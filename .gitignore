@@ -1,0 +1,44 @@
+# ── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Videos (all) ─────────────────────────────────────────────────────────────
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.m4v
+*.wmv
+*.flv
+*.ts
+*.mts
+
+# ── Generated images (>50 KB) ─────────────────────────────────────────────────
+# Entire generated-image directories
+schedule-tweets/images/x/
+schedule-tweets/images/yt/
+schedule-tweets/images/ig/
+
+# Loose images at the images/ root (sample, cartoonify, etc.)
+# Note: images/reference/ is intentionally not excluded — all reference
+# images are kept regardless of size.
+schedule-tweets/images/*.png
+schedule-tweets/images/*.jpg
+schedule-tweets/images/*.jpeg
+schedule-tweets/images/*.webp
+schedule-tweets/images/*.gif
+
+# Debug / temp screenshots
+schedule-tweets/tmp-fb-debug/
+schedule-tweets/tmp-tiktok-debug/
+schedule-tweets/*.png
+schedule-tweets/*.jpg
+uploading/*.png
+uploading/*.jpg
+uploading/new/
+
+# ── Config / secrets ─────────────────────────────────────────────────────────
+schedule-tweets/config/
+
+# ── Chrome profile directories ────────────────────────────────────────────────
+schedule-tweets/UsersmnedeAppData*/

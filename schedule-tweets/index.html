@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Posts</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f2f5;
+      color: #1a1a1a;
+    }
+
+    header {
+      background: white;
+      border-bottom: 1px solid #e4e6ea;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header h1 { font-size: 17px; font-weight: 600; }
+
+    .tabs {
+      background: white;
+      border-bottom: 1px solid #e4e6ea;
+      padding: 0 24px;
+      display: flex;
+      overflow-x: auto;
+    }
+    .tab {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      padding: 13px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #65676b;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    .tab:hover { color: #1a1a1a; }
+    .tab.active { color: #1877f2; border-bottom-color: #1877f2; }
+
+    .badge {
+      background: #e4e6ea;
+      color: #65676b;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 10px;
+      min-width: 20px;
+      text-align: center;
+    }
+    .tab.active .badge { background: #e7f0fd; color: #1877f2; }
+
+    .tab-content { display: none; padding: 24px; max-width: 720px; margin: 0 auto; }
+    .tab-content.active { display: block; }
+
+    .empty {
+      text-align: center;
+      color: #aaa;
+      padding: 60px 0;
+      font-size: 15px;
+    }
+    .loading { text-align: center; color: #bbb; padding: 48px 0; }
+    .load-error {
+      background: #fff0f0;
+      color: #c0392b;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    /* ---- Cards ---- */
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.07);
+    }
+    .card-meta {
+      font-size: 11px;
+      color: #aaa;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+    .hook {
+      font-size: 12px;
+      color: #888;
+      background: #f7f7f7;
+      border-radius: 5px;
+      padding: 5px 9px;
+      margin-bottom: 9px;
+    }
+    .post-text {
+      font-size: 15px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .card-image { margin-top: 12px; }
+    .card-image img {
+      max-width: 100%;
+      border-radius: 10px;
+      display: block;
+    }
+
+    /* ---- Thread ---- */
+    .thread-tweet {
+      border-left: 3px solid #e4e6ea;
+      padding-left: 12px;
+      margin-top: 12px;
+    }
+    .thread-tweet:first-child { border-left-color: #1877f2; }
+    .tweet-num { font-size: 11px; color: #aaa; margin-bottom: 3px; }
+
+    /* ---- Polls ---- */
+    .poll-options { margin-top: 12px; display: flex; flex-direction: column; gap: 7px; }
+    .poll-option {
+      border: 1px solid #e4e6ea;
+      border-radius: 20px;
+      padding: 7px 14px;
+      font-size: 14px;
+      color: #444;
+    }
+    .poll-meta { font-size: 12px; color: #aaa; margin-top: 8px; }
+
+    /* ---- Images row (carousel slides, YT post slides) ---- */
+    .images-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .images-row img {
+      height: 150px;
+      width: auto;
+      border-radius: 8px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+    .images-row img:hover { opacity: 0.9; }
+
+    /* ---- IG / YT caption ---- */
+    .caption {
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .hashtags { font-size: 13px; color: #1877f2; margin-top: 8px; }
+
+    .engagement-q {
+      font-size: 13px;
+      color: #666;
+      font-style: italic;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+
+    /* ---- Shorts platform pills ---- */
+    .plt-pills { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0 10px; }
+    .plt-pill {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .short-video {
+      display: block;
+      width: 260px;
+      border-radius: 10px;
+      margin-top: 12px;
+      background: #000;
+    }
+    .plt-pending  { background: #e7f0fd; color: #1877f2; }
+    .plt-posted   { background: #e6f9ee; color: #1a7f37; }
+    .plt-failed   { background: #fff0f0; color: #c0392b; }
+    .plt-skip     { background: #f0f0f0; color: #888; }
+    .plt-posting  { background: #fff3e0; color: #e65c00; }
+
+    /* ---- Reply Opportunities ---- */
+    .opp-card { position: relative; }
+    .opp-source {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: 8px;
+      background: #f0f2f5;
+      color: #65676b;
+      margin-bottom: 10px;
+    }
+    .opp-tweet-preview {
+      border: 1px solid #e4e6ea;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      background: #fafafa;
+    }
+    .opp-tweet-author {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 5px;
+    }
+    .opp-tweet-author a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .opp-tweet-author a:hover { text-decoration: underline; }
+    .opp-tweet-text {
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #333;
+    }
+    .opp-why {
+      font-size: 12px;
+      color: #888;
+      background: #f7f7f7;
+      border-radius: 5px;
+      padding: 6px 10px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .opp-reply-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #aaa;
+      margin-bottom: 5px;
+    }
+    .opp-reply-text {
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #1a1a1a;
+      border-left: 3px solid #1877f2;
+      padding-left: 10px;
+      margin-bottom: 12px;
+    }
+    .opp-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .opp-view-link {
+      font-size: 12px;
+      color: #1877f2;
+      text-decoration: none;
+    }
+    .opp-view-link:hover { text-decoration: underline; }
+    .btn-queue {
+      background: #1877f2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-queue:hover { background: #1565d8; }
+    .btn-queue:disabled { background: #a8c4f0; cursor: default; }
+    .btn-queued {
+      background: #e6f9ee;
+      color: #1a7f37;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: default;
+    }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 92vw;
+      max-height: 92vh;
+      border-radius: 6px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Pending Posts</h1>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-tab="tweets">X Tweets <span class="badge" id="badge-tweets">…</span></button>
+  <button class="tab" data-tab="threads">Threads <span class="badge" id="badge-threads">…</span></button>
+  <button class="tab" data-tab="xpolls">X Polls <span class="badge" id="badge-xpolls">…</span></button>
+  <button class="tab" data-tab="ytposts">YT Posts <span class="badge" id="badge-ytposts">…</span></button>
+  <button class="tab" data-tab="ytpolls">YT Polls <span class="badge" id="badge-ytpolls">…</span></button>
+  <button class="tab" data-tab="igsingle">IG Single <span class="badge" id="badge-igsingle">…</span></button>
+  <button class="tab" data-tab="igcarousel">IG Carousel <span class="badge" id="badge-igcarousel">…</span></button>
+  <button class="tab" data-tab="xreplies">X Replies <span class="badge" id="badge-xreplies">…</span></button>
+  <button class="tab" data-tab="replyopp">Reply Opp <span class="badge" id="badge-replyopp">…</span></button>
+  <button class="tab" data-tab="shorts">Shorts <span class="badge" id="badge-shorts">…</span></button>
+</nav>
+
+<div id="tab-tweets"     class="tab-content active"><div class="loading">Loading…</div></div>
+<div id="tab-threads"    class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-xpolls"     class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-ytposts"    class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-ytpolls"    class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-igsingle"   class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-igcarousel" class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-xreplies"   class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-replyopp"   class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-shorts"     class="tab-content"><div class="loading">Loading…</div></div>
+
+<div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
+
+<script>
+// ---- Tab switching ----
+document.getElementById('tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.tab');
+  if (!btn) return;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+});
+
+// ---- Lightbox ----
+document.getElementById('lightbox').addEventListener('click', () => {
+  document.getElementById('lightbox').classList.remove('open');
+});
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+document.addEventListener('click', e => {
+  if (e.target.matches('.images-row img, .card-image img')) openLightbox(e.target.src);
+});
+
+// ---- Helpers ----
+function imgUrl(path) {
+  if (!path) return null;
+  return '/' + path.replace(/^schedule-tweets\//, '');
+}
+
+function esc(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ---- Renderers ----
+
+function renderTweets(items) {
+  if (!items.length) return '<div class="empty">No pending tweets</div>';
+  return items.map((t, i) => {
+    const hook = t.hook ? `<div class="hook">Hook: ${esc(t.hook)}</div>` : '';
+    const img  = t.image_path
+      ? `<div class="card-image"><img src="${esc(imgUrl(t.image_path))}" alt=""></div>`
+      : '';
+    return `<div class="card">
+      <div class="card-meta">#${i + 1}</div>
+      ${hook}
+      <div class="post-text">${esc(t.tweet || t.text || '')}</div>
+      ${img}
+    </div>`;
+  }).join('');
+}
+
+function renderThreads(items) {
+  if (!items.length) return '<div class="empty">No pending threads</div>';
+  return items.map((t, i) => {
+    const tweets = (t.tweets || []).map(tw => `
+      <div class="thread-tweet">
+        <div class="tweet-num">Tweet ${tw.position} · ${tw.char_count ?? tw.text?.length ?? 0} chars</div>
+        <div class="post-text">${esc(tw.text || '')}</div>
+      </div>`).join('');
+    return `<div class="card">
+      <div class="card-meta">#${i + 1} · ${esc(t.id || '')}</div>
+      ${tweets}
+    </div>`;
+  }).join('');
+}
+
+function renderXPolls(items) {
+  if (!items.length) return '<div class="empty">No pending X polls</div>';
+  return items.map((p, i) => {
+    const opts = (p.options || []).map(o => `<div class="poll-option">${esc(o)}</div>`).join('');
+    return `<div class="card">
+      <div class="card-meta">#${i + 1}</div>
+      <div class="post-text">${esc(p.tweet_text || '')}</div>
+      <div class="poll-options">${opts}</div>
+      <div class="poll-meta">Duration: ${esc(p.duration || '—')}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderYTPosts(items) {
+  if (!items.length) return '<div class="empty">No pending YT posts</div>';
+  return items.map((p, i) => {
+    const imgs = (p.images || []).map(s =>
+      `<img src="${esc(imgUrl(s.image_path))}" alt="${esc(s.slide_text || '')}" title="${esc(s.slide_text || '')}">`
+    ).join('');
+    const imgRow = imgs ? `<div class="images-row">${imgs}</div>` : '';
+    const eq = p.engagement_question
+      ? `<div class="engagement-q">${esc(p.engagement_question)}</div>`
+      : '';
+    return `<div class="card">
+      <div class="card-meta">#${i + 1} · ${esc(p.id || '')}</div>
+      <div class="post-text">${esc(p.body || '')}</div>
+      ${eq}
+      ${imgRow}
+    </div>`;
+  }).join('');
+}
+
+function renderYTPolls(items) {
+  if (!items.length) return '<div class="empty">No pending YT text polls</div>';
+  return items.map((p, i) => {
+    const opts = (p.options || []).map(o => `<div class="poll-option">${esc(o)}</div>`).join('');
+    return `<div class="card">
+      <div class="card-meta">#${i + 1}</div>
+      <div class="post-text">${esc(p.question_text || '')}</div>
+      <div class="poll-options">${opts}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderIGSingle(items) {
+  if (!items.length) return '<div class="empty">No pending IG single posts</div>';
+  return items.map((p, i) => {
+    const img = p.image_path
+      ? `<div class="card-image"><img src="${esc(imgUrl(p.image_path))}" alt=""></div>`
+      : '';
+    const tags = (p.hashtags || []).slice(0, 3).map(h => `#${esc(h)}`).join(' ');
+    return `<div class="card">
+      <div class="card-meta">#${i + 1}</div>
+      ${img}
+      <div class="caption" style="margin-top:${img ? '12px' : '0'}">${esc(p.caption || '')}</div>
+      ${tags ? `<div class="hashtags">${tags}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderIGCarousel(items) {
+  if (!items.length) return '<div class="empty">No pending IG carousels</div>';
+  return items.map((p, i) => {
+    // Accept both `slides` (older entries) and `images` (newer entries from batch)
+    const imgs = (p.slides || p.images || []).map(s =>
+      `<img src="${esc(imgUrl(s.image_path))}" alt="">`
+    ).join('');
+    const imgRow = imgs ? `<div class="images-row">${imgs}</div>` : '';
+    const tags = (p.hashtags || []).slice(0, 3).map(h => `#${esc(h)}`).join(' ');
+    return `<div class="card">
+      <div class="card-meta">#${i + 1}</div>
+      ${imgRow}
+      <div class="caption" style="margin-top:${imgRow ? '12px' : '0'}">${esc(p.caption || '')}</div>
+      ${tags ? `<div class="hashtags">${tags}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderReplies(items) {
+  if (!items.length) return '<div class="empty">No pending replies</div>';
+  return items.map((r, i) => {
+    const author = esc(r.author || '');
+    const url    = esc(r.tweet_url || '#');
+    const isReaction = !!r.reaction_only;
+
+    let body;
+    if (isReaction) {
+      if (r.gif_search) {
+        body = `<div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+          <span style="background:#e7f0fd;color:#1877f2;font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.04em">GIF</span>
+          <span style="font-size:15px;color:#444">Search: <em>${esc(r.gif_search)}</em></span>
+        </div>`;
+      } else {
+        body = `<div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+          <span style="background:#e7f0fd;color:#1877f2;font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.04em">Emoji</span>
+          <span style="font-size:28px;line-height:1">${esc(r.reply_text)}</span>
+        </div>`;
+      }
+    } else {
+      body = `<div class="post-text">${esc(r.reply_text || '')}</div>`;
+    }
+
+    const badge = isReaction
+      ? `<span style="background:#fff3cd;color:#856404;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;margin-left:6px;text-transform:uppercase;letter-spacing:.04em">Reaction</span>`
+      : '';
+
+    return `<div class="card">
+      <div class="card-meta">#${i + 1} &nbsp;·&nbsp; <a href="${url}" target="_blank" style="color:#1877f2;text-decoration:none;font-weight:600">${author}</a>${badge}</div>
+      ${body}
+    </div>`;
+  }).join('');
+}
+
+function renderReplyOpportunities(items) {
+  if (!items.length) return '<div class="empty">No pending reply opportunities</div>';
+  return items.map((opp, i) => {
+    const author    = esc(opp.author || '');
+    const url       = esc(opp.tweet_url || '#');
+    const tweetText = esc(opp.tweet_text || '');
+    const source    = esc(opp.source || '');
+    const why       = esc(opp.why_reply || '');
+    const reply     = esc(opp.reply_text || '');
+    const cardId    = `opp-${i}`;
+
+    return `<div class="card opp-card" id="${cardId}">
+      <div class="card-meta">#${i + 1} &nbsp;·&nbsp; ${source}</div>
+      <div class="opp-tweet-preview">
+        <div class="opp-tweet-author"><a href="${url}" target="_blank">${author}</a></div>
+        <div class="opp-tweet-text">${tweetText}</div>
+      </div>
+      ${why ? `<div class="opp-why">${why}</div>` : ''}
+      <div class="opp-reply-label">Suggested reply</div>
+      <div class="opp-reply-text">${reply}</div>
+      <div class="opp-footer">
+        <a class="opp-view-link" href="${url}" target="_blank">View tweet ↗</a>
+        <button class="btn-queue" onclick="queueReply(this, ${i})">+ Queue</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+let _replyOpps = [];
+
+async function queueReply(btn, idx) {
+  const opp = _replyOpps[idx];
+  if (!opp) return;
+  btn.disabled = true;
+  btn.textContent = 'Queuing…';
+  try {
+    const res = await fetch('/x-reply-guy/queue', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(opp),
+    });
+    if (!res.ok) throw new Error(res.status);
+    btn.outerHTML = '<span class="btn-queued">✓ Queued</span>';
+    document.getElementById('badge-xreplies').textContent =
+      String(parseInt(document.getElementById('badge-xreplies').textContent || '0', 10) + 1);
+    const badge = document.getElementById('badge-replyopp');
+    badge.textContent = String(Math.max(0, parseInt(badge.textContent || '0', 10) - 1));
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = '+ Queue';
+    alert('Failed to queue: ' + e.message);
+  }
+}
+
+function renderShorts(items) {
+  if (!items.length) return '<div class="empty">No pending shorts</div>';
+
+  const PLAT = { yt_shorts: 'YT Shorts', ig_reels: 'IG Reels', x: 'X', tiktok: 'TikTok', facebook: 'FB' };
+
+  function fmtDur(sec) {
+    const m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+    return `${m}:${String(s).padStart(2, '0')}`;
+  }
+
+  return items.map((s, i) => {
+    const dur   = s.duration_seconds ? fmtDur(s.duration_seconds) : '—';
+    const pills = Object.entries(s.platforms || {}).map(([key, p]) =>
+      `<span class="plt-pill plt-${esc(p.status || 'skip')}">${esc(PLAT[key] || key)}</span>`
+    ).join('');
+    const tags  = (s.tags || []).map(t => `#${esc(t)}`).join(' ');
+    const video = s.video_path
+      ? `<video class="short-video" src="${esc('/' + s.video_path)}" controls preload="metadata"></video>`
+      : '';
+    return `<div class="card">
+      <div class="card-meta">#${i + 1} &nbsp;·&nbsp; ${esc(s.title || s.id || '')} &nbsp;·&nbsp; ${esc(dur)}</div>
+      <div class="plt-pills">${pills}</div>
+      ${video}
+      <div class="hook" style="margin-top:12px">Hook: ${esc(s.hook || '')}</div>
+      <div class="caption">${esc(s.caption || '')}</div>
+      ${tags ? `<div class="hashtags" style="margin-top:8px">${tags}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+// ---- Load all ----
+
+const SOURCES = [
+  { tab: 'tweets',     url: '/data/x-tweets.json',        key: 'tweets',  render: renderTweets },
+  { tab: 'threads',    url: '/data/x-threads.json',       key: 'threads', render: renderThreads },
+  { tab: 'xpolls',     url: '/data/x-polls.json',         key: 'polls',   render: renderXPolls },
+  { tab: 'ytposts',    url: '/data/yt-posts.json',        key: 'posts',   render: renderYTPosts },
+  { tab: 'ytpolls',    url: '/data/yt-text-polls.json',   key: 'polls',   render: renderYTPolls },
+  { tab: 'igsingle',   url: '/data/ig-single-image.json', key: 'posts',   render: renderIGSingle },
+  { tab: 'igcarousel', url: '/data/ig-carousel.json',     key: 'posts',   render: renderIGCarousel },
+  { tab: 'xreplies',   url: '/x-reply-guy/data/replies_to_post.json',      key: null,      render: renderReplies },
+  { tab: 'replyopp',  url: '/x-reply-guy/data/reply_opportunities.json',  key: null,      render: items => { _replyOpps = items; return renderReplyOpportunities(items); } },
+  { tab: 'shorts',     url: '/data/shorts.json',                          key: 'shorts',  render: renderShorts,
+    filter: x => Object.values(x.platforms || {}).some(p => p.status === 'pending') },
+];
+
+Promise.all(SOURCES.map(async s => {
+  const el = document.getElementById('tab-' + s.tab);
+  try {
+    const data = await fetch(s.url, { cache: 'no-store' }).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+    const items = s.key === null
+      ? (Array.isArray(data) ? data : [])
+      : (data[s.key] || []).filter(s.filter || (x => x.status === 'pending'));
+    document.getElementById('badge-' + s.tab).textContent = items.length;
+    el.innerHTML = s.render(items);
+  } catch (err) {
+    document.getElementById('badge-' + s.tab).textContent = '!';
+    el.innerHTML = `<div class="load-error">Could not load ${s.url}: ${esc(err.message)}</div>`;
+  }
+}));
+</script>
+
+</body>
+</html>
