@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
 
-const PROFILE_DIR   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\xbot-profile';
+const PROFILE_DIR   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\chatgpt-profile';
 const IMAGES_DIR    = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images';
 const SCHEDULE_DIR  = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
 const CHAT_URL      = 'https://chatgpt.com/c/69ffc14c-3994-83ea-8f79-48845459ecfa';

@@ -1,16 +1,16 @@
-// One-time setup: opens Chrome with xbot-profile pointed at ChatGPT so you
+// One-time setup: opens Chrome with chatgpt-profile pointed at ChatGPT so you
 // can log in. The session is saved automatically in the profile — no auth
-// file written. Re-run only if Chrome wipes xbot-profile or logs you out.
+// file written. Re-run only if Chrome wipes chatgpt-profile or logs you out.
 //
 // Run: node setup-chatgpt.js
 
 const { chromium } = require('playwright');
 const readline = require('readline');
 
-const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\xbot-profile';
+const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\chatgpt-profile';
 
 async function main() {
-  console.log('Launching Chrome with xbot-profile...');
+  console.log('Launching Chrome with chatgpt-profile...');
   const browser = await chromium.launchPersistentContext(PROFILE_DIR, {
     channel: 'chrome',
     headless: false,
@@ -31,7 +31,7 @@ async function main() {
   console.log('When you can see your chat list and can chat freely,');
   console.log('come back here and press Enter to close.');
   console.log('=================================================');
-  console.log('\nSession is saved automatically in xbot-profile.');
+  console.log('\nSession is saved automatically in chatgpt-profile.');
   console.log('You will not need to run this again unless Chrome wipes the profile.\n');
 
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });

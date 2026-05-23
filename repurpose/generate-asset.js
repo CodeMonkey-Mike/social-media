@@ -10,7 +10,7 @@ const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
 
-const PROFILE_DIR       = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\xbot-profile';
+const PROFILE_DIR       = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\chatgpt-profile';
 const IMAGE_URL_PATTERN = 'estuary/content';
 const MIN_GEN_DELAY_MS  = 10000; // real generations take >10s; sidebar retries arrive in <3s
 const MAX_WAIT_MS       = 5 * 60 * 1000;
@@ -51,7 +51,7 @@ async function main() {
   console.log(`Prompt : ${prompt.slice(0, 120)}...`);
   console.log('');
 
-  console.log('Launching Chrome with xbot-profile...');
+  console.log('Launching Chrome with chatgpt-profile...');
   const browser = await chromium.launchPersistentContext(PROFILE_DIR, {
     channel: 'chrome',
     headless: false,
@@ -68,7 +68,7 @@ async function main() {
 
   try {
     // ── Phase 1: block image delivery while page + sidebar load ──────────────
-    // The xbot-profile has cached chat history; sidebar images load on scroll.
+    // The chatgpt-profile has cached chat history; sidebar images load on scroll.
     // Blocking them ensures our baseline is a clean zero before we send the prompt.
     const imgRoutePattern = `**/*${IMAGE_URL_PATTERN}*`;
     await page.route(imgRoutePattern, route => route.abort());
@@ -88,7 +88,7 @@ async function main() {
     try {
       await composer.waitFor({ timeout: 30000 });
     } catch {
-      throw new Error('Composer not found within 30s — is xbot-profile logged into ChatGPT? Run setup-chatgpt.js to re-authenticate.');
+      throw new Error('Composer not found within 30s — is chatgpt-profile logged into ChatGPT? Run setup-chatgpt.js to re-authenticate.');
     }
     console.log('Chat ready.');
 
