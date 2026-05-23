@@ -13,26 +13,19 @@ node_modules/
 *.ts
 *.mts
 
-# ── Generated images (>50 KB) ─────────────────────────────────────────────────
-# Entire generated-image directories
-schedule-tweets/images/x/
-schedule-tweets/images/yt/
-schedule-tweets/images/ig/
+# ── Images ───────────────────────────────────────────────────────────────────
+# ALL images under schedule-tweets/images/ are tracked (including x/, yt/, ig/,
+# and reference/). Rationale: image deletion is irreversible without git, so
+# we accept the repo-size cost for the recovery safety net.
 
-# Loose images at the images/ root (sample, cartoonify, etc.)
-# Note: images/reference/ is intentionally not excluded — all reference
-# images are kept regardless of size.
-schedule-tweets/images/*.png
-schedule-tweets/images/*.jpg
-schedule-tweets/images/*.jpeg
-schedule-tweets/images/*.webp
-schedule-tweets/images/*.gif
-
-# Debug / temp screenshots
+# Loose debug/temp screenshots at the schedule-tweets root level are still
+# excluded — those are throwaway, not generated content.
 schedule-tweets/tmp-fb-debug/
 schedule-tweets/tmp-tiktok-debug/
 schedule-tweets/*.png
 schedule-tweets/*.jpg
+
+# Uploading helper screenshots — also throwaway
 uploading/*.png
 uploading/*.jpg
 uploading/new/
