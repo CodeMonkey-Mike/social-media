@@ -1478,7 +1478,19 @@ Each posting script uses a dedicated Chrome profile, but a few collisions exist:
 
 - **X tweets / X polls / X threads / X shorts / reply-guy** all use `xbot-profile`.
 - **ChatGPT (for image generation in `generate-image.js`)** also uses `xbot-profile`.
-- **TikTok (`post-tiktok-short.js`) uses the MAIN Chrome User Data profile + CDP port 9224.** If any other Chrome window is open against `C:\Users\mnede\AppData\Local\Google\Chrome\User Data` — including stale Chrome processes from earlier runs — TikTok will fail with "Chrome did not open CDP 9224 within 15s." Close all Chrome windows (Task Manager if needed) before running TikTok.
+- **TikTok (`post-tiktok-short.js`) uses the MAIN Chrome User Data profile + CDP port 9224.** Known issue: `node scripts/post-tiktok-short.js` sometimes fails with "Chrome did not open CDP 9224 within 15s" even when no Chrome processes exist (verified via PowerShell `Get-Process chrome` and `netstat`). Chrome appears to launch (a window briefly opens) but the CDP port never binds — likely because Chrome's launcher stub intercepts the spawn from Node's `child_process` and doesn't propagate `--remote-debugging-port` correctly.
+
+  **Workaround that works reliably:** launch Chrome manually from PowerShell FIRST, then run the Node script — the script's `isCDPReady()` check will detect the live Chrome and reuse it. Manual launch:
+  ```powershell
+  Start-Process -FilePath 'C:\Program Files\Google\Chrome\Application\chrome.exe' -ArgumentList @(
+    '--user-data-dir=C:\Users\mnede\AppData\Local\Google\Chrome\User Data',
+    '--profile-directory=Default',
+    '--remote-debugging-port=9224',
+    '--no-first-run',
+    'about:blank'
+  )
+  ```
+  Wait 2–3 seconds (port 9224 binds almost instantly when launched this way), then `cd schedule-tweets; node scripts/post-tiktok-short.js`. The script will print "Chrome already on CDP 9224 ✓" and proceed.
 
 Implication: when interleaving posting and image-gen tasks, **never run image-gen in parallel with an xbot-profile task** (X tweet/poll/thread/short, reply-guy). Image gen can run in parallel with: IG single, IG Reel, IG carousel, YT community post, YT poll, YT short, Rumble, Bitchute, Facebook.
 
