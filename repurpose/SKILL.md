@@ -1083,14 +1083,9 @@ Editorial carousel slide, 1:1 square. Very dark near-black background with subtl
 
 ---
 
-**Version 3 — Tom Bilyeu single image** (`--subdir=version3`)
+**Version 3 — Tom Bilyeu single image** (`--subdir=version3`) — **RETIRED, do not use**
 
-Real photo of Mike as the full background. Bold all-caps white text overlay at the bottom, yellow/gold accent for the punchline. One hook per image — no carousel. **Requires Mike's photo uploaded as a reference image.** This version depends on the `--reference-image` upload feature; confirm it is working before running.
-
-Prompt template:
-```
-Single editorial image, 1:1 square. Full-bleed photo of the person from the reference image as the background. At the bottom, a semi-transparent dark overlay with bold all-caps white text: '[HOOK LINE]'. Below in bold yellow-gold all-caps: '[PUNCHLINE]'. No other text. Match the reference photo's lighting and setting.
-```
+Previously: real photo of Mike as the full background with text overlay. **Removed from the active version menu as of 2026-05-22.** Only Versions 1, 2, and 4 should be offered for new carousels. Version 3 is left here for reference only; do not recommend it.
 
 ---
 
@@ -1431,3 +1426,70 @@ The bottleneck for most creators isn't ideas — it's pulling them back out of l
 - **Transcript has timestamps.** Strip them when extracting topics. Don't include them in tweets.
 - **Transcript is too short to yield 3 topics.** Surface fewer topics rather than padding with weak ones. One strong topic is better than three forced ones.
 - **User pastes a transcript directly into chat instead of using the folder.** Work with what they gave you. Skip the file-reading step, do the rest of the workflow normally, and still write the output file to `output/` using today's date and a slugified hint from the content (e.g., `output/2026-04-29_pasted.md`).
+
+## Operational notes captured 2026-05-22
+
+These are concrete operational lessons from a long multi-platform posting + image-regeneration session. They are NOT writing-style rules; they are about how the toolchain behaves and how to drive it without breaking things.
+
+### Image cleanup — never delete by status alone
+
+When cleaning up old image files to free disk, **do NOT use `status === 'posted'` on the X-tweet entry as a proxy for "image no longer needed."** The same `image_path` can be referenced from a pending YT post's `images[]` array or an IG carousel's `images[]` / `slides[]` array. The safe rule:
+
+> Only delete an image file if **every** reference across **every** data file is in a `posted`/`draft` (already-shipped) state.
+
+Specifically, the orphan-detection script must traverse, at minimum:
+- `x-tweets.json` → `tweets[].image_path`
+- `ig-single-image.json` → `posts[].image_path`
+- `ig-carousel.json` → `posts[].slides[].image_path` AND `posts[].images[].image_path` (older entries use `slides`, newer use `images`)
+- `yt-posts.json` → `posts[].images[].image_path` (text-only posts have no images array; carousel-style posts do)
+- `shorts.json`, `x-polls.json`, `x-threads.json`, `yt-text-polls.json` — currently no image_path fields, but check before assuming.
+
+Missing any of these nestings will misclassify in-use images as orphans and delete them. Treat the safe rule as a hard invariant.
+
+### Images live in git now
+
+The `.gitignore` was rewritten 2026-05-22 to **track all images under `schedule-tweets/images/`**, including `x/`, `yt/`, `ig/`, and `reference/`. The repo-size cost is accepted in exchange for the safety net: any future accidental deletion is recoverable via `git checkout`. The only image-related exclusions that remain are throwaway debug screenshots (`tmp-fb-debug/`, `tmp-tiktok-debug/`, `schedule-tweets/*.png`, `uploading/*.png`, `uploading/new/`).
+
+### ChatGPT image generation — rate limits and delays
+
+ChatGPT Plus allows ~40–50 image generations per 3 hours (one every 4–5 min). `repurpose/generate-image.js` was tuned 2026-05-22 to pace requests:
+
+- **Pre-launch delay:** 15–45s random
+- **Typing delay:** 60–100ms per char with jitter
+- **Pre-Enter pause:** 10–20s after typing, before submit
+
+These delays are the defaults. When generating in a posting-burst session, keep these or longer.
+
+### Image dimensions
+
+Current ChatGPT output is **1254×1254** for 1:1 prompts. The platform-standard for X/IG/YT images is **1080×1080**. The current pipeline does not downscale; flag this if/when a downscale step gets added. The 1254×1254 still uploads cleanly to all platforms (X compresses; IG and YT accept it), so the impact is purely bandwidth/storage, not visual.
+
+### YT/IG carousel image generation — version selection
+
+When regenerating carousel slides, **always use Version 1, 2, or 4** (Version 3 is retired — see earlier section). For each regen pass:
+1. Pick a version (default to Version 1 — news-flash — unless the post body clearly fits another style).
+2. Pick a reference image from `images/reference/carousels/versionN/` that matches the slide's role (hook → 01-hook reference, mid-slide → 02/03/04 reference, question → 05-question reference).
+3. Pass it via `--reference-image=` to `generate-image.js`.
+4. Use the version's prompt template, substituting in slide-text derived from the YT post body (the `images[]` entries often have null `slide_text`, so it must be inferred from the body and the slide slug).
+
+### Profile conflicts that matter when posting in parallel
+
+Each posting script uses a dedicated Chrome profile, but a few collisions exist:
+
+- **X tweets / X polls / X threads / X shorts / reply-guy** all use `xbot-profile`.
+- **ChatGPT (for image generation in `generate-image.js`)** also uses `xbot-profile`.
+- **TikTok (`post-tiktok-short.js`) uses the MAIN Chrome User Data profile + CDP port 9224.** If any other Chrome window is open against `C:\Users\mnede\AppData\Local\Google\Chrome\User Data` — including stale Chrome processes from earlier runs — TikTok will fail with "Chrome did not open CDP 9224 within 15s." Close all Chrome windows (Task Manager if needed) before running TikTok.
+
+Implication: when interleaving posting and image-gen tasks, **never run image-gen in parallel with an xbot-profile task** (X tweet/poll/thread/short, reply-guy). Image gen can run in parallel with: IG single, IG Reel, IG carousel, YT community post, YT poll, YT short, Rumble, Bitchute, Facebook.
+
+### Recommended future change — dedicated `chatgpt-profile`
+
+To eliminate the xbot collision, create a dedicated `chatgpt-profile` Chrome profile, log into ChatGPT once there, and change the `PROFILE_DIR` constant in `generate-image.js` (currently hardcoded to `xbot-profile`). After that change, image generation can run in parallel with X tweets / X polls / X threads / X shorts / reply-guy, doubling effective throughput during posting bursts.
+
+### Reply-guy `--limit` is not honored
+
+`post_replies.py --limit 5` posted 7 replies in observed testing. The script appears to drain whatever is in the queue at run time, regardless of the `--limit` flag. Treat the limit flag as advisory; the queue empties to whatever is staged. If precise batch sizing matters, pre-trim the queue file before running.
+
+### Status updates during long-running tasks
+
+When running a long sequential posting list, emit a short status line per task in this shape: `[HH:MM:SS] Task N/M start: <script>` and `[HH:MM:SS] Task N/M done in <s>s` plus the live post URL. That gives the user enough info to know progress without a verbose stream.

@@ -91,8 +91,10 @@ async function main() {
   console.log(`Target: ${targetPath}`);
   console.log(`Prompt length: ${prompt.length} chars`);
 
-  const preDelay = Math.floor(Math.random() * 11000) + 5000; // 5–15 seconds
-  console.log(`Pre-launch delay: ${(preDelay / 1000).toFixed(1)}s...`);
+  // Pre-launch delay: 15–45s. ChatGPT Plus rate limit is ~40-50 images per 3 hours
+  // (~13-16/hour). Combined with typing/pre-Enter delays, this paces requests.
+  const preDelay = Math.floor(Math.random() * 30001) + 15000; // 15–45 seconds
+  console.log(`Pre-launch delay: ${(preDelay / 1000).toFixed(1)}s (rate-limit buffer)...`);
   await new Promise(r => setTimeout(r, preDelay));
 
   console.log('Launching Chrome...');
@@ -206,8 +208,13 @@ async function main() {
       await composer.click();
     }
 
-    console.log('Typing prompt...');
-    await page.keyboard.type(prompt, { delay: 15 });
+    console.log('Typing prompt (slow, char-by-char with jitter)...');
+    for (const ch of prompt) {
+      await page.keyboard.type(ch);
+      await page.waitForTimeout(Math.floor(Math.random() * 41) + 60); // 60–100ms per char
+    }
+    // Pause before pressing Enter (looks more human, gives rate-limit headroom)
+    await page.waitForTimeout(Math.floor(Math.random() * 10001) + 10000); // 10–20s
     await page.keyboard.press('Enter');
     const promptSentAt = Date.now();
     console.log('Prompt sent. Waiting for image (up to 5 min)...');
