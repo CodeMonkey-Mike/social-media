@@ -213,7 +213,9 @@
       padding: 12px 14px;
       margin-bottom: 12px;
       background: #fafafa;
+      overflow: hidden;
     }
+    .opp-tweet-preview .twitter-tweet { margin: 0 auto !important; }
     .opp-tweet-author {
       font-size: 13px;
       font-weight: 700;
@@ -543,7 +545,7 @@ function renderReplyOpportunities(items) {
 
     return `<div class="card opp-card" id="${cardId}">
       <div class="card-meta">#${i + 1} &nbsp;·&nbsp; ${source}</div>
-      <div class="opp-tweet-preview">
+      <div class="opp-tweet-preview" data-embed-url="${url}">
         <div class="opp-tweet-author"><a href="${url}" target="_blank">${author}</a></div>
         <div class="opp-tweet-text">${tweetText}</div>
       </div>
@@ -559,6 +561,31 @@ function renderReplyOpportunities(items) {
 }
 
 let _replyOpps = [];
+
+async function loadTweetEmbeds() {
+  const els = document.querySelectorAll('.opp-tweet-preview[data-embed-url]');
+  if (!els.length) return;
+  await Promise.all([...els].map(async el => {
+    const url = el.dataset.embedUrl;
+    try {
+      const r = await fetch(
+        `https://publish.twitter.com/oembed?url=${encodeURIComponent(url)}&omit_script=true&dnt=true`,
+        { cache: 'force-cache' }
+      );
+      if (!r.ok) return;
+      const d = await r.json();
+      el.innerHTML = d.html || el.innerHTML;
+      el.removeAttribute('data-embed-url');
+    } catch { /* keep text fallback */ }
+  }));
+  if (window.twttr?.widgets) {
+    window.twttr.widgets.load();
+  } else {
+    const s = document.createElement('script');
+    s.src = 'https://platform.twitter.com/widgets.js';
+    document.head.appendChild(s);
+  }
+}
 
 async function queueReply(btn, idx) {
   const opp = _replyOpps[idx];
@@ -625,7 +652,7 @@ const SOURCES = [
   { tab: 'igsingle',   url: '/data/ig-single-image.json', key: 'posts',   render: renderIGSingle },
   { tab: 'igcarousel', url: '/data/ig-carousel.json',     key: 'posts',   render: renderIGCarousel },
   { tab: 'xreplies',   url: '/x-reply-guy/data/replies_to_post.json',      key: null,      render: renderReplies },
-  { tab: 'replyopp',  url: '/x-reply-guy/data/reply_opportunities.json',  key: null,      render: items => { _replyOpps = items; return renderReplyOpportunities(items); } },
+  { tab: 'replyopp',  url: '/x-reply-guy/data/reply_opportunities.json',  key: null,      render: items => { _replyOpps = items; return renderReplyOpportunities(items); }, afterRender: loadTweetEmbeds },
   { tab: 'shorts',     url: '/data/shorts.json',                          key: 'shorts',  render: renderShorts,
     filter: x => Object.values(x.platforms || {}).some(p => p.status === 'pending') },
 ];
@@ -639,6 +666,7 @@ Promise.all(SOURCES.map(async s => {
       : (data[s.key] || []).filter(s.filter || (x => x.status === 'pending'));
     document.getElementById('badge-' + s.tab).textContent = items.length;
     el.innerHTML = s.render(items);
+    if (s.afterRender) s.afterRender();
   } catch (err) {
     document.getElementById('badge-' + s.tab).textContent = '!';
     el.innerHTML = `<div class="load-error">Could not load ${s.url}: ${esc(err.message)}</div>`;
