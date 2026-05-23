@@ -1,0 +1,480 @@
+{
+  "$schema_doc": "Each short video is one object in the shorts[] array. The video file lives in shorts/<source-livestream>/<slug>.mp4 (relative to schedule-tweets root). Each short can be queued to multiple platforms (yt_shorts, ig_reels, x, tiktok, facebook); each platform has its own independent status flow: pending -> posting -> posted -> failed (or 'skip' to never post there). The base 'caption' and 'tags' are the platform-agnostic defaults; platform entries may set 'caption_override' or 'tags_override' for platform-specific tweaks. The 'thumbnail_path' is optional and currently null until thumbnails are generated. The 'source_clip' tracks which source livestream + clip this came from for traceability.",
+  "$post_schema": {
+    "id": "<unique slug, e.g. 'mu-20260520-kaspa-hard-fork'>",
+    "slug": "<filename slug>",
+    "source_livestream": "<source folder name under shorts/>",
+    "source_clip": "<original clip slug from video-creation/shorts/market-update-clips/>",
+    "video_path": "<relative path from schedule-tweets root, e.g. 'shorts/<source>/<slug>.mp4'>",
+    "thumbnail_path": "<relative path or null>",
+    "duration_seconds": "<float>",
+    "width": 1080,
+    "height": 1920,
+    "title": "<short descriptive title>",
+    "hook": "<first line / sentence of caption>",
+    "caption": "<base caption / description with hashtags>",
+    "tags": [
+      "array",
+      "of",
+      "hashtags"
+    ],
+    "platforms": {
+      "yt_shorts": {
+        "status": "pending | posting | posted | failed | skip",
+        "posted_at": null,
+        "url": null,
+        "views": null,
+        "views_captured_at": null,
+        "caption_override": null
+      },
+      "ig_reels": {
+        "status": "pending | posting | posted | failed | skip",
+        "posted_at": null,
+        "url": null,
+        "views": null,
+        "views_captured_at": null,
+        "caption_override": null
+      },
+      "x": {
+        "status": "pending | posting | posted | failed | skip",
+        "posted_at": null,
+        "url": null,
+        "views": null,
+        "views_captured_at": null,
+        "caption_override": null
+      },
+      "tiktok": {
+        "status": "pending | posting | posted | failed | skip",
+        "posted_at": null,
+        "url": null,
+        "views": null,
+        "views_captured_at": null,
+        "caption_override": null
+      },
+      "facebook": {
+        "status": "pending | posting | posted | failed | skip",
+        "posted_at": null,
+        "url": null,
+        "views": null,
+        "views_captured_at": null,
+        "caption_override": null
+      }
+    },
+    "created_at": "<ISO 8601>"
+  },
+  "shorts": [
+    {
+      "id": "mu-20260520-ai-job-market",
+      "slug": "ai-job-market",
+      "source_livestream": "market-update-2026-05-20",
+      "source_clip": "ai-job-market",
+      "video_path": "shorts/market-update-2026-05-20/ai-job-market.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 32.13,
+      "width": 1080,
+      "height": 1920,
+      "title": "AI is changing the job market: explosion of jobs incoming",
+      "hook": "AI is causing the change of hands in the job market right now.",
+      "caption": "AI is causing the change of hands in the job market right now.\n\nBig companies are laying off.\nSmall companies are hiring more — they can do more with less.\n\nThe balance tips → explosion of more job openings.\n\nIt's just a matter of when.\n\n#AI #JobMarket #FutureOfWork #Layoffs",
+      "tags": [
+        "AI",
+        "JobMarket",
+        "FutureOfWork",
+        "Layoffs",
+        "AIJobs",
+        "Hiring",
+        "TechJobs"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "posted",
+          "posted_at": "2026-05-20T21:33:12.272Z",
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "posted",
+          "posted_at": "2026-05-20T21:58:10.948Z",
+          "url": "https://www.instagram.com/realcodemonkeymike/reel/DYiMY7MM9u5/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "x": {
+          "status": "posted",
+          "posted_at": "2026-05-20T22:15:00.000Z",
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "tiktok": {
+          "status": "posted",
+          "posted_at": "2026-05-21T11:17:21.368Z",
+          "url": "https://www.tiktok.com/@realcodemonkeymike/video/7642301199537982734",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-05-21T10:47:50.025Z",
+          "url": "https://www.facebook.com/reel/1365960762027498/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-05-20T22:26:16.649Z",
+          "url": "https://rumble.com/v7a5fso-ai-is-changing-the-job-market-explosion-of-jobs-incoming.html",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-05-20T23:02:23.173Z",
+          "url": "https://www.bitchute.com/content",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        }
+      },
+      "created_at": "2026-05-20T16:36:00"
+    },
+    {
+      "id": "mu-20260520-kaspa-hard-fork",
+      "slug": "kaspa-hard-fork",
+      "source_livestream": "market-update-2026-05-20",
+      "source_clip": "kaspa-hard-fork",
+      "video_path": "shorts/market-update-2026-05-20/kaspa-hard-fork.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 35.97,
+      "width": 1080,
+      "height": 1920,
+      "title": "Kaspa $0.25-$0.30 target + Toccata hard fork in 27 days",
+      "hook": "If this year goes well, $KAS gets to 25–30 cents.",
+      "caption": "If this year goes well, $KAS gets to 25–30 cents.\n\n27 days to the Toccata hard fork.\nTestnet was a success → onwards to mainnet.\n\nWhen the market does pump — we have the BEST coin on planet earth.\n\n$KAS #Kaspa #Toccata #Crypto",
+      "tags": [
+        "Kaspa",
+        "KAS",
+        "Toccata",
+        "Crypto",
+        "HardFork",
+        "PoW",
+        "Bitcoin",
+        "BlockDAG"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "posted",
+          "posted_at": "2026-05-21T23:20:46.329Z",
+          "url": "https://www.youtube.com/shorts/LgTkSzGcArM",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "posted",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null,
+          "posted_at": "2026-05-21T21:53:44.019Z",
+          "url": "https://www.instagram.com/realcodemonkeymike/reel/DYndI22pUtN/"
+        },
+        "x": {
+          "status": "posted",
+          "posted_at": "2026-05-21T15:41:38.701Z",
+          "url": "https://x.com/mikeneder/status/2057486977331507329",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "tiktok": {
+          "status": "posted",
+          "posted_at": "2026-05-21T17:06:18.473Z",
+          "url": "https://www.tiktok.com/@realcodemonkeymike/video/7642391083921444110",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-05-21T17:52:07.500Z",
+          "url": "https://www.facebook.com/reel/1351920236807716",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-05-21T15:36:39.500Z",
+          "url": "https://rumble.com/v7a6loo-kaspa-0.25-0.30-target-toccata-hard-fork-in-27-days.html",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-05-21T17:59:50.114Z",
+          "url": "https://www.bitchute.com/content",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        }
+      },
+      "created_at": "2026-05-20T16:36:00"
+    },
+    {
+      "id": "mu-20260520-meme-bear-market",
+      "slug": "meme-bear-market",
+      "source_livestream": "market-update-2026-05-20",
+      "source_clip": "meme-bear-market",
+      "video_path": "shorts/market-update-2026-05-20/meme-bear-market.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 101.37,
+      "width": 1080,
+      "height": 1920,
+      "title": "Why I'm staying away from new meme coins right now",
+      "hook": "Memes are not going to do anything right now. Here's why.",
+      "caption": "Memes are not going to do anything right now. Here's why.\n\nThe only people trading are us — we're competing against ourselves.\nNo new retail = no real pumps.\n\nFlying Ketamine Horse: 5 CEX listings → RUG in one month.\n\nIt's REALLY RISKY to get into a new meme in a bear market.\n\n#Crypto #MemeCoins #BearMarket #Rug #CryptoTrading",
+      "tags": [
+        "Crypto",
+        "MemeCoins",
+        "BearMarket",
+        "Rug",
+        "CryptoTrading",
+        "Memes",
+        "Altcoins"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "posted",
+          "posted_at": "2026-05-22T00:57:08.250Z",
+          "url": "https://www.youtube.com/shorts/mjzs1ge3448",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "posted",
+          "posted_at": "2026-05-22T01:18:31.721Z",
+          "url": "https://www.instagram.com/realcodemonkeymike/reel/DYnz94Sh9wX/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "x": {
+          "status": "posted",
+          "posted_at": "2026-05-22T00:51:21.263Z",
+          "url": "https://x.com/mikeneder/status/2057625318714650908",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "tiktok": {
+          "status": "posted",
+          "posted_at": "2026-05-22T00:44:02.147Z",
+          "url": "https://www.tiktok.com/@realcodemonkeymike/video/7642509028291071246",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-05-22T00:21:24.938Z",
+          "url": "https://www.facebook.com/reel/1015898081129181",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-05-22T00:14:27.058Z",
+          "url": "https://rumble.com/v7a7dwi-why-im-staying-away-from-new-meme-coins-right-now.html",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-05-22T00:12:02.141Z",
+          "url": "https://www.bitchute.com/content",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        }
+      },
+      "created_at": "2026-05-20T16:36:00"
+    },
+    {
+      "id": "mu-20260520-meme-holds",
+      "slug": "meme-holds",
+      "source_livestream": "market-update-2026-05-20",
+      "source_clip": "meme-holds",
+      "video_path": "shorts/market-update-2026-05-20/meme-holds.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 123.07,
+      "width": 1080,
+      "height": 1920,
+      "title": "The memes I'm actually holding: Housecoin, MOTHER, URANUS",
+      "hook": "Buy the good ones — tried and tested.",
+      "caption": "Buy the good ones — tried and tested.\n\nThe memes I'm actually holding right now:\n\n→ $HOUSE (Housecoin) — was a $600K mcap a few months ago, now 5X. Going well beyond $1B.\n→ $MOTHER (Iggy Azalea) — 7M followers on X, business-minded, still has CEX listings.\n→ $URANUS — mascot of Jupiter Swap on Solana. $100M now → easily beyond a billion.\n\nProven devs. CEX listings. Still posting through the bear market.\n\n#Memes #Crypto #Housecoin #URANUS #MOTHER #Solana #Kaspa",
+      "tags": [
+        "Memes",
+        "Crypto",
+        "Housecoin",
+        "URANUS",
+        "MOTHER",
+        "Solana",
+        "Kaspa",
+        "MemeCoins",
+        "Altcoins"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "posted",
+          "posted_at": "2026-05-22T18:27:38.776Z",
+          "url": "https://www.youtube.com/shorts/7A-Vsyt5d-I",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "posted",
+          "posted_at": "2026-05-22T16:30:13.391Z",
+          "url": "https://www.instagram.com/realcodemonkeymike/reel/DYpcK5ht6QU/",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "x": {
+          "status": "posted",
+          "posted_at": "2026-05-22T17:20:43.052Z",
+          "url": "https://x.com/mikeneder/status/2057874293124399166",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "tiktok": {
+          "status": "posted",
+          "posted_at": "2026-05-22T17:00:22.028Z",
+          "url": "https://www.tiktok.com/@realcodemonkeymike/video/7642760565491830029",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-05-22T18:22:13.072Z",
+          "url": "https://www.facebook.com/reel/1351920236807716",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-05-22T15:06:07.853Z",
+          "url": "https://rumble.com/v7a8afa-the-memes-im-actually-holding-housecoin-mother-uranus.html",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-05-22T18:37:23.724Z",
+          "url": "https://www.bitchute.com/content",
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        }
+      },
+      "created_at": "2026-05-20T16:36:00"
+    },
+    {
+      "id": "mu-20260520-tao-ai-play",
+      "slug": "tao-ai-play",
+      "source_livestream": "market-update-2026-05-20",
+      "source_clip": "tao-ai-play",
+      "video_path": "shorts/market-update-2026-05-20/tao-ai-play.mp4",
+      "thumbnail_path": null,
+      "duration_seconds": 48.47,
+      "width": 1080,
+      "height": 1920,
+      "title": "TAO is the all-in-one AI play — just buy TAO instead of NVDA",
+      "hook": "$TAO is gonna be a MASSIVE play this cycle.",
+      "caption": "$TAO is gonna be a MASSIVE play this cycle.\n\nWhy invest in NVDA and other AI stocks when you might not even get the multipliers?\n\nTAO is the ALL-IN-ONE AI play.\nJust buy $TAO. You can earn more off of it.\n\nMy target: $40B → $80B+ market cap.\n\n#TAO #Bittensor #AI #Crypto #Altcoins",
+      "tags": [
+        "TAO",
+        "Bittensor",
+        "AI",
+        "Crypto",
+        "Altcoins",
+        "NVDA",
+        "AICrypto"
+      ],
+      "platforms": {
+        "yt_shorts": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "ig_reels": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "x": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "tiktok": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "facebook": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "rumble": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        },
+        "bitchute": {
+          "status": "pending",
+          "posted_at": null,
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "caption_override": null
+        }
+      },
+      "created_at": "2026-05-20T16:36:00"
+    }
+  ]
+}

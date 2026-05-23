@@ -1,0 +1,1701 @@
+{
+  "$schema_doc": "Each thread is one object. The schedule-tweets skill picks up the first thread with status='pending' and posts every tweet in sequence as a reply chain (atomic posting). Status flow: 'pending' (queued, posted on the next manual run of the schedule-tweets skill) -> 'posting' (mid-flight, in case run gets interrupted) -> 'posted' (all tweets shipped successfully) -> 'failed' (any tweet in the chain failed; manual cleanup needed).",
+  "threads": [
+    {
+      "id": "thread-2026-05-01-dotcom-ai-variation-a",
+      "topic": "We're at the 1992 of the AI buildout — Bitcoin is along for the ride",
+      "source_transcript": "transcripts/2026-05-01_dotcom-vs-ai-explosion.txt",
+      "variation_label": "A — Historical-parallel structure (chronological)",
+      "hook_pattern": "#11 numbered-thread insider decode + #10 reframe",
+      "created_at": "2026-05-01T16:00:00",
+      "revised_at": "2026-05-01T18:00:00",
+      "status": "posted",
+      "posted_at": "2026-05-02T00:00:00",
+      "thread_root_url": "https://x.com/mikeneder/status/2050506640000995411",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Everyone thinks the S&P is topping.\n\nWe're not in 2000. We're in 1992.\n\nHere's the historical parallel that explains why this expansion is just getting started 🧵",
+          "hook": "Everyone thinks the S&P is topping. We're not in 2000. We're in 1992.",
+          "char_count": 161
+        },
+        {
+          "position": 2,
+          "text": "The dot-com boom didn't start in 1995. It started in 1968.\n\n→ 1968: Carter Phone — modems become legal\n→ 1980-86: Computer II/III — pipes vs services split\n→ 1984: AT&T broken into 7 Baby Bells\n\n25 years of quiet legal wins. Nobody noticed.",
+          "hook": null,
+          "char_count": 240
+        },
+        {
+          "position": 3,
+          "text": "1989: Tim Berners-Lee invents HTTP at CERN.\n\n1993: Mosaic browser launches. Anyone with a modem can now reach the web.\n\nThe platform exists. The mania hasn't started.\n\nSound familiar?",
+          "hook": null,
+          "char_count": 183
+        },
+        {
+          "position": 4,
+          "text": "Then the floodgates:\n\n→ 1995: Netscape IPO doubles in a day\n→ 1996: Telecom Act\n→ 1998: Fed eases mid-cycle\n→ 1999: Qualcomm +2,600% in a single year\n→ 2000: Nasdaq +572% over 5 years, P/E hits 200\n\nA real mania looks like this.",
+          "hook": null,
+          "char_count": 228
+        },
+        {
+          "position": 5,
+          "text": "Now overlay AI:\n\n→ 2012: AlexNet\n→ 2017: Google's Transformer paper\n→ 2020: GPT-3\n→ 2022: ChatGPT (100M users in 2 months)\n→ 2024: Spot Bitcoin ETFs\n→ 2025: Stablecoin legislation\n\nSound like 1990 to you? Same here.",
+          "hook": null,
+          "char_count": 215
+        },
+        {
+          "position": 6,
+          "text": "The difference: AI skipped the 30-year regulatory grind.\n\nNo Ma Bell. No 12-year FCC battles. Innovation, investment, and policy all landed at once.\n\nWhat took telecom 30 years takes AI maybe 15.\n\nAnd Bitcoin is institutional for the first time.",
+          "hook": null,
+          "char_count": 245
+        },
+        {
+          "position": 7,
+          "text": "So when Cathie Wood revises her BTC target to $1.5M by 2032, that's not a moonboy take.\n\nThat's the dot-com timeline applied to crypto.\n\nWe're at the 1992 of the AI buildout.\n\nThe 5-year run hasn't started.\n\nIt's about to.",
+          "hook": null,
+          "char_count": 222
+        },
+        {
+          "position": 8,
+          "text": "If this reframed how you're thinking about the cycle —\n\nFollow me for weekly macro × crypto threads that ignore the 4-year cycle echo chamber.\n\n🧠 + 📈",
+          "hook": null,
+          "is_cta": true,
+          "char_count": 157
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-01-dotcom-ai-variation-b",
+      "topic": "We're at the 1992 of the AI buildout; Bitcoin is along for the ride",
+      "source_transcript": "transcripts/2026-05-01_dotcom-vs-ai-explosion.txt",
+      "variation_label": "B: Hook-and-thesis-first structure (punchy)",
+      "hook_pattern": "#7 contrarian aphorism with timestamp + #5 stat-stack parallelism",
+      "created_at": "2026-05-01T16:00:00",
+      "revised_at": "2026-05-02T14:30:00",
+      "status": "posted",
+      "posted_at": "2026-05-03T16:09:10",
+      "thread_root_url": "https://x.com/mikeneder/status/2050970452466577592",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The 4-year Bitcoin cycle is dead.\n\nNot because of ETFs.\nNot because of US policy.\n\nIt died because we just entered an economic expansion bigger than the dot-com boom.\n\nA thread on why this changes everything 🧵",
+          "hook": "The 4-year Bitcoin cycle is dead.",
+          "char_count": 209
+        },
+        {
+          "position": 2,
+          "text": "Bitcoin has never seen one of these.\n\nBorn in 2008's ashes. Lived through QE, COVID, three \"halving cycles.\"\n\nIt has never lived through a real industrial supercycle.\n\nThat's the part nobody is pricing in.",
+          "hook": null,
+          "char_count": 205
+        },
+        {
+          "position": 3,
+          "text": "The last industrial supercycle was the dot-com explosion.\n\nTake in the numbers:\n\n→ Nasdaq +572% in 5 years\n→ 20M jobs created\n→ Qualcomm +2,600% in 1999 alone\n→ P/E ratios hit 200 (Japan's '89 bubble peaked at 80)\n\nThis is what a real mania looks like.",
+          "hook": null,
+          "char_count": 252
+        },
+        {
+          "position": 4,
+          "text": "What nobody talks about:\n\nThat 5-year mania sat on top of 30 years of quiet groundwork.\n\n→ Carter Phone (1968)\n→ Computer II/III (1980-86)\n→ AT&T breakup (1984)\n→ HTTP invented (1989)\n\nThe setup was the iceberg. The mania was the tip.",
+          "hook": null,
+          "char_count": 234
+        },
+        {
+          "position": 5,
+          "text": "Now overlay AI:\n\n→ 2012: AlexNet\n→ 2017: Transformer paper\n→ 2020: GPT-3\n→ 2022: ChatGPT (100M users in 2 months)\n→ 2024: Spot $BTC ETFs\n→ 2025: Stablecoin legislation\n\nWe're not in 2000. We're in 1992. And AI skipped the 30-year regulatory grind.",
+          "hook": null,
+          "char_count": 247
+        },
+        {
+          "position": 6,
+          "text": "$BTC is institutionally accessible for the first time, right as the wave starts.\n\nETFs. Custody. Stablecoin laws.\n\nThe \"October bottom\" crowd will miss it; they're trading a cycle that never accounted for an AI supercycle.\n\nThe bottom isn't coming. The expansion is.",
+          "hook": null,
+          "char_count": 266
+        },
+        {
+          "position": 7,
+          "text": "My take: we're not capping in 2025.\n\n→ 2026: incremental new ATHs, choppy\n→ 2027: real expansion of the mania\n→ 2028-2030: blow-off territory\n→ $BTC north of $400K, possibly $1M+\n\nThe biggest expansion in a generation may have just started.",
+          "hook": null,
+          "char_count": 240
+        },
+        {
+          "position": 8,
+          "text": "If this reframed how you're thinking about the cycle...\n\nFollow me for weekly macro × crypto threads that ignore the 4-year cycle echo chamber.\n\n🧠 + 📈",
+          "hook": null,
+          "is_cta": true,
+          "char_count": 158
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-03-flippening-cascade",
+      "topic": "The flippening cascade; $ETH flips $BTC, then $KAS climbs",
+      "source_transcript": "transcripts/2026-05-03_crypto-livestream-macro-kaspa.txt",
+      "variation_label": "Flippening cascade thread (sole variation)",
+      "hook_pattern": "#6 outsized prediction with insider FOMO + tribal contrast",
+      "created_at": "2026-05-03T19:00:00",
+      "status": "posted",
+      "posted_at": "2026-05-07T10:24:38",
+      "thread_root_url": "https://x.com/mikeneder/status/2052332811919495398",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The 4-year Bitcoin cycle isn't the only thing that's about to die.\n\nThe ranking at the top of the crypto market is too.\n\nHere's the cascade I'm betting on for the next 10 years 🧵",
+          "hook": "The 4-year Bitcoin cycle isn't the only thing that's about to die.",
+          "char_count": 178,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 2,
+          "text": "By 2030: $ETH flips $BTC.\n\nInstitutional adoption keeps building. Spot ETH ETFs, restaking, the L2 stack, treasury holdings.\n\nBitcoin's whole pitch (digital gold, store of value) starts to feel narrow next to ETH's expanding utility.",
+          "hook": null,
+          "char_count": 233,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 3,
+          "text": "Bitcoin maxis don't take this well.\n\nThey've spent a decade calling proof-of-stake broken and ETH unsound money.\n\nThen proof-of-stake takes #1 from them. Logically, they have nowhere to go.",
+          "hook": null,
+          "char_count": 189,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 4,
+          "text": "Except they do.\n\nThere's exactly one chain that fits the maxi worldview: proof of work, no premine, no insider allocation, fair-launched, fast enough to actually function as money.\n\nThat chain is $KAS.",
+          "hook": null,
+          "char_count": 201,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 5,
+          "text": "The migration starts.\n\nSome maxis switch immediately. Others hold out. But over a few years, $KAS climbs the rankings as the only philosophically acceptable destination for Bitcoin's most committed holders.\n\nBy 2032, $KAS is in the top 5.",
+          "hook": null,
+          "char_count": 238,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 6,
+          "text": "By 2035-ish, $KAS climbs further.\n\nBitcoin sits at #2, increasingly seen as the legacy chain. ETH at #1 for utility. $KAS rising as the chain that's actually being used as money.\n\nThe maxi's destination becomes the asset's destination.",
+          "hook": null,
+          "char_count": 235,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 7,
+          "text": "This is a 10-year prediction. It happens slowly, then all at once.\n\nIf you're holding Bitcoin maxi-style, the long-term move is $KAS.\n\nIf you're holding $KAS today and the broader market doesn't see it yet, the wait is finite.",
+          "hook": null,
+          "char_count": 226,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 8,
+          "text": "If this reframed how you're seeing the long-term map; there's more where it came from.\n\nFollow me for weekly macro × crypto threads that ignore the 4-year cycle echo chamber.\n\n🧠 + 📈",
+          "hook": null,
+          "is_cta": true,
+          "char_count": 189,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-03-kaspa-tps-vs-btc",
+      "topic": "Kaspa's 5,700 TPS vs Bitcoin's 7; what real throughput unlocks",
+      "source_transcript": "transcripts/2026-05-03_crypto-livestream-macro-kaspa.txt",
+      "variation_label": "TPS comparison thread (sole variation)",
+      "hook_pattern": "#5 stat-stack parallelism (extreme variant)",
+      "created_at": "2026-05-03T19:00:00",
+      "status": "posted",
+      "posted_at": "2026-05-09T00:54:00.953Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2052914925798818210",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Bitcoin does about 7 transactions per second.\n\n$KAS just hit 5,700.\n\nThat's 800x the throughput on a fair-launched proof-of-work chain.\n\nHere's why this number matters more than people realize 🧵",
+          "hook": "Bitcoin does about 7 transactions per second.",
+          "char_count": 194,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 2,
+          "text": "Bitcoin's whole reason for existing was to be peer-to-peer electronic cash.\n\nThe 2008 white paper is explicit. The pitch was: a payment system that doesn't need banks.\n\nThat requires the network to move money at the speed money needs to move.",
+          "hook": null,
+          "char_count": 242,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 3,
+          "text": "It doesn't.\n\n7 transactions per second across the entire global network. Confirmation times measured in tens of minutes. Fees that spike to $20+ during congestion.\n\nTry paying for a coffee with that. Try sending payroll to a thousand employees with that.",
+          "hook": null,
+          "char_count": 254,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 4,
+          "text": "Now look at $KAS.\n\n5,700 TPS. Block times in milliseconds. Fees that round to zero.\n\nThe chain that can actually do what Bitcoin promised in 2008 wasn't built by Satoshi.\n\nIt was built by someone who looked at Bitcoin's limits and decided to fix them.",
+          "hook": null,
+          "char_count": 251,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 5,
+          "text": "Why throughput matters:\n\nNo asset can be money if you can't move it fast enough.\n\nGold isn't money in the modern sense; it's a settlement layer. Bitcoin is currently in the same category: a slow settlement layer pretending to be money.",
+          "hook": null,
+          "char_count": 235,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 6,
+          "text": "5,700 TPS opens doors that Bitcoin physically cannot:\n\nReal merchant adoption. Micropayments. Global remittance flows. On-chain commerce at consumer scale.\n\nThese aren't theoretical. They're waiting for a chain that can actually handle them.",
+          "hook": null,
+          "char_count": 241,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 7,
+          "text": "The bull case for $KAS isn't \"it might replace Bitcoin.\"\n\nThe bull case is: Bitcoin can't do its own job. $KAS can.\n\nWhen the global payment layer actually needs replacing, the question stops being \"which crypto.\" It becomes \"which one actually works at scale.\"",
+          "hook": null,
+          "char_count": 261,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        {
+          "position": 8,
+          "text": "If this reframed how you're thinking about Bitcoin's TPS limits; there's more where it came from.\n\nFollow me for weekly macro × crypto threads that ignore the 4-year cycle echo chamber.\n\n🧠 + 📈",
+          "hook": null,
+          "is_cta": true,
+          "char_count": 200,
+          "posted_url": null,
+          "views": null,
+          "views_captured_at": null
+        }
+      ],
+      "error": "locator.click: Error: strict mode violation: locator('[data-testid=\"tweetTextarea_0\"]') resolved to 2 elements:\n    1) <div tabindex=\"0\" role=\"textbox\" spellcheck=\"true\" aria-multiline=\"true\" aria-label=\"Post text\" contenteditable=\"true\" aria-autocomplete=\"list\" data-testid=\"tweetTextarea_0\" no-focustrapview-refocus=\"true\" aria-describedby=\"placeholder-3m7ct\" aria-controls=\"typeaheadDropdownWrapped-8\" class=\"notranslate public-DraftEditor-content\" aria-activedescendant=\"typeaheadFocus-0.3153768702426025\">…</div> aka getByRole('textbox', { name: 'Post text' })\n    2) <div tabindex=\"0\" role=\"textbox\" spellcheck=\"true\" aria-multiline=\"true\" aria-label=\"Post text\" contenteditable=\"true\" aria-autocomplete=\"list\" data-testid=\"tweetTextarea_0\" no-focustrapview-refocus=\"true\" aria-describedby=\"placeholder-9uko1\" aria-controls=\"typeaheadDropdownWrapped-7\" class=\"notranslate public-DraftEditor-content\" aria-activedescendant=\"typeaheadFocus-0.559789082221962\">…</div> aka getByTestId('primaryColumn').getByTestId('tweetTextarea_0')\n\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"tweetTextarea_0\"]')\u001b[22m\n"
+    },
+    {
+      "id": "thread-2026-05-07-midcycle-top",
+      "topic": "October 2025 was a midcycle top, not THE cycle top",
+      "source_transcript": "transcripts/2026-05-07_crypto-livestream-midcycle-iran-kaspa.txt",
+      "variation_label": "A — Pattern-break + chart-anchored historical comparison",
+      "hook_pattern": "Contrarian claim + setup-and-payoff",
+      "created_at": "2026-05-07T20:00:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "October 2025 wasn't the cycle top.\n\nIt was a midcycle top so weak it didn't even reach average power law.\n\nThe 2013 and 2019 midcycle tops both blew past it.\n\nHere's what people are mourning that didn't actually happen 🧵",
+          "hook": "October 2025 wasn't the cycle top.",
+          "char_count": 220
+        },
+        {
+          "position": 2,
+          "text": "First, definitions.\n\nA midcycle top is the local high partway through a cycle, not the cycle top itself.\n\nIn 2013, $BTC ran from ~$13 to ~$259 in Q1, peaked, sold off ~85%, then ran to ~$1,150 by year-end. That early peak was a midcycle top, not the cycle top.",
+          "hook": null,
+          "char_count": 260
+        },
+        {
+          "position": 3,
+          "text": "The 2019 setup was the same shape.\n\n$BTC ran from ~$3,200 in December 2018 to ~$13,800 in June 2019. Then it sold off into ~$3,800 by March 2020. Then it printed the actual cycle top at ~$69,000 in November 2021.\n\nJune 2019 was a midcycle top. The cycle top came later.",
+          "hook": null,
+          "char_count": 269
+        },
+        {
+          "position": 4,
+          "text": "What both midcycle tops have in common: they blew well past average power law.\n\nAverage power law isn't a magic level. It's the regression of $BTC's lifetime price drawn through the middle.\n\nPast midcycle tops cleared it convincingly. That's how you tell a real local high from noise.",
+          "hook": null,
+          "char_count": 284
+        },
+        {
+          "position": 5,
+          "text": "October 2025 didn't reach it.\n\nThe \"top\" everyone is now mourning peaked below average power law. That's not a cycle top by any prior pattern. It's a local high inside a sideways structure.\n\nIf October had even matched the 2019 midcycle overshoot, $BTC would have printed well above $200k.",
+          "hook": null,
+          "char_count": 289
+        },
+        {
+          "position": 6,
+          "text": "The four-year cycle zombies grieving October as the top are extrapolating from a midcycle high that didn't even break trend.\n\nIt would be like calling June 2019 the top of the 2017–2021 cycle.\n\nNobody serious did that then. Nobody serious should be doing it now.",
+          "hook": null,
+          "char_count": 262
+        },
+        {
+          "position": 7,
+          "text": "The actual cycle top is still ahead.\n\nWhen it prints, it'll be well above average power law, like every previous one. That's not a guess; it's the pattern every cycle has followed.\n\nIf you sold October expecting the bear, you sold a midcycle dip thinking it was a peak.",
+          "hook": null,
+          "char_count": 269
+        },
+        {
+          "position": 8,
+          "text": "Power law charts aren't the only thing the four-year cycle crowd is misreading right now.\n\nFollow me for weekly macro × crypto threads that don't run on echo chamber autopilot.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 191,
+          "is_cta": true
+        }
+      ],
+      "posted_at": "2026-05-10T16:30:09.237Z",
+      "thread_root_url": null
+    },
+    {
+      "id": "thread-2026-05-07-four-year-cycle-dead",
+      "topic": "The four-year cycle was always macro coincidence; dip was self-inflicted",
+      "source_transcript": "transcripts/2026-05-07_crypto-livestream-midcycle-iran-kaspa.txt",
+      "variation_label": "B — Macro causal arc with $95k counterfactual payoff",
+      "hook_pattern": "Counterintuitive claim + cause/effect reveal",
+      "created_at": "2026-05-07T20:00:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The four-year cycle didn't break.\n\nIt never existed.\n\nWhat people called \"the cycle\" was three macro variables happening to line up. And the people still acting like it's real cost $BTC roughly $15k of price right now.\n\nHere's the actual story 🧵",
+          "hook": "The four-year cycle didn't break.",
+          "char_count": 245
+        },
+        {
+          "position": 2,
+          "text": "For a decade, three things lined up almost perfectly with the halving calendar:\n\n1. The business cycle (PMI expansion → contraction)\n2. Money printing (QE on → QT on)\n3. Interest rates (cuts → hikes)\n\nPeople credited the halving. The halving was incidental.",
+          "hook": null,
+          "char_count": 257
+        },
+        {
+          "position": 3,
+          "text": "The proof: every prior crypto bear (2014, 2018, 2022) maps cleanly to PMI rolling over, QE ending, and rates rising.\n\nNot \"Bitcoin halved 18 months ago, time for a bear.\"\n\nThe macro environment did the work. The halving narrative just borrowed credit for it.",
+          "hook": null,
+          "char_count": 258
+        },
+        {
+          "position": 4,
+          "text": "This time the three variables didn't line up.\n\nPMI: expanding.\nQE: running.\nRates: coming down.\n\nThe conditions that created every previous \"crypto winter\" simply aren't present. The macro side of the cycle isn't there.",
+          "hook": null,
+          "char_count": 219
+        },
+        {
+          "position": 5,
+          "text": "But the four-year cycle zombies didn't notice.\n\nThey saw the calendar (year four after a halving). They saw a shutdown-driven dip. They assumed the bear had arrived.\n\nLong-term holders started distributing into it. Sell pressure compounded. Down we went.",
+          "hook": null,
+          "char_count": 254
+        },
+        {
+          "position": 6,
+          "text": "The dip wasn't macro. It wasn't structural.\n\nIt was a self-fulfilling prophecy from people convinced of a cycle that never existed.\n\nIf they hadn't dumped, $BTC would be at ~$95k right now. The current ~$80k is the cost of acting on a dead theory.",
+          "hook": null,
+          "char_count": 247
+        },
+        {
+          "position": 7,
+          "text": "The lesson isn't \"the cycle is broken\" or \"the halving doesn't matter.\"\n\nThe lesson is that \"the cycle\" was always macro wearing a Bitcoin costume.\n\nOnce you see it as macro coincidence, you can't unsee it. And you stop selling when the calendar says \"bear.\"",
+          "hook": null,
+          "char_count": 258
+        },
+        {
+          "position": 8,
+          "text": "The four-year cycle had a good run. It's done.\n\nFollow me for weekly macro × crypto threads that follow the actual data, not the calendar.",
+          "hook": null,
+          "char_count": 146,
+          "is_cta": true
+        }
+      ],
+      "posted_at": "2026-05-12T02:32:52.891Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2054026971391074627"
+    },
+    {
+      "id": "thread-2026-05-07-bear-during-expansion",
+      "topic": "First-ever crypto bear during expansion + QE (pattern break)",
+      "source_transcript": "transcripts/2026-05-07_crypto-livestream-midcycle-iran-kaspa.txt",
+      "variation_label": "C — Historical comparison + pattern-break payoff",
+      "hook_pattern": "Pattern-break framing",
+      "created_at": "2026-05-07T20:00:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Every previous crypto bear lined up with macro tightening.\n\nRates up. QT. PMI down.\n\nThis \"bear\" is happening with QE running and PMI expanding. The opposite of every prior one.\n\nEither we just rewrote how cycles work, or this isn't a bear at all 🧵",
+          "hook": "Every previous crypto bear lined up with macro tightening.",
+          "char_count": 248
+        },
+        {
+          "position": 2,
+          "text": "2014 bear: post-Mt.Gox unwind on the surface.\n\nThe deeper story was the Fed taper. QE3 ended December 2014. PMI rolled through 2015.\n\n$BTC drained from ~$1,150 to ~$170. The headlines blamed the exchange collapse. The macro did most of the lifting.",
+          "hook": null,
+          "char_count": 248
+        },
+        {
+          "position": 3,
+          "text": "2018 bear: ICO bust on the surface; rate hikes underneath.\n\nThe Fed lifted from 1.25% to 2.5% over 12 months. QT ran simultaneously. PMI peaked mid-2018 and rolled.\n\n$BTC went ~$19,500 → ~$3,200.",
+          "hook": null,
+          "char_count": 195
+        },
+        {
+          "position": 4,
+          "text": "2022 bear: Luna and FTX dominate the headlines, but the real catalyst was the fastest hiking cycle in 40 years.\n\nThe Fed went 0% → 5.5% in 18 months. QT was running. PMI contracted.\n\n$BTC: ~$69,000 → ~$15,500. The collapses were symptoms.",
+          "hook": null,
+          "char_count": 238
+        },
+        {
+          "position": 5,
+          "text": "Three bears. Three different surface stories (Mt.Gox, ICO bust, Luna/FTX).\n\nOne identical macro setup underneath: tightening + contraction.\n\nThat's the actual playbook. The thing people called \"the four-year cycle\" was just the macro cycle.",
+          "hook": null,
+          "char_count": 240
+        },
+        {
+          "position": 6,
+          "text": "Now look at the present.\n\nPMI: expanding.\nQE: running.\nRates: coming down, not up.\n\nPull a chart of any prior crypto bear and overlay these conditions. They don't fit. None of the boxes that defined the past three bears are checked.",
+          "hook": null,
+          "char_count": 232
+        },
+        {
+          "position": 7,
+          "text": "So either:\n\n1. We just witnessed the first crypto bear in history that happened during the opposite macro setup, OR\n2. What looked like a bear was actually a panic in a bull setup, driven by people still acting on the old playbook.\n\nOccam's razor picks the second one.",
+          "hook": null,
+          "char_count": 268
+        },
+        {
+          "position": 8,
+          "text": "The macro behind crypto is doing the opposite of what most accounts will admit.\n\nFollow me for weekly threads that work the macro before they touch the chart.",
+          "hook": null,
+          "char_count": 166,
+          "is_cta": true
+        }
+      ],
+      "posted_at": "2026-05-12T23:36:31.974Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2054344982274691217"
+    },
+    {
+      "id": "thread-2026-05-07-kaspa-hard-fork-35-days",
+      "topic": "35 days to the $KAS hard fork; KRC20 season > BNB season",
+      "source_transcript": "transcripts/2026-05-07_crypto-livestream-midcycle-iran-kaspa.txt",
+      "variation_label": "D — Calendar countdown + historical parallel",
+      "hook_pattern": "Time-anchored hook + actionable thesis",
+      "created_at": "2026-05-07T20:00:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "35 days to the $KAS hard fork.\n\nKRC20s have been quiet for almost a year. That ends.\n\nThe Kaspa chain right now is sitting in the same setup BNB chain was in pre-October 2025: quiet, low-attention, primed.\n\nHere's why KRC20 season will be bigger than BNB season was 🧵",
+          "hook": "35 days to the $KAS hard fork.",
+          "char_count": 267
+        },
+        {
+          "position": 2,
+          "text": "First, what the hard fork unlocks.\n\nIt's the protocol upgrade the community has been waiting on. Improvements to consensus, throughput, and the underlying foundation that lets the KRC20 token standard mature past its scrappy first wave.",
+          "hook": null,
+          "char_count": 236
+        },
+        {
+          "position": 3,
+          "text": "Why KRC20s went quiet:\n\nThe first wave ran in 2024, then died down once early adopters rotated out.\n\nThe infrastructure for the next wave (better tooling, deeper liquidity, more mature wallets) wasn't ready. So the meta moved elsewhere — to BNB chain, to Solana memes, to Base.",
+          "hook": null,
+          "char_count": 277
+        },
+        {
+          "position": 4,
+          "text": "What changed: the prerequisites are now in place.\n\nThe hard fork lands those features the next wave needs. Wallet UX has improved. Liquidity is deeper than it was a year ago.\n\nKRC20s aren't quiet because nobody wants them. They're quiet because the foundation wasn't ready. It's about to be.",
+          "hook": null,
+          "char_count": 291
+        },
+        {
+          "position": 5,
+          "text": "Now the BNB parallel.\n\nPre-October 2025, BNB chain was the same kind of \"quiet but ready.\" Then the rotation started.\n\nLAB ran 61x. MYX ran 550x. DeAgent AI did 130x.\n\nNone of those moves were predicted by mainstream crypto media. They were predicted by setup recognition.",
+          "hook": null,
+          "char_count": 272
+        },
+        {
+          "position": 6,
+          "text": "The setup recognition for the Kaspa chain right now:\n\nNative token sub-$1B mcap (lots of headroom).\nCalendar catalyst in 35 days.\nToken standard primed for a comeback.\nMost retail isn't watching.\n\nThat's the same kind of checklist BNB chain checked off pre-October.",
+          "hook": null,
+          "char_count": 265
+        },
+        {
+          "position": 7,
+          "text": "The reason KRC20 season will be bigger than BNB season:\n\nKaspa is proof of work and fair launch. No insider bag overhanging the price.\n\nKRC20s built on top of that base inherit the same dynamics. BNB memes had to fight Binance's structural sell pressure. KRC20s won't.",
+          "hook": null,
+          "char_count": 268
+        },
+        {
+          "position": 8,
+          "text": "Most accounts will catch the KRC20 pump 30 days late.\n\nFollow me for weekly threads that work the setup before the move, not after.",
+          "hook": null,
+          "char_count": 139,
+          "is_cta": true
+        }
+      ],
+      "posted_at": "2026-05-13T13:36:45.335Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2054556429357326589"
+    },
+    {
+      "id": "thread-2026-05-07-dip-was-psychological",
+      "topic": "50-week SMA breakdown was belief, not structure; LTH dumping at the bottom",
+      "source_transcript": "transcripts/2026-05-07_crypto-livestream-midcycle-iran-kaspa.txt",
+      "variation_label": "E — Technical + behavioral combined",
+      "hook_pattern": "Contrarian technical claim + behavioral payoff",
+      "created_at": "2026-05-07T20:00:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The 50-week SMA breakdown wasn't real.\n\n200-week SMA was barely wicked on a single Thursday. No weekly close at or below it.\n\nTechnically, this isn't even crypto winter. People behaved like it was.\n\nHere's the cost of acting on belief instead of charts 🧵",
+          "hook": "The 50-week SMA breakdown wasn't real.",
+          "char_count": 254
+        },
+        {
+          "position": 2,
+          "text": "\"Crypto winter\" has a definition.\n\nIt's the period after $BTC closes weekly below the 200-week SMA, traditionally for sustained weeks.\n\nThe 200-week SMA is the long-term trend line. Closing below it is what \"the long-term structure broke\" actually means in chart terms.",
+          "hook": null,
+          "char_count": 269
+        },
+        {
+          "position": 3,
+          "text": "What actually happened in October:\n\n$BTC wicked toward the 200-week SMA on a single Thursday. It didn't close at or below it on the weekly. Not even once.\n\nBy the strict definition, the structural break never happened. The trend held.",
+          "hook": null,
+          "char_count": 234
+        },
+        {
+          "position": 4,
+          "text": "But people behaved as if the break had happened.\n\nLong-term holders, the cohort that's supposed to weather these moments, distributed into the dip instead of accumulating.\n\nThe on-chain data is unambiguous: LTH supply dropped through October and November.",
+          "hook": null,
+          "char_count": 255
+        },
+        {
+          "position": 5,
+          "text": "Ill-advised long-term holders sold a bear they invented.\n\nNot because the chart broke. Because they thought it would.\n\nThe four-year cycle calendar said \"year four = bear.\" The dip felt like confirmation. Down went the bags.",
+          "hook": null,
+          "char_count": 224
+        },
+        {
+          "position": 6,
+          "text": "The cost of that behavior:\n\n$BTC at ~$80k instead of ~$95k.\n\nThat ~$15k delta is a tax on people who acted on a thesis their own charts weren't confirming. It's also a discount for whoever didn't sell.",
+          "hook": null,
+          "char_count": 201
+        },
+        {
+          "position": 7,
+          "text": "The lesson is small and uncomfortable:\n\nRead your own charts before you act.\n\nThe 50-week SMA \"breakdown\" wasn't a breakdown. The 200-week SMA \"test\" wasn't a structural break. Crypto winter wasn't here.\n\nIt was always belief acting on incomplete reading.",
+          "hook": null,
+          "char_count": 255
+        },
+        {
+          "position": 8,
+          "text": "Most accounts will keep telling you what the chart \"feels like.\"\n\nFollow me for weekly threads that read the chart the chart is actually showing.",
+          "hook": null,
+          "char_count": 153,
+          "is_cta": true
+        }
+      ],
+      "posted_at": "2026-05-14T15:32:34.215Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2054947957632364992"
+    },
+    {
+      "id": "thread-2026-05-11-strategic-reserve-instant-ath",
+      "topic": "US Bitcoin Strategic Reserve = instant new ATH",
+      "source_transcript": "transcripts/2026-05-11_crypto-update-67x-fed-chair-week.txt",
+      "variation_label": "Strategic Reserve thread (sole variation)",
+      "hook_pattern": "Asymmetric scenario + setup-and-payoff",
+      "created_at": "2026-05-12T22:30:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The day the US announces it's buying $BTC for a strategic reserve, every chart you're using becomes obsolete.\n\nA sovereign buyer of last resort changes the math.\n\nHere's what that announcement does, who's already done it, and how to position 🧵",
+          "hook": "The day the US announces it's buying $BTC for a strategic reserve, every chart you're using becomes obsolete.",
+          "char_count": 243
+        },
+        {
+          "position": 2,
+          "text": "First, why does this single announcement re-price the entire market in minutes?\n\nBecause the US is the issuer of the world reserve currency. When a sovereign of that size publicly commits to a buy program, every other holder has to immediately mark up their cost-basis estimate.\n\nIf the US is bidding, the floor is now wherever the US is willing to bid.",
+          "hook": null,
+          "char_count": 353
+        },
+        {
+          "position": 3,
+          "text": "There's no precedent for what that does to price discovery.\n\nThe closest analogs are when central banks have publicly committed to gold accumulation. Those happened against a multi-trillion-dollar gold market.\n\nBitcoin's entire market cap is smaller than the US gold reserve at market value.",
+          "hook": null,
+          "char_count": 291
+        },
+        {
+          "position": 4,
+          "text": "Second, the precedents. This isn't theoretical anymore.\n\nEl Salvador has been actively buying $BTC since 2021 (a 1-BTC-daily program among other purchases).\n\nBhutan accumulated sovereign $BTC reserves through state-owned mining since around 2019, with disclosed reserves north of $750M.",
+          "hook": null,
+          "char_count": 286
+        },
+        {
+          "position": 5,
+          "text": "At the state level: Texas signed strategic Bitcoin reserve legislation in 2025. New Hampshire passed similar legislation. Several other states have introduced bills.\n\nThe pattern is clear. Sovereigns are quietly building positions before the federal level commits.",
+          "hook": null,
+          "char_count": 264
+        },
+        {
+          "position": 6,
+          "text": "Third, the asymmetry.\n\nIf the US announces, $BTC re-prices instantly to a number that includes the implied future demand.\n\nIf the US doesn't announce, $BTC stays roughly where it is.\n\nLimited downside. Asymmetric upside. This is why I'm not selling into rallies right now.",
+          "hook": null,
+          "char_count": 272
+        },
+        {
+          "position": 7,
+          "text": "Fourth, the timeline.\n\nThe current US holdings (~200K $BTC from seizures) are already designated as a strategic reserve under the March 2025 executive order.\n\nThe next step is whether the Treasury announces an active acquisition program. Reports suggest it could land within weeks.\n\nThat announcement is the unlock.",
+          "hook": null,
+          "char_count": 315
+        },
+        {
+          "position": 8,
+          "text": "Most accounts will tell you this is moonboy speculation.\n\nFollow me for weekly threads that work the macro setups before they print.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 147,
+          "is_cta": true
+        }
+      ],
+      "posted_at": "2026-05-15T13:02:01.845Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2055272472157511813"
+    },
+    {
+      "id": "thread-2026-05-11-kas-three-dollar-cycle-top",
+      "topic": "$KAS at $3 is realistic at a parabolic cycle top",
+      "source_transcript": "transcripts/2026-05-11_crypto-update-67x-fed-chair-week.txt",
+      "variation_label": "$KAS $3 thesis thread (sole variation)",
+      "hook_pattern": "Specific number + scenario forecast",
+      "created_at": "2026-05-12T22:30:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "$3 $KAS is the right order of magnitude for a parabolic cycle top.\n\nThat's a 100x from here.\n\nIt won't happen in normal market conditions. It will happen if we get a real cycle top with AI-expansion macro tailwinds.\n\nHere's the math, the conditions, and the two paths 🧵",
+          "hook": "$3 $KAS is the right order of magnitude for a parabolic cycle top.",
+          "char_count": 269
+        },
+        {
+          "position": 2,
+          "text": "First, the math. $KAS is around 3 cents. $3 is exactly 100x.\n\n100x sounds outlandish until you look at what individual L1s have done at past parabolic cycle tops.\n\nSOL went from under $1 in early 2020 to over $250 in November 2021. That's well over 200x.",
+          "hook": null,
+          "char_count": 254
+        },
+        {
+          "position": 3,
+          "text": "For $KAS to hit $3, the Kaspa market cap has to climb to roughly $80-90B at fully diluted supply.\n\n28.7B max supply × $3 = $86B.\n\nThat puts it in the same neighborhood Solana topped at in 2021. Not unreasonable for a fair-launched proof-of-work L1 with no insider bag.",
+          "hook": null,
+          "char_count": 268
+        },
+        {
+          "position": 4,
+          "text": "Second, the conditions. $3 KAS is conditional, not unconditional.\n\nThree things have to be true:\n\nThe AI economic expansion has to keep running.\nThe crypto cycle top has to be parabolic, not muted.\nKRC20 season has to materialize.",
+          "hook": null,
+          "char_count": 230
+        },
+        {
+          "position": 5,
+          "text": "AI expansion: actively expanding into the productivity and corporate-earnings phase that dot-com had post-1995.\n\nParabolic cycle top: October 2025 was below average power law. The actual top has to overshoot trend.\n\nKRC20 season: hard fork in 35 days. Retail attention rotates the way it did into BNB tokens last fall.",
+          "hook": null,
+          "char_count": 318
+        },
+        {
+          "position": 6,
+          "text": "Third, the two paths.\n\nPath A: a normal local high this year. $KAS prints a new ATH in the 25-30 cent range. Doable. Not parabolic, but defensible.\n\nThis happens if the cycle is muted and we just pick up where the prior ATH topped out.",
+          "hook": null,
+          "char_count": 235
+        },
+        {
+          "position": 7,
+          "text": "Path B: a real cycle top with AI tailwinds running.\n\n$KAS prints $3. 100x from here. Realistic, not retail fantasy.\n\nThis happens if the macro side actually delivers what it's setting up to deliver.\n\nI'm positioned for both. The difference between A and B is roughly 30x. Worth being patient for.",
+          "hook": null,
+          "char_count": 296
+        },
+        {
+          "position": 8,
+          "text": "Most accounts won't put a number on $KAS because numbers are accountable.\n\nFollow me for threads that show the math.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 131,
+          "is_cta": true
+        }
+      ],
+      "posted_at": "2026-05-16T19:10:56.662Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2055727694105411890"
+    },
+    {
+      "id": "thread-2026-05-11-bear-market-test-lab-98x",
+      "topic": "Bear market is the real test (Lab 98x update)",
+      "source_transcript": "transcripts/2026-05-11_crypto-update-67x-fed-chair-week.txt",
+      "variation_label": "Bear-market-test thread (sole variation)",
+      "hook_pattern": "Stat-driven setup + filter framework",
+      "created_at": "2026-05-12T22:30:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The bear market is doing the work most people won't do.\n\nIt's separating projects that survive from projects that die.\n\nLab launched in October. Just hit 98x in the bear.\n\nHere's the 3-question filter I'm using to decide which projects make the cut 🧵",
+          "hook": "The bear market is doing the work most people won't do.",
+          "char_count": 250
+        },
+        {
+          "position": 2,
+          "text": "First, the framing.\n\nA bull market makes every project look strong. Liquidity is everywhere; even projects with no fundamentals print 50-100x because retail throws capital at anything that moves.\n\nA bear market does the opposite. It filters by survival.",
+          "hook": null,
+          "char_count": 253
+        },
+        {
+          "position": 3,
+          "text": "My 3-question filter.\n\nQuestion 1: Did the project launch before this bear?\n\nIf yes, they've been tested by macro headwinds, not just bull-market frenzy. Pre-bear launches with current activity are the ones to take seriously.",
+          "hook": null,
+          "char_count": 225
+        },
+        {
+          "position": 4,
+          "text": "Question 2: Are they still getting CEX listings?\n\nCEX listings cost money and effort. Teams that keep landing them during a bear are signaling commitment from operators, not just punters.\n\nQuiet on listings = quiet on the project.",
+          "hook": null,
+          "char_count": 230
+        },
+        {
+          "position": 5,
+          "text": "Question 3: Are they still shipping product or content?\n\nDevs and founders who keep building during a bear demonstrate they were never just pumping for the rotation.\n\nTeams that go quiet on product or social are flagging that they were here for the cycle, not the chain.",
+          "hook": null,
+          "char_count": 270
+        },
+        {
+          "position": 6,
+          "text": "Third, Lab as proof.\n\nLab launched in October 2025. I called it on day two of launch at 10 cents. We swing-traded it back in at 7.7 cents in December. It just hit 98x.\n\nThat's 98x in a bear market. Not in the next rally. Right now, while four-year cycle zombies are still calling for further downside.",
+          "hook": null,
+          "char_count": 301
+        },
+        {
+          "position": 7,
+          "text": "If 98x is what's possible in a bear, what's possible at a real cycle top?\n\nMy original target on Lab was 20x. We're already 5x past that.\n\nThat tells you how conservative my targets have been, and how loud the cycle top is going to be when it actually arrives.",
+          "hook": null,
+          "char_count": 260
+        },
+        {
+          "position": 8,
+          "text": "Most retail picks projects in the bull and never re-validates them in the bear.\n\nFollow me for threads that filter projects the way the market actually does.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 172,
+          "is_cta": true
+        }
+      ],
+      "posted_at": "2026-05-17T19:49:49.016Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2056099860030378443"
+    },
+    {
+      "id": "thread-2026-05-11-90-10-wealth-transfer",
+      "topic": "The 90/10 wealth transfer (the dumpers paid the holders)",
+      "source_transcript": "transcripts/2026-05-11_crypto-update-67x-fed-chair-week.txt",
+      "variation_label": "90/10 wealth transfer thread (sole variation)",
+      "hook_pattern": "Structural reveal + behavioral payoff",
+      "created_at": "2026-05-12T22:30:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "In every bear market, 90% of holders transfer wealth to 10% of holders.\n\nThe dumpers create the discount. The accumulators take it.\n\nThe Oct/Nov dip was the cleanest example we've ever seen. Here's what 90/10 actually looked like",
+          "hook": "In every bear market, 90% of holders transfer wealth to 10% of holders.",
+          "char_count": 231
+        },
+        {
+          "position": 2,
+          "text": "First, the framing.\n\nBear markets are not random price events. They are wealth transfers.\n\nThe supply of coins doesn't change. The number of holders doesn't change much. What changes is the distribution: who holds what coins, at what cost basis. Every bear, that distribution shifts dramatically.",
+          "hook": null,
+          "char_count": 296
+        },
+        {
+          "position": 3,
+          "text": "Second, what happened in Oct/Nov.\n\nThe four-year cycle zombies dumped. Long-term holders distributed (the on-chain data is unambiguous). Retail panicked.\n\nEvery wave of selling created a discount for whoever was on the other side of the trade.",
+          "hook": null,
+          "char_count": 243
+        },
+        {
+          "position": 4,
+          "text": "The dumpers didn't know the four-year cycle was dead.\n\nThey saw the calendar, they saw a shutdown-driven dip, they assumed the bear had arrived. They sold into the assumption.\n\nWhoever didn't sell got the discount.",
+          "hook": null,
+          "char_count": 214
+        },
+        {
+          "position": 5,
+          "text": "Third, the cost.\n\nIf the four-year cycle zombies hadn't dumped, $BTC would be at roughly $95k right now instead of $80k.\n\nThat ~$15k delta is the most measurable wealth transfer of the cycle so far. The dumpers paid $15k per Bitcoin to learn their thesis was wrong. The holders received $15k per Bitcoin for being right.",
+          "hook": null,
+          "char_count": 320
+        },
+        {
+          "position": 6,
+          "text": "Fourth, why this is structural.\n\nEvery bear is a wealth transfer because every bear is fundamentally a coordination failure.\n\nPeople who would have been better off holding sell anyway, because their information environment tells them the asset is going lower.\n\nWhoever is right about the macro stays. Whoever is wrong leaves.",
+          "hook": null,
+          "char_count": 325
+        },
+        {
+          "position": 7,
+          "text": "There will be another dip. There always is.\n\nWhen it comes, the same pattern will play out. The question is which side of the 90/10 you'll be on.\n\nIf you held through October and November, you're already on the 10 side. Stay there.",
+          "hook": null,
+          "char_count": 231
+        },
+        {
+          "position": 8,
+          "text": "Most accounts blame the bear on the macro. The macro didn't dump $BTC. People did.\n\nFollow me for threads that name what's actually moving the price.\n\n🧠",
+          "hook": null,
+          "char_count": 161,
+          "is_cta": true
+        }
+      ],
+      "error": "page.waitForTimeout: Target page, context or browser has been closed",
+      "posted_at": "2026-05-20T00:21:16.957Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2056892959157625210"
+    },
+    {
+      "id": "thread-2026-05-15-warsh-trap-kaspa-hedge",
+      "topic": "The Warsh trap (and why $KAS is the asymmetric PoW hedge)",
+      "source_transcript": "transcripts/2026-05-13_krc20-mania-revival.txt",
+      "variation_label": "warsh-trap-kaspa-hedge (sole variation)",
+      "hook_pattern": "Trap-reveal + macro setup → tribal payoff",
+      "created_at": "2026-05-15T19:00:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Everyone celebrated when Powell got pushed out.\n\nThen April PPI printed +1.4% MoM, +6.0% YoY (largest 12-month jump since 2022).\n\nKevin Warsh is walking into the worst macro trap of his career. The reason June 16-17 is the most important date in crypto right now 🧵",
+          "hook": "Everyone celebrated when Powell got pushed out.",
+          "char_count": 264
+        },
+        {
+          "position": 2,
+          "text": "The setup: Warsh was sold to the market as the Trump-aligned dove.\n\nCuts were assumed. Risk priced it in. Bitcoin held 80K because the rate-cut path felt locked.\n\nThen PPI broke. CPI lags PPI by 1-3 months. Whatever lands before June 16-17 won't give him cover to cut.",
+          "hook": null,
+          "char_count": 268
+        },
+        {
+          "position": 3,
+          "text": "His three options at the first meeting:\n\n1) Cut anyway. Trump wins. Long end of the curve sells off violently.\n2) Hold. Data forces it. Dollar firms; risk pulls back.\n3) Hike. Nobody's positioned for it.\n\nThe reflexive trade is bearish into June. I'm not.",
+          "hook": null,
+          "char_count": 255
+        },
+        {
+          "position": 4,
+          "text": "Here's the part rate traders are missing.\n\nThe four-year cycle zombies dumped because they thought the cycle was real.\n\nThe rate watchers will dump in June because they think Warsh's first move sets the regime.\n\nBoth groups are trading the news cycle, not the supply schedule.",
+          "hook": null,
+          "char_count": 276
+        },
+        {
+          "position": 5,
+          "text": "Bitcoin's supply schedule doesn't care about Warsh.\n\n$KAS supply schedule doesn't care about Warsh.\n\nThe Kaspa hard fork isn't being delayed because of PPI. The 95% mined number doesn't move because the FOMC dot plot moves.",
+          "hook": null,
+          "char_count": 223
+        },
+        {
+          "position": 6,
+          "text": "PoW assets with capped supply and no central pre-mine to dump are the cleanest hedge for whichever way Warsh breaks.\n\nBitcoin gets the headline.\n\n$KAS gets the asymmetry. One-tenth the awareness, full PoW exposure, fair-launch-only.",
+          "hook": null,
+          "char_count": 232
+        },
+        {
+          "position": 7,
+          "text": "If you thought $KAS was interesting at the 50-week SMA before this week, the case got stronger after PPI, not weaker.\n\nThe macro trap is asymmetric for the wrong reason. The traders are positioned for the news. The supply schedule is positioned for the truth.",
+          "hook": null,
+          "char_count": 259
+        },
+        {
+          "position": 8,
+          "text": "If this reframed how you're thinking about June 16-17 ...\n\nFollow me for macro × Kaspa setups before the catalysts land.\n\n🧠",
+          "hook": null,
+          "char_count": 132,
+          "is_cta": true
+        }
+      ],
+      "posted_at": "2026-05-21T01:36:52.002Z",
+      "thread_root_url": "https://x.com/mikeneder/status/2057274366434460010"
+    },
+    {
+      "id": "thread-2026-05-15-zombies-sbr-kaspa-leg",
+      "topic": "Zombie re-entry + SBR rumor = the year of the new ATH",
+      "source_transcript": "transcripts/2026-05-13_krc20-mania-revival.txt",
+      "variation_label": "zombies-sbr-kaspa-leg (sole variation)",
+      "hook_pattern": "Double-catalyst stack + Kaspa beta payoff",
+      "created_at": "2026-05-15T19:00:00",
+      "status": "posted",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The bear case for the rest of 2026 just lost two more legs.\n\nLeg 1: four-year cycle zombies are running out of time.\nLeg 2: an SBR announcement is expected in the coming weeks.\n\nWhy this stacks into a new ATH this year 🧵",
+          "hook": "The bear case for the rest of 2026 just lost two more legs.",
+          "char_count": 220,
+          "posted_url": "https://x.com/mikeneder/status/2057511478832357812/quick_promote_web/targeting"
+        },
+        {
+          "position": 2,
+          "text": "The zombie math:\n\nThey've been short the cycle since the four-year breakdown call.\n\nThey sold their bags into the Oct/Nov dip, expecting the bottom.\n\nThe bottom never came. They're now down on a thesis they bet rent on.",
+          "hook": null,
+          "char_count": 219,
+          "posted_url": "https://x.com/mikeneder/status/2057511481143447702"
+        },
+        {
+          "position": 3,
+          "text": "When the calendar pressure hits in late Q3, they have to choose: admit the call was wrong, or re-enter.\n\nThey re-enter. The four-year cycle community is loud, but it's not suicidal.\n\nThat alone gets us a notch. Maybe not an ATH. But a notch.",
+          "hook": null,
+          "char_count": 241,
+          "posted_url": "https://x.com/mikeneder/status/2057511483211141188"
+        },
+        {
+          "position": 4,
+          "text": "The SBR math:\n\nNobody knows the exact contents of the announcement yet. The market is going to read it one of two ways once it lands:",
+          "hook": null,
+          "char_count": 133,
+          "posted_url": "https://x.com/mikeneder/status/2057511485463503291"
+        },
+        {
+          "position": 5,
+          "text": "(a) 'New buying authority enabled' = instant god candle through the 50-week SMA.\n\n(b) 'Legal framework only, no new buying' = sell the news for a day, then a slower grind higher as the regulatory tail risk gets removed.\n\nEither outcome is bullish.",
+          "hook": null,
+          "char_count": 247,
+          "posted_url": "https://x.com/mikeneder/status/2057511487443189832"
+        },
+        {
+          "position": 6,
+          "text": "The bear case requires the announcement to never come.\n\nThe rumor cycle has now made that the unlikely outcome.\n\nStack the zombie re-entry on top of either SBR outcome and you have the conditions for a new ATH this year.",
+          "hook": null,
+          "char_count": 220,
+          "posted_url": "https://x.com/mikeneder/status/2057511489582325952"
+        },
+        {
+          "position": 7,
+          "text": "The Kaspa angle: every prior cycle's $BTC leg was followed by $KAS beta.\n\nBitcoin pumps. Attention rotates to PoW alts. $KAS is the cleanest fair-launch PoW story.\n\nIf $BTC ATH lands in Q3 or Q4, the $KAS catch-up isn't a hope. It's a reflex.",
+          "hook": null,
+          "char_count": 242,
+          "posted_url": "https://x.com/mikeneder/status/2057511492652568859"
+        },
+        {
+          "position": 8,
+          "text": "If this is the framework you've been missing ...\n\nFollow me for macro × Kaspa setups the four-year cycle crowd keeps getting wrong.\n\n🧠",
+          "hook": null,
+          "char_count": 143,
+          "is_cta": true,
+          "posted_url": "https://x.com/mikeneder/status/2057511494837785082"
+        }
+      ],
+      "thread_root_url": "https://x.com/mikeneder/status/2057511478832357812",
+      "posted_at": "2026-05-21T17:19:10.468Z"
+    },
+    {
+      "id": "thread-2026-05-15-ai-mania-compressed-kaspa-window",
+      "topic": "The AI mania is compressed. The $KAS window is shorter than people think.",
+      "source_transcript": "transcripts/2026-05-13_krc20-mania-revival.txt",
+      "variation_label": "ai-mania-compressed-kaspa-window (sole variation)",
+      "hook_pattern": "Historical-parallel walk + present-day positioning",
+      "created_at": "2026-05-15T19:00:00",
+      "status": "failed",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The dot-com mania didn't start in 1995.\n\nIt started in 1968.\n\n28 years of telecom infrastructure had to be built before the explosion. Most of it was spent in court.\n\nAI has none of those drags. Why the $KAS window is shorter than people think 🧵",
+          "hook": "The dot-com mania didn't start in 1995.",
+          "char_count": 245,
+          "posted_url": "https://x.com/mikeneder/status/2057872376964993398/quick_promote_web/targeting"
+        },
+        {
+          "position": 2,
+          "text": "The history:\n\nCarterfone (1968) cracked the door for third-party devices.\nMFJ consent decree (1982) broke up Bell.\nTelecom Act (1996) deregulated the last mile.\n\nFrom the 1996 Act to the dot-com peak (March 2000) was 4 years.",
+          "hook": null,
+          "char_count": 225,
+          "posted_url": "https://x.com/mikeneder/status/2057872379003474176"
+        },
+        {
+          "position": 3,
+          "text": "28 years of infrastructure → 4 years of mania.\n\nThe AI parallel: foundational compute since ~2012. ChatGPT public moment was late 2022. Frontier models, agents, deployment is happening now.\n\nNo AT&T-style monopoly battles. No Bell-style consent decrees.",
+          "hook": null,
+          "char_count": 253,
+          "posted_url": "https://x.com/mikeneder/status/2057872380890931565"
+        },
+        {
+          "position": 4,
+          "text": "The 28-year groundwork phase compressed into ~10 years.\n\nThe 4-year mania phase compresses into ~2-3.\n\nWe're not in 1992. Probably not in 2000 yet. The Netscape moment was ChatGPT.",
+          "hook": null,
+          "char_count": 180,
+          "posted_url": "https://x.com/mikeneder/status/2057872382879019462"
+        },
+        {
+          "position": 5,
+          "text": "What this means for $KAS:\n\nThe runway for accumulating PoW exposure at fair-launch prices is shorter than the four-year cycle crowd assumes.\n\nIf we're in AI's 1996 instead of 1992, the time between 'I have time' and 'I missed it' is 2 years, not 8.",
+          "hook": null,
+          "char_count": 248
+        },
+        {
+          "position": 6,
+          "text": "Inside that window:\n\n$KAS hits 95% mined supply.\nThe hard-fork milestone lands.\nInstitutional PoW-as-financial-asset onboarding happens.\n\nAll three are calendar-driven. They don't slow down because retail wasn't paying attention.",
+          "hook": null,
+          "char_count": 229,
+          "posted_url": "https://x.com/mikeneder/status/2057872386830041574"
+        },
+        {
+          "position": 7,
+          "text": "The mistake in compressed timelines: waiting for the same setup you'd have had in a slower one.\n\nThe setup doesn't repeat at the same pace.\n\nYou either pre-position or you're the FOMO buyer. Right now $KAS is still under the 50-week SMA. The window doesn't stay open.",
+          "hook": null,
+          "char_count": 267,
+          "posted_url": "https://x.com/mikeneder/status/2057872389833207989"
+        },
+        {
+          "position": 8,
+          "text": "If this changed how you're thinking about the AI vs $KAS overlay ...\n\nFollow me for the historical-pattern thinking the four-year cycle camp can't do.\n\n🧠",
+          "hook": null,
+          "char_count": 162,
+          "is_cta": true,
+          "posted_url": "https://x.com/mikeneder/status/2057872391645037004"
+        }
+      ],
+      "thread_root_url": "https://x.com/mikeneder/status/2057872376964993398",
+      "posted_at": "2026-05-22T17:13:14.609Z",
+      "error": "Root captured but verification failed — possible partial thread: https://x.com/mikeneder/status/2057872376964993398"
+    },
+    {
+      "id": "thread-2026-05-15-dry-powder-krc20-lottery",
+      "topic": "Dry powder, KRC20 lottery math, and what KROAK just proved",
+      "source_transcript": "transcripts/2026-05-13_krc20-mania-revival.txt",
+      "variation_label": "dry-powder-krc20-lottery (sole variation)",
+      "hook_pattern": "Trader playbook → ecosystem-level Kaspa thesis",
+      "created_at": "2026-05-15T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "98x on Lab is a great number.\n\nThe dry powder it gives you is the actual win.\n\nMost retail will never touch a multiplier like that. The few who do usually mismanage the cash and round-trip it.\n\nThe rotation playbook (and what KROAK's quiet 6x just confirmed) 🧵",
+          "hook": "98x on Lab is a great number.",
+          "char_count": 260
+        },
+        {
+          "position": 2,
+          "text": "Dry powder is the only edge that survives the cycle.\n\nYou don't need to be right about every call. You need to be in a position to take the next one.\n\nCash out partial size on the multipliers. Build a war chest. Let the chest fund the lottery tickets.",
+          "hook": null,
+          "char_count": 251
+        },
+        {
+          "position": 3,
+          "text": "The KRC20 lottery math:\n\nSome of these mcaps are sitting at 4K right now. Not 4M. 4K.\n\n$20 each on ten different KRC20s = $200 of total risk.\n\nOne 1,000x in a parabolic Kaspa run = $20,000 back. Other nine going to zero costs you $180.",
+          "hook": null,
+          "char_count": 235
+        },
+        {
+          "position": 4,
+          "text": "Net: ~$19,820 on a $200 outlay.\n\nPure asymmetric expected value.\n\nYou don't have to be right ten times. You don't even have to be right twice.\n\nOnce is enough.",
+          "hook": null,
+          "char_count": 159
+        },
+        {
+          "position": 5,
+          "text": "Risk management rules:\n\n1) Position size > ticker selection. $20 across ten beats $200 on one.\n2) Filter premint % on Casper Lens. Above 70% is structural red flag.\n3) Use dry powder, not rent money. The whole point is you can lose it without touching your floor.",
+          "hook": null,
+          "char_count": 263
+        },
+        {
+          "position": 6,
+          "text": "What KROAK just confirmed:\n\nWhile CT was screaming KRC20s are dead, KROAK quietly did a 6x this week.\n\nSame dev team behind Broke on Base. The bear didn't kill them; it filtered everyone else out.",
+          "hook": null,
+          "char_count": 196
+        },
+        {
+          "position": 7,
+          "text": "For the rotation, $KAS itself is the anchor.\n\nThe KRC20 lotteries only matter if the layer one is healthy.\n\nStack $KAS for the layer-one move. Use the dry powder for the asymmetric KRC20 leg on top.\n\nThat's the whole playbook. 😎",
+          "hook": null,
+          "char_count": 228
+        },
+        {
+          "position": 8,
+          "text": "If this is the cycle-survival framework you've been missing ...\n\nFollow me for the dry-powder × Kaspa playbook nobody else is writing.\n\n🧠",
+          "hook": null,
+          "char_count": 146,
+          "is_cta": true
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-15-kaspa-ghost-mascot-debate",
+      "topic": "Mascot wars: Kasper-the-Ghost vs Nacho",
+      "source_transcript": "transcripts/2026-05-13_krc20-mania-revival.txt",
+      "variation_label": "kaspa-ghost-mascot-debate (sole variation)",
+      "hook_pattern": "Contrarian debunk + identity bait",
+      "created_at": "2026-05-15T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Hot take that's going to make Nacho holders mad:\n\nNacho's mascot logic broke the day Shai left.\n\n$KAS is a fully implemented GhostDAG. The fitting mascot is the ghost token, not someone's house cat.\n\nWhy the market hasn't repriced this yet 🧵",
+          "hook": "Hot take that's going to make Nacho holders mad:",
+          "char_count": 241
+        },
+        {
+          "position": 2,
+          "text": "The history:\n\nNacho came up early in the KRC20 cycle as a tribute to Shai's cat.\n\nShai was one of the lead devs. The founder's pet became the mascot of the founder's chain.\n\nIt made sense at the time.",
+          "hook": null,
+          "char_count": 200
+        },
+        {
+          "position": 3,
+          "text": "Shai is no longer leading the project.\n\nThe mascot logic that justified Nacho's symbolic premium broke at that point.\n\nThe only thing keeping Nacho's ~3.6M mcap above Kasper-the-Ghost's ~300K is brand inertia from a brand that no longer maps.",
+          "hook": null,
+          "char_count": 242
+        },
+        {
+          "position": 4,
+          "text": "The Kaspa-native case:\n\nThe chain is a fully implemented GHOSTDAG. The ghost is in the architecture; it's the actual selling point.\n\nThe mascot of a ghost-architecture chain should be a ghost. Most literal possible brand-to-tech mapping.",
+          "hook": null,
+          "char_count": 237
+        },
+        {
+          "position": 5,
+          "text": "Why the market hasn't repriced:\n\n1) Brand inertia. Nacho is the Kaspa mascot like Apple has a bite out of the logo; nobody questions it.\n\n2) Liquidity. Nacho has thicker order books.\n\n3) Bear markets suppress the community-driven repricing that mascot debates require.",
+          "hook": null,
+          "char_count": 268
+        },
+        {
+          "position": 6,
+          "text": "When the bull returns:\n\nNew retail comes in without the brand inertia.\n\nThey look at the chain's tech, see 'fully implemented GhostDAG,' and look for the ghost token.\n\nThat's the repricing trigger.",
+          "hook": null,
+          "char_count": 197
+        },
+        {
+          "position": 7,
+          "text": "I'm not telling you to dump Nacho.\n\nI'm telling you the asymmetric setup right now is on the ghost token, not the established cat.\n\nBranding congruent with the chain. Mcap one-tenth. Dev team alive.\n\nThat's the trade. And $KAS itself wins regardless. 👻",
+          "hook": null,
+          "char_count": 252
+        },
+        {
+          "position": 8,
+          "text": "If this is the Kaspa take CT won't post ...\n\nFollow me for the asymmetric $KAS reads the rest of CT keeps missing.\n\n🧠",
+          "hook": null,
+          "char_count": 126,
+          "is_cta": true
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-15-winners-from-ruggers-kaspa-survivor",
+      "topic": "The bear-market filter (and why $KAS is the canonical survivor)",
+      "source_transcript": "transcripts/2026-05-13_krc20-mania-revival.txt",
+      "variation_label": "winners-from-ruggers-kaspa-survivor (sole variation)",
+      "hook_pattern": "Filter framing → tribal Kaspa close",
+      "created_at": "2026-05-15T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The bear market did us a favor.\n\nIt sorted the dev teams who stuck around (KROAK, Kaspy, Nacho, Pac-Man) from the ones who checked out (Kasy, Burt, Kurt).\n\nThe 3-signal filter I've been using, and why $KAS itself is the canonical survivor 🧵",
+          "hook": "The bear market did us a favor.",
+          "char_count": 240
+        },
+        {
+          "position": 2,
+          "text": "Three signals, in order:\n\n1) Are the devs still posting (showing up in the social layer)?\n2) Is the project still on at least one centralized exchange?\n3) Did the project survive its worst on-chain day?",
+          "hook": null,
+          "char_count": 202
+        },
+        {
+          "position": 3,
+          "text": "Apply these to anything in your bag right now.\n\nKROAK passes. Kaspy passes. Pac-Man passes.\n\nKasy fails. Burt fails. Kurt fails.\n\nIf two of three fail, the position is dead even if you don't want to admit it.",
+          "hook": null,
+          "char_count": 208
+        },
+        {
+          "position": 4,
+          "text": "Without the four-year cycle zombies dumping, every project would still look healthy on the surface.\n\nWith their selling done, the projects with no real demand got exposed.\n\nThe ones with real demand absorbed the supply and kept going. That's the test.",
+          "hook": null,
+          "char_count": 251
+        },
+        {
+          "position": 5,
+          "text": "The Kaspa angle: $KAS is the canonical survivor.\n\nDev team shipping. CEX presence real. On-chain network kept producing blocks through the worst of the bear. Mining hash rate stayed elevated.\n\nEvery PoW alt gets measured against this filter.",
+          "hook": null,
+          "char_count": 241
+        },
+        {
+          "position": 6,
+          "text": "KROAK passing the filter doesn't mean much in isolation.\n\nKROAK passing the filter while $KAS itself passes the filter at the layer-one tier means the entire ecosystem is healthy.\n\nThat's the tier of signal you're actually trading.",
+          "hook": null,
+          "char_count": 231
+        },
+        {
+          "position": 7,
+          "text": "When the next leg comes, the projects that passed are the ones with the cleanest setups.\n\n$KAS leads the layer-one move.\nSelected KRC20s lead the lottery move.\nThe ruggers don't come back.\n\nThe filter sorts the trade for you ahead of time.",
+          "hook": null,
+          "char_count": 239
+        },
+        {
+          "position": 8,
+          "text": "If this is the bear-market filter you wish you had a year ago ...\n\nFollow me for the survival framework the four-year cycle crowd never had to learn.\n\n🧠",
+          "hook": null,
+          "char_count": 161,
+          "is_cta": true
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-15-clarity-act-stables-kaspa-non-yield",
+      "topic": "The Clarity Act yield gate (and why $KAS becomes the cleaner play)",
+      "source_transcript": "transcripts/2026-05-13_krc20-mania-revival.txt",
+      "variation_label": "clarity-act-stables-kaspa-non-yield (sole variation)",
+      "hook_pattern": "Regulatory thesis → Kaspa asset close",
+      "created_at": "2026-05-15T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The Clarity Act stable-coin compromise just landed.\n\nYield is allowed, but only on accounts with 'material activity' (a payment, a trade).\n\nNo idle yield. No automatic compounding on parked stables.\n\nWhy this makes $KAS the cleaner play 🧵",
+          "hook": "The Clarity Act stable-coin compromise just landed.",
+          "char_count": 238
+        },
+        {
+          "position": 2,
+          "text": "The compromise: bank lobby pushed for no idle yield. Crypto side pushed for unrestricted.\n\nMiddle landed at: yield is fine, but the account has to show real usage.\n\nOn paper that sounds workable. In practice it kills the cleanest carry trade we had.",
+          "hook": null,
+          "char_count": 249
+        },
+        {
+          "position": 3,
+          "text": "That trade was: park stables on a regulated exchange, earn 4-5% on the float, withdraw when you want to deploy.\n\nIt required idle yield. Activity-gated yield doesn't replicate it.\n\nManufactured trades to keep the account 'material' eat the yield in most cases.",
+          "hook": null,
+          "char_count": 260
+        },
+        {
+          "position": 4,
+          "text": "Three implications.\n\nFirst, the compounding-stables crowd has to find a new home.\n\nSome goes to higher-yield DeFi (protocol risk). Some goes to BTC and ETH spot for optionality. Some goes to PoW alts for asymmetry.",
+          "hook": null,
+          "char_count": 214
+        },
+        {
+          "position": 5,
+          "text": "Second, the idle-yield expectation gets repriced.\n\nIf yield needs activity, 'productive' looks more attractive on assets that never claimed to pay yield in the first place.\n\nThe framing of $KAS as a non-yielding productive asset becomes the cleaner thesis.",
+          "hook": null,
+          "char_count": 256
+        },
+        {
+          "position": 6,
+          "text": "Third, capital that would have parked in stables for yield now has to choose: cash, treasuries, BTC, or PoW alts.\n\nNone of those are bad outcomes for the asset class.\n\nThe alternative-loss is what tilts the flow.",
+          "hook": null,
+          "char_count": 212
+        },
+        {
+          "position": 7,
+          "text": "$KAS doesn't compete with stable yield because it never claimed to.\n\nIt competes on the asset thesis: capped supply, fair launch, PoW security, hard-fork milestone in the schedule.\n\nThe Clarity Act compromise is, accidentally, a tailwind for $KAS's own thesis.",
+          "hook": null,
+          "char_count": 260
+        },
+        {
+          "position": 8,
+          "text": "If this changed how you're thinking about where your idle stables go ...\n\nFollow me for the asset-thesis × regulation reads the rest of CT keeps missing.\n\n🧠",
+          "hook": null,
+          "char_count": 165,
+          "is_cta": true
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-20-bottom-behind-us-kaspa-beta",
+      "topic": "The bottom may already be behind us (Kaspa beta close)",
+      "source_transcript": "transcripts/2026-05-20_iran-attack-pulled-kaspa-hardfork-27-days.txt",
+      "variation_label": "bottom-behind-us-kaspa-beta (sole variation)",
+      "hook_pattern": "Contrarian-debunk + Kaspa beta payoff",
+      "created_at": "2026-05-20T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Hot take that's going to make the bears mad:\n\nIf Iran caves to the Gulf states' deal, we may never see Bitcoin under 70K again.\n\nThe zombies already dumped. The Hormuz weight is the only thing keeping us low. Why the bottom is already behind us 🧵",
+          "hook": "Hot take that's going to make the bears mad:",
+          "char_count": 246
+        },
+        {
+          "position": 2,
+          "text": "Trump was within an hour of ordering the attack. He called it off when Qatar, Saudi Arabia, and the UAE told him Pakistan-led mediation was making real progress.\n\nNew Trump timeline: two or three days. Friday, Saturday, Sunday, early next week.",
+          "hook": null,
+          "char_count": 244
+        },
+        {
+          "position": 3,
+          "text": "Three things are now simultaneously true:\n\n1) The four-year cycle zombies already dumped. That selling is done.\n2) PMI 52.7. 4 straight months of expansion.\n3) If Iran caves, the Hormuz weight gets cut.\n\nNone of those reverse.",
+          "hook": null,
+          "char_count": 226
+        },
+        {
+          "position": 4,
+          "text": "Take the zombie selling off. Take the Hormuz weight off.\n\nThe only thing supporting the under-70K price was both of those at the same time. Neither is permanent.\n\nDip risk left? Yes, on a real black swan (Iran detonates a nuke). Absent that, the bottom is structural.",
+          "hook": null,
+          "char_count": 267
+        },
+        {
+          "position": 5,
+          "text": "Here's what the bears miss: the zombies don't get a second chance to dump.\n\nThey already sold. Their sell-side ammo is gone.\n\nWhen the next leg up comes, they're trying to FOMO back in, not capitulate.",
+          "hook": null,
+          "char_count": 201
+        },
+        {
+          "position": 6,
+          "text": "The Kaspa angle: every prior cycle's $BTC leg was followed by $KAS beta.\n\nBitcoin pumps. Attention rotates to PoW alts. $KAS is the cleanest fair-launch PoW story.\n\nIf the relief candle prints, the catch-up move isn't a hope. It's a reflex.",
+          "hook": null,
+          "char_count": 240
+        },
+        {
+          "position": 7,
+          "text": "If this reframed how you're thinking about the cycle bottom ...\n\nFollow me for cycle takes the four-year crowd keeps missing.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 140,
+          "is_cta": true
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-20-pmi-expansion-kaspa-runway",
+      "topic": "4 months of expansion (and the closing Kaspa runway)",
+      "source_transcript": "transcripts/2026-05-20_iran-attack-pulled-kaspa-hardfork-27-days.txt",
+      "variation_label": "pmi-expansion-kaspa-runway (sole variation)",
+      "hook_pattern": "Macro reveal + runway-compression payoff",
+      "created_at": "2026-05-20T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "CT is still calling this a recession.\n\nApril PMI: 52.7. Anything above 50 = expansion.\n\nThe US has been in economic expansion for 4 straight months.\n\nThe runway for accumulating $KAS is shorter than the four-year cycle camp realizes 🧵",
+          "hook": "CT is still calling this a recession.",
+          "char_count": 235
+        },
+        {
+          "position": 2,
+          "text": "PMI tells you what businesses are actually doing.\n\nNew orders growing. Supplier deliveries lengthening (= demand outstripping supply chains). Prices Index at 84.6, highest since April 2022.\n\nTranslation: economy is firing, with an inflation tail.",
+          "hook": null,
+          "char_count": 246
+        },
+        {
+          "position": 3,
+          "text": "Why the bears can't see it: they're pattern-matching to 2018 and 2022.\n\nThis cycle is unique. The strongest expansion in years happening simultaneously with the biggest supply shock since the 1970s (Hormuz).\n\nThose two cancel partially in the price.",
+          "hook": null,
+          "char_count": 249
+        },
+        {
+          "position": 4,
+          "text": "When the Hormuz overhang clears, the expansion shows up in risk assets all at once.\n\nThat's the unlock.\n\nIf you believe we're 4 months into an expansion already, you don't have years to position. You have months.",
+          "hook": null,
+          "char_count": 212
+        },
+        {
+          "position": 5,
+          "text": "Inside that window:\n\n$KAS hits 95% mined.\nThe hard fork lands.\nInstitutions begin onboarding PoW as a financial asset class.\n\nNone of those events wait for the macro to cooperate.",
+          "hook": null,
+          "char_count": 179
+        },
+        {
+          "position": 6,
+          "text": "Pre-position now while $KAS is still under the 50-week SMA.\n\nOr be the FOMO buyer when the Hormuz overhang lifts and all three milestones align with the relief candle at once.\n\nThe cycle is compressed.",
+          "hook": null,
+          "char_count": 201
+        },
+        {
+          "position": 7,
+          "text": "If this is the macro × Kaspa frame you've been missing ...\n\nFollow me for the runway analysis the four-year crowd skips.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 135,
+          "is_cta": true
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-20-minnesota-custody-kaspa-institutional",
+      "topic": "Minnesota custody bill (and why $KAS wins the state-by-state wave)",
+      "source_transcript": "transcripts/2026-05-20_iran-attack-pulled-kaspa-hardfork-27-days.txt",
+      "variation_label": "minnesota-custody-kaspa-institutional (sole variation)",
+      "hook_pattern": "Regulatory news → institutional Kaspa close",
+      "created_at": "2026-05-20T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Minnesota just signed HF 3709 into law.\n\nStarting Aug 1, every bank and credit union in the state can custody Bitcoin.\n\n130-4 in the House. 51-16 in the Senate.\n\nWhy this is a bigger setup for $KAS than for $BTC 🧵",
+          "hook": "Minnesota just signed HF 3709 into law.",
+          "char_count": 213
+        },
+        {
+          "position": 2,
+          "text": "The mechanism: state banking laws control what bank-chartered institutions can do with customer assets.\n\nWhen Minnesota says 'yes,' banks immediately offer digital-asset safekeeping to every account holder.\n\nSmall absolute unlock. But the next state gets political cover.",
+          "hook": null,
+          "char_count": 271
+        },
+        {
+          "position": 3,
+          "text": "Texas passed strategic reserve legislation last year. New Hampshire too. Now Minnesota on custody.\n\nThe pace is accelerating, not slowing.\n\nThe Minnesota bill is custody-only (no trading or lending). That's the bank lobby compromise. Trading flows come later.",
+          "hook": null,
+          "char_count": 259
+        },
+        {
+          "position": 4,
+          "text": "What it unlocks: pension funds, family offices, trust accounts, RIAs.\n\nClients who couldn't touch crypto before now can, through their existing bank relationships.\n\nThose clients are not FOMOing into a 100K mcap meme.",
+          "hook": null,
+          "char_count": 217
+        },
+        {
+          "position": 5,
+          "text": "They ask their banker one question:\n\n'What's the safest, most decentralized, most institutionally-ready chain after Bitcoin?'\n\nWhoever answers that question right captures the second-leg institutional flow.",
+          "hook": null,
+          "char_count": 206
+        },
+        {
+          "position": 6,
+          "text": "$KAS checks every box: security (PoW), instant settlement (BlockDAG / GhostDAG), decentralization (no premine), stability under stress (real hash rate distribution).\n\nMost chains check one or two.\n\nThat's the answer the bankers eventually find.",
+          "hook": null,
+          "char_count": 244
+        },
+        {
+          "position": 7,
+          "text": "If this is the institutional setup you weren't tracking ...\n\nFollow me for the state-by-state × Kaspa flow analysis nobody else is writing.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 154,
+          "is_cta": true
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-20-hard-fork-23-days-pricing-in",
+      "topic": "Kaspa hard fork 23 days out (and why it won't pump in 23 days)",
+      "source_transcript": "transcripts/2026-05-20_iran-attack-pulled-kaspa-hardfork-27-days.txt",
+      "variation_label": "hard-fork-23-days-pricing-in (sole variation)",
+      "hook_pattern": "Contrarian against own community + post-event payoff",
+      "created_at": "2026-05-20T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "Hot take that's going to make my own Kaspa community mad:\n\nThe Kaspa hard fork is 23 days out. Don't expect the pump in 23 days.\n\nWhy pricing-in eats your face, and where the real pump actually lands 🧵",
+          "hook": "Hot take that's going to make my own Kaspa community mad:",
+          "char_count": 201
+        },
+        {
+          "position": 2,
+          "text": "We've been counting down to Kasplex for months.\n\nEvery member of the Kaspa community knows the date. Every X post mentions it. Every YT video covers it.\n\nWhen everyone knows, it gets priced in. The smart money is already positioned.",
+          "hook": null,
+          "char_count": 232
+        },
+        {
+          "position": 3,
+          "text": "What actually happens at milestones like this:\n\n1) Run-up gets sold into. Smart positions take profit on the date itself.\n2) Wick up on hard-fork day. Sell-the-news traders win.\n3) Quiet weeks afterward as the chart bases.",
+          "hook": null,
+          "char_count": 222
+        },
+        {
+          "position": 4,
+          "text": "Step 4 is where the real pump lives.\n\nBroader crypto retail wakes up post-Hormuz, looks for the cleanest PoW play that ISN'T already at all-time highs, and Kaspa is sitting there with a tech upgrade fresh in the rearview.",
+          "hook": null,
+          "char_count": 221
+        },
+        {
+          "position": 5,
+          "text": "Real catalyst timing: 60 to 120 days out. Not 23.\n\nDepends on when the macro turns. Not on the fork date.\n\nThe fork itself isn't the pump driver. The market discovery is.",
+          "hook": null,
+          "char_count": 170
+        },
+        {
+          "position": 6,
+          "text": "Why I'm telling you this: I'm long $KAS. I want you long $KAS. But I don't want anyone leveraging into the fork date expecting an instant 5x.\n\nThe mechanics don't work that way.\n\nPosition for the post-fork window. Take the discount that prints between now and then.",
+          "hook": null,
+          "char_count": 265
+        },
+        {
+          "position": 7,
+          "text": "If this is the Kaspa take the rest of the community won't tell you ...\n\nFollow me for the asymmetric $KAS reads the bulls miss.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 142,
+          "is_cta": true
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-20-institutions-infrastructure-kaspa-checklist",
+      "topic": "Institutions don't buy memes (they buy infrastructure; $KAS checks every box)",
+      "source_transcript": "transcripts/2026-05-20_iran-attack-pulled-kaspa-hardfork-27-days.txt",
+      "variation_label": "institutions-infrastructure-kaspa-checklist (sole variation)",
+      "hook_pattern": "Tribal contrast + checklist proof",
+      "created_at": "2026-05-20T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "When institutions come shopping, they don't look for memes.\n\nThey have allocators. Risk committees. Compliance teams.\n\nThe screening process ignores 99% of what crypto Twitter spends time on. The 4-box checklist they actually use 🧵",
+          "hook": "When institutions come shopping, they don't look for memes.",
+          "char_count": 231
+        },
+        {
+          "position": 2,
+          "text": "Box 1: security.\n\nHas the chain ever been 51% attacked? Has consensus been compromised? Has hash rate distribution stayed healthy through bears and bulls?\n\nBitcoin passes. $KAS passes. Most L1s pass on paper, fail under real stress.",
+          "hook": null,
+          "char_count": 232
+        },
+        {
+          "position": 3,
+          "text": "Box 2: instant settlement.\n\nNot 10-minute Bitcoin finality. Not 12-second Ethereum probabilistic. Actual instant.\n\nBlockDAG with GhostDAG ordering gives Kaspa effectively-instant block production at high throughput.\n\nAlmost no other L1 has this.",
+          "hook": null,
+          "char_count": 245
+        },
+        {
+          "position": 4,
+          "text": "Box 3: decentralization.\n\nIs there foundation control? Dev admin keys? Can it be censored under sovereign pressure?\n\nBitcoin passes. $KAS passes (no premine, no foundation control, fair launch from day one). Most chains fail when you push hard on this.",
+          "hook": null,
+          "char_count": 252
+        },
+        {
+          "position": 5,
+          "text": "Box 4: stability under stress.\n\nDid the chain stay online during congestion? Did it produce blocks during regulatory uncertainty? Did the node network grow through the bear?\n\nBitcoin passes. $KAS passes.",
+          "hook": null,
+          "char_count": 203
+        },
+        {
+          "position": 6,
+          "text": "Bitcoin checks all four boxes too. But Bitcoin is already institutionally adopted. The allocation is sized. The price reflects it.\n\n$KAS checks all four boxes AND is still under the 50-week SMA. AND has a hard-fork roadmap in the schedule. AND is 1/200th of Bitcoin's mcap.",
+          "hook": null,
+          "char_count": 273
+        },
+        {
+          "position": 7,
+          "text": "The institution looking for non-Bitcoin PoW exposure has roughly one obvious answer.\n\nThat's why the cycle ends with $KAS bid hard. Not because of memes. Because the checklist that allocators actually use has one answer that hasn't been priced in.",
+          "hook": null,
+          "char_count": 247
+        },
+        {
+          "position": 8,
+          "text": "If this is the institutional × Kaspa framing nobody else is doing ...\n\nFollow me for the asymmetric reads the rest of CT misses.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 143,
+          "is_cta": true
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-20-influencer-integrity-only-already-owned",
+      "topic": "Why I won't call new low-mcap coins on this channel",
+      "source_transcript": "transcripts/2026-05-20_iran-attack-pulled-kaspa-hardfork-27-days.txt",
+      "variation_label": "influencer-integrity-only-already-owned (sole variation)",
+      "hook_pattern": "Trust positioning + Kaspa as canonical example",
+      "created_at": "2026-05-20T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "I won't call new low-mcap coins on this channel.\n\nThe structural incentive in crypto influencing is to screw the audience. I want you to see the trap before someone else springs it on you.\n\nThe rule I follow, and how to apply it to everyone you follow 🧵",
+          "hook": "I won't call new low-mcap coins on this channel.",
+          "char_count": 253
+        },
+        {
+          "position": 2,
+          "text": "The standard play:\n\nFind a 100K mcap coin. Shill it to your audience. Audience buys in, pumps the price. Influencer sells the bag they accumulated before the call.\n\nAudience holds.\n\nSo common in memes you can set a watch by it.",
+          "hook": null,
+          "char_count": 227
+        },
+        {
+          "position": 3,
+          "text": "My rule, in three parts:\n\n1) I only talk publicly about coins I already own and have already made money on. Not coins I just bought. Coins where my cost basis is way below current price.\n\nMy upside isn't where the next 5x lives.",
+          "hook": null,
+          "char_count": 228
+        },
+        {
+          "position": 4,
+          "text": "2) Low-mcap calls go to my paid community, not the public stream.\n\nI want the upside concentrated with the people who paid to be there. Not diluted across a broadcast where the dev team or other influencers can front-run.",
+          "hook": null,
+          "char_count": 221
+        },
+        {
+          "position": 5,
+          "text": "3) When I make an exception and call a low-mcap publicly (Housecoin recently), it's because I've been talking about it long enough that the position isn't fresh.\n\nThe public audience deserves to see I'm not just a paid-community gatekeeper.",
+          "hook": null,
+          "char_count": 240
+        },
+        {
+          "position": 6,
+          "text": "The Kaspa angle: $KAS is the canonical example.\n\nI've been calling it since well before it was on most radars. The price has gone where it's gone. My position is what it is.\n\nNo information asymmetry I'm trying to extract from you by talking about it.",
+          "hook": null,
+          "char_count": 251
+        },
+        {
+          "position": 7,
+          "text": "Apply this to everyone you follow.\n\nConstantly pushing fresh low-mcap coins, never disclosing cost basis = you are the exit liquidity.\n\nOnly talks about things they've held for months at lower prices = aligned with your interests.",
+          "hook": null,
+          "char_count": 230
+        },
+        {
+          "position": 8,
+          "text": "If this reframed how you read crypto influencers ...\n\nFollow me for the influencer landscape decoded honestly.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 125,
+          "is_cta": true
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-05-20-ai-tug-of-war-tipping-kaspa-retail",
+      "topic": "The AI employment tug-of-war is tipping (and what it unlocks for $KAS)",
+      "source_transcript": "transcripts/2026-05-20_iran-attack-pulled-kaspa-hardfork-27-days.txt",
+      "variation_label": "ai-tug-of-war-tipping-kaspa-retail (sole variation)",
+      "hook_pattern": "Macro reframe + retail-wave payoff",
+      "created_at": "2026-05-20T19:00:00",
+      "status": "pending",
+      "tweets": [
+        {
+          "position": 1,
+          "text": "The biggest thing holding crypto back from going parabolic isn't the Fed.\n\nIt isn't Iran. It isn't even the four-year cycle zombies.\n\nIt's wages. Why the AI tug-of-war is tipping, and what it unlocks for $KAS 🧵",
+          "hook": "The biggest thing holding crypto back from going parabolic isn't the Fed.",
+          "char_count": 210
+        },
+        {
+          "position": 2,
+          "text": "ADP weekly came in positive again this week.\n\nJobs reports net-positive for 4 months running. Even with the bad weeks mixed in, the trend is up.\n\nBut underneath the headline, there are two opposing forces.",
+          "hook": null,
+          "char_count": 205
+        },
+        {
+          "position": 3,
+          "text": "Force 1: big-headcount firms cutting.\n\nAI lets a 1,000-person team do what a 1,500-person team used to. Output up, headcount down. They lay off.\n\nForce 2: small-headcount firms hiring. The output edge over human-only competitors is real. They're growing into the gap.",
+          "hook": null,
+          "char_count": 267
+        },
+        {
+          "position": 4,
+          "text": "The two forces partially cancel in the jobs data. That's why prints have been mediocre for so long.\n\nWhen small-firm hiring outpaces big-firm cutting, wages start growing.\n\nWages growing = disposable income for risk assets = retail back into crypto.",
+          "hook": null,
+          "char_count": 249
+        },
+        {
+          "position": 5,
+          "text": "That's the unlock the four-year cycle crowd has been waiting for without realizing it.\n\nThey think the catalyst is a calendar date.\n\nThe actual catalyst is the moment the labor market starts working in regular people's favor again.",
+          "hook": null,
+          "char_count": 231
+        },
+        {
+          "position": 6,
+          "text": "My read on tipping point: Q2 to Q3 2026.\n\nADP weekly already showing it. PMI new orders already showing it. The headline jobs report is last to catch up because it lags.\n\nWatch the leading indicators, not the headline.",
+          "hook": null,
+          "char_count": 218
+        },
+        {
+          "position": 7,
+          "text": "The Kaspa angle: when retail comes back, they don't come back for Bitcoin (already at a new ATH by then).\n\nThey come back looking for the next thing. PoW, fair launch, still under-discovered.\n\nRoughly one chain fits all three.",
+          "hook": null,
+          "char_count": 226
+        },
+        {
+          "position": 8,
+          "text": "If this connected the labor-market catalyst to the $KAS thesis for you ...\n\nFollow me for the macro × Kaspa connection nobody else is making.\n\n🧠 + 📈",
+          "hook": null,
+          "char_count": 156,
+          "is_cta": true
+        }
+      ]
+    }
+  ]
+}
