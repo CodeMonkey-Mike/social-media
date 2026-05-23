@@ -7,7 +7,7 @@
 //   node generate-image.js --image-id=<8char> --slug=<kebab-slug> --prompt-file=path
 //  opt: --prefix=yt-posts  (default: x-tweets)
 //
-// Prereq: xbot-profile must be logged into ChatGPT. Run setup-chatgpt.js once
+// Prereq: chatgpt-profile must be logged into ChatGPT. Run setup-chatgpt.js once
 // if it isn't. The session persists in the profile; no auth file needed.
 
 const { chromium } = require('playwright');
@@ -17,7 +17,7 @@ const path = require('path');
 // Default: fresh chat per run (x-tweets). Override with --chat-url for
 // persistent chats (e.g. the dedicated YouTube images chat).
 const DEFAULT_CHAT_URL = 'https://chatgpt.com/';
-const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\xbot-profile';
+const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\chatgpt-profile';
 const IMAGES_DIR = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images';
 
 // Matches ChatGPT's image delivery endpoint only (not general API traffic).
@@ -114,7 +114,7 @@ async function main() {
 
   try {
     // Phase 1 — block all image delivery while the page and sidebar load.
-    // xbot-profile has cached history images; the sidebar lazy-loads them,
+    // chatgpt-profile has cached history images; the sidebar lazy-loads them,
     // making it impossible to baseline reliably if they're allowed through.
     // Blocking them completely guarantees our baseline will be zero.
     const imageRoutePattern = `**/*${IMAGE_URL_PATTERN}*`;
@@ -134,7 +134,7 @@ async function main() {
     try {
       await composer.waitFor({ timeout: 30000 });
     } catch {
-      throw new Error('ChatGPT composer did not appear within 30s. Check that xbot-profile is logged into ChatGPT (run node setup-chatgpt.js to log in).');
+      throw new Error('ChatGPT composer did not appear within 30s. Check that chatgpt-profile is logged into ChatGPT (run node setup-chatgpt.js to log in).');
     }
     console.log('Chat ready.');
 

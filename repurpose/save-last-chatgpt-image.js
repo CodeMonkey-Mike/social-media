@@ -9,7 +9,7 @@ const path = require('path');
 const https = require('https');
 const http  = require('http');
 
-const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\xbot-profile';
+const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\chatgpt-profile';
 const IMAGES_DIR  = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images';
 const SCHEDULE_DIR = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
 const CHAT_URL    = 'https://chatgpt.com/c/69fe9134-a5a8-83ea-995a-6912aa4d2a24';
