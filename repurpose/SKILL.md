@@ -1344,6 +1344,44 @@ C:\Users\mnede\Documents\Claude\social-media\repurpose\generate-image.js
 
 **Reference-image uploads (faces, lesser-known brand logos) are not yet supported by the script.** If the prompt requires uploading a reference asset, fall back to the manual ChatGPT flow for that one image, save it manually to `schedule-tweets/images/x/` with the same `x-tweets-<id>-<slug>.png` filename, and update `data/x-tweets.json` as usual.
 
+### Batch generation (multiple images, one Chrome session)
+
+For carousel regens, bulk post images, or any run of 3+ images: use `generate-image-batch.js` instead of calling `generate-image.js` in a loop. The batch script launches Chrome **once**, processes all jobs sequentially inside the single session, then closes Chrome. This eliminates the open/close cycle between images.
+
+```
+C:\Users\mnede\Documents\Claude\social-media\repurpose\generate-image-batch.js
+```
+
+**Usage:**
+```powershell
+cd C:\Users\mnede\Documents\Claude\social-media\repurpose
+node generate-image-batch.js --jobs-file=<path-to-jobs.json>
+```
+
+**Jobs file format:** a JSON array where each object matches the `generate-image.js` CLI flags:
+
+```json
+[
+  {
+    "imageId": "2e48acb6",
+    "slug": "03-priced-in-everyone-knows",
+    "prefix": "yt-posts",
+    "chatUrl": "https://chatgpt.com/c/69ffc14c-3994-83ea-8f79-48845459ecfa",
+    "referenceImage": "C:\\path\\to\\ref.png",
+    "prompt": "Bold crypto news graphic..."
+  }
+]
+```
+
+All fields match the `generate-image.js` flags: `imageId`, `slug`, `prefix` (default `x-tweets`), `chatUrl` (default fresh chat), `referenceImage` (optional), `prompt` or `promptFile`. The 15–45s rate-limit delay is applied **between** jobs (skipped before the first), so total time is roughly the same as the loop approach but with far less Chrome startup overhead.
+
+**When to use which:**
+- Single image or one-off regeneration → `generate-image.js`
+- 3+ images in one batch (carousel regen, bulk tweet images) → `generate-image-batch.js` with a jobs JSON file
+
+**Existing batch regen job files:**
+- `repurpose/regen-remaining-carousels.json` — the 13 carousel slides from the 2026-05-22 session (hard-fork-23-days, institutions-infrastructure, ai-tug-of-war)
+
 ### Linking images back to their tweets via UUID
 
 When an image is generated for a specific tweet, store the image's UUID in the tweet's row so the schedule-tweets skill can locate the file when posting. **The UUID is the canonical link**; the path is convenience, the UUID is truth.
