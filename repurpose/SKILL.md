@@ -24,140 +24,41 @@ What is **out of scope** — these belong to the schedule-tweets skill in a sepa
 
 If the user asks about scheduling here, redirect them: "That's a scheduling decision; the schedule-tweets chat is the place for that. Want me to wrap up the repurposing first?"
 
-## Writing-style rules (apply to ALL repurposed content)
+## Voice, terminology & brand rules → see the central persona
 
-These rules apply to every piece of content this skill produces: single tweets, threads, YouTube community posts, and any future format. They reflect the user's personal voice and override generic Twitter/YouTube best practices when they conflict.
+All of Mike's voice, terminology, and brand rules now live in the single source of truth: **`../persona/persona.json`** (see `../persona/README.md`). **Read it before drafting any content.** It is authoritative and **wins on conflict** with the viral-craft guidance in `VIRAL-TWEET-STANDARDS.md`. Do not restate voice rules here — link to persona instead.
 
-### Never use em dashes
+`persona.json` covers:
+- **Writing style & formatting** — top-level tweet pattern, tone, the **no-em-dash rule** (use semicolons/ellipses/colons/parentheses/periods), hashtags on their own line, "50-week SMA" notation (never "50WMA").
+- **Reply voice** — lowercase register, openers, length tiers, reaction-only ratio, mock-quotes, edgy-analogy boundary.
+- **Brand voice patterns** — named opposition, no aphorism/punchline closers, no loose status labels, no chain-rotation framing, first-person conviction, pattern-break framing, verified-claims-only (incl. fact-checking + updating transcript numbers to current reality), quantity-not-price framing, and the **1-in-10 correction-bait rule** (5 techniques, never manufacture a factual error).
+- **Terminology** — Kaspa vs Casper ($CSPR), the KRC20 K-prefix glossary (Kaspy/Kasy/Kappy/Kasper-the-Ghost), GhostDAG (+ the "fully implemented ghost" audit).
+- **Emoji rules** and the **avoid-in-drafts** list (incl. the personal/political quote-tweet boundary).
 
-The em dash (—) is banned from all content. Not in hooks. Not in CTAs. Not in body prose. Not in bullet expansions. Never.
+## Repurpose-specific drafting rules (process, not voice)
 
-When you would have reached for an em dash, use one of these instead, in this preference order:
+These are workflow rules for the repurpose pipeline — how to draft and deploy, not how Mike sounds. Voice/terminology lives in `../persona/persona.json`.
 
-1. **Semicolons** (default; this is the user's preferred substitute most of the time). Good for joining two related independent clauses where you want a pause stronger than a comma but weaker than a period. Example: *"The 4-year cycle is dead; not because of ETFs."*
-2. **Ellipses** (second preference). Good for dramatic pauses, trailing thoughts, and rhetorical buildup. Example: *"If you had to bet right now... does Bitcoin top in 2026, or in 2030?"*
-3. **Colons.** Good for label-explanation patterns and setup-payoff. Example: *"AlexNet: deep learning works."* or *"Take in the numbers:"*
-4. **Parentheses.** Good for parenthetical asides, especially in stat lists. Example: *"ChatGPT (100M users in 2 months)"*
-5. **Periods.** When the sentence naturally breaks, just break it. Two short sentences often beat one long one with a dash.
-6. **Commas.** For light parenthetical breaks, simple appositives, and quick asides.
+**Two variations should be genuinely different angles, not paraphrases.** When two variations cover the same idea with similar structure, Mike picks one and cuts the other; when they take different angles (data-led vs personal-conviction; pattern-break vs counterfactual), he often picks both. Give each variation its own distinct hook pattern from `VIRAL-TWEET-STANDARDS.md` — don't ship two variations of the same hook with different word choices.
 
-Hyphens (-) for compound words ("4-year cycle," "1-year mania") and en dashes in number ranges ("1980-86") are fine; the ban is specifically on em dashes used as dramatic pauses or parenthetical breaks.
+**Don't re-surface skipped concepts within a session.** Once Mike picks which concepts to run with and drops others, the dropped ones don't reappear when moving across formats (tweets → threads → polls → YT posts). The workflow is concept-level decisions first, then format adaptations of the chosen set. Treat a filtered-out concept as a permanent decision for that cycle.
 
-When auditing content for em dashes, search for the literal `—` character (U+2014). The substitution should preserve flow; if a semicolon makes the prose feel awkward, try the next option in the list rather than forcing it.
+**Cross-platform parallel deployment is the default.** When a transcript yields chosen concepts, assume each will be adapted to multiple formats. Plan in this order: long tweet → one-liner tweet → thread → X poll → YT poll → YT post. Don't ask format-by-format once the concept is approved; adapt to all unless the user opts out.
 
-### Moving-average notation: use "50-week SMA" / "200-week SMA"
+**One-liner image-first tweets are a separate format class, not a replacement.** Single-sentence tweets paired with an image, offered *in addition to* the long-form versions (not instead). They live alongside the long-form versions in `data/x-tweets.json` and serve different feed contexts (a one-liner + image stops the scroll where a long tweet wouldn't, and vice versa).
 
-Always write the long form. Mike does not use the compact "50WMA" or "200WMA" abbreviation, partly because WMA technically means weighted moving average (the chart he references is simple, not weighted).
+**Geopolitical / dark-register content stays at tweet-tier.** War / Iran / black-swan content is OK on X (fast reach, timely take) but doesn't get YT post or YT poll amplification — those build long-term audience association. Draft tweet variations for dark-register concepts, but don't proactively suggest long YT posts or YT polls for them unless the user asks.
 
-- ✅ "50-week SMA"
-- ✅ "200-week SMA"
-- ❌ "50WMA"
-- ❌ "200WMA"
-- ❌ "50-week MA" (the simple vs weighted distinction matters)
-- ❌ "50 WMA" (with space)
+**Don't draft self-quote-tweets unless asked.** Mike quote-tweets his own posts manually for second-wind engagement; just make sure the original post is sturdy enough to support a second pass.
 
-When checking drafts, do a `50WMA|200WMA` grep before saving and replace any matches. Same for any other "WMA" variant.
+### Image generation — favorites lineup & reference images
 
-### Never write "Casper"; always "Kaspa"
+> **⛔ HARD RULE #1 — EVERY IMAGE IS UNIQUE. NEVER reuse an `image_id` or image file across two posts.**
+> Not for a one-liner variant of a longer tweet, not for two posts on the same topic, not from an already-posted tweet, not "to save generation time." Each tweet / IG post / slide gets its own freshly generated UUID and its own freshly generated image. If you catch yourself about to point two entries at the same file, STOP and generate a new one. (This is the single most-repeated mistake on this account — full rule + the mandatory pre-save duplicate scan are in the "every tweet gets a unique image" section below. Read it.)
 
-The chain is **Kaspa**, ticker **$KAS**. Never write "Casper" anywhere in content (tweets, threads, YouTube posts, lead-gen, any repurposed output).
+**Canonical coin lineup lives in `../persona/persona.json` → `stacking_lineup`.** When generating images that depict Mike's portfolio / favorites / "coins I'm stacking", use that lineup; render **$KAS as the hero** (larger / more prominent when coins share a frame). Never include $BTC, $ETH, $SOL, $BNB in a favorites image (persona covers why) — they're macro-commentary subjects, not stacking picks.
 
-The transcripts the user records contain frequent transcription errors where "Kaspa" gets misheard as "Casper" by the speech-to-text engine; the two words sound nearly identical spoken aloud. **Normalize every instance of "Casper" to "Kaspa" during topic extraction, before drafting any output.** Treat this as a search-and-replace pass on the transcript content as part of Phase 1.
-
-The brand mismatch matters: Casper Network ($CSPR) is a different, unrelated chain. Confusing the two undermines credibility with the Kaspa community and signals to outsiders that the writer doesn't know the project. The error also tends to compound through the writing because the misspelled name reads naturally to anyone who didn't catch it the first time.
-
-When auditing drafts before saving, search for the literal string "Casper" (case-insensitive) and replace any occurrences with "Kaspa". Same audit applies to ticker drift: "$CASPER" or any variation should always be `$KAS`.
-
-**Important nuance: "Kasper" (with K and -er) is a valid spelling — it is NOT the same as "Casper" or "Kaspa".** Kasper is a KRC20 meme token (the ghost-themed one). Its full brand name is **Kasper-the-Ghost**. Distinct treatment:
-
-- ✅ "Kaspa" = the chain itself, ticker `$KAS`
-- ✅ "Kasper" or "Kasper-the-Ghost" = the KRC20 ghost-themed meme token (different asset, same chain)
-- ❌ "Casper" = a different, unrelated chain (`$CSPR`); never write this in Kaspa-context content
-- ❌ "Kaspa-the-Ghost" = wrong; this conflates the chain with the meme. Use **"Kasper-the-Ghost"** for the meme token.
-
-When the discussion is about a ghost-themed mascot or the ghost-themed KRC20 token, the correct spelling is "Kasper" / "Kasper-the-Ghost". When the discussion is about the chain or its architecture, the correct spelling is "Kaspa". When auditing drafts about Kaspa's mascot debate or any KRC20 ghost-themed token, search for the literal string "Kaspa-the-Ghost" and replace with "Kasper-the-Ghost".
-
-### KRC20 meme-token glossary (the K-prefix STT trap)
-
-The speech-to-text engines NoteGPT and similar transcript tools consistently mishear KRC20 meme-token names because most of them start with a **K** that sounds like a **C** when spoken. The transcripts will show C-prefix spellings; the actual project names use K-prefix. **Never inherit the C-prefix spelling from a transcript without verifying.**
-
-The known canonical spellings for the KRC20 meme tokens that show up most often in Mike's transcripts:
-
-| Transcript drift (wrong) | Canonical spelling | Notes |
-|---|---|---|
-| Caspie | **Kaspy** | KRC20 meme token |
-| Cassie | **Kasy** | KRC20 meme token (cute anime girl mascot per transcript) |
-| Cappy | **Kappy** | KRC20 meme token (cat-themed: "Kappy the cat, the happiest cat") |
-| Casper | Kasper *only if* mascot/meme context (Kasper-the-Ghost); otherwise Kaspa | See above section |
-| Caspby | unknown — flag for removal | Pronunciation not familiar to Mike. If it appears in a draft, ask before keeping; default to removing the reference rather than shipping a project name nobody recognizes. |
-
-**Audit pass before saving any KRC20 content:** search for each C-prefix string in the table above (case-sensitive). For each hit, replace with the K-prefix canonical spelling. For "Caspby" specifically, surface the hit to Mike and remove unless he confirms.
-
-**When new KRC20 names appear in a transcript that aren't in the table above:** assume the K-prefix transcription rule applies (any C/K confusion in the project name is more likely K than C, since KRC20 = Kaspa Request for Comment). Confirm with Mike before adding to a draft. When confirmed, append a new row to the glossary table above so future drafts get it right automatically.
-
-### "Fully implemented GhostDAG" — never just "ghost"
-
-When describing Kaspa's architecture, the technical term is **GhostDAG** (the protocol name). Never write "Kaspa is a fully implemented ghost" — that loses the technical precision and reads to anyone Kaspa-literate as a careless mistake. Always:
-
-- ✅ "Kaspa is a fully implemented GhostDAG"
-- ✅ "Kaspa is a fully implemented GHOSTDAG protocol" (all-caps stylization is also fine)
-- ❌ "Kaspa is a fully implemented ghost"
-- ❌ "Kaspa is a ghost chain"
-
-The casing convention: `GhostDAG` (camel-case) reads as the protocol name; `GHOSTDAG` (all-caps) reads as the protocol acronym. Either is acceptable. The all-lowercase "ghost" is reserved for poetic / metaphorical phrasing only ("the ghost is in the architecture") and should never replace the protocol name itself.
-
-When auditing drafts before saving, search for the literal phrase "fully implemented ghost" and verify the next word is "DAG" (or "GHOSTDAG" follows in context). If not, fix it.
-
-### Invite correction without factual errors (the 1-in-10 rule)
-
-Roughly 1 in 10 posts should lean into a framing that invites pushback or correction. The "well, actually" instinct on Crypto Twitter is a powerful engagement driver: people who would never reply to a regular post will reply to defend their position when something feels wrong-shaped to them. Comments are the algorithm's highest-weighted signal, so converting lurkers into correctors is a real engagement multiplier.
-
-**This is bait without lying.** Never manufacture a factual error to drive corrections. Repeated factual mistakes erode the trust that makes the account valuable long-term, and X's Community Notes system increasingly suppresses reach on posts with verified issues. The strategy also degrades quickly once the audience pattern-recognizes it; people stop bothering to correct posts they suspect are bait.
-
-**Techniques that capture the same engagement mechanic without lying:**
-
-1. **Strong, defensible-but-debatable takes.** Example: *"$KAS is the only fair-launched chain that matters."* Tribally true to the user's camp, technically arguable. Same correction instinct, no factual error.
-2. **Approximate framings that invite precision.** Example: *"Kaspa hits its supply cap around 2026-2027."* People who want to "correct" you to the exact year will still do it, but the underlying claim isn't wrong.
-3. **"What am I missing?" closers.** Caitlin Long pattern from `VIRAL-TWEET-STANDARDS.md`. Explicit invitation to disagree without lying. Doubles as a humility flex that softens the bait.
-4. **Polls.** Native correction-bait. Voting against the stated position is the lowest-friction way for a lurker to disagree. The poll modes already covered in this skill are the primary tool for this technique.
-5. **Provocative predictions.** Forecasts can't be "wrong" yet; they invite debate. Example: *"$KAS hits top-10 by 2027."* Generates the same defenders + skeptics dynamic as a factual error would, with no credibility cost.
-
-**Tagging convention:** when drafting a post that uses one of these techniques deliberately, note it in the markdown draft (e.g., `**Engagement note:** uses correction-bait technique #2 (approximate framing)`). This helps the user see at a glance which posts are leaning on this mechanic and keeps the cadence from drifting above the ~1-in-10 ratio.
-
-**Real factual errors are different.** When an accidental mistake slips through (transcription drift, miscalled date, wrong number), don't manufacture an apology. Reply to corrections with grace and let the engagement happen naturally. Manufactured errors and accidental errors both drive engagement; only the accidental ones don't compound the credibility cost over time.
-
-### What Mike picks vs cuts (brand voice patterns)
-
-These patterns are observed across multiple drafting sessions, recorded so future drafts trend toward what Mike keeps without manual review. Honor them by default; deviate only when the user explicitly asks for something different.
-
-**Defends every claim, even small ones.** If a draft references something Mike can't argue for in a thread (a specific L2 not yet proven, a project's rumored partnership, an unverified stat), he'll cut it. Example: drafts mentioning "Igra L2 going live" got stripped from Kaspa hard-fork tweets even though it strengthened the bull case, because he doesn't want to overhype an unproven L2 yet. Default behavior: only include named projects, products, or claims you're confident the user has verified. When in doubt, leave the claim general (e.g., "the L2 stack" instead of naming a specific L2).
-
-**Cuts aphorism-style closing punchlines.** Lines like "X is alpha," "smart money is a label," "the structure never broke. The crowd did." get removed even when the rest of the tweet is kept. They read as performative rather than substantive. Default behavior: end tweets with a concrete claim, an actionable observation, or just stop after the last data point. Avoid the "drop-the-mic" final line.
-
-**Rejects loose labels he disagrees with, even if they make the tweet stronger.** A draft framing long-term holders as "smart money" got rewritten because Mike doesn't believe LTH = smart money. He prefers "ill-advised long-term holders" — calling people by what their behavior actually is, not by an unearned status label. Default behavior: don't use shorthand labels (smart money, whales, OGs, diamond hands) without checking whether the user agrees with the implied valence. When in doubt, describe the behavior instead.
-
-**Skips chain-rotation and trader-portfolio content** in favor of thesis-driven content. A "BNB chain on fire, Base chain dead" draft got cut entirely even though it surfaced legitimate alpha (LAB 61x, MYX 550x, DeAgent 130x), because the framing was rotation-trader rather than thesis-builder. Default behavior: when transcripts have both thesis material and rotation material, lead with thesis variations and only suggest rotation framings if the user explicitly asks. The account's voice is "here's the macro/structural take," not "here's what to buy this week."
-
-**Keeps first-person conviction phrasing.** "I shed my four-year cycle belief in Q2 2025." "I'm watching the Iran situation like an ascending channel." "I'm trimming 5-10% on every pump." These get picked. Tweets in pure third-person observational mode get cut more often. Default behavior: when a thesis is genuinely Mike's (not just an industry observation), drop into first-person. It distinguishes him from the AI-generated noise floor.
-
-**Prefers pattern-break framings over single-point claims.** "Every previous crypto bear lined up with macro tightening. This one isn't" gets picked because it sets up the contrast. A standalone "this isn't a bear, it's a panic" gets a lukewarm response. Default behavior: when arguing something is anomalous, lead with the historical pattern, then break it. Don't just assert anomaly.
-
-**Names the opposition he's arguing against.** "Four-year cycle zombies." "BTC maxis." "$KAS holders mad it's not on Coinbase." These give the tweet a target audience to react. Default behavior: when a tweet is contrarian, name the camp it's contradicting. Don't argue against a vague consensus.
-
-**Two variations should be genuinely different angles, not paraphrases.** When two variations cover the same idea with similar structure, Mike picks one and cuts the other. When they take different angles (data-led vs personal-conviction; pattern-break vs counterfactual; etc.), he often picks both. Default behavior: when drafting two variations of the same concept, make sure each one has its own distinct hook pattern from `VIRAL-TWEET-STANDARDS.md`. Don't ship two variations of the same hook with different word choices.
-
-**Mike's favorite-coins lineup (for image content and "coins I'm stacking" type posts).** When generating images that depict Mike's portfolio, his favorites, "coins I'm bullish on," "what I'm stacking," etc., use this exact lineup:
-
-- **$KAS (Kaspa)** — primary. Mike is a Kaspa maxi. Always present, always the focal element when a single coin needs hero treatment, always rendered larger / more prominent than the others when they share a frame.
-- **$TAO (Bittensor)**
-- **$TON (Toncoin)**
-- **$LINEA (Linea)** — Layer 2 from Consensys.
-- **AI16Z / ElizaOS** — the AI agent project. Note: token migrated; use the current ticker. Render the ElizaOS branding rather than the old AI6Z.
-- **Housecoin** — meme.
-
-**Do NOT include in favorites lineups:** $BTC, $ETH, $SOL, $BNB, or any other major chain that isn't on this list. Mike posts about $BTC and others in thesis content, but they aren't in his "stacking" lineup. Including them in a favorites image misrepresents his portfolio. The Bitcoin/Ethereum tweets he writes are macro commentary, not endorsements.
-
-**When generating an image with these coins:** name them by ticker explicitly in the prompt so the model renders the right logos (per the existing brand-naming rule in the Image generation mode section). For lesser-known projects, the model invents fake logos when left to its own — use the reference images stored at:
+**Reference images for lesser-known coins.** The image model invents fake logos for lesser-known projects when left to its own. Before generating any image that mentions a lesser-known crypto project, scan the text for project names/tickers and check for a matching reference file in:
 
 ```
 C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\images\reference\
@@ -169,66 +70,13 @@ C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\images\reference\
   kasy.png           — KASY (KRC20 meme token; cute anime girl mascot)
 ```
 
-**Rule: before generating any image that mentions a lesser-known crypto project, scan the tweet/post text for project names or tickers and check if a matching reference file exists in this directory.** If a match is found, pass it via the `--reference-image=<path>` flag on `generate-image.js`. In the prompt, refer to it as "the logo shown in the attached reference image" so the model uses it instead of inventing.
+If a match exists, pass it via `--reference-image=<path>` on `generate-image.js` and refer to it in the prompt as "the logo shown in the attached reference image". Kaspa, Bittensor, and Toncoin are well-known enough to render correctly without a reference.
 
-**Multi-coin lineup constraint.** The current `generate-image.js` accepts only a single `--reference-image`. So for a single-coin spotlight image (e.g., just ElizaOS or just Linea), the reference flow works cleanly. For a multi-coin lineup that needs reference logos for two or more of the lesser-known coins (e.g., Linea + ElizaOS in the same frame), the script can't handle it — fall back to manual ChatGPT upload for that one image, save it manually with the right filename in `schedule-tweets/images/x/` (for x-tweets) or `schedule-tweets/images/yt/` (for yt-posts), and update the queue entry. Kaspa, Bittensor, and Toncoin are well-known enough that the model renders them correctly without references, so a typical favorites lineup with $KAS as hero only needs one reference upload per lesser-known coin in the frame.
+**Multi-coin lineup constraint.** `generate-image.js` accepts only a single `--reference-image`. For a single-coin spotlight (just ElizaOS or just Linea), the reference flow works cleanly. For a multi-coin lineup needing reference logos for two or more lesser-known coins in the same frame, the script can't handle it — fall back to manual ChatGPT upload for that image, save it with the right filename in `images/x/` (tweets) or `images/yt/` (yt-posts), and update the queue entry. A typical favorites lineup with $KAS as hero needs one reference upload per lesser-known coin in the frame.
 
-**When the post text mentions "favorites" or "coins I'm stacking" but doesn't enumerate them:** ask Mike whether the current list still applies before generating the image. The lineup may evolve.
+**When "favorites" / "coins I'm stacking" is mentioned but not enumerated:** ask Mike whether the current lineup still applies before generating — the list may evolve.
 
-**Fact-checks specific claims before they ship.** Example: a draft cited "El Salvador and Kazakhstan" as sovereign Bitcoin holders; Mike asked for verification. Kazakhstan is a mining hub but doesn't actually hold sovereign BTC reserves. The verified set is El Salvador (active buying since 2021), Bhutan (sovereign reserves via state-owned mining), and Texas / New Hampshire (state legislation passed in 2025). Default behavior: any time a draft cites named entities (countries, companies, projects, dates, statistics, percentages), pause and verify before shipping. If the user hasn't asked explicitly, run the check anyway and either correct the draft or flag the uncertainty in the markdown.
-
-**Numbers must reflect current reality, not just what was in the transcript.** Example: the May 11 transcript said "67x on Lab" but by the time drafts were being reviewed, Lab had hit 98x. Mike updated the number across every draft that cited it. Default behavior: when transcripts reference specific multipliers, prices, market caps, or any figure that could plausibly move between recording and posting, ask the user to confirm the number is still current. Don't inherit the transcript's snapshot blindly.
-
-**Respects prior selections — don't bring back skipped concepts in later format passes.** Example: from the May 11 brainstorm, Mike picked concepts 2-6 + 9 and skipped concept 1 (Fed chair changeover). When recommending long YT post candidates later in the session, I added concept 1 back into the list and Mike had to correct me. Once a concept is filtered out, treat that as a permanent decision for the current cycle. Default behavior: the workflow is concept-level decisions first, then format adaptations of the chosen set. Don't re-surface skipped concepts when moving from tweets → threads → polls → YT posts.
-
-**Geopolitical / dark-register content stays at tweet-tier; doesn't get YT amplification.** Example: Mike picked both Iran tweet variations (9A and 9B) and let them ship to tweets.json. But when offered 5 long-form YT post candidates from the same concept set, he chose the 4 non-Iran ones. When offered 11 polls, he picked 6 — skipping both Iran polls. Pattern: Iran / war / black-swan content gets a smaller surface area than other thesis content. It's OK on X (where reach is fast and the take is timely), but doesn't get the YT post or YT poll amplification that builds long-term audience association. Default behavior: when a concept is darker register, draft tweet variations but don't proactively suggest long YT posts or YT polls unless the user asks.
-
-**Cross-platform parallel deployment is the default workflow.** Example from this session: same May-11 concepts went to tweets.json (long + one-liner versions), threads.json, x-polls.json, yt-text-polls.json, and yt-posts.json. Each chosen concept got 5+ format adaptations. Default behavior: when a transcript yields chosen concepts, assume each will be adapted to multiple formats. Plan in this order: long tweet → one-liner tweet → thread → X poll → YT poll → YT post. Don't ask format-by-format if the concept itself is approved; adapt to all unless the user opts out.
-
-**One-liner image-first tweets are a separate format class, not a replacement.** This session introduced explicit "one-liner" tweet variants — single-sentence tweets paired with images. Mike asked for them in addition to the long-form versions, not instead of them. Default behavior: when tweet variations are approved, also offer image-first one-liners. They live alongside the long-form versions in `data/x-tweets.json` and serve different feed contexts (a one-liner with an image stops the scroll where a long tweet wouldn't, and vice versa).
-
-**X image → IG cross-post always gets a 4:5 companion.** When a new image is generated for an X tweet, also generate a second version of the same image at **4:5 aspect ratio** for the Instagram single-image entry. Same prompt, same subject, same visual style — only the aspect ratio changes. Save the 4:5 version to `schedule-tweets/images/ig/` with the prefix `ig-single-` and the same `image_id` (e.g. `ig-single-a3f7c2e9-kaspa-coinbase-illustration.png`). The IG entry in `data/ig-single-image.json` references this 4:5 file; the tweet entry in `data/x-tweets.json` references the 1:1 file. Default behavior: after generating the X image, immediately generate the 4:5 companion and add both the tweet and the IG entry to their respective queues.
-
-### What Mike's own tweets and replies look like (observed from live samples)
-
-Captured from reading six of Mike's own posts directly on X. These reflect how his voice actually behaves in the wild, not just how it should behave on paper. Use them as patterns to match in drafts.
-
-**Top-level tweet signature pattern: named-opposition + counter-claim + question.** Mike's strongest engagement-driver shape, observed directly:
-
-```
-Crypto Wendy thinks that XRP can go to $10,000
-
-I think that Kaspa to $3 is more realistic.
-
-What do you think?
-
-#kaspa #xrp
-```
-
-Three lines, blank line between each, hashtags on their own line at the bottom. Named the specific opponent ("Crypto Wendy"), stated her specific claim ("XRP to $10K"), counter-positioned with his own specific claim ("Kaspa to $3"), invited debate ("What do you think?"). 1,130 views, 23 likes, 10 replies on this one. This pattern compounds because it gives readers three reasons to engage: defend Wendy, defend Mike, or post their own number. Default behavior: when a topic has a competing public claim from a named source, lead with this shape.
-
-**Self-quote-tweets for second-wind engagement.** Mike quote-tweets his own posts to add commentary and surface the original again. Example: he quote-tweeted the XRP-vs-Kaspa post above with a snarky observation about the people on the other side of the debate. The second post drives new eyeballs to the original. Default behavior: don't draft self-quote-tweets yourself unless asked, but be aware Mike does this manually and the original post should be sturdy enough to support a second pass.
-
-**Replies use a different register than top-level posts.** This is the biggest gap between the queued content and Mike's actual reply voice. Observed reply patterns:
-
-- **Lowercase sentence starts and lowercase "i".** Example: *"oh, i often talk about the jobs data..."* and *"personally i think rates will be held in June."* Replies aren't proofread the way top-level posts are. The casing signals conversational/personal register.
-- **Conversational fillers.** "oh, ...", "personally i think...", "yeah..." as openers signal the reply is talking-to-a-person, not broadcasting-to-an-audience.
-- **Typos and small errors stay in.** Example: *"more massive layoffs at companies do to AI"* ("do to" should be "due to"). Mike doesn't polish replies. Don't fake-polish drafted replies either; the imperfections feel native.
-- **Length depends on the question type.**
-  - Ultra-short (10 words) for direct opinion questions: *"personally i think rates will be held in June."*
-  - Single-sentence + emoji for tribal/community engagement: *"@peakymn Because Kaspa is amazing. It's like a supermodel that's still a virgin. Every guy is like 🤩"*
-  - Multi-sentence analytical for macro questions: the jobs-data reply runs ~50 words with embedded mock-quotes ("yea!! more jobs are being created...").
-- **Embedded mock-quotes for sarcastic emphasis.** Mike sometimes drops an inner-monologue quote into a reply to mock the consensus position. Pattern: `we think, "yea!! more jobs are being created..."`. Effective because it lets him voice the wrong take in scare quotes without committing to it.
-
-If we ever build a reply-mode for this skill, default to this register: lowercase opener, first-person, short unless the question is analytical, don't sanitize typos.
-
-**Edgy / spicy analogies are allowed in community-tribe replies (not in macro-thesis content).** Mike's reply *"Because Kaspa is amazing. It's like a supermodel that's still a virgin. Every guy is like 🤩"* is a vivid, sexually-suggestive analogy that lands inside the Kaspa community. He WILL use that register; the queue currently doesn't. Default behavior: keep tribal/community-engagement content (replies, occasional standalone tweets) free to use vivid analogies. Keep macro-thesis content (queued tweets, threads, YT posts) cleaner and more analytical. The two registers shouldn't blend in a single post.
-
-**Off-the-cuff personal/political quote-tweets exist but don't belong in the automatable queue.** Mike posts the occasional personal-observation tweet — example: a quote-tweet about brunette-vs-blonde stereotypes referencing public figures. These are low-effort, off-cuff, and use a register that doesn't fit the macro-thesis queue. Default behavior: never draft this kind of content for him. If a transcript contains personal-observation throwaway material, surface it as a topic Mike can post manually if he wants — don't queue it.
-
-**Hashtags on a separate line at the bottom is confirmed.** Mike does in fact put `#kaspa #xrp` on their own line below the body, separated by a blank line. The SKILL.md guidance ("one or two, at the bottom") is consistent with his actual practice.
-
-**First-person conviction is the default top-level voice.** Both top-level posts observed used "I" / "I think" framing ("I think that Kaspa to $3 is more realistic"). Even the snarky personal post is in first-person observational mode ("When I was a kid..."). This reinforces the existing skill rule about preferring first-person.
+**X image → IG 4:5 companion.** When a new image is generated for an X tweet, also generate a **4:5** version of the same image (same prompt, subject, style — only the aspect ratio changes) for the Instagram single-image entry. Save the 4:5 version to `images/ig/` with prefix `ig-single-` and the same `image_id` (e.g. `ig-single-a3f7c2e9-...png`). The IG entry in `data/ig-single-image.json` references the 4:5 file; the tweet entry references the 1:1 file. Do this immediately after generating the X image and add both queue entries.
 
 ## Workflow
 
@@ -915,7 +763,7 @@ After appending, confirm with the user: "Added N YouTube post(s) to yt-posts.jso
 
 ## Instagram single-image mode
 
-When the user asks to draft for Instagram, port a tweet to IG, or says "make it an IG post," use this mode. This mode covers the **single-image feed post** format. Carousels and reels will have separate modes if the user adds them later.
+When the user asks to draft for Instagram, port a tweet to IG, or says "make it an IG post," use this mode. This mode covers the **single-image feed post** format. Carousels have their own section below (**Instagram carousel mode**); reels will get a separate mode if the user adds it later.
 
 ### How IG single-image posts differ from tweets
 
@@ -992,6 +840,18 @@ The schema is documented inline in the JSON file's `$schema_doc` and `$post_sche
 
 After appending, confirm with the user: "Added N Instagram post(s) to data/ig-single-image.json. Ready to schedule."
 
+## Instagram carousel mode
+
+IG carousels are **repurposed from an existing YouTube community post** — not authored from scratch. Each IG carousel's `source_post` links to the YT post it came from.
+
+1. **Reuse the YT carousel's slide images as-is — do NOT regenerate.** IG carousels post at **1:1** (the `post-ig-carousel.js` uploader clicks straight through the Crop screen and takes IG's 1:1 default; it does NOT select 4:5 — only `post-ig-single.js` selects 4:5). The YT slides are already 1:1, so the IG carousel's `slides[].image_path` point at the same `images/yt/yt-posts-*.png` files. No extra image generation, no 4:5 versions.
+
+2. **The caption is SHORT — four sentences max.** This is the big difference from every other format. The YT post body is a long essay (up to ~2,500 chars); the IG **single-image** caption can run 1.5–3× a tweet. The IG **carousel** caption does neither — **the slides carry the content**, so the caption is just a brief hook + a line or two of setup + the engagement question. Never paste the YT essay into a carousel caption. (`ig-carousel.json` allows up to 2,200 chars, but that is a ceiling, not a target — stay around 3–4 sentences.)
+
+3. **Hashtags:** 12–15, `caption_end` — same strategy as IG single-image.
+
+4. **Write to `data/ig-carousel.json`** per its `$post_schema`: short `caption`, `hook`, `hashtags`, `slides[]` (2–10, reusing the YT `images/yt/...` paths, `aspect_ratio: "1:1"`), `source_post` (the YT post id), `status: "draft"`. Flip to `"pending"` only once 2–10 slides are present. Never regenerate a post that already has `slides` populated.
+
 ## YouTube post carousel image mode
 
 When the user asks for images for a YouTube community post, use this mode. It is fundamentally different from the tweet image mode: slides are **text-forward and hook-driven**, not illustrative. The images carry the content of the post in compressed, scannable form — each slide is one punchy idea that earns the swipe to the next one.
@@ -1051,9 +911,9 @@ The versions below are platform-agnostic visual styles. They are currently wired
 
 ---
 
-**Never pick a version and start generating without approval.** Before generating any carousel images, present your version recommendation for each post with a one-line reason (e.g. "Post 1 → Version 1 because it's a high-energy announcement; Post 2 → Version 2 because it's analytical"). Wait for the user to confirm or redirect. Only generate after explicit approval.
+**Claude picks the version (1, 2, or 4) and generates without approval.** Choose the version that matches the post's tone — 1 = high-energy news-flash, 2 = analytical/editorial, 4 = hook + data/chart. Mike does NOT need to approve version selection or the slide plan; just pick what fits and generate. (Corrected 2026-05-24 at Mike's direction — the prior "wait for explicit approval" gate was removed; it was slowing the workflow and Mike never wanted it.)
 
-**Slide count: use what the content needs, not a default.** The right number is 4–6 slides. Never pad to hit a target — if 4 slides covers the post cleanly, use 4. Only go to 6 if there's a genuine sixth beat worth a slide. Always present the slide plan (one line per slide) alongside the version recommendation and get approval before running the script.
+**Slide count: use what the content needs, not a default.** The right number is 4–6 slides. Never pad to hit a target — if 4 slides covers the post cleanly, use 4. Only go to 6 if there's a genuine sixth beat worth a slide. Decide the slide plan yourself and run the script; no approval step.
 
 **Never add slides to a post that already has an `images` array.** Check `data/yt-posts.json` (or `data/ig-carousel.json`) before generating. If the post's `images` field is already populated, skip it unless the user explicitly asks to replace or extend it.
 
@@ -1064,6 +924,10 @@ Each version has a fixed style, subfolder, and prompt approach. Never mix versio
 **Version 1 — News-flash** (`--subdir=version1`)
 
 Near-black background, dramatic lighting, bold all-caps white + neon green typography, glowing crypto coin icons, chart/data panel elements. High-energy, aggressive feel. Modeled on viral crypto news graphics.
+
+> **CAUTION (learned 2026-05-24) — image-capture bug in history-heavy chats:** The batch generators (`generate-yt-post-images-batch.js`, etc.) can save the WRONG image to a slide. In a persistent chat already full of prior generations, the response-capture sometimes grabs a *stale history image* instead of the freshly-generated one, so slides get cross-assigned (confirmed: a d3 slide's file contained an e1-e4 slide's image; an earlier d3 slide contained an old "retail flows back" graphic). **This affects all versions — it is NOT a V1-vs-V2 issue.** The single `generate-image.js` has robust baseline logic (block history during load → scroll to exhaust → 5s grace → baseline → only accept URLs ≥10s after prompt); the batch scripts used a thinner version that fails when history is large.
+>
+> **FIXED 2026-05-24:** all three batch scripts (`generate-yt-post-images-batch.js`, `generate-broll-batch.js`, `generate-tweet-images-batch.js`) now set `CHAT_URL = 'https://chatgpt.com/'` (a **fresh chat per run**, no history to mis-grab) plus a guard that forces a new conversation if redirected to `/c/`. Verified: re-running the YT carousels produced correctly-placed slides. **Keep batch chats fresh; still spot-check 1–2 slides per run.**
 
 Prompt template:
 ```
@@ -1530,7 +1394,17 @@ Each posting script uses a dedicated Chrome profile, but a few collisions exist:
   ```
   Wait 2–3 seconds (port 9224 binds almost instantly when launched this way), then `cd schedule-tweets; node scripts/post-tiktok-short.js`. The script will print "Chrome already on CDP 9224 ✓" and proceed.
 
-Implication: with the dedicated `chatgpt-profile` in place (as of 2026-05-22), image generation can run in parallel with ANY posting task — including X tweets/polls/threads/shorts and reply-guy — since the profiles are now isolated. The only remaining true conflicts are between two posting scripts that share a profile (e.g., two X scripts at once), which is already handled by the sequential posting list.
+Implication: with the dedicated `chatgpt-profile` (2026-05-22), image generation never collides with posting on the **Chrome** side. The only Chrome conflict left is two posting scripts sharing a profile (e.g. two X scripts), handled by the sequential posting list.
+
+**BUT profile isolation does NOT solve a second conflict: shared JSON files (corrected 2026-05-24).** The image batches do per-item read-modify-write on `data/x-tweets.json` (tweet images), `data/ig-single-image.json` (IG companions), and `data/yt-posts.json` (carousel slides). The posting scripts write those SAME files. Running an image batch at the same time as a posting script that touches the same file is a write race: the posting script saves its stale in-memory copy and silently wipes the image links the batch just wrote. (Confirmed 2026-05-24: two tweet image links were clobbered exactly this way; had to re-link them.)
+
+**Lane priority rule: posting (Lane B) ALWAYS beats image generation (Lane A). Never delay a post for image-gen.** When a Lane B step is about to write a JSON file that a running image batch also writes (tweet step vs the tweet-image batch; yt-post step vs the carousel batch; IG-single step vs the IG-companion batch), PAUSE the image batch first, run the post, then re-launch the batch. The batches are resumable (they skip already-generated files via `fs.existsSync`), so pausing wastes nothing. Steps that do NOT share a file with the running batch (X poll, reply-guy, shorts, IG Reel while the tweet-image batch runs) proceed in parallel as normal.
+
+To pause the image batch without touching the posting profiles, kill ONLY its node process and its `chatgpt-profile` Chrome:
+```powershell
+Get-CimInstance Win32_Process -Filter "Name='node.exe'"   | Where-Object { $_.CommandLine -like '*generate-*-images-batch*' -or $_.CommandLine -like '*generate-tweet-images-batch*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
+Get-CimInstance Win32_Process -Filter "Name='chrome.exe'" | Where-Object { $_.CommandLine -like '*chatgpt-profile*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
+```
 
 ### Reply-guy `--limit` is not honored
 

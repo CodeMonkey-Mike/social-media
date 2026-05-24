@@ -2,7 +2,7 @@
 
 ## Project
 Reply-guy automation for @mikeneder. Curated X list of 191 high-signal crypto accounts.
-Full context in `reply_guy_project_handoff.md`. Voice/style rules in `persona.json`.
+Full context in `reply_guy_project_handoff.md`. Voice/style rules: see the project-wide single source of truth at `../persona/persona.json` (moved out of `config/` so reply-guy and repurpose share one persona).
 
 ---
 
@@ -83,7 +83,7 @@ Two failure patterns that are *always* false-negatives and should never be retri
 | `replies_to_post.json` | Active queue — loaded here, cleared after posting |
 | `posted_replies.json` | Permanent archive of all posted replies |
 | `state.json` | Tracks which accounts have been added to the X list |
-| `persona.json` | Mike's full voice, style, and terminology rules |
+| `../persona/persona.json` | Mike's full voice, style, and terminology rules (project-wide single source of truth — no longer in this folder's `config/`) |
 
 ---
 

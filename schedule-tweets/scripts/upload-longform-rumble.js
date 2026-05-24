@@ -1,15 +1,16 @@
 // upload-longform-rumble.js — uploads a single longform video to Rumble.
-// Reads metadata.json + video + thumbnail from C:\Users\mnede\Documents\Claude\social-media\uploading\new\
+// Reads metadata.json + video + thumbnail from C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\longform\
 // Adapted from post-rumble-short.js with thumbnail support added.
 
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
 
-const SOURCE_DIR        = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\uploading\\new';
-const VIDEO_FILE        = 'market update LONG FORM FINAL.mp4';
-const THUMBNAIL_FILE    = 'kaspa market update.png';
+const SOURCE_DIR        = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\longform';
 const METADATA_FILE     = 'metadata.json';
+// Video + thumbnail are auto-detected from SOURCE_DIR — drop any-named files in schedule-tweets/longform.
+const VIDEO_EXTS        = ['.mp4', '.mov', '.webm', '.mkv'];
+const THUMBNAIL_EXTS    = ['.png', '.jpg', '.jpeg', '.webp'];
 
 const CHROME_PROFILE    = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\rumblebot-profile';
 const RUMBLE_UPLOAD_URL = 'https://rumble.com/upload.php';
@@ -23,6 +24,18 @@ const ACTION_MIN     = 2000;
 const ACTION_MAX     = 5000;
 
 function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+// Auto-detect the single video / thumbnail in SOURCE_DIR (most-recently-modified wins if several).
+function pickFile(dir, exts, label) {
+  const matches = fs.readdirSync(dir)
+    .filter(f => exts.includes(path.extname(f).toLowerCase()))
+    .map(f => ({ p: path.join(dir, f), name: f, mtime: fs.statSync(path.join(dir, f)).mtimeMs }))
+    .sort((a, b) => b.mtime - a.mtime);
+  if (matches.length === 0) return null;
+  if (matches.length > 1) console.log(`  Multiple ${label} files — using most recent: ${matches[0].name}`);
+  else console.log(`  ${label}: ${matches[0].name}`);
+  return matches[0].p;
+}
 
 async function actionPause(page, label = '') {
   const ms = rnd(ACTION_MIN, ACTION_MAX);
@@ -40,13 +53,13 @@ async function typeHuman(page, locator, text) {
 }
 
 (async () => {
-  const videoPath = path.join(SOURCE_DIR, VIDEO_FILE);
-  const thumbPath = path.join(SOURCE_DIR, THUMBNAIL_FILE);
   const metaPath  = path.join(SOURCE_DIR, METADATA_FILE);
+  const videoPath = pickFile(SOURCE_DIR, VIDEO_EXTS, 'video');
+  const thumbPath = pickFile(SOURCE_DIR, THUMBNAIL_EXTS, 'thumbnail');
 
-  if (!fs.existsSync(videoPath))     { console.error('Video not found:', videoPath); process.exit(1); }
-  if (!fs.existsSync(metaPath))      { console.error('Metadata not found:', metaPath); process.exit(1); }
-  const hasThumb = fs.existsSync(thumbPath);
+  if (!videoPath)               { console.error('No video file found in', SOURCE_DIR); process.exit(1); }
+  if (!fs.existsSync(metaPath)) { console.error('Metadata not found:', metaPath); process.exit(1); }
+  const hasThumb = !!thumbPath;
 
   const metadata = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
   const title = (metadata.title || '').slice(0, RUMBLE_TITLE_MAX);
