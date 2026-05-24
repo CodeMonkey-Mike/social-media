@@ -14,13 +14,19 @@ node_modules/
 *.mts
 
 # ── Images ───────────────────────────────────────────────────────────────────
-# ALL images under schedule-tweets/images/ are tracked (including x/, yt/, ig/,
-# and reference/). Rationale: image deletion is irreversible without git, so
-# we accept the repo-size cost for the recovery safety net.
+# Generated content images (the image-batch output) are large (>50KB each) and
+# reproducible by re-running the batches. With deletes now going to the Recycle
+# Bin (cleanup-images), the git "recovery safety net" is no longer needed, so we
+# do NOT track them. (gitignore can't filter by raw size; these dirs hold all the
+# >50KB generated output.) Reference logos in images/reference/ are small, needed
+# by generate-image.js --reference-image, and NOT reproducible — those stay tracked.
+schedule-tweets/images/x/
+schedule-tweets/images/ig/
+schedule-tweets/images/yt/
 
-# Loose debug/temp screenshots at the schedule-tweets root level are still
-# excluded — those are throwaway, not generated content.
+# Loose debug/temp screenshots are throwaway, not content.
 schedule-tweets/tmp-fb-debug/
+schedule-tweets/tmp-fb-longform-debug/
 schedule-tweets/tmp-tiktok-debug/
 schedule-tweets/*.png
 schedule-tweets/*.jpg
