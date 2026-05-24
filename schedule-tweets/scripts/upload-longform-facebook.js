@@ -79,6 +79,63 @@ async function clickByLabelInDialog(page, label) {
   }, label);
 }
 
+// Robustly wait for the byte upload to finish. FB doesn't reliably render a literal
+// "100%" string for large files, so we watch the progress bar / percentage / "uploading"
+// text plus the video preview, and require a sustained "not uploading" state before
+// proceeding. minWaitMs guards against a premature "done" before the UI even appears.
+async function waitForUploadComplete(page, { timeoutMs = 1_200_000, minWaitMs = 45_000 } = {}) {
+  const start = Date.now(); let stable = 0, lastLog = -999;
+  while (Date.now() - start < timeoutMs) {
+    const s = await page.evaluate(() => {
+      const ds = [...document.querySelectorAll('[role="dialog"]')].filter(d => { const r = d.getBoundingClientRect(); return r.width > 100 && r.height > 100; });
+      const root = ds[ds.length - 1] || document.body;
+      const txt = root.innerText || '';
+      const bars = [...root.querySelectorAll('[role="progressbar"]')];
+      let barVal = null;
+      for (const b of bars) { const v = parseFloat(b.getAttribute('aria-valuenow')); if (!isNaN(v)) barVal = (barVal === null) ? v : Math.min(barVal, v); }
+      const pm = txt.match(/(\d{1,3})\s*%/g);
+      const pct = pm ? Math.min(...pm.map(x => parseInt(x, 10))) : null;
+      return { barVal, pct, uploading: /uploading/i.test(txt), hasVideo: !!root.querySelector('video'), hasBar: bars.length > 0 };
+    });
+    const stillUploading = s.uploading || (s.hasBar && (s.barVal === null || s.barVal < 100)) || (s.pct !== null && s.pct < 100);
+    const elapsed = Math.round((Date.now() - start) / 1000);
+    if (elapsed - lastLog >= 15) { console.log(`  [upload] ${elapsed}s — bar=${s.barVal} pct=${s.pct} uploading=${s.uploading} video=${s.hasVideo}`); lastLog = elapsed; }
+    if (!stillUploading && s.hasVideo) stable++; else stable = 0;
+    if (stable >= 4 && (Date.now() - start) >= minWaitMs) { console.log(`  [upload] complete (stable ${stable}x, ${elapsed}s)`); return true; }
+    await page.waitForTimeout(3000);
+  }
+  console.log('  [upload] WARNING — completion not confirmed before timeout');
+  return false;
+}
+
+// All video/reel numeric IDs currently visible on the /videos tab.
+async function getVideoIds(page) {
+  return page.evaluate(() => {
+    const ids = new Set();
+    for (const a of document.querySelectorAll('a[href*="/videos/"], a[href*="/reel/"]')) {
+      const m = a.href.split('?')[0].match(/\/(?:videos|reel)\/(\d+)/);
+      if (m) ids.add(m[1]);
+    }
+    return [...ids];
+  });
+}
+
+// Poll the /videos tab until an ID appears that wasn't in the baseline (the new upload).
+async function pollForNewVideo(page, baselineSet, { timeoutMs = 720_000, intervalMs = 30_000 } = {}) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    try {
+      await page.goto(`https://www.facebook.com/${FB_PAGE}/videos`, { waitUntil: 'domcontentloaded' });
+      await page.waitForTimeout(rnd(VIDEOS_TAB_WAIT_MIN, VIDEOS_TAB_WAIT_MAX));
+      const hrefs = await page.evaluate(() => [...document.querySelectorAll('a[href*="/videos/"], a[href*="/reel/"]')].map(a => a.href.split('?')[0]));
+      for (const href of hrefs) { const m = href.match(/\/(?:videos|reel)\/(\d+)/); if (m && !baselineSet.has(m[1])) { console.log(`  [poll] NEW video: ${href}`); return href; } }
+      console.log(`  [poll] ${Math.round((Date.now()-start)/1000)}s — no new video yet (processing)...`);
+    } catch (e) { console.log(`  [poll] error: ${e.message}`); }
+    await page.waitForTimeout(intervalMs);
+  }
+  return null;
+}
+
 (async () => {
   // ── Validate source (before any Chrome work) ──────────────────────────────
   const metaPath  = path.join(SOURCE_DIR, METADATA_FILE);
@@ -117,6 +174,20 @@ async function clickByLabelInDialog(page, label) {
     };
     if (await isLoggedOut()) throw new Error('Not logged in — sign in to fbbot-profile manually');
 
+    // Baseline existing video/reel IDs so we can identify the NEW upload afterward.
+    // (A large video is still processing right after Post, so "most recent" would be a
+    // stale, already-published video — that was the original false-positive bug.)
+    console.log('Capturing baseline video IDs...');
+    let baselineIds = new Set();
+    try {
+      await page.goto(`https://www.facebook.com/${FB_PAGE}/videos`, { waitUntil: 'domcontentloaded' });
+      await longWait(page, VIDEOS_TAB_WAIT_MIN, VIDEOS_TAB_WAIT_MAX, 'baseline videos settle');
+      baselineIds = new Set(await getVideoIds(page));
+      console.log(`  baseline: ${baselineIds.size} existing video/reel IDs`);
+    } catch (e) { console.log(`  baseline capture failed: ${e.message}`); }
+    await page.goto(PAGE_URL, { waitUntil: 'domcontentloaded' });
+    await actionPause(page, 'back to page');
+
     await page.keyboard.press('Escape'); await page.waitForTimeout(500);
     await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(1000);
     try {
@@ -154,9 +225,9 @@ async function clickByLabelInDialog(page, label) {
     }
     if (!attached) throw new Error('Could not attach video');
 
-    console.log('Waiting for upload 100% (longform — up to 10 min)...');
-    try { await page.waitForFunction(() => document.body.innerText.includes('100%'), { timeout: 600000 }); console.log('  100% ✓'); }
-    catch { console.log('  100% signal not seen — continuing'); }
+    console.log('Waiting for the byte upload to fully complete (large file — up to 20 min)...');
+    const uploadOk = await waitForUploadComplete(page, { timeoutMs: 1_200_000, minWaitMs: 45_000 });
+    if (!uploadOk) console.log('  WARNING: upload completion not confirmed — post may fail; will verify via baseline diff after.');
 
     console.log('Waiting for copyright check to clear...');
     for (let i = 0; i < 60; i++) { const txt = await page.evaluate(() => document.body.innerText.toLowerCase()); if (!txt.includes('checking for copyrighted')) break; await page.waitForTimeout(2000); }
@@ -193,25 +264,31 @@ async function clickByLabelInDialog(page, label) {
     }
     if (!posted) { await snapshot(page, 'FAILED_final_state'); throw new Error('Wizard did not reach final submit button'); }
 
-    for (const label of ['Not now', 'No thanks', 'Maybe later', 'Skip']) {
-      try { const btn = page.getByRole('button', { name: label, exact: true }).first(); if (await btn.isVisible()) { console.log(`Dismissing upsell: ${label}`); await btn.click(); await page.waitForTimeout(rnd(1500, 2500)); break; } } catch {}
+    // Dismiss any post-publish upsell ("Add WhatsApp button", etc.) — may appear more than once.
+    for (let pass = 0; pass < 2; pass++) {
+      let dismissed = false;
+      for (const label of ['Not now', 'No thanks', 'Maybe later', 'Skip']) {
+        try { const btn = page.getByRole('button', { name: label, exact: true }).first(); if (await btn.isVisible()) { console.log(`Dismissing upsell: ${label}`); await btn.click(); await page.waitForTimeout(rnd(1500, 2500)); dismissed = true; break; } } catch {}
+      }
+      if (!dismissed) break;
     }
 
-    console.log('\nWaiting for "Posting" to clear...');
+    // Real submit signal: the "Create post" composer dialog disappears. Large videos
+    // finalize slowly — keep the browser OPEN and wait up to 10 min for it to close.
+    console.log('\nWaiting for composer to close (submit finalizing — up to 10 min)...');
     let submitted = false;
-    for (let i = 0; i < 180; i++) { await page.waitForTimeout(1000); const txt = (await page.evaluate(() => document.body.innerText)).toLowerCase(); if (!txt.includes('posting') && !txt.includes('uploading')) { submitted = true; console.log('  Submitted ✓'); break; } }
+    for (let i = 0; i < 300; i++) {
+      const open = await page.evaluate(() => [...document.querySelectorAll('[role="dialog"]')].some(d => d.getAttribute('aria-label') === 'Create post' && d.getBoundingClientRect().width > 100));
+      if (!open) { submitted = true; console.log(`  Composer closed ✓ (after ~${i*2}s)`); break; }
+      if (i && i % 15 === 0) console.log(`  ...composer still open after ${i*2}s`);
+      await page.waitForTimeout(2000);
+    }
+    if (!submitted) console.log('  WARNING: composer never closed — submit may have failed.');
 
-    console.log('\nCapturing video URL from /videos tab...');
-    let videoUrl = null;
-    try {
-      await page.goto(`https://www.facebook.com/${FB_PAGE}/videos`, { waitUntil: 'domcontentloaded' });
-      await longWait(page, VIDEOS_TAB_WAIT_MIN, VIDEOS_TAB_WAIT_MAX, 'videos tab settle');
-      const links = await page.evaluate(() => [...document.querySelectorAll('a[href]')].map(a => a.href.split('?')[0])
-        .filter(h => (h.includes('/videos/') || h.includes('/reel/')) && h.includes('facebook.com') && !h.endsWith('/videos') && !h.endsWith('/videos/') && !h.endsWith('/reel/'))
-        .filter((h, i, arr) => arr.indexOf(h) === i).slice(0, 3));
-      console.log(`  Recent video URLs: ${JSON.stringify(links)}`);
-      if (links.length) videoUrl = links[0];
-    } catch (e) { console.log(`  URL fetch error: ${e.message}`); }
+    // Find the NEW video by diffing against the baseline. A large video keeps processing
+    // after submit, so poll the /videos tab for up to 12 min (browser stays open).
+    console.log('\nPolling for the new video (baseline diff; up to 12 min)...');
+    const videoUrl = await pollForNewVideo(page, baselineIds, { timeoutMs: 720_000, intervalMs: 30_000 });
 
     let verified = false;
     if (videoUrl) {
@@ -230,10 +307,10 @@ async function clickByLabelInDialog(page, label) {
         if (status >= 200 && status < 400 && hasPlayer) { verified = true; console.log('  Verified live ✓'); }
         else console.log('  Could not verify — post may not be live');
       } catch (e) { console.log(`  Verification error: ${e.message}`); }
-    } else console.log('  Skipping verification — no URL captured');
+    } else console.log('  No NEW video appeared within the poll window — upload likely did not complete.');
 
-    if (submitted && verified) console.log(`\nDone ✓  URL: ${videoUrl}`);
-    else console.log(`\nUncertain — verify manually. URL: ${videoUrl || '(not captured)'}`);
+    if (verified) console.log(`\nDone ✓  URL: ${videoUrl}`);
+    else console.log(`\nUncertain — verify manually. URL: ${videoUrl || '(no new video detected)'}`);
 
   } catch (err) {
     console.error('\nFailed:', err.message); process.exit(1);

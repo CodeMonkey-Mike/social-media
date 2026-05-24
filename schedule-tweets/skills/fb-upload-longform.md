@@ -45,16 +45,26 @@ Mirror `post-fb-short.js`: `PRE_COMPOSE` 60–180s, `PRE_POST` 60–180s, `ACTIO
 
 1. Validates a video + `metadata.json` exist in the source folder (video ≥1MB) — aborts before any Chrome work otherwise.
 2. Builds the caption (title + description, hashtags stripped).
-3. Launches Chrome (`fbbot-profile`), navigates to the Page, checks login, clicks "Switch Now" if the Page-context prompt appears.
-4. Pre-composer wait → opens composer → Photo/video → `setInputFiles()` on the `accept*="video"` file input.
-5. Waits for upload `100%` + copyright scan to clear.
-6. Types caption → pre-post wait.
-7. Wizard loop (up to 12 steps): snapshots the top dialog, clicks the visible final button (Post/Share/Publish/Share now/Done) if present, else the visible Next. Off-screen stacked-panel buttons are filtered out; among same-label matches the largest visible one wins.
-8. Dismisses the post-publish upsell ("Not now" / "No thanks" / "Maybe later" / "Skip").
-9. Waits for the "Posting" spinner to clear.
-10. Captures the URL from `/<page>/videos`, then **verifies**: navigates to the URL, confirms HTTP 2xx/3xx + a `<video>` / player / `og:video`. Prints the URL; only reports success if both the spinner cleared AND the URL verified.
+3. Launches Chrome (`fbbot-profile`), navigates to the Page, checks login.
+4. **Baseline capture:** visits `/<page>/videos` and records the existing video/reel IDs (used later to identify the *new* upload — see below).
+5. Returns to the Page, clicks "Switch Now" if the Page-context prompt appears.
+6. Pre-composer wait → opens composer → Photo/video → `setInputFiles()` on the `accept*="video"` file input.
+7. **Waits for the byte upload to genuinely finish** (`waitForUploadComplete`) — see the section below. Then waits for the copyright scan to clear.
+8. Types caption → pre-post wait.
+9. Wizard loop (up to 12 steps): snapshots the top dialog, clicks the visible final button (Post/Share/Publish/Share now/Done) if present, else the visible Next. Off-screen stacked-panel buttons are filtered out; among same-label matches the largest visible one wins. For a landscape video the path is typically Next ×3 → **Post**.
+10. Dismisses the post-publish upsell ("Not now" / "No thanks" / "Maybe later" / "Skip").
+11. **Waits for the "Create post" composer dialog to close** (the real submit signal), up to 10 min — the browser stays open through finalization.
+12. **Polls `/<page>/videos` for up to 12 min** for an ID *not in the baseline* — that's the newly-uploaded video (a large file keeps processing for minutes after submit, so it isn't listed immediately).
+13. **Verifies** the new URL: HTTP 2xx/3xx + a `<video>` / player / `og:video`. Reports success only if a new video was found AND it verified.
 
 No queue writeback — it just uploads and prints the result (re-running uploads whatever video is currently staged again, so swap the staging folder between runs).
+
+## Critical: upload completion + correct URL (why the naive approach fails)
+
+Two things go wrong with large longform files and are handled explicitly:
+
+- **Don't post before the upload finishes.** Facebook doesn't reliably render a literal `100%` string for a large video, so an `innerText.includes('100%')` check falls through immediately, the wizard clicks Post on a partial upload, and closing the browser aborts the byte transfer → the post never lands. `waitForUploadComplete()` instead watches the dialog's `[role="progressbar"]` `aria-valuenow`, any `NN%` text, an `/uploading/i` string, and the `<video>` preview, and only proceeds after a *sustained* "not uploading" state (with a 45s floor and a 20-min ceiling). **Never replace this with a fixed sleep or a literal-string check.**
+- **Don't trust "most recent video" as the URL.** Right after submit the new video is still processing and isn't on `/videos` yet, so "most recent" returns a stale, already-published clip (this produced a false-positive "verified" once). The script diffs against the baseline IDs captured in step 4 and polls until a genuinely new ID appears.
 
 ## Debug artifacts
 
