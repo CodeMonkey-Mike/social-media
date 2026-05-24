@@ -187,6 +187,15 @@
       margin-top: 12px;
       background: #000;
     }
+    .long-video {
+      display: block;
+      width: 420px;
+      max-width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 10px;
+      margin-top: 12px;
+      background: #000;
+    }
     .plt-pending  { background: #e7f0fd; color: #1877f2; }
     .plt-posted   { background: #e6f9ee; color: #1a7f37; }
     .plt-failed   { background: #fff0f0; color: #c0392b; }
@@ -334,6 +343,7 @@
   <button class="tab" data-tab="xreplies">X Replies <span class="badge" id="badge-xreplies">…</span></button>
   <button class="tab" data-tab="replyopp">Reply Opp <span class="badge" id="badge-replyopp">…</span></button>
   <button class="tab" data-tab="shorts">Shorts <span class="badge" id="badge-shorts">…</span></button>
+  <button class="tab" data-tab="longs">Longs <span class="badge" id="badge-longs">…</span></button>
 </nav>
 
 <div id="tab-tweets"     class="tab-content active"><div class="loading">Loading…</div></div>
@@ -346,6 +356,7 @@
 <div id="tab-xreplies"   class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-replyopp"   class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-shorts"     class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-longs"      class="tab-content"><div class="loading">Loading…</div></div>
 
 <div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
 
@@ -641,6 +652,37 @@ function renderShorts(items) {
   }).join('');
 }
 
+function renderLongs(items) {
+  if (!items.length) return '<div class="empty">No pending longs</div>';
+
+  const PLAT = { rumble: 'Rumble', bitchute: 'BitChute', facebook: 'FB', youtube: 'YouTube' };
+
+  function fmtDur(sec) {
+    const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = Math.floor(sec % 60);
+    return h
+      ? `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+      : `${m}:${String(s).padStart(2, '0')}`;
+  }
+
+  return items.map((v, i) => {
+    const dur   = v.duration_seconds ? fmtDur(v.duration_seconds) : '—';
+    const pills = Object.entries(v.platforms || {}).map(([key, p]) =>
+      `<span class="plt-pill plt-${esc(p.status || 'skip')}">${esc(PLAT[key] || key)}</span>`
+    ).join('');
+    const tags  = (v.tags || []).map(t => `#${esc(t)}`).join(' ');
+    const video = v.video_path
+      ? `<video class="long-video" src="${esc('/' + encodeURI(v.video_path))}" controls preload="metadata"></video>`
+      : '';
+    return `<div class="card">
+      <div class="card-meta">#${i + 1} &nbsp;·&nbsp; ${esc(v.title || v.id || '')} &nbsp;·&nbsp; ${esc(dur)}</div>
+      <div class="plt-pills">${pills}</div>
+      ${video}
+      <div class="caption" style="margin-top:12px">${esc(v.description || '')}</div>
+      ${tags ? `<div class="hashtags" style="margin-top:8px">${tags}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
 // ---- Load all ----
 
 const SOURCES = [
@@ -654,6 +696,8 @@ const SOURCES = [
   { tab: 'xreplies',   url: '/x-reply-guy/data/replies_to_post.json',      key: null,      render: renderReplies },
   { tab: 'replyopp',  url: '/x-reply-guy/data/reply_opportunities.json',  key: null,      render: items => { _replyOpps = items; return renderReplyOpportunities(items); }, afterRender: loadTweetEmbeds },
   { tab: 'shorts',     url: '/data/shorts.json',                          key: 'shorts',  render: renderShorts,
+    filter: x => Object.values(x.platforms || {}).some(p => p.status === 'pending') },
+  { tab: 'longs',      url: '/data/longs.json',                           key: 'longs',   render: renderLongs,
     filter: x => Object.values(x.platforms || {}).some(p => p.status === 'pending') },
 ];
 
