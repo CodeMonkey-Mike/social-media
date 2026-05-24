@@ -11,7 +11,7 @@ const path = require('path');
 const PROFILE_DIR   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\chatgpt-profile';
 const IMAGES_DIR    = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images';
 const SCHEDULE_DIR  = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
-const CHAT_URL      = 'https://chatgpt.com/c/69fe9134-a5a8-83ea-995a-6912aa4d2a24';
+const CHAT_URL      = 'https://chatgpt.com/';  // FRESH chat per run (fixed 2026-05-24 — history-heavy chats caused stale-image grabs)
 const IMAGE_PATTERN = 'estuary/content';
 const COMPOSER_SEL  = '#prompt-textarea, div[contenteditable="true"][data-id]';
 const MIN_GEN_MS    = 10000;
@@ -23,91 +23,60 @@ const IG_JSON     = path.join(SCHEDULE_DIR, 'data', 'ig-single-image.json');
 
 // ── IG match map: tweet hook snippet → IG post id ────────────────────────────
 const IG_HOOK_MAP = {
-  'Take the four-year cycle zombies':       'ig-2026-05-20-bottom-behind-us-1l',
-  'Minnesota banks can custody Bitcoin':    'ig-2026-05-20-minnesota-custody-bill-1l',
-  'Don\'t expect the $KAS pump in 23 days': 'ig-2026-05-20-hard-fork-23-days-priced-in-1l',
-  '\'We could be dead in two days':         'ig-2026-05-20-senior-leadership-defects-1l',
-  '$TAO might win the absolute mcap race':  'ig-2026-05-20-tau-vs-kaspa-multiplier-math-1l',
-  '$TROLL on Solana is now bigger than the original': 'ig-2026-05-20-troll-solana-bigger-than-eth-1l',
+  '$PNUT to reclaim its 2024 ATH from here is a 32x':       'ig-2026-05-21-b3-pnut-32x-bear-math-1l',
+  'Hunter Virus was everywhere a month ago':               'ig-2026-05-21-c1-hunter-virus-narrative-dead-1l',
+  'following the same caller through 8 rugs':              'ig-2026-05-21-c5-rugger-influencer-loyalty-1l',
+  'institutions are coming':                               'ig-2026-05-21-b1-ton-strategy-treasury-1l',
+  'humanity\'s best ideas are sitting in a cemetery':      'ig-2026-05-21-e1-cemetery-of-best-ideas-1l',
+  'four-year cycle zombies will tell you the April rally': 'ig-2026-05-21-a2-btc-spot-deep-contraction-1l',
+  '$PEPE has no brand, no IP, no revenue':                 'ig-2026-05-21-b2-pengu-flips-pepe-1l',
 };
 
 // ── Image plan ────────────────────────────────────────────────────────────────
 // Each entry: { hookSnippet, uuid, slug, xPrompt, igPrompt|null, refImage|null }
 // hookSnippet is matched against pending tweet hooks to find the right tweet.
+// 20 pending tweets — each gets its OWN unique image (NEVER reuse an image_id; see SKILL HARD RULE #1).
 const IMAGES = [
-  // ── TROLL tweets — both use troll.png reference ───────────────────────────
-  {
-    hookSnippet: '$TROLL on Solana is now bigger than the original',
-    uuid: 'e42e6175', slug: 'troll-solana-beats-troll-eth',
-    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Two large anthropomorphized versions of the coin shown in the reference image face off dramatically. The smaller one stands on a purple Ethereum platform looking intimidated. The much larger, bolder one stands on a bright green Solana platform, arms crossed triumphantly. Render the character using the logo from the attached reference image. Deep navy near-black background. Dramatic cinematic green and purple rim lighting. Competitive triumphant mood. No text or words anywhere in the image.',
-    igPrompt: 'Pixar-style 3D animated CGI illustration, 4:5 aspect ratio, film-quality render. Two large anthropomorphized versions of the coin shown in the reference image face off dramatically. The smaller one stands on a purple Ethereum platform looking intimidated. The much larger, bolder one stands on a bright green Solana platform, arms crossed triumphantly. Render the character using the logo from the attached reference image. Deep navy near-black background. Dramatic cinematic green and purple rim lighting. Competitive triumphant mood. No text or words anywhere in the image.',
-    refImage: TROLL_REF,
-  },
-  {
-    hookSnippet: '$TROLL on Solana is now bigger than $TROLL on ETH.',
-    uuid: 'e40a228f', slug: 'troll-copy-beats-original-eth',
-    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A small original version of the coin from the reference image stands on a purple Ethereum stage, looking embarrassed and deflated. Next to it, a dramatically larger copy of the same coin on a bright green Solana stage towers over it confidently, holding a trophy. Render the coin character using the attached reference image logo. Deep navy near-black background. Dramatic cinematic green and purple rim lighting. Ironic comedic mood. No text or words anywhere in the image.',
-    igPrompt: null,
-    refImage: TROLL_REF,
-  },
-
-  // ── 8 remaining tweets with no image ─────────────────────────────────────
-  {
-    hookSnippet: 'Take the four-year cycle zombies',
-    uuid: '67d2cc9e', slug: 'cycle-zombies-fading-btc-rises',
-    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A group of zombie-like tired investor characters shuffle away and dissolve into mist, dropping heavy coin bags. Behind them, a glowing gold Bitcoin coin character rises triumphantly into golden light above. Deep navy near-black background. Dramatic cinematic gold and teal rim lighting. Triumphant hopeful mood. No text or words anywhere in the image.',
-    igPrompt: 'Pixar-style 3D animated CGI illustration, 4:5 aspect ratio, film-quality render. A group of zombie-like tired investor characters shuffle away and dissolve into mist, dropping heavy coin bags. Behind them, a glowing gold Bitcoin coin character rises triumphantly into golden light above. Deep navy near-black background. Dramatic cinematic gold and teal rim lighting. Triumphant hopeful mood. No text or words anywhere in the image.',
-    refImage: null,
-  },
-  {
-    hookSnippet: 'Minnesota banks can custody Bitcoin',
-    uuid: '221dbeb4', slug: 'minnesota-banks-rolling-adoption',
-    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A friendly bank building character opens its vault doors wide, welcoming a cheerful glowing gold Bitcoin coin character inside. In the background, a stylized map of the United States has multiple states lighting up with golden glows in a chain reaction spreading state by state. Deep navy near-black background. Dramatic cinematic gold rim lighting. Triumphant official mood. No text or words anywhere in the image.',
-    igPrompt: 'Pixar-style 3D animated CGI illustration, 4:5 aspect ratio, film-quality render. A friendly bank building character opens its vault doors wide, welcoming a cheerful glowing gold Bitcoin coin character inside. In the background, a stylized map of the United States has multiple states lighting up with golden glows in a chain reaction spreading state by state. Deep navy near-black background. Dramatic cinematic gold rim lighting. Triumphant official mood. No text or words anywhere in the image.',
-    refImage: null,
-  },
-  {
-    hookSnippet: 'Bought $PNUT back yesterday at 48% under my prior sell. Dry',
-    uuid: '94c3df2f', slug: 'pnut-dry-powder-edge',
-    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A confident investor character with bright green eyes holds a glowing peanut coin in one hand and a glowing reserve pouch of dry powder in the other, grinning with satisfaction. The peanut coin beams happily. Deep navy near-black background. Dramatic cinematic gold rim lighting. Savvy opportunistic mood. No text or words anywhere in the image.',
-    igPrompt: null,
-    refImage: null,
-  },
-  {
-    hookSnippet: "Don't expect the $KAS pump in 23 days",
-    uuid: 'cdae76ab', slug: 'kas-hard-fork-priced-in-crowd',
-    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A glowing teal Kaspa coin character stands on a stage facing a huge excited crowd all pointing at a glowing countdown timer. A large rubber stamp descends from above stamping the air. The coin shrugs knowingly. Deep navy near-black background. Dramatic cinematic teal rim lighting. Knowing ironic mood. No text or words anywhere in the image.',
-    igPrompt: 'Pixar-style 3D animated CGI illustration, 4:5 aspect ratio, film-quality render. A glowing teal Kaspa coin character stands on a stage facing a huge excited crowd all pointing at a glowing countdown timer. A large rubber stamp descends from above stamping the air. The coin shrugs knowingly. Deep navy near-black background. Dramatic cinematic teal rim lighting. Knowing ironic mood. No text or words anywhere in the image.',
-    refImage: null,
-  },
-  {
-    hookSnippet: 'The Kaspa hard fork is 23 days out.',
-    uuid: 'c6513e28', slug: 'kaspa-hard-fork-countdown-no-pump',
-    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A glowing teal Kaspa coin character stands confidently in front of a large countdown timer. An excited crowd surrounds it expecting a celebration. The coin raises one eyebrow knowingly, unmoved by the hype. Deep navy near-black background. Dramatic cinematic teal rim lighting. Wise knowing mood. No text or words anywhere in the image.',
-    igPrompt: null,
-    refImage: null,
-  },
-  {
-    hookSnippet: "'We could be dead in two days",
-    uuid: 'c929e08f', slug: 'iran-geopolitical-calculus-chess',
-    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Two opposing chess piece characters face each other across a chessboard set in a dramatic desert landscape at night. Both look calculating and tense, each weighing impossible choices. A glowing gold Bitcoin coin observes calmly from the sidelines. Deep navy near-black background. Dramatic cinematic moonlit tension lighting. Tense strategic mood. No text or words anywhere in the image.',
-    igPrompt: 'Pixar-style 3D animated CGI illustration, 4:5 aspect ratio, film-quality render. Two opposing chess piece characters face each other across a chessboard set in a dramatic desert landscape at night. Both look calculating and tense, each weighing impossible choices. A glowing gold Bitcoin coin observes calmly from the sidelines. Deep navy near-black background. Dramatic cinematic moonlit tension lighting. Tense strategic mood. No text or words anywhere in the image.',
-    refImage: null,
-  },
-  {
-    hookSnippet: 'Theory on why this Iran ceasefire keeps holding',
-    uuid: '6fc77eea', slug: 'iran-ceasefire-targeted-leadership-theory',
-    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Two opposing military chess piece characters sit across a table in a tense but stable ceasefire meeting. Both look uncomfortable but restrained. A spotlight clearly illuminates each one. The tension is palpable but neither moves. Deep navy near-black background. Dramatic cinematic cool blue rim lighting. Tense cautious mood. No text or words anywhere in the image.',
-    igPrompt: null,
-    refImage: null,
-  },
-  {
-    hookSnippet: '$TAO might win the absolute mcap race',
-    uuid: 'a881e0c8', slug: 'tao-kas-different-finish-lines',
-    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Two coin characters race on parallel tracks with separate finish lines. A large TAO coin crosses the market cap finish line first, raising a trophy. A teal Kaspa coin crosses a different multiplier finish line at the same moment, holding an even bigger trophy and grinning wider. Both win in their own category. Deep navy near-black background. Dramatic cinematic teal and blue rim lighting. Competitive triumphant mood. No text or words anywhere in the image.',
-    igPrompt: 'Pixar-style 3D animated CGI illustration, 4:5 aspect ratio, film-quality render. Two coin characters race on parallel tracks with separate finish lines. A large TAO coin crosses the market cap finish line first, raising a trophy. A teal Kaspa coin crosses a different multiplier finish line at the same moment, holding an even bigger trophy and grinning wider. Both win in their own category. Deep navy near-black background. Dramatic cinematic teal and blue rim lighting. Competitive triumphant mood. No text or words anywhere in the image.',
-    refImage: null,
-  },
+  { hookSnippet: '4% on USDC dies the second', uuid: 'sb01vlt0', slug: 'stablecoin-yield-vault-slam', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A heavy bank vault door slamming shut on a glowing golden percent-yield symbol while small everyday-person characters reach for it from outside. Deep navy near-black background. Dramatic gold and grey rim lighting. Tense defiant mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'Polymarket has it at 61%', uuid: 'cl02oddw', slug: 'clarity-odds-wheel', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A confident coin character watching a glowing odds wheel land on a bright green winning slice, a cracked golden ceiling opening above to reveal light. Deep navy near-black background. Dramatic green and gold rim lighting. Hopeful anticipation mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'One day soon, self-driving will be mandatory', uuid: 'sd03mand', slug: 'self-driving-mandatory', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A sleek glowing driverless car character gliding along a neon futuristic highway at night, an empty driver seat with a faint red prohibition glow where the steering wheel would be. Deep navy near-black background. Cool blue rim lighting. Inevitable futuristic mood. No text or words anywhere in the image.' },
+  { hookSnippet: '$PNUT topped near $1.7B mcap', uuid: 'pn04mtn0', slug: 'pnut-32x-mountain', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A determined glowing peanut mascot character climbing a tall dark mountain toward a distant glowing summit flag far above, a tiny base camp far below. Deep navy near-black background. Dramatic gold rim lighting. Aspirational underdog mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'Real meme devs time their launches for rallies', uuid: 'rm05surf', slug: 'meme-devs-surf-rally', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A cute chubby blue penguin character surfing confidently atop a massive glowing green rally wave at the perfect moment, while other meme-coin characters tumble and wipe out in the cold water below. Deep navy near-black background. Teal and green rim lighting. Well-timed triumphant mood. No text or words anywhere in the image.' },
+  { hookSnippet: "April's BTC rally was perp futures", uuid: 'bt06blon', slug: 'btc-perp-balloon-candle', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A hollow green candlestick shaped like a balloon being inflated by a wheezing perp-futures air pump, already sagging and starting to deflate, nothing solid inside. Deep navy near-black background. Eerie green rim lighting. Skeptical hollow mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'delivered my frozen meat to the wrong house', uuid: 'fx07lost', slug: 'fedex-courier-wrong-house', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A careless human courier character tossing a package onto the wrong dark doorstep and sneaking away, while a glowing AI delivery robot nearby watches disapprovingly with arms crossed. Deep navy near-black background. Cool blue versus murky rim lighting. Ironic mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'KRC20 meme at $5.1K mcap', uuid: 'mc08gem0', slug: 'microcap-hidden-gem', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A tiny radiant gem-like coin spotlighted on a hidden pedestal behind a drawn velvet curtain, a small inner circle of silhouettes peeking in admiringly. Deep navy near-black background. Teal and gold rim lighting. Secretive insider mood. No text or words anywhere in the image.' },
+  { hookSnippet: "Following the same caller through 8 rugs isn't loyalty", uuid: 'rg09trap', slug: 'eight-rugs-trapdoors', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A line of trusting investor characters handing wallets to a grinning influencer character who drops each one through a row of eight trapdoors in the dark floor. Deep navy near-black background. Dramatic red rim lighting. Dark cautionary mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'unlocks the highest concentration of unbuilt ideas', uuid: 'ai10rise', slug: 'ai-ideas-rising-build', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. Glowing idea-orbs floating up out of a moonlit graveyard toward a bright construction site where a single small figure builds with the light. Deep navy near-black background. Teal and warm gold rim lighting. Hopeful visionary mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'The goalpost is gone', uuid: 'fx11robo', slug: 'delivery-robot-perfect', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A precise glowing AI delivery robot character placing a package perfectly and gently on a doorstep under a clean bright spotlight, flawless and reliable. Deep navy near-black background. Cool blue rim lighting. Competent reassuring mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'One day human driving will be illegal', uuid: 'dr12musm', slug: 'steering-wheel-museum', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. An old-fashioned car steering wheel sealed inside a glowing museum glass display case on a pedestal, a relic of the past, a judge gavel resting beside it. Deep navy near-black background. Cool blue rim lighting. Solemn historic mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'New all-time highs come back onto the table if it passes', uuid: 'cl13brk0', slug: 'coin-breaks-ath-ceiling', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A determined coin character smashing upward through a glowing cracked ceiling into bright light above, green breakout energy trailing behind it. Deep navy near-black background. Green and gold rim lighting. Breakthrough triumphant mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'future engineer manager has no direct reports', uuid: 'en14mgr0', slug: 'manager-only-ai-reports', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A relaxed manager character at a sleek desk directing a neat fleet of glowing AI robot workers as the only team, faint empty human office chairs dissolving in the background. Deep navy near-black background. Cool blue rim lighting. Future-of-work mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'Brand and IP beat pure vibes', uuid: 'pp15ldrb', slug: 'pengu-leaps-pepe-leaderboard', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A glowing leaderboard podium where a confident blue penguin coin leaps up past a green frog coin to seize the top spot. Deep navy near-black background. Teal versus green rim lighting. Competitive ascending mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'The MicroStrategy of Toncoin is already here', uuid: 'tn16bldg', slug: 'ton-treasury-tower', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A towering corporate treasury skyscraper constructed entirely from stacked glowing blue diamond TON coins, a flag planted triumphantly at its peak. Deep navy near-black background. Cool blue rim lighting. Institutional powerful mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'caught Lab at 8 cents', uuid: 'lb17vlt0', slug: 'lab-quiet-accumulation-kas', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A calm investor character quietly slipping a glowing coin into a hidden vault in the shadows while a massive glowing green ascending chart soars upward behind them, one finger raised to lips for silence. Deep navy near-black background. Teal and green rim lighting. Quiet-conviction mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'My community has the microcaps before X does', uuid: 'mc18circ', slug: 'community-inner-circle-bags', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. An exclusive inner-circle table of cheering member characters holding glowing money bags, while a crowd of outsiders presses against a glass wall looking in from the dark. Deep navy near-black background. Teal and gold rim lighting. Insider-advantage mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'Everyone was talking up Hunter Virus', uuid: 'hv19tmbl', slug: 'hunter-virus-tumbleweed', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. A dusty abandoned meme-coin character slumped on a cracked pedestal in a deserted fading spotlight, a tumbleweed rolling past, the hype long gone. Deep navy near-black background. Cold faded rim lighting. Forgotten desolate mood. No text or words anywhere in the image.' },
+  { hookSnippet: 'I never announced publicly until we were already up 50x', uuid: 'lb20trph', slug: 'lab-98x-silent-trophy', igPrompt: null, refImage: null,
+    xPrompt: 'Pixar-style 3D animated CGI illustration, 1:1 square, film-quality render. An investor character quietly holding up a glowing golden trophy in the shadows with one finger to the lips signaling silence, an understated private victory. Deep navy near-black background. Gold and teal rim lighting. Quiet-win mood. No text or words anywhere in the image.' },
 ];
 
 // ── JSON helpers ──────────────────────────────────────────────────────────────
@@ -252,9 +221,13 @@ async function main() {
   // Block sidebar images during initial load so baseline is clean
   const imgPattern = `**/*${IMAGE_PATTERN}*`;
   await page.route(imgPattern, route => route.abort());
-  console.log(`Navigating to chat: ${CHAT_URL}`);
+  console.log(`Navigating to a fresh chat...`);
   await page.goto(CHAT_URL);
   await page.waitForLoadState('domcontentloaded');
+  if (page.url().includes('/c/')) {
+    await page.goto('https://chatgpt.com/');
+    await page.waitForLoadState('domcontentloaded');
+  }
   await page.locator(COMPOSER_SEL).first().waitFor({ timeout: 30000 });
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await page.waitForTimeout(3000);
@@ -271,15 +244,21 @@ async function main() {
     console.log(`${'─'.repeat(60)}`);
     console.log(`[${i + 1}/${IMAGES.length}] ${uuid} — ${slug}`);
 
-    // X tweet image (1:1)
+    // X tweet image (1:1) — skip if already generated, so the batch is resumable
+    // after being paused for a higher-priority Lane B post.
     const xPath = path.join(IMAGES_DIR, 'x', `x-tweets-${uuid}-${slug}.png`);
-    try {
-      await generateOne(page, { targetPath: xPath, prompt: xPrompt, refImage, label: `X 1:1 — ${slug}` });
+    if (fs.existsSync(xPath)) {
+      console.log(`  [SKIP] ${path.basename(xPath)} already exists`);
       updateTweetJson(hookSnippet, uuid, slug);
-      successCount++;
-    } catch (err) {
-      console.error(`  ✗ X failed: ${err.message}`);
-      failCount++;
+    } else {
+      try {
+        await generateOne(page, { targetPath: xPath, prompt: xPrompt, refImage, label: `X 1:1 — ${slug}` });
+        updateTweetJson(hookSnippet, uuid, slug);
+        successCount++;
+      } catch (err) {
+        console.error(`  ✗ X failed: ${err.message}`);
+        failCount++;
+      }
     }
 
     // IG companion (4:5) if applicable

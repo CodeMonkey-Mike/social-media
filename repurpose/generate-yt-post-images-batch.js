@@ -9,7 +9,7 @@ const path = require('path');
 const PROFILE_DIR   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\chatgpt-profile';
 const IMAGES_DIR    = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images';
 const SCHEDULE_DIR  = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
-const CHAT_URL      = 'https://chatgpt.com/c/69ffc14c-3994-83ea-8f79-48845459ecfa';
+const CHAT_URL      = 'https://chatgpt.com/';  // FRESH chat per run — a history-heavy persistent chat caused stale-image grabs (fixed 2026-05-24)
 const IMAGE_PATTERN = 'estuary/content';
 const COMPOSER_SEL  = '#prompt-textarea, div[contenteditable="true"][data-id]';
 const MIN_GEN_MS    = 10000;
@@ -29,165 +29,75 @@ const V2 = ({ n, total, title, insight, boxLabel, detail }) =>
 // Each post: { id, version, igCaption, slides: [{ uuid, seq, slug, slideText, prompt }] }
 const POSTS = [
 
-  // ── Post 1: Iran/bottom — Version 1, 5 slides ─────────────────────────────
+  // ── a3 Clarity Act stablecoin yield — Version 2, 5 slides ──────────────────
   {
-    id: 'yt-post-2026-05-20-bottom-behind-us-kaspa-beta',
-    version: 1,
-    igCaption: 'Hot take: if Iran caves, Bitcoin may never dip below 70K again. The macro is setting up faster than retail realizes. $KAS is the beta play. Is the cycle bottom already behind us — or one more dip?',
-    slides: [
-      { uuid: 'a9a4a79d', seq: '01', slug: 'hook-bears-mad',
-        slideText: 'Hot take that\'ll make the bears mad.',
-        prompt: V1('Dramatic hook slide. Center text area: large bold all-caps white text. Teal glowing accent border. Neon green highlight on key phrase. Dark near-black background with subtle light rays. No coins, no faces. Pure typography impact. Slide text: HOT TAKE THAT\'LL MAKE THE BEARS MAD') },
-      { uuid: '313239db', seq: '02', slug: 'iran-bitcoin-70k',
-        slideText: 'If Iran caves, Bitcoin may never dip under 70K again.',
-        prompt: V1('News-flash slide. Bold all-caps white headline. Neon green accent on the price figure. Background: dramatic dark sky with faint geopolitical tension atmosphere. No faces. Slide concept: IF IRAN CAVES / BITCOIN NEVER BELOW 70K') },
-      { uuid: '78bc49fa', seq: '03', slug: 'gulf-states-mediation',
-        slideText: 'Qatar, Saudi, UAE stepped in. Mediation is working.',
-        prompt: V1('News-flash slide. Three bold region labels stacked vertically in white all-caps. Neon green checkmarks next to each. Dark background. Bold typography. No faces. Concept: QATAR / SAUDI ARABIA / UAE / MEDIATION IS WORKING') },
-      { uuid: '4d4bf7bb', seq: '04', slug: 'kas-beta-positioning',
-        slideText: 'Cycle bottom may already be behind us. $KAS is the beta.',
-        prompt: V1('Dramatic news-flash slide. Large teal glowing $KAS label prominent. Bold white all-caps text. Neon green accent on BETA. Dark near-black background with upward light rays. No faces. Concept: CYCLE BOTTOM BEHIND US / $KAS IS THE BETA') },
-      { uuid: 'dbd28e64', seq: '05', slug: 'engagement-question',
-        slideText: 'Bottom already behind us — or one more dip?',
-        prompt: V1('Engagement question slide. Split design: left side neon green UP arrow, right side red DOWN arrow. Bold white all-caps question between them. Dark background. High contrast. No faces. Concept: BOTTOM ALREADY IN — OR ONE MORE DIP?') },
-    ],
-  },
-
-  // ── Post 2: PMI expansion/KAS runway — Version 2, 5 slides ───────────────
-  {
-    id: 'yt-post-2026-05-20-pmi-expansion-kaspa-runway',
+    id: 'yt-post-2026-05-21-a3-clarity-act-yield-is-the-whole-point',
     version: 2,
-    igCaption: 'CT is calling a recession. PMI says 52.7 — 18 straight months of expansion. Manufacturing is back. Retail is missing the window. $KAS runway is closing fast. How much accumulation time is actually left?',
+    igCaption: "The Clarity Act is at the Senate floor, and the banking lobby is fighting to gut the one part that matters to retail: stablecoin yield. The text allows yield from bona-fide protocol activity, so USDC and USDT can keep paying. Banks want it narrowed until nothing qualifies. Where do you stand on stablecoin yield?",
     slides: [
-      { uuid: '0960b4b8', seq: '01', slug: 'hook-ct-recession',
-        slideText: 'CT is still calling this a recession.',
-        prompt: V2({ n:1, total:5, title: 'CT IS STILL CALLING THIS A RECESSION', insight: 'The data says otherwise', boxLabel: 'THE SETUP', detail: 'PMI 52.7. 18 months of expansion. Manufacturing month 4 above 50.' }) },
-      { uuid: '1f991d4b', seq: '02', slug: 'pmi-data',
-        slideText: 'April PMI: 52.7. Anything above 50 means expansion.',
-        prompt: V2({ n:2, total:5, title: 'APRIL PMI: 52.7', insight: 'Above 50 = expansion. Below 50 = contraction', boxLabel: 'THE NUMBER', detail: '18 straight months of expansion. Manufacturing: 4th month in a row above 50.' }) },
-      { uuid: '31dcb431', seq: '03', slug: 'retail-missing-window',
-        slideText: 'Retail isn\'t connecting the dots. The window is closing.',
-        prompt: V2({ n:3, total:5, title: 'RETAIL IS MISSING THE CONNECTION', insight: 'Expansion + rate environment = asset rotation incoming', boxLabel: 'THE PROBLEM', detail: 'Most retail is looking at headlines, not PMI. The accumulation window is closing.' }) },
-      { uuid: '317cb2e8', seq: '04', slug: 'kas-runway-closing',
-        slideText: '$KAS has a runway most people don\'t see closing.',
-        prompt: V2({ n:4, total:5, title: '$KAS RUNWAY IS CLOSING', insight: 'Low entry + macro tailwind = asymmetric setup', boxLabel: 'THE OPPORTUNITY', detail: 'When PMI-driven expansion hits crypto awareness, the entry closes. $KAS is still early.' }) },
-      { uuid: 'cc713205', seq: '05', slug: 'engagement-question',
-        slideText: 'How much accumulation runway is actually left?',
-        prompt: V2({ n:5, total:5, title: 'HOW MUCH RUNWAY IS LEFT?', insight: 'You tell me', boxLabel: 'YOUR TAKE', detail: 'If we\'re 18 months into expansion already — how much time is actually left to accumulate?' }) },
+      { uuid: 'a3010001', seq: '01', slug: 'hook-gut-yield',
+        slideText: 'The banking lobby is fighting to gut stablecoin yield.',
+        prompt: V2({ n: 1, total: 5, title: 'THE BANKING LOBBY WANTS TO KILL STABLECOIN YIELD', insight: 'The one part of the bill retail cares about', boxLabel: 'THE FIGHT', detail: 'The Clarity Act is at the Senate floor, and banks are lobbying to strip the yield provision.' }) },
+      { uuid: 'a3020002', seq: '02', slug: 'bona-fide-yield',
+        slideText: 'The bill still allows yield from real protocol activity.',
+        prompt: V2({ n: 2, total: 5, title: 'YIELD FROM REAL ACTIVITY STAYS LEGAL', insight: 'Bona-fide protocol yield is allowed', boxLabel: 'THE TEXT', detail: 'Tillis and Alsobrooks banned bank-deposit-equivalent yield but kept bona-fide activity. USDC and USDT can still pay.' }) },
+      { uuid: 'a3030003', seq: '03', slug: 'narrow-it-down',
+        slideText: 'Banks want the language narrowed until nothing qualifies.',
+        prompt: V2({ n: 3, total: 5, title: 'BANKS WANT IT NARROWED TO ZERO', insight: 'Refine the language is lobby code', boxLabel: 'THE PLAYBOOK', detail: 'The American Bankers Association is writing letters to narrow the wording until no stablecoin qualifies.' }) },
+      { uuid: 'a3040004', seq: '04', slug: 'yield-whole-point',
+        slideText: 'Yield is the whole point for the little guy.',
+        prompt: V2({ n: 4, total: 5, title: 'YIELD IS THE WHOLE POINT', insight: 'Kill it and 4% on USDC dies day one', boxLabel: 'WHY IT MATTERS', detail: 'Strip the yield and the retail upside of this entire bill disappears the moment it passes.' }) },
+      { uuid: 'a3050005', seq: '05', slug: 'engagement-question',
+        slideText: 'Where do you stand on stablecoin yield?',
+        prompt: V2({ n: 5, total: 5, title: 'WHERE DO YOU STAND ON STABLECOIN YIELD?', insight: 'And how much of your bag is parked there?', boxLabel: 'YOUR TAKE', detail: 'Is stablecoin yield the killer feature of this bill, or a footnote? Where is your cash sitting?' }) },
     ],
   },
 
-  // ── Post 3: Minnesota HF 3709 — Version 2, 4 slides ──────────────────────
+  // ── c4 Real meme devs time launches — Version 2, 5 slides ──────────────────
   {
-    id: 'yt-post-2026-05-20-minnesota-custody-kaspa-institutional',
+    id: 'yt-post-2026-05-21-c4-real-meme-devs-time-their-launches',
     version: 2,
-    igCaption: 'Minnesota just signed HF 3709. Every bank can custody Bitcoin starting Aug 1. State-by-state adoption is how institutions get in. $KAS checks every box on their checklist. Which box do most chains fail first?',
+    igCaption: "Want to know if a meme launch is serious? Look at the calendar. $PENGU launched into the Trump pump of 2024, not a bear, because a funded team could wait for the rally. The gap between bidless tape and a pump is the gap between a $50M and a $1.7B mcap. When does the next serious meme launch?",
     slides: [
-      { uuid: 'f9fe2d98', seq: '01', slug: 'hook-minnesota-signed',
-        slideText: 'Minnesota just signed HF 3709 into law.',
-        prompt: V2({ n:1, total:4, title: 'MINNESOTA JUST SIGNED HF 3709', insight: 'Every bank can custody Bitcoin starting Aug 1', boxLabel: 'THE VOTE', detail: '130-4 in the House. 51-16 in the Senate. Gov Walz signed Friday.' }) },
-      { uuid: 'c9ab42e1', seq: '02', slug: 'state-by-state-rolling',
-        slideText: 'State-by-state adoption is rolling. This is how it happens.',
-        prompt: V2({ n:2, total:4, title: 'STATE BY STATE ADOPTION IS ROLLING', insight: 'One state signs → others follow', boxLabel: 'THE MECHANISM', detail: 'Banks can now custody Bitcoin as an asset class. This is the on-ramp for institutional capital at the state level.' }) },
-      { uuid: '1bd4ef3c', seq: '03', slug: 'kas-four-box-checklist',
-        slideText: '$KAS checks every institutional box. Most chains don\'t.',
-        prompt: V2({ n:3, total:4, title: '$KAS CHECKS ALL FOUR BOXES', insight: 'Security. Settlement. Decentralization. Stress stability.', boxLabel: 'THE FILTER', detail: 'Institutional allocators use a four-box screen. $KAS is the only PoW alt that clears all four.' }) },
-      { uuid: '174aaf69', seq: '04', slug: 'engagement-question',
-        slideText: 'Which box do most chains fail on first?',
-        prompt: V2({ n:4, total:4, title: 'WHICH BOX DO MOST CHAINS FAIL FIRST?', insight: 'Security / Settlement / Decentralization / Stress stability', boxLabel: 'YOUR TAKE', detail: 'Of the four institutional boxes — which one eliminates the most competitors first?' }) },
+      { uuid: 'c4010001', seq: '01', slug: 'hook-calendar',
+        slideText: 'Want to know if a meme is serious? Look at the calendar.',
+        prompt: V2({ n: 1, total: 5, title: 'A SERIOUS MEME LAUNCH SHOWS UP ON THE CALENDAR', insight: 'Timing reveals the team', boxLabel: 'THE TELL', detail: 'Serious teams launch when retail is pouring in, never into dead bidless tape.' }) },
+      { uuid: 'c4020002', seq: '02', slug: 'pengu-trump-pump',
+        slideText: '$PENGU launched into the Trump pump, not a bear.',
+        prompt: V2({ n: 2, total: 5, title: '$PENGU LAUNCHED INTO THE TRUMP PUMP', insight: 'Not a bear, by design', boxLabel: 'THE EXAMPLE', detail: 'Pudgy Penguins had VCs, brand deals, and a real launch operation. They waited for the rally because they could.' }) },
+      { uuid: 'c4030003', seq: '03', slug: 'funded-teams-wait',
+        slideText: 'Funded teams can afford to wait a year.',
+        prompt: V2({ n: 3, total: 5, title: 'FUNDED TEAMS CAN AFFORD TO WAIT', insight: 'A year on the sidelines if needed', boxLabel: 'THE EDGE', detail: 'Teams with real money time their launch for maximum bang. Fair-launch projects never get that luxury.' }) },
+      { uuid: 'c4040004', seq: '04', slug: 'mcap-gap',
+        slideText: 'Bidless tape vs Trump pump: $50M or $1.7B.',
+        prompt: V2({ n: 4, total: 5, title: 'THE TIMING IS WORTH BILLIONS', insight: '$50M mcap or $1.7B mcap', boxLabel: 'THE MATH', detail: 'Same coin, different week. Launch timing is the difference between a flop and a top-tier token.' }) },
+      { uuid: 'c4050005', seq: '05', slug: 'engagement-question',
+        slideText: 'When does the next serious meme launch?',
+        prompt: V2({ n: 5, total: 5, title: 'WHEN DOES THE NEXT SERIOUS MEME LAUNCH?', insight: 'And how will you spot it first?', boxLabel: 'YOUR CALL', detail: 'How do you plan to spot the next funded launch before the chart confirms it?' }) },
     ],
   },
 
-  // ── Post 4: Hard fork priced in — Version 1, 5 slides ────────────────────
+  // ── c5 Influencer integrity — Version 2, 5 slides ──────────────────────────
   {
-    id: 'yt-post-2026-05-20-hard-fork-23-days-pricing-in',
-    version: 1,
-    igCaption: "Hot take: don't expect the $KAS pump in 23 days. Everyone knows the date — that means it's already priced in. The real move lands when the crowd stops watching. Do you think $KAS pumps before, on, or after the fork?",
-    slides: [
-      { uuid: '4f83d205', seq: '01', slug: 'hook-community-mad',
-        slideText: 'Hot take that\'ll make the Kaspa community mad.',
-        prompt: V1('Dramatic hook slide. Bold all-caps white text. Teal $KAS logo glow accent. Neon red warning accent. Dark near-black background. High contrast typography. No faces. Slide text: HOT TAKE THAT\'LL MAKE THE KASPA COMMUNITY MAD') },
-      { uuid: '9b639801', seq: '02', slug: 'fork-23-days-no-pump',
-        slideText: 'Hard fork is 23 days out. Don\'t expect the pump.',
-        prompt: V1('News-flash slide. Large countdown visual: "23 DAYS" in bold neon green. Crossed-out rocket icon (no pump). White all-caps text. Dark background. No faces. Concept: HARD FORK 23 DAYS OUT / NO PUMP EXPECTED') },
-      { uuid: '2e48acb6', seq: '03', slug: 'priced-in-everyone-knows',
-        slideText: 'When everyone knows the catalyst, it\'s already priced in.',
-        prompt: V1('Bold educational slide. Large bold white all-caps headline. Neon green accent on PRICED IN. Crowd of small identical figures below the text to suggest "everyone knows." Dark background. No faces. Concept: WHEN EVERYONE KNOWS / IT\'S ALREADY PRICED IN') },
-      { uuid: '45a965bc', seq: '04', slug: 'real-pump-after-crowd',
-        slideText: 'The real move lands when the crowd stops watching.',
-        prompt: V1('Dramatic news-flash slide. Bold white all-caps text. Neon green accent on REAL MOVE. Dark background with faint upward light ray. Suspenseful mood. No faces. Concept: THE REAL MOVE LANDS / WHEN THE CROWD STOPS WATCHING') },
-      { uuid: 'ec8141d7', seq: '05', slug: 'engagement-question',
-        slideText: 'Does $KAS pump before, on, or weeks after the fork?',
-        prompt: V1('Poll-style engagement slide. Three bold options stacked: BEFORE / ON THE DAY / WEEKS AFTER — each on its own line in white all-caps. Teal $KAS accent. Dark background. No faces. Concept: WHEN DOES $KAS PUMP?') },
-    ],
-  },
-
-  // ── Post 5: Institutional checklist — Version 2, 5 slides ────────────────
-  {
-    id: 'yt-post-2026-05-20-institutions-infrastructure-kaspa-checklist',
+    id: 'yt-post-2026-05-21-c5-influencer-integrity-and-the-community-test',
     version: 2,
-    igCaption: 'Institutions use a 4-box filter: security, instant settlement, decentralization, stability under stress. $KAS is the only PoW alt that checks all four. Which box trips most competitors first?',
+    igCaption: "There is a pattern nobody names: the same crowd follows the same caller through 8 rugs. Different ticker, same wallet bleed. That is not loyalty, it is a paid subscription to losses. A real caller holds what they shill, on chain, before the call goes out. What is your filter for a crypto caller?",
     slides: [
-      { uuid: '21eb4251', seq: '01', slug: 'hook-no-memes',
-        slideText: 'Institutions don\'t look for memes. They have a checklist.',
-        prompt: V2({ n:1, total:5, title: 'INSTITUTIONS DON\'T BUY MEMES', insight: 'They have allocators, risk committees, and a checklist', boxLabel: 'THE REALITY', detail: 'The screening process for institutional crypto is brutal. 99% of CT gets ignored.' }) },
-      { uuid: '1b7d1287', seq: '02', slug: 'box-1-security',
-        slideText: 'Box 1: Security. Proven PoW. No exploit history.',
-        prompt: V2({ n:2, total:5, title: 'BOX 1: SECURITY', insight: 'Proven PoW with no exploit history', boxLabel: 'THE STANDARD', detail: '$KAS: GhostDAG PoW, fair launch, no pre-mine. No exploit on record. Institutions want battle-tested.' }) },
-      { uuid: '7a7b7b9a', seq: '03', slug: 'box-2-instant-settlement',
-        slideText: 'Box 2: Instant settlement. BlockDAG processes in real time.',
-        prompt: V2({ n:3, total:5, title: 'BOX 2: INSTANT SETTLEMENT', insight: 'BlockDAG architecture processes transactions in real time', boxLabel: 'THE EDGE', detail: 'No waiting for confirmations. $KAS settles instantly at scale — what institutions need for real deployment.' }) },
-      { uuid: 'b1c1a8db', seq: '04', slug: 'box-3-4-decentralized-stress',
-        slideText: 'Box 3: Decentralized. Box 4: Stable under stress.',
-        prompt: V2({ n:4, total:5, title: 'BOX 3 + BOX 4', insight: 'Decentralized + stable under market stress', boxLabel: 'THE FULL PASS', detail: '$KAS is the only PoW alt that checks all four institutional boxes. Most chains fail at box 1 or 2.' }) },
-      { uuid: '01b045a8', seq: '05', slug: 'engagement-question',
-        slideText: 'Which box trips up most $KAS competitors first?',
-        prompt: V2({ n:5, total:5, title: 'WHICH BOX TRIPS COMPETITORS FIRST?', insight: 'Security / Settlement / Decentralization / Stress stability', boxLabel: 'YOUR TAKE', detail: 'Of the four institutional boxes — which one eliminates the most competing chains first?' }) },
-    ],
-  },
-
-  // ── Post 6: Influencer integrity — Version 1, 4 slides ───────────────────
-  {
-    id: 'yt-post-2026-05-20-influencer-integrity-only-already-owned',
-    version: 1,
-    igCaption: "I won't call low-mcap coins. The standard influencer play: shill at 100K mcap, dump on your audience. I only talk about coins I already own and made money on. What's the biggest red flag that lost your trust in a crypto influencer?",
-    slides: [
-      { uuid: 'c0acf492', seq: '01', slug: 'hook-wont-call-low-mcap',
-        slideText: 'I won\'t call new low-mcap coins. Here\'s why.',
-        prompt: V1('Bold principled statement slide. Large bold all-caps white text. Teal accent line below headline. Dark background. Clean, trustworthy design. No faces. Concept: I WON\'T CALL NEW LOW-MCAP COINS / HERE\'S WHY') },
-      { uuid: '2c0835e6', seq: '02', slug: 'influencer-playbook-exposed',
-        slideText: 'The play: shill at 100K mcap, dump on your audience.',
-        prompt: V1('Exposé-style slide. Bold red neon accent on THE PLAY. White all-caps text. Dark background with warning atmosphere. Dramatic lighting. No faces. Concept: THE PLAY: SHILL 100K MCAP / DUMP ON YOUR AUDIENCE') },
-      { uuid: '18cd1e3a', seq: '03', slug: 'my-rule-own-it-first',
-        slideText: 'My rule: only coins I already own and made money on.',
-        prompt: V1('Integrity statement slide. Large bold white all-caps headline. Teal checkmark accent. Clean dark background with teal glow. Trustworthy, confident tone. No faces. Concept: MY RULE: ONLY COINS I OWN / AND ALREADY MADE MONEY ON') },
-      { uuid: '1d3e8d61', seq: '04', slug: 'engagement-question',
-        slideText: 'Biggest red flag that made you stop trusting an influencer?',
-        prompt: V1('Engagement question slide. Bold white all-caps question. Neon green question mark accent. Dark background. High-contrast minimal design. No faces. Concept: BIGGEST RED FLAG / THAT LOST YOUR TRUST?') },
-    ],
-  },
-
-  // ── Post 7: AI wages/retail — Version 1, 5 slides ────────────────────────
-  {
-    id: 'yt-post-2026-05-20-ai-tug-of-war-tipping-kaspa-retail',
-    version: 1,
-    igCaption: "The biggest thing blocking parabolic crypto isn't the Fed — it's wages. AI is eating jobs but the tug-of-war is tipping. When retail gets employed again, it flows back into crypto. When does AI tip to net hiring: Q2, Q3, Q4?",
-    slides: [
-      { uuid: '3b47b002', seq: '01', slug: 'hook-not-the-fed',
-        slideText: 'The biggest thing blocking parabolic crypto isn\'t the Fed.',
-        prompt: V1('Bold hook slide. Large all-caps white text with FED crossed out in red neon. Dark background with dramatic lighting. No faces. Concept: THE BIGGEST BLOCKER ISN\'T THE FED') },
-      { uuid: '34c57330', seq: '02', slug: 'its-wages-ai-eating-jobs',
-        slideText: 'It\'s wages. AI is eating jobs at the big-headcount end.',
-        prompt: V1('News-flash slide. Bold white all-caps: IT\'S WAGES. Below, neon green: AI IS EATING JOBS. Dark near-black background. Robotic arm visual suggestion in background. No faces. Concept: IT\'S WAGES / AI EATING BIG-HEADCOUNT JOBS') },
-      { uuid: '3fbe9e4d', seq: '03', slug: 'adp-up-tug-tipping',
-        slideText: 'ADP weekly is up. The tug-of-war is tipping to hiring.',
-        prompt: V1('News-flash data slide. Bold white ADP weekly stat. Neon green UP arrow prominent. Tug-of-war visual with the hiring side winning. Dark background. No faces. Concept: ADP UP / TUG-OF-WAR TIPPING TO HIRING') },
-      { uuid: '3f6c059c', seq: '04', slug: 'retail-flows-back-crypto',
-        slideText: 'When retail gets employed again, it flows into crypto.',
-        prompt: V1('Flow diagram slide. Bold white all-caps text: EMPLOYED RETAIL → CRYPTO. Neon green arrow showing the flow. Dark background with golden glow at the destination. No faces. Concept: EMPLOYMENT → CRYPTO FLOWS') },
-      { uuid: 'ed5b9124', seq: '05', slug: 'engagement-question',
-        slideText: 'When does AI tip to net hiring: Q2, Q3, Q4, or later?',
-        prompt: V1('Poll-style slide. Four bold options stacked: Q2 / Q3 / Q4 / LATER — each in white all-caps with teal accent lines between them. Dark background. No faces. Concept: WHEN DOES AI TIP TO NET HIRING?') },
+      { uuid: 'c5010001', seq: '01', slug: 'hook-8-rugs',
+        slideText: 'The same crowd follows the same caller through 8 rugs.',
+        prompt: V2({ n: 1, total: 5, title: 'THE SAME CROWD, THE SAME CALLER, 8 RUGS', insight: 'Different ticker, same wallet bleed', boxLabel: 'THE PATTERN', detail: 'The caller never apologizes. The bag gets smaller. The next call goes out anyway.' }) },
+      { uuid: 'c5020002', seq: '02', slug: 'not-loyalty',
+        slideText: 'That is not loyalty. It is a subscription to losses.',
+        prompt: V2({ n: 2, total: 5, title: 'THAT IS NOT LOYALTY', insight: 'It is a paid subscription to losses', boxLabel: 'THE REFRAME', detail: 'Staying loyal to a caller who cannot stop calling rugs costs you every single cycle.' }) },
+      { uuid: 'c5030003', seq: '03', slug: 'real-caller-holds',
+        slideText: 'A real caller holds what they shill, on chain.',
+        prompt: V2({ n: 3, total: 5, title: 'A REAL CALLER HOLDS WHAT THEY SHILL', insight: 'On chain, before the call, in real size', boxLabel: 'THE TEST', detail: 'If they would not risk their own rent on it, they should not be telling you to buy.' }) },
+      { uuid: 'c5040004', seq: '04', slug: 'community-test',
+        slideText: 'Run every caller through that filter.',
+        prompt: V2({ n: 4, total: 5, title: 'RUN EVERY CALLER THROUGH THE FILTER', insight: 'Receipts, skin in the game, accountability', boxLabel: 'THE FILTER', detail: 'A real caller has the receipts on chain before the call and owns the outcome when it goes wrong.' }) },
+      { uuid: 'c5050005', seq: '05', slug: 'engagement-question',
+        slideText: 'What is your filter for a crypto caller?',
+        prompt: V2({ n: 5, total: 5, title: 'WHAT IS YOUR FILTER FOR A CALLER?', insight: 'And which one actually passes it?', boxLabel: 'YOUR TAKE', detail: 'Name the filter you use, and the one caller who actually passes it.' }) },
     ],
   },
 ];
@@ -365,9 +275,14 @@ async function main() {
 
   const imgPattern = `**/*${IMAGE_PATTERN}*`;
   await page.route(imgPattern, route => route.abort());
-  console.log(`Navigating to YT Images chat...`);
+  console.log(`Navigating to a fresh chat...`);
   await page.goto(CHAT_URL);
   await page.waitForLoadState('domcontentloaded');
+  // If redirected to an existing conversation, force a new chat (no history to mis-grab).
+  if (page.url().includes('/c/')) {
+    await page.goto('https://chatgpt.com/');
+    await page.waitForLoadState('domcontentloaded');
+  }
   await page.locator(COMPOSER_SEL).first().waitFor({ timeout: 30000 });
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await page.waitForTimeout(3000);

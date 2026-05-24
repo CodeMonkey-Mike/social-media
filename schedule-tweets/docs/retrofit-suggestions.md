@@ -184,7 +184,7 @@ For each script: the current weak signal, the recommended player-DOM selector to
 
 1. **Extract `verifyLivePost(page, url, signals)` into a shared helper** — currently the FB/TikTok verification is inlined in each script. Move to `scripts/_lib/verify.js` (or similar) so retrofitting becomes a 4-line diff per script.
 
-2. **Add `processing` to the status enum** — for Rumble/BitChute (short + longform), the right state machine is: `pending → posting → processing (URL captured but not yet verifiable) → posted (URL verified live)`. This requires updating the `$schema_doc` in `shorts.json` and the queue-counter skill (`pending-social-posts-SKILL.md`).
+2. **Add `processing` to the status enum** — for Rumble/BitChute (short + longform), the right state machine is: `pending → posting → processing (URL captured but not yet verifiable) → posted (URL verified live)`. This requires updating the `$schema_doc` in `shorts.json` and the queue-counter skill (`pending-social-posts.md`).
 
 3. **Add a delayed re-verification pass** — `scripts/verify-processing-posts.js` that picks up rows where `status === "processing"` and `posted_at` is more than 30 minutes (configurable per platform) old, runs the verification, and flips to `posted` / `failed` accordingly.
 
