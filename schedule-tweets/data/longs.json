@@ -1,0 +1,95 @@
+{
+  "$schema_doc": "Each longform video (a full livestream recording, landscape) is one object in the longs[] array. Mirrors shorts.json but for the longform pipeline. The video file lives under longform/ relative to the schedule-tweets root (e.g. 'longform/<slug>.mp4'); prefer no-spaces slug filenames so the dashboard video player resolves cleanly. Each long can be queued to the platforms that have a longform uploader script: rumble (upload-longform-rumble.js), bitchute (upload-longform-bitchute.js), facebook (upload-longform-facebook.js). Each platform has its own independent status flow: pending -> posting -> posted -> failed (or 'skip' to never post there). 'description' is the base description used as the post body/caption (Rumble/BitChute use title+description+tags; Facebook builds its caption from title+description with hashtags stripped). NOTE: the upload scripts currently read the single staged video + metadata.json from the longform/ folder, NOT from this JSON yet — this file is the dashboard queue/record; wiring the scripts to consume it is a future step.",
+  "$post_schema": {
+    "id": "<unique slug, e.g. 'lf-20260524-weekend-red'>",
+    "slug": "<filename slug>",
+    "source": "<source livestream / recording name>",
+    "video_path": "<relative path from schedule-tweets root, e.g. 'longform/<slug>.mp4'>",
+    "thumbnail_path": "<relative path or null>",
+    "duration_seconds": "<float>",
+    "width": 1920,
+    "height": 1080,
+    "title": "<video title>",
+    "description": "<base description / post body>",
+    "tags": [
+      "array",
+      "of",
+      "tags"
+    ],
+    "categories": {
+      "rumble": {
+        "primary": "Finance & Crypto"
+      }
+    },
+    "visibility": "public",
+    "platforms": {
+      "rumble": {
+        "status": "pending | posting | posted | failed | skip",
+        "posted_at": null,
+        "url": null,
+        "views": null,
+        "views_captured_at": null
+      },
+      "bitchute": {
+        "status": "pending | posting | posted | failed | skip",
+        "posted_at": null,
+        "url": null,
+        "views": null,
+        "views_captured_at": null
+      },
+      "facebook": {
+        "status": "pending | posting | posted | failed | skip",
+        "posted_at": null,
+        "url": null,
+        "views": null,
+        "views_captured_at": null
+      }
+    },
+    "created_at": "<ISO 8601>"
+  },
+  "longs": [
+    {
+      "id": "lf-20260524-weekend-red",
+      "slug": "weekend-red",
+      "source": "Weekend Red livestream",
+      "video_path": "longform/Weekend Red LOW RES.mp4",
+      "thumbnail_path": "longform/weekend_red_thumbnail_under_2mb.jpg",
+      "duration_seconds": 5352,
+      "width": 1920,
+      "height": 1080,
+      "title": "Best Alts I'm Buying Now to 98x Again - Crypto FTW!",
+      "description": "Best Alts I'm Buying Now to 98x Again - Crypto FTW! - Disclaimer: Nothing I say is financial advice. Find out more about my team and my community: https://www.cryptorich.vip/",
+      "tags": ["cryptomarket", "SUI", "kaspa", "Toncoin"],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-05-24",
+          "url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-05-24",
+          "url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-05-24T17:50:00Z",
+          "url": "https://www.facebook.com/reel/1802284997813016/",
+          "views": null,
+          "views_captured_at": null
+        }
+      },
+      "created_at": "2026-05-24"
+    }
+  ]
+}
