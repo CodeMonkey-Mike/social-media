@@ -17,24 +17,14 @@ const { walkFiles, ageDays } = require('../lib');
 const NAME = 'video-creation';
 const ARTIFACT_RE = /^(preview\.mp4|whisper.*\.json|captions\.ts\.draft)$/i;
 const LOGO_RE = /^logo-.*\.(png|jpe?g)$/i;
-const NUM_PREFIX = /^\d+-/;
 
-// Returns one record per shorts.json entry: { slug, source, allPosted }.
-// The caller matches on BOTH slug and batch (source_livestream) — slugs are not
-// unique across batches (e.g. pengu-flips-pepe exists in two different batches).
-function loadShortsEntries(repoRoot) {
-  const f = path.join(repoRoot, 'schedule-tweets', 'data', 'shorts.json');
+// The batch registry (repo-root batches.json). An ACTIVE batch's directories are
+// protected; everything else is eligible. Returns [{ status, directories:[...] }].
+function loadBatches(repoRoot) {
+  const f = path.join(repoRoot, 'batches.json');
   if (!fs.existsSync(f)) return [];
-  let data;
-  try { data = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { return []; }
-  return (data.shorts || []).map(s => {
-    const plats = s.platforms ? Object.values(s.platforms) : [];
-    return {
-      slug: s.slug,
-      source: s.source_livestream || '',
-      allPosted: plats.length > 0 && plats.every(p => p && p.status === 'posted'),
-    };
-  });
+  try { return JSON.parse(fs.readFileSync(f, 'utf8')).batches || []; }
+  catch { return []; }
 }
 
 function plan({ repoRoot, ageDays: maxAge = 30 }) {
@@ -78,28 +68,24 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     if (ARTIFACT_RE.test(path.basename(f))) classifyAge(f, 'clip artifact');
   }
 
-  // ── remotion/out/<batch>/ renders — publish-state guard ────────────────────
+  // ── remotion/out/ — keep ONLY active batches' render folders ───────────────
+  // out/ is disposable scratch: posted shorts live in the schedule-tweets queue and
+  // every comp is in git, so anything not tied to an active batch is recyclable.
   const OUT = path.join(ROOT, 'remotion', 'out');
-  const entries = loadShortsEntries(repoRoot);
+  const activeOutDirs = new Set(
+    loadBatches(repoRoot)
+      .filter(b => b.status === 'active')
+      .flatMap(b => b.directories || [])
+      .map(d => path.resolve(repoRoot, d).toLowerCase())
+  );
   if (fs.existsSync(OUT)) {
-    for (const batch of fs.readdirSync(OUT, { withFileTypes: true })) {
-      if (!batch.isDirectory()) continue;
-      const batchDir = path.join(OUT, batch.name);
-      // Match shorts whose source_livestream belongs to THIS batch (e.g. "meme-coins-2026-05-28"
-      // for the "meme-coins" render folder). Slug alone is ambiguous across batches.
-      const prefix = batch.name + '-';
-      for (const f of fs.readdirSync(batchDir)) {
-        if (!f.toLowerCase().endsWith('.mp4')) continue;
-        const slug = path.basename(f, '.mp4').replace(NUM_PREFIX, '');
-        const full = path.join(batchDir, f);
-        const matches = entries.filter(e => e.slug === slug && e.source.startsWith(prefix));
-        if (matches.length && matches.some(e => e.allPosted)) {
-          recycle.push({ path: full, reason: `posted render (${batch.name})` });
-        } else if (matches.length) {
-          skipped.push({ path: full, reason: 'render — not yet posted on all platforms' });
-        } else {
-          skipped.push({ path: full, reason: 'render — not in shorts.json for this batch yet' });
-        }
+    for (const entry of fs.readdirSync(OUT, { withFileTypes: true })) {
+      const full = path.join(OUT, entry.name);
+      if (entry.isDirectory()) {
+        if (activeOutDirs.has(full.toLowerCase())) skipped.push({ path: full, reason: 'active batch render folder' });
+        else recycle.push({ path: full, reason: 'render folder — not an active batch' });
+      } else if (entry.isFile()) {
+        recycle.push({ path: full, reason: 'loose legacy render (no active batch folder)' });
       }
     }
   }

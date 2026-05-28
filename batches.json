@@ -1,0 +1,78 @@
+{
+  "$doc": {
+    "what": "Durable registry of livestream-repurpose batches for the whole social-media repo. One object per batch; persists for finished (archived) batches too. Paths are relative to this file's directory (the repo root).",
+    "consumers": [
+      "cleanup/cleanup.js (video-creation target) — protects ACTIVE batches' directories; treats everything else as recyclable.",
+      "repurpose/SKILL.md — reads transcript_plain of the next batch whose pipelines.repurpose is 'pending'.",
+      "scripts/publish-shorts.py — (future) batch -> render folder + shorts.json source."
+    ],
+    "status_values": {
+      "active": "current batch still in progress; its directories/files are protected from cleanup.",
+      "archived": "finished batch; its directories/files are eligible for cleanup."
+    },
+    "pipelines": {
+      "shorts": "video-creation side: cut clips -> render shorts (active | done).",
+      "repurpose": "tweet/image side (repurpose/ skill): pending | done. The skill sets this to done after generating."
+    },
+    "note": "Older publishing batches exist in schedule-tweets/data/shorts.json (weekend-red-2026-05-24, remotion-2026-05-25) but predate this registry and have no retained video-creation source artifacts, so they are not listed here. Going forward, every new batch should keep its files under per-batch folders (remotion/out/<batch>/, shorts/<batch>-clips/, assets/<batch>/) so 'directories' can list them cleanly."
+  },
+  "batches": [
+    {
+      "batch": "meme-coins",
+      "status": "active",
+      "date": "2026-05-28",
+      "livestream_title": "Best Meme Coins to retire ur arse LOW BPS VERTICAL",
+      "shorts_source": "meme-coins-2026-05-28",
+      "source_media": "video-creation/livestream-repurpose/media/Best Meme Coins to retire ur arse LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/Best Meme Coins to retire ur arse LOW BPS VERTICAL_plain.txt",
+      "transcripts_glob": "video-creation/livestream-repurpose/transcripts/Best Meme Coins to retire ur arse LOW BPS VERTICAL*",
+      "dashboard": "video-creation/shorts/meme-coins-dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/meme-coins",
+        "video-creation/shorts/meme-coins-clips"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done"
+      }
+    },
+    {
+      "batch": "bulls-are-sleeping",
+      "status": "archived",
+      "date": "2026-05-24",
+      "livestream_title": "bulls are sleeping LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/bulls are sleeping LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/bulls are sleeping LOW BPS VERTICAL_plain.txt",
+      "transcripts_glob": "video-creation/livestream-repurpose/transcripts/bulls are sleeping LOW BPS VERTICAL*",
+      "dashboard": "video-creation/shorts/bulls-are-sleeping-dashboard.html",
+      "directories": [
+        "video-creation/shorts/bulls-are-sleeping-clips"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      },
+      "note": "shorts_source publishing id uncertain (possibly weekend-red-2026-05-24)."
+    },
+    {
+      "batch": "market-update",
+      "status": "archived",
+      "date": "2026-05-20",
+      "livestream_title": null,
+      "shorts_source": "market-update-2026-05-20",
+      "source_media": null,
+      "transcript_plain": null,
+      "transcripts_glob": null,
+      "dashboard": "video-creation/shorts/market-update-dashboard.html",
+      "directories": [
+        "video-creation/shorts/market-update-clips"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      },
+      "note": "Source media/transcript not retained on disk."
+    }
+  ]
+}
