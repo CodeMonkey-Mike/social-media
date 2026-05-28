@@ -30,12 +30,13 @@ references it. Images not found in any queue are left untouched. Queues scanned:
 |---|---|---|
 | **Never touch** | `assets/{sfx,music,fonts,transitions}/`, `assets/logo-*.png`, every `*-progress.json` | protected |
 | **Always sweep** | any `_bad-*/` reject folder | recycled regardless of age |
-| **Age-based** | rest of `assets/` (b-roll PNGs, `*-clip.mp4`, overlays), and per-clip `preview.mp4` / `whisper*.json` / `captions.ts.draft` under `shorts/` | recycled if older than `--age-days` |
-| **Registry-driven** | `remotion/out/` and `livestream-repurpose/{media,transcripts}` | keep only what belongs to an **active** batch (per `batches.json`); recycle the rest |
+| **Age-based** | rest of `assets/` (b-roll PNGs, `*-clip.mp4`, overlays) | recycled if older than `--age-days` |
+| **Registry-driven** | `remotion/out/`, `livestream-repurpose/{media,transcripts}`, and `shorts/` clip artifacts | keep only what belongs to an **active** batch (per `batches.json`); recycle the rest |
 
 The registry-driven tier reads `../batches.json`:
 - **`remotion/out/`** — keep the render `directories` of `status: "active"` batches; recycle every other batch folder and all loose files. (Disposable scratch: posted shorts live in the `schedule-tweets/` queue and every comp is in git.)
 - **`livestream-repurpose/`** — `media/` files (flat) and `transcripts/<livestream>/` folders (one per livestream) are matched to a batch by `livestream_title`; active batch → keep, archived → recycle, no match → left alone. (Source recordings are on YouTube; transcripts are regenerable.)
+- **`shorts/`** — only the **gitignored** per-clip artifacts (`preview.mp4`, `whisper-words.json`, `captions.ts.draft`): kept inside the active batch's clip `directories`, recycled everywhere else. Tracked source in the clip dirs (`index.html`, `preview.json`, `gen_captions.py`, `whisper.json`, …) is never touched.
 
 ## How to run
 
