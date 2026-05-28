@@ -40,60 +40,45 @@ having them part of the same repo."
 
 ---
 
-## What to do next session (resume here)
+## Status — MERGE DONE (2026-05-28)
 
-### Step 1 — Review the .gitignore one more time
-Open `video-creation/.gitignore`. Confirm the content still matches the rationale
-in "Agreed .gitignore" below. If unchanged, skip this step.
+The move + path fixes are complete and committed on `social-media` (branch `master`):
+- `157c4f6` Move video-creation/ under social-media/ as a subfolder (117 code/doc files, ~1.2 MB)
+- `e88acb3` Fix stale video-creation absolute paths after the move (27 files)
 
-### Step 2 — Move the folder
-From PowerShell at `C:\Users\mnede\Documents\Claude\`:
-```powershell
-Move-Item video-creation social-media\video-creation
-```
-Expect ~2.4 GB of binaries to move on disk (they'll be ignored by git but they're
-still there). The move itself is just a rename, near-instant.
+Both commits were scoped with `git commit -- video-creation/` so they did NOT sweep in
+the unrelated in-progress work that was already dirty/staged in `social-media/` (e.g. the
+parked `repurpose/PLAYWRIGHT_HANDOFF.md` deletion). That work is untouched.
 
-### Step 3 — Verify git sees only code
-From `social-media/`:
-```powershell
-git status
-```
-Should show ~50-80 new files added under `video-creation/`. No `.mp4`/`.png`/`.mp3`,
-no `node_modules/`, no `out/`, no `assets/`. If anything binary shows up,
-**stop and fix `.gitignore` before committing.**
+### Steps 1–6 — done
+- [x] **Step 1 — .gitignore reviewed.** Found a real bug: the four "bucketed-out"
+  patterns had **inline trailing comments** (`assets/   # ...`). `.gitignore` does NOT
+  support inline comments — `#` only starts a comment at the START of a line — so those
+  four patterns matched nothing and 10 asset files (`assets/`, `transcripts/`,
+  `remotion/out/`) leaked into the first `git add`. Fixed by moving each comment to its
+  own line; re-verified with `git check-ignore -v`. (The "Agreed .gitignore" block at the
+  bottom of this file still shows the BROKEN inline-comment form — do not copy it verbatim.)
+- [x] **Step 2 — folder moved** (`Move-Item` with absolute paths; relative form failed
+  because the shell cwd was `social-media`, not the Claude root).
+- [x] **Step 3 — verified git sees only code.** 117 files, ~1.2 MB. No mp4/png/mp3, no
+  node_modules/out/assets/media/transcripts. (Note: actual count was higher than the
+  50–80 estimate and size far smaller than the ~30 MB estimate — all genuine code/docs.
+  Small text JSON like `whisper.json`/`preview.json` is tracked by design; the agreed
+  ignore only excludes `**/whisper-words.json`.)
+- [x] **Step 4 — committed.**
+- [x] **Step 5 — stale absolute paths fixed.** 27 files in the tree (24 single-backslash
+  + 3 JS files using ESCAPED double-backslash `Claude\\video-creation`, which the first
+  grep missed). Also updated the 5 memory files' relative `video-creation/` refs to
+  `social-media/video-creation/`. `PROFILE_DIR` in the b-roll scripts points at
+  `AppData\...\chatgpt-profile` and correctly stays unchanged.
+- [x] **Step 6 — verified nothing broke.**
+  - Remotion 30-frame render of `KeycatDoginme` succeeded (assets resolved).
+  - Caption builder runs (`_build_captions_meme.py house-coin-1000x` — the TODO's old
+    `keycat-vs-doginme` arg is just an undefined `SCHEMES` slug, not a move failure).
+  - All 3 edited b-roll scripts pass `node --check`; Playwright resolves via the
+    `NODE_PATH=...\repurpose\node_modules` workaround.
 
-### Step 4 — Commit
-```powershell
-git add video-creation/
-git commit -m "Move video-creation/ under social-media/ as a subfolder"
-```
-
-### Step 5 — Fix all the stale absolute paths
-After the move, every absolute reference to
-`C:\Users\mnede\Documents\Claude\social-media\video-creation\...` is stale and should become
-`C:\Users\mnede\Documents\Claude\social-media\video-creation\...`. Scope:
-
-- [ ] Memory files at `~/.claude/projects/C--Users-mnede-Documents-Claude/memory/*.md`
-  (grep for `Documents\Claude\social-media\video-creation`)
-- [ ] `video-creation/CLAUDE.md`, `SKILL.md`, `TODO.md` (this file)
-- [ ] Hardcoded paths in scripts:
-  - [ ] `generate-broll-batch.js` — `ASSETS_DIR`, profile paths
-  - [ ] `_make_overlays_alpha.py`, `_make_overlay_doginme_alpha.py`, `_make_v34_overlays_alpha.py`
-  - [ ] Any other `_*.py` with `C:\Users` paths
-- [ ] `video-creation/shorts/meme-coins-progress.json` and any other progress JSONs
-
-Easiest approach: grep across the whole tree for the literal string
-`Documents\Claude\social-media\video-creation` and `Documents/Claude/social-media/video-creation`, replace with
-`Documents\Claude\social-media\video-creation` and the slash variant. Test one
-script after replacement before doing them all.
-
-### Step 6 — Verify nothing broke
-- [ ] Run `npx remotion render src/index.ts KeycatDoginme out/_test.mp4 --frames=0-29 --codec=h264` to confirm Remotion still finds assets.
-- [ ] Run `python video-creation/shorts/_build_captions_meme.py keycat-vs-doginme` to confirm the caption builder still works.
-- [ ] Try the b-roll batch dry-run (just verify it launches Chrome) — `node video-creation/generate-broll-batch.js` then Ctrl+C.
-
-### Step 7 — Write a publish-to-schedule script
+### Step 7 — Write a publish-to-schedule script (STILL OPEN — deferred)
 Today (2026-05-28) we manually copied 5 MP4s from `remotion/out/meme-coins/` into
 `schedule-tweets/shorts/meme-coins-2026-05-28/` and ran a Python script
 (`data/_append_meme_coins.py`) to add JSON entries. Generalize that into a reusable
