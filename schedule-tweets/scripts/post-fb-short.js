@@ -143,9 +143,15 @@ async function clickByLabelInDialog(page, label) {
 (async () => {
   const data = JSON.parse(fs.readFileSync(SHORTS_JSON, 'utf8'));
 
-  // Reset any stuck 'posting' rows
-  for (const s of data.shorts) {
-    if (s.platforms[PLATFORM]?.status === 'posting') s.platforms[PLATFORM].status = 'pending';
+  // Bail if anything is stuck in 'posting' — those need manual review. Prior
+  // behavior auto-reset 'posting' to 'pending', causing re-uploads of shorts
+  // whose previous run died after submission but before status flipped.
+  const stuck = data.shorts.filter(s => s.platforms[PLATFORM]?.status === 'posting');
+  if (stuck.length > 0) {
+    console.error(`${stuck.length} short(s) stuck in 'posting' — manual review required:`);
+    for (const s of stuck) console.error(`  - ${s.id}: ${s.title}`);
+    console.error(`Check facebook.com/${FB_PAGE}/videos to see if any actually published, then update data/shorts.json before retrying.`);
+    process.exit(2);
   }
 
   const short = data.shorts.find(s => s.platforms[PLATFORM]?.status === 'pending');

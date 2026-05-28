@@ -10,13 +10,32 @@ cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
 node scripts/upload-longform-rumble.js
 ```
 
-Uploads one video. **No JSON queue** — the script reads a hardcoded video, thumbnail, and metadata triplet from a staging folder. Different from `rumble-post-vertical.md`, which reads `data/shorts.json`.
+Uploads one video.
+
+## ⛔ HARD RULE — `data/longs.json` is the queue, the dashboard cue is correct
+
+The dashboard's Longs tab shows `data/longs.json`. **That queue drives uploads — full stop, no exceptions, no questioning.** When this skill fires, the next-pending entry for the `rumble` platform (earliest `created_at` among `status === 'pending'`) is what gets uploaded.
+
+Do NOT stop and ask the user "should I stage this?" or "the folder root has a different video, what do I do?" The queue is authoritative; the folder is an implementation artifact (see "Staging" below).
+
+## Staging (automatic — never block on this)
+
+`upload-longform-rumble.js` reads `longform/` root for the most-recently-modified video + image + a fixed `metadata.json`. It does NOT consume `longs.json` directly yet. To bridge that gap, the upload step (this skill) **automatically stages** the next-pending entry's files into the root:
+
+1. Find next pending entry in `longs.json` for `rumble` (earliest `created_at`).
+2. Copy the entry's `video_path` (often in a subfolder like `longform/<source>/<file>.mp4`) into `longform/` root.
+3. Copy the entry's `thumbnail_path` into `longform/` root.
+4. Copy/write the entry's title/description/tags/categories/visibility into `longform/metadata.json` (each subfolder typically already has a ready-to-go `metadata.json` — prefer copying that).
+5. Run the upload script. `pickFile()` picks the freshly-copied files because they have new mtimes.
+6. After successful upload: write back `status: "posted"`, `posted_at`, `url` to the entry in `longs.json`.
+
+Old root-level files are fine to leave at root — `pickFile()` picks most-recent-mtime.
 
 ## Source folder
 
 `C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\longform\`
 
-Drop your files into that folder before running — **filenames don't matter; they're auto-detected:**
+The auto-staging step above handles this folder. Files dropped manually still work — **filenames don't matter; they're auto-detected:**
 
 | What | How it's picked |
 |---|---|

@@ -49,6 +49,20 @@ function resolveImagePath(post) {
   return null;
 }
 
+// IG pops a "Turn on Notifications" (and sometimes "Save your login info?") modal
+// on load. It traps focus and intercepts clicks, so the Create sidebar never
+// expands and input[type=file] never appears. Dismiss up to 2 with "Not Now".
+async function dismissBlockingDialogs(page) {
+  for (let i = 0; i < 2; i++) {
+    const btn = page.getByRole('button', { name: /^Not Now$/i }).first();
+    if (await btn.count() > 0) {
+      await btn.click().catch(() => {});
+      console.log('  Dismissed blocking modal (Not Now)');
+      await page.waitForTimeout(1200);
+    } else break;
+  }
+}
+
 async function mouseClick(page, locator) {
   const bbox = await locator.boundingBox();
   if (bbox && bbox.width > 0) {
@@ -195,6 +209,7 @@ async function main() {
       throw new Error('Instagram login form detected — not logged in.');
     }
     console.log('Instagram home loaded ✓');
+    await dismissBlockingDialogs(page);
 
     // ── PRE-CHECK ─────────────────────────────────────────────────────────────
     const duplicateUrl = await checkAlreadyPosted(page, post.hook);
@@ -214,6 +229,7 @@ async function main() {
     // Navigate back to home for the Create flow
     await page.goto('https://www.instagram.com/');
     await page.waitForTimeout(1500);
+    await dismissBlockingDialogs(page);
 
     // Mark mid-flight
     post.status = 'posting';

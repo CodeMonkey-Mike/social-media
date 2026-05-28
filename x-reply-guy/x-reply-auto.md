@@ -52,11 +52,19 @@ python auto_reply_scan.py
 
 ### Step 3 — Fire it
 
-Write the chosen reply to `data/auto_reply_pending.json`:
+Write the chosen reply to `data/auto_reply_pending.json`.
 
+**Text reply:**
 ```json
 { "tweet_url": "https://x.com/.../status/...", "reply_text": "<draft in voice>", "author": "@handle", "source": "Following feed | Reply Guy list" }
 ```
+
+**GIF reaction** (when `reaction_only: true` per persona rules, ~5% of replies):
+```json
+{ "tweet_url": "https://x.com/.../status/...", "gif_search": "<search query>", "reaction_only": true, "author": "@handle", "source": "Following feed | Reply Guy list" }
+```
+
+Never put `"[GIF: ...]"` in `reply_text` — it posts that literal string (happened 2026-05-25). Use the `gif_search` shape above instead; `auto_reply_post.py` detects it and routes to the GIF poster automatically.
 
 Then:
 
@@ -64,7 +72,7 @@ Then:
 python auto_reply_post.py
 ```
 
-It posts via the validated `post_reply()` (reused from `post_replies.py`), archives the outcome (`posted` / `already_posted` / `failed`) to `data/posted_replies.json`, and deletes the pending file. It does **not** touch `reply_opportunities.json` or `replies_to_post.json`.
+It posts via `post_reply()` (text) or `post_gif_reply()` (GIF), archives the outcome (`posted` / `posted_gif` / `uncertain` / `already_posted` / `failed`) to `data/posted_replies.json`, and deletes the pending file. It does **not** touch `reply_opportunities.json` or `replies_to_post.json`.
 
 ## Guardrails (auto-skip — applied in `auto_reply_scan.py`)
 

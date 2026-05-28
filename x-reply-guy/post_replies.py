@@ -8,6 +8,7 @@ then archives to posted_replies.json and clears the queue.
 
 Usage:
     python post_replies.py              # post everything in queue
+    python post_replies.py --limit 5    # post only the first 5, leave the rest queued
     python post_replies.py --dry-run    # preview without posting
 """
 
@@ -18,6 +19,15 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 import time
 from datetime import datetime
 from pathlib import Path
+
+def parse_limit() -> int | None:
+    """Return --limit N value, or None if not provided."""
+    for i, arg in enumerate(sys.argv[1:], 1):
+        if arg == "--limit" and i < len(sys.argv) and sys.argv[i].lstrip("-").isdigit():
+            val = int(sys.argv[i])
+            if val > 0:
+                return val
+    return None
 
 try:
     from playwright.sync_api import sync_playwright, TimeoutError as PWTimeout
@@ -167,27 +177,48 @@ def post_reply(page, tweet_url: str, reply_text: str, author: str) -> str:
         return "error"
 
 
+def remove_from_queue(tweet_url: str):
+    """Remove a single entry from replies_to_post.json immediately after processing."""
+    try:
+        current = json.loads(REPLIES_FILE.read_text(encoding="utf-8"))
+        updated = [r for r in current if r.get("tweet_url") != tweet_url]
+        REPLIES_FILE.write_text(
+            json.dumps(updated, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+    except Exception as e:
+        print(f"  Warning: could not remove from queue: {e}")
+
+
 def main():
     dry_run = "--dry-run" in sys.argv
+    limit = parse_limit()
 
     if not REPLIES_FILE.exists():
         print(f"No queue file found at {REPLIES_FILE}")
         sys.exit(1)
 
-    replies = json.loads(REPLIES_FILE.read_text(encoding="utf-8"))
-    if not replies:
+    all_replies = json.loads(REPLIES_FILE.read_text(encoding="utf-8"))
+    if not all_replies:
         print("Queue is empty — nothing to post.")
         return
 
+    replies = all_replies[:limit] if limit else all_replies
+    remaining = len(all_replies) - len(replies)
+
     print("=" * 55)
-    print(f"{'DRY RUN — ' if dry_run else ''}Posting {len(replies)} repl{'y' if len(replies)==1 else 'ies'}")
+    print(f"{'DRY RUN — ' if dry_run else ''}Posting {len(replies)} repl{'y' if len(replies)==1 else 'ies'}"
+          + (f" (of {len(all_replies)} queued, {remaining} remaining after)" if limit else ""))
     print(f"Keystroke delay: {CHAR_DELAY_MIN}–{CHAR_DELAY_MAX}ms/char")
     print(f"Delay between posts: {POST_DELAY_MIN}–{POST_DELAY_MAX} min")
     print("=" * 55)
 
     for i, r in enumerate(replies):
-        print(f"\n[{i+1}/{len(replies)}] -> {r.get('author', '?')}")
-        print(f"  {r['reply_text'][:120]}")
+        author = r.get("author", "?")
+        if r.get("gif_search"):
+            print(f"\n[{i+1}/{len(replies)}] -> {author}  [GIF: {r['gif_search']}]")
+        else:
+            print(f"\n[{i+1}/{len(replies)}] -> {author}")
+            print(f"  {r.get('reply_text', '')[:120]}")
         if dry_run:
             print("  [DRY RUN]")
     if dry_run:
@@ -216,34 +247,52 @@ def main():
         for i, r in enumerate(replies):
             author     = r.get("author", "?")
             tweet_url  = r["tweet_url"]
-            reply_text = r["reply_text"]
+            gif_search = r.get("gif_search", "").strip()
+            reply_text = r.get("reply_text", "").strip()
+            is_gif     = bool(gif_search)
 
-            print(f"\n--- [{i+1}/{len(replies)}] {author} ---")
+            print(f"\n--- [{i+1}/{len(replies)}] {author} {'[GIF]' if is_gif else ''} ---")
 
-            # Check if already replied before attempting
-            if already_replied(page, tweet_url, reply_text):
-                print("  Already replied to this tweet — skipping")
-                r["result"] = "already_posted"
-                posted_log.append(r)
-                POSTED_FILE.write_text(
-                    json.dumps(posted_log, indent=2, ensure_ascii=False), encoding="utf-8"
-                )
-                continue
-
-            result = post_reply(page, tweet_url, reply_text, author)
-
-            if result == "posted":
-                print(f"  POSTED")
-                r["posted_at"] = datetime.now().isoformat()
-                r["result"] = "posted"
+            if is_gif:
+                from post_gif_reply import post_gif_reply as _post_gif
+                result = _post_gif(page, r, dry_run=False)
+                if result in ("posted", "uncertain"):
+                    r["posted_at"] = datetime.now().isoformat()
+                    r["result"] = "posted_gif" if result == "posted" else "uncertain_gif"
+                    print(f"  {'POSTED GIF' if result == 'posted' else 'UNCERTAIN GIF — check tweet manually'}")
+                else:
+                    r["result"] = "failed"
+                    print("  FAILED GIF")
             else:
-                print(f"  FAILED — left in queue for manual retry")
-                r["result"] = "failed"
+                if already_replied(page, tweet_url, reply_text):
+                    print("  Already replied to this tweet — skipping")
+                    r["result"] = "already_posted"
+                    posted_log.append(r)
+                    POSTED_FILE.write_text(
+                        json.dumps(posted_log, indent=2, ensure_ascii=False), encoding="utf-8"
+                    )
+                    remove_from_queue(tweet_url)
+                    continue
 
+                result = post_reply(page, tweet_url, reply_text, author)
+
+                if result == "posted":
+                    print(f"  POSTED")
+                    r["posted_at"] = datetime.now().isoformat()
+                    r["result"] = "posted"
+                else:
+                    print(f"  FAILED")
+                    r["result"] = "failed"
+
+            # Archive outcome and remove from queue immediately — regardless of result.
+            # A "failed" result is very often a false negative (reply posted but verify
+            # couldn't see it under shadow-filter). Removing it prevents accidental
+            # duplicate posts on the next run. See HARD RULE in CLAUDE.md.
             posted_log.append(r)
             POSTED_FILE.write_text(
                 json.dumps(posted_log, indent=2, ensure_ascii=False), encoding="utf-8"
             )
+            remove_from_queue(tweet_url)
 
             if i < len(replies) - 1:
                 delay_s = random.randint(POST_DELAY_MIN * 60, POST_DELAY_MAX * 60)
@@ -255,20 +304,18 @@ def main():
         time.sleep(30)
         ctx.close()
 
-    # HARD RULE: clear the queue entirely after every run — even for failures.
-    # A "failed" reply is very often a successful post that the verify step
-    # couldn't see (X shadow-hides under throttle / page didn't settle in time).
-    # Retrying creates duplicates that have to be manually deleted from X.
-    # All outcomes are archived to posted_replies.json with their `result` field
-    # ("posted" | "already_posted" | "failed") for audit. Manual re-queue only.
-    posted_count = sum(1 for r in replies if r.get("result") in ("posted", "already_posted"))
-    failed_count = sum(1 for r in replies if r.get("result") == "failed")
-    REPLIES_FILE.write_text("[]", encoding="utf-8")
+    posted_count    = sum(1 for r in replies if r.get("result") in ("posted", "posted_gif", "already_posted"))
+    uncertain_count = sum(1 for r in replies if r.get("result") == "uncertain_gif")
+    failed_count    = sum(1 for r in replies if r.get("result") == "failed")
 
     # Remove successfully posted entries from reply_opportunities.json
-    remove_posted_opportunities([r for r in replies if r.get("result") in ("posted", "already_posted")])
+    remove_posted_opportunities([r for r in replies if r.get("result") in ("posted", "posted_gif", "uncertain_gif", "already_posted")])
 
-    print(f"\nDone. {posted_count} posted, {failed_count} failed (archived, NOT requeued — see posted_replies.json).")
+    summary = f"\nDone. {posted_count} posted"
+    if uncertain_count:
+        summary += f", {uncertain_count} uncertain GIF (likely posted — verify manually)"
+    summary += f", {failed_count} failed (archived, NOT requeued — see posted_replies.json)."
+    print(summary)
 
 
 def remove_posted_opportunities(posted: list[dict]):

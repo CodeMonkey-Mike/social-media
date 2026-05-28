@@ -15,6 +15,8 @@ Picks up the first short where `platforms.yt_shorts.status === "pending"`, uploa
 
 ⭐ Use `post-yt-short-api.js` unless something specifically blocks it. The API version returns the canonical video ID — no scraping, no UI brittleness.
 
+> ⚠ **Never pipe this script through `findstr`/`grep`** (e.g. to hide the verbose "uploaded X MB" progress). findstr exits immediately, node gets EPIPE on its first progress write and dies mid-upload, leaving the `shorts.json` row stuck `posting` with nothing on YouTube. Run it plain or `run_in_background`, then `Grep` the output FILE for `Posted ✓`. Reset the stuck `posting` row before re-running. (Hit 2026-05-25.)
+
 ## Queue file
 
 `C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\data\shorts.json` → `platforms.yt_shorts`

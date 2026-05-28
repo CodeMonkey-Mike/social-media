@@ -48,6 +48,51 @@ async function typeHuman(page, locator, text) {
   }
 }
 
+// Scrape the logged-in /content (Studio) dashboard for {title, url, videoId}
+// per video card. Used for both pre-upload duplicate check and post-upload
+// URL capture. Defensive: walks the DOM trying multiple ways to associate a
+// /video/<id>/ link with a visible title.
+async function scrapeContentPage(page) {
+  await page.goto(`${BITCHUTE_HOME.replace(/\/$/, '')}/content`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(3500);
+  try {
+    await page.waitForFunction(() => {
+      return document.querySelectorAll('a[href*="/video/"]').length > 0
+        || /no videos|nothing here/i.test(document.body.innerText || '');
+    }, { timeout: 20000 });
+  } catch {}
+  return await page.evaluate(() => {
+    const items = [];
+    const seen = new Set();
+    document.querySelectorAll('a[href*="/video/"]').forEach(a => {
+      const href = a.getAttribute('href') || '';
+      const m = href.match(/\/video\/([\w-]+)/);
+      if (!m) return;
+      const videoId = m[1];
+      if (seen.has(videoId)) return;
+      let title = (a.innerText || '').trim();
+      let node = a;
+      for (let i = 0; i < 8 && !title && node?.parentElement; i++) {
+        node = node.parentElement;
+        const h = node.querySelector && node.querySelector('h1, h2, h3, h4, h5, .title, [class*="title"]');
+        if (h && h.innerText) { title = h.innerText.trim(); break; }
+      }
+      if (!title) title = (a.getAttribute('title') || a.getAttribute('aria-label') || '').trim();
+      if (!title) return;
+      const url = href.startsWith('http') ? href : `https://www.bitchute.com${href}`;
+      items.push({ videoId, title, url });
+      seen.add(videoId);
+    });
+    return items;
+  });
+}
+
+function findByTitle(items, target) {
+  const norm = s => (s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const t = norm(target);
+  return items.find(it => norm(it.title) === t);
+}
+
 async function closeDrawer(page) {
   // Close BitChute's side drawer if open. Don't toggle if already closed —
   // clicking the menu would re-open it.
@@ -67,10 +112,15 @@ async function closeDrawer(page) {
 (async () => {
   const data = JSON.parse(fs.readFileSync(SHORTS_JSON, 'utf8'));
 
-  for (const s of data.shorts) {
-    if (s.platforms[PLATFORM]?.status === 'posting') {
-      s.platforms[PLATFORM].status = 'pending';
-    }
+  // Bail if anything is stuck in 'posting' — those need manual review. The
+  // previous auto-reset behavior caused duplicate uploads when a prior run
+  // succeeded on BitChute but died before flipping the JSON to 'posted'.
+  const stuck = data.shorts.filter(s => s.platforms[PLATFORM]?.status === 'posting');
+  if (stuck.length > 0) {
+    console.error(`${stuck.length} short(s) stuck in 'posting' — manual review required:`);
+    for (const s of stuck) console.error(`  - ${s.id}: ${s.title}`);
+    console.error(`Check BitChute /content to see if any actually published, then update data/shorts.json before retrying.`);
+    process.exit(2);
   }
 
   // BitChute isn't in the default schema — add it if missing
@@ -160,6 +210,32 @@ async function closeDrawer(page) {
       throw new Error('Timed out waiting for upload icon — sign in to BitChute and retry.');
     }
 
+    // ── Pre-upload duplicate check ──────────────────────────────────────────
+    // Scrape /content and look for a video already on the channel with the
+    // same title. If found, mark posted with the real URL and skip upload.
+    console.log('Checking /content for an existing copy of this title...');
+    let preItems = [];
+    try {
+      preItems = await scrapeContentPage(page);
+    } catch (e) {
+      throw new Error(`Could not scrape /content for duplicate check: ${e.message}`);
+    }
+    console.log(`  Scraped ${preItems.length} item(s) from /content`);
+    const preMatch = findByTitle(preItems, title);
+    if (preMatch) {
+      console.log(`Already on BitChute: ${preMatch.url}`);
+      console.log(`  Matched title: "${preMatch.title}"`);
+      short.platforms[PLATFORM].status    = 'posted';
+      short.platforms[PLATFORM].posted_at = new Date().toISOString();
+      short.platforms[PLATFORM].url       = preMatch.url;
+      fs.writeFileSync(SHORTS_JSON, JSON.stringify(data, null, 2));
+      console.log('Marked as posted with real URL. Skipping upload.');
+      await context.close();
+      process.exit(0);
+    }
+    console.log('  No matching title — proceeding with upload.');
+    await closeDrawer(page);
+
     // ── Click the +Video icon ────────────────────────────────────────────────
     await closeDrawer(page);
     await page.waitForTimeout(500);
@@ -183,7 +259,14 @@ async function closeDrawer(page) {
       uploadVideoEl.evaluate(el => el.click()),
     ]);
     await uploadPage.waitForLoadState('domcontentloaded');
-    console.log(`  Upload page: ${uploadPage.url()}`);
+    const uploadPageUrl = uploadPage.url();
+    console.log(`  Upload page: ${uploadPageUrl}`);
+    // Capture the video id from the upload page's `upload_code` query param.
+    // The published URL is deterministically https://www.bitchute.com/video/<upload_code>/
+    // — much more reliable than scraping /content after publish.
+    const uploadCodeMatch = uploadPageUrl.match(/[?&]upload_code=([\w-]+)/);
+    const uploadCode = uploadCodeMatch ? uploadCodeMatch[1] : null;
+    if (uploadCode) console.log(`  Captured upload_code: ${uploadCode}`);
     await actionPause(uploadPage, 'upload page loaded');
 
     // ── Attach the video ────────────────────────────────────────────────────
@@ -293,13 +376,23 @@ async function closeDrawer(page) {
       console.log('  Warning: no /content redirect — submission may still have gone through');
     }
 
-    // BitChute encoding is async — submission is "processing" state
-    const url = 'https://www.bitchute.com/content';
-    console.log(`\nPosted (processing): ${url}`);
+    // ── Compose real video URL from upload_code ─────────────────────────────
+    // BitChute video URLs are deterministically built from the upload_code
+    // captured off the upload page URL. No scraping needed.
+    let postedUrl;
+    if (uploadCode) {
+      postedUrl = `https://www.bitchute.com/video/${uploadCode}/`;
+      console.log(`  Real URL from upload_code: ${postedUrl}`);
+    } else {
+      postedUrl = 'https://www.bitchute.com/content';
+      console.log('  Warning: no upload_code captured — using /content placeholder');
+    }
+
+    console.log(`\nPosted (processing): ${postedUrl}`);
 
     short.platforms[PLATFORM].status    = 'posted';
     short.platforms[PLATFORM].posted_at = new Date().toISOString();
-    short.platforms[PLATFORM].url       = url;
+    short.platforms[PLATFORM].url       = postedUrl;
     fs.writeFileSync(SHORTS_JSON, JSON.stringify(data, null, 2));
     console.log('shorts.json updated. Done ✓');
 

@@ -69,6 +69,8 @@ Uses `fbbot-profile`. **Chrome must be fully closed before running** — Playwri
 
 **Verification is mandatory.** A submitted upload silently dropped by Facebook still clears the "Posting" spinner. Always verify the URL serves a `<video>` element before marking `posted`.
 
+> ⚠ **Captured URL is often the WRONG (stale) video (observed 2026-05-26).** Step 16 scrapes the `/videos` tab and takes the most-recent `/reel/` or `/videos/` URL, but that tab lists a **persistent older `videos/<id>` entry first** — so the script grabs it instead of the actual new reel. Two separate FB shorts both recorded the same `videos/999231325954864`, while their real reels (`reel/2073243086589105`, `reel/3106848643037524`) sat second in the list. Verification still "passes" because the stale `videos/` URL is itself a valid live video (HTTP 200 + `<video>`). **Net: the post goes live correctly, but the `url` in `shorts.json` points at the wrong/older video.** Fix: snapshot the `/reel/` URL set *before* posting, then after Submit pick the `/reel/` URL that is NEW (not in the pre-snapshot) rather than blindly taking list position 0; prefer `/reel/` over `/videos/` since FB Reels land under `/reel/`.
+
 ## Debug artifacts
 
 Each wizard step saves to `tmp-fb-debug/stepN_state.{json,png}`. On failure: `tmp-fb-debug/FAILED_final_state.{json,png}`. Inspect when Facebook's UI updates change wizard behavior.

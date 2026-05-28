@@ -3,6 +3,8 @@ name: ig-post-single
 description: Post the next pending Instagram single-image post from data/ig-single-image.json via Playwright script.
 ---
 
+> ✅ **FIXED 2026-05-25:** symptom was `input[type="file"]` never attaching after Create → "Post" (timeout). ROOT CAUSE was NOT a selector change — IG pops a **"Turn on Notifications" modal** on load that traps focus and blocks the whole Create flow (Post sub-link never appears, file input never injected). FIX: `dismissBlockingDialogs()` clicks **"Not Now"** after home-load AND before the Create click. Same fix applied to reel + carousel. If IG posting ever breaks at the file-input step again, FIRST check for a new blocking modal (notifications, "save login info", cookie banner) before touching selectors — run `scripts/_diag-ig-create.js` to dump dialogs/clickables at each step.
+
 ## Invocation
 
 ```powershell

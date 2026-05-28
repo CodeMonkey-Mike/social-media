@@ -70,7 +70,19 @@ async function clickPostButton(page) {
 
 async function main() {
   const data = JSON.parse(fs.readFileSync(THREADS_JSON, 'utf8'));
-  const thread = data.threads.find(t => t.status === 'pending' || t.status === 'posting');
+
+  // Bail if anything is stuck in 'posting' — those need manual review. The
+  // prior behavior auto-picked up 'posting' threads, which would re-post any
+  // thread whose prior run died after submission but before status flipped.
+  const stuck = data.threads.filter(t => t.status === 'posting');
+  if (stuck.length > 0) {
+    console.error(`${stuck.length} thread(s) stuck in 'posting' — manual review required:`);
+    for (const t of stuck) console.error(`  - ${t.id}: "${(t.tweets?.[0]?.text || '').slice(0, 60)}"`);
+    console.error('Check x.com to see if any actually published, then update data/x-threads.json before retrying.');
+    process.exit(2);
+  }
+
+  const thread = data.threads.find(t => t.status === 'pending');
 
   if (!thread) {
     console.log('No eligible threads. Exiting.');
