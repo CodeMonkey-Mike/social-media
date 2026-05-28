@@ -11,6 +11,7 @@
 
 const { google }  = require('googleapis');
 const http        = require('http');
+const https       = require('https');
 const url         = require('url');
 const { exec }    = require('child_process');
 const fs          = require('fs');
@@ -19,6 +20,7 @@ const path        = require('path');
 const SHORTS_JSON   = path.join(__dirname, '..', 'data', 'shorts.json');
 const OAUTH_FILE    = path.join(__dirname, '..', 'config', 'yt-oauth.json');
 const TOKEN_FILE    = path.join(__dirname, '..', 'config', 'yt-api-token.json');
+const CHANNEL_FILE  = path.join(__dirname, '..', 'config', 'yt-channel.json');
 const WORKSPACE     = path.join(__dirname, '..');
 const PLATFORM      = 'yt_shorts';
 const UPLOAD_SCOPES = ['https://www.googleapis.com/auth/youtube.upload'];
@@ -118,6 +120,56 @@ async function getAuthorizedClient() {
   return oauth2Client;
 }
 
+// Derive the authenticated user's channelId. Reads from a cached config file.
+// (The OAuth token's youtube.upload scope is too narrow for videos.list /
+// channels.list, so we don't try to look it up at runtime — provision the
+// channelId once via config/yt-channel.json.)
+function getChannelId() {
+  if (!fs.existsSync(CHANNEL_FILE)) {
+    throw new Error(`Missing ${CHANNEL_FILE}. Create it with {"channelId":"UC..."} — fetch your channel id from https://www.youtube.com/<handle> page source.`);
+  }
+  const cached = JSON.parse(fs.readFileSync(CHANNEL_FILE, 'utf8'));
+  if (!cached.channelId) throw new Error(`${CHANNEL_FILE} missing channelId field`);
+  return cached.channelId;
+}
+
+function fetchUrl(u) {
+  return new Promise((resolve, reject) => {
+    https.get(u, { headers: { 'User-Agent': 'social-media-script/1.0' } }, res => {
+      if (res.statusCode !== 200) return reject(new Error(`HTTP ${res.statusCode} from ${u}`));
+      let body = '';
+      res.on('data', c => body += c);
+      res.on('end', () => resolve(body));
+    }).on('error', reject);
+  });
+}
+
+// Look for an existing upload on the channel that matches targetTitle. Uses
+// the channel's public RSS feed (last ~15 entries), which needs no auth and
+// is enough to catch the bug we care about: a recent re-upload of the same
+// short. Returns {videoId,url,title,publishedAt} or null.
+async function findExistingUpload(channelId, targetTitle) {
+  const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+  const xml = await fetchUrl(rssUrl);
+  const entries = xml.split('<entry>').slice(1).map(e => e.split('</entry>')[0]);
+  const norm = s => (s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const target = norm(targetTitle.slice(0, 100));
+  for (const entry of entries) {
+    const title = (entry.match(/<title>([\s\S]*?)<\/title>/)?.[1] || '').trim();
+    if (norm(title) !== target) continue;
+    const videoId = entry.match(/<yt:videoId>([\w-]+)<\/yt:videoId>/)?.[1];
+    const publishedAt = entry.match(/<published>([\w\-:.+]+)<\/published>/)?.[1];
+    if (!videoId) continue;
+    return {
+      videoId,
+      url: `https://www.youtube.com/shorts/${videoId}`,
+      title,
+      publishedAt,
+    };
+  }
+  return null;
+}
+
 async function uploadVideo(auth, videoPath, title, description, tags) {
   const youtube = google.youtube({ version: 'v3', auth });
   console.log(`Uploading ${path.basename(videoPath)} (${(fs.statSync(videoPath).size / 1024 / 1024).toFixed(2)} MB)...`);
@@ -150,9 +202,15 @@ async function uploadVideo(auth, videoPath, title, description, tags) {
 (async () => {
   const data = JSON.parse(fs.readFileSync(SHORTS_JSON, 'utf8'));
 
-  // Unblock anything stuck mid-flight from a prior run
-  for (const s of data.shorts) {
-    if (s.platforms[PLATFORM]?.status === 'posting') s.platforms[PLATFORM].status = 'pending';
+  // Bail if anything is stuck in 'posting' — those need manual review. The
+  // previous auto-reset behavior caused duplicate uploads when a prior run
+  // succeeded on the platform but died before flipping the JSON to 'posted'.
+  const stuck = data.shorts.filter(s => s.platforms[PLATFORM]?.status === 'posting');
+  if (stuck.length > 0) {
+    console.error(`${stuck.length} short(s) stuck in 'posting' — manual review required:`);
+    for (const s of stuck) console.error(`  - ${s.id}: ${s.title}`);
+    console.error(`Check YouTube to see if any actually published, then update data/shorts.json before retrying.`);
+    process.exit(2);
   }
 
   const short = data.shorts.find(s => s.platforms[PLATFORM]?.status === 'pending');
@@ -177,11 +235,44 @@ async function uploadVideo(auth, videoPath, title, description, tags) {
   console.log(`File:  ${videoPath}`);
   console.log(`Title: ${title}`);
 
+  // Pre-upload duplicate check against the channel's recent uploads (RSS).
+  // If a matching title already exists, mark posted with the discovered URL
+  // and skip the upload entirely.
+  console.log('Checking channel RSS feed for existing copy...');
+  let channelId;
+  try {
+    channelId = getChannelId();
+  } catch (err) {
+    console.error(`channelId lookup failed: ${err.message}`);
+    process.exit(1);
+  }
+  let existing = null;
+  try {
+    existing = await findExistingUpload(channelId, title);
+  } catch (err) {
+    console.error(`RSS lookup failed: ${err.message}`);
+    console.error('Refusing to upload without a working duplicate check. Fix the channel RSS access and retry.');
+    process.exit(1);
+  }
+
+  const auth = await getAuthorizedClient();
+  if (existing) {
+    console.log(`Already on YouTube: ${existing.url}`);
+    console.log(`  Matched title: "${existing.title}"`);
+    console.log(`  Published:     ${existing.publishedAt}`);
+    short.platforms[PLATFORM].status    = 'posted';
+    short.platforms[PLATFORM].posted_at = existing.publishedAt;
+    short.platforms[PLATFORM].url       = existing.url;
+    fs.writeFileSync(SHORTS_JSON, JSON.stringify(data, null, 2));
+    console.log('Marked as posted with real URL. Skipping upload.');
+    process.exit(0);
+  }
+  console.log('  No matching title in recent uploads — proceeding with upload.');
+
   short.platforms[PLATFORM].status = 'posting';
   fs.writeFileSync(SHORTS_JSON, JSON.stringify(data, null, 2));
 
   try {
-    const auth = await getAuthorizedClient();
     const result = await uploadVideo(auth, videoPath, title, description, tags);
     const videoUrl = `https://www.youtube.com/shorts/${result.id}`;
     console.log(`\nPosted ✓  ${videoUrl}`);

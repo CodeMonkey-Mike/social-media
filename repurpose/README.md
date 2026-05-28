@@ -18,8 +18,8 @@ A Claude skill for turning livestream transcripts into tweets.
 repurpose/
 ├── SKILL.md          # the skill instructions Claude follows
 ├── README.md         # this file (for you)
-├── transcripts/      # drop transcripts here
-└── output/           # tweet drafts get saved here
+├── transcripts-ad-hoc/  # manual drop for one-off transcripts (override; batches.json is the default)
+└── output/              # tweet drafts get saved here
 ```
 
 ## Activating the skill

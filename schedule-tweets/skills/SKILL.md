@@ -4,6 +4,12 @@ Each capability has its own file in this folder. This file is the index and home
 
 ---
 
+## HARD RULE: Sequential execution only
+
+**Always run posting scripts one at a time, in the order given. Never run two scripts in parallel for any reason** — not because of Chrome profiles, not for throughput, not for any technical justification. If the user provides a task list, execute each step sequentially and wait for it to complete before starting the next one. This rule has no exceptions.
+
+---
+
 ## Skill files
 
 | File | What it does |
@@ -64,8 +70,6 @@ Each capability has its own file in this folder. This file is the index and home
 | `bitchutebot-profile` | post-bitchute-short, upload-longform-bitchute |
 | `chatgpt-profile` | generate-image.js, generate-image-batch.js |
 | Main `User Data\Default` (CDP 9224) | post-tiktok-short |
-
-**Profile conflict rule:** two scripts sharing a profile cannot run concurrently. Sequence them.
 
 ---
 
@@ -150,3 +154,29 @@ A concentrated burst of image generation (~87 images this session across b-roll 
 
 ### Reply-guy throttle is real and escalates
 X starts false-negative "failed" verifies as cumulative replies climb in a window (this run: 0 fails in the first 4, then 2 of 5, then more across 17). NEVER retry a "failed" reply (it very likely posted; retry duplicates). For big batches, expect rising failures past ~20-25 replies in a window.
+
+---
+
+## Operational notes — 2026-05-25 session (37-step run)
+
+### ⛔ Closing a Chrome profile: use Get-CimInstance, NOT Get-Process
+In Windows PowerShell 5.1, `Get-Process chrome` objects do NOT populate `.CommandLine` (it's always `$null`), so `Get-Process chrome | Where-Object { $_.CommandLine -like "*xbot-profile*" }` matches NOTHING — a silent no-op. This bit us: a per-profile "kill" appeared to succeed every time but actually killed nothing; lingering xbot Chrome from a prior step then blocked `post-x-short.js` with `launchPersistentContext: ... browser has been closed` / `Opening in existing browser session`. CORRECT per-profile close:
+```powershell
+Get-CimInstance Win32_Process -Filter "Name = 'chrome.exe'" | Where-Object { $_.CommandLine -like "*xbot-profile*" } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
+```
+Then re-query the same way to VERIFY zero remain. (Most scripts self-close on success, which is why the no-op went unnoticed for many steps.)
+
+### IG create-flow "regression" — RESOLVED 2026-05-25 (was a blocking modal, not selectors)
+Symptom: all three IG image/video scripts (`post-ig-single.js`, `post-ig-reel.js`, `post-ig-carousel.js`) timed out waiting for `input[type="file"]` after Create → "Post". ROOT CAUSE (found via `scripts/_diag-ig-create.js`, which dumps dialogs/clickables at each step): IG pops a **"Turn on Notifications" modal** on load that traps focus and blocks the Create flow — the Post sub-link never appears and the file input is never injected. It was NOT a selector change. FIX: added `dismissBlockingDialogs(page)` (clicks **"Not Now"**, up to 2x) right after home-load AND before the Create click, in all three scripts. Verified: 3 singles + 1 carousel + 2 reels all posted clean afterward. **Lesson:** when an IG script dies at the file-input step, FIRST suspect a new blocking modal (notifications / "save login info" / cookie / consent) and dump the DOM with `_diag-ig-create.js` BEFORE assuming a selector broke. Keep that diagnostic around.
+
+### Longform scripts do NOT write back to longs.json
+`upload-longform-{rumble,bitchute,facebook}.js` are folder-based (read `longform/` + `metadata.json`) and print the result but never update `data/longs.json`. After each longform upload, manually set `longs.json` → `platforms.<plat>.status = posted` + url. Also: if multiple videos are staged in `longform/`, most-recent-modified wins — and `metadata.json` can be STALE from a previous upload (this run it still had the prior video's title). VERIFY `metadata.json` title/desc/tags match the intended (most-recent) video before running; reconcile from `longs.json` (authoritative) if stale.
+
+### FB & Rumble post-upload URL capture returns a STALE video right after upload
+`post-fb-short.js`, `upload-longform-facebook.js`, `post-rumble-short.js` capture "most recent channel video" immediately after submit — but a fresh upload is still processing and not yet listed, so the scrape returns an OLDER video (FB short #2 verify "failed" and Rumble short URL pointed at the just-uploaded longform). The post is usually LIVE; the in-run verify is a false negative. Confirm later with `scripts/check-fb-longform.js` (read-only; match by DURATION — e.g. 0:50 ≈ a 49s short, 1:10:04 = the 4204s longform) and only then record the real URL. Do NOT re-upload on an in-run verify failure (duplicate risk).
+
+### YT API short: never pipe through findstr/grep
+`node scripts/post-yt-short-api.js | findstr ...` breaks: findstr exits, node gets EPIPE on its first "uploaded X MB" progress write and dies mid-upload, leaving the row stuck `posting` with nothing on YouTube. Run it plain (or `run_in_background`) and `Grep` the output FILE afterward for the `Posted ✓` line. Reset the stuck `posting` row before re-running.
+
+### GIF replies need `gif_search`, never `[GIF: ...]` in reply_text
+`post_replies.py` ONLY types `reply_text` as text. NEVER put `"[GIF: standing ovation]"` in `reply_text` — it posts that literal string (happened twice 2026-05-25 → 2 broken replies). The correct shape is `reaction_only: true` + `gif_search: "<query>"`. Post via `x-reply-guy/post_gif_reply.py` (the `x-gif-reply` skill) — dry-run first. `auto_reply_post.py` also routes GIF entries natively when `gif_search` + `reaction_only: true` are set in `auto_reply_pending.json`.

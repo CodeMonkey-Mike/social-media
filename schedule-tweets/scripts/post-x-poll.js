@@ -138,12 +138,15 @@ async function setPollDuration(page, duration) {
 async function main() {
   const data = JSON.parse(fs.readFileSync(POLLS_JSON, 'utf8'));
 
-  // Reset any stuck "posting" entry so it gets retried
-  for (const p of data.polls) {
-    if (p.status === 'posting') {
-      console.log(`Resetting stuck poll → pending: ${p.id}`);
-      p.status = 'pending';
-    }
+  // Bail if anything is stuck in 'posting' — those need manual review. The
+  // prior auto-reset caused duplicates by re-queueing polls whose previous
+  // run succeeded on X but died before flipping the JSON status.
+  const stuck = data.polls.filter(p => p.status === 'posting');
+  if (stuck.length > 0) {
+    console.error(`${stuck.length} poll(s) stuck in 'posting' — manual review required:`);
+    for (const p of stuck) console.error(`  - ${p.id}: "${(p.hook || p.tweet_text || '').slice(0, 60)}"`);
+    console.error('Check x.com to see if any actually published, then update data/x-polls.json before retrying.');
+    process.exit(2);
   }
 
   const poll = data.polls.find(p => p.status === 'pending');

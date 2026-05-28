@@ -56,17 +56,27 @@ def main():
     # Consume the pending file immediately — never double-fire on a re-run.
     PENDING_FILE.unlink()
 
-    tweet_url  = (pending.get("tweet_url") or "").strip()
-    reply_text = (pending.get("reply_text") or "").strip()
-    author     = pending.get("author", "?")
+    tweet_url     = (pending.get("tweet_url") or "").strip()
+    reply_text    = (pending.get("reply_text") or "").strip()
+    gif_search    = (pending.get("gif_search") or "").strip()
+    reaction_only = pending.get("reaction_only", False)
+    author        = pending.get("author", "?")
 
-    if not tweet_url or not reply_text:
-        print("Pending entry missing tweet_url or reply_text. Aborting.")
+    if not tweet_url:
+        print("Pending entry missing tweet_url. Aborting.")
+        return
+    if not reply_text and not gif_search:
+        print("Pending entry missing both reply_text and gif_search. Aborting.")
         return
 
-    print(f"Auto-reply -> {author}")
+    is_gif = bool(gif_search) and reaction_only
+
+    print(f"Auto-{'GIF' if is_gif else 'text'} reply -> {author}")
     print(f"  tweet: {tweet_url}")
-    print(f"  reply: {reply_text[:120]}")
+    if is_gif:
+        print(f"  gif:   {gif_search}")
+    else:
+        print(f"  reply: {reply_text[:120]}")
 
     entry = dict(pending)
     entry["auto_reply"] = True
@@ -83,23 +93,37 @@ def main():
         )
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
         try:
-            if already_replied(page, tweet_url, reply_text):
-                print("Already replied to this tweet — skipping (archived as already_posted).")
-                entry["result"] = "already_posted"
-                entry["posted_at"] = datetime.now().isoformat()
-                archive(entry)
-                return
-
-            result = post_reply(page, tweet_url, reply_text, author)
-            if result == "posted":
-                entry["result"] = "posted"
-                entry["posted_at"] = datetime.now().isoformat()
-                print("POSTED ✓")
+            if is_gif:
+                from post_gif_reply import post_gif_reply as _post_gif
+                result = _post_gif(page, pending, dry_run=False)
+                if result == "posted":
+                    entry["result"] = "posted_gif"
+                    entry["posted_at"] = datetime.now().isoformat()
+                    print("POSTED GIF ✓")
+                elif result == "uncertain":
+                    entry["result"] = "uncertain"
+                    print("GIF result uncertain — archived as 'uncertain'. Check tweet on X manually.")
+                else:
+                    entry["result"] = "failed"
+                    print("GIF post NOT confirmed. Archived as 'failed' — check tweet on X manually.")
             else:
-                entry["result"] = "failed"
-                print("Result NOT confirmed. Archived as 'failed' — DO NOT re-run. "
-                      "X verify false-negatives mean it has very likely already posted; "
-                      "a retry would duplicate. Check the tweet on X manually.")
+                if already_replied(page, tweet_url, reply_text):
+                    print("Already replied to this tweet — skipping (archived as already_posted).")
+                    entry["result"] = "already_posted"
+                    entry["posted_at"] = datetime.now().isoformat()
+                    archive(entry)
+                    return
+
+                result = post_reply(page, tweet_url, reply_text, author)
+                if result == "posted":
+                    entry["result"] = "posted"
+                    entry["posted_at"] = datetime.now().isoformat()
+                    print("POSTED ✓")
+                else:
+                    entry["result"] = "failed"
+                    print("Result NOT confirmed. Archived as 'failed' — DO NOT re-run. "
+                          "X verify false-negatives mean it has very likely already posted; "
+                          "a retry would duplicate. Check the tweet on X manually.")
             archive(entry)
 
             print("\nBrowser closing in 20s so you can verify...")

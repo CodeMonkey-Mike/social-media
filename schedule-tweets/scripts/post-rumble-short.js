@@ -45,10 +45,14 @@ async function typeHuman(page, locator, text) {
 (async () => {
   const data = JSON.parse(fs.readFileSync(SHORTS_JSON, 'utf8'));
 
-  for (const s of data.shorts) {
-    if (s.platforms[PLATFORM]?.status === 'posting') {
-      s.platforms[PLATFORM].status = 'pending';
-    }
+  // Bail if anything is stuck in 'posting' — those need manual review. Prior
+  // behavior auto-reset to 'pending' and caused duplicate uploads.
+  const stuck = data.shorts.filter(s => s.platforms[PLATFORM]?.status === 'posting');
+  if (stuck.length > 0) {
+    console.error(`${stuck.length} short(s) stuck in 'posting' — manual review required:`);
+    for (const s of stuck) console.error(`  - ${s.id}: ${s.title}`);
+    console.error('Check rumble.com user profile to see if any actually published, then update data/shorts.json before retrying.');
+    process.exit(2);
   }
 
   // Rumble isn't in the default schema — add it if missing on the chosen short
@@ -285,28 +289,7 @@ async function typeHuman(page, locator, text) {
         break;
       }
 
-      const scanned = await page.evaluate((reSrc) => {
-        const re = new RegExp(reSrc);
-        const hrefs = [...document.querySelectorAll('a[href]')].map(a => a.href);
-        for (const h of hrefs) {
-          const m = h.match(re);
-          if (m) return m[0];
-        }
-        const values = [...document.querySelectorAll('input')].map(i => i.value);
-        for (const v of values) {
-          const m = (v || '').match(re);
-          if (m) return m[0];
-        }
-        const body = document.body.innerText;
-        const m = body.match(re);
-        return m ? m[0] : null;
-      }, RUMBLE_V_RE.source);
-
-      if (scanned) {
-        url = scanned.replace(/\.$/, '');
-        console.log(`  Direct link captured: ${url}`);
-        break;
-      }
+      // Only trust URL navigation — do not scan page links (sidebar has existing video URLs)
 
       // Check for licensing page after ~2.5s
       if (i === 4) {
@@ -355,20 +338,27 @@ async function typeHuman(page, locator, text) {
           console.log(`  Redirected to: ${url}`);
           break;
         }
-        const scanned = await page.evaluate((reSrc) => {
+        // Only trust URL navigation — page links may contain sidebar/existing video URLs
+      }
+    }
+
+    // ── Verify by navigating to channel and grabbing most recent video URL ──────
+    if (!url) {
+      console.log('\nNavigating to channel to capture video URL...');
+      try {
+        await page.goto('https://rumble.com/user/CodeMonkeyMike', { waitUntil: 'domcontentloaded', timeout: 30000 });
+        await page.waitForTimeout(5000);
+        const channelUrl = await page.evaluate((reSrc) => {
           const re = new RegExp(reSrc);
-          const hrefs = [...document.querySelectorAll('a[href]')].map(a => a.href);
-          for (const h of hrefs) {
-            const m = h.match(re);
-            if (m) return m[0];
-          }
-          return null;
+          const links = [...document.querySelectorAll('a[href]')].map(a => a.href);
+          return links.find(h => re.test(h)) || null;
         }, RUMBLE_V_RE.source);
-        if (scanned) {
-          url = scanned.replace(/\.$/, '');
-          console.log(`  Direct link: ${url}`);
-          break;
+        if (channelUrl) {
+          url = channelUrl.match(RUMBLE_V_RE)[0].replace(/\.$/, '');
+          console.log(`  Most recent channel video: ${url}`);
         }
+      } catch (e) {
+        console.log(`  Channel verify error: ${e.message}`);
       }
     }
 

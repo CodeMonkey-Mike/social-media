@@ -1,6 +1,6 @@
 ---
 name: repurpose
-description: Turns long-form content (livestream transcripts, podcast episodes, video scripts, talks) into ready-to-post tweets. Use this skill whenever the user mentions repurposing content, says things like "make tweets from this", "what can I post from my livestream", "turn my video into social posts", or refers to a transcript/recording they want to break down for Twitter/X. Also trigger when the user drops a transcript file into the repurpose/transcripts folder, even if they don't explicitly name the skill. Don't undertrigger — if the user is talking about reusing existing spoken or written content for social media, this skill applies.
+description: Turns long-form content (livestream transcripts, podcast episodes, video scripts, talks) into ready-to-post tweets. Use this skill whenever the user mentions repurposing content, says things like "make tweets from this", "what can I post from my livestream", "turn my video into social posts", or refers to a transcript/recording they want to break down for Twitter/X. Also trigger when the user drops a transcript file into the repurpose/transcripts-ad-hoc folder, even if they don't explicitly name the skill. Don't undertrigger — if the user is talking about reusing existing spoken or written content for social media, this skill applies.
 ---
 
 # Repurpose
@@ -51,6 +51,22 @@ These are workflow rules for the repurpose pipeline — how to draft and deploy,
 
 **Don't draft self-quote-tweets unless asked.** Mike quote-tweets his own posts manually for second-wind engagement; just make sure the original post is sturdy enough to support a second pass.
 
+**Tag the project at the end of project-focused tweets — "Follow: @handle".** When a tweet is about a specific token / project (DogInMe, Toshi, Housecoin, Pengu, ElizaOS, Pythia, Turbo, etc.), append a final line:
+
+```
+Follow: @<handle>
+```
+
+This tags the project's official X account so they see the post and often retweet — meaningful additional reach for meme tokens. The handle map lives in `../persona/persona.json` → `project_handles.handles` (project name lowercased, no `$` prefix → X handle string including `@`, or `null` if unknown). When drafting:
+
+1. Look up the project name in `project_handles.handles`.
+2. If a non-null handle exists → append `\n\nFollow: @<handle>` to the tweet (account for the 280-char limit).
+3. If the handle is `null` → either ask the user for it (and update the map), or omit the Follow line.
+4. **Skip for Kaspa-focused tweets** — Mike is the Kaspa voice; tagging back to Kaspa adds nothing.
+5. For multi-project tweets (e.g. "$PENGU vs $PEPE") use judgment: tag the one Mike is championing, or skip if the framing isn't a clear pitch for one side.
+
+The map needs to be filled in over time — most handles are currently `null`. When drafting a tweet for a project whose handle isn't yet in the map, ask the user; if they confirm it, update the map so the next tweet about that project picks it up automatically.
+
 ### Image generation — favorites lineup & reference images
 
 > **⛔ HARD RULE #1 — EVERY IMAGE IS UNIQUE. NEVER reuse an `image_id` or image file across two posts.**
@@ -84,16 +100,19 @@ This skill helps the user turn one long piece of content (typically a livestream
 
 The whole thing lives in a folder on the user's machine. The default folder is wherever this `SKILL.md` is installed; if that's not obvious, ask. Inside that folder:
 
-- `transcripts/` — the user drops raw transcript files here (`.txt`, `.md`, `.srt`, `.vtt`)
+- `transcripts-ad-hoc/` — manual drop folder for one-off transcripts that are NOT part of a video batch (`.txt`, `.md`, `.srt`, `.vtt`). This is the override path, not the default.
 - `output/` — you write finished tweet files here
 
-Read the transcript directly from the filesystem. Don't ask the user to paste it into chat — that defeats the point of the folder workflow.
+The **default** source of transcripts is the batch registry at `../batches.json` (repo root) — see Phase 1. Read the transcript directly from the filesystem. Don't ask the user to paste it into chat — that defeats the point of the folder workflow.
 
 ## Phase 1 — Find the topics
 
 When the user invokes the skill (or just says "repurpose my latest transcript"), do this:
 
-1. **Pick the transcript.** If the user named a specific file, use that. Otherwise look in `transcripts/` and pick the most recently modified file. If there's only one file, just use it without asking. If there are multiple and the user wasn't specific, list them with their modified dates and ask which one.
+1. **Pick the transcript.** In priority order:
+   - If the user named a specific file, use that.
+   - **Default — the batch registry.** Read `../batches.json` (repo root) and find the first batch whose `pipelines.repurpose` is `"pending"`. Use its `transcript_plain` path (the exact `_plain.txt` file). When you finish generating, set that batch's `pipelines.repurpose` to `"done"` so it isn't picked again. If the user says "repurpose my latest transcript" with no file named, this is what you do.
+   - **Fallback — the ad-hoc folder.** If no batch is pending (or there's no registry), look in `transcripts-ad-hoc/` and pick the most recently modified file. If there's only one, use it; if multiple and the user wasn't specific, list them with modified dates and ask which one.
 
 2. **Read the whole file.** Don't sample, don't truncate unless it's enormous. Quality of topic extraction depends on you actually understanding the full arc of what was said.
 
@@ -955,9 +974,11 @@ Previously: real photo of Mike as the full background with text overlay. **Remov
 
 **Version 4 — Hook + data/chart slides** (`--subdir=version4`)
 
+**Intent (read this first):** Slide 1 is a **topic-relevant PHOTO** that acts as the visual hook; slides 2–N are data-formatted "financial report" slides. The photo is chosen to fit the post's subject and is **NOT assumed to be Mike** — the canonical reference (`images/reference/carousels/version4/hook.png`) uses a **Trump photo on a stock-market post**. Use whatever image best illustrates the hook (public figure, news image, scene).
+
 Two structurally different slide types within the same set:
 
-*Slide 1 (hook):* Full-bleed real photo of Mike as the background. Small chart or data visualization bubble overlaid in one corner (e.g. a candlestick chart, supply curve, or stat callout in a circle). Bold all-caps text at the bottom in white + accent color (green or teal). "SWIPE FOR MORE" CTA at the very bottom. Requires Mike's photo via `--reference-image`.
+*Slide 1 (hook):* Full-bleed **topic-relevant photo** as the background — whatever image best illustrates the post's subject (public figure, news image, or scene). **This is NOT Mike's photo** (common past misread); it's the topical photo for the hook. Small chart or data visualization bubble overlaid in one corner (e.g. a candlestick chart, supply curve, or stat callout in a circle). Bold all-caps text at the bottom in white + accent color (green or teal). "SWIPE FOR MORE" CTA at the very bottom. Requires that topic-relevant photo passed via `--reference-image`.
 
 *Slides 2–N (data):* Light/white or near-white background — completely different from the hook. Structure: title at top, three stat boxes below it (current value / historical average / comparison point), a chart filling the center (line chart, candlestick, or bar chart with labeled axes), and a warning/insight box at the bottom with 2–3 bullet points. Small page-number indicator top-right. Dense, analytical, professional financial look.
 
@@ -965,7 +986,7 @@ Two structurally different slide types within the same set:
 
 Hook prompt template:
 ```
-Single editorial hook image, 1:1 square. Full-bleed photo of the person from the reference image as the background. In one corner, a small circular bubble overlay containing a [chart type] chart in [color]. Bold all-caps text at the bottom: white for '[HOOK LINE]', accent green for '[EMPHASIS WORD/PHRASE]'. 'SWIPE FOR MORE' in small white text at the very bottom. No other text.
+Single editorial hook image, 1:1 square. Full-bleed photo from the reference image (the topic-relevant subject) as the background. In one corner, a small circular bubble overlay containing a [chart type] chart in [color]. Bold all-caps text at the bottom: white for '[HOOK LINE]', accent green for '[EMPHASIS WORD/PHRASE]'. 'SWIPE FOR MORE' in small white text at the very bottom. No other text.
 ```
 
 Data slide prompt template:

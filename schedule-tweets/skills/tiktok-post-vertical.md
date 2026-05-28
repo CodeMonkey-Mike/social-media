@@ -1,6 +1,6 @@
 ---
 name: tiktok-post-vertical
-description: Post the next pending TikTok vertical video from data/shorts.json by CDP-attaching to the user's real Chrome.
+description: Post the next pending TikTok vertical video from data/shorts.json by CDP-attaching to a dedicated tiktokbot-profile Chrome.
 ---
 
 ## Invocation
@@ -10,21 +10,17 @@ cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
 node scripts/post-tiktok-short.js
 ```
 
-**IMPORTANT — manually launch Chrome first (CDP spawn from Node fails silently).** Run this before the script:
+**Kill all Chrome windows first** — Chrome can't open CDP on a profile that's already in use. Run before the script:
 
 ```powershell
-Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList `
-  "--user-data-dir=C:\Users\mnede\AppData\Local\Google\Chrome\User Data", `
-  "--profile-directory=Default", "--remote-debugging-port=9224", "--no-first-run", "about:blank"
-Start-Sleep -Seconds 6
+Stop-Process -Name chrome -Force -ErrorAction SilentlyContinue
+Start-Sleep -Seconds 3
 node scripts/post-tiktok-short.js
 ```
 
-The script detects the existing CDP port and prints "Chrome already on CDP 9224 ✓". Skip the script's internal spawn entirely.
-
 ## Why this script is different
 
-TikTok aggressively detects Playwright's `launchPersistentContext` — even with `--disable-blink-features=AutomationControlled`. The fix: **don't launch Chrome via Playwright; spawn the user's REAL Chrome, then attach Playwright via CDP.** TikTok sees a normal Chrome session with real fingerprints.
+TikTok aggressively detects Playwright's `launchPersistentContext` — even with `--disable-blink-features=AutomationControlled`. The fix: **spawn real Chrome via CDP, then attach Playwright.** TikTok sees a normal Chrome session with real fingerprints, not an automation launch.
 
 ## Queue file
 
@@ -32,9 +28,13 @@ TikTok aggressively detects Playwright's `launchPersistentContext` — even with
 
 ## Chrome profile
 
-**Main Chrome User Data directory** — `C:\Users\mnede\AppData\Local\Google\Chrome\User Data`, `--profile-directory=Default`.
+**`tiktokbot-profile`** — `C:\Users\mnede\AppData\Local\Google\Chrome\tiktokbot-profile` (dedicated bot profile, TikTok logged in as of 2026-05-24).
 
-**ALL Chrome windows must be fully closed before running** — Chrome can't open a second instance against the same User Data dir, and can't add `--remote-debugging-port` to an already-running instance. Use Task Manager to confirm no `chrome.exe` processes remain.
+**Do NOT use main `User Data`** — the main Chrome profile takes too long to restore its session tabs, consistently failing to open CDP within the timeout. All other bot scripts (xbot, igbot, ytbot, etc.) use dedicated profiles for the same reason; TikTok now follows the same pattern.
+
+**Why a dedicated profile works now:** earlier attempts at a dedicated profile failed at login — TikTok blocked the login page entirely on profiles with no browsing history or session. The only workaround was main Chrome (with real history and cookies). On 2026-05-24, the user manually logged into TikTok on `tiktokbot-profile` while the script was waiting, establishing a real session. With that session in place, TikTok no longer blocks the upload flow. If TikTok ever blocks again on this profile, the user will need to log in manually (the script waits up to 10 minutes on the login page).
+
+**ALL Chrome windows must be fully closed before running** — Chrome can't open a second instance against a profile already in use. Use `Stop-Process -Name chrome -Force` before every run.
 
 ## Timing constants
 
@@ -52,7 +52,7 @@ TikTok aggressively detects Playwright's `launchPersistentContext` — even with
 3. Navigates to `https://www.tiktok.com/tiktokstudio/upload?lang=en`
 4. **Login handling:** if TikTok redirects to `/login`, waits up to 10 minutes for manual sign-in. After login, navigates back to upload page.
 5. **Pre-compose wait: 60–180s**
-6. `setInputFiles()` on `input[type="file"]` to attach the .mp4
+6. `DOM.setFileInputFiles` via raw CDP session on `input[type="file"]` to attach the .mp4 (no 50MB limit)
 7. Waits up to 90s for the caption composer (`div[contenteditable="true"][role="combobox"]`)
 8. Dismisses any onboarding overlay (`[data-test-id="overlay"]` → `button[data-action="skip"]`)
 9. Clicks into caption field, `Ctrl+A` + `Delete` to clear TikTok's auto-populated filename, then types caption at 60–150ms/char
@@ -70,22 +70,26 @@ TikTok aggressively detects Playwright's `launchPersistentContext` — even with
 
 **Two completion signals — accept the first.** TikTok shows a success toast briefly, but the more reliable signal is the URL redirect to `/tiktokstudio/content`.
 
-**Don't kill Chrome on exit.** The script ends with the user's real Chrome window still open. The script calls `browser.close()` on the Playwright CDP connection only (detaches without killing Chrome).
+**Chrome is killed as soon as the URL is captured** — immediately after the video URL is scraped from the content dashboard, Chrome is closed before the HTTP verification step. Verification is done via a plain HTTPS request, no browser needed. On error paths, the `finally` block kills Chrome as a safety net. Do not leave Chrome open after the script exits; it blocks other scripts that need CDP on port 9224.
 
-## CRITICAL — 50MB Playwright CDP cap
+## 50MB Playwright CDP cap — SOLVED via DOM.setFileInputFiles
 
-TikTok's actual upload limit is 500MB, but **Playwright connecting via CDP refuses files larger than 50MB**: `locator.setInputFiles: Cannot transfer files larger than 50Mb to a browser not co-located with the server`. This is a Playwright client-side cap, not TikTok's.
+Playwright's `setInputFiles()` via CDP refuses files larger than 50MB: `Cannot transfer files larger than 50Mb to a browser not co-located with the server`. This is a Playwright client-side cap, not TikTok's (TikTok allows up to 500MB).
 
-**Workflow when a video exceeds 50MB:**
-```powershell
-# Keep original as backup
-Copy-Item video.mp4 video-original.mp4
+**The fix (implemented 2026-05-24):** the script uses `DOM.setFileInputFiles` via a raw CDP session instead of Playwright's `setInputFiles`. This sends only the file *path* to Chrome (which reads the file locally), bypassing the Playwright data-transfer limit entirely. No file size limit. No ffmpeg re-encoding needed.
 
-# Re-encode to ~20MB at CRF 26 (visually lossless, ~30s for a 36s clip)
-ffmpeg -y -i video-original.mp4 -c:v libx264 -crf 26 -preset fast -c:a aac -b:a 128k video.mp4
+```js
+const cdp = await ctx.newCDPSession(page);
+const { root } = await cdp.send('DOM.getDocument');
+const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector: 'input[type="file"]' });
+await cdp.send('DOM.setFileInputFiles', { files: [videoPath], nodeId });
+await cdp.detach().catch(() => {});
 ```
 
-Compression ratio: ~2.5× (53MB → 21MB at CRF 26). Bump `-crf` higher for smaller; lower for higher quality. After compression, reset `tiktok` status to `pending` and re-run.
+If this ever breaks (Chrome API change), the fallback is ffmpeg re-encode to bring the file under 50MB:
+```powershell
+ffmpeg -y -i video.mp4 -c:v libx264 -crf 26 -preset fast -c:a aac -b:a 128k video-small.mp4
+```
 
 ## Debug artifacts
 

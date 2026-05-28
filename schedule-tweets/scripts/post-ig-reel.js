@@ -49,6 +49,20 @@ async function mouseClick(page, locator) {
   }
 }
 
+// IG pops a "Turn on Notifications" (and sometimes "Save your login info?") modal
+// on load that traps focus and blocks the Create flow (the Post sub-link never
+// appears and input[type=file] never attaches). Dismiss up to 2 with "Not Now".
+async function dismissBlockingDialogs(page) {
+  for (let i = 0; i < 2; i++) {
+    const btn = page.getByRole('button', { name: /^Not Now$/i }).first();
+    if (await btn.count() > 0) {
+      await btn.click().catch(() => {});
+      console.log('  Dismissed blocking modal (Not Now)');
+      await page.waitForTimeout(1200);
+    } else break;
+  }
+}
+
 async function clickNext(page, stepLabel) {
   console.log(`  Clicking Next (${stepLabel})...`);
   let btn = page.getByRole('button', { name: 'Next' });
@@ -70,10 +84,14 @@ async function getRecentReelUrls(page, count = 3) {
 (async () => {
   const data = JSON.parse(fs.readFileSync(SHORTS_JSON, 'utf8'));
 
-  for (const s of data.shorts) {
-    if (s.platforms[PLATFORM]?.status === 'posting') {
-      s.platforms[PLATFORM].status = 'pending';
-    }
+  // Bail if anything is stuck in 'posting' — those need manual review. Prior
+  // behavior auto-reset to 'pending' and caused duplicate uploads.
+  const stuck = data.shorts.filter(s => s.platforms[PLATFORM]?.status === 'posting');
+  if (stuck.length > 0) {
+    console.error(`${stuck.length} short(s) stuck in 'posting' — manual review required:`);
+    for (const s of stuck) console.error(`  - ${s.id}: ${s.title}`);
+    console.error(`Check instagram.com/${IG_USERNAME}/reels/ to see if any actually published, then update data/shorts.json before retrying.`);
+    process.exit(2);
   }
 
   const short = data.shorts.find(s => s.platforms[PLATFORM]?.status === 'pending');
@@ -117,9 +135,11 @@ async function getRecentReelUrls(page, count = 3) {
       throw new Error('Instagram login form detected — check igbot-profile.');
     }
     console.log('Instagram home loaded ✓');
+    await dismissBlockingDialogs(page);
 
     // ── Pre-compose wait ─────────────────────────────────────────────────────
     await longWait(page, PRE_COMPOSE_MIN, PRE_COMPOSE_MAX, 'before composer');
+    await dismissBlockingDialogs(page);
 
     // ── Open Create menu → Post ───────────────────────────────────────────────
     // Instagram converts video uploads to Reels automatically via the Post flow.

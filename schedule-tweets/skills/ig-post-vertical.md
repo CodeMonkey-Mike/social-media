@@ -3,6 +3,8 @@ name: ig-post-vertical
 description: Post the next pending Instagram vertical video (Reel) from data/shorts.json via Playwright script.
 ---
 
+> ✅ **FIXED 2026-05-25:** the file-input timeout after Create → "Post" was caused by a **"Turn on Notifications" modal** trapping focus and blocking the Create flow — not a selector change. FIX: `dismissBlockingDialogs()` clicks **"Not Now"** after home-load and before Create (applied to single/reel/carousel). If it breaks at file-input again, check for a new blocking modal first (`scripts/_diag-ig-create.js`).
+
 ## Invocation
 
 ```powershell

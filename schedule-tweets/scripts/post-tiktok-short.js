@@ -20,7 +20,7 @@ const path         = require('path');
 
 const SHORTS_JSON       = path.join(__dirname, '..', 'data', 'shorts.json');
 const CHROME_EXE        = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-const MAIN_USER_DATA    = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\User Data';
+const MAIN_USER_DATA    = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\tiktokbot-profile';
 const WORKSPACE_ROOT    = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
 const DEBUG_DIR         = path.join(WORKSPACE_ROOT, 'tmp-tiktok-debug');
 const CDP_PORT          = 9224;
@@ -77,18 +77,20 @@ async function startChrome() {
   console.log(`(if this hangs, you still have a Chrome window open — close it and re-run)`);
   const proc = spawn(CHROME_EXE, [
     `--user-data-dir=${MAIN_USER_DATA}`,
-    `--profile-directory=Default`,
     `--remote-debugging-port=${CDP_PORT}`,
     '--no-first-run',
+    '--disable-blink-features=AutomationControlled',
+    '--disable-sync',
+    '--no-default-browser-check',
     'about:blank',
   ], { detached: false, stdio: 'ignore' });
 
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 120; i++) {
     await new Promise(r => setTimeout(r, 500));
     if (await isCDPReady()) { console.log(`Chrome ready on CDP ${CDP_PORT} ✓`); return proc; }
   }
   throw new Error(
-    `Chrome did not open CDP ${CDP_PORT} within 15s.\n` +
+    `Chrome did not open CDP ${CDP_PORT} within 60s.\n` +
     `Likely cause: another Chrome window is already open against ${MAIN_USER_DATA}.\n` +
     `Close ALL Chrome windows (use Task Manager if needed) and re-run.`
   );
@@ -117,10 +119,17 @@ async function snapshot(page, label) {
 (async () => {
   const data = JSON.parse(fs.readFileSync(SHORTS_JSON, 'utf8'));
 
+  // Bail if anything is stuck in 'posting' — those need manual review. Prior
+  // behavior auto-reset to 'pending' and caused duplicate uploads.
+  const stuck = data.shorts.filter(s => s.platforms[PLATFORM]?.status === 'posting');
+  if (stuck.length > 0) {
+    console.error(`${stuck.length} short(s) stuck in 'posting' — manual review required:`);
+    for (const s of stuck) console.error(`  - ${s.id}: ${s.title}`);
+    console.error('Check tiktok.com user profile to see if any actually published, then update data/shorts.json before retrying.');
+    process.exit(2);
+  }
+
   for (const s of data.shorts) {
-    if (s.platforms[PLATFORM]?.status === 'posting') {
-      s.platforms[PLATFORM].status = 'pending';
-    }
     if (!s.platforms[PLATFORM]) {
       s.platforms[PLATFORM] = {
         status: 'pending', posted_at: null, url: null,
@@ -193,10 +202,14 @@ async function snapshot(page, label) {
     await longWait(page, PRE_COMPOSE_MIN, PRE_COMPOSE_MAX, 'before attaching video');
 
     // ── Attach video ────────────────────────────────────────────────────────
+    // Use DOM.setFileInputFiles via CDP to bypass Playwright's 50MB connectOverCDP limit
     console.log(`Attaching video: ${videoPath}`);
-    const fileInput = page.locator('input[type="file"]').first();
-    await fileInput.setInputFiles(videoPath);
-    console.log('  Video attached ✓');
+    const cdp = await ctx.newCDPSession(page);
+    const { root } = await cdp.send('DOM.getDocument');
+    const { nodeId } = await cdp.send('DOM.querySelector', { nodeId: root.nodeId, selector: 'input[type="file"]' });
+    await cdp.send('DOM.setFileInputFiles', { files: [videoPath], nodeId });
+    await cdp.detach().catch(() => {});
+    console.log('  Video attached via CDP ✓');
     await actionPause(page, 'after attach');
 
     // ── Wait for caption composer ───────────────────────────────────────────
@@ -315,39 +328,36 @@ async function snapshot(page, label) {
       console.log(`  URL: ${videoUrl || '(not found)'}`);
     } catch (e) { console.log(`  URL fetch error: ${e.message}`); }
 
-    // ── Verify the post is live by visiting the URL ─────────────────────────
+    // ── URL captured — close Chrome immediately, verify via HTTP (no browser needed) ──
+    try { await browser.close(); } catch {}
+    if (chromeProc) { try { chromeProc.kill(); } catch {} }
+    console.log('  Chrome closed ✓');
+
+    // ── Verify the post is live via HTTP fetch (no browser needed) ────────────
     let verified = false;
     if (videoUrl) {
       console.log(`\nVerifying live post: ${videoUrl}`);
       try {
-        const resp = await page.goto(videoUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
-        const status = resp ? resp.status() : 0;
-        console.log(`  HTTP ${status}`);
-        await page.waitForTimeout(rnd(3000, 5000));
-        const hasPlayer = await page.evaluate(() => {
-          if (document.querySelector('video')) return 'video';
-          if (document.querySelector('[data-e2e*="video"], [class*="VideoPlayer"]')) return 'player';
-          const og = document.querySelector('meta[property="og:video"], meta[property="og:video:url"]');
-          if (og) return 'og:video';
-          return null;
+        const https = require('https');
+        const status = await new Promise(resolve => {
+          const req = https.get(videoUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } }, r => resolve(r.statusCode));
+          req.on('error', () => resolve(0));
+          req.setTimeout(10000, () => { req.destroy(); resolve(0); });
         });
-        console.log(`  Player signal: ${hasPlayer || 'none'}`);
-        if (status >= 200 && status < 400 && hasPlayer) {
-          verified = true;
-          console.log('  Verified live ✓');
-        }
+        console.log(`  HTTP ${status}`);
+        if (status >= 200 && status < 400) { verified = true; console.log('  Verified live ✓'); }
+        else console.log('  Not yet live (still processing) — URL captured, marking posted.');
       } catch (e) { console.log(`  Verification error: ${e.message}`); }
     }
 
-    short.platforms[PLATFORM].status    = (confirmed && (verified || !videoUrl)) ? 'posted' : 'failed';
+    short.platforms[PLATFORM].status    = confirmed ? 'posted' : 'failed';
     short.platforms[PLATFORM].posted_at = new Date().toISOString();
     short.platforms[PLATFORM].url       = videoUrl || 'https://www.tiktok.com/tiktokstudio/content';
     if (!confirmed) short.platforms[PLATFORM].error = 'no confirmation';
-    else if (videoUrl && !verified) short.platforms[PLATFORM].error = `URL captured but verification failed: ${videoUrl}`;
     else delete short.platforms[PLATFORM].error;
     fs.writeFileSync(SHORTS_JSON, JSON.stringify(data, null, 2));
 
-    if (confirmed && (verified || !videoUrl)) console.log(`\nDone ✓  URL: ${videoUrl || '(dashboard)'}`);
+    if (confirmed) console.log(`\nDone ✓  URL: ${videoUrl || '(dashboard)'}`);
     else console.log(`\nUncertain — verify manually. URL: ${videoUrl}`);
 
   } catch (err) {
@@ -357,7 +367,8 @@ async function snapshot(page, label) {
     console.error('\nFailed:', err.message);
     process.exit(1);
   } finally {
+    // Chrome is killed as soon as URL is captured (above). This is a safety net for error paths.
     try { await browser.close(); } catch {}
-    // NOTE: do NOT kill the spawned Chrome — it's the user's real browser.
+    if (chromeProc) { try { chromeProc.kill(); } catch {} }
   }
 })();
