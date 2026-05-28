@@ -1,7 +1,7 @@
 import subprocess, re, sys, io, os, shutil
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-SHORTS = r"C:\Users\mnede\Documents\Claude\video-creation\shorts"
+SHORTS = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts"
 SIL_TH, AUD_TH, MIN_SIL, MIN_AUD, WIN = -57.0, -52.0, 0.25, 0.25, 0.02
 
 SLUGS = ["xrp-vs-kaspa","kaspa-iso20022-swift","kaspa-entry-doesnt-matter","ideas-in-a-cemetery",

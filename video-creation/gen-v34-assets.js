@@ -10,7 +10,7 @@ const CHAT_URL          = 'https://chatgpt.com/c/6a0deddf-1bac-83ea-8107-0e419a2
 const IMAGE_URL_PATTERN = 'estuary/content';
 const MIN_GEN_DELAY_MS  = 10000;
 const MAX_WAIT_MS       = 5 * 60 * 1000;
-const ASSETS_DIR        = 'C:\\Users\\mnede\\Documents\\Claude\\video-creation\\assets\\v34';
+const ASSETS_DIR        = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\v34';
 const SEL = { composer: '#prompt-textarea, div[contenteditable="true"][data-id]' };
 
 const ON_BLACK = ' Centered, brightly glowing and fully opaque, on a PURE SOLID BLACK (#000000) background and NOTHING else — no checkerboard, no gradient, no other objects, no text. Fills most of the frame.';

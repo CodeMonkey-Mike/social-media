@@ -1,7 +1,7 @@
 """Convert the v34 coin overlays (glow-on-black) to TRUE alpha PNGs (alpha = boosted luminance)."""
 from PIL import Image
 import os
-d = r"C:\Users\mnede\Documents\Claude\video-creation\assets\v34"
+d = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\assets\v34"
 for f in ["ov-eth-coin.png", "ov-btc-coin.png"]:
     p = os.path.join(d, f)
     if not os.path.exists(p):

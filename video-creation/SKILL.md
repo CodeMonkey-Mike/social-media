@@ -784,12 +784,12 @@ In CSS: `bottom` values must be `≥ 240px`.
 ```powershell
 # in-project batch (edit the IMAGES array at the top first; skips files that already exist):
 $env:NODE_PATH = "C:\Users\mnede\Documents\Claude\social-media\repurpose\node_modules"
-node "C:\Users\mnede\Documents\Claude\video-creation\generate-broll-batch.js"
+node "C:\Users\mnede\Documents\Claude\social-media\video-creation\generate-broll-batch.js"
 ```
 `generate-asset.js` does a single image: `node generate-asset.js --output="..." --prompt="..." [--chat-url="..."]`.
 
 ### cut-silences.py
-Location: `C:\Users\mnede\Documents\Claude\video-creation\cut-silences.py`
+Location: `C:\Users\mnede\Documents\Claude\social-media\video-creation\cut-silences.py`
 ```powershell
 python cut-silences.py --input facecam.mp4 --output facecam-cut.mp4 "--noise=-32dB" --duration 0.35
 ```
@@ -960,7 +960,7 @@ FACE_OVERLAY_EVENTS.forEach(e => {
 ## SOUND EFFECTS SYSTEM
 
 ### SFX library location
-`C:\Users\mnede\Documents\Claude\video-creation\assets\sfx\`
+`C:\Users\mnede\Documents\Claude\social-media\video-creation\assets\sfx\`
 
 **Curation rules:**
 - SFX only — no music tracks. Delete anything that is a full song, ambient loop, or jingle.

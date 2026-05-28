@@ -7,11 +7,11 @@ Generates a review dashboard.
 """
 import json, subprocess, os
 
-BASE     = r"C:\Users\mnede\Documents\Claude\video-creation\livestream-repurpose"
+BASE     = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\livestream-repurpose"
 SRC      = os.path.join(BASE, "media", "bulls are sleeping LOW BPS VERTICAL.mp4")
 JSON_SRC = os.path.join(BASE, "transcripts", "bulls are sleeping LOW BPS VERTICAL.json")
-OUT_BASE = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\bulls-are-sleeping-clips"
-DASHBOARD = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\bulls-are-sleeping-dashboard.html"
+OUT_BASE = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\bulls-are-sleeping-clips"
+DASHBOARD = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\bulls-are-sleeping-dashboard.html"
 
 os.makedirs(OUT_BASE, exist_ok=True)
 

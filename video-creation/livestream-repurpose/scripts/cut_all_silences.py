@@ -3,8 +3,8 @@ Run cut-silences.py on all 5 draft clips. Overwrites preview.mp4 in place.
 """
 import subprocess, os, shutil
 
-SCRIPT   = r"C:\Users\mnede\Documents\Claude\video-creation\cut-silences.py"
-CLIPS_DIR = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\market-update-clips"
+SCRIPT   = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\cut-silences.py"
+CLIPS_DIR = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\market-update-clips"
 
 clips = [
     "ai-job-market",

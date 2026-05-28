@@ -1,5 +1,5 @@
 import whisper, json
-base = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\toccata-explained"
+base = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\toccata-explained"
 model = whisper.load_model("base")
 path = base + "\\seg-C-candidate.mp4"
 r = model.transcribe(path, word_timestamps=True, language="en")

@@ -71,11 +71,11 @@ git commit -m "Move video-creation/ under social-media/ as a subfolder"
 
 ### Step 5 — Fix all the stale absolute paths
 After the move, every absolute reference to
-`C:\Users\mnede\Documents\Claude\video-creation\...` is stale and should become
+`C:\Users\mnede\Documents\Claude\social-media\video-creation\...` is stale and should become
 `C:\Users\mnede\Documents\Claude\social-media\video-creation\...`. Scope:
 
 - [ ] Memory files at `~/.claude/projects/C--Users-mnede-Documents-Claude/memory/*.md`
-  (grep for `Documents\Claude\video-creation`)
+  (grep for `Documents\Claude\social-media\video-creation`)
 - [ ] `video-creation/CLAUDE.md`, `SKILL.md`, `TODO.md` (this file)
 - [ ] Hardcoded paths in scripts:
   - [ ] `generate-broll-batch.js` — `ASSETS_DIR`, profile paths
@@ -84,7 +84,7 @@ After the move, every absolute reference to
 - [ ] `video-creation/shorts/meme-coins-progress.json` and any other progress JSONs
 
 Easiest approach: grep across the whole tree for the literal string
-`Documents\Claude\video-creation` and `Documents/Claude/video-creation`, replace with
+`Documents\Claude\social-media\video-creation` and `Documents/Claude/social-media/video-creation`, replace with
 `Documents\Claude\social-media\video-creation` and the slash variant. Test one
 script after replacement before doing them all.
 

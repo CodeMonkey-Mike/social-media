@@ -5,7 +5,7 @@ drops to transparent and the glowing subject stays opaque with a feathered glow.
 from PIL import Image
 import os
 
-ASSETS = r"C:\Users\mnede\Documents\Claude\video-creation\assets"
+ASSETS = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\assets"
 FILE = "overlay-doginme-character.png"
 
 p = os.path.join(ASSETS, FILE)
