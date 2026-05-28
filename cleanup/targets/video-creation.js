@@ -38,6 +38,8 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     else skipped.push({ path: f, reason: `${label} but too recent (<${maxAge}d)` });
   };
 
+  const batches = loadBatches(repoRoot);
+
   // ── assets/ ──────────────────────────────────────────────────────────────
   const ASSETS = path.join(ROOT, 'assets');
   const protectDirs = new Set(
@@ -57,10 +59,27 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     classifyAge(f, 'asset');
   }
 
-  // ── livestream-repurpose/media + transcripts ───────────────────────────────
+  // ── livestream-repurpose/media + transcripts — batch-aware ─────────────────
+  // Keep files belonging to an ACTIVE batch (matched by livestream_title prefix);
+  // recycle those belonging to an ARCHIVED batch. Files matching no batch are left
+  // alone (can't classify safely). Media is on YouTube + transcripts regenerable.
+  const titled = batches.filter(b => b.livestream_title);
+  const batchForFile = (filename) => {
+    let best = null;
+    for (const b of titled) {
+      if (filename.startsWith(b.livestream_title) &&
+          (!best || b.livestream_title.length > best.livestream_title.length)) best = b;
+    }
+    return best;
+  };
   for (const sub of ['media', 'transcripts']) {
     const dir = path.join(ROOT, 'livestream-repurpose', sub);
-    for (const f of walkFiles(dir)) classifyAge(f, `livestream ${sub}`);
+    for (const f of walkFiles(dir)) {
+      const b = batchForFile(path.basename(f));
+      if (!b) skipped.push({ path: f, reason: `livestream ${sub} — not in batch registry` });
+      else if (b.status === 'active') skipped.push({ path: f, reason: `livestream ${sub} — active batch (${b.batch})` });
+      else recycle.push({ path: f, reason: `livestream ${sub} — archived batch (${b.batch})` });
+    }
   }
 
   // ── per-clip artifacts under shorts/ ───────────────────────────────────────
@@ -73,7 +92,7 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
   // every comp is in git, so anything not tied to an active batch is recyclable.
   const OUT = path.join(ROOT, 'remotion', 'out');
   const activeOutDirs = new Set(
-    loadBatches(repoRoot)
+    batches
       .filter(b => b.status === 'active')
       .flatMap(b => b.directories || [])
       .map(d => path.resolve(repoRoot, d).toLowerCase())
