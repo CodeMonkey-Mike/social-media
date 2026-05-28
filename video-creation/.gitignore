@@ -1,0 +1,50 @@
+# Goal: track CODE ONLY. All assets are regenerable from YouTube + scripts,
+# or curated outside the repo. "Nothing of consequence" lives here.
+# Agreed with Mike on 2026-05-28. See ./TODO.md for the discussion + move plan.
+
+# ── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Bucketed-out directories ─────────────────────────────────────────────────
+# NOTE: .gitignore has NO inline comments — "#" only starts a comment at the
+# start of a line. Keep each pattern alone on its own line (a trailing "# ..."
+# becomes part of the pattern and silently matches nothing).
+assets/
+# ^ SFX, b-roll PNGs, logos, clip copies
+livestream-repurpose/media/
+# ^ source livestreams (on YouTube)
+livestream-repurpose/transcripts/
+# ^ Whisper output (re-run as needed)
+remotion/out/
+# ^ renders
+
+# ── Per-clip artifacts (regenerable from source + scripts) ───────────────────
+**/preview.mp4
+**/whisper-words.json
+**/captions.ts.draft
+
+# ── Media file extensions (safety net for stray binaries anywhere) ───────────
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.m4v
+*.mp3
+*.wav
+*.aiff
+*.aif
+*.m4a
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.ico
+
+# ── Logs / temp / OS junk ────────────────────────────────────────────────────
+*.log
+*.timemap.txt
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

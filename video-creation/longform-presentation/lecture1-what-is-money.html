@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 2 · Lecture 1 — What is Money?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #141414;
+    --border: #222;
+    --text: #f0f0f0;
+    --muted: #888;
+    --very-muted: #444;
+    --dim: #555;
+    --accent: #F5A623;
+    --sidebar-w: 220px;
+    --nav-h: 52px;
+    --progress-h: 3px;
+  }
+
+  html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+
+  /* PROGRESS BAR */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: var(--progress-h);
+    background: var(--accent); width: 0%; z-index: 1000;
+    transition: width 0.4s ease;
+  }
+
+  /* LAYOUT */
+  #app {
+    display: flex;
+    height: 100vh;
+    padding-top: var(--progress-h);
+  }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: var(--sidebar-w);
+    min-width: var(--sidebar-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0 calc(var(--nav-h) + 1rem);
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  #sidebar-header {
+    padding: 0 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  #sidebar-header .section-label {
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+
+  #sidebar-header .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .chapter-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    padding: 0.65rem 1.2rem;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .chapter-item:hover { background: rgba(255,255,255,0.03); }
+
+  .chapter-item.active {
+    border-left-color: var(--accent);
+  }
+
+  .chapter-item.active .ch-num,
+  .chapter-item.active .ch-title { color: var(--text); }
+
+  .chapter-item.visited {
+    border-left-color: var(--border);
+  }
+  .chapter-item.visited .ch-num,
+  .chapter-item.visited .ch-title { color: var(--very-muted); }
+
+  .chapter-item.upcoming {
+    border-left-color: var(--border);
+  }
+  .chapter-item.upcoming .ch-num,
+  .chapter-item.upcoming .ch-title { color: var(--muted); }
+
+  .ch-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 600;
+    color: var(--muted);
+    min-width: 16px;
+    padding-top: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .ch-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* MAIN CONTENT */
+  #main {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* SLIDES */
+  .slide {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: var(--nav-h);
+    padding: 3.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    overflow-y: auto;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* BREADCRUMB */
+  .breadcrumb {
+    font-size: 0.62rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: 1.6rem;
+  }
+  .breadcrumb span { color: var(--accent); }
+
+  /* EYEBROW */
+  .eyebrow {
+    font-size: 0.62rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  /* HEADING */
+  .slide h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 2.2rem;
+    max-width: 780px;
+  }
+
+  /* SLIDE COUNTER */
+  .slide-counter {
+    position: fixed;
+    bottom: calc(var(--nav-h) + 1.2rem);
+    right: 2rem;
+    font-size: 0.65rem;
+    font-family: 'Inter', sans-serif;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    z-index: 5;
+  }
+  .slide-counter span { color: var(--accent); font-weight: 600; }
+
+  /* CARDS — TOOL GRID */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 860px;
+  }
+
+  .card-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    max-width: 900px;
+  }
+
+  .tool-card {
+    background: #181818;
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    border-radius: 3px;
+    padding: 1.2rem 1.4rem;
+    transition: background 0.2s ease, transform 0.2s ease;
+    animation: slideIn 0.4s ease both;
+  }
+
+  .tool-card:hover {
+    background: #1e1e1e;
+    transform: translateY(-2px);
+  }
+
+  .tool-card .card-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .tool-card .card-desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .tool-card .card-icon {
+    font-size: 1.4rem;
+    margin-bottom: 0.7rem;
+    display: block;
+  }
+
+  /* ACCENT CARD — full width highlight */
+  .accent-card {
+    background: rgba(245, 166, 35, 0.06);
+    border: 1px solid rgba(245, 166, 35, 0.2);
+    border-left: 3px solid var(--accent);
+    border-radius: 3px;
+    padding: 1.2rem 1.6rem;
+    margin-bottom: 1rem;
+    max-width: 780px;
+  }
+
+  .accent-card .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .accent-card .card-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* BULLET LIST */
+  .bullet-list {
+    list-style: none;
+    max-width: 720px;
+  }
+
+  .bullet-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid #1a1a1a;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+    animation: slideIn 0.4s ease both;
+  }
+
+  .bullet-list li:last-child { border-bottom: none; }
+
+  .bullet-list li::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    min-width: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 6px;
+  }
+
+  .bullet-list li strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* TWO COL LAYOUT */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    max-width: 860px;
+  }
+
+  .col-label {
+    font-size: 0.6rem;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* STAT CALLOUT */
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-box {
+    background: #181818;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1rem 1.4rem;
+    min-width: 160px;
+  }
+
+  .stat-box .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-box .stat-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 1.8rem;
+    max-width: 700px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--border));
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1.4rem;
+    animation: slideIn 0.4s ease both;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.8rem;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-item .t-date {
+    font-size: 0.62rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+
+  .timeline-item .t-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-item .t-desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* BIG QUOTE */
+  .big-quote {
+    max-width: 700px;
+    margin: 1rem 0 2rem;
+  }
+
+  .big-quote blockquote {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+    border-left: 3px solid var(--accent);
+    padding-left: 1.4rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .big-quote cite {
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-style: normal;
+    padding-left: 1.4rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* WARNING/PROBLEM CARD */
+  .problem-card {
+    background: rgba(255, 80, 80, 0.05);
+    border: 1px solid rgba(255, 80, 80, 0.15);
+    border-left: 3px solid #ff5050;
+    border-radius: 3px;
+    padding: 1rem 1.4rem;
+    margin-bottom: 0.8rem;
+    max-width: 760px;
+    animation: slideIn 0.4s ease both;
+  }
+
+  .problem-card .p-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #ff7070;
+    margin-bottom: 0.3rem;
+  }
+
+  .problem-card .p-desc {
+    font-size: 0.74rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* CLOSING SLIDE */
+  .closing-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 700px;
+  }
+
+  .closing-center .big-text {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .closing-center .big-text em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  .closing-center .sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 520px;
+    margin-bottom: 2rem;
+  }
+
+  .next-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(245, 166, 35, 0.1);
+    border: 1px solid rgba(245, 166, 35, 0.3);
+    border-radius: 3px;
+    padding: 0.6rem 1rem;
+    font-size: 0.7rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+  }
+
+  /* BOTTOM NAV */
+  #nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: var(--sidebar-w);
+    right: 0;
+    height: var(--nav-h);
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 2rem;
+    gap: 0.8rem;
+    z-index: 100;
+  }
+
+  .nav-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.45rem 1.2rem;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+  }
+
+  #btn-prev {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  #btn-prev:hover { border-color: var(--muted); color: var(--text); }
+
+  #btn-next {
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: #000;
+    font-weight: 600;
+  }
+
+  #btn-next:hover { background: #e09620; border-color: #e09620; }
+
+  /* ANIMATIONS */
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-16px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .delay-1 { animation-delay: 70ms; }
+  .delay-2 { animation-delay: 140ms; }
+  .delay-3 { animation-delay: 210ms; }
+  .delay-4 { animation-delay: 280ms; }
+  .delay-5 { animation-delay: 350ms; }
+  .delay-6 { animation-delay: 420ms; }
+  .delay-7 { animation-delay: 490ms; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* INTRO SLIDE SPECIAL */
+  .intro-hero {
+    margin-bottom: 2.5rem;
+  }
+
+  .intro-hero .lecture-num {
+    font-size: 0.6rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .intro-hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.05;
+    margin-bottom: 1rem;
+  }
+
+  .intro-hero h1 em {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  .intro-hero .tagline {
+    font-size: 0.85rem;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.7;
+  }
+
+  .intro-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin: 1.5rem 0;
+    opacity: 0.6;
+  }
+
+  .section-pill {
+    display: inline-block;
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.25);
+    border-radius: 2px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.6rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 1.2rem;
+  }
+
+  /* FIAT SPECIAL */
+  .fiat-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 780px;
+    margin-top: 0.5rem;
+  }
+
+  .fiat-col {
+    background: #181818;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1.2rem;
+  }
+
+  .fiat-col .fiat-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+  }
+
+  .fiat-col .fiat-item {
+    font-size: 0.76rem;
+    color: var(--muted);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #1e1e1e;
+    line-height: 1.4;
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .fiat-col .fiat-item:last-child { border-bottom: none; }
+
+  .fiat-col .fiat-item::before {
+    content: '→';
+    color: var(--accent);
+    font-size: 0.7rem;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div id="sidebar-header">
+      <div class="section-label">Section 2</div>
+      <div class="section-title">What is Crypto & Bitcoin</div>
+    </div>
+
+    <div class="chapter-item active" data-slide="0">
+      <span class="ch-num">01</span>
+      <span class="ch-title">Introduction</span>
+    </div>
+    <div class="chapter-item upcoming" data-slide="1">
+      <span class="ch-num">02</span>
+      <span class="ch-title">Functions & Properties</span>
+    </div>
+    <div class="chapter-item upcoming" data-slide="2">
+      <span class="ch-num">03</span>
+      <span class="ch-title">A Brief History of Money</span>
+    </div>
+    <div class="chapter-item upcoming" data-slide="3">
+      <span class="ch-num">04</span>
+      <span class="ch-title">Why is Money Worth Anything?</span>
+    </div>
+    <div class="chapter-item upcoming" data-slide="4">
+      <span class="ch-num">05</span>
+      <span class="ch-title">What is Fiat Money?</span>
+    </div>
+    <div class="chapter-item upcoming" data-slide="5">
+      <span class="ch-num">06</span>
+      <span class="ch-title">The Problem with Fiat</span>
+    </div>
+    <div class="chapter-item upcoming" data-slide="6">
+      <span class="ch-num">07</span>
+      <span class="ch-title">The Role of Trust</span>
+    </div>
+    <div class="chapter-item upcoming" data-slide="7">
+      <span class="ch-num">08</span>
+      <span class="ch-title">Centralized Control</span>
+    </div>
+    <div class="chapter-item upcoming" data-slide="8">
+      <span class="ch-num">09</span>
+      <span class="ch-title">Why Bitcoin Was Created</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- SLIDE 0: INTRO -->
+    <section class="slide active" id="slide-0">
+      <div class="breadcrumb">Section 2 / <span>Lecture 1</span></div>
+      <div class="intro-hero">
+        <div class="section-pill">Foundations</div>
+        <p class="lecture-num">Lecture 01 of 05</p>
+        <h1>What is <em>Money</em>?</h1>
+        <div class="intro-divider"></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Functions of Money</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Key Properties</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">1971</div>
+          <div class="stat-label">End of Gold Standard</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">2008</div>
+          <div class="stat-label">The Crisis That Changed Everything</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 1: FUNCTIONS & PROPERTIES -->
+    <section class="slide" id="slide-1">
+      <div class="breadcrumb">Section 2 / <span>Lecture 1</span></div>
+      <div class="eyebrow">Chapter 02</div>
+      <h2>Functions & Properties of Money</h2>
+
+      <div class="two-col">
+        <div>
+          <div class="col-label">What Money Does — The 3 Functions</div>
+          <div class="tool-card delay-1">
+            <span class="card-icon">🏦</span>
+            <div class="card-title">Store of Value</div>
+          </div>
+          <div class="tool-card delay-2" style="margin-top:0.8rem">
+            <span class="card-icon">🔄</span>
+            <div class="card-title">Medium of Exchange</div>
+          </div>
+          <div class="tool-card delay-3" style="margin-top:0.8rem">
+            <span class="card-icon">📏</span>
+            <div class="card-title">Unit of Account</div>
+          </div>
+        </div>
+        <div>
+          <div class="col-label">What Makes Good Money — The 4 Properties</div>
+          <div class="tool-card delay-1">
+            <span class="card-icon">✂️</span>
+            <div class="card-title">Divisibility</div>
+          </div>
+          <div class="tool-card delay-2" style="margin-top:0.8rem">
+            <span class="card-icon">🪨</span>
+            <div class="card-title">Durability</div>
+          </div>
+          <div class="tool-card delay-3" style="margin-top:0.8rem">
+            <span class="card-icon">🔁</span>
+            <div class="card-title">Fungibility</div>
+          </div>
+          <div class="tool-card delay-4" style="margin-top:0.8rem">
+            <span class="card-icon">✅</span>
+            <div class="card-title">Verifiability</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: HISTORY OF MONEY -->
+    <section class="slide" id="slide-2">
+      <div class="breadcrumb">Section 2 / <span>Lecture 1</span></div>
+      <div class="eyebrow">Chapter 03</div>
+      <h2>A Brief History of Money</h2>
+
+      <div class="timeline">
+        <div class="timeline-item delay-1">
+          <div class="t-date">Ancient Times</div>
+          <div class="t-title">Barter Systems</div>
+        </div>
+        <div class="timeline-item delay-2">
+          <div class="t-date">~3000 BC onwards</div>
+          <div class="t-title">Commodity Money</div>
+        </div>
+        <div class="timeline-item delay-3">
+          <div class="t-date">17th–19th Century</div>
+          <div class="t-title">The Gold Standard & Paper Money</div>
+        </div>
+        <div class="timeline-item delay-4">
+          <div class="t-date">1944</div>
+          <div class="t-title">Bretton Woods Agreement</div>
+        </div>
+        <div class="timeline-item delay-5">
+          <div class="t-date">1971 — The Nixon Shock</div>
+          <div class="t-title">The End of the Gold Standard</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: WHY IS MONEY WORTH ANYTHING -->
+    <section class="slide" id="slide-3">
+      <div class="breadcrumb">Section 2 / <span>Lecture 1</span></div>
+      <div class="eyebrow">Chapter 04</div>
+      <h2>Why is Money Worth Anything?</h2>
+
+      <div class="accent-card delay-1" style="margin-bottom:1.6rem">
+        <div class="card-title">Money is worth something because enough people agree that it is</div>
+      </div>
+
+      <div class="card-grid">
+        <div class="tool-card delay-2">
+          <span class="card-icon">🤝</span>
+          <div class="card-title">Collective Agreement</div>
+        </div>
+        <div class="tool-card delay-3">
+          <span class="card-icon">🏛️</span>
+          <div class="card-title">Authority & Validation</div>
+        </div>
+        <div class="tool-card delay-4">
+          <span class="card-icon">⚓</span>
+          <div class="card-title">Backed by Something</div>
+        </div>
+        <div class="tool-card delay-5">
+          <span class="card-icon">❓</span>
+          <div class="card-title">What Backs It Today?</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: WHAT IS FIAT -->
+    <section class="slide" id="slide-4">
+      <div class="breadcrumb">Section 2 / <span>Lecture 1</span></div>
+      <div class="eyebrow">Chapter 05</div>
+      <h2>What is Fiat Money?</h2>
+
+      <div class="fiat-comparison">
+        <div class="fiat-col delay-2">
+          <div class="fiat-label">How It Works</div>
+          <div class="fiat-item">Backed by government decree, not a physical asset</div>
+          <div class="fiat-item">Central banks control its creation and supply</div>
+          <div class="fiat-item">Governments can print more whenever needed</div>
+          <div class="fiat-item">Legal tender laws force its acceptance</div>
+          <div class="fiat-item">Value maintained through monetary policy</div>
+        </div>
+        <div class="fiat-col delay-3">
+          <div class="fiat-label">Who Controls It</div>
+          <div class="fiat-item">Federal Reserve (USD) — USA</div>
+          <div class="fiat-item">European Central Bank (EUR) — Eurozone</div>
+          <div class="fiat-item">Bank of England (GBP) — UK</div>
+          <div class="fiat-item">Bank of Japan (JPY) — Japan</div>
+          <div class="fiat-item">A handful of unelected officials set policy for billions</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: PROBLEM WITH FIAT -->
+    <section class="slide" id="slide-5">
+      <div class="breadcrumb">Section 2 / <span>Lecture 1</span></div>
+      <div class="eyebrow">Chapter 06</div>
+      <h2>The Problem with Fiat — Inflation & Debasement</h2>
+
+      <div class="problem-card delay-1">
+        <div class="p-title">⚠️ A Small Group Controls Everything</div>
+      </div>
+      <div class="problem-card delay-2">
+        <div class="p-title">💸 Inflation Silently Destroys Savings</div>
+      </div>
+      <div class="problem-card delay-3">
+        <div class="p-title">🇿🇼 Zimbabwe — The Extreme Example</div>
+      </div>
+      <div class="problem-card delay-4">
+        <div class="p-title">🔍 Zero Privacy in Digital Transactions</div>
+      </div>
+      <div class="problem-card delay-5">
+        <div class="p-title">🏦 Forced Dependence on Intermediaries</div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: ROLE OF TRUST -->
+    <section class="slide" id="slide-6">
+      <div class="breadcrumb">Section 2 / <span>Lecture 1</span></div>
+      <div class="eyebrow">Chapter 07</div>
+      <h2>The Role of Trust in Money</h2>
+
+      <div class="accent-card delay-1" style="margin-bottom: 1.8rem;">
+        <div class="card-title">Everything Runs on Trust</div>
+      </div>
+
+      <div class="card-grid">
+        <div class="tool-card delay-2">
+          <span class="card-icon">🏛️</span>
+          <div class="card-title">Centralized Trust</div>
+        </div>
+        <div class="tool-card delay-3">
+          <span class="card-icon">🌐</span>
+          <div class="card-title">Decentralized Trust</div>
+        </div>
+        <div class="tool-card delay-4">
+          <span class="card-icon">📉</span>
+          <div class="card-title">When Trust Breaks Down</div>
+        </div>
+        <div class="tool-card delay-5">
+          <span class="card-icon">🧮</span>
+          <div class="card-title">Trust in Math Instead</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: CENTRALISED CONTROL -->
+    <section class="slide" id="slide-7">
+      <div class="breadcrumb">Section 2 / <span>Lecture 1</span></div>
+      <div class="eyebrow">Chapter 08</div>
+      <h2>The Problem with Centralized Control</h2>
+
+      <div class="two-col" style="margin-bottom: 1.5rem;">
+        <div>
+          <div class="col-label">Powers Governments Have Over Your Money</div>
+          <ul class="bullet-list">
+            <li class="delay-1"><strong>Freeze accounts</strong></li>
+            <li class="delay-2"><strong>Print unlimited money</strong></li>
+            <li class="delay-3"><strong>Impose capital controls</strong></li>
+            <li class="delay-4"><strong>Confiscate assets</strong></li>
+            <li class="delay-5"><strong>Negative interest rates</strong></li>
+          </ul>
+        </div>
+        <div>
+          <div class="col-label">The 2008 Financial Crisis — A Turning Point</div>
+          <div class="tool-card delay-2">
+            <div class="card-title">Banks Failed. Governments Bailed Them Out.</div>
+            <div class="card-desc">Ordinary people lost homes and savings. The banks that caused the crisis were deemed "too big to fail" and rescued with public money. This is the event that directly inspired the creation of Bitcoin.</div>
+          </div>
+          <div class="accent-card delay-3" style="margin-top: 0.8rem;">
+            <div class="card-title">Satoshi's Message</div>
+            <div class="card-desc">Embedded in Bitcoin's first block: "Chancellor on brink of second bailout for banks." Not an accident. A statement of intent.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: WHY BITCOIN WAS CREATED -->
+    <section class="slide" id="slide-8">
+      <div class="breadcrumb">Section 2 / <span>Lecture 1</span></div>
+      <div class="eyebrow">Chapter 09 — The Setup</div>
+      <h2>Why Bitcoin Was Created</h2>
+
+      <div class="closing-center">
+        <p class="big-text">All roads led to one question:<br><em>Can we build money<br>that nobody controls?</em></p>
+        <p class="sub">Money that can't be printed into worthlessness. That can't be frozen or confiscated. That doesn't require trust in banks, governments, or any single institution. Money governed by math, not by people.</p>
+        <div style="margin-bottom: 1rem;">
+          <ul class="bullet-list" style="max-width: 560px;">
+            <li class="delay-1">No central authority — rules enforced by code</li>
+            <li class="delay-2">Fixed supply — only 21 million Bitcoin will ever exist</li>
+            <li class="delay-3">Transparent — every transaction publicly verifiable</li>
+            <li class="delay-4">Permissionless — anyone, anywhere can participate</li>
+            <li class="delay-5">Censorship resistant — no one can block your transaction</li>
+          </ul>
+        </div>
+        <div class="next-tag">
+          ▶ Next: Lecture 2 — What is Bitcoin?
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- NAV BAR -->
+<div id="nav-bar">
+  <button class="nav-btn" id="btn-prev">← Prev</button>
+  <button class="nav-btn" id="btn-next">Next →</button>
+</div>
+
+<!-- SLIDE COUNTER -->
+<div class="slide-counter">
+  <span id="current-num">1</span> / <span id="total-num">9</span>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const chapters = document.querySelectorAll('.chapter-item');
+  const progressBar = document.getElementById('progress-bar');
+  const currentNumEl = document.getElementById('current-num');
+  const totalNumEl = document.getElementById('total-num');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  let current = 0;
+  const total = slides.length;
+  totalNumEl.textContent = total;
+
+  function goTo(index) {
+    if (index < 0 || index >= total) return;
+
+    slides[current].classList.remove('active');
+    chapters[current].classList.remove('active');
+    if (index > current) {
+      chapters[current].classList.remove('upcoming');
+      chapters[current].classList.add('visited');
+    } else {
+      chapters[current].classList.remove('visited');
+      chapters[current].classList.add('upcoming');
+    }
+
+    current = index;
+
+    slides[current].classList.add('active');
+    chapters[current].classList.remove('visited', 'upcoming');
+    chapters[current].classList.add('active');
+
+    // Progress
+    const pct = ((current + 1) / total) * 100;
+    progressBar.style.width = pct + '%';
+
+    // Counter
+    currentNumEl.textContent = current + 1;
+
+    // Button states
+    btnPrev.style.opacity = current === 0 ? '0.3' : '1';
+    btnNext.textContent = current === total - 1 ? 'Finish ✓' : 'Next →';
+  }
+
+  btnPrev.addEventListener('click', () => goTo(current - 1));
+  btnNext.addEventListener('click', () => goTo(current + 1));
+
+  chapters.forEach((ch, i) => {
+    ch.addEventListener('click', () => goTo(i));
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current - 1);
+  });
+
+  // Init
+  goTo(0);
+</script>
+</body>
+</html>
