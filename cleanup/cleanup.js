@@ -23,7 +23,7 @@ const TARGETS = {
 };
 
 function parseArgs(argv) {
-  const opts = { target: null, dryRun: false, ageDays: 30 };
+  const opts = { target: null, dryRun: false, ageDays: 30, only: null };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--dry-run') opts.dryRun = true;
@@ -31,18 +31,28 @@ function parseArgs(argv) {
     else if (a.startsWith('--target=')) opts.target = a.split('=')[1];
     else if (a === '--age-days') opts.ageDays = parseInt(argv[++i], 10);
     else if (a.startsWith('--age-days=')) opts.ageDays = parseInt(a.split('=')[1], 10);
+    else if (a === '--only') opts.only = argv[++i];
+    else if (a.startsWith('--only=')) opts.only = a.split('=')[1];
   }
   return opts;
 }
 
 function usage(msg) {
   if (msg) console.error('ERROR: ' + msg + '\n');
-  console.error('Usage: node cleanup/cleanup.js --target <schedule-tweets|video-creation|all> [--dry-run] [--age-days N]');
+  console.error('Usage: node cleanup/cleanup.js --target <schedule-tweets|video-creation|all> [--dry-run] [--age-days N] [--only <path-substring>]');
   process.exit(msg ? 2 : 0);
 }
 
 function runTarget(name, opts) {
-  const { recycle, skipped } = TARGETS[name].plan({ repoRoot: REPO_ROOT, ageDays: opts.ageDays });
+  let { recycle, skipped } = TARGETS[name].plan({ repoRoot: REPO_ROOT, ageDays: opts.ageDays });
+  if (opts.only) {
+    const needle = opts.only.replace(/\\/g, '/').toLowerCase();
+    const rel = (p) => path.relative(REPO_ROOT, p).replace(/\\/g, '/').toLowerCase();
+    const match = (e) => rel(e.path).includes(needle);
+    recycle = recycle.filter(match);
+    skipped = skipped.filter(match);
+    console.log(`  (filtered to paths matching "${opts.only}")`);
+  }
   const totalBytes = recycle.reduce((sum, r) => sum + lib.sizeOf(r.path), 0);
 
   console.log(`\n=== target: ${name} ===`);
