@@ -6,7 +6,7 @@ Overwrites the files in place (originals already moved to _bad-checkerboard/).
 from PIL import Image
 import os
 
-d = r"C:\Users\mnede\Documents\Claude\video-creation\assets\price-vs-tech"
+d = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\assets\price-vs-tech"
 FILES = ["ov-kaspa-coin.png", "ov-arrow-up.png", "ov-diamond.png"]
 
 for f in FILES:

@@ -3,7 +3,7 @@ Grouping per SKILL.md (2-4 words; break on >0.18s gap or word limit). Lowercase.
 Fixes mishears; light color-coding. <gr> green=kaspa, <o> orange=bitcoin, <y> yellow=numbers, <r> red=hate."""
 import json
 
-BASE = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\bulls-are-sleeping-clips"
+BASE = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\bulls-are-sleeping-clips"
 JOBS = [
     ("VIDEO 3 (heard-of-kaspa-brah)", f"{BASE}\\heard-of-kaspa-brah\\preview.json",
      {"brandon": "randy", "brandon,": "randy,", "casper": "kaspa", "casper.": "kaspa.",

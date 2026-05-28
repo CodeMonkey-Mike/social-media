@@ -1,7 +1,7 @@
 import json, textwrap
 
 import sys, os
-src = sys.argv[1] if len(sys.argv) > 1 else r"C:\Users\mnede\Documents\Claude\video-creation\livestream-repurpose\transcripts\bulls are sleeping LOW BPS VERTICAL.json"
+src = sys.argv[1] if len(sys.argv) > 1 else r"C:\Users\mnede\Documents\Claude\social-media\video-creation\livestream-repurpose\transcripts\bulls are sleeping LOW BPS VERTICAL.json"
 base = os.path.splitext(src)[0]
 out_txt = base + "_words.txt"
 out_plain = base + "_plain.txt"

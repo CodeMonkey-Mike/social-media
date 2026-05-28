@@ -5,7 +5,7 @@ SPOKEN words. Does NOT run the silence-removal pass — all natural pauses are p
 """
 import subprocess, os, shutil
 
-CLIP = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\bulls-are-sleeping-clips\eth-flips-btc\preview.mp4"
+CLIP = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\bulls-are-sleeping-clips\eth-flips-btc\preview.mp4"
 
 # Spoken-word spans to remove (start, end) in clip seconds. Pauses around them are kept.
 CUTS = [

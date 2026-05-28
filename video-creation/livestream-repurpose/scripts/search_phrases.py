@@ -1,6 +1,6 @@
 import json
 
-with open(r"C:\Users\mnede\Documents\Claude\video-creation\livestream-repurpose\transcripts\market update VERTICAL.json", encoding="utf-8") as f:
+with open(r"C:\Users\mnede\Documents\Claude\social-media\video-creation\livestream-repurpose\transcripts\market update VERTICAL.json", encoding="utf-8") as f:
     data = json.load(f)
 
 # Everything around "best goddamn coin" and onwards to mainnet context

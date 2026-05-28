@@ -4,8 +4,8 @@ Grouping per SKILL.md: 2-4 word groups, break on pause >0.18s or word limit
 """
 import json, os
 
-JSON_SRC = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\bulls-are-sleeping-clips\bulls-are-sleeping\preview.json"
-OUT_TS   = r"C:\Users\mnede\Documents\Claude\video-creation\remotion\src\constants-bulls.ts"
+JSON_SRC = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\bulls-are-sleeping-clips\bulls-are-sleeping\preview.json"
+OUT_TS   = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\remotion\src\constants-bulls.ts"
 
 with open(JSON_SRC, encoding="utf-8") as f:
     data = json.load(f)

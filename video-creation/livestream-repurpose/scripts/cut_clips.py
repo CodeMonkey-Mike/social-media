@@ -4,9 +4,9 @@ Uses word-level timestamps from Whisper JSON for precision — no bleed into off
 """
 import json, subprocess, os
 
-SRC      = r"C:\Users\mnede\Documents\Claude\video-creation\livestream-repurpose\media\market update VERTICAL.mp4"
-OUT_BASE = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\market-update-clips"
-JSON_SRC = r"C:\Users\mnede\Documents\Claude\video-creation\livestream-repurpose\transcripts\market update VERTICAL.json"
+SRC      = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\livestream-repurpose\media\market update VERTICAL.mp4"
+OUT_BASE = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\market-update-clips"
+JSON_SRC = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\livestream-repurpose\transcripts\market update VERTICAL.json"
 
 os.makedirs(OUT_BASE, exist_ok=True)
 
@@ -208,7 +208,7 @@ for clip in clips:
 
 cards_js = json.dumps(card_data, indent=2)
 
-DASHBOARD = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\market-update-dashboard.html"
+DASHBOARD = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\market-update-dashboard.html"
 
 html = f"""<!DOCTYPE html>
 <html lang="en">

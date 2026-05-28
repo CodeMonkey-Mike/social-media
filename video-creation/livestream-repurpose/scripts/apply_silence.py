@@ -7,7 +7,7 @@ Drops every silence >250ms; keeps all audio regions. Overwrites preview.mp4 in p
 import subprocess, re, sys, io, os, shutil
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-CLIPS = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\bulls-are-sleeping-clips"
+CLIPS = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\bulls-are-sleeping-clips"
 SIL_TH, AUD_TH, MIN_SIL, MIN_AUD, WIN = -57.0, -52.0, 0.25, 0.25, 0.02
 
 SLUGS = ["bulls-are-sleeping", "price-vs-technology", "heard-of-kaspa-brah"]

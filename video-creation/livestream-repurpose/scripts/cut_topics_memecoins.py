@@ -10,11 +10,11 @@ peppy=PEPE, spx/sbs 6900=SPX6900, housecoin=House Coin, lab=LAB.
 """
 import json, subprocess, os
 
-BASE     = r"C:\Users\mnede\Documents\Claude\video-creation\livestream-repurpose"
+BASE     = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\livestream-repurpose"
 SRC      = os.path.join(BASE, "media", "Best Meme Coins to retire ur arse LOW BPS VERTICAL.mp4")
 JSON_SRC = os.path.join(BASE, "transcripts", "Best Meme Coins to retire ur arse LOW BPS VERTICAL.json")
-OUT_BASE = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\meme-coins-clips"
-DASHBOARD = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\meme-coins-dashboard.html"
+OUT_BASE = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\meme-coins-clips"
+DASHBOARD = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\meme-coins-dashboard.html"
 
 os.makedirs(OUT_BASE, exist_ok=True)
 

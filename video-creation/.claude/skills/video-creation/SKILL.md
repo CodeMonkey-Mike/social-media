@@ -9,7 +9,7 @@ description: Mike's canonical video-creation pipeline — topic finding (90s chu
 repo root:
 
 - Repo-relative: `video-creation/SKILL.md`
-- Absolute: `C:\Users\mnede\Documents\Claude\video-creation\SKILL.md`
+- Absolute: `C:\Users\mnede\Documents\Claude\social-media\video-creation\SKILL.md`
 
 When `/video-creation` is invoked, **READ that root `SKILL.md` in full and follow it.**
 

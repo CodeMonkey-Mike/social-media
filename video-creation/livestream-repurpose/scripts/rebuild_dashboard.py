@@ -2,8 +2,8 @@
 reading live durations and showing each clip's processing label."""
 import json, subprocess, os
 
-CLIPS = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\bulls-are-sleeping-clips"
-DASHBOARD = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\bulls-are-sleeping-dashboard.html"
+CLIPS = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\bulls-are-sleeping-clips"
+DASHBOARD = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\bulls-are-sleeping-dashboard.html"
 
 # slug -> (title, processing label, tag-class)
 META = [

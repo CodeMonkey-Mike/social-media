@@ -11,10 +11,10 @@ Leaves video 3 (deleted) and video 5 (trimmed) untouched.
 """
 import json, subprocess, os, shutil, tempfile
 
-BASE     = r"C:\Users\mnede\Documents\Claude\video-creation\livestream-repurpose"
+BASE     = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\livestream-repurpose"
 SRC      = os.path.join(BASE, "media", "bulls are sleeping LOW BPS VERTICAL.mp4")
 JSON_SRC = os.path.join(BASE, "transcripts", "bulls are sleeping LOW BPS VERTICAL.json")
-CLIPS    = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\bulls-are-sleeping-clips"
+CLIPS    = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\bulls-are-sleeping-clips"
 
 SIL_TH, AUD_TH, MIN_SIL, MIN_AUD, WIN = -57.0, -52.0, 0.25, 0.25, 0.02
 FADE = 0.008  # 8ms declick fade at each region edge

@@ -1,5 +1,5 @@
 import whisper, json
-base = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\toccata-explained"
+base = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\toccata-explained"
 model = whisper.load_model("base")
 for seg, fname in [("A", "seg-A-candidate.mp4"), ("B", "seg-B-candidate.mp4")]:
     path = base + "\\" + fname

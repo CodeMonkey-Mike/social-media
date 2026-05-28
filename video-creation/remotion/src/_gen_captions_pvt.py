@@ -4,7 +4,7 @@ Fixes Whisper mishears (Casper->kaspa, Dix connection->disconnection). Light col
 """
 import json
 
-JSON_SRC = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\bulls-are-sleeping-clips\price-vs-technology\preview.json"
+JSON_SRC = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\bulls-are-sleeping-clips\price-vs-technology\preview.json"
 
 with open(JSON_SRC, encoding="utf-8") as f:
     data = json.load(f)

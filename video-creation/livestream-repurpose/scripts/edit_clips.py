@@ -4,8 +4,8 @@ Same segments as before, just switching from -c copy to re-encode per segment.
 """
 import subprocess, os
 
-SRC     = r"C:\Users\mnede\Documents\Claude\video-creation\livestream-repurpose\media\market update VERTICAL.mp4"
-OUT_DIR = r"C:\Users\mnede\Documents\Claude\video-creation\shorts\market-update-clips\meme-holds"
+SRC     = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\livestream-repurpose\media\market update VERTICAL.mp4"
+OUT_DIR = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\market-update-clips\meme-holds"
 os.makedirs(OUT_DIR, exist_ok=True)
 
 def cut_reencode(src, start, end, out):
