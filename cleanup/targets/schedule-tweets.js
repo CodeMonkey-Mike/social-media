@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { walkFiles } = require('../lib');
+const { walkFiles, ageDays } = require('../lib');
 
 const NAME = 'schedule-tweets';
 
@@ -58,6 +58,17 @@ function plan({ repoRoot }) {
     if (activePaths.has(key)) skipped.push({ path: img, reason: 'still needed (non-posted item links it)' });
     else if (postedPaths.has(key)) recycle.push({ path: img, reason: 'posted, no active link' });
     else skipped.push({ path: img, reason: 'not in any queue (untracked)' });
+  }
+
+  // Run logs (post-step*/workflow-step*.log) directly in schedule-tweets/ — recycle once
+  // >=24h old so the current posting session is preserved. Top-level only, so the Chrome
+  // bot-profile LevelDB logs deeper in the tree are never touched.
+  for (const f of fs.readdirSync(BASE)) {
+    if (!f.toLowerCase().endsWith('.log')) continue;
+    const full = path.join(BASE, f);
+    if (!fs.statSync(full).isFile()) continue;
+    if (ageDays(full) >= 1) recycle.push({ path: full, reason: 'run log (>=24h old)' });
+    else skipped.push({ path: full, reason: 'run log (<24h, current session)' });
   }
   return { name: NAME, recycle, skipped };
 }
