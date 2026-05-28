@@ -78,16 +78,28 @@ parked `repurpose/PLAYWRIGHT_HANDOFF.md` deletion). That work is untouched.
   - All 3 edited b-roll scripts pass `node --check`; Playwright resolves via the
     `NODE_PATH=...\repurpose\node_modules` workaround.
 
-### Step 7 — Write a publish-to-schedule script (STILL OPEN — deferred)
-Today (2026-05-28) we manually copied 5 MP4s from `remotion/out/meme-coins/` into
-`schedule-tweets/shorts/meme-coins-2026-05-28/` and ran a Python script
-(`data/_append_meme_coins.py`) to add JSON entries. Generalize that into a reusable
-script:
-- Input: batch name (e.g. `meme-coins`), source folder under `video-creation/remotion/out/<batch>/`
-- Action: copy MP4s into `schedule-tweets/shorts/<batch>-<YYYY-MM-DD>/`, append entries to `shorts.json` (or stub them — user fills in titles/captions).
-- Lives at `social-media/scripts/publish-shorts.py` or similar.
+### Step 7 — Write a publish-to-schedule script — DONE (2026-05-28)
+Built `social-media/scripts/publish-shorts.py` (stub model — Mike chose option A).
 
-Defer Step 7 if time-pressed — the merge itself is the main goal.
+```
+python scripts/publish-shorts.py <batch> [--date YYYY-MM-DD] [--id-prefix mc] [--dry-run]
+```
+
+What it does, per batch:
+1. Copies `video-creation/remotion/out/<batch>/<n>-<slug>.mp4` →
+   `schedule-tweets/shorts/<batch>-<date>/` (skips files already copied).
+2. Appends one STUB entry per clip to `schedule-tweets/data/shorts.json` with all 7
+   platforms set to `status: "pending"` (what the `post-*.js` scripts consume).
+
+Auto-filled: id (`<prefix>-<YYYYMMDD>-<slug>`, prefix derived from batch initials),
+slug, source, video_path, width/height + duration (via ffprobe), platform blocks.
+`title` is pulled from `<batch>-progress.json` when present. **Left blank for you to
+fill before posting: `hook`, `caption`, `tags`.**
+
+Idempotent: skips ids already in shorts.json; never overwrites an existing MP4.
+Verified with `--dry-run` against the meme-coins batch (correctly skipped all 5
+existing) and a throwaway date (correctly built 5 stubs with titles + durations).
+The old one-off prototype `schedule-tweets/data/_append_meme_coins.py` is now superseded.
 
 ---
 
