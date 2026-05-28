@@ -64,21 +64,31 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
   // recycle those belonging to an ARCHIVED batch. Files matching no batch are left
   // alone (can't classify safely). Media is on YouTube + transcripts regenerable.
   const titled = batches.filter(b => b.livestream_title);
-  const batchForFile = (filename) => {
+  // Match a media filename or a transcript folder name to its batch by livestream_title
+  // prefix (longest match wins, since one title could prefix another).
+  const batchFor = (name) => {
     let best = null;
     for (const b of titled) {
-      if (filename.startsWith(b.livestream_title) &&
+      if (name.startsWith(b.livestream_title) &&
           (!best || b.livestream_title.length > best.livestream_title.length)) best = b;
     }
     return best;
   };
-  for (const sub of ['media', 'transcripts']) {
-    const dir = path.join(ROOT, 'livestream-repurpose', sub);
-    for (const f of walkFiles(dir)) {
-      const b = batchForFile(path.basename(f));
-      if (!b) skipped.push({ path: f, reason: `livestream ${sub} — not in batch registry` });
-      else if (b.status === 'active') skipped.push({ path: f, reason: `livestream ${sub} — active batch (${b.batch})` });
-      else recycle.push({ path: f, reason: `livestream ${sub} — archived batch (${b.batch})` });
+  const classifyByBatch = (full, name, kind) => {
+    const b = batchFor(name);
+    if (!b) skipped.push({ path: full, reason: `${kind} — not in batch registry` });
+    else if (b.status === 'active') skipped.push({ path: full, reason: `${kind} — active batch (${b.batch})` });
+    else recycle.push({ path: full, reason: `${kind} — archived batch (${b.batch})` });
+  };
+  // media/: flat files named after the livestream.
+  for (const f of walkFiles(path.join(ROOT, 'livestream-repurpose', 'media'))) {
+    classifyByBatch(f, path.basename(f), 'livestream media');
+  }
+  // transcripts/: one folder per livestream (legacy loose files handled too).
+  const tdir = path.join(ROOT, 'livestream-repurpose', 'transcripts');
+  if (fs.existsSync(tdir)) {
+    for (const e of fs.readdirSync(tdir, { withFileTypes: true })) {
+      classifyByBatch(path.join(tdir, e.name), e.name, e.isDirectory() ? 'transcript folder' : 'transcript file');
     }
   }
 

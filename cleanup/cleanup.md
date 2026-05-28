@@ -35,7 +35,7 @@ references it. Images not found in any queue are left untouched. Queues scanned:
 
 The registry-driven tier reads `../batches.json`:
 - **`remotion/out/`** — keep the render `directories` of `status: "active"` batches; recycle every other batch folder and all loose files. (Disposable scratch: posted shorts live in the `schedule-tweets/` queue and every comp is in git.)
-- **`livestream-repurpose/{media,transcripts}`** — each file is matched to a batch by `livestream_title` prefix; active batch → keep, archived batch → recycle, no match → left alone. (Source recordings are on YouTube; transcripts are regenerable.)
+- **`livestream-repurpose/`** — `media/` files (flat) and `transcripts/<livestream>/` folders (one per livestream) are matched to a batch by `livestream_title`; active batch → keep, archived → recycle, no match → left alone. (Source recordings are on YouTube; transcripts are regenerable.)
 
 ## How to run
 

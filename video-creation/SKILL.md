@@ -33,6 +33,14 @@ video-creation/
 └── watch/                        — extracted frames + transcripts from reference videos
 ```
 
+**Transcript layout convention:** each livestream's transcript artifacts live together in a
+per-livestream folder, `livestream-repurpose/transcripts/<livestream name>/`, holding the raw
+Whisper `<name>.json` plus the derived `<name>_plain.txt`, `<name>_words.txt`, and
+`<name>_chunks_90s.txt`. Save the raw `.json` into that folder; `parse_transcript.py` and
+`chunk_transcript.py` write their outputs next to the `.json`, so they land in the folder
+automatically. This keeps `transcripts/` one-folder-per-livestream (so the cleaner can match a
+whole folder to a batch) instead of a flat dump of 4×N files.
+
 ---
 
 ## Phase 1 — Find topics in the transcript
