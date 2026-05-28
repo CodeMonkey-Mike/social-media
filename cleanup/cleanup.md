@@ -30,11 +30,13 @@ references it. Images not found in any queue are left untouched. Queues scanned:
 | **Never touch** | `assets/{sfx,music,fonts,transitions}/`, `assets/logo-*.png`, every `*-progress.json` | protected |
 | **Always sweep** | any `_bad-*/` reject folder | recycled regardless of age |
 | **Age-based** | rest of `assets/` (b-roll PNGs, `*-clip.mp4`, overlays), `livestream-repurpose/media` + `transcripts`, and per-clip `preview.mp4` / `whisper*.json` / `captions.ts.draft` under `shorts/` | recycled if older than `--age-days` |
-| **Publish-state guard** | `remotion/out/<batch>/<n>-<slug>.mp4` | recycled only when that clip is in `shorts.json` for THIS batch (`source_livestream` starts with `<batch>-`) with EVERY platform `status=posted` |
+| **Registry-driven** | everything under `remotion/out/` | keep only the render folders of **active** batches (per `batches.json`); recycle every other batch folder AND all loose files |
 
-The publish-state guard matches on slug **and** batch — slugs repeat across batches
-(e.g. `pengu-flips-pepe` exists in both `weekend-red` and `meme-coins`), so a slug-only
-match would wrongly recycle an unposted render.
+`out/` is treated as disposable scratch: the canonical copy of a posted short lives in
+the `schedule-tweets/` queue, and every comp is in git, so a render can always be
+regenerated. The cleaner reads `../batches.json`, protects the `directories` of any batch
+with `status: "active"`, and recycles the rest of `out/` (older batch folders + the loose
+pre-subfolder renders).
 
 ## How to run
 
