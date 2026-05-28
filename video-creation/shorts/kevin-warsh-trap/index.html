@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kevin Warsh Trap — Short</title>
+<style>
+/* ═══════════════════════════════════════════
+   RESET + FRAME
+═══════════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: #080808;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: 'Impact','Arial Black',sans-serif;
+}
+
+.wrapper {
+  position: relative;
+  transform-origin: top left;
+}
+
+.frame {
+  width: 1080px;
+  height: 1920px;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  transform-origin: top left;
+}
+
+/* ── Progress dots ── */
+.progress {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  z-index: 600;
+}
+.dot {
+  width: 12px; height: 12px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.2);
+  transition: width .35s ease, background .35s ease, box-shadow .35s ease;
+}
+.dot.active {
+  width: 48px;
+  background: #39ff14;
+  box-shadow: 0 0 10px #39ff14, 0 0 24px rgba(57,255,20,.45);
+}
+
+/* ── Slides ── */
+.slide {
+  position: absolute;
+  top: 72px; left: 0;
+  width: 1080px; height: 1848px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.slide.active { opacity: 1; pointer-events: auto; }
+
+/* ── Transition curtain ── */
+.curtain {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 500;
+}
+.curtain.flash { animation: curtainAnim .7s ease-in-out forwards; }
+@keyframes curtainAnim {
+  0%  { opacity: 0; }
+  40% { opacity: 1; }
+  60% { opacity: 1; }
+  100%{ opacity: 0; }
+}
+
+/* ═══════════════════════════════════════════
+   SHARED KEYFRAMES
+═══════════════════════════════════════════ */
+@keyframes fadeIn    { from{opacity:0}              to{opacity:1} }
+@keyframes slideUp   { from{opacity:0;transform:translateY(50px)}  to{opacity:1;transform:translateY(0)} }
+@keyframes slideDown { from{opacity:0;transform:translateY(-50px)} to{opacity:1;transform:translateY(0)} }
+@keyframes slideLeft { from{opacity:0;transform:translateX(-70px)} to{opacity:1;transform:translateX(0)} }
+@keyframes slideRight{ from{opacity:0;transform:translateX(70px)}  to{opacity:1;transform:translateX(0)} }
+@keyframes scaleIn   { from{opacity:0;transform:scale(.5)}         to{opacity:1;transform:scale(1)} }
+@keyframes popIn     { from{opacity:0;transform:scale(0)}          to{opacity:1;transform:scale(1)} }
+@keyframes drawLine  { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+@keyframes barGrow   { from{transform:scaleY(0)} to{transform:scaleY(1)} }
+@keyframes pulse     { 0%,100%{transform:scale(1)}   50%{transform:scale(1.07)} }
+@keyframes glow      { 0%,100%{opacity:.65}           50%{opacity:1} }
+@keyframes floatA    { 0%,100%{transform:translateY(0)rotate(-2deg)}   50%{transform:translateY(-18px)rotate(2deg)} }
+@keyframes floatB    { 0%,100%{transform:translateY(-10px)rotate(2deg)} 50%{transform:translateY(10px)rotate(-2deg)} }
+@keyframes rotCW     { from{transform:rotate(0deg)}   to{transform:rotate(360deg)} }
+@keyframes rotCCW    { from{transform:rotate(0deg)}   to{transform:rotate(-360deg)} }
+@keyframes lightFlash{ 0%,100%{opacity:0} 8%,24%{opacity:.85} 16%{opacity:.05} }
+@keyframes particleFly {
+  0%  { opacity:1; transform:translate(0,0)scale(1); }
+  100%{ opacity:0; transform:translate(var(--tx),var(--ty))scale(.15)rotate(var(--rot)); }
+}
+@keyframes arrowDraw { from{stroke-dashoffset:3000} to{stroke-dashoffset:0} }
+@keyframes sparkOut  {
+  0%  { opacity:1; transform:translate(-50%,0)translate(0,0)scale(1); }
+  100%{ opacity:0; transform:translate(-50%,0)translate(var(--sx),var(--sy))scale(0); }
+}
+@keyframes ringExpand { 0%{transform:scale(1);opacity:.4} 100%{transform:scale(1.35);opacity:0} }
+@keyframes glowPulse {
+  from{ filter:drop-shadow(0 0 10px currentColor); }
+  to  { filter:drop-shadow(0 0 35px currentColor)drop-shadow(0 0 70px currentColor); }
+}
+
+
+/* ═══════════════════════════════════════════
+   SLIDE 1 — WARSH HOOK
+═══════════════════════════════════════════ */
+#s1 { background:#000; }
+
+/* Clean arrow asset — full frame, no baked-in text. Show 680px (63%) of the
+   1:1 image so the arrowhead and debris have breathing room at the top.
+   Black background on both image and slide blend seamlessly — no hard edge. */
+#s1 .s1-img-wrap {
+  position:absolute;
+  top:0; left:0; right:0;
+  height:680px;
+  overflow:hidden;
+}
+#s1 .s1-img {
+  width:100%;
+  height:1080px;
+  object-fit:cover;
+  object-position:top center;
+  transform-origin:center 40%;
+  display:block;
+}
+#s1.active .s1-img {
+  animation:kenBurns 5.5s ease-out forwards;
+}
+@keyframes kenBurns {
+  from { transform:scale(1.0); }
+  to   { transform:scale(1.1) translateY(-20px); }
+}
+/* Subtle gradient — image bg is already black so this just softens the edge */
+#s1 .s1-img-fade {
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:200px;
+  background:linear-gradient(to bottom, transparent, #000);
+  pointer-events:none;
+}
+
+#s1 .particle {
+  position:absolute;
+  border-radius:3px;
+  background:#39ff14;
+  box-shadow:0 0 8px #39ff14;
+  opacity:0;
+  width:var(--w,9px); height:var(--h2,9px);
+}
+#s1.active .particle {
+  animation:particleFly var(--dur,1.3s) var(--delay,.85s) ease-out forwards;
+}
+
+#s1 .line-1, #s1 .line-2, #s1 .line-3 {
+  position:absolute; left:0; right:0;
+  text-align:center;
+  font-weight:900; text-transform:uppercase;
+  opacity:0;
+}
+#s1 .line-1 {
+  top:700px;
+  font-size:148px; letter-spacing:3px; line-height:1;
+  color:#fff;
+  text-shadow:0 0 40px rgba(255,255,255,.25),5px 5px 0 rgba(0,0,0,.7);
+}
+#s1 .line-2 {
+  top:855px;
+  font-size:148px; letter-spacing:3px; line-height:1;
+  color:#fff;
+  text-shadow:0 0 40px rgba(255,255,255,.25),5px 5px 0 rgba(0,0,0,.7);
+}
+#s1 .line-3 {
+  top:1010px;
+  font-size:110px; letter-spacing:0; line-height:1.1;
+  color:#fff;
+  text-shadow:5px 5px 0 rgba(0,0,0,.7);
+}
+#s1.active .line-1 { animation:slideUp .55s .75s  cubic-bezier(.22,1,.36,1) forwards; }
+#s1.active .line-2 { animation:slideUp .55s .90s  cubic-bezier(.22,1,.36,1) forwards; }
+#s1.active .line-3 { animation:slideUp .55s 1.05s cubic-bezier(.22,1,.36,1) forwards; }
+
+#s1 .subtitle {
+  position:absolute;
+  top:1220px; left:60px; right:60px;
+  text-align:center;
+  font-size:58px; font-weight:900; text-transform:uppercase;
+  color:#39ff14; line-height:1.28; letter-spacing:1px;
+  text-shadow:0 0 20px rgba(57,255,20,.55);
+  opacity:0;
+}
+#s1.active .subtitle { animation:slideUp .55s 1.25s cubic-bezier(.22,1,.36,1) forwards; }
+
+/* safe-zone reminder: bottom 240px reserved for platform UI on all slides */
+
+#s1 .scan-wrap {
+  position:absolute;
+  bottom:240px; left:0; right:0;
+  display:flex; flex-direction:column; gap:10px;
+  padding:0 20px;
+}
+#s1 .scan {
+  height:3px;
+  background:linear-gradient(90deg, transparent 0%, #00e5ff 15%, #00e5ff 85%, transparent 100%);
+  transform:scaleX(0); transform-origin:left;
+  opacity:0;
+}
+#s1.active .scan:nth-child(1) { animation:drawLine .4s 1.70s ease forwards, fadeIn .1s 1.70s ease forwards; }
+#s1.active .scan:nth-child(2) { animation:drawLine .4s 1.82s ease forwards, fadeIn .1s 1.82s ease forwards; }
+#s1.active .scan:nth-child(3) { animation:drawLine .4s 1.94s ease forwards, fadeIn .1s 1.94s ease forwards; }
+
+
+/* ═══════════════════════════════════════════
+   SLIDE 2 — PPI DATA
+═══════════════════════════════════════════ */
+#s2 { background:#060606; }
+
+#s2 .slide-num {
+  position:absolute; top:18px; left:44px;
+  font-size:36px; color:#39ff14; letter-spacing:1px;
+  opacity:0;
+}
+#s2.active .slide-num { animation:fadeIn .35s .1s ease forwards; }
+
+#s2 .hl-april, #s2 .hl-ppi, #s2 .hl-broke {
+  position:absolute; left:44px;
+  font-size:185px; font-weight:900; text-transform:uppercase;
+  letter-spacing:-4px; line-height:.92;
+  color:#fff;
+  text-shadow:5px 5px 0 rgba(0,0,0,.6);
+  opacity:0;
+}
+#s2 .hl-april { top:72px; }
+#s2 .hl-ppi   { top:257px; }
+#s2 .hl-broke { top:442px; }
+#s2.active .hl-april { animation:slideLeft  .5s .20s cubic-bezier(.22,1,.36,1) forwards; }
+#s2.active .hl-ppi   { animation:slideRight .5s .35s cubic-bezier(.22,1,.36,1) forwards; }
+#s2.active .hl-broke { animation:slideLeft  .5s .50s cubic-bezier(.22,1,.36,1) forwards; }
+
+#s2 .chart {
+  position:absolute;
+  top:655px; left:44px; right:44px;
+  height:640px;
+}
+
+#s2 .axis-y, #s2 .axis-x {
+  position:absolute;
+  background:rgba(255,255,255,.25);
+  opacity:0;
+}
+#s2.active .axis-y, #s2.active .axis-x { animation:fadeIn .3s .7s ease forwards; }
+#s2 .axis-y { left:70px; top:0; bottom:56px; width:2px; }
+#s2 .axis-x { left:70px; right:0; bottom:56px; height:2px; }
+
+#s2 .zero-line {
+  position:absolute;
+  left:70px; right:0;
+  height:2px;
+  background:rgba(255,255,255,.4);
+  bottom:calc(56px + 13%);
+  transform:scaleX(0); transform-origin:left;
+  opacity:0;
+}
+#s2.active .zero-line { animation:drawLine .4s .75s ease forwards, fadeIn .1s .75s ease forwards; }
+
+#s2 .y-labels {
+  position:absolute;
+  left:0; top:0; bottom:56px; width:68px;
+  display:flex; flex-direction:column-reverse; justify-content:space-around;
+  align-items:flex-end; padding-right:8px;
+  opacity:0;
+}
+#s2.active .y-labels { animation:fadeIn .3s .75s ease forwards; }
+#s2 .y-labels span { font-family:'Arial',sans-serif; font-size:26px; color:rgba(255,255,255,.5); }
+
+#s2 .x-labels {
+  position:absolute;
+  bottom:0; left:70px; right:0;
+  height:54px;
+  display:flex; align-items:center; justify-content:space-around;
+  opacity:0;
+}
+#s2.active .x-labels { animation:fadeIn .3s .75s ease forwards; }
+#s2 .x-labels span { font-family:'Arial Black',sans-serif; font-size:28px; color:rgba(255,255,255,.55); }
+
+#s2 .bars {
+  position:absolute;
+  bottom:58px; left:72px; right:4px; top:0;
+  display:flex; align-items:flex-end; gap:2px;
+}
+
+.bar {
+  flex:1;
+  border-radius:2px 2px 0 0;
+  transform:scaleY(0); transform-origin:bottom;
+  height:var(--bh);
+}
+.bar.bar-active { animation:barGrow .55s var(--bd,0s) cubic-bezier(.22,1,.36,1) forwards; }
+
+.bar-spike {
+  position:relative; overflow:visible;
+  background:linear-gradient(180deg, #ffff00 0%, #39ff14 50%, rgba(57,255,20,.5) 100%) !important;
+  box-shadow:0 0 24px #39ff14, 0 0 50px rgba(57,255,20,.4);
+  z-index:10;
+}
+
+#s2 .spike-tag {
+  position:absolute;
+  top:-110px; right:-50px;
+  background:#39ff14; color:#000;
+  font-size:28px; font-weight:900;
+  padding:8px 16px; border-radius:8px;
+  white-space:nowrap;
+  box-shadow:0 0 20px #39ff14, 0 0 40px rgba(57,255,20,.5);
+  opacity:0; transform:scale(0);
+  line-height:1.2; text-align:center;
+}
+#s2.active .spike-tag { animation:popIn .4s 2.0s cubic-bezier(.34,1.56,.64,1) forwards; }
+#s2 .spike-tag::after {
+  content:'';
+  position:absolute; bottom:-22px; left:50%;
+  transform:translateX(-50%);
+  width:3px; height:22px; background:#39ff14;
+}
+
+#s2 .spark {
+  position:absolute; top:0; left:50%;
+  border-radius:50%; opacity:0;
+}
+#s2.active .spark { animation:sparkOut var(--sdur,.7s) var(--sdelay,2s) ease-out forwards; }
+
+#s2 .stat-text {
+  position:absolute;
+  bottom:240px; left:44px; right:44px;
+  font-size:50px; font-weight:900; font-style:italic;
+  color:#39ff14; text-transform:uppercase; line-height:1.3;
+  text-shadow:0 0 20px rgba(57,255,20,.4);
+  opacity:0;
+}
+#s2.active .stat-text { animation:slideUp .5s 2.25s cubic-bezier(.22,1,.36,1) forwards; }
+
+
+/* ═══════════════════════════════════════════
+   SLIDE 3 — THREE OPTIONS
+═══════════════════════════════════════════ */
+#s3 {
+  background:
+    radial-gradient(ellipse 700px 380px at 50% 22%, rgba(0,35,0,.65) 0%, transparent 65%),
+    #060606;
+}
+
+#s3 .slide-num {
+  position:absolute; top:18px; left:44px;
+  font-size:36px; color:#39ff14; opacity:0;
+}
+#s3.active .slide-num { animation:fadeIn .3s .1s ease forwards; }
+
+#s3 .headline {
+  position:absolute;
+  top:58px; left:0; right:0;
+  text-align:center;
+  font-size:118px; font-weight:900; text-transform:uppercase;
+  line-height:1.02; letter-spacing:1px;
+  color:#fff;
+  text-shadow:5px 5px 0 rgba(0,0,0,.7);
+  opacity:0;
+}
+#s3.active .headline { animation:slideDown .55s .2s cubic-bezier(.22,1,.36,1) forwards; }
+
+#s3 .rule {
+  position:absolute; top:378px; left:80px; right:80px;
+  height:3px;
+  background:linear-gradient(90deg, transparent, rgba(57,255,20,.5), transparent);
+  transform:scaleX(0); transform-origin:left; opacity:0;
+}
+#s3.active .rule { animation:drawLine .45s .55s ease forwards, fadeIn .1s .55s ease forwards; }
+
+#s3 .opt-card {
+  position:absolute;
+  left:40px; right:40px; height:270px;
+  border-radius:18px;
+  display:flex; align-items:center;
+  gap:36px; padding:0 44px;
+  border:3px solid; opacity:0;
+}
+#s3 .opt-cut  { top:408px;  border-color:#39ff14; background:rgba(0,80,0,.35);  box-shadow:0 0 32px rgba(57,255,20,.15); }
+#s3 .opt-hold { top:718px;  border-color:#ffd700; background:rgba(80,70,0,.35); box-shadow:0 0 32px rgba(255,215,0,.15); }
+#s3 .opt-hike { top:1028px; border-color:#ff3b3b; background:rgba(80,0,0,.35);  box-shadow:0 0 32px rgba(255,59,59,.15); }
+#s3.active .opt-cut  { animation:slideLeft  .5s .65s cubic-bezier(.22,1,.36,1) forwards; }
+#s3.active .opt-hold { animation:slideRight .5s .82s cubic-bezier(.22,1,.36,1) forwards; }
+#s3.active .opt-hike { animation:slideLeft  .5s .99s cubic-bezier(.22,1,.36,1) forwards; }
+
+#s3 .opt-icon {
+  width:110px; height:110px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:54px; flex-shrink:0; border:3px solid;
+}
+#s3.active .opt-icon { animation:pulse 2.5s 1.3s ease-in-out infinite; }
+#s3 .icon-cut  { border-color:#39ff14; background:rgba(57,255,20,.12); color:#39ff14; }
+#s3 .icon-hold { border-color:#ffd700; background:rgba(255,215,0,.12); color:#ffd700; }
+#s3 .icon-hike { border-color:#ff3b3b; background:rgba(255,59,59,.12); color:#ff3b3b; }
+
+#s3 .opt-info { flex:1; }
+#s3 .opt-label { font-size:78px; font-weight:900; text-transform:uppercase; line-height:1; }
+#s3 .lbl-cut  { color:#39ff14; text-shadow:0 0 18px rgba(57,255,20,.5); }
+#s3 .lbl-hold { color:#ffd700; text-shadow:0 0 18px rgba(255,215,0,.5); }
+#s3 .lbl-hike { color:#ff3b3b; text-shadow:0 0 18px rgba(255,59,59,.5); }
+
+#s3 .opt-desc {
+  font-family:'Arial Black',sans-serif;
+  font-size:34px; color:rgba(255,255,255,.85);
+  text-transform:uppercase; line-height:1.25; margin-top:6px;
+}
+
+#s3 .bottom-rule {
+  position:absolute; bottom:320px; left:80px; right:80px;
+  height:2px;
+  background:linear-gradient(90deg, transparent, rgba(57,255,20,.35), transparent);
+  transform:scaleX(0); transform-origin:center; opacity:0;
+}
+#s3.active .bottom-rule { animation:drawLine .5s 1.25s ease forwards, fadeIn .1s 1.25s ease forwards; }
+
+#s3 .bottom-q {
+  position:absolute; bottom:248px; left:0; right:0;
+  text-align:center;
+  font-size:42px; color:rgba(255,255,255,.4);
+  text-transform:uppercase; letter-spacing:2px; opacity:0;
+}
+#s3.active .bottom-q { animation:fadeIn .4s 1.4s ease forwards; }
+
+
+/* ═══════════════════════════════════════════
+   SLIDE 4 — POW DON'T CARE
+═══════════════════════════════════════════ */
+#s4 { background:#000; overflow:hidden; }
+
+#s4 .orb-left {
+  position:absolute; top:-280px; left:-320px;
+  width:1000px; height:1000px;
+  background:radial-gradient(circle at center, rgba(0,229,255,.28) 0%, transparent 55%);
+  border-radius:50%;
+  animation:rotCW 12s linear infinite;
+  transform-origin:700px 800px;
+}
+#s4 .orb-right {
+  position:absolute; top:-280px; right:-320px;
+  width:1000px; height:1000px;
+  background:radial-gradient(circle at center, rgba(255,160,0,.28) 0%, transparent 55%);
+  border-radius:50%;
+  animation:rotCCW 10s linear infinite;
+  transform-origin:300px 800px;
+}
+#s4 .orb-center {
+  position:absolute; top:180px; left:50%; transform:translateX(-50%);
+  width:680px; height:680px;
+  background:radial-gradient(circle at center, rgba(0,0,0,.92) 40%, transparent 72%);
+  border-radius:50%;
+}
+
+#s4 .slide-num {
+  position:absolute; top:18px; left:44px;
+  font-size:36px; color:rgba(255,255,255,.6);
+  opacity:0; z-index:10;
+}
+#s4.active .slide-num { animation:fadeIn .3s .1s ease forwards; }
+
+#s4 .headline {
+  position:absolute;
+  top:65px; left:0; right:0;
+  text-align:center;
+  font-size:126px; font-weight:900; text-transform:uppercase;
+  letter-spacing:2px; line-height:1.02;
+  color:#fff;
+  text-shadow:0 0 40px rgba(255,255,255,.2),5px 5px 0 rgba(0,0,0,.8);
+  opacity:0; z-index:10;
+}
+#s4.active .headline { animation:slideDown .6s .3s cubic-bezier(.22,1,.36,1) forwards; }
+
+#s4 .coins {
+  position:absolute;
+  top:490px; left:0; right:0; height:740px;
+  display:flex; align-items:center; justify-content:center;
+  gap:90px; z-index:10;
+}
+
+#s4 .coin {
+  width:380px; height:380px;
+  border-radius:50%;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  position:relative; opacity:0;
+}
+
+#s4 .coin-kas {
+  background:radial-gradient(circle at 35% 30%, #4fffff, #006b7a 50%, #003a40);
+  border:5px solid rgba(0,229,255,.7);
+  box-shadow:
+    0 0 50px rgba(0,229,255,.65),
+    0 0 100px rgba(0,229,255,.3),
+    inset 0 5px 15px rgba(255,255,255,.35),
+    inset 0 -5px 15px rgba(0,0,0,.5);
+}
+#s4.active .coin-kas {
+  animation:
+    slideLeft  .7s .5s  cubic-bezier(.22,1,.36,1) forwards,
+    floatA     3.2s 1.3s ease-in-out infinite;
+}
+
+#s4 .coin-btc {
+  background:radial-gradient(circle at 35% 30%, #ffe566, #c8920a 50%, #7a5000);
+  border:5px solid rgba(255,215,0,.7);
+  box-shadow:
+    0 0 50px rgba(255,165,0,.65),
+    0 0 100px rgba(255,140,0,.3),
+    inset 0 5px 15px rgba(255,255,255,.35),
+    inset 0 -5px 15px rgba(0,0,0,.5);
+}
+#s4.active .coin-btc {
+  animation:
+    slideRight .7s .68s cubic-bezier(.22,1,.36,1) forwards,
+    floatB     3.2s 1.5s ease-in-out infinite;
+}
+
+#s4 .coin-letter {
+  font-size:175px; font-weight:900; color:rgba(255,255,255,.92);
+  text-shadow:0 4px 12px rgba(0,0,0,.6),0 -2px 6px rgba(255,255,255,.2);
+  line-height:1;
+}
+#s4 .coin-name {
+  font-family:'Arial Black',sans-serif;
+  font-size:34px; letter-spacing:6px; color:rgba(255,255,255,.7);
+  margin-top:-10px;
+}
+
+#s4 .ring {
+  position:absolute; inset:-16px; border-radius:50%;
+  border:2px solid;
+  animation:ringExpand 2.2s var(--rd,0s) ease-out infinite;
+}
+#s4 .coin-kas .ring { border-color:#00e5ff; }
+#s4 .coin-btc .ring { border-color:#ffd700; }
+#s4 .ring2 { inset:-32px; animation-delay:calc(var(--rd,0s) + .7s); opacity:.25; }
+
+#s4 .bottom-text {
+  position:absolute;
+  bottom:240px; left:40px; right:40px;
+  text-align:center;
+  font-size:60px; font-weight:900; text-transform:uppercase;
+  color:#39ff14; line-height:1.25;
+  text-shadow:0 0 22px rgba(57,255,20,.5);
+  opacity:0; z-index:10;
+}
+#s4.active .bottom-text { animation:slideUp .6s 1.1s cubic-bezier(.22,1,.36,1) forwards; }
+
+
+/* ═══════════════════════════════════════════
+   SLIDE 5 — WHICH WAY?
+═══════════════════════════════════════════ */
+#s5 { background:#030303; overflow:hidden; }
+
+#s5 .bolt {
+  position:absolute;
+  width:var(--bw,3px); height:var(--bh2,220px);
+  background:linear-gradient(180deg, transparent 0%, rgba(255,255,255,.75) 40%, rgba(200,220,255,.9) 60%, transparent 100%);
+  border-radius:2px; opacity:0;
+  transform:rotate(var(--br,0deg));
+  transform-origin:top center;
+  animation:lightFlash var(--bd2,2.2s) var(--bdelay,0s) ease-in-out infinite;
+}
+
+#s5 .storm-glow {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 500px 800px at 20% 40%, rgba(80,40,160,.2)  0%, transparent 60%),
+    radial-gradient(ellipse 500px 800px at 80% 50%, rgba(160,30,30,.2)  0%, transparent 60%),
+    radial-gradient(ellipse 400px 600px at 50% 70%, rgba(0,80,0,.15)    0%, transparent 60%);
+  animation:glow 2.5s ease-in-out infinite alternate;
+}
+
+#s5 .slide-num {
+  position:absolute; top:18px; left:44px;
+  font-size:36px; color:rgba(255,255,255,.6);
+  opacity:0; z-index:10;
+}
+#s5.active .slide-num { animation:fadeIn .3s .1s ease forwards; }
+
+#s5 .headline {
+  position:absolute;
+  top:55px; left:0; right:0;
+  text-align:center;
+  font-size:128px; font-weight:900; text-transform:uppercase;
+  letter-spacing:2px; line-height:1.0;
+  color:#fff;
+  text-shadow:5px 5px 0 rgba(0,0,0,.8),0 0 40px rgba(255,255,255,.15);
+  opacity:0; z-index:10;
+}
+#s5.active .headline { animation:slideDown .6s .2s cubic-bezier(.22,1,.36,1) forwards; }
+
+#s5 .arrows {
+  position:absolute;
+  top:460px; left:0; right:0; height:960px;
+  display:flex; align-items:center; justify-content:center;
+  gap:28px; z-index:10;
+}
+
+#s5 .arrow-block {
+  display:flex; flex-direction:column;
+  align-items:center; gap:24px; opacity:0;
+}
+#s5.active .arrow-hold { animation:slideLeft  .6s .50s cubic-bezier(.22,1,.36,1) forwards; }
+#s5.active .arrow-hike { animation:slideUp    .7s .35s cubic-bezier(.22,1,.36,1) forwards; }
+#s5.active .arrow-cut  { animation:slideRight .6s .50s cubic-bezier(.22,1,.36,1) forwards; }
+
+#s5.active .arrow-hold .arrow-svg { animation:glowPulse 1.8s 1.3s ease-in-out infinite alternate; color:#ffd700; }
+#s5.active .arrow-hike .arrow-svg { animation:glowPulse 1.8s 1.1s ease-in-out infinite alternate; color:#39ff14; }
+#s5.active .arrow-cut  .arrow-svg { animation:glowPulse 1.8s 1.5s ease-in-out infinite alternate; color:#ff3b3b; }
+
+#s5 .arrow-svg { display:block; }
+
+#s5 .arrow-lbl {
+  font-size:88px; font-weight:900; text-transform:uppercase; letter-spacing:3px;
+  text-shadow:0 0 22px currentColor,4px 4px 0 rgba(0,0,0,.8);
+}
+#s5 .arrow-hold .arrow-lbl { color:#ffd700; }
+#s5 .arrow-hike .arrow-lbl { color:#39ff14; }
+#s5 .arrow-cut  .arrow-lbl { color:#ff3b3b; }
+
+#s5 .cta {
+  position:absolute;
+  bottom:240px; left:40px; right:40px;
+  text-align:center;
+  font-size:65px; font-weight:900; text-transform:uppercase;
+  color:#39ff14; line-height:1.2;
+  text-shadow:0 0 22px rgba(57,255,20,.5);
+  opacity:0; z-index:10;
+}
+#s5 .kas-hl {
+  font-size:1.12em;
+  text-shadow:0 0 30px #39ff14,0 0 60px rgba(57,255,20,.5);
+}
+#s5.active .cta { animation:slideUp .6s 1.15s cubic-bezier(.22,1,.36,1) forwards; }
+
+</style>
+</head>
+<body>
+<div class="wrapper" id="wrapper">
+<div class="frame"   id="frame">
+
+  <div class="progress" id="progress"></div>
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 1 — WARSH HOOK
+  ════════════════════════════════════════ -->
+  <div class="slide" id="s1">
+
+    <!-- Clean arrow asset — generated via ChatGPT, no baked-in text -->
+    <div class="s1-img-wrap">
+      <img class="s1-img"
+        src="../../assets/warsh-arrow-clean.png"
+        alt="Warsh arrow" />
+      <div class="s1-img-fade"></div>
+    </div>
+
+    <!-- Debris particles (layer on top of image) -->
+    <div class="particle" style="left:170px;top:185px;--tx:-90px;--ty:-110px;--dur:1.35s;--delay:.88s;--rot:45deg"></div>
+    <div class="particle" style="left:590px;top:160px;--tx:100px;--ty:-130px;--dur:1.2s;--delay:.95s;--rot:-60deg"></div>
+    <div class="particle" style="left:140px;top:360px;--tx:-120px;--ty:60px;--dur:1.5s;--delay:1.0s;--rot:70deg"></div>
+    <div class="particle" style="left:640px;top:320px;--tx:110px;--ty:80px;--dur:1.3s;--delay:.90s;--rot:-30deg"></div>
+    <div class="particle" style="left:490px;top:145px;--tx:-50px;--ty:-150px;--dur:1.45s;--delay:.80s;--rot:20deg;--w:6px;--h2:6px"></div>
+    <div class="particle" style="left:520px;top:150px;--tx:70px;--ty:-140px;--dur:1.15s;--delay:.98s;--rot:-50deg;--w:6px;--h2:6px"></div>
+    <div class="particle" style="left:310px;top:490px;--tx:-130px;--ty:30px;--dur:1.4s;--delay:1.08s;--rot:55deg;background:#fff;box-shadow:none"></div>
+    <div class="particle" style="left:450px;top:500px;--tx:120px;--ty:50px;--dur:1.25s;--delay:1.02s;--rot:-25deg;background:#fff;box-shadow:none"></div>
+    <div class="particle" style="left:380px;top:145px;--tx:30px;--ty:-160px;--dur:1.6s;--delay:.85s;--rot:10deg;--w:5px;--h2:12px"></div>
+
+    <div class="line-1">KEVIN WARSH</div>
+    <div class="line-2">WALKED INTO</div>
+    <div class="line-3">A TRAP</div>
+
+    <div class="subtitle">JUNE 16–17 IS THE MOST<br>IMPORTANT DATE FOR CRYPTO<br>IN 60 DAYS</div>
+
+    <div class="scan-wrap">
+      <div class="scan"></div>
+      <div class="scan"></div>
+      <div class="scan"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 2 — PPI DATA
+  ════════════════════════════════════════ -->
+  <div class="slide" id="s2">
+    <div class="slide-num">2 OF 5</div>
+
+    <div class="hl-april">APRIL</div>
+    <div class="hl-ppi">PPI</div>
+    <div class="hl-broke">JUST BROKE</div>
+
+    <div class="chart">
+      <div class="axis-y"></div>
+      <div class="axis-x"></div>
+      <div class="zero-line"></div>
+      <div class="y-labels">
+        <span>8%</span><span>6%</span><span>4%</span><span>2%</span><span>0%</span><span>-2%</span>
+      </div>
+      <div class="x-labels">
+        <span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span>
+      </div>
+      <div class="bars" id="chart-bars"></div>
+    </div>
+
+    <div class="stat-text">+1.4% MOM AND +6.0% YOY.<br>BIGGEST 12-MONTH JUMP SINCE 2022.</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 3 — THREE OPTIONS
+  ════════════════════════════════════════ -->
+  <div class="slide" id="s3">
+    <div class="slide-num">3 OF 5</div>
+    <div class="headline">WARSH HAS<br>3 OPTIONS</div>
+    <div class="rule"></div>
+
+    <div class="opt-card opt-cut">
+      <div class="opt-icon icon-cut">↓</div>
+      <div class="opt-info">
+        <div class="opt-label lbl-cut">CUT:</div>
+        <div class="opt-desc">Trump happy,<br>inflation unanchors</div>
+      </div>
+    </div>
+
+    <div class="opt-card opt-hold">
+      <div class="opt-icon icon-hold">=</div>
+      <div class="opt-info">
+        <div class="opt-label lbl-hold">HOLD:</div>
+        <div class="opt-desc">Data forces it,<br>political cost high</div>
+      </div>
+    </div>
+
+    <div class="opt-card opt-hike">
+      <div class="opt-icon icon-hike">↑</div>
+      <div class="opt-info">
+        <div class="opt-label lbl-hike">HIKE:</div>
+        <div class="opt-desc">Least likely. Nobody<br>is positioned for it.</div>
+      </div>
+    </div>
+
+    <div class="bottom-rule"></div>
+    <div class="bottom-q">WHICH CHOICE DOES THE DATA SUPPORT?</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 4 — POW DON'T CARE
+  ════════════════════════════════════════ -->
+  <div class="slide" id="s4">
+    <div class="orb-left"></div>
+    <div class="orb-right"></div>
+    <div class="orb-center"></div>
+
+    <div class="slide-num">4 OF 5</div>
+    <div class="headline">THE POW ASSETS<br>DON'T CARE</div>
+
+    <div class="coins">
+      <div class="coin coin-kas">
+        <div class="ring"></div>
+        <div class="ring ring2" style="--rd:.8s"></div>
+        <div class="coin-letter">K</div>
+        <div class="coin-name">KASPA</div>
+      </div>
+      <div class="coin coin-btc">
+        <div class="ring"></div>
+        <div class="ring ring2" style="--rd:.6s"></div>
+        <div class="coin-letter">&#x20BF;</div>
+        <div class="coin-name">BITCOIN</div>
+      </div>
+    </div>
+
+    <div class="bottom-text">SUPPLY SCHEDULES DON'T MOVE<br>BECAUSE THE DOT PLOT MOVES.</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SLIDE 5 — WHICH WAY?
+  ════════════════════════════════════════ -->
+  <div class="slide" id="s5">
+    <div class="storm-glow"></div>
+    <div id="bolts-wrap"></div>
+
+    <div class="slide-num">5 OF 5</div>
+    <div class="headline">WHICH WAY<br>DOES WARSH<br>BREAK?</div>
+
+    <div class="arrows">
+
+      <div class="arrow-block arrow-hold">
+        <svg class="arrow-svg" width="260" height="170" viewBox="0 0 260 170" style="color:#ffd700">
+          <defs>
+            <filter id="f-hold" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="10" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <polygon points="0,85 82,12 82,52 178,52 178,12 260,85 178,158 178,118 82,118 82,158"
+            fill="rgba(255,215,0,.28)" stroke="#ffd700" stroke-width="6"
+            stroke-linejoin="round" filter="url(#f-hold)"/>
+        </svg>
+        <div class="arrow-lbl">HOLD</div>
+      </div>
+
+      <div class="arrow-block arrow-hike">
+        <svg class="arrow-svg" width="200" height="300" viewBox="0 0 200 300" style="color:#39ff14">
+          <defs>
+            <filter id="f-hike" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="10" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <polygon points="100,0 200,135 130,135 130,300 70,300 70,135 0,135"
+            fill="rgba(57,255,20,.28)" stroke="#39ff14" stroke-width="6"
+            stroke-linejoin="round" filter="url(#f-hike)"/>
+        </svg>
+        <div class="arrow-lbl">HIKE</div>
+      </div>
+
+      <div class="arrow-block arrow-cut">
+        <svg class="arrow-svg" width="200" height="300" viewBox="0 0 200 300" style="color:#ff3b3b">
+          <defs>
+            <filter id="f-cut" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="10" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <polygon points="100,300 0,165 70,165 70,0 130,0 130,165 200,165"
+            fill="rgba(255,59,59,.28)" stroke="#ff3b3b" stroke-width="6"
+            stroke-linejoin="round" filter="url(#f-cut)"/>
+        </svg>
+        <div class="arrow-lbl">CUT</div>
+      </div>
+
+    </div>
+
+    <div class="cta">AND WHAT DOES<br><span class="kas-hl">$KAS</span> DO<br>IN EACH SCENARIO?</div>
+  </div>
+
+  <div class="curtain" id="curtain"></div>
+</div>
+</div>
+
+<script>
+/* ── PPI monthly approximations 2020-2025
+   value = (raw_yoy + 2) / 14  → height as decimal (0–1)
+   color: css color string, or 'SPIKE' for the explosion bar ── */
+const PPI_DATA = [
+  // 2020 — low, brief dip into negative
+  [1.7,'#2d8c2d'],[.6,'#2d8c2d'],[1.3,'#2d8c2d'],[.3,'#2d8c2d'],[.6,'#2d8c2d'],[1.0,'#2d8c2d'],
+  [1.4,'#2d8c2d'],[1.7,'#2d8c2d'],[2.0,'#339933'],[2.3,'#339933'],[2.6,'#339933'],[2.8,'#3da33d'],
+  // 2021 — sharp rise
+  [3.2,'#4db830'],[4.4,'#6cd416'],[5.6,'#90e010'],[6.8,'#bae010'],[7.2,'#e0cc10'],[7.6,'#e0b510'],
+  [7.9,'#e09810'],[8.3,'#e07210'],[8.7,'#dd5010'],[9.1,'#da3510'],[9.5,'#d81818'],[9.8,'#d51010'],
+  // 2022 — peak then fall
+  [10.0,'#d01010'],[10.5,'#cc0c0c'],[11.2,'#c80808'],[10.9,'#c41010'],[10.5,'#bf1818'],[10.0,'#ba2424'],
+  [9.3,'#b43030'],[8.7,'#ae3e3e'],[8.2,'#a84c4c'],[8.5,'#a44040'],[7.6,'#a05050'],[6.7,'#9c6060'],
+  // 2023 — declining
+  [6.0,'#4daa30'],[5.2,'#3da030'],[4.4,'#339830'],[3.7,'#2a9030'],[3.0,'#248c30'],[2.5,'#228c30'],
+  [2.2,'#209030'],[1.9,'#1e9030'],[1.5,'#1c8830'],[1.7,'#1e8830'],[1.6,'#1e8830'],[1.8,'#1e9030'],
+  // 2024 — stable low
+  [2.1,'#249030'],[2.0,'#249030'],[2.3,'#289830'],[2.6,'#30a030'],[2.4,'#2e9c30'],[2.2,'#2c9830'],
+  [2.2,'#2c9830'],[2.0,'#2a9030'],[2.1,'#2c9830'],[2.6,'#38a030'],[3.2,'#60bc20'],[3.0,'#58b820'],
+  // 2025 Jan–Mar
+  [3.4,'#80cc20'],[4.0,'#a0d820'],[5.0,'#cce820'],
+  // Apr 2025 — SPIKE
+  [8.0,'SPIKE'],
+];
+
+const MAX_NORM = 14;
+
+const barsEl = document.getElementById('chart-bars');
+PPI_DATA.forEach(([raw, color], i) => {
+  const isSpike = color === 'SPIKE';
+  const hPct = ((raw) / MAX_NORM * 100).toFixed(1) + '%';
+
+  const bar = document.createElement('div');
+  bar.className = 'bar' + (isSpike ? ' bar-spike' : '');
+  bar.style.height = hPct;
+  bar.style.setProperty('--bh', hPct);
+  bar.style.setProperty('--bd', (0.88 + i * 0.022) + 's');
+  if (!isSpike) {
+    bar.style.background = `linear-gradient(180deg, ${color} 0%, ${color}88 100%)`;
+  }
+
+  if (isSpike) {
+    const tag = document.createElement('div');
+    tag.className = 'spike-tag';
+    tag.innerHTML = '+6.0%<br>YOY';
+    bar.appendChild(tag);
+
+    for (let a = 0; a < 14; a++) {
+      const sp = document.createElement('div');
+      sp.className = 'spark';
+      const angle = (a / 14) * Math.PI * 2;
+      const r = 55 + Math.random() * 50;
+      sp.style.setProperty('--sx', (Math.cos(angle) * r).toFixed(0) + 'px');
+      sp.style.setProperty('--sy', (Math.sin(angle) * r - r * .5).toFixed(0) + 'px');
+      sp.style.setProperty('--sdur', (.5 + Math.random() * .45) + 's');
+      sp.style.setProperty('--sdelay', (1.95 + a * 0.03) + 's');
+      sp.style.background = a % 2 === 0 ? '#ffff00' : '#39ff14';
+      sp.style.width = sp.style.height = (4 + Math.random() * 5) + 'px';
+      bar.appendChild(sp);
+    }
+  }
+  barsEl.appendChild(bar);
+});
+
+/* Lightning bolts for slide 5 */
+const boltsCfg = [
+  { left:'8%',  top:'8%',  h:'280px', w:'3px', dur:'2.1s', delay:'0s',   rot:'12deg'  },
+  { left:'82%', top:'6%',  h:'240px', w:'4px', dur:'1.7s', delay:'.5s',  rot:'-14deg' },
+  { left:'22%', top:'38%', h:'200px', w:'2px', dur:'2.4s', delay:'.9s',  rot:'7deg'   },
+  { left:'72%', top:'32%', h:'230px', w:'3px', dur:'1.9s', delay:'1.2s', rot:'-18deg' },
+  { left:'50%', top:'55%', h:'190px', w:'2px', dur:'2.7s', delay:'.3s',  rot:'5deg'   },
+  { left:'4%',  top:'62%', h:'210px', w:'4px', dur:'1.8s', delay:'.7s',  rot:'-6deg'  },
+  { left:'90%', top:'58%', h:'195px', w:'3px', dur:'2.3s', delay:'1.0s', rot:'15deg'  },
+  { left:'38%', top:'15%', h:'160px', w:'2px', dur:'3.1s', delay:'.4s',  rot:'-9deg'  },
+  { left:'62%', top:'78%', h:'180px', w:'2px', dur:'2.0s', delay:'1.4s', rot:'11deg'  },
+];
+const boltsWrap = document.getElementById('bolts-wrap');
+boltsCfg.forEach(c => {
+  const b = document.createElement('div');
+  b.className = 'bolt';
+  b.style.left = c.left; b.style.top = c.top;
+  b.style.setProperty('--bw', c.w);
+  b.style.setProperty('--bh2', c.h);
+  b.style.setProperty('--bd2', c.dur);
+  b.style.setProperty('--bdelay', c.delay);
+  b.style.setProperty('--br', c.rot);
+  boltsWrap.appendChild(b);
+});
+
+/* Progress dots */
+const progEl = document.getElementById('progress');
+for (let i = 0; i < 5; i++) {
+  const d = document.createElement('div');
+  d.className = 'dot'; d.id = 'dot-' + i;
+  progEl.appendChild(d);
+}
+
+/* Responsive scale */
+function scaleFrame() {
+  const f = document.getElementById('frame');
+  const w = document.getElementById('wrapper');
+  const s = window.innerHeight / 1920;
+  f.style.transform = 'scale(' + s + ')';
+  f.style.transformOrigin = 'top left';
+  w.style.width  = (1080 * s) + 'px';
+  w.style.height = (1920 * s) + 'px';
+}
+scaleFrame();
+window.addEventListener('resize', scaleFrame);
+
+/* Slideshow */
+const SLIDES     = ['s1','s2','s3','s4','s5'];
+const DISPLAY_MS = 5500;
+const TRANS_HALF = 350;
+let current = 0;
+const curtain = document.getElementById('curtain');
+
+function showSlide(idx) {
+  /* Remove active and force reflow so animations restart */
+  SLIDES.forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('active');
+  });
+  document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+
+  /* Restart bar animations */
+  document.querySelectorAll('.bar').forEach(b => {
+    b.classList.remove('bar-active');
+  });
+
+  /* Force reflow */
+  void document.getElementById('frame').offsetWidth;
+
+  document.querySelectorAll('.bar').forEach(b => b.classList.add('bar-active'));
+  document.getElementById(SLIDES[idx]).classList.add('active');
+  document.getElementById('dot-' + idx).classList.add('active');
+}
+
+function advance() {
+  curtain.classList.remove('flash');
+  void curtain.offsetWidth;
+  curtain.classList.add('flash');
+  setTimeout(() => {
+    current = (current + 1) % SLIDES.length;
+    showSlide(current);
+  }, TRANS_HALF);
+}
+
+showSlide(0);
+setInterval(advance, DISPLAY_MS);
+</script>
+</body>
+</html>

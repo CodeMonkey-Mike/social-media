@@ -1,0 +1,178 @@
+{
+  "$schema_version": 1,
+  "batch": "meme-coins",
+  "source_livestream": "Best Meme Coins to retire ur arse LOW BPS VERTICAL",
+  "dashboard": "shorts/meme-coins-dashboard.html",
+  "dashboard_status": "ALL 5 clips approved by Mike — proceed to production for every clip without re-asking",
+  "active_scope_2026_05_28": "ONLY clip 1 (keycat-vs-doginme). Mike wants to see how this one comes out before approving the others. Do NOT start clips 2/4/5 until told.",
+  "source_transcript": "livestream-repurpose/transcripts/Best Meme Coins to retire ur arse LOW BPS VERTICAL_plain.txt",
+  "source_transcript_words_json": "livestream-repurpose/transcripts/Best Meme Coins to retire ur arse LOW BPS VERTICAL.json",
+  "source_transcript_chunks_90s": "livestream-repurpose/transcripts/Best Meme Coins to retire ur arse LOW BPS VERTICAL_chunks_90s.txt",
+  "last_updated": "2026-05-28T11:59",
+  "phases": [
+    "preview",
+    "whisper",
+    "captions",
+    "broll_prompts",
+    "broll_pngs",
+    "constants",
+    "comp",
+    "root_registered",
+    "rendered"
+  ],
+  "phase_meaning": {
+    "preview":          "shorts/meme-coins-clips/<slug>/preview.mp4 exists (silence-cut, declicked)",
+    "whisper":          "shorts/meme-coins-clips/<slug>/whisper-words.json exists",
+    "captions":         "shorts/meme-coins-clips/<slug>/captions.ts.draft exists (grouped + color spans)",
+    "broll_prompts":    "IMAGES array authored for generate-broll-batch.js (committed in the batch script)",
+    "broll_pngs":       "PNGs present in video-creation/assets/ for every src referenced by the constants",
+    "constants":        "remotion/src/constants-<slug>.ts exists, exports TOTAL_FRAMES_X / FPS_X",
+    "comp":             "remotion/src/<CompName>.tsx exists",
+    "root_registered":  "comp imported + <Composition> added in remotion/src/Root.tsx",
+    "rendered":         "remotion/out/<N>-<slug>.mp4 exists"
+  },
+  "templates": {
+    "constants": "remotion/src/constants-xrpk.ts",
+    "composition": "remotion/src/XrpVsKaspa.tsx",
+    "root_registration_pattern": "import { TOTAL_FRAMES_X, FPS_X } from './constants-<slug>'; + <Composition id=... durationInFrames={TOTAL_FRAMES_X} fps={FPS_X} width={1080} height={1920} />"
+  },
+  "color_tags": {
+    "g":  "teal — winner of comparison / Kaspa",
+    "y":  "yellow — alternative / emphasis",
+    "gr": "green — positive number or outcome",
+    "o":  "orange — Bitcoin",
+    "p":  "purple — Ethereum",
+    "r":  "red — danger, 'not financial advice', rug"
+  },
+  "clips": [
+    {
+      "n": 1,
+      "slug": "keycat-vs-doginme",
+      "title": "Keycat or Dog In Me? The One I'd Buy",
+      "comp_name": "KeycatDoginme",
+      "constants_file": "remotion/src/constants-doginme.ts",
+      "comp_file": "remotion/src/KeycatDoginme.tsx",
+      "duration_seconds": 53.94,
+      "source_times": ["3:17-3:39", "5:21-5:42", "11:34-12:03"],
+      "phase_status": {
+        "preview":         "done",
+        "whisper":         "done",
+        "captions":        "done",
+        "broll_prompts":   "done",
+        "broll_pngs":      "done",
+        "constants":       "done",
+        "comp":            "done",
+        "root_registered": "done",
+        "rendered":        "done"
+      },
+      "output_mp4": "remotion/out/meme-coins/1-keycat-vs-doginme.mp4",
+      "rebuilt_2026_05_28": "Regenerated 4 DogInMe PNGs using REAL character (blue muscular pitbull, not shiba — bad ones moved to assets/_bad-shiba-doginme/). Added transparent character overlay (overlay-doginme-character.png, alpha-converted via _make_overlay_doginme_alpha.py). Added fullface moment at 45.98-47.60s ('punching the goddamn balls'). Added OVERLAY_EVENTS at 14.6-19.0 (rocket side pose) and 30.0-37.0 (winner flex pose). See feedback-meme-coin-character-art + feedback-fullface-and-overlays memories."
+    },
+    {
+      "n": 2,
+      "slug": "stop-hating-build-business",
+      "title": "Stop Hating Crypto — Go Build a Business",
+      "comp_name": "StopHating",
+      "constants_file": "remotion/src/constants-stophate.ts",
+      "comp_file": "remotion/src/StopHating.tsx",
+      "duration_seconds": 38.43,
+      "source_times": ["67:31-68:08", "76:03-76:16"],
+      "scope_2026_05_28": "REVISED after captions-only initial render: Mike requested adding content-zone b-roll (hyper-realistic photos of regular people, motivational/productivity theme, not crypto-related). Still NO full-screen b-roll, NO SFX, NO badges, NO fullface, NO overlays, NO thumbnail. See feedback-captions-only-meaning memory.",
+      "output_mp4": "remotion/out/meme-coins/2-stop-hating-build-business.mp4",
+      "phase_status": {
+        "preview":         "done",
+        "whisper":         "done",
+        "captions":        "done",
+        "broll_prompts":   "n/a",
+        "broll_pngs":      "n/a",
+        "constants":       "done",
+        "comp":            "done",
+        "root_registered": "done",
+        "rendered":        "done"
+      }
+    },
+    {
+      "n": 3,
+      "slug": "pengu-flips-pepe",
+      "title": "PENGU Will Flip PEPE — Best Meme of the Supercycle",
+      "comp_name": "PenguFlipsPepe",
+      "constants_file": "remotion/src/constants-pengu.ts",
+      "comp_file": "remotion/src/PenguFlipsPepe.tsx",
+      "duration_seconds": null,
+      "source_times": ["21:29-21:49", "22:11-22:40"],
+      "note": "Already built in the Weekend Red batch — skip unless asked to rebuild. Source render at remotion/out/2-pengu-flips-pepe.mp4 (Weekend Red index). Copied into the meme-coins folder as 3-pengu-flips-pepe.mp4 on 2026-05-28.",
+      "output_mp4": "remotion/out/meme-coins/3-pengu-flips-pepe.mp4",
+      "phase_status": {
+        "preview":         "done",
+        "whisper":         "done",
+        "captions":        "done",
+        "broll_prompts":   "done",
+        "broll_pngs":      "done",
+        "constants":       "done",
+        "comp":            "done",
+        "root_registered": "done",
+        "rendered":        "done"
+      }
+    },
+    {
+      "n": 4,
+      "slug": "house-coin-1000x",
+      "title": "Everyone Hates House Coin — I See a 1000x",
+      "comp_name": null,
+      "constants_file": null,
+      "comp_file": null,
+      "duration_seconds": null,
+      "source_times": ["61:37-61:50", "62:30-62:52"],
+      "duration_seconds": 28.68,
+      "comp_name": "HouseCoin1000x",
+      "constants_file": "remotion/src/constants-house.ts",
+      "comp_file": "remotion/src/HouseCoin1000x.tsx",
+      "output_mp4": "remotion/out/meme-coins/4-house-coin-1000x.mp4",
+      "phase_status": {
+        "preview":         "done",
+        "whisper":         "done",
+        "captions":        "done",
+        "broll_prompts":   "done",
+        "broll_pngs":      "done",
+        "constants":       "done",
+        "comp":            "done",
+        "root_registered": "done",
+        "rendered":        "done"
+      }
+    },
+    {
+      "n": 5,
+      "slug": "pythia-28x",
+      "title": "Pythia: My Community Did 28x — And It Could Rip Again",
+      "comp_name": null,
+      "constants_file": null,
+      "comp_file": null,
+      "duration_seconds": null,
+      "source_times": ["35:51-35:59", "36:21-36:44", "39:37-39:44"],
+      "duration_seconds": 26.72,
+      "comp_name": "Pythia28x",
+      "constants_file": "remotion/src/constants-pythia.ts",
+      "comp_file": "remotion/src/Pythia28x.tsx",
+      "output_mp4": "remotion/out/meme-coins/5-pythia-28x.mp4",
+      "phase_status": {
+        "preview":         "done",
+        "whisper":         "done",
+        "captions":        "done",
+        "broll_prompts":   "done",
+        "broll_pngs":      "done",
+        "constants":       "done",
+        "comp":            "done",
+        "root_registered": "done",
+        "rendered":        "done"
+      }
+    }
+  ],
+  "resume_protocol": [
+    "1. Read this file at session start.",
+    "2. Find the lowest-n clip whose phase_status still has a 'todo' or 'in_progress' phase.",
+    "3. Pick the leftmost non-'done' phase in the order listed in `phases`.",
+    "4. Execute the work per video-creation/SKILL.md.",
+    "5. Update phase_status to 'in_progress' on start and 'done' on completion.",
+    "6. Update last_updated."
+  ]
+}

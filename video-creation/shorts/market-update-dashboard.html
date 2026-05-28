@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Market Update — Draft Clips</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d0d0d; color: #e0e0e0; font-family: 'Segoe UI', system-ui, sans-serif; padding: 32px 24px 80px; }
+  header { margin-bottom: 40px; border-bottom: 1px solid #2a2a2a; padding-bottom: 20px; }
+  header h1 { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 0.04em; }
+  header p { margin-top: 6px; font-size: 13px; color: #666; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 28px; }
+  .card { background: #161616; border: 1px solid #2a2a2a; border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+  .card:hover { border-color: #444; }
+  .card.approved { border-color: #00e5ff; box-shadow: 0 0 0 1px #00e5ff22; }
+  .card.skipped { opacity: 0.45; }
+  .video-wrap { background: #000; aspect-ratio: 9 / 16; max-height: 480px; overflow: hidden; }
+  .video-wrap video { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .card-body { padding: 16px 18px 20px; }
+  .topic-num { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #555; margin-bottom: 4px; }
+  .card-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 8px; line-height: 1.3; }
+  .meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tag { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .tag-time { background: #1e1e1e; color: #888; border: 1px solid #333; }
+  .tag-dur  { background: #1e2620; color: #5caf82; border: 1px solid #2d4035; }
+  .tag-multi { background: #201e10; color: #d4a017; border: 1px solid #40380a; }
+  .actions { display: flex; gap: 10px; }
+  .btn { flex: 1; padding: 9px 0; border: none; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; letter-spacing: 0.04em; transition: opacity 0.15s; }
+  .btn:hover { opacity: 0.85; }
+  .btn-approve { background: #00e5ff; color: #000; }
+  .btn-skip { background: #2a2a2a; color: #888; }
+  .btn-approved { background: #00e5ff22; color: #00e5ff; border: 1px solid #00e5ff44; }
+  .btn-skipped { background: #1e1e1e; color: #555; border: 1px solid #333; }
+  .summary-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid #2a2a2a; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; z-index: 100; }
+  .summary-bar span { color: #666; }
+  .summary-bar strong { color: #00e5ff; }
+  #approved-list { color: #aaa; font-size: 12px; max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Market Update — Draft Clips</h1>
+  <p>5 topics &nbsp;·&nbsp; Raw cuts, no edits &nbsp;·&nbsp; Play each clip, then Approve or Skip</p>
+</header>
+<div class="grid" id="grid"></div>
+<div class="summary-bar">
+  <span>Approved: <strong id="count">0</strong></span>
+  <div id="approved-list">—</div>
+</div>
+<script>
+const topics = [
+  {
+    "slug": "ai-job-market",
+    "title": "AI Is Changing the Job Market",
+    "times": [
+      "20:31\u201321:13"
+    ],
+    "multi": false,
+    "duration": "0m 42s"
+  },
+  {
+    "slug": "kaspa-hard-fork",
+    "title": "Kaspa \u2014 Price Targets + 27-Day Hard Fork",
+    "times": [
+      "10:33\u201311:16",
+      "24:38\u201328:57"
+    ],
+    "multi": true,
+    "duration": "5m 01s"
+  },
+  {
+    "slug": "meme-bear-market",
+    "title": "Why I'm Avoiding New Meme Coins Right Now",
+    "times": [
+      "14:07\u201316:21"
+    ],
+    "multi": false,
+    "duration": "2m 13s"
+  },
+  {
+    "slug": "meme-holds",
+    "title": "The Memes I'm Actually Holding",
+    "times": [
+      "22:38\u201323:13",
+      "36:16\u201339:06"
+    ],
+    "multi": true,
+    "duration": "3m 25s"
+  },
+  {
+    "slug": "tao-ai-play",
+    "title": "TAO \u2014 The AI All-In-One Play This Cycle",
+    "times": [
+      "31:33\u201332:39"
+    ],
+    "multi": false,
+    "duration": "1m 05s"
+  }
+];
+const state = {};
+topics.forEach(t => state[t.slug] = 'none');
+function render() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  topics.forEach((t, i) => {
+    const s = state[t.slug];
+    const timeTags = t.times.map(ts => `<span class="tag tag-time">${ts}</span>`).join('');
+    const multiTag = t.multi ? `<span class="tag tag-multi">multi-segment</span>` : '';
+    const durTag = `<span class="tag tag-dur">${t.duration}</span>`;
+    const approveBtn = s === 'approved'
+      ? `<button class="btn btn-approved" onclick="toggle('${t.slug}','approved')">✓ Approved</button>`
+      : `<button class="btn btn-approve" onclick="toggle('${t.slug}','approved')">Approve</button>`;
+    const skipBtn = s === 'skipped'
+      ? `<button class="btn btn-skipped" onclick="toggle('${t.slug}','skipped')">Skipped</button>`
+      : `<button class="btn btn-skip" onclick="toggle('${t.slug}','skipped')">Skip</button>`;
+    const card = document.createElement('div');
+    card.className = 'card' + (s === 'approved' ? ' approved' : s === 'skipped' ? ' skipped' : '');
+    card.innerHTML = `
+      <div class="video-wrap">
+        <video controls preload="metadata" src="market-update-clips/${t.slug}/preview.mp4"></video>
+      </div>
+      <div class="card-body">
+        <div class="topic-num">Topic ${i+1} of ${topics.length}</div>
+        <div class="card-title">${t.title}</div>
+        <div class="meta">${timeTags}${multiTag}${durTag}</div>
+        <div class="actions">${approveBtn}${skipBtn}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+  updateSummary();
+}
+function toggle(slug, action) { state[slug] = state[slug] === action ? 'none' : action; render(); }
+function updateSummary() {
+  const approved = topics.filter(t => state[t.slug] === 'approved');
+  document.getElementById('count').textContent = approved.length;
+  document.getElementById('approved-list').textContent = approved.length ? approved.map(t => t.title).join(' · ') : '—';
+}
+render();
+</script>
+</body>
+</html>
