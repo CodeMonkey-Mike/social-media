@@ -15,6 +15,7 @@ node cleanup/cleanup.js --target <schedule-tweets|video-creation|all> [--dry-run
 - `--target` (required): which folder's policy to run, or `all`.
 - `--dry-run`: print what would be recycled, move nothing. **Always run this first.**
 - `--age-days N`: age threshold for the video-creation target (default 30).
+- `--only <path-substring>`: restrict the run to paths matching a substring (forward-slash, case-insensitive), e.g. `--only video-creation/remotion/out` to clean just that folder. Great for going folder-by-folder.
 
 ## Targets & policies
 
