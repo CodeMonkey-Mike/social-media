@@ -25,6 +25,10 @@ only if some post queue references it with `status=posted` AND no non-posted ite
 references it. Images not found in any queue are left untouched. Queues scanned:
 `x-tweets`, `x-threads`, `x-polls`, `ig-single-image`, `ig-carousel`, `yt-posts`, `yt-text-polls`.
 
+Also recycles **top-level run logs** (`*.log` directly in `schedule-tweets/`, e.g.
+`post-step*` / `workflow-step*`) once they're **≥24h old** — the current posting session is
+preserved, and the Chrome bot-profile LevelDB logs deeper in the tree are never touched.
+
 ### `video-creation` — hybrid
 | Tier | Paths | Rule |
 |---|---|---|
