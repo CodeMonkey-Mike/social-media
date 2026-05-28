@@ -30,14 +30,12 @@ references it. Images not found in any queue are left untouched. Queues scanned:
 |---|---|---|
 | **Never touch** | `assets/{sfx,music,fonts,transitions}/`, `assets/logo-*.png`, every `*-progress.json` | protected |
 | **Always sweep** | any `_bad-*/` reject folder | recycled regardless of age |
-| **Age-based** | rest of `assets/` (b-roll PNGs, `*-clip.mp4`, overlays), `livestream-repurpose/media` + `transcripts`, and per-clip `preview.mp4` / `whisper*.json` / `captions.ts.draft` under `shorts/` | recycled if older than `--age-days` |
-| **Registry-driven** | everything under `remotion/out/` | keep only the render folders of **active** batches (per `batches.json`); recycle every other batch folder AND all loose files |
+| **Age-based** | rest of `assets/` (b-roll PNGs, `*-clip.mp4`, overlays), and per-clip `preview.mp4` / `whisper*.json` / `captions.ts.draft` under `shorts/` | recycled if older than `--age-days` |
+| **Registry-driven** | `remotion/out/` and `livestream-repurpose/{media,transcripts}` | keep only what belongs to an **active** batch (per `batches.json`); recycle the rest |
 
-`out/` is treated as disposable scratch: the canonical copy of a posted short lives in
-the `schedule-tweets/` queue, and every comp is in git, so a render can always be
-regenerated. The cleaner reads `../batches.json`, protects the `directories` of any batch
-with `status: "active"`, and recycles the rest of `out/` (older batch folders + the loose
-pre-subfolder renders).
+The registry-driven tier reads `../batches.json`:
+- **`remotion/out/`** — keep the render `directories` of `status: "active"` batches; recycle every other batch folder and all loose files. (Disposable scratch: posted shorts live in the `schedule-tweets/` queue and every comp is in git.)
+- **`livestream-repurpose/{media,transcripts}`** — each file is matched to a batch by `livestream_title` prefix; active batch → keep, archived batch → recycle, no match → left alone. (Source recordings are on YouTube; transcripts are regenerable.)
 
 ## How to run
 
