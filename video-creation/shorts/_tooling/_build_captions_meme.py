@@ -1,15 +1,16 @@
 """
 Build captions.ts.draft for a given clip's whisper-words.json.
 Usage:
-    python _build_captions_meme.py <slug>
+    python _tooling/_build_captions_meme.py <slug>
 
-Reads:  meme-coins-clips/<slug>/whisper-words.json
-Writes: meme-coins-clips/<slug>/captions.ts.draft
+Reads:  meme-coins/<slug>/whisper-words.json
+Writes: meme-coins/<slug>/captions.ts.draft
 """
 import json, re, sys
 from pathlib import Path
 
-HERE = Path(__file__).parent
+# This script lives in shorts/_tooling/; clips are in shorts/meme-coins/<slug>/.
+BATCH = Path(__file__).parent.parent / "meme-coins"
 SHORT_LEN = 4
 GAP_BREAK = 0.22
 
@@ -66,7 +67,7 @@ SCHEMES = {
 
 
 def load_words(slug):
-    p = HERE / "meme-coins-clips" / slug / "whisper-words.json"
+    p = BATCH / slug / "whisper-words.json"
     data = json.loads(p.read_text())
     words = []
     for seg in data["segments"]:
@@ -165,7 +166,7 @@ def main(slug):
     words = merge_phrases(words, scheme["merge"])
     groups = group(words)
     out = emit(slug, groups, scheme)
-    out_path = HERE / "meme-coins-clips" / slug / "captions.ts.draft"
+    out_path = BATCH / slug / "captions.ts.draft"
     out_path.write_text(out)
     print(f"Wrote {out_path} ({len(groups)} groups, last at {groups[-1][0]:.2f}s)")
 

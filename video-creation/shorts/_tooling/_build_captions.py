@@ -1,11 +1,12 @@
 """Group Whisper word timings into 2-3 word caption chunks for a Remotion CAPTIONS array.
-Usage: python _build_captions.py <clip-folder-name>
+Usage: python _tooling/_build_captions.py <batch>/<clip-folder>   (e.g. meme-coins/keycat-vs-doginme)
 Reads <folder>/whisper-words.json, cleans fillers/mishears, prints a TS-ready array.
 Captions don't have to be 1:1 with audio — fillers and stutters are dropped for readability.
 """
 import sys, os, json, re
 
-SHORTS = os.path.dirname(os.path.abspath(__file__))
+# This script lives in shorts/_tooling/; SHORTS is the shorts/ dir one level up.
+SHORTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 FILLER = {"uh", "um", "uhh", "umm", "mm", "hmm"}
 
@@ -23,7 +24,7 @@ def core(w):
     return re.sub(r"[^a-z0-9]", "", w.lower())
 
 def main():
-    folder = sys.argv[1] if len(sys.argv) > 1 else "xrp-vs-kaspa"
+    folder = sys.argv[1] if len(sys.argv) > 1 else "meme-coins/keycat-vs-doginme"
     data = json.load(open(os.path.join(SHORTS, folder, "whisper-words.json"), encoding="utf-8"))
 
     raw = []

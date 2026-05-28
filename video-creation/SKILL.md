@@ -27,7 +27,7 @@ video-creation/
 │   └── broll-analysis.md       — frame-by-frame analysis of 4 sample shorts
 ├── assets/
 │   └── sfx/                     — ~90 sound effect files
-├── shorts/                       — one subfolder per completed short
+├── shorts/                       — one folder per batch: <batch>/ (clip subdirs + dashboard.html + progress.json); _tooling/ holds caption/transcribe scripts
 ├── remotion/                     — Remotion project for rendering MP4s
 ├── livestream-repurpose/         — source media/, transcripts/, scripts/
 └── watch/                        — extracted frames + transcripts from reference videos
@@ -166,7 +166,7 @@ A single Premiere-formatted vertical video (1080×1920) of the full livestream, 
 2. For each topic, run FFmpeg `-ss`/`-to` cuts on the vertical video — **always re-encode, never `-c copy`**. Using `-c copy` preserves source timestamps that can cause audio/video drift in Remotion. Always use: `-c:v libx264 -preset fast -crf 18 -c:a aac -b:a 192k -avoid_negative_ts make_zero`
 3. **Multi-snippet topics** (same subject at multiple points in the stream) get concatenated into a single clip using FFmpeg's concat demuxer. Do not present separate cards per segment — one clip per topic
 4. Build an HTML dashboard (single `.html` file, no server needed) with one card per topic: title, source timestamps, duration, and a `<video>` player
-5. Save clips to `shorts/<topic-slug>/preview.mp4` and the dashboard to `shorts/dashboard.html`
+5. Save clips to `shorts/<batch>/<topic-slug>/preview.mp4` and the dashboard to `shorts/<batch>/dashboard.html`
 
 ### Snap every cut boundary to true silence (NOT Whisper timestamps)
 

@@ -3,7 +3,10 @@ Loads the model once, loops all clips, writes <folder>/whisper-words.json. Skips
 No ChatGPT quota involved — safe to run overnight in parallel with image gen.
 """
 import os, json
-SHORTS = os.path.dirname(os.path.abspath(__file__))
+# This script lives in shorts/_tooling/; SHORTS is the shorts/ dir one level up.
+# NOTE: the CLIPS list below is a stale Weekend Red one-off; repopulate with
+# "<batch>/<slug>" paths (e.g. "meme-coins/keycat-vs-doginme") before reuse.
+SHORTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 CLIPS = [
     "kaspa-iso20022-swift", "kaspa-entry-doesnt-matter", "ideas-in-a-cemetery",
