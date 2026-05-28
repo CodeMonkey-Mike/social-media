@@ -15,7 +15,9 @@ const path = require('path');
 const { walkFiles, ageDays } = require('../lib');
 
 const NAME = 'video-creation';
-const ARTIFACT_RE = /^(preview\.mp4|whisper.*\.json|captions\.ts\.draft)$/i;
+// Only the gitignored, regenerable per-clip artifacts — NOT tracked source like
+// whisper.json / preview.json / index.html / gen_captions.py.
+const ARTIFACT_RE = /^(preview\.mp4|whisper-words\.json|captions\.ts\.draft)$/i;
 const LOGO_RE = /^logo-.*\.(png|jpe?g)$/i;
 
 // The batch registry (repo-root batches.json). An ACTIVE batch's directories are
@@ -92,9 +94,19 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     }
   }
 
-  // ── per-clip artifacts under shorts/ ───────────────────────────────────────
+  // ── shorts/ per-clip artifacts — keep active batch, recycle the rest ───────
+  // Only the gitignored heavy artifacts (preview.mp4 / whisper-words.json /
+  // captions.ts.draft); tracked source in the clip dirs is left untouched.
+  const activeShortsDirs = batches
+    .filter(b => b.status === 'active')
+    .flatMap(b => b.directories || [])
+    .map(d => path.resolve(repoRoot, d).toLowerCase())
+    .filter(d => d.includes(`${path.sep}shorts${path.sep}`));
   for (const f of walkFiles(path.join(ROOT, 'shorts'))) {
-    if (ARTIFACT_RE.test(path.basename(f))) classifyAge(f, 'clip artifact');
+    if (!ARTIFACT_RE.test(path.basename(f))) continue;
+    const fl = f.toLowerCase();
+    if (activeShortsDirs.some(d => fl.startsWith(d))) skipped.push({ path: f, reason: 'clip artifact — active batch' });
+    else recycle.push({ path: f, reason: 'clip artifact — outside active batch' });
   }
 
   // ── remotion/out/ — keep ONLY active batches' render folders ───────────────
