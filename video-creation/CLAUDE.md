@@ -18,11 +18,14 @@ deleted on 2026-05-25.
 
 ## Per-batch progress files (READ ONE EVERY SESSION)
 
-Each multi-clip batch keeps its own machine-readable progress JSON at `shorts/<batch>-progress.json`.
+Each multi-clip batch lives in its own folder `shorts/<batch>/` (clip subdirs + `dashboard.html`)
+and keeps its machine-readable progress JSON at `shorts/<batch>/progress.json`.
 **At session start, read the relevant batch's progress JSON before doing anything else** — it tells
 you which clip and which phase to resume on, and it includes a `resume_protocol` block describing
 exactly how to pick the next step. **Update it as you complete each phase** (in_progress → done +
 bump `last_updated`).
 
 Active batches:
-- `shorts/meme-coins-progress.json` — meme-coins batch (5 clips from "Best Meme Coins to retire ur arse")
+- `shorts/meme-coins/progress.json` — meme-coins batch (from "Best Meme Coins to retire ur arse")
+
+The shared caption/transcribe scripts live in `shorts/_tooling/` (invoked with a `<batch>/<slug>` path).

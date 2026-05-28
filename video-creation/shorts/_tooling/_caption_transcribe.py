@@ -1,10 +1,11 @@
 """Word-level Whisper transcription for an edited short clip -> captions source.
-Usage: python _caption_transcribe.py <clip-folder-name>
+Usage: python _tooling/_caption_transcribe.py <batch>/<clip-folder>   (e.g. meme-coins/keycat-vs-doginme)
 Writes <folder>/whisper-words.json (full result) and prints duration + word count.
 """
 import sys, os, json, subprocess
 
-SHORTS = os.path.dirname(os.path.abspath(__file__))
+# This script lives in shorts/_tooling/; SHORTS is the shorts/ dir one level up.
+SHORTS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def duration(path):
     out = subprocess.run(
@@ -18,7 +19,7 @@ def duration(path):
         return None
 
 def main():
-    folder = sys.argv[1] if len(sys.argv) > 1 else "xrp-vs-kaspa"
+    folder = sys.argv[1] if len(sys.argv) > 1 else "meme-coins/keycat-vs-doginme"
     clip = os.path.join(SHORTS, folder, "preview.mp4")
     if not os.path.exists(clip):
         print("NOT FOUND:", clip); sys.exit(1)
