@@ -204,8 +204,10 @@ def main():
     print(f"Done. {verb} {added}, skipped {skipped} existing, copied {copied} file(s). "
           f"shorts.json has {len(data['shorts'])} entries.")
     if added and not args.dry_run:
-        print("\nNEXT: fill in hook / caption / tags for the new stub entries in shorts.json "
-              "before running the post-*.js scripts.")
+        print("\nNEXT: fill in hook / caption / tags for the new stub entries in shorts.json")
+        print("  -> Write them in Mike's PERSONA VOICE: read persona/persona.json first")
+        print("     (no em dashes, cashtags, hashtags on their own line, etc.).")
+        print("  -> Then run `python scripts/persona-lint.py` to catch any AI-tells before posting.")
 
 
 if __name__ == "__main__":
