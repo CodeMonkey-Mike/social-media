@@ -10,7 +10,10 @@ const SOURCE_DIR     = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\sched
 const METADATA_FILE  = 'metadata.json';
 // Video + thumbnail are auto-detected from SOURCE_DIR — drop any-named files in schedule-tweets/longform.
 const VIDEO_EXTS     = ['.mp4', '.mov', '.webm', '.mkv'];
-const THUMBNAIL_EXTS = ['.png', '.jpg', '.jpeg', '.webp'];
+// BitChute silently rejects .webp thumbnails (PNG/JPG only). It accepts the upload but the
+// Proceed click becomes a no-op → the script falls into a 15-min retry loop that never lands.
+const THUMBNAIL_EXTS = ['.png', '.jpg', '.jpeg'];
+const REJECTED_THUMBNAIL_EXTS = ['.webp'];
 
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\bitchutebot-profile';
 const BITCHUTE_HOME  = 'https://www.bitchute.com/';
@@ -71,6 +74,16 @@ async function closeDrawer(page) {
 
   if (!videoPath)               { console.error('No video file found in', SOURCE_DIR); process.exit(1); }
   if (!fs.existsSync(metaPath)) { console.error('Metadata not found:', metaPath); process.exit(1); }
+
+  // Fail fast on .webp thumbnails — BitChute accepts the upload but the Proceed click becomes a
+  // silent no-op, sending the script into a 15-min retry loop that never lands. Convert to PNG/JPG.
+  const webpThumbs = fs.readdirSync(SOURCE_DIR)
+    .filter(f => REJECTED_THUMBNAIL_EXTS.includes(path.extname(f).toLowerCase()));
+  if (webpThumbs.length) {
+    console.error(`Thumbnail "${webpThumbs[0]}" is .webp — BitChute silently rejects .webp thumbnails.`);
+    console.error('Convert it to PNG or JPG and re-run (a .webp causes a no-op Proceed → 15-min retry loop).');
+    process.exit(1);
+  }
 
   const fileSize = fs.statSync(videoPath).size;
   if (fileSize < MIN_FILE_SIZE) {
