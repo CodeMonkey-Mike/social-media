@@ -74,7 +74,7 @@ Use `--limit N` to post a subset of a large queue across multiple sessions. All 
 
 Two failure patterns that are *always* false-negatives and should never be retried even after manual check:
 - `Clicked Post → Reply NOT found on tweet page` — post fired, verify couldn't see it under shadow-filter.
-- `Reply textarea not found` — script never opened the composer. **Almost always means the tweet is reply-restricted.** Verify on X; if you see "Only some accounts can reply" or "Only subscribers can reply," remove the author from `add_members.py`'s research list since they'll never be reply-able.
+- `Reply textarea not found` — script never opened the composer. **Almost always means the tweet is reply-restricted.** Verify on X; if you see "Only some accounts can reply" or "Only subscribers can reply," consider removing the author from the Reply Guy list since they'll never be reply-able.
 
 **GIF replies from `post_gif_reply.py` consistently return `uncertain` (`Composer still open after Post — uncertain`).** This is the normal behavior — X does not close the GIF composer immediately after posting, so the composer-closure verify always fails. The queue is cleared regardless. Treat every `uncertain` GIF reply as likely posted. Verify manually on the target tweet if concerned. Do NOT re-run `post_gif_reply.py` without first checking the tweet — duplicates will happen. **Established 2026-05-26 across @SpaceX, @CryptoHayes, and @blknoiz06 (3/3 GIF replies marked `uncertain`, all were live on X).**
 
@@ -89,11 +89,9 @@ Two failure patterns that are *always* false-negatives and should never be retri
 | `reply_opportunities.json` | **Pending** reply opportunities only — entries are removed as they are posted or queued via dashboard. Overwritten fresh each session. |
 | `replies_to_post.json` | Active queue — entries are removed one at a time as they are processed; use `--limit N` to post a subset across sessions |
 | `posted_replies.json` | Permanent archive of all posted replies |
-| `state.json` | Tracks which accounts have been added to the X list |
 | `../persona/persona.json` | Mike's full voice, style, and terminology rules (project-wide single source of truth — no longer in this folder's `config/`) |
 
 ---
 
 ## Rate limits
-- X list member adds: max 10–15/day, 30–60 min between adds (`add_members.py` handles this)
 - Replies: no hard daily limit but keep natural cadence; `post_replies.py` adds 2–6 min gaps

@@ -12,7 +12,7 @@ ecosystems. Day-to-day this runs as a feed-scraping → draft → post workflow 
 ## The "Reply Guy" X List
 
 A private X list backs the project. **It has been finalized** — the one-time list-building pass
-(`add_members.py` + `config/state.json`) is retired and no longer part of the workflow.
+that built it is retired, and its tooling has been removed from the repo.
 
 - **List name:** Reply Guy
 - **List ID:** `2051819466921533779`
