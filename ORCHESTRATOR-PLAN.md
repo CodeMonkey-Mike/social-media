@@ -182,11 +182,14 @@ observed first.
 
 ## Phasing / decision (2026-05-31)
 
-- **Phase 1 (now): lightweight, human-driven routing.** Build only the root `CLAUDE.md` routing table
-  + plain reference docs (a normal folder like `playbooks/`). Mike says which skill to run next; Claude
-  uses the table to run it correctly without searching. **No `.claude/agents/` changes** — the hidden
-  subagents folder (incl. the old `chrome-uploader`/`camoufox-uploader`) stays untouched. **No
-  auto-spawning, no peer-to-peer chaining.**
+- **Phase 1 (now): lightweight, human-driven routing. ✅ BUILT 2026-05-31.** Root `CLAUDE.md` routing
+  table + a `playbooks/` folder (`repurpose`, `image-gen`, `posting`, `video`, `reply-guy`) — each a
+  condensed command sheet that points into the existing canonical `SKILL.md`/`CLAUDE.md` docs, not a
+  copy. Mike says which skill to run next; Claude uses the table to run it without searching. **No
+  `.claude/agents/` changes** — the hidden subagents folder (incl. the old `chrome-uploader`/
+  `camoufox-uploader`) stays untouched. **No auto-spawning, no peer-to-peer chaining.** Additive only:
+  nothing existing was moved. (Not yet done: a full stale-path audit of all 23 `schedule-tweets/skills/`
+  files — the routing was built from the canonical docs and all pointer paths were verified to resolve.)
 - **Observation window (~1 week+):** run the manual loop, watch where it's clumsy, let the real command
   set and pipeline stabilize.
 - **Phase 2 (later, only if it earns it):** add the spawnable orchestration above (DAG-driven parallel
@@ -194,9 +197,11 @@ observed first.
 
 ## Next step
 
-Work through the "Investigate" list, then draft the Phase-1 root `CLAUDE.md` routing table + a
-re-derived reference-doc set grounded in the current inventory (not the stale 2026-05-24 `agents/`
-list). Keep it lightweight and human-driven; defer all spawnable automation to Phase 2.
+Phase 1 is built (root `CLAUDE.md` + `playbooks/`). Now **use it for ~a week and watch where it's
+clumsy** — wrong/stale commands, capabilities that want their own playbook, rules worth promoting into
+the always-loaded `CLAUDE.md`. Fold those observations back into the routing table/playbooks. Only after
+that, and only if it earns it, move to Phase 2 (the spawnable DAG orchestration). Optional tidy-up:
+the full stale-path audit of the 23 `schedule-tweets/skills/` files.
 
 _Source: session `6dc1c3b9` (2026-05-24). Related but distinct: the old `social-video-upload`
 orchestrator is recoverable from git at `86709d6~1` (`uploading/` subtree, removed in the refactor)._
