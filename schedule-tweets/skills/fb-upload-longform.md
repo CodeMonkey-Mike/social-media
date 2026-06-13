@@ -18,30 +18,15 @@ The dashboard's Longs tab shows `data/longs.json`. **That queue drives uploads �
 
 Do NOT stop and ask the user "should I stage this?" or "the folder root has a different video, what do I do?" The queue is authoritative; the folder is an implementation artifact (see "Staging" below).
 
-## Staging (automatic — never block on this)
+## Staging (none needed — the script reads `longs.json` directly)
 
-`upload-longform-facebook.js` reads `longform/` root for the most-recently-modified video + a fixed `metadata.json`. It does NOT consume `longs.json` directly yet. To bridge that gap, the upload step (this skill) **automatically stages** the next-pending entry's files into the root:
+`upload-longform-facebook.js` now sources the next-pending `facebook` entry **directly from `longs.json`** via `scripts/lib/longform-queue.js` (`pickNextLongform('facebook')`). It uploads the entry's own `video_path` and builds the caption from the entry's title + description. **Do NOT copy anything into `longform/` root** — the old loose-root staging step is gone (it was what left orphaned duplicates behind).
 
-1. Find next pending entry in `longs.json` for `facebook` (earliest `created_at`).
-2. Copy the entry's `video_path` (often in a subfolder) into `longform/` root.
-3. Copy/write the entry's title + description into `longform/metadata.json` (each subfolder typically already has a ready-to-go `metadata.json` — prefer copying that).
-4. Run the upload script.
-5. After successful upload: write back `status: "posted"`, `posted_at`, `url` to the entry in `longs.json`.
+1. The script picks the next pending `facebook` entry itself (queue order) — you stage nothing.
+2. Run the upload script.
+3. After a confirmed upload: write back `status: "posted"`, `posted_at`, `url` to that entry in `longs.json`.
 
-Old root-level files are fine to leave at root — `pickFile()` picks most-recent-mtime.
-
-## Source folder
-
-`C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\longform\`
-
-The auto-staging step above handles this folder. Files dropped manually still work — **filenames don't matter; auto-detected:**
-
-| What | How it's picked |
-|---|---|
-| Video | The single video file (`.mp4` / `.mov` / `.webm` / `.mkv`). Most-recently-modified wins if several. Must be ≥1MB. |
-| `metadata.json` | Fixed name. Title + description become the caption; tags are not used for FB. |
-
-No thumbnail step — Facebook auto-generates the video thumbnail (same as `post-fb-short.js`).
+Prerequisite: the entry's `video_path` must exist on disk (≥1MB) — the repurpose/longform pipeline writes it into the `longform/<source>/` subfolder. No thumbnail step — Facebook auto-generates the video thumbnail.
 
 ## Caption
 

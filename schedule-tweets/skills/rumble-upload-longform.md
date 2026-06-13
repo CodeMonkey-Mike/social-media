@@ -18,32 +18,15 @@ The dashboard's Longs tab shows `data/longs.json`. **That queue drives uploads �
 
 Do NOT stop and ask the user "should I stage this?" or "the folder root has a different video, what do I do?" The queue is authoritative; the folder is an implementation artifact (see "Staging" below).
 
-## Staging (automatic — never block on this)
+## Staging (none needed — the script reads `longs.json` directly)
 
-`upload-longform-rumble.js` reads `longform/` root for the most-recently-modified video + image + a fixed `metadata.json`. It does NOT consume `longs.json` directly yet. To bridge that gap, the upload step (this skill) **automatically stages** the next-pending entry's files into the root:
+`upload-longform-rumble.js` now sources the next-pending `rumble` entry **directly from `longs.json`** via `scripts/lib/longform-queue.js` (`pickNextLongform('rumble')`). It uploads the entry's own `video_path` / `thumbnail_path` (usually a `longform/<source>/` subfolder) and builds the post from the entry's title / description / tags / categories / visibility. **Do NOT copy anything into `longform/` root** — the old loose-root staging step is gone (it was what left orphaned duplicates behind).
 
-1. Find next pending entry in `longs.json` for `rumble` (earliest `created_at`).
-2. Copy the entry's `video_path` (often in a subfolder like `longform/<source>/<file>.mp4`) into `longform/` root.
-3. Copy the entry's `thumbnail_path` into `longform/` root.
-4. Copy/write the entry's title/description/tags/categories/visibility into `longform/metadata.json` (each subfolder typically already has a ready-to-go `metadata.json` — prefer copying that).
-5. Run the upload script. `pickFile()` picks the freshly-copied files because they have new mtimes.
-6. After successful upload: write back `status: "posted"`, `posted_at`, `url` to the entry in `longs.json`.
+1. The script picks the next pending `rumble` entry itself (queue order) — you stage nothing.
+2. Run the upload script.
+3. After a confirmed upload: write back `status: "posted"`, `posted_at`, `url` to that entry in `longs.json`.
 
-Old root-level files are fine to leave at root — `pickFile()` picks most-recent-mtime.
-
-## Source folder
-
-`C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\longform\`
-
-The auto-staging step above handles this folder. Files dropped manually still work — **filenames don't matter; they're auto-detected:**
-
-| What | How it's picked |
-|---|---|
-| Video | The single video file in the folder (`.mp4` / `.mov` / `.webm` / `.mkv`). If several, the most-recently-modified wins. |
-| Thumbnail | The single image file (`.png` / `.jpg` / `.jpeg` / `.webp`). Optional — script continues without if absent. |
-| `metadata.json` | Fixed name. Title, description, tags, category, visibility. |
-
-No renaming and no script edits needed — drop a video + (optional) thumbnail + `metadata.json` and run. The script uses `pickFile()` to grab whatever video/image is in the folder.
+Prerequisite: the entry's `video_path` (and optional `thumbnail_path`) must exist on disk — the repurpose/longform pipeline already writes these into the `longform/<source>/` subfolder. Nothing else to do.
 
 ## metadata.json shape
 

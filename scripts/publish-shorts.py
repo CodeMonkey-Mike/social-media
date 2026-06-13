@@ -6,9 +6,10 @@ Takes the rendered MP4s for a batch and (1) copies them into the schedule-tweets
 queue folder, then (2) appends one STUB entry per clip to schedule-tweets/data/shorts.json
 with every platform set to status="pending" (which is what the post-*.js scripts pick up).
 
-Stub model: the mechanical fields are filled automatically (id, slug, source, video_path,
-width/height, duration, the platform blocks). `title` is pulled from the batch progress JSON
-when available. `hook`, `caption`, and `tags` are left blank for you to fill in before posting.
+Stub model: the mechanical fields are filled automatically (id, batch, slug, source, video_path,
+width/height, duration, the platform blocks). `batch` is the registered batches.json id (the
+<batch> arg) and is the join key used to compute when a batch is fully posted. `title` is pulled
+from the batch progress JSON when available. `hook`, `caption`, and `tags` are left blank for you to fill in before posting.
 
 Usage:
     python scripts/publish-shorts.py <batch> [--date YYYY-MM-DD] [--id-prefix mc] [--dry-run]
@@ -82,9 +83,10 @@ def platform_block():
     ])
 
 
-def build_entry(*, id_, slug, source_livestream, video_path, duration, width, height, title):
+def build_entry(*, id_, batch, slug, source_livestream, video_path, duration, width, height, title):
     return OrderedDict([
         ("id", id_),
+        ("batch", batch),
         ("slug", slug),
         ("source_livestream", source_livestream),
         ("source_clip", slug),
@@ -185,7 +187,7 @@ def main():
             continue
         w, h, dur = ffprobe_dims_duration(mp4)
         entry = build_entry(
-            id_=id_, slug=slug, source_livestream=source_livestream,
+            id_=id_, batch=batch, slug=slug, source_livestream=source_livestream,
             video_path=video_path, duration=dur, width=w, height=h,
             title=titles.get(slug, ""),
         )
