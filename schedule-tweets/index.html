@@ -643,11 +643,12 @@ function renderShorts(items) {
       : '';
     return `<div class="card">
       <div class="card-meta">#${i + 1} &nbsp;·&nbsp; ${esc(s.title || s.id || '')} &nbsp;·&nbsp; ${esc(dur)}</div>
+      <div class="card-meta" style="opacity:.7;font-size:.82em;margin-top:2px">batch: <b>${esc(s.batch || '—')}</b> &nbsp;·&nbsp; id: ${esc(s.id || '—')} &nbsp;·&nbsp; src: ${esc(s.source_livestream || '—')}</div>
       <div class="plt-pills">${pills}</div>
       ${video}
       <div class="hook" style="margin-top:12px">Hook: ${esc(s.hook || '')}</div>
       <div class="caption">${esc(s.caption || '')}</div>
-      ${tags ? `<div class="hashtags" style="margin-top:8px">${tags}</div>` : ''}
+      <div class="hashtags" style="margin-top:8px">Tags (${(s.tags || []).length}): ${tags || '<span style="color:#c0392b">(none)</span>'}</div>
     </div>`;
   }).join('');
 }
@@ -675,6 +676,7 @@ function renderLongs(items) {
       : '';
     return `<div class="card">
       <div class="card-meta">#${i + 1} &nbsp;·&nbsp; ${esc(v.title || v.id || '')} &nbsp;·&nbsp; ${esc(dur)}</div>
+      <div class="card-meta" style="opacity:.7;font-size:.82em;margin-top:2px">batch: <b>${esc(v.batch || '—')}</b> &nbsp;·&nbsp; id: ${esc(v.id || '—')}</div>
       <div class="plt-pills">${pills}</div>
       ${video}
       <div class="caption" style="margin-top:12px">${esc(v.description || '')}</div>
@@ -696,9 +698,9 @@ const SOURCES = [
   { tab: 'xreplies',   url: '/x-reply-guy/data/replies_to_post.json',      key: null,      render: renderReplies },
   { tab: 'replyopp',  url: '/x-reply-guy/data/reply_opportunities.json',  key: null,      render: items => { _replyOpps = items; return renderReplyOpportunities(items); }, afterRender: loadTweetEmbeds },
   { tab: 'shorts',     url: '/data/shorts.json',                          key: 'shorts',  render: renderShorts,
-    filter: x => Object.values(x.platforms || {}).some(p => p.status === 'pending') },
+    filter: x => Object.values(x.platforms || {}).some(p => ['pending','failed','posting'].includes(p.status)) },
   { tab: 'longs',      url: '/data/longs.json',                           key: 'longs',   render: renderLongs,
-    filter: x => Object.values(x.platforms || {}).some(p => p.status === 'pending') },
+    filter: x => Object.values(x.platforms || {}).some(p => ['pending','failed','posting'].includes(p.status)) },
 ];
 
 Promise.all(SOURCES.map(async s => {

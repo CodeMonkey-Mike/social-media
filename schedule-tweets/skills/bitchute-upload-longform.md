@@ -18,32 +18,15 @@ The dashboard's Longs tab shows `data/longs.json`. **That queue drives uploads �
 
 Do NOT stop and ask the user "should I stage this?" or "the folder root has a different video, what do I do?" The queue is authoritative; the folder is an implementation artifact (see "Staging" below). If the script and the queue disagree, **fix the script**, don't fix the user's expectations.
 
-## Staging (automatic — never block on this)
+## Staging (none needed — the script reads `longs.json` directly)
 
-The current `upload-longform-bitchute.js` reads `longform/` root for the most-recently-modified video + image + a fixed `metadata.json`. It does NOT consume `longs.json` directly yet. To bridge that gap, the upload step (this skill) **automatically stages** the next-pending entry's files into the root:
+`upload-longform-bitchute.js` now sources the next-pending `bitchute` entry **directly from `longs.json`** via `scripts/lib/longform-queue.js` (`pickNextLongform('bitchute')`). It uploads the entry's own `video_path` / `thumbnail_path` (usually a `longform/<source>/` subfolder) and builds the post from the entry's title / description / tags. **Do NOT copy anything into `longform/` root** — the old loose-root staging step is gone (it was what left orphaned duplicates behind).
 
-1. Find next pending entry in `longs.json` for `bitchute` (earliest `created_at`).
-2. Copy the entry's `video_path` (often in a subfolder like `longform/<source>/<file>.mp4`) into `longform/` root.
-3. Copy the entry's `thumbnail_path` into `longform/` root.
-4. Copy/write the entry's title/description/tags/categories/visibility into `longform/metadata.json` (each subfolder typically already has a ready-to-go `metadata.json` — prefer copying that).
-5. Run the upload script. `pickFile()` picks the freshly-copied files because they have new mtimes.
-6. After successful upload: write back `status: "posted"`, `posted_at`, `url` to the entry in `longs.json`.
+1. The script picks the next pending `bitchute` entry itself (queue order) — you stage nothing.
+2. Run the upload script.
+3. After a confirmed upload: write back `status: "posted"`, `posted_at`, `url` to that entry in `longs.json`.
 
-Old root-level files (FFS, weekend red, bulls, etc.) are fine to leave at root — `pickFile()` picks most-recent-mtime so the newly-copied files win.
-
-## Source folder
-
-`C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\longform\`
-
-The auto-staging step above handles this folder. Files dropped manually still work — **filenames don't matter; they're auto-detected:**
-
-| What | How it's picked |
-|---|---|
-| Video | The single video file in the folder (`.mp4` / `.mov` / `.webm` / `.mkv`). If several, the most-recently-modified wins. |
-| Thumbnail | The single image file (`.png` / `.jpg` / `.jpeg` / `.webp`). Optional — falls back to BitChute's "Grab Thumbnail" if absent. |
-| `metadata.json` | Fixed name. Title, description, tags. |
-
-No renaming and no script edits needed — the script uses `pickFile()` to grab whatever video/image is in the folder.
+Prerequisite: the entry's `video_path` (and optional `thumbnail_path`) must exist on disk — the repurpose/longform pipeline writes these into the `longform/<source>/` subfolder. **Thumbnails must be PNG/JPG, never `.webp`** (BitChute silently rejects `.webp` → the script aborts with a clear error).
 
 **Tip — use a lower-bitrate export here:** BitChute's processing is slower than Rumble's, so a "LOW RES" export uploads more reliably. Reserve the full-quality file for Rumble. (Both scripts read from the same `schedule-tweets/longform/` folder and just grab whatever video is present, so you can stage the low-res file, run BitChute, then swap in the full-quality file and run Rumble.)
 

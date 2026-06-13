@@ -1,7 +1,8 @@
 {
-  "$schema_doc": "Each longform video (a full livestream recording, landscape) is one object in the longs[] array. Mirrors shorts.json but for the longform pipeline. The video file lives under longform/ relative to the schedule-tweets root (e.g. 'longform/<slug>.mp4'); prefer no-spaces slug filenames so the dashboard video player resolves cleanly. Each long can be queued to the platforms that have a longform uploader script: rumble (upload-longform-rumble.js), bitchute (upload-longform-bitchute.js), facebook (upload-longform-facebook.js). Each platform has its own independent status flow: pending -> posting -> posted -> failed (or 'skip' to never post there). 'description' is the base description used as the post body/caption (Rumble/BitChute use title+description+tags; Facebook builds its caption from title+description with hashtags stripped). NOTE: the upload scripts currently read the single staged video + metadata.json from the longform/ folder, NOT from this JSON yet — this file is the dashboard queue/record; wiring the scripts to consume it is a future step.",
+  "$schema_doc": "Each longform video (a full livestream recording, landscape) is one object in the longs[] array. Mirrors shorts.json but for the longform pipeline. The video file lives under longform/ relative to the schedule-tweets root (e.g. 'longform/<slug>.mp4'); prefer no-spaces slug filenames so the dashboard video player resolves cleanly. Each long can be queued to the platforms that have a longform uploader script: rumble (upload-longform-rumble.js), bitchute (upload-longform-bitchute.js), facebook (upload-longform-facebook.js). Each platform has its own independent status flow: pending -> posting -> posted -> failed (or 'skip' to never post there). 'description' is the base description used as the post body/caption (Rumble/BitChute use title+description+tags; Facebook builds its caption from title+description with hashtags stripped). NOTE: the upload scripts currently read the single staged video + metadata.json from the longform/ folder, NOT from this JSON yet — this file is the dashboard queue/record; wiring the scripts to consume it is a future step. REQUIRED: \"batch\" is the batches.json batch id this longform belongs to (the join key used to compute when a batch is fully posted so its registry status can flip to completed); set null only for pre-registry entries with no registered batch.",
   "$post_schema": {
     "id": "<unique slug, e.g. 'lf-20260524-weekend-red'>",
+    "batch": "<batches.json batch id this video belongs to; null only for pre-registry entries>",
     "slug": "<filename slug>",
     "source": "<source livestream / recording name>",
     "video_path": "<relative path from schedule-tweets root, e.g. 'longform/<slug>.mp4'>",
@@ -50,6 +51,7 @@
   "longs": [
     {
       "id": "lf-20260525-bulls-are-sleeping",
+      "batch": "bulls-are-sleeping",
       "slug": "bulls-are-sleeping",
       "source": "Bulls Are Sleeping livestream",
       "video_path": "longform/bulls are sleeping LOW BPS.mp4",
@@ -98,6 +100,7 @@
     },
     {
       "id": "lf-20260524-weekend-red",
+      "batch": null,
       "slug": "weekend-red",
       "source": "Weekend Red livestream",
       "video_path": "longform/Weekend Red LOW RES.mp4",
@@ -146,6 +149,7 @@
     },
     {
       "id": "lf-20260527-ffs-iran-war-not-ending",
+      "batch": null,
       "slug": "ffs-iran-war-not-ending",
       "source": "FFS Iran War Not Ending livestream",
       "video_path": "longform/FFS Iran War Not Ending.mp4",
@@ -195,6 +199,7 @@
     },
     {
       "id": "lf-20260527-meme-coins-to-retire-your-arse",
+      "batch": "meme-coins",
       "slug": "meme-coins-to-retire-your-arse",
       "source": "Best Meme Coins To Retire Your Arse livestream",
       "video_path": "longform/meme coins to retire your arse/Best Meme Coins to return ur arse LOW BPS.mp4",
@@ -246,6 +251,7 @@
     },
     {
       "id": "lf-20260528-fighting-continues",
+      "batch": null,
       "slug": "fighting-continues",
       "source": "Fighting Continues livestream",
       "video_path": "longform/war continues - market update/war continues - crypto market update LOW BPS.mp4",
@@ -290,6 +296,509 @@
         }
       },
       "created_at": "2026-05-28"
+    },
+    {
+      "id": "lf-20260531-best-cryptos-wife-lose-weight",
+      "batch": "wife-lose-weight",
+      "slug": "best-cryptos-wife-lose-weight",
+      "source": "Best Cryptos To Make Your Wife Lose Weight livestream",
+      "video_path": "longform/best-cryptos-wife-lose-weight.mp4",
+      "thumbnail_path": "longform/best-cryptos-wife-lose-weight.png",
+      "duration_seconds": 3276.4,
+      "width": 1920,
+      "height": 1080,
+      "title": "Best Cryptos To Make Your Wife Lose Weight + 115x on LAB!!",
+      "description": "Best Cryptos To Make Your Wife Lose Weight\n\n#cryptomarket  #Kaspa\n\nDisclaimer: Nothing I say is financial advice.\n\nFollow my trades in my Discord community with various tools to find the best cryptos that helped me become crypto-rich:\nhttps://whop.com/cryptorich/\n\nMy Kaspa Power Law chart: https://cryptorich.vip/kaspa-power-law\n\nAt this point I'm doing more than a 50x on 50 different coins, some of which are above a 200x\n\nFind out more about my team and my community: https://www.cryptorich.vip/\n\nDisclaimer: Nothing I say is financial advice.",
+      "tags": [
+        "cryptomarket",
+        "kaspa",
+        "lab",
+        "altcoins"
+      ],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-06-01T12:32:12.750Z",
+          "url": "https://rumble.com/v7ao4oc-best-cryptos-to-make-your-wife-lose-weight-115x-on-lab.html",
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-06-01T12:21:12.134Z",
+          "url": "https://www.bitchute.com/video/rBFqebOsptqA/",
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-06-01T12:59:07.368Z",
+          "url": null,
+          "views": null,
+          "views_captured_at": null,
+          "note": "Submit confirmed (upload 100%, composer closed, upsell dismissed); URL not captured — still processing server-side. Backfill URL + liveness check manually."
+        }
+      },
+      "created_at": "2026-05-31"
+    },
+    {
+      "id": "lf-20260603-353x-low-bps",
+      "batch": "353x",
+      "slug": "353x-low-bps",
+      "source": "My New 353x LOW BPS livestream",
+      "video_path": "longform/353x-low-bps.mp4",
+      "thumbnail_path": "longform/353x-low-bps.png",
+      "duration_seconds": 1096.6,
+      "width": 1920,
+      "height": 1080,
+      "title": "My new 353x 🤯+ Market Update: Fighting With Iran Continues (again)",
+      "description": "353x on LAB In A Bear Market\n\n#cryptomarket  #Kaspa\n\nDisclaimer: Nothing I say is financial advice.\n\nFollow my trades in my Discord community with various tools to find the best cryptos that helped me become crypto-rich:\nhttps://whop.com/cryptorich/\n\nMy Kaspa Power Law chart: https://cryptorich.vip/kaspa-power-law\n\nAt this point I am doing more than a 50x on 50 different coins, some of which are above a 200x\n\nFind out more about my team and my community: https://www.cryptorich.vip/\n\nDisclaimer: Nothing I say is financial advice.",
+      "tags": [
+        "cryptomarket",
+        "kaspa",
+        "lab",
+        "altcoins"
+      ],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-06-04T02:02:32.626Z",
+          "url": "https://rumble.com/v7aslog-my-new-353x-market-update-fighting-with-iran-continues-again.html",
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-06-04T01:53:59.287Z",
+          "url": "https://www.bitchute.com/video/t7QaxhTjOfA3/",
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-06-04T02:19:32.462Z",
+          "url": "https://www.facebook.com/reel/2848881455452960/",
+          "views": null,
+          "views_captured_at": null
+        }
+      },
+      "created_at": "2026-06-03"
+    },
+    {
+      "id": "lf-20260604-best-350x-cryptos",
+      "batch": "best-350x",
+      "slug": "best-350x-cryptos",
+      "source": "Best 350x Cryptos To Make Me Millions livestream (silence-removed, LOW BPS)",
+      "video_path": "longform/best-350x-cryptos-low-bps.mp4",
+      "thumbnail_path": "longform/best-350x-cryptos.png",
+      "duration_seconds": 3083.3,
+      "width": 1920,
+      "height": 1080,
+      "title": "Best 350x Cryptos To Make Me Millions!",
+      "description": "Best 350x Cryptos To Make Me Millions! Disclaimer: Nothing I say is financial advice. Find out more about my team and my community: https://www.cryptorich.vip/",
+      "tags": [
+        "cryptomarket",
+        "kaspa",
+        "bitcoin",
+        "altcoins"
+      ],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-06-05T12:14:10.976Z",
+          "url": "https://rumble.com/v7ausfq-best-350x-cryptos-to-make-me-millions.html",
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-06-05T12:04:42.097Z",
+          "url": "https://www.bitchute.com/content",
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-06-05T12:36:15.267Z",
+          "url": "https://www.facebook.com/reel/2113197009240814/",
+          "views": null,
+          "views_captured_at": null
+        }
+      },
+      "created_at": "2026-06-04",
+      "note": "Long-form queue = silence-removed derivative of the LOW BPS master (delete_silences.py, -1435.8s/32%), re-compressed to ~0.7 Mbps for fast upload. Shorts pipeline uses the untouched LOW BPS master, not this file."
+    },
+    {
+      "id": "lf-20260605-zombie-class",
+      "batch": "zombie-class",
+      "slug": "4-year-cycle-zombie-class",
+      "source": "4-year cycle zombie class livestream",
+      "video_path": "longform/4-year-cycle-zombie-class/4-year-cycle-zombie-class.mp4",
+      "thumbnail_path": "longform/4-year-cycle-zombie-class/4-year-cycle-zombie-class.png",
+      "duration_seconds": 2898,
+      "width": 1920,
+      "height": 1080,
+      "title": "The Four Year Cycle Is a Magic Trick: Crypto Winter Market Update",
+      "description": "Four year cycle zombie class. Why Bitcoin really broke down, why we are officially in a crypto winter, and why the economy is the strongest it has been since 1948. Disclaimer: Nothing I say is financial advice. Find out more about my team and my community: https://www.cryptorich.vip/",
+      "tags": [
+        "cryptomarket",
+        "bitcoin",
+        "fouryearcycle",
+        "macro",
+        "kaspa"
+      ],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-06-06T05:01:37.725Z",
+          "url": "https://rumble.com/v7aw25e-the-four-year-cycle-is-a-magic-trick-crypto-winter-market-update.html",
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-06-06T04:52:09.845Z",
+          "url": "https://www.bitchute.com/video/ZXE5ZWZKxs3p/",
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-06-06T05:25:49.439Z",
+          "url": "https://www.facebook.com/reel/1016608507569841/",
+          "views": null,
+          "views_captured_at": null
+        }
+      }
+    },
+    {
+      "id": "lf-20260607-four-year-cycle-dilemma",
+      "batch": "dilemma",
+      "slug": "4-year-cycle-dilemma",
+      "source": "4-year cycle dilemma livestream",
+      "video_path": "longform/4-year-cycle-dilemma/4-year-cycle-dilemma.mp4",
+      "thumbnail_path": "longform/4-year-cycle-dilemma/4-year-cycle-dilemma.png",
+      "duration_seconds": 1943.33,
+      "width": 1920,
+      "height": 1080,
+      "title": "The Four-Year Cycle Dilemma 🧟 Crypto Market Update",
+      "description": "The four-year cycle dilemma. Why the four-year Bitcoin cycle let so many people down, why macro liquidity is the real driver now, and what a crypto winter actually means for the next move. I get into where Bitcoin really stands, the cost of waiting on a cycle that is not coming back, and where I am putting my conviction.\n\n#cryptomarket  #Kaspa  #fouryearcycle\n\nDisclaimer: Nothing I say is financial advice.\n\nFind out more about my team and my community: https://www.cryptorich.vip/",
+      "tags": [
+        "cryptomarket",
+        "bitcoin",
+        "fouryearcycle",
+        "macro",
+        "kaspa"
+      ],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-06-07T19:02:47.317Z",
+          "url": "https://rumble.com/v7aydpi-the-four-year-cycle-dilemma-crypto-market-update.html",
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-06-07T18:53:45.985Z",
+          "url": "https://www.bitchute.com/video/mzQaEqgHECvP/",
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-06-07T19:22:56.470Z",
+          "url": "https://www.facebook.com/reel/36686427260955805/",
+          "views": null,
+          "views_captured_at": null
+        }
+      },
+      "created_at": "2026-06-07",
+      "note": "Long-form queue = silence-removed derivative of the LOW BPS master (longform_desilence_dilemma.py, 2587.2s -> 1943.3s, -643.9s/25%), re-compressed to ~0.76 Mbps. Shorts pipeline uses the untouched LOW BPS master, not this file."
+    },
+    {
+      "id": "lf-20260606-history-of-qe-before-bitcoin",
+      "batch": "qe-history",
+      "slug": "history-of-qe-before-bitcoin",
+      "source": "QE before bitcoin presentation (spotlight render, qe-money-printer.mp4)",
+      "video_path": "longform/history-of-qe-before-bitcoin.mp4",
+      "thumbnail_path": "longform/history-of-qe-before-bitcoin.png",
+      "duration_seconds": 409.05,
+      "width": 1920,
+      "height": 1080,
+      "title": "History of QE before Bitcoin",
+      "description": "History of QE before Bitcoin. Quantitative easing was not invented in 2008. It was the final, most visible layer of a money creation system that had been quietly building since 1971, long before anyone heard of Bitcoin. Disclaimer: Nothing I say is financial advice. Find out more about my team and my community: https://www.cryptorich.vip/",
+      "tags": [
+        "qe",
+        "bitcoin",
+        "quantitativeeasing",
+        "macro",
+        "money"
+      ],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-06-08T12:49:41.603Z",
+          "url": "https://rumble.com/v7azi7c-history-of-qe-before-bitcoin.html",
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-06-08T12:41:48.240Z",
+          "url": "https://www.bitchute.com/video/Mndf20Js8bMZ/",
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-06-08T13:02:06.690Z",
+          "url": "https://www.facebook.com/reel/1048715867542293/",
+          "views": null,
+          "views_captured_at": null
+        }
+      },
+      "created_at": "2026-06-06"
+    },
+    {
+      "id": "lf-20260608-wife-changing-gains",
+      "batch": "wife-changing-gains",
+      "slug": "wife-changing-gains",
+      "source": "wife-changing-gains livestream (2026-06-07), LOW BPS desilenced",
+      "video_path": "longform/wife-changing-gains/wife-changing-gains.mp4",
+      "thumbnail_path": "longform/wife-changing-gains/wife-changing-gains.png",
+      "duration_seconds": 2570.3,
+      "width": 1920,
+      "height": 1080,
+      "title": "Wife Changing Gains: Kaspa Strength, the AI Job Shakeup, and the October Bottom Trap",
+      "description": "Wife changing gains. A Sunday crypto market update on why Kaspa keeps closing green while the rest of the market bleeds, why fair launch (no premine, no VC unlock, not even on Coinbase) is the real tell, and why Kaspa and TAO are my two highest conviction plays for this cycle. Plus the AI job shakeup coming for every profession, and why the October bottom everyone is waiting for probably will not show up on schedule.\n\n#Kaspa #crypto #TAO\n\nDisclaimer: Nothing I say is financial advice.\n\nFind out more about my team and my community: https://www.cryptorich.vip/",
+      "tags": [
+        "kaspa",
+        "crypto",
+        "tao",
+        "bitcoin",
+        "macro"
+      ],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": null,
+          "url": "https://rumble.com/v7b16xi-wife-changing-gains-kaspa-strength-the-ai-job-shakeup-and-the-october-botto.html",
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": null,
+          "url": "https://www.bitchute.com/video/1oRiu7xWqho3/",
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": null,
+          "url": "https://www.facebook.com/reel/2175733479827604/",
+          "views": null,
+          "views_captured_at": null,
+          "submitted_at": "2026-06-09T12:56:02.880Z"
+        }
+      },
+      "created_at": "2026-06-08"
+    },
+    {
+      "id": "lf-20260608-ai-can-hack-blockchains",
+      "batch": "zcash-hack",
+      "slug": "ai-can-hack-blockchains",
+      "source": "AI Can Now Hack Blockchains presentation (Zcash exploit, ZcashHack render)",
+      "video_path": "longform/ai-can-hack-blockchains.mp4",
+      "thumbnail_path": "longform/ai-can-hack-blockchains.png",
+      "duration_seconds": 700.33,
+      "width": 1920,
+      "height": 1080,
+      "title": "Detailed Analysis of the Zcash Hack and How No Blockchain Is Safe",
+      "description": "AI Can Now Hack Blockchains. A security researcher paired a public AI, Claude Opus 4.8, with a custom auditing tool and found a critical flaw in Zcash’s Orchard shielded pool that survived four years of expert audits, one that could mint unlimited, undetectable counterfeit ZEC out of thin air. It was responsibly disclosed and patched fast, but the real story is scarier: the same public AI that anyone can log into just collapsed the barrier to finding catastrophic exploits in famous, heavily audited chains. This is why a simpler, verifiable trust model like Kaspa matters more than ever.\n\n#crypto  #Kaspa  #Zcash  #AI\n\nDisclaimer: Nothing I say is financial advice.\n\nFind out more about my team and my community: https://www.cryptorich.vip/",
+      "tags": [
+        "crypto",
+        "kaspa",
+        "zcash",
+        "ai",
+        "security"
+      ],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": null,
+          "url": "https://rumble.com/v7b19ai-detailed-analysis-of-the-zcash-hack-and-how-no-blockchain-is-safe.html",
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": null,
+          "url": "https://www.bitchute.com/video/uS3D8A3lNz7k/",
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": null,
+          "url": "https://www.facebook.com/reel/2045077943032980/",
+          "views": null,
+          "views_captured_at": null,
+          "submitted_at": "2026-06-09T13:35:50.106Z"
+        }
+      },
+      "created_at": "2026-06-08"
+    },
+    {
+      "id": "lf-20260611-uh-oh",
+      "batch": "uh-oh",
+      "slug": "uh-oh",
+      "source": "UH-OH livestream (2026-06-10 market update)",
+      "video_path": "longform/uh-oh/uh-oh.mp4",
+      "thumbnail_path": "longform/uh-oh/uh-oh.png",
+      "duration_seconds": 1505.3,
+      "width": 1920,
+      "height": 1080,
+      "title": "Uh Oh: Hottest Inflation Since 2023, and Bitcoin Wont Budge",
+      "description": "The hottest inflation report since 2023 just dropped, the Strait of Hormuz is still a mess, and Bitcoin barely moved. In this stream I break down why the summer could stay heavy, why I think October turns green no matter what the four-year cycle zombies believe, and the altcoin plays I am watching while everyone else checked out: ElizaOS, Linea, Kaspa, Toncoin, Bittensor and more.\n\n#crypto  #bitcoin  #kaspa  #macro\n\nDisclaimer: Nothing I say is financial advice.\n\nFind out more about my team and my community: https://www.cryptorich.vip/",
+      "tags": [
+        "crypto",
+        "bitcoin",
+        "kaspa",
+        "macro",
+        "inflation",
+        "altcoins"
+      ],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-06-12T02:29:58.048Z",
+          "url": "https://rumble.com/v7b5xus-uh-oh-hottest-inflation-since-2023-and-bitcoin-wont-budge.html",
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-06-12T02:21:40.725Z",
+          "url": null,
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-06-12T02:48:15.967Z",
+          "url": "https://www.facebook.com/reel/1739555367219027/",
+          "views": null,
+          "views_captured_at": null
+        }
+      },
+      "created_at": "2026-06-11"
+    },
+    {
+      "id": "lf-20260612-market-meltdown",
+      "batch": "market-meltdown",
+      "slug": "market-meltdown",
+      "source": "Market Meltdown livestream (2026-06-11 morning market update)",
+      "video_path": "longform/market-meltdown/market-meltdown.mp4",
+      "thumbnail_path": "longform/market-meltdown/market-meltdown.png",
+      "duration_seconds": 1571.37,
+      "width": 1920,
+      "height": 1080,
+      "title": "Market Meltdown: Why This Bear Bottoms Without the 80% Crash",
+      "description": "Bitcoin is down 50 plus percent and the four-year cycle zombies are calling for 32k. I am not buying it. This top never went parabolic (126k, not 200k), so it makes no sense for the bottom to crater like the old cycles. In this stream I break down why these bear markets keep getting shallower, how Michael Saylor sold a fraction of a percent to crack the 116-day channel and then bought 110 million at the lows, the hot PPI and jobs data, and the projects I am stacking through the pain: Kaspa, Bittensor (TAO), Toncoin, ElizaOS and more.\n\n#crypto  #bitcoin  #kaspa  #macro\n\nDisclaimer: Nothing I say is financial advice.\n\nFind out more about my team and my community: https://www.cryptorich.vip/",
+      "tags": [
+        "crypto",
+        "bitcoin",
+        "kaspa",
+        "macro",
+        "bear market",
+        "altcoins"
+      ],
+      "categories": {
+        "rumble": {
+          "primary": "Finance & Crypto"
+        }
+      },
+      "visibility": "public",
+      "platforms": {
+        "rumble": {
+          "status": "posted",
+          "posted_at": "2026-06-13T13:21:15.596Z",
+          "url": "https://rumble.com/v7b891s-market-meltdown-why-this-bear-bottoms-without-the-80-crash.html",
+          "views": null,
+          "views_captured_at": null
+        },
+        "bitchute": {
+          "status": "posted",
+          "posted_at": "2026-06-13T13:12:05.201Z",
+          "url": "https://www.bitchute.com/video/g7p8d9H5B8HR/",
+          "views": null,
+          "views_captured_at": null
+        },
+        "facebook": {
+          "status": "posted",
+          "posted_at": "2026-06-13T13:39:46.468Z",
+          "url": "https://www.facebook.com/reel/2085162548728033/",
+          "views": null,
+          "views_captured_at": null
+        }
+      },
+      "created_at": "2026-06-12T10:40:28.987Z"
     }
   ]
 }

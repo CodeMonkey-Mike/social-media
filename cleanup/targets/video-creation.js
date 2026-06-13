@@ -4,9 +4,13 @@
 //  - Protected (never touch): assets/{sfx,music,fonts,transitions}/, assets/logo-*.png,
 //    and every <batch>-progress.json.
 //  - Always sweep: any _bad-*/ reject folder (regardless of age).
+//  - Registry-driven (assets/projects/<batch>/ — the canonical per-batch asset home, see
+//    video-creation/SKILL.md): keep folders whose <batch> is ACTIVE in batches.json, recycle
+//    those of an ARCHIVED batch; a folder matching no batch falls back to age-based.
 //  - Age-based (recycle if older than --age-days, default 30): everything else under
-//    assets/ (b-roll PNGs, *-clip.mp4, overlays), livestream-repurpose/media + transcripts,
-//    and per-clip artifacts under shorts/ (preview.mp4, whisper*.json, captions.ts.draft).
+//    assets/ (legacy loose b-roll PNGs, *-clip.mp4, overlays in the root and non-projects/
+//    subdirs), livestream-repurpose/media + transcripts, and per-clip artifacts under shorts/
+//    (preview.mp4, whisper*.json, captions.ts.draft).
 //  - Publish-state guard: remotion/out/<batch>/<n>-<slug>.mp4 is recycled only when that
 //    clip is in shorts.json with EVERY platform status=posted (queue copy is the canonical one).
 
@@ -41,9 +45,14 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
   };
 
   const batches = loadBatches(repoRoot);
+  // batch id (lowercased) -> status, for the assets/projects/<batch>/ registry tier.
+  const batchStatus = new Map(
+    batches.filter(b => b.batch).map(b => [String(b.batch).toLowerCase(), b.status])
+  );
 
   // ── assets/ ──────────────────────────────────────────────────────────────
   const ASSETS = path.join(ROOT, 'assets');
+  const PROJECTS = path.join(ASSETS, 'projects').toLowerCase();
   const protectDirs = new Set(
     ['sfx', 'music', 'fonts', 'transitions'].map(d => path.join(ASSETS, d).toLowerCase())
   );
@@ -56,8 +65,22 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     },
   });
   for (const d of badDirs) recycle.push({ path: d, reason: 'reject folder (_bad-*)' });
+  // For a file under assets/projects/<batch>/..., return that <batch> folder name; else null.
+  const projectBatchOf = (f) => {
+    const fl = f.toLowerCase();
+    if (!fl.startsWith(PROJECTS + path.sep)) return null;
+    return path.relative(PROJECTS, fl).split(path.sep)[0] || null;
+  };
   for (const f of assetFiles) {
     if (LOGO_RE.test(path.basename(f))) { skipped.push({ path: f, reason: 'protected logo' }); continue; }
+    const batch = projectBatchOf(f);
+    if (batch) {
+      const status = batchStatus.get(batch);
+      if (status === 'active') { skipped.push({ path: f, reason: `project asset — active batch (${batch})` }); continue; }
+      if (status === 'completed' || status === 'archived') { recycle.push({ path: f, reason: `project asset — ${status} batch (${batch})` }); continue; }
+      // no matching batch in the registry — fall through to age-based (safe default).
+      classifyAge(f, `project asset — batch "${batch}" not in registry`); continue;
+    }
     classifyAge(f, 'asset');
   }
 
@@ -80,7 +103,7 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     const b = batchFor(name);
     if (!b) skipped.push({ path: full, reason: `${kind} — not in batch registry` });
     else if (b.status === 'active') skipped.push({ path: full, reason: `${kind} — active batch (${b.batch})` });
-    else recycle.push({ path: full, reason: `${kind} — archived batch (${b.batch})` });
+    else recycle.push({ path: full, reason: `${kind} — ${b.status} batch (${b.batch})` });
   };
   // media/: flat files named after the livestream.
   for (const f of walkFiles(path.join(ROOT, 'livestream-repurpose', 'media'))) {
@@ -128,6 +151,29 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
       } else if (entry.isFile()) {
         recycle.push({ path: full, reason: 'loose legacy render (no active batch folder)' });
       }
+    }
+  }
+
+  // ── longform-presentation/media/<project>/ — batch-aware (matched by source_media) ────────
+  // Each project subfolder holds a longform-presentation batch's source artifacts (master .mkv,
+  // EDIT/FINAL, deck, transcript, thumbnail). Recycle a completed/archived batch's folder, keep
+  // an active one, leave an unmatched folder alone (can't classify safely). ONLY media/<project>/
+  // subfolders are eligible — top-level files (the skill doc, scripts/, decks) are never touched.
+  const LFP_MEDIA = path.join(ROOT, 'longform-presentation', 'media');
+  if (fs.existsSync(LFP_MEDIA)) {
+    for (const entry of fs.readdirSync(LFP_MEDIA, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      const full = path.join(LFP_MEDIA, entry.name);
+      // Match by path prefix: source_media may be the project FOLDER or a FILE inside it.
+      const relPath = `video-creation/longform-presentation/media/${entry.name}`.toLowerCase();
+      const b = batches.find((bb) => {
+        if (!bb.source_media) return false;
+        const sm = bb.source_media.replace(/\\/g, '/').toLowerCase();
+        return sm === relPath || sm.startsWith(relPath + '/');
+      });
+      if (!b) { skipped.push({ path: full, reason: 'longform-presentation project — not in batch registry' }); continue; }
+      if (b.status === 'active') skipped.push({ path: full, reason: `longform-presentation project — active batch (${b.batch})` });
+      else recycle.push({ path: full, reason: `longform-presentation project — ${b.status} batch (${b.batch})` });
     }
   }
 

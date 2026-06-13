@@ -3,23 +3,210 @@
     "what": "Durable registry of livestream-repurpose batches for the whole social-media repo. One object per batch; persists for finished (archived) batches too. Paths are relative to this file's directory (the repo root).",
     "consumers": [
       "cleanup/cleanup.js (video-creation target) — protects ACTIVE batches' directories; treats everything else as recyclable.",
+      "scripts/reconcile-batch-status.js — recomputes each batch's `status` (active|completed) from the queues' batch field; the authority on status, run before cleanup.",
       "repurpose/SKILL.md — reads transcript_plain of the next batch whose pipelines.repurpose is 'pending'.",
       "scripts/publish-shorts.py — (future) batch -> render folder + shorts.json source."
     ],
     "status_values": {
       "active": "current batch still in progress; its directories/files are protected from cleanup.",
-      "archived": "finished batch; its directories/files are eligible for cleanup."
+      "completed": "fully published (every queued short AND long posted everywhere, repurpose done); its directories/files are eligible for cleanup. This is COMPUTED, not hand-set — run `node scripts/reconcile-batch-status.js` (it derives status from schedule-tweets/data/{shorts,longs}.json via each item's batch field). Do not edit status by hand.",
+      "archived": "legacy synonym for completed (pre-reconciler); still honoured by cleanup as eligible. New reconciler runs write 'completed'."
     },
     "pipelines": {
       "shorts": "video-creation side: cut clips -> render shorts (active | done).",
-      "repurpose": "tweet/image side (repurpose/ skill): pending | done. The skill sets this to done after generating."
+      "repurpose": "tweet/image side (repurpose/ skill): pending | done. The skill sets this to done after generating.",
+      "longform": "longform-presentation side: render spotlight presentation -> stage to schedule-tweets longs.json (pending | done)."
     },
-    "note": "Older publishing batches exist in schedule-tweets/data/shorts.json (weekend-red-2026-05-24, remotion-2026-05-25) but predate this registry and have no retained video-creation source artifacts, so they are not listed here. Going forward, every new batch should keep its files under per-batch folders (remotion/out/<batch>/, shorts/<batch>-clips/, assets/<batch>/) so 'directories' can list them cleanly."
+    "note": "Older publishing batches exist in schedule-tweets/data/shorts.json (weekend-red-2026-05-24, remotion-2026-05-25) but predate this registry and have no retained video-creation source artifacts, so they are not listed here. Going forward, every new batch should keep its files under per-batch folders (remotion/out/<batch>/, shorts/<batch>-clips/, assets/<batch>/) so 'directories' can list them cleanly. Per-batch generated assets (b-roll, overlays, rendered clips) go under assets/projects/<batch>/ — see video-creation/SKILL.md 'Asset folder organization'.",
+    "track_values": {
+      "livestream": "default; a repurposed livestream recording",
+      "longform-presentation": "a longform-presentation project (slide deck + presenter), built in video-creation/longform-presentation/",
+      "longform-edited": "a heavily-edited longform project (b-roll/music/motion-graphics, NOT slide-deck), built in video-creation/longform-edited/; Phase 4 style guide grows per video"
+    }
   },
   "batches": [
     {
-      "batch": "meme-coins",
+      "batch": "why-ai-python",
+      "track": "longform-edited",
       "status": "active",
+      "date": "2026-06-13",
+      "livestream_title": null,
+      "title": "Why AI Devs Use Python",
+      "shorts_source": null,
+      "source_media": "video-creation/longform-edited/media/why-ai-devs-use-python/",
+      "transcript_plain": null,
+      "transcripts_dir": null,
+      "dashboard": null,
+      "directories": [
+        "video-creation/longform-edited/media/why-ai-devs-use-python",
+        "video-creation/remotion/out/why-ai-python",
+        "video-creation/assets/projects/why-ai-python"
+      ],
+      "pipelines": {
+        "shorts": "skip",
+        "repurpose": "skip",
+        "longform": "pending"
+      },
+      "note": "Registered 2026-06-13 to protect active work. longform-edited project; comp video-creation/remotion/src/WhyAiPython.tsx (in Root.tsx). Renders currently LOOSE in remotion/out/why-ai-python-v{1,2,3}.mp4 (v3 latest, 07:12) — loose out/ files are swept by cleanup regardless of batch status; protect via folder move or name-prefix rule. NOT yet published."
+    },
+    {
+      "batch": "market-meltdown",
+      "status": "active",
+      "date": "2026-06-12",
+      "livestream_title": "market-meltdown LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/market-meltdown/market-meltdown LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/market-meltdown LOW BPS VERTICAL/market-meltdown LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/market-meltdown LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/market-meltdown/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/market-meltdown",
+        "video-creation/shorts/market-meltdown"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      }
+    },
+    {
+      "batch": "uh-oh",
+      "status": "active",
+      "date": "2026-06-11",
+      "livestream_title": "UH-OH LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/UH-OH/UH-OH LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/UH-OH LOW BPS VERTICAL/UH-OH LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/UH-OH LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/uh-oh/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/uh-oh",
+        "video-creation/shorts/uh-oh"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      }
+    },
+    {
+      "batch": "wife-changing-gains",
+      "status": "active",
+      "date": "2026-06-08",
+      "livestream_title": "wife-changing-gains LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/wife-changing-gains/wife-changing-gains LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/wife-changing-gains LOW BPS VERTICAL/wife-changing-gains LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/wife-changing-gains LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/wife-changing-gains/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/wife-changing-gains",
+        "video-creation/shorts/wife-changing-gains"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done"
+      }
+    },
+    {
+      "batch": "dilemma",
+      "status": "active",
+      "date": "2026-06-07",
+      "livestream_title": "4-year cycle dilemma LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/4-year cycle dilemma/4-year cycle dilemma LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/4-year cycle dilemma LOW BPS VERTICAL/4-year cycle dilemma LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/4-year cycle dilemma LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/dilemma/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/dilemma",
+        "video-creation/shorts/dilemma"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "pending"
+      }
+    },
+    {
+      "batch": "zombie-class",
+      "status": "completed",
+      "date": "2026-06-05",
+      "livestream_title": "4-year cycle zombie class LOW BPS VERTICAL",
+      "shorts_source": "zombie-class",
+      "source_media": "video-creation/livestream-repurpose/media/4-year cycle zombie class/4-year cycle zombie class LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/4-year cycle zombie class LOW BPS VERTICAL/4-year cycle zombie class LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/4-year cycle zombie class LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/zombie-class/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/zombie-class",
+        "video-creation/shorts/zombie-class"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      },
+      "note": "8/8 shorts produced (full b-roll/thumb/SFX, LAB+Saylor refs) + queued pending in shorts.json. Long-form desilenced + queued pending in longs.json. repurpose (tweet/image side) not yet run."
+    },
+    {
+      "batch": "best-350x",
+      "status": "completed",
+      "date": "2026-06-04",
+      "livestream_title": "Best 350x Cryptos To Make Me Millions! LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/Best 350x Cryptos That Will Make me a Millionaire/Best 350x Cryptos To Make Me Millions! LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/Best 350x Cryptos To Make Me Millions! LOW BPS VERTICAL/Best 350x Cryptos To Make Me Millions! LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/Best 350x Cryptos To Make Me Millions! LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/best-350x/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/best-350x",
+        "video-creation/shorts/best-350x"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done"
+      }
+    },
+    {
+      "batch": "wife-lose-weight",
+      "status": "completed",
+      "date": "2026-05-31",
+      "livestream_title": "best cryptos to make your wife lose weight LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/best cryptos to make your wife lose weight LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/best cryptos to make your wife lose weight LOW BPS VERTICAL/best cryptos to make your wife lose weight LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/best cryptos to make your wife lose weight LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/wife-lose-weight/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/wife-lose-weight",
+        "video-creation/shorts/wife-lose-weight"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      },
+      "note": "Backfilled 2026-06-03 (registry gap). Batch complete: 11/11 rendered."
+    },
+    {
+      "batch": "353x",
+      "status": "completed",
+      "date": "2026-06-03",
+      "livestream_title": "My new 353x LOW BPS VERTICAL",
+      "shorts_source": "353x",
+      "source_media": "video-creation/livestream-repurpose/media/my 353x/My new 353x LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/My new 353x LOW BPS VERTICAL/My new 353x LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/My new 353x LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/353x/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/353x",
+        "video-creation/shorts/353x"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      },
+      "note": "6 shorts produced + published to schedule-tweets shorts.json (shorts/353x/). LAB logo on 1-4; clip 5 removed. Saylor/Warsh portraits in 6/7."
+    },
+    {
+      "batch": "meme-coins",
+      "status": "completed",
       "date": "2026-05-28",
       "livestream_title": "Best Meme Coins to retire ur arse LOW BPS VERTICAL",
       "shorts_source": "meme-coins-2026-05-28",
@@ -38,7 +225,7 @@
     },
     {
       "batch": "bulls-are-sleeping",
-      "status": "archived",
+      "status": "completed",
       "date": "2026-05-24",
       "livestream_title": "bulls are sleeping LOW BPS VERTICAL",
       "shorts_source": null,
@@ -57,7 +244,7 @@
     },
     {
       "batch": "market-update",
-      "status": "archived",
+      "status": "completed",
       "date": "2026-05-20",
       "livestream_title": null,
       "shorts_source": "market-update-2026-05-20",
@@ -73,6 +260,96 @@
         "repurpose": "done"
       },
       "note": "Source media/transcript not retained on disk."
+    },
+    {
+      "batch": "qe-history",
+      "track": "longform-presentation",
+      "status": "completed",
+      "date": "2026-06-06",
+      "livestream_title": null,
+      "title": "History of QE before Bitcoin",
+      "shorts_source": null,
+      "source_media": "video-creation/longform-presentation/media/QE before bitcoin/QE before bitcoin.mkv",
+      "transcript_plain": null,
+      "transcripts_dir": null,
+      "dashboard": null,
+      "directories": [
+        "video-creation/remotion/out/qe-history"
+      ],
+      "pipelines": {
+        "shorts": "skip",
+        "repurpose": "skip",
+        "longform": "done"
+      },
+      "note": "Longform-presentation project (NOT a livestream). Phase 1-4 done: spotlight presentation render = video-creation/remotion/out/qe-history/qe-money-printer.mp4 (52MB, 6:49), approved 2026-06-06. Source artifacts (master .mkv, EDIT2, transcript, deck, thumbnail) live in video-creation/longform-presentation/media/QE before bitcoin/ which cleanup does NOT scan. Publish copy staged to schedule-tweets/longform/history-of-qe-before-bitcoin.mp4 + queued pending in longs.json (id lf-20260606-history-of-qe-before-bitcoin). directories[] lists the out folder so cleanup keeps the render; assets/{qe-full.m4a,intro,outro,face1-3}.mp4 are age-based (30d)."
+    },
+    {
+      "batch": "zcash-hack",
+      "track": "longform-presentation",
+      "status": "completed",
+      "date": "2026-06-08",
+      "livestream_title": null,
+      "title": "AI Can Now Hack Blockchains",
+      "shorts_source": null,
+      "source_media": "video-creation/longform-presentation/media/zcash exploit/",
+      "transcript_plain": null,
+      "transcripts_dir": null,
+      "dashboard": null,
+      "directories": [
+        "video-creation/remotion/out/zc-seg"
+      ],
+      "pipelines": {
+        "shorts": "skip",
+        "repurpose": "skip",
+        "longform": "done"
+      },
+      "note": "AI-narrated longform (NOT a livestream). ElevenLabs v2 clone narration for slides 1-7,9; Mike’s real recording for intro + slide 8 (Kaspa). Comp = video-creation/remotion/src/ZcashHack.tsx (registered in Root.tsx). Built per-segment to out/zc-seg/{slides1-7,slide8-v3,slide9}.mp4, then ffmpeg-concat intro + 3 segments -> FINAL at media/zcash exploit/AI Can Hack Blockchains FINAL.mp4 (11:42, ~99MB, approved 2026-06-08). Source artifacts (intro.mkv, slide8.mkv, EDIT2, narration scripts, deck, thumbnail.png) live in media/zcash exploit/ which cleanup does NOT scan. directories[] protects out/zc-seg during publish; out/zc-hack (old full render) + out/zc-test (stills) are recyclable; assets/zcash/* are age-based (30d). NEXT: stage to schedule-tweets/longform/ + queue in longs.json."
+    },
+    {
+      "batch": "banks-own-chain",
+      "track": "longform-edited",
+      "status": "active",
+      "date": "2026-06-09",
+      "livestream_title": null,
+      "title": "The Banks' Plan to Destroy XRP and Crypto as a Whole by 2027",
+      "shorts_source": null,
+      "source_media": "video-creation/longform-edited/media/banks-own-chain/",
+      "transcript_plain": null,
+      "transcripts_dir": null,
+      "dashboard": null,
+      "directories": [
+        "video-creation/longform-edited/media/banks-own-chain",
+        "video-creation/remotion/out/banks-own-chain",
+        "video-creation/assets/projects/banks-own-chain"
+      ],
+      "pipelines": {
+        "shorts": "skip",
+        "repurpose": "skip",
+        "longform": "pending"
+      },
+      "note": "First longform-edited project (heavily-edited track, NOT a livestream, NOT a slide presentation). Topic seeded from CryptoWendyO livestream 'SHOCKING BANKS WILL DESTROY CRYPTO AND MAKE THEIR OWN CHAIN!' (2026-06-06); source transcript (clean .md + raw SRT) in media/banks-own-chain/source-crypto-wendy/. Angle: banks build their own tokenized-deposit chain + SWIFT picked Linea over XRPL, so banks won't need XRP. Working outline (verified/sourced facts + segment structure + edit notes) at media/banks-own-chain/outline.md. Talk-over deck BUILT (banks-own-chain-deck.html, 10 slides, problem->solution arc, Linea-token angle). 3 receipt screenshots captured to screenshots/ (recapture: node _capture-screenshots.js). EDIT STYLE (2026-06-09): talking-head holds frame, deck content containers as overlays (NOT full-screen spotlight), full deck shown only in intro; canonical in longform-edited.md Phase 4 rule #1. STAGE: deck + assets ready, awaiting Mike's recording. No EDIT yet. cleanup does NOT scan video-creation/longform-edited/media/."
+    },
+    {
+      "batch": "silverscript",
+      "track": "longform-edited",
+      "status": "active",
+      "date": "2026-06-13",
+      "livestream_title": null,
+      "title": "SilverScript: Kaspa's First Real Smart Contract Language",
+      "shorts_source": null,
+      "source_media": "video-creation/longform-edited/media/silverscript/",
+      "transcript_plain": null,
+      "transcripts_dir": null,
+      "dashboard": null,
+      "directories": [
+        "video-creation/longform-edited/media/silverscript"
+      ],
+      "pipelines": {
+        "shorts": "skip",
+        "repurpose": "skip",
+        "longform": "pending"
+      },
+      "note": "longform-edited project (heavily-edited track, NOT a livestream, NOT a slide presentation). Topic seeded from KatDaddyKrypto video 'Is KASPA About to EXPLODE? Easy To Understand Hard Fork Update!' (https://youtu.be/aj5O1u_gcNM), SilverScript segment ~3:55-4:27. Seed segment transcript + on-screen infographic frames in media/silverscript/source-katdaddy/. Angle: SilverScript (Ori Newman) is the developer on-ramp that finally makes Kaspa programmable; ties to the May 5 2026 covenant hardfork. Working outline (independently verified/sourced facts + segment structure + b-roll notes) at media/silverscript/outline.md. KEY FACT-CHECK baked into the outline: SilverScript compiles DIRECTLY to native Kaspa Script (no VM, no WASM yet, WASM only planned); the seed video's on-screen infographic claiming 'WASM bytecode -> uProgs VM' is WRONG, do not repeat it. Stage: outline only, awaiting Mike's recording. cleanup does NOT scan video-creation/longform-edited/media/."
     }
   ]
 }

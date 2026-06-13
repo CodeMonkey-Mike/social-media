@@ -1,17 +1,14 @@
 // upload-longform-facebook.js — uploads a single longform video to Facebook.
-// Reads metadata.json + video from C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\longform\
-// Adapted from post-fb-short.js: SAME Facebook upload flow (feed composer -> Photo/video ->
-// wizard -> Post -> verify), but sourced from the longform/ staging folder (no shorts.json queue),
-// same pattern as upload-longform-rumble.js / upload-longform-bitchute.js. The video is landscape,
-// so Facebook posts it as a normal video (not a Reel); the generic wizard loop handles both.
+// Sources the next pending Facebook entry directly from data/longs.json (video_path), so no
+// loose-root staging copy is needed. Adapted from post-fb-short.js: SAME Facebook upload flow
+// (feed composer -> Photo/video -> wizard -> Post -> verify). The video is landscape, so Facebook
+// posts it as a normal video (not a Reel); the generic wizard loop handles both.
 
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
+const { pickNextLongform } = require('./lib/longform-queue');
 
-const SOURCE_DIR     = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\longform';
-const METADATA_FILE  = 'metadata.json';
-const VIDEO_EXTS     = ['.mp4', '.mov', '.webm', '.mkv'];
 const MIN_FILE_SIZE  = 1_000_000; // 1MB
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\fbbot-profile';
 const WORKSPACE_ROOT = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
@@ -32,18 +29,6 @@ async function actionPause(page, label = '') { const ms = rnd(ACTION_MIN, ACTION
 async function longWait(page, a, b, label = '') { const ms = rnd(a, b); console.log(`  waiting ${Math.round(ms/1000)}s${label?` (${label})`:''}...`); await page.waitForTimeout(ms); }
 async function typeHuman(page, text) { for (const c of text) { await page.keyboard.type(c); await page.waitForTimeout(rnd(CHAR_DELAY_MIN, CHAR_DELAY_MAX)); } }
 async function mouseClick(page, locator) { const b = await locator.boundingBox(); if (b && b.width > 0) await page.mouse.click(b.x + b.width/2, b.y + b.height/2); else await locator.click(); }
-
-// Auto-detect the single video in SOURCE_DIR (most-recently-modified wins if several).
-function pickFile(dir, exts, label) {
-  if (!fs.existsSync(dir)) return null;
-  const files = fs.readdirSync(dir)
-    .filter(f => exts.includes(path.extname(f).toLowerCase()))
-    .map(f => ({ f, m: fs.statSync(path.join(dir, f)).mtimeMs }))
-    .sort((a, b) => b.m - a.m);
-  if (!files.length) return null;
-  if (files.length > 1) console.log(`  (multiple ${label} files; using most recent: ${files[0].f})`);
-  return path.join(dir, files[0].f);
-}
 
 async function snapshot(page, label) {
   const state = await page.evaluate(() => {
@@ -137,14 +122,12 @@ async function pollForNewVideo(page, baselineSet, { timeoutMs = 720_000, interva
 }
 
 (async () => {
-  // ── Validate source (before any Chrome work) ──────────────────────────────
-  const metaPath  = path.join(SOURCE_DIR, METADATA_FILE);
-  const videoPath = pickFile(SOURCE_DIR, VIDEO_EXTS, 'video');
-  if (!videoPath)            { console.error('No video file found in', SOURCE_DIR); process.exit(1); }
-  if (!fs.existsSync(metaPath)) { console.error('metadata.json not found in', SOURCE_DIR); process.exit(1); }
+  // ── Source the next pending Facebook longform from longs.json ──────────────
+  const job = pickNextLongform('facebook');
+  if (!job) { console.error('No pending Facebook longform in longs.json (every entry already posted/skipped).'); process.exit(1); }
+  const { metadata: meta, videoPath } = job;
+  if (!videoPath || !fs.existsSync(videoPath)) { console.error('video_path missing on disk:', videoPath); process.exit(1); }
   if (fs.statSync(videoPath).size < MIN_FILE_SIZE) { console.error('Video below 1MB minimum'); process.exit(1); }
-
-  const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
   const titleLine = (meta.title || '').trim();
   const descr     = (meta.description || '').trim();
   let caption = [titleLine, descr].filter(Boolean).join('\n\n');

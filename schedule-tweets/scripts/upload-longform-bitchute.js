@@ -1,18 +1,14 @@
 // upload-longform-bitchute.js — uploads a single longform video to BitChute.
-// Reads metadata.json + video + thumbnail from C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\longform\
-// Adapted from post-bitchute-short.js with custom thumbnail file (vs Grab Thumbnail).
+// Sources the next pending BitChute entry directly from data/longs.json (video_path /
+// thumbnail_path), so no loose-root staging copy is needed. Adapted from post-bitchute-short.js.
 
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
+const { pickNextLongform } = require('./lib/longform-queue');
 
-const SOURCE_DIR     = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\longform';
-const METADATA_FILE  = 'metadata.json';
-// Video + thumbnail are auto-detected from SOURCE_DIR — drop any-named files in schedule-tweets/longform.
-const VIDEO_EXTS     = ['.mp4', '.mov', '.webm', '.mkv'];
 // BitChute silently rejects .webp thumbnails (PNG/JPG only). It accepts the upload but the
 // Proceed click becomes a no-op → the script falls into a 15-min retry loop that never lands.
-const THUMBNAIL_EXTS = ['.png', '.jpg', '.jpeg'];
 const REJECTED_THUMBNAIL_EXTS = ['.webp'];
 
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\bitchutebot-profile';
@@ -25,18 +21,6 @@ const ACTION_MIN      = 3000;
 const ACTION_MAX      = 6000;
 
 function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-
-// Auto-detect the single video / thumbnail in SOURCE_DIR (most-recently-modified wins if several).
-function pickFile(dir, exts, label) {
-  const matches = fs.readdirSync(dir)
-    .filter(f => exts.includes(path.extname(f).toLowerCase()))
-    .map(f => ({ p: path.join(dir, f), name: f, mtime: fs.statSync(path.join(dir, f)).mtimeMs }))
-    .sort((a, b) => b.mtime - a.mtime);
-  if (matches.length === 0) return null;
-  if (matches.length > 1) console.log(`  Multiple ${label} files — using most recent: ${matches[0].name}`);
-  else console.log(`  ${label}: ${matches[0].name}`);
-  return matches[0].p;
-}
 
 async function actionPause(page, label = '') {
   const ms = rnd(ACTION_MIN, ACTION_MAX);
@@ -68,19 +52,15 @@ async function closeDrawer(page) {
 }
 
 (async () => {
-  const metaPath  = path.join(SOURCE_DIR, METADATA_FILE);
-  const videoPath = pickFile(SOURCE_DIR, VIDEO_EXTS, 'video');
-  const thumbPath = pickFile(SOURCE_DIR, THUMBNAIL_EXTS, 'thumbnail');
-
-  if (!videoPath)               { console.error('No video file found in', SOURCE_DIR); process.exit(1); }
-  if (!fs.existsSync(metaPath)) { console.error('Metadata not found:', metaPath); process.exit(1); }
+  const job = pickNextLongform('bitchute');
+  if (!job) { console.error('No pending BitChute longform in longs.json (every entry already posted/skipped).'); process.exit(1); }
+  const { metadata, videoPath, thumbPath } = job;
+  if (!videoPath || !fs.existsSync(videoPath)) { console.error('video_path missing on disk:', videoPath); process.exit(1); }
 
   // Fail fast on .webp thumbnails — BitChute accepts the upload but the Proceed click becomes a
   // silent no-op, sending the script into a 15-min retry loop that never lands. Convert to PNG/JPG.
-  const webpThumbs = fs.readdirSync(SOURCE_DIR)
-    .filter(f => REJECTED_THUMBNAIL_EXTS.includes(path.extname(f).toLowerCase()));
-  if (webpThumbs.length) {
-    console.error(`Thumbnail "${webpThumbs[0]}" is .webp — BitChute silently rejects .webp thumbnails.`);
+  if (thumbPath && REJECTED_THUMBNAIL_EXTS.includes(path.extname(thumbPath).toLowerCase())) {
+    console.error(`Thumbnail "${path.basename(thumbPath)}" is .webp — BitChute silently rejects .webp thumbnails.`);
     console.error('Convert it to PNG or JPG and re-run (a .webp causes a no-op Proceed → 15-min retry loop).');
     process.exit(1);
   }
@@ -91,8 +71,6 @@ async function closeDrawer(page) {
     process.exit(1);
   }
   const hasThumb = !!thumbPath;
-
-  const metadata = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
   const title = (metadata.title || '').trim();
   const description = (metadata.description || '').trim();
   const tags = metadata.tags || [];

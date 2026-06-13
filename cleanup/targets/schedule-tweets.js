@@ -1,15 +1,25 @@
 'use strict';
 
-// Policy: reference-counted GC against the post queues.
-// An image is recycled only if (a) some queue references it with status=posted
-// and (b) no non-posted item references it. Images not in any queue are left
-// untouched. Ported from schedule-tweets/scripts/cleanup-images.js.
+// Policy: reference-counted GC against the post queues, for BOTH images and staged videos.
+//  - Images (images/) are keyed on each queue item's single status field; staged videos
+//    (longform/ + shorts/) are keyed on PER-PLATFORM status in longs.json / shorts.json
+//    (a staged video is "posted" only when EVERY platform is terminal). A referenced file is
+//    recycled only when its post is fully posted AND no non-posted item references it.
+//  - An ORPHAN file (referenced by NO queue) is recycled once it is >= ORPHAN_AGE_DAYS old;
+//    a newer orphan is kept (may be freshly generated/staged and not yet queued). Recency thus
+//    protects active-batch work, which is always recent — no batch-id check needed.
+//  - metadata.json (the active staging manifest) is always kept.
+// Ported from schedule-tweets/scripts/cleanup-images.js.
 
 const fs = require('fs');
 const path = require('path');
 const { walkFiles, ageDays } = require('../lib');
 
 const NAME = 'schedule-tweets';
+
+// Orphan images (in no queue) are kept until this old, then recycled. ~2 weeks: long enough
+// that a generated-but-not-yet-queued image survives a normal drafting cycle.
+const ORPHAN_AGE_DAYS = 14;
 
 function plan({ repoRoot }) {
   const BASE = path.join(repoRoot, 'schedule-tweets');
@@ -50,6 +60,26 @@ function plan({ repoRoot }) {
   scanFile(D('yt-posts.json'), d => d.posts || [], p => (p.images || []).map(i => i.image_path));
   scanFile(D('yt-text-polls.json'), d => d.polls || [], p => [p.image_path]);
 
+  // Staged video queues (shorts.json / longs.json) use PER-PLATFORM status, not a single
+  // item.status — a staged file counts as posted only when every platform is terminal.
+  const PLATFORM_DONE = new Set(['posted', 'posted_unverified', 'skip', 'skipped']);
+  const scanStaged = (file, getItems, getPaths) => {
+    if (!fs.existsSync(file)) return;
+    let data;
+    try { data = JSON.parse(fs.readFileSync(file, 'utf8')); } catch { return; }
+    for (const item of getItems(data)) {
+      const plats = Object.values(item.platforms || {});
+      const fullyPosted = plats.length > 0 && plats.every(p => PLATFORM_DONE.has(p && p.status));
+      for (const rel of getPaths(item)) {
+        const abs = resolveImagePath(rel);
+        if (!abs) continue;
+        (fullyPosted ? postedPaths : activePaths).add(abs.toLowerCase());
+      }
+    }
+  };
+  scanStaged(D('shorts.json'), d => d.shorts || [], s => [s.video_path, s.thumbnail_path]);
+  scanStaged(D('longs.json'), d => d.longs || [], l => [l.video_path, l.thumbnail_path]);
+
   const recycle = [];
   const skipped = [];
   const allImages = walkFiles(IMAGES_DIR, { skipDirs: new Set([REFERENCE_DIR.toLowerCase()]) });
@@ -57,7 +87,24 @@ function plan({ repoRoot }) {
     const key = img.toLowerCase();
     if (activePaths.has(key)) skipped.push({ path: img, reason: 'still needed (non-posted item links it)' });
     else if (postedPaths.has(key)) recycle.push({ path: img, reason: 'posted, no active link' });
-    else skipped.push({ path: img, reason: 'not in any queue (untracked)' });
+    else if (ageDays(img) >= ORPHAN_AGE_DAYS) recycle.push({ path: img, reason: `orphan (no queue ref, >=${ORPHAN_AGE_DAYS}d old)` });
+    else skipped.push({ path: img, reason: `orphan (no queue ref, <${ORPHAN_AGE_DAYS}d — may be unqueued)` });
+  }
+
+  // Staged video folders (longform/ + shorts/) — same reference-counted + orphan-by-age policy
+  // as images, but driven by per-platform status in longs.json / shorts.json. A short/long that
+  // still has any non-terminal platform keeps its staged file; metadata.json is always kept.
+  for (const sub of ['longform', 'shorts']) {
+    const dir = path.join(BASE, sub);
+    if (!fs.existsSync(dir)) continue;
+    for (const f of walkFiles(dir)) {
+      if (path.basename(f).toLowerCase() === 'metadata.json') { skipped.push({ path: f, reason: `${sub} staging manifest` }); continue; }
+      const key = f.toLowerCase();
+      if (activePaths.has(key)) skipped.push({ path: f, reason: `${sub} — still needed (pending post links it)` });
+      else if (postedPaths.has(key)) recycle.push({ path: f, reason: `${sub} — posted, no active link` });
+      else if (ageDays(f) >= ORPHAN_AGE_DAYS) recycle.push({ path: f, reason: `${sub} orphan (no queue ref, >=${ORPHAN_AGE_DAYS}d old)` });
+      else skipped.push({ path: f, reason: `${sub} orphan (<${ORPHAN_AGE_DAYS}d — may be unstaged)` });
+    }
   }
 
   // Run logs (post-step*/workflow-step*.log) directly in schedule-tweets/ — recycle once
