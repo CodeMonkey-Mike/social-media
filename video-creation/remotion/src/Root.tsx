@@ -33,6 +33,31 @@ import { HouseCoin1000x } from './HouseCoin1000x';
 import { Pythia28x } from './Pythia28x';
 import { StopHating } from './StopHating';
 import { PenguFlipsPepeMC } from './PenguFlipsPepeMC';
+import { CryptoPromo } from './CryptoPromo';
+import { YuliCrypto1, FPS_YULI, FRAMES_YULI } from './YuliCrypto1';
+import { AnaToccata, ANA_FPS, ANA_FRAMES } from './AnaToccata';
+import { WiseManIntro } from './WiseManIntro';
+import { WiseManFl07 } from './WiseManFl07';
+import { LivestreamRepurpose } from './LivestreamRepurpose';
+import { QeMoneyPrinterPoc } from './QeMoneyPrinterPoc';
+import { QeMoneyPrinter, QE_FPS, QE_DURATION } from './QeMoneyPrinter';
+import { ZcashHack, ZC_FPS, ZC_DURATION } from './ZcashHack';
+import { BanksOwnChain, BOC_FPS, BOC_DURATION } from './BanksOwnChain';
+import { SilverScript, SS_FPS, SS_DURATION } from './SilverScript';
+import { BittensorCh1to6, B_FPS, B_DURATION } from './BittensorCh1to6';
+import { WhyAiPython, WAP_FPS, WAP_DURATION } from './WhyAiPython';
+import { LivestreamShort } from './LivestreamShort';
+import { TransitionDemo, demoDurationFrames } from './TransitionDemo';
+import { WLW_TITLE, WLW_UNICORN, WLW_LAB115X, WLW_KASPA3, WLW_WF, WLW_BOUNTY, WLW_ROTATION, WLW_LABWONT, WLW_KASPAHOLD, WLW_KASPATON, WLW_PENGU, FRAMES } from './wlwData';
+import { D353X_SHORT, D353X_MEDIUM, D353X_LONG, D353X_MOONBAG, D353X_SAYLOR, D353X_WARSH, FRAMES as F353X } from './data353x';
+import { D_B350_C1, D_B350_C2, D_B350_C3, D_B350_C4, D_B350_C5, D_B350_C6, D_B350_C7, D_B350_C8, FRAMES_B350 } from './dataBest350x';
+import { D_ZC_1, D_ZC_2, D_ZC_3, D_ZC_4, D_ZC_5, D_ZC_6, D_ZC_7, D_ZC_8, FRAMES_ZC } from './dataZombie';
+import { D_DIL_1, D_DIL_2, D_DIL_3, FRAMES_DIL } from './dataDilemma';
+import { D_WCG_1, D_WCG_2, FRAMES_WCG } from './dataWcg';
+import { D_UH_1, D_UH_2, D_UH_3, D_UH_4, D_UH_5, D_UH_6, FRAMES_UH } from './dataUhoh';
+import { D_MM_1, D_MM_2, D_MM_3, FRAMES_MM } from './dataMarketMeltdown';
+import { D_TIGR_1, D_TIGR_2, D_TIGR_3, FRAMES_TIGR } from './dataTigr';
+import { D_BC_TAO, D_BC_LAB, D_BC_AI, D_BC_LINEA, FRAMES_BC } from './dataBestCoin';
 import { TOTAL_FRAMES, FPS_FYCZ } from './constants-fycz';
 import { TOTAL_FRAMES_K3D, FPS_K3D } from './constants-k3d';
 import { TOTAL_FRAMES_T, FPS_T } from './constants-toccata';
@@ -200,6 +225,97 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="Pythia28x" component={Pythia28x} durationInFrames={TOTAL_FRAMES_PYTHIA} fps={FPS_PYTHIA} width={1080} height={1920} />
       <Composition id="StopHating" component={StopHating} durationInFrames={TOTAL_FRAMES_STOPHATE} fps={FPS_STOPHATE} width={1080} height={1920} />
       <Composition id="PenguFlipsPepeMC" component={PenguFlipsPepeMC} durationInFrames={TOTAL_FRAMES_PENGUMC} fps={FPS_PENGUMC} width={1080} height={1920} />
+      <Composition id="CryptoPromo" component={CryptoPromo} durationInFrames={2289} fps={30} width={1080} height={1920} />
+      <Composition id="YuliCrypto1" component={YuliCrypto1} durationInFrames={FRAMES_YULI} fps={FPS_YULI} width={1080} height={1920} />
+      <Composition
+        id="TransitionDemo"
+        component={TransitionDemo}
+        defaultProps={{ id: 'blocks-max' }}
+        fps={30}
+        width={1920}
+        height={1080}
+        calculateMetadata={({ props }) => ({
+          durationInFrames: demoDurationFrames(props.id, 30),
+        })}
+      />
+      <Composition id="AnaToccata" component={AnaToccata} durationInFrames={ANA_FRAMES} fps={ANA_FPS} width={1080} height={1920} />
+      <Composition id="QeMoneyPrinterPoc" component={QeMoneyPrinterPoc} durationInFrames={1290} fps={30} width={1920} height={1080} />
+      <Composition id="QeMoneyPrinter" component={QeMoneyPrinter} durationInFrames={QE_DURATION} fps={QE_FPS} width={1920} height={1080} />
+      <Composition id="ZcashHack" component={ZcashHack} durationInFrames={ZC_DURATION} fps={ZC_FPS} width={1920} height={1080} />
+      <Composition id="BanksOwnChain" component={BanksOwnChain} durationInFrames={BOC_DURATION} fps={BOC_FPS} width={1920} height={1080} />
+      <Composition id="SilverScript" component={SilverScript} durationInFrames={SS_DURATION} fps={SS_FPS} width={1920} height={1080} />
+      <Composition id="BittensorCh1to6" component={BittensorCh1to6} durationInFrames={B_DURATION} fps={B_FPS} width={1920} height={1080} />
+      <Composition id="WhyAiPython" component={WhyAiPython} durationInFrames={WAP_DURATION} fps={WAP_FPS} width={1920} height={1080} />
+      <Composition id="WiseManIntro" component={WiseManIntro} durationInFrames={999} fps={30} width={1080} height={1920} />
+      <Composition id="WiseManFl07" component={WiseManFl07} durationInFrames={517} fps={30} width={1080} height={1920} />
+      <Composition id="WlwTitle" component={LivestreamShort} durationInFrames={FRAMES.title} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_TITLE }} />
+      <Composition id="WlwUnicorn" component={LivestreamShort} durationInFrames={FRAMES.unicorn} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_UNICORN }} />
+      <Composition id="WlwLab115x" component={LivestreamShort} durationInFrames={FRAMES.lab115x} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_LAB115X }} />
+      <Composition id="WlwKaspa3" component={LivestreamShort} durationInFrames={FRAMES.kaspa3} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_KASPA3 }} />
+      <Composition id="WlwWellsFargo" component={LivestreamShort} durationInFrames={FRAMES.wf} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_WF }} />
+      <Composition id="WlwBounty" component={LivestreamShort} durationInFrames={FRAMES.bounty} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_BOUNTY }} />
+      <Composition id="WlwRotation" component={LivestreamShort} durationInFrames={FRAMES.rotation} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_ROTATION }} />
+      <Composition id="WlwLabWont" component={LivestreamShort} durationInFrames={FRAMES.labwont} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_LABWONT }} />
+      <Composition id="WlwKaspaHold" component={LivestreamShort} durationInFrames={FRAMES.kaspahold} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_KASPAHOLD }} />
+      <Composition id="WlwKaspaTon" component={LivestreamShort} durationInFrames={FRAMES.kaspaton} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_KASPATON }} />
+      <Composition id="WlwPengu" component={LivestreamShort} durationInFrames={FRAMES.pengu} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_PENGU }} />
+      <Composition id="X353xShort" component={LivestreamShort} durationInFrames={F353X.short} fps={30} width={1080} height={1920} defaultProps={{ data: D353X_SHORT }} />
+      <Composition id="X353xMedium" component={LivestreamShort} durationInFrames={F353X.medium} fps={30} width={1080} height={1920} defaultProps={{ data: D353X_MEDIUM }} />
+      <Composition id="X353xLong" component={LivestreamShort} durationInFrames={F353X.long} fps={30} width={1080} height={1920} defaultProps={{ data: D353X_LONG }} />
+      <Composition id="X353xMoonbag" component={LivestreamShort} durationInFrames={F353X.moonbag} fps={30} width={1080} height={1920} defaultProps={{ data: D353X_MOONBAG }} />
+      <Composition id="X353xSaylor" component={LivestreamShort} durationInFrames={F353X.saylor} fps={30} width={1080} height={1920} defaultProps={{ data: D353X_SAYLOR }} />
+      <Composition id="X353xWarsh" component={LivestreamShort} durationInFrames={F353X.warsh} fps={30} width={1080} height={1920} defaultProps={{ data: D353X_WARSH }} />
+      <Composition id="Best350xC1" component={LivestreamShort} durationInFrames={FRAMES_B350.c1} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C1 }} />
+      <Composition id="Best350xC2" component={LivestreamShort} durationInFrames={FRAMES_B350.c2} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C2 }} />
+      <Composition id="Best350xC3" component={LivestreamShort} durationInFrames={FRAMES_B350.c3} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C3 }} />
+      <Composition id="Best350xC4" component={LivestreamShort} durationInFrames={FRAMES_B350.c4} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C4 }} />
+      <Composition id="Best350xC5" component={LivestreamShort} durationInFrames={FRAMES_B350.c5} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C5 }} />
+      <Composition id="Best350xC6" component={LivestreamShort} durationInFrames={FRAMES_B350.c6} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C6 }} />
+      <Composition id="Best350xC7" component={LivestreamShort} durationInFrames={FRAMES_B350.c7} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C7 }} />
+      <Composition id="Best350xC8" component={LivestreamShort} durationInFrames={FRAMES_B350.c8} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C8 }} />
+      <Composition id="ZombieC1" component={LivestreamShort} durationInFrames={FRAMES_ZC.c1} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_1 }} />
+      <Composition id="ZombieC2" component={LivestreamShort} durationInFrames={FRAMES_ZC.c2} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_2 }} />
+      <Composition id="ZombieC3" component={LivestreamShort} durationInFrames={FRAMES_ZC.c3} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_3 }} />
+      <Composition id="ZombieC4" component={LivestreamShort} durationInFrames={FRAMES_ZC.c4} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_4 }} />
+      <Composition id="ZombieC5" component={LivestreamShort} durationInFrames={FRAMES_ZC.c5} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_5 }} />
+      <Composition id="ZombieC6" component={LivestreamShort} durationInFrames={FRAMES_ZC.c6} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_6 }} />
+      <Composition id="ZombieC7" component={LivestreamShort} durationInFrames={FRAMES_ZC.c7} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_7 }} />
+      <Composition id="ZombieC8" component={LivestreamShort} durationInFrames={FRAMES_ZC.c8} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_8 }} />
+      <Composition id="DilemmaC1" component={LivestreamShort} durationInFrames={FRAMES_DIL.c1} fps={30} width={1080} height={1920} defaultProps={{ data: D_DIL_1 }} />
+      <Composition id="DilemmaC2" component={LivestreamShort} durationInFrames={FRAMES_DIL.c2} fps={30} width={1080} height={1920} defaultProps={{ data: D_DIL_2 }} />
+      <Composition id="DilemmaC3" component={LivestreamShort} durationInFrames={FRAMES_DIL.c3} fps={30} width={1080} height={1920} defaultProps={{ data: D_DIL_3 }} />
+      <Composition id="UhOhC1" component={LivestreamShort} durationInFrames={FRAMES_UH.c1} fps={30} width={1080} height={1920} defaultProps={{ data: D_UH_1 }} />
+      <Composition id="UhOhC2" component={LivestreamShort} durationInFrames={FRAMES_UH.c2} fps={30} width={1080} height={1920} defaultProps={{ data: D_UH_2 }} />
+      <Composition id="UhOhC3" component={LivestreamShort} durationInFrames={FRAMES_UH.c3} fps={30} width={1080} height={1920} defaultProps={{ data: D_UH_3 }} />
+      <Composition id="UhOhC4" component={LivestreamShort} durationInFrames={FRAMES_UH.c4} fps={30} width={1080} height={1920} defaultProps={{ data: D_UH_4 }} />
+      <Composition id="UhOhC5" component={LivestreamShort} durationInFrames={FRAMES_UH.c5} fps={30} width={1080} height={1920} defaultProps={{ data: D_UH_5 }} />
+      <Composition id="UhOhC6" component={LivestreamShort} durationInFrames={FRAMES_UH.c6} fps={30} width={1080} height={1920} defaultProps={{ data: D_UH_6 }} />
+      <Composition id="TigrKaspa" component={LivestreamShort} durationInFrames={FRAMES_TIGR.c1} fps={30} width={1080} height={1920} defaultProps={{ data: D_TIGR_1 }} />
+      <Composition id="TigrBear" component={LivestreamShort} durationInFrames={FRAMES_TIGR.c2} fps={30} width={1080} height={1920} defaultProps={{ data: D_TIGR_2 }} />
+      <Composition id="TigrTao" component={LivestreamShort} durationInFrames={FRAMES_TIGR.c3} fps={30} width={1080} height={1920} defaultProps={{ data: D_TIGR_3 }} />
+      <Composition id="BcTao" component={LivestreamShort} durationInFrames={FRAMES_BC.tao} fps={30} width={1080} height={1920} defaultProps={{ data: D_BC_TAO }} />
+      <Composition id="BcLab" component={LivestreamShort} durationInFrames={FRAMES_BC.lab} fps={30} width={1080} height={1920} defaultProps={{ data: D_BC_LAB }} />
+      <Composition id="BcAi" component={LivestreamShort} durationInFrames={FRAMES_BC.ai} fps={30} width={1080} height={1920} defaultProps={{ data: D_BC_AI }} />
+      <Composition id="BcLinea" component={LivestreamShort} durationInFrames={FRAMES_BC.linea} fps={30} width={1080} height={1920} defaultProps={{ data: D_BC_LINEA }} />
+      <Composition id="MmExcavator" component={LivestreamShort} durationInFrames={FRAMES_MM.c1} fps={30} width={1080} height={1920} defaultProps={{ data: D_MM_1 }} />
+      <Composition id="MmTao" component={LivestreamShort} durationInFrames={FRAMES_MM.c2} fps={30} width={1080} height={1920} defaultProps={{ data: D_MM_2 }} />
+      <Composition id="MmSaylor" component={LivestreamShort} durationInFrames={FRAMES_MM.c3} fps={30} width={1080} height={1920} defaultProps={{ data: D_MM_3 }} />
+      <Composition id="WcgAiJobs" component={LivestreamShort} durationInFrames={FRAMES_WCG.c1} fps={30} width={1080} height={1920} defaultProps={{ data: D_WCG_1 }} />
+      <Composition id="WcgPunch" component={LivestreamShort} durationInFrames={FRAMES_WCG.c2} fps={30} width={1080} height={1920} defaultProps={{ data: D_WCG_2 }} />
+      <Composition
+        id="LivestreamRepurpose"
+        component={LivestreamRepurpose}
+        durationInFrames={300}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          // Proxy cut starting at screenshot timecode 00:07:49.467, so frame 0
+          // of this comp == the Premiere program-monitor reference frame.
+          src: 'livestream-repurpose/proxy-0749.mp4',
+          trimBefore: 0,
+        }}
+      />
     </>
   );
 };
