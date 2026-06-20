@@ -1,0 +1,513 @@
+{
+  "$doc": "Reusable TRANSITION catalog — Remotion re-creations of the Swiftly Studio 850 pack. This JSON is the catalog (data); rendering code is in remotion/src/transitions/ (engine + registry). Blocks displacement amounts are the real per-clip Offset 'Shift Center To' vectors (extracted via _extract-blocks-clips.js, per-clip not a global closure). Block PATTERN source by family: Max/Medium use the pack's real `Gth - Disp Blocks Max.mp4`, Short uses `Gth - Disp Blocks Small.mp4` (converted to alpha masks in lib/masks/, white=show; fidelity near-1:1). STRIPS have NO source mask file, so their strip masks are reverse-engineered from each density's PREVIEW render (diff vs clean frame -> per-row bands -> alpha; fidelity approximate). Browse demos via browse/<CAT>/<VARIANT>/gallery.html. SCOPE: GLITCH/Blocks all 15 (Max/Medium/Short x3 + Strips 1x-6x).",
+  "$schema_note": "params.offsets = real Shift Center To deltas (count = intensity: Max 6 / Medium 4 / Short 2); opacityPeak 0.333; maskDir = the alpha-mask PNG sequence from the real Gth-Disp file; maskCount = frames; scaleH = Geometry2 vertical Scale Height (150). Engine: footage shown through the real moving block mask, wrap-shifted by each offset, faded by the Opacity envelope 0->100->0 with the A->B cut at the peak.",
+  "transitions": [
+    {
+      "id": "blocks-max-1",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Max 1",
+      "label": "Glitch · Blocks · Max 1",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.96,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.15,
+            "dy": 0
+          },
+          {
+            "dx": 0.3188,
+            "dy": 0.3583
+          },
+          {
+            "dx": -0.2953,
+            "dy": 0.2259
+          },
+          {
+            "dx": 0.4443,
+            "dy": 0.663
+          },
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-max",
+        "maskCount": 30,
+        "scaleH": 150
+      },
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-max-2",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Max 2",
+      "label": "Glitch · Blocks · Max 2",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.96,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.15,
+            "dy": 0.6231
+          },
+          {
+            "dx": -0.0182,
+            "dy": 0.3583
+          },
+          {
+            "dx": -0.2953,
+            "dy": 1.5185
+          },
+          {
+            "dx": 1.1982,
+            "dy": 1.387
+          },
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-max",
+        "maskCount": 30,
+        "scaleH": 150
+      },
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-max-3",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Max 3",
+      "label": "Glitch · Blocks · Max 3",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.96,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.15,
+            "dy": 0.6231
+          },
+          {
+            "dx": -0.0182,
+            "dy": 0.3583
+          },
+          {
+            "dx": -0.2953,
+            "dy": 1.5185
+          },
+          {
+            "dx": 1.1982,
+            "dy": 1.387
+          },
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-max",
+        "maskCount": 30,
+        "scaleH": 150
+      },
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-medium-1",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Medium 1",
+      "label": "Glitch · Blocks · Medium 1",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.96,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.15,
+            "dy": 0.6231
+          },
+          {
+            "dx": 1.1982,
+            "dy": 1.387
+          },
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-max",
+        "maskCount": 30,
+        "scaleH": 150
+      },
+      "sfx": "transitions/lib/sfx-blocks-med.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-medium-2",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Medium 2",
+      "label": "Glitch · Blocks · Medium 2",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.96,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.15,
+            "dy": 0.6231
+          },
+          {
+            "dx": 1.1982,
+            "dy": 1.387
+          },
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-max",
+        "maskCount": 30,
+        "scaleH": 150
+      },
+      "sfx": "transitions/lib/sfx-blocks-med.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-medium-3",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Medium 3",
+      "label": "Glitch · Blocks · Medium 3",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.96,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.15,
+            "dy": 0.6231
+          },
+          {
+            "dx": 1.1982,
+            "dy": 1.387
+          },
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-max",
+        "maskCount": 30,
+        "scaleH": 150
+      },
+      "sfx": "transitions/lib/sfx-blocks-med.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-short-1",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Short 1",
+      "label": "Glitch · Blocks · Short 1",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.96,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-small",
+        "maskCount": 30,
+        "scaleH": 150
+      },
+      "sfx": "transitions/lib/sfx-blocks-min.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-short-2",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Short 2",
+      "label": "Glitch · Blocks · Short 2",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.96,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-small",
+        "maskCount": 30,
+        "scaleH": 150
+      },
+      "sfx": "transitions/lib/sfx-blocks-min.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-short-3",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Short 3",
+      "label": "Glitch · Blocks · Short 3",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.96,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-small",
+        "maskCount": 30,
+        "scaleH": 150
+      },
+      "sfx": "transitions/lib/sfx-blocks-min.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-strips-1x",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Strips 1x",
+      "label": "Glitch · Blocks · Strips 1x",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.4,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-strips-1x",
+        "maskCount": 12,
+        "scaleH": null
+      },
+      "sfx": "transitions/lib/sfx-blocks-min.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-strips-2x",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Strips 2x",
+      "label": "Glitch · Blocks · Strips 2x",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.4,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-strips-2x",
+        "maskCount": 12,
+        "scaleH": null
+      },
+      "sfx": "transitions/lib/sfx-blocks-min.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-strips-3x",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Strips 3x",
+      "label": "Glitch · Blocks · Strips 3x",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.4,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-strips-3x",
+        "maskCount": 12,
+        "scaleH": null
+      },
+      "sfx": "transitions/lib/sfx-blocks-min.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-strips-4x",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Strips 4x",
+      "label": "Glitch · Blocks · Strips 4x",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.4,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-strips-4x",
+        "maskCount": 12,
+        "scaleH": null
+      },
+      "sfx": "transitions/lib/sfx-blocks-min.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-strips-5x",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Strips 5x",
+      "label": "Glitch · Blocks · Strips 5x",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.4,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-strips-5x",
+        "maskCount": 12,
+        "scaleH": null
+      },
+      "sfx": "transitions/lib/sfx-blocks-min.mp3",
+      "used_in": []
+    },
+    {
+      "id": "blocks-strips-6x",
+      "category": "GLITCH",
+      "variant": "Blocks",
+      "intensity": "Strips 6x",
+      "label": "Glitch · Blocks · Strips 6x",
+      "engine": "GlitchBlocks",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.4,
+      "params": {
+        "offsets": [
+          {
+            "dx": 0.2828,
+            "dy": 0.4241
+          },
+          {
+            "dx": 0.5359,
+            "dy": 0.4241
+          }
+        ],
+        "opacityPeak": 0.333,
+        "maskDir": "transitions/lib/masks/blocks-strips-6x",
+        "maskCount": 12,
+        "scaleH": null
+      },
+      "sfx": "transitions/lib/sfx-blocks-min.mp3",
+      "used_in": []
+    }
+  ]
+}
