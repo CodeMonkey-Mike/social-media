@@ -9,8 +9,23 @@ node_modules/
 # NOTE: .gitignore has NO inline comments — "#" only starts a comment at the
 # start of a line. Keep each pattern alone on its own line (a trailing "# ..."
 # becomes part of the pattern and silently matches nothing).
-assets/
-# ^ SFX, b-roll PNGs, logos, clip copies
+assets/**
+# ^ ignore all assets CONTENT (SFX, b-roll PNGs, logos, clip copies, renders)
+# but TRACK code/data/docs under assets (library catalogs, engines, scripts,
+# galleries) — changed 2026-06-20; the old blanket `assets/` hid the transitions
+# library's own source. Media stays ignored via the extensions block below.
+!assets/**/
+!assets/**/*.json
+!assets/**/*.js
+!assets/**/*.ts
+!assets/**/*.tsx
+!assets/**/*.jsx
+!assets/**/*.md
+!assets/**/*.html
+!assets/**/*.css
+!assets/**/*.py
+# Keep the huge vendor transition pack fully OUT regardless of file type:
+assets/transitions/Swiftly Studio 850 Seamless Transitions/
 livestream-repurpose/media/
 # ^ source livestreams (on YouTube)
 livestream-repurpose/transcripts/
