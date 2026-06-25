@@ -4,13 +4,20 @@
 //  - Protected (never touch): assets/{sfx,music,fonts,transitions}/, assets/logo-*.png,
 //    and every <batch>-progress.json.
 //  - Always sweep: any _bad-*/ reject folder (regardless of age).
-//  - Registry-driven (assets/projects/<batch>/ — the canonical per-batch asset home, see
-//    video-creation/SKILL.md): keep folders whose <batch> is ACTIVE in batches.json, recycle
-//    those of an ARCHIVED batch; a folder matching no batch falls back to age-based.
+//  - Registry-driven (assets/projects/<batch>/ — LEGACY per-batch asset home for pre-2026-06-25
+//    shorts batches; new shorts use shorts/<batch>/render-assets/ instead, covered by the
+//    whole-folder shorts tier below): keep folders whose <batch> is ACTIVE in batches.json,
+//    recycle those of an ARCHIVED batch; a folder matching no batch falls back to age-based.
 //  - Age-based (recycle if older than --age-days, default 30): everything else under
 //    assets/ (legacy loose b-roll PNGs, *-clip.mp4, overlays in the root and non-projects/
-//    subdirs), livestream-repurpose/media + transcripts, and per-clip artifacts under shorts/
-//    (preview.mp4, whisper*.json, captions.ts.draft).
+//    subdirs) and livestream-repurpose/media + transcripts.
+//  - Whole-folder, batch-aware (recycle the ENTIRE project folder for a completed/archived
+//    batch, keep an active one, leave an unregistered folder alone):
+//      * shorts/<batch>/                     — matched by the batch's `directories`.
+//      * longform-presentation/media/<proj>/ — matched by the batch's `source_media`.
+//      * longform-edited/media/<proj>/       — matched by the batch's `source_media`.
+//    For shorts folders tied to no batch, only the gitignored per-clip artifacts
+//    (preview.mp4 / whisper-words.json / captions.ts.draft) are swept.
 //  - Publish-state guard: remotion/out/<batch>/<n>-<slug>.mp4 is recycled only when that
 //    clip is in shorts.json with EVERY platform status=posted (queue copy is the canonical one).
 
@@ -117,19 +124,39 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     }
   }
 
-  // ── shorts/ per-clip artifacts — keep active batch, recycle the rest ───────
-  // Only the gitignored heavy artifacts (preview.mp4 / whisper-words.json /
-  // captions.ts.draft); tracked source in the clip dirs is left untouched.
-  const activeShortsDirs = batches
-    .filter(b => b.status === 'active')
-    .flatMap(b => b.directories || [])
-    .map(d => path.resolve(repoRoot, d).toLowerCase())
-    .filter(d => d.includes(`${path.sep}shorts${path.sep}`));
-  for (const f of walkFiles(path.join(ROOT, 'shorts'))) {
+  // ── shorts/<batch>/ — whole project folder, batch-aware (matched by directories) ──
+  // Each immediate subfolder of shorts/ is a batch's clip project (matched by the batch's
+  // `directories`). Recycle the WHOLE folder for a completed/archived batch, keep an active
+  // one. A folder tied to no batch (e.g. _tooling, or a not-yet-registered project) is left
+  // in place at the folder level — only its gitignored per-clip artifacts (preview.mp4 /
+  // whisper-words.json / captions.ts.draft) are swept, tracked source is left untouched.
+  const SHORTS_DIR = path.join(ROOT, 'shorts');
+  // resolved shorts subdir (lowercased) -> batch it belongs to.
+  const shortsBatchByDir = new Map();
+  for (const b of batches) {
+    for (const d of (b.directories || [])) {
+      const abs = path.resolve(repoRoot, d).toLowerCase();
+      if (abs.includes(`${path.sep}shorts${path.sep}`)) shortsBatchByDir.set(abs, b);
+    }
+  }
+  if (fs.existsSync(SHORTS_DIR)) {
+    for (const entry of fs.readdirSync(SHORTS_DIR, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      const full = path.join(SHORTS_DIR, entry.name);
+      const b = shortsBatchByDir.get(full.toLowerCase());
+      if (!b) continue; // unregistered folder — handled by the artifact sweep below
+      if (b.status === 'active') skipped.push({ path: full, reason: `shorts project — active batch (${b.batch})` });
+      else recycle.push({ path: full, reason: `shorts project — ${b.status} batch (${b.batch})` });
+    }
+  }
+  // Per-clip artifact sweep for shorts files NOT inside a registered batch folder
+  // (those are governed wholesale above). Unregistered = recycle the heavy artifact only.
+  const matchedShortsRoots = [...shortsBatchByDir.keys()].map(d => d + path.sep);
+  for (const f of walkFiles(SHORTS_DIR)) {
     if (!ARTIFACT_RE.test(path.basename(f))) continue;
     const fl = f.toLowerCase();
-    if (activeShortsDirs.some(d => fl.startsWith(d))) skipped.push({ path: f, reason: 'clip artifact — active batch' });
-    else recycle.push({ path: f, reason: 'clip artifact — outside active batch' });
+    if (matchedShortsRoots.some(r => fl.startsWith(r))) continue; // inside a batch folder
+    recycle.push({ path: f, reason: 'clip artifact — outside any batch folder' });
   }
 
   // ── remotion/out/ — keep ONLY active batches' render folders ───────────────
@@ -174,6 +201,29 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
       if (!b) { skipped.push({ path: full, reason: 'longform-presentation project — not in batch registry' }); continue; }
       if (b.status === 'active') skipped.push({ path: full, reason: `longform-presentation project — active batch (${b.batch})` });
       else recycle.push({ path: full, reason: `longform-presentation project — ${b.status} batch (${b.batch})` });
+    }
+  }
+
+  // ── longform-edited/media/<project>/ — batch-aware (matched by source_media) ──────────
+  // Mirror of longform-presentation above, for the heavily-edited 16:9 track. Each project
+  // subfolder holds a longform-edited batch's source artifacts (master .mkv, EDIT/FINAL renders,
+  // intermediates, deck, transcript, thumbnail). Recycle the WHOLE folder for a completed/archived
+  // batch, keep an active one, leave an unmatched folder alone. ONLY media/<project>/ subfolders are
+  // eligible — the track's skill doc and scripts are never touched.
+  const LFE_MEDIA = path.join(ROOT, 'longform-edited', 'media');
+  if (fs.existsSync(LFE_MEDIA)) {
+    for (const entry of fs.readdirSync(LFE_MEDIA, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      const full = path.join(LFE_MEDIA, entry.name);
+      const relPath = `video-creation/longform-edited/media/${entry.name}`.toLowerCase();
+      const b = batches.find((bb) => {
+        if (!bb.source_media) return false;
+        const sm = bb.source_media.replace(/\\/g, '/').toLowerCase();
+        return sm === relPath || sm.startsWith(relPath + '/');
+      });
+      if (!b) { skipped.push({ path: full, reason: 'longform-edited project — not in batch registry' }); continue; }
+      if (b.status === 'active') skipped.push({ path: full, reason: `longform-edited project — active batch (${b.batch})` });
+      else recycle.push({ path: full, reason: `longform-edited project — ${b.status} batch (${b.batch})` });
     }
   }
 

@@ -17,6 +17,12 @@ node cleanup/cleanup.js --target <schedule-tweets|video-creation|all> [--dry-run
 - `--age-days N`: age threshold for the video-creation target (default 30).
 - `--only <path-substring>`: restrict the run to paths matching a substring (forward-slash, case-insensitive), e.g. `--only video-creation/remotion/out` to clean just that folder. Great for going folder-by-folder.
 
+**Batch status is synced automatically.** Whenever the run includes the `video-creation` target,
+cleanup first invokes `scripts/reconcile-batch-status.js` (in `--dry-run` mode when cleanup is a
+dry run) so eligibility is computed from current batch lifecycle status — a batch that finished
+publishing but was never reconciled can't stay wrongly protected. You never have to remember to
+reconcile before cleaning.
+
 ## Targets & policies
 
 ### `schedule-tweets` — reference-counted GC + orphan-by-age
@@ -37,14 +43,15 @@ preserved, and the Chrome bot-profile LevelDB logs deeper in the tree are never 
 |---|---|---|
 | **Never touch** | `assets/{sfx,music,fonts,transitions}/`, `assets/logo-*.png`, every `*-progress.json` | protected |
 | **Always sweep** | any `_bad-*/` reject folder | recycled regardless of age |
-| **Registry-driven** | `assets/projects/<batch>/`, `remotion/out/`, `livestream-repurpose/{media,transcripts}`, and `shorts/` clip artifacts | keep only what belongs to an **active** batch (per `batches.json`); recycle the rest. For `assets/projects/<batch>/` the folder name is matched to a batch id — a folder matching no batch falls back to age-based. |
+| **Registry-driven** | `assets/projects/<batch>/`, `remotion/out/`, `livestream-repurpose/{media,transcripts}`, `shorts/<batch>/`, `longform-{presentation,edited}/media/<project>/` | keep only what belongs to an **active** batch (per `batches.json`); recycle the rest. For `assets/projects/<batch>/` the folder name is matched to a batch id — a folder matching no batch falls back to age-based. |
 | **Age-based** | legacy loose assets in the `assets/` root + non-`projects/` subdirs (old b-roll PNGs, `*-clip.mp4`, overlays) | recycled if older than `--age-days` |
 
 The registry-driven tier reads `../batches.json`:
-- **`assets/projects/<batch>/`** — the canonical per-batch asset home (b-roll, overlays, generated stills, rendered clips). The folder name is the batch id: an **active** batch's folder is kept, an **archived** batch's folder is recycled, and a folder matching no batch falls back to age-based (so old/unregistered junk still ages out at `--age-days`). Loose files in the `assets/` root and non-`projects/` subdirs remain age-based.
+- **`assets/projects/<batch>/`** — LEGACY per-batch asset home for shorts batches created before 2026-06-25 (new shorts use `shorts/<batch>/render-assets/`, recycled via the `shorts/<batch>/` tier below). The folder name is the batch id: an **active** batch's folder is kept, an **archived** batch's folder is recycled, and a folder matching no batch falls back to age-based (so old/unregistered junk still ages out at `--age-days`). Loose files in the `assets/` root and non-`projects/` subdirs remain age-based.
 - **`remotion/out/`** — keep the render `directories` of `status: "active"` batches; recycle every other batch folder and all loose files. (Disposable scratch: posted shorts live in the `schedule-tweets/` queue and every comp is in git.)
 - **`livestream-repurpose/`** — `media/` files (flat) and `transcripts/<livestream>/` folders (one per livestream) are matched to a batch by `livestream_title`; active batch → keep, archived → recycle, no match → left alone. (Source recordings are on YouTube; transcripts are regenerable.)
-- **`shorts/`** — only the **gitignored** per-clip artifacts (`preview.mp4`, `whisper-words.json`, `captions.ts.draft`): kept inside the active batch's clip `directories`, recycled everywhere else. Tracked source in the clip dirs (`index.html`, `preview.json`, `gen_captions.py`, `whisper.json`, …) is never touched.
+- **`shorts/<batch>/`** — each immediate subfolder is matched to a batch by its `directories`. The **whole project folder** is recycled for a completed/archived batch and kept for an active one. A folder tied to no batch (e.g. `_tooling`, or a not-yet-registered project) is left in place — only its **gitignored** per-clip artifacts (`preview.mp4`, `whisper-words.json`, `captions.ts.draft`) are swept; tracked source (`index.html`, `preview.json`, `gen_captions.py`, `whisper.json`, …) is never touched.
+- **`longform-presentation/media/<project>/` and `longform-edited/media/<project>/`** — each project subfolder (master `.mkv`, EDIT/FINAL renders, intermediates, deck, transcript, thumbnail) is matched to a batch by `source_media`. The **whole folder** is recycled for a completed/archived batch, kept for an active one, and left alone if it matches no batch. Only `media/<project>/` subfolders are eligible — the track's skill doc and scripts are never touched.
 
 ## How to run
 
