@@ -1,6 +1,12 @@
 // generate-broll-batch.js
-// Opens the B-roll chat once, generates all images in sequence, saves to assets/.
+// Opens the B-roll chat once, generates all images in sequence, saves them.
 // Each image: type prompt → wait for generation → download → save → repeat.
+//
+// OUTPUT DIR (must be a batch's OWN render-assets — NEVER the shared assets root or assets/projects/;
+// see SKILL.md "Asset folder organization"). Pass one of:
+//   --batch=<id>     SHORTS: writes to video-creation/shorts/<id>/render-assets/
+//   --outdir=<abs>   LONGFORM/PERSONA: the project's own render-assets/ folder
+// The script REFUSES to write under video-creation/assets/ (the old root-dump regression).
 
 const { chromium } = require('playwright');
 const fs   = require('fs');
@@ -11,7 +17,28 @@ const CHAT_URL          = 'https://chatgpt.com/c/6a0deddf-1bac-83ea-8107-0e419a2
 const IMAGE_URL_PATTERN = 'estuary/content';
 const MIN_GEN_DELAY_MS  = 10000;
 const MAX_WAIT_MS       = 5 * 60 * 1000;
-const ASSETS_DIR        = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets';
+
+const VIDEO_CREATION = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation';
+const ASSETS_ROOT    = path.join(VIDEO_CREATION, 'assets');
+const ARGS = Object.fromEntries(process.argv.slice(2).map(a => {
+  const m = a.match(/^--([^=]+)=(.*)$/); return m ? [m[1], m[2]] : [a.replace(/^--/, ''), true];
+}));
+const ASSETS_DIR = ARGS.outdir
+  ? path.resolve(ARGS.outdir)
+  : ARGS.batch ? path.join(VIDEO_CREATION, 'shorts', String(ARGS.batch), 'render-assets')
+  : null;
+if (!ASSETS_DIR) {
+  console.error('ERROR: pass --batch=<id> (SHORTS → shorts/<id>/render-assets/) or --outdir=<abs> (LONGFORM/PERSONA → the project folder).');
+  process.exit(2);
+}
+{
+  const norm = (p) => path.resolve(p).replace(/[\\/]+$/, '').toLowerCase();
+  const out = norm(ASSETS_DIR), root = norm(ASSETS_ROOT);
+  if (out === root || out.startsWith(root + path.sep)) {
+    console.error(`ERROR: refusing to write b-roll anywhere under the shared assets tree (${ASSETS_DIR}). Use --batch=<id> or --outdir at the project folder.`);
+    process.exit(2);
+  }
+}
 
 const SEL = {
   composer: '#prompt-textarea, div[contenteditable="true"][data-id]',
