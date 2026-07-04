@@ -1,6 +1,6 @@
 {
   "$doc": "Reusable TRANSITION catalog — Remotion re-creations of the Swiftly Studio 850 pack. This JSON is the catalog (data); rendering code is in remotion/src/transitions/ (engine + registry). Blocks displacement amounts are the real per-clip Offset 'Shift Center To' vectors (extracted via _extract-blocks-clips.js, per-clip not a global closure). Block PATTERN source by family: Max/Medium use the pack's real `Gth - Disp Blocks Max.mp4`, Short uses `Gth - Disp Blocks Small.mp4` (converted to alpha masks in lib/masks/, white=show; fidelity near-1:1). STRIPS have NO source mask file, so their strip masks are reverse-engineered from each density's PREVIEW render (diff vs clean frame -> per-row bands -> alpha; fidelity approximate). Browse demos via browse/<CAT>/<VARIANT>/gallery.html. SCOPE: GLITCH/Blocks all 15 (Max/Medium/Short x3 + Strips 1x-6x).",
-  "$schema_note": "params.offsets = real Shift Center To deltas (count = intensity: Max 6 / Medium 4 / Short 2); opacityPeak 0.333; maskDir = the alpha-mask PNG sequence from the real Gth-Disp file; maskCount = frames; scaleH = Geometry2 vertical Scale Height (150). Engine: footage shown through the real moving block mask, wrap-shifted by each offset, faded by the Opacity envelope 0->100->0 with the A->B cut at the peak.",
+  "$schema_note": "params.offsets = real Shift Center To deltas (count = intensity: Max 6 / Medium 4 / Short 2); opacityPeak 0.333; maskDir = the alpha-mask PNG sequence from the real Gth-Disp file; maskCount = frames; scaleH = Geometry2 vertical Scale Height (150). Engine: footage shown through the real moving block mask, wrap-shifted by each offset, faded by the Opacity envelope 0->100->0 with the A->B cut at the peak. meta: per-object info for PICKING a transition when editing — aspectRatios (which aspect it is authored for; add \"9:16\" when a vertical version exists), resolution, family, engineFile, description (plain language), energy (low|medium|high), durationSeconds, hasSound, fidelity, tags[], useWhen. Scan meta to choose a fitting transition for a given cut/aspect.",
   "transitions": [
     {
       "id": "blocks-max-1",
@@ -45,7 +45,29 @@
         "scaleH": 150
       },
       "sfx": "transitions/lib/sfx-blocks-max.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Digital block-shatter: the frame breaks into rectangular blocks that wrap-shift in several directions then snap back, with an opacity flash burying the A→B cut.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "blocks",
+          "digital",
+          "hard-cut",
+          "tech",
+          "crypto"
+        ],
+        "useWhen": "Energetic hard cuts; tech/crypto/hype content; beat drops. Max = most aggressive, Short = quick hit."
+      }
     },
     {
       "id": "blocks-max-2",
@@ -90,7 +112,29 @@
         "scaleH": 150
       },
       "sfx": "transitions/lib/sfx-blocks-max.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Digital block-shatter: the frame breaks into rectangular blocks that wrap-shift in several directions then snap back, with an opacity flash burying the A→B cut.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "blocks",
+          "digital",
+          "hard-cut",
+          "tech",
+          "crypto"
+        ],
+        "useWhen": "Energetic hard cuts; tech/crypto/hype content; beat drops. Max = most aggressive, Short = quick hit."
+      }
     },
     {
       "id": "blocks-max-3",
@@ -135,7 +179,29 @@
         "scaleH": 150
       },
       "sfx": "transitions/lib/sfx-blocks-max.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Digital block-shatter: the frame breaks into rectangular blocks that wrap-shift in several directions then snap back, with an opacity flash burying the A→B cut.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "blocks",
+          "digital",
+          "hard-cut",
+          "tech",
+          "crypto"
+        ],
+        "useWhen": "Energetic hard cuts; tech/crypto/hype content; beat drops. Max = most aggressive, Short = quick hit."
+      }
     },
     {
       "id": "blocks-medium-1",
@@ -172,7 +238,29 @@
         "scaleH": 150
       },
       "sfx": "transitions/lib/sfx-blocks-med.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Digital block-shatter: the frame breaks into rectangular blocks that wrap-shift in several directions then snap back, with an opacity flash burying the A→B cut.",
+        "energy": "medium",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "blocks",
+          "digital",
+          "hard-cut",
+          "tech",
+          "crypto"
+        ],
+        "useWhen": "Energetic hard cuts; tech/crypto/hype content; beat drops. Max = most aggressive, Short = quick hit."
+      }
     },
     {
       "id": "blocks-medium-2",
@@ -209,7 +297,29 @@
         "scaleH": 150
       },
       "sfx": "transitions/lib/sfx-blocks-med.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Digital block-shatter: the frame breaks into rectangular blocks that wrap-shift in several directions then snap back, with an opacity flash burying the A→B cut.",
+        "energy": "medium",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "blocks",
+          "digital",
+          "hard-cut",
+          "tech",
+          "crypto"
+        ],
+        "useWhen": "Energetic hard cuts; tech/crypto/hype content; beat drops. Max = most aggressive, Short = quick hit."
+      }
     },
     {
       "id": "blocks-medium-3",
@@ -246,7 +356,29 @@
         "scaleH": 150
       },
       "sfx": "transitions/lib/sfx-blocks-med.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Digital block-shatter: the frame breaks into rectangular blocks that wrap-shift in several directions then snap back, with an opacity flash burying the A→B cut.",
+        "energy": "medium",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "blocks",
+          "digital",
+          "hard-cut",
+          "tech",
+          "crypto"
+        ],
+        "useWhen": "Energetic hard cuts; tech/crypto/hype content; beat drops. Max = most aggressive, Short = quick hit."
+      }
     },
     {
       "id": "blocks-short-1",
@@ -275,7 +407,29 @@
         "scaleH": 150
       },
       "sfx": "transitions/lib/sfx-blocks-min.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Digital block-shatter: the frame breaks into rectangular blocks that wrap-shift in several directions then snap back, with an opacity flash burying the A→B cut.",
+        "energy": "low",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "blocks",
+          "digital",
+          "hard-cut",
+          "tech",
+          "crypto"
+        ],
+        "useWhen": "Energetic hard cuts; tech/crypto/hype content; beat drops. Max = most aggressive, Short = quick hit."
+      }
     },
     {
       "id": "blocks-short-2",
@@ -304,7 +458,29 @@
         "scaleH": 150
       },
       "sfx": "transitions/lib/sfx-blocks-min.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Digital block-shatter: the frame breaks into rectangular blocks that wrap-shift in several directions then snap back, with an opacity flash burying the A→B cut.",
+        "energy": "low",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "blocks",
+          "digital",
+          "hard-cut",
+          "tech",
+          "crypto"
+        ],
+        "useWhen": "Energetic hard cuts; tech/crypto/hype content; beat drops. Max = most aggressive, Short = quick hit."
+      }
     },
     {
       "id": "blocks-short-3",
@@ -333,7 +509,29 @@
         "scaleH": 150
       },
       "sfx": "transitions/lib/sfx-blocks-min.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Digital block-shatter: the frame breaks into rectangular blocks that wrap-shift in several directions then snap back, with an opacity flash burying the A→B cut.",
+        "energy": "low",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "blocks",
+          "digital",
+          "hard-cut",
+          "tech",
+          "crypto"
+        ],
+        "useWhen": "Energetic hard cuts; tech/crypto/hype content; beat drops. Max = most aggressive, Short = quick hit."
+      }
     },
     {
       "id": "blocks-strips-1x",
@@ -362,7 +560,28 @@
         "scaleH": null
       },
       "sfx": "transitions/lib/sfx-blocks-min.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Glitch strips: the frame splits into thin horizontal strips that slip sideways (wrapping) and snap back, with a brief opacity flash hiding the cut.",
+        "energy": "medium",
+        "durationSeconds": 0.4,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "strips",
+          "digital",
+          "scanline",
+          "hard-cut"
+        ],
+        "useWhen": "Fast, punchy cuts and rapid montage; subtle-to-energetic depending on density (1x soft … 6x intense)."
+      }
     },
     {
       "id": "blocks-strips-2x",
@@ -391,7 +610,28 @@
         "scaleH": null
       },
       "sfx": "transitions/lib/sfx-blocks-min.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Glitch strips: the frame splits into thin horizontal strips that slip sideways (wrapping) and snap back, with a brief opacity flash hiding the cut.",
+        "energy": "medium",
+        "durationSeconds": 0.4,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "strips",
+          "digital",
+          "scanline",
+          "hard-cut"
+        ],
+        "useWhen": "Fast, punchy cuts and rapid montage; subtle-to-energetic depending on density (1x soft … 6x intense)."
+      }
     },
     {
       "id": "blocks-strips-3x",
@@ -420,7 +660,28 @@
         "scaleH": null
       },
       "sfx": "transitions/lib/sfx-blocks-min.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Glitch strips: the frame splits into thin horizontal strips that slip sideways (wrapping) and snap back, with a brief opacity flash hiding the cut.",
+        "energy": "high",
+        "durationSeconds": 0.4,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "strips",
+          "digital",
+          "scanline",
+          "hard-cut"
+        ],
+        "useWhen": "Fast, punchy cuts and rapid montage; subtle-to-energetic depending on density (1x soft … 6x intense)."
+      }
     },
     {
       "id": "blocks-strips-4x",
@@ -449,7 +710,28 @@
         "scaleH": null
       },
       "sfx": "transitions/lib/sfx-blocks-min.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Glitch strips: the frame splits into thin horizontal strips that slip sideways (wrapping) and snap back, with a brief opacity flash hiding the cut.",
+        "energy": "high",
+        "durationSeconds": 0.4,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "strips",
+          "digital",
+          "scanline",
+          "hard-cut"
+        ],
+        "useWhen": "Fast, punchy cuts and rapid montage; subtle-to-energetic depending on density (1x soft … 6x intense)."
+      }
     },
     {
       "id": "blocks-strips-5x",
@@ -478,7 +760,28 @@
         "scaleH": null
       },
       "sfx": "transitions/lib/sfx-blocks-min.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Glitch strips: the frame splits into thin horizontal strips that slip sideways (wrapping) and snap back, with a brief opacity flash hiding the cut.",
+        "energy": "high",
+        "durationSeconds": 0.4,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "strips",
+          "digital",
+          "scanline",
+          "hard-cut"
+        ],
+        "useWhen": "Fast, punchy cuts and rapid montage; subtle-to-energetic depending on density (1x soft … 6x intense)."
+      }
     },
     {
       "id": "blocks-strips-6x",
@@ -507,7 +810,2500 @@
         "scaleH": null
       },
       "sfx": "transitions/lib/sfx-blocks-min.mp3",
-      "used_in": []
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBlocks.tsx",
+        "description": "Glitch strips: the frame splits into thin horizontal strips that slip sideways (wrapping) and snap back, with a brief opacity flash hiding the cut.",
+        "energy": "high",
+        "durationSeconds": 0.4,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "strips",
+          "digital",
+          "scanline",
+          "hard-cut"
+        ],
+        "useWhen": "Fast, punchy cuts and rapid montage; subtle-to-energetic depending on density (1x soft … 6x intense)."
+      }
+    },
+    {
+      "id": "badsignal-max-1",
+      "category": "GLITCH",
+      "variant": "Cinematic Bad Signal",
+      "intensity": "Max 1",
+      "label": "Glitch · Cinematic Bad Signal · Max 1",
+      "engine": "GlitchBadSignal",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.76,
+      "params": {
+        "offsets": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.2,
+            "dx": 0,
+            "dy": -0.322
+          },
+          {
+            "t": 0.24,
+            "dx": 0,
+            "dy": -0.739
+          },
+          {
+            "t": 0.28,
+            "dx": 0.0153,
+            "dy": -0.614
+          },
+          {
+            "t": 0.32,
+            "dx": 0.0211,
+            "dy": -0.463
+          },
+          {
+            "t": 0.36,
+            "dx": 0.0041,
+            "dy": -0.361
+          },
+          {
+            "t": 0.4,
+            "dx": -0.0071,
+            "dy": -0.344
+          },
+          {
+            "t": 0.44,
+            "dx": 0,
+            "dy": -0.271
+          },
+          {
+            "t": 0.48,
+            "dx": 0,
+            "dy": -0.122
+          },
+          {
+            "t": 0.52,
+            "dx": -0.004,
+            "dy": -0.051
+          },
+          {
+            "t": 0.56,
+            "dx": -0.0144,
+            "dy": 0
+          },
+          {
+            "t": 0.6,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.76,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "tileDir": "transitions/lib/plates/badsignal-tile-max-1",
+        "tileCount": 30,
+        "tearX": 0.22,
+        "split": 22,
+        "plateDir": "transitions/lib/plates/badsignal-max-1",
+        "plateCount": 30,
+        "plateBlend": "overlay",
+        "plateOpacity": 0.6,
+        "mosaicH": 128,
+        "mosaicV": 72,
+        "swapAt": 0.37
+      },
+      "sfx": "transitions/lib/sfx-badsignal-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBadSignal.tsx",
+        "description": "TV bad-signal: horizontal RGB tear-bands roll and pixelate over the footage with a scanline overlay texture; the cut hides in the worst of the roll.",
+        "energy": "high",
+        "durationSeconds": 0.76,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "analog",
+          "rgb-split",
+          "bad-signal",
+          "scanline",
+          "retro"
+        ],
+        "useWhen": "Gritty analog/retro feel, tension, signal-loss vibe; works between any two scenes."
+      }
+    },
+    {
+      "id": "badsignal-max-2",
+      "category": "GLITCH",
+      "variant": "Cinematic Bad Signal",
+      "intensity": "Max 2",
+      "label": "Glitch · Cinematic Bad Signal · Max 2",
+      "engine": "GlitchBadSignal",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.76,
+      "params": {
+        "offsets": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.2,
+            "dx": 0,
+            "dy": -0.0994
+          },
+          {
+            "t": 0.24,
+            "dx": 0,
+            "dy": -0.5116
+          },
+          {
+            "t": 0.28,
+            "dx": -0.0306,
+            "dy": -0.789
+          },
+          {
+            "t": 0.32,
+            "dx": -0.0232,
+            "dy": -0.8561
+          },
+          {
+            "t": 0.36,
+            "dx": -0.0133,
+            "dy": -0.5224
+          },
+          {
+            "t": 0.4,
+            "dx": -0.0061,
+            "dy": 0.0558
+          },
+          {
+            "t": 0.44,
+            "dx": 0,
+            "dy": 0.6038
+          },
+          {
+            "t": 0.48,
+            "dx": 0,
+            "dy": 0.5802
+          },
+          {
+            "t": 0.52,
+            "dx": 0.0365,
+            "dy": 0.3125
+          },
+          {
+            "t": 0.56,
+            "dx": 0.0101,
+            "dy": 0
+          },
+          {
+            "t": 0.6,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.64,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.68,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.72,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "tileDir": "transitions/lib/plates/badsignal-tile-max-2",
+        "tileCount": 23,
+        "tearX": 0.22,
+        "split": 22,
+        "plateDir": "transitions/lib/plates/badsignal-max-2",
+        "plateCount": 23,
+        "plateBlend": "overlay",
+        "plateOpacity": 0.6,
+        "mosaicH": 128,
+        "mosaicV": 72,
+        "swapAt": 0.4
+      },
+      "sfx": "transitions/lib/sfx-badsignal-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBadSignal.tsx",
+        "description": "TV bad-signal: horizontal RGB tear-bands roll and pixelate over the footage with a scanline overlay texture; the cut hides in the worst of the roll.",
+        "energy": "high",
+        "durationSeconds": 0.76,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "analog",
+          "rgb-split",
+          "bad-signal",
+          "scanline",
+          "retro"
+        ],
+        "useWhen": "Gritty analog/retro feel, tension, signal-loss vibe; works between any two scenes."
+      }
+    },
+    {
+      "id": "badsignal-max-3",
+      "category": "GLITCH",
+      "variant": "Cinematic Bad Signal",
+      "intensity": "Max 3",
+      "label": "Glitch · Cinematic Bad Signal · Max 3",
+      "engine": "GlitchBadSignal",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.76,
+      "params": {
+        "offsets": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.2,
+            "dx": 0,
+            "dy": -0.2536
+          },
+          {
+            "t": 0.24,
+            "dx": 0,
+            "dy": -0.4903
+          },
+          {
+            "t": 0.28,
+            "dx": -0.0273,
+            "dy": -0.3612
+          },
+          {
+            "t": 0.32,
+            "dx": -0.01,
+            "dy": -0.2009
+          },
+          {
+            "t": 0.36,
+            "dx": -0.0082,
+            "dy": -0.1023
+          },
+          {
+            "t": 0.4,
+            "dx": -0.0071,
+            "dy": -0.0518
+          },
+          {
+            "t": 0.44,
+            "dx": 0,
+            "dy": 0.184
+          },
+          {
+            "t": 0.48,
+            "dx": 0,
+            "dy": 0.3264
+          },
+          {
+            "t": 0.52,
+            "dx": -0.0254,
+            "dy": 0.2378
+          },
+          {
+            "t": 0.56,
+            "dx": -0.0048,
+            "dy": 0
+          },
+          {
+            "t": 0.6,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.64,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.68,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.72,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.76,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "tileDir": "transitions/lib/plates/badsignal-tile-max-3",
+        "tileCount": 23,
+        "tearX": 0.22,
+        "split": 22,
+        "plateDir": "transitions/lib/plates/badsignal-max-3",
+        "plateCount": 23,
+        "plateBlend": "overlay",
+        "plateOpacity": 0.6,
+        "mosaicH": 128,
+        "mosaicV": 72,
+        "swapAt": 0.4
+      },
+      "sfx": "transitions/lib/sfx-badsignal-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBadSignal.tsx",
+        "description": "TV bad-signal: horizontal RGB tear-bands roll and pixelate over the footage with a scanline overlay texture; the cut hides in the worst of the roll.",
+        "energy": "high",
+        "durationSeconds": 0.76,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "analog",
+          "rgb-split",
+          "bad-signal",
+          "scanline",
+          "retro"
+        ],
+        "useWhen": "Gritty analog/retro feel, tension, signal-loss vibe; works between any two scenes."
+      }
+    },
+    {
+      "id": "badsignal-short-1",
+      "category": "GLITCH",
+      "variant": "Cinematic Bad Signal",
+      "intensity": "Short 1",
+      "label": "Glitch · Cinematic Bad Signal · Short 1",
+      "engine": "GlitchBadSignal",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.48,
+      "params": {
+        "offsets": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": -0.0174
+          },
+          {
+            "t": 0.12,
+            "dx": -0.0066,
+            "dy": -0.0488
+          },
+          {
+            "t": 0.16,
+            "dx": 0.0034,
+            "dy": -0.0422
+          },
+          {
+            "t": 0.2,
+            "dx": 0,
+            "dy": -0.0216
+          },
+          {
+            "t": 0.24,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.32,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.36,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.4,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.44,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.48,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "tileDir": "transitions/lib/plates/badsignal-tile-short-1",
+        "tileCount": 14,
+        "tearX": 0.26,
+        "split": 28,
+        "plateDir": "transitions/lib/plates/badsignal-short-1",
+        "plateCount": 14,
+        "plateBlend": "overlay",
+        "plateOpacity": 0.72,
+        "mosaicH": 128,
+        "mosaicV": 72,
+        "swapAt": 0.4,
+        "intensityFloor": 0.6
+      },
+      "sfx": "transitions/lib/sfx-badsignal-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBadSignal.tsx",
+        "description": "TV bad-signal: horizontal RGB tear-bands roll and pixelate over the footage with a scanline overlay texture; the cut hides in the worst of the roll.",
+        "energy": "low",
+        "durationSeconds": 0.48,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "analog",
+          "rgb-split",
+          "bad-signal",
+          "scanline",
+          "retro"
+        ],
+        "useWhen": "Gritty analog/retro feel, tension, signal-loss vibe; works between any two scenes."
+      }
+    },
+    {
+      "id": "badsignal-short-2",
+      "category": "GLITCH",
+      "variant": "Cinematic Bad Signal",
+      "intensity": "Short 2",
+      "label": "Glitch · Cinematic Bad Signal · Short 2",
+      "engine": "GlitchBadSignal",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.48,
+      "params": {
+        "offsets": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": -0.0196
+          },
+          {
+            "t": 0.12,
+            "dx": 0.0038,
+            "dy": -0.154
+          },
+          {
+            "t": 0.16,
+            "dx": 0.0035,
+            "dy": -0.2194
+          },
+          {
+            "t": 0.2,
+            "dx": 0,
+            "dy": -0.0917
+          },
+          {
+            "t": 0.24,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.32,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.36,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.4,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.44,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.48,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "tileDir": "transitions/lib/plates/badsignal-tile-short-2",
+        "tileCount": 14,
+        "tearX": 0.26,
+        "split": 28,
+        "plateDir": "transitions/lib/plates/badsignal-short-2",
+        "plateCount": 14,
+        "plateBlend": "overlay",
+        "plateOpacity": 0.72,
+        "mosaicH": 128,
+        "mosaicV": 72,
+        "swapAt": 0.4,
+        "intensityFloor": 0.6
+      },
+      "sfx": "transitions/lib/sfx-badsignal-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBadSignal.tsx",
+        "description": "TV bad-signal: horizontal RGB tear-bands roll and pixelate over the footage with a scanline overlay texture; the cut hides in the worst of the roll.",
+        "energy": "low",
+        "durationSeconds": 0.48,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "analog",
+          "rgb-split",
+          "bad-signal",
+          "scanline",
+          "retro"
+        ],
+        "useWhen": "Gritty analog/retro feel, tension, signal-loss vibe; works between any two scenes."
+      }
+    },
+    {
+      "id": "badsignal-short-3",
+      "category": "GLITCH",
+      "variant": "Cinematic Bad Signal",
+      "intensity": "Short 3",
+      "label": "Glitch · Cinematic Bad Signal · Short 3",
+      "engine": "GlitchBadSignal",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.48,
+      "params": {
+        "offsets": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0.0869
+          },
+          {
+            "t": 0.12,
+            "dx": 0.0023,
+            "dy": 0.1371
+          },
+          {
+            "t": 0.16,
+            "dx": 0.009,
+            "dy": 0.0483
+          },
+          {
+            "t": 0.2,
+            "dx": 0,
+            "dy": -0.0364
+          },
+          {
+            "t": 0.24,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.32,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.36,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.4,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.44,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.48,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "tileDir": "transitions/lib/plates/badsignal-tile-short-3",
+        "tileCount": 14,
+        "tearX": 0.26,
+        "split": 28,
+        "plateDir": "transitions/lib/plates/badsignal-short-3",
+        "plateCount": 14,
+        "plateBlend": "overlay",
+        "plateOpacity": 0.72,
+        "mosaicH": 128,
+        "mosaicV": 72,
+        "swapAt": 0.4,
+        "intensityFloor": 0.6
+      },
+      "sfx": "transitions/lib/sfx-badsignal-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchBadSignal.tsx",
+        "description": "TV bad-signal: horizontal RGB tear-bands roll and pixelate over the footage with a scanline overlay texture; the cut hides in the worst of the roll.",
+        "energy": "low",
+        "durationSeconds": 0.48,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "analog",
+          "rgb-split",
+          "bad-signal",
+          "scanline",
+          "retro"
+        ],
+        "useWhen": "Gritty analog/retro feel, tension, signal-loss vibe; works between any two scenes."
+      }
+    },
+    {
+      "id": "monitor-max-1",
+      "category": "GLITCH",
+      "variant": "Cinematic Monitor",
+      "intensity": "Max 1",
+      "label": "Glitch · Cinematic Monitor · Max 1",
+      "engine": "GlitchCinematicMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.8,
+      "params": {
+        "jolts": [
+          {
+            "t0": 0,
+            "t1": 0.12,
+            "dx": 0.3422,
+            "dy": 0.5861
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "dx": 0.8173,
+            "dy": -0.3908
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.48,
+            "dx": -0.7324,
+            "dy": -0.4204
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "dx": 0.1118,
+            "dy": -0.7174
+          }
+        ],
+        "roll": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dy": -0.02335
+          },
+          {
+            "t": 0.12,
+            "dy": -0.01047
+          },
+          {
+            "t": 0.16,
+            "dy": 0.01616
+          },
+          {
+            "t": 0.2,
+            "dy": 0.02034
+          },
+          {
+            "t": 0.24,
+            "dy": 0.00217
+          },
+          {
+            "t": 0.28,
+            "dy": 0.00491
+          },
+          {
+            "t": 0.32,
+            "dy": 0.02188
+          },
+          {
+            "t": 0.36,
+            "dy": 0.02528
+          },
+          {
+            "t": 0.4,
+            "dy": 0.01096
+          },
+          {
+            "t": 0.44,
+            "dy": 0.00658
+          },
+          {
+            "t": 0.48,
+            "dy": 0.00435
+          },
+          {
+            "t": 0.52,
+            "dy": 0.00176
+          },
+          {
+            "t": 0.56,
+            "dy": 0.00092
+          },
+          {
+            "t": 0.6,
+            "dy": 0.00017
+          },
+          {
+            "t": 0.64,
+            "dy": 0
+          },
+          {
+            "t": 0.68,
+            "dy": 0
+          },
+          {
+            "t": 0.72,
+            "dy": 0
+          },
+          {
+            "t": 0.76,
+            "dy": 0
+          },
+          {
+            "t": 0.8,
+            "dy": 0
+          },
+          {
+            "t": 0.84,
+            "dy": 0
+          },
+          {
+            "t": 0.88,
+            "dy": 0
+          }
+        ],
+        "wave": {
+          "type": 7,
+          "height": 120,
+          "width": 41.4,
+          "speed": 2
+        },
+        "plateDir": "transitions/lib/plates/monitor-max-1",
+        "plateCount": 30,
+        "plateIn": 0.08,
+        "plateBlend": "pin-light",
+        "plateOpacity": 1,
+        "swapAt": 0.3
+      },
+      "sfx": "transitions/lib/sfx-monitor-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchCinematicMonitor.tsx",
+        "description": "Broken-monitor glitch: rows tear into horizontally-shifted strips, the whole frame jolts in wrap-around jumps, colored signal bars and static noise flash over the footage; the cut hides mid-glitch.",
+        "energy": "high",
+        "durationSeconds": 0.8,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "noise",
+          "tear",
+          "strips",
+          "max"
+        ],
+        "useWhen": "Hard cut on a high-energy beat; the most violent of the family (0.8s)."
+      }
+    },
+    {
+      "id": "monitor-max-2",
+      "category": "GLITCH",
+      "variant": "Cinematic Monitor",
+      "intensity": "Max 2",
+      "label": "Glitch · Cinematic Monitor · Max 2",
+      "engine": "GlitchCinematicMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.8,
+      "params": {
+        "jolts": [
+          {
+            "t0": 0,
+            "t1": 0.12,
+            "dx": 0.5146,
+            "dy": 0.098
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.24,
+            "dx": -0.7463,
+            "dy": -0.2498
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.48,
+            "dx": -0.3682,
+            "dy": -0.4708
+          },
+          {
+            "t0": 0.48,
+            "t1": 0.6,
+            "dx": 0.2248,
+            "dy": -0.2568
+          }
+        ],
+        "roll": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dy": 0.01215
+          },
+          {
+            "t": 0.12,
+            "dy": 0.03279
+          },
+          {
+            "t": 0.16,
+            "dy": 0.02186
+          },
+          {
+            "t": 0.2,
+            "dy": 0.01055
+          },
+          {
+            "t": 0.24,
+            "dy": 0.00503
+          },
+          {
+            "t": 0.28,
+            "dy": -0.00239
+          },
+          {
+            "t": 0.32,
+            "dy": -0.02067
+          },
+          {
+            "t": 0.36,
+            "dy": -0.01454
+          },
+          {
+            "t": 0.4,
+            "dy": 0.01779
+          },
+          {
+            "t": 0.44,
+            "dy": 0.04255
+          },
+          {
+            "t": 0.48,
+            "dy": 0.01824
+          },
+          {
+            "t": 0.52,
+            "dy": 0.00199
+          },
+          {
+            "t": 0.56,
+            "dy": -0.00026
+          },
+          {
+            "t": 0.6,
+            "dy": 0.00002
+          },
+          {
+            "t": 0.64,
+            "dy": 0
+          },
+          {
+            "t": 0.68,
+            "dy": 0
+          },
+          {
+            "t": 0.72,
+            "dy": 0
+          },
+          {
+            "t": 0.76,
+            "dy": 0
+          },
+          {
+            "t": 0.8,
+            "dy": 0
+          },
+          {
+            "t": 0.84,
+            "dy": 0
+          },
+          {
+            "t": 0.88,
+            "dy": 0
+          }
+        ],
+        "wave": {
+          "type": 7,
+          "height": 120,
+          "width": 41.4,
+          "speed": 2
+        },
+        "plateDir": "transitions/lib/plates/monitor-max-2",
+        "plateCount": 30,
+        "plateIn": 0.08,
+        "plateBlend": "pin-light",
+        "plateOpacity": 1,
+        "swapAt": 0.3
+      },
+      "sfx": "transitions/lib/sfx-monitor-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchCinematicMonitor.tsx",
+        "description": "Broken-monitor glitch: rows tear into horizontally-shifted strips, the whole frame jolts in wrap-around jumps, colored signal bars and static noise flash over the footage; the cut hides mid-glitch.",
+        "energy": "high",
+        "durationSeconds": 0.8,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "noise",
+          "tear",
+          "strips",
+          "max"
+        ],
+        "useWhen": "Hard cut on a high-energy beat; the most violent of the family (0.8s)."
+      }
+    },
+    {
+      "id": "monitor-max-3",
+      "category": "GLITCH",
+      "variant": "Cinematic Monitor",
+      "intensity": "Max 3",
+      "label": "Glitch · Cinematic Monitor · Max 3",
+      "engine": "GlitchCinematicMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.8,
+      "params": {
+        "jolts": [
+          {
+            "t0": 0,
+            "t1": 0.08,
+            "dx": 0.811,
+            "dy": 0.4666
+          },
+          {
+            "t0": 0.08,
+            "t1": 0.24,
+            "dx": 0.3224,
+            "dy": 0.7182
+          },
+          {
+            "t0": 0.24,
+            "t1": 0.4,
+            "dx": 0.5411,
+            "dy": 0.2393
+          },
+          {
+            "t0": 0.4,
+            "t1": 0.68,
+            "dx": 0.2234,
+            "dy": 0.7415
+          }
+        ],
+        "roll": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dy": -0.00452
+          },
+          {
+            "t": 0.12,
+            "dy": 0.01561
+          },
+          {
+            "t": 0.16,
+            "dy": 0.02466
+          },
+          {
+            "t": 0.2,
+            "dy": 0.01735
+          },
+          {
+            "t": 0.24,
+            "dy": -0.00588
+          },
+          {
+            "t": 0.28,
+            "dy": -0.02421
+          },
+          {
+            "t": 0.32,
+            "dy": -0.03209
+          },
+          {
+            "t": 0.36,
+            "dy": -0.02136
+          },
+          {
+            "t": 0.4,
+            "dy": -0.00839
+          },
+          {
+            "t": 0.44,
+            "dy": 0.00722
+          },
+          {
+            "t": 0.48,
+            "dy": 0.00349
+          },
+          {
+            "t": 0.52,
+            "dy": -0.00035
+          },
+          {
+            "t": 0.56,
+            "dy": -0.0001
+          },
+          {
+            "t": 0.6,
+            "dy": 0.0001
+          },
+          {
+            "t": 0.64,
+            "dy": 0
+          },
+          {
+            "t": 0.68,
+            "dy": 0
+          },
+          {
+            "t": 0.72,
+            "dy": 0
+          },
+          {
+            "t": 0.76,
+            "dy": 0
+          },
+          {
+            "t": 0.8,
+            "dy": 0
+          },
+          {
+            "t": 0.84,
+            "dy": 0
+          },
+          {
+            "t": 0.88,
+            "dy": 0
+          }
+        ],
+        "wave": {
+          "type": 7,
+          "height": 120,
+          "width": 41.4,
+          "speed": 2
+        },
+        "plateDir": "transitions/lib/plates/monitor-max-3",
+        "plateCount": 30,
+        "plateIn": 0.08,
+        "plateBlend": "pin-light",
+        "plateOpacity": 1,
+        "swapAt": 0.3
+      },
+      "sfx": "transitions/lib/sfx-monitor-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchCinematicMonitor.tsx",
+        "description": "Broken-monitor glitch: rows tear into horizontally-shifted strips, the whole frame jolts in wrap-around jumps, colored signal bars and static noise flash over the footage; the cut hides mid-glitch.",
+        "energy": "high",
+        "durationSeconds": 0.8,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "noise",
+          "tear",
+          "strips",
+          "max"
+        ],
+        "useWhen": "Hard cut on a high-energy beat; the most violent of the family (0.8s)."
+      }
+    },
+    {
+      "id": "monitor-min-1",
+      "category": "GLITCH",
+      "variant": "Cinematic Monitor",
+      "intensity": "Min 1",
+      "label": "Glitch · Cinematic Monitor · Min 1",
+      "engine": "GlitchCinematicMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.28,
+      "params": {
+        "jolts": [
+          {
+            "t0": 0.04,
+            "t1": 0.16,
+            "dx": 0.0813,
+            "dy": -0.1389
+          }
+        ],
+        "roll": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": -0.00246
+          },
+          {
+            "t": 0.08,
+            "dy": -0.00371
+          },
+          {
+            "t": 0.12,
+            "dy": -0.00228
+          },
+          {
+            "t": 0.16,
+            "dy": 0.00033
+          },
+          {
+            "t": 0.2,
+            "dy": 0
+          },
+          {
+            "t": 0.24,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dy": 0
+          }
+        ],
+        "wave": {
+          "type": 7,
+          "height": 120,
+          "width": 41.4,
+          "speed": 2
+        },
+        "plateDir": "transitions/lib/plates/monitor-min-1",
+        "plateCount": 30,
+        "plateIn": 0.24,
+        "plateBlend": "pin-light",
+        "plateOpacity": 1,
+        "swapAt": 0.2857
+      },
+      "sfx": "transitions/lib/sfx-monitor-min.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchCinematicMonitor.tsx",
+        "description": "Broken-monitor glitch: rows tear into horizontally-shifted strips, the whole frame jolts in wrap-around jumps, colored signal bars and static noise flash over the footage; the cut hides mid-glitch.",
+        "energy": "medium",
+        "durationSeconds": 0.28,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "noise",
+          "tear",
+          "strips",
+          "min"
+        ],
+        "useWhen": "Quick subtle monitor blip between related shots (0.28s)."
+      }
+    },
+    {
+      "id": "monitor-min-2",
+      "category": "GLITCH",
+      "variant": "Cinematic Monitor",
+      "intensity": "Min 2",
+      "label": "Glitch · Cinematic Monitor · Min 2",
+      "engine": "GlitchCinematicMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.28,
+      "params": {
+        "jolts": [
+          {
+            "t0": 0.04,
+            "t1": 0.16,
+            "dx": 0,
+            "dy": 0.1963
+          }
+        ],
+        "roll": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": -0.0082
+          },
+          {
+            "t": 0.08,
+            "dy": -0.01643
+          },
+          {
+            "t": 0.12,
+            "dy": -0.00398
+          },
+          {
+            "t": 0.16,
+            "dy": -0.00016
+          },
+          {
+            "t": 0.2,
+            "dy": 0
+          },
+          {
+            "t": 0.24,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dy": 0
+          }
+        ],
+        "wave": {
+          "type": 7,
+          "height": 120,
+          "width": 41.4,
+          "speed": 2
+        },
+        "plateDir": "transitions/lib/plates/monitor-min-2",
+        "plateCount": 30,
+        "plateIn": 0.24,
+        "plateBlend": "pin-light",
+        "plateOpacity": 1,
+        "swapAt": 0.2857
+      },
+      "sfx": "transitions/lib/sfx-monitor-min.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchCinematicMonitor.tsx",
+        "description": "Broken-monitor glitch: rows tear into horizontally-shifted strips, the whole frame jolts in wrap-around jumps, colored signal bars and static noise flash over the footage; the cut hides mid-glitch.",
+        "energy": "medium",
+        "durationSeconds": 0.28,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "noise",
+          "tear",
+          "strips",
+          "min"
+        ],
+        "useWhen": "Quick subtle monitor blip between related shots (0.28s)."
+      }
+    },
+    {
+      "id": "monitor-min-3",
+      "category": "GLITCH",
+      "variant": "Cinematic Monitor",
+      "intensity": "Min 3",
+      "label": "Glitch · Cinematic Monitor · Min 3",
+      "engine": "GlitchCinematicMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.28,
+      "params": {
+        "jolts": [
+          {
+            "t0": 0.04,
+            "t1": 0.16,
+            "dx": 0,
+            "dy": 0.1963
+          }
+        ],
+        "roll": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": -0.0082
+          },
+          {
+            "t": 0.08,
+            "dy": -0.01643
+          },
+          {
+            "t": 0.12,
+            "dy": -0.00398
+          },
+          {
+            "t": 0.16,
+            "dy": -0.00016
+          },
+          {
+            "t": 0.2,
+            "dy": 0
+          },
+          {
+            "t": 0.24,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dy": 0
+          }
+        ],
+        "wave": {
+          "type": 7,
+          "height": 120,
+          "width": 41.4,
+          "speed": 2
+        },
+        "plateDir": "transitions/lib/plates/monitor-min-3",
+        "plateCount": 30,
+        "plateIn": 0.24,
+        "plateBlend": "pin-light",
+        "plateOpacity": 1,
+        "swapAt": 0.2857
+      },
+      "sfx": "transitions/lib/sfx-monitor-min.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchCinematicMonitor.tsx",
+        "description": "Broken-monitor glitch: rows tear into horizontally-shifted strips, the whole frame jolts in wrap-around jumps, colored signal bars and static noise flash over the footage; the cut hides mid-glitch.",
+        "energy": "medium",
+        "durationSeconds": 0.28,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "noise",
+          "tear",
+          "strips",
+          "min"
+        ],
+        "useWhen": "Quick subtle monitor blip between related shots (0.28s)."
+      }
+    },
+    {
+      "id": "monitor-short-1",
+      "category": "GLITCH",
+      "variant": "Cinematic Monitor",
+      "intensity": "Short 1",
+      "label": "Glitch · Cinematic Monitor · Short 1",
+      "engine": "GlitchCinematicMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "jolts": [
+          {
+            "t0": 0.08,
+            "t1": 0.16,
+            "dx": 0.171,
+            "dy": -0.3907
+          },
+          {
+            "t0": 0.16,
+            "t1": 0.28,
+            "dx": -0.3647,
+            "dy": -0.5427
+          },
+          {
+            "t0": 0.28,
+            "t1": 0.36,
+            "dx": 0.0437,
+            "dy": -0.0343
+          }
+        ],
+        "roll": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dy": -0.00387
+          },
+          {
+            "t": 0.16,
+            "dy": -0.00371
+          },
+          {
+            "t": 0.2,
+            "dy": -0.00636
+          },
+          {
+            "t": 0.24,
+            "dy": 0.00601
+          },
+          {
+            "t": 0.28,
+            "dy": 0.00789
+          },
+          {
+            "t": 0.32,
+            "dy": 0.00111
+          },
+          {
+            "t": 0.36,
+            "dy": 0.00029
+          },
+          {
+            "t": 0.4,
+            "dy": 0
+          },
+          {
+            "t": 0.44,
+            "dy": 0
+          }
+        ],
+        "wave": {
+          "type": 7,
+          "height": 120,
+          "width": 41.4,
+          "speed": 2
+        },
+        "plateDir": "transitions/lib/plates/monitor-short-1",
+        "plateCount": 30,
+        "plateIn": 0.16,
+        "plateBlend": "pin-light",
+        "plateOpacity": 1,
+        "swapAt": 0.3636
+      },
+      "sfx": "transitions/lib/sfx-monitor-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchCinematicMonitor.tsx",
+        "description": "Broken-monitor glitch: rows tear into horizontally-shifted strips, the whole frame jolts in wrap-around jumps, colored signal bars and static noise flash over the footage; the cut hides mid-glitch.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "noise",
+          "tear",
+          "strips",
+          "short"
+        ],
+        "useWhen": "Punchy mid-length monitor glitch (0.4-0.44s)."
+      }
+    },
+    {
+      "id": "monitor-short-2",
+      "category": "GLITCH",
+      "variant": "Cinematic Monitor",
+      "intensity": "Short 2",
+      "label": "Glitch · Cinematic Monitor · Short 2",
+      "engine": "GlitchCinematicMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.4,
+      "params": {
+        "jolts": [
+          {
+            "t0": 0,
+            "t1": 0.12,
+            "dx": 0.3911,
+            "dy": -0.2797
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.28,
+            "dx": 0,
+            "dy": 0.1287
+          }
+        ],
+        "roll": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dy": -0.01069
+          },
+          {
+            "t": 0.12,
+            "dy": -0.02414
+          },
+          {
+            "t": 0.16,
+            "dy": -0.01254
+          },
+          {
+            "t": 0.2,
+            "dy": -0.00149
+          },
+          {
+            "t": 0.24,
+            "dy": 0.00121
+          },
+          {
+            "t": 0.28,
+            "dy": 0.00078
+          },
+          {
+            "t": 0.32,
+            "dy": 0.00036
+          },
+          {
+            "t": 0.36,
+            "dy": 0
+          },
+          {
+            "t": 0.4,
+            "dy": 0
+          }
+        ],
+        "wave": {
+          "type": 7,
+          "height": 120,
+          "width": 41.4,
+          "speed": 2
+        },
+        "plateDir": "transitions/lib/plates/monitor-short-2",
+        "plateCount": 30,
+        "plateIn": 0.2,
+        "plateBlend": "pin-light",
+        "plateOpacity": 1,
+        "swapAt": 0.3
+      },
+      "sfx": "transitions/lib/sfx-monitor-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchCinematicMonitor.tsx",
+        "description": "Broken-monitor glitch: rows tear into horizontally-shifted strips, the whole frame jolts in wrap-around jumps, colored signal bars and static noise flash over the footage; the cut hides mid-glitch.",
+        "energy": "high",
+        "durationSeconds": 0.4,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "noise",
+          "tear",
+          "strips",
+          "short"
+        ],
+        "useWhen": "Punchy mid-length monitor glitch (0.4-0.44s)."
+      }
+    },
+    {
+      "id": "monitor-short-3",
+      "category": "GLITCH",
+      "variant": "Cinematic Monitor",
+      "intensity": "Short 3",
+      "label": "Glitch · Cinematic Monitor · Short 3",
+      "engine": "GlitchCinematicMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.4,
+      "params": {
+        "jolts": [
+          {
+            "t0": 0.04,
+            "t1": 0.12,
+            "dx": 0.1264,
+            "dy": 0.916
+          },
+          {
+            "t0": 0.12,
+            "t1": 0.28,
+            "dx": -0.6259,
+            "dy": -1.0231
+          }
+        ],
+        "roll": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dy": -0.0082
+          },
+          {
+            "t": 0.12,
+            "dy": -0.01643
+          },
+          {
+            "t": 0.16,
+            "dy": -0.00398
+          },
+          {
+            "t": 0.2,
+            "dy": -0.00016
+          },
+          {
+            "t": 0.24,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dy": 0
+          },
+          {
+            "t": 0.32,
+            "dy": 0
+          },
+          {
+            "t": 0.36,
+            "dy": 0
+          },
+          {
+            "t": 0.4,
+            "dy": 0
+          }
+        ],
+        "wave": {
+          "type": 7,
+          "height": 120,
+          "width": 41.4,
+          "speed": 2
+        },
+        "plateDir": "transitions/lib/plates/monitor-short-3",
+        "plateCount": 30,
+        "plateIn": 0.2,
+        "plateBlend": "pin-light",
+        "plateOpacity": 1,
+        "swapAt": 0.3
+      },
+      "sfx": "transitions/lib/sfx-monitor-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchCinematicMonitor.tsx",
+        "description": "Broken-monitor glitch: rows tear into horizontally-shifted strips, the whole frame jolts in wrap-around jumps, colored signal bars and static noise flash over the footage; the cut hides mid-glitch.",
+        "energy": "high",
+        "durationSeconds": 0.4,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "noise",
+          "tear",
+          "strips",
+          "short"
+        ],
+        "useWhen": "Punchy mid-length monitor glitch (0.4-0.44s)."
+      }
+    },
+    {
+      "id": "invert-max-1",
+      "category": "GLITCH",
+      "variant": "Invert",
+      "intensity": "Max 1",
+      "label": "Glitch · Invert · Max 1",
+      "engine": "GlitchInvert",
+      "kind": "shader",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "stepSeconds": 0.04,
+        "steps": [
+          [],
+          [
+            "inv0",
+            "inv12"
+          ],
+          [
+            "inv0"
+          ],
+          [
+            "tint"
+          ],
+          [
+            "tint",
+            "inv6",
+            "inv7"
+          ],
+          [
+            "inv0",
+            "inv6"
+          ],
+          [
+            "inv6"
+          ],
+          [
+            "tint",
+            "inv0",
+            "inv6",
+            "inv7"
+          ],
+          [
+            "inv0",
+            "inv6",
+            "inv7"
+          ],
+          [
+            "inv6"
+          ],
+          [
+            "tint",
+            "inv6"
+          ]
+        ],
+        "swapAt": 0.4545
+      },
+      "sfx": "transitions/lib/sfx-invert-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchInvert.tsx",
+        "description": "Color-invert strobe: the full frame flickers through negative, hue-flip, chroma-flip and b/w flashes at 25fps; no displacement, the cut hides inside the strobe.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "invert",
+          "negative",
+          "strobe",
+          "flash",
+          "max"
+        ],
+        "useWhen": "Hard cut on a big beat; longest, most aggressive invert strobe (0.44s)."
+      }
+    },
+    {
+      "id": "invert-max-2",
+      "category": "GLITCH",
+      "variant": "Invert",
+      "intensity": "Max 2",
+      "label": "Glitch · Invert · Max 2",
+      "engine": "GlitchInvert",
+      "kind": "shader",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "stepSeconds": 0.04,
+        "steps": [
+          [],
+          [],
+          [],
+          [
+            "tint"
+          ],
+          [
+            "tint",
+            "inv2"
+          ],
+          [
+            "tint"
+          ],
+          [
+            "inv6",
+            "inv7"
+          ],
+          [
+            "inv12",
+            "inv7"
+          ],
+          [
+            "inv12"
+          ],
+          [
+            "inv12"
+          ],
+          [
+            "tint",
+            "inv0",
+            "inv6"
+          ]
+        ],
+        "swapAt": 0.4545
+      },
+      "sfx": "transitions/lib/sfx-invert-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchInvert.tsx",
+        "description": "Color-invert strobe: the full frame flickers through negative, hue-flip, chroma-flip and b/w flashes at 25fps; no displacement, the cut hides inside the strobe.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "invert",
+          "negative",
+          "strobe",
+          "flash",
+          "max"
+        ],
+        "useWhen": "Hard cut on a big beat; longest, most aggressive invert strobe (0.44s)."
+      }
+    },
+    {
+      "id": "invert-max-3",
+      "category": "GLITCH",
+      "variant": "Invert",
+      "intensity": "Max 3",
+      "label": "Glitch · Invert · Max 3",
+      "engine": "GlitchInvert",
+      "kind": "shader",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "stepSeconds": 0.04,
+        "steps": [
+          [],
+          [],
+          [],
+          [],
+          [
+            "inv12",
+            "inv7"
+          ],
+          [
+            "inv12"
+          ],
+          [
+            "tint",
+            "inv0"
+          ],
+          [
+            "tint",
+            "inv0",
+            "inv2"
+          ],
+          [
+            "inv0",
+            "inv12"
+          ],
+          [
+            "inv0"
+          ],
+          [
+            "inv0",
+            "inv12"
+          ]
+        ],
+        "swapAt": 0.4545
+      },
+      "sfx": "transitions/lib/sfx-invert-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchInvert.tsx",
+        "description": "Color-invert strobe: the full frame flickers through negative, hue-flip, chroma-flip and b/w flashes at 25fps; no displacement, the cut hides inside the strobe.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "invert",
+          "negative",
+          "strobe",
+          "flash",
+          "max"
+        ],
+        "useWhen": "Hard cut on a big beat; longest, most aggressive invert strobe (0.44s)."
+      }
+    },
+    {
+      "id": "invert-min-1",
+      "category": "GLITCH",
+      "variant": "Invert",
+      "intensity": "Min 1",
+      "label": "Glitch · Invert · Min 1",
+      "engine": "GlitchInvert",
+      "kind": "shader",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.12,
+      "params": {
+        "stepSeconds": 0.04,
+        "steps": [
+          [
+            "tint",
+            "inv0"
+          ],
+          [
+            "inv0",
+            "inv6"
+          ],
+          [
+            "inv6"
+          ]
+        ],
+        "swapAt": 0.3333
+      },
+      "sfx": "transitions/lib/sfx-invert-min.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchInvert.tsx",
+        "description": "Color-invert strobe: the full frame flickers through negative, hue-flip, chroma-flip and b/w flashes at 25fps; no displacement, the cut hides inside the strobe.",
+        "energy": "medium",
+        "durationSeconds": 0.12,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "invert",
+          "negative",
+          "strobe",
+          "flash",
+          "min"
+        ],
+        "useWhen": "Blink-fast invert accent between related shots (0.12s)."
+      }
+    },
+    {
+      "id": "invert-min-2",
+      "category": "GLITCH",
+      "variant": "Invert",
+      "intensity": "Min 2",
+      "label": "Glitch · Invert · Min 2",
+      "engine": "GlitchInvert",
+      "kind": "shader",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.12,
+      "params": {
+        "stepSeconds": 0.04,
+        "steps": [
+          [
+            "inv6"
+          ],
+          [
+            "tint",
+            "inv0"
+          ],
+          [
+            "inv0",
+            "inv12"
+          ]
+        ],
+        "swapAt": 0.3333
+      },
+      "sfx": "transitions/lib/sfx-invert-min.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchInvert.tsx",
+        "description": "Color-invert strobe: the full frame flickers through negative, hue-flip, chroma-flip and b/w flashes at 25fps; no displacement, the cut hides inside the strobe.",
+        "energy": "medium",
+        "durationSeconds": 0.12,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "invert",
+          "negative",
+          "strobe",
+          "flash",
+          "min"
+        ],
+        "useWhen": "Blink-fast invert accent between related shots (0.12s)."
+      }
+    },
+    {
+      "id": "invert-min-3",
+      "category": "GLITCH",
+      "variant": "Invert",
+      "intensity": "Min 3",
+      "label": "Glitch · Invert · Min 3",
+      "engine": "GlitchInvert",
+      "kind": "shader",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.12,
+      "params": {
+        "stepSeconds": 0.04,
+        "steps": [
+          [
+            "inv0"
+          ],
+          [
+            "inv0"
+          ],
+          [
+            "tint",
+            "inv7"
+          ]
+        ],
+        "swapAt": 0.3333
+      },
+      "sfx": "transitions/lib/sfx-invert-min.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchInvert.tsx",
+        "description": "Color-invert strobe: the full frame flickers through negative, hue-flip, chroma-flip and b/w flashes at 25fps; no displacement, the cut hides inside the strobe.",
+        "energy": "medium",
+        "durationSeconds": 0.12,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "invert",
+          "negative",
+          "strobe",
+          "flash",
+          "min"
+        ],
+        "useWhen": "Blink-fast invert accent between related shots (0.12s)."
+      }
+    },
+    {
+      "id": "invert-short-1",
+      "category": "GLITCH",
+      "variant": "Invert",
+      "intensity": "Short 1",
+      "label": "Glitch · Invert · Short 1",
+      "engine": "GlitchInvert",
+      "kind": "shader",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.16,
+      "params": {
+        "stepSeconds": 0.04,
+        "steps": [
+          [
+            "tint",
+            "inv0"
+          ],
+          [
+            "inv0",
+            "inv6"
+          ],
+          [
+            "inv0",
+            "inv6",
+            "inv7"
+          ],
+          [
+            "tint"
+          ]
+        ],
+        "swapAt": 0.25
+      },
+      "sfx": "transitions/lib/sfx-invert-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchInvert.tsx",
+        "description": "Color-invert strobe: the full frame flickers through negative, hue-flip, chroma-flip and b/w flashes at 25fps; no displacement, the cut hides inside the strobe.",
+        "energy": "high",
+        "durationSeconds": 0.16,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "invert",
+          "negative",
+          "strobe",
+          "flash",
+          "short"
+        ],
+        "useWhen": "Punchy short invert strobe (0.16s)."
+      }
+    },
+    {
+      "id": "invert-short-2",
+      "category": "GLITCH",
+      "variant": "Invert",
+      "intensity": "Short 2",
+      "label": "Glitch · Invert · Short 2",
+      "engine": "GlitchInvert",
+      "kind": "shader",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.2,
+      "params": {
+        "stepSeconds": 0.04,
+        "steps": [
+          [
+            "inv0",
+            "inv6",
+            "inv7"
+          ],
+          [
+            "inv6",
+            "inv7"
+          ],
+          [
+            "tint",
+            "inv0",
+            "inv6"
+          ],
+          [
+            "tint",
+            "inv0",
+            "inv6"
+          ],
+          [
+            "tint",
+            "inv6"
+          ]
+        ],
+        "swapAt": 0.4
+      },
+      "sfx": "transitions/lib/sfx-invert-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchInvert.tsx",
+        "description": "Color-invert strobe: the full frame flickers through negative, hue-flip, chroma-flip and b/w flashes at 25fps; no displacement, the cut hides inside the strobe.",
+        "energy": "high",
+        "durationSeconds": 0.2,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "invert",
+          "negative",
+          "strobe",
+          "flash",
+          "short"
+        ],
+        "useWhen": "Punchy short invert strobe (0.2s)."
+      }
+    },
+    {
+      "id": "invert-short-3",
+      "category": "GLITCH",
+      "variant": "Invert",
+      "intensity": "Short 3",
+      "label": "Glitch · Invert · Short 3",
+      "engine": "GlitchInvert",
+      "kind": "shader",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.2,
+      "params": {
+        "stepSeconds": 0.04,
+        "steps": [
+          [
+            "inv12"
+          ],
+          [
+            "tint",
+            "inv12"
+          ],
+          [
+            "inv12"
+          ],
+          [
+            "inv6",
+            "inv12",
+            "inv7"
+          ],
+          [
+            "inv12"
+          ]
+        ],
+        "swapAt": 0.4
+      },
+      "sfx": "transitions/lib/sfx-invert-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchInvert.tsx",
+        "description": "Color-invert strobe: the full frame flickers through negative, hue-flip, chroma-flip and b/w flashes at 25fps; no displacement, the cut hides inside the strobe.",
+        "energy": "high",
+        "durationSeconds": 0.2,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "invert",
+          "negative",
+          "strobe",
+          "flash",
+          "short"
+        ],
+        "useWhen": "Punchy short invert strobe (0.2s)."
+      }
     }
   ]
 }
