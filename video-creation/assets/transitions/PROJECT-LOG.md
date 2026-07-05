@@ -23,6 +23,41 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## GLITCH / Offset: all 7 built ✅ (2026-07-05, awaiting Mike's review)
+
+`glitchoffset-1x…7x` (0.4-0.88s) — rendered + in the gallery (`browse/GLITCH/Offset/`).
+Engine: `remotion/src/transitions/engines/GlitchOffset.tsx`. **fidelity: near-1:1** —
+no plates; the whole transition is keyframed, every value from the project.
+
+Mechanism (per-clip extraction of all 7 sequences, `_extract-offset.js` → `_offset-clips.json`
+→ `_build-offset-rows.js`):
+- **t2 adjustment pair**: ONE keyframed full-frame wrap Offset (y only — x static 0.5 in
+  all 7), 25fps keyframes in media time (in-point 0.88); the two clips stitch a single
+  continuous roll curve across the cut (t_seq = clip.start + kf.t − inPoint). Amplitude
+  scales with density: 1x = one ±0.2-screen bump, 7x = ±1.8 screens (multiple full wraps).
+  The A→B cut hides at the first clip's end (0.12-0.24s), inside the first big jump.
+- **t1 "Abberations"/"Deviation" window** (straddles the cut): Offset tiny +y (0.28-0.74%),
+  Emboss dir 180 / relief 3-8 / contrast 60, Tint black→GREEN white→BLACK (ff00ff00 /
+  ff000000), Pin Light — same HST recipe as Glitch Monitor's t1, bottom-up order
+  (tint → emboss → offset → pin light). Reads as green/magenta fringes on edges.
+  **Emboss orientation settled empirically**: residual analysis vs the preview (target
+  minus rolled clean frame) is G-channel-dominated with green-above/magenta-below pairs
+  → VERTICAL kernel, green on TOP edges of bright objects; the literal "180° = horizontal"
+  reading and both flipped signs score worse (MSE + residual, `scratchpad/offset-sign-test.js`
+  method mirrors the Invert numeric verification).
+- **NO SFX — verified 3 ways** (FullHD + 4K sequences both have EMPTY audio groups,
+  previews are video-only, no Offset-named file in `(Footage)/Sound`). Rows ship
+  `hasSound:false` per Rule 2 (don't invent a mapping); add a hit manually if an edit
+  needs one.
+
+ENGINE GOTCHAS (cost one re-render): (a) content must be a Remotion `<Img>`, NOT a CSS
+`background-image` — Remotion only waits for `<Img>` loads, so scene B rendered black on
+its first engine frames; (b) the filtered layer needs an `overflow:hidden` wrapper per
+WrapLayer tile or the 140% filter region smears white bands across neighbor tiles (the
+Monitor ghost pipeline already had this wrapper — keep it).
+
+---
+
 ## GLITCH / Monitor: all 8 built ✅ (2026-07-04, awaiting Mike's review)
 
 `glitchmonitor-1…8` (0.52-0.64s) — rendered + in the gallery (`browse/GLITCH/Monitor/`).

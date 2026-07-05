@@ -3840,6 +3840,837 @@
         ],
         "useWhen": "Fast punchy signal-glitch cut (~0.64s) on an energetic beat; 8 variants differ in band pattern, ghost direction and glitch-window length."
       }
+    },
+    {
+      "id": "glitchoffset-1x",
+      "category": "GLITCH",
+      "variant": "Offset",
+      "intensity": "1x",
+      "label": "Glitch · Offset · 1x",
+      "engine": "GlitchOffset",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.4,
+      "params": {
+        "curve": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": -0.01422
+          },
+          {
+            "t": 0.08,
+            "dy": -0.01148
+          },
+          {
+            "t": 0.12,
+            "dy": 0.12308
+          },
+          {
+            "t": 0.16,
+            "dy": 0.20278
+          },
+          {
+            "t": 0.2,
+            "dy": 0.15519
+          },
+          {
+            "t": 0.24,
+            "dy": 0.08156
+          },
+          {
+            "t": 0.28,
+            "dy": -0.00311
+          },
+          {
+            "t": 0.32,
+            "dy": -0.00944
+          },
+          {
+            "t": 0.36,
+            "dy": -0.00833
+          },
+          {
+            "t": 0.4,
+            "dy": 0
+          }
+        ],
+        "swapAt": 0.3,
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.28
+        },
+        "hstShiftY": 0.00278,
+        "emboss": {
+          "reliefPx": 3,
+          "contrast": 0.6
+        }
+      },
+      "sfx": null,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchOffset.tsx",
+        "description": "Vertical roll glitch: the whole frame wrap-scrolls up/down on a jagged keyframed path (the cut hides inside the first jump), while red/green chromatic-aberration fringes bite on vertical edges, then it snaps back to rest. Density 1x (one clean bump) to 7x (violent multi-screen rolls).",
+        "energy": "medium",
+        "durationSeconds": 0.4,
+        "hasSound": false,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "offset",
+          "roll",
+          "scroll",
+          "vertical",
+          "aberration"
+        ],
+        "useWhen": "Frame-roll glitch cut (~0.4s), reads like a video signal losing v-sync; higher x = longer + wilder. No pack SFX for this family (ships silent; add a whoosh/glitch hit manually if the edit needs one)."
+      }
+    },
+    {
+      "id": "glitchoffset-2x",
+      "category": "GLITCH",
+      "variant": "Offset",
+      "intensity": "2x",
+      "label": "Glitch · Offset · 2x",
+      "engine": "GlitchOffset",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.48,
+      "params": {
+        "curve": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0.01571
+          },
+          {
+            "t": 0.08,
+            "dy": 0.05808
+          },
+          {
+            "t": 0.12,
+            "dy": 0.10889
+          },
+          {
+            "t": 0.16,
+            "dy": -0.01443
+          },
+          {
+            "t": 0.2,
+            "dy": -0.0892
+          },
+          {
+            "t": 0.24,
+            "dy": -0.01749
+          },
+          {
+            "t": 0.28,
+            "dy": 0.11603
+          },
+          {
+            "t": 0.32,
+            "dy": 0.19537
+          },
+          {
+            "t": 0.36,
+            "dy": -0.02055
+          },
+          {
+            "t": 0.4,
+            "dy": -0.01528
+          },
+          {
+            "t": 0.44,
+            "dy": 0.00196
+          },
+          {
+            "t": 0.48,
+            "dy": 0
+          }
+        ],
+        "swapAt": 0.25,
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.28
+        },
+        "hstShiftY": 0.0037,
+        "emboss": {
+          "reliefPx": 4,
+          "contrast": 0.6
+        }
+      },
+      "sfx": null,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchOffset.tsx",
+        "description": "Vertical roll glitch: the whole frame wrap-scrolls up/down on a jagged keyframed path (the cut hides inside the first jump), while red/green chromatic-aberration fringes bite on vertical edges, then it snaps back to rest. Density 1x (one clean bump) to 7x (violent multi-screen rolls).",
+        "energy": "medium",
+        "durationSeconds": 0.48,
+        "hasSound": false,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "offset",
+          "roll",
+          "scroll",
+          "vertical",
+          "aberration"
+        ],
+        "useWhen": "Frame-roll glitch cut (~0.48s), reads like a video signal losing v-sync; higher x = longer + wilder. No pack SFX for this family (ships silent; add a whoosh/glitch hit manually if the edit needs one)."
+      }
+    },
+    {
+      "id": "glitchoffset-3x",
+      "category": "GLITCH",
+      "variant": "Offset",
+      "intensity": "3x",
+      "label": "Glitch · Offset · 3x",
+      "engine": "GlitchOffset",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.6,
+      "params": {
+        "curve": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0.02526
+          },
+          {
+            "t": 0.08,
+            "dy": 0.0442
+          },
+          {
+            "t": 0.12,
+            "dy": -0.0432
+          },
+          {
+            "t": 0.16,
+            "dy": -0.1984
+          },
+          {
+            "t": 0.2,
+            "dy": -0.15488
+          },
+          {
+            "t": 0.24,
+            "dy": 0.01374
+          },
+          {
+            "t": 0.28,
+            "dy": 0.14915
+          },
+          {
+            "t": 0.32,
+            "dy": -0.02437
+          },
+          {
+            "t": 0.36,
+            "dy": -0.4266
+          },
+          {
+            "t": 0.4,
+            "dy": -0.67785
+          },
+          {
+            "t": 0.44,
+            "dy": -0.48827
+          },
+          {
+            "t": 0.48,
+            "dy": -0.01577
+          },
+          {
+            "t": 0.52,
+            "dy": -0.0099
+          },
+          {
+            "t": 0.56,
+            "dy": -0.00093
+          },
+          {
+            "t": 0.6,
+            "dy": 0
+          }
+        ],
+        "swapAt": 0.2667,
+        "hst": {
+          "t0": 0.08,
+          "t1": 0.4
+        },
+        "hstShiftY": 0.00463,
+        "emboss": {
+          "reliefPx": 5,
+          "contrast": 0.6
+        }
+      },
+      "sfx": null,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchOffset.tsx",
+        "description": "Vertical roll glitch: the whole frame wrap-scrolls up/down on a jagged keyframed path (the cut hides inside the first jump), while red/green chromatic-aberration fringes bite on vertical edges, then it snaps back to rest. Density 1x (one clean bump) to 7x (violent multi-screen rolls).",
+        "energy": "high",
+        "durationSeconds": 0.6,
+        "hasSound": false,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "offset",
+          "roll",
+          "scroll",
+          "vertical",
+          "aberration"
+        ],
+        "useWhen": "Frame-roll glitch cut (~0.6s), reads like a video signal losing v-sync; higher x = longer + wilder. No pack SFX for this family (ships silent; add a whoosh/glitch hit manually if the edit needs one)."
+      }
+    },
+    {
+      "id": "glitchoffset-4x",
+      "category": "GLITCH",
+      "variant": "Offset",
+      "intensity": "4x",
+      "label": "Glitch · Offset · 4x",
+      "engine": "GlitchOffset",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.72,
+      "params": {
+        "curve": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0.02675
+          },
+          {
+            "t": 0.08,
+            "dy": 0.06843
+          },
+          {
+            "t": 0.12,
+            "dy": 0.061
+          },
+          {
+            "t": 0.16,
+            "dy": 0.1541
+          },
+          {
+            "t": 0.2,
+            "dy": 0.19428
+          },
+          {
+            "t": 0.24,
+            "dy": -0.10505
+          },
+          {
+            "t": 0.28,
+            "dy": 0.00896
+          },
+          {
+            "t": 0.32,
+            "dy": 0.15039
+          },
+          {
+            "t": 0.36,
+            "dy": 0.23131
+          },
+          {
+            "t": 0.4,
+            "dy": 0.44291
+          },
+          {
+            "t": 0.44,
+            "dy": 0.76523
+          },
+          {
+            "t": 0.48,
+            "dy": 0.66222
+          },
+          {
+            "t": 0.52,
+            "dy": 0.31147
+          },
+          {
+            "t": 0.56,
+            "dy": 0.09104
+          },
+          {
+            "t": 0.6,
+            "dy": 0.06335
+          },
+          {
+            "t": 0.64,
+            "dy": 0.048
+          },
+          {
+            "t": 0.68,
+            "dy": 0.00722
+          },
+          {
+            "t": 0.72,
+            "dy": 0
+          }
+        ],
+        "swapAt": 0.2778,
+        "hst": {
+          "t0": 0.08,
+          "t1": 0.48
+        },
+        "hstShiftY": 0.00463,
+        "emboss": {
+          "reliefPx": 5,
+          "contrast": 0.6
+        }
+      },
+      "sfx": null,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchOffset.tsx",
+        "description": "Vertical roll glitch: the whole frame wrap-scrolls up/down on a jagged keyframed path (the cut hides inside the first jump), while red/green chromatic-aberration fringes bite on vertical edges, then it snaps back to rest. Density 1x (one clean bump) to 7x (violent multi-screen rolls).",
+        "energy": "high",
+        "durationSeconds": 0.72,
+        "hasSound": false,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "offset",
+          "roll",
+          "scroll",
+          "vertical",
+          "aberration"
+        ],
+        "useWhen": "Frame-roll glitch cut (~0.72s), reads like a video signal losing v-sync; higher x = longer + wilder. No pack SFX for this family (ships silent; add a whoosh/glitch hit manually if the edit needs one)."
+      }
+    },
+    {
+      "id": "glitchoffset-5x",
+      "category": "GLITCH",
+      "variant": "Offset",
+      "intensity": "5x",
+      "label": "Glitch · Offset · 5x",
+      "engine": "GlitchOffset",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.72,
+      "params": {
+        "curve": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0.03654
+          },
+          {
+            "t": 0.08,
+            "dy": -0.00018
+          },
+          {
+            "t": 0.12,
+            "dy": -0.05635
+          },
+          {
+            "t": 0.16,
+            "dy": -0.07235
+          },
+          {
+            "t": 0.2,
+            "dy": 0.40349
+          },
+          {
+            "t": 0.24,
+            "dy": 0.69906
+          },
+          {
+            "t": 0.28,
+            "dy": 0.31156
+          },
+          {
+            "t": 0.32,
+            "dy": -0.53128
+          },
+          {
+            "t": 0.36,
+            "dy": -1.03984
+          },
+          {
+            "t": 0.4,
+            "dy": -0.94803
+          },
+          {
+            "t": 0.44,
+            "dy": -0.61652
+          },
+          {
+            "t": 0.48,
+            "dy": -0.17745
+          },
+          {
+            "t": 0.52,
+            "dy": 0.32589
+          },
+          {
+            "t": 0.56,
+            "dy": 0.42927
+          },
+          {
+            "t": 0.6,
+            "dy": 0.01245
+          },
+          {
+            "t": 0.64,
+            "dy": 0.02427
+          },
+          {
+            "t": 0.68,
+            "dy": 0.01905
+          },
+          {
+            "t": 0.72,
+            "dy": 0
+          }
+        ],
+        "swapAt": 0.2778,
+        "hst": {
+          "t0": 0.08,
+          "t1": 0.56
+        },
+        "hstShiftY": 0.00556,
+        "emboss": {
+          "reliefPx": 6,
+          "contrast": 0.6
+        }
+      },
+      "sfx": null,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchOffset.tsx",
+        "description": "Vertical roll glitch: the whole frame wrap-scrolls up/down on a jagged keyframed path (the cut hides inside the first jump), while red/green chromatic-aberration fringes bite on vertical edges, then it snaps back to rest. Density 1x (one clean bump) to 7x (violent multi-screen rolls).",
+        "energy": "high",
+        "durationSeconds": 0.72,
+        "hasSound": false,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "offset",
+          "roll",
+          "scroll",
+          "vertical",
+          "aberration"
+        ],
+        "useWhen": "Frame-roll glitch cut (~0.72s), reads like a video signal losing v-sync; higher x = longer + wilder. No pack SFX for this family (ships silent; add a whoosh/glitch hit manually if the edit needs one)."
+      }
+    },
+    {
+      "id": "glitchoffset-6x",
+      "category": "GLITCH",
+      "variant": "Offset",
+      "intensity": "6x",
+      "label": "Glitch · Offset · 6x",
+      "engine": "GlitchOffset",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.8,
+      "params": {
+        "curve": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": 0.00692
+          },
+          {
+            "t": 0.08,
+            "dy": -0.06943
+          },
+          {
+            "t": 0.12,
+            "dy": -0.25103
+          },
+          {
+            "t": 0.16,
+            "dy": -0.35974
+          },
+          {
+            "t": 0.2,
+            "dy": -0.44403
+          },
+          {
+            "t": 0.24,
+            "dy": -0.55568
+          },
+          {
+            "t": 0.28,
+            "dy": -0.25066
+          },
+          {
+            "t": 0.32,
+            "dy": -0.20435
+          },
+          {
+            "t": 0.36,
+            "dy": -0.61499
+          },
+          {
+            "t": 0.4,
+            "dy": -1.18741
+          },
+          {
+            "t": 0.44,
+            "dy": -1.43215
+          },
+          {
+            "t": 0.48,
+            "dy": -1.48383
+          },
+          {
+            "t": 0.52,
+            "dy": -1.03384
+          },
+          {
+            "t": 0.56,
+            "dy": -0.32457
+          },
+          {
+            "t": 0.6,
+            "dy": 0.11502
+          },
+          {
+            "t": 0.64,
+            "dy": 0.0901
+          },
+          {
+            "t": 0.68,
+            "dy": -0.00185
+          },
+          {
+            "t": 0.72,
+            "dy": -0.01163
+          },
+          {
+            "t": 0.76,
+            "dy": -0.00859
+          },
+          {
+            "t": 0.8,
+            "dy": 0
+          }
+        ],
+        "swapAt": 0.3,
+        "hst": {
+          "t0": 0.12,
+          "t1": 0.68
+        },
+        "hstShiftY": 0.00648,
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.6
+        }
+      },
+      "sfx": null,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchOffset.tsx",
+        "description": "Vertical roll glitch: the whole frame wrap-scrolls up/down on a jagged keyframed path (the cut hides inside the first jump), while red/green chromatic-aberration fringes bite on vertical edges, then it snaps back to rest. Density 1x (one clean bump) to 7x (violent multi-screen rolls).",
+        "energy": "high",
+        "durationSeconds": 0.8,
+        "hasSound": false,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "offset",
+          "roll",
+          "scroll",
+          "vertical",
+          "aberration"
+        ],
+        "useWhen": "Frame-roll glitch cut (~0.8s), reads like a video signal losing v-sync; higher x = longer + wilder. No pack SFX for this family (ships silent; add a whoosh/glitch hit manually if the edit needs one)."
+      }
+    },
+    {
+      "id": "glitchoffset-7x",
+      "category": "GLITCH",
+      "variant": "Offset",
+      "intensity": "7x",
+      "label": "Glitch · Offset · 7x",
+      "engine": "GlitchOffset",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "curve": [
+          {
+            "t": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dy": -0.00234
+          },
+          {
+            "t": 0.08,
+            "dy": 0.00786
+          },
+          {
+            "t": 0.12,
+            "dy": -0.02183
+          },
+          {
+            "t": 0.16,
+            "dy": -0.03086
+          },
+          {
+            "t": 0.2,
+            "dy": -0.55147
+          },
+          {
+            "t": 0.24,
+            "dy": -1.80525
+          },
+          {
+            "t": 0.28,
+            "dy": -1.37927
+          },
+          {
+            "t": 0.32,
+            "dy": -0.33374
+          },
+          {
+            "t": 0.36,
+            "dy": 0.47544
+          },
+          {
+            "t": 0.4,
+            "dy": 0.53984
+          },
+          {
+            "t": 0.44,
+            "dy": -0.17482
+          },
+          {
+            "t": 0.48,
+            "dy": -0.78719
+          },
+          {
+            "t": 0.52,
+            "dy": -1.00501
+          },
+          {
+            "t": 0.56,
+            "dy": -0.93731
+          },
+          {
+            "t": 0.6,
+            "dy": -0.60195
+          },
+          {
+            "t": 0.64,
+            "dy": -0.05638
+          },
+          {
+            "t": 0.68,
+            "dy": 0.10191
+          },
+          {
+            "t": 0.72,
+            "dy": -0.05708
+          },
+          {
+            "t": 0.76,
+            "dy": -0.08413
+          },
+          {
+            "t": 0.8,
+            "dy": -0.07245
+          },
+          {
+            "t": 0.84,
+            "dy": -0.00289
+          },
+          {
+            "t": 0.88,
+            "dy": 0
+          }
+        ],
+        "swapAt": 0.2727,
+        "hst": {
+          "t0": 0.08,
+          "t1": 0.72
+        },
+        "hstShiftY": 0.00741,
+        "emboss": {
+          "reliefPx": 8,
+          "contrast": 0.6
+        }
+      },
+      "sfx": null,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchOffset.tsx",
+        "description": "Vertical roll glitch: the whole frame wrap-scrolls up/down on a jagged keyframed path (the cut hides inside the first jump), while red/green chromatic-aberration fringes bite on vertical edges, then it snaps back to rest. Density 1x (one clean bump) to 7x (violent multi-screen rolls).",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": false,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "offset",
+          "roll",
+          "scroll",
+          "vertical",
+          "aberration"
+        ],
+        "useWhen": "Frame-roll glitch cut (~0.88s), reads like a video signal losing v-sync; higher x = longer + wilder. No pack SFX for this family (ships silent; add a whoosh/glitch hit manually if the edit needs one)."
+      }
     }
   ]
 }
