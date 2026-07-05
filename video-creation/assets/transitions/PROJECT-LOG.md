@@ -23,6 +23,43 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## GLITCH / Monitor: all 8 built ✅ (2026-07-04, awaiting Mike's review)
+
+`glitchmonitor-1…8` (0.52-0.64s) — rendered + in the gallery (`browse/GLITCH/Monitor/`).
+Engine: `remotion/src/transitions/engines/GlitchMonitor.tsx`. **fidelity: approximate.**
+
+Mechanism (per-clip extraction of all 8 sequences, `_extract-glitchmonitor.js` →
+`_glitchmonitor-clips.json` → `_build-glitchmonitor-rows.js`); every variant has the SAME
+5-track recipe, cut always at **0.16s**:
+- **t4 plate** `Glitch Monitor <n>.mp4` (flat 50% gray + colored signal BANDS with baked
+  smear texture, in-point 0) — Pin Light, the family's dominant look. `lib/plates/glitchmonitor-<n>`.
+- **t3 offsets**: two constant full-frame wrap Offsets split at the 0.16 cut (dx/dy = raw − 0.5).
+- **t2**: Fast Blur 100 + Geometry2 Scale Height 150 — the smear/stretch.
+- **t1 "HST Adjustment"** (window straddles the cut, varies per variant): Offset +0.36% x,
+  Emboss 90°/7px/70%, Tint black→GREEN white→BLACK, Pin Light → green scan-relief lines.
+  Components apply BOTTOM-UP (Tint before Emboss), per the Invert-verified rule.
+- SFX `lib/sfx-glitchmonitor-<n>.mp3` from `Glitch_Overlay_1_0<n>.mp3` — the 1:1 n↔n mapping
+  verified by walking each sequence's audio track in the XML (Rule 7 lead-in trim applied).
+
+Approximations (documented honestly):
+- The FullHD project carries t1-t3 as STATIC params, but the pack previews clearly ramp in and
+  settle (same situation as Cinematic Monitor's constant Wave Warp). The engine gates the ghost
+  copy (offset+blur+stretch, compounded in source order: offset wraps the CROPPED blurred/stretched
+  frame — that's what carves the strip seams) with an envelope rising over [hst.t0 → cut] and
+  falling over [cut → hst.t1 + 0.05]; the sharp base stays underneath. Peak blur sigma capped at
+  blurriness×0.2 (full 100/3 obliterates; previews stay readable — QA'd).
+- The pack's peak has harder row-chop displacement (baked into its plate smears); ours reads as a
+  smoother smear + wrap seam. Bands/colors/settle match.
+
+ENGINE GOTCHA (cost 2 re-renders): the emboss MUST be a `feConvolveMatrix` with
+`preserveAlpha="true"` (straight-RGB math). An arithmetic `feComposite` (k2=c, k3=−c, k4=0.5)
+collapses alpha to 0.5 and Chromium un-premultiplies the whole frame toward WHITE (same alpha
+trap as the Invert engine's k-composite). Also: CSS `mix-blend-mode` children inside a
+filtered/stretched parent do NOT composite in headless Chromium — the HST Pin Light is done
+in-filter (feBlend darken/lighten vs SourceGraphic) for the ghost pipeline.
+
+---
+
 ## GLITCH / Invert: all 9 built ✅ (2026-07-04, awaiting Mike's review)
 
 `invert-max-1/2/3` (0.44s), `invert-min-1/2/3` (0.12s), `invert-short-1/2/3` (0.16-0.2s) —
