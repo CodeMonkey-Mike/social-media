@@ -43,8 +43,8 @@ Mechanism (per-clip extraction of all 7 sequences, `_extract-offset.js` → `_of
   **Emboss orientation settled empirically**: residual analysis vs the preview (target
   minus rolled clean frame) is G-channel-dominated with green-above/magenta-below pairs
   → VERTICAL kernel, green on TOP edges of bright objects; the literal "180° = horizontal"
-  reading and both flipped signs score worse (MSE + residual, `scratchpad/offset-sign-test.js`
-  method mirrors the Invert numeric verification).
+  reading and both flipped signs score worse (MSE + residual correlation,
+  `_verify-offset-sign.js` — method mirrors the Invert numeric verification).
 - **NO SFX — verified 3 ways** (FullHD + 4K sequences both have EMPTY audio groups,
   previews are video-only, no Offset-named file in `(Footage)/Sound`). Rows ship
   `hasSound:false` per Rule 2 (don't invent a mapping); add a hit manually if an edit
