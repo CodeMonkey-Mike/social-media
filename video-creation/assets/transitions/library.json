@@ -3304,6 +3304,542 @@
         ],
         "useWhen": "Punchy short invert strobe (0.2s)."
       }
+    },
+    {
+      "id": "glitchmonitor-1",
+      "category": "GLITCH",
+      "variant": "Monitor",
+      "intensity": "1",
+      "label": "Glitch · Monitor · 1",
+      "engine": "GlitchMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.64,
+      "params": {
+        "offsets": [
+          {
+            "t0": 0,
+            "t1": 0.16,
+            "dx": -0.6781,
+            "dy": 0
+          },
+          {
+            "t0": 0.16,
+            "t1": 0.64,
+            "dx": 0,
+            "dy": -0.2167
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.28
+        },
+        "hstShiftX": 0.00365,
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.7
+        },
+        "blurPx": 100,
+        "stretchY": 1.5,
+        "plateDir": "transitions/lib/plates/glitchmonitor-1",
+        "plateCount": 30,
+        "plateIn": 0,
+        "plateOpacity": 1,
+        "swapAt": 0.25
+      },
+      "sfx": "transitions/lib/sfx-glitchmonitor-1.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchMonitor.tsx",
+        "description": "Monitor-signal glitch: colored signal bands sweep over the frame, a blurred stretched ghost of the shot slams across the cut with green embossed scan relief, then everything snaps clean; faster and bandier than Cinematic Monitor.",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "bands",
+          "smear",
+          "green"
+        ],
+        "useWhen": "Fast punchy signal-glitch cut (~0.64s) on an energetic beat; 8 variants differ in band pattern, ghost direction and glitch-window length."
+      }
+    },
+    {
+      "id": "glitchmonitor-2",
+      "category": "GLITCH",
+      "variant": "Monitor",
+      "intensity": "2",
+      "label": "Glitch · Monitor · 2",
+      "engine": "GlitchMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.52,
+      "params": {
+        "offsets": [
+          {
+            "t0": 0,
+            "t1": 0.16,
+            "dx": 0.4063,
+            "dy": -0.5954
+          },
+          {
+            "t0": 0.16,
+            "t1": 0.52,
+            "dx": -0.326,
+            "dy": 0
+          }
+        ],
+        "hst": {
+          "t0": 0.12,
+          "t1": 0.36
+        },
+        "hstShiftX": 0.00365,
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.7
+        },
+        "blurPx": 100,
+        "stretchY": 1.5,
+        "plateDir": "transitions/lib/plates/glitchmonitor-2",
+        "plateCount": 30,
+        "plateIn": 0,
+        "plateOpacity": 1,
+        "swapAt": 0.3077
+      },
+      "sfx": "transitions/lib/sfx-glitchmonitor-2.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchMonitor.tsx",
+        "description": "Monitor-signal glitch: colored signal bands sweep over the frame, a blurred stretched ghost of the shot slams across the cut with green embossed scan relief, then everything snaps clean; faster and bandier than Cinematic Monitor.",
+        "energy": "high",
+        "durationSeconds": 0.52,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "bands",
+          "smear",
+          "green"
+        ],
+        "useWhen": "Fast punchy signal-glitch cut (~0.52s) on an energetic beat; 8 variants differ in band pattern, ghost direction and glitch-window length."
+      }
+    },
+    {
+      "id": "glitchmonitor-3",
+      "category": "GLITCH",
+      "variant": "Monitor",
+      "intensity": "3",
+      "label": "Glitch · Monitor · 3",
+      "engine": "GlitchMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.6,
+      "params": {
+        "offsets": [
+          {
+            "t0": 0,
+            "t1": 0.16,
+            "dx": -0.0021,
+            "dy": -0.9546
+          },
+          {
+            "t0": 0.16,
+            "t1": 0.6,
+            "dx": 0,
+            "dy": -0.3185
+          }
+        ],
+        "hst": {
+          "t0": 0.08,
+          "t1": 0.2
+        },
+        "hstShiftX": 0.00365,
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.7
+        },
+        "blurPx": 100,
+        "stretchY": 1.5,
+        "plateDir": "transitions/lib/plates/glitchmonitor-3",
+        "plateCount": 30,
+        "plateIn": 0,
+        "plateOpacity": 1,
+        "swapAt": 0.2667
+      },
+      "sfx": "transitions/lib/sfx-glitchmonitor-3.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchMonitor.tsx",
+        "description": "Monitor-signal glitch: colored signal bands sweep over the frame, a blurred stretched ghost of the shot slams across the cut with green embossed scan relief, then everything snaps clean; faster and bandier than Cinematic Monitor.",
+        "energy": "high",
+        "durationSeconds": 0.6,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "bands",
+          "smear",
+          "green"
+        ],
+        "useWhen": "Fast punchy signal-glitch cut (~0.6s) on an energetic beat; 8 variants differ in band pattern, ghost direction and glitch-window length."
+      }
+    },
+    {
+      "id": "glitchmonitor-4",
+      "category": "GLITCH",
+      "variant": "Monitor",
+      "intensity": "4",
+      "label": "Glitch · Monitor · 4",
+      "engine": "GlitchMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.56,
+      "params": {
+        "offsets": [
+          {
+            "t0": 0,
+            "t1": 0.16,
+            "dx": -0.0021,
+            "dy": -0.9194
+          },
+          {
+            "t0": 0.16,
+            "t1": 0.56,
+            "dx": -0.412,
+            "dy": -0.462
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.4
+        },
+        "hstShiftX": 0.00365,
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.7
+        },
+        "blurPx": 100,
+        "stretchY": 1.5,
+        "plateDir": "transitions/lib/plates/glitchmonitor-4",
+        "plateCount": 30,
+        "plateIn": 0,
+        "plateOpacity": 1,
+        "swapAt": 0.2857
+      },
+      "sfx": "transitions/lib/sfx-glitchmonitor-4.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchMonitor.tsx",
+        "description": "Monitor-signal glitch: colored signal bands sweep over the frame, a blurred stretched ghost of the shot slams across the cut with green embossed scan relief, then everything snaps clean; faster and bandier than Cinematic Monitor.",
+        "energy": "high",
+        "durationSeconds": 0.56,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "bands",
+          "smear",
+          "green"
+        ],
+        "useWhen": "Fast punchy signal-glitch cut (~0.56s) on an energetic beat; 8 variants differ in band pattern, ghost direction and glitch-window length."
+      }
+    },
+    {
+      "id": "glitchmonitor-5",
+      "category": "GLITCH",
+      "variant": "Monitor",
+      "intensity": "5",
+      "label": "Glitch · Monitor · 5",
+      "engine": "GlitchMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.64,
+      "params": {
+        "offsets": [
+          {
+            "t0": 0,
+            "t1": 0.16,
+            "dx": 0.8901,
+            "dy": 0.1843
+          },
+          {
+            "t0": 0.16,
+            "t1": 0.64,
+            "dx": -0.0021,
+            "dy": -0.3981
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.44
+        },
+        "hstShiftX": 0.00365,
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.7
+        },
+        "blurPx": 100,
+        "stretchY": 1.5,
+        "plateDir": "transitions/lib/plates/glitchmonitor-5",
+        "plateCount": 30,
+        "plateIn": 0,
+        "plateOpacity": 1,
+        "swapAt": 0.25
+      },
+      "sfx": "transitions/lib/sfx-glitchmonitor-5.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchMonitor.tsx",
+        "description": "Monitor-signal glitch: colored signal bands sweep over the frame, a blurred stretched ghost of the shot slams across the cut with green embossed scan relief, then everything snaps clean; faster and bandier than Cinematic Monitor.",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "bands",
+          "smear",
+          "green"
+        ],
+        "useWhen": "Fast punchy signal-glitch cut (~0.64s) on an energetic beat; 8 variants differ in band pattern, ghost direction and glitch-window length."
+      }
+    },
+    {
+      "id": "glitchmonitor-6",
+      "category": "GLITCH",
+      "variant": "Monitor",
+      "intensity": "6",
+      "label": "Glitch · Monitor · 6",
+      "engine": "GlitchMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.6,
+      "params": {
+        "offsets": [
+          {
+            "t0": 0,
+            "t1": 0.16,
+            "dx": 0,
+            "dy": -0.2176
+          },
+          {
+            "t0": 0.16,
+            "t1": 0.6,
+            "dx": 0.0917,
+            "dy": -0.2102
+          }
+        ],
+        "hst": {
+          "t0": 0.08,
+          "t1": 0.44
+        },
+        "hstShiftX": 0.00365,
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.7
+        },
+        "blurPx": 100,
+        "stretchY": 1.5,
+        "plateDir": "transitions/lib/plates/glitchmonitor-6",
+        "plateCount": 30,
+        "plateIn": 0,
+        "plateOpacity": 1,
+        "swapAt": 0.2667
+      },
+      "sfx": "transitions/lib/sfx-glitchmonitor-6.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchMonitor.tsx",
+        "description": "Monitor-signal glitch: colored signal bands sweep over the frame, a blurred stretched ghost of the shot slams across the cut with green embossed scan relief, then everything snaps clean; faster and bandier than Cinematic Monitor.",
+        "energy": "high",
+        "durationSeconds": 0.6,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "bands",
+          "smear",
+          "green"
+        ],
+        "useWhen": "Fast punchy signal-glitch cut (~0.6s) on an energetic beat; 8 variants differ in band pattern, ghost direction and glitch-window length."
+      }
+    },
+    {
+      "id": "glitchmonitor-7",
+      "category": "GLITCH",
+      "variant": "Monitor",
+      "intensity": "7",
+      "label": "Glitch · Monitor · 7",
+      "engine": "GlitchMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.64,
+      "params": {
+        "offsets": [
+          {
+            "t0": 0,
+            "t1": 0.16,
+            "dx": 0,
+            "dy": -0.3185
+          },
+          {
+            "t0": 0.16,
+            "t1": 0.64,
+            "dx": 0.4245,
+            "dy": 0.6685
+          }
+        ],
+        "hst": {
+          "t0": 0.08,
+          "t1": 0.36
+        },
+        "hstShiftX": 0.00365,
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.7
+        },
+        "blurPx": 100,
+        "stretchY": 1.5,
+        "plateDir": "transitions/lib/plates/glitchmonitor-7",
+        "plateCount": 30,
+        "plateIn": 0,
+        "plateOpacity": 1,
+        "swapAt": 0.25
+      },
+      "sfx": "transitions/lib/sfx-glitchmonitor-7.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchMonitor.tsx",
+        "description": "Monitor-signal glitch: colored signal bands sweep over the frame, a blurred stretched ghost of the shot slams across the cut with green embossed scan relief, then everything snaps clean; faster and bandier than Cinematic Monitor.",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "bands",
+          "smear",
+          "green"
+        ],
+        "useWhen": "Fast punchy signal-glitch cut (~0.64s) on an energetic beat; 8 variants differ in band pattern, ghost direction and glitch-window length."
+      }
+    },
+    {
+      "id": "glitchmonitor-8",
+      "category": "GLITCH",
+      "variant": "Monitor",
+      "intensity": "8",
+      "label": "Glitch · Monitor · 8",
+      "engine": "GlitchMonitor",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.64,
+      "params": {
+        "offsets": [
+          {
+            "t0": 0,
+            "t1": 0.16,
+            "dx": 0.3271,
+            "dy": -0.4556
+          },
+          {
+            "t0": 0.16,
+            "t1": 0.64,
+            "dx": -0.5005,
+            "dy": 0.1889
+          }
+        ],
+        "hst": {
+          "t0": 0.12,
+          "t1": 0.24
+        },
+        "hstShiftX": 0.00365,
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.7
+        },
+        "blurPx": 100,
+        "stretchY": 1.5,
+        "plateDir": "transitions/lib/plates/glitchmonitor-8",
+        "plateCount": 30,
+        "plateIn": 0,
+        "plateOpacity": 1,
+        "swapAt": 0.25
+      },
+      "sfx": "transitions/lib/sfx-glitchmonitor-8.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchMonitor.tsx",
+        "description": "Monitor-signal glitch: colored signal bands sweep over the frame, a blurred stretched ghost of the shot slams across the cut with green embossed scan relief, then everything snaps clean; faster and bandier than Cinematic Monitor.",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "monitor",
+          "signal",
+          "bands",
+          "smear",
+          "green"
+        ],
+        "useWhen": "Fast punchy signal-glitch cut (~0.64s) on an energetic beat; 8 variants differ in band pattern, ghost direction and glitch-window length."
+      }
     }
   ]
 }
