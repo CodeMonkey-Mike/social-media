@@ -115,6 +115,10 @@ blend modes, and the SFX → came out smooth and wrong. Don't repeat.)
 - **Trim leading silence from the pack SFX** (`ffmpeg ... silenceremove=start_periods=1:start_threshold=-50dB`)
   so the hit lands at the cut, not 0.2s late. The pack's `Cinematic_Bad_Signal_Min.mp3` had 0.2s of
   lead-in silence = silent for the whole Min window.
+- **Some families genuinely ship NO SFX** (Glitch Offset, verified 2026-07-05: FullHD + 4K
+  audio groups empty, previews video-only, no matching Sound file). Verify all three before
+  concluding that; then `hasSound:false` + tell Mike is correct — do NOT invent a mapping
+  from another family's sounds (Rule 2 beats "never ship silent" when the pack has none).
 - **Check the source plates aren't EMPTY before building a variant.** Bad Signal **Min** has an
   all-black Tile Mask AND a flat-gray overlay plate (no content) — its glitch is negligible and not
   worth faking. We ABANDONED Min (Mike's call 2026-06-20) and shipped Cinematic Bad Signal as **6**
