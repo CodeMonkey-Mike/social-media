@@ -4671,6 +4671,588 @@
         ],
         "useWhen": "Frame-roll glitch cut (~0.88s), reads like a video signal losing v-sync; higher x = longer + wilder. No pack SFX for this family (ships silent; add a whoosh/glitch hit manually if the edit needs one)."
       }
+    },
+    {
+      "id": "roughly-1x",
+      "category": "GLITCH",
+      "variant": "Roughly",
+      "intensity": "1x",
+      "label": "Glitch · Roughly · 1x",
+      "engine": "GlitchRoughly",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.28,
+      "params": {
+        "cut": 0.12,
+        "windows": [
+          {
+            "type": "mosaic",
+            "t0": 0,
+            "t1": 0.28,
+            "maskDir": "transitions/lib/masks/roughly-frag-1x",
+            "maskFrames": 7,
+            "maskStart": 0,
+            "cellsX": 314,
+            "cellsY": 174,
+            "scaleH": 125
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-roughly-1x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchRoughly.tsx",
+        "description": "Rough compression-artifact glitch: ragged fragment-shaped patches of the footage go coarse-mosaic and stretch, while blocky strips tear away as wrap-shifted displaced copies, then it settles. Density 1x (brief fragment flicker) to 7x (long tear with stacked block displacement).",
+        "energy": "medium",
+        "durationSeconds": 0.28,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "roughly",
+          "fragments",
+          "mosaic",
+          "displacement",
+          "datamosh"
+        ],
+        "useWhen": "Datamosh/corruption-style cut (~0.28s) that chews the frame into pixelated fragments; higher x = longer + more block tearing. Pairs with its own displacement SFX."
+      }
+    },
+    {
+      "id": "roughly-2x",
+      "category": "GLITCH",
+      "variant": "Roughly",
+      "intensity": "2x",
+      "label": "Glitch · Roughly · 2x",
+      "engine": "GlitchRoughly",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.36,
+      "params": {
+        "cut": 0.16,
+        "windows": [
+          {
+            "type": "offset",
+            "t0": 0.12,
+            "t1": 0.24,
+            "maskDir": "transitions/lib/masks/roughly-blocks-2x",
+            "maskFrames": 9,
+            "maskStart": 0.12,
+            "curve": [
+              {
+                "t": -0.2,
+                "dx": 0.01146,
+                "dy": -0.77222
+              },
+              {
+                "t": -0.12,
+                "dx": 0.77917,
+                "dy": -0.3963
+              },
+              {
+                "t": 0.08,
+                "dx": 0.10885,
+                "dy": -0.78519
+              },
+              {
+                "t": 0.2,
+                "dx": 0.07396,
+                "dy": -0.06019
+              }
+            ]
+          },
+          {
+            "type": "mosaic",
+            "t0": 0,
+            "t1": 0.36,
+            "maskDir": "transitions/lib/masks/roughly-frag-2x",
+            "maskFrames": 9,
+            "maskStart": 0,
+            "cellsX": 314,
+            "cellsY": 174,
+            "scaleH": 125
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-roughly-2x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchRoughly.tsx",
+        "description": "Rough compression-artifact glitch: ragged fragment-shaped patches of the footage go coarse-mosaic and stretch, while blocky strips tear away as wrap-shifted displaced copies, then it settles. Density 1x (brief fragment flicker) to 7x (long tear with stacked block displacement).",
+        "energy": "medium",
+        "durationSeconds": 0.36,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "roughly",
+          "fragments",
+          "mosaic",
+          "displacement",
+          "datamosh"
+        ],
+        "useWhen": "Datamosh/corruption-style cut (~0.36s) that chews the frame into pixelated fragments; higher x = longer + more block tearing. Pairs with its own displacement SFX."
+      }
+    },
+    {
+      "id": "roughly-3x",
+      "category": "GLITCH",
+      "variant": "Roughly",
+      "intensity": "3x",
+      "label": "Glitch · Roughly · 3x",
+      "engine": "GlitchRoughly",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.4,
+      "params": {
+        "cut": 0.16,
+        "windows": [
+          {
+            "type": "offset",
+            "t0": 0.12,
+            "t1": 0.28,
+            "maskDir": "transitions/lib/masks/roughly-blocks-3x",
+            "maskFrames": 10,
+            "maskStart": 0.12,
+            "curve": [
+              {
+                "t": -0.12,
+                "dx": 0.11927,
+                "dy": -0.78148
+              },
+              {
+                "t": -0.04,
+                "dx": 0.28646,
+                "dy": -0.47963
+              },
+              {
+                "t": 0.04,
+                "dx": 0.62344,
+                "dy": -0.2
+              },
+              {
+                "t": 0.2,
+                "dx": 0.02656,
+                "dy": -0.9037
+              }
+            ]
+          },
+          {
+            "type": "mosaic",
+            "t0": 0,
+            "t1": 0.4,
+            "maskDir": "transitions/lib/masks/roughly-frag-3x",
+            "maskFrames": 10,
+            "maskStart": 0,
+            "cellsX": 314,
+            "cellsY": 174,
+            "scaleH": 125
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-roughly-3x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchRoughly.tsx",
+        "description": "Rough compression-artifact glitch: ragged fragment-shaped patches of the footage go coarse-mosaic and stretch, while blocky strips tear away as wrap-shifted displaced copies, then it settles. Density 1x (brief fragment flicker) to 7x (long tear with stacked block displacement).",
+        "energy": "high",
+        "durationSeconds": 0.4,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "roughly",
+          "fragments",
+          "mosaic",
+          "displacement",
+          "datamosh"
+        ],
+        "useWhen": "Datamosh/corruption-style cut (~0.4s) that chews the frame into pixelated fragments; higher x = longer + more block tearing. Pairs with its own displacement SFX."
+      }
+    },
+    {
+      "id": "roughly-4x",
+      "category": "GLITCH",
+      "variant": "Roughly",
+      "intensity": "4x",
+      "label": "Glitch · Roughly · 4x",
+      "engine": "GlitchRoughly",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.52,
+      "params": {
+        "cut": 0.2,
+        "windows": [
+          {
+            "type": "offset",
+            "t0": 0.12,
+            "t1": 0.4,
+            "maskDir": "transitions/lib/masks/roughly-blocks-4x",
+            "maskFrames": 12,
+            "maskStart": 0.12,
+            "curve": [
+              {
+                "t": -0.12,
+                "dx": -0.01406,
+                "dy": -0.07778
+              },
+              {
+                "t": -0.001,
+                "dx": 0.26719,
+                "dy": -0.76944
+              },
+              {
+                "t": 0,
+                "dx": 0.9099,
+                "dy": -0.39167
+              },
+              {
+                "t": 0.2,
+                "dx": 0.35104,
+                "dy": -0.88519
+              },
+              {
+                "t": 0.32,
+                "dx": 0.95469,
+                "dy": 0.11111
+              }
+            ]
+          },
+          {
+            "type": "mosaic",
+            "t0": 0,
+            "t1": 0.48,
+            "maskDir": "transitions/lib/masks/roughly-frag-4x",
+            "maskFrames": 12,
+            "maskStart": 0,
+            "cellsX": 314,
+            "cellsY": 174,
+            "scaleH": 125
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-roughly-4x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchRoughly.tsx",
+        "description": "Rough compression-artifact glitch: ragged fragment-shaped patches of the footage go coarse-mosaic and stretch, while blocky strips tear away as wrap-shifted displaced copies, then it settles. Density 1x (brief fragment flicker) to 7x (long tear with stacked block displacement).",
+        "energy": "high",
+        "durationSeconds": 0.52,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "roughly",
+          "fragments",
+          "mosaic",
+          "displacement",
+          "datamosh"
+        ],
+        "useWhen": "Datamosh/corruption-style cut (~0.52s) that chews the frame into pixelated fragments; higher x = longer + more block tearing. Pairs with its own displacement SFX."
+      }
+    },
+    {
+      "id": "roughly-5x",
+      "category": "GLITCH",
+      "variant": "Roughly",
+      "intensity": "5x",
+      "label": "Glitch · Roughly · 5x",
+      "engine": "GlitchRoughly",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.6,
+      "params": {
+        "cut": 0.2,
+        "windows": [
+          {
+            "type": "offset",
+            "t0": 0.12,
+            "t1": 0.44,
+            "maskDir": "transitions/lib/masks/roughly-blocks-5x",
+            "maskFrames": 14,
+            "maskStart": 0.12,
+            "curve": [
+              {
+                "t": -0.12,
+                "dx": 0,
+                "dy": 0.05185
+              },
+              {
+                "t": -0.04,
+                "dx": 0.9276,
+                "dy": -0.31204
+              },
+              {
+                "t": 0.12,
+                "dx": 0.20521,
+                "dy": -0.62222
+              },
+              {
+                "t": 0.24,
+                "dx": 0.20521,
+                "dy": -0.77407
+              },
+              {
+                "t": 0.4,
+                "dx": 0.15781,
+                "dy": 0.97222
+              }
+            ]
+          },
+          {
+            "type": "mosaic",
+            "t0": 0,
+            "t1": 0.56,
+            "maskDir": "transitions/lib/masks/roughly-frag-5x",
+            "maskFrames": 14,
+            "maskStart": 0,
+            "cellsX": 314,
+            "cellsY": 174,
+            "scaleH": 125
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-roughly-5x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchRoughly.tsx",
+        "description": "Rough compression-artifact glitch: ragged fragment-shaped patches of the footage go coarse-mosaic and stretch, while blocky strips tear away as wrap-shifted displaced copies, then it settles. Density 1x (brief fragment flicker) to 7x (long tear with stacked block displacement).",
+        "energy": "high",
+        "durationSeconds": 0.6,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "roughly",
+          "fragments",
+          "mosaic",
+          "displacement",
+          "datamosh"
+        ],
+        "useWhen": "Datamosh/corruption-style cut (~0.6s) that chews the frame into pixelated fragments; higher x = longer + more block tearing. Pairs with its own displacement SFX."
+      }
+    },
+    {
+      "id": "roughly-6x",
+      "category": "GLITCH",
+      "variant": "Roughly",
+      "intensity": "6x",
+      "label": "Glitch · Roughly · 6x",
+      "engine": "GlitchRoughly",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.6,
+      "params": {
+        "cut": 0.24,
+        "windows": [
+          {
+            "type": "offset",
+            "t0": 0.12,
+            "t1": 0.6,
+            "maskDir": "transitions/lib/masks/roughly-blocks-6x",
+            "maskFrames": 15,
+            "maskStart": 0.12,
+            "curve": [
+              {
+                "t": -0.12,
+                "dx": 0.03073,
+                "dy": 0
+              },
+              {
+                "t": -0.04,
+                "dx": 0.2349,
+                "dy": 0.20833
+              },
+              {
+                "t": 0.08,
+                "dx": 0.76458,
+                "dy": -0.41296
+              },
+              {
+                "t": 0.24,
+                "dx": 1.10469,
+                "dy": -0.26574
+              },
+              {
+                "t": 0.4,
+                "dx": -0.01979,
+                "dy": 0.02407
+              }
+            ]
+          },
+          {
+            "type": "mosaic",
+            "t0": 0,
+            "t1": 0.6,
+            "maskDir": "transitions/lib/masks/roughly-frag-6x",
+            "maskFrames": 15,
+            "maskStart": 0,
+            "cellsX": 314,
+            "cellsY": 174,
+            "scaleH": 125
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-roughly-6x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchRoughly.tsx",
+        "description": "Rough compression-artifact glitch: ragged fragment-shaped patches of the footage go coarse-mosaic and stretch, while blocky strips tear away as wrap-shifted displaced copies, then it settles. Density 1x (brief fragment flicker) to 7x (long tear with stacked block displacement).",
+        "energy": "high",
+        "durationSeconds": 0.6,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "roughly",
+          "fragments",
+          "mosaic",
+          "displacement",
+          "datamosh"
+        ],
+        "useWhen": "Datamosh/corruption-style cut (~0.6s) that chews the frame into pixelated fragments; higher x = longer + more block tearing. Pairs with its own displacement SFX."
+      }
+    },
+    {
+      "id": "roughly-7x",
+      "category": "GLITCH",
+      "variant": "Roughly",
+      "intensity": "7x",
+      "label": "Glitch · Roughly · 7x",
+      "engine": "GlitchRoughly",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.64,
+      "params": {
+        "cut": 0.24,
+        "windows": [
+          {
+            "type": "offset",
+            "t0": 0.08,
+            "t1": 0.52,
+            "maskDir": "transitions/lib/masks/roughly-blocks-7x",
+            "maskFrames": 16,
+            "maskStart": 0.08,
+            "curve": [
+              {
+                "t": -0.08,
+                "dx": -0.01406,
+                "dy": -0.07778
+              },
+              {
+                "t": 0,
+                "dx": 0.26719,
+                "dy": -0.76944
+              },
+              {
+                "t": 0.24,
+                "dx": 0.17083,
+                "dy": 0.45185
+              },
+              {
+                "t": 0.44,
+                "dx": 0,
+                "dy": 0.20648
+              }
+            ]
+          },
+          {
+            "type": "offset",
+            "t0": 0.12,
+            "t1": 0.48,
+            "maskDir": "transitions/lib/masks/roughly-blocks-3x",
+            "maskFrames": 10,
+            "maskStart": 0.04,
+            "curve": [
+              {
+                "t": -0.04,
+                "dx": 0.11927,
+                "dy": -0.78148
+              },
+              {
+                "t": 0.04,
+                "dx": 0.28646,
+                "dy": -0.47963
+              },
+              {
+                "t": 0.12,
+                "dx": 0.62344,
+                "dy": -0.2
+              },
+              {
+                "t": 0.28,
+                "dx": 0.02656,
+                "dy": -0.9037
+              }
+            ]
+          },
+          {
+            "type": "mosaic",
+            "t0": 0,
+            "t1": 0.64,
+            "maskDir": "transitions/lib/masks/roughly-frag-7x",
+            "maskFrames": 16,
+            "maskStart": 0,
+            "cellsX": 314,
+            "cellsY": 174,
+            "scaleH": 125
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-roughly-7x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchRoughly.tsx",
+        "description": "Rough compression-artifact glitch: ragged fragment-shaped patches of the footage go coarse-mosaic and stretch, while blocky strips tear away as wrap-shifted displaced copies, then it settles. Density 1x (brief fragment flicker) to 7x (long tear with stacked block displacement).",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "glitch",
+          "roughly",
+          "fragments",
+          "mosaic",
+          "displacement",
+          "datamosh"
+        ],
+        "useWhen": "Datamosh/corruption-style cut (~0.64s) that chews the frame into pixelated fragments; higher x = longer + more block tearing. Pairs with its own displacement SFX."
+      }
     }
   ]
 }

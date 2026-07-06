@@ -23,6 +23,52 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## GLITCH / Roughly: all 7 built ✅ (2026-07-05, awaiting Mike's review)
+
+`roughly-1x…7x` (0.28-0.64s) — rendered + in the gallery (`browse/GLITCH/Roughly/`).
+Engine: `remotion/src/transitions/engines/GlitchRoughly.tsx`. **fidelity: near-1:1** —
+every window is the pack's REAL plate as a luma matte + real keyframes; nothing invented.
+
+Mechanism (per-clip extraction `_extract-roughly.js` → `_roughly-clips.json` →
+`_build-roughly-rows.js`; 4K project verified identical):
+- Every effect window is a SubClip of the shared **"Texture Adjustment" utility sequence**
+  (`_extract-texadj.js`) — a rack of the pack's plates at integer-second slots, each
+  self-luma-matted (Set Matte2 matte=self / luminance / stretch-to-fit + zero AECrop):
+  slot 120+(N-1) = `Different Fragments Nx`, slot 127+(N-2) = `Blocks Nx`. The window's
+  in-point picks the slot (and a plate frame offset, e.g. Blocks windows start 0.12 into
+  their slot = plate frame 3).
+- **Mosaic window** (every variant, whole transition, pair split AT the A→B cut with
+  continuous media = the cut point): content → Geometry2 Scale Height 125% → Mosaic
+  314×174 (bottom-up order: Geometry2 listed last, applies first), shown through the
+  `Different Fragments Nx` mask. 1x = this alone.
+- **Offset window(s)** (2x-6x one, 7x stacks TWO — Blocks 7x + Blocks 3x): content
+  wrap-shifted by the clip's keyframed Offset "Shift Center To" (dx,dy = raw − 0.5),
+  shown through the `Blocks Nx` mask (plates carry GRAYS → partial alpha, baked into
+  the mask PNGs `lib/masks/roughly-*`).
+- **Semantics verified NUMERICALLY vs previews** (`_verify-roughly-mech.js`): the matted
+  regions carry CONTENT chroma (≈50, baseline 48), not plate pixels (H1 would be ~0
+  chroma / ~255 luma white) → the plates are mattes over effected content, same mechanism
+  as the approved Blocks. And the matte is **SCREEN-FIXED** with effects applied to the
+  content BENEATH (adjustment-layer semantics): changed-region IoU vs preview = 0.22
+  static vs 0.09 stretched (frag), 0.12 static vs 0.02 travelling (blocks). First build
+  had effects-on-matted-output — wrong, fixed before delivery.
+- **Mosaic implemented EXACTLY** as cell-center sampling: an SVG `feDisplacementMap`
+  driven by a generated sawtooth map (R=dx,G=dy to cell center, scale 16, quantization
+  0.06px; `colorInterpolationFilters="sRGB"`, `filterUnits="userSpaceOnUse"`). Verified
+  cell pitch ~6.1px in the render. Cells are 6.1px at 1080p by the FullHD project's own
+  numbers; the pack previews show ~12.7px cells because they were rendered from the 4K
+  project (3996/314) — ours is correct for a 1080p library.
+- SFX `lib/sfx-roughly-Nx.mp3` = `Composite_Roughly_Only_Displacement.mp3` cut from each
+  variant's REAL per-variant audio in-point (0 / 0.08 / 0.64 / 0.08 / 0.44 / 0.24 / 0.04).
+- QA sheets `_qa/roughly/qa_sheet_2x.png`, `qa_sheet_7x.png` (preview vs render at
+  matching times). Honest caveat: visibility differs with content — mosaic over flat/dark
+  areas is invisible by nature, so intensity reads lower on quiet footage than the neon
+  preview; structure/timing/masks match.
+- Tooling gotcha: converting plates with a `color=` source needs `-frames:v N` — it is
+  INFINITE and alphamerge won't stop it (one runaway produced 108k PNGs).
+
+---
+
 ## GLITCH / Offset: all 7 built ✅ (2026-07-05, awaiting Mike's review)
 
 `glitchoffset-1x…7x` (0.4-0.88s) — rendered + in the gallery (`browse/GLITCH/Offset/`).
