@@ -23,6 +23,37 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## GLITCH / Turbulent Displace: all 10 built ✅ (2026-07-05, awaiting Mike's review)
+
+`turbulent-h-1x…5x`, `turbulent-v-1x…5x` (0.28-0.48s) — rendered + in the gallery
+(`browse/GLITCH/Turbulent Displace/`). Engine:
+`remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx`. **fidelity: approximate**
+(the only family so far whose LOOK is a procedural AE effect with no plates at all).
+
+Mechanism (`_extract-turbdisp.js` → `_turbdisp-clips.json` → `_build-turbdisp-rows.js`):
+- t2 (full length): AE **Turbulent Displace** — Displacement enum 9=Horizontal / 8=Vertical
+  (1-based counting the popup separator, Invert-enum convention), Amount keyframed
+  0→110..300→0 peaking AT the cut, Size 10..80, Complexity 5.1, Evolution 0→1080°,
+  per-variant Random Seed, Pinning 0.
+- t1 pair (split at the cut): the Offset/Monitor-verified HST fringe — Tint black→GREEN +
+  Emboss (dir 90 H / 0 V, relief 5..20, contrast 70) + Pin Light. t2 sits ABOVE t1 →
+  fringe first, then the turbulence displaces the fringed frame (Offset-family ordering).
+- Engine: feTurbulence + feDisplacementMap driven by the real params; Evolution scrolls
+  the field (AE morphs it in place — closest analog). CALIBRATION (the honest
+  approximations, Wave-Warp standing): ONE smooth octave (feTurbulence's octave falloff
+  is harsher than AE's; real Complexity 5 turns to fine marble, previews are laminar
+  molten folds), anisotropic baseFrequency 1/(3·Size) along / 1/(1.5·Size) across the
+  displaced axis, scale = 2×Amount. QA'd vs previews at peak both axes (S-curve folds,
+  wavelength, edge tears match; H-5x and V-3x sheets in `_qa/turb/`).
+- ENGINE NOTES: the displacement filter wraps the WHOLE 3×3 WrapLayer tile set (filtering
+  inside each tile leaves white holes where sampling exits the tile); filter remounted
+  per frame via frame-keyed id (stale-compiled-filter gotcha); axis isolation via
+  feColorMatrix pinning B=0.5 and pointing the unused channel selector at B.
+- SFX `lib/sfx-turbulent-{h,v}-Nx.mp3` = `Displacement_Turbulent.mp3` cut from each
+  variant's REAL audio in-point (0.72/0.64/0.6/0.44/0.08, H and V pairs identical).
+
+---
+
 ## GLITCH / Roughly: all 7 built ✅ (2026-07-05, awaiting Mike's review)
 
 `roughly-1x…7x` (0.28-0.64s) — rendered + in the gallery (`browse/GLITCH/Roughly/`).

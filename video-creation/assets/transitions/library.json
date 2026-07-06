@@ -5253,6 +5253,760 @@
         ],
         "useWhen": "Datamosh/corruption-style cut (~0.64s) that chews the frame into pixelated fragments; higher x = longer + more block tearing. Pairs with its own displacement SFX."
       }
+    },
+    {
+      "id": "turbulent-h-1x",
+      "category": "GLITCH",
+      "variant": "Turbulent Displace",
+      "intensity": "Horizontal 1x",
+      "label": "Glitch · Turbulent Displace · Horizontal 1x",
+      "engine": "GlitchTurbulentDisplace",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.28,
+      "params": {
+        "cut": 0.12,
+        "axis": "x",
+        "size": 10,
+        "complexity": 5,
+        "seed": 30129,
+        "amount": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.12,
+            "v": 110
+          },
+          {
+            "t": 0.28,
+            "v": 0
+          }
+        ],
+        "evolution": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.28,
+            "v": 1080
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.24
+        },
+        "emboss": {
+          "reliefPx": 5,
+          "contrast": 0.7,
+          "dir": 90
+        }
+      },
+      "sfx": "transitions/lib/sfx-turbulent-h-1x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx",
+        "description": "Heat-haze signal warp: fractal-noise horizontal displacement churns the frame (peak 110px at the cut) with green/magenta emboss fringes biting during the hot zone, then it settles clean. Density 1x (fine jitter) to 5x (big molten waves).",
+        "energy": "medium",
+        "durationSeconds": 0.28,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "turbulent",
+          "displace",
+          "warp",
+          "noise",
+          "horizontal"
+        ],
+        "useWhen": "Analog-signal warp cut (~0.28s); horizontal smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
+      }
+    },
+    {
+      "id": "turbulent-h-2x",
+      "category": "GLITCH",
+      "variant": "Turbulent Displace",
+      "intensity": "Horizontal 2x",
+      "label": "Glitch · Turbulent Displace · Horizontal 2x",
+      "engine": "GlitchTurbulentDisplace",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.32,
+      "params": {
+        "cut": 0.12,
+        "axis": "x",
+        "size": 20,
+        "complexity": 5,
+        "seed": 2401,
+        "amount": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.12,
+            "v": 120
+          },
+          {
+            "t": 0.32,
+            "v": 0
+          }
+        ],
+        "evolution": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.32,
+            "v": 1080
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.28
+        },
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.7,
+          "dir": 90
+        }
+      },
+      "sfx": "transitions/lib/sfx-turbulent-h-2x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx",
+        "description": "Heat-haze signal warp: fractal-noise horizontal displacement churns the frame (peak 120px at the cut) with green/magenta emboss fringes biting during the hot zone, then it settles clean. Density 1x (fine jitter) to 5x (big molten waves).",
+        "energy": "medium",
+        "durationSeconds": 0.32,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "turbulent",
+          "displace",
+          "warp",
+          "noise",
+          "horizontal"
+        ],
+        "useWhen": "Analog-signal warp cut (~0.32s); horizontal smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
+      }
+    },
+    {
+      "id": "turbulent-h-3x",
+      "category": "GLITCH",
+      "variant": "Turbulent Displace",
+      "intensity": "Horizontal 3x",
+      "label": "Glitch · Turbulent Displace · Horizontal 3x",
+      "engine": "GlitchTurbulentDisplace",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.36,
+      "params": {
+        "cut": 0.12,
+        "axis": "x",
+        "size": 30,
+        "complexity": 5,
+        "seed": 2339,
+        "amount": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.12,
+            "v": 140
+          },
+          {
+            "t": 0.36,
+            "v": 0
+          }
+        ],
+        "evolution": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.36,
+            "v": 1080
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.32
+        },
+        "emboss": {
+          "reliefPx": 10,
+          "contrast": 0.7,
+          "dir": 90
+        }
+      },
+      "sfx": "transitions/lib/sfx-turbulent-h-3x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx",
+        "description": "Heat-haze signal warp: fractal-noise horizontal displacement churns the frame (peak 140px at the cut) with green/magenta emboss fringes biting during the hot zone, then it settles clean. Density 1x (fine jitter) to 5x (big molten waves).",
+        "energy": "high",
+        "durationSeconds": 0.36,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "turbulent",
+          "displace",
+          "warp",
+          "noise",
+          "horizontal"
+        ],
+        "useWhen": "Analog-signal warp cut (~0.36s); horizontal smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
+      }
+    },
+    {
+      "id": "turbulent-h-4x",
+      "category": "GLITCH",
+      "variant": "Turbulent Displace",
+      "intensity": "Horizontal 4x",
+      "label": "Glitch · Turbulent Displace · Horizontal 4x",
+      "engine": "GlitchTurbulentDisplace",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.48,
+      "params": {
+        "cut": 0.24,
+        "axis": "x",
+        "size": 40,
+        "complexity": 5,
+        "seed": 490,
+        "amount": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.24,
+            "v": 180
+          },
+          {
+            "t": 0.48,
+            "v": 0
+          }
+        ],
+        "evolution": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.48,
+            "v": 1080
+          }
+        ],
+        "hst": {
+          "t0": 0.08,
+          "t1": 0.44
+        },
+        "emboss": {
+          "reliefPx": 15,
+          "contrast": 0.7,
+          "dir": 90
+        }
+      },
+      "sfx": "transitions/lib/sfx-turbulent-h-4x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx",
+        "description": "Heat-haze signal warp: fractal-noise horizontal displacement churns the frame (peak 180px at the cut) with green/magenta emboss fringes biting during the hot zone, then it settles clean. Density 1x (fine jitter) to 5x (big molten waves).",
+        "energy": "high",
+        "durationSeconds": 0.48,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "turbulent",
+          "displace",
+          "warp",
+          "noise",
+          "horizontal"
+        ],
+        "useWhen": "Analog-signal warp cut (~0.48s); horizontal smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
+      }
+    },
+    {
+      "id": "turbulent-h-5x",
+      "category": "GLITCH",
+      "variant": "Turbulent Displace",
+      "intensity": "Horizontal 5x",
+      "label": "Glitch · Turbulent Displace · Horizontal 5x",
+      "engine": "GlitchTurbulentDisplace",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.16,
+        "axis": "x",
+        "size": 80,
+        "complexity": 5,
+        "seed": 3820,
+        "amount": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.16,
+            "v": 300
+          },
+          {
+            "t": 0.44,
+            "v": 0
+          }
+        ],
+        "evolution": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.44,
+            "v": 1080
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.4
+        },
+        "emboss": {
+          "reliefPx": 20,
+          "contrast": 0.7,
+          "dir": 90
+        }
+      },
+      "sfx": "transitions/lib/sfx-turbulent-h-5x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx",
+        "description": "Heat-haze signal warp: fractal-noise horizontal displacement churns the frame (peak 300px at the cut) with green/magenta emboss fringes biting during the hot zone, then it settles clean. Density 1x (fine jitter) to 5x (big molten waves).",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "turbulent",
+          "displace",
+          "warp",
+          "noise",
+          "horizontal"
+        ],
+        "useWhen": "Analog-signal warp cut (~0.44s); horizontal smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
+      }
+    },
+    {
+      "id": "turbulent-v-1x",
+      "category": "GLITCH",
+      "variant": "Turbulent Displace",
+      "intensity": "Vertical 1x",
+      "label": "Glitch · Turbulent Displace · Vertical 1x",
+      "engine": "GlitchTurbulentDisplace",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.28,
+      "params": {
+        "cut": 0.12,
+        "axis": "y",
+        "size": 10,
+        "complexity": 5,
+        "seed": 3310,
+        "amount": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.12,
+            "v": 110
+          },
+          {
+            "t": 0.28,
+            "v": 0
+          }
+        ],
+        "evolution": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.28,
+            "v": 1080
+          },
+          {
+            "t": 2.04,
+            "v": 1080
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.24
+        },
+        "emboss": {
+          "reliefPx": 5,
+          "contrast": 0.7,
+          "dir": 0
+        }
+      },
+      "sfx": "transitions/lib/sfx-turbulent-v-1x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx",
+        "description": "Heat-haze signal warp: fractal-noise vertical displacement churns the frame (peak 110px at the cut) with green/magenta emboss fringes biting during the hot zone, then it settles clean. Density 1x (fine jitter) to 5x (big molten waves).",
+        "energy": "medium",
+        "durationSeconds": 0.28,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "turbulent",
+          "displace",
+          "warp",
+          "noise",
+          "vertical"
+        ],
+        "useWhen": "Analog-signal warp cut (~0.28s); vertical smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
+      }
+    },
+    {
+      "id": "turbulent-v-2x",
+      "category": "GLITCH",
+      "variant": "Turbulent Displace",
+      "intensity": "Vertical 2x",
+      "label": "Glitch · Turbulent Displace · Vertical 2x",
+      "engine": "GlitchTurbulentDisplace",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.32,
+      "params": {
+        "cut": 0.12,
+        "axis": "y",
+        "size": 15,
+        "complexity": 5,
+        "seed": 4015,
+        "amount": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.12,
+            "v": 120
+          },
+          {
+            "t": 0.32,
+            "v": 0
+          }
+        ],
+        "evolution": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.32,
+            "v": 1080
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.28
+        },
+        "emboss": {
+          "reliefPx": 7,
+          "contrast": 0.7,
+          "dir": 0
+        }
+      },
+      "sfx": "transitions/lib/sfx-turbulent-v-2x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx",
+        "description": "Heat-haze signal warp: fractal-noise vertical displacement churns the frame (peak 120px at the cut) with green/magenta emboss fringes biting during the hot zone, then it settles clean. Density 1x (fine jitter) to 5x (big molten waves).",
+        "energy": "medium",
+        "durationSeconds": 0.32,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "turbulent",
+          "displace",
+          "warp",
+          "noise",
+          "vertical"
+        ],
+        "useWhen": "Analog-signal warp cut (~0.32s); vertical smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
+      }
+    },
+    {
+      "id": "turbulent-v-3x",
+      "category": "GLITCH",
+      "variant": "Turbulent Displace",
+      "intensity": "Vertical 3x",
+      "label": "Glitch · Turbulent Displace · Vertical 3x",
+      "engine": "GlitchTurbulentDisplace",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.36,
+      "params": {
+        "cut": 0.12,
+        "axis": "y",
+        "size": 25,
+        "complexity": 5,
+        "seed": 2686,
+        "amount": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.12,
+            "v": 140
+          },
+          {
+            "t": 0.36,
+            "v": 0
+          }
+        ],
+        "evolution": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.36,
+            "v": 1080
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.32
+        },
+        "emboss": {
+          "reliefPx": 10,
+          "contrast": 0.7,
+          "dir": 0
+        }
+      },
+      "sfx": "transitions/lib/sfx-turbulent-v-3x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx",
+        "description": "Heat-haze signal warp: fractal-noise vertical displacement churns the frame (peak 140px at the cut) with green/magenta emboss fringes biting during the hot zone, then it settles clean. Density 1x (fine jitter) to 5x (big molten waves).",
+        "energy": "high",
+        "durationSeconds": 0.36,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "turbulent",
+          "displace",
+          "warp",
+          "noise",
+          "vertical"
+        ],
+        "useWhen": "Analog-signal warp cut (~0.36s); vertical smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
+      }
+    },
+    {
+      "id": "turbulent-v-4x",
+      "category": "GLITCH",
+      "variant": "Turbulent Displace",
+      "intensity": "Vertical 4x",
+      "label": "Glitch · Turbulent Displace · Vertical 4x",
+      "engine": "GlitchTurbulentDisplace",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.4,
+      "params": {
+        "cut": 0.16,
+        "axis": "y",
+        "size": 30,
+        "complexity": 5,
+        "seed": 4360,
+        "amount": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.16,
+            "v": 180
+          },
+          {
+            "t": 0.4,
+            "v": 0
+          }
+        ],
+        "evolution": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.4,
+            "v": 1080
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.36
+        },
+        "emboss": {
+          "reliefPx": 15,
+          "contrast": 0.7,
+          "dir": 0
+        }
+      },
+      "sfx": "transitions/lib/sfx-turbulent-v-4x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx",
+        "description": "Heat-haze signal warp: fractal-noise vertical displacement churns the frame (peak 180px at the cut) with green/magenta emboss fringes biting during the hot zone, then it settles clean. Density 1x (fine jitter) to 5x (big molten waves).",
+        "energy": "high",
+        "durationSeconds": 0.4,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "turbulent",
+          "displace",
+          "warp",
+          "noise",
+          "vertical"
+        ],
+        "useWhen": "Analog-signal warp cut (~0.4s); vertical smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
+      }
+    },
+    {
+      "id": "turbulent-v-5x",
+      "category": "GLITCH",
+      "variant": "Turbulent Displace",
+      "intensity": "Vertical 5x",
+      "label": "Glitch · Turbulent Displace · Vertical 5x",
+      "engine": "GlitchTurbulentDisplace",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.16,
+        "axis": "y",
+        "size": 55,
+        "complexity": 5,
+        "seed": 15203,
+        "amount": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.16,
+            "v": 300
+          },
+          {
+            "t": 0.44,
+            "v": 0
+          }
+        ],
+        "evolution": [
+          {
+            "t": 0,
+            "v": 0
+          },
+          {
+            "t": 0.44,
+            "v": 1080
+          }
+        ],
+        "hst": {
+          "t0": 0.04,
+          "t1": 0.4
+        },
+        "emboss": {
+          "reliefPx": 20,
+          "contrast": 0.7,
+          "dir": 0
+        }
+      },
+      "sfx": "transitions/lib/sfx-turbulent-v-5x.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTurbulentDisplace.tsx",
+        "description": "Heat-haze signal warp: fractal-noise vertical displacement churns the frame (peak 300px at the cut) with green/magenta emboss fringes biting during the hot zone, then it settles clean. Density 1x (fine jitter) to 5x (big molten waves).",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "turbulent",
+          "displace",
+          "warp",
+          "noise",
+          "vertical"
+        ],
+        "useWhen": "Analog-signal warp cut (~0.44s); vertical smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
+      }
     }
   ]
 }
