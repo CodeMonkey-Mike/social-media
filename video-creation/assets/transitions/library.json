@@ -6007,6 +6007,1332 @@
         ],
         "useWhen": "Analog-signal warp cut (~0.44s); vertical smear reads like heat haze / molten video. Approximate: the AE fractal noise field is procedural, reproduced with feTurbulence from the real params (amount/size/evolution/seed)."
       }
+    },
+    {
+      "id": "tvsat-max-1",
+      "category": "GLITCH",
+      "variant": "TV Satellite",
+      "intensity": "Max 1",
+      "label": "Glitch · TV Satellite · Max 1",
+      "engine": "GlitchTVSatellite",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.96,
+      "params": {
+        "cut": 0.32,
+        "window": {
+          "t0": 0,
+          "t1": 0.96,
+          "maskDir": "transitions/lib/masks/tvsat-max-1",
+          "maskFrames": 25,
+          "maskStart": 0,
+          "turb": {
+            "amount": 635,
+            "size": 11.900015830994,
+            "complexity": 2,
+            "seed": 0,
+            "evolution": [
+              {
+                "t": 0,
+                "v": 0
+              },
+              {
+                "t": 0.96,
+                "v": 360
+              }
+            ]
+          }
+        },
+        "roll": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": -0.00607,
+            "dy": 0
+          },
+          {
+            "t": 0.2,
+            "dx": -0.01785,
+            "dy": 0
+          },
+          {
+            "t": 0.24,
+            "dx": -0.01211,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dx": -0.0075,
+            "dy": 1.0125
+          },
+          {
+            "t": 0.32,
+            "dx": -0.0126,
+            "dy": 2.17329
+          },
+          {
+            "t": 0.36,
+            "dx": -0.01808,
+            "dy": 0.59992
+          },
+          {
+            "t": 0.4,
+            "dx": -0.01631,
+            "dy": -0.80026
+          },
+          {
+            "t": 0.44,
+            "dx": -0.0158,
+            "dy": -0.68938
+          },
+          {
+            "t": 0.48,
+            "dx": -0.02232,
+            "dy": 0.22272
+          },
+          {
+            "t": 0.52,
+            "dx": -0.0177,
+            "dy": 0.09747
+          },
+          {
+            "t": 0.56,
+            "dx": 0.00113,
+            "dy": 0
+          },
+          {
+            "t": 0.6,
+            "dx": 0.01296,
+            "dy": 0
+          },
+          {
+            "t": 0.64,
+            "dx": 0.00965,
+            "dy": 0
+          },
+          {
+            "t": 0.68,
+            "dx": -0.00818,
+            "dy": 0
+          },
+          {
+            "t": 0.72,
+            "dx": -0.00944,
+            "dy": 0
+          },
+          {
+            "t": 0.76,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.8,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.84,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.88,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.92,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.96,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "plate": {
+          "dir": "transitions/lib/plates/tvsat-max-1",
+          "frames": 25,
+          "seg1In": 0,
+          "seg2In": 0.32
+        }
+      },
+      "sfx": "transitions/lib/sfx-tvsat-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTVSatellite.tsx",
+        "description": "Lost-satellite-feed glitch: ragged mask regions fill with grayscale static-shred of the footage while the whole frame rolls on a keyframed offset path and a real noise/scanline plate pin-lights over everything, then the signal locks back in. Max ~1s, Short ~0.5s, Min ~0.3s.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "satellite",
+          "static",
+          "signal-loss",
+          "analog"
+        ],
+        "useWhen": "TV-signal-loss cut (~0.96s): grayscale shredded static in torn bands + frame roll + real noise plate. Approximate: the shred is AE Turbulent Displace, reproduced procedurally (real amount/size/evolution)."
+      }
+    },
+    {
+      "id": "tvsat-max-2",
+      "category": "GLITCH",
+      "variant": "TV Satellite",
+      "intensity": "Max 2",
+      "label": "Glitch · TV Satellite · Max 2",
+      "engine": "GlitchTVSatellite",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.96,
+      "params": {
+        "cut": 0.32,
+        "window": {
+          "t0": 0,
+          "t1": 0.96,
+          "maskDir": "transitions/lib/masks/tvsat-max-2",
+          "maskFrames": 25,
+          "maskStart": 0,
+          "turb": {
+            "amount": 635,
+            "size": 11.900015830994,
+            "complexity": 2,
+            "seed": 831,
+            "evolution": [
+              {
+                "t": 0,
+                "v": 0
+              },
+              {
+                "t": 0.96,
+                "v": 360
+              }
+            ]
+          }
+        },
+        "roll": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": -0.00462,
+            "dy": 0
+          },
+          {
+            "t": 0.2,
+            "dx": -0.02697,
+            "dy": 0
+          },
+          {
+            "t": 0.24,
+            "dx": -0.0296,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dx": -0.0086,
+            "dy": -0.93313
+          },
+          {
+            "t": 0.32,
+            "dx": 0.00433,
+            "dy": -2.49715
+          },
+          {
+            "t": 0.36,
+            "dx": 0.00205,
+            "dy": -2.14008
+          },
+          {
+            "t": 0.4,
+            "dx": -0.00032,
+            "dy": -0.45962
+          },
+          {
+            "t": 0.44,
+            "dx": 0.00922,
+            "dy": 0.03628
+          },
+          {
+            "t": 0.48,
+            "dx": 0.00673,
+            "dy": -0.1441
+          },
+          {
+            "t": 0.52,
+            "dx": -0.00489,
+            "dy": -0.05641
+          },
+          {
+            "t": 0.56,
+            "dx": -0.0035,
+            "dy": 0
+          },
+          {
+            "t": 0.6,
+            "dx": 0.00783,
+            "dy": 0
+          },
+          {
+            "t": 0.64,
+            "dx": 0.00748,
+            "dy": 0
+          },
+          {
+            "t": 0.68,
+            "dx": -0.00375,
+            "dy": 0
+          },
+          {
+            "t": 0.72,
+            "dx": -0.00398,
+            "dy": 0
+          },
+          {
+            "t": 0.76,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.8,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.84,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.88,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.92,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.96,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "plate": {
+          "dir": "transitions/lib/plates/tvsat-max-2",
+          "frames": 25,
+          "seg1In": 0,
+          "seg2In": 0.32
+        }
+      },
+      "sfx": "transitions/lib/sfx-tvsat-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTVSatellite.tsx",
+        "description": "Lost-satellite-feed glitch: ragged mask regions fill with grayscale static-shred of the footage while the whole frame rolls on a keyframed offset path and a real noise/scanline plate pin-lights over everything, then the signal locks back in. Max ~1s, Short ~0.5s, Min ~0.3s.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "satellite",
+          "static",
+          "signal-loss",
+          "analog"
+        ],
+        "useWhen": "TV-signal-loss cut (~0.96s): grayscale shredded static in torn bands + frame roll + real noise plate. Approximate: the shred is AE Turbulent Displace, reproduced procedurally (real amount/size/evolution)."
+      }
+    },
+    {
+      "id": "tvsat-max-3",
+      "category": "GLITCH",
+      "variant": "TV Satellite",
+      "intensity": "Max 3",
+      "label": "Glitch · TV Satellite · Max 3",
+      "engine": "GlitchTVSatellite",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.96,
+      "params": {
+        "cut": 0.32,
+        "window": {
+          "t0": 0,
+          "t1": 0.96,
+          "maskDir": "transitions/lib/masks/tvsat-max-3",
+          "maskFrames": 25,
+          "maskStart": 0,
+          "turb": {
+            "amount": 635,
+            "size": 11.900015830994,
+            "complexity": 2,
+            "seed": 2540,
+            "evolution": [
+              {
+                "t": 0,
+                "v": 0
+              },
+              {
+                "t": 0.96,
+                "v": 360
+              }
+            ]
+          }
+        },
+        "roll": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": -0.00462,
+            "dy": 0
+          },
+          {
+            "t": 0.2,
+            "dx": -0.02697,
+            "dy": 0
+          },
+          {
+            "t": 0.24,
+            "dx": -0.0296,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dx": -0.0086,
+            "dy": -0.93313
+          },
+          {
+            "t": 0.32,
+            "dx": 0.00433,
+            "dy": -2.49715
+          },
+          {
+            "t": 0.36,
+            "dx": 0.00205,
+            "dy": -2.14008
+          },
+          {
+            "t": 0.4,
+            "dx": -0.00032,
+            "dy": -0.45962
+          },
+          {
+            "t": 0.44,
+            "dx": 0.00922,
+            "dy": 0.03628
+          },
+          {
+            "t": 0.48,
+            "dx": 0.00673,
+            "dy": -0.1441
+          },
+          {
+            "t": 0.52,
+            "dx": -0.00489,
+            "dy": -0.05641
+          },
+          {
+            "t": 0.56,
+            "dx": -0.0035,
+            "dy": 0
+          },
+          {
+            "t": 0.6,
+            "dx": 0.00783,
+            "dy": 0
+          },
+          {
+            "t": 0.64,
+            "dx": 0.00748,
+            "dy": 0
+          },
+          {
+            "t": 0.68,
+            "dx": -0.00375,
+            "dy": 0
+          },
+          {
+            "t": 0.72,
+            "dx": -0.00398,
+            "dy": 0
+          },
+          {
+            "t": 0.76,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.8,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.84,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.88,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.92,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.96,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "plate": {
+          "dir": "transitions/lib/plates/tvsat-max-3",
+          "frames": 25,
+          "seg1In": 0,
+          "seg2In": 0.32
+        }
+      },
+      "sfx": "transitions/lib/sfx-tvsat-max.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTVSatellite.tsx",
+        "description": "Lost-satellite-feed glitch: ragged mask regions fill with grayscale static-shred of the footage while the whole frame rolls on a keyframed offset path and a real noise/scanline plate pin-lights over everything, then the signal locks back in. Max ~1s, Short ~0.5s, Min ~0.3s.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "satellite",
+          "static",
+          "signal-loss",
+          "analog"
+        ],
+        "useWhen": "TV-signal-loss cut (~0.96s): grayscale shredded static in torn bands + frame roll + real noise plate. Approximate: the shred is AE Turbulent Displace, reproduced procedurally (real amount/size/evolution)."
+      }
+    },
+    {
+      "id": "tvsat-min-1",
+      "category": "GLITCH",
+      "variant": "TV Satellite",
+      "intensity": "Min 1",
+      "label": "Glitch · TV Satellite · Min 1",
+      "engine": "GlitchTVSatellite",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.32,
+      "params": {
+        "cut": 0.16,
+        "window": {
+          "t0": 0,
+          "t1": 0.32,
+          "maskDir": "transitions/lib/masks/tvsat-min-1",
+          "maskFrames": 25,
+          "maskStart": 0,
+          "turb": {
+            "amount": 635,
+            "size": 11.900015830994,
+            "complexity": 2,
+            "seed": 0,
+            "evolution": [
+              {
+                "t": 0,
+                "v": 0
+              },
+              {
+                "t": 0.32,
+                "v": 360
+              }
+            ]
+          }
+        },
+        "roll": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": -0.00313,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": -0.00235,
+            "dy": 0
+          },
+          {
+            "t": 0.2,
+            "dx": 0.00139,
+            "dy": 0
+          },
+          {
+            "t": 0.24,
+            "dx": -0.0002,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.32,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "plate": {
+          "dir": "transitions/lib/plates/tvsat-min-1",
+          "frames": 25,
+          "seg1In": 0.16,
+          "seg2In": 0.32
+        }
+      },
+      "sfx": "transitions/lib/sfx-tvsat-min.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTVSatellite.tsx",
+        "description": "Lost-satellite-feed glitch: ragged mask regions fill with grayscale static-shred of the footage while the whole frame rolls on a keyframed offset path and a real noise/scanline plate pin-lights over everything, then the signal locks back in. Max ~1s, Short ~0.5s, Min ~0.3s.",
+        "energy": "medium",
+        "durationSeconds": 0.32,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "satellite",
+          "static",
+          "signal-loss",
+          "analog"
+        ],
+        "useWhen": "TV-signal-loss cut (~0.32s): grayscale shredded static in torn bands + frame roll + real noise plate. Approximate: the shred is AE Turbulent Displace, reproduced procedurally (real amount/size/evolution)."
+      }
+    },
+    {
+      "id": "tvsat-min-2",
+      "category": "GLITCH",
+      "variant": "TV Satellite",
+      "intensity": "Min 2",
+      "label": "Glitch · TV Satellite · Min 2",
+      "engine": "GlitchTVSatellite",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.32,
+      "params": {
+        "cut": 0.16,
+        "window": {
+          "t0": 0,
+          "t1": 0.32,
+          "maskDir": "transitions/lib/masks/tvsat-min-2",
+          "maskFrames": 25,
+          "maskStart": 0,
+          "turb": {
+            "amount": 635,
+            "size": 11.900015830994,
+            "complexity": 2,
+            "seed": 0,
+            "evolution": [
+              {
+                "t": 0,
+                "v": 0
+              },
+              {
+                "t": 0.32,
+                "v": 360
+              }
+            ]
+          }
+        },
+        "roll": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": 0.00462,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": 0.00283,
+            "dy": 0
+          },
+          {
+            "t": 0.2,
+            "dx": 0.00001,
+            "dy": 0
+          },
+          {
+            "t": 0.24,
+            "dx": 0.00073,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.32,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "plate": {
+          "dir": "transitions/lib/plates/tvsat-min-2",
+          "frames": 25,
+          "seg1In": 0.16,
+          "seg2In": 0.32
+        }
+      },
+      "sfx": "transitions/lib/sfx-tvsat-min.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTVSatellite.tsx",
+        "description": "Lost-satellite-feed glitch: ragged mask regions fill with grayscale static-shred of the footage while the whole frame rolls on a keyframed offset path and a real noise/scanline plate pin-lights over everything, then the signal locks back in. Max ~1s, Short ~0.5s, Min ~0.3s.",
+        "energy": "medium",
+        "durationSeconds": 0.32,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "satellite",
+          "static",
+          "signal-loss",
+          "analog"
+        ],
+        "useWhen": "TV-signal-loss cut (~0.32s): grayscale shredded static in torn bands + frame roll + real noise plate. Approximate: the shred is AE Turbulent Displace, reproduced procedurally (real amount/size/evolution)."
+      }
+    },
+    {
+      "id": "tvsat-min-3",
+      "category": "GLITCH",
+      "variant": "TV Satellite",
+      "intensity": "Min 3",
+      "label": "Glitch · TV Satellite · Min 3",
+      "engine": "GlitchTVSatellite",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.32,
+      "params": {
+        "cut": 0.16,
+        "window": {
+          "t0": 0,
+          "t1": 0.32,
+          "maskDir": "transitions/lib/masks/tvsat-min-3",
+          "maskFrames": 25,
+          "maskStart": 0,
+          "turb": {
+            "amount": 635,
+            "size": 11.900015830994,
+            "complexity": 2,
+            "seed": 0,
+            "evolution": [
+              {
+                "t": 0,
+                "v": 0
+              },
+              {
+                "t": 0.32,
+                "v": 360
+              }
+            ]
+          }
+        },
+        "roll": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": 0.00462,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": 0.00283,
+            "dy": 0
+          },
+          {
+            "t": 0.2,
+            "dx": 0.00001,
+            "dy": 0
+          },
+          {
+            "t": 0.24,
+            "dx": 0.00073,
+            "dy": 0
+          },
+          {
+            "t": 0.28,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.32,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "plate": {
+          "dir": "transitions/lib/plates/tvsat-min-3",
+          "frames": 25,
+          "seg1In": 0.16,
+          "seg2In": 0.32
+        }
+      },
+      "sfx": "transitions/lib/sfx-tvsat-min.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTVSatellite.tsx",
+        "description": "Lost-satellite-feed glitch: ragged mask regions fill with grayscale static-shred of the footage while the whole frame rolls on a keyframed offset path and a real noise/scanline plate pin-lights over everything, then the signal locks back in. Max ~1s, Short ~0.5s, Min ~0.3s.",
+        "energy": "medium",
+        "durationSeconds": 0.32,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "satellite",
+          "static",
+          "signal-loss",
+          "analog"
+        ],
+        "useWhen": "TV-signal-loss cut (~0.32s): grayscale shredded static in torn bands + frame roll + real noise plate. Approximate: the shred is AE Turbulent Displace, reproduced procedurally (real amount/size/evolution)."
+      }
+    },
+    {
+      "id": "tvsat-short-1",
+      "category": "GLITCH",
+      "variant": "TV Satellite",
+      "intensity": "Short 1",
+      "label": "Glitch · TV Satellite · Short 1",
+      "engine": "GlitchTVSatellite",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.48,
+      "params": {
+        "cut": 0.16,
+        "window": {
+          "t0": 0,
+          "t1": 0.48,
+          "maskDir": "transitions/lib/masks/tvsat-short-1",
+          "maskFrames": 25,
+          "maskStart": 0,
+          "turb": {
+            "amount": 635,
+            "size": 11.900015830994,
+            "complexity": 2,
+            "seed": 0,
+            "evolution": [
+              {
+                "t": 0,
+                "v": 0
+              },
+              {
+                "t": 0.48,
+                "v": 360
+              }
+            ]
+          }
+        },
+        "roll": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": -0.00223,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": -0.00336,
+            "dy": 0.01942
+          },
+          {
+            "t": 0.2,
+            "dx": 0.00198,
+            "dy": -0.05998
+          },
+          {
+            "t": 0.24,
+            "dx": -0.00058,
+            "dy": 0.00446
+          },
+          {
+            "t": 0.28,
+            "dx": -0.00466,
+            "dy": 0
+          },
+          {
+            "t": 0.32,
+            "dx": -0.00144,
+            "dy": 0
+          },
+          {
+            "t": 0.36,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.4,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.44,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.48,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "plate": {
+          "dir": "transitions/lib/plates/tvsat-short-1",
+          "frames": 25,
+          "seg1In": 0.16,
+          "seg2In": 0.32
+        }
+      },
+      "sfx": "transitions/lib/sfx-tvsat-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTVSatellite.tsx",
+        "description": "Lost-satellite-feed glitch: ragged mask regions fill with grayscale static-shred of the footage while the whole frame rolls on a keyframed offset path and a real noise/scanline plate pin-lights over everything, then the signal locks back in. Max ~1s, Short ~0.5s, Min ~0.3s.",
+        "energy": "high",
+        "durationSeconds": 0.48,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "satellite",
+          "static",
+          "signal-loss",
+          "analog"
+        ],
+        "useWhen": "TV-signal-loss cut (~0.48s): grayscale shredded static in torn bands + frame roll + real noise plate. Approximate: the shred is AE Turbulent Displace, reproduced procedurally (real amount/size/evolution)."
+      }
+    },
+    {
+      "id": "tvsat-short-2",
+      "category": "GLITCH",
+      "variant": "TV Satellite",
+      "intensity": "Short 2",
+      "label": "Glitch · TV Satellite · Short 2",
+      "engine": "GlitchTVSatellite",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.48,
+      "params": {
+        "cut": 0.16,
+        "window": {
+          "t0": 0,
+          "t1": 0.48,
+          "maskDir": "transitions/lib/masks/tvsat-short-2",
+          "maskFrames": 25,
+          "maskStart": -0.08,
+          "turb": {
+            "amount": 635,
+            "size": 11.900015830994,
+            "complexity": 2,
+            "seed": 0,
+            "evolution": [
+              {
+                "t": 0,
+                "v": 0
+              },
+              {
+                "t": 0.48,
+                "v": 360
+              }
+            ]
+          }
+        },
+        "roll": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": 0.00079,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": -0.00613,
+            "dy": -0.1388
+          },
+          {
+            "t": 0.2,
+            "dx": -0.00507,
+            "dy": -0.07936
+          },
+          {
+            "t": 0.24,
+            "dx": -0.00251,
+            "dy": -0.02649
+          },
+          {
+            "t": 0.28,
+            "dx": 0.00272,
+            "dy": 0
+          },
+          {
+            "t": 0.32,
+            "dx": 0.00401,
+            "dy": 0
+          },
+          {
+            "t": 0.36,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.4,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.44,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.48,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "plate": {
+          "dir": "transitions/lib/plates/tvsat-short-2",
+          "frames": 25,
+          "seg1In": 0.16,
+          "seg2In": 0.32
+        }
+      },
+      "sfx": "transitions/lib/sfx-tvsat-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTVSatellite.tsx",
+        "description": "Lost-satellite-feed glitch: ragged mask regions fill with grayscale static-shred of the footage while the whole frame rolls on a keyframed offset path and a real noise/scanline plate pin-lights over everything, then the signal locks back in. Max ~1s, Short ~0.5s, Min ~0.3s.",
+        "energy": "high",
+        "durationSeconds": 0.48,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "satellite",
+          "static",
+          "signal-loss",
+          "analog"
+        ],
+        "useWhen": "TV-signal-loss cut (~0.48s): grayscale shredded static in torn bands + frame roll + real noise plate. Approximate: the shred is AE Turbulent Displace, reproduced procedurally (real amount/size/evolution)."
+      }
+    },
+    {
+      "id": "tvsat-short-3",
+      "category": "GLITCH",
+      "variant": "TV Satellite",
+      "intensity": "Short 3",
+      "label": "Glitch · TV Satellite · Short 3",
+      "engine": "GlitchTVSatellite",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 0.48,
+      "params": {
+        "cut": 0.16,
+        "window": {
+          "t0": 0,
+          "t1": 0.48,
+          "maskDir": "transitions/lib/masks/tvsat-short-3",
+          "maskFrames": 25,
+          "maskStart": 0,
+          "turb": {
+            "amount": 635,
+            "size": 11.900015830994,
+            "complexity": 2,
+            "seed": 0,
+            "evolution": [
+              {
+                "t": 0,
+                "v": 0
+              },
+              {
+                "t": 0.48,
+                "v": 360
+              }
+            ]
+          }
+        },
+        "roll": [
+          {
+            "t": 0,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.04,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.08,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.12,
+            "dx": -0.00091,
+            "dy": 0
+          },
+          {
+            "t": 0.16,
+            "dx": -0.00654,
+            "dy": -0.17302
+          },
+          {
+            "t": 0.2,
+            "dx": -0.00487,
+            "dy": -0.05964
+          },
+          {
+            "t": 0.24,
+            "dx": 0.001,
+            "dy": 0.05479
+          },
+          {
+            "t": 0.28,
+            "dx": 0.0023,
+            "dy": 0
+          },
+          {
+            "t": 0.32,
+            "dx": 0.00078,
+            "dy": 0
+          },
+          {
+            "t": 0.36,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.4,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.44,
+            "dx": 0,
+            "dy": 0
+          },
+          {
+            "t": 0.48,
+            "dx": 0,
+            "dy": 0
+          }
+        ],
+        "plate": {
+          "dir": "transitions/lib/plates/tvsat-short-3",
+          "frames": 25,
+          "seg1In": 0.16,
+          "seg2In": 0.32
+        }
+      },
+      "sfx": "transitions/lib/sfx-tvsat-short.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Glitch",
+        "engineFile": "remotion/src/transitions/engines/GlitchTVSatellite.tsx",
+        "description": "Lost-satellite-feed glitch: ragged mask regions fill with grayscale static-shred of the footage while the whole frame rolls on a keyframed offset path and a real noise/scanline plate pin-lights over everything, then the signal locks back in. Max ~1s, Short ~0.5s, Min ~0.3s.",
+        "energy": "high",
+        "durationSeconds": 0.48,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "glitch",
+          "tv",
+          "satellite",
+          "static",
+          "signal-loss",
+          "analog"
+        ],
+        "useWhen": "TV-signal-loss cut (~0.48s): grayscale shredded static in torn bands + frame roll + real noise plate. Approximate: the shred is AE Turbulent Displace, reproduced procedurally (real amount/size/evolution)."
+      }
     }
   ]
 }
