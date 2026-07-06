@@ -8,6 +8,7 @@ import { GlitchMonitor } from './engines/GlitchMonitor';
 import { GlitchOffset } from './engines/GlitchOffset';
 import { GlitchRoughly } from './engines/GlitchRoughly';
 import { GlitchTurbulentDisplace } from './engines/GlitchTurbulentDisplace';
+import { GlitchTVSatellite } from './engines/GlitchTVSatellite';
 
 /**
  * The catalog (data) lives in assets/transitions/library.json — the single
@@ -55,6 +56,7 @@ export const ENGINES: Record<string, React.FC<any>> = {
   GlitchOffset,
   GlitchRoughly,
   GlitchTurbulentDisplace,
+  GlitchTVSatellite,
 };
 
 export const TRANSITIONS = (library as { transitions: TransitionRow[] }).transitions;

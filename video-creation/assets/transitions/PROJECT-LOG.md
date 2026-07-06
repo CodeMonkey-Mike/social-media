@@ -23,6 +23,36 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## GLITCH / TV Satellite: all 9 built ✅ (2026-07-05, awaiting Mike's review)
+
+`tvsat-{max,min,short}-{1,2,3}` (Max 0.96s / Short 0.48s / Min 0.32s) — rendered + in the
+gallery (`browse/GLITCH/TV Satellite/`). Engine:
+`remotion/src/transitions/engines/GlitchTVSatellite.tsx`. **fidelity: approximate** (the
+shred is procedural; everything else is real plates + real keyframes).
+
+Mechanism (`_extract-tvsat.js` → `_tvsat-clips.json` → `_build-tvsat-rows.js`) — a
+composite of THREE previously-verified mechanisms:
+- **t1 (full length)**: Texture Adjustment rack window at the variant's `Tint Mask <V> <n>`
+  slot (1s slots at 133/135/…/149) — per the Roughly verification, a SCREEN-FIXED luma
+  matte over EFFECTED content: Tint decodes to black→black/white→WHITE = GRAYSCALE
+  (Invert convention, applied FIRST bottom-up), then Turbulent Displace Amount 635 /
+  Size 11.9 / Complexity 2 / Horizontal / Evolution 0→360 / seed 0 = the satellite-static
+  shred (feTurbulence, same calibration as the Turbulent Displace engine). All 9 variants
+  share IDENTICAL window effects — only the mask slot differs. (Short-2's in-point sits
+  0.08s BEFORE its slot in the empty rack gap → no matte for those frames; engine clamps.)
+- **t2 (full length)**: HST "Offset" adjustment — keyframed 25fps full-frame wrap roll
+  (x AND y), carries content + shred window together (it sits above both).
+- **t3**: the REAL `TV Satellite <V> <n>.mp4` plate PIN-LIGHTED on top (Blend 8+17,
+  Monitor-verified darken/lighten pair), split at the cut (Max 0.32 / Min+Short 0.16)
+  with a MEDIA JUMP: segment 2 plays plate media from 0.32s in every variant.
+  Plates + masks converted native-25fps → `lib/plates/tvsat-*`, `lib/masks/tvsat-*`.
+- SFX `lib/sfx-tvsat-{max,min,short}.mp3` from `TV_Satellite_*.mp3`, real in-points
+  (Max 0, Min/Short 0.16).
+- QA vs preview: clean at ramp-in, full grayscale static shred + scanline fringe rows at
+  peak (`_qa/cmp_tvsat.png`, `_qa/cmp_tvsat_early.png`).
+
+---
+
 ## GLITCH / Turbulent Displace: all 10 built ✅ (2026-07-05, awaiting Mike's review)
 
 `turbulent-h-1x…5x`, `turbulent-v-1x…5x` (0.28-0.48s) — rendered + in the gallery
