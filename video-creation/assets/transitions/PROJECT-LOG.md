@@ -23,6 +23,37 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## GLITCH / VHS: all 9 built ✅ (2026-07-05, awaiting Mike's review) — GLITCH CATEGORY COMPLETE
+
+`vhs-{max,min,short}-{1,2,3}` (Max ~1.1s / Short 0.64s / Min 0.52s) — rendered + in the
+gallery (`browse/GLITCH/VHS/`). Engine: `remotion/src/transitions/engines/GlitchVHS.tsx`.
+**fidelity: approximate.** With this the ENTIRE GLITCH category is built: 89 rows
+(Blocks 15, Bad Signal 6, Cinematic Monitor 9, Invert 9, Monitor 8, Offset 7, Roughly 7,
+Turbulent Displace 10, TV Satellite 9, VHS 9).
+
+Mechanism (`_extract-vhs.js` → `_vhs-clips.json` → `_build-vhs-rows.js`) — 4 adjustment
+layers + 1 plate, the pack's most stacked recipe:
+- **t1 (full window)**, bottom-up Tint → Unsharp → Turbulent Displace → Solid Composite:
+  wash Tint black→RGB(31,31,31)/white→WHITE whose amount STROBES per-frame (100→0→100…,
+  the VHS color-dropout flicker — a single still can mislead QA; compare against the
+  flicker phase). Unsharp keyframed 0→500→0 r4 (0.4× gain calibration — AE's 0.12
+  threshold tempers the literal 500%, which otherwise blows bright content to white).
+  Turbulent Displace keyframed 0→50→0, Size 100, field scrolled by the REAL keyframed
+  "Offset (Turbulence)" curve (first family to confirm the scroll mechanism from data).
+  Solid Composite black backing approximated by wrap padding.
+- **t2 window**: green/black HST tint → Emboss 90/15/70 → Fast Blur 30 (σ = px·0.2,
+  Monitor calibration), with the blend pair KEYFRAMED (18,0)→(8,17): NORMAL full takeover
+  first, PIN LIGHT after. **The switch keyframe t=0.36 is TIMELINE-absolute** (preview-
+  verified: content returns by ~0.4; the media-time reading put it at 0.48 and QA caught
+  it). Min variants' window ends AT 0.36 → Normal takeover the whole window.
+- **t3**: keyframed 25fps wrap Offset roll around content+t1+t2.
+- **t4**: REAL `Gth - TV VHS` plate PIN-LIGHTED on top, window from 0.04, media
+  continuous across the editorial split at the cut (Max 0.4 / Min 0.16 / Short 0.2).
+- SFX `lib/sfx-vhs-*.mp3` with the project's real timing baked in (Max +0.08s delay,
+  Min in 0.24 +0.04s delay, Short in 0.16).
+
+---
+
 ## GLITCH / TV Satellite: all 9 built ✅ (2026-07-05, awaiting Mike's review)
 
 `tvsat-{max,min,short}-{1,2,3}` (Max 0.96s / Short 0.48s / Min 0.32s) — rendered + in the
