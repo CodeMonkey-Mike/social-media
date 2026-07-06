@@ -1,0 +1,2456 @@
+[
+  {
+    "name": "Turbulent Displace Horizontal - 1x",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.28,
+        "subClipName": "Turbulent Displace Horizontal - 1x.mp4",
+        "inPoint": 0,
+        "masterClipName": "Turbulent Displace Horizontal - 1x.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0.04,
+        "end": 0.12,
+        "subClipName": "Deviation",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Relief",
+                "value": "5."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.12,
+        "end": 0.24,
+        "subClipName": "Abberations",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Relief",
+                "value": "5."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.28,
+        "subClipName": "Turbulent Displace Horizontal - 1x",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Turbulent Displace",
+            "params": [
+              {
+                "name": "Displacement",
+                "value": "9"
+              },
+              {
+                "name": "Amount",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "110."
+                  },
+                  {
+                    "t": 0.28,
+                    "v": "0."
+                  }
+                ]
+              },
+              {
+                "name": "Size",
+                "value": "10."
+              },
+              {
+                "name": "Offset (Turbulence)",
+                "value": "0:0"
+              },
+              {
+                "name": "Complexity",
+                "value": "5.099998474121"
+              },
+              {
+                "name": "Evolution",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.28,
+                    "v": "1080."
+                  }
+                ]
+              },
+              {
+                "name": "Evolution Options",
+                "value": "false"
+              },
+              {
+                "name": "Cycle (in Revolutions)",
+                "value": "1"
+              },
+              {
+                "name": "Random Seed",
+                "value": "30129"
+              },
+              {
+                "name": "Random Seed",
+                "value": "false"
+              },
+              {
+                "name": "Pinning",
+                "value": "0"
+              },
+              {
+                "name": "Antialiasing for Best Quality",
+                "value": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.28,
+        "inPoint": 0.72,
+        "subClipName": "Displacement_Turbulent.mp3",
+        "masterClipName": "Displacement_Turbulent.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Turbulent Displace Horizontal - 2x",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.32,
+        "subClipName": "Turbulent Displace Horizontal - 2x.mp4",
+        "inPoint": 0,
+        "masterClipName": "Turbulent Displace Horizontal - 2x.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0.04,
+        "end": 0.12,
+        "subClipName": "Deviation",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Relief",
+                "value": "7."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.12,
+        "end": 0.28,
+        "subClipName": "Deviation",
+        "inPoint": 0.96,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Relief",
+                "value": "7."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.32,
+        "subClipName": "Turbulent Displace Horizontal - 2x",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Turbulent Displace",
+            "params": [
+              {
+                "name": "Displacement",
+                "value": "9"
+              },
+              {
+                "name": "Amount",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "120."
+                  },
+                  {
+                    "t": 0.32,
+                    "v": "0."
+                  }
+                ]
+              },
+              {
+                "name": "Size",
+                "value": "20."
+              },
+              {
+                "name": "Offset (Turbulence)",
+                "value": "0:0"
+              },
+              {
+                "name": "Complexity",
+                "value": "5.099998474121"
+              },
+              {
+                "name": "Evolution",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.32,
+                    "v": "1080."
+                  }
+                ]
+              },
+              {
+                "name": "Evolution Options",
+                "value": "false"
+              },
+              {
+                "name": "Cycle (in Revolutions)",
+                "value": "1"
+              },
+              {
+                "name": "Random Seed",
+                "value": "2401"
+              },
+              {
+                "name": "Random Seed",
+                "value": "false"
+              },
+              {
+                "name": "Pinning",
+                "value": "0"
+              },
+              {
+                "name": "Antialiasing for Best Quality",
+                "value": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.32,
+        "inPoint": 0.64,
+        "subClipName": "Displacement_Turbulent.mp3",
+        "masterClipName": "Displacement_Turbulent.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Turbulent Displace Horizontal - 3x",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.36,
+        "subClipName": "Turbulent Displace Horizontal - 3x.mp4",
+        "inPoint": 0,
+        "masterClipName": "Turbulent Displace Horizontal - 3x.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0.04,
+        "end": 0.12,
+        "subClipName": "Deviation",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Relief",
+                "value": "10."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.12,
+        "end": 0.32,
+        "subClipName": "Deviation",
+        "inPoint": 0.96,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Relief",
+                "value": "10."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.36,
+        "subClipName": "Turbulent Displace Horizontal - 3x",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Turbulent Displace",
+            "params": [
+              {
+                "name": "Displacement",
+                "value": "9"
+              },
+              {
+                "name": "Amount",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "140."
+                  },
+                  {
+                    "t": 0.36,
+                    "v": "0."
+                  }
+                ]
+              },
+              {
+                "name": "Size",
+                "value": "30."
+              },
+              {
+                "name": "Offset (Turbulence)",
+                "value": "0:0"
+              },
+              {
+                "name": "Complexity",
+                "value": "5.099998474121"
+              },
+              {
+                "name": "Evolution",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.36,
+                    "v": "1080."
+                  }
+                ]
+              },
+              {
+                "name": "Evolution Options",
+                "value": "false"
+              },
+              {
+                "name": "Cycle (in Revolutions)",
+                "value": "1"
+              },
+              {
+                "name": "Random Seed",
+                "value": "2339"
+              },
+              {
+                "name": "Random Seed",
+                "value": "false"
+              },
+              {
+                "name": "Pinning",
+                "value": "0"
+              },
+              {
+                "name": "Antialiasing for Best Quality",
+                "value": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.36,
+        "inPoint": 0.6,
+        "subClipName": "Displacement_Turbulent.mp3",
+        "masterClipName": "Displacement_Turbulent.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Turbulent Displace Horizontal - 4x",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.48,
+        "subClipName": "Turbulent Displace Horizontal - 4x.mp4",
+        "inPoint": 0,
+        "masterClipName": "Turbulent Displace Horizontal - 4x.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0.08,
+        "end": 0.24,
+        "subClipName": "Deviation",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Relief",
+                "value": "15."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.24,
+        "end": 0.44,
+        "subClipName": "Deviation",
+        "inPoint": 1.04,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Relief",
+                "value": "15."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.48,
+        "subClipName": "Turbulent Displace Horizontal - 4x",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Turbulent Displace",
+            "params": [
+              {
+                "name": "Displacement",
+                "value": "9"
+              },
+              {
+                "name": "Amount",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.24,
+                    "v": "180."
+                  },
+                  {
+                    "t": 0.48,
+                    "v": "0."
+                  }
+                ]
+              },
+              {
+                "name": "Size",
+                "value": "40."
+              },
+              {
+                "name": "Offset (Turbulence)",
+                "value": "0:0"
+              },
+              {
+                "name": "Complexity",
+                "value": "5.099998474121"
+              },
+              {
+                "name": "Evolution",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.48,
+                    "v": "1080."
+                  }
+                ]
+              },
+              {
+                "name": "Evolution Options",
+                "value": "false"
+              },
+              {
+                "name": "Cycle (in Revolutions)",
+                "value": "1"
+              },
+              {
+                "name": "Random Seed",
+                "value": "490"
+              },
+              {
+                "name": "Random Seed",
+                "value": "false"
+              },
+              {
+                "name": "Pinning",
+                "value": "0"
+              },
+              {
+                "name": "Antialiasing for Best Quality",
+                "value": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.48,
+        "inPoint": 0.44,
+        "subClipName": "Displacement_Turbulent.mp3",
+        "masterClipName": "Displacement_Turbulent.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Turbulent Displace Horizontal - 5x",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.44,
+        "subClipName": "Turbulent Displace Horizontal - 5x.mp4",
+        "inPoint": 0,
+        "masterClipName": "Turbulent Displace Horizontal - 5x.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0.04,
+        "end": 0.16,
+        "subClipName": "Deviation",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Relief",
+                "value": "20."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.16,
+        "end": 0.4,
+        "subClipName": "Deviation",
+        "inPoint": 1,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Relief",
+                "value": "20."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.44,
+        "subClipName": "Turbulent Displace Horizontal - 5x",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Turbulent Displace",
+            "params": [
+              {
+                "name": "Displacement",
+                "value": "9"
+              },
+              {
+                "name": "Amount",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.16,
+                    "v": "300."
+                  },
+                  {
+                    "t": 0.44,
+                    "v": "0."
+                  }
+                ]
+              },
+              {
+                "name": "Size",
+                "value": "80."
+              },
+              {
+                "name": "Offset (Turbulence)",
+                "value": "0:0"
+              },
+              {
+                "name": "Complexity",
+                "value": "5.099998474121"
+              },
+              {
+                "name": "Evolution",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.44,
+                    "v": "1080."
+                  }
+                ]
+              },
+              {
+                "name": "Evolution Options",
+                "value": "false"
+              },
+              {
+                "name": "Cycle (in Revolutions)",
+                "value": "1"
+              },
+              {
+                "name": "Random Seed",
+                "value": "3820"
+              },
+              {
+                "name": "Random Seed",
+                "value": "false"
+              },
+              {
+                "name": "Pinning",
+                "value": "0"
+              },
+              {
+                "name": "Antialiasing for Best Quality",
+                "value": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.44,
+        "inPoint": 0.08,
+        "subClipName": "Displacement_Turbulent.mp3",
+        "masterClipName": "Displacement_Turbulent.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Turbulent Displace Vertical - 1x",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.28,
+        "subClipName": "Turbulent Displace Vertical - 1x.mp4",
+        "inPoint": 0,
+        "masterClipName": "Turbulent Displace Vertical - 1x.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0.04,
+        "end": 0.12,
+        "subClipName": "Deviation",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "0."
+              },
+              {
+                "name": "Relief",
+                "value": "5."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.12,
+        "end": 0.24,
+        "subClipName": "Deviation",
+        "inPoint": 0.96,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "0."
+              },
+              {
+                "name": "Relief",
+                "value": "5."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.28,
+        "subClipName": "Turbulent Displace Vertical - 1x",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Turbulent Displace",
+            "params": [
+              {
+                "name": "Displacement",
+                "value": "8"
+              },
+              {
+                "name": "Amount",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "110."
+                  },
+                  {
+                    "t": 0.28,
+                    "v": "0."
+                  }
+                ]
+              },
+              {
+                "name": "Size",
+                "value": "10."
+              },
+              {
+                "name": "Offset (Turbulence)",
+                "value": "0:0"
+              },
+              {
+                "name": "Complexity",
+                "value": "5.099998474121"
+              },
+              {
+                "name": "Evolution",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.28,
+                    "v": "1080."
+                  },
+                  {
+                    "t": 2.04,
+                    "v": "1080."
+                  }
+                ]
+              },
+              {
+                "name": "Evolution Options",
+                "value": "false"
+              },
+              {
+                "name": "Cycle (in Revolutions)",
+                "value": "1"
+              },
+              {
+                "name": "Random Seed",
+                "value": "3310"
+              },
+              {
+                "name": "Random Seed",
+                "value": "false"
+              },
+              {
+                "name": "Pinning",
+                "value": "0"
+              },
+              {
+                "name": "Antialiasing for Best Quality",
+                "value": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.28,
+        "inPoint": 0.72,
+        "subClipName": "Displacement_Turbulent.mp3",
+        "masterClipName": "Displacement_Turbulent.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Turbulent Displace Vertical - 2x",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.32,
+        "subClipName": "Turbulent Displace Vertical - 2x.mp4",
+        "inPoint": 0,
+        "masterClipName": "Turbulent Displace Vertical - 2x.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0.04,
+        "end": 0.12,
+        "subClipName": "Deviation",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "0."
+              },
+              {
+                "name": "Relief",
+                "value": "7."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.12,
+        "end": 0.28,
+        "subClipName": "Deviation",
+        "inPoint": 0.96,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "0."
+              },
+              {
+                "name": "Relief",
+                "value": "7."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.32,
+        "subClipName": "Turbulent Displace Vertical - 2x",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Turbulent Displace",
+            "params": [
+              {
+                "name": "Displacement",
+                "value": "8"
+              },
+              {
+                "name": "Amount",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "120."
+                  },
+                  {
+                    "t": 0.32,
+                    "v": "0."
+                  }
+                ]
+              },
+              {
+                "name": "Size",
+                "value": "15."
+              },
+              {
+                "name": "Offset (Turbulence)",
+                "value": "0:0"
+              },
+              {
+                "name": "Complexity",
+                "value": "5.099998474121"
+              },
+              {
+                "name": "Evolution",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.32,
+                    "v": "1080."
+                  }
+                ]
+              },
+              {
+                "name": "Evolution Options",
+                "value": "false"
+              },
+              {
+                "name": "Cycle (in Revolutions)",
+                "value": "1"
+              },
+              {
+                "name": "Random Seed",
+                "value": "4015"
+              },
+              {
+                "name": "Random Seed",
+                "value": "false"
+              },
+              {
+                "name": "Pinning",
+                "value": "0"
+              },
+              {
+                "name": "Antialiasing for Best Quality",
+                "value": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.32,
+        "inPoint": 0.64,
+        "subClipName": "Displacement_Turbulent.mp3",
+        "masterClipName": "Displacement_Turbulent.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Turbulent Displace Vertical - 3x",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.36,
+        "subClipName": "Turbulent Displace Vertical - 3x.mp4",
+        "inPoint": 0,
+        "masterClipName": "Turbulent Displace Vertical - 3x.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0.04,
+        "end": 0.12,
+        "subClipName": "Deviation",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "0."
+              },
+              {
+                "name": "Relief",
+                "value": "10."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.12,
+        "end": 0.32,
+        "subClipName": "Deviation",
+        "inPoint": 0.96,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "0."
+              },
+              {
+                "name": "Relief",
+                "value": "10."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.36,
+        "subClipName": "Turbulent Displace Vertical - 3x",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Turbulent Displace",
+            "params": [
+              {
+                "name": "Displacement",
+                "value": "8"
+              },
+              {
+                "name": "Amount",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "140."
+                  },
+                  {
+                    "t": 0.36,
+                    "v": "0."
+                  }
+                ]
+              },
+              {
+                "name": "Size",
+                "value": "25."
+              },
+              {
+                "name": "Offset (Turbulence)",
+                "value": "0:0"
+              },
+              {
+                "name": "Complexity",
+                "value": "5.099998474121"
+              },
+              {
+                "name": "Evolution",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.36,
+                    "v": "1080."
+                  }
+                ]
+              },
+              {
+                "name": "Evolution Options",
+                "value": "false"
+              },
+              {
+                "name": "Cycle (in Revolutions)",
+                "value": "1"
+              },
+              {
+                "name": "Random Seed",
+                "value": "2686"
+              },
+              {
+                "name": "Random Seed",
+                "value": "false"
+              },
+              {
+                "name": "Pinning",
+                "value": "0"
+              },
+              {
+                "name": "Antialiasing for Best Quality",
+                "value": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.36,
+        "inPoint": 0.6,
+        "subClipName": "Displacement_Turbulent.mp3",
+        "masterClipName": "Displacement_Turbulent.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Turbulent Displace Vertical - 4x",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.4,
+        "subClipName": "Turbulent Displace Vertical - 4x.mp4",
+        "inPoint": 0,
+        "masterClipName": "Turbulent Displace Vertical - 4x.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0.04,
+        "end": 0.16,
+        "subClipName": "Deviation",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "0."
+              },
+              {
+                "name": "Relief",
+                "value": "15."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.16,
+        "end": 0.36,
+        "subClipName": "Deviation",
+        "inPoint": 1,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "0."
+              },
+              {
+                "name": "Relief",
+                "value": "15."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.4,
+        "subClipName": "Turbulent Displace Vertical - 4x",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Turbulent Displace",
+            "params": [
+              {
+                "name": "Displacement",
+                "value": "8"
+              },
+              {
+                "name": "Amount",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.16,
+                    "v": "180."
+                  },
+                  {
+                    "t": 0.4,
+                    "v": "0."
+                  }
+                ]
+              },
+              {
+                "name": "Size",
+                "value": "30."
+              },
+              {
+                "name": "Offset (Turbulence)",
+                "value": "0:0"
+              },
+              {
+                "name": "Complexity",
+                "value": "5.099998474121"
+              },
+              {
+                "name": "Evolution",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.4,
+                    "v": "1080."
+                  }
+                ]
+              },
+              {
+                "name": "Evolution Options",
+                "value": "false"
+              },
+              {
+                "name": "Cycle (in Revolutions)",
+                "value": "1"
+              },
+              {
+                "name": "Random Seed",
+                "value": "4360"
+              },
+              {
+                "name": "Random Seed",
+                "value": "false"
+              },
+              {
+                "name": "Pinning",
+                "value": "0"
+              },
+              {
+                "name": "Antialiasing for Best Quality",
+                "value": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.4,
+        "inPoint": 0.44,
+        "subClipName": "Displacement_Turbulent.mp3",
+        "masterClipName": "Displacement_Turbulent.mp3"
+      }
+    ]
+  },
+  {
+    "name": "Turbulent Displace Vertical - 5x",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.44,
+        "subClipName": "Turbulent Displace Vertical - 5x.mp4",
+        "inPoint": 0,
+        "masterClipName": "Turbulent Displace Vertical - 5x.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0.04,
+        "end": 0.16,
+        "subClipName": "Deviation",
+        "inPoint": 0.88,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "0."
+              },
+              {
+                "name": "Relief",
+                "value": "20."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.16,
+        "end": 0.4,
+        "subClipName": "Deviation",
+        "inPoint": 1,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Opacity",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              },
+              {
+                "name": "Blend Mode",
+                "value": "8"
+              },
+              {
+                "name": "Blend Mode",
+                "value": "17"
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Emboss",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "0."
+              },
+              {
+                "name": "Relief",
+                "value": "20."
+              },
+              {
+                "name": "Contrast",
+                "value": "70"
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Tint",
+            "params": [
+              {
+                "name": "Map Black To",
+                "value": "18374966855136706560"
+              },
+              {
+                "name": "Map White To",
+                "value": "18374686479671688960"
+              },
+              {
+                "name": "Amount to Tint",
+                "value": "100."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.44,
+        "subClipName": "Turbulent Displace Vertical - 5x",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Turbulent Displace",
+            "params": [
+              {
+                "name": "Displacement",
+                "value": "8"
+              },
+              {
+                "name": "Amount",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.16,
+                    "v": "300."
+                  },
+                  {
+                    "t": 0.44,
+                    "v": "0."
+                  }
+                ]
+              },
+              {
+                "name": "Size",
+                "value": "55."
+              },
+              {
+                "name": "Offset (Turbulence)",
+                "value": "0:0"
+              },
+              {
+                "name": "Complexity",
+                "value": "5.099998474121"
+              },
+              {
+                "name": "Evolution",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0."
+                  },
+                  {
+                    "t": 0.44,
+                    "v": "1080."
+                  }
+                ]
+              },
+              {
+                "name": "Evolution Options",
+                "value": "false"
+              },
+              {
+                "name": "Cycle (in Revolutions)",
+                "value": "1"
+              },
+              {
+                "name": "Random Seed",
+                "value": "15203"
+              },
+              {
+                "name": "Random Seed",
+                "value": "false"
+              },
+              {
+                "name": "Pinning",
+                "value": "0"
+              },
+              {
+                "name": "Antialiasing for Best Quality",
+                "value": "1"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.44,
+        "inPoint": 0.08,
+        "subClipName": "Displacement_Turbulent.mp3",
+        "masterClipName": "Displacement_Turbulent.mp3"
+      }
+    ]
+  }
+]
