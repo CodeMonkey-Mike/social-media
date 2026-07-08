@@ -102,7 +102,7 @@ export const GlitchBlocks: React.FC<TransitionProps & { params: GlitchBlocksPara
         })}
       </AbsoluteFill>
 
-      {sfx && sfxSrc && <Audio src={staticFile(sfxSrc)} />}
+      {/* SFX emitted by the wrapper (TransitionDemo / TransitionClip), not here. */}
     </AbsoluteFill>
   );
 };
