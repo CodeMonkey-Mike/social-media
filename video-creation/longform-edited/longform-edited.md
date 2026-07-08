@@ -214,11 +214,14 @@ exact regression: kaspa-covenants C1 held 18s, C2a showed the full hardfork slid
 - **Project-specific render assets live in `media/<project>/render-assets/`** (spine, music, deck/, img/, vid/,
   receipts/, charts, logo) — NOT in `video-creation/assets/` (that's for SHARED/reused assets only). The comp's
   `asset()` = `staticFile(f)` and the public dir is set PER-RENDER.
-- **Render command** (Bittensor comp; `BittensorCh1to6` renders the full CH1-9 despite the name):
-  `cd video-creation/remotion && npx remotion render src/index.ts BittensorCh1to6 "<out>.mp4" --public-dir "../longform-edited/media/<project>/render-assets"`
+- **Render command** (Bittensor comp; `BittensorCh1to6` renders the full CH1-9 despite the name). The output
+  path ALWAYS lands in the project's own media folder, never the shared `remotion/out/` scratch (rule #7 below;
+  `comp-build.md` §10-11) — a **draft/QA** slice goes in `_previews/`, a **kept deliverable** pass in `renders/`:
+  `cd video-creation/remotion && npx remotion render src/index.ts BittensorCh1to6 "../longform-edited/media/<project>/_previews/<project>-draft-vN.mp4" --public-dir "../longform-edited/media/<project>/render-assets"`
   (omitting `--public-dir` → assets don't resolve). Concurrency 8 (`remotion.config.ts`); ~40 min for a 14-min
   video; Remotion can't GPU-encode h264 on Windows so the encode is CPU (doesn't matter — the bottleneck is the
-  spine OffthreadVideo decode). `--frames=A-B` renders a slice (use for the video-qa chunks).
+  spine OffthreadVideo decode). `--frames=A-B` renders a slice (use for the video-qa chunks — those land in
+  `_previews/qa/`, `video-qa.md` STEP 0).
 - **SFX (impacts/risers) + audio fades are mixed onto the finished render with ffmpeg, NOT in the comp** — so
   any audio change (level, swap, new cue, fade) is a ~1-min re-mix with `-c:v copy`, NO re-render. Only VISUAL
   changes need a Remotion render.
@@ -445,9 +448,15 @@ explicit time slot**. The container is just another item on that one track, not 
 6. **Mute every overlay video** (`muted` on b-roll and lip-sync `OffthreadVideo`s) — the spine
    strip is the single audio source and is never unmounted.
 7. **Render OUTPUT goes in the project folder, NOT `remotion/out/` (Mike, 2026-06-17).** Always render
-   to `media/<project>/renders/<name>.mp4` (e.g. `--out` an absolute path into the project), so the
-   deliverable lives with its project and is never an orphan in the generic Remotion `out/` dir. The
-   finished cut is `media/<project>/<project> FINAL.mp4`; work-in-progress passes go in `renders/`.
+   to a path inside `media/<project>/`, so the deliverable lives with its project and is never an orphan
+   in the generic Remotion `out/` dir. Two subfolders, by keep-vs-throwaway:
+   - **`renders/`** — KEPT deliverable passes; the finished cut is `media/<project>/<project> FINAL.mp4`.
+   - **`_previews/`** — DISPOSABLE outputs: draft renders, preflight stills, chart tests, render logs, and
+     QA frame-grabs/stacks (the last in `_previews/qa/`, `video-qa.md` STEP 0). `comp-build.md` §10-11.
+   **Nothing renders or screenshots to the bare `remotion/out/` — it is shared, cleanup-swept scratch, so
+   anything left there is an orphan** (this is how the `_nlg_preflight.png` / `_qa_*.png` stills leaked and
+   had to be recycled by hand, Mike 2026-07-08). Segmented-render intermediates (the `out/seg*/` working
+   folders) are the one allowed exception — they are large temporaries the cleanup job sweeps by design.
 8. **Preview gate before the full render** — render the first ~60s (`--frames=0-1799`) PLUS a
    short window for each special device not in the first minute (e.g. the lip-sync insert), QA
    frames yourself (scene/overlay edges, strip alignment, transition mids), then give Mike the

@@ -25,13 +25,25 @@ QA the wrong artifact. Two hard rules:
    in, the render has it, or QA FAILS. "I deferred it" is the violation, not an acceptable QA result. (Mike,
    2026-06-21: QA should have caught the missing captions itself, before handoff.)
 
+## ⛔ WHERE QA OUTPUTS GO — the project folder, never remotion/out/ (Mike, 2026-07-08)
+**Every QA artifact — chunk renders, extracted frames, frame-stacks, preflight stills, signal-check dumps —
+writes to `media/<project>/_previews/qa/`, NEVER the shared `remotion/out/` scratch dir.** `remotion/out/` is
+cleanup-swept scratch shared by all projects: anything left there is an orphan with no project home (this is
+exactly how `_qa_t130.png` / `_qa_stack.png` / `_nlg_preflight.png` leaked and had to be recycled by hand). Set
+it once at the top of a QA pass and point every command at it:
+```bash
+QA="../<track>/media/<project>/_previews/qa"; mkdir -p "$QA"   # <track> = longform-edited | ai-engineering | ...
+```
+Name files with the project prefix so they travel with the folder and get recycled with the batch.
+
 ## STEP 0 — QA CHUNKS *before* the full render (Mike, 2026-06-18; the key fix)
 **Do NOT do a 40-min full render to discover problems. Render 10-second CHUNKS at every spot you changed and
 QA those first.** Single still frames CANNOT catch motion (a light-leak drift), audio (impact loudness vs VO),
 or timing (a black dip / mis-timed overlay) — that's why issues kept slipping. A chunk is a real clip: you see
 the motion and can mix/measure the audio.
-- Render a slice: `npx remotion render src/index.ts BittensorCh1to6 "<out>.mp4" --frames=A-B --public-dir <PUB>`
-  (A-B = `time*30`). ~10s = ~300 frames, renders in well under a minute.
+- Render a slice: `npx remotion render src/index.ts BittensorCh1to6 "$QA/<project>-ch1-chunk.mp4" --frames=A-B --public-dir <PUB>`
+  (A-B = `time*30`; `$QA` from the box above — never a bare `out/…`). ~10s = ~300 frames, renders in well under a minute.
+- Extract frames / stacks into `$QA` too: `ffmpeg -i "$QA/<project>-ch1-chunk.mp4" -vf 'select=...' "$QA/<project>-qa-t%03d.png"`.
 - For each change, render the chunk that contains it (a light-leak hold, the CTA/caption beat, an impact, a
   cut, the outro), extract frames across it AND/OR mix the SFX onto the chunk to hear/measure the audio.
 - Iterate on chunks until each change is right. Only THEN do the single full render. The full render becomes a
