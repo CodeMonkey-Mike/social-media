@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   AbsoluteFill,
+  Audio,
   Img,
   Sequence,
   staticFile,
@@ -61,6 +62,13 @@ export const TransitionDemo: React.FC<TransitionDemoProps> = ({ id }) => {
       <Sequence from={DEMO_HOLD + win}>
         <Still src={SCENE_B} />
       </Sequence>
+      {/* SFX from the transition start, allowed to ring out past the (possibly
+          short) window so it isn't clipped — emitted here, not in the engine. */}
+      {row.sfx && (
+        <Sequence from={DEMO_HOLD}>
+          <Audio src={staticFile(row.sfx)} />
+        </Sequence>
+      )}
     </AbsoluteFill>
   );
 };
