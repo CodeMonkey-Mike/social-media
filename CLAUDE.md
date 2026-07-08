@@ -66,5 +66,9 @@ Prefix every command with `cd C:\Users\mnede\Documents\Claude\social-media &&` (
 All voice / terminology / brand rules: **`persona/persona.json`** (single source of truth). Read before drafting any content.
 
 ## Orchestrator status
-**Phase 1** — this routing table + `playbooks/`, human-driven (Mike says which skill runs next). Spawnable
-DAG automation is **deferred to Phase 2**; do not create or edit `.claude/agents/` for this. See `ORCHESTRATOR-PLAN.md`.
+**Phase 1** — this routing table + `playbooks/`, human-driven (Mike says which skill runs next).
+**Automatic** spawnable-DAG orchestration (a fleet that self-dispatches lanes) is **deferred to Phase 2**;
+do not build that yet. See `ORCHESTRATOR-PLAN.md`. **Hand-authored advisory subagents ARE allowed** in
+`.claude/agents/` — single specialists the Opus orchestrator/main-loop consults for one judgment step and
+that Mike reviews (e.g. `clip-strategist.md`, Fable/max, Lane 2 clip selection). These are versioned with
+the repo on purpose; they do not constitute the deferred DAG automation.
