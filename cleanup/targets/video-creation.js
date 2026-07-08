@@ -207,6 +207,22 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     }
   }
 
+  // ── remotion/ ROOT — loose render/QA output that leaked OUTSIDE out/ ───────────
+  // Renders + QA stills are supposed to write into media/<project>/_previews (comp-build.md §10-11);
+  // anything that landed as a loose OUTPUT file at the remotion/ root (QA frame grabs `_q_*.png`,
+  // `_render_*.log`, stray media) is orphan scratch with no project home. Sweep ONLY top-level files
+  // with an output extension (image/video/audio/log) — source (.ts/.tsx/.js), config (package*.json,
+  // *.config.ts, tsconfig.json), and every subdir (src/, components/, out/, node_modules/) are left
+  // untouched (subdirs aren't iterated here; out/ is handled above).
+  const REMOTION = path.join(ROOT, 'remotion');
+  const OUTPUT_EXT_RE = /\.(png|jpe?g|gif|webp|mp4|mov|webm|mkv|mp3|wav|m4a|log)$/i;
+  if (fs.existsSync(REMOTION)) {
+    for (const entry of fs.readdirSync(REMOTION, { withFileTypes: true })) {
+      if (!entry.isFile() || !OUTPUT_EXT_RE.test(entry.name)) continue;
+      recycle.push({ path: path.join(REMOTION, entry.name), reason: 'loose render/QA output at remotion/ root (belongs in media/<project>/_previews)' });
+    }
+  }
+
   // ── media/<project>/ project trees — whole-folder, batch-aware (matched by source_media) ──
   // Each immediate subfolder holds one batch's source/render artifacts (master .mkv, EDIT/FINAL
   // renders, intermediates, deck, transcript, thumbnail). Recycle the WHOLE folder for a
