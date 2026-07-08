@@ -338,6 +338,7 @@
   <button class="tab" data-tab="xpolls">X Polls <span class="badge" id="badge-xpolls">…</span></button>
   <button class="tab" data-tab="ytposts">YT Posts <span class="badge" id="badge-ytposts">…</span></button>
   <button class="tab" data-tab="ytpolls">YT Polls <span class="badge" id="badge-ytpolls">…</span></button>
+  <button class="tab" data-tab="ytquiz">YT Quiz <span class="badge" id="badge-ytquiz">…</span></button>
   <button class="tab" data-tab="igsingle">IG Single <span class="badge" id="badge-igsingle">…</span></button>
   <button class="tab" data-tab="igcarousel">IG Carousel <span class="badge" id="badge-igcarousel">…</span></button>
   <button class="tab" data-tab="xreplies">X Replies <span class="badge" id="badge-xreplies">…</span></button>
@@ -351,6 +352,7 @@
 <div id="tab-xpolls"     class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-ytposts"    class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-ytpolls"    class="tab-content"><div class="loading">Loading…</div></div>
+<div id="tab-ytquiz"     class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-igsingle"   class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-igcarousel" class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-xreplies"   class="tab-content"><div class="loading">Loading…</div></div>
@@ -470,6 +472,28 @@ function renderYTPolls(items) {
       <div class="card-meta">#${i + 1}</div>
       <div class="post-text">${esc(p.question_text || '')}</div>
       <div class="poll-options">${opts}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderYTQuiz(items) {
+  if (!items.length) return '<div class="empty">No pending YT quizzes</div>';
+  return items.map((p, i) => {
+    const ci = p.correct_option_index;
+    const opts = (p.options || []).map((o, oi) => {
+      const isCorrect = oi === ci;
+      const style = isCorrect ? ' style="border-color:#1a7f4e;background:#e8f5ee;font-weight:600"' : '';
+      const mark  = isCorrect ? ' <span style="color:#1a7f4e;font-weight:700">✓ correct</span>' : '';
+      return `<div class="poll-option"${style}>${esc(o)}${mark}</div>`;
+    }).join('');
+    const expl = p.explanation
+      ? `<div class="poll-meta">Explanation: ${esc(p.explanation)}</div>`
+      : '';
+    return `<div class="card">
+      <div class="card-meta">#${i + 1} · ${esc(p.id || '')}</div>
+      <div class="post-text">${esc(p.question_text || '')}</div>
+      <div class="poll-options">${opts}</div>
+      ${expl}
     </div>`;
   }).join('');
 }
@@ -693,6 +717,7 @@ const SOURCES = [
   { tab: 'xpolls',     url: '/data/x-polls.json',         key: 'polls',   render: renderXPolls },
   { tab: 'ytposts',    url: '/data/yt-posts.json',        key: 'posts',   render: renderYTPosts },
   { tab: 'ytpolls',    url: '/data/yt-text-polls.json',   key: 'polls',   render: renderYTPolls },
+  { tab: 'ytquiz',     url: '/data/yt-quizzes.json',      key: 'quizzes', render: renderYTQuiz },
   { tab: 'igsingle',   url: '/data/ig-single-image.json', key: 'posts',   render: renderIGSingle },
   { tab: 'igcarousel', url: '/data/ig-carousel.json',     key: 'posts',   render: renderIGCarousel },
   { tab: 'xreplies',   url: '/x-reply-guy/data/replies_to_post.json',      key: null,      render: renderReplies },
