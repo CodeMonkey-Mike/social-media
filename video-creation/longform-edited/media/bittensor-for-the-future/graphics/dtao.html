@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Bittensor — dTAO</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:100%; height:100%; background:#04060d;
+              display:flex; align-items:center; justify-content:center; font-family:'Inter',system-ui,sans-serif; }
+  .stage { position:relative; width:1920px; height:1080px; transform-origin:center center;
+    background:
+      radial-gradient(1000px 720px at 50% 48%, rgba(33,170,190,0.13), transparent 70%),
+      linear-gradient(180deg,#070c18 0%,#04060d 100%); overflow:hidden; }
+  @media (max-aspect-ratio:16/9){ .stage{ transform:scale(calc(100vw/1920)); } }
+  @media (min-aspect-ratio:16/9){ .stage{ transform:scale(calc(100vh/1080)); } }
+  .stage::before{ content:""; position:absolute; inset:0;
+    background-image:radial-gradient(rgba(120,200,220,0.045) 1.4px, transparent 1.6px);
+    background-size:48px 48px; mask-image:radial-gradient(1020px 620px at 50% 50%, #000 40%, transparent 86%); }
+  svg{ position:absolute; inset:0; }
+  .eyebrow{ font-size:22px; font-weight:600; letter-spacing:.4em; fill:#4fd6e6; text-transform:uppercase; }
+  .htitle { font-size:46px; font-weight:800; fill:#eef6f9; }
+  .src-h  { font-size:26px; font-weight:800; fill:#bff6ff; }
+  .src-s  { font-size:18px; font-weight:500; fill:#9fb4c0; }
+  .eng-h  { font-size:30px; font-weight:800; fill:#bff6ff; letter-spacing:.03em; }
+  .eng-s  { font-size:19px; font-weight:500; fill:#bdd6df; }
+  .sn-t   { font-size:23px; font-weight:700; fill:#1a1407; }
+  .sn-z   { font-size:21px; font-weight:700; fill:#9aa7b0; }
+  .stk-h  { font-size:23px; font-weight:700; fill:#dfeae1; }
+  .stk-s  { font-size:18px; font-weight:500; fill:#86a08f; }
+  .caption{ font-size:26px; font-weight:600; fill:#9fb4c0; }
+  .caption b{ fill:#cfe4eb; }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="engFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#13414e"/><stop offset="100%" stop-color="#0b232c"/>
+        </linearGradient>
+        <linearGradient id="srcFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="rgba(22,38,56,0.92)"/><stop offset="100%" stop-color="rgba(11,19,31,0.92)"/>
+        </linearGradient>
+        <linearGradient id="snBar" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#f7d488"/><stop offset="100%" stop-color="#e7a83f"/>
+        </linearGradient>
+        <linearGradient id="stkFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="rgba(20,40,28,0.85)"/><stop offset="100%" stop-color="rgba(10,22,15,0.85)"/>
+        </linearGradient>
+        <marker id="aA" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#e7a83f"/></marker>
+        <marker id="aC" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6fd8e6"/></marker>
+        <marker id="aG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#7ede9f"/></marker>
+      </defs>
+
+      <text class="eyebrow" x="120" y="90">dTAO &#183; dynamic TAO, the 2026 upgrade</text>
+      <text class="htitle"  x="120" y="144">The market itself decides which AI gets funded</text>
+
+      <!-- emissions source -->
+      <rect x="120" y="396" width="360" height="150" rx="20" fill="url(#srcFill)" stroke="rgba(95,224,238,0.4)" stroke-width="1.6"/>
+      <text class="src-h" x="300" y="458" text-anchor="middle">New TAO</text>
+      <text class="src-s" x="300" y="492" text-anchor="middle">emitted every block</text>
+      <text class="src-s" x="300" y="516" text-anchor="middle">to be distributed</text>
+
+      <!-- arrow source -> router -->
+      <line x1="480" y1="471" x2="640" y2="471" stroke="#6fd8e6" stroke-width="2.6" marker-end="url(#aC)"/>
+
+      <!-- router engine -->
+      <rect x="650" y="386" width="380" height="170" rx="22" fill="url(#engFill)" stroke="#5fe0ee" stroke-width="2.2"/>
+      <text class="eng-h" x="840" y="452" text-anchor="middle">ROUTER</text>
+      <text class="eng-s" x="840" y="492" text-anchor="middle">emissions follow the stake</text>
+      <text class="eng-s" x="840" y="518" text-anchor="middle">in real time, no committee</text>
+
+      <!-- stakers feed the router (from below) -->
+      <rect x="650" y="690" width="380" height="150" rx="20" fill="url(#stkFill)" stroke="rgba(126,222,160,0.45)" stroke-width="1.6"/>
+      <text class="stk-h" x="840" y="744" text-anchor="middle">Stakers</text>
+      <text class="stk-s" x="840" y="776" text-anchor="middle">move TAO into the subnets</text>
+      <text class="stk-s" x="840" y="800" text-anchor="middle">they believe in</text>
+      <line x1="840" y1="690" x2="840" y2="562" stroke="#7ede9f" stroke-width="2.6" marker-end="url(#aG)"/>
+
+      <!-- subnet emission bars (right) -->
+      <g>
+        <rect x="1120" y="306" width="560" height="64" rx="10" fill="url(#snBar)"/>
+        <text class="sn-t" x="1144" y="346">Subnet A &#183; high stake</text>
+
+        <rect x="1120" y="396" width="400" height="64" rx="10" fill="url(#snBar)" opacity="0.8"/>
+        <text class="sn-t" x="1144" y="436">Subnet B</text>
+
+        <rect x="1120" y="486" width="250" height="64" rx="10" fill="url(#snBar)" opacity="0.6"/>
+        <text class="sn-t" x="1144" y="526">Subnet C</text>
+
+        <rect x="1120" y="576" width="120" height="64" rx="10" fill="#3a3320" stroke="rgba(154,167,176,0.4)"/>
+        <text class="sn-z" x="1264" y="616">Subnet D &#183; low flow, near-zero emissions</text>
+      </g>
+
+      <!-- arrows router -> subnets -->
+      <g fill="none" stroke="#e7a83f" stroke-width="2.4">
+        <line x1="1030" y1="430" x2="1116" y2="338" marker-end="url(#aA)"/>
+        <line x1="1030" y1="455" x2="1116" y2="428" marker-end="url(#aA)"/>
+        <line x1="1030" y1="490" x2="1116" y2="518" marker-end="url(#aA)"/>
+        <line x1="1030" y1="515" x2="1116" y2="606" marker-end="url(#aA)"/>
+      </g>
+
+      <text class="caption" x="120" y="950">Stake flows in, emissions follow. <tspan fill="#cfe4eb">No committee, no gatekeeper, the market funds the AI it actually uses.</tspan></text>
+    </svg>
+  </div>
+</body>
+</html>

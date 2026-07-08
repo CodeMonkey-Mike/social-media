@@ -5,7 +5,7 @@
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
-const { pickNextLongform } = require('./lib/longform-queue');
+const { pickNextLongform, stripMusicCredits } = require('./lib/longform-queue');
 
 // BitChute silently rejects .webp thumbnails (PNG/JPG only). It accepts the upload but the
 // Proceed click becomes a no-op → the script falls into a 15-min retry loop that never lands.
@@ -72,10 +72,14 @@ async function closeDrawer(page) {
   }
   const hasThumb = !!thumbPath;
   const title = (metadata.title || '').trim();
-  const description = (metadata.description || '').trim();
+  const description = stripMusicCredits((metadata.description || '').trim());
   const tags = metadata.tags || [];
-  // BitChute: max 3 search terms, space-separated, no #
-  const searchTerms = tags.slice(0, 3).map(t => t.replace(/\s+/g, '_')).join(' ');
+  // BitChute: max 3 search terms, space-separated, no #.
+  // The Search Terms field rejects anything but letters A-Z ("Only use letters A to Z") — a tag
+  // with digits (e.g. "ai16z") throws a validation popup that blocks publish AND is misread by the
+  // publish flow as the "missing-thumbnail modal". DROP non-letter tags and fall through to the
+  // next valid one. (Root-caused on the shorts side 2026-06-19; same field/rule for longform.)
+  const searchTerms = tags.filter(t => /^[A-Za-z]+$/.test(t)).slice(0, 3).join(' ');
 
   console.log(`\nLongform: "${title}"`);
   console.log(`File:  ${videoPath}`);

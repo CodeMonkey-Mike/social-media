@@ -16,6 +16,7 @@ const url         = require('url');
 const { exec }    = require('child_process');
 const fs          = require('fs');
 const path        = require('path');
+const { stripHashtags, buildCaption } = require('./lib/strip-hashtags');
 
 const SHORTS_JSON   = path.join(__dirname, '..', 'data', 'shorts.json');
 const OAUTH_FILE    = path.join(__dirname, '..', 'config', 'yt-oauth.json');
@@ -225,11 +226,19 @@ async function uploadVideo(auth, videoPath, title, description, tags) {
     process.exit(1);
   }
 
-  const caption  = short.platforms[PLATFORM].caption_override || short.caption || '';
+  const caption  = buildCaption(short.platforms[PLATFORM].caption_override || short.caption || '', short.tags, PLATFORM);
   const title    = (short.title || caption.split('\n')[0] || 'Short').slice(0, 100);
   const tags     = short.tags || ['kaspa', 'crypto'];
+  // If this short teases a related long-form video, link it in the description.
+  // (The native YouTube Studio "Related video" field for a Short is NOT settable via
+  //  the Data API v3, so the description link is the API-supported equivalent; set the
+  //  Studio "Related video" manually if you also want the on-Short chip.)
+  let description = caption;
+  if (short.related_longform_url) {
+    description += `\n\nWatch the full video: ${short.related_longform_url}`;
+  }
   // YT description supports newlines and basic text; #Shorts hashtag helps surface
-  const description = caption.includes('#Shorts') ? caption : `${caption}\n\n#Shorts`;
+  description = description.includes('#Shorts') ? description : `${description}\n\n#Shorts`;
 
   console.log(`Short: "${short.title}"`);
   console.log(`File:  ${videoPath}`);
@@ -280,6 +289,16 @@ async function uploadVideo(auth, videoPath, title, description, tags) {
     short.platforms[PLATFORM].posted_at = new Date().toISOString();
     short.platforms[PLATFORM].url       = videoUrl;
     fs.writeFileSync(SHORTS_JSON, JSON.stringify(data, null, 2));
+    // Teaser shorts: the on-Short "Related video" chip is NOT settable via the YouTube Data API v3
+    // (only the description link is, which we already appended). Flag the one manual Studio step so
+    // it is never forgotten. See PUBLISH-SHORTS.md "Related long-form link".
+    if (short.related_longform_url) {
+      console.log('\n⚠ MANUAL STEP REQUIRED (YouTube Studio):');
+      console.log(`   Set the "Related video" on this Short to the long-form. The API cannot do this.`);
+      console.log(`   Short:     ${videoUrl}`);
+      console.log(`   Long-form: ${short.related_longform_url}`);
+      console.log('   YT Studio -> Content -> Shorts -> this Short -> Related video -> pick the long-form.');
+    }
   } catch (err) {
     short.platforms[PLATFORM].status = 'failed';
     short.platforms[PLATFORM].error  = err.message;

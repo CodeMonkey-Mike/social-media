@@ -1,0 +1,32 @@
+{
+  "_purpose": "Spoken-dialogue / on-camera persona for Mike's vertical AI-persona videos. This is for how Mike PREFERS TO SPEAK in audio (Seedance talking-head lines), NOT for written social text — the tweet/written persona lives in the schedule-tweets persona.json. When writing or revising spoken lines for these shorts, apply these preferences.",
+  "subject": "mike",
+  "applies_to": "spoken dialogue in video-creation/vertical-ai-persona shorts (Seedance 2.0 talking-head clips)",
+  "speaking_style": {
+    "register": "natural, conversational, friendly — sounds like a real relaxed person talking, not a script being read",
+    "warmth": "smiles and stays upbeat in the resort/positive scenes; deadpan only when the scene calls for it (e.g. the clinic interview)",
+    "conversational_fillers": "natural friendly repetition is GOOD — e.g. 'That's good, that's good.' / 'Good to hear, good to hear.' Repetition reads as genuine, flowing conversation rather than stiff Q&A.",
+    "emphasis": "let key payoff words land hard — emphasize/exclaim the punch word (e.g. she nearly shouts 'BIG TIME'); pair vocal emphasis with a matching gesture when it fits (e.g. a triumphant fist-pump on the emphasized word)",
+    "energy_matching": "react to the other speaker — grin, nod, light laugh when delighted; the listener is never frozen"
+  },
+  "line_writing_rules": [
+    "Keep lines short and speakable; contractions always (that's, he's, I'll).",
+    "Friendly repetition of a short phrase is encouraged where it fits the beat ('that's good, that's good').",
+    "Mark the intended emphasis word in CAPS inside the quoted line so Seedance stresses it (e.g. 'made it BIG TIME').",
+    "Describe the matching physical beat (gesture/expression) in the prompt around the emphasized word.",
+    "Pass the final spoken line VERBATIM to Seedance — the synthesized audio speaks exactly the quoted text.",
+    "TICKERS / ACRONYMS meant to be spelled out letter-by-letter MUST be hyphenated in the spoken line (e.g. 'M-Y-X', not 'MYX') — otherwise the TTS reads them as a word ('MYX' came out as 'mix'). Verify with Whisper after generating. Acronyms that are normally said as words can be left as-is.",
+    "Match clip DURATION tightly to the spoken length. Over-long clips for a short line let the TTS hallucinate garbled filler audio (even on single-voice clips — e.g. a 6s clip on a one-sentence line produced 'The large dang its lawns' before the real line). Keep it snug and Whisper-verify; re-roll on garbage."
+  ],
+  "examples": {
+    "friendly_repetition": "That's good, that's good. And the motivation?",
+    "emphasis_plus_gesture": "My husband made it BIG TIME! He bought me a whole new life. (left fist pumps up on 'big time')"
+  },
+  "title_caption_split": "For long-form-description platforms (YouTube, Rumble, BitChute) the CryptoRich.vip link goes IN the description. For the others (TikTok, IG Reels, X, Facebook) leave the link OUT of the caption — keep it clean. (Mike's rule 2026-05-30. The end-card already shows the URL on-screen.)",
+  "production_defaults": {
+    "seedance_resolution": "480p",
+    "why": "480p is ~3x cheaper than 1080p (33 vs 99 cr for an 11s 2-voice clip; 720p=49). For captioned talking-head shorts watched in-feed, 480p is indistinguishable. Remotion upscales the clip to the 1080x1920 timeline for FREE (OffthreadVideo, no crop/reframe). Default to 480p, especially while credits are low; only bump a specific clip that genuinely needs detail.",
+    "final_delivery": "Remotion composition renders at 1080x1920 regardless of source clip resolution."
+  },
+  "notes": "Evolving. Add new spoken-style preferences here as they come up during production. See SKILL.md for the technical generation pipeline; this file is purely about voice/delivery/word-choice + production defaults."
+}

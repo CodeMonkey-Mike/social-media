@@ -5,6 +5,7 @@
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
+const { stripHashtags, buildCaption } = require('./lib/strip-hashtags');
 
 const SHORTS_JSON       = path.join(__dirname, '..', 'data', 'shorts.json');
 const CHROME_PROFILE    = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\rumblebot-profile';
@@ -80,7 +81,7 @@ async function typeHuman(page, locator, text) {
 
   // Rumble title max 100 chars
   const title = (short.title || '').slice(0, RUMBLE_TITLE_MAX);
-  const description = short.platforms[PLATFORM].caption_override || short.caption;
+  const description = buildCaption(short.platforms[PLATFORM].caption_override || short.caption, short.tags, PLATFORM);
   const tags = short.tags || [];
   const tagsCsv = tags.map(t => t.trim()).join(', ');
 
@@ -327,51 +328,94 @@ async function typeHuman(page, locator, text) {
       }
     }
 
-    // ── If still no URL, poll for redirect (up to 3 min) ──────────────────────
-    if (!url) {
-      console.log('Scanning for direct link after Submit...');
-      for (let i = 0; i < 60; i++) {
-        await page.waitForTimeout(3000);
-        const curUrl = page.url();
-        if (RUMBLE_V_RE.test(curUrl)) {
-          url = curUrl.match(RUMBLE_V_RE)[0].replace(/\.$/, '');
-          console.log(`  Redirected to: ${url}`);
-          break;
+    // ── Capture the short's REAL URL from /account/content ───────────────────
+    // ⛔ ROOT-CAUSE FIX (2026-06-02): Rumble SHORTS live at rumble.com/shorts/v<id>,
+    // a SEPARATE namespace that NEVER appears in the channel video grid or as a
+    // /v<id>-slug.html link. The old channel-scrape therefore ALWAYS captured an
+    // unrelated .html video for a short. The authoritative source is
+    // /account/content, where each short's row links to /shorts/v<id>. We match
+    // THIS short by title, then liveness-check the public page. We DELIBERATELY
+    // ignore any .html `url` the redirect loop may have grabbed — it's wrong for
+    // a short. Never write a wrong URL: if we can't confirm, mark posted_unverified.
+    const norm = s => (s || '').toLowerCase().replace(/&#0?39;|&apos;/g, "'").replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+    const titleNeedle = norm(title).slice(0, 40);
+
+    async function captureShortUrlByTitle() {
+      for (let attempt = 1; attempt <= 6; attempt++) {
+        try {
+          await page.goto('https://rumble.com/account/content', { waitUntil: 'domcontentloaded', timeout: 30000 });
+          await page.waitForTimeout(4000);
+          const href = await page.evaluate((want) => {
+            const n = s => (s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+            // Anchor the search on each /shorts/v link and find how FEW ancestor
+            // levels until its own row text contains the wanted title; pick the
+            // anchor with the tightest (smallest-level) match. Climbing the other
+            // way (from a title node down to an anchor) can cross into a neighbor
+            // row and grab the wrong video's URL — which is exactly the bug that
+            // mis-captured kaspa's URL for the wells-fargo short (2026-06-02).
+            let best = null, bestLevel = 99;
+            for (const a of document.querySelectorAll('a[href*="/shorts/v"]')) {
+              let c = a;
+              for (let lvl = 0; lvl < 5 && c; lvl++) {
+                if (n(c.innerText).includes(want)) { if (lvl < bestLevel) { bestLevel = lvl; best = a; } break; }
+                c = c.parentElement;
+              }
+            }
+            return best ? best.getAttribute('href') : null;
+          }, titleNeedle);
+          if (href) {
+            const full = (href.startsWith('http') ? href : 'https://rumble.com' + href).split('?')[0];
+            console.log(`  Matched short on /account/content: ${full}`);
+            return full;
+          }
+          console.log(`  Capture ${attempt}/6: short not listed on /account/content yet — waiting...`);
+        } catch (e) {
+          console.log(`  Capture ${attempt}/6 error: ${e.message.split('\n')[0]}`);
         }
-        // Only trust URL navigation — page links may contain sidebar/existing video URLs
+        if (attempt < 6) await page.waitForTimeout(20000);
       }
+      return null;
     }
 
-    // ── Verify by navigating to channel and grabbing most recent video URL ──────
-    if (!url) {
-      console.log('\nNavigating to channel to capture video URL...');
-      try {
-        await page.goto('https://rumble.com/user/CodeMonkeyMike', { waitUntil: 'domcontentloaded', timeout: 30000 });
-        await page.waitForTimeout(5000);
-        const channelUrl = await page.evaluate((reSrc) => {
-          const re = new RegExp(reSrc);
-          const links = [...document.querySelectorAll('a[href]')].map(a => a.href);
-          return links.find(h => re.test(h)) || null;
-        }, RUMBLE_V_RE.source);
-        if (channelUrl) {
-          url = channelUrl.match(RUMBLE_V_RE)[0].replace(/\.$/, '');
-          console.log(`  Most recent channel video: ${url}`);
-        }
-      } catch (e) {
-        console.log(`  Channel verify error: ${e.message}`);
+    // Liveness: fetch the public /shorts/ page and confirm its title matches.
+    async function verifyLive(u) {
+      const want = norm(title).slice(0, 25);
+      const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36';
+      for (let i = 1; i <= 5; i++) {
+        try {
+          const resp = await browser.request.get(u, { timeout: 20000, headers: { 'User-Agent': UA } });
+          const html = await resp.text();
+          const m = html.match(/<title>([^<]*)<\/title>/i) || html.match(/og:title"\s+content="([^"]*)"/i);
+          const got = norm(m ? m[1] : '');
+          if (got && want && got.includes(want)) { console.log(`  Liveness ✓ (title="${m[1]}")`); return true; }
+          console.log(`  Liveness ${i}/5: not live yet (title="${m ? m[1] : 'none'}")`);
+        } catch (e) { console.log(`  Liveness ${i}/5 error: ${e.message.split('\n')[0]}`); }
+        if (i < 5) await page.waitForTimeout(20000);
       }
+      return false;
     }
 
-    if (url) {
-      console.log(`\nPosted: ${url}`);
-    } else {
-      url = 'https://rumble.com/account/videos';
-      console.log('\nPosted — URL not captured (check Rumble dashboard).');
-    }
+    console.log('\nCapturing short URL from /account/content (matching by title)...');
+    const shortUrl = await captureShortUrlByTitle();
+    const live = shortUrl ? await verifyLive(shortUrl) : false;
 
-    short.platforms[PLATFORM].status    = 'posted';
     short.platforms[PLATFORM].posted_at = new Date().toISOString();
-    short.platforms[PLATFORM].url       = url;
+    if (shortUrl && live) {
+      short.platforms[PLATFORM].status = 'posted';
+      short.platforms[PLATFORM].url    = shortUrl;
+      delete short.platforms[PLATFORM].error;
+      console.log(`\nPosted (live, verified): ${shortUrl}`);
+    } else if (shortUrl) {
+      short.platforms[PLATFORM].status = 'posted_unverified';
+      short.platforms[PLATFORM].url    = shortUrl;
+      short.platforms[PLATFORM].error  = 'Short URL found on /account/content but public page did not resolve within the retry window — verify manually. Do NOT re-run (would duplicate).';
+      console.log(`\n⚠ posted_unverified: ${shortUrl} (URL captured, liveness not confirmed in window)`);
+    } else {
+      short.platforms[PLATFORM].status = 'posted_unverified';
+      short.platforms[PLATFORM].url    = null;
+      short.platforms[PLATFORM].error  = 'Upload submitted but short not found on /account/content within retry window — recapture by title later (it lives at /shorts/v<id>, not the channel grid). Do NOT re-run (would duplicate).';
+      console.log('\n⚠ posted_unverified: short URL not captured — recapture later from /account/content by title.');
+    }
     fs.writeFileSync(SHORTS_JSON, JSON.stringify(data, null, 2));
     console.log('shorts.json updated. Done ✓');
 

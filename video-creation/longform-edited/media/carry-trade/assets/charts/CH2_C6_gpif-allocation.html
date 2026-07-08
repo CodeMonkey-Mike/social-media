@@ -1,0 +1,44 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1920px;height:1080px;background:#05070a;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+.card{width:1820px;height:980px;background:#0d1015;border:1px solid #1e2330;border-radius:28px;padding:64px 72px;display:flex;flex-direction:column}
+h1{font-size:52px;font-weight:900;color:#e8eaf0;letter-spacing:-0.01em}
+.sub{font-size:24px;color:#8892a4;margin-top:14px;font-weight:400}
+.chartarea{flex:1;margin-top:24px;display:flex;align-items:center;justify-content:center;gap:90px}
+.legend{display:flex;flex-direction:column;gap:22px}
+.legend div{font-size:26px;color:#e8eaf0;display:flex;align-items:center;gap:16px}
+.dot{width:22px;height:22px;border-radius:50%;display:inline-block}
+.legend .pct{font-family:'JetBrains Mono',monospace;color:#8892a4;margin-left:6px}
+.takeaway{font-size:30px;margin-top:20px}
+.takeaway b{color:#a855f7;font-weight:700}
+.takeaway span{color:#8892a4;font-weight:400}
+.source{font-size:17px;color:#505a6e;margin-top:16px;font-family:'JetBrains Mono',monospace}
+</style></head>
+<body>
+<div class="card">
+  <h1>Japan's $1.7T Public Pension Fund: Where the Money Sits</h1>
+  <div class="sub">GPIF target allocation &mdash; a full quarter of the world's largest pension fund is in foreign stocks</div>
+  <div class="chartarea">
+    <svg viewBox="0 0 560 560" width="520" height="520">
+      <circle cx="280" cy="280" r="190" fill="none" stroke="#1e2330" stroke-width="4"/>
+      <circle cx="280" cy="280" r="190" fill="none" stroke="#00e68a" stroke-width="78" stroke-dasharray="298.5 895.4" stroke-dashoffset="0" transform="rotate(-90 280 280)"/>
+      <circle cx="280" cy="280" r="190" fill="none" stroke="#a855f7" stroke-width="90" stroke-dasharray="302.4 891.5" stroke-dashoffset="-298.5" transform="rotate(-90 280 280)"/>
+      <circle cx="280" cy="280" r="190" fill="none" stroke="#00c2ff" stroke-width="78" stroke-dasharray="298.5 895.4" stroke-dashoffset="-600.9" transform="rotate(-90 280 280)"/>
+      <circle cx="280" cy="280" r="190" fill="none" stroke="#ffd700" stroke-width="78" stroke-dasharray="294.5 899.4" stroke-dashoffset="-899.4" transform="rotate(-90 280 280)"/>
+      <text x="280" y="265" fill="#e8eaf0" font-family="DM Sans" font-weight="900" font-size="64" text-anchor="middle">25.3%</text>
+      <text x="280" y="310" fill="#8892a4" font-family="DM Sans" font-size="26" text-anchor="middle">foreign stocks</text>
+    </svg>
+    <div class="legend">
+      <div><span class="dot" style="background:#a855f7"></span> Foreign stocks <span class="pct">25.34%</span></div>
+      <div><span class="dot" style="background:#ffd700"></span> Foreign bonds <span class="pct">~25%</span></div>
+      <div><span class="dot" style="background:#00e68a"></span> Domestic stocks <span class="pct">~25%</span></div>
+      <div><span class="dot" style="background:#00c2ff"></span> Domestic bonds <span class="pct">~25%</span></div>
+    </div>
+  </div>
+  <div class="takeaway"><b>Half the fund sits abroad</b><span> &mdash; foreign stocks AND foreign bonds, both exposed if the money starts going home</span></div>
+  <div class="source">SOURCE: GPIF (TARGET MIX SINCE APR 2020); FOREIGN-EQUITY SLICE MEASURED 25.34% Q3 FY2026 (ASIA ASSET MANAGEMENT). VERIFY AT RENDER.</div>
+</div>
+</body></html>

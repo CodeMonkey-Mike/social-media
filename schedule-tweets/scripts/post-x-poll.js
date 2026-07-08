@@ -50,6 +50,22 @@ async function mouseClick(page, locator) {
   }
 }
 
+// Robust click for the composer toolbar. X overlays a transparent full-cover
+// drag-drop dropzone (div[class*="r-1xcajam"], position:absolute inset:0) on top of
+// the composer, which intercepts ALL coordinate-based clicks (raw mouse.click AND
+// Playwright's hit-tested .click()) — this is what broke the poll button on
+// 2026-06-07/08. So: try a normal click briefly, then fall back to the element's
+// native .click() via JS, which dispatches straight to the button (React's delegated
+// onClick still fires) and bypasses the overlay entirely.
+async function robustClick(locator, label = 'element') {
+  try {
+    await locator.click({ timeout: 5000 });
+  } catch (err) {
+    console.log(`  ${label}: normal click blocked (${err.message.split('\n')[0]}); using JS click`);
+    await locator.evaluate(el => el.click());
+  }
+}
+
 async function typeHuman(page, text) {
   for (const char of text) {
     await page.keyboard.type(char);
@@ -82,8 +98,13 @@ async function checkAlreadyPosted(page, poll) {
 
     const hook = (poll.hook || poll.tweet_text.split('\n')[0]).trim().toLowerCase().slice(0, 60);
 
+    // Use startsWith, NOT includes: a genuine duplicate poll's profile text
+    // begins with its own hook (first line). `includes` cross-matched a poll
+    // against an unrelated TWEET that merely quoted the same sentence mid-body
+    // (2026-06-20: poll "The Kaspa hard fork is almost here." false-matched a
+    // tweet whose body contained that sentence → poll marked posted, never sent).
     for (const text of recentTexts) {
-      if (text.includes(hook)) {
+      if (hook && text.startsWith(hook)) {
         console.log(`  Duplicate found: "${text.slice(0, 80)}"`);
         return true;
       }
@@ -244,12 +265,18 @@ async function main() {
     console.log('Tweet text verified ✓');
     await actionPause(page, 'after typing');
 
-    // Click the poll button in the composer toolbar
-    // Confirmed data-testid from live DOM inspection (2026-05-20): "createPollButton"
+    // Click the poll button in the composer toolbar.
+    // testid "createPollButton" confirmed unchanged (DOM recapture 2026-06-08).
+    // IMPORTANT: use Playwright's locator.click(), NOT a raw mouse.click() at
+    // coordinates. The toolbar buttons are 36px wide and packed together (poll sits
+    // beside GIF/Grok/location); raw-coordinate clicks land on an adjacent button when
+    // the layout shifts, so the poll widget never opens (caused the 2026-06-07/08
+    // selectPollDays timeouts — nothing was wrong with the selector). Target a :visible
+    // instance because a hidden duplicate createPollButton can exist in the DOM.
     console.log('Opening poll widget...');
-    const pollBtn = page.locator('[data-testid="createPollButton"]').first();
+    const pollBtn = page.locator('[data-testid="createPollButton"]:visible').first();
     if (await pollBtn.count() === 0) throw new Error('Poll button (createPollButton) not found in composer.');
-    await mouseClick(page, pollBtn);
+    await robustClick(pollBtn, 'poll button');
 
     // Wait for poll duration select — confirms widget is fully open
     await page.waitForSelector('[data-testid="selectPollDays"]', { timeout: 10000 });
@@ -265,9 +292,9 @@ async function main() {
       // Options 3 and 4 need "Add a choice" clicked first
       // Confirmed data-testid from live DOM inspection (2026-05-20): "addPollChoice"
       if (i >= 2) {
-        const addBtn = page.locator('[data-testid="addPollChoice"]').first();
+        const addBtn = page.locator('[data-testid="addPollChoice"]:visible').first();
         if (await addBtn.count() === 0) throw new Error(`"Add a choice" button not found for option ${i + 1}`);
-        await mouseClick(page, addBtn);
+        await robustClick(addBtn, 'add choice');
         await page.waitForTimeout(randomBetween(1000, 2000));
         await page.waitForFunction(
           ({ sel, count }) => document.querySelectorAll(sel).length >= count,
@@ -278,15 +305,20 @@ async function main() {
       }
 
       const input = page.locator(CHOICE_SEL).nth(i);
-      await input.click();
-      await page.waitForTimeout(randomBetween(500, 1000));
+      // Use fill(), NOT click()+type. The composer dropzone overlay intercepts pointer
+      // events, so click-to-focus is unreliable (left option 2 empty on a JS-click focus
+      // race 2026-06-08). fill() focuses + sets the value + fires React's input event
+      // without a pointer hit-test — overlay-proof and deterministic.
+      console.log(`  Filling option ${i + 1}: "${poll.options[i]}"`);
+      await input.fill(poll.options[i]);
+      await page.waitForTimeout(randomBetween(400, 900));
 
-      console.log(`  Typing option ${i + 1}: "${poll.options[i]}"`);
-      await typeHuman(page, poll.options[i]);
-
-      const val = await input.evaluate(el => el.value);
+      const val = await input.inputValue();
+      if (val.trim() !== poll.options[i].trim()) {
+        throw new Error(`Option ${i + 1} verification failed: expected "${poll.options[i]}" got "${val}"`);
+      }
       console.log(`  Option ${i + 1} confirmed: "${val}" ✓`);
-      await page.waitForTimeout(randomBetween(600, 1200));
+      await page.waitForTimeout(randomBetween(400, 900));
     }
 
     // Always post with 7-day duration regardless of what's in the JSON

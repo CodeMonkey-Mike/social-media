@@ -1,0 +1,5 @@
+Every node reads and writes one shared state object, and defining it is code you already
+know how to write.
+It's a typed dict.
+One class, one field per thing the pipeline cares about.
+Right here, the batch metadata, the transcript, the clip list, the draft queues.

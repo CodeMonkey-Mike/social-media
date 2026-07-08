@@ -40,4 +40,19 @@ function pickNextLongform(platform) {
   return { entry, metadata: entry, videoPath, thumbPath };
 }
 
-module.exports = { pickNextLongform, LONGS_JSON };
+// Soundstripe (and any) music-license credits belong ONLY in the YouTube description — the codes
+// are Content-ID clearance codes Mike pastes into YouTube. They must NOT appear on Facebook /
+// Rumble / BitChute. The credit is its own paragraph (blank-line delimited), e.g.:
+//   Music (licensed via Soundstripe):
+//   Born Every Minute by Neon Beach | V6HIWVPVCE6SHQ4T
+//   ...
+// Drop any paragraph whose first line is a "Music ... (licensed via) Soundstripe" header.
+function stripMusicCredits(desc) {
+  if (!desc) return desc;
+  const kept = desc
+    .split(/\n{2,}/)
+    .filter(p => !/^\s*music\b[^\n]*soundstripe/i.test(p));
+  return kept.join('\n\n').trim();
+}
+
+module.exports = { pickNextLongform, LONGS_JSON, stripMusicCredits };

@@ -28,12 +28,12 @@ const HOST_SEL       = 'tp-yt-paper-input.poll-option-input';
 // Timing constants — mirrored from scripts/post-thread.js
 const CHAR_DELAY_MIN  = 60;     // ms per keystroke
 const CHAR_DELAY_MAX  = 150;
-const ACTION_MIN      = 4000;   // ms between UI actions
-const ACTION_MAX      = 7000;
-const PRE_COMPOSE_MIN = 60000;  // ms before opening composer (60–180s)
-const PRE_COMPOSE_MAX = 180000;
-const PRE_POST_MIN    = 60000;  // ms before clicking Post (60–180s)
-const PRE_POST_MAX    = 180000;
+const ACTION_MIN      = 2000;   // ms between UI actions (halved 2026-06-14)
+const ACTION_MAX      = 3500;
+const PRE_COMPOSE_MIN = 30000;  // ms before opening composer (30–90s, halved 2026-06-14)
+const PRE_COMPOSE_MAX = 90000;
+const PRE_POST_MIN    = 30000;  // ms before clicking Post (30–90s, halved 2026-06-14)
+const PRE_POST_MAX    = 90000;
 
 function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -55,6 +55,17 @@ async function typeHuman(page, text) {
   for (const char of text) {
     await page.keyboard.type(char);
     await page.waitForTimeout(randomBetween(CHAR_DELAY_MIN, CHAR_DELAY_MAX));
+  }
+}
+
+// Click that survives composer overlays / custom Polymer handlers: try Playwright's
+// actionability-checked click, fall back to a native JS click dispatched on the element.
+async function robustClick(locator, label = '') {
+  try {
+    await locator.click({ timeout: 5000 });
+  } catch {
+    console.log(`  ${label}: normal click blocked — using JS click`);
+    await locator.evaluate(el => el.click());
   }
 }
 
@@ -183,56 +194,54 @@ async function main() {
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await page.waitForTimeout(randomBetween(700, 1100));
 
-    // Fill option fields — mouse-click + real keystrokes
+    // Fill option fields — target the INNER <input> directly (NOT raw host coords).
+    // The old approach computed the host's bounding-box center and did page.mouse.click(x,y)
+    // to focus — that coordinate click missed the input (each row is [remove-X][input]),
+    // so text never entered (host.value=null) and the widget degraded, which then made the
+    // coordinate-based add-option click miss too (30s hang). Fix (2026-06-10): click the
+    // actual <input> element (Playwright actionability-checked) + robustClick for add-option.
+    const OPT_INPUT_SEL = `${HOST_SEL} input`;   // tp-yt-paper-input.poll-option-input input
     console.log(`Filling ${poll.options.length} poll options...`);
-    await page.locator(HOST_SEL).first().waitFor({ state: 'attached', timeout: 10000 });
+    await page.locator(OPT_INPUT_SEL).first().waitFor({ state: 'attached', timeout: 10000 });
 
     for (let i = 0; i < poll.options.length; i++) {
-      // Add a new field if needed (initial DOM has 2 hosts)
-      let currentHosts = await page.locator(HOST_SEL).count();
-      if (i >= currentHosts) {
-        console.log(`  Clicking #add-option to add field ${i + 1}...`);
-        const addCoords = await page.evaluate(() => {
-          const btn = document.querySelector('#add-option button');
-          if (!btn) return null;
-          btn.scrollIntoView({ block: 'center' });
-          const r = btn.getBoundingClientRect();
-          return r.width > 0 ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null;
-        });
-        if (addCoords) await page.mouse.click(addCoords.x, addCoords.y);
-        else await page.locator('#add-option button').first().dispatchEvent('click');
+      // Ensure enough option fields exist (composer starts with 2)
+      let currentInputs = await page.locator(OPT_INPUT_SEL).count();
+      while (currentInputs <= i) {
+        console.log(`  Adding option field (have ${currentInputs}, need ${i + 1})...`);
+        const addBtn = page.locator('#add-option button').first();
+        await addBtn.scrollIntoViewIfNeeded().catch(() => {});
+        await robustClick(addBtn, '#add-option');
         await page.waitForFunction(
           ({ sel, n }) => document.querySelectorAll(sel).length > n,
-          { sel: HOST_SEL, n: currentHosts },
+          { sel: OPT_INPUT_SEL, n: currentInputs },
           { timeout: 8000 }
         );
+        currentInputs = await page.locator(OPT_INPUT_SEL).count();
         await actionPause(page, `field ${i + 1} added`);
       }
 
-      // Get host coordinates and mouse-click to focus
-      const rect = await page.evaluate(({ sel, idx }) => {
-        const el = document.querySelectorAll(sel)[idx];
-        if (!el) return null;
-        el.scrollIntoView({ block: 'center' });
-        const r = el.getBoundingClientRect();
-        return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height };
-      }, { sel: HOST_SEL, idx: i });
+      const input = page.locator(OPT_INPUT_SEL).nth(i);
+      await input.scrollIntoViewIfNeeded().catch(() => {});
 
-      if (!rect || rect.w === 0) throw new Error(`Option ${i + 1} has zero rect — poll attachment may be hidden`);
-      console.log(`  Option ${i + 1} host at (${Math.round(rect.x)},${Math.round(rect.y)})`);
-
-      await page.mouse.click(rect.x, rect.y);
-      await page.waitForTimeout(randomBetween(400, 700));
-
-      // Type option character-by-character with human delays
+      // Focus the real input element (actionability-checked), then type real keystrokes —
+      // real CDP keystrokes update Polymer's two-way binding AND YouTube's submission state.
       console.log(`  Typing option ${i + 1}: "${poll.options[i]}"`);
+      await robustClick(input, `option ${i + 1} input`);
+      await page.waitForTimeout(randomBetween(300, 600));
+      await page.keyboard.press('Control+A');
+      await page.keyboard.press('Delete');
       await typeHuman(page, poll.options[i]);
 
-      const actual = await page.evaluate(({ sel, idx }) => {
-        const el = document.querySelectorAll(sel)[idx];
-        return el ? el.value : null;
-      }, { sel: HOST_SEL, idx: i });
-      console.log(`  Option ${i + 1}: host.value="${actual}" ${actual === poll.options[i] ? '✓' : '⚠'}`);
+      const actual = await input.inputValue().catch(() => null);
+      console.log(`  Option ${i + 1}: value="${actual}" ${actual === poll.options[i] ? '✓' : '⚠'}`);
+      if (actual !== poll.options[i]) {
+        // Last-resort: native value set + input event (Polymer listens to bubbling 'input')
+        await input.fill(poll.options[i]);
+        const retry = await input.inputValue().catch(() => null);
+        console.log(`  Option ${i + 1} (fill retry): value="${retry}" ${retry === poll.options[i] ? '✓' : '⚠'}`);
+        if (retry !== poll.options[i]) throw new Error(`Option ${i + 1} text did not register ("${retry}")`);
+      }
 
       await actionPause(page, `after option ${i + 1}`);
     }
@@ -270,22 +279,17 @@ async function main() {
     console.log('Pre-post wait (60–180s)...');
     await longWait(page, PRE_POST_MIN, PRE_POST_MAX, 'before Post');
 
-    // Re-resolve coords after the long wait (layout may have shifted slightly)
-    postCoords = await page.evaluate(() => {
-      const btns = [...document.querySelectorAll('button[aria-label="Post"]')];
-      for (const btn of btns) {
-        const r = btn.getBoundingClientRect();
-        const enabled = !btn.disabled && btn.getAttribute('aria-disabled') !== 'true';
-        if (r.width > 0 && r.height > 0 && enabled) {
-          return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-        }
-      }
-      return null;
-    });
-    if (!postCoords) throw new Error('Post button no longer visible after pre-post wait');
-
+    // Click the VISIBLE Post button as an ELEMENT via robustClick (trusted Playwright
+    // click, then JS-click fallback) — NOT page.mouse.click(x,y). A coordinate click
+    // misses YouTube's Polymer Post button and never fires its submit handler, so the
+    // poll types in fully but never posts: composer never clears, no new post URL, the
+    // poll is not live. This was the LAST click still on raw coordinates after the
+    // 2026-06-10 option-field fix switched everything else to robustClick. (Reproduced
+    // twice on 2026-06-14 — fix: target the element, not a point.)
     console.log('Clicking Post...');
-    await page.mouse.click(postCoords.x, postCoords.y);
+    const postBtn = page.locator('button[aria-label="Post"]:visible').first();
+    await postBtn.waitFor({ state: 'visible', timeout: 10000 });
+    await robustClick(postBtn, 'Post button');
     console.log('Post clicked ✓');
 
     // Wait for composer to clear

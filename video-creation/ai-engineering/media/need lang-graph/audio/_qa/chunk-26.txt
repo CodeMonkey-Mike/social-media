@@ -1,0 +1,6 @@
+But resuming has a trap, and this
+is the part that bites people in production.
+Say a post actually goes out to a platform,
+and then the call crashes before it records success.
+A naive resume runs that note again.
+Congratulations, you just posted twice.

@@ -1,0 +1,3 @@
+So you wrap the dangerous steps in a guard and the pattern is four steps.
+Record attempted, do the action, verify it actually happened, then record complete.
+On resume, the node checks state first and skips anything that's already done.

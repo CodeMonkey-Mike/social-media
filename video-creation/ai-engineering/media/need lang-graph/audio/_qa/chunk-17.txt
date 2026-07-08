@@ -1,0 +1,5 @@
+But here's a design rule worth stealing.
+Peers never spawn peers.
+Only the orchestrator owns the graph.
+Workers do their job and report back.
+And that one rule is what keeps the whole thing acyclic and sane.

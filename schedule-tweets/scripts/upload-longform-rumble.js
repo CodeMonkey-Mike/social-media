@@ -5,7 +5,7 @@
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
-const { pickNextLongform } = require('./lib/longform-queue');
+const { pickNextLongform, stripMusicCredits } = require('./lib/longform-queue');
 
 const CHROME_PROFILE    = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\rumblebot-profile';
 const RUMBLE_UPLOAD_URL = 'https://rumble.com/upload.php';
@@ -42,7 +42,7 @@ async function typeHuman(page, locator, text) {
   if (!videoPath || !fs.existsSync(videoPath)) { console.error('video_path missing on disk:', videoPath); process.exit(1); }
   const hasThumb = !!thumbPath;
   const title = (metadata.title || '').slice(0, RUMBLE_TITLE_MAX);
-  const description = (metadata.description || '').trim();
+  const description = stripMusicCredits((metadata.description || '').trim());
   const tags = metadata.tags || [];
   const tagsCsv = tags.map(t => t.trim()).join(', ');
   const category = (metadata.categories?.rumble?.primary) || 'Finance & Crypto';

@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-post_gif_reply.py — Post GIF-only replies to X tweets via the native GIF picker.
+post_gif_reply.py — GIF-picker helper for the unified reply poster.
 
-The text reply poster (post_replies.py) can only TYPE reply_text. A reaction
-entry whose intent is a GIF must be posted through X's GIF picker instead — this
-script does that. It mirrors post_replies.py's launch / navigation / human-pacing,
-but replaces the type-text step with: GIF button -> search gif_search -> click the
-first result tile -> Post.
+NOT a standalone runner. GIF replies live in the single queue
+(data/replies_to_post.json) with text and emoji replies, and post_replies.py
+posts all three types — it imports post_gif_reply() from this module to handle
+the GIF entries (those with a "gif_search" field).
 
-Queue file: data/gif_replies_to_post.json — an array of:
-    { "tweet_url": "...", "gif_search": "standing ovation", "author": "@handle" }
-(reply_text/caption is NOT used — these are GIF-only reactions.)
+The text path can only TYPE reply_text; a GIF reaction must go through X's native
+GIF picker instead. post_gif_reply() does that on an already-open page:
+GIF button -> search gif_search -> click the first result tile -> Post.
 
-Usage:
-    python post_gif_reply.py --dry-run   # attach GIF + screenshot, DO NOT post
-    python post_gif_reply.py             # attach GIF and post for real
+To post (or dry-run) replies, run the one poster:
+    python post_replies.py --dry-run    # attaches + screenshots GIFs, does NOT post
+    python post_replies.py              # posts text + emoji + GIF
 
---dry-run stops right before the final Post click and saves a screenshot of the
-composer (tmp-gif-debug/) so you can confirm a GIF actually attached before firing.
+A GIF queue entry is just a normal reply object with a gif_search field:
+    { "author": "@handle", "tweet_url": "...", "gif_search": "standing ovation",
+      "reaction_only": true }
 """
 
 import json
@@ -35,35 +35,10 @@ except ImportError:
     print("ERROR: playwright not installed.")
     sys.exit(1)
 
-CHROME_PROFILE = r"C:\Users\mnede\AppData\Local\Google\Chrome\xbot-profile"
 ACTION_MIN, ACTION_MAX = 4, 7          # seconds between UI actions
-POST_DELAY_MIN, POST_DELAY_MAX = 2, 6  # minutes between multiple GIF replies
 
-HERE               = Path(__file__).parent
-QUEUE_FILE         = HERE / "data" / "gif_replies_to_post.json"
-POSTED_FILE        = HERE / "data" / "posted_replies.json"
-OPPORTUNITIES_FILE = HERE / "data" / "reply_opportunities.json"
-DEBUG_DIR          = HERE / "tmp-gif-debug"
-
-
-def remove_posted_opportunities(posted: list[dict]):
-    if not posted or not OPPORTUNITIES_FILE.exists():
-        return
-    posted_urls = {e.get("tweet_url") for e in posted if e.get("tweet_url")}
-    if not posted_urls:
-        return
-    try:
-        opps = json.loads(OPPORTUNITIES_FILE.read_text(encoding="utf-8"))
-    except Exception:
-        return
-    before = len(opps)
-    opps = [o for o in opps if o.get("tweet_url") not in posted_urls]
-    after = len(opps)
-    if after < before:
-        OPPORTUNITIES_FILE.write_text(
-            json.dumps(opps, indent=2, ensure_ascii=False), encoding="utf-8"
-        )
-        print(f"  Removed {before - after} posted entries from reply_opportunities.json")
+HERE      = Path(__file__).parent
+DEBUG_DIR = HERE / "tmp-gif-debug"     # dry-run composer screenshots
 
 
 def human_pause(label=""):
@@ -256,69 +231,23 @@ def post_gif_reply(page, entry: dict, dry_run: bool) -> str:
 
 
 def main():
-    dry_run = "--dry-run" in sys.argv
-    if not QUEUE_FILE.exists():
-        print(f"No GIF queue at {QUEUE_FILE}"); sys.exit(1)
-    queue = json.loads(QUEUE_FILE.read_text(encoding="utf-8"))
-    if not queue:
-        print("GIF queue empty — nothing to post."); return
-
-    print("=" * 55)
-    print(f"{'DRY RUN — ' if dry_run else ''}Posting {len(queue)} GIF repl{'y' if len(queue)==1 else 'ies'}")
-    print("=" * 55)
-    for i, e in enumerate(queue):
-        print(f"[{i+1}/{len(queue)}] {e.get('author','?')} -> GIF '{e['gif_search']}' on {e['tweet_url']}")
-
-    jitter = random.randint(10, 30)
-    print(f"\nStarting in {jitter}s...")
-    time.sleep(jitter)
-
-    posted_log = json.loads(POSTED_FILE.read_text(encoding="utf-8")) if POSTED_FILE.exists() else []
-    results = []
-
-    with sync_playwright() as pw:
-        ctx = pw.chromium.launch_persistent_context(
-            user_data_dir=CHROME_PROFILE, channel="chrome", headless=False, slow_mo=50,
-            args=["--disable-blink-features=AutomationControlled"],
-            ignore_default_args=["--enable-automation"],
-        )
-        page = ctx.pages[0] if ctx.pages else ctx.new_page()
-
-        for i, e in enumerate(queue):
-            print(f"\n--- [{i+1}/{len(queue)}] {e.get('author','?')} ---")
-            result = post_gif_reply(page, e, dry_run)
-            print(f"  result: {result}")
-            results.append(result)
-
-            if not dry_run and result in ("posted", "uncertain"):
-                rec = dict(e)
-                rec["result"] = "posted_gif" if result == "posted" else "uncertain_gif"
-                rec["posted_at"] = datetime.now().isoformat()
-                posted_log.append(rec)
-                POSTED_FILE.write_text(json.dumps(posted_log, indent=2, ensure_ascii=False), encoding="utf-8")
-
-            if i < len(queue) - 1 and not dry_run:
-                delay_s = random.randint(POST_DELAY_MIN*60, POST_DELAY_MAX*60)
-                print(f"\n  Next GIF reply in {delay_s//60}m {delay_s%60}s...")
-                time.sleep(delay_s)
-
-        print("\nBrowser closing in 30s so you can verify...")
-        time.sleep(30)
-        ctx.close()
-
-    # On a real run, drop posted entries from the queue (keep failures for manual review).
-    if not dry_run:
-        # Keep only hard errors in the queue — uncertain very likely posted (same
-        # X false-negative pattern as text replies), so remove those too.
-        remaining = [e for e, r in zip(queue, results) if r == "error"]
-        QUEUE_FILE.write_text(json.dumps(remaining, indent=2, ensure_ascii=False), encoding="utf-8")
-        posted_entries = [e for e, r in zip(queue, results) if r in ("posted", "uncertain")]
-        remove_posted_opportunities(posted_entries)
-        n_posted = results.count("posted")
-        n_uncertain = results.count("uncertain")
-        print(f"\nDone. {n_posted} posted, {n_uncertain} uncertain (likely posted — check manually), {len(remaining)} errors left in queue.")
-    else:
-        print("\nDry run complete — queue untouched. Review tmp-gif-debug/ screenshots.")
+    # DEPRECATED as a standalone runner. GIF replies now live in the single
+    # unified queue (data/replies_to_post.json) alongside text and emoji
+    # replies, and post_replies.py posts all three types (it imports
+    # post_gif_reply() from this module for the GIF ones). There is no longer a
+    # separate gif_replies_to_post.json queue.
+    #
+    # This module is kept as the GIF-picker helper library. Run the one poster:
+    print("=" * 60)
+    print("post_gif_reply.py is no longer a standalone runner.")
+    print("GIF replies are part of the single queue: data/replies_to_post.json")
+    print()
+    print("  Dry-run (attaches + screenshots GIFs, does NOT post):")
+    print("    python post_replies.py --dry-run")
+    print()
+    print("  Post everything in the queue (text + emoji + GIF):")
+    print("    python post_replies.py")
+    print("=" * 60)
 
 
 if __name__ == "__main__":

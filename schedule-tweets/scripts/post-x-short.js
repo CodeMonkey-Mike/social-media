@@ -5,6 +5,7 @@
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
+const { stripHashtags, buildCaption } = require('./lib/strip-hashtags');
 
 const SHORTS_JSON    = path.join(__dirname, '..', 'data', 'shorts.json');
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\xbot-profile';
@@ -61,14 +62,16 @@ async function typeHuman(page, text) {
     process.exit(1);
   }
 
+  const caption = buildCaption(short.caption, short.tags, PLATFORM);
+
   // X has a 280 char limit — warn if caption is over
-  if (short.caption.length > 280) {
-    console.warn(`Warning: caption is ${short.caption.length} chars (> 280). X may truncate or reject.`);
+  if (caption.length > 280) {
+    console.warn(`Warning: caption is ${caption.length} chars (> 280). X may truncate or reject.`);
   }
 
   console.log(`\nShort: "${short.title}"`);
   console.log(`File:  ${videoPath} (${short.duration_seconds}s)`);
-  console.log(`Caption: ${short.caption.length} chars`);
+  console.log(`Caption: ${caption.length} chars (hashtags stripped)`);
 
   short.platforms[PLATFORM].status = 'posting';
   fs.writeFileSync(SHORTS_JSON, JSON.stringify(data, null, 2));
@@ -148,8 +151,8 @@ async function typeHuman(page, text) {
     await page.keyboard.press('Control+Home');
     await page.waitForTimeout(500);
 
-    console.log(`Typing caption (${short.caption.length} chars)...`);
-    await typeHuman(page, short.caption);
+    console.log(`Typing caption (${caption.length} chars)...`);
+    await typeHuman(page, caption);
     await page.waitForTimeout(1000);
     console.log('Caption typed ✓');
     await actionPause(page, 'after caption');

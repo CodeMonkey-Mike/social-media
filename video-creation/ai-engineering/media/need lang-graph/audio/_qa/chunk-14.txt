@@ -1,0 +1,5 @@
+For the fan out itself, landgraph gives you the send API.
+You write a little routing function, and the trick is all in its return line.
+Look at this.
+Instead of naming one next node, it returns a list of send objects, one per clip.
+And every send spawns its own parallel worker.

@@ -7,6 +7,7 @@ const { spawn }    = require('child_process');
 const net          = require('net');
 const fs           = require('fs');
 const path         = require('path');
+const { stripHashtags } = require('./lib/strip-hashtags');
 
 const SHORTS_JSON    = path.join(__dirname, '..', 'data', 'shorts.json');
 const CHROME_EXE     = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
@@ -155,8 +156,9 @@ async function clickFirst(page, selectors, timeout = 8000) {
     const descBox = page.locator('#description-textarea #textbox, #description-container #textbox').first();
     await descBox.click();
     await page.waitForTimeout(500);
-    await typeHuman(page, short.caption);
-    console.log(`  Description: ${short.caption.length} chars`);
+    const ytDescription = stripHashtags(short.platforms.yt_shorts.caption_override || short.caption);
+    await typeHuman(page, ytDescription);
+    console.log(`  Description: ${ytDescription.length} chars (hashtags stripped)`);
     await pause(page, 'after description');
 
     // ── Not made for kids ─────────────────────────────────────────────────────

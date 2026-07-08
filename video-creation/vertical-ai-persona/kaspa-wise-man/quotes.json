@@ -1,0 +1,1061 @@
+{
+  "_purpose": "Quote bank for the Kaspa Wise Man series — a single recurring AI-persona character (Mike's likeness, wise-man/sage look, see SKILL.md identity refs) who delivers ONE short, high-conviction line per video. The line is the only spoken variable per daily; the character, voice, and delivery framing are constant across the whole series. Each line also carries a 'hook' — a photoreal-but-physically-impossible visual METAPHOR that opens the video (the scroll-stopper, iceman.healer style) before cutting to the wise man delivering the line. The daily automation pulls the next 'unused' quote, renders the hook (its own bespoke 'hook' OR the theme archetype) + a single-voice Seedance delivery clip, captions + assembles, then STOPS for human approval before queueing.",
+  "series": "kaspa-wise-man",
+  "title": "The Kaspa Wise Man",
+  "register": {
+    "name": "conviction sage",
+    "summary": "Wise man WITH fire — gravitas plus electricity, never sleepy. Authority of a sage, certainty of a prophet. Measured delivery that BUILDS and lands hard on the payoff word. The calm-monk-that-bores-you is explicitly rejected (Mike's direction 2026-06-01): the viewer must be excited enough to like, subscribe, and watch more.",
+    "delivery": "Use Mike's real timbre (identity/my-avatar-voice-13s.mp3), directed with weight and build, not a slow sedated sage voice. Words in CAPS mark the intended emphasis/payoff word for Seedance to stress (per persona-voice.json). Every line ends on a BUTTON — a punch, a challenge to the viewer, or present-tense urgency — never trailing off into serenity.",
+    "visual_note": "Open EVERY video with the line's hook (impossible visual metaphor), then cut to the wise man delivering the line to camera. Lock ONE delivery keyframe (face + look + backdrop) and reuse it for the entire series. Captions: reuse the crypto-promo yellow-highlight karaoke (white all-caps, 2-4 words, yellow box on the key word).",
+    "voice_source": "video-creation/vertical-ai-persona/persona-voice.json (spoken-dialogue persona). Kaspa terminology + theses: persona/persona.json (repo single source of truth). Full concept + workflow: CONCEPT.md in this folder."
+  },
+  "rules": [
+    "EVERGREEN ONLY. No dates, no 'this June', no 'this year', no current-price references. Time-pegged hype lines do NOT belong in this bank — they get posted fresh as one-offs (see ideas-backlog).",
+    "NO EM DASHES anywhere (repo-wide hard rule; captions render them). Use commas, periods, colons, semicolons, parentheses.",
+    "Kaspa terminology: 'Kaspa' / $KAS never 'Casper'; 'GhostDAG' never 'fully implemented ghost'; '50-week SMA' never '50WMA'. (persona/persona.json terminology_rules)",
+    "CAPS = intended emphasis word for the TTS, not shouting. Keep to 0-1 caps word per line.",
+    "Spoken length target 5-15s (~10-35 words). Match clip --duration tight to spoken length or the TTS hallucinates filler (SKILL.md).",
+    "Each line must be educational, inspiring, or hype-energy. No flat exposition, no sleepy aphorism.",
+    "Each quote's 'hook' is a specific variation WITHIN its theme's visual family (see hook_archetypes). At production time, render the bespoke hook OR fall back to reusing the cached theme-archetype clip to save credits. The hook text is free; only rendering costs."
+  ],
+  "themes": {
+    "fair-launch": "No premine, no founder reward, the empty Coinbase chair, given to everyone at once.",
+    "ghostdag": "The architecture: parallel blocks, no wasted orphans, speed without sacrificing security — a different species.",
+    "dag-explained": "Educational. Teach what a blockDAG actually IS in plain analogy, with energy.",
+    "proof-of-work": "Honest effort you cannot fake; energy becomes truth; PoW vs PoS.",
+    "anti-cycle": "The four-year cycle is dead; watch global liquidity, not the calendar; contrarian.",
+    "succession-cascade": "ETH flips BTC, Bitcoin maxis seek the purest PoW left standing and migrate to Kaspa.",
+    "institutional-adoption": "What institutions will actually need in the next financial reset: fast, final, secure, unstoppable settlement.",
+    "building-wealth": "Patience, temperament, conviction; generational wealth comes from holding the right thing, not selling."
+  },
+  "hook_archetypes": {
+    "fair-launch": "Visual family: a clean glowing greenish cyan Kaspa coin stays whole, shared, and free while rival/premined coins fail, crumble, hang on puppet strings, or siphon hidden wealth to shadowy insiders. Palette: pure greenish cyan vs tarnished gold and shadow.",
+    "ghostdag": "Visual family: blocks as physical objects. A single block shuffling through one gate or queue versus a swarm of glowing greenish cyan blocks pouring through many gates at once, colliding then snapping into a perfectly ordered luminous 3D lattice. Geometric greenish cyan light-trails.",
+    "dag-explained": "Visual family: plain teaching analogies made physical and impossible. One-lane road/bridge/rope versus a hundred-lane glowing greenish cyan river/bridge/tree that still orders everything perfectly. Diagrammatic, clean, chalkboard-clear, greenish cyan accents.",
+    "proof-of-work": "Visual family: honest forged energy versus fake printed money. Blacksmith forge, sparks, hammer, anvil, lightning, sweat, real current producing a glowing greenish cyan coin, set against a printer spitting flimsy paper coins. Heat/orange forge vs cheap paper.",
+    "anti-cycle": "Visual family: destroy the four-year clock/calendar; reveal liquidity as a glowing greenish cyan tide/ocean/river that actually drives price. Burning calendars, smashed clocks, hypnotized herds and zombies versus one clear-eyed figure. Clockwork vs greenish cyan flood.",
+    "succession-cascade": "Visual family: orange Bitcoin-maxi figures/coins migrating through a door, bridge, or relay and emerging glowing greenish cyan. Torch-passing, inheritance, crowns, lineage. Orange-to-greenish cyan transformation, no battle.",
+    "institutional-adoption": "Visual family: monumental scale. Suited giants, vaults, skyscrapers, trillion-dollar weights and stress-tests crushing competing rails while only the glowing greenish cyan Kaspa rail/pillar holds. Banker grey vs greenish cyan pillar.",
+    "building-wealth": "Visual family: patience and time made visible. Seeds growing into glowing greenish cyan coin-trees, the impatient ripping up seedlings or panic-selling, stillness amid stampedes, zooming out until a scary candle is a single pixel. Growth and calm vs panic."
+  },
+  "energy_legend": [
+    "educational",
+    "inspiring",
+    "hype"
+  ],
+  "status_legend": [
+    "unused",
+    "used"
+  ],
+  "quotes": [
+    {
+      "id": "fl-01",
+      "theme": "fair-launch",
+      "energy": "inspiring",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "There was no premine. No founder's reward. No secret door. Kaspa was handed to everyone at the same moment. That is why no one can ever take it back.",
+      "hook": "A hundred hands reach up out of darkness; a single greenish cyan Kaspa coin multiplies and drops into every hand at the SAME instant."
+    },
+    {
+      "id": "fl-02",
+      "theme": "fair-launch",
+      "energy": "hype",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "They ask why Kaspa isn't on Coinbase. There was no premine to buy the seat. That empty chair is the receipt. Fair launches don't pay for favors.",
+      "hook": "A grand exchange hall of nameplate chairs; every coin has a reserved golden seat except Kaspa, whose empty chair glows greenish cyan, prouder than the filled ones."
+    },
+    {
+      "id": "fl-03",
+      "theme": "fair-launch",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "A coin sold to insiders before you arrived will always answer to the insiders. Kaspa answers to no one. That is the entire point.",
+      "hook": "Three premined rival coins, Ethereum, BNB, and XRP, jerk and dance on puppet-strings pulled by a hidden hand reaching down from above; below them the greenish cyan Kaspa coin floats free, its strings cut and dangling.",
+      "keyframes": [
+        "prototype-fl-03/keyframes/puppet-tableau.png",
+        "prototype-fl-03/keyframes/puppet-tableau-composite.png"
+      ]
+    },
+    {
+      "id": "fl-04",
+      "theme": "fair-launch",
+      "energy": "hype",
+      "approx_seconds": 7,
+      "status": "unused",
+      "used_date": null,
+      "line": "Every premine is a quiet tax you pay to people you will never meet. Kaspa never charged it. Read that again.",
+      "hook": "He holds up a rival coin; thin streams of gold siphon OUT of it into shadowy hands behind him, while the greenish cyan Kaspa coin in his other palm loses nothing."
+    },
+    {
+      "id": "fl-05",
+      "theme": "fair-launch",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "Fairness isn't a marketing word for Kaspa. It's the genesis block. There was no head start, and there was no owner.",
+      "hook": "A starting line of runners; every other coin already sprinting from far ahead, while the greenish cyan Kaspa runner alone stands at the true start line, glowing."
+    },
+    {
+      "id": "fl-06",
+      "theme": "fair-launch",
+      "energy": "hype",
+      "approx_seconds": 6,
+      "status": "unused",
+      "used_date": null,
+      "line": "The fairest launch wins slowly, then all at once. Kaspa is somewhere in the slowly. Don't blink.",
+      "hook": "An hourglass where greenish cyan Kaspa sand barely trickles, then suddenly ROARS through and fills the chamber to bursting."
+    },
+    {
+      "id": "fl-07",
+      "theme": "fair-launch",
+      "energy": "educational",
+      "approx_seconds": 15,
+      "status": "unused",
+      "used_date": null,
+      "line": "Ask who got the early bag in Kaspa. The answer is nobody. The same machine that mines it today is the only machine that ever mined it. No founder pressed a button. The machine BIRTHED every coin, and it still does today.",
+      "hook": "Extreme close-up filling the frame with the steel face of a single mining rig, humming. A seam splits open like living tissue and a thick, glowing greenish cyan substance excretes from inside; it gathers at the opening and a single shiny Kaspa coin pushes out and drops free, wet and gleaming. No room, no hands, no VIP, just the machine birthing the coin. Wise man composited small in the bottom-left corner, watching, unbothered.",
+      "keyframes": [
+        "prototype-fl-07/keyframes/machine-intact.png",
+        "prototype-fl-07/keyframes/orifice-oozing.png",
+        "prototype-fl-07/keyframes/coin-birthing.png"
+      ]
+    },
+    {
+      "id": "fl-08",
+      "theme": "fair-launch",
+      "energy": "inspiring",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "Most projects sell you the dream and keep the supply. Kaspa kept nothing. The miners earned every single coin, including the first one.",
+      "hook": "A rival-logo vault overflows with hoarded coins; Kaspa's vault stands empty and open, its greenish cyan coins all out in working hands."
+    },
+    {
+      "id": "fl-09",
+      "theme": "fair-launch",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "When a chain has no insiders, it has no one to dump on you. Kaspa was built without a single hand above yours.",
+      "hook": "A giant shadowy hand poised to dump a landslide of coins onto a crowd; over Kaspa there is simply no hand, just open greenish cyan sky."
+    },
+    {
+      "id": "fl-10",
+      "theme": "fair-launch",
+      "energy": "hype",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "They printed their tokens and called it a launch. Kaspa mined every coin in the open. One of these is fair. You already know which.",
+      "hook": "A printer on the left ejects fake coins like paper; a glowing open-air mine on the right produces real greenish cyan coins under the sun."
+    },
+    {
+      "id": "fl-11",
+      "theme": "fair-launch",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "The absence of a premine is not a missing feature. It is the FOUNDATION. Everything honest about Kaspa starts there.",
+      "hook": "A skyscraper of rival tokens cracks and tilts on a hollow base; the Kaspa tower stands solid on a glowing greenish cyan bedrock slab."
+    },
+    {
+      "id": "fl-12",
+      "theme": "fair-launch",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "No venture fund got Kaspa at a discount. No influencer got a bag to shill. You and the earliest miner stand on the exact same floor.",
+      "hook": "An auction room where suits and influencers bid behind a velvet rope; the rope is cut and whale and little guy stand on the same glowing greenish cyan floor."
+    },
+    {
+      "id": "fl-13",
+      "theme": "fair-launch",
+      "energy": "inspiring",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "Fair launch means the field was never tilted. In Kaspa, the little guy and the whale started the same race at the same line.",
+      "hook": "A racetrack tilted so rival coins slide ahead downhill; Kaspa's lane snaps perfectly level and a small runner and a whale start side by side."
+    },
+    {
+      "id": "gd-01",
+      "theme": "ghostdag",
+      "energy": "hype",
+      "approx_seconds": 12,
+      "status": "unused",
+      "used_date": null,
+      "line": "Bitcoin lets one block through the door at a time. GhostDAG sends ten a second through together, and not one of them fights. That's not an upgrade. That's a different SPECIES.",
+      "hook": "A single block shuffles through a turnstile while a swarm of greenish cyan blocks pours through a hundred open gates at once, none colliding."
+    },
+    {
+      "id": "gd-02",
+      "theme": "ghostdag",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "Ten blocks a second, and they cooperate instead of compete. There's more harmony in the GhostDAG than in most marriages.",
+      "hook": "Blocks as dancers: a rival chain's blocks shove in a single queue while Kaspa's blocks waltz in perfect synchronized greenish cyan formation."
+    },
+    {
+      "id": "gd-03",
+      "theme": "ghostdag",
+      "energy": "educational",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "Other chains make blocks stand in line. GhostDAG lets them all arrive, then agrees on the order after. Speed without chaos. That's the breakthrough.",
+      "hook": "A flurry of blocks rains down in apparent chaos, then mid-air snaps into a perfectly numbered, ordered luminous greenish cyan lattice."
+    },
+    {
+      "id": "gd-04",
+      "theme": "ghostdag",
+      "energy": "hype",
+      "approx_seconds": 6,
+      "status": "unused",
+      "used_date": null,
+      "line": "GhostDAG didn't break the rules of Proof of Work. It found the rule everyone else MISSED.",
+      "hook": "A wall of locked doors; he turns one hidden key and a concealed door swings open onto a glowing greenish cyan lattice nobody else saw."
+    },
+    {
+      "id": "gd-05",
+      "theme": "ghostdag",
+      "energy": "hype",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "Bitcoin's security with the speed of the internet. Engineers said pick one. Kaspa's GhostDAG refused to.",
+      "hook": "A balance scale with 'security' and 'speed' on each pan; instead of tipping, both pans rise together and fuse into one glowing greenish cyan orb."
+    },
+    {
+      "id": "gd-06",
+      "theme": "ghostdag",
+      "energy": "educational",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "A chain is a thread. A DAG is a fabric. Kaspa stopped weaving in one line and started weaving in every direction at once.",
+      "hook": "A single fragile thread being woven; the camera pulls back to reveal it is one strand in a vast shimmering greenish cyan fabric weaving itself in all directions."
+    },
+    {
+      "id": "gd-07",
+      "theme": "ghostdag",
+      "energy": "educational",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "The genius of GhostDAG is what it does with conflict. It doesn't avoid blocks colliding. It welcomes them, then sorts it out in milliseconds.",
+      "hook": "Two blocks crash head-on; instead of one shattering, they merge and instantly slot into ordered place with a greenish cyan flash."
+    },
+    {
+      "id": "gd-08",
+      "theme": "ghostdag",
+      "energy": "hype",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Every blockchain before Kaspa had a speed limit baked into its bones. GhostDAG removed the limit without removing the security. Let that sink in.",
+      "hook": "A speed-limit sign on rails cracks and falls; the track ahead lights up infinite and greenish cyan while a vault lock beside it stays firmly shut."
+    },
+    {
+      "id": "gd-09",
+      "theme": "ghostdag",
+      "energy": "educational",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "They call it GhostDAG because the blocks that used to die now live on inside the structure. Nothing is haunted here. Nothing is wasted.",
+      "hook": "Ghostly grey orphan blocks drift toward a graveyard, then reverse, glow greenish cyan, and lock into the living structure."
+    },
+    {
+      "id": "gd-10",
+      "theme": "ghostdag",
+      "energy": "hype",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Kaspa confirms in about a second what Bitcoin takes an hour to settle, and it does it on the same proof-of-work spine. Faster AND just as honest.",
+      "hook": "A clock face spins a full hour for a rival coin; for Kaspa the second-hand ticks once and it's DONE, the same iron spine glowing greenish cyan beneath."
+    },
+    {
+      "id": "gd-11",
+      "theme": "ghostdag",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "Most people think faster means weaker. GhostDAG is the proof that the trade-off was a failure of imagination, not a law of nature.",
+      "hook": "The words 'FASTER = WEAKER' carved in stone shatter; behind them a greenish cyan lattice runs blazing fast and unbreakable."
+    },
+    {
+      "id": "gd-12",
+      "theme": "ghostdag",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "GhostDAG is Bitcoin's heart in a body that can actually run. The values stayed. The speed limit didn't.",
+      "hook": "A glowing Bitcoin-orange heart is transplanted into a sprinting greenish cyan figure; the heart keeps beating, the body finally runs."
+    },
+    {
+      "id": "de-01",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 13,
+      "status": "unused",
+      "used_date": null,
+      "line": "A blockchain is a single-file line. One block, then the next, then the next. A blockDAG is a river with a hundred channels, all flowing at once, all arriving. Kaspa didn't widen the road. It rebuilt the physics.",
+      "hook": "A narrow one-lane country road of bumper-to-bumper cars dissolves into a hundred-channel glowing greenish cyan river, all flowing forward at once."
+    },
+    {
+      "id": "de-02",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Every other chain throws away the blocks that arrive at the same instant. They call them orphans. GhostDAG keeps every one, orders them, and uses them. Kaspa wastes NOTHING.",
+      "hook": "Blocks tumble into a trash bin on a rival chain; on Kaspa a hand catches each one and slots it glowing into a greenish cyan lattice."
+    },
+    {
+      "id": "de-03",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "Picture a highway where cars never wait for each other and never crash. That's a DAG. Now picture it settling in one second. That's Kaspa.",
+      "hook": "An impossible highway interchange where hundreds of greenish cyan cars pass through each other frictionlessly, then freeze in perfect order."
+    },
+    {
+      "id": "de-04",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 13,
+      "status": "unused",
+      "used_date": null,
+      "line": "DAG stands for Directed Acyclic Graph. Forget the name. Just remember the idea. Many blocks at once, all pointing forward, never in a circle. That's how you get speed without lies.",
+      "hook": "A glowing arrow tries to loop back into a circle and is gently forbidden; all arrows snap to point forward into a greenish cyan mesh."
+    },
+    {
+      "id": "de-05",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 12,
+      "status": "unused",
+      "used_date": null,
+      "line": "In a blockchain, when two miners find a block at the same time, one of them loses. In a blockDAG, they BOTH win, and the network keeps both blocks. That single change is everything.",
+      "hook": "Two miners race to a finish line and BOTH break the tape; instead of one losing, two greenish cyan trophies appear and both coins join the chain."
+    },
+    {
+      "id": "de-06",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 12,
+      "status": "unused",
+      "used_date": null,
+      "line": "Think of a chain as a one-lane bridge. Everyone waits their turn. A blockDAG is a bridge with a hundred lanes that somehow still agrees who crossed first. Kaspa built the second one.",
+      "hook": "A rickety one-lane rope bridge with a long queue beside a vast hundred-lane glowing greenish cyan bridge, a ledger tallying every crossing in order."
+    },
+    {
+      "id": "de-07",
+      "theme": "dag-explained",
+      "energy": "hype",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "The hardest problem in crypto was speed without sacrificing security. The answer wasn't a bigger block. It was a different SHAPE. Kaspa changed the shape.",
+      "hook": "A block inflates bigger and bigger then pops; beside it a block reshapes into a branching greenish cyan lattice that just works."
+    },
+    {
+      "id": "de-08",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "A normal chain grows like a single rope. Kaspa grows like a tree, branches everywhere, and then orders every leaf perfectly. That's the blockDAG.",
+      "hook": "A single rope being braided versus a glowing greenish cyan tree exploding into branches, each leaf numbered perfectly."
+    },
+    {
+      "id": "de-09",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Most networks slow down when more people use them. A blockDAG can speed up. The more blocks, the richer the structure. Kaspa gets stronger under pressure.",
+      "hook": "A rival highway gridlocks as cars pile on; the Kaspa lattice glows brighter and accelerates the more greenish cyan blocks pour in."
+    },
+    {
+      "id": "de-10",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "Orphan blocks are wasted work, wasted energy, lost forever on other chains. Kaspa's GhostDAG turns that waste into security. It's recycling, for trust.",
+      "hook": "Discarded grey blocks are swept into a recycling bin that outputs glowing greenish cyan armor plating wrapping around the chain."
+    },
+    {
+      "id": "de-11",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "You don't need a computer science degree to get it. Old chains, one line, slow. Kaspa, many lines at once, fast, and still honest. That's the whole revolution.",
+      "hook": "On a chalkboard a hand draws one slow line and crosses it out, then draws an explosive many-lined greenish cyan web as the room lights up."
+    },
+    {
+      "id": "de-12",
+      "theme": "dag-explained",
+      "energy": "educational",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "The acronym scares people off. Here's the truth in one breath. A blockDAG lets a network move at internet speed without asking you to trust anyone. That's it. That's Kaspa.",
+      "hook": "The intimidating letters D-A-G loom huge and dark, then crack open to reveal a simple glowing greenish cyan network humming at light speed."
+    },
+    {
+      "id": "pw-01",
+      "theme": "proof-of-work",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "Proof of Work is one simple thing. You cannot lie about effort. The chain believes what was done, never what was promised.",
+      "hook": "A lie-detector needle pins hard on a smooth-talking salesman coin; beside it a glowing forged greenish cyan coin needs no test, its heat proves the work."
+    },
+    {
+      "id": "pw-02",
+      "theme": "proof-of-work",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "Energy becomes order. Work becomes truth. There's nothing mystical about Kaspa. It's honesty, made too expensive to fake.",
+      "hook": "A shower of raw chaotic sparks funnels into a forge and emerges as a perfectly ordered glowing greenish cyan coin."
+    },
+    {
+      "id": "pw-03",
+      "theme": "proof-of-work",
+      "energy": "hype",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "Proof of Stake asks who already has the most. Proof of Work asks who's willing to do the most. Kaspa chose the harder, honest path.",
+      "hook": "A velvet throne where the richest coin lounges versus a blacksmith hammering an anvil, sweat and sparks forging a greenish cyan Kaspa coin."
+    },
+    {
+      "id": "pw-04",
+      "theme": "proof-of-work",
+      "energy": "educational",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "You can print a stake. You cannot print electricity and time. That's why Proof of Work still matters, and why Kaspa kept it.",
+      "hook": "A printer effortlessly spits stake-tokens; beside it a lightning bolt and a draining hourglass are clamped into a greenish cyan coin that cannot be faked."
+    },
+    {
+      "id": "pw-05",
+      "theme": "proof-of-work",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "Every Kaspa block is backed by real energy that someone actually spent. You can't fake that into existence, and you can't fake it away.",
+      "hook": "A coin plugged into crackling power lines glows from real current; a hand tries to erase it and the energy refuses to let go."
+    },
+    {
+      "id": "pw-06",
+      "theme": "proof-of-work",
+      "energy": "hype",
+      "approx_seconds": 12,
+      "status": "unused",
+      "used_date": null,
+      "line": "In a Proof of Stake world, the rich vote on the rules. In Kaspa, the rules are decided by work no one can shortcut. That's the difference between aristocracy and fairness.",
+      "hook": "A boardroom of crowned coins raises hands to vote versus a wide-open field of miners whose hammers cast the only votes, sparks flying greenish cyan."
+    },
+    {
+      "id": "pw-07",
+      "theme": "proof-of-work",
+      "energy": "educational",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "Proof of Work is the only consensus that ties digital money to the physical universe. Kaspa kept that anchor. Most chains cut the rope.",
+      "hook": "Coins float off into abstract space with their ropes snapped; the Kaspa coin stays chained to a glowing planet Earth, anchored and real."
+    },
+    {
+      "id": "pw-08",
+      "theme": "proof-of-work",
+      "energy": "hype",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "They told us Proof of Work was old. Wasteful. Done. Then Kaspa made it the fastest secure ledger on earth. Old, it turns out, was just EARLY.",
+      "hook": "A tombstone reading 'PROOF OF WORK: OBSOLETE' cracks apart as a greenish cyan coin bursts out of the grave moving at blazing speed."
+    },
+    {
+      "id": "pw-09",
+      "theme": "proof-of-work",
+      "energy": "inspiring",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "The beauty of Proof of Work is that it doesn't care who you are. The machine does the talking. Kaspa is the purest form of that idea since Bitcoin.",
+      "hook": "Faces, logos, and credentials are stripped away at a gate; only a humming mining machine passes through, emitting a pure greenish cyan coin."
+    },
+    {
+      "id": "pw-10",
+      "theme": "proof-of-work",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "You earn a Kaspa block the way you earn anything real. With work. No shortcuts, no favorites, no founder skipping the line.",
+      "hook": "A long honest line of miners at a forge; a founder in a suit tries to cut to the front and simply is not there in Kaspa's line."
+    },
+    {
+      "id": "pw-11",
+      "theme": "proof-of-work",
+      "energy": "hype",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "Proof of Stake rewards the wealthy for being wealthy. Proof of Work rewards the willing for doing the work. Kaspa picked the side that lets you IN.",
+      "hook": "A gilded VIP door opens only for fat wallets; beside it a forge door stands wide open to anyone willing to pick up the hammer, glowing greenish cyan inside."
+    },
+    {
+      "id": "pw-12",
+      "theme": "proof-of-work",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "The miners protecting Kaspa right now are spending real energy to make your money impossible to counterfeit. That's not waste. That's the price of true security.",
+      "hook": "A counterfeiter's press jams and smokes trying to fake a Kaspa coin while miners' energy seals it in unbreakable greenish cyan light."
+    },
+    {
+      "id": "pw-13",
+      "theme": "proof-of-work",
+      "energy": "hype",
+      "approx_seconds": 12,
+      "status": "unused",
+      "used_date": null,
+      "line": "Take away the marketing and one question remains. Who secures this? In Kaspa, the answer is physics and honest work. In most chains, the answer is a foundation. Choose.",
+      "hook": "Two pedestals: one coin propped up by a flimsy 'FOUNDATION' sign, the other held aloft by glowing pillars of lightning and muscle."
+    },
+    {
+      "id": "ac-01",
+      "theme": "anti-cycle",
+      "energy": "hype",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "The four-year cycle is a bedtime story the crowd tells itself so it isn't afraid of the dark. I stopped believing it. Watch the liquidity, not the calendar.",
+      "hook": "A child's storybook titled 'THE 4-YEAR CYCLE' snaps shut and dissolves; behind it a glowing greenish cyan tide of liquidity rolls in under the moon."
+    },
+    {
+      "id": "ac-02",
+      "theme": "anti-cycle",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "Everyone's waiting for the cycle to repeat on schedule. Markets don't run on calendars. They run on money. Follow the money.",
+      "hook": "A giant wall calendar peels and burns while a luminous river of money carves the real path forward, greenish cyan currents leading on."
+    },
+    {
+      "id": "ac-03",
+      "theme": "anti-cycle",
+      "energy": "hype",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "The four-year cycle zombies are still counting days since the halving. Meanwhile the real signal, global liquidity, is screaming something else entirely.",
+      "hook": "Glassy-eyed zombie figures tick marks on a calendar in the dark, deaf to a blazing greenish cyan liquidity siren erupting behind them."
+    },
+    {
+      "id": "ac-04",
+      "theme": "anti-cycle",
+      "energy": "inspiring",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Every previous crypto winter lined up with the world tightening money. Look at what's tightening now. The pattern people trust is about to BETRAY them.",
+      "hook": "A row of past crypto-winter snow globes each frozen by a tightening clamp; this time the clamp loosens and the trusted pattern cracks."
+    },
+    {
+      "id": "ac-05",
+      "theme": "anti-cycle",
+      "energy": "hype",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "If your entire thesis is, it happened last time, you don't have a thesis. You have a superstition. The cycle is dead. Liquidity is king now.",
+      "hook": "A black cat and broken mirror labeled 'SUPERSTITION' on one side; on the other a crowned greenish cyan tide labeled 'LIQUIDITY' takes the throne."
+    },
+    {
+      "id": "ac-06",
+      "theme": "anti-cycle",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "The crowd buys the top because the calendar told them to. The patient buy the truth because the fundamentals told them to. Be the second kind.",
+      "hook": "A herd stampedes off a cliff chasing a calendar held like a carrot; one calm figure walks the other way onto solid glowing greenish cyan ground."
+    },
+    {
+      "id": "ac-07",
+      "theme": "anti-cycle",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "I shed the four-year cycle belief and never looked back. The chains that win the next decade won't ask permission from a four-year clock.",
+      "hook": "He rips a four-year clock off his wrist and drops it; ahead, a greenish cyan road stretches with no clock in sight."
+    },
+    {
+      "id": "ac-08",
+      "theme": "anti-cycle",
+      "energy": "inspiring",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "When everyone is staring at the same chart waiting for the same date, the edge isn't in the chart. It's in refusing to look where the herd is looking.",
+      "hook": "A huge crowd stands hypnotized facing one giant chart; he alone turns around and sees a glowing greenish cyan opportunity nobody else is watching."
+    },
+    {
+      "id": "ac-09",
+      "theme": "anti-cycle",
+      "energy": "educational",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Cycles feel safe because they're predictable. Predictable is exactly what gets priced in and stops working. The next move won't be on the old schedule.",
+      "hook": "A merry-go-round of coins spinning predictably grinds to a halt as everyone piles on; off to the side a greenish cyan path spirals upward unpredictably."
+    },
+    {
+      "id": "ac-10",
+      "theme": "anti-cycle",
+      "energy": "hype",
+      "approx_seconds": 7,
+      "status": "unused",
+      "used_date": null,
+      "line": "The halving gets a parade. Liquidity moves in silence. Guess which one actually decides where price goes.",
+      "hook": "A loud confetti parade for 'THE HALVING' while behind the crowd, silent and unnoticed, a massive greenish cyan liquidity tide quietly lifts everything."
+    },
+    {
+      "id": "ac-11",
+      "theme": "anti-cycle",
+      "energy": "hype",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Stop counting the days. Start reading the money supply. The four-year cycle is a comfort blanket, and comfort never made anyone rich in this market.",
+      "hook": "A figure clutches a 'CYCLE' security blanket in the dark; he pulls it away to reveal a glowing greenish cyan money-supply wave to read instead."
+    },
+    {
+      "id": "ac-12",
+      "theme": "anti-cycle",
+      "energy": "inspiring",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "The market's job is to embarrass the maximum number of people. Right now, the maximum number of people are certain about the cycle. Draw your own conclusion.",
+      "hook": "A vast confident crowd all hold identical 'CYCLE' signs; the floor tilts beneath them as a greenish cyan wave rises to embarrass the certain."
+    },
+    {
+      "id": "sc-01",
+      "theme": "succession-cascade",
+      "energy": "hype",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Watch the order of it. Ethereum flips Bitcoin. The Bitcoin maxis don't quit. They go looking for the purest Proof of Work left standing. There's only one. Kaspa.",
+      "hook": "Giant pillars labeled ETH and BTC swap height; orange maxi figures climb down and stream toward a single glowing greenish cyan beacon."
+    },
+    {
+      "id": "sc-02",
+      "theme": "succession-cascade",
+      "energy": "hype",
+      "approx_seconds": 12,
+      "status": "unused",
+      "used_date": null,
+      "line": "Bitcoin maxis will never become Ethereum holders. It's not in their blood. So when the flip comes, they migrate to the fair-launched Proof of Work that out-engineered the original. That's Kaspa.",
+      "hook": "Orange maxis recoil from an ETH gate, turn, and march across a bridge that turns them glowing greenish cyan as they cross."
+    },
+    {
+      "id": "sc-03",
+      "theme": "succession-cascade",
+      "energy": "inspiring",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "The day Ethereum passes Bitcoin, millions of maxis will need a new home that still honors the work. Kaspa is the only door that fits the key they're already holding.",
+      "hook": "A maxi holds a glowing orange key, trying locked doors; only the greenish cyan Kaspa door clicks open perfectly to the same key."
+    },
+    {
+      "id": "sc-04",
+      "theme": "succession-cascade",
+      "energy": "inspiring",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "Bitcoin opened the door. Kaspa is what walks through it, for everyone who still believes Proof of Work should be fast AND fair.",
+      "hook": "A massive Bitcoin-orange door swings open; through it strides a glowing greenish cyan figure into bright fast-moving light."
+    },
+    {
+      "id": "sc-05",
+      "theme": "succession-cascade",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "The student often surpasses the teacher. That's not betrayal. It's the entire reason the teacher ever bothered to teach. Bitcoin taught. Kaspa learned.",
+      "hook": "An old orange master coin bows as a greenish cyan student coin grows taller and brighter; the master smiles, a torch passed between them."
+    },
+    {
+      "id": "sc-06",
+      "theme": "succession-cascade",
+      "energy": "hype",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "When the flip happens, and it will, the question for every Bitcoin holder is simple. Where does pure Proof of Work go to grow up? It goes to Kaspa.",
+      "hook": "A small orange PoW seedling outgrows its pot and is transplanted into vast glowing greenish cyan soil where it shoots skyward."
+    },
+    {
+      "id": "sc-07",
+      "theme": "succession-cascade",
+      "energy": "inspiring",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "Loyalty to Proof of Work is deeper than loyalty to a ticker. When the maxis realize that, the migration begins, and it ends in one place.",
+      "hook": "Maxis peel orange ticker-badges off their chests; underneath glows a greenish cyan PoW heart pulling them all to one destination."
+    },
+    {
+      "id": "sc-08",
+      "theme": "succession-cascade",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "Ethereum flipping Bitcoin won't kill Proof of Work. It will set it free. The believers will look for the best version, and they'll find Kaspa waiting.",
+      "hook": "A caged orange PoW bird's door springs open; it flies and lands, glowing greenish cyan, on a perch already waiting for it."
+    },
+    {
+      "id": "sc-09",
+      "theme": "succession-cascade",
+      "energy": "inspiring",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "Kaspa isn't trying to beat Bitcoin. It's positioned to inherit it. Inheritance doesn't fight the parent. It carries the bloodline forward.",
+      "hook": "An orange king coin places a greenish cyan crown on a successor's head; no battle, a lineage portrait gallery lighting up in greenish cyan."
+    },
+    {
+      "id": "sc-10",
+      "theme": "succession-cascade",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "There's a generation of holders who chose Proof of Work on principle. When their first chain stalls, principle sends them to the fastest honest one. Kaspa.",
+      "hook": "A stalled orange train sits on dead tracks; principled passengers walk to a blazing greenish cyan bullet train and board."
+    },
+    {
+      "id": "sc-11",
+      "theme": "succession-cascade",
+      "energy": "inspiring",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "The smartest thing about Kaspa's position is that it doesn't need Bitcoin to fail. It just needs Bitcoiners to want more, while keeping what they believe in.",
+      "hook": "A maxi happily holding his orange coin reaches out a second hand and a greenish cyan Kaspa coin lands in it; he keeps both, beliefs intact."
+    },
+    {
+      "id": "sc-12",
+      "theme": "succession-cascade",
+      "energy": "hype",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Picture a million Bitcoin maxis the day after the flip, all asking the same question. They won't migrate to a premine. They'll migrate to the fair one. They'll migrate to Kaspa.",
+      "hook": "A vast orange crowd at a crossroads; the 'PREMINE' road is roped off, so they all flow down the glowing greenish cyan 'FAIR LAUNCH' road."
+    },
+    {
+      "id": "sc-13",
+      "theme": "succession-cascade",
+      "energy": "inspiring",
+      "approx_seconds": 12,
+      "status": "unused",
+      "used_date": null,
+      "line": "History rhymes. Gold made way for paper, paper made way for Bitcoin, and Bitcoin will hand the torch to the chain that kept the fire and added speed. That chain is Kaspa.",
+      "hook": "A relay of torch-passing: a gold bar to a paper note to an orange Bitcoin to a glowing greenish cyan Kaspa runner sprinting ahead with the flame."
+    },
+    {
+      "id": "ia-01",
+      "theme": "institutional-adoption",
+      "energy": "hype",
+      "approx_seconds": 13,
+      "status": "unused",
+      "used_date": null,
+      "line": "When institutions look for infrastructure in the next financial reset, they won't shop for the best memes. They'll shop for secure, scalable, instant settlement that stays online under stress. That's a short list, and Kaspa is on it.",
+      "hook": "A suited giant tosses joke meme-coins in the trash and runs a stress-test gauntlet; only the greenish cyan Kaspa rail survives every blow."
+    },
+    {
+      "id": "ia-02",
+      "theme": "institutional-adoption",
+      "energy": "inspiring",
+      "approx_seconds": 12,
+      "status": "unused",
+      "used_date": null,
+      "line": "The price tells you what the market thinks today. The protocol tells you what the world will need tomorrow. Right now those two are wildly disconnected, and that gap is the opportunity.",
+      "hook": "A low flat 'PRICE' line on the floor while a towering glowing greenish cyan 'PROTOCOL' structure rises far above it; the gap between them glows as opportunity."
+    },
+    {
+      "id": "ia-03",
+      "theme": "institutional-adoption",
+      "energy": "educational",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "Institutions don't move on hype. They move on settlement speed, security, and uptime. Kaspa was built for exactly the things they'll demand.",
+      "hook": "A hype-balloon of fireworks pops in a banker's face; he turns to a solid greenish cyan pillar stamped SPEED, SECURITY, UPTIME."
+    },
+    {
+      "id": "ia-04",
+      "theme": "institutional-adoption",
+      "energy": "inspiring",
+      "approx_seconds": 12,
+      "status": "unused",
+      "used_date": null,
+      "line": "The next financial system won't run on a network that settles in an hour. It'll run on one that settles in a second and never lies. The institutions know this. They're just early in admitting it.",
+      "hook": "A bank clock grinds an hour for a rival rail; a greenish cyan rail settles in one tick, and suited figures peek from behind a curtain, not yet admitting it."
+    },
+    {
+      "id": "ia-05",
+      "theme": "institutional-adoption",
+      "energy": "hype",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "Wall Street doesn't care about your community. It cares whether the rails hold under a trillion dollars of pressure. Kaspa's architecture was designed for that load.",
+      "hook": "A colossal trillion-dollar weight lowers onto competing rails that buckle; the glowing greenish cyan Kaspa rail doesn't even flex."
+    },
+    {
+      "id": "ia-06",
+      "theme": "institutional-adoption",
+      "energy": "hype",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "When the reset comes, capital runs to whatever is fast, final, and impossible to corrupt. That's not a meme. That's a specification. Kaspa meets it.",
+      "hook": "Rivers of capital flee crumbling rails and rush toward a greenish cyan rail stamped with a checked spec sheet: FAST, FINAL, INCORRUPTIBLE."
+    },
+    {
+      "id": "ia-07",
+      "theme": "institutional-adoption",
+      "energy": "educational",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Institutions are allergic to a chain controlled by a foundation that can change the rules. Kaspa has no such hand on the wheel. That's a feature they'll come to crave.",
+      "hook": "A meddling hand yanks a rival chain's steering wheel off course; Kaspa's wheel sits locked straight with no hand on it, glowing greenish cyan."
+    },
+    {
+      "id": "ia-08",
+      "theme": "institutional-adoption",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "The big money doesn't arrive at the bottom and it doesn't arrive loudly. It arrives when the infrastructure is undeniable. Kaspa is building toward undeniable.",
+      "hook": "A vault of big money waits behind a door marked 'UNDENIABLE'; a greenish cyan bridge is being built brick by brick toward it."
+    },
+    {
+      "id": "ia-09",
+      "theme": "institutional-adoption",
+      "energy": "educational",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Every serious institution will ask one thing of any crypto rail. Does it settle instantly and stay honest under stress? Kaspa is one of the very few that can answer yes.",
+      "hook": "A line of chains at an inspector's desk fail a stress stamp; the greenish cyan Kaspa rail gets a glowing 'YES' stamp under crushing load."
+    },
+    {
+      "id": "ia-10",
+      "theme": "institutional-adoption",
+      "energy": "inspiring",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "The world doesn't need a thousand chains. It needs a handful that actually work at scale. The reset will reveal which ones. Kaspa is built to be standing when it does.",
+      "hook": "A thousand toy chains shatter in an earthquake reset; a few monumental pillars remain, the brightest one glowing greenish cyan."
+    },
+    {
+      "id": "ia-11",
+      "theme": "institutional-adoption",
+      "energy": "inspiring",
+      "approx_seconds": 12,
+      "status": "unused",
+      "used_date": null,
+      "line": "Retail chases the story. Institutions buy the settlement layer. The settlement layer of the next reset has to be fast, fair, and unstoppable. Kaspa is auditioning for the role right now.",
+      "hook": "Retail crowds chase a glowing story-billboard one way; suited giants quietly walk the other way to inspect a greenish cyan settlement-layer foundation."
+    },
+    {
+      "id": "ia-12",
+      "theme": "institutional-adoption",
+      "energy": "hype",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "By the time the suits issue a press release about Kaspa, the opportunity will be a memory. The institutional bid is loudest after the price has already moved. Be early to the rails.",
+      "hook": "A press-release podium lights up AFTER a greenish cyan rocket has already left; one early figure is already standing on the glowing greenish cyan rails."
+    },
+    {
+      "id": "bw-01",
+      "theme": "building-wealth",
+      "energy": "inspiring",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "Wealth isn't built in the green candles everyone screenshots. It's built in the red months nobody posts about, by the people who didn't flinch.",
+      "hook": "A crowd frantically screenshots a green candle; one calm figure stands in a storm of red candles, unflinching, slowly turning greenish-cyan-gold."
+    },
+    {
+      "id": "bw-02",
+      "theme": "building-wealth",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "The market transfers money from the impatient to the patient. Kaspa is just the vehicle. Your temperament is the engine.",
+      "hook": "A glowing greenish cyan car labeled KASPA with an engine made of a calm beating heart; an impatient driver stalls and smokes beside it."
+    },
+    {
+      "id": "bw-03",
+      "theme": "building-wealth",
+      "energy": "inspiring",
+      "approx_seconds": 8,
+      "status": "unused",
+      "used_date": null,
+      "line": "Generational wealth never came from selling. It came from owning something the world hadn't priced yet, and refusing to let go.",
+      "hook": "A hand grips a small dim greenish cyan coin as a storm tries to rip it away; years blur past and the coin swells into a glowing fortune."
+    },
+    {
+      "id": "bw-04",
+      "theme": "building-wealth",
+      "energy": "hype",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "You don't need to be early to everything. You need to be early to ONE thing and right about it. Choose carefully. Then hold like you mean it.",
+      "hook": "A field of a hundred dim doors; he steps through one glowing greenish cyan door and bolts it shut behind him, holding firm as it lights up."
+    },
+    {
+      "id": "bw-05",
+      "theme": "building-wealth",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "Most people lose not because they picked wrong, but because they sold right before they were proven right. Conviction is the rarest asset you own.",
+      "hook": "A figure drops a greenish cyan coin in despair and walks off; one second later the coin erupts into a geyser of light he never turns to see."
+    },
+    {
+      "id": "bw-06",
+      "theme": "building-wealth",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "The hardest part of getting rich in this market isn't buying. It's doing nothing while everyone around you panics. Stillness is a position too.",
+      "hook": "A stampeding panicked crowd blurs around one perfectly still seated figure glowing calm greenish cyan, untouched by the chaos."
+    },
+    {
+      "id": "bw-07",
+      "theme": "building-wealth",
+      "energy": "hype",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "Down ninety percent is a catastrophe to the tourist and a discount to the believer. The only question is which ONE you are.",
+      "hook": "A plunging red cliff-chart; a tourist tumbles off screaming while a believer calmly steps down and scoops glowing greenish cyan coins at the bottom."
+    },
+    {
+      "id": "bw-08",
+      "theme": "building-wealth",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "Real wealth is built by people who think in years while the crowd thinks in hours. Zoom out. The chart you're crying over is a single pixel.",
+      "hook": "A crowd agonizes over a giant scary red candle; the camera rockets backward until that candle is a single greenish cyan pixel on a soaring lifetime chart."
+    },
+    {
+      "id": "bw-09",
+      "theme": "building-wealth",
+      "energy": "inspiring",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "Nobody got generationally wealthy spreading into forty coins they didn't understand. They got there by concentrating on one truth and being patient enough to be right.",
+      "hook": "Forty tiny coins scatter and dim in shaky hands; one figure holds a single growing greenish cyan coin that outshines all forty combined."
+    },
+    {
+      "id": "bw-10",
+      "theme": "building-wealth",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "The money you make in this life will come from a few decisions you had the nerve to hold. Pick your conviction. Then let time do the heavy lifting.",
+      "hook": "A muscular figure named TIME effortlessly hoists an enormous greenish cyan coin while the holder simply stands firm with arms crossed."
+    },
+    {
+      "id": "bw-11",
+      "theme": "building-wealth",
+      "energy": "inspiring",
+      "approx_seconds": 10,
+      "status": "unused",
+      "used_date": null,
+      "line": "Selling feels smart in the moment and looks foolish in the rearview. The ones who built wealth learned to sit on their hands while their thesis matured.",
+      "hook": "A driver hits SELL and zooms off; in his rear-view mirror the greenish cyan coin he dumped balloons into a glowing skyline shrinking behind him."
+    },
+    {
+      "id": "bw-12",
+      "theme": "building-wealth",
+      "energy": "hype",
+      "approx_seconds": 9,
+      "status": "unused",
+      "used_date": null,
+      "line": "You will be tested at the bottom, not the top. Anyone can hold in a bull market. Wealth is the reward for holding when it HURTS.",
+      "hook": "A figure clings to a greenish cyan coin at the dark ocean bottom under crushing pressure; he holds, and the coin's glow lifts him surging upward."
+    },
+    {
+      "id": "bw-13",
+      "theme": "building-wealth",
+      "energy": "inspiring",
+      "approx_seconds": 11,
+      "status": "unused",
+      "used_date": null,
+      "line": "The crowd wants to get rich by Friday. The wealthy are happy to get rich by the decade. That patience is the whole secret, and almost no one can stomach it.",
+      "hook": "A roulette wheel labeled FRIDAY spins for a frantic crowd; one figure plants a greenish cyan seed and calmly watches a decade-tree grow into a fortune."
+    }
+  ]
+}

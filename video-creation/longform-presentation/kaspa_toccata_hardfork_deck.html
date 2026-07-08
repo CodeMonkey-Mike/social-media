@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kaspa Toccata Hardfork — June 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0a0c10;
+  --bg-card: #12151c;
+  --bg-card-hover: #181c26;
+  --accent-green: #00e68a;
+  --accent-cyan: #00c2ff;
+  --accent-gold: #ffd700;
+  --accent-red: #ff4060;
+  --accent-purple: #a855f7;
+  --text-primary: #e8eaf0;
+  --text-secondary: #8892a4;
+  --text-muted: #505a6e;
+  --border: #1e2330;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  overflow: hidden;
+  height: 100vh;
+  position: relative;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.slide {
+  display: none;
+  position: absolute;
+  inset: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 100px 80px 60px;
+  overflow-y: auto;
+}
+.slide.active { display: flex; }
+
+/* Title and closing stay centered for impact */
+.title-slide, .closing {
+  justify-content: center;
+  padding: 60px 80px;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.slide > *:not(.orb) { position: relative; z-index: 1; }
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+
+h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-primary);
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.mono { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+
+.divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+  border-radius: 2px;
+  margin: 24px 0;
+}
+
+.accent-green { color: var(--accent-green); }
+.accent-cyan { color: var(--accent-cyan); }
+.accent-gold { color: var(--accent-gold); }
+.accent-red { color: var(--accent-red); }
+.accent-purple { color: var(--accent-purple); }
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  background: var(--bg-card-hover);
+}
+.card-accent-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.card .accent-green-grad { background: linear-gradient(90deg, var(--accent-green), transparent); }
+.card .accent-cyan-grad { background: linear-gradient(90deg, var(--accent-cyan), transparent); }
+.card .accent-gold-grad { background: linear-gradient(90deg, var(--accent-gold), transparent); }
+.card .accent-purple-grad { background: linear-gradient(90deg, var(--accent-purple), transparent); }
+.card .accent-red-grad { background: linear-gradient(90deg, var(--accent-red), transparent); }
+
+.card h3 { margin-bottom: 16px; }
+.card p + p { margin-top: 14px; }
+
+/* Tags */
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: 'DM Sans', sans-serif;
+}
+.tag-green { background: rgba(0,230,138,0.15); color: var(--accent-green); }
+.tag-cyan { background: rgba(0,194,255,0.15); color: var(--accent-cyan); }
+.tag-gold { background: rgba(255,215,0,0.15); color: var(--accent-gold); }
+.tag-red { background: rgba(255,64,96,0.15); color: var(--accent-red); }
+.tag-purple { background: rgba(168,85,247,0.15); color: var(--accent-purple); }
+
+/* Big number */
+.big-number {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1;
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Impact box */
+.impact-box {
+  background: linear-gradient(135deg, rgba(0,230,138,0.08), rgba(0,194,255,0.06));
+  border: 1px solid rgba(0,230,138,0.2);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-top: 24px;
+}
+
+/* Grid */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+/* Title slide */
+.title-slide { justify-content: center; align-items: flex-start; }
+.title-eyebrow { margin-bottom: 24px; }
+.title-headline { max-width: 1100px; margin-bottom: 28px; }
+.title-sub { font-size: 1.2rem; max-width: 720px; margin-bottom: 48px; color: var(--text-secondary); }
+.title-stats { display: flex; gap: 56px; flex-wrap: wrap; }
+.title-stat .label { display: block; margin-bottom: 8px; }
+.title-stat .value { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 1.5rem; color: var(--text-primary); }
+
+/* Slide content wrapper */
+.slide-inner { max-width: 1400px; margin: 0 auto; width: 100%; }
+
+.slide-eyebrow { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.slide-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--accent-green);
+}
+.slide-eyebrow .label { color: var(--text-muted); }
+
+/* Bullet list */
+.bullet-list { list-style: none; padding: 0; margin-top: 8px; }
+.bullet-list li {
+  padding-left: 28px;
+  position: relative;
+  margin-bottom: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+.bullet-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 12px;
+  width: 14px; height: 2px;
+  background: var(--accent-green);
+}
+
+/* Covenant comparison columns */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 32px; }
+.compare-col { padding: 28px; border-radius: 16px; }
+.compare-col.normal { background: rgba(80,90,110,0.08); border: 1px solid var(--border); }
+.compare-col.covenant { background: linear-gradient(135deg, rgba(0,230,138,0.06), rgba(0,194,255,0.04)); border: 1px solid rgba(0,230,138,0.25); }
+.compare-col h3 { margin-bottom: 8px; }
+.compare-col .mini-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 4px; color: var(--text-muted); }
+.compare-col .quote { font-style: italic; color: var(--text-primary); margin-top: 10px; padding-left: 14px; border-left: 2px solid var(--accent-green); }
+.compare-col.normal .quote { border-left-color: var(--text-muted); color: var(--text-secondary); }
+
+.rule-list { list-style: none; padding: 0; margin-top: 18px; }
+.rule-list li {
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.02);
+  border-left: 2px solid var(--accent-cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.delay-1 { transition-delay: 0.15s; }
+.delay-2 { transition-delay: 0.3s; }
+.delay-3 { transition-delay: 0.45s; }
+.delay-4 { transition-delay: 0.6s; }
+.delay-5 { transition-delay: 0.75s; }
+
+/* Nav dots */
+.nav-dots {
+  position: fixed;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 100;
+}
+.nav-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+  padding: 0;
+}
+.nav-dot.active {
+  background: var(--accent-green);
+  transform: scale(1.4);
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-muted);
+}
+.scroll-hint .label { font-size: 0.7rem; }
+.bounce { animation: bounce 1.8s infinite; }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+/* Closing slide */
+.closing { text-align: center; align-items: center; }
+.closing .slide-inner { display: flex; flex-direction: column; align-items: center; gap: 32px; }
+.closing h2 { max-width: 900px; }
+.closing .big-number { margin: 20px 0; }
+
+/* Mobile */
+@media (max-width: 900px) {
+  .slide { padding: 40px 28px; }
+  .grid-2, .grid-3, .compare-grid { grid-template-columns: 1fr; }
+  .title-stats { gap: 28px; }
+  .nav-dots { right: 16px; gap: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav dots -->
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- SLIDE 1: TITLE -->
+<section class="slide title-slide" id="slide-1">
+  <div class="orb" style="background: var(--accent-green); width: 600px; height: 600px; top: -150px; right: -100px;"></div>
+  <div class="orb" style="background: var(--accent-cyan); width: 450px; height: 450px; bottom: -120px; left: -80px;"></div>
+
+  <div class="slide-inner">
+    <div class="fade-in title-eyebrow">
+      <span class="label">Kaspa · Programmable Layer 1</span>
+    </div>
+
+    <h1 class="fade-in delay-1 title-headline">
+      The <span class="accent-green">Toccata</span> Hardfork
+    </h1>
+
+    <p class="fade-in delay-2 title-sub">
+      Kaspa's biggest upgrade since Crescendo. A coordinated rollout of native tokens, covenants, and zero-knowledge verification — turning a fast PoW payments chain into a programmable Layer 1.
+    </p>
+
+    <div class="fade-in delay-3 title-stats">
+      <div class="title-stat">
+        <span class="label">Activation Window</span>
+        <span class="value accent-green">Jun 5–20, 2026</span>
+      </div>
+      <div class="title-stat">
+        <span class="label">Compatibility</span>
+        <span class="value accent-gold">Non-backward</span>
+      </div>
+      <div class="title-stat">
+        <span class="label">Chain Split</span>
+        <span class="value accent-cyan">None</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span class="label">Scroll</span>
+    <svg class="bounce" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M5 7l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</section>
+
+<!-- SLIDE 2: NATIVE KRC-20 TOKENS -->
+<section class="slide" id="slide-2">
+  <div class="orb" style="background: var(--accent-green); width: 500px; height: 500px; top: -100px; left: -150px;"></div>
+
+  <div class="slide-inner">
+    <div class="fade-in slide-eyebrow">
+      <span class="slide-number">01</span>
+      <span class="label">Feature One</span>
+    </div>
+
+    <h2 class="fade-in delay-1">Native <span class="accent-green">KRC-20 Tokens</span> on Layer 1</h2>
+    <div class="fade-in delay-1 divider"></div>
+
+    <div class="grid-2" style="margin-top: 32px;">
+      <div class="fade-in delay-2 card">
+        <div class="card-accent-top accent-green-grad"></div>
+        <span class="tag tag-green">Base-layer primitive</span>
+        <h3 style="margin-top: 16px;">From Overlay to First-Class</h3>
+        <p>Today's KRC-20 lives as inscription-style metadata coordinated off-chain via Kasplex. Toccata moves it into the protocol itself — tokens become real, native objects on the chain.</p>
+      </div>
+
+      <div class="fade-in delay-3 card">
+        <div class="card-accent-top accent-cyan-grad"></div>
+        <span class="tag tag-cyan">No more indexers</span>
+        <h3 style="margin-top: 16px;">Direct, On-Chain State</h3>
+        <p>Wallets and apps can read token balances directly from the node — no off-chain indexer required to determine who owns what. Faster, cheaper, more reliable.</p>
+      </div>
+    </div>
+
+    <div class="fade-in delay-4 impact-box">
+      <span class="label" style="display: block; margin-bottom: 8px;">Why It Matters</span>
+      <p style="color: var(--text-primary);">Native tokens are the foundation everything else sits on — DeFi, NFTs, lending, tokenized assets. Without them, builders can't ship a real ecosystem on Kaspa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: WHAT IS A COVENANT? (THE NEW EXPLAINER) -->
+<section class="slide" id="slide-3">
+  <div class="orb" style="background: var(--accent-purple); width: 500px; height: 500px; top: -100px; right: -100px;"></div>
+  <div class="orb" style="background: var(--accent-green); width: 400px; height: 400px; bottom: -100px; left: -100px;"></div>
+
+  <div class="slide-inner">
+    <div class="fade-in slide-eyebrow">
+      <span class="slide-number" style="color: var(--accent-purple);">·</span>
+      <span class="label">Quick Definition</span>
+    </div>
+
+    <h2 class="fade-in delay-1">What's a <span class="accent-purple">Covenant?</span></h2>
+    <div class="fade-in delay-1 divider" style="background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));"></div>
+
+    <p class="fade-in delay-2" style="max-width: 900px; margin-top: 8px;">
+      The word is jargon borrowed from Bitcoin research — nothing to do with the everyday meaning of a promise between people. In a blockchain context:
+    </p>
+
+    <div class="fade-in delay-2 impact-box" style="background: linear-gradient(135deg, rgba(168,85,247,0.10), rgba(0,194,255,0.06)); border-color: rgba(168,85,247,0.3); margin-top: 20px;">
+      <p style="color: var(--text-primary); font-size: 1.15rem;">
+        A <strong class="accent-purple">covenant</strong> is a rule attached to a coin that restricts how that coin can be spent <em>in the future</em>.
+      </p>
+    </div>
+
+    <div class="compare-grid">
+      <div class="fade-in delay-3 compare-col normal">
+        <div class="mini-label">Today's UTXO</div>
+        <h3>Normal Coins</h3>
+        <p style="margin-top: 10px;">When you receive coins, the only rule is: whoever has the private key can spend them however they want.</p>
+        <p class="quote">Once signed, the receiver has total freedom over those coins.</p>
+      </div>
+
+      <div class="fade-in delay-4 compare-col covenant">
+        <div class="mini-label accent-green">After Toccata</div>
+        <h3>Covenant Coins</h3>
+        <p style="margin-top: 10px;">Coins arrive <strong>pre-bundled with rules</strong> about what can be done with them next. The coins themselves enforce the conditions.</p>
+        <ul class="rule-list">
+          <li>→ "Can only be sent to address X, Y, or Z"</li>
+          <li>→ "Can't be spent until block 50,000,000"</li>
+          <li>→ "Requires 2-of-3 specific signatures"</li>
+          <li>→ "10% must route to this other address"</li>
+          <li>→ "Can only move into another covenant with the same rules" <span style="color: var(--text-muted);">← this is how tokens work</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: COVENANTS VIA SILVERSCRIPT -->
+<section class="slide" id="slide-4">
+  <div class="orb" style="background: var(--accent-cyan); width: 550px; height: 550px; top: -120px; right: -120px;"></div>
+
+  <div class="slide-inner">
+    <div class="fade-in slide-eyebrow">
+      <span class="slide-number">02</span>
+      <span class="label">Feature Two</span>
+    </div>
+
+    <h2 class="fade-in delay-1">Covenants via <span class="accent-cyan">SilverScript</span></h2>
+    <div class="fade-in delay-1 divider"></div>
+
+    <div class="grid-3" style="margin-top: 32px;">
+      <div class="fade-in delay-2 card">
+        <div class="card-accent-top accent-cyan-grad"></div>
+        <span class="tag tag-cyan">High-level language</span>
+        <h3 style="margin-top: 16px;">Kaspa's Solidity</h3>
+        <p>SilverScript is Kaspa's first high-level covenant language and compiler — designed to make writing covenants feel like "writing apps," not "fighting script." Intentionally narrower than Solidity.</p>
+      </div>
+
+      <div class="fade-in delay-3 card">
+        <div class="card-accent-top accent-green-grad"></div>
+        <span class="tag tag-green">No VM overhead</span>
+        <h3 style="margin-top: 16px;">Compiles to Native</h3>
+        <p>Unlike Ethereum, there's no virtual machine. SilverScript compiles straight to Kaspa Script opcodes — lean, fast, and aligned with the UTXO security model.</p>
+      </div>
+
+      <div class="fade-in delay-4 card">
+        <div class="card-accent-top accent-purple-grad"></div>
+        <span class="tag tag-purple">KIP-20</span>
+        <h3 style="margin-top: 16px;">Covenant IDs</h3>
+        <p>Underneath SilverScript, KIP-20 introduces consensus-tracked Covenant IDs — stateful covenants scale practically, with no recursive lineage proofs dragging parent history around.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: ZK VERIFICATION -->
+<section class="slide" id="slide-5">
+  <div class="orb" style="background: var(--accent-gold); width: 500px; height: 500px; top: -100px; left: -100px;"></div>
+  <div class="orb" style="background: var(--accent-purple); width: 400px; height: 400px; bottom: -100px; right: -100px;"></div>
+
+  <div class="slide-inner">
+    <div class="fade-in slide-eyebrow">
+      <span class="slide-number">03</span>
+      <span class="label">Feature Three</span>
+    </div>
+
+    <h2 class="fade-in delay-1">Zero-Knowledge <span class="accent-gold">Verification</span> on L1</h2>
+    <div class="fade-in delay-1 divider" style="background: linear-gradient(90deg, var(--accent-gold), var(--accent-purple));"></div>
+
+    <div class="grid-2" style="margin-top: 32px;">
+      <div class="fade-in delay-2 card">
+        <div class="card-accent-top accent-gold-grad"></div>
+        <span class="tag tag-gold">KIP-16</span>
+        <h3 style="margin-top: 16px;">ZK Opcodes + Precompile</h3>
+        <p>Adds ZK opcodes with a verifier precompile subsystem — currently supporting a flexible <span class="mono">Groth16</span> verifier with arbitrary parameters and verification keys.</p>
+        <p>A RISC Zero STARK verifier is already running on Testnet 12, with a final call pending on mainnet activation.</p>
+      </div>
+
+      <div class="fade-in delay-3 card">
+        <div class="card-accent-top accent-purple-grad"></div>
+        <span class="tag tag-purple">Privacy + scale</span>
+        <h3 style="margin-top: 16px;">Verify Without Exposing</h3>
+        <p>Applications can prove a computation or claim is true without revealing the underlying data — the foundation for privacy features and verifiable off-chain compute.</p>
+        <p>Combined with covenants, this is the bedrock for "based ZK applications" on Kaspa — including canonical L1↔L2 bridges.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: vPROGS FOUNDATIONS -->
+<section class="slide" id="slide-6">
+  <div class="orb" style="background: var(--accent-purple); width: 550px; height: 550px; top: -120px; right: -120px;"></div>
+
+  <div class="slide-inner">
+    <div class="fade-in slide-eyebrow">
+      <span class="slide-number">04</span>
+      <span class="label">Feature Four</span>
+    </div>
+
+    <h2 class="fade-in delay-1">vProgs <span class="accent-purple">Foundations</span></h2>
+    <div class="fade-in delay-1 divider" style="background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan));"></div>
+
+    <div class="grid-2" style="margin-top: 32px;">
+      <div class="fade-in delay-2 card">
+        <div class="card-accent-top accent-purple-grad"></div>
+        <span class="tag tag-purple">Plumbing, not product</span>
+        <h3 style="margin-top: 16px;">The Long Game</h3>
+        <p>vProgs (Verifiable Programs) = on-chain sequencing with off-chain execution settled via ZK proofs. Toccata ships the underlying script and ZK primitives that vProgs builds on top of.</p>
+      </div>
+
+      <div class="fade-in delay-3 card">
+        <div class="card-accent-top accent-cyan-grad"></div>
+        <span class="tag tag-cyan">2027 target</span>
+        <h3 style="margin-top: 16px;">Composable Smart Contracts</h3>
+        <p>The long-term destination: synchronously composable verifiable programs — Kaspa's answer to fully expressive smart contracts. Full rollout targeted for 2027 alongside the 100 BPS goal.</p>
+      </div>
+    </div>
+
+    <div class="fade-in delay-4 impact-box" style="margin-top: 24px;">
+      <span class="label" style="display: block; margin-bottom: 8px;">Translation</span>
+      <p style="color: var(--text-primary);">Toccata is not vProgs. Toccata is the <strong>plumbing</strong> that makes vProgs possible later.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7: SEQUENCING COMMITMENTS / KIP-21 -->
+<section class="slide" id="slide-7">
+  <div class="orb" style="background: var(--accent-red); width: 500px; height: 500px; top: -100px; left: -100px;"></div>
+
+  <div class="slide-inner">
+    <div class="fade-in slide-eyebrow">
+      <span class="slide-number">05</span>
+      <span class="label">Feature Five</span>
+    </div>
+
+    <h2 class="fade-in delay-1">Sequencing Commitments <span class="accent-red">(KIP-21)</span></h2>
+    <div class="fade-in delay-1 divider" style="background: linear-gradient(90deg, var(--accent-red), var(--accent-gold));"></div>
+
+    <div class="grid-2" style="margin-top: 32px;">
+      <div class="fade-in delay-2 card">
+        <div class="card-accent-top accent-red-grad"></div>
+        <span class="tag tag-red">Canonical ordering</span>
+        <h3 style="margin-top: 16px;">Partitioned Architecture</h3>
+        <p>Introduces a partitioned sequencing commitment design — a reliable way for applications to reference and order data across the DAG. Essential for ZK rollups and bridges that need canonical transaction order.</p>
+      </div>
+
+      <div class="fade-in delay-3 card">
+        <div class="card-accent-top accent-gold-grad"></div>
+        <span class="tag tag-gold">Locked-in pricing</span>
+        <h3 style="margin-top: 16px;">Script-Engine Economics</h3>
+        <p>Finalizes gas and pricing for the new opcodes so miners, block builders, and developers know exactly what every operation costs the moment mainnet activates.</p>
+      </div>
+    </div>
+
+    <div class="fade-in delay-4 impact-box" style="background: linear-gradient(135deg, rgba(255,64,96,0.08), rgba(255,215,0,0.06)); border-color: rgba(255,64,96,0.25); margin-top: 24px;">
+      <span class="label" style="display: block; margin-bottom: 8px;">Why the May → June delay</span>
+      <p style="color: var(--text-primary);">KIP-21 is the <strong>reason</strong>. Sutton's team needed more time to lock the sequencing architecture before freezing it onto mainnet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8: CLOSING TAKEAWAY -->
+<section class="slide closing" id="slide-8">
+  <div class="orb" style="background: var(--accent-green); width: 600px; height: 600px; top: -150px; left: -150px;"></div>
+  <div class="orb" style="background: var(--accent-cyan); width: 500px; height: 500px; bottom: -120px; right: -120px;"></div>
+
+  <div class="slide-inner">
+    <span class="fade-in label">The Takeaway</span>
+
+    <h2 class="fade-in delay-1">From a fast payments chain to a <span class="accent-green">programmable PoW L1</span></h2>
+    <div class="fade-in delay-1 divider" style="margin: 24px auto;"></div>
+
+    <div class="fade-in delay-2 big-number">3 Pillars</div>
+
+    <p class="fade-in delay-3" style="max-width: 720px; font-size: 1.1rem;">
+      <span class="accent-green mono">Native assets</span> · <span class="accent-cyan mono">Covenants</span> · <span class="accent-gold mono">ZK verification</span>
+    </p>
+
+    <p class="fade-in delay-4" style="max-width: 760px; margin-top: 24px;">
+      Toccata doesn't make Kaspa "Ethereum but faster." It's a fundamentally different bet — programmability built on UTXO covenants, secured by Proof-of-Work, with the foundations for full verifiable computation already in the ground.
+    </p>
+
+    <div class="fade-in delay-5" style="margin-top: 40px; display: flex; gap: 40px; flex-wrap: wrap; justify-content: center;">
+      <div>
+        <span class="label" style="display: block; margin-bottom: 6px;">Mainnet</span>
+        <span class="mono" style="color: var(--accent-green); font-size: 1.2rem;">Jun 5–20, 2026</span>
+      </div>
+      <div>
+        <span class="label" style="display: block; margin-bottom: 6px;">Next</span>
+        <span class="mono" style="color: var(--accent-cyan); font-size: 1.2rem;">DAGKnight · Q3 2026</span>
+      </div>
+      <div>
+        <span class="label" style="display: block; margin-bottom: 6px;">Long-term</span>
+        <span class="mono" style="color: var(--accent-gold); font-size: 1.2rem;">100 BPS · 2027</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // One-slide-at-a-time deck: arrow keys / click / dots
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const navDotsContainer = document.getElementById('navDots');
+  let current = 0;
+
+  slides.forEach((slide, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot';
+    dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+    dot.addEventListener('click', (e) => { e.stopPropagation(); show(i); });
+    navDotsContainer.appendChild(dot);
+  });
+  const dots = Array.from(document.querySelectorAll('.nav-dot'));
+
+  function show(i) {
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    dots.forEach((d, idx) => d.classList.toggle('active', idx === current));
+    const active = slides[current];
+    active.scrollTop = 0;
+    // (re)play the fade-in entrance on the slide being shown
+    active.querySelectorAll('.fade-in').forEach(el => {
+      el.classList.remove('visible');
+      void el.offsetWidth; // force reflow so the transition restarts
+      el.classList.add('visible');
+    });
+    if (location.hash !== '#' + (current + 1)) history.replaceState(null, '', '#' + (current + 1));
+  }
+  const next = () => show(current + 1);
+  const prev = () => show(current - 1);
+
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); next(); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+  });
+  // click to advance (shift-click to go back); ignore clicks on the nav dots
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.nav-dot')) return;
+    if (e.shiftKey) prev(); else next();
+  });
+
+  // deep-link support (#3 opens slide 3)
+  const start = parseInt((location.hash || '').slice(1), 10);
+  show(Number.isFinite(start) && start >= 1 ? start - 1 : 0);
+</script>
+
+</body>
+</html>

@@ -14,10 +14,11 @@ const MAX_WAIT_MS   = 5 * 60 * 1000;
 const REF_SETTLE_MS = 5000;  // wait this long after reference upload before baselining
 
 async function uploadReference(page, refPath) {
-  console.log(`  Uploading reference: ${path.basename(refPath)}`);
+  const refs = Array.isArray(refPath) ? refPath : [refPath];
+  console.log(`  Uploading reference: ${refs.map(r => path.basename(r)).join(', ')}`);
   const fileInput = page.locator('input[type="file"]').first();
   await fileInput.waitFor({ state: 'attached', timeout: 10000 });
-  await fileInput.setInputFiles(refPath);
+  await fileInput.setInputFiles(refs);
   await page.waitForTimeout(4000);
   console.log('  Reference uploaded ✓');
 }
@@ -90,12 +91,14 @@ async function generateOne(page, { targetPath, prompt, refImage }) {
   const buffer = await buffers.get(imgUrl);
   if (!buffer || buffer.length === 0) throw new Error('Empty buffer');
 
-  // PARANOIA CHECK: if the saved buffer size matches the reference file size
-  // exactly, we accidentally captured the reference upload — bail loudly.
-  if (refImage && fs.existsSync(refImage)) {
-    const refSize = fs.statSync(refImage).size;
+  // PARANOIA CHECK: if the saved buffer size matches any reference file size
+  // exactly, we accidentally captured a reference upload — bail loudly.
+  const refList = refImage ? (Array.isArray(refImage) ? refImage : [refImage]) : [];
+  for (const r of refList) {
+    if (!fs.existsSync(r)) continue;
+    const refSize = fs.statSync(r).size;
     if (Math.abs(buffer.length - refSize) <= 8) {
-      throw new Error(`Saved image size ${buffer.length} ≈ reference size ${refSize} — captured the reference instead of the generated image. Aborting.`);
+      throw new Error(`Saved image size ${buffer.length} ≈ reference size ${refSize} (${path.basename(r)}) — captured the reference instead of the generated image. Aborting.`);
     }
   }
 

@@ -101,6 +101,8 @@ page.getByRole('link', { name: /^Post$/ })
 
 **"Confirmation dialog not detected" is now normal — don't treat it as an error.** The `waitForSelector('text="Your post has been shared."')` no longer fires in any observed run. IG either changed the confirmation text or removed the dialog entirely. The script falls through to the post-check (profile-grid scrape), which is the authoritative success signal. If a future regression breaks the post-check, fix that — don't try to revive the share-confirmation selector.
 
+**Post-check "Hook ... not found in caption" FALSE-NEGATIVES on cashtag captions — VERIFY the captured URL before treating as failed (do NOT retry).** (Hit 2026-06-14 on a `$KAS`/`$BTC` caption.) The script grabs a fresh `/p/<id>` URL (proof a post was created), then fails the run because the rendered caption it reads back doesn't contain the hook text — captions with cashtags (`$KAS`, `$BTC`) read back differently (IG's og/meta-description escaping). The post is almost always LIVE. Resolution: `curl` the captured `/p/<id>` URL and check for `<meta property="og:type" content="article">` (a live post). If live, set that entry `status:"posted"` with the captured URL + a note — **never reset to `pending` / re-run**, that double-posts. Only treat as a true failure if the URL is genuinely dead. (Same shape as the FB/Rumble stale-URL rule: a verification miss is not a posting miss.)
+
 ## Resetting a stuck post
 
 ```

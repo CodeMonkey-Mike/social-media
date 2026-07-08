@@ -40,6 +40,16 @@ URL captured from the confirmation dashboard. **No live-page HTTP verification**
 
 > ⚠ **Captured URL is often STALE (observed 2026-05-26).** After Submit, the script does "Navigating to channel to capture video URL → Most recent channel video: …". While the just-uploaded video is still *processing*, it hasn't appeared on the channel yet, so the scrape returns the **previous** most-recent video's URL. In one run, two different shorts both recorded `v7adqkq-but-kaspa-will-awaken-market-update.html` (a prior upload). The upload itself succeeds (upload progress → licensing → Submit all complete); only the `url` written to `shorts.json` is wrong. **The url field is unreliable — treat upload success (Submit clicked + /content redirect) as the real signal, not the captured URL.** To fix properly: snapshot the channel's top video URL *before* upload, then poll after Submit until a *new* (different) URL appears, with a timeout fallback.
 
+> ✅ **DEFINITIVE ROOT CAUSE + FIX (2026-06-02): wrong URL namespace — now handled in the script.** Rumble **shorts** live at **`rumble.com/shorts/v<id>`**, NOT the regular `rumble.com/v<id>-<slug>.html`. Shorts **never appear in the channel video grid** (`/user/CodeMonkeyMike`) or its SSR HTML, so the old channel-scrape could NEVER capture a short's real URL — it always wrote an unrelated `.html` video's URL. The real URL lives on **`rumble.com/account/content`**, where each short's row has an anchor `href="/shorts/v<id>"`.
+>
+> **`post-rumble-short.js` now does this automatically:** after Submit it loads `/account/content`, matches THIS short by title (smallest element containing the title, climb to the `/shorts/v` anchor), takes the `/shorts/v<id>` URL, then **liveness-checks** it (HTTP GET the public page, confirm `<title>` matches; retries for processing lag). It marks `posted` only if the public page resolves; otherwise `posted_unverified` with an error note (and **never writes a wrong `.html` URL**). The old channel `.html` scrape and the 3-minute redirect poll were removed. It ignores any `.html` URL the redirect loop may have seen (wrong namespace for a short).
+>
+> **`posted_unverified` handling:** means the upload submitted but liveness couldn't be confirmed in-window (or the short hadn't surfaced on `/account/content` yet). The status is NOT `pending`, so it won't be re-picked/duplicated. **Recapture with `node scripts/recapture-rumble-url.js <short-id>`** — it re-matches the short by title on `/account/content`, grabs the `/shorts/v<id>` URL, liveness-checks it, and writes it back (sets `posted` if live). **Do NOT re-run the poster** (it would re-upload). (Validated 2026-06-02: recovered wells-fargo → `/shorts/v7aqvri`.)
+>
+> **Capture must be anchor-anchored:** the title→URL match iterates each `/shorts/v` anchor and finds the one whose *own* row contains the title (smallest ancestor level). Climbing the other way (title node → nearest anchor) crosses into neighbor rows and grabs the wrong video — that bug mis-captured kaspa's URL for the wells-fargo short before it was fixed.
+>
+> Fixed examples from the discovery session: unicorn-fart-dust=`/shorts/v7apx28`, kaspa-3-dollars=`/shorts/v7aq1em`, lab-wont-go-down=`/shorts/v7ao676`.
+
 ## Browser interruption mid-upload
 
 If the browser is closed or focus is stolen **after "Submit clicked ✓"** but before URL capture, the upload has already succeeded. Rumble processes the video server-side regardless of what happens to the browser after Submit.
@@ -67,3 +77,7 @@ for (const s of d.shorts) {
 fs.writeFileSync('data/shorts.json', JSON.stringify(d, null, 2));
 "
 ```
+
+## Hashtag policy (added 2026-05-29)
+
+Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.

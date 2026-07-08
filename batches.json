@@ -9,7 +9,7 @@
     ],
     "status_values": {
       "active": "current batch still in progress; its directories/files are protected from cleanup.",
-      "completed": "fully published (every queued short AND long posted everywhere, repurpose done); its directories/files are eligible for cleanup. This is COMPUTED, not hand-set — run `node scripts/reconcile-batch-status.js` (it derives status from schedule-tweets/data/{shorts,longs}.json via each item's batch field). Do not edit status by hand.",
+      "completed": "fully published (every queued short AND long posted everywhere, repurpose done); its directories/files are eligible for cleanup. This is COMPUTED, not hand-set — run `node scripts/reconcile-batch-status.js` (it derives status from schedule-tweets/data/{shorts,longs}.json via each item's batch field). Do not edit status by hand. EXCEPTION: a batch published outside the queues (e.g. a longform uploaded manually, never staged to longs.json) can't be derived — set `manual_status: \"completed\"` on it and the reconciler honors that verbatim instead of deriving.",
       "archived": "legacy synonym for completed (pre-reconciler); still honoured by cleanup as eligible. New reconciler runs write 'completed'."
     },
     "pipelines": {
@@ -26,9 +26,85 @@
   },
   "batches": [
     {
+      "batch": "better-coins",
+      "status": "active",
+      "date": "2026-06-29",
+      "livestream_title": "code monkeys call better coins LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/code monkeys call better coins/code monkeys call better coins LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/code monkeys call better coins LOW BPS VERTICAL/code monkeys call better coins LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/code monkeys call better coins LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/better-coins/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/better-coins",
+        "video-creation/shorts/better-coins"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      }
+    },
+    {
+      "batch": "kaspa-changes-everything",
+      "status": "completed",
+      "date": "2026-06-23",
+      "livestream_title": "kaspa changes everything LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/kaspa changes everything/kaspa changes everything LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/kaspa changes everything LOW BPS VERTICAL/kaspa changes everything LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/kaspa changes everything LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/kaspa-changes-everything/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/kaspa-changes-everything",
+        "video-creation/shorts/kaspa-changes-everything"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done"
+      }
+    },
+    {
+      "batch": "best-coin-to-buy",
+      "status": "completed",
+      "date": "2026-06-17",
+      "livestream_title": "best coin to buy LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/best coin to buy/best coin to buy LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/best coin to buy LOW BPS VERTICAL/best coin to buy LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/best coin to buy LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/best-coin-to-buy/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/best-coin-to-buy",
+        "video-creation/shorts/best-coin-to-buy"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      }
+    },
+    {
+      "batch": "this-is-gonna-rip",
+      "status": "completed",
+      "date": "2026-06-15",
+      "livestream_title": "this is gonna rip LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/this is gonna rip/this is gonna rip LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/this is gonna rip LOW BPS VERTICAL/this is gonna rip LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/this is gonna rip LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/this-is-gonna-rip/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/this-is-gonna-rip",
+        "video-creation/shorts/this-is-gonna-rip"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      }
+    },
+    {
       "batch": "why-ai-python",
       "track": "longform-edited",
-      "status": "active",
+      "status": "completed",
       "date": "2026-06-13",
       "livestream_title": null,
       "title": "Why AI Devs Use Python",
@@ -45,13 +121,14 @@
       "pipelines": {
         "shorts": "skip",
         "repurpose": "skip",
-        "longform": "pending"
+        "longform": "done"
       },
-      "note": "Registered 2026-06-13 to protect active work. longform-edited project; comp video-creation/remotion/src/WhyAiPython.tsx (in Root.tsx). Renders currently LOOSE in remotion/out/why-ai-python-v{1,2,3}.mp4 (v3 latest, 07:12) — loose out/ files are swept by cleanup regardless of batch status; protect via folder move or name-prefix rule. NOT yet published."
+      "note": "longform-edited project; comp video-creation/remotion/src/WhyAiPython.tsx (in Root.tsx). Published manually (not staged to longs.json), so completion cannot be derived from the queues: marked done via manual_status:\"completed\" (reconcile honors it verbatim). Renders were LOOSE in remotion/out/why-ai-python-v{1,2,3}.mp4 (v3 latest, 07:12). Now COMPLETED — cleanup may reclaim its directories.",
+      "manual_status": "completed"
     },
     {
       "batch": "market-meltdown",
-      "status": "active",
+      "status": "completed",
       "date": "2026-06-12",
       "livestream_title": "market-meltdown LOW BPS VERTICAL",
       "shorts_source": null,
@@ -70,7 +147,7 @@
     },
     {
       "batch": "uh-oh",
-      "status": "active",
+      "status": "completed",
       "date": "2026-06-11",
       "livestream_title": "UH-OH LOW BPS VERTICAL",
       "shorts_source": null,
@@ -89,7 +166,7 @@
     },
     {
       "batch": "wife-changing-gains",
-      "status": "active",
+      "status": "completed",
       "date": "2026-06-08",
       "livestream_title": "wife-changing-gains LOW BPS VERTICAL",
       "shorts_source": null,
@@ -108,7 +185,7 @@
     },
     {
       "batch": "dilemma",
-      "status": "active",
+      "status": "completed",
       "date": "2026-06-07",
       "livestream_title": "4-year cycle dilemma LOW BPS VERTICAL",
       "shorts_source": null,
@@ -121,8 +198,8 @@
         "video-creation/shorts/dilemma"
       ],
       "pipelines": {
-        "shorts": "active",
-        "repurpose": "pending"
+        "shorts": "done",
+        "repurpose": "completed"
       }
     },
     {
@@ -308,7 +385,7 @@
     {
       "batch": "banks-own-chain",
       "track": "longform-edited",
-      "status": "active",
+      "status": "completed",
       "date": "2026-06-09",
       "livestream_title": null,
       "title": "The Banks' Plan to Destroy XRP and Crypto as a Whole by 2027",
@@ -327,15 +404,15 @@
         "repurpose": "skip",
         "longform": "pending"
       },
-      "note": "First longform-edited project (heavily-edited track, NOT a livestream, NOT a slide presentation). Topic seeded from CryptoWendyO livestream 'SHOCKING BANKS WILL DESTROY CRYPTO AND MAKE THEIR OWN CHAIN!' (2026-06-06); source transcript (clean .md + raw SRT) in media/banks-own-chain/source-crypto-wendy/. Angle: banks build their own tokenized-deposit chain + SWIFT picked Linea over XRPL, so banks won't need XRP. Working outline (verified/sourced facts + segment structure + edit notes) at media/banks-own-chain/outline.md. Talk-over deck BUILT (banks-own-chain-deck.html, 10 slides, problem->solution arc, Linea-token angle). 3 receipt screenshots captured to screenshots/ (recapture: node _capture-screenshots.js). EDIT STYLE (2026-06-09): talking-head holds frame, deck content containers as overlays (NOT full-screen spotlight), full deck shown only in intro; canonical in longform-edited.md Phase 4 rule #1. STAGE: deck + assets ready, awaiting Mike's recording. No EDIT yet. cleanup does NOT scan video-creation/longform-edited/media/."
+      "note": "First longform-edited project (heavily-edited track, NOT a livestream, NOT a slide presentation). Topic seeded from CryptoWendyO livestream 'SHOCKING BANKS WILL DESTROY CRYPTO AND MAKE THEIR OWN CHAIN!' (2026-06-06); source transcript (clean .md + raw SRT) in media/banks-own-chain/source-crypto-wendy/. Angle: banks build their own tokenized-deposit chain + SWIFT picked Linea over XRPL, so banks won't need XRP. Working outline (verified/sourced facts + segment structure + edit notes) at media/banks-own-chain/outline.md. Talk-over deck BUILT (banks-own-chain-deck.html, 10 slides, problem->solution arc, Linea-token angle). 3 receipt screenshots captured to screenshots/ (recapture: node _capture-screenshots.js). EDIT STYLE (2026-06-09): talking-head holds frame, deck content containers as overlays (NOT full-screen spotlight), full deck shown only in intro; canonical in longform-edited.md Phase 4 rule #1. STAGE: deck + assets ready, awaiting Mike's recording. No EDIT yet. cleanup recycles this media/<project>/ folder once the batch is completed (see cleanup/targets/video-creation.js)."
     },
     {
       "batch": "silverscript",
       "track": "longform-edited",
-      "status": "active",
+      "status": "completed",
       "date": "2026-06-13",
       "livestream_title": null,
-      "title": "SilverScript: Kaspa's First Real Smart Contract Language",
+      "title": "Kaspa's Weapon Unleashed - And This Changes Everything!",
       "shorts_source": null,
       "source_media": "video-creation/longform-edited/media/silverscript/",
       "transcript_plain": null,
@@ -349,7 +426,73 @@
         "repurpose": "skip",
         "longform": "pending"
       },
-      "note": "longform-edited project (heavily-edited track, NOT a livestream, NOT a slide presentation). Topic seeded from KatDaddyKrypto video 'Is KASPA About to EXPLODE? Easy To Understand Hard Fork Update!' (https://youtu.be/aj5O1u_gcNM), SilverScript segment ~3:55-4:27. Seed segment transcript + on-screen infographic frames in media/silverscript/source-katdaddy/. Angle: SilverScript (Ori Newman) is the developer on-ramp that finally makes Kaspa programmable; ties to the May 5 2026 covenant hardfork. Working outline (independently verified/sourced facts + segment structure + b-roll notes) at media/silverscript/outline.md. KEY FACT-CHECK baked into the outline: SilverScript compiles DIRECTLY to native Kaspa Script (no VM, no WASM yet, WASM only planned); the seed video's on-screen infographic claiming 'WASM bytecode -> uProgs VM' is WRONG, do not repeat it. Stage: outline only, awaiting Mike's recording. cleanup does NOT scan video-creation/longform-edited/media/."
+      "note": "longform-edited project (heavily-edited track, NOT a livestream, NOT a slide presentation). Topic seeded from KatDaddyKrypto video 'Is KASPA About to EXPLODE? Easy To Understand Hard Fork Update!' (https://youtu.be/aj5O1u_gcNM), SilverScript segment ~3:55-4:27. Seed segment transcript + on-screen infographic frames in media/silverscript/source-katdaddy/. Angle: SilverScript (Ori Newman) is the developer on-ramp that finally makes Kaspa programmable; ties to the May 5 2026 covenant hardfork. Working outline (independently verified/sourced facts + segment structure + b-roll notes) at media/silverscript/outline.md. KEY FACT-CHECK baked into the outline: SilverScript compiles DIRECTLY to native Kaspa Script (no VM, no WASM yet, WASM only planned); the seed video's on-screen infographic claiming 'WASM bytecode -> uProgs VM' is WRONG, do not repeat it. Stage: outline only, awaiting Mike's recording. cleanup recycles this media/<project>/ folder once the batch is completed (see cleanup/targets/video-creation.js)."
+    },
+    {
+      "batch": "bittensor-for-the-future",
+      "track": "longform-edited",
+      "status": "completed",
+      "date": "2026-06-18",
+      "livestream_title": null,
+      "title": "BULLISH: The US Government Backs Bittensor",
+      "shorts_source": null,
+      "source_media": "video-creation/longform-edited/media/bittensor-for-the-future/",
+      "transcript_plain": null,
+      "transcripts_dir": null,
+      "dashboard": null,
+      "directories": [
+        "video-creation/longform-edited/media/bittensor-for-the-future"
+      ],
+      "pipelines": {
+        "shorts": "skip",
+        "repurpose": "skip",
+        "longform": "pending"
+      },
+      "note": "Longform-edited gated-face video tying the Bittensor/TAO thesis to the US export-control ban on a frontier AI model. FINAL render bittensor-FULL-v8-sfx.mp4 (14:05) DONE + QA'd 2026-06-18; staged to schedule-tweets/longform/bittensor-for-the-future/. Render assets live in media/bittensor-for-the-future/render-assets/ (NOT video-creation/assets). Queued to longs.json for rumble/bitchute/facebook; YouTube uploaded manually (chapters + Soundstripe codes provided). Canonical edit docs: EDIT-PLAN.md, CUE-SHEET.md, BROLL-PLAN.md, PROJECT-LOG.md."
+    },
+    {
+      "batch": "kaspa-covenants-short",
+      "track": "vertical-ai-persona",
+      "status": "completed",
+      "date": "2026-06-22",
+      "livestream_title": null,
+      "title": "Kaspa just did something Bitcoin has argued about for years",
+      "shorts_source": null,
+      "source_media": "video-creation/vertical-ai-persona/media/kaspa-covenants-short/",
+      "transcript_plain": null,
+      "transcripts_dir": null,
+      "dashboard": null,
+      "directories": [
+        "video-creation/vertical-ai-persona/media/kaspa-covenants-short"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "skip",
+        "longform": "skip"
+      },
+      "note": "Vertical AI-persona 9:16 TEASER (24.0s) for the longform-edited Kaspa Covenants video (longform-edited/media/kaspa-covenants/). Built 2026-06-22: desilence @200ms -> bake 3 faces -> Remotion KaspaCovenantsShort. Single short (not a livestream batch). related_longform_url to be backfilled once Mike provides the live longform URL. directories[] protects the media folder from cleanup while the short is pending."
+    },
+    {
+      "batch": "kaspa-covenants",
+      "track": "longform-edited",
+      "status": "completed",
+      "date": "2026-06-22",
+      "livestream_title": null,
+      "title": "Kaspa's Covenants Put It Lightyears Ahead Of Every Other Crypto",
+      "shorts_source": null,
+      "source_media": "video-creation/longform-edited/media/kaspa-covenants/",
+      "transcript_plain": null,
+      "transcripts_dir": null,
+      "dashboard": null,
+      "directories": [
+        "video-creation/longform-edited/media/kaspa-covenants"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "skip",
+        "longform": "done"
+      },
+      "note": "longform-edited Kaspa Covenants / Toccata hardfork explainer (7:35, FINAL kaspa-covenants-FINAL.mp4). Published to YouTube @CodeMonkeyMike 2026-06-22 (watch?v=mc1bqf7Ph30, with chapters + 3 Soundstripe YT codes GV8XEWTBX0UWWEFB/7BIQSDGTEZT05I1N/UKUXQMODJ3JLHRXO). Queued in longs.json for rumble/bitchute/facebook (YT done manually). Vertical teaser = batch kaspa-covenants-short."
     }
   ]
 }

@@ -17,6 +17,7 @@ const { spawn }    = require('child_process');
 const net          = require('net');
 const fs           = require('fs');
 const path         = require('path');
+const { stripHashtags, buildCaption } = require('./lib/strip-hashtags');
 
 const SHORTS_JSON       = path.join(__dirname, '..', 'data', 'shorts.json');
 const CHROME_EXE        = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
@@ -144,7 +145,7 @@ async function snapshot(page, label) {
   const videoPath = path.join(WORKSPACE_ROOT, short.video_path);
   if (!fs.existsSync(videoPath)) { console.error('Video not found:', videoPath); process.exit(1); }
 
-  const caption = short.platforms[PLATFORM].caption_override || short.caption;
+  const caption = buildCaption(short.platforms[PLATFORM].caption_override || short.caption, short.tags, PLATFORM);
 
   console.log(`\nShort: "${short.title}"`);
   console.log(`File:  ${videoPath} (${short.duration_seconds}s)`);

@@ -1,0 +1,245 @@
+{
+  "project": "crypto-promo",
+  "title": "Crypto Community Promo (Weight-Loss Testimonial Parody)",
+  "aspect_ratio": "9:16",
+  "notes": "Parody of the mother.satori clinic-interview format, two acts. STRUCTURE (2026-05-30): each act is a LOCKED STATIC TRIPOD framing — one camera, no moves, no angle changes, just watching the interview. The conversation plays out as a sequence of ~15s generations chained last-frame->first-frame; each generation animates ONE speaker while the other listens idle. SCENE 1 (s1-clinic) = the 'before' interview in a grimy WELLNESS CLINIC: Mike (mic, frame-right, standing) interviews a heavier-set woman (frame-left, seated). Six speaker-turns inside one held two-shot (see scene.turns). SCENE 2+ = '3 months later' at a LAVISH TROPICAL RESORT BAR (consolidated 2026-05-30 into ONE held two-shot with turns[], same as the clinic). Setting contrast (clinic->resort) sells the before/after. CHARACTERS: Mike (real refs in identity/); the WOMAN (fictional) needed in BOTH states (heavier 'before' + slim 'after') with her own soft feminine voice — still the gating asset; a brief slim FRIEND enters in s2i. Gaze cues are FRAME-RELATIVE (Seedance reads gaze from viewer POV). Specific calls (MYX 550x, De-Agent AI 130x, Pippin, Lab) and the CryptoRich.vip CTA are Mike's promo content — keep verbatim. Per-turn prompts pass VERBATIM to Seedance.",
+  "voice_default": "../identity/my-avatar-voice-13s.mp3",
+  "characters": {
+    "mike": {
+      "note": "Real refs in identity/ (shot1-3 close-ups + 4 body angles). Voice identity/my-avatar-voice-13s.mp3. No Soul — direct references work well."
+    },
+    "woman": {
+      "age": 23,
+      "look": "Caucasian, long brunette hair, honey-amber eyes, naturally very pretty",
+      "before": "almost unrealistically obese, worn-down — the scroll-stopping visual hook",
+      "after": "slim and genuinely attractive",
+      "voice": "soft, very feminine, not assertive — submissive-to-a-breadwinner read",
+      "voice_file": "../identity/female - nichalia - gentle, kind and sweet.mp3",
+      "base_face": "characters/woman/base.png (Cand 4)",
+      "before_base": "characters/woman/before-base.png (obese clinic, dirty white tee + grey sweats)",
+      "after_base": "characters/woman/after-base.png (slim, resort)",
+      "consistency": "reference-direct via Nano Banana Pro from the bases (no Soul) — same approach as Mike; reference the matching base per shot",
+      "soul_id": null
+    },
+    "friend": {
+      "age": 19,
+      "look": "younger attractive woman; enters in s2i only (single shot, low consistency need)",
+      "soul_id": null
+    },
+    "tone": "sex appeal + humor; parody of testimonial ads + crypto-bro culture; all characters clearly adults"
+  },
+  "scenes": [
+    {
+      "id": "s1-clinic",
+      "order": 1,
+      "character": "You + Woman (before, two-shot)",
+      "duration": 30,
+      "summary": "CLINIC interview — full Q&A in ONE held two-shot",
+      "dialogue": "You: \"So, when did your husband stop touching you?\"\nHer: \"Six months ago. Ever since he got into crypto.\"\nYou: \"And what happened after that?\"\nHer: \"He stayed up all night staring at charts and watching your videos. I had nothing to do but eat.\"\nYou: \"Aren't you worried other girls will chase him once he makes it big time?\"\nHer: \"I've got no motivation… until I see some progress.\"",
+      "prompt": "A grimy, dimly lit wellness clinic. LOCKED STATIC TRIPOD TWO-SHOT, vertical 9:16, the camera does not move or change angle for the entire interview. A man with curly hair and glasses stands on the RIGHT of the frame holding a microphone; a heavier-set woman in a dirty white t-shirt and grey sweatpants sits on the LEFT. Dim flickering fluorescent light, run-down clinic background. The camera holds this exact framing while they take turns speaking — when one talks the other listens naturally (small head movements, blinking, breathing), never frozen.",
+      "ref": "",
+      "voice": "../identity/my-avatar-voice-13s.mp3",
+      "keyframe": "keyframes/s1a.png",
+      "clip": "clips/s1-clinic.mp4",
+      "status": "planned",
+      "turns": [
+        {
+          "turn": 1,
+          "speaker": "mike",
+          "summary": "HOOK — opening question",
+          "line": "So, when did your husband stop touching you?",
+          "voice": "../identity/my-avatar-voice-13s.mp3",
+          "prompt": "A grimy wellness clinic, vertical two-shot, locked static tripod. A man with curly hair and glasses stands on the right holding a microphone; a heavier-set woman sits on the left. He leans slightly toward her, looking toward the left of the frame, and in a calm deadpan voice asks, \"So, when did your husband stop touching you?\" The woman listens, silent.",
+          "start_frame": "keyframes/s1a.png",
+          "from_scene": "s1a-hook"
+        },
+        {
+          "turn": 2,
+          "speaker": "woman",
+          "summary": "Her answer — 'ever since he got into crypto'",
+          "line": "Six months ago. Ever since he got into crypto.",
+          "voice": "../identity/female - nichalia - gentle, kind and sweet.mp3",
+          "prompt": "Same grimy wellness clinic, same locked two-shot framing. The heavier-set woman on the left, looking toward the right of the frame at the interviewer, in a flat resigned voice says, \"Six months ago. Ever since he got into crypto.\" The man on the right holds the mic and listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s1b-crypto"
+        },
+        {
+          "turn": 3,
+          "speaker": "mike",
+          "summary": "Follow up — 'and what happened after that?'",
+          "line": "And what happened after that?",
+          "voice": "../identity/my-avatar-voice-13s.mp3",
+          "prompt": "Same grimy wellness clinic, same locked two-shot framing. The man with curly hair and glasses holding the microphone, looking toward the left of the frame at the woman, asks in a calm curious voice, \"And what happened after that?\" The woman listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s1c-followup"
+        },
+        {
+          "turn": 4,
+          "speaker": "woman",
+          "summary": "Her — charts + 'watching your videos', 'nothing to do but eat'",
+          "line": "He stayed up all night staring at charts and watching your videos. I had nothing to do but eat.",
+          "voice": "../identity/female - nichalia - gentle, kind and sweet.mp3",
+          "prompt": "Same grimy wellness clinic, same locked two-shot framing. The heavier-set woman, looking toward the right of the frame, in a deadpan voice says, \"He stayed up all night staring at charts and watching your videos. I had nothing to do but eat.\" The man holds the mic and listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s1d-ate"
+        },
+        {
+          "turn": 5,
+          "speaker": "mike",
+          "summary": "You — 'aren't you worried other girls will chase him?'",
+          "line": "Aren't you worried other girls will chase him once he makes it big time?",
+          "voice": "../identity/my-avatar-voice-13s.mp3",
+          "prompt": "Same grimy wellness clinic, same locked two-shot framing. The man holding the microphone, looking toward the left of the frame at the woman, asks with a slight smirk, \"Aren't you worried other girls will chase him once he makes it big time?\" The woman listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s1e-jealous"
+        },
+        {
+          "turn": 6,
+          "speaker": "woman",
+          "summary": "Her button — 'no motivation until I see some progress'",
+          "line": "I've got no motivation… until I see some progress.",
+          "voice": "../identity/female - nichalia - gentle, kind and sweet.mp3",
+          "prompt": "Same grimy wellness clinic, same locked two-shot framing. The heavier-set woman, looking toward the right of the frame, shrugs and says flatly, \"I've got no motivation… until I see some progress.\" The man holds the mic and listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s1f-motivation"
+        }
+      ]
+    },
+    {
+      "id": "s2-resort",
+      "order": 2,
+      "character": "You + Woman (after, two-shot)",
+      "duration": 30,
+      "summary": "RESORT — '3 months later' interview; full Q&A in ONE held two-shot",
+      "dialogue": "[super: 3 MONTHS LATER]\nYou: \"So how are things now?\"\nHer: \"My husband made it big time. He bought me a whole new life.\"\nYou: \"That's good, that's good. And the motivation?\"\nHer: \"Instead of just watching your videos, he joined your community and followed your calls. He made a 550x on M-Y-X — all because of your call.\"\nYou: \"Oh wow, that's awesome! What about the 130x on Dee-Agent AI?\"\nHer: \"Yup, he got that one too. He also got Pippin and Lab in a bear market.\"\nYou: \"Wow, that's awesome. Good to hear, good to hear.\"",
+      "prompt": "A sunny tropical beach bar at a luxury resort. LOCKED STATIC TRIPOD TWO-SHOT, vertical 9:16, the camera does not move or change angle for the entire interview. A man with curly hair and glasses sits on the RIGHT holding a microphone; a now-slim, glowing woman sits beside him on the LEFT, both relaxed with tropical drinks. Bright sun, palms, ocean behind them. The camera holds this exact framing while they take turns speaking — when one talks the other listens naturally, never frozen.",
+      "ref": "",
+      "voice": "../identity/my-avatar-voice-13s.mp3",
+      "keyframe": "keyframes/s2a.png",
+      "clip": "clips/s2-resort.mp4",
+      "status": "planned",
+      "turns": [
+        {
+          "turn": 1,
+          "speaker": "mike",
+          "summary": "Opening — 'so how are things now?'",
+          "line": "So how are things now?",
+          "voice": "../identity/my-avatar-voice-13s.mp3",
+          "prompt": "A sunny tropical beach bar at a luxury resort, vertical two-shot, locked static tripod. A man with curly hair and glasses sits on the right holding a microphone; a slim, glowing woman sits on the left with a tropical drink. He holds the mic to his own mouth and, looking toward the left of the frame at her, asks warmly, \"So how are things now?\" The woman listens.",
+          "start_frame": "keyframes/s2a.png",
+          "from_scene": "s2a-resort-open"
+        },
+        {
+          "turn": 2,
+          "speaker": "woman",
+          "summary": "Her — 'he made it big time, bought me a whole new life'",
+          "line": "My husband made it big time. He bought me a whole new life.",
+          "voice": "../identity/female - nichalia - gentle, kind and sweet.mp3",
+          "prompt": "Same sunny tropical resort bar, same locked two-shot framing. The slim, radiant woman on the left, looking toward the right of the frame at the interviewer, beams and says, \"My husband made it big time. He bought me a whole new life.\" The man on the right holds the mic and listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s2b-new-life"
+        },
+        {
+          "turn": 3,
+          "speaker": "mike",
+          "summary": "You — 'that's good. and the motivation?'",
+          "line": "That's good, that's good. And the motivation?",
+          "voice": "../identity/my-avatar-voice-13s.mp3",
+          "prompt": "Same sunny tropical resort bar, same locked two-shot framing. The man with curly hair and glasses holding the microphone, looking toward the left of the frame at the woman, asks with a warm friendly smile, nodding, \"That's good, that's good. And the motivation?\" The woman listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s2c-motivation-q"
+        },
+        {
+          "turn": 4,
+          "speaker": "woman",
+          "summary": "Her — joined the community, 550x on M-Y-X",
+          "line": "Instead of just watching your videos, he joined your community and followed your calls. He made a 550x on M-Y-X — all because of your call.",
+          "voice": "../identity/female - nichalia - gentle, kind and sweet.mp3",
+          "prompt": "Same sunny tropical resort bar, same locked two-shot framing. The slim, glowing woman, looking toward the right of the frame, says excitedly, \"Instead of just watching your videos, he joined your community and followed your calls. He made a 550x on M-Y-X — all because of your call.\" The man holds the mic and listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s2d-myx-call"
+        },
+        {
+          "turn": 5,
+          "speaker": "mike",
+          "summary": "You — 'what about the 130x on De-Agent AI?'",
+          "line": "Oh wow, that's awesome! What about the 130x on Dee-Agent AI?",
+          "voice": "../identity/my-avatar-voice-13s.mp3",
+          "prompt": "Same sunny tropical resort bar, same locked two-shot framing. The man holding the microphone, eyes widening with a grin, looking toward the left of the frame, says, \"Oh wow, that's awesome! What about the 130x on Dee-Agent AI?\" The woman listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s2e-130x-q"
+        },
+        {
+          "turn": 6,
+          "speaker": "woman",
+          "summary": "Her (big smile) — 'got that one too… Pippin and Lab'",
+          "line": "Yup, he got that one too. He also got Pippin and Lab in a bear market.",
+          "voice": "../identity/female - nichalia - gentle, kind and sweet.mp3",
+          "prompt": "Same sunny tropical resort bar, same locked two-shot framing. The slim woman, breaking into a big smile, looking toward the right of the frame, says, \"Yup, he got that one too. He also got Pippin and Lab in a bear market.\" The man holds the mic and listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s2f-pippin-lab"
+        },
+        {
+          "turn": 7,
+          "speaker": "mike",
+          "summary": "You — 'good to hear, good to hear'",
+          "line": "Wow, that's awesome. Good to hear, good to hear.",
+          "voice": "../identity/my-avatar-voice-13s.mp3",
+          "prompt": "Same sunny tropical resort bar, same locked two-shot framing. The man nods, pleased, holding the microphone, looking toward the left of the frame, and says, \"Wow, that's awesome. Good to hear, good to hear.\" The woman listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s2g-good-to-hear"
+        }
+      ]
+    },
+    {
+      "id": "s2-friend",
+      "order": 3,
+      "character": "You + Woman (after) + Friend",
+      "duration": 9,
+      "summary": "FRIEND enters — 'what about those other girls?' -> 'invite a friend along'",
+      "dialogue": "You: \"And what about those other girls?\"\nHer: \"I just want to make him happy. If he keeps this up, I'll have to invite a friend along.\"  [a slim friend steps into frame]",
+      "prompt": "Same sunny tropical resort bar, same locked two-shot framing as the resort interview; a second slim friend enters near the end.",
+      "ref": "",
+      "voice": "../identity/my-avatar-voice-13s.mp3",
+      "keyframe": "keyframes/s3-friend-composite.png",
+      "clip": "clips/s2-friend.mp4",
+      "status": "planned",
+      "turns": [
+        {
+          "turn": 1,
+          "speaker": "mike",
+          "summary": "You — 'and what about those other girls?'",
+          "line": "And what about those other girls?",
+          "voice": "../identity/my-avatar-voice-13s.mp3",
+          "prompt": "Same sunny tropical resort bar, same locked two-shot framing. The man at the resort bar, mic in hand, raises an eyebrow with a grin, looking toward the left of the frame, asks, \"And what about those other girls?\" The woman listens.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s2h-other-girls"
+        },
+        {
+          "turn": 2,
+          "speaker": "woman",
+          "summary": "Her — 'invite a friend along'; friend steps in",
+          "line": "I just want to make him happy. If he keeps this up, I'll have to invite a friend along.",
+          "voice": "../identity/female - nichalia - gentle, kind and sweet.mp3",
+          "prompt": "Same sunny tropical resort bar, same locked two-shot framing. The slim woman smiles confidently, looking toward the right of the frame, and says, \"I just want to make him happy. If he keeps this up, I'll have to invite a friend along.\" A second attractive, slim friend steps into frame beside her, smiling.",
+          "start_frame": "chain:prev-last",
+          "from_scene": "s2i-friend-enters"
+        }
+      ]
+    },
+    {
+      "id": "s2j-cta",
+      "order": 4,
+      "character": "You (to camera)",
+      "duration": 7,
+      "summary": "CTA — you turn to camera: 'my private crypto community keeps on paying off. CryptoRich.vip'",
+      "dialogue": "You (to camera): \"Well, there you have it. My private crypto community keeps on paying off. CryptoRich.vip\"",
+      "prompt": "The man with curly hair and glasses at the tropical resort turns to look directly into the camera as the shot slowly pushes in on him, and with a confident knowing smile he says, \"Well, there you have it. My private crypto community keeps on paying off. CryptoRich dot vip.\"",
+      "ref": "../identity/shot1.png",
+      "voice": "../identity/my-avatar-voice-13s.mp3",
+      "keyframe": "keyframes/s2j.png",
+      "clip": "clips/s2j.mp4",
+      "status": "planned"
+    }
+  ]
+}

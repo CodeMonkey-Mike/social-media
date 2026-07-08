@@ -3,6 +3,8 @@ name: yt-post-poll
 description: Post the next pending YouTube community text poll from data/yt-text-polls.json via Playwright script.
 ---
 
+> ✅ **FIXED 2026-06-10 — it was NEVER a DOM change; the option-field targeting was the bug.** A read-only diagnostic (`scripts/_diag-yt-poll-selectors.js`) proved every selector is UNCHANGED: poll attachment opens inline, `tp-yt-paper-input.poll-option-input` count = 2, `#add-option button` exists, each row is `[remove-X icon-button][input field]`. The real bug: the old code computed the **host's bounding-box center** and did a raw `page.mouse.click(x,y)` to focus — that coordinate click missed the input (it's offset right of the remove-X), so text never entered (`host.value="null"`) and the widget degraded, which then made the coordinate-based add-option click miss too (the `dispatchEvent` fallback hung 30s). **The fix (selectors untouched):** target the **inner `<input>`** directly (`tp-yt-paper-input.poll-option-input input`), focus it with an actionability-checked `robustClick` (Playwright click → native JS click fallback), type real keystrokes (preserves Polymer two-way binding + YouTube submission state), verify each option via `input.inputValue()`, and add fields with `robustClick` on `#add-option button`. Two safety gates run BEFORE Post: per-option value verify (throws if text didn't register) + waiting for the visible Post button to enable. **Validated end-to-end 2026-06-10:** posted `yt-text-poll-2026-05-31-kaspa-3-dollar` live (3 options, all `✓`) → `youtube.com/post/UgkxoCWoDh4DZ0pNorSpIxuuObW8nNBTwF8R`. YT polls work again.
+
 ## Invocation
 
 ```powershell
@@ -57,6 +59,18 @@ Uses `ytbot-profile` (`C:\Users\mnede\AppData\Local\Google\Chrome\ytbot-profile`
 **Real keystrokes via `page.keyboard.type()` only.** Polymer's two-way binding for `tp-yt-paper-input.poll-option-input` only updates when real CDP keystrokes fire. `keyboard.insertText()` updates the DOM value but NOT Polymer's data model — the post submits with **no options** (broken). Setting `el.value` or firing synthetic `input` events has the same broken result.
 
 **Focus an option field by mouse-clicking the host coordinates — `host.focus()` doesn't work.** Get the host's center coordinates via `getBoundingClientRect()` inside `page.evaluate()`, then `page.mouse.click(x, y)`.
+
+## ✅ FIXED 2026-06-14 — the Post button click was on raw COORDINATES; switched to robustClick
+
+Symptom: the script typed the question + all 3 options correctly (each `✓`), logged "Post clicked ✓", but then **"Composer-cleared signal not detected"** and all 5 URL-capture attempts failed → exit 1, entry `failed`, and the poll was **NOT live** (confirmed on the Community tab). Reproduced twice.
+
+ROOT CAUSE: the Post click was the **last** click in the script still using `page.mouse.click(x, y)` at the button's computed center — the exact brittle pattern the 2026-06-10 option-field fix replaced everywhere else. A coordinate click misses YouTube's Polymer Post button and never fires its submit handler, so the composer never clears and nothing posts. (The `getBoundingClientRect` center can sit on a non-interactive overlay/padding, or the synthetic mouse event isn't honored by the paper-button.)
+
+FIX (in `post-yt-poll.js`): target the visible button as an ELEMENT — `page.locator('button[aria-label="Post"]:visible').first()` — and `robustClick` it (trusted Playwright click, JS-click fallback), the same helper the options use. The reliable success signal is **"Composer cleared ✓"**; if you see that, the new-post-URL lookup will succeed. Validated end-to-end: posted `yt-text-poll-2026-06-07-four-year-cycle-dead` → `youtube.com/post/UgkxSPhYb_rgiRKF3dkAdpOIyWjVsflwOCSn`.
+
+Wait times were also **halved 2026-06-14** (PRE_COMPOSE / PRE_POST 60–180s → 30–90s, ACTION 4–7s → 2–3.5s) for faster iteration — community posts aren't reply-throttle-sensitive.
+
+**If it ever fails THIS way again** (composer not cleared + no URL): the post did NOT go through — verify on the Community tab, then reset + re-run. Only if the composer DID clear but URL capture timed out is the poll live (don't re-run → duplicate). Same never-blind-retry principle as the reply-guy / FB / Rumble flows.
 
 ## Resetting a stuck poll
 

@@ -1,0 +1,3 @@
+And if you do migrate, don't rewrite everything, use the Strangler Fig approach.
+Pick one small low blast radius lane, prove check pointing and idempotency there, keep
+the old flow running next to it, and expand only once you trust it.

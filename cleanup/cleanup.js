@@ -14,9 +14,26 @@
 // Recycling is reversible (Recycle Bin), but always run --dry-run first.
 
 const path = require('path');
+const fs = require('fs');
+const { spawnSync } = require('child_process');
 const lib = require('./lib');
 
 const REPO_ROOT = path.resolve(__dirname, '..');
+
+// Keep batch lifecycle status fresh before planning. The video-creation target
+// PROTECTS active batches and RECYCLES completed ones, so a finished batch still
+// flagged `active` would wrongly shield its source artifacts (and a never-reconciled
+// batch never gets reclaimed). Run the reconciler first so cleanup always acts on
+// current status; in --dry-run it runs in dry mode too (reports drift, writes nothing).
+function syncBatchStatus(dryRun) {
+  const script = path.join(REPO_ROOT, 'scripts', 'reconcile-batch-status.js');
+  if (!fs.existsSync(script)) return;
+  console.log(`\n--- syncing batch status (reconcile-batch-status.js${dryRun ? ' --dry-run' : ''}) ---`);
+  const args = [script];
+  if (dryRun) args.push('--dry-run');
+  const res = spawnSync(process.execPath, args, { stdio: 'inherit', cwd: REPO_ROOT });
+  if (res.status !== 0) console.error('  WARNING: reconcile failed; proceeding with existing batches.json status.');
+}
 const TARGETS = {
   'schedule-tweets': require('./targets/schedule-tweets'),
   'video-creation': require('./targets/video-creation'),
@@ -44,7 +61,7 @@ function usage(msg) {
 }
 
 function runTarget(name, opts) {
-  let { recycle, skipped } = TARGETS[name].plan({ repoRoot: REPO_ROOT, ageDays: opts.ageDays });
+  let { recycle, skipped, pruneRoots = [], pruneSkipDirs = [] } = TARGETS[name].plan({ repoRoot: REPO_ROOT, ageDays: opts.ageDays });
   if (opts.only) {
     const needle = opts.only.replace(/\\/g, '/').toLowerCase();
     const rel = (p) => path.relative(REPO_ROOT, p).replace(/\\/g, '/').toLowerCase();
@@ -53,6 +70,22 @@ function runTarget(name, opts) {
     skipped = skipped.filter(match);
     console.log(`  (filtered to paths matching "${opts.only}")`);
   }
+
+  // Empty-folder prune: any directory under the target's pruneRoots that will be left with no
+  // files once the planned recycle set is removed is itself recycled, so we never strand the
+  // empty <batch>/ folders behind cleaned-out files. Computed against the (post-filter) recycle
+  // set so dry-run reports them and the real run removes them in the same single move.
+  if (pruneRoots.length) {
+    const removed = new Set(recycle.map(r => r.path.toLowerCase()));
+    const skipSet = new Set(pruneSkipDirs.map(d => d.toLowerCase()));
+    let emptyDirs = lib.findEmptyDirs(pruneRoots, { skipDirs: skipSet, removed });
+    if (opts.only) {
+      const needle = opts.only.replace(/\\/g, '/').toLowerCase();
+      emptyDirs = emptyDirs.filter(d => path.relative(REPO_ROOT, d).replace(/\\/g, '/').toLowerCase().includes(needle));
+    }
+    for (const d of emptyDirs) recycle.push({ path: d, reason: 'empty folder (no files remain after cleanup)' });
+  }
+
   const totalBytes = recycle.reduce((sum, r) => sum + lib.sizeOf(r.path), 0);
 
   console.log(`\n=== target: ${name} ===`);
@@ -90,6 +123,9 @@ function main() {
 
   if (opts.dryRun) console.log('[DRY RUN] No files will be moved.');
   const names = opts.target === 'all' ? Object.keys(TARGETS) : [opts.target];
+
+  // The video-creation target's eligibility depends on batches.json status — sync it first.
+  if (names.includes('video-creation')) syncBatchStatus(opts.dryRun);
 
   let totalMoved = 0, totalBytes = 0;
   for (const name of names) {

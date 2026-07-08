@@ -1,0 +1,5 @@
+Now, how do 20 parallel workers write results back without stomping on each other?
+You mark the field with a reducer, right here.
+That annotation tells Langrath to append each worker's result instead of overriding the
+whole field.
+One line, and the fan in handles itself.

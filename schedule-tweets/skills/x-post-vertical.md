@@ -59,3 +59,7 @@ fs.writeFileSync('data/shorts.json', JSON.stringify(d, null, 2));
 ## ⛔ Absolute Rules (X posting)
 
 See `x-post-tweet.md` for Rules 0, 1, 2 — they apply identically here.
+
+## Hashtag policy (added 2026-05-29)
+
+Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.

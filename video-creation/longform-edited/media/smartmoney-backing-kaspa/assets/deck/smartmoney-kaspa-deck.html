@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Money Is Quietly Cornering Kaspa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e; --border:#1e2330;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+body{background:var(--bg-deep);font-family:'DM Sans',sans-serif;color:var(--text-primary);overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.slide{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:60px 80px;position:relative;overflow:hidden}
+@media(max-width:900px){.slide{padding:40px 28px}}
+.orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.4;pointer-events:none}
+.slide>*:not(.orb){position:relative;z-index:1}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.8rem,6vw,5.5rem);line-height:1.05;letter-spacing:-.02em}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.8rem,3.5vw,3rem);line-height:1.15}
+h3{font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.15rem;text-transform:uppercase;letter-spacing:.12em}
+h3.mono{text-transform:none;letter-spacing:0}
+.ey{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);font-weight:600;margin-bottom:18px}
+p{font-size:clamp(.95rem,1.05vw,1.05rem);line-height:1.7;color:var(--text-secondary)}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.divider{width:60px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--accent-teal),var(--accent-cyan));margin:24px 0}
+.center{text-align:center}
+.g{color:var(--accent-green)}.c{color:var(--accent-cyan)}.go{color:var(--accent-gold)}
+.pu{color:var(--accent-purple)}.re{color:var(--accent-red)}.tl{color:var(--accent-teal)}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.card .top-accent{position:absolute;top:0;left:0;right:0;height:2px}
+.card h3{margin-bottom:6px}.card p{margin-top:12px}
+.tag{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.tag.green{background:rgba(0,230,138,.15);color:var(--accent-green)}
+.tag.cyan{background:rgba(0,194,255,.15);color:var(--accent-cyan)}
+.tag.teal{background:rgba(73,224,200,.15);color:var(--accent-teal)}
+.tag.gold{background:rgba(255,215,0,.15);color:var(--accent-gold)}
+.tag.red{background:rgba(255,64,96,.15);color:var(--accent-red)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.grid2,.grid3{grid-template-columns:1fr}}
+.impact{background:linear-gradient(135deg,rgba(73,224,200,.08),rgba(0,194,255,.06));border:1px solid rgba(73,224,200,.2);border-radius:12px;padding:24px 28px;margin-top:30px}
+.big-number{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(3rem,7vw,6rem);line-height:1;background:linear-gradient(135deg,var(--accent-teal),var(--accent-cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
+.col{padding:32px;border-radius:16px}
+.col.norm{background:rgba(80,90,110,.08);border:1px solid var(--border)}
+.col.cov{background:linear-gradient(135deg,rgba(73,224,200,.07),rgba(0,194,255,.05));border:1px solid rgba(73,224,200,.28)}
+.col .ml{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.stat-row{display:flex;gap:40px;flex-wrap:wrap;margin-top:30px}
+.stat .num{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.8rem,3.2vw,2.8rem);color:var(--accent-teal)}
+.stat .lbl{font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-top:6px}
+.rules{list-style:none;margin-top:24px}
+.rules li{padding:16px 20px;margin-bottom:12px;border-radius:12px;background:rgba(255,255,255,.02);border-left:3px solid var(--accent-cyan);font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--text-primary);line-height:1.5}
+.rules li.hot{border-left-color:var(--accent-teal);background:rgba(73,224,200,.07)}
+.bar-row{display:flex;align-items:center;gap:18px;margin:14px 0}
+.bar-row .bl{width:230px;color:var(--text-secondary);font-size:.95rem}
+.bar-track{flex:1;height:26px;background:var(--border);border-radius:8px;overflow:hidden}
+.bar-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--accent-teal),var(--accent-cyan))}
+.bar-row .bv{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text-primary);width:130px;text-align:right}
+.coinwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center}
+.coin{width:clamp(140px,16vw,210px);height:clamp(140px,16vw,210px);border-radius:50%;background:radial-gradient(circle at 38% 32%,#1b3a39,#0c1817);border:5px solid var(--accent-teal);box-shadow:0 0 70px rgba(73,224,200,.55),inset 0 0 50px rgba(73,224,200,.25);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(4rem,9vw,7rem);color:var(--accent-teal)}
+.chips{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;max-width:900px;margin-top:30px}
+.chip{padding:10px 20px;border-radius:100px;background:rgba(73,224,200,.1);border:1px solid rgba(73,224,200,.35);color:var(--accent-teal);font-family:'JetBrains Mono',monospace;font-size:.85rem}
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:.15s}.delay-2{transition-delay:.3s}.delay-3{transition-delay:.45s}.delay-4{transition-delay:.6s}.delay-5{transition-delay:.75s}
+.nav-dots{position:fixed;right:28px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:100}
+.nav-dots button{width:8px;height:8px;border-radius:50%;border:none;background:var(--text-muted);cursor:pointer;padding:0;transition:transform .3s,background .3s}
+.nav-dots button.active{background:var(--accent-teal);transform:scale(1.4)}
+@media(max-width:900px){.nav-dots{right:14px}}
+.scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;z-index:2}
+.scroll-hint svg{animation:bounce 1.8s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+.src{font-size:.72rem;color:var(--text-muted);margin-top:26px;font-family:'JetBrains Mono',monospace}
+</style>
+</head>
+<body>
+
+<!-- 1. TITLE -->
+<section class="slide center" id="s1">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-teal);top:-120px;left:-120px"></div>
+  <div class="orb" style="width:420px;height:420px;background:var(--accent-cyan);bottom:-100px;right:-80px"></div>
+  <div class="coinwrap">
+    <div class="coin fade-in">K</div>
+    <h1 class="fade-in delay-1" style="margin-top:34px;max-width:1100px">Smart Money Is Quietly <span class="tl">Cornering Kaspa</span></h1>
+    <p class="fade-in delay-2" style="margin-top:18px;max-width:680px;font-size:1.15rem">The bears call it centralization. The chain says it is accumulation. Here is the on-chain proof.</p>
+    <div class="stat-row fade-in delay-3" style="justify-content:center">
+      <div class="stat"><div class="num">+42M</div><div class="lbl">KAS, one wallet, one day</div></div>
+      <div class="stat"><div class="num">+2.4B</div><div class="lbl">added by whales in 1 year</div></div>
+      <div class="stat"><div class="num">38%</div><div class="lbl">held by the top 0.01%</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+</section>
+
+<!-- 2. THE VISIBLE BUY -->
+<section class="slide" id="s2">
+  <div class="orb" style="width:480px;height:480px;background:var(--accent-teal);top:-140px;right:-120px"></div>
+  <span class="ey fade-in">Chapter 1 / the buy you can see</span>
+  <h2 class="fade-in">The single biggest wallet just bought <span class="tl mono">42 million</span> coins in a day</h2>
+  <div class="divider fade-in"></div>
+  <div class="grid2" style="margin-top:14px">
+    <div class="card fade-in delay-1"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-teal),transparent)"></div>
+      <span class="tag teal">Buy 1</span><h3 class="mono"><span class="tl mono">28,000,000 KAS</span></h3><p>Pulled off <b>Gate.io</b> in a single transaction. 2026-06-15.</p></div>
+    <div class="card fade-in delay-2"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-cyan),transparent)"></div>
+      <span class="tag cyan">Buy 2</span><h3 class="mono"><span class="c mono">14,000,000 KAS</span></h3><p>Off <b>Bitget</b>, seven minutes later. Same wallet, same day.</p></div>
+  </div>
+  <div class="impact fade-in delay-3"><p style="color:var(--text-primary);font-size:1.1rem">You do not click-buy that on an order book without spiking the price. You pull it into self-custody, off the market, where it is not coming back. That wallet now holds <span class="mono tl">1.46 billion KAS</span> (5.3% of all supply).</p></div>
+  <div class="src fade-in delay-4">Source: on-chain, api.kaspa.org + kaspa.stream. tx 49182fbf… / 5efe9263…</div>
+</section>
+
+<!-- 3. THE HIDDEN BUYERS -->
+<section class="slide" id="s3">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-cyan);bottom:-160px;left:-140px"></div>
+  <span class="ey fade-in">Chapter 2 / nobody is watching the other whales</span>
+  <h2 class="fade-in">It is not one wallet. It is a <span class="tl">whole pack.</span></h2>
+  <div class="divider fade-in"></div>
+  <p class="fade-in delay-1" style="max-width:760px">Set the exchange wallets aside and look only at the individual whales in the top 20. Over the past year they added, between them:</p>
+  <div class="fade-in delay-2" style="margin-top:18px"><span class="big-number">+2.4B KAS</span></div>
+  <div class="stat-row fade-in delay-3">
+    <div class="stat"><div class="num">~$70M</div><div class="lbl">accumulated, off the market</div></div>
+    <div class="stat"><div class="num">11 / 14</div><div class="lbl">whale wallets grew</div></div>
+    <div class="stat"><div class="num">358</div><div class="lbl">buys in 84 of the last 90 days (one wallet)</div></div>
+  </div>
+  <div class="impact fade-in delay-4"><p style="color:var(--text-primary)">Several of these wallets did not even exist a year ago and now hold hundreds of millions of coins each. One has been buying six figures of KAS almost every single day for months, now sitting on <span class="mono tl">120M+ KAS</span>. We have no idea who they are. And that is the exciting part.</p></div>
+  <div class="src fade-in delay-5">Source: on-chain top-20 scan, api.kaspa.org. Exchange-custody wallets excluded. Jun 2026.</div>
+</section>
+
+<!-- 4. YEARS OF ACCUMULATION -->
+<section class="slide" id="s4">
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-teal);top:-120px;left:-100px"></div>
+  <span class="ey fade-in">Chapter 3 / this has been building for years</span>
+  <h2 class="fade-in">The strongest hands keep taking more</h2>
+  <div class="divider fade-in"></div>
+  <p class="fade-in delay-1" style="max-width:780px">Share of all KAS supply held by the top <span class="mono">0.01%</span> of wallets, over time:</p>
+  <div class="bar-row fade-in delay-2"><div class="bl">Aug 2023</div><div class="bar-track"><div class="bar-fill" style="width:24.4%"></div></div><div class="bv mono">24.4%</div></div>
+  <div class="bar-row fade-in delay-3"><div class="bl">Today</div><div class="bar-track"><div class="bar-fill" style="width:38.4%"></div></div><div class="bv mono">38.4%</div></div>
+  <div class="impact fade-in delay-4"><p style="color:var(--text-primary);font-size:1.1rem">And here is the tell: that share kept climbing <span class="tl">even while the price fell</span>. The biggest hands were taking more, not less, exactly when everyone else was scared. That is not a network being cornered. It is a network being claimed early.</p></div>
+  <div class="src fade-in delay-5">Source: kaspalytics.com, top 0.01% of meaningful addresses, % of circulating supply. 1029 daily points.</div>
+</section>
+
+<!-- 5. MAXIMUM PAIN -->
+<section class="slide" id="s5">
+  <div class="orb" style="width:480px;height:480px;background:var(--accent-red);bottom:-150px;right:-120px;opacity:.25"></div>
+  <span class="ey fade-in">Chapter 4 / they are buying the bottom</span>
+  <h2 class="fade-in">Almost everyone is <span class="re">underwater.</span> Someone is buying it all.</h2>
+  <div class="divider fade-in"></div>
+  <div class="cmp fade-in delay-1">
+    <div class="col cov"><div class="ml">In profit</div><div class="big-number" style="font-size:clamp(2.4rem,5vw,4rem)">13.5%</div><p style="margin-top:10px">of all KAS supply is currently in profit.</p></div>
+    <div class="col norm"><div class="ml">Underwater</div><div style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.4rem,5vw,4rem);color:var(--accent-red)">86.5%</div><p style="margin-top:10px">is sitting at a loss. Maximum pain.</p></div>
+  </div>
+  <div class="impact fade-in delay-2"><p style="color:var(--text-primary);font-size:1.1rem">This is the exact point where tired retail throws in the towel. So ask the obvious question: if almost everyone is at a loss and giving up, <span class="tl">who is on the other side of all those daily buys?</span> The whales. Smart money does not buy euphoria. It buys the moment the chart looks the scariest.</p></div>
+  <div class="src fade-in delay-3">Source: kaspalytics.com, supply in profit / loss. Jun 2026.</div>
+</section>
+
+<!-- 6. THE FLOAT VANISHING -->
+<section class="slide" id="s6">
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-teal);top:-120px;right:-110px"></div>
+  <span class="ey fade-in">Chapter 5 / the float is vanishing</span>
+  <h2 class="fade-in">Shrinking supply, on a coin that was already scarce</h2>
+  <div class="divider fade-in"></div>
+  <div class="grid3" style="margin-top:14px">
+    <div class="card fade-in delay-1"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-teal),transparent)"></div><h3 class="mono">4.5B → 2.0B</h3><p>KAS sitting on exchanges has collapsed since late 2025, and it is still falling. Coins are moving into wallets that do not sell.</p></div>
+    <div class="card fade-in delay-2"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-cyan),transparent)"></div><h3 class="mono">95.8% mined</h3><p>Almost all the Kaspa that will ever exist is already mined. No premine, no VC, no insider unlocks.</p></div>
+    <div class="card fade-in delay-3"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div><h3 class="mono">2.2% → 0.07%</h3><p>New issuance halves toward zero every year. The faucet is closing.</p></div>
+  </div>
+  <div class="impact fade-in delay-4"><p style="color:var(--text-primary);font-size:1.1rem">Shrinking float, whales accumulating, almost nothing new being minted. <span class="tl">That is the setup for a supply shock.</span></p></div>
+  <div class="src fade-in delay-5">Source: kaspalytics.com exchange holdings + emission schedule. Jun 2026.</div>
+</section>
+
+<!-- 7. THE SETUP -->
+<section class="slide" id="s7">
+  <div class="orb" style="width:480px;height:480px;background:var(--accent-cyan);bottom:-150px;left:-120px"></div>
+  <span class="ey fade-in">Chapter 6 / why this matters now</span>
+  <h2 class="fade-in">Room to run, and almost no float left to fill it</h2>
+  <div class="divider fade-in"></div>
+  <div class="bar-row fade-in delay-1"><div class="bl">Market cap today</div><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div><div class="bv mono">~$0.8B</div></div>
+  <div class="bar-row fade-in delay-2"><div class="bl">Previous all-time high</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,var(--accent-gold),var(--accent-teal))"></div></div><div class="bv mono">~$5B</div></div>
+  <ul class="rules fade-in delay-3" style="margin-top:24px">
+    <li class="hot">Open interest + leverage near historic lows = this is spot, real coins, not borrowed money</li>
+    <li>A return to the old top would be a <span class="tl">6x from here</span> — asymmetry, not a promise</li>
+    <li>When retail finally floods back in, the supply has already been taken off the table</li>
+  </ul>
+  <div class="src fade-in delay-4">Source: market data (HTX spot/perp, Coinglass-style OI). Conditional framing. Jun 2026.</div>
+</section>
+
+<!-- 8. CLOSE -->
+<section class="slide center" id="s8">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-teal);top:-120px;left:50%;transform:translateX(-50%)"></div>
+  <span class="ey fade-in">Swim with the whales</span>
+  <h1 class="fade-in delay-1" style="max-width:1000px;margin:0 auto">The smartest money on the network is <span class="tl">quietly loading the boat.</span></h1>
+  <p class="fade-in delay-2" style="max-width:680px;margin:22px auto 0;font-size:1.15rem">Daily. In size. At the moment of maximum fear. And it is all printed on a public ledger for anyone who bothers to read it.</p>
+  <div class="chips fade-in delay-3" style="margin-top:34px">
+    <span class="chip">Track the smart money</span><span class="chip">Get positioned early</span><span class="chip">Join Crypto Rich</span>
+  </div>
+  <div class="src fade-in delay-4" style="text-align:center">CryptoRich.vip — where we read the chain together.</div>
+</section>
+
+<div class="nav-dots" id="navDots"></div>
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const fadeObserver = new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.15});
+document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
+const dotsWrap=document.getElementById('navDots');
+slides.forEach((s,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Go to slide '+(i+1));b.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));dotsWrap.appendChild(b);});
+const dots=Array.from(dotsWrap.children);
+const dotObserver=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const i=slides.indexOf(e.target);dots.forEach((d,j)=>d.classList.toggle('active',j===i));}});},{threshold:0.5});
+slides.forEach(s=>dotObserver.observe(s));
+function currentIndex(){const mid=window.innerHeight/2;let idx=0,best=Infinity;slides.forEach((s,i)=>{const r=s.getBoundingClientRect();const d=Math.abs((r.top+r.bottom)/2-mid);if(d<best){best=d;idx=i;}});return idx;}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' '].includes(e.key)){e.preventDefault();slides[Math.min(slides.length-1,currentIndex()+1)].scrollIntoView({behavior:'smooth'});}
+  if(['ArrowLeft','ArrowUp'].includes(e.key)){e.preventDefault();slides[Math.max(0,currentIndex()-1)].scrollIntoView({behavior:'smooth'});}
+});
+</script>
+</body>
+</html>

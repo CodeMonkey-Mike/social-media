@@ -1,0 +1,4 @@
+Validation works the same way and look how little code the redraft loop is.
+Add conditional edges, right here, the lint node runs, a router function reads the result
+and the mapping says pass, moves forward, fail, routes back to the drafting node for
+another round.

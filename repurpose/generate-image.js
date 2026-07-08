@@ -14,9 +14,18 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
-// Default: fresh chat per run (x-tweets). Override with --chat-url for
-// persistent chats (e.g. the dedicated YouTube images chat).
-const DEFAULT_CHAT_URL = 'https://chatgpt.com/';
+// HARD RULE: image generation ALWAYS reuses the designated PERSISTENT chat per content type.
+// Never a fresh chatgpt.com/ chat (that litters the user's sidebar with orphan chats they must
+// hand-delete). The chat is auto-selected by --prefix; --chat-url only overrides to another
+// persistent /c/<id> chat. (Prefer gen-batch.js for any batch of 2+ images.)
+const PERSISTENT_CHATS = {
+  'x-tweets':    'https://chatgpt.com/c/69fe9134-a5a8-83ea-995a-6912aa4d2a24',
+  'ig-single':   'https://chatgpt.com/c/69fe9134-a5a8-83ea-995a-6912aa4d2a24',
+  // ⚠ RETIRED 2026-06-05 (overloaded — stopped rendering images). On the NEXT YT gen, launch a NEW
+  // chat, record its /c/<id> URL here (and in gen-batch.js + repurpose/SKILL.md), reuse it thereafter.
+  'yt-posts':    'https://chatgpt.com/c/69ffc14c-3994-83ea-8f79-48845459ecfa',
+  'ig-carousel': 'https://chatgpt.com/c/69ffc14c-3994-83ea-8f79-48845459ecfa',
+};
 const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\chatgpt-profile';
 const IMAGES_DIR = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images';
 
@@ -74,13 +83,20 @@ function parseArgs() {
     prompt: args.prompt,
     prefix,
     subdir: args.subdir || '',
-    chatUrl: args['chat-url'] || DEFAULT_CHAT_URL,
+    chatUrl: args['chat-url'] || PERSISTENT_CHATS[prefix] || null,
     referenceImage: args['reference-image'] || null,
   };
 }
 
 async function main() {
   const { imageId, slug, prompt, prefix, subdir, chatUrl, referenceImage } = parseArgs();
+
+  // HARD RULE guard: never run against a fresh chat. Must be a persistent /c/<id> chat.
+  if (!chatUrl || /chatgpt\.com\/?$/.test(chatUrl)) {
+    console.error(`Refusing to run: no persistent chat for prefix "${prefix}". Pass --chat-url=<persistent /c/ chat>; never a fresh chatgpt.com/ chat.`);
+    console.error('For any batch of 2+ images use repurpose/gen-batch.js (one persistent chat for the whole list).');
+    process.exit(1);
+  }
 
   // Derive platform subfolder from prefix unless --subdir is explicit
   const platformSubdir = subdir || (prefix === 'x-tweets' ? 'x' : prefix === 'yt-posts' ? 'yt' : prefix === 'ig-carousel' ? 'ig' : '');
@@ -123,12 +139,6 @@ async function main() {
     console.log(`Navigating to chat: ${chatUrl}`);
     await page.goto(chatUrl);
     await page.waitForLoadState('domcontentloaded');
-
-    // If we wanted a fresh chat but got redirected to an existing one, navigate away.
-    if (chatUrl === DEFAULT_CHAT_URL && page.url().includes('/c/')) {
-      await page.goto('https://chatgpt.com/');
-      await page.waitForLoadState('domcontentloaded');
-    }
 
     const composer = page.locator(SEL.composer).first();
     try {

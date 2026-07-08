@@ -34,16 +34,35 @@ since it may be freshly generated and not yet queued. Because active batches are
 this age threshold protects their art without any batch-id check. Queues scanned:
 `x-tweets`, `x-threads`, `x-polls`, `ig-single-image`, `ig-carousel`, `yt-posts`, `yt-text-polls`.
 
-Also recycles **top-level run logs** (`*.log` directly in `schedule-tweets/`, e.g.
-`post-step*` / `workflow-step*`) once they're **≥24h old** — the current posting session is
-preserved, and the Chrome bot-profile LevelDB logs deeper in the tree are never touched.
+**Staged video folders (`longform/<batch>/` and `shorts/<batch>/`) are cleaned WHOLE-FOLDER by
+batch status**, not file-by-file. Each immediate subfolder is one batch's staged deliverables;
+the folder name is matched to a batch id in `batches.json` (a trailing `-YYYY-MM-DD` is stripped
+first, e.g. `best-coin-to-buy-2026-06-17` → `best-coin-to-buy`):
+- **completed/archived batch** → the entire `<batch>/` folder is recycled, *including leftover
+  cover thumbnails*. This is deliberate: a posted short's `*-thumb.jpg` is a recent orphan that
+  the per-file orphan-by-age rule would otherwise keep, stranding the whole folder. An inactive
+  batch's folder always goes, frame or no frame.
+- **active batch** → the folder is **kept**; only its individually-posted files are cleaned
+  (per-platform status in `shorts.json`/`longs.json` — a staged file counts as posted only when
+  every platform is terminal), so in-flight work is preserved.
+- **folder matching no batch** → falls back to the per-file reference-counted + orphan-by-age
+  rule (can't classify the folder, so it's never nuked wholesale). `metadata.json` directly
+  under `longform/` or `shorts/` is the live staging manifest and is always kept.
+
+Also recycles **loose top-level artifacts** in `schedule-tweets/` once **≥24h old** (the current
+posting session is preserved, and the Chrome bot-profile LevelDB logs deeper in the tree are
+never touched):
+- **run logs** (`*.log`, e.g. `post-step*` / `workflow-step*`).
+- **debug screenshots** (`*.png` / `*.jpg` at the root, e.g. `diag-poll-*`, `debug-after-*`,
+  `dashboard_check*`, `replies_tab_*`) — the Playwright posting/diagnostic scripts dump these at
+  the repo root; they are throwaway captures, never queue assets (those live under `images/`).
 
 ### `video-creation` — hybrid
 | Tier | Paths | Rule |
 |---|---|---|
 | **Never touch** | `assets/{sfx,music,fonts,transitions}/`, `assets/logo-*.png`, every `*-progress.json` | protected |
 | **Always sweep** | any `_bad-*/` reject folder | recycled regardless of age |
-| **Registry-driven** | `assets/projects/<batch>/`, `remotion/out/`, `livestream-repurpose/{media,transcripts}`, `shorts/<batch>/`, `longform-{presentation,edited}/media/<project>/` | keep only what belongs to an **active** batch (per `batches.json`); recycle the rest. For `assets/projects/<batch>/` the folder name is matched to a batch id — a folder matching no batch falls back to age-based. |
+| **Registry-driven** | `assets/projects/<batch>/`, `remotion/out/`, `livestream-repurpose/{media,transcripts}`, `shorts/<batch>/`, `longform-{presentation,edited}/media/<project>/`, `vertical-ai-persona/media/<project>/`, `vertical-ai-persona/Yuli y Ana/media/<project>/` | keep only what belongs to an **active** batch (per `batches.json`); recycle the rest. For `assets/projects/<batch>/` the folder name is matched to a batch id — a folder matching no batch falls back to age-based. |
 | **Age-based** | legacy loose assets in the `assets/` root + non-`projects/` subdirs (old b-roll PNGs, `*-clip.mp4`, overlays) | recycled if older than `--age-days` |
 
 The registry-driven tier reads `../batches.json`:
@@ -51,7 +70,20 @@ The registry-driven tier reads `../batches.json`:
 - **`remotion/out/`** — keep the render `directories` of `status: "active"` batches; recycle every other batch folder and all loose files. (Disposable scratch: posted shorts live in the `schedule-tweets/` queue and every comp is in git.)
 - **`livestream-repurpose/`** — `media/` files (flat) and `transcripts/<livestream>/` folders (one per livestream) are matched to a batch by `livestream_title`; active batch → keep, archived → recycle, no match → left alone. (Source recordings are on YouTube; transcripts are regenerable.)
 - **`shorts/<batch>/`** — each immediate subfolder is matched to a batch by its `directories`. The **whole project folder** is recycled for a completed/archived batch and kept for an active one. A folder tied to no batch (e.g. `_tooling`, or a not-yet-registered project) is left in place — only its **gitignored** per-clip artifacts (`preview.mp4`, `whisper-words.json`, `captions.ts.draft`) are swept; tracked source (`index.html`, `preview.json`, `gen_captions.py`, `whisper.json`, …) is never touched.
-- **`longform-presentation/media/<project>/` and `longform-edited/media/<project>/`** — each project subfolder (master `.mkv`, EDIT/FINAL renders, intermediates, deck, transcript, thumbnail) is matched to a batch by `source_media`. The **whole folder** is recycled for a completed/archived batch, kept for an active one, and left alone if it matches no batch. Only `media/<project>/` subfolders are eligible — the track's skill doc and scripts are never touched.
+- **`longform-presentation/media/<project>/`, `longform-edited/media/<project>/`, and `vertical-ai-persona/media/<project>/`** — each project subfolder (master `.mkv`, EDIT/FINAL renders, intermediates, deck, transcript, thumbnail) is matched to a batch by `source_media`. The **whole folder** is recycled for a completed/archived batch, kept for an active one, and left alone if it matches no batch. Only `media/<project>/` subfolders are eligible — the track's skill doc and scripts are never touched. (These all share one `classifyMediaProjects` helper in `targets/video-creation.js`.)
+- **`vertical-ai-persona/Yuli y Ana/media/<project>/`** — the Yuli y Ana persona is a **separate channel NOT tracked in `batches.json`**, so every folder here matches no batch and is **always left alone**. These concept folders are a reusable library; the cleaner never auto-recycles them. Remove one only on an explicit, per-folder instruction (and consider registering it as a batch if it should be lifecycle-managed).
+
+## Empty-folder pruning (all targets)
+
+After the planned files are recycled, the engine prunes any directory left **empty** (no files
+anywhere in its subtree) under each target's managed roots, so a cleaned-out `<batch>/` folder
+never lingers as an empty shell. It's computed against the planned recycle set, so `--dry-run`
+lists the folders that *would* be left empty and the live run removes them in the same single
+move. The managed roots are declared per target (`pruneRoots`): `longform/` and `shorts/` for
+schedule-tweets; `assets/`, `shorts/`, `remotion/out/`, `livestream-repurpose/{media,transcripts}`,
+and `longform-{presentation,edited}/media/` for video-creation. Protected libraries
+(`assets/{sfx,music,fonts,transitions}/`) are never pruned even if momentarily empty, and the
+root folders themselves are kept — only their empty contents are removed.
 
 ## How to run
 

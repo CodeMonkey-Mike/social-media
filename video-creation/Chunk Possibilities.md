@@ -39,7 +39,7 @@ The real win: if Mike's clearest *explanation* of a topic is at minute 8 but his
 1. A chunking script — splits the Whisper JSON by time window (configurable chunk size, e.g. 3 min)
 2. Per-chunk topic extraction — Claude analyzes each chunk and returns a topic tag list
 3. Topic merge pass — deduplicates and groups chunks that share the same tag
-4. Updated Phase 1 output — instead of "here are 5 topics," output "here are 5 topics, topic X appears in 3 segments"
+4. Updated Phase 2 (topic-finding) output — instead of "here are 5 topics," output "here are 5 topics, topic X appears in 3 segments"
 5. Updated clip-cutting guidance — multi-segment cuts using the existing re-encode pipeline in `create-short` SKILL.md
 
 ## Status

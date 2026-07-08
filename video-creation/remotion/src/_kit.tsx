@@ -67,11 +67,20 @@ export const CaptionLayer: React.FC<{ captions: Caption[]; fps: number }> = ({ c
 
 // ─── B-roll layer (over the video base) ─────────────────────────────────────────
 export const BrollLayer: React.FC<{ broll: BrollEv[]; t: number }> = ({ broll, t }) => {
-  const ev = broll.find(e => t >= e.tIn && t < e.tOut);
-  if (!ev) return null;
-  const op = ev.tIn <= 0.001
-    ? interpolate(t, [ev.tOut - 0.12, ev.tOut], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
-    : fadeInOut(t, ev.tIn, ev.tOut, 0.12);
+  const idx = broll.findIndex(e => t >= e.tIn && t < e.tOut);
+  if (idx < 0) return null;
+  const ev = broll[idx];
+  // Adjacency: if a different b-roll ends right at our tIn (prev) or starts right at our tOut
+  // (next), HARD-CUT at that edge instead of fading. Otherwise the base video flashes for ~0.2s
+  // between two back-to-back full-screen images (a real, repeatedly-hit bug). Isolated b-roll
+  // still fades to/from the base as before. (SKILL.md production rule.)
+  const F = 0.12, EPS = 0.18;
+  const prevAdj = broll.some((o, i) => i !== idx && Math.abs(o.tOut - ev.tIn) <= EPS);
+  const nextAdj = broll.some((o, i) => i !== idx && Math.abs(o.tIn - ev.tOut) <= EPS);
+  const atStart = ev.tIn <= 0.001;
+  let op = 1;
+  if (!prevAdj && !atStart) op = Math.min(op, interpolate(t, [ev.tIn, ev.tIn + F], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }));
+  if (!nextAdj) op = Math.min(op, interpolate(t, [ev.tOut - F, ev.tOut], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }));
   const age = t - ev.tIn;
   const kb = interpolate(age, [0, ev.tOut - ev.tIn], [1.0, 1.07], { extrapolateRight: 'clamp' });
 

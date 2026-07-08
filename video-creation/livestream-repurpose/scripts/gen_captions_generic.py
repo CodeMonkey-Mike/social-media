@@ -1,4 +1,6 @@
 """
+SUPERSEDED -> use `video-creation/skills/captions/build_captions.py` (canonical caption skill, captions/captions.md).
+The --teal/--yellow/--green/--red colour lists map to the montserrat preset's `--colorize g=/y=/gr=/r=`.
 Generate caption groups from a Whisper JSON file.
 Usage: python gen_captions_generic.py <json_path> [--teal w1,w2,...] [--yellow w1,w2,...] [--green w1,w2,...]
 """

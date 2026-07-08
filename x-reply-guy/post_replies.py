@@ -214,14 +214,58 @@ def main():
 
     for i, r in enumerate(replies):
         author = r.get("author", "?")
-        if r.get("gif_search"):
+        if r.get("image_path") or r.get("image_prompt"):
+            ready = "ready" if (r.get("image_path") or "").strip() else "NOT GENERATED - left in queue"
+            print(f"\n[{i+1}/{len(replies)}] -> {author}  [IMAGE: {r.get('image_style', '?')} | {ready}]")
+            if (r.get("reply_text") or "").strip():
+                print(f"  {r['reply_text'][:120]}")
+        elif r.get("gif_search"):
             print(f"\n[{i+1}/{len(replies)}] -> {author}  [GIF: {r['gif_search']}]")
         else:
             print(f"\n[{i+1}/{len(replies)}] -> {author}")
             print(f"  {r.get('reply_text', '')[:120]}")
         if dry_run:
             print("  [DRY RUN]")
+
     if dry_run:
+        # Text/emoji need no browser to preview. GIF and image entries are
+        # fragile (picker selectors / media upload), so honor the "always
+        # dry-run first" safety net: open the browser, attach + screenshot
+        # each GIF/image, never post.
+        gif_entries   = [r for r in replies if r.get("gif_search")]
+        image_entries = [r for r in replies if (r.get("image_path") or "").strip()]
+        ungenerated   = [r for r in replies
+                         if (r.get("image_prompt") or "").strip() and not (r.get("image_path") or "").strip()]
+        if ungenerated:
+            print(f"\n[DRY RUN] {len(ungenerated)} image repl(y/ies) have no image yet — "
+                  f"run `node generate_reply_images.js` first.")
+        if not gif_entries and not image_entries:
+            print("\n[DRY RUN] nothing to attach — nothing posted.")
+            return
+        print(f"\n[DRY RUN] launching browser to attach {len(gif_entries)} GIF(s) + "
+              f"{len(image_entries)} image(s) for verification (will NOT post). "
+              f"Review tmp-gif-debug/ and tmp-image-debug/ screenshots.")
+        from post_gif_reply import post_gif_reply as _post_gif
+        from post_image_reply import post_image_reply as _post_image
+        with sync_playwright() as pw:
+            ctx = pw.chromium.launch_persistent_context(
+                user_data_dir=CHROME_PROFILE,
+                channel="chrome",
+                headless=False,
+                slow_mo=50,
+                args=["--disable-blink-features=AutomationControlled"],
+                ignore_default_args=["--enable-automation"],
+            )
+            page = ctx.pages[0] if ctx.pages else ctx.new_page()
+            for r in gif_entries:
+                print(f"\n--- DRY RUN GIF: {r.get('author','?')} '{r['gif_search']}' ---")
+                _post_gif(page, r, dry_run=True)
+            for r in image_entries:
+                print(f"\n--- DRY RUN IMAGE: {r.get('author','?')} [{r.get('image_style','?')}] ---")
+                _post_image(page, r, dry_run=True)
+            print("\nBrowser closing in 20s — review tmp-gif-debug/ + tmp-image-debug/ screenshots.")
+            time.sleep(20)
+            ctx.close()
         return
 
     # Start jitter
@@ -245,15 +289,36 @@ def main():
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
 
         for i, r in enumerate(replies):
-            author     = r.get("author", "?")
-            tweet_url  = r["tweet_url"]
-            gif_search = r.get("gif_search", "").strip()
-            reply_text = r.get("reply_text", "").strip()
-            is_gif     = bool(gif_search)
+            author       = r.get("author", "?")
+            tweet_url    = r["tweet_url"]
+            gif_search   = (r.get("gif_search") or "").strip()
+            reply_text   = (r.get("reply_text") or "").strip()
+            image_path   = (r.get("image_path") or "").strip()
+            image_prompt = (r.get("image_prompt") or "").strip()
+            is_image     = bool(image_path or image_prompt)
+            is_gif       = bool(gif_search) and not is_image
 
-            print(f"\n--- [{i+1}/{len(replies)}] {author} {'[GIF]' if is_gif else ''} ---")
+            kind = '[IMAGE]' if is_image else '[GIF]' if is_gif else ''
+            print(f"\n--- [{i+1}/{len(replies)}] {author} {kind} ---")
 
-            if is_gif:
+            if is_image and not image_path:
+                # Not ready — never attempted, so it STAYS in the queue (the
+                # remove-after-processing rule only applies to attempts).
+                print("  Image not generated yet — run `node generate_reply_images.js` first. LEFT IN QUEUE.")
+                r["result"] = "skipped_ungenerated"
+                continue
+
+            if is_image:
+                from post_image_reply import post_image_reply as _post_image
+                result = _post_image(page, r, dry_run=False)
+                if result in ("posted", "uncertain"):
+                    r["posted_at"] = datetime.now().isoformat()
+                    r["result"] = "posted_image" if result == "posted" else "uncertain_image"
+                    print(f"  {'POSTED IMAGE' if result == 'posted' else 'UNCERTAIN IMAGE — check tweet manually'}")
+                else:
+                    r["result"] = "failed"
+                    print("  FAILED IMAGE")
+            elif is_gif:
                 from post_gif_reply import post_gif_reply as _post_gif
                 result = _post_gif(page, r, dry_run=False)
                 if result in ("posted", "uncertain"):
@@ -304,17 +369,23 @@ def main():
         time.sleep(30)
         ctx.close()
 
-    posted_count    = sum(1 for r in replies if r.get("result") in ("posted", "posted_gif", "already_posted"))
-    uncertain_count = sum(1 for r in replies if r.get("result") == "uncertain_gif")
+    posted_count    = sum(1 for r in replies if r.get("result") in ("posted", "posted_gif", "posted_image", "already_posted"))
+    uncertain_count = sum(1 for r in replies if r.get("result") in ("uncertain_gif", "uncertain_image"))
     failed_count    = sum(1 for r in replies if r.get("result") == "failed")
+    skipped_count   = sum(1 for r in replies if r.get("result") == "skipped_ungenerated")
 
     # Remove successfully posted entries from reply_opportunities.json
-    remove_posted_opportunities([r for r in replies if r.get("result") in ("posted", "posted_gif", "uncertain_gif", "already_posted")])
+    remove_posted_opportunities([r for r in replies if r.get("result") in
+                                 ("posted", "posted_gif", "posted_image",
+                                  "uncertain_gif", "uncertain_image", "already_posted")])
 
     summary = f"\nDone. {posted_count} posted"
     if uncertain_count:
-        summary += f", {uncertain_count} uncertain GIF (likely posted — verify manually)"
+        summary += f", {uncertain_count} uncertain GIF/image (likely posted — verify manually)"
     summary += f", {failed_count} failed (archived, NOT requeued — see posted_replies.json)."
+    if skipped_count:
+        summary += (f"\n{skipped_count} image repl(y/ies) left in queue awaiting generation — "
+                    f"run `node generate_reply_images.js`.")
     print(summary)
 
 
