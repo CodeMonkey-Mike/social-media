@@ -182,13 +182,22 @@ render-assets/
 ## 11. Render command (bitrate is the ONLY draft knob — `longform-edited.md`)
 ```bash
 cd video-creation/remotion
+# Outputs go INTO the project's own media folder, NEVER the shared remotion/out/ scratch (§10).
+# OUT is a sibling of render-assets/; mkdir -p it first. <track> = longform-edited | ai-engineering | ...
+OUT="../<track>/media/<project>/_previews"; mkdir -p "$OUT"
 # DRAFT (fast, light proxy — FULL feature set, low bitrate):
-npx remotion render src/index.ts <CompId> "<out>.mp4" \
+npx remotion render src/index.ts <CompId> "$OUT/<project>-draft-vN.mp4" \
   --video-bitrate=200k \
-  --public-dir "../longform-edited/media/<project>/render-assets"
+  --public-dir "../<track>/media/<project>/render-assets" \
+  --log=verbose 2>&1 | tee "$OUT/<project>-draft-render.log"
 # FINAL (quality):  swap --video-bitrate=200k for  --crf=18   (the two are mutually exclusive)
-# Slice for QA chunks:  add  --frames=A-B
+# Slice for QA chunks:  add  --frames=A-B   (the chunk mp4 + its extracted QA frames also land under $OUT — see video-qa.md STEP 0)
 ```
+- **⛔ OUTPUT LOCATION IS MECHANICAL: the render mp4, any preflight still, AND the render log ALL go to
+  `media/<project>/_previews/` (§10) — NEVER the bare `remotion/out/`.** `remotion/out/` is shared, cleanup-swept
+  scratch: anything left there is an orphan with no project home (this is exactly how `_nlg_preflight.png` /
+  `_nlg_draft_render.log` / `_qa_*.png` leaked and had to be recycled by hand, 2026-07-06). Always write outputs
+  INTO the project's `_previews/` with the project prefix, so they travel with the folder and get recycled with the batch.
 - `--video-bitrate=200k` = 0.2 Mbps draft (300k=0.3 was the old default; 200k is fine for a faster look-see).
   `--video-bitrate` and `--crf` are mutually exclusive — pick one.
 - Omitting `--public-dir` → assets don't resolve. Concurrency 8 (`remotion.config.ts`); Windows = CPU h264 encode
