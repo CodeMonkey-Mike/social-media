@@ -29,6 +29,47 @@ function walkFiles(dir, { skipDirs = new Set(), onDir = null } = {}) {
   return out;
 }
 
+// Find directories that will be left empty (no files anywhere in their subtree) under
+// `roots`, so a recycle pass that removed a folder's files doesn't strand the now-empty
+// folder. `removed` (lowercased abs paths) is the set of files/dirs already slated for
+// recycling — they're treated as gone, so this can run BEFORE the move and predict which
+// folders will be left empty (dry-run reporting + a single combined move). Returns the
+// TOP-MOST empty dirs (a recursively-empty parent is returned, not its empty children), so
+// recycling each one cleans its whole subtree. The roots themselves are never returned (we
+// prune their contents, not the managed base dirs). `skipDirs` (lowercased abs paths) are
+// treated as non-empty so neither they nor their ancestors are pruned.
+function findEmptyDirs(roots, { skipDirs = new Set(), removed = new Set() } = {}) {
+  const result = [];
+  // Returns count of surviving files in dir's subtree (Infinity if it holds a protected skipDir).
+  const visit = (dir, isRoot) => {
+    if (!fs.existsSync(dir)) return 0;
+    const dl = dir.toLowerCase();
+    if (skipDirs.has(dl)) return Infinity;
+    if (removed.has(dl)) return 0; // whole dir already slated for recycling
+    let files = 0;
+    const emptyChildren = [];
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      const fl = full.toLowerCase();
+      if (entry.isDirectory()) {
+        const sub = visit(full, false);
+        // A child that survives empty is a prune candidate — unless it's already in `removed`
+        // (its parent recycle entry covers it, so don't list it twice).
+        if (sub === 0 && !removed.has(fl)) emptyChildren.push(full);
+        files += sub;
+      } else if (entry.isFile()) {
+        if (!removed.has(fl)) files += 1;
+      }
+    }
+    // A surviving non-empty dir (or a root) is the boundary: its empty children are top-most
+    // empties. A recursively-empty non-root returns 0 and is emitted by its parent instead.
+    if (files > 0 || isRoot) result.push(...emptyChildren);
+    return files;
+  };
+  for (const r of roots) visit(r, true);
+  return result;
+}
+
 function ageDays(p) {
   try {
     return (Date.now() - fs.statSync(p).mtimeMs) / DAY_MS;
@@ -83,4 +124,4 @@ function recyclePaths(paths) {
   return res.status === 0;
 }
 
-module.exports = { DAY_MS, walkFiles, ageDays, sizeOf, fmtBytes, recyclePaths };
+module.exports = { DAY_MS, walkFiles, findEmptyDirs, ageDays, sizeOf, fmtBytes, recyclePaths };

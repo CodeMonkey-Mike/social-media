@@ -1,4 +1,6 @@
-"""Group Whisper word timings into 2-3 word caption chunks for a Remotion CAPTIONS array.
+"""SUPERSEDED -> use `video-creation/skills/captions/build_captions.py --style montserrat` (canonical caption
+skill, captions/captions.md). This is the original shorts builder, kept for reference.
+Group Whisper word timings into 2-3 word caption chunks for a Remotion CAPTIONS array.
 Usage: python _tooling/_build_captions.py <batch>/<clip-folder>   (e.g. meme-coins/keycat-vs-doginme)
 Reads <folder>/whisper-words.json, cleans fillers/mishears, prints a TS-ready array.
 Captions don't have to be 1:1 with audio — fillers and stutters are dropped for readability.
@@ -17,6 +19,7 @@ def clean_token(w):
     t = re.sub(r"\bkas+per\b", "kaspa", t)
     t = re.sub(r"\bcaspa\b", "kaspa", t)
     t = re.sub(r"\bsailor\b", "saylor", t)
+    t = re.sub(r"\btau\b", "tao", t)  # Mike says "tau" for $TAO; ticker is always TAO, never "tau"
     return t
 
 def core(w):

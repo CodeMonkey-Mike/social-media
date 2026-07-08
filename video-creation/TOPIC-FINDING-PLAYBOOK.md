@@ -142,6 +142,11 @@ shows up on Fox *and* CNBC *and* Bloomberg).
 - SEC officials
 - Trump / Sen. Lummis (and other crypto-vocal politicians)
 
+### The Lane 2 dashboard tab
+
+The Topic Radar dashboard's **News Clips** tab automates this lane — see **"The Topic Radar
+dashboard"** section at the bottom of this playbook.
+
 ### The Lane 2 search move
 
 For each channel's YouTube/X, search **channel + a crypto keyword**, OR search **a name from the people
@@ -181,6 +186,11 @@ The peer video is the hook; your thesis is the payoff.
 *(Add more as you spot channels with a consistent daily topic hit-rate. The bar: would their last 5
 uploads each have made a strong topic for you?)*
 
+### The watchlist dashboard
+
+The Topic Radar dashboard's **Creator Watch List** tab automates this lane — see **"The Topic Radar
+dashboard"** section at the bottom of this playbook.
+
 ### The Lane 3 search move
 
 Each morning, skim the latest uploads from the watchlist. For any that clears the topic-selection filter
@@ -190,6 +200,48 @@ source behind it.
 
 ---
 
-*Idea for later: a recurring automated "topic radar" that scans Kaspa/crypto for named-entity claims,
-filing mentions, and "did X endorse Kaspa" rumors and drops 3-5 candidates each morning. Ask Claude
-to set it up when you're ready.*
+## The Topic Radar dashboard (the tool that runs this playbook)
+
+**Open:** `video-creation/topic-radar/dashboard.html` — fully static, no server, just open the file.
+Everything below lives in `video-creation/topic-radar/`.
+
+### The 4 tabs and where each gets its data
+
+| Tab | Lane | Source | Config |
+|---|---|---|---|
+| Creator Watch List | Lane 3 | YouTube RSS per creator (precise dates + views) | `creators.json` |
+| News Clips | Lane 2 | yt-dlp pages ~400 uploads per outlet channel, titles filtered by crypto keywords | `outlets.json` + `CRYPTO_RE` regex in `build-dashboard.js` |
+| Crypto Sites | article radar | Site RSS feeds | `sites.json` |
+| Policy Radar | regulation | Polymarket search API (odds cards) + cached X posts from policy reporters | `polymarket.json`, `x-accounts.json` |
+
+Adding a source = add one entry to the matching json, rebuild. Yellow **"🎬 Video idea"** cards under
+stories come from `video-ideas.json` (news entries match by videoId, article entries by link URL);
+they survive rebuilds, so curation is never lost. Title register for ideas: watchlist style — one or
+two CAPS power words, an active verb with teeth, a parenthetical second hook, **no em dashes**.
+
+### Refresh procedure (when Mike says "refresh the dashboard / tabs")
+
+1. *(Optional, only if Chrome is free — NEVER while any posting script runs; uses the shared
+   xbot-profile)* `python video-creation/topic-radar/fetch-x-policy.py` → recaches X policy posts.
+2. `node video-creation/topic-radar/build-dashboard.js` (~2-3 min; `--days N` to widen the window).
+   Polymarket odds refresh automatically on every build.
+3. **Curation pass** (the human-value step, do not skip): read the new News Clips + Crypto Sites
+   items, pick stories that clear the topic-selection filter above, cross-reference against the
+   Creator Watch List tab (peer coverage = validation; zero coverage on a big contested story =
+   first-mover window), then update `video-ideas.json`: prune idea blocks whose stories aged out,
+   add new blocks with 4-5 hype-register titles each. Rebuild once more to render them.
+
+### Known limits (so nobody "fixes" the wrong thing)
+
+- YouTube RSS caps at 15 videos/channel → ultra-prolific creators (Wendy, Heresy) may be undercounted.
+- Site RSS feeds cap at ~20-40 items → the Crypto Sites tab really reaches back only ~1.5-3.5 days,
+  not the full window. Fast-moving legislative drama can roll out of feeds before a build catches it
+  — that's exactly what the Policy Radar tab (X reporters + Polymarket odds) is for.
+- News Clips: YouTube sometimes omits upload dates from channel listings; the builder resolves missing
+  dates per-video automatically (that's why the news pull is the slow part).
+- Yahoo Finance often shows 0 crypto clips — usually genuine, verify before assuming breakage.
+- Blockworks (RSS frozen Jan 2026, pivoted to research) and DL News (shut down May 2026) were removed
+  from `sites.json` on 2026-07-05 — don't re-add without checking they publish again.
+
+*Idea for later: cron the refresh (schedule-tweets-style) so the dashboard is already fresh each
+morning, and auto-drop 3-5 filter-passing candidates into a daily note. Ask Claude when ready.*

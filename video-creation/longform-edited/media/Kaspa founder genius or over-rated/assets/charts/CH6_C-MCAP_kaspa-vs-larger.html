@@ -1,0 +1,36 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<title>C-MCAP — Kaspa vs larger networks</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--card:#12151c;--border:#1e2330;--green:#00e68a;--cyan:#00c2ff;--gold:#ffd700;--red:#ff4060;--teal:#49e0c8;--tp:#e8eaf0;--ts:#8892a4;--tm:#505a6e}
+*{margin:0;box-sizing:border-box}
+body{width:1280px;height:720px;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--tp);padding:64px 80px;position:relative;overflow:hidden}
+.orb{position:absolute;width:520px;height:520px;border-radius:50%;filter:blur(120px);opacity:.16;background:var(--red);bottom:-160px;left:-120px}
+.ey{font-size:.8rem;text-transform:uppercase;letter-spacing:.2em;color:var(--tm);font-weight:600}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:2.6rem;line-height:1.1;margin:14px 0 4px}
+.sub{color:var(--ts);font-size:1rem;margin-bottom:40px}
+.rows{display:flex;flex-direction:column;gap:22px;position:relative;z-index:2}
+.row{display:flex;align-items:center;gap:20px}
+.name{width:130px;font-weight:700;font-size:1.05rem;text-align:right}
+.track{flex:1;height:38px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;position:relative}
+.fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#3a4252,#23272f)}
+.row.kas .name{color:var(--teal)}
+.row.kas .fill{background:linear-gradient(90deg,var(--teal),rgba(73,224,200,.3));box-shadow:0 0 18px rgba(73,224,200,.5)}
+.val{font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--ts);margin-left:14px;white-space:nowrap}
+.row.kas .val{color:var(--teal)}
+.callout{position:absolute;left:3%;top:50%;transform:translateY(-50%);white-space:nowrap;color:var(--teal);font-size:.9rem;font-weight:600}
+.foot{position:absolute;bottom:30px;left:80px;color:var(--tm);font-size:.78rem;font-family:'JetBrains Mono',monospace}
+</style></head>
+<body>
+<div class="orb"></div>
+<div class="ey">Market cap, size context (magnitude, not merit)</div>
+<h1>The research is ahead. The <span style="color:var(--teal)">chain</span> is still small.</h1>
+<div class="sub">The skeptic's strongest point: if the tech is this far ahead, why is the market not pricing it?</div>
+<div class="rows">
+  <div class="row"><div class="name">Ethereum</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="val">~$195B</div></div>
+  <div class="row"><div class="name">XRP</div><div class="track"><div class="fill" style="width:71.8%"></div></div><div class="val">~$140B</div></div>
+  <div class="row"><div class="name">Solana</div><div class="track"><div class="fill" style="width:46.2%"></div></div><div class="val">~$90B</div></div>
+  <div class="row kas"><div class="name">Kaspa</div><div class="track"><div class="fill" style="width:0.9%"></div><div class="callout">a fraction of the size</div></div><div class="val">~$0.8B</div></div>
+</div>
+<div class="foot">[VERIFY] approximate snapshot 2026-06-29 (CoinGecko / CoinMarketCap) — re-pull at render; caps drift hard</div>
+</body></html>

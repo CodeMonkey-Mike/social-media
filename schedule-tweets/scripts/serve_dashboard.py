@@ -1,5 +1,6 @@
 import http.server
 import json
+import mimetypes
 import os
 import socketserver
 
@@ -17,8 +18,9 @@ class CORSHandler(http.server.SimpleHTTPRequestHandler):
             if os.path.isfile(full):
                 with open(full, "rb") as f:
                     data = f.read()
+                ctype = mimetypes.guess_type(full)[0] or "application/json"
                 self.send_response(200)
-                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Type", ctype)
                 self.send_header("Content-Length", str(len(data)))
                 self.send_header("Access-Control-Allow-Origin", "*")
                 self.end_headers()
@@ -44,7 +46,11 @@ class CORSHandler(http.server.SimpleHTTPRequestHandler):
                     queue = json.load(f)
             except Exception:
                 queue = []
-            item = {k: entry[k] for k in ("author", "tweet_url", "reply_text") if k in entry}
+            # One queue for all reply types. Carry through gif_search (GIF
+            # reactions) and image_* (image replies) so they survive queuing —
+            # all types post via the same post_replies.py.
+            item = {k: entry[k] for k in ("author", "tweet_url", "reply_text", "gif_search",
+                                          "image_style", "image_prompt", "image_path") if k in entry}
             if entry.get("reaction_only"):
                 item["reaction_only"] = True
             queue.append(item)

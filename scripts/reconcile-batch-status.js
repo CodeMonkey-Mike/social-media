@@ -26,6 +26,11 @@
  * NOTE: the queue is treated as the publish manifest. Clips rendered but never staged to
  * shorts.json are invisible here — stage them, or the batch may complete without them.
  *
+ * MANUAL OVERRIDE: a batch that never flows through the queues (e.g. a longform uploaded by
+ * hand, never staged to longs.json) can't be derived and would stay `active` forever. Set
+ * `manual_status` ("completed"|"active") on that batch and this script honors it verbatim,
+ * skipping derivation — so reconcile never reverts the hand-set value.
+ *
  * Usage:
  *   node scripts/reconcile-batch-status.js [--dry-run]
  *   --dry-run : print the table + the flips it WOULD make, write nothing.
@@ -59,6 +64,27 @@ function main() {
     const lo = longs.filter((l) => l.batch === b.batch);
     const shPending = sh.filter((s) => !itemPosted(s)).length;
     const loPending = lo.filter((l) => !itemPosted(l)).length;
+
+    // Manual override. Some batches never flow through the queues (e.g. a longform
+    // published by hand, never staged to longs.json) so completion can't be derived
+    // from the publish manifest — derivation would peg them `active` forever. A human
+    // sets `manual_status` ("completed"|"active") and the reconciler honors it verbatim,
+    // so a later run never reverts the hand-set value.
+    if (b.manual_status) {
+      rows.push({
+        batch: b.batch,
+        shorts: `${sh.length - shPending}/${sh.length}`,
+        longs: `${lo.length - loPending}/${lo.length}`,
+        repurpose: (b.pipelines && b.pipelines.repurpose) || '-',
+        from: b.status,
+        to: b.manual_status,
+        why: 'manual_status (locked)',
+      });
+      if (b.status !== b.manual_status) flips.push({ batch: b.batch, from: b.status, to: b.manual_status });
+      b.status = b.manual_status;
+      continue;
+    }
+
     const hasItems = sh.length + lo.length > 0;
     const repurposePending = !!(b.pipelines && b.pipelines.repurpose === 'pending');
 

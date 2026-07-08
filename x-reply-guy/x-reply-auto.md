@@ -48,11 +48,12 @@ python auto_reply_scan.py
 1. Read `data/auto_reply_candidates.json`.
 2. **If empty → STOP. Report "nothing reply-worthy in the last hour — skipping" and end.**
 3. **Pick the most recent _reply-worthy_ tweet.** Because the Following tab is on **Popular** sort (see "Feed sort" above), the top tweets are already high-engagement — so replying to them maximizes visibility. From the pool, **skip junk first** (genuine spam/scam the blocklist missed; overtly partisan flamebait that doesn't fit a crypto/macro account), then take the **most recent** of what remains so the reply lands while the tweet is still fresh. Big crypto/news accounts and alert bots (Cointelegraph, Watcher.Guru, etc.) are *good* targets, not noise — their audience sees and retweets the reply. Apply persona special-cases (e.g. `$TURBO`: reply in-tribe, no KAS pivot, no #kaspa tag — `../persona/persona.json` → `stacking_lineup`). If nothing in the pool is reply-worthy, no-op.
-4. Draft ONE reply in Mike's **reply voice** (`../persona/persona.json` → `reply_voice`): lowercase opener, conversational, short unless the tweet is analytical, typos-stay register, ~5% reaction-only. Apply the persona's terminology + avoid-in-drafts rules.
+4. Draft ONE reply in Mike's **reply voice** (`../persona/persona.json` → `reply_voice`): lowercase opener, conversational, short unless the tweet is analytical, typos-stay register. Apply the persona's terminology + avoid-in-drafts rules.
+   - **Reaction-only check (don't let this silently regress to always-text).** Per `reply_voice.reaction_only`, ~1 in 20 replies is a reaction with no text — a single emoji OR a GIF — reserved for genuinely exciting (🚀) or crazy/unbelievable (😱) tweets. This flow fires one reply at a time, so the quota only lands if you actively apply it: **before defaulting to a text take, ask whether THIS tweet is one of those moments.** If it is, draft it as a reaction (emoji in `reply_text`, or `gif_search` per the GIF shape below) instead of a text reply. If not, write the text reply. Don't force a reaction onto a tweet that warrants a real take.
 
 ### Step 3 — Fire it
 
-Write the chosen reply to `data/auto_reply_pending.json`.
+Write the chosen reply to `data/auto_reply_pending.json` **as a single JSON object — NOT an array.** `auto_reply_post.py` does `pending.get(...)`; a `[ {...} ]` wrapper crashes it with `'list' object has no attribute 'get'` *before* Chrome opens (harmless pre-flight abort, nothing posts — just rewrite as a bare object and re-run). Tripped 2026-06-03.
 
 **Text reply:**
 ```json
@@ -105,6 +106,10 @@ It posts via `post_reply()` (text) or `post_gif_reply()` (GIF), archives the out
 | Volume | a batch | one per invocation |
 
 Both share `posted_replies.json`, `persona.json`, `post_reply()`, and the **never-retry-failed** rule.
+
+## ⚠ Read the FULL `tweet_text` before drafting — a truncated preview will get you a MISREAD (2026-06-29)
+
+The scanner stores the full `tweet_text` in `auto_reply_candidates.json`, but it's easy to draft off a **sliced preview** (e.g. a `.slice(0,95)` you printed to pick a candidate) and miss a clause that flips the meaning. This run, Murad's tweet previewed as *"Studying 'Vibe Coding techniques' and 'Agentic Workflows' is cope and a complete waste of time"* — read alone, that looks like he's calling AI agents a fad, and the first draft pushed back on exactly that. The FULL text continued *"...because within 12-24 months that will be fully [automated]"* — i.e. he's **pro**-AI-progress, arguing the manual technique gets automated away. The first reply was a misread of a truncated snippet; caught it by reading `c.tweet_text` in full before firing and rewrote to engage his actual point (the orchestration/verification skill survives even when the technique automates). **RULE: before drafting, print/read the ENTIRE `tweet_text` of the chosen candidate (not a slice); after drafting, re-read the full tweet and confirm your take answers what was actually said.** An unseen auto-fire built on a half-read tweet is the worst failure mode (cf. the 2026-06-11 "skip the cryptic one" note).
 
 ## Throttle note
 

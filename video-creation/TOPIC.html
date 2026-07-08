@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topic Radar — Candidate Video Topics</title>
+<style>
+  :root{
+    --bg:#0c0f14; --panel:#141922; --panel2:#1b212c; --ink:#e8edf4; --muted:#93a0b4;
+    --line:#27303d; --accent:#49d0b0; --accent2:#7aa2ff; --warn:#ffb454; --bad:#ff6b6b;
+    --lane1:#49d0b0; --lane2:#7aa2ff; --lane3:#c792ea;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent2);text-decoration:none} a:hover{text-decoration:underline}
+  header{padding:34px 28px 22px;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#11161f,#0c0f14)}
+  h1{margin:0 0 6px;font-size:26px;letter-spacing:.3px}
+  .sub{color:var(--muted);max-width:880px}
+  .meta{margin-top:10px;color:var(--muted);font-size:13px}
+  .wrap{max-width:1080px;margin:0 auto;padding:24px 28px 60px}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
+  .badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;
+    border:1px solid var(--line);color:var(--muted);background:var(--panel2);white-space:nowrap}
+  .badge.on{color:#0c0f14}
+  .b-named{background:#2a3550;border-color:#3a4a72;color:#bcd0ff}
+  .b-trend{background:#173a33;border-color:#1f5448;color:#9ff0d8}
+  .b-contest{background:#3a2a18;border-color:#5a4226;color:#ffd9a8}
+  .b-verify{background:#2e1f3a;border-color:#4a2f5e;color:#e3c2ff}
+  .b-thesis{background:#1f2b3a;border-color:#2f4a66;color:#bfe0ff}
+  .lane{margin-top:36px}
+  .lane h2{display:flex;align-items:center;gap:10px;font-size:19px;margin:0 0 4px}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .lane .blurb{color:var(--muted);margin:0 0 14px;max-width:880px}
+  .srcline{font-size:13px;color:var(--muted);margin:2px 0 16px}
+  .srcline b{color:var(--ink);font-weight:600}
+  .card{background:var(--panel);border:1px solid var(--line);border-left-width:3px;
+    border-radius:10px;padding:16px 18px;margin:0 0 14px}
+  .card.l1{border-left-color:var(--lane1)} .card.l2{border-left-color:var(--lane2)} .card.l3{border-left-color:var(--lane3)}
+  .card h3{margin:0 0 8px;font-size:16px;line-height:1.35}
+  .row{margin:7px 0;font-size:14px}
+  .row .k{color:var(--muted);font-weight:600;display:inline-block;min-width:118px;vertical-align:top}
+  .card .badges{margin-top:11px;display:flex;flex-wrap:wrap;gap:6px}
+  .flag{margin-top:9px;font-size:12.5px;color:var(--warn);
+    background:#2a1d10;border:1px solid #4a3318;border-radius:7px;padding:7px 10px}
+  .score{float:right;font-size:12px;color:var(--muted);font-weight:600}
+  footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);
+    margin-top:40px;padding-top:16px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Topic Radar — Candidate Video Topics</h1>
+  <div class="sub">Inbound topics harvested from the source shortlist in
+  <code>TOPIC-FINDING-PLAYBOOK.md</code>. The narrative gives the topic; the primary source gives
+  the credibility edge. Each card lists the <b>claim</b> (hook), the <b>primary source to pull</b>
+  (your edge), and the <b>redirect to thesis</b> (the payoff). Grouped by source lane.</div>
+  <div class="meta">Generated 2026-06-18 &nbsp;·&nbsp; Filter: a topic is a video if it hits 3+ badges.</div>
+  <div class="legend">
+    <span class="badge b-named">Named entity</span>
+    <span class="badge b-trend">Trending now</span>
+    <span class="badge b-contest">Contested</span>
+    <span class="badge b-verify">Verifiable</span>
+    <span class="badge b-thesis">Ties to thesis</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ============ LANE 1 ============ -->
+<section class="lane">
+  <h2><span class="dot" style="background:var(--lane1)"></span>Lane 1 — Community narrative (Kaspa-native)</h2>
+  <p class="blurb">Claims trending in the Kaspa community. You verify against the primary source
+  (filing / explorer / roadmap / dev), then redirect to the catalyst you control.</p>
+  <p class="srcline"><b>Sources:</b> Kaspa X / Crypto Twitter · r/kaspa, Discord/Telegram ·
+  crypto-news aggregators · your community's questions &nbsp;|&nbsp;
+  <b>Verify at:</b> Kaspa GitHub / roadmap · block explorer · CoinGecko/CMC · core-dev posts</p>
+
+  <div class="card l1">
+    <span class="score">5/5</span>
+    <h3>Toccata hard fork is live this window (June 5–20, 2026)</h3>
+    <div class="row"><span class="k">Claim / hook</span> Kaspa flips from a payments chain to a
+      programmable L1 — native L1 programmability, KRC-20 native assets, and zero-knowledge opcodes
+      are shipping in the activation window happening RIGHT NOW.</div>
+    <div class="row"><span class="k">Pull the source</span> Michael Sutton's
+      <a href="https://medium.com/@michaelsuttonil/kaspa-covenants-toccata-hard-fork-outlook-a4d81a40900c">"Covenants++ Toccata Hard-Fork Outlook"</a>,
+      the <a href="https://www.gate.com/blog/kaspa-toccata-hard-fork-pow-blockchain-programmable-era-upgrade-analysis">Toccata deep-dive</a>,
+      and the code-freeze (April 2026) on the Kaspa GitHub. Read the actual opcode set, not the hype thread.</div>
+    <div class="row"><span class="k">Redirect</span> This IS the catalyst — the noise about price is a
+      sideshow; programmability + fair launch is the real story.</div>
+    <div class="badges"><span class="badge b-named">Named entity</span><span class="badge b-trend">Trending now</span><span class="badge b-verify">Verifiable</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+
+  <div class="card l1">
+    <span class="score">4/5</span>
+    <h3>"$10B market cap by Toccata" target making the rounds</h3>
+    <div class="row"><span class="k">Claim / hook</span> Articles + community posts floating a $10B
+      market-cap target on the back of the fork. Bulls vs skeptics — built-in debate.</div>
+    <div class="row"><span class="k">Pull the source</span> Compare the
+      <a href="https://blockonomi.com/kaspa-kas-sets-sights-on-10-billion-market-cap-as-toccata-hardfork-approaches-in-june-2026/">$10B claim article</a>
+      against the real number on <a href="https://coinmarketcap.com/cmc-ai/kaspa/latest-updates/">CoinGecko/CMC</a>
+      (KAS ~$0.0325, sitting in a falling wedge). Show the gap between the headline and the chart.</div>
+    <div class="row"><span class="k">Redirect</span> Price follows the tech catalyst, not a round-number
+      target. Anchor on adoption, not a price meme.</div>
+    <div class="badges"><span class="badge b-named">Named entity</span><span class="badge b-trend">Trending now</span><span class="badge b-contest">Contested</span><span class="badge b-verify">Verifiable</span></div>
+  </div>
+
+  <div class="card l1">
+    <span class="score">3/5</span>
+    <h3>VIZO market launching by June 30 — "Kaspa for large-scale coordination"</h3>
+    <div class="row"><span class="k">Claim / hook</span> A core dev (Junny Ho) announced the VIZO market
+      going live by month-end, pitched at the Unchained Summit (Da Nang) as Kaspa solving large-scale
+      coordination — fresh institutional-visibility angle in a growth region.</div>
+    <div class="row"><span class="k">Pull the source</span> The core-dev announcement / summit talk itself,
+      and the VIZO docs. Confirm what actually ships June 30 vs what's roadmap.</div>
+    <div class="row"><span class="k">Redirect</span> Real-world coordination use-case → the "invisible
+      engine" thesis, grounded in a shipped product, not a slogan.</div>
+    <div class="badges"><span class="badge b-trend">Trending now</span><span class="badge b-verify">Verifiable</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+
+  <div class="card l1">
+    <span class="score">2/5 — VERIFY FIRST</span>
+    <h3>"Energy companies / institutions are quietly settling on Kaspa"</h3>
+    <div class="row"><span class="k">Claim / hook</span> Analyst-commentary framing Kaspa as the "invisible
+      engine" for institutional settlement, with energy firms using it for high-frequency low-cost txns.</div>
+    <div class="row"><span class="k">Pull the source</span> No named entity, no on-chain proof yet — this is
+      exactly the wallet-tag-style rumor the playbook warns about. Check the explorer for the flows being
+      claimed before you repeat ANY of it.</div>
+    <div class="flag">⚠ Unverified. Do not build a video on this until you have a named company or an
+      on-chain flow you can show. If it can't be verified, it's the rumor you debunk — not the claim you amplify.</div>
+    <div class="badges"><span class="badge b-trend">Trending now</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+
+  <div class="card l1">
+    <span class="score">3/5</span>
+    <h3>The post-Toccata roadmap: DAGKnight (Q3 2026) → 100 bps → vProgs (2027)</h3>
+    <div class="row"><span class="k">Claim / hook</span> "What's next after the fork?" — DAGKnight in Q3,
+      then a push to 100 blocks/sec and parallel smart contracts (vProgs) in 2027.</div>
+    <div class="row"><span class="k">Pull the source</span> The
+      <a href="https://ourcryptotalk.com/blog/kaspa-roadmap-2026-2027">2026–2027 roadmap</a> + dev updates.
+      Map each milestone to what it unlocks; correct anyone collapsing the timeline.</div>
+    <div class="row"><span class="k">Redirect</span> Toccata isn't the finish line — it's the on-ramp to the
+      DAGKnight throughput story. Evergreen "here's the multi-year arc" explainer.</div>
+    <div class="badges"><span class="badge b-trend">Trending now</span><span class="badge b-verify">Verifiable</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+</section>
+
+<!-- ============ LANE 2 ============ -->
+<section class="lane">
+  <h2><span class="dot" style="background:var(--lane2)"></span>Lane 2 — Mainstream-media clips</h2>
+  <p class="blurb">An authority figure says something crypto-relevant on a high-credibility outlet. The
+  clip is both the hook and the borrowed credibility — you're the interpreter. Pull the primary source
+  behind the soundbite, then end on your own catalyst.</p>
+  <p class="srcline"><b>Channels:</b> Fox Business · CNBC (Squawk Box, Fast Money) · Bloomberg · Yahoo
+  Finance · Reuters &nbsp;|&nbsp; <b>People:</b> Saylor · Tom Lee · Larry Fink · Jamie Dimon · Powell/Fed ·
+  Cathie Wood · Matt Hougan</p>
+
+  <div class="card l2">
+    <span class="score">5/5 — TOP PICK</span>
+    <h3>Saylor's Strategy sold Bitcoin — first sale since 2022</h3>
+    <div class="row"><span class="k">Claim / hook</span> Strategy (MSTR) sold 32 BTC (~$2.5M) in late May to
+      fund preferred dividends — its first sale since Dec 2022. "Saylor capitulated" vs "immaterial" is a
+      full-blown fight; a prediction market even melted down over it.</div>
+    <div class="row"><span class="k">Pull the source</span> The actual
+      <a href="https://www.coindesk.com/markets/2026/06/01/strategy-sold-32-btc-for-usd2-5-million-in-late-may-filing-shows">8-K filing</a>
+      on SEC EDGAR — read the exact line (avg ~$77,135), not the headline. Plus Saylor's BTC Prague
+      <a href="https://cryptopotato.com/i-never-said-the-company-wouldnt-sell-michael-saylor-fires-back-after-bitcoin-drop/">"I never said the company wouldn't sell"</a> walk-back.</div>
+    <div class="row"><span class="k">Redirect</span> The leveraged-treasury model has a fixed-dividend
+      pressure valve that forces selling into weakness. Contrast with Kaspa: no treasury, no preferred
+      stack, fair launch — nobody is forced to sell your network to pay a coupon.</div>
+    <div class="badges"><span class="badge b-named">Named entity</span><span class="badge b-trend">Trending now</span><span class="badge b-contest">Contested</span><span class="badge b-verify">Verifiable</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+
+  <div class="card l2">
+    <span class="score">4/5</span>
+    <h3>Tom Lee: Saylor sale + ETF outflows is "classic bottom behavior"</h3>
+    <div class="row"><span class="k">Claim / hook</span> Tom Lee (Bitmine chair) on
+      <a href="https://www.coindesk.com/markets/2026/06/02/tom-lee-dismisses-bitcoin-fears-over-michael-saylor-first-bitcoin-sale-and-etf-outflows">CoinDesk/TV</a>
+      dismisses the panic — says the Saylor sale and an 11-day, $3.4B ETF outflow streak are what bottoms
+      look like, and keeps accumulating. Perfect reactable clip.</div>
+    <div class="row"><span class="k">Pull the source</span> The full segment + the ETF flow data behind his
+      claim (the $3.4B / $5.4B outflow numbers). Steelman and stress-test his "bottom" call.</div>
+    <div class="row"><span class="k">Redirect</span> If this is a bottom, what's the asymmetric bet into the
+      next leg? Bridge from BTC sentiment to the Kaspa fork catalyst.</div>
+    <div class="badges"><span class="badge b-named">Named entity</span><span class="badge b-trend">Trending now</span><span class="badge b-contest">Contested</span><span class="badge b-verify">Verifiable</span></div>
+  </div>
+
+  <div class="card l2">
+    <span class="score">4/5</span>
+    <h3>Fed killed the rate-cut hopes — odds of a HIKE by October near 60%</h3>
+    <div class="row"><span class="k">Claim / hook</span> Strong jobs data flipped the narrative: median
+      forecast now sees the policy rate ending 2026 at 3.8% (up from 3.4%), nine officials pencil in a
+      hike, and BTC/ETH ETFs bled on the news. Macro fear is the inbound hook.</div>
+    <div class="row"><span class="k">Pull the source</span> The
+      <a href="https://www.coindesk.com/tech/2026/06/18/live-markets-bitcoin-and-ether-etfs-lost-usd111-million-combined-as-rate-cut-hopes-died">June 18 ETF-flow live coverage</a>
+      + the Fed dot plot / Powell presser clip. Quote the dots directly.</div>
+    <div class="row"><span class="k">Redirect</span> Rates whipsaw fiat-priced assets; proof-of-work hard
+      money is the thing the Fed can't print. Macro-fear hook → PoW thesis payoff.</div>
+    <div class="badges"><span class="badge b-named">Named entity</span><span class="badge b-trend">Trending now</span><span class="badge b-verify">Verifiable</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+
+  <div class="card l2">
+    <span class="score">4/5</span>
+    <h3>Saylor's BTC Prague keynote: "Bitcoin Capitalism," $7M long-term</h3>
+    <div class="row"><span class="k">Claim / hook</span> June 12 keynote reframing BTC as "digital capital,"
+      the base layer for a new class of financial products, with a $7M/coin long-term call. Big name,
+      big number, instantly clippable.</div>
+    <div class="row"><span class="k">Pull the source</span> The full keynote
+      (<a href="https://cryptobriefing.com/saylor-bitcoin-capitalism-btc-prague-2026/">recap</a>) — react to
+      the actual framing, and note he gave it days after the company sold (ties to the top pick).</div>
+    <div class="row"><span class="k">Redirect</span> If BTC is "digital capital," what's the settlement +
+      programmability layer that capital actually moves on? Open the door to Kaspa's L1 story.</div>
+    <div class="badges"><span class="badge b-named">Named entity</span><span class="badge b-trend">Trending now</span><span class="badge b-contest">Contested</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+
+  <div class="card l2">
+    <span class="score">3/5</span>
+    <h3>Fink "digital gold" vs Dimon the skeptic — the institutional split</h3>
+    <div class="row"><span class="k">Claim / hook</span> The evergreen contrast: BlackRock's Fink keeps
+      calling BTC <a href="https://99bitcoins.com/news/bitcoin-btc/blackrock-crypto-makes-new-bet-larry-fink-calls-bitcoin-digital-gold/">"digital gold,"</a>
+      Dimon stays dismissive. Two of the biggest names in finance on opposite sides = institutional-validation catnip.</div>
+    <div class="row"><span class="k">Pull the source</span> Their actual CNBC/Bloomberg clips. Best used as a
+      framing device on top of a fresher news peg (the ETF flows or the Saylor sale), not standalone.</div>
+    <div class="row"><span class="k">Redirect</span> Even the skeptics now argue about <em>which</em> crypto,
+      not <em>whether</em> — the Overton window moved. Position Kaspa as the next leg of that move.</div>
+    <div class="badges"><span class="badge b-named">Named entity</span><span class="badge b-contest">Contested</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+</section>
+
+<!-- ============ LANE 3 ============ -->
+<section class="lane">
+  <h2><span class="dot" style="background:var(--lane3)"></span>Lane 3 — Peer-creator topic scouting</h2>
+  <p class="blurb">Mine the <em>topic selection</em> of full-time crypto creators, not their take. Grab the
+  claim they surfaced, then do your own primary-source work and Kaspa redirect on top. The peer video is
+  the hook; your thesis is the payoff.</p>
+  <p class="srcline"><b>Watchlist:</b> Fire Hustle · Crypto Wendy O · Heresy Financial · Andrei Jikh ·
+  Crypto Casey · Jesse Ai · Your Crypto Crew · MoneyZG · Money and I · Jesse Eckel</p>
+
+  <div class="card l3">
+    <span class="score">4/5</span>
+    <h3>"Best altcoins for June 2026" lists — Kaspa keeps making the cut</h3>
+    <div class="row"><span class="k">Claim / hook</span> The recurring listicle/video format across the
+      watchlist; Kaspa appears on veteran picks
+      (<a href="https://captainaltcoin.com/crypto-veteran-shares-best-altcoins-to-buy-kaspa-makes-the-list/">CaptainAltcoin</a>,
+      CryptoTicker). Easy inbound: "they put Kaspa on the list — here's the part they skipped."</div>
+    <div class="row"><span class="k">Pull the source</span> The Altcoin Season Index (stuck mid-30s = NOT
+      altseason yet) + the KAS falling-wedge setup at ~$0.0325. Show why most of these lists are riding
+      momentum, not the fork.</div>
+    <div class="row"><span class="k">Redirect</span> Kaspa doesn't need an altseason — it has a dated,
+      shipping catalyst (Toccata). That's the differentiator the listicles gloss over.</div>
+    <div class="badges"><span class="badge b-named">Named entity</span><span class="badge b-trend">Trending now</span><span class="badge b-verify">Verifiable</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+
+  <div class="card l3">
+    <span class="score">4/5</span>
+    <h3>"Why is Bitcoin crashing?" — the fear video everyone's running</h3>
+    <div class="row"><span class="k">Claim / hook</span> BTC near $63K off a -12% week, record ETF
+      outflows, dead rate-cut hopes — the whole watchlist is making the panic explainer. High inbound
+      attention, low conviction supply.</div>
+    <div class="row"><span class="k">Pull the source</span> The
+      <a href="https://bitcoinfoundation.org/news/crypto-etfs-news/etf-outflows-june-2/">$1.72B-week / $5.4B-over-4-weeks</a>
+      outflow data + Fed dots. Don't echo the doom — quantify it, then take the other side.</div>
+    <div class="row"><span class="k">Redirect</span> Contrarian conviction: outflows + forced seller +
+      Fed fear is where asymmetric bets get made. Pivot to the Kaspa catalyst the panic crowd is ignoring.</div>
+    <div class="badges"><span class="badge b-trend">Trending now</span><span class="badge b-contest">Contested</span><span class="badge b-verify">Verifiable</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+
+  <div class="card l3">
+    <span class="score">3/5</span>
+    <h3>Competing-L1 narratives: Chainlink buyback, XRP ETFs, ETH upgrades</h3>
+    <div class="row"><span class="k">Claim / hook</span> Peer creators are pumping LINK (ascending triangle,
+      $644M buyback, OpenAssets), XRP (SEC appeal dropped, new ETFs), and ETH scalability upgrades as the
+      next-altseason plays. Ready-made "vs Kaspa" contrast content.</div>
+    <div class="row"><span class="k">Pull the source</span> Each project's actual catalyst (buyback filing,
+      ETF approvals, upgrade specs). Build the honest scorecard — speed, fair launch, programmability.</div>
+    <div class="row"><span class="k">Redirect</span> Where Kaspa's blockDAG + fair launch + Toccata
+      programmability genuinely differentiates against each of these. Comparison = comments.</div>
+    <div class="badges"><span class="badge b-named">Named entity</span><span class="badge b-trend">Trending now</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+
+  <div class="card l3">
+    <span class="score">3/5</span>
+    <h3>"Speculation is clearing out — RWA, institutional capital, DeAI move in"</h3>
+    <div class="row"><span class="k">Claim / hook</span> The macro-creator (Heresy-style) thesis that June
+      2026 is a structural rotation: hype flushing out, real-world-asset tokenization + institutional
+      capital + decentralized-AI infra rotating in. Big-picture framing topic.</div>
+    <div class="row"><span class="k">Pull the source</span> The market-structure pieces calling the rotation;
+      pair with the ETF-outflow + altseason-index data to test whether it's real or narrative.</div>
+    <div class="row"><span class="k">Redirect</span> If the market is rewarding real infrastructure over
+      hype, that's the Kaspa bull case — a working, scaling, programmable base layer. Thesis tailwind.</div>
+    <div class="badges"><span class="badge b-trend">Trending now</span><span class="badge b-verify">Verifiable</span><span class="badge b-thesis">Ties to thesis</span></div>
+  </div>
+</section>
+
+<footer>
+  <b>Method (from TOPIC-FINDING-PLAYBOOK.md):</b> the narrative hands you the topic; the primary source
+  is your edge. Pick the claim with a big name + a contested angle, be the one who reads the filing /
+  explorer / roadmap, and end on the catalyst YOU control. A topic is a video if it clears 3+ filter
+  badges. &nbsp;·&nbsp; Sources captured 2026-06-18; re-run the morning skim to refresh.
+</footer>
+
+</div>
+</body>
+</html>

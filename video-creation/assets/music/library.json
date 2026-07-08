@@ -1,0 +1,801 @@
+{
+  "$doc": "Reusable music-library catalog. Tracks listed here are PERMANENT and reused across many videos (Mike's go-to ~20-30 beds). Project-only/trial downloads live in that project's media folder, NOT here; promote a track here only once it's a reusable keeper. Sourcing tool: video-creation/skills/music-sourcing/ (renamed from music/ on 2026-06-13). LICENSING IS SOURCE-SPECIFIC: Soundstripe tracks carry a yt_license_code (16-char, bare code) that MUST be pasted into the YOUTUBE description ONLY (Soundstripe clearance is YouTube Content-ID; NOT needed on FB/IG) or the YT upload gets claimed; Envato Elements tracks have no per-video code, they use the Elements license certificate tied to the item/register. metadata_complete=false means the Soundstripe genre/mood/bpm fields still need backfilling via the sourcing tool (by soundstripe_id).",
+  "$schema_note": "energy_measured is ffmpeg volumedetect mean/max dBFS (rough loudness proxy: higher mean = louder/fuller = more 'exciting'). Real Soundstripe 'energy'/'mood'/'genre' come from the API when enriched.",
+  "tracks": [
+    {
+      "id": "common-high-speeds",
+      "title": "High Speeds",
+      "artist": "Common Kid",
+      "source": "soundstripe",
+      "soundstripe_id": "10267",
+      "url": "https://www.soundstripe.com/library/songs/10267",
+      "yt_license_code": "GKBQ5IPUAHY1HSS4",
+      "folder": "assets/music/Common High Speeds",
+      "primary_file": "Common_Kid_High_Speeds_instrumental_2_28.wav",
+      "duration_sec": 149,
+      "vibe": "driving / high-energy instrumental — strong fit for conviction-tech explainers",
+      "genre": [],
+      "mood": [],
+      "bpm": null,
+      "metadata_complete": false,
+      "energy_measured": {
+        "full_2_28": {
+          "mean_db": -10.9,
+          "max_db": -1
+        },
+        "sections_0_18": {
+          "exciting": {
+            "files": [
+              "...-3.wav",
+              "...-6.wav"
+            ],
+            "mean_db": -9.8,
+            "note": "dense, full, continuous waveform"
+          },
+          "subtle": {
+            "files": [
+              "...-1.wav",
+              "...-2.wav",
+              "...-4.wav",
+              "...-5.wav"
+            ],
+            "mean_db": -14,
+            "note": "pulsing/sparser, quiet gaps"
+          }
+        }
+      },
+      "variants_note": "Folder holds the full 2:28 (x2) + six 0:18 section cuts. Sections 3 & 6 = exciting (loud/full); 1/2/4/5 = subtle.",
+      "used_in": [
+        "silverscript (CONFIRMED 2026-06-13: variant 6 '...0_18-6.wav' under the hook/open; full '...2_28.wav' looped through the body)"
+      ]
+    },
+    {
+      "id": "falls-glasgow",
+      "title": "Glasgow",
+      "artist": "Falls",
+      "source": "soundstripe",
+      "soundstripe_id": "15326",
+      "url": "https://www.soundstripe.com/library/songs/15326",
+      "yt_license_code": "HWWLLITQ468T4VN9",
+      "folder": "assets/music/Falls-Glasgow",
+      "primary_file": "Falls_Glasgow_background_vocals_3_30.wav",
+      "duration_sec": 210,
+      "vibe": "",
+      "genre": [],
+      "mood": [],
+      "bpm": null,
+      "metadata_complete": false,
+      "variants_note": "Full background_vocals master (wav) + the Alternate Versions bundle unpacked into the folder (instrumental AND background_vocals mixes of each section).",
+      "alt_tracks_zip": "Glasgow_alternate_tracks_wav.zip",
+      "sections": [
+        "Falls_Glasgow_instrumental_full_3_30-6.wav",
+        "Falls_Glasgow_instrumental_chorus_1_23-5.wav",
+        "Falls_Glasgow_background_vocals_chorus_1_23-1.wav",
+        "Falls_Glasgow_instrumental_verse_0_55-7.wav",
+        "Falls_Glasgow_background_vocals_verse_0_55-4.wav",
+        "Falls_Glasgow_instrumental_bridge_1_11-2.wav",
+        "Falls_Glasgow_background_vocals_bridge_1_11-3.wav"
+      ],
+      "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (chorus/verse/bridge, each in instrumental + bg-vocal mixes, plus instrumental_full). Same yt_license_code covers them.",
+      "stems": {
+        "folder": "Falls_Glasgow",
+        "files": [
+          "Falls_Glasgow_BASS.wav",
+          "Falls_Glasgow_SYNTHS.wav",
+          "Falls_Glasgow_SVOX.wav"
+        ],
+        "note": "Per-instrument WAV stems from Soundstripe's Stems bundle (unpacked, zip deleted). SVOX = vocals. Same yt_license_code covers them."
+      },
+      "used_in": []
+    },
+    {
+      "id": "corporate-dmitriysimf-main-01",
+      "title": "Background Music (Main 01)",
+      "artist": "dmitriysimf",
+      "source": "envato_elements",
+      "soundstripe_id": null,
+      "url": "",
+      "yt_license_code": null,
+      "license_note": "ENVATO ELEMENTS — no Soundstripe yt code. Covered by the Elements subscription license CERTIFICATE tied to the item/register; for Content-ID claims, clear via the Envato Elements license, not a per-video code. NEEDS: the Envato item URL + saved license certificate.",
+      "folder": "assets/music/corporate",
+      "primary_file": "dmitriysimf_background-music_main-01_full.wav",
+      "duration_sec": null,
+      "vibe": "corporate / background",
+      "genre": [],
+      "mood": [],
+      "bpm": null,
+      "metadata_complete": false,
+      "used_in": []
+    },
+    {
+      "id": "theta-rest",
+      "title": "Theta Rest",
+      "artist": "Outside The Sky",
+      "source": "soundstripe",
+      "soundstripe_id": "17384",
+      "url": "https://www.soundstripe.com/library/songs/17384",
+      "yt_license_code": "VHWICIAB6U5Y9OHE",
+      "folder": "video-creation/skills/music-sourcing/downloads",
+      "primary_file": "Outside_The_Sky_Theta_Rest_instrumental_3_24.mp3",
+      "promote_todo": "Still in the sourcing tool's downloads/ (legacy). It IS a used/reusable track -> move its master into assets/music/theta-rest/ and update this folder/primary_file.",
+      "duration_sec": 204,
+      "bpm": 100,
+      "key": "G major",
+      "energy": "very_low",
+      "vibe": "calm / ambient / reflective bed",
+      "genre": [
+        "Soundtrack / Cinematic",
+        "Ambient"
+      ],
+      "mood": [
+        "Calm",
+        "Reflective"
+      ],
+      "characteristic": [
+        "Mellow",
+        "Minimal",
+        "Atmospheric",
+        "Dreamy"
+      ],
+      "keywords": [
+        "ambient",
+        "meditation",
+        "ethereal",
+        "healing",
+        "rest",
+        "peaceful"
+      ],
+      "metadata_complete": true,
+      "used_in": [
+        "kaspa-wise-man (channel intro bed)"
+      ]
+    },
+    {
+      "id": "searching-for-signs-of-life",
+      "title": "Searching For Signs Of Life",
+      "artist": "Hill",
+      "source": "soundstripe",
+      "soundstripe_id": "7244",
+      "url": "https://www.soundstripe.com/library/songs/7244",
+      "yt_license_code": "CM0H6NCUNQIUSA0E",
+      "folder": "assets/music/Searching For Signs Of Life",
+      "primary_file": "Hill_Searching_For_Signs_Of_Life_instrumental_4_11.mp3",
+      "duration_sec": 251,
+      "bpm": 100,
+      "key": "C minor",
+      "energy": "low",
+      "vibe": "inspiring / hopeful epic orchestral build — soaring closing bed",
+      "genre": [
+        "Soundtrack / Cinematic",
+        "Orchestral",
+        "Score",
+        "Classical"
+      ],
+      "mood": [
+        "Inspiring",
+        "Hopeful"
+      ],
+      "characteristic": [
+        "Building",
+        "Atmospheric",
+        "Epic"
+      ],
+      "keywords": [],
+      "alt_tracks_zip": "Searching_For_Signs_Of_Life_alternate_tracks_wav.zip",
+      "sections": [
+        "Hill_Searching_For_Signs_Of_Life_instrumental_0_30-1.wav",
+        "Hill_Searching_For_Signs_Of_Life_instrumental_0_15-2.wav",
+        "Hill_Searching_For_Signs_Of_Life_instrumental_1_00-3.wav"
+      ],
+      "sections_note": "WAV cuts from Soundstripe's Alternate Versions bundle (instrumental 0:30 / 0:15 / 1:00 duration edits, not named sections for this track). Same yt_license_code covers them.",
+      "stems": {
+        "folder": "Hill_SearchingForSignsOfLife",
+        "files": [
+          "SFSOL_DRUMS.wav",
+          "SFSOL_PERC.wav",
+          "SFSOL_BASS.wav",
+          "SFSOL_STRINGS.wav",
+          "SFSOL_WINDS.wav",
+          "SFSOL_SYNTHS.wav"
+        ],
+        "note": "Per-instrument WAV stems from Soundstripe's Stems bundle (unpacked, zip deleted). Same yt_license_code covers them."
+      },
+      "metadata_complete": true,
+      "used_in": [
+        "bittensor-for-the-future (CH8 + CH9, RIGHT-ALIGNED so the epic close lands at the very end of CH9)"
+      ]
+    },
+    {
+      "id": "hold-the-line",
+      "title": "Hold The Line",
+      "artist": "Wicked Cinema",
+      "source": "soundstripe",
+      "soundstripe_id": "17299",
+      "url": "https://www.soundstripe.com/library/songs/17299",
+      "yt_license_code": "2RSEUREJAJSKKSNX",
+      "folder": "assets/music/Hold The Line",
+      "primary_file": "Wicked_Cinema_Hold_The_Line_instrumental_3_09.mp3",
+      "duration_sec": 190,
+      "bpm": 176,
+      "key": "Db/C# minor",
+      "energy": "medium",
+      "vibe": "intense modern-orchestral blockbuster, driving and building — dark epic",
+      "genre": [
+        "Cinematic",
+        "Soundtrack / Cinematic",
+        "Modern Orchestral",
+        "Score"
+      ],
+      "mood": [
+        "Suspenseful",
+        "Scary",
+        "Angry"
+      ],
+      "characteristic": [
+        "Intense",
+        "Aggressive",
+        "Dynamic",
+        "Epic",
+        "Chaotic"
+      ],
+      "keywords": [
+        "orchestral",
+        "modernorchestral",
+        "epic",
+        "blockbuster",
+        "drama",
+        "darkcinematic",
+        "building",
+        "suspense",
+        "actionfilm",
+        "electronic",
+        "run"
+      ],
+      "alt_tracks_zip": "Hold_The_Line_alternate_tracks_wav.zip",
+      "sections": [
+        "Wicked_Cinema_Hold_The_Line_instrumental_intro_0_28-1.wav",
+        "Wicked_Cinema_Hold_The_Line_instrumental_verse_0_27-2.wav",
+        "Wicked_Cinema_Hold_The_Line_instrumental_chorus_0_31-3.wav"
+      ],
+      "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental intro/verse/chorus). Same yt_license_code covers them.",
+      "stems": {
+        "folder": "WickedCinema_HoldTheLine",
+        "files": [
+          "WickedCinema_HoldTheLine_DRUMS.wav",
+          "WickedCinema_HoldTheLine_PERC.wav",
+          "WickedCinema_HoldTheLine_BASS.wav",
+          "WickedCinema_HoldTheLine_STRINGS1.wav",
+          "WickedCinema_HoldTheLine_STRINGS2.wav",
+          "WickedCinema_HoldTheLine_SYNTHS.wav",
+          "WickedCinema_HoldTheLine_SFX.wav"
+        ],
+        "note": "Per-instrument WAV stems from Soundstripe's Stems bundle (unpacked, zip deleted). Same yt_license_code covers them."
+      },
+      "metadata_complete": true,
+      "used_in": [
+        "bittensor-for-the-future (CH2 + CH3 + CH4)"
+      ]
+    },
+    {
+      "id": "the-invaders",
+      "title": "The Invaders",
+      "artist": "Lunareh",
+      "source": "soundstripe",
+      "soundstripe_id": "15484",
+      "url": "https://www.soundstripe.com/library/songs/15484",
+      "yt_license_code": "DTHJQV7NPWCXOUYB",
+      "folder": "assets/music/The Invaders",
+      "primary_file": "Lunareh_The_Invaders_background_vocals_3_37.mp3",
+      "duration_sec": 217,
+      "bpm": 90,
+      "key": "G minor",
+      "energy": "medium",
+      "vibe": "cinematic electronic / EDM, atmospheric building to intense — war / epic energy",
+      "genre": [
+        "Electronic",
+        "Pop",
+        "Hip Hop"
+      ],
+      "mood": [
+        "Reflective",
+        "Angry"
+      ],
+      "characteristic": [
+        "Dynamic",
+        "Atmospheric",
+        "Intense"
+      ],
+      "keywords": [
+        "exciting",
+        "scary",
+        "frightening",
+        "fire",
+        "bomb",
+        "explode",
+        "war",
+        "shocking",
+        "edm",
+        "electronic",
+        "cinematic",
+        "movie"
+      ],
+      "variants_note": "Full background_vocals master (mp3) + the Alternate Versions bundle unpacked into the folder (both instrumental AND background_vocals mixes of each section).",
+      "alt_tracks_zip": "The_Invaders_alternate_tracks_wav.zip",
+      "sections": [
+        "Lunareh_The_Invaders_instrumental_full_3_37-5.wav",
+        "Lunareh_The_Invaders_instrumental_intro_0_46-6.wav",
+        "Lunareh_The_Invaders_background_vocals_intro_0_46-7.wav",
+        "Lunareh_The_Invaders_instrumental_chorus_0_39-4.wav",
+        "Lunareh_The_Invaders_background_vocals_chorus_0_39-3.wav",
+        "Lunareh_The_Invaders_instrumental_bridge_0_40-2.wav",
+        "Lunareh_The_Invaders_background_vocals_bridge_0_40-1.wav"
+      ],
+      "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (intro/chorus/bridge, each in instrumental + bg-vocal mixes, plus instrumental_full). Same yt_license_code covers them.",
+      "stems": {
+        "folder": "LUNAREH_TheInvaders",
+        "files": [
+          "LUNAREH_TheInvaders_DRUMS.wav",
+          "LUNAREH_TheInvaders_PERC.wav",
+          "LUNAREH_TheInvaders_BASS.wav",
+          "LUNAREH_TheInvaders_GUITARS.wav",
+          "LUNAREH_TheInvaders_KEYS.wav",
+          "LUNAREH_TheInvaders_STRINGS.wav",
+          "LUNAREH_TheInvaders_SYNTHS.wav",
+          "LUNAREH_TheInvaders_SVOCALS.wav",
+          "LUNAREH_TheInvaders_SFX.wav"
+        ],
+        "note": "Per-instrument WAV stems from Soundstripe's Stems bundle (unpacked, zip deleted). SVOCALS = sung vocals. Same yt_license_code covers them."
+      },
+      "metadata_complete": true,
+      "used_in": [
+        "bittensor-for-the-future (CH5 + CH6, RIGHT-ALIGNED so the epic climax lands at the very end of CH6)"
+      ]
+    },
+    {
+      "id": "retribution",
+      "title": "Retribution",
+      "artist": "Wicked Cinema",
+      "source": "soundstripe",
+      "soundstripe_id": "17543",
+      "url": "https://www.soundstripe.com/library/songs/17543",
+      "yt_license_code": "FKNMTSSDHR92HXE9",
+      "folder": "assets/music/Retribution",
+      "primary_file": "Wicked_Cinema_Retribution_instrumental_3_33.mp3",
+      "duration_sec": 213,
+      "bpm": 133,
+      "key": "C minor",
+      "energy": "medium",
+      "vibe": "dark brooding modern-orchestral with big percussion — epic cold-open energy",
+      "genre": [
+        "Cinematic",
+        "Modern Orchestral",
+        "Soundtrack / Cinematic",
+        "Score"
+      ],
+      "mood": [
+        "Suspenseful",
+        "Scary"
+      ],
+      "characteristic": [
+        "Dark",
+        "Epic",
+        "Intense",
+        "Dynamic"
+      ],
+      "keywords": [
+        "orchestral",
+        "modernorchestral",
+        "score",
+        "building",
+        "brooding",
+        "dark",
+        "darkcinematic",
+        "cinematic",
+        "big",
+        "blockbuster",
+        "dynamic",
+        "bigpercussion"
+      ],
+      "alt_tracks_zip": "Retribution_alternate_tracks_wav.zip",
+      "sections": [
+        "Wicked_Cinema_Retribution_instrumental_intro_0_21-3.wav",
+        "Wicked_Cinema_Retribution_instrumental_chorus_0_30-1.wav",
+        "Wicked_Cinema_Retribution_instrumental_verse_0_40-2.wav"
+      ],
+      "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental intro/chorus/verse). Same yt_license_code covers them.",
+      "stems": {
+        "folder": "WickedCinema_Retribution",
+        "files": [
+          "WickedCinema_Retribution_DRUMS.wav",
+          "WickedCinema_Retribution_PERC.wav",
+          "WickedCinema_Retribution_BASS.wav",
+          "WickedCinema_Retribution_STRINGS1.wav",
+          "WickedCinema_Retribution_STRINGS2.wav",
+          "WickedCinema_Retribution_WINDS1.wav",
+          "WickedCinema_Retribution_WINDS2.wav",
+          "WickedCinema_Retribution_SYNTHS.wav",
+          "WickedCinema_Retribution_SFX.wav"
+        ],
+        "note": "Per-instrument WAV stems from Soundstripe's Stems bundle (unpacked, zip deleted). Same yt_license_code covers them."
+      },
+      "metadata_complete": true,
+      "used_in": [
+        "bittensor-for-the-future (CH1 cold open)"
+      ]
+    },
+    {
+      "id": "race-against-time",
+      "title": "Race Against Time",
+      "artist": "Moments",
+      "source": "soundstripe",
+      "soundstripe_id": "16375",
+      "url": "https://www.soundstripe.com/library/songs/16375",
+      "yt_license_code": "GV8XEWTBX0UWWEFB",
+      "folder": "assets/music/Race Against Time",
+      "primary_file": "Moments_Race_Against_Time_instrumental_2_58.mp3",
+      "bpm": 160,
+      "energy": "high",
+      "vibe": "high-energy driver (160bpm) for the hook + the covenant teach",
+      "sections": [
+        "Moments_Race_Against_Time_instrumental_chorus_0_31-3.wav",
+        "Moments_Race_Against_Time_instrumental_intro_0_25-2.wav",
+        "Moments_Race_Against_Time_instrumental_verse_0_30-1.wav"
+      ],
+      "sections_note": "Soundstripe Alternate Versions: section cuts (intro/chorus/verse/bridge), instrumental + bg-vocal mixes.",
+      "stems": {
+        "folder": "Moments_RaceAgainstTime",
+        "files": [
+          "Moments_RaceAgainstTime_DRUMS.wav",
+          "Moments_RaceAgainstTime_PERC.wav",
+          "Moments_RaceAgainstTime_SFX.wav",
+          "Moments_RaceAgainstTime_STRINGS.wav",
+          "Moments_RaceAgainstTime_SYNTHS.wav",
+          "Moments_RaceAgainstTime_WINDS.wav"
+        ]
+      },
+      "used_in": [
+        "kaspa-covenants: cold open + CH1-3"
+      ],
+      "metadata_complete": false
+    },
+    {
+      "id": "the-big-bang",
+      "title": "The Big Bang",
+      "artist": "Rhythm Scott",
+      "source": "soundstripe",
+      "soundstripe_id": "9931",
+      "url": "https://www.soundstripe.com/library/songs/9931",
+      "yt_license_code": "7BIQSDGTEZT05I1N",
+      "folder": "assets/music/The Big Bang",
+      "primary_file": "Rhythm_Scott_The_Big_Bang_instrumental_1_50.mp3",
+      "bpm": 110,
+      "energy": "medium",
+      "vibe": "bed change at the native-tokens chapter (110bpm)",
+      "sections": [
+        "Rhythm_Scott_The_Big_Bang_instrumental_0_16-3.wav",
+        "Rhythm_Scott_The_Big_Bang_instrumental_0_17-1.wav",
+        "Rhythm_Scott_The_Big_Bang_instrumental_0_17-2.wav",
+        "Rhythm_Scott_The_Big_Bang_instrumental_0_22-4.wav"
+      ],
+      "sections_note": "Soundstripe Alternate Versions: section cuts (intro/chorus/verse/bridge), instrumental + bg-vocal mixes.",
+      "stems": {
+        "folder": "RhythmScott_TheBigBang",
+        "files": [
+          "TBB_DRUMS.wav",
+          "TBB_LFE.wav",
+          "TBB_PERC.wav",
+          "TBB_SFX.wav"
+        ]
+      },
+      "used_in": [
+        "kaspa-covenants: CH4"
+      ],
+      "metadata_complete": false
+    },
+    {
+      "id": "synthwave-cinema",
+      "title": "Synthwave Cinema",
+      "artist": "Mikey Geiger, Falls",
+      "source": "soundstripe",
+      "soundstripe_id": "9141",
+      "url": "https://www.soundstripe.com/library/songs/9141",
+      "yt_license_code": "UKUXQMODJ3JLHRXO",
+      "folder": "assets/music/Synthwave Cinema",
+      "primary_file": "Mikey_Geiger_Synthwave_Cinema_instrumental_2_57.mp3",
+      "bpm": 92,
+      "energy": "medium",
+      "vibe": "synthwave-cinematic (92bpm) for the competition + payoff; DUCK on the final vibe-cut line",
+      "sections": [
+        "Mikey_Geiger_Synthwave_Cinema_instrumental_0_20-3.wav",
+        "Mikey_Geiger_Synthwave_Cinema_instrumental_0_33-1.wav",
+        "Mikey_Geiger_Synthwave_Cinema_instrumental_0_41-2.wav"
+      ],
+      "sections_note": "Soundstripe Alternate Versions: section cuts (intro/chorus/verse/bridge), instrumental + bg-vocal mixes.",
+      "stems": {
+        "folder": "MikeyGeiger_SynthwaveCinema",
+        "files": [
+          "SC_BASS.wav",
+          "SC_DRUMS.wav",
+          "SC_PERC.wav",
+          "SC_SYNTHS.wav",
+          "SC_VOX.wav"
+        ]
+      },
+      "used_in": [
+        "kaspa-covenants: CH5-6 + close"
+      ],
+      "metadata_complete": false
+    },
+    {
+      "id": "born-every-minute",
+      "title": "Born Every Minute",
+      "artist": "Neon Beach",
+      "source": "soundstripe",
+      "soundstripe_id": "15323",
+      "url": "https://www.soundstripe.com/library/songs/15323",
+      "yt_license_code": "V6HIWVPVCE6SHQ4T",
+      "folder": "assets/music/Born Every Minute",
+      "primary_file": "Neon_Beach_Born_Every_Minute_instrumental_3_10.mp3",
+      "duration_sec": 191,
+      "bpm": 174,
+      "key": "F minor",
+      "energy": "medium",
+      "vibe": "dark drum & bass / electronic, driving and sinister with a Tron/Matrix energy; strong fit for the dark-build accumulation chapters of smartmoney-backing-kaspa",
+      "genre": [
+        "Electronic",
+        "Drum & Bass"
+      ],
+      "mood": [
+        "Angry",
+        "Scary",
+        "Suspenseful"
+      ],
+      "characteristic": [
+        "Intense",
+        "Droning",
+        "Retro",
+        "Chaotic",
+        "Dancey",
+        "Dark"
+      ],
+      "instrument": [
+        "Drums",
+        "Electronic Drums",
+        "Bass",
+        "Synth Bass",
+        "Synth"
+      ],
+      "keywords": [
+        "drumbass",
+        "electronic",
+        "tron",
+        "matrix",
+        "dark",
+        "sinister",
+        "scary"
+      ],
+      "sections": [
+        "Neon_Beach_Born_Every_Minute_instrumental_chorus_0_44-1.wav",
+        "Neon_Beach_Born_Every_Minute_instrumental_verse_0_49-2.wav"
+      ],
+      "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental chorus 0:44 + verse 0:49). Instrumental-only track, so no background-vocal mixes. Stems NOT downloaded. Same yt_license_code covers the section cuts.",
+      "metadata_complete": true,
+      "used_in": []
+    },
+    {
+      "id": "revenant",
+      "title": "Revenant",
+      "artist": "Michael Briguglio",
+      "source": "soundstripe",
+      "soundstripe_id": "14239",
+      "url": "https://www.soundstripe.com/library/songs/14239",
+      "yt_license_code": "AQFZRPVE95SG0TWF",
+      "folder": "assets/music/Revenant",
+      "primary_file": "Michael_Briguglio_Revenant_background_vocals_1_46.mp3",
+      "duration_sec": 106,
+      "bpm": 120,
+      "key": "A minor",
+      "energy": "high",
+      "vibe": "epic modern-orchestral battle/journey build (120bpm), soaring and intense; CH1 intro / hype reel of Kaspa genius-or-over-rated",
+      "genre": [
+        "Modern Orchestral",
+        "Classical",
+        "Score",
+        "Soundtrack / Cinematic",
+        "Cinematic"
+      ],
+      "mood": [
+        "Inspiring",
+        "Suspenseful"
+      ],
+      "characteristic": [
+        "Epic",
+        "Intense",
+        "Soaring",
+        "Building"
+      ],
+      "instrument": [
+        "Strings",
+        "Big Drums",
+        "Horns",
+        "Violin",
+        "Cello",
+        "Drums"
+      ],
+      "keywords": [
+        "cinematic",
+        "epic",
+        "battle",
+        "war",
+        "fight",
+        "journey",
+        "adventure",
+        "suspense",
+        "modernorchestral"
+      ],
+      "variants_note": "Master downloaded is the background_vocals mix; the Alternate Versions bundle ALSO includes the INSTRUMENTAL mixes (incl. Michael_Briguglio_Revenant_instrumental_full_1_46-7.wav). For a bed UNDER VO, use the instrumental so vocals don't compete.",
+      "sections": [
+        "Michael_Briguglio_Revenant_background_vocals_bridge_0_23-1.wav",
+        "Michael_Briguglio_Revenant_background_vocals_chorus_0_18-2.wav",
+        "Michael_Briguglio_Revenant_background_vocals_intro_0_16-3.wav",
+        "Michael_Briguglio_Revenant_background_vocals_verse_0_32-4.wav",
+        "Michael_Briguglio_Revenant_instrumental_bridge_0_23-5.wav",
+        "Michael_Briguglio_Revenant_instrumental_chorus_0_18-6.wav",
+        "Michael_Briguglio_Revenant_instrumental_full_1_46-7.wav",
+        "Michael_Briguglio_Revenant_instrumental_intro_0_16-8.wav",
+        "Michael_Briguglio_Revenant_instrumental_verse_0_32-9.wav"
+      ],
+      "sections_note": "WAV cuts from Soundstripe's Alternate Versions bundle: intro/chorus/verse/bridge in BOTH background_vocals and instrumental mixes, plus instrumental_full. Same yt_license_code covers them. Stems NOT downloaded.",
+      "metadata_complete": true,
+      "used_in": [
+        "Kaspa founder genius or over-rated: CH1 intro / hype reel"
+      ]
+    },
+    {
+      "id": "press-play",
+      "title": "Press Play",
+      "artist": "Elision",
+      "source": "soundstripe",
+      "soundstripe_id": "13342",
+      "url": "https://www.soundstripe.com/library/songs/13342",
+      "yt_license_code": "KHWFBWAPGB4JAZUM",
+      "folder": "assets/music/Press Play",
+      "primary_file": "Elision_Press_Play_instrumental_1_33.mp3",
+      "duration_sec": 93,
+      "bpm": 90,
+      "key": "D minor",
+      "energy": "medium",
+      "vibe": "synthwave cruiser (90bpm), chill/retro/dancey; the explanation-section bed for CH2 + CH3",
+      "genre": [
+        "Synthwave",
+        "Electronic"
+      ],
+      "mood": [
+        "Chill",
+        "Fun"
+      ],
+      "characteristic": [
+        "Cruising",
+        "Dancey",
+        "Retro"
+      ],
+      "instrument": [
+        "Synth Bass",
+        "Bass",
+        "Electronic Drums",
+        "Drums",
+        "Synth",
+        "Samples"
+      ],
+      "keywords": [],
+      "sections": [
+        "Elision_Press_Play_instrumental_0_21-1.wav",
+        "Elision_Press_Play_instrumental_0_21-2.wav",
+        "Elision_Press_Play_instrumental_0_21-3.wav"
+      ],
+      "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental 0:21 edits -1/-2/-3). Instrumental-only track, no bg-vocal mixes. Same yt_license_code covers them. Stems NOT downloaded.",
+      "metadata_complete": true,
+      "used_in": [
+        "Kaspa founder genius or over-rated: CH2 + CH3 (explanation / backstory)"
+      ]
+    },
+    {
+      "id": "i-will-deliver",
+      "title": "I Will Deliver",
+      "artist": "Strength To Last",
+      "source": "soundstripe",
+      "soundstripe_id": "5355",
+      "url": "https://www.soundstripe.com/library/songs/5355",
+      "yt_license_code": "WNVFRQQASZA8SSQQ",
+      "folder": "assets/music/I Will Deliver",
+      "primary_file": "Strength_To_Last_I_Will_Deliver_instrumental_4_07.mp3",
+      "duration_sec": 247,
+      "bpm": 130,
+      "key": "D minor",
+      "energy": "high",
+      "vibe": "high-energy electropop / new-wave driver (130bpm), intense and rebellious; the back-half bed for CH4 through the close",
+      "genre": [
+        "Electronic",
+        "Pop",
+        "Rock"
+      ],
+      "mood": [
+        "Fun",
+        "Angry"
+      ],
+      "characteristic": [
+        "Intense",
+        "Dancey",
+        "Dark",
+        "Rebellious",
+        "Droning",
+        "Aggressive"
+      ],
+      "instrument": [
+        "Synth",
+        "Electric Guitar",
+        "Claps / Snaps / Stomps",
+        "Percussion",
+        "Guitar",
+        "Drums",
+        "Electronic Drums"
+      ],
+      "keywords": [
+        "electropop",
+        "newwave",
+        "80s",
+        "fashion",
+        "dress",
+        "gym",
+        "twitch",
+        "socials",
+        "depechemode",
+        "petshopboys"
+      ],
+      "sections": [
+        "Strength_To_Last_I_Will_Deliver_instrumental_0_15-3.wav",
+        "Strength_To_Last_I_Will_Deliver_instrumental_0_30-1.wav",
+        "Strength_To_Last_I_Will_Deliver_instrumental_1_00-2.wav"
+      ],
+      "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental duration edits 0:15 / 0:30 / 1:00). Instrumental-only track, no bg-vocal mixes. Same yt_license_code covers them. Stems NOT downloaded.",
+      "metadata_complete": true,
+      "used_in": [
+        "Kaspa founder genius or over-rated: CH4, MID, CH5, CH6, CH7"
+      ]
+    },
+    {
+      "id": "wicked-cinema-wooden",
+      "title": "Wooden",
+      "artist": "Wicked Cinema",
+      "source": "soundstripe",
+      "soundstripe_id": "14870",
+      "url": "https://www.soundstripe.com/library/songs/14870",
+      "yt_license_code": "X0LSN3AU9JLZKKFG",
+      "folder": "assets/music/Wicked Cinema-Wooden",
+      "primary_file": "Wicked_Cinema_Wooden_background_vocals_4_10.mp3",
+      "duration_sec": 250,
+      "vibe": "",
+      "genre": [],
+      "mood": [],
+      "bpm": null,
+      "variants_note": "Master downloaded is the background_vocals mix; the Alternate Versions bundle ALSO includes the INSTRUMENTAL mixes (incl. Wicked_Cinema_Wooden_instrumental_full_4_10-7.wav). For a bed UNDER VO, use the instrumental so vocals don't compete.",
+      "alt_tracks_zip": "Wooden_alternate_tracks_wav.zip (unpacked into the folder, zip deleted)",
+      "sections": [
+        "Wicked_Cinema_Wooden_background_vocals_bridge_0_38-1.wav",
+        "Wicked_Cinema_Wooden_background_vocals_chorus_1_00-2.wav",
+        "Wicked_Cinema_Wooden_background_vocals_intro_1_00-3.wav",
+        "Wicked_Cinema_Wooden_background_vocals_verse_1_30-4.wav",
+        "Wicked_Cinema_Wooden_instrumental_bridge_0_38-5.wav",
+        "Wicked_Cinema_Wooden_instrumental_chorus_1_00-6.wav",
+        "Wicked_Cinema_Wooden_instrumental_full_4_10-7.wav",
+        "Wicked_Cinema_Wooden_instrumental_intro_1_00-8.wav",
+        "Wicked_Cinema_Wooden_instrumental_verse_1_30-9.wav"
+      ],
+      "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (intro/chorus/bridge/verse, each in instrumental + bg-vocal mixes, plus instrumental_full). Same yt_license_code covers them. Stems NOT downloaded.",
+      "metadata_complete": false,
+      "used_in": [
+        "carry-trade (candidate bed, not yet locked in the screenplay/music plan)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$doc": "Reusable B-ROLL video catalog (STATIC, cross-project). Full-screen cinematic motion clips kept here because they are reusable across videos. Project-only / trial b-roll lives in that project's media folder (e.g. media/<project>/assets/video/), NOT here — promote a clip here only once it's a reusable keeper, and COMPRESS it first (target < 400 MB; our pipeline is 1080p h264, so a 1080p re-encode is usually a few MB). Mirrors assets/music/library.json + assets/sfx/*/library.json. Clips here are SILENT (audio stripped — b-roll carries no audio, per the strip-audio rule). Files live under ./video/.",
+  "$schema_note": "Search by `keywords`, `motion`, `look`, `best_for`. `motion` describes the camera/subject movement (matters for the longform-edited 'immersive leading motion' b-roll duration exception — a forward-dolly/fly-through MAY run up to ~5s vs the usual <=3-4s punctuation). `resolution`/`fps` are the encoded master here; downscale per project as needed. LICENSING: Envato Elements = subscription license certificate tied to the item/register (no per-video code).",
+  "broll": [
+    {
+      "id": "datacenter-corridor-dark",
+      "title": "Dark data-center corridor (forward dolly)",
+      "file": "video/datacenter-corridor-dark.mp4",
+      "duration_sec": 12.53,
+      "resolution": "1920x1080",
+      "fps": 30,
+      "silent": true,
+      "motion": "slow forward dolly straight down a server-rack corridor — LEADS the viewer into the scene",
+      "look": "dark, cool blue-lit server racks, blinking equipment LEDs, vanishing-point corridor",
+      "best_for": "AI / compute / data-center / 'the machine' beats; an immersive 'leading' pattern-interrupt cutaway that (per the longform-edited duration exception) MAY hold up to ~5s instead of the usual <=3-4s. Also works for 'server / network goes dark' and shutdown beats.",
+      "keywords": ["datacenter", "data center", "server", "server room", "corridor", "hallway", "dark", "blue", "compute", "AI", "infrastructure", "dolly", "push-in", "leading", "vanishing point"],
+      "source": "envato_elements",
+      "original_file": "server-dark.mov (4096x2160 ProRes, ~1.4GB) — first used in bittensor-for-the-future cold open",
+      "license": "Envato Elements subscription — license certificate tied to the item/register (no per-video code).",
+      "used_in": ["bittensor-for-the-future"]
+    }
+  ]
+}

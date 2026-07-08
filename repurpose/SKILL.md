@@ -72,21 +72,39 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > **⛔ HARD RULE #1 — EVERY IMAGE IS UNIQUE. NEVER reuse an `image_id` or image file across two posts.**
 > Not for a one-liner variant of a longer tweet, not for two posts on the same topic, not from an already-posted tweet, not "to save generation time." Each tweet / IG post / slide gets its own freshly generated UUID and its own freshly generated image. If you catch yourself about to point two entries at the same file, STOP and generate a new one. (This is the single most-repeated mistake on this account — full rule + the mandatory pre-save duplicate scan are in the "every tweet gets a unique image" section below. Read it.)
 
+> **⛔ HARD RULE #2 — ALL IMAGE GENERATION RUNS THROUGH `gen-images.js` (pool-managed). NEVER loop `generate-image.js`.**
+> Generate every batch with **`repurpose/gen-images.js`**. It consults the chat registry
+> **`chatgpt-image-chats.json`** (repo root) via `repurpose/chat-pool.js`: it reuses the active ChatGPT
+> chat for that `--prefix`/purpose while it's under the cap (~25 images), and **auto-rotates to a fresh
+> chat when full, dead, or missing** — capturing and recording the new chat URL itself. Chats are isolated
+> per purpose so styles never cross-contaminate. Just run it:
+> ```
+> node gen-images.js --list=<items.json> --prefix=x-tweets    # X tweets
+> node gen-images.js --list=<items.json> --prefix=yt-posts     # YT carousel/posts
+> node gen-images.js --list=<items.json> --prefix=ig-single    # IG 4:5 companions
+> ```
+> No hand-recorded chat URLs anymore — the pool manages them. `items.json` = `[{ "image_id":"<8hex>",
+> "slug":"<kebab>", "prompt":"...", "ref":"<optional logo path>" }]`; skips already-existing files (resumable).
+> B-roll uses the same pool (purpose `broll`) via `generate-broll-wlw.js` (outputs to `video-creation/assets/`).
+> **Background (why the pool exists):** a ChatGPT chat degrades past ~25 images — it either stops rendering
+> OR returns off-prompt/style-contaminated images (e.g. the b-roll chat forced icy/Bitcoin motifs onto every
+> prompt, 2026-06-07). The pool caps + rotates to prevent both. Always QA a generated frame regardless.
+> `gen-batch.js` / `gen-batch-freshchat.js` are SUPERSEDED (kept for reference); their hardcoded persistent
+> chat URLs are overloaded/contaminated. **Do NOT loop `generate-image.js`** (a new chat per image = orphan-chat sprawl).
+
 **Canonical coin lineup lives in `../persona/persona.json` → `stacking_lineup`.** When generating images that depict Mike's portfolio / favorites / "coins I'm stacking", use that lineup; render **$KAS as the hero** (larger / more prominent when coins share a frame). Never include $BTC, $ETH, $SOL, $BNB in a favorites image (persona covers why) — they're macro-commentary subjects, not stacking picks.
 
-**Reference images for lesser-known coins.** The image model invents fake logos for lesser-known projects when left to its own. Before generating any image that mentions a lesser-known crypto project, scan the text for project names/tickers and check for a matching reference file in:
+**Reference images for lesser-known coins.** The image model invents fake logos for lesser-known projects when left to its own. Before generating any image that mentions a lesser-known crypto project, scan the text for project names/tickers, then **list the live contents of the reference folder and match against THAT — never against any list written in this doc.**
 
 ```
-C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\images\reference\
-  linea.png          — Linea (Ethereum L2)
-  ElizaOS-ai16z.webp — ElizaOS / ai16z AI agent project
-  housecoin.webp     — Housecoin (KRC20 meme token)
-  kroak.png          — KROAK (KRC20 meme token)
-  kappy.png          — KAPPY (KRC20 meme token; cat-themed "the happiest cat")
-  kasy.png           — KASY (KRC20 meme token; cute anime girl mascot)
+schedule-tweets\images\reference\   ← glob / ls this folder EVERY time; it is the only source of truth
 ```
 
-If a match exists, pass it via `--reference-image=<path>` on `generate-image.js` and refer to it in the prompt as "the logo shown in the attached reference image". Kaspa, Bittensor, and Toncoin are well-known enough to render correctly without a reference.
+> Do not trust a remembered or doc-embedded set of filenames. New references get added over there continually, so a static list goes stale. (Real miss, 2026-06-03: `LAB.png` was sitting in the folder and had been used many times, but a hardcoded list here omitted it, so a draft wrongly claimed "no $LAB reference exists." Always `ls`/Glob the directory first.)
+
+Filenames follow the project name (e.g. `LAB.png`, `toshi.png`, `DogInMe.png`, `kasy.png`). If a match exists, pass it via `--reference-image=<path>` on `generate-image.js` and refer to it in the prompt as "the logo shown in the attached reference image". Kaspa, Bittensor, and Toncoin are well-known enough to render correctly without a reference.
+
+**Brand-safety — when a project has multiple reference variants, pick the brand-safe one for monetized YT/TikTok.** Some references have a risqué and a clean variant (e.g. ElizaOS: the orange-tee `ElizaOS-ai16z.webp` is brand-safe; `ElizaOS-ai16z-2.png` is the risqué one). Default to the clean variant for any monetized short/post.
 
 **Multi-coin lineup constraint.** `generate-image.js` accepts only a single `--reference-image`. For a single-coin spotlight (just ElizaOS or just Linea), the reference flow works cleanly. For a multi-coin lineup needing reference logos for two or more lesser-known coins in the same frame, the script can't handle it — fall back to manual ChatGPT upload for that image, save it with the right filename in `images/x/` (tweets) or `images/yt/` (yt-posts), and update the queue entry. A typical favorites lineup with $KAS as hero needs one reference upload per lesser-known coin in the frame.
 
@@ -282,20 +300,22 @@ When the topic is a sustained argument that single tweets can't carry, draft a t
 - The **last content tweet is the takeaway**. Land it punchy — single line that's screenshot-bait, restating the thesis or its implication.
 - The **final tweet is always a CTA**. See "CTA pattern" below.
 - Each individual tweet still has the hard 280-char cap.
-- Use `1/N` style numbering at the start of each tweet (where N is the total including the CTA) so readers know how many beats are coming. The CTA gets numbered like the rest — no need to flag it specially in the numbering.
+- **Do NOT put `1/N` numbering in the tweet text.** Mike's actual threads never number the tweets; the chain reads as a natural sequence of replies. (The `### N/N` headers in the draft-markdown format below are just document labels for review; they never go into the posted tweet text.)
 
 ### CTA pattern (8th tweet)
 
 The CTA exists to convert thread readers into followers. Keep it short, value-focused, and consistent so people who see multiple threads recognize the pattern.
 
-**Default CTA target:** Follow @mikeneder on X.
+**Default CTA target:** Follow me on X.
+
+**ALWAYS write "Follow me" — NEVER spell out the @username (@mikeneder).** The reader is already on Mike's thread; "follow me" is the natural ask and reads as human. Spelling out "@mikeneder" reads like an AI-generated growth-hack template and is exactly what Mike does not want. This regressed once (drafts May 27 2026 onward reverted to "@mikeneder" because a session lost this instruction and fell back to the literal doc example) — that is why this rule is now spelled out explicitly. If you ever catch "@mikeneder" in a CTA, replace it with "me".
 
 **Default CTA template:**
 
 ```
 If [thread payoff] —
 
-Follow @mikeneder for [value prop — what they'll get from following].
+Follow me for [value prop — what they'll get from following].
 
 [short signature line, often emoji]
 ```
@@ -305,12 +325,13 @@ Follow @mikeneder for [value prop — what they'll get from following].
 ```
 If this reframed how you're thinking about the cycle —
 
-Follow @mikeneder for macro × crypto threads that ignore the 4-year cycle echo chamber.
+Follow me for macro × crypto threads that ignore the 4-year cycle echo chamber.
 
-🧠 + 📈
+🧠 + 😎
 ```
 
 **CTA writing rules:**
+- **"Follow me", never "@mikeneder"** (see the bolded rule above). No @username anywhere in the CTA.
 - Open with an "if" clause that references what the thread just delivered ("If this reframed…", "If you got value from…", "If this hit…"). This filters for engaged readers and primes them with self-identification before the ask.
 - The value prop should be specific to the niche, not generic ("for macro × crypto threads," not "for great content").
 - Keep it under ~200 chars so it reads cleanly and leaves room for visual breathing space.
@@ -414,7 +435,7 @@ When the user picks a variation (or asks you to combine pieces of both), append 
     },
     {
       "position": 8,
-      "text": "If this reframed how you're thinking about the cycle —\n\nFollow @mikeneder for weekly macro × crypto threads...",
+      "text": "If this reframed how you're thinking about the cycle —\n\nFollow me for macro × crypto threads...",
       "hook": null,
       "is_cta": true,
       "char_count": 159,
@@ -916,11 +937,20 @@ Slide 1 rules are strictest — it must earn the swipe on its own. If someone sc
 
 Unlike tweet image prompts (which ban text), carousel slide prompts specify the exact text to render. **Always use one of the four named version templates below** — never invent an ad-hoc minimalist prompt. The version templates are the canonical prompt structure; using anything else produces visual inconsistency across the account.
 
+**⛔ MANDATORY — anchor EVERY slide on a reference exemplar image. This is the #1 repeated regression (Mike has flagged it many times).** A text prompt alone is NEVER acceptable for a carousel slide: generating without a reference produces minimalist, off-brand slides (floating-coin, sentence-case, no news-flash background) that do not match the account's look. For every slide — **whether generating a NEW carousel or regenerating an existing one** — you MUST:
+1. **Make an independent per-post judgment and choose the best-fitting version (1, 2, or 4) for THIS post's content — there is NO default version.** Judge by tone: 1 = high-energy news-flash, 2 = analytical/editorial, 4 = hook photo + data/chart. When a run processes multiple YT posts, you make a SEPARATE version judgment for EACH post; never blanket one version across all of them. Then pull a matching exemplar from `images/reference/carousels/versionN/` (N = the version you chose), matched to the slide's ROLE: hook → `*-01-hook*`, middle beats → `*-02/03/04-*`, question → `*-05-question*`. `ls` the folder live each time.
+2. Pass that exemplar via `--reference-image=` to `generate-image.js`, and in the prompt say **"match the layout, typography, color, and overall styling of the attached reference image."**
+3. Keep slide text in the canonical ALL-CAPS punchy register (not sentence case).
+
+The "When generating or regenerating carousel slides" steps in the version-selection section far below are the SAME requirement, restated — fresh generation is **not** exempt. If you ever find yourself building a carousel slide prompt with no `--reference-image`, stop: that is the bug.
+
+**⛔ HARD RULE — no usable reference exemplar means DO NOT GENERATE.** If for any reason you cannot anchor on a Version 1/2/4 exemplar (the `images/reference/carousels/versionN/` folder is missing, no role-matching exemplar exists, the chat/tool can't attach the reference, etc.), you must **STOP and tell Mike** — do NOT fall back to a text-only prompt, an ad-hoc minimalist slide, or "best effort" carousel. A carousel generated without its version reference is worse than no carousel: producing one silently is the exact failure Mike has flagged repeatedly. Absence of a usable reference = do not generate at all; surface it to Mike and wait.
+
 **Visual variety across the set**: vary the accent element or layout slightly from slide to slide so the carousel feels designed, not stamped. Slide 1 can have a stronger visual element (hero coin, bold graphic). Middle slides lean more text-only. Last slide (question) can echo slide 1's energy.
 
 **Brand colors**: dark navy background, white headline text, teal or gold accent elements. Do not deviate — consistency across slides and across posts is what makes the account look intentional.
 
-**Never use this slide prompt for images that need reference uploads** (lesser-known logos, faces). Text + abstract visuals only. If a slide concept needs a specific logo that the generator won't recognize, use a text label instead: `"[PROJECT NAME]"` in the slide text itself.
+**Style reference vs logo/face reference — do not confuse the two.** The carousel STYLE exemplar from `images/reference/carousels/versionN/` is ALWAYS attached (mandatory, per the block above) — that is the one and only `--reference-image`. What this caveat restricts is slide *content*: do not try to render a specific lesser-known logo or a real face inside a slide. `generate-image.js` accepts only one `--reference-image`, and that slot belongs to the style exemplar — so for any exotic logo the generator won't recognize, use a **text label** (`"[PROJECT NAME]"` in the slide text) rather than spending the reference slot on a logo. Text + abstract visuals + the style exemplar. (Earlier wording here said "never use reference uploads for slides," which wrongly read as "skip the style exemplar" — that was the source of the off-reference regressions.)
 
 ### Version library
 
@@ -1383,15 +1413,27 @@ ChatGPT Plus allows ~40–50 image generations per 3 hours (one every 4–5 min)
 
 These delays are the defaults. When generating in a posting-burst session, keep these or longer.
 
+- **An OVERLOADED persistent chat stops rendering images entirely — symptom is a wall of `FAIL (timeout)`; this is the #1 cause and it WILL recur (observed 2026-06-05).** The persistent chats are long-lived conversations that accumulate every image ever generated in them. Once a chat holds enough images, it can stop producing new ones: mid-run, the YT Images chat (`.../69ffc14c...`) suddenly timed out on every remaining `gen-batch.js` slide (no image element ever appeared in the DOM), on both the first attempt and the retry, for 15+ min. **It is NOT a rate cap** (a real ChatGPT cap takes hundreds of gens) and **NOT prompt-specific** — the whole conversation is overloaded. Re-running the same 5 prompts in a **fresh chat** generated all 5 in ~5 min, first try.
+
+  **Immediate fix (one run):** regenerate in a fresh `chatgpt.com/` chat. `gen-batch.js` refuses fresh chats by design; use `_gen-353x-redo.js` (fresh-chat pattern) or its carousel-output copy `_gen-neutral-freshchat.js` (writes `yt-posts-<id>-<slug>.png` into `images/yt/`). Succeeded files from the bad run are real (md5-unique, on disk); the fresh-chat regen skips them via its exists-check and fills only the missing ones.
+
+  **⚠ STANDING INSTRUCTION — the recorded YT Images chat (`.../69ffc14c...`) is RETIRED as of 2026-06-05 (overloaded).** Do not expect it to work. **On the NEXT YT image generation, launch a brand-new chat, then record that new chat's URL as the persistent YT Images chat in all the places below, and reuse THAT one every time afterwards** (until it too overloads, then repeat). Until it has been re-recorded, generate YT carousels via the fresh-chat tool above.
+
+  **Durable fix (when a persistent chat overloads, RETIRE it and register a NEW one):** start a brand-new ChatGPT conversation, do one generation in it, copy its `https://chatgpt.com/c/<new-id>` URL, then replace the old URL **everywhere it is recorded** so future `gen-batch.js`/`generate-image.js` runs use the healthy chat:
+  - `repurpose/gen-batch.js` → `PERSISTENT_CHATS` (`yt-posts` **and** `ig-carousel` share the YT chat; `x-tweets` is separate).
+  - `repurpose/generate-image.js` → `PERSISTENT_CHATS` (same keys; note `ig-single` shares the X-tweets chat).
+  - This doc's inline URLs (search `69ffc14c` for the YT chat, `69fe9134` for the X-tweets chat).
+  The X-tweets/IG-single chat (`.../69fe9134...`) will eventually overload the same way — same procedure applies to it.
+
 ### Image dimensions
 
 Current ChatGPT output is **1254×1254** for 1:1 prompts. The platform-standard for X/IG/YT images is **1080×1080**. The current pipeline does not downscale; flag this if/when a downscale step gets added. The 1254×1254 still uploads cleanly to all platforms (X compresses; IG and YT accept it), so the impact is purely bandwidth/storage, not visual.
 
 ### YT/IG carousel image generation — version selection
 
-When regenerating carousel slides, **always use Version 1, 2, or 4** (Version 3 is retired — see earlier section). For each regen pass:
-1. Pick a version (default to Version 1 — news-flash — unless the post body clearly fits another style).
-2. Pick a reference image from `images/reference/carousels/versionN/` that matches the slide's role (hook → 01-hook reference, mid-slide → 02/03/04 reference, question → 05-question reference).
+When **generating OR regenerating** carousel slides (fresh generation is NOT exempt — same rule), **always use Version 1, 2, or 4** (Version 3 is retired — see earlier section). For each pass:
+1. **Choose the best-fitting version (1, 2, or 4) for THIS post based on its content/tone — there is NO default.** 1 = high-energy news-flash, 2 = analytical/editorial, 4 = hook photo + data/chart. Make the judgment independently for every post: if a run has three YT posts with three carousels, that is three separate version judgments, one per post. Do NOT pick a single version and apply it across multiple posts for "consistency" — the right version is whatever each post's content calls for.
+2. Pick a reference image from `images/reference/carousels/versionN/` that matches the slide's role (hook → 01-hook reference, mid-slide → 02/03/04 reference, question → 05-question reference). **This is mandatory, not optional — a carousel slide generated without a versionN reference exemplar is the regression Mike repeatedly catches.**
 3. Pass it via `--reference-image=` to `generate-image.js`.
 4. Use the version's prompt template, substituting in slide-text derived from the YT post body (the `images[]` entries often have null `slide_text`, so it must be inferred from the body and the slide slug).
 

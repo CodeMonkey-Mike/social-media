@@ -1,0 +1,42 @@
+// Lane 2 b-roll for 'this-is-gonna-rip' shorts. 9:16 full-screen scenes.
+// Clip 1 (Kaspa) uses kaspa-logo ref; clip 2 (macro/zombies) + clip 4 (TAO) need no ref.
+// Clip 2 gets EXTRA coverage (8 beats) to cover the blurry face per Mike's request.
+const fs = require('fs');
+const crypto = require('crypto');
+const ROOT = 'C:\\Users\\mnede\\Documents\\Claude\\social-media';
+const KREF = ROOT + '\\schedule-tweets\\images\\reference\\kaspa-logo.png';
+const id8 = () => crypto.randomBytes(4).toString('hex');
+
+const items = [
+  // ---- Clip 1: Kaspa (ref) ----
+  { slug: 'tigr-energy', ref: KREF, prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, film-quality render. A glowing teal Kaspa coin with the backwards-K (mirrored capital K) logo and an orange Bitcoin coin side by side, both drawing glowing energy from power lines into themselves, the Kaspa coin's energy noticeably brighter and cleaner. Deep navy near-black background, dramatic teal rim lighting. No text or words anywhere in the image." },
+  { slug: 'tigr-efficient', ref: KREF, prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, film-quality render. A glowing teal Kaspa coin with the backwards-K (mirrored capital K) logo racing far ahead on a fast glowing light track leaving bright trails, while a heavy orange Bitcoin coin lumbers behind on a slow narrow lane. Deep navy near-black background, dramatic teal speed glow. No text or words anywhere in the image." },
+  { slug: 'tigr-podium', ref: KREF, prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, film-quality render. A glowing teal Kaspa coin with the backwards-K (mirrored capital K) logo standing triumphantly on top of a sturdy orange Bitcoin coin like a champion on a podium, radiating a clean teal glow upward. Deep navy near-black background, dramatic rim lighting. No text or words anywhere in the image." },
+  // ---- Clip 2: macro / zombies / whales (no ref, generic) ----
+  { slug: 'tigr-whales-stop', prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, film-quality render. A friendly giant whale made of glowing blue light calmly scooping up falling golden coins and tucking them away, confident and steady. Deep navy near-black underwater background, dramatic rim lighting. No text or words anywhere in the image." },
+  { slug: 'tigr-sell-pumps', prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, film-quality render. A glowing jagged market line with peaks and valleys, little cartoon hands dropping coins at the bright green peaks and snatching them back at the red dips. Deep navy near-black background, dramatic rim lighting. No text or words anywhere in the image." },
+  { slug: 'tigr-cause-dump', prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, slightly comedic. A crowd of goofy green crypto zombies shoving glowing coins off a steep cliff, and their own panic forming a dark storm cloud above them. Deep navy near-black background, dramatic rim lighting. No text or words anywhere in the image." },
+  { slug: 'tigr-prophecy', prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, slightly eerie. A mob of green crypto zombies all staring into a glowing crystal ball that shows a falling red market line, and their belief literally dragging the line downward. Deep navy near-black background, eerie rim lighting. No text or words anywhere in the image." },
+  { slug: 'tigr-old-bear', prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, film-quality render. A heavy iron vice squeezing a glowing red market chart downward, dark storm clouds behind it, conveying tightening pressure. Deep navy near-black background, cold blue rim lighting. No text or words anywhere in the image." },
+  { slug: 'tigr-macro-good', prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, film-quality render. A cheerful money printer spitting out glowing bills while bright green upward arrows rise around it and a climbing employment graph glows, optimistic and warm. Deep navy near-black background, warm green rim lighting. No text or words anywhere in the image." },
+  { slug: 'tigr-panic-dump', prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, slightly comedic. A panicked crowd of cartoon investors frantically hurling glowing coins down into a dark pit, chaotic motion and fear. Deep navy near-black background, dramatic red rim lighting. No text or words anywhere in the image." },
+  { slug: 'tigr-reversed-bull', prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, film-quality render. A confident glowing whale rising upward through water carrying a bright green climbing market chart with it, sunrise breaking through above, triumphant reversal. Deep navy near-black background, bright teal-green rim lighting. No text or words anywhere in the image." },
+  // ---- Clip 4: TAO (no ref, well-known) ----
+  { slug: 'tigr-tao-switchoff', prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, film-quality render. A giant cold government hand flipping a big switch to OFF on a glowing centralized AI brain-server, leaving a small crowd of cartoon people in the dark, while a small decentralized network of glowing nodes stays lit nearby. Deep navy near-black background, cool electric-blue rim lighting. No text or words anywhere in the image." },
+  { slug: 'tigr-tao-network', prompt: "Pixar-style 3D animated CGI, 9:16 vertical aspect ratio, film-quality render. A glowing resilient decentralized AI network orb made of many interconnected luminous nodes, floating powerfully and unstoppable with electric energy crackling around it. Deep navy near-black background, bright electric-blue and teal rim lighting. No text or words anywhere in the image." },
+];
+
+const gen = [], map = {};
+const seen = new Set();
+for (const it of items) {
+  let id = id8(); while (seen.has(id)) id = id8(); seen.add(id);
+  const filename = `broll-${id}-${it.slug}.png`;
+  const g = { image_id: id, slug: it.slug, prompt: it.prompt };
+  if (it.ref) g.ref = it.ref;
+  gen.push(g);
+  map[it.slug] = filename;
+}
+fs.writeFileSync(ROOT + '\\repurpose\\_rip_items_broll.json', JSON.stringify(gen, null, 2));
+fs.writeFileSync(ROOT + '\\repurpose\\_rip_broll_map.json', JSON.stringify(map, null, 2));
+console.log(`b-roll items: ${gen.length}`);
+console.log(JSON.stringify(map, null, 2));

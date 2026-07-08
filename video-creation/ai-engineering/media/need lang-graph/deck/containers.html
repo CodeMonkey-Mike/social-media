@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>need lang-graph — standalone containers (one per chunk)</title>
+<!-- Built per longform-edited/skills/broll-and-containers.md + container-reference/:
+     ONE self-contained full-frame container per chunk. LEFT-aligned, eyebrow + Playfair
+     headline (accent keyword) + body/diagram/code. Title lives INSIDE. Never a cropped deck.
+     Stylesheet reused verbatim from python-ai-libraries/deck/containers.html + graph helpers. -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c10; --card:#12151c; --border:#1e2330;
+  --g:#00e68a; --c:#00c2ff; --go:#ffd700; --re:#ff4060; --pu:#a855f7;
+  --t1:#e8eaf0; --t2:#8892a4; --t3:#505a6e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;font-family:'DM Sans',sans-serif;color:var(--t1)}
+.frame{width:1920px;height:1080px;position:relative;overflow:hidden;background:var(--bg);display:flex;align-items:center;margin:0 auto 40px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.36;pointer-events:none}
+.inner{position:relative;z-index:1;padding:0 150px;max-width:1620px;width:100%}
+.ey{display:block;font-family:'JetBrains Mono',monospace;font-size:23px;font-weight:600;text-transform:uppercase;letter-spacing:.26em;color:var(--t3);margin-bottom:28px}
+.hl{font-family:'Playfair Display',serif;font-weight:800;font-size:80px;line-height:1.06;letter-spacing:-.01em}
+.hl .g{color:var(--g)} .hl .c{color:var(--c)} .hl .go{color:var(--go)} .hl .re{color:var(--re)} .hl .pu{color:var(--pu)}
+.divider{width:74px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--g),var(--c));margin:32px 0 38px}
+.body{font-size:31px;line-height:1.6;color:var(--t2);max-width:1200px}
+.body .mono{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--t1)}
+.body .g{color:var(--g)} .body .go{color:var(--go)} .body .c{color:var(--c)} .body .re{color:var(--re)}
+
+/* code block */
+.code{font-family:'JetBrains Mono',monospace;font-size:30px;line-height:1.7;color:var(--t1);white-space:pre;margin-top:38px;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:40px 46px;max-width:1400px;overflow:hidden}
+.code .cm{color:var(--t3)} .code .g{color:var(--g)} .code .go{color:var(--go)} .code .c{color:var(--c)} .code .pu{color:var(--pu)} .code .re{color:var(--re)}
+.code .kw{color:var(--pu)} .code .str{color:var(--go)} .code .fn{color:var(--c)}
+.code .hi{background:rgba(0,230,138,.14);border-radius:6px;padding:3px 8px;margin:0 -8px;box-shadow:inset 0 0 0 1px rgba(0,230,138,.3)}
+.codecap{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--t3);margin-top:22px;letter-spacing:.04em}
+
+/* 2-up compare (the ONE sanctioned multi-card shape) */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:44px;max-width:1400px}
+.col{padding:38px 44px;border-radius:20px}
+.col.norm{background:rgba(80,90,110,.08);border:1px solid var(--border)}
+.col.cov{background:linear-gradient(135deg,rgba(0,230,138,.07),rgba(0,194,255,.05));border:1px solid rgba(0,230,138,.3)}
+.col.bad{background:rgba(255,64,96,.06);border:1px solid rgba(255,64,96,.28)}
+.col .ml{display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:22px}
+.col .ml.g{color:var(--g)} .col .ml.re{color:var(--re)} .col .ml.c{color:var(--c)}
+.col .big{font-family:'Playfair Display',serif;font-weight:800;font-size:46px;color:var(--t1);margin-bottom:12px}
+.col .sub{font-size:27px;color:var(--t2);line-height:1.5}
+.col ul{list-style:none;margin-top:6px}
+.col li{font-size:27px;color:var(--t2);line-height:1.5;padding:9px 0 9px 34px;position:relative}
+.col li::before{content:'';position:absolute;left:0;top:20px;width:12px;height:12px;border-radius:3px;background:var(--t3)}
+.col.cov li::before{background:var(--g)} .col.bad li::before{background:var(--re)}
+
+/* hero / quote card */
+.hero{font-family:'Playfair Display',serif;font-weight:900;font-size:96px;line-height:1.12;margin-top:20px;
+  background:linear-gradient(135deg,var(--g),var(--c));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.chips{display:flex;gap:18px;margin-top:48px;flex-wrap:wrap}
+.chip{padding:16px 32px;border-radius:100px;background:rgba(0,194,255,.1);border:1px solid rgba(0,194,255,.35);color:var(--c);font-family:'JetBrains Mono',monospace;font-size:27px}
+.chip.g{background:rgba(0,230,138,.1);border-color:rgba(0,230,138,.35);color:var(--g)}
+.chip.go{background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.35);color:var(--go)}
+.chip.pu{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35);color:var(--pu)}
+
+/* list (buys/costs/have) */
+.rows{list-style:none;margin-top:40px;max-width:1300px}
+.rows li{display:flex;align-items:center;gap:22px;padding:24px 34px;margin-bottom:16px;border-radius:15px;background:rgba(255,255,255,.02);border-left:4px solid var(--c);font-size:31px;color:var(--t1)}
+.rows li .ic{font-size:34px;flex:none}
+.rows li.g{border-left-color:var(--g)} .rows li.re{border-left-color:var(--re)} .rows li.go{border-left-color:var(--go)}
+
+/* ===== GRAPH DIAGRAM HELPERS ===== */
+.gwrap{display:flex;align-items:center;gap:0;margin-top:52px;flex-wrap:nowrap}
+.gnode{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 30px;text-align:center;min-width:190px;position:relative}
+.gnode .nm{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:27px;color:var(--t1);display:flex;align-items:center;gap:12px;justify-content:center;white-space:nowrap}
+.gnode .sub{font-family:'DM Sans';font-weight:400;font-size:19px;color:var(--t3);margin-top:6px}
+.gnode.in{border-color:rgba(0,194,255,.45)}
+.gnode.pub{border-color:rgba(255,215,0,.45)}
+.gnode.good{border-color:rgba(0,230,138,.5);background:linear-gradient(135deg,rgba(0,230,138,.09),rgba(0,194,255,.04))}
+.gnode.bad{border-color:rgba(255,64,96,.5)}
+.gnode.agent{border-color:rgba(0,230,138,.6);box-shadow:0 0 34px rgba(0,230,138,.16)}
+.gnode.dimn{opacity:.4}
+.gnode.boss{border-color:rgba(255,215,0,.5);background:linear-gradient(135deg,rgba(255,215,0,.08),transparent)}
+.lanes{display:flex;flex-direction:column;gap:22px}
+.arrow{width:64px;height:3px;background:var(--t3);position:relative;flex:none}
+.arrow::after{content:'';position:absolute;right:-2px;top:-5px;border-left:11px solid var(--t3);border-top:6.5px solid transparent;border-bottom:6.5px solid transparent}
+.arrow.sm{width:44px}
+.arrow.g{background:var(--g)} .arrow.g::after{border-left-color:var(--g)}
+.svgconn{flex:none}
+.col-nodes{display:flex;flex-direction:column;gap:20px;align-items:center}
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:21px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);padding:8px 16px;border:1px solid var(--border);border-radius:8px;margin-top:14px}
+.tag.g{color:var(--g);border-color:rgba(0,230,138,.4)}
+.tag.re{color:var(--re);border-color:rgba(255,64,96,.4)}
+
+/* 2x2 matrix */
+.matrix{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:16px;margin-top:44px;width:900px;height:520px}
+.quad{border:1px solid var(--border);border-radius:16px;padding:30px;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(255,255,255,.02)}
+.quad .qh{font-family:'JetBrains Mono',monospace;font-size:23px;color:var(--t3);margin-bottom:10px}
+.quad .qt{font-size:27px;color:var(--t2)}
+.quad.hot{border-color:var(--g);background:linear-gradient(135deg,rgba(0,230,138,.14),rgba(0,194,255,.05));box-shadow:0 0 40px rgba(0,230,138,.14)}
+.quad.hot .qt{color:var(--g);font-family:'Playfair Display',serif;font-weight:800;font-size:38px}
+.axlabel{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--t3);letter-spacing:.1em}
+
+/* guard steps */
+.steps{display:flex;align-items:center;gap:0;margin-top:50px;flex-wrap:nowrap}
+.step{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;text-align:center;min-width:210px}
+.step .n{font-family:'JetBrains Mono',monospace;font-size:20px;color:var(--g);letter-spacing:.1em}
+.step .l{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:28px;color:var(--t1);margin-top:8px}
+.step.danger{border-color:rgba(255,64,96,.5)}
+.step.done{border-color:rgba(0,230,138,.5);background:linear-gradient(135deg,rgba(0,230,138,.08),transparent)}
+
+/* progress bar */
+.pbar{height:44px;border-radius:10px;background:rgba(255,255,255,.05);position:relative;overflow:hidden;margin-top:46px;max-width:1100px}
+.pbar i{position:absolute;inset:0;right:auto;width:95%;background:linear-gradient(90deg,var(--g),var(--c));border-radius:10px}
+.pbar .crash{position:absolute;right:5%;top:-10px;bottom:-10px;width:3px;background:var(--re)}
+.twin{display:flex;gap:26px;margin-top:34px}
+.twin .t{flex:1;border:1px solid var(--border);border-radius:14px;padding:26px 32px;font-family:'JetBrains Mono',monospace;font-size:30px}
+.twin .t.strike{color:var(--t3);text-decoration:line-through;text-decoration-color:var(--re)}
+.twin .t.win{border-color:rgba(0,230,138,.4);color:var(--g)}
+
+/* file vs server db */
+.dbrow{display:flex;align-items:center;gap:70px;margin-top:50px}
+.fileicon{width:200px;height:240px;border-radius:16px;border:2px solid rgba(0,230,138,.5);background:linear-gradient(135deg,rgba(0,230,138,.08),transparent);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.fileicon .fn{font-family:'JetBrains Mono',monospace;font-size:24px;color:var(--g)}
+.fileicon .fi{font-size:76px}
+.stack-db{display:flex;flex-direction:column;gap:12px;opacity:.55}
+.stack-db .box{border:1px dashed var(--t3);border-radius:12px;padding:18px 30px;font-family:'JetBrains Mono',monospace;font-size:24px;color:var(--t2);text-align:center}
+.vs{font-family:'Playfair Display',serif;font-style:italic;font-size:40px;color:var(--t3)}
+
+.note{font-size:26px;color:var(--t3);margin-top:30px;font-style:italic}
+</style>
+</head>
+<body>
+
+<!-- Shared SVG defs (arrowheads) -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#505a6e"/></marker>
+  <marker id="ahg" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#00e68a"/></marker>
+  <marker id="ahr" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#ff4060"/></marker>
+</defs></svg>
+
+
+<!-- ═══════════ CHAPTER 1 — HOOK ═══════════ -->
+
+<!-- CHUNK 01 — title card -->
+<section class="frame" id="c01">
+  <div class="orb" style="width:660px;height:660px;background:var(--g);top:-180px;left:-160px"></div>
+  <div class="orb" style="width:520px;height:520px;background:var(--pu);bottom:-160px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">AI Engineering Simplified</span>
+    <div class="hl" style="font-size:104px">When Do You Actually<br>Need <span class="g">LangGraph</span>?</div>
+    <div class="divider"></div>
+    <p class="body">A real-world walkthrough. Two libraries, almost the same name, and one question: could a real content pipeline live in <span class="g">LangGraph</span>, and would that be <span class="c">better</span>?</p>
+    <div class="chips"><span class="chip">LangChain vs LangGraph</span><span class="chip g">a real pipeline</span><span class="chip pu">do you even need it?</span></div>
+  </div>
+</section>
+
+<!-- CHUNK 02 — the pipeline (framing device) -->
+<section class="frame" id="c02">
+  <div class="orb" style="width:560px;height:560px;background:var(--c);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Framing Device</span>
+    <div class="hl">One real pipeline, <span class="c">seven</span> platforms</div>
+    <div class="divider"></div>
+    <div class="gwrap">
+      <div class="gnode in"><div class="nm">livestream</div><div class="sub">one input</div></div>
+      <svg class="svgconn" width="96" height="260" viewBox="0 0 96 260">
+        <path d="M2,130 C50,130 50,44 94,44" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,130 H94" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,130 C50,130 50,216 94,216" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+      </svg>
+      <div class="lanes">
+        <div class="gnode"><div class="nm">long-form</div></div>
+        <div class="gnode"><div class="nm">shorts</div></div>
+        <div class="gnode"><div class="nm">repurpose</div></div>
+      </div>
+      <svg class="svgconn" width="96" height="260" viewBox="0 0 96 260">
+        <path d="M2,44 C50,44 50,130 94,130" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,130 H94" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,216 C50,216 50,130 94,130" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+      </svg>
+      <div class="gnode pub"><div class="nm">publish</div><div class="sub">X · IG · FB · TikTok · YT · +2</div></div>
+    </div>
+    <p class="note">Not a toy demo. The real thing, running every week.</p>
+  </div>
+</section>
+
+<!-- CHUNK 03 — the question -->
+<section class="frame" id="c03">
+  <div class="orb" style="width:600px;height:600px;background:var(--g);bottom:-160px;left:-140px"></div>
+  <div class="inner">
+    <span class="ey">The Question</span>
+    <div class="hl">Could this pipeline live in<br><span class="g">LangGraph</span>, and would it be <span class="c">better</span>?</div>
+    <div class="divider"></div>
+    <p class="body">By the end you'll know what each library is for, what code you'd actually write to map a workflow onto a graph, and how to tell whether you even <span class="g">need</span> it.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 2 — PARTS BIN vs ENGINE ═══════════ -->
+
+<!-- CHUNK 04 — the one-liner -->
+<section class="frame" id="c04">
+  <div class="orb" style="width:540px;height:540px;background:var(--pu);top:-120px;left:-120px"></div>
+  <div class="orb" style="width:540px;height:540px;background:var(--c);bottom:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The One-Liner</span>
+    <div class="hl">The distinction that <span class="go">actually</span> matters</div>
+    <div class="cmp">
+      <div class="col norm"><div class="ml c">LangChain</div><div class="big" style="color:var(--c)">A parts bin</div><div class="sub">Components you assemble: models, prompts, parsers, tools.</div></div>
+      <div class="col cov"><div class="ml g">LangGraph</div><div class="big" style="color:var(--g)">A control-flow engine</div><div class="sub">Nodes, edges, and one shared state flowing through them.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 05 — LCEL chain (CODE) -->
+<section class="frame" id="c05">
+  <div class="orb" style="width:520px;height:520px;background:var(--c);top:-120px;right:-100px"></div>
+  <div class="inner">
+    <span class="ey">LangChain · the parts bin</span>
+    <div class="hl">Pipe the pieces <span class="c">left to right</span></div>
+    <div class="code"><span class="kw">from</span> langchain_core.prompts <span class="kw">import</span> ChatPromptTemplate
+<span class="kw">from</span> langchain_anthropic <span class="kw">import</span> ChatAnthropic
+
+<span class="hi">chain = prompt | model | parser</span>
+answer = chain.<span class="fn">invoke</span>({<span class="str">"topic"</span>: <span class="str">"langgraph"</span>})</div>
+    <div class="codecap">prompt &rarr; model &rarr; parser. Question in one end, clean data out the other.</div>
+  </div>
+</section>
+
+<!-- CHUNK 06 — StateGraph build (CODE + diagram) -->
+<section class="frame" id="c06">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">LangGraph · the engine</span>
+    <div class="hl">The graph you draw <span class="g">is</span> the program</div>
+    <div class="code"><span class="hi">g = <span class="fn">StateGraph</span>(State)</span>
+g.<span class="fn">add_node</span>(<span class="str">"transcribe"</span>, transcribe)
+g.<span class="fn">add_node</span>(<span class="str">"clip"</span>, clip)
+g.<span class="fn">add_edge</span>(<span class="str">"transcribe"</span>, <span class="str">"clip"</span>)
+app = g.<span class="fn">compile</span>()</div>
+    <div class="codecap">Nodes, edges, one shared state. Add node, add edge, compile.</div>
+  </div>
+</section>
+
+<!-- CHUNK 07 — why it exists: one-way vs graph -->
+<section class="frame" id="c07">
+  <div class="orb" style="width:520px;height:520px;background:var(--re);bottom:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Why LangGraph Exists</span>
+    <div class="hl">One-way and stateless vs <span class="g">loops</span> and memory</div>
+    <div class="cmp">
+      <div class="col norm"><div class="ml">LCEL chain</div><ul><li>Runs in one direction</li><li>Remembers nothing</li><li>Great: prompt in, answer out</li></ul></div>
+      <div class="col cov"><div class="ml g">StateGraph</div><ul><li>Loops and conditional routing</li><li>Pauses for a human</li><li>Survives a crash mid-run</li></ul></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 3 — DON'T NEED LANGCHAIN ═══════════ -->
+
+<!-- CHUNK 08 — a node is a plain function (CODE) -->
+<section class="frame" id="c08">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Surprise</span>
+    <div class="hl">A node is just a <span class="g">Python function</span></div>
+    <div class="code"><span class="kw">def</span> <span class="fn">render_video</span>(state):
+    <span class="cm"># plain code: no LangChain in sight</span>
+    out = <span class="fn">run_ffmpeg</span>(state[<span class="str">"clips"</span>])
+    <span class="kw">return</span> {<span class="str">"render_path"</span>: out}</div>
+    <div class="codecap">It can call a model, run a shell command, hit an API. Whatever you want.</div>
+  </div>
+</section>
+
+<!-- CHUNK 09 — the contract + register (CODE) -->
+<section class="frame" id="c09">
+  <div class="orb" style="width:520px;height:520px;background:var(--c);bottom:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Whole Contract</span>
+    <div class="hl">State in, <span class="g">changed fields</span> out</div>
+    <div class="code"><span class="kw">def</span> <span class="fn">render_video</span>(state):
+    out = <span class="fn">run_ffmpeg</span>(state[<span class="str">"clips"</span>])
+    <span class="hi"><span class="kw">return</span> {<span class="str">"render_path"</span>: out}</span>   <span class="cm"># just what changed</span>
+
+g.<span class="fn">add_node</span>(<span class="str">"render"</span>, render_video)   <span class="cm"># one line registers it</span></div>
+    <div class="codecap">If you can write a Python function, you can write a node.</div>
+  </div>
+</section>
+
+<!-- CHUNK 10 — mental model: spine + langchain in nodes -->
+<section class="frame" id="c10">
+  <div class="orb" style="width:560px;height:560px;background:var(--pu);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Mental Model</span>
+    <div class="hl">LangGraph is the <span class="g">spine</span>.<br>LangChain lives <span class="c">inside the nodes</span>.</div>
+    <div class="gwrap" style="margin-top:44px">
+      <div class="gnode"><div class="nm">ingest</div></div>
+      <div class="arrow"></div>
+      <div class="gnode agent"><div class="nm">draft <span style="color:var(--c);font-size:20px">◆ LC</span></div></div>
+      <div class="arrow"></div>
+      <div class="gnode agent"><div class="nm">summarize <span style="color:var(--c);font-size:20px">◆ LC</span></div></div>
+      <div class="arrow"></div>
+      <div class="gnode"><div class="nm">publish</div></div>
+    </div>
+    <p class="note">Reach for LangChain only where the work is linear and LLM-driven. ◆ LC = a LangChain node.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 4 — MAPPING ONTO A STATEGRAPH ═══════════ -->
+
+<!-- CHUNK 11 — walk the pipeline (lanes labeled) -->
+<section class="frame" id="c11">
+  <div class="orb" style="width:560px;height:560px;background:var(--c);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Mapping It · Chapter 4</span>
+    <div class="hl">Three lanes, one <span class="go">convergence</span></div>
+    <div class="gwrap">
+      <div class="gnode in"><div class="nm">livestream</div></div>
+      <svg class="svgconn" width="96" height="280" viewBox="0 0 96 280">
+        <path d="M2,140 C50,140 50,46 94,46" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,140 H94" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,140 C50,140 50,234 94,234" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+      </svg>
+      <div class="lanes">
+        <div class="gnode"><div class="nm">long-form edit</div></div>
+        <div class="gnode"><div class="nm">shorts</div></div>
+        <div class="gnode"><div class="nm">repurpose</div><div class="sub">transcript &rarr; posts</div></div>
+      </div>
+      <svg class="svgconn" width="96" height="280" viewBox="0 0 96 280">
+        <path d="M2,46 C50,46 50,140 94,140" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,140 H94" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,234 C50,234 50,140 94,140" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+      </svg>
+      <div class="gnode pub"><div class="nm">publish</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 12 — fan-out / fan-in named -->
+<section class="frame" id="c12">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);bottom:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Pattern Has a Name</span>
+    <div class="hl"><span class="g">Fan-out</span>, then <span class="c">fan-in</span></div>
+    <div class="cmp">
+      <div class="col cov"><div class="ml g">Fan-out</div><div class="sub">One input splits into parallel branches. Each runs on its own.</div></div>
+      <div class="col norm" style="border-color:rgba(0,194,255,.3)"><div class="ml c">Fan-in</div><div class="sub">The branches converge back to one point. Textbook distributed systems.</div></div>
+    </div>
+    <p class="note">LangGraph speaks this pattern natively.</p>
+  </div>
+</section>
+
+<!-- CHUNK 13 — TypedDict state (CODE) -->
+<section class="frame" id="c13">
+  <div class="orb" style="width:520px;height:520px;background:var(--pu);top:-120px;right:-100px"></div>
+  <div class="inner">
+    <span class="ey">The Shared State</span>
+    <div class="hl">One typed object, <span class="c">one field per thing</span></div>
+    <div class="code"><span class="kw">class</span> <span class="fn">State</span>(TypedDict):
+    batch_id: str
+    transcript: str
+    clips: <span class="fn">list</span>[Clip]
+    draft_queue: <span class="fn">list</span>[Post]</div>
+    <div class="codecap">Every node reads and writes this same object as it flows through the graph.</div>
+  </div>
+</section>
+
+<!-- CHUNK 14 — Send API (CODE + fan-out) -->
+<section class="frame" id="c14">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">Fan-out · the Send API</span>
+    <div class="hl">The trick is all in the <span class="g">return line</span></div>
+    <div class="code" style="font-size:27px"><span class="kw">from</span> langgraph.types <span class="kw">import</span> Send
+
+<span class="kw">def</span> <span class="fn">fan_out_clips</span>(state):        <span class="cm"># a routing function</span>
+    <span class="hi"><span class="kw">return</span> [<span class="fn">Send</span>(<span class="str">"caption_clip"</span>, {<span class="str">"clip"</span>: c})
+            <span class="kw">for</span> c <span class="kw">in</span> state[<span class="str">"clips"</span>]]</span>
+
+g.<span class="fn">add_conditional_edges</span>(<span class="str">"transcribe"</span>, fan_out_clips)</div>
+    <div class="codecap">A routing function returns a LIST of Send objects, one per clip. Each spawns its own parallel worker.</div>
+  </div>
+</section>
+
+<!-- CHUNK 15 — reducers (CODE + fan-in) -->
+<section class="frame" id="c15">
+  <div class="orb" style="width:520px;height:520px;background:var(--c);bottom:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Fan-in · reducers</span>
+    <div class="hl">One annotation does the <span class="c">merge</span></div>
+    <div class="code"><span class="kw">class</span> <span class="fn">State</span>(TypedDict):
+    clips: <span class="fn">list</span>[Clip]
+    <span class="hi">captions: Annotated[<span class="fn">list</span>, operator.add]</span>  <span class="cm"># append, don't overwrite</span></div>
+    <div class="codecap">Twenty workers write back without stomping on each other. The fan-in handles itself.</div>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 5 — IS IT A DAG? ═══════════ -->
+
+<!-- CHUNK 16 — DAG? -->
+<section class="frame" id="c16">
+  <div class="orb" style="width:540px;height:540px;background:var(--go);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">A Question I See Everywhere</span>
+    <div class="hl">Is a LangGraph a <span class="go">DAG</span>?</div>
+    <div class="divider"></div>
+    <p class="body">It <span class="go">can</span> be, but LangGraph does not force it. Loops are allowed on purpose, like a draft, lint, redraft loop that keeps going until the content passes.</p>
+    <div style="position:relative;width:1000px;margin-top:44px">
+      <div class="gwrap" style="margin-top:0">
+        <div class="gnode"><div class="nm">draft</div></div>
+        <div class="arrow sm"></div>
+        <div class="gnode"><div class="nm">lint</div></div>
+        <div class="arrow sm"></div>
+        <div class="gnode good"><div class="nm">schedule</div></div>
+      </div>
+      <svg width="1000" height="130" viewBox="0 0 1000 130" style="display:block;margin-top:2px">
+        <path d="M329,6 C329,92 95,92 95,20" stroke="#00e68a" stroke-width="3" fill="none" marker-end="url(#ahg)"/>
+        <text x="360" y="74" fill="#00e68a" font-family="'JetBrains Mono',monospace" font-size="22">fail: loop back to draft</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 17 — peers never spawn peers -->
+<section class="frame" id="c17">
+  <div class="orb" style="width:560px;height:560px;background:var(--g);bottom:-160px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">A Design Rule Worth Stealing</span>
+    <div class="hl">Peers never spawn <span class="re">peers</span></div>
+    <div class="divider"></div>
+    <p class="body">Only the <span class="g">orchestrator</span> owns the graph. Workers do their job and report back. That one rule keeps the whole thing acyclic and sane.</p>
+    <div class="gwrap" style="margin-top:48px;justify-content:center;gap:40px">
+      <div class="gnode boss"><div class="nm">orchestrator</div></div>
+      <div class="col-nodes">
+        <div class="gnode"><div class="nm">worker A</div></div>
+        <div class="gnode"><div class="nm">worker B</div></div>
+      </div>
+      <div style="font-family:'JetBrains Mono';color:var(--re);font-size:44px">&#10007;</div>
+      <div style="font-family:'JetBrains Mono';color:var(--re);font-size:22px;max-width:200px">no worker&rarr;worker edges</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 6 — SUPERVISOR / SWARM / HIERARCHY ═══════════ -->
+
+<!-- CHUNK 18 — supervisor -->
+<section class="frame" id="c18">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">Three Shapes · 1 of 3</span>
+    <div class="hl">Supervisor: <span class="g">fixed, predictable, safe</span></div>
+    <div class="gwrap" style="margin-top:46px;flex-direction:column;gap:30px;align-items:center">
+      <div class="gnode boss"><div class="nm">orchestrator</div><div class="sub">reads state, dispatches</div></div>
+      <svg width="560" height="70" viewBox="0 0 560 70">
+        <path d="M280,4 C280,40 90,30 90,64" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M280,4 V64" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M280,4 C280,40 470,30 470,64" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+      </svg>
+      <div style="display:flex;gap:40px">
+        <div class="gnode"><div class="nm">worker</div></div>
+        <div class="gnode"><div class="nm">worker</div></div>
+        <div class="gnode"><div class="nm">worker</div></div>
+      </div>
+    </div>
+    <p class="note">The right call for a pipeline with strict ordering.</p>
+  </div>
+</section>
+
+<!-- CHUNK 19 — swarm -->
+<section class="frame" id="c19">
+  <div class="orb" style="width:540px;height:540px;background:var(--go);bottom:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Three Shapes · 2 of 3</span>
+    <div class="hl">Swarm: flexible, and <span class="re">chaos-prone</span></div>
+    <div class="gwrap" style="margin-top:46px;justify-content:center;gap:36px">
+      <div class="gnode"><div class="nm">peer</div></div>
+      <div class="arrow sm"></div>
+      <div class="gnode"><div class="nm">peer</div></div>
+      <div class="arrow sm"></div>
+      <div class="gnode bad"><div class="nm">breaking-news</div><div class="sub">cuts the queue</div></div>
+      <div class="arrow sm"></div>
+      <div class="gnode"><div class="nm">peer</div></div>
+    </div>
+    <p class="note">Flat peers hand control to each other, no central boss. Good when work is negotiated dynamically.</p>
+  </div>
+</section>
+
+<!-- CHUNK 20 — hierarchy -->
+<section class="frame" id="c20">
+  <div class="orb" style="width:540px;height:540px;background:var(--pu);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Three Shapes · 3 of 3</span>
+    <div class="hl">Hierarchy: supervisors of <span class="pu">supervisors</span></div>
+    <div class="gwrap" style="margin-top:40px;flex-direction:column;gap:26px;align-items:center">
+      <div class="gnode boss"><div class="nm">top supervisor</div></div>
+      <svg width="620" height="56" viewBox="0 0 620 56">
+        <path d="M310,2 C310,32 110,26 110,52" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M310,2 V52" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M310,2 C310,32 510,26 510,52" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+      </svg>
+      <div style="display:flex;gap:44px">
+        <div class="gnode boss" style="min-width:150px"><div class="nm">long-form</div><div class="sub">+ team</div></div>
+        <div class="gnode boss" style="min-width:150px"><div class="nm">shorts</div><div class="sub">+ team</div></div>
+        <div class="gnode boss" style="min-width:150px"><div class="nm">repurpose</div><div class="sub">+ team</div></div>
+      </div>
+    </div>
+    <p class="note">Each lane becomes its own mini-pipeline with its own boss.</p>
+  </div>
+</section>
+
+<!-- CHUNK 21 — nodes aren't all agents -->
+<section class="frame" id="c21">
+  <div class="orb" style="width:560px;height:560px;background:var(--g);bottom:-160px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">Easy to Miss</span>
+    <div class="hl">Most nodes are <span class="c">plain scripts</span>. A few need <span class="g">judgment</span>.</div>
+    <div class="gwrap" style="margin-top:46px">
+      <div class="gnode"><div class="nm">transcribe</div></div>
+      <div class="arrow"></div>
+      <div class="gnode agent"><div class="nm">pick clips</div><div class="sub">agent</div></div>
+      <div class="arrow"></div>
+      <div class="gnode"><div class="nm">render</div></div>
+      <div class="arrow"></div>
+      <div class="gnode agent"><div class="nm">draft posts</div><div class="sub">agent</div></div>
+      <div class="arrow"></div>
+      <div class="gnode"><div class="nm">publish</div></div>
+    </div>
+    <p class="note">Gray = deterministic script. Glowing = a reasoning LLM. Save the agents for real judgment.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 7 — CHECKPOINTING ═══════════ -->
+
+<!-- CHUNK 22 — checkpointing: save after every node -->
+<section class="frame" id="c22">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Feature That Sold Me</span>
+    <div class="hl">Crash, then <span class="g">resume</span> where it died</div>
+    <div class="gwrap" style="margin-top:48px">
+      <div class="gnode"><div class="nm">n1</div></div>
+      <div class="arrow g"></div>
+      <div class="gnode"><div class="nm">n2</div></div>
+      <div class="arrow g"></div>
+      <div class="gnode"><div class="nm">n3</div></div>
+      <div class="arrow g"></div>
+      <div class="gnode"><div class="nm">n4</div></div>
+      <div class="arrow g"></div>
+      <div class="gnode bad"><div class="nm">n5 &#9889;</div><div class="sub">resume here</div></div>
+    </div>
+    <p class="note">A checkpointer saves state after every single node. No restart. Resume.</p>
+  </div>
+</section>
+
+<!-- CHUNK 23 — real numbers -->
+<section class="frame" id="c23">
+  <div class="orb" style="width:520px;height:520px;background:var(--c);bottom:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">What It Means</span>
+    <div class="hl">A <span class="re">40-minute</span> render dies at minute <span class="re">38</span></div>
+    <div class="pbar"><i></i><div class="crash"></div></div>
+    <div class="twin">
+      <div class="t strike">restart: 40 min</div>
+      <div class="t win">resume: 2 min</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 24 — SQLite clarification -->
+<section class="frame" id="c24">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Clarification Most People Need</span>
+    <div class="hl">SQLite <span class="g">is</span> a real database</div>
+    <div class="dbrow">
+      <div class="fileicon"><div class="fi">&#128190;</div><div class="fn">checkpoints.db</div></div>
+      <div class="vs">same thing, no server</div>
+      <div class="stack-db">
+        <div class="box">client</div>
+        <div class="box">&#8595; network</div>
+        <div class="box">server + daemon</div>
+        <div class="box">disk</div>
+      </div>
+    </div>
+    <p class="note">Serverless and file-based: one file on disk, nothing to administer.</p>
+  </div>
+</section>
+
+<!-- CHUNK 25 — SqliteSaver (CODE) -->
+<section class="frame" id="c25">
+  <div class="orb" style="width:520px;height:520px;background:var(--c);bottom:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">What It Costs You In Code</span>
+    <div class="hl">Wrap a file, and <span class="g">no SQL</span></div>
+    <div class="code" style="font-size:26px"><span class="kw">import</span> sqlite3
+<span class="kw">from</span> langgraph.checkpoint.sqlite <span class="kw">import</span> SqliteSaver
+
+conn = sqlite3.<span class="fn">connect</span>(<span class="str">"checkpoints.db"</span>, check_same_thread=<span class="kw">False</span>)
+<span class="hi">saver = <span class="fn">SqliteSaver</span>(conn)
+app = g.<span class="fn">compile</span>(checkpointer=saver)</span></div>
+    <div class="codecap">Every node run is now checkpointed automatically. Keep a JSON registry alongside if you want.</div>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 8 — IDEMPOTENCY ═══════════ -->
+
+<!-- CHUNK 26 — the trap: duplicate post -->
+<section class="frame" id="c26">
+  <div class="orb" style="width:540px;height:540px;background:var(--re);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Trap That Bites In Production</span>
+    <div class="hl">Crash after the post, resume, <span class="re">post twice</span></div>
+    <div class="gwrap" style="margin-top:48px;flex-wrap:wrap;gap:0">
+      <div class="gnode"><div class="nm">post node</div></div>
+      <div class="arrow"></div>
+      <div class="gnode good"><div class="nm">platform &#10003;</div></div>
+      <div class="arrow re" style="background:var(--re)"></div>
+      <div class="gnode bad"><div class="nm">&#9889; crash</div><div class="sub">before "success"</div></div>
+      <div class="arrow re" style="background:var(--re)"></div>
+      <div class="gnode bad"><div class="nm">resume &rarr; post again</div></div>
+    </div>
+    <p class="note">A naive resume runs the node again. Congratulations, you just posted twice.</p>
+  </div>
+</section>
+
+<!-- CHUNK 27 — idempotency defined -->
+<section class="frame" id="c27">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);bottom:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Fix Is A Property</span>
+    <div class="hl"><span class="g">Idempotent</span>: run it ten times, same result as once</div>
+    <div class="cmp">
+      <div class="col cov"><div class="ml g">&#10003; naturally safe</div><div class="big" style="color:var(--g)">Rendering</div><div class="sub">Same input, same output. Run it again, no harm.</div></div>
+      <div class="col bad"><div class="ml re">&#9888; not safe</div><div class="big" style="color:var(--re)">Posting</div><div class="sub">Runs again = a second public post. Must be guarded.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 28 — the guard (4 steps) -->
+<section class="frame" id="c28">
+  <div class="orb" style="width:540px;height:540px;background:var(--c);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Wrap The Dangerous Steps</span>
+    <div class="hl">Attempted &rarr; act &rarr; <span class="g">verify</span> &rarr; complete</div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="l">attempted</div></div>
+      <div class="arrow sm"></div>
+      <div class="step danger"><div class="n">2</div><div class="l">do the action</div></div>
+      <div class="arrow sm"></div>
+      <div class="step"><div class="n">3</div><div class="l">verify</div></div>
+      <div class="arrow sm"></div>
+      <div class="step done"><div class="n">4</div><div class="l">complete</div></div>
+    </div>
+    <p class="note">On resume, the node checks state first and skips anything already done.</p>
+  </div>
+</section>
+
+<!-- CHUNK 29 — retry policies (CODE + table) -->
+<section class="frame" id="c29">
+  <div class="orb" style="width:520px;height:520px;background:var(--g);bottom:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Retry Policies · Per Node</span>
+    <div class="hl">Posting gets <span class="re">zero</span> retries</div>
+    <div class="code"><span class="kw">from</span> langgraph.pregel <span class="kw">import</span> RetryPolicy
+
+<span class="hi">g.<span class="fn">add_node</span>(<span class="str">"post"</span>, post_node,
+           retry_policy=<span class="fn">RetryPolicy</span>(max_attempts=<span class="go">1</span>))</span></div>
+    <div class="codecap">download &rarr; 3 &nbsp;·&nbsp; render &rarr; 2 &nbsp;·&nbsp; post &rarr; 0. "At least once" is wrong for a public action.</div>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 9 — RULES AS STRUCTURE ═══════════ -->
+
+<!-- CHUNK 30 — philosophy: prompt vs topology -->
+<section class="frame" id="c30">
+  <div class="orb" style="width:540px;height:540px;background:var(--pu);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">My Favorite Idea Here</span>
+    <div class="hl">Not a prompt. <span class="g">Structurally impossible.</span></div>
+    <div class="cmp">
+      <div class="col bad"><div class="ml re">A prompt (forgettable)</div><div class="sub" style="font-family:'JetBrains Mono',monospace;font-size:25px">"please never post<br>in parallel..."</div></div>
+      <div class="col cov"><div class="ml g">Topology (enforced)</div><div class="sub">The graph has no path that posts in parallel. It cannot happen.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 31 — one posting node funnel -->
+<section class="frame" id="c31">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);bottom:-160px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Rules &rarr; Mechanisms</span>
+    <div class="hl">Everything funnels through <span class="g">one</span> posting node</div>
+    <div class="gwrap">
+      <div class="lanes">
+        <div class="gnode"><div class="nm">long-form</div></div>
+        <div class="gnode"><div class="nm">shorts</div></div>
+        <div class="gnode"><div class="nm">repurpose</div></div>
+      </div>
+      <svg class="svgconn" width="110" height="280" viewBox="0 0 110 280">
+        <path d="M2,46 C55,46 55,140 108,140" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ahg)"/>
+        <path d="M2,140 H108" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ahg)"/>
+        <path d="M2,234 C55,234 55,140 108,140" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ahg)"/>
+      </svg>
+      <div class="gnode good" style="min-width:220px;box-shadow:0 0 40px rgba(0,230,138,.22)"><div class="nm">POST</div><div class="sub">sequential only</div></div>
+    </div>
+    <p class="note">Topology forbids parallel posts. "Never auto-retry" is that retry policy, set to zero.</p>
+  </div>
+</section>
+
+<!-- CHUNK 32 — conditional edges (CODE) -->
+<section class="frame" id="c32">
+  <div class="orb" style="width:520px;height:520px;background:var(--c);top:-120px;right:-100px"></div>
+  <div class="inner">
+    <span class="ey">Validation Gates</span>
+    <div class="hl">A lint check is a <span class="c">conditional edge</span></div>
+    <div class="code"><span class="hi">g.<span class="fn">add_conditional_edges</span>(
+    <span class="str">"lint"</span>, route_lint,
+    {<span class="str">"pass"</span>: <span class="str">"schedule"</span>, <span class="str">"fail"</span>: <span class="str">"draft"</span>})</span></div>
+    <div class="codecap">Pass moves forward. Fail routes back to the drafting node for another round.</div>
+  </div>
+</section>
+
+<!-- CHUNK 33 — the line -->
+<section class="frame" id="c33">
+  <div class="orb" style="width:640px;height:640px;background:var(--g);top:-180px;left:-140px"></div>
+  <div class="orb" style="width:520px;height:520px;background:var(--c);bottom:-160px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Line To Remember</span>
+    <div class="hero">Constraints as structure,<br>not prose.</div>
+    <p class="body" style="margin-top:44px;font-size:36px">Prompts get forgotten. <span class="g">Topology doesn't.</span></p>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 10 — HUMAN IN THE LOOP ═══════════ -->
+
+<!-- CHUNK 34 — interrupts: pause and wait -->
+<section class="frame" id="c34">
+  <div class="orb" style="width:540px;height:540px;background:var(--go);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Human In The Loop</span>
+    <div class="hl">The graph <span class="go">pauses</span> and waits</div>
+    <div class="gwrap" style="margin-top:48px">
+      <div class="gnode"><div class="nm">draft</div></div>
+      <div class="arrow"></div>
+      <div class="gnode boss" style="border-color:rgba(255,215,0,.6)"><div class="nm">approval &#9208;</div><div class="sub">persisted, waiting</div></div>
+      <div class="arrow"></div>
+      <div class="gnode dimn"><div class="nm">publish</div></div>
+      <div style="margin-left:34px;font-size:56px">&#9200;</div>
+    </div>
+    <p class="note">A minute or a week. Then it resumes from that exact point.</p>
+  </div>
+</section>
+
+<!-- CHUNK 35 — interrupt() call (CODE) -->
+<section class="frame" id="c35">
+  <div class="orb" style="width:520px;height:520px;background:var(--g);bottom:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">In The Node · One Call</span>
+    <div class="hl"><span class="g">interrupt()</span> hands over what a human sees</div>
+    <div class="code"><span class="kw">def</span> <span class="fn">approval</span>(state):
+    <span class="hi">decision = <span class="fn">interrupt</span>({<span class="str">"draft"</span>: state[<span class="str">"draft"</span>]})</span>
+    <span class="kw">return</span> {<span class="str">"decision"</span>: decision}</div>
+    <div class="codecap">approve / edit / reject pops out of that same call when the graph resumes.</div>
+  </div>
+</section>
+
+<!-- CHUNK 36 — where it lives while it waits -->
+<section class="frame" id="c36">
+  <div class="orb" style="width:540px;height:540px;background:var(--c);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">Where It Lives While It Waits</span>
+    <div class="hl">Frozen in the <span class="g">checkpoint</span>, on disk</div>
+    <div class="gwrap" style="margin-top:48px;gap:40px;align-items:center">
+      <div class="gnode"><div class="nm">&#128421; reboot</div></div>
+      <div class="arrow"></div>
+      <div class="fileicon" style="width:170px;height:200px"><div class="fi">&#128190;</div><div class="fn">checkpoints.db</div></div>
+      <div class="arrow g"></div>
+      <div class="gnode good"><div class="nm">still paused</div><div class="sub">waiting for you</div></div>
+    </div>
+    <p class="note">Your machine can reboot. The graph is still sitting there, waiting for your answer.</p>
+  </div>
+</section>
+
+<!-- CHUNK 37 — the redraft loop -->
+<section class="frame" id="c37">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);bottom:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Structured Choices</span>
+    <div class="hl">Approve, edit, or <span class="re">reject with notes</span></div>
+    <div class="chips" style="margin-top:40px">
+      <span class="chip g">&#10003; approve</span><span class="chip go">&#9998; edit</span><span class="chip" style="background:rgba(255,64,96,.1);border-color:rgba(255,64,96,.35);color:var(--re)">&#10007; reject + notes</span>
+    </div>
+    <div class="gwrap" style="margin-top:44px">
+      <div class="gnode"><div class="nm">draft</div></div>
+      <div class="arrow"></div>
+      <div class="gnode boss"><div class="nm">approval</div></div>
+      <svg class="svgconn" width="150" height="120" viewBox="0 0 150 120">
+        <path d="M60,54 C60,104 -14,104 -14,20" stroke="#ff4060" stroke-width="3" fill="none" marker-end="url(#ahr)" transform="translate(24,0)"/>
+        <text x="30" y="112" fill="#ff4060" font-family="monospace" font-size="17">notes &rarr; back to draft</text>
+      </svg>
+    </div>
+    <p class="note">Loop until you say yes.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 11 — DO YOU NEED IT? ═══════════ -->
+
+<!-- CHUNK 38 — what you already have -->
+<section class="frame" id="c38">
+  <div class="orb" style="width:540px;height:540px;background:var(--go);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Honest Question</span>
+    <div class="hl">A human-driven setup <span class="go">already works</span></div>
+    <ul class="rows">
+      <li class="go"><span class="ic">&#9889;</span> Flexible: change any step on the fly</li>
+      <li class="go"><span class="ic">&#128295;</span> Jump in and fix a broken script mid-run</li>
+      <li class="go"><span class="ic">&#10003;</span> Zero new infrastructure to learn</li>
+    </ul>
+    <p class="note">That flexibility is worth something real.</p>
+  </div>
+</section>
+
+<!-- CHUNK 39 — buys vs costs -->
+<section class="frame" id="c39">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);bottom:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Trade</span>
+    <div class="hl">What LangGraph <span class="g">buys</span> vs what it <span class="re">costs</span></div>
+    <div class="cmp">
+      <div class="col cov"><div class="ml g">Buys you</div><ul><li>Resumability</li><li>Rules enforced by structure</li><li>Real observability</li></ul></div>
+      <div class="col bad"><div class="ml re">Costs you</div><ul><li>New infra to learn</li><li>New failure modes</li><li>Less interactive repair mid-graph</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 40 — the signal (2x2) -->
+<section class="frame" id="c40">
+  <div class="orb" style="width:540px;height:540px;background:var(--c);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Signal</span>
+    <div class="hl">Frequency <span class="c">&times;</span> pain</div>
+    <div style="display:flex;align-items:center;gap:30px;margin-top:30px">
+      <div class="axlabel" style="writing-mode:vertical-rl;transform:rotate(180deg)">PAIN &rarr;</div>
+      <div class="matrix">
+        <div class="quad"><div class="qh">rare · painful</div><div class="qt">wait</div></div>
+        <div class="quad hot"><div class="qh">frequent · painful</div><div class="qt">&rarr; migrate</div></div>
+        <div class="quad"><div class="qh">rare · easy</div><div class="qt">keep manual</div></div>
+        <div class="quad"><div class="qh">frequent · easy</div><div class="qt">keep manual</div></div>
+      </div>
+    </div>
+    <div class="axlabel" style="text-align:center;margin-top:14px;margin-left:70px">FREQUENCY &rarr;</div>
+  </div>
+</section>
+
+<!-- CHUNK 41 — strangler fig -->
+<section class="frame" id="c41">
+  <div class="orb" style="width:540px;height:540px;background:var(--g);bottom:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">If You Do Migrate</span>
+    <div class="hl">Strangler-fig: <span class="g">one small lane</span> first</div>
+    <div class="gwrap" style="margin-top:46px;gap:30px">
+      <div class="gnode dimn"><div class="nm">old flow</div><div class="sub">still running</div></div>
+      <div class="arrow"></div>
+      <div class="gnode good"><div class="nm">one lane</div><div class="sub">as a graph</div></div>
+      <div class="arrow g"></div>
+      <div class="gnode good" style="box-shadow:0 0 34px rgba(0,230,138,.18)"><div class="nm">expand</div><div class="sub">once trusted</div></div>
+    </div>
+    <p class="note">Prove checkpointing and idempotency on forgiving ground. Keep the old flow alongside.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 12 — WRAP ═══════════ -->
+
+<!-- CHUNK 42 — recap -->
+<section class="frame" id="c42">
+  <div class="orb" style="width:560px;height:560px;background:var(--pu);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Whole Mental Model</span>
+    <div class="hl">In one <span class="g">breath</span></div>
+    <div class="chips" style="margin-top:44px">
+      <span class="chip g">LangGraph = the spine</span>
+      <span class="chip c">LangChain = inside the nodes</span>
+      <span class="chip">state + checkpoints = resumable</span>
+      <span class="chip go">idempotency = safe to resume</span>
+      <span class="chip pu">rules = topology</span>
+      <span class="chip g">humans = interrupts</span>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 43 — meta-lesson -->
+<section class="frame" id="c43">
+  <div class="orb" style="width:640px;height:640px;background:var(--g);top:-180px;left:-140px"></div>
+  <div class="orb" style="width:520px;height:520px;background:var(--c);bottom:-160px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Meta-Lesson</span>
+    <div class="hero">Rewrite for pain,<br>not for hype.</div>
+    <p class="body" style="margin-top:44px;font-size:34px">Don't rewrite working automation because a framework is trending. Start with the smallest piece you can.</p>
+  </div>
+</section>
+
+<!-- CHUNK 44 — outro + CTA -->
+<section class="frame" id="c44">
+  <div class="orb" style="width:560px;height:560px;background:var(--c);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Coming Next</span>
+    <div class="hl">What would <span class="g">you</span> rebuild in LangGraph?</div>
+    <div class="cmp" style="grid-template-columns:1fr 1fr 1fr;margin-top:40px">
+      <div class="col norm"><div class="ml c">Next</div><div class="sub">Observability &amp; tracing</div></div>
+      <div class="col norm"><div class="ml c">Next</div><div class="sub">Scheduling &amp; triggers</div></div>
+      <div class="col norm"><div class="ml c">Next</div><div class="sub">The migration walkthrough</div></div>
+    </div>
+    <div class="chips" style="margin-top:44px"><span class="chip g">@aiEngineeringSimplified</span><span class="chip">subscribe for the follow-ups</span></div>
+  </div>
+</section>
+
+</body>
+</html>

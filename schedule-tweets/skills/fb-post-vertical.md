@@ -70,6 +70,12 @@ Uses `fbbot-profile`. **Chrome must be fully closed before running** — Playwri
 **Verification is mandatory.** A submitted upload silently dropped by Facebook still clears the "Posting" spinner. Always verify the URL serves a `<video>` element before marking `posted`.
 
 > ⚠ **Captured URL is often the WRONG (stale) video (observed 2026-05-26).** Step 16 scrapes the `/videos` tab and takes the most-recent `/reel/` or `/videos/` URL, but that tab lists a **persistent older `videos/<id>` entry first** — so the script grabs it instead of the actual new reel. Two separate FB shorts both recorded the same `videos/999231325954864`, while their real reels (`reel/2073243086589105`, `reel/3106848643037524`) sat second in the list. Verification still "passes" because the stale `videos/` URL is itself a valid live video (HTTP 200 + `<video>`). **Net: the post goes live correctly, but the `url` in `shorts.json` points at the wrong/older video.** Fix: snapshot the `/reel/` URL set *before* posting, then after Submit pick the `/reel/` URL that is NEW (not in the pre-snapshot) rather than blindly taking list position 0; prefer `/reel/` over `/videos/` since FB Reels land under `/reel/`.
+>
+> **Manual-correction heuristic (confirmed 2026-05-29):** when fixing the URL by hand after a run, the just-posted reel is the **first `/reel/` entry** in the scraped `Recent video URLs` list (the persistent `/videos/<id>` at position 0 is the perennial stale one). Verified across two back-to-back shorts: pass-1's reel sat at the top `/reel/` slot, then demoted to position 3 once pass-2's new reel landed at the top `/reel/` slot. So: skip the leading `/videos/`, take the topmost `/reel/`, write that to `shorts.json`.
+>
+> **Re-confirmed 2026-06-01** across two more back-to-back shorts in one posting run: the persistent stale `/videos/967567666181256` stayed at position 0 both times; pengu's reel (`1198937162284762`) was the topmost `/reel/` on pass 1, then dropped to position 3 on pass 2 when house-coin's new reel (`960488220185718`) took the top `/reel/` slot. The heuristic is stable — automating it (pick topmost `/reel/`, ignore leading `/videos/`) would remove the manual fix entirely.
+
+> **Re-confirmed AGAIN 2026-06-14** (4th occurrence). Pass-2 short captured the stale leading `/videos/1730184431514071` (which was pass-1's own short from earlier in the run); the real new short was the topmost `/reel/1552864023179890` (the only `/reel/` not seen in any prior step's capture). Manual fix per the heuristic. **This keeps recurring every multi-FB-short run — the script should just be patched to skip the leading `/videos/` and take the topmost NEW `/reel/`.**
 
 ## Debug artifacts
 
@@ -85,3 +91,7 @@ const s=d.shorts.find(x=>x.platforms.facebook?.status==='posting'||x.platforms.f
 if(s){s.platforms.facebook.status='pending';delete s.platforms.facebook.error;fs.writeFileSync('data/shorts.json',JSON.stringify(d,null,2));console.log('Reset:',s.id);}
 "
 ```
+
+## Hashtag policy (added 2026-05-29)
+
+Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.

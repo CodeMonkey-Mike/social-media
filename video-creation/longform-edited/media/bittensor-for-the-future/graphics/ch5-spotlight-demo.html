@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>CH5 — spotlight swap demo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:100%; height:100%; background:#04060d; overflow:hidden;
+              display:flex; align-items:center; justify-content:center; font-family:'Inter',system-ui,sans-serif; }
+  .stage { position:relative; width:1920px; height:1080px; transform-origin:center center; background:#04060d; overflow:hidden; }
+  @media (max-aspect-ratio:16/9){ .stage{ transform:scale(calc(100vw/1920)); } }
+  @media (min-aspect-ratio:16/9){ .stage{ transform:scale(calc(100vh/1080)); } }
+  .layer { position:absolute; inset:0; background-size:100% 100%; background-position:center;
+           transform-origin:center center; will-change:opacity,transform; opacity:0; }
+  /* bullet label chip */
+  .label { position:absolute; left:60px; bottom:54px; padding:14px 26px; border-radius:14px;
+           background:rgba(8,16,24,0.72); border:1px solid rgba(95,224,238,0.35);
+           color:#eaf3f7; font-size:30px; font-weight:700; letter-spacing:.01em;
+           box-shadow:0 0 40px rgba(0,0,0,0.5); }
+  .label span { color:#5fe0ee; font-weight:800; margin-right:14px; }
+  /* progress dots */
+  .dots { position:absolute; right:60px; bottom:64px; display:flex; gap:14px; }
+  .dot { width:14px; height:14px; border-radius:50%; background:rgba(150,180,195,0.28); transition:none; }
+  .dot.on { background:#5fe0ee; box-shadow:0 0 16px rgba(95,224,238,0.7); }
+</style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="layer" data-img="subnets-network.png"></div>
+    <div class="layer" data-img="miners-validators.png"></div>
+    <div class="layer" data-img="yuma-consensus.png"></div>
+    <div class="layer" data-img="tao-token.png"></div>
+    <div class="layer" data-img="dtao.png"></div>
+    <div class="label" id="label"><span id="lnum">1</span><span id="ltxt" style="color:#eaf3f7;font-weight:700;margin:0;">Subnets</span></div>
+    <div class="dots" id="dots"></div>
+  </div>
+
+<script>
+  const LABELS = ["Subnets","Miners &amp; validators","Proof of Intelligence","The TAO token","dTAO"];
+  const N = 5;
+  const HOLD = 2200, TRANS = 600;          // ms fully-on, ms cross-fade
+  const STEP = HOLD + TRANS;               // onset spacing
+  const CYCLE = N * STEP;                   // full loop
+
+  const layers = [...document.querySelectorAll('.layer')];
+  layers.forEach(l => l.style.backgroundImage = `url('${l.dataset.img}')`);
+
+  // progress dots
+  const dotsEl = document.getElementById('dots');
+  const dots = LABELS.map(() => { const d=document.createElement('div'); d.className='dot'; dotsEl.appendChild(d); return d; });
+  const lnum = document.getElementById('lnum'), ltxt = document.getElementById('ltxt'), labelEl = document.getElementById('label');
+
+  // opacity + scale for layer i at time t  (cross-fade + 0.93->1 scale-in spotlight)
+  function state(i, t){
+    let dt = t - i*STEP;
+    if (dt >  CYCLE/2) dt -= CYCLE;
+    if (dt < -CYCLE/2) dt += CYCLE;
+    if (dt >= -TRANS && dt < 0){ const p=(dt+TRANS)/TRANS; return {op:p, sc:0.93+0.07*p}; }      // fading in
+    if (dt >= 0 && dt <= HOLD)  return {op:1, sc:1};                                              // full
+    if (dt > HOLD && dt <= HOLD+TRANS){ const p=(dt-HOLD)/TRANS; return {op:1-p, sc:1+0.03*p}; }  // fading out
+    return {op:0, sc:1.03};
+  }
+
+  function render(t){
+    let best=0, bestOp=-1;
+    for (let i=0;i<N;i++){
+      const s = state(i, t);
+      layers[i].style.opacity = s.op.toFixed(3);
+      layers[i].style.transform = `scale(${s.sc.toFixed(4)})`;
+      if (s.op > bestOp){ bestOp = s.op; best = i; }
+    }
+    lnum.textContent = best+1;
+    ltxt.innerHTML = LABELS[best];
+    labelEl.style.opacity = (0.35 + 0.65*bestOp).toFixed(2);
+    dots.forEach((d,i)=> d.classList.toggle('on', i===best));
+  }
+
+  // deterministic seek for screenshot/render: ?t=<ms>
+  const qs = new URLSearchParams(location.search);
+  if (qs.has('t')){
+    render(((+qs.get('t')) % CYCLE + CYCLE) % CYCLE);
+  } else {
+    const start = performance.now();
+    (function loop(now){ render(((now-start) % CYCLE)); requestAnimationFrame(loop); })(start);
+  }
+</script>
+</body>
+</html>

@@ -10,13 +10,16 @@ cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
 node scripts/post-tiktok-short.js
 ```
 
-**Kill all Chrome windows first** — Chrome can't open CDP on a profile that's already in use. Run before the script:
+**Free the tiktokbot-profile + CDP port 9224 first** — Chrome can't open CDP on a profile that's already in use. **Do NOT kill-all Chrome** (`Stop-Process -Name chrome -Force` nukes Mike's main browsing window — hard rule). Since TikTok now uses a *dedicated* `tiktokbot-profile` (NOT main `User Data`), a **per-profile kill** is sufficient and leaves the main browser alone. Validated 2026-06-13: CDP 9224 spawned first-try on both passes with only the per-profile kill below.
 
 ```powershell
-Stop-Process -Name chrome -Force -ErrorAction SilentlyContinue
+Get-CimInstance Win32_Process -Filter "Name = 'chrome.exe'" | Where-Object { $_.CommandLine -like "*tiktokbot-profile*" -or $_.CommandLine -like "*9224*" } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
 Start-Sleep -Seconds 3
+# verify nothing remains on the profile / port, then:
 node scripts/post-tiktok-short.js
 ```
+
+(The old `Stop-Process -Name chrome -Force` kill-all advice predates the dedicated profile and violates the never-kill-main-Chrome rule — superseded.)
 
 ## Why this script is different
 
@@ -34,7 +37,7 @@ TikTok aggressively detects Playwright's `launchPersistentContext` — even with
 
 **Why a dedicated profile works now:** earlier attempts at a dedicated profile failed at login — TikTok blocked the login page entirely on profiles with no browsing history or session. The only workaround was main Chrome (with real history and cookies). On 2026-05-24, the user manually logged into TikTok on `tiktokbot-profile` while the script was waiting, establishing a real session. With that session in place, TikTok no longer blocks the upload flow. If TikTok ever blocks again on this profile, the user will need to log in manually (the script waits up to 10 minutes on the login page).
 
-**ALL Chrome windows must be fully closed before running** — Chrome can't open a second instance against a profile already in use. Use `Stop-Process -Name chrome -Force` before every run.
+**The tiktokbot-profile must be free before running** — Chrome can't open a second instance against a profile already in use, and CDP port 9224 must be unbound. Use the **per-profile kill** above (match `tiktokbot-profile` + `9224`), NOT a global `Stop-Process -Name chrome -Force` — the latter kills Mike's main browser (hard rule). Because the profile is dedicated, other Chrome windows (main browsing, other bot profiles) do not interfere with the CDP spawn.
 
 ## Timing constants
 
@@ -48,7 +51,7 @@ TikTok aggressively detects Playwright's `launchPersistentContext` — even with
 ## What the script does
 
 1. Reads queue, finds first `pending` TikTok short, marks `posting`
-2. Spawns real Chrome with main User Data + CDP port 9224 (or detects existing). Connects Playwright via CDP.
+2. Spawns real Chrome with the `tiktokbot-profile` user-data-dir + CDP port 9224 (or detects existing). Connects Playwright via CDP. (Note: the script's internal constant is named `MAIN_USER_DATA` for historical reasons but points at `tiktokbot-profile`, NOT the main Chrome "User Data".)
 3. Navigates to `https://www.tiktok.com/tiktokstudio/upload?lang=en`
 4. **Login handling:** if TikTok redirects to `/login`, waits up to 10 minutes for manual sign-in. After login, navigates back to upload page.
 5. **Pre-compose wait: 60–180s**
@@ -100,11 +103,16 @@ Each phase saves to `tmp-tiktok-debug/`:
 - `04_after_post_click.{png,json}` — after first Post click
 - `05_confirmed.{png,json}` — after redirect to /tiktokstudio/content
 
-## Camoufox fallback (not currently used)
-
-If CDP-attach stops working, the Python reference at `C:\Users\mnede\Documents\Claude\social-media\uploading\uploaders\tiktok_upload.py` uses Camoufox (fingerprint-patched Firefox) with session-cookie save/restore. Invoke via the `camoufox-uploader` subagent. Plan B only.
-
 ## Resetting a stuck short
+
+⚠️ **The script HARD-STOPS (exit 2) if ANY short is in `posting`** — it scans `shorts.json` first and refuses to post *anything* (won't even reach the next pending short) until every stuck `posting` is resolved. The log names the stuck short, which can look like it's "trying to post that one" — it isn't; it's the blocker.
+
+⚠️ **Do NOT blindly reset `posting` → `pending` if the short was killed mid-upload** — TikTok may have already published it (the kill often happens *after* the Post click, while waiting on confirmation). Resetting to `pending` then re-posts it = **duplicate**. Correct resolution:
+1. Check `@realcodemonkeymike` on TikTok. If the video is live → set that platform's status to `"posted"` (backfill URL later), which clears the guard without re-posting.
+2. Only if it's genuinely NOT live → set to `pending` so it re-uploads.
+(Observed 2026-05-29: `bulls-are-sleeping` was stuck `posting` from a prior killed run; it had actually published, so we set it `posted` — resetting to `pending` would have duplicated it.)
+
+The snippet below sets `pending` — only use it for the genuinely-not-live case:
 
 ```
 node -e "
@@ -114,3 +122,7 @@ const s=d.shorts.find(x=>x.platforms.tiktok?.status==='posting'||x.platforms.tik
 if(s){s.platforms.tiktok.status='pending';delete s.platforms.tiktok.error;fs.writeFileSync('data/shorts.json',JSON.stringify(d,null,2));console.log('Reset:',s.id);}
 "
 ```
+
+## Hashtag policy (added 2026-05-29)
+
+Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.

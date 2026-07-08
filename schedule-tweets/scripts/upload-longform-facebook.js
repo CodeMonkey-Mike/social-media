@@ -7,7 +7,7 @@
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
-const { pickNextLongform } = require('./lib/longform-queue');
+const { pickNextLongform, stripMusicCredits } = require('./lib/longform-queue');
 
 const MIN_FILE_SIZE  = 1_000_000; // 1MB
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\fbbot-profile';
@@ -129,7 +129,7 @@ async function pollForNewVideo(page, baselineSet, { timeoutMs = 720_000, interva
   if (!videoPath || !fs.existsSync(videoPath)) { console.error('video_path missing on disk:', videoPath); process.exit(1); }
   if (fs.statSync(videoPath).size < MIN_FILE_SIZE) { console.error('Video below 1MB minimum'); process.exit(1); }
   const titleLine = (meta.title || '').trim();
-  const descr     = (meta.description || '').trim();
+  const descr     = stripMusicCredits((meta.description || '').trim());
   let caption = [titleLine, descr].filter(Boolean).join('\n\n');
   caption = caption.replace(/#[\w]+/g, '').replace(/\n{3,}/g, '\n\n').trim(); // strip hashtags (break FB wizard)
 

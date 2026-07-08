@@ -1,0 +1,122 @@
+{
+  "$doc": "Registry of the ChatGPT chats used for image generation, grouped by PURPOSE. Every image-gen script (repurpose/gen-batch*.js, generate-broll-wlw.js, generate-image.js, etc.) consults this via repurpose/chat-pool.js. A ChatGPT chat degrades past ~25 images (stops rendering OR returns off-prompt/style-contaminated images), so each chat is capped and auto-rotated. Chats are also keyed by purpose so different visual styles (cinematic b-roll vs text-slide carousels vs tweet renders) never share a chat and cross-contaminate. Flow: getActiveUrl(purpose) -> if a chat for that purpose has count<cap, reuse it; else the caller opens a fresh chatgpt.com/ chat, generates, captures the /c/<id> URL, and registerNewChat() REPLACES the full one (replace-then-delete: retired chats are dropped, so at steady state there is ~1 active object per purpose). recordImage(purpose) increments only on a SUCCESSFUL save. markDead(purpose) drops a chat that was manually deleted in the UI (conversation-not-found) so a fresh one is made. Seeded empty on 2026-06-07 because the prior hand-recorded persistent chats were all overloaded/contaminated; the pool creates fresh chats on first use per purpose.",
+  "cap": 25,
+  "purposes": [
+    "x-tweets",
+    "yt-posts",
+    "ig-single",
+    "ig-carousel",
+    "broll",
+    "longform-broll"
+  ],
+  "chats": [
+    {
+      "purpose": "ig-single",
+      "url": "https://chatgpt.com/c/6a26e9dd-12c8-83ea-8977-8e1bae3e0602",
+      "count": 24,
+      "created_at": "2026-06-08T16:13:55.791Z"
+    },
+    {
+      "purpose": "python-ai-broll",
+      "url": "https://chatgpt.com/c/6a2cd300-8188-83ea-b93a-0838166b5cfb",
+      "count": 3,
+      "created_at": "2026-06-13T03:49:49.451Z"
+    },
+    {
+      "purpose": "silverscript-broll",
+      "url": "https://chatgpt.com/c/6a2def7d-b940-83ea-a0f8-a5597dc6a406",
+      "count": 6,
+      "created_at": "2026-06-14T00:03:19.299Z"
+    },
+    {
+      "purpose": "yuli-broll",
+      "url": "https://chatgpt.com/c/6a304057-aa58-83ea-9160-da7a81cd2ae8",
+      "count": 5,
+      "created_at": "2026-06-15T18:13:19.450Z"
+    },
+    {
+      "purpose": "bittensor-broll",
+      "url": "https://chatgpt.com/c/6a32e89b-5cc4-83ea-937c-d79a0aa23b55",
+      "count": 12,
+      "created_at": "2026-06-17T18:35:18.828Z"
+    },
+    {
+      "purpose": "bittensor-broll2",
+      "url": "https://chatgpt.com/c/6a32f804-00c0-83ea-963e-56cd5e894bf4",
+      "count": 11,
+      "created_at": "2026-06-17T19:41:20.838Z"
+    },
+    {
+      "purpose": "kaspa-covenants-broll",
+      "url": "https://chatgpt.com/c/6a3735b9-a1e8-83ea-ac98-0d93f11fcc74",
+      "count": 4,
+      "created_at": "2026-06-21T00:53:22.459Z"
+    },
+    {
+      "purpose": "kaspa-covenants-short-broll",
+      "url": "https://chatgpt.com/c/6a3750d0-5500-83ea-9fe0-9a3e6bfe6c6c",
+      "count": 2,
+      "created_at": "2026-06-21T02:49:26.069Z"
+    },
+    {
+      "purpose": "persona-broll",
+      "url": "https://chatgpt.com/c/6a395e84-1764-83ea-8709-d7f69dcc6428",
+      "count": 3,
+      "created_at": "2026-06-22T16:12:16.277Z"
+    },
+    {
+      "purpose": "longform-broll",
+      "url": "https://chatgpt.com/c/6a430107-18bc-83ea-85e7-06542a015dce",
+      "count": 4,
+      "created_at": "2026-06-29T23:35:51.308Z"
+    },
+    {
+      "purpose": "broll",
+      "url": "https://chatgpt.com/c/6a446e52-75bc-83ea-858b-26a7dd76b7b8",
+      "count": 1,
+      "created_at": "2026-07-01T01:34:30.782Z"
+    },
+    {
+      "purpose": "x-tweets",
+      "url": "https://chatgpt.com/c/6a467642-ea64-83ea-8b30-8a8876cf53ef",
+      "count": 11,
+      "created_at": "2026-07-02T14:33:27.791Z"
+    },
+    {
+      "purpose": "yt-posts",
+      "url": "https://chatgpt.com/c/6a4680d2-5104-83ea-b9a1-ecb89230633c",
+      "count": 23,
+      "created_at": "2026-07-02T15:18:55.914Z"
+    },
+    {
+      "purpose": "carry-trade-broll",
+      "url": "https://chatgpt.com/c/6a4be761-e244-83ea-9aa8-25bd32e4a776",
+      "count": 10,
+      "created_at": "2026-07-06T17:36:44.932Z"
+    },
+    {
+      "purpose": "carry-trade-broll-adlib",
+      "url": "https://chatgpt.com/c/6a4c1b32-4158-83ea-8472-9c31e3e1eefb",
+      "count": 3,
+      "created_at": "2026-07-06T21:17:39.905Z"
+    },
+    {
+      "purpose": "carry-trade-broll-vertical",
+      "url": "https://chatgpt.com/c/6a4c4dfb-fef8-83ea-ba46-fff4ad0e33d1",
+      "count": 13,
+      "created_at": "2026-07-07T00:55:02.436Z"
+    },
+    {
+      "purpose": "reply-image-styles",
+      "url": "https://chatgpt.com/c/6a4d216f-3790-83ea-a0f3-e71b2d53f129",
+      "count": 12,
+      "created_at": "2026-07-07T15:57:46.323Z"
+    },
+    {
+      "purpose": "reply-images",
+      "url": "https://chatgpt.com/c/6a4d761c-5d2c-83ea-9ce8-a41a0e89d531",
+      "count": 4,
+      "created_at": "2026-07-07T21:59:45.509Z"
+    }
+  ]
+}

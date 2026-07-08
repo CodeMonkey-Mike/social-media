@@ -41,7 +41,11 @@ Prerequisite: the entry's `video_path` (and optional `thumbnail_path`) must exis
 ```
 
 - **Title:** **NOT truncated** by the script (unlike Rumble's 100-char cap, and unlike `bitchute-post-vertical.md` which truncates to 100). BitChute Studio's UI enforces the limit if there is one.
-- **Tags:** first 3 only. Each tag's internal spaces are replaced with underscores, then joined with spaces to form BitChute's "search terms" field (`tags.slice(0,3).map(t => t.replace(/\s+/g, '_')).join(' ')`).
+- **Tags:** first 3 **letters-only** tags, joined with spaces to form BitChute's "search terms" field (`tags.filter(t => /^[A-Za-z]+$/.test(t)).slice(0,3).join(' ')`). See the letters-only rule below — this filter is mandatory.
+
+## ⛔ Search Terms field is LETTERS-ONLY (A–Z) — applies to longform too (2026-06-19)
+
+BitChute's **Search Terms field rejects anything but letters A–Z** with a red **"Only use letters A to Z"** error. Any tag containing a **digit or symbol** (e.g. `ai16z`, `web3`, `100x`) throws a validation popup that **blocks the publish** — and on the shorts side that same popup gets misread as the "missing-thumbnail modal," causing a consistent every-attempt `failed`. Root-caused on the shorts side 2026-06-19 (the `ai16z` tag failed a short twice; dropping it published cleanly first try). **The longform Search Terms field is the identical control with the identical rule**, so `upload-longform-bitchute.js` now applies the same filter: any non-letters tag is **dropped** and the next valid tag is used (source `tags` are left untouched for other platforms). If you ever build the search terms by hand, use **letters-only** tokens.
 
 ## Validation (pre-Chrome)
 
@@ -77,7 +81,9 @@ Longform timings are lighter than vertical-video scripts because the upload itse
 
 ## Post-publish verification
 
-URL written from the Studio dashboard — **NOT the specific video URL**. To find the actual video URL after posting, visit the channel page manually. Same caveat applies as in `bitchute-post-vertical.md`.
+URL written from the Studio dashboard — **NOT the specific video URL** (it writes `https://www.bitchute.com/content`).
+
+**Derive the real video URL from the upload_code** — don't just leave the dashboard URL or scrape the channel by hand. The upload page URL the script lands on contains `?upload_code=<CODE>&...` (logged as `Upload page: https://up###.bitchute.com/videos/upload/?upload_code=<CODE>...`). The public video lives at `https://www.bitchute.com/video/<CODE>/` — exactly how `post-bitchute-short.js` already builds it. Confirmed 2026-06-14 (banks-own-chain: upload_code `mrkhxqj2SopE` → `https://www.bitchute.com/video/mrkhxqj2SopE/`, og:title matched). Verify with `curl ... | grep og:title` and write THAT to `longs.json`, not `/content`. (TODO worth doing: port the short script's upload_code→URL derivation into `upload-longform-bitchute.js` so this is automatic.)
 
 ## Custom thumbnail vs. Grab Thumbnail
 

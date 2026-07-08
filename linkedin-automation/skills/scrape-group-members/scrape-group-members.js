@@ -3,9 +3,10 @@
 // their location, and saves the ones in Europe / North America / South America /
 // the Caribbean to members.json as { profile_url, location }.
 //
-// Mirrors the human-timing + persistent-Chrome-profile pattern used by the
-// posting scripts (schedule-tweets/scripts/post-x-poll.js): system Chrome via
-// channel:'chrome', randomized delays between every action, webdriver hidden.
+// The browser session, login gate, and "reach a profile like a human" navigation
+// all live in _li-session.js (shared with request-connections.js). This file is
+// just the group-specific logic: collect the member list, read + classify each
+// profile's location, capture the matches.
 //
 // FIRST RUN: a fresh Chrome profile (li-bot-profile) opens with no LinkedIn
 // session. Log in manually in that window; the script waits for you, then
@@ -27,10 +28,14 @@
 // NOTE: LinkedIn's DOM changes often. The member-list and profile-location
 // selectors below are the fragile parts — if a run collects 0 members or every
 // location comes back empty, the selectors (COLLECT step / readLocation) are the
-// first thing to re-check against the live page.
+// first thing to re-check against the live page. (Search-box churn lives in
+// _li-session.js.)
 
 const path = require('path');
-const fs = require('fs');
+const S = require('../../lib/_li-session');
+
+// Data lives in linkedin-automation/data (two levels up from this skill folder).
+const DATA = path.join(__dirname, '..', '..', 'data');
 
 // CLI flags (for supervised test runs):
 //   --max=N         visit at most N profiles this run, then stop
@@ -42,35 +47,30 @@ const MAX_PROFILES = (() => {
 })();
 const COLLECT_ONLY = ARGV.includes('--collect-only');
 
-// Reuse the repo's existing Playwright install (this folder has no node_modules).
-const { chromium } = require(path.join(__dirname, '..', 'schedule-tweets', 'node_modules', 'playwright'));
-
 // ----------------------------------------------------------------------------
 // Config
 // ----------------------------------------------------------------------------
 const GROUP_ID      = '9078205';
 const MEMBERS_URL   = `https://www.linkedin.com/groups/${GROUP_ID}/members/`;
-const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\li-bot-profile';
 
 // Work queue — every collected group member whose location we don't know yet:
 //   { profile_url, processed }
 // Collection seeds all members with processed:false; each run visits the next N
 // unprocessed members and flips processed:true, so you can run it in batches here
 // and there. Navigation errors stay processed:false so they're retried next run.
-const QUEUE = path.join(__dirname, 'members-urls.json');
+const QUEUE = path.join(DATA, 'members-urls.json');
 
 // Captured deliverable — only members located in a target zone (Europe / Americas /
 // Caribbean). One record each: { profile_url, location }.
-const OUT_MEMBERS = path.join(__dirname, 'members.json');
+const OUT_MEMBERS = path.join(DATA, 'members.json');
 
-// Human-timing knobs (ms). Same spirit as post-x-poll.js.
-const ACTION_MIN        = 1500;   // small pause between scrolls / clicks
-const ACTION_MAX        = 3800;
-const PROFILE_MIN       = 15000;  // pause between visiting one profile and the next
-const PROFILE_MAX       = 30000;
+// Profile-cycle pacing knobs (ms). Small-action pacing (ACTION_MIN/MAX) is shared
+// from _li-session.js; these between-profile knobs are scraper-specific.
+const PROFILE_MIN       = 60000;  // pause between one profile cycle and the next search (1 min)
+const PROFILE_MAX       = 300000; // ...up to 5 min — random, deliberately slow (Mike, 2026-06-30: "it could take all day, that's okay")
 const REST_EVERY        = 18;     // every N profiles, take a longer "human break"
-const REST_MIN          = 30000;
-const REST_MAX          = 90000;
+const REST_MIN          = 300000; // distinctly longer than the new 1-5 min between-profile gap (5 min)
+const REST_MAX          = 480000; // ...up to 8 min
 
 const MAX_SCROLL_ROUNDS   = 400;  // hard ceiling so a stuck scroll can't loop forever
 const SCROLL_STALL_LIMIT  = 6;    // stop scrolling after this many rounds with no new members
@@ -194,50 +194,23 @@ function classify(location) {
 }
 
 // ----------------------------------------------------------------------------
-// Small helpers
-// ----------------------------------------------------------------------------
-function randomBetween(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
-
-async function pause(page, min, max, label = '') {
-  const ms = randomBetween(min, max);
-  if (label) console.log(`  ~ ${(ms / 1000).toFixed(1)}s (${label})`);
-  await page.waitForTimeout(ms);
-}
-
-function readJson(file, fallback) {
-  try { return JSON.parse(fs.readFileSync(file, 'utf8')); } catch { return fallback; }
-}
-function writeJson(file, data) {
-  fs.writeFileSync(file, JSON.stringify(data, null, 2));
-}
-
-// Normalize a profile URL to its canonical /in/<slug>/ form for stable dedup.
-function canonicalProfileUrl(href) {
-  try {
-    const u = new URL(href, 'https://www.linkedin.com');
-    const m = u.pathname.match(/\/in\/([^/]+)/);
-    return m ? `https://www.linkedin.com/in/${m[1]}/` : null;
-  } catch { return null; }
-}
-
-// ----------------------------------------------------------------------------
 // Step 1 — collect every member's profile URL from the group member list
 // ----------------------------------------------------------------------------
 // Returns the work queue (loaded from members-urls.json, or freshly collected).
 // Each element is { profile_url, processed:false }.
 async function collectQueue(page) {
-  const existing = readJson(QUEUE, null);
+  const existing = S.readJson(QUEUE, null);
   if (existing && Array.isArray(existing) && existing.length) {
     // Migrate the legacy string-array format -> objects with a processed flag.
     if (typeof existing[0] === 'string') {
       // Preserve work already done: mark processed for anything captured in
       // members.json or recorded in a legacy visited.json.
       const doneUrls = new Set([
-        ...readJson(OUT_MEMBERS, []).map(m => m.profile_url),
-        ...readJson(path.join(__dirname, 'visited.json'), []),
+        ...S.readJson(OUT_MEMBERS, []).map(m => m.profile_url),
+        ...S.readJson(path.join(DATA, 'visited.json'), []),
       ]);
       const migrated = existing.map(url => ({ profile_url: url, processed: doneUrls.has(url) }));
-      writeJson(QUEUE, migrated);
+      S.writeJson(QUEUE, migrated);
       const carried = migrated.filter(m => m.processed).length;
       console.log(`Migrated members-urls.json: ${migrated.length} URLs -> objects (carried over ${carried} already-processed).`);
       return migrated;
@@ -248,9 +221,9 @@ async function collectQueue(page) {
 
   console.log(`\nOpening group members page:\n  ${MEMBERS_URL}`);
   await page.goto(MEMBERS_URL, { waitUntil: 'domcontentloaded' });
-  await ensureLoggedIn(page);
+  await S.ensureLoggedIn(page);
   await page.goto(MEMBERS_URL, { waitUntil: 'domcontentloaded' });
-  await pause(page, 3000, 5000, 'let member list render');
+  await S.pause(page, 3000, 5000, 'let member list render');
 
   const found = new Map(); // canonicalUrl -> true
   let stalls = 0;
@@ -260,7 +233,7 @@ async function collectQueue(page) {
     const hrefs = await page.$$eval('a[href*="/in/"]', els => els.map(a => a.getAttribute('href')));
     let added = 0;
     for (const h of hrefs) {
-      const c = canonicalProfileUrl(h);
+      const c = S.canonicalProfileUrl(h);
       if (c && !found.has(c)) { found.set(c, true); added++; }
     }
 
@@ -269,7 +242,7 @@ async function collectQueue(page) {
 
     // Scroll down to trigger lazy-loading.
     await page.evaluate(() => window.scrollBy(0, document.body.scrollHeight));
-    await pause(page, ACTION_MIN, ACTION_MAX, 'scroll');
+    await S.pause(page, S.ACTION_MIN, S.ACTION_MAX, 'scroll');
 
     // Click a "Show more results" button if LinkedIn renders one instead of pure infinite scroll.
     const moreBtn = page.locator(
@@ -279,7 +252,7 @@ async function collectQueue(page) {
       try {
         if (await moreBtn.isVisible()) {
           await moreBtn.click({ timeout: 4000 });
-          await pause(page, ACTION_MIN, ACTION_MAX, 'after show-more');
+          await S.pause(page, S.ACTION_MIN, S.ACTION_MAX, 'after show-more');
           stalls = 0;
         }
       } catch { /* button detached / not clickable — keep scrolling */ }
@@ -287,37 +260,9 @@ async function collectQueue(page) {
   }
 
   const queue = [...found.keys()].map(url => ({ profile_url: url, processed: false }));
-  writeJson(QUEUE, queue);
+  S.writeJson(QUEUE, queue);
   console.log(`\nCollected ${queue.length} members -> ${path.basename(QUEUE)} (all processed:false)`);
   return queue;
-}
-
-// ----------------------------------------------------------------------------
-// Login gate — wait for a human to sign in on the fresh profile
-// ----------------------------------------------------------------------------
-// LinkedIn redirects logged-out users to an auth wall. So the reliable signal is
-// the URL, not a nav selector: if we're NOT on a login/authwall URL, we're logged
-// in (a profile/members page only renders when authenticated). We only block for a
-// manual login when LinkedIn has actually bounced us to the auth wall.
-const AUTHWALL_RE = /\/(login|uas\/login|checkpoint|authwall|signup)(\/|\?|$)/i;
-
-async function ensureLoggedIn(page) {
-  // Give the SPA a moment to perform any auth redirect after domcontentloaded.
-  if (!AUTHWALL_RE.test(page.url())) {
-    try { await page.waitForSelector('#global-nav, img.global-nav__me-photo', { timeout: 8000 }); } catch { /* nav slow to hydrate; URL check below still governs */ }
-  }
-  if (!AUTHWALL_RE.test(page.url())) return; // not bounced to auth wall → logged in
-
-  console.log('\n============================================================');
-  console.log(' NOT LOGGED IN. Sign in to LinkedIn in the Chrome window now.');
-  console.log(' Waiting up to 5 minutes for you to finish...');
-  console.log('============================================================\n');
-  const deadline = Date.now() + 5 * 60 * 1000;
-  while (Date.now() < deadline) {
-    if (!AUTHWALL_RE.test(page.url())) { console.log('Detected login. Continuing.\n'); return; }
-    await page.waitForTimeout(3000);
-  }
-  throw new Error('Timed out waiting for manual login.');
 }
 
 // ----------------------------------------------------------------------------
@@ -376,22 +321,10 @@ async function readLocation(page) {
 // Main
 // ----------------------------------------------------------------------------
 (async () => {
-  console.log('Launching Chrome (li-bot-profile)...');
-  const browser = await chromium.launchPersistentContext(CHROME_PROFILE, {
-    channel: 'chrome',
-    headless: false,
-    slowMo: 50,
-    ignoreDefaultArgs: ['--enable-automation'],
-    args: ['--disable-blink-features=AutomationControlled'],
-    viewport: null,
-  });
-  await browser.addInitScript(() => {
-    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-  });
-  const page = browser.pages().length > 0 ? browser.pages()[0] : await browser.newPage();
+  const { browser, page } = await S.launchSession();
 
   // Captured deliverable so far (matched members). Resume-friendly.
-  const members = readJson(OUT_MEMBERS, []);
+  const members = S.readJson(OUT_MEMBERS, []);
   const captured = new Set(members.map(m => m.profile_url));
 
   try {
@@ -416,17 +349,25 @@ async function readLocation(page) {
       const url = entry.profile_url;
       console.log(`[${i}/${todo.length}] ${url}`);
       try {
-        await page.goto(url, { waitUntil: 'domcontentloaded' });
-        await ensureLoggedIn(page);
-        await pause(page, ACTION_MIN, ACTION_MAX, 'read profile');
+        const nav = await S.searchAndOpen(page, entry);
+        await S.ensureLoggedIn(page);
+        console.log(`   reached via ${nav}`);
+        // Guard: only proceed if we actually landed on a profile page. Otherwise
+        // throw so this member stays processed:false and is retried next run
+        // (never mark it done off the wrong page).
+        if (!/\/in\//.test(page.url())) throw new Error(`not on a profile page (${page.url()})`);
+        await S.pause(page, S.ACTION_MIN, S.ACTION_MAX, 'read profile');
 
         const location = await readLocation(page);
         const zone = classify(location);
 
         if (zone && !captured.has(url)) {
-          members.push({ profile_url: url, location, group_id: GROUP_ID });
+          // Tag the capture with the QUEUE ENTRY's own group_id (seed-by-name writes
+          // it per member), not the hardcoded collect-phase GROUP_ID — the queue now
+          // crosses from 9078205 into 6665791, so the constant would mis-tag captures.
+          members.push({ profile_url: url, location, group_id: entry.group_id || GROUP_ID });
           captured.add(url);
-          writeJson(OUT_MEMBERS, members);
+          S.writeJson(OUT_MEMBERS, members);
           console.log(`   CAPTURE [${zone}] ${location}`);
         } else if (zone) {
           console.log(`   already captured [${zone}] ${location}`);
@@ -436,16 +377,16 @@ async function readLocation(page) {
 
         // Visited successfully -> mark processed so we never re-check it.
         entry.processed = true;
-        writeJson(QUEUE, queue);
+        S.writeJson(QUEUE, queue);
       } catch (err) {
         // Leave processed:false so a genuine load error is retried on the next run.
         console.log(`   error (will retry next run): ${String(err.message).split('\n')[0]}`);
       }
 
       if (i % REST_EVERY === 0 && i < todo.length) {
-        await pause(page, REST_MIN, REST_MAX, 'longer human break');
+        await S.pause(page, REST_MIN, REST_MAX, 'longer human break');
       } else {
-        await pause(page, PROFILE_MIN, PROFILE_MAX, 'between profiles');
+        await S.pause(page, PROFILE_MIN, PROFILE_MAX, 'between profiles');
       }
     }
 

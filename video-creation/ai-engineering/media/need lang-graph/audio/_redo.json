@@ -1,0 +1,10 @@
+[
+ {
+  "file": "chunk-27.mp3",
+  "text": "The fix is a property called IDEMPOTENCY. An idempotent operation is one you can run ten times and get the same result as running it once. Rendering a video is naturally idempotent: same input, same output. POSTING to social media is not."
+ },
+ {
+  "file": "chunk-29.mp3",
+  "text": "And you set retry policies per node... in code it's one keyword argument on add node, right here: a retry policy with max attempts set to one. Downloads and renders can retry all day, they're safe. POSTING nodes get zero retries, because at least once is the wrong guarantee for a public action."
+ }
+]

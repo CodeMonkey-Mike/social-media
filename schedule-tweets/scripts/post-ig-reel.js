@@ -5,6 +5,7 @@
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
+const { stripHashtags, buildCaption } = require('./lib/strip-hashtags');
 
 const SHORTS_JSON    = path.join(__dirname, '..', 'data', 'shorts.json');
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\igbot-profile';
@@ -103,7 +104,7 @@ async function getRecentReelUrls(page, count = 3) {
     process.exit(1);
   }
 
-  const caption = short.platforms[PLATFORM].caption_override || short.caption;
+  const caption = buildCaption(short.platforms[PLATFORM].caption_override || short.caption, short.tags, PLATFORM);
 
   console.log(`\nReel: "${short.title}"`);
   console.log(`File: ${videoPath} (${short.duration_seconds}s)`);

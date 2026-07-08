@@ -51,6 +51,7 @@ existing entries. Then posting is the per-platform schedule-tweets skills (see "
   "height": 1920,
   "title": "<open-loop hook>",
   "hook": "<the spoken hook line>",
+  "related_longform_url": null,
   "caption": "<clean caption — NO link, NO #hashtags>",
   "tags": ["<keyword tags, no #, ~4-5, most-relevant first; drive the per-platform hashtags + YT/Rumble tag boxes>"],
   "platforms": {
@@ -78,6 +79,14 @@ existing entries. Then posting is the per-platform schedule-tweets skills (see "
   `wlw-20260531-115x-lab`). Keep it unique and human-readable.
 
 ---
+
+## Related long-form link (teaser shorts)
+
+`related_longform_url` (top-level, default `null`): when a short is a TEASER for a related long-form
+video, set this to the long-form's URL. `post-yt-short-api.js` appends `Watch the full video: <url>`
+to the YouTube description. (The native YouTube Studio "Related video" field on a Short is NOT
+settable via the Data API v3 — set that manually in Studio if you also want the on-Short chip; the
+description link is the API-supported equivalent.) Leave `null` for standalone shorts.
 
 ## Title / hook — make it an OPEN LOOP
 

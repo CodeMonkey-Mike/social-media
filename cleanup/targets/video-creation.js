@@ -181,53 +181,57 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     }
   }
 
-  // ── longform-presentation/media/<project>/ — batch-aware (matched by source_media) ────────
-  // Each project subfolder holds a longform-presentation batch's source artifacts (master .mkv,
-  // EDIT/FINAL, deck, transcript, thumbnail). Recycle a completed/archived batch's folder, keep
-  // an active one, leave an unmatched folder alone (can't classify safely). ONLY media/<project>/
-  // subfolders are eligible — top-level files (the skill doc, scripts/, decks) are never touched.
+  // ── media/<project>/ project trees — whole-folder, batch-aware (matched by source_media) ──
+  // Each immediate subfolder holds one batch's source/render artifacts (master .mkv, EDIT/FINAL
+  // renders, intermediates, deck, transcript, thumbnail). Recycle the WHOLE folder for a
+  // completed/archived batch, keep an active one, and LEAVE ALONE a folder that maps to no batch
+  // (can't classify it safely). ONLY media/<project>/ subfolders are eligible — each track's skill
+  // doc, scripts/, and decks are never touched. source_media may be the project FOLDER or a FILE
+  // inside it, so we match on path prefix.
   const LFP_MEDIA = path.join(ROOT, 'longform-presentation', 'media');
-  if (fs.existsSync(LFP_MEDIA)) {
-    for (const entry of fs.readdirSync(LFP_MEDIA, { withFileTypes: true })) {
-      if (!entry.isDirectory()) continue;
-      const full = path.join(LFP_MEDIA, entry.name);
-      // Match by path prefix: source_media may be the project FOLDER or a FILE inside it.
-      const relPath = `video-creation/longform-presentation/media/${entry.name}`.toLowerCase();
-      const b = batches.find((bb) => {
-        if (!bb.source_media) return false;
-        const sm = bb.source_media.replace(/\\/g, '/').toLowerCase();
-        return sm === relPath || sm.startsWith(relPath + '/');
-      });
-      if (!b) { skipped.push({ path: full, reason: 'longform-presentation project — not in batch registry' }); continue; }
-      if (b.status === 'active') skipped.push({ path: full, reason: `longform-presentation project — active batch (${b.batch})` });
-      else recycle.push({ path: full, reason: `longform-presentation project — ${b.status} batch (${b.batch})` });
-    }
-  }
-
-  // ── longform-edited/media/<project>/ — batch-aware (matched by source_media) ──────────
-  // Mirror of longform-presentation above, for the heavily-edited 16:9 track. Each project
-  // subfolder holds a longform-edited batch's source artifacts (master .mkv, EDIT/FINAL renders,
-  // intermediates, deck, transcript, thumbnail). Recycle the WHOLE folder for a completed/archived
-  // batch, keep an active one, leave an unmatched folder alone. ONLY media/<project>/ subfolders are
-  // eligible — the track's skill doc and scripts are never touched.
   const LFE_MEDIA = path.join(ROOT, 'longform-edited', 'media');
-  if (fs.existsSync(LFE_MEDIA)) {
-    for (const entry of fs.readdirSync(LFE_MEDIA, { withFileTypes: true })) {
+  const VAP_MEDIA = path.join(ROOT, 'vertical-ai-persona', 'media');
+  const YULI_MEDIA = path.join(ROOT, 'vertical-ai-persona', 'Yuli y Ana', 'media');
+  const classifyMediaProjects = (mediaDir, relPrefix, label) => {
+    if (!fs.existsSync(mediaDir)) return;
+    for (const entry of fs.readdirSync(mediaDir, { withFileTypes: true })) {
       if (!entry.isDirectory()) continue;
-      const full = path.join(LFE_MEDIA, entry.name);
-      const relPath = `video-creation/longform-edited/media/${entry.name}`.toLowerCase();
+      const full = path.join(mediaDir, entry.name);
+      const relPath = `${relPrefix}/${entry.name}`.toLowerCase();
       const b = batches.find((bb) => {
         if (!bb.source_media) return false;
         const sm = bb.source_media.replace(/\\/g, '/').toLowerCase();
         return sm === relPath || sm.startsWith(relPath + '/');
       });
-      if (!b) { skipped.push({ path: full, reason: 'longform-edited project — not in batch registry' }); continue; }
-      if (b.status === 'active') skipped.push({ path: full, reason: `longform-edited project — active batch (${b.batch})` });
-      else recycle.push({ path: full, reason: `longform-edited project — ${b.status} batch (${b.batch})` });
+      if (!b) { skipped.push({ path: full, reason: `${label} project — not in batch registry (left alone)` }); continue; }
+      if (b.status === 'active') skipped.push({ path: full, reason: `${label} project — active batch (${b.batch})` });
+      else recycle.push({ path: full, reason: `${label} project — ${b.status} batch (${b.batch})` });
     }
-  }
+  };
+  classifyMediaProjects(LFP_MEDIA, 'video-creation/longform-presentation/media', 'longform-presentation');
+  classifyMediaProjects(LFE_MEDIA, 'video-creation/longform-edited/media', 'longform-edited');
+  // vertical-ai-persona main-likeness projects ARE batch-tracked (e.g. kaspa-covenants-short).
+  classifyMediaProjects(VAP_MEDIA, 'video-creation/vertical-ai-persona/media', 'vertical-ai-persona');
+  // Yuli y Ana is a SEPARATE persona channel NOT tracked in batches.json; with no batch match
+  // every folder is "left alone" by design — these concept folders are a reusable library and
+  // must never be auto-recycled (recycle them only on an explicit, per-folder instruction).
+  classifyMediaProjects(YULI_MEDIA, 'video-creation/vertical-ai-persona/Yuli y Ana/media', 'yuli-y-ana');
 
-  return { name: NAME, recycle, skipped };
+  // Empty folders left after a recycle pass are pruned by the engine across these roots, so a
+  // cleaned-out <batch>/ or render folder never lingers. The protected asset libraries
+  // (sfx/music/fonts/transitions) are skipped so they're never pruned even if momentarily empty.
+  const pruneRoots = [
+    ASSETS,
+    SHORTS_DIR,
+    OUT,
+    path.join(ROOT, 'livestream-repurpose', 'media'),
+    path.join(ROOT, 'livestream-repurpose', 'transcripts'),
+    LFP_MEDIA,
+    LFE_MEDIA,
+    VAP_MEDIA,
+    YULI_MEDIA,
+  ];
+  return { name: NAME, recycle, skipped, pruneRoots, pruneSkipDirs: [...protectDirs] };
 }
 
 module.exports = { name: NAME, plan };

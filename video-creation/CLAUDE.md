@@ -16,6 +16,22 @@ Do not rely on any skill outside this repo. There was a home-dir copy
 (`~/.claude/skills/create-short/`) that silently diverged and caused lost work; it was
 deleted on 2026-05-25.
 
+## Shared skills (`skills/`) + external tooling
+
+**ALL reusable, cross-cutting video-creation skills live in `skills/`** (canonical copies committed to
+the repo so they travel with a checkout; `skills/README.md` is the index): `captions`, `defumbler`,
+`desilencer`, `elevenlabs-lipsync`, `envato-broll`, `gaze`, `higgsfield-generate`, `higgsfield-soul-id`,
+`higgsfield-voice`, `music-sourcing`. Skills with a `/command` (`/defumbler`, `/higgsfield-generate`,
+`/higgsfield-soul-id`) have a 3-line pointer under `.claude/skills/<name>/SKILL.md` that points back to
+`skills/`; the rest are read directly via this routing table or the track docs.
+
+Some wrap **external tooling not in the repo** (e.g. the `higgsfield` CLI + login). On a fresh machine,
+install it first — see **`SKILLS-SETUP.md`** (this folder's root).
+
+What does NOT go in `skills/`: the master `SKILL.md`, the track *pipelines* (`longform-edited/`,
+`longform-presentation/`, `vertical-ai-persona/`, `livestream-repurpose/`), and infra (`assets/`,
+`remotion/`, `shorts/`, `style-guide/`) — those stay at the `video-creation/` root.
+
 ## Per-batch progress files (READ ONE EVERY SESSION)
 
 Each multi-clip batch lives in its own folder `shorts/<batch>/` (clip subdirs + `dashboard.html`)

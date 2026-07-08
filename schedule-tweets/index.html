@@ -540,7 +540,19 @@ function renderReplies(items) {
     const isReaction = !!r.reaction_only;
 
     let body;
-    if (isReaction) {
+    if (r.image_path || r.image_prompt) {
+      const generated = (r.image_path || '').trim();
+      const base = generated ? generated.replace(/\\/g, '/').split('/').pop() : '';
+      const media = generated
+        ? `<img src="/x-reply-guy/data/reply-images/${encodeURIComponent(base)}" alt="reply image" style="max-width:300px;width:100%;border-radius:10px;margin-top:8px;display:block">`
+        : `<span style="background:#fdecea;color:#c0392b;font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px">awaiting generation — node generate_reply_images.js</span>`;
+      body = `<div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+        <span style="background:#e8f5ee;color:#1a7f4e;font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.04em">Image</span>
+        <span style="font-size:13px;color:#444">${esc(r.image_style || '')}</span>
+      </div>
+      ${r.reply_text ? `<div class="post-text" style="margin-top:8px">${esc(r.reply_text)}</div>` : ''}
+      <div style="margin-top:8px">${media}</div>`;
+    } else if (isReaction) {
       if (r.gif_search) {
         body = `<div style="display:flex;align-items:center;gap:10px;margin-top:4px">
           <span style="background:#e7f0fd;color:#1877f2;font-size:11px;font-weight:700;padding:3px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:.04em">GIF</span>
@@ -576,10 +588,23 @@ function renderReplyOpportunities(items) {
     const source    = esc(opp.source || '');
     const why       = esc(opp.why_reply || '');
     const reply     = esc(opp.reply_text || '');
+    const imgStyle  = esc(opp.image_style || '');
+    const imgPrompt = esc(opp.image_prompt || '');
     const cardId    = `opp-${i}`;
 
+    const imageBlock = imgStyle ? `
+      <div class="opp-reply-label" style="margin-top:10px">Image reply&nbsp;
+        <span style="background:#e8f5ee;color:#1a7f4e;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px;text-transform:uppercase;letter-spacing:.04em">${imgStyle}</span>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;margin-top:6px">
+        <img class="opp-style-thumb" data-style-slug="${imgStyle}" alt="${imgStyle} style exemplar"
+             title="Style exemplar — the actual image is generated after queuing"
+             style="width:130px;border-radius:8px;flex:none;display:none">
+        <div style="font-size:12.5px;color:#667;line-height:1.45">${imgPrompt}</div>
+      </div>` : '';
+
     return `<div class="card opp-card" id="${cardId}">
-      <div class="card-meta">#${i + 1} &nbsp;·&nbsp; ${source}</div>
+      <div class="card-meta">#${i + 1} &nbsp;·&nbsp; ${source}${imgStyle ? ' &nbsp;·&nbsp; <b style="color:#1a7f4e">IMAGE</b>' : ''}</div>
       <div class="opp-tweet-preview" data-embed-url="${url}">
         <div class="opp-tweet-author"><a href="${url}" target="_blank">${author}</a></div>
         <div class="opp-tweet-text">${tweetText}</div>
@@ -587,6 +612,7 @@ function renderReplyOpportunities(items) {
       ${why ? `<div class="opp-why">${why}</div>` : ''}
       <div class="opp-reply-label">Suggested reply</div>
       <div class="opp-reply-text">${reply}</div>
+      ${imageBlock}
       <div class="opp-footer">
         <a class="opp-view-link" href="${url}" target="_blank">View tweet ↗</a>
         <button class="btn-queue" onclick="queueReply(this, ${i})">+ Queue</button>
@@ -596,6 +622,23 @@ function renderReplyOpportunities(items) {
 }
 
 let _replyOpps = [];
+let _styleLibMap = null;
+
+async function fillStyleThumbs() {
+  const imgs = document.querySelectorAll('img.opp-style-thumb[data-style-slug]');
+  if (!imgs.length) return;
+  if (!_styleLibMap) {
+    try {
+      const lib = await fetch('/x-reply-guy/example-images/library.json', { cache: 'no-store' })
+        .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+      _styleLibMap = Object.fromEntries(lib.styles.map(s => [s.slug, s.file]));
+    } catch { _styleLibMap = {}; }
+  }
+  imgs.forEach(img => {
+    const f = _styleLibMap[img.dataset.styleSlug];
+    if (f) { img.src = '/x-reply-guy/example-images/' + f; img.style.display = 'block'; }
+  });
+}
 
 async function loadTweetEmbeds() {
   const els = document.querySelectorAll('.opp-tweet-preview[data-embed-url]');
@@ -721,7 +764,7 @@ const SOURCES = [
   { tab: 'igsingle',   url: '/data/ig-single-image.json', key: 'posts',   render: renderIGSingle },
   { tab: 'igcarousel', url: '/data/ig-carousel.json',     key: 'posts',   render: renderIGCarousel },
   { tab: 'xreplies',   url: '/x-reply-guy/data/replies_to_post.json',      key: null,      render: renderReplies },
-  { tab: 'replyopp',  url: '/x-reply-guy/data/reply_opportunities.json',  key: null,      render: items => { _replyOpps = items; return renderReplyOpportunities(items); }, afterRender: loadTweetEmbeds },
+  { tab: 'replyopp',  url: '/x-reply-guy/data/reply_opportunities.json',  key: null,      render: items => { _replyOpps = items; return renderReplyOpportunities(items); }, afterRender: () => { fillStyleThumbs(); loadTweetEmbeds(); } },
   { tab: 'shorts',     url: '/data/shorts.json',                          key: 'shorts',  render: renderShorts,
     filter: x => Object.values(x.platforms || {}).some(p => ['pending','failed','posting'].includes(p.status)) },
   { tab: 'longs',      url: '/data/longs.json',                           key: 'longs',   render: renderLongs,

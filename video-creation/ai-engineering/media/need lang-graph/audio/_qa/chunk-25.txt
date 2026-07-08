@@ -1,0 +1,6 @@
+and look at what that feature costs you in code.
+You open a SQLite connection to a file,
+wrap it in a SQLite saver,
+and hand that to compile, right here.
+From that moment, every node run is check-pointed automatically
+and you never write a single line of SQL.

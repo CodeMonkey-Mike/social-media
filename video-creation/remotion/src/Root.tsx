@@ -1,5 +1,7 @@
 import React from 'react';
 import { Composition } from 'remotion';
+import { CRankChart } from './kaspaFounderCharts';
+import { KaspaFounderGenius, KF_DURATION, KF_FPS } from './KaspaFounderGenius';
 import { MikeTysonKaspa } from './MikeTysonKaspa';
 import { FourYearCycleZombies } from './FourYearCycleZombies';
 import { Kaspa3Dollar } from './Kaspa3Dollar';
@@ -44,10 +46,25 @@ import { QeMoneyPrinter, QE_FPS, QE_DURATION } from './QeMoneyPrinter';
 import { ZcashHack, ZC_FPS, ZC_DURATION } from './ZcashHack';
 import { BanksOwnChain, BOC_FPS, BOC_DURATION } from './BanksOwnChain';
 import { SilverScript, SS_FPS, SS_DURATION } from './SilverScript';
+import { SmChartsPreview, SMCHARTS_FPS, SMCHARTS_FRAMES } from './SmCharts';
+import { SmartMoneyKaspa, SMK_FPS, SMK_DURATION } from './SmartMoneyKaspa';
+import { SmChartsAnimPreview, SMCA_FPS, SMCA_FRAMES } from './SmChartsAnim';
+import { SmkCh13, SMKC_FPS, SMKC_DURATION } from './SmkCh13';
+import { SmkFull, SMKF_FPS, SMKF_DURATION } from './SmkFull';
+import { CarryTradeFull, CT_FPS, CT_DURATION } from './CarryTradeFull';
+import { CarryTradeVertical, CTV_FPS, CTV_DURATION } from './CarryTradeVertical';
+import { KaspaCovenants, KC_FPS, KC_DURATION } from './KaspaCovenants';
+import { KaspaCovenantsShort, KCS_FPS, KCS_DURATION } from './KaspaCovenantsShort';
+import { KaspaCovenantsYuli, KCY_FPS, KCY_DURATION } from './KaspaCovenantsYuli';
 import { BittensorCh1to6, B_FPS, B_DURATION } from './BittensorCh1to6';
 import { WhyAiPython, WAP_FPS, WAP_DURATION } from './WhyAiPython';
+import { PythonAiLibs, PAL_FPS, PAL_DURATION } from './PythonAiLibs';
+import { PythonAiLibsVertical, PALV_FPS, PALV_DURATION } from './PythonAiLibsVertical';
+import { NeedLangGraph, NLG_FPS_EXPORT, NLG_DURATION } from './NeedLangGraph';
+import { NeedLangGraphVertical, NLGV_FPS_EXPORT, NLGV_DURATION } from './NeedLangGraphVertical';
 import { LivestreamShort } from './LivestreamShort';
 import { TransitionDemo, demoDurationFrames } from './TransitionDemo';
+import { TransitionTest } from './TransitionTest';
 import { WLW_TITLE, WLW_UNICORN, WLW_LAB115X, WLW_KASPA3, WLW_WF, WLW_BOUNTY, WLW_ROTATION, WLW_LABWONT, WLW_KASPAHOLD, WLW_KASPATON, WLW_PENGU, FRAMES } from './wlwData';
 import { D353X_SHORT, D353X_MEDIUM, D353X_LONG, D353X_MOONBAG, D353X_SAYLOR, D353X_WARSH, FRAMES as F353X } from './data353x';
 import { D_B350_C1, D_B350_C2, D_B350_C3, D_B350_C4, D_B350_C5, D_B350_C6, D_B350_C7, D_B350_C8, FRAMES_B350 } from './dataBest350x';
@@ -58,6 +75,8 @@ import { D_UH_1, D_UH_2, D_UH_3, D_UH_4, D_UH_5, D_UH_6, FRAMES_UH } from './dat
 import { D_MM_1, D_MM_2, D_MM_3, FRAMES_MM } from './dataMarketMeltdown';
 import { D_TIGR_1, D_TIGR_2, D_TIGR_3, FRAMES_TIGR } from './dataTigr';
 import { D_BC_TAO, D_BC_LAB, D_BC_AI, D_BC_LINEA, FRAMES_BC } from './dataBestCoin';
+import { D_KC_COVENANTS, D_KC_FIRST, D_KC_ELIZA, D_KC_KRC20, FRAMES_KC } from './dataKaspaChanges';
+import { D_BCM_LEARN, D_BCM_BREAKAGE, D_BCM_TAO, D_BCM_BTC200, D_BCM_WHALES, D_BCM_SHITCOIN, D_BCM_STOPWAIT, D_BCM_1992, FRAMES_BCM } from './dataBetterCoins';
 import { TOTAL_FRAMES, FPS_FYCZ } from './constants-fycz';
 import { TOTAL_FRAMES_K3D, FPS_K3D } from './constants-k3d';
 import { TOTAL_FRAMES_T, FPS_T } from './constants-toccata';
@@ -94,6 +113,22 @@ import { TOTAL_FRAMES_PENGUMC, FPS_PENGUMC } from './constants-pengu-mc';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="CarryTradeFull"
+        component={CarryTradeFull}
+        durationInFrames={CT_DURATION}
+        fps={CT_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="CarryTradeVertical"
+        component={CarryTradeVertical}
+        durationInFrames={CTV_DURATION}
+        fps={CTV_FPS}
+        width={1080}
+        height={1920}
+      />
       <Composition
         id="MikeTysonKaspa"
         component={MikeTysonKaspa}
@@ -238,14 +273,29 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames: demoDurationFrames(props.id, 30),
         })}
       />
+      <Composition id="TransitionTest" component={TransitionTest} defaultProps={{ id: 'badsignal-max-1' }} fps={30} width={1920} height={1080} durationInFrames={75} />
       <Composition id="AnaToccata" component={AnaToccata} durationInFrames={ANA_FRAMES} fps={ANA_FPS} width={1080} height={1920} />
       <Composition id="QeMoneyPrinterPoc" component={QeMoneyPrinterPoc} durationInFrames={1290} fps={30} width={1920} height={1080} />
       <Composition id="QeMoneyPrinter" component={QeMoneyPrinter} durationInFrames={QE_DURATION} fps={QE_FPS} width={1920} height={1080} />
       <Composition id="ZcashHack" component={ZcashHack} durationInFrames={ZC_DURATION} fps={ZC_FPS} width={1920} height={1080} />
       <Composition id="BanksOwnChain" component={BanksOwnChain} durationInFrames={BOC_DURATION} fps={BOC_FPS} width={1920} height={1080} />
       <Composition id="SilverScript" component={SilverScript} durationInFrames={SS_DURATION} fps={SS_FPS} width={1920} height={1080} />
+      <Composition id="SmChartsPreview" component={SmChartsPreview} durationInFrames={SMCHARTS_FRAMES} fps={SMCHARTS_FPS} width={1920} height={1080} />
+      <Composition id="SmartMoneyKaspa" component={SmartMoneyKaspa} durationInFrames={SMK_DURATION} fps={SMK_FPS} width={1920} height={1080} />
+      <Composition id="SmChartsAnimPreview" component={SmChartsAnimPreview} durationInFrames={SMCA_FRAMES} fps={SMCA_FPS} width={1920} height={1080} />
+      <Composition id="SmkCh13" component={SmkCh13} durationInFrames={SMKC_DURATION} fps={SMKC_FPS} width={1920} height={1080} />
+      <Composition id="SmkFull" component={SmkFull} durationInFrames={SMKF_DURATION} fps={SMKF_FPS} width={1920} height={1080} />
+      <Composition id="KaspaCovenants" component={KaspaCovenants} durationInFrames={KC_DURATION} fps={KC_FPS} width={1920} height={1080} />
+      <Composition id="KaspaCovenantsShort" component={KaspaCovenantsShort} durationInFrames={KCS_DURATION} fps={KCS_FPS} width={1080} height={1920} />
+      <Composition id="KaspaCovenantsYuli" component={KaspaCovenantsYuli} durationInFrames={KCY_DURATION} fps={KCY_FPS} width={1080} height={1920} />
       <Composition id="BittensorCh1to6" component={BittensorCh1to6} durationInFrames={B_DURATION} fps={B_FPS} width={1920} height={1080} />
+      <Composition id="CRankTest" component={CRankChart} durationInFrames={150} fps={30} width={1920} height={1080} />
+      <Composition id="KaspaFounderGenius" component={KaspaFounderGenius} durationInFrames={KF_DURATION} fps={KF_FPS} width={1920} height={1080} />
       <Composition id="WhyAiPython" component={WhyAiPython} durationInFrames={WAP_DURATION} fps={WAP_FPS} width={1920} height={1080} />
+      <Composition id="PythonAiLibs" component={PythonAiLibs} durationInFrames={PAL_DURATION} fps={PAL_FPS} width={1920} height={1080} />
+      <Composition id="PythonAiLibsVertical" component={PythonAiLibsVertical} durationInFrames={PALV_DURATION} fps={PALV_FPS} width={1080} height={1920} />
+      <Composition id="NeedLangGraph" component={NeedLangGraph} durationInFrames={NLG_DURATION} fps={NLG_FPS_EXPORT} width={1920} height={1080} />
+      <Composition id="NeedLangGraphVertical" component={NeedLangGraphVertical} durationInFrames={NLGV_DURATION} fps={NLGV_FPS_EXPORT} width={1080} height={1920} />
       <Composition id="WiseManIntro" component={WiseManIntro} durationInFrames={999} fps={30} width={1080} height={1920} />
       <Composition id="WiseManFl07" component={WiseManFl07} durationInFrames={517} fps={30} width={1080} height={1920} />
       <Composition id="WlwTitle" component={LivestreamShort} durationInFrames={FRAMES.title} fps={30} width={1080} height={1920} defaultProps={{ data: WLW_TITLE }} />
@@ -273,6 +323,10 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="Best350xC6" component={LivestreamShort} durationInFrames={FRAMES_B350.c6} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C6 }} />
       <Composition id="Best350xC7" component={LivestreamShort} durationInFrames={FRAMES_B350.c7} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C7 }} />
       <Composition id="Best350xC8" component={LivestreamShort} durationInFrames={FRAMES_B350.c8} fps={30} width={1080} height={1920} defaultProps={{ data: D_B350_C8 }} />
+      <Composition id="KcCovenants" component={LivestreamShort} durationInFrames={FRAMES_KC.covenants} fps={30} width={1080} height={1920} defaultProps={{ data: D_KC_COVENANTS }} />
+      <Composition id="KcFirst" component={LivestreamShort} durationInFrames={FRAMES_KC.first} fps={30} width={1080} height={1920} defaultProps={{ data: D_KC_FIRST }} />
+      <Composition id="KcEliza" component={LivestreamShort} durationInFrames={FRAMES_KC.eliza} fps={30} width={1080} height={1920} defaultProps={{ data: D_KC_ELIZA }} />
+      <Composition id="KcKrc20" component={LivestreamShort} durationInFrames={FRAMES_KC.krc20} fps={30} width={1080} height={1920} defaultProps={{ data: D_KC_KRC20 }} />
       <Composition id="ZombieC1" component={LivestreamShort} durationInFrames={FRAMES_ZC.c1} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_1 }} />
       <Composition id="ZombieC2" component={LivestreamShort} durationInFrames={FRAMES_ZC.c2} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_2 }} />
       <Composition id="ZombieC3" component={LivestreamShort} durationInFrames={FRAMES_ZC.c3} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_3 }} />
@@ -281,6 +335,14 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="ZombieC6" component={LivestreamShort} durationInFrames={FRAMES_ZC.c6} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_6 }} />
       <Composition id="ZombieC7" component={LivestreamShort} durationInFrames={FRAMES_ZC.c7} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_7 }} />
       <Composition id="ZombieC8" component={LivestreamShort} durationInFrames={FRAMES_ZC.c8} fps={30} width={1080} height={1920} defaultProps={{ data: D_ZC_8 }} />
+      <Composition id="BcmLearn" component={LivestreamShort} durationInFrames={FRAMES_BCM.learn} fps={30} width={1080} height={1920} defaultProps={{ data: D_BCM_LEARN }} />
+      <Composition id="BcmBreakage" component={LivestreamShort} durationInFrames={FRAMES_BCM.breakage} fps={30} width={1080} height={1920} defaultProps={{ data: D_BCM_BREAKAGE }} />
+      <Composition id="BcmTao" component={LivestreamShort} durationInFrames={FRAMES_BCM.tao} fps={30} width={1080} height={1920} defaultProps={{ data: D_BCM_TAO }} />
+      <Composition id="BcmBtc200" component={LivestreamShort} durationInFrames={FRAMES_BCM.btc200} fps={30} width={1080} height={1920} defaultProps={{ data: D_BCM_BTC200 }} />
+      <Composition id="BcmWhales" component={LivestreamShort} durationInFrames={FRAMES_BCM.whales} fps={30} width={1080} height={1920} defaultProps={{ data: D_BCM_WHALES }} />
+      <Composition id="BcmShitcoin" component={LivestreamShort} durationInFrames={FRAMES_BCM.shitcoin} fps={30} width={1080} height={1920} defaultProps={{ data: D_BCM_SHITCOIN }} />
+      <Composition id="BcmStopwait" component={LivestreamShort} durationInFrames={FRAMES_BCM.stopwait} fps={30} width={1080} height={1920} defaultProps={{ data: D_BCM_STOPWAIT }} />
+      <Composition id="Bcm1992" component={LivestreamShort} durationInFrames={FRAMES_BCM.c1992} fps={30} width={1080} height={1920} defaultProps={{ data: D_BCM_1992 }} />
       <Composition id="DilemmaC1" component={LivestreamShort} durationInFrames={FRAMES_DIL.c1} fps={30} width={1080} height={1920} defaultProps={{ data: D_DIL_1 }} />
       <Composition id="DilemmaC2" component={LivestreamShort} durationInFrames={FRAMES_DIL.c2} fps={30} width={1080} height={1920} defaultProps={{ data: D_DIL_2 }} />
       <Composition id="DilemmaC3" component={LivestreamShort} durationInFrames={FRAMES_DIL.c3} fps={30} width={1080} height={1920} defaultProps={{ data: D_DIL_3 }} />

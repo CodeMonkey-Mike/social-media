@@ -23,6 +23,7 @@
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
+const { stripHashtags, buildCaption } = require('./lib/strip-hashtags');
 
 const SHORTS_JSON    = path.join(__dirname, '..', 'data', 'shorts.json');
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\fbbot-profile';
@@ -160,8 +161,7 @@ async function clickByLabelInDialog(page, label) {
   const videoPath = path.join(WORKSPACE_ROOT, short.video_path);
   if (!fs.existsSync(videoPath)) { console.error('Video not found:', videoPath); process.exit(1); }
 
-  const rawCaption = short.platforms[PLATFORM].caption_override || short.caption;
-  const caption = rawCaption.replace(/#[\w]+/g, '').replace(/\n{3,}/g, '\n\n').trim();
+  const caption = buildCaption(short.platforms[PLATFORM].caption_override || short.caption, short.tags, PLATFORM);
 
   console.log(`Short: "${short.title}"`);
   console.log(`File:  ${videoPath} (${short.duration_seconds}s)`);

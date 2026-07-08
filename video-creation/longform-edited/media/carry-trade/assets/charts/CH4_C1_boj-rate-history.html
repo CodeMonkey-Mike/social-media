@@ -1,0 +1,44 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1920px;height:1080px;background:#05070a;display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif}
+.card{width:1820px;height:980px;background:#0d1015;border:1px solid #1e2330;border-radius:28px;padding:64px 72px;display:flex;flex-direction:column}
+h1{font-size:52px;font-weight:900;color:#e8eaf0;letter-spacing:-0.01em}
+.sub{font-size:24px;color:#8892a4;margin-top:14px;font-weight:400}
+.chartarea{flex:1;margin-top:36px;display:flex;align-items:center;justify-content:center}
+.takeaway{font-size:30px;margin-top:20px}
+.takeaway b{color:#ff4060;font-weight:700}
+.takeaway span{color:#8892a4;font-weight:400}
+.source{font-size:17px;color:#505a6e;margin-top:16px;font-family:'JetBrains Mono',monospace}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+</style></head>
+<body>
+<div class="card">
+  <h1>BoJ Policy Rate, 2007&ndash;2026</h1>
+  <div class="sub">Bank of Japan policy interest rate over time</div>
+  <div class="chartarea">
+    <svg viewBox="0 0 1680 620" width="1680" height="620">
+      <line x1="100" y1="60" x2="100" y2="540" stroke="#1e2330" stroke-width="2"/>
+      <line x1="100" y1="540" x2="1620" y2="540" stroke="#1e2330" stroke-width="2"/>
+      <text x="70" y="270" fill="#8892a4" font-family="JetBrains Mono" font-size="22" text-anchor="end">1%</text>
+      <text x="70" y="450" fill="#8892a4" font-family="JetBrains Mono" font-size="22" text-anchor="end">0%</text>
+      <text x="60" y="540" fill="#8892a4" font-family="JetBrains Mono" font-size="22" text-anchor="end">-0.1%</text>
+      <polyline fill="none" stroke="#ff4060" stroke-width="5" points="
+        100,360 340,360 340,470 860,470 860,405 1200,405 1200,315 1320,315 1320,270 1620,270" />
+      <circle cx="860" cy="405" r="9" fill="#ffd700"/>
+      <text x="820" y="375" fill="#ffd700" font-family="JetBrains Mono" font-size="24" text-anchor="middle">Jul 2024: 0.25%</text>
+      <circle cx="1200" cy="315" r="9" fill="#ffd700"/>
+      <text x="1140" y="285" fill="#ffd700" font-family="JetBrains Mono" font-size="24" text-anchor="middle">Feb 2026: 0.75%</text>
+      <circle cx="1320" cy="270" r="9" fill="#00e68a"/>
+      <text x="1440" y="235" fill="#00e68a" font-family="JetBrains Mono" font-size="24" text-anchor="middle">Jun 2026: 1%</text>
+      <text x="100" y="580" fill="#505a6e" font-family="JetBrains Mono" font-size="20" text-anchor="middle">2008</text>
+      <text x="860" y="580" fill="#505a6e" font-family="JetBrains Mono" font-size="20" text-anchor="middle">2024</text>
+      <text x="1550" y="580" fill="#505a6e" font-family="JetBrains Mono" font-size="20" text-anchor="middle">2026</text>
+    </svg>
+  </div>
+  <div class="takeaway"><b>Three hikes since 2024</b><span>, after a decade-plus at zero or negative &mdash; the highest rate since 1995</span></div>
+  <div class="source">SOURCE: BANK OF JAPAN POLICY ANNOUNCEMENTS (2024-07-31, 2026 HIKES). SCHEMATIC STEP-PLOT FROM CONFIRMED DATED RATE CHANGES, NOT A FULL DAILY SERIES. VERIFY AT RENDER.</div>
+</div>
+</body></html>
