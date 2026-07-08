@@ -10,12 +10,15 @@
 //    recycle those of an ARCHIVED batch; a folder matching no batch falls back to age-based.
 //  - Age-based (recycle if older than --age-days, default 30): everything else under
 //    assets/ (legacy loose b-roll PNGs, *-clip.mp4, overlays in the root and non-projects/
-//    subdirs) and livestream-repurpose/media + transcripts.
+//    subdirs), livestream-repurpose transcripts, and any livestream-repurpose/media entry
+//    tied to no batch (protects a just-recorded stream until it ages out or gets registered).
 //  - Whole-folder, batch-aware (recycle the ENTIRE project folder for a completed/archived
 //    batch, keep an active one, leave an unregistered folder alone):
 //      * shorts/<batch>/                     — matched by the batch's `directories`.
 //      * longform-presentation/media/<proj>/ — matched by the batch's `source_media`.
 //      * longform-edited/media/<proj>/       — matched by the batch's `source_media`.
+//      * livestream-repurpose/media/<sub>/   — matched by the batch's `source_media`
+//        (also loose files directly under media/); unmatched entries fall to age-based.
 //    For shorts folders tied to no batch, only the gitignored per-clip artifacts
 //    (preview.mp4 / whisper-words.json / captions.ts.draft) are swept.
 //  - Publish-state guard: remotion/out/<batch>/<n>-<slug>.mp4 is recycled only when that
@@ -91,13 +94,41 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     classifyAge(f, 'asset');
   }
 
-  // ── livestream-repurpose/media + transcripts — batch-aware ─────────────────
-  // Keep files belonging to an ACTIVE batch (matched by livestream_title prefix);
-  // recycle those belonging to an ARCHIVED batch. Files matching no batch are left
-  // alone (can't classify safely). Media is on YouTube + transcripts regenerable.
+  // ── livestream-repurpose/media — whole-folder + loose-file, batch-aware ────
+  // media/ holds one SUBFOLDER per livestream (source .mkv/.mp4 master, LOW BPS
+  // re-encodes, working PNGs, encode logs), plus a few loose working files. Match
+  // each subfolder/loose file to a batch whose source_media path points at it (the
+  // same source_media prefix match the longform/vertical media roots use — NOT the
+  // livestream_title, which is the LOW-BPS-VERTICAL derivative name and never a
+  // prefix of the real source filenames). Recycle the WHOLE folder for a completed/
+  // archived batch, keep an active one. Anything matching no batch falls back to
+  // age-based, so a freshly-recorded livestream (added today, not yet repurposed
+  // into a batch) is protected until it ages out or gets registered, while long-dead
+  // stray files still get swept. Media is on YouTube and every re-encode regenerable.
+  const LSR_MEDIA = path.join(ROOT, 'livestream-repurpose', 'media');
+  // A batch whose source_media resolves to `relLower` (a media subfolder or loose
+  // file), by exact match or folder-prefix (source_media may name the folder OR a
+  // file inside it).
+  const batchForMediaPath = (relLower) => batches.find((bb) => {
+    if (!bb.source_media) return false;
+    const sm = bb.source_media.replace(/\\/g, '/').toLowerCase();
+    return sm === relLower || sm.startsWith(relLower + '/');
+  });
+  if (fs.existsSync(LSR_MEDIA)) {
+    for (const entry of fs.readdirSync(LSR_MEDIA, { withFileTypes: true })) {
+      const full = path.join(LSR_MEDIA, entry.name);
+      const rel = `video-creation/livestream-repurpose/media/${entry.name}`.toLowerCase();
+      const kind = entry.isDirectory() ? 'livestream media' : 'loose livestream media';
+      const b = batchForMediaPath(rel);
+      if (!b) { classifyAge(full, `${kind} — not in batch registry`); continue; }
+      if (b.status === 'active') skipped.push({ path: full, reason: `${kind} — active batch (${b.batch})` });
+      else recycle.push({ path: full, reason: `${kind} — ${b.status} batch (${b.batch})` });
+    }
+  }
+  // ── livestream-repurpose/transcripts — batch-aware ─────────────────────────
+  // One folder per livestream, named EXACTLY by livestream_title (so prefix match
+  // works here where it can't for media/). Legacy loose files handled too.
   const titled = batches.filter(b => b.livestream_title);
-  // Match a media filename or a transcript folder name to its batch by livestream_title
-  // prefix (longest match wins, since one title could prefix another).
   const batchFor = (name) => {
     let best = null;
     for (const b of titled) {
@@ -112,11 +143,6 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     else if (b.status === 'active') skipped.push({ path: full, reason: `${kind} — active batch (${b.batch})` });
     else recycle.push({ path: full, reason: `${kind} — ${b.status} batch (${b.batch})` });
   };
-  // media/: flat files named after the livestream.
-  for (const f of walkFiles(path.join(ROOT, 'livestream-repurpose', 'media'))) {
-    classifyByBatch(f, path.basename(f), 'livestream media');
-  }
-  // transcripts/: one folder per livestream (legacy loose files handled too).
   const tdir = path.join(ROOT, 'livestream-repurpose', 'transcripts');
   if (fs.existsSync(tdir)) {
     for (const e of fs.readdirSync(tdir, { withFileTypes: true })) {
