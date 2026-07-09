@@ -1,0 +1,131 @@
+{
+  "batch": "pump-season-is-back",
+  "generated_by": "clip-strategist (Fable/max)",
+  "generated_for": "Pump Season is Back! - Market Update",
+  "source": "video-creation/livestream-repurpose/media/pump season is back/pump season is back LOW BPS VERTICAL.mp4",
+  "transcript_json": "video-creation/livestream-repurpose/transcripts/pump season is back LOW BPS VERTICAL/pump season is back LOW BPS VERTICAL.json",
+  "constraints": { "max_topics": 5, "max_clips": 8 },
+  "clips": [
+    {
+      "topic": "Community receipts: 550x, 350x LAB, 52x Peanut, and a 500x brewing",
+      "slug": "community-receipts",
+      "rank": 1,
+      "hook_type": "payoff",
+      "why_short_worthy": "Project-hype and community-wins content, Mike's standing #1 priority. Open-loop tease plus a machine-gun receipts run, closed by the man-in-the-mirror humor punchline.",
+      "segments": [
+        { "start": 2016.14, "end": 2066.40, "why": "The tease hook: a coin pumping today, members up 5x/8x/10x, 'I'm expecting a 500x'." },
+        { "start": 2080.88, "end": 2176.20, "why": "The receipts run: 550x, 130x, 94x, 85x Pippin, 47x, 30x, 15x, LAB 350x, 58x; ends on 'change my group'." },
+        { "start": 2233.70, "end": 2249.95, "why": "Proof mid-pump: 'it was like the Peanut scenario... I ended up doing a 52x on Peanut.'" }
+      ],
+      "assembly_order": [0, 2, 1],
+      "peak_beats": [
+        { "start": 2051.42, "end": 2066.40, "note": "The 500x open-loop tease killer line." },
+        { "start": 2167.24, "end": 2176.20, "note": "The man-in-the-mirror humor punchline." }
+      ],
+      "length_variants": [
+        { "label": "full", "use_segments": [0, 2, 1], "est_seconds": 162 },
+        { "label": "impact", "use_segments": ["peak_beats[0]"], "est_seconds": 15 }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Caption pass MUST verify Whisper-garbled coin names with Mike: 'mox' (550x), 'dh and ai' (130x, likely D-Agent AI), 'tutorial' (94x), 'vmb' (85x), 'velvet' (58x), 'disco' (47x), 'giggle fun' (30x). LAB known call is 353x; keep spoken words in-clip, update numbers only in publish copy."
+    },
+    {
+      "topic": "The four-year cycle is a religion; I called the crypto winter",
+      "slug": "four-year-cycle-religion",
+      "rank": 2,
+      "hook_type": "tribal-contrast",
+      "why_short_worthy": "Tribal contrast against the four-year cycle zombies fused with a vindicated conviction story: he called the crypto winter last summer, documented, and it happened.",
+      "segments": [
+        { "start": 951.44, "end": 1028.90, "why": "Contiguous arc: 'no longer a four-year cycle zombie... it's doctrine, you don't care about data' -> 'I said last summer we're going into crypto winter starting in January' -> mechanism -> 'and it actually did happen'." },
+        { "start": 1097.58, "end": 1108.90, "why": "The kicker, doubled: 'you receive new data and you have to adjust to it'." }
+      ],
+      "assembly_order": [0, 1],
+      "peak_beats": [
+        { "start": 961.52, "end": 978.20, "note": "'a magical four-year cycle... it's almost like something religious... it's doctrine.' Hardest tribal line." }
+      ],
+      "length_variants": [
+        { "label": "full", "use_segments": [0, 1], "est_seconds": 89 },
+        { "label": "impact", "use_segments": ["peak_beats[0]"], "est_seconds": 17 }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "STT fixes for captions: 'four-year cycles on me' is 'four-year cycle zombie'; 'straight up homo' is 'Strait of Hormuz'. Segment 0 ends on the Trump/Iran joke to frame Iran as an unknowable black swan, not Mike's miss (no-self-deprecation rule)."
+    },
+    {
+      "topic": "Mark my words: October will be green",
+      "slug": "october-will-be-green",
+      "rank": 3,
+      "hook_type": "prediction",
+      "why_short_worthy": "Flagship contrarian thesis stated with a doubled declaration. Carries its own mechanism: the crowd expecting red buys in and turns the candles green. Ends on an open question.",
+      "segments": [
+        { "start": 322.73, "end": 360.50, "why": "The mechanism: 'people who think it's going to be red are gonna buy in... turn those candles green... a very green October'." },
+        { "start": 1167.34, "end": 1176.30, "why": "Cold-open hook, doubled declaration: 'October will be green. Mark my words.'" },
+        { "start": 1551.34, "end": 1576.60, "why": "Escalation + engagement closer: 'impossible that October is going to be red... will Bitcoin actually go down to a new low?'" }
+      ],
+      "assembly_order": [1, 0, 2],
+      "peak_beats": [
+        { "start": 1167.34, "end": 1176.30, "note": "'October will be green. Mark my words.' The scroll-stop." }
+      ],
+      "length_variants": [
+        { "label": "full", "use_segments": [1, 0, 2], "est_seconds": 72 },
+        { "label": "impact", "use_segments": ["peak_beats[0]"], "est_seconds": 9 }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Do NOT extend segment 1 past 1176.3 (garbled aside + stall). Never phrase as 'the zombies cause the October bottom'."
+    },
+    {
+      "topic": "Bitcoin's 126k just kept pace with inflation; year five of the bear",
+      "slug": "bitcoin-inflation-year-five",
+      "rank": 4,
+      "hook_type": "contrarian",
+      "why_short_worthy": "Contrarian reframe: bear began Dec 2021, year five; 68k to 126k is just the money supply. Anchored by the $800->$1600 tow receipt. Exits on the 1990s new-highs-every-year hype.",
+      "segments": [
+        { "start": 1648.46, "end": 1675.65, "why": "Scroll-stop setup: 'the bear market began December 2021... year number five, hard to argue against'." },
+        { "start": 1773.58, "end": 1916.70, "why": "Contiguous build: '68k to 126k just adjusted to inflation' -> the tow story -> 'a Bitcoin in October 2025 buys the same as November 2021'." },
+        { "start": 1977.86, "end": 2002.60, "why": "Hype payoff: 'new all-time highs every single year, same way the stock market went in the 1990s'." }
+      ],
+      "assembly_order": [0, 1, 2],
+      "peak_beats": [
+        { "start": 1895.66, "end": 1916.60, "note": "'a Bitcoin in October 2025 would buy you almost the same stuff as November 2021... it just adjusted to inflation.'" },
+        { "start": 1977.86, "end": 1986.80, "note": "'new all-time highs every single year, same way the stock market went in the 1990s.'" }
+      ],
+      "length_variants": [
+        { "label": "full", "use_segments": [0, 1, 2], "est_seconds": 195 }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "OVER-CAP WARNING: raw concat ~195s, above the 180s Shorts ceiling. Phase 5 tighten must land it ~165 (cut the tow-story geography rambling ~1810-1830 and stutters). If still over, drop segment 0 and cold-open segment 1."
+    },
+    {
+      "topic": "Longevity escape velocity: by 2032 it is no longer reasonable to die",
+      "slug": "longevity-escape-velocity",
+      "rank": 5,
+      "hook_type": "prediction",
+      "why_short_worthy": "Philosophical/futurist wonder with genuine disbelief energy, the evergreen non-market-data lane Mike wants more of. Outrageous self-contained claim with a date.",
+      "segments": [
+        { "start": 772.11, "end": 846.75, "why": "Single run: biotech advancements -> longevity escape velocity 2032, 'no longer reasonable to die' -> aging math -> grain-of-rice robot -> 'blowing my mind'." }
+      ],
+      "assembly_order": [0],
+      "peak_beats": [
+        { "start": 795.71, "end": 812.90, "note": "'a conservative estimate is 2032... the date at which it is no longer reasonable to die.'" }
+      ],
+      "length_variants": [
+        { "label": "full", "use_segments": [0], "est_seconds": 75 }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Ends cleanly at 'blowing my mind' (846.54); do not run into 'well I'll do another video about that' at 846.90."
+    }
+  ],
+  "dropped": [
+    { "topic": "Japan carry trade unwind (~235-525s)", "reason": "Market-news macro explainer, de-prioritized per hype-over-market-data; Mike already shipped a dedicated carry-trade video." },
+    { "topic": "AI wage deflation $130k->$260k (~600-765s)", "reason": "Strongest drop (real insider credibility) but arc lands bearish and reads flat-explainer. Best candidate for a 6th." },
+    { "topic": "Tariffs / 'take on Iran' (~1185-1280s)", "reason": "Political off-the-cuff; persona says surface for Mike to post himself, never clip." },
+    { "topic": "ONK mockery + CoinMarketCap jab (~2430-2560s)", "reason": "Hard rule: no clips disparaging a specific named project." },
+    { "topic": "Meme-coin survival rules + copycat bulls (~2250-2430s)", "reason": "Adjacent to trashing specific tokens; better as a tweet." },
+    { "topic": "Claude token trending (~100-130s)", "reason": "Curiosity blip, no take, fails energy bar." },
+    { "topic": "Polygon record + Polymarket 74% (~1445-1510s)", "reason": "Headline/data readout, zero conviction in delivery." },
+    { "topic": "Green July / red August (~140-190s)", "reason": "Heavily hedged market-state prediction." },
+    { "topic": "Black Bull insider-alert (~2195-2233s)", "reason": "Chart-dependent and garbled; its Peanut 52x payoff was extracted into clip 1." },
+    { "topic": "Bitcoin priced in gold (~1676-1706s)", "reason": "Fumbling digression; thesis carried cleaner by the inflation clip." },
+    { "topic": "Matt Hougan of Bitwise (~1917-1965s)", "reason": "Secondhand quote recalled vaguely; fails verified-claims-only." },
+    { "topic": "Stream open and sign-off CTA", "reason": "Housekeeping, never clip-worthy." }
+  ]
+}
