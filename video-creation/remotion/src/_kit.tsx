@@ -37,7 +37,8 @@ export const colourize = (html: string) =>
     .replace(/<y>/g, `<span style="color:${YELLOW}">`).replace(/<\/y>/g, '</span>')
     .replace(/<gr>/g, `<span style="color:${GREEN}">`).replace(/<\/gr>/g, '</span>')
     .replace(/<r>/g, `<span style="color:${RED}">`).replace(/<\/r>/g, '</span>')
-    .replace(/<b>/g, `<span style="color:${BLUE}">`).replace(/<\/b>/g, '</span>');
+    .replace(/<b>/g, `<span style="color:${BLUE}">`).replace(/<\/b>/g, '</span>')
+    .replace(/<o>/g, `<span style="color:${ORANGE}">`).replace(/<\/o>/g, '</span>');
 
 // ─── Captions ────────────────────────────────────────────────────────────────
 export const CaptionLayer: React.FC<{ captions: Caption[]; fps: number }> = ({ captions, fps }) => {

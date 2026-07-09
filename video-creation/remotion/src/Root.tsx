@@ -63,6 +63,20 @@ import { PythonAiLibsVertical, PALV_FPS, PALV_DURATION } from './PythonAiLibsVer
 import { NeedLangGraph, NLG_FPS_EXPORT, NLG_DURATION } from './NeedLangGraph';
 import { NeedLangGraphVertical, NLGV_FPS_EXPORT, NLGV_DURATION } from './NeedLangGraphVertical';
 import { LivestreamShort } from './LivestreamShort';
+import { CommunityReceipts } from './CommunityReceipts';
+import { CR_FPS, CR_DURATION } from './constants-creceipts';
+import { CommunityReceiptsImpact } from './CommunityReceiptsImpact';
+import { CRI_FPS, CRI_DURATION } from './constants-creceipts-impact';
+import { FourYearCycleReligion } from './FourYearCycleReligion';
+import { FYC_FPS, FYC_DURATION } from './constants-fyc';
+import { FourYearCycleReligionImpact } from './FourYearCycleReligionImpact';
+import { FYCI_FPS, FYCI_DURATION } from './constants-fyci';
+import { OctoberWillBeGreen } from './OctoberWillBeGreen';
+import { OWBG_FPS, OWBG_DURATION } from './constants-owbg';
+import { BitcoinInflationYearFive } from './BitcoinInflationYearFive';
+import { BIYF_FPS, BIYF_DURATION } from './constants-biyf';
+import { LongevityEscapeVelocity } from './LongevityEscapeVelocity';
+import { LEV_FPS, LEV_DURATION } from './constants-lev';
 import { TransitionDemo, demoDurationFrames } from './TransitionDemo';
 import { TransitionTest } from './TransitionTest';
 import { WLW_TITLE, WLW_UNICORN, WLW_LAB115X, WLW_KASPA3, WLW_WF, WLW_BOUNTY, WLW_ROTATION, WLW_LABWONT, WLW_KASPAHOLD, WLW_KASPATON, WLW_PENGU, FRAMES } from './wlwData';
@@ -142,6 +156,62 @@ export const RemotionRoot: React.FC = () => {
         component={FourYearCycleZombies}
         durationInFrames={TOTAL_FRAMES}
         fps={FPS_FYCZ}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="CommunityReceipts"
+        component={CommunityReceipts}
+        durationInFrames={CR_DURATION}
+        fps={CR_FPS}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="CommunityReceiptsImpact"
+        component={CommunityReceiptsImpact}
+        durationInFrames={CRI_DURATION}
+        fps={CRI_FPS}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="FourYearCycleReligion"
+        component={FourYearCycleReligion}
+        durationInFrames={FYC_DURATION}
+        fps={FYC_FPS}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="FourYearCycleReligionImpact"
+        component={FourYearCycleReligionImpact}
+        durationInFrames={FYCI_DURATION}
+        fps={FYCI_FPS}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="OctoberWillBeGreen"
+        component={OctoberWillBeGreen}
+        durationInFrames={OWBG_DURATION}
+        fps={OWBG_FPS}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="BitcoinInflationYearFive"
+        component={BitcoinInflationYearFive}
+        durationInFrames={BIYF_DURATION}
+        fps={BIYF_FPS}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="LongevityEscapeVelocity"
+        component={LongevityEscapeVelocity}
+        durationInFrames={LEV_DURATION}
+        fps={LEV_FPS}
         width={1080}
         height={1920}
       />
