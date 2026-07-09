@@ -85,12 +85,27 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > ```
 > No hand-recorded chat URLs anymore — the pool manages them. `items.json` = `[{ "image_id":"<8hex>",
 > "slug":"<kebab>", "prompt":"...", "ref":"<optional logo path>" }]`; skips already-existing files (resumable).
-> B-roll uses the same pool (purpose `broll`) via `generate-broll-wlw.js` (outputs to `video-creation/assets/`).
+> B-roll uses the same pool (purpose `broll`) via **`generate-broll-reload.js`** — the RELIABLE capture that supersedes the flaky DOM-poll `generate-broll-wlw.js` (outputs to `video-creation/assets/`; a `..\shorts\...\render-assets\` prefix in the `file` field lands it in a clip folder).
+>
+> **⚠️ ChatGPT image generation GETS STUCK in the automated (bot-detected) browser — RELOAD the chat after ~80s to unstick it (Mike, 2026-07-09).** After a prompt is sent, the automated Chrome's live DOM often never surfaces the finished image (it just spins) even though the image IS finished server-side — you can confirm by opening the same chat in a normal/Edge browser and seeing it there. **The fix: wait up to ~80s, then RELOAD the chat room and grab the finished image from the reloaded page** (do NOT re-send the prompt — that starts a duplicate generation). `generate-broll-reload.js` does exactly this and also: keys capture on the stable estuary `file_id` (so it never grabs a wrong/pre-existing image); waits for a fresh chat's `/c/<id>` URL before reloading (else the first image of a fresh chat is lost); and dismisses the full-screen "Compare responses" A/B modal (`role=dialog`, `inset-0`) that ChatGPT sometimes overlays on the composer and hangs the next prompt. The older scripts (`gen-images.js`, `generate-broll-wlw.js`) do NOT reload and so hang / mis-capture — prefer `generate-broll-reload.js`, or port this reload-after-~80s behavior into them, for any ChatGPT image run.
 > **Background (why the pool exists):** a ChatGPT chat degrades past ~25 images — it either stops rendering
 > OR returns off-prompt/style-contaminated images (e.g. the b-roll chat forced icy/Bitcoin motifs onto every
 > prompt, 2026-06-07). The pool caps + rotates to prevent both. Always QA a generated frame regardless.
 > `gen-batch.js` / `gen-batch-freshchat.js` are SUPERSEDED (kept for reference); their hardcoded persistent
 > chat URLs are overloaded/contaminated. **Do NOT loop `generate-image.js`** (a new chat per image = orphan-chat sprawl).
+>
+> **Spent chats are DELETED, not abandoned** (Mike, 2026-07-08 — the sidebar was drowning in dead image
+> chats; safe because every image downloads to the project folder at generation time). Two mechanisms,
+> both automatic:
+> 1. **Rotation:** a replaced/dead chat moves to the registry's `retired` list, and every gen script
+>    sweeps that list at the end of its run (`chat-delete.js`, UI delete with backend-API fallback).
+>    A failed delete just stays queued — never let it block a generation run.
+> 2. **Batch completion:** a chat registered with a `batch` (batches.json id — pass `--chat-batch`,
+>    or `--batch`, to `gen-batch-freshchat.js` for one-off project chats) is retired + deleted by
+>    `repurpose/delete-chats.js` once that batch is completed/archived. Cleanup runs it automatically
+>    (`cleanup/cleanup.js --target video-creation|all`); dry-run prints the plan, live run opens the
+>    chatgpt-profile browser. No `batch` = evergreen purpose (rotation-only); a `batch` matching no
+>    batches.json entry is kept. Manual one-off: `node repurpose/delete-chats.js --retire <purpose>`.
 
 **Canonical coin lineup lives in `../persona/persona.json` → `stacking_lineup`.** When generating images that depict Mike's portfolio / favorites / "coins I'm stacking", use that lineup; render **$KAS as the hero** (larger / more prominent when coins share a frame). Never include $BTC, $ETH, $SOL, $BNB in a favorites image (persona covers why) — they're macro-commentary subjects, not stacking picks.
 
