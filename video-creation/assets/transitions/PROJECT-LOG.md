@@ -1,7 +1,7 @@
 # Transition Library — Project Log
 
 _Re-creating the **Swiftly Studio 850 Seamless Transitions** Premiere pack as a browsable
-Remotion transition library. Last updated: 2026-06-20._
+Remotion transition library. Last updated: 2026-07-12._
 
 > **Read `CLAUDE.md` in this folder first** (hard rules: never invent a transition's look; use the
 > project's real values + the pack's own asset files; never overwrite an approved result blindly).
@@ -20,6 +20,57 @@ values, with a per-folder gallery to browse them.
 | Registry | `remotion/src/transitions/registry.ts` | binds row.engine → component. |
 | Demo | `remotion/src/TransitionDemo.tsx` | renders one row between two stills (passes image srcs). |
 | Browser | `browse/<CAT>/<VARIANT>/gallery.html` | per-folder video galleries. |
+
+---
+
+## GLASS / Beveled: all 12 built ✅ (2026-07-12, awaiting Mike's review) — Mike's pick; NEW CATEGORY (subgroup only)
+
+`glass-beveled-{1,2}-{up,down,left,right}` + `glass-beveled-{3,4}-{horizontal,vertical}`
+(1.04s L/R/H · 1.08s 3V/4V · 1.12s 1/2 U/D) — engine
+`remotion/src/transitions/engines/GlassBeveled.tsx`, browse `browse/GLASS/Beveled/`.
+**fidelity: near-1:1** — geometry, masks, easings, stagger and compositing order are all real
+project data; no plates, no procedural effects. Mike asked for ONLY the Beveled subgroup
+(GLASS also has Beveled Short 12 / Blocks 4 / Blocks Corner 12 — intentionally NOT built).
+
+**Mechanism** (`_extract-glassbeveled.js` → `_glassbeveled-clips.json` → `_analyze-glassbeveled.js`
+→ `_build-glassbeveled-rows.js`): the (In) [0.04..0.4] / (Out) [0.4..end] HST Adjustment pair,
+each stacking **FIVE AEMask-gated wrap-Offsets**: every Offset shifts exactly ONE full frame
+(0.5→1.5 = identity at both ends, real temporal-bezier handles) and is clipped to a straight-edged
+quadrilateral **SHARD mask**; phases are TIME-STAGGERED (timeline starts 0.04/0.12/0.20/0.24/0.28,
+0.76s each). Where shards overlap, the masked offsets COMPOUND bottom-up = the faceted
+beveled-glass refraction; every phase ends at identity so the frame settles seamlessly. The
+(In)/(Out) curves are exact continuations (verified: same handles, same phase at the cut — unlike
+OFFSET Short's deliberate skip); the A→B swap at 0.4 lands at peak faceting. Four shard-mask sets
+(A/B/C/D, shared across variants); direction = **flip sandwiches** (PR H/V Flip pairs around
+subsets of the stack), resolved ANALYTICALLY in the builder (mirror mask + negate shift).
+Beveled 3/4 flip only SOME shards (opposing-direction facets) + add a SIXTH unmasked full-frame
+base push (0.96s H / 1.0s V). Builder hard-fails on curved mask vertices / non-default
+feather/opacity/expansion / inverted or keyframed masks / mixed axes / unclosed sandwiches.
+
+**KEY EXTRACTION FINDS (new — cost a day on OFFSET-family assumptions):**
+- **Effect MASKS live in SubComponents** (`AE.ADBE AEMask` under each VideoFilterComponent),
+  NOT in the Params list — a "5 uniform offsets, can't be the look" reading means CHECK
+  SubComponents. Mask Path is an `ArbVideoComponentParam` with a **'2cin' binary blob**:
+  header (magic, ver, flag, nVerts) then per vertex [separators + 6 f32 = anchor,inTan,outTan]
+  in normalized frame coords (may extend past [0,1]; tangents==anchors ⇒ straight edges).
+- **Premiere DEDUPS blobs by BinaryHash**: most StartKeyframeValue tags are SELF-CLOSED refs;
+  exactly one occurrence in the file carries the inline base64 — build a hash→payload table first.
+- The FullHD project IS authoritative here (masks byte-identical in 4K; the "demo assembly"
+  suspicion was wrong for GLASS — the adjustment stacks are live).
+- Engine: ONE SVG filter chain in real apply order; per stage the torus wrap = **two feOffset
+  copies merged** (no feTile — untested primitive avoided), shard clip = feImage white-polygon
+  data-URI + feComposite in/over, frame-cropped subregions, frame-keyed filter id, sRGB. No
+  displacement maps ⇒ no 8-bit-wall risk. ~13-16s per demo render.
+
+SFX: ALL 12 share `Skew_Simple_01.mp3` (window 0.04..1.04, in 0) → ONE lib file
+`lib/sfx-glassbeveled.mp3` (source truncated to the 1.0s clip window per the OFFSET A/B rule,
+0.04s lead delay baked, 30ms tail guard). QA (`_qa-glassbeveled-sweep.js` → `_qa/glassbeveled/`):
+12 frame-aligned sweep sheets + full-res compares (1-Left ×4 timestamps, 1-Up, 3-H, 4-V) —
+facet lean, stagger cadence, cascade structure, bidirectional splits and settle all match; the
+pack's own preview also ends with the same sub-1% residual at its last frame. Honest caveats:
+residual displacement at matching late timestamps reads slightly stronger than the preview on
+some frames (the bezier-value interpretation is the only fitted piece), and previews are
+25→29.97 pulldown-blended (~1-frame alignment slop).
 
 ---
 

@@ -14,6 +14,7 @@ import { ExpandZoom } from './engines/ExpandZoom';
 import { GlitchTurbulentDisplace } from './engines/GlitchTurbulentDisplace';
 import { GlitchTVSatellite } from './engines/GlitchTVSatellite';
 import { GlitchVHS } from './engines/GlitchVHS';
+import { GlassBeveled } from './engines/GlassBeveled';
 
 /**
  * The catalog (data) lives in assets/transitions/library.json — the single
@@ -70,6 +71,7 @@ export const ENGINES: Record<string, React.FC<any>> = {
   DeviationGlitch,
   ExpandPan,
   ExpandZoom,
+  GlassBeveled,
 };
 
 export const TRANSITIONS = (library as { transitions: TransitionRow[] }).transitions;

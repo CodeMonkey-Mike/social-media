@@ -18,7 +18,7 @@ const BROWSE = path.join(ROOT, '..', 'assets', 'transitions', 'browse');
 (async () => {
   const filter = process.argv[2] || '';
   const rows = JSON.parse(fs.readFileSync(LIB, 'utf8')).transitions
-    .filter((r) => (r.category === 'OFFSET' && r.engine === 'OffsetSlide') || (r.category === 'DEVIATION' && r.engine === 'DeviationGlitch') || (r.category === 'EXPAND' && (r.engine === 'ExpandPan' || r.engine === 'ExpandZoom')))
+    .filter((r) => (r.category === 'OFFSET' && r.engine === 'OffsetSlide') || (r.category === 'DEVIATION' && r.engine === 'DeviationGlitch') || (r.category === 'EXPAND' && (r.engine === 'ExpandPan' || r.engine === 'ExpandZoom')) || (r.category === 'GLASS' && r.engine === 'GlassBeveled'))
     .filter((r) => r.id.includes(filter));
   if (!rows.length) { console.log('no rows match filter', JSON.stringify(filter)); return; }
 
