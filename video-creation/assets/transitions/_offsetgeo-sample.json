@@ -1,0 +1,569 @@
+[
+  {
+    "name": "Offset Simple - Right",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.24,
+        "subClipName": "Offset Simple - Right.mp4",
+        "inPoint": 0,
+        "masterClipName": "Offset Simple - Right.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.12,
+        "subClipName": "Offset Simple - Right (In)",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Offset",
+            "params": [
+              {
+                "name": "Shift Center To",
+                "value": "0.5:0.5",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0.5:0.5",
+                    "a": [
+                      "0.5:0.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.33333333333333331"
+                    ]
+                  },
+                  {
+                    "t": 0.24,
+                    "v": "1.5:0.5",
+                    "a": [
+                      "1.5:0.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.084873430774701858"
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.12,
+        "end": 0.24,
+        "subClipName": "Offset Simple - Right (Out)",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Offset",
+            "params": [
+              {
+                "name": "Shift Center To",
+                "value": "0.5:0.5",
+                "keyframes": [
+                  {
+                    "t": -0.12,
+                    "v": "0.5:0.5",
+                    "a": [
+                      "0.5:0.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.33333333333333331"
+                    ]
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "1.5:0.5",
+                    "a": [
+                      "1.5:0.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.084873430774701858"
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.24,
+        "subClipName": "Motion Blur",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Alpha Adjust",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Motion Blur",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "90."
+              },
+              {
+                "name": "Blur Length",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0.",
+                    "a": [
+                      "0.",
+                      "5",
+                      "2",
+                      "5291895.5485026045",
+                      "0.33333333333333331"
+                    ]
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "200.",
+                    "a": [
+                      "200.",
+                      "5",
+                      "2",
+                      "0",
+                      "1"
+                    ]
+                  },
+                  {
+                    "t": 0.24,
+                    "v": "0.",
+                    "a": [
+                      "0.",
+                      "5",
+                      "2",
+                      "-6085943.2220458984",
+                      "0.0001"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.24,
+        "inPoint": 0.14,
+        "subClipName": "Camera_01.wav",
+        "masterClipName": "Camera_01.wav"
+      }
+    ]
+  },
+  {
+    "name": "Offset Simple - Right Up",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.24,
+        "subClipName": "Offset Simple - Right Up.mp4",
+        "inPoint": 0,
+        "masterClipName": "Offset Simple - Right Up.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.12,
+        "subClipName": "Offset Simple - Right Up (In)",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Offset",
+            "params": [
+              {
+                "name": "Shift Center To",
+                "value": "0.5:0.5",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0.5:0.5",
+                    "a": [
+                      "0.5:0.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.33333333333333331"
+                    ]
+                  },
+                  {
+                    "t": 0.24,
+                    "v": "1.5:-0.5",
+                    "a": [
+                      "1.5:-0.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.084873430774701858"
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.12,
+        "end": 0.24,
+        "subClipName": "Offset Simple - Right Up (Out)",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Offset",
+            "params": [
+              {
+                "name": "Shift Center To",
+                "value": "0.5:0.5",
+                "keyframes": [
+                  {
+                    "t": -0.12,
+                    "v": "0.5:0.5",
+                    "a": [
+                      "0.5:0.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.33333333333333331"
+                    ]
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "1.5:-0.5",
+                    "a": [
+                      "1.5:-0.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.084873430774701858"
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.24,
+        "subClipName": "Motion Blur",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Alpha Adjust",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Motion Blur",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "60.599998474121"
+              },
+              {
+                "name": "Blur Length",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0.",
+                    "a": [
+                      "0.",
+                      "5",
+                      "2",
+                      "5291895.5485026045",
+                      "0.33333333333333331"
+                    ]
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "200.",
+                    "a": [
+                      "200.",
+                      "5",
+                      "2",
+                      "0",
+                      "1"
+                    ]
+                  },
+                  {
+                    "t": 0.24,
+                    "v": "0.",
+                    "a": [
+                      "0.",
+                      "5",
+                      "2",
+                      "-6085943.2220458984",
+                      "0.0001"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.24,
+        "inPoint": 0.14,
+        "subClipName": "Camera_01.wav",
+        "masterClipName": "Camera_01.wav"
+      }
+    ]
+  },
+  {
+    "name": "Offset Simple - Right Down",
+    "clips": [
+      {
+        "track": 0,
+        "start": 0,
+        "end": 0.24,
+        "subClipName": "Offset Simple - Right Down.mp4",
+        "inPoint": 0,
+        "masterClipName": "Offset Simple - Right Down.mp4",
+        "isAdjustment": false,
+        "effects": []
+      },
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.12,
+        "subClipName": "Offset Simple - Right Down (In)",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Offset",
+            "params": [
+              {
+                "name": "Shift Center To",
+                "value": "0.5:0.5",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0.5:0.5",
+                    "a": [
+                      "0.5:0.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.33333333333333331"
+                    ]
+                  },
+                  {
+                    "t": 0.24,
+                    "v": "1.5:1.5",
+                    "a": [
+                      "1.5:1.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.084873430774701858"
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 1,
+        "start": 0.12,
+        "end": 0.24,
+        "subClipName": "Offset Simple - Right Down (Out)",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Offset",
+            "params": [
+              {
+                "name": "Shift Center To",
+                "value": "0.5:0.5",
+                "keyframes": [
+                  {
+                    "t": -0.12,
+                    "v": "0.5:0.5",
+                    "a": [
+                      "0.5:0.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.33333333333333331"
+                    ]
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "1.5:1.5",
+                    "a": [
+                      "1.5:1.5",
+                      "5",
+                      "2",
+                      "0",
+                      "0.084873430774701858"
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Blend With Original",
+                "value": "0."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "track": 2,
+        "start": 0,
+        "end": 0.24,
+        "subClipName": "Motion Blur",
+        "inPoint": 0,
+        "masterClipName": "HST Adjustment",
+        "isAdjustment": false,
+        "effects": [
+          {
+            "matchName": "AE.ADBE Alpha Adjust",
+            "params": [
+              {
+                "name": "Opacity",
+                "value": "100."
+              }
+            ]
+          },
+          {
+            "matchName": "AE.ADBE Motion Blur",
+            "params": [
+              {
+                "name": "Direction",
+                "value": "-60.599998474121"
+              },
+              {
+                "name": "Blur Length",
+                "value": "0.",
+                "keyframes": [
+                  {
+                    "t": 0,
+                    "v": "0.",
+                    "a": [
+                      "0.",
+                      "5",
+                      "2",
+                      "5291895.5485026045",
+                      "0.33333333333333331"
+                    ]
+                  },
+                  {
+                    "t": 0.12,
+                    "v": "200.",
+                    "a": [
+                      "200.",
+                      "5",
+                      "2",
+                      "0",
+                      "1"
+                    ]
+                  },
+                  {
+                    "t": 0.24,
+                    "v": "0.",
+                    "a": [
+                      "0.",
+                      "5",
+                      "2",
+                      "-6085943.2220458984",
+                      "0.0001"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "audio": [
+      {
+        "track": 1,
+        "start": 0,
+        "end": 0.24,
+        "inPoint": 0.14,
+        "subClipName": "Camera_01.wav",
+        "masterClipName": "Camera_01.wav"
+      }
+    ]
+  }
+]

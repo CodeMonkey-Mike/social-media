@@ -52,6 +52,8 @@ import { SmChartsAnimPreview, SMCA_FPS, SMCA_FRAMES } from './SmChartsAnim';
 import { SmkCh13, SMKC_FPS, SMKC_DURATION } from './SmkCh13';
 import { SmkFull, SMKF_FPS, SMKF_DURATION } from './SmkFull';
 import { CarryTradeFull, CT_FPS, CT_DURATION } from './CarryTradeFull';
+import { ClarityTest, CLR_FPS, CLR_DURATION } from './ClarityTest';
+import { ClarityVertical, CLRV_FPS, CLRV_DURATION } from './ClarityVertical';
 import { CarryTradeVertical, CTV_FPS, CTV_DURATION } from './CarryTradeVertical';
 import { KaspaCovenants, KC_FPS, KC_DURATION } from './KaspaCovenants';
 import { KaspaCovenantsShort, KCS_FPS, KCS_DURATION } from './KaspaCovenantsShort';
@@ -127,6 +129,22 @@ import { TOTAL_FRAMES_PENGUMC, FPS_PENGUMC } from './constants-pengu-mc';
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="ClarityTest"
+        component={ClarityTest}
+        durationInFrames={CLR_DURATION}
+        fps={CLR_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="ClarityVertical"
+        component={ClarityVertical}
+        durationInFrames={CLRV_DURATION}
+        fps={CLRV_FPS}
+        width={1080}
+        height={1920}
+      />
       <Composition
         id="CarryTradeFull"
         component={CarryTradeFull}

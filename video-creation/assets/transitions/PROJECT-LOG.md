@@ -23,6 +23,202 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## EXPAND / Pan: all 8 built ✅ (2026-07-11, Mike's favorite — requested by name)
+
+`expand-pan-{up,down,left,right}` (1.24s) + `expand-pan-short-*` (0.64s) — engine
+`remotion/src/transitions/engines/ExpandPan.tsx`, browse `browse/EXPAND/Pan*/`.
+**fidelity: near-1:1** — everything keyframed, pure CSS transforms, no filters.
+
+**Mechanism** (`_extract-expandpan.js` → `_expandpan-clips.json` → `_build-expandpan-rows.js`;
+5 clips per sequence): the T1 "Offset" rig = Offset(0,0) + Replicate(2) + 4 Mirrors + uniform
+Scale 200% — decoded via pixel-simulation as "**frame with MIRRORED edge padding**" (nets to
+identity at Position 0.5), panned by keyframed Geometry2 Position. The T2 (In)/(Out) windows
+carry keyframed AECrop curves whose visible result (preview-verified: rows/cols collapse into
+streak bands) is the **EXPAND edge-stretch**: the kept sliver stretches to fill the frame —
+A smears out to one edge (crop → 99.5% in ~0.12s), then B starts as the opposite edge's sliver
+(crop 99%) and expands back to identity over ~0.6s while the pan decelerates to rest. All
+affine ⇒ sample x = anchor·crop + u·(1−crop) + pan over a 5-copy mirror-tiled strip = ONE CSS
+translate+scale per frame. Anchor rule: 1 when the cropped side is the LOW-coordinate side
+(Left/Top), else 0. **PAN SIGN GOTCHA (cost one re-render): Geometry2 Position +x = camera
+pans right = content slides LEFT (−pan in the sampling); with the sign flipped the sampling
+window crossed the mirror-copy boundary at heavy stretch → kaleidoscope "butterfly" artifacts
+the preview doesn't have.** Frame-aligned QA vs previews: Right + Up sheets
+(`_qa/offsetgeo/sbs_expand-pan-*.png`), band character/timing/settle match; residual = content
+density (their sky obliterates at 14× stretch, our towers stay readable as smears). SFX
+`Simple_SFX.mp3` @ real in-point 0.08, truncated to the family window (1.24s / 0.64s) →
+`lib/sfx-expandpan{,-short}.mp3`.
+
+---
+
+## DEVIATION: Optics 1x-4x + Shift 4x built ✅ (2026-07-11, Mike's selection)
+
+`deviation-optics-{1x..4x}` (0.2-0.48s) + `deviation-shift-4x` (0.32s) — Mike asked for ALL
+Optics and ONLY Shift 4x. Engine `remotion/src/transitions/engines/DeviationGlitch.tsx`,
+browse `browse/DEVIATION/`. **fidelity: approximate** — the whole family is built on the
+THIRD-PARTY `AE.Mettle SkyBox Digital Glitch` plugin (closed algorithm), used with everything
+OFF except a keyframed **Color Distortion 0→100→0 peaking AT the cut** (static field:
+Rate/Evolution 0, seed 0, Complexity 1, GeomX/Y 100/83). Optics adds the Warp lens bulge
+(Curvature 0→−30→0). Same (In)/(Out) piecewise architecture as OFFSET (media ip 0.88, bezier
+handles, swap at the cut). Extraction `_extract-deviation.js` → `_deviation-clips.json` →
+`_build-deviation-rows.js` (4K cross-checked byte-identical — note the extractor must honor
+env SWXML or the "4K check" silently re-reads FullHD; fixed in `_extract-deviation4k.js`).
+
+Look — **corrected after Mike's single-image check (the turbulence model was WRONG):** the
+Mettle Color Distortion is **RADIAL SPECTRAL DISPERSION + a CONSTANT lateral split** — a prism
+zoom: R scaled outward, B inward, G a whisper, fringes ~10px even at frame center growing to
+~20-25px at edges, quiet-ish middle, subtle zoom pulse at peak. The first model (mean-zero
+feTurbulence field) matched thumbnails on bright content but was nearly INVISIBLE on a dark
+scene and put quiet zones in random places; testing on ONE continuous image (like the pack's
+own previews do — `sameScene` prop added to TransitionDemo for exactly this) exposed it.
+Implemented as per-channel displacement over a LINEAR radial map with a baked-in bias
+(`_gen-lens-map.js` → `LINEAR_MAP`: dx = A2·(nx+0.55), dy = A2·0.83·ny, A2=45). **Calibration
+went through TWO Mike-driven corrections:** (1) EDGE_PX=16 with G a whisper read as "hardly
+anything" on the gallery demo; (2) final = EDGE_PX=30 with channel coefficients R 1.8 / G 1.0 /
+B 0.2 — the common-mode ≈1.0 gives the actual "SHIFT" (a visible lateral jump via the map bias
++ zoom pulse at peak), and the R−B spread of 1.6 gives the aggressive spectra (every light on a
+dark scene splits into full RGB). Gallery note: the Shift row carries `demoSameScene: true` —
+its demo plays over ONE continuous image (TransitionDemo reads the flag; Mike's use case is
+punch-ins/jump cuts of the same scene). Galleries now cache-bust (`?v=<mtime>`) because demo
+filenames never change across re-renders and stale browser cache bit twice. Displacement
+≤ ~70px → still NO 8-bit-wall issue (chained passes only needed for the lens, which reuses it).
+**NO SFX — the pack ships this category silent** (FullHD + 4K audio groups empty, previews
+video-only; `Optics_01/02.wav` in Sound/ is referenced by NO sequence — not inventing a
+mapping, per Rule 7). QA: frame-aligned sheets vs previews (`_qa/offsetgeo/sbs_deviation-*`),
+envelope ramp/peak/decay + swap frame align; full-size peak compare calibrated the field.
+Remaining Deviation rows (Shift 1x-3x) intentionally NOT built (Mike's call).
+
+---
+
+## OFFSET: all 152 built ✅ (2026-07-11, awaiting Mike's review) — NEW CATEGORY COMPLETE
+
+The first NON-glitch category: the pack's big **OFFSET** motion group = 19 sub-families × 8
+directions = **152** sequences, ALL built. **112 pure-push** (near-1:1): Simple/Simple Short/Long
+Simple; Ease/Ease Short/Ease Out/Ease Out Short/Long Ease/Long Ease Out; Bounce/Bounce Short;
+Swinging/Swinging Short/Long Swinging. **40 hybrids** (approximate): **Warp** (16 — multi-wrap ease
++ keyframed Lens Distortion bulge) and **Hit** (24 — fast low-blur slam + green-emboss "Deviation"
+glitch-fringe flash). ONE engine drives all 152 (optional `lens`/`deviation` param blocks for the
+hybrids). id `offset-<variant>-<dir>`, engine `OffsetSlide`, browse `browse/OFFSET/<Variant>/`.
+
+ONE engine covers all 152 (`remotion/src/transitions/engines/OffsetSlide.tsx`); variants are the
+same mechanism, different keyframe curve + duration + direction. Extraction + decode:
+`_extract-offsetgeo.js` → `_offsetgeo-clips.json` → `_analyze-offsetgeo.js` (family comparison) →
+`_build-offsetgeo-rows.js` → 112 rows; `_render-offsetgeo.js` (bundle-once batch, marker-resume).
+
+**Mechanism (per-clip extracted from the FullHD project, verified vs the pack previews):**
+- Two "HST Adjustment" layers `(In)` [0..cut] and `(Out)` [cut..end] each carry a wrap-**Offset**
+  "Shift Center To" curve. **They are NOT one continuous curve — sample PIECEWISE (2026-07-11 QA
+  fix):** the (Out) curve is the same motion RE-KEYED and, in the Short variants, SHIFTED EARLIER —
+  the transition **jumps ahead in the motion at the cut** (Ease Out Short: (In) reaches 0.9436 at
+  seq 0.2, (Out) at 0.12 = a 0.08s skip, hidden under the blur; even non-Short Ease skips 0.04s).
+  The first build merged both clips' keyframes into one union curve, which smoothed over the jump
+  and distorted segment shapes. Engine params are now `curveIn`/`curveOut`, sampled by clip window,
+  exactly as Premiere composites them. We **swap from→to AT the cut** (the (Out) start), which lands
+  under peak motion blur. Naming gotcha: one sequence uses lowercase "(in)" (Long Simple - Right) —
+  match case-insensitively.
+- A top "Motion Blur" adjustment applies a **DIRECTIONAL** blur (one AE Direction + keyframed Blur
+  Length 0→peak→0, peaking at the cut). This is the DOMINANT visual — at peak the frame is a near-
+  pure smear along the push axis (preview-confirmed: a coffee cup smears to horizontal bands), which
+  is what hides the swap. Alpha Adjust Opacity is a constant 100 across the whole family (no crossfade).
+- Direction is encoded in the Offset END vector: Right `1.5:0.5`, Right Up `1.5:-0.5`, Right Down
+  `1.5:1.5` (dx,dy ∈ {−1,0,+1}, AE y-down). "Long" variants shift **4 full widths** (0.5→4.5) = a
+  fast multi-wrap streak; base/Short shift one width.
+
+**Sub-family character (all just the offset curve + blur-length shape — no new effects):**
+Simple = near-linear whip · Ease = ease-in-out w/ long low-blur settle · Ease Out = starts
+mid-motion (fast) and decelerates · Bounce = overshoot to target then bounce back and settle ·
+Swinging = overshoot PAST target then pendulum-swing back · Short/Long = compressed / multi-wrap.
+
+**Engine notes (OffsetSlide.tsx):**
+- **True directional motion blur** via a rotate sandwich: rotate the 3×3 wrap-tiled content so the
+  push axis is horizontal → horizontal `feGaussianBlur "sigma 0"` → rotate back. Faithful diagonals
+  (streak along the real ~29°/61° angle), not an axis-elliptical fake. `BLUR_K=0.55` (sigma per unit
+  AE Blur Length ≈ variance-matched to a 2·length box). Angle computed from the net offset vector in
+  px (`atan2(dy·H, dx·W)`), which equals the pack's own AE `Direction` (90−D).
+- The offset slide is applied to the WHOLE rotated/blurred group in screen space (so it slides along
+  the true direction); tiling makes the wrap seamless past the edges — no black gaps, QA-confirmed.
+- **THE KEYFRAME EASING IS REAL AND EXTRACTABLE — 2026-07-11 QA failure + fix (Mike caught it).**
+  First build interpolated keyframes with monotone-cubic (claiming AE handles "aren't recoverable")
+  — WRONG twice: with only 2 keyframes monotone-cubic degenerates to LINEAR, and the handles ARE in
+  the prproj. Raw keyframe row = `time, value, interpFlags(5,2), inVel, inInf, outVel, outInf,
+  [spatial extras]` (velocity in value-units/sec, influence 0..1 of the segment). These carry the
+  whole character: Hit's offset kf0 outInf=0.58 = sit still half the window then WHIP; Hit's blur
+  BULGES to ~100 mid-segment via inVel −7.1e6 @ inf 1e-4 despite endpoint value 8 (that's the
+  preview's huge smear — the bulge lives in the handles, not the endpoints). Engine evaluates the
+  true cubic bezier in (time, progress) per segment (time-cubic solved by bisection; velocity
+  normalized by the segment's path length for 2D / signed delta for scalars; progress MAY leave
+  [0,1] inside a segment — that's the real value bulge, don't clamp). Verified frame-by-frame vs
+  previews after the fix: Hit/Simple/Ease/Warp pacing signatures align. FullHD handles = 4K handles
+  (byte-identical, cross-checked).
+- Content via Remotion `<Img>` (not CSS background-image — Remotion only awaits `<Img>` loads).
+
+**SFX — corrected TWICE 2026-07-11 (both times Mike heard the difference):**
+- First trims (`silenceremove` + 0.9s cap + fade from 0.5s) chopped attacks arbitrarily and
+  amputated ring-outs → rebuilt from the REAL project in-points, full length.
+- Still "different": **the pack TRUNCATES each sound at the transition's end** (the audio clip
+  window == the sequence window). Simple plays a tight 0.24s "tk", NOT the file's 0.86s whip;
+  Mike's A/B vs Premiere flagged exactly the families whose windows are much shorter than the
+  file (Simple 0.24/0.86, Warp Short 0.36/1.0) and passed the one where they match (Warp 1.0/1.0).
+  FINAL build: cut at the real in-point AND truncate to the family's audio-clip window, 30ms tail
+  guard → ONE file per family `lib/sfx-offset-<variant-slug>.mp3` (19 files; windows differ between
+  families sharing a source). The wrapper ring-out policy (Rule 7, adopted for GLITCH) does NOT
+  apply to this pack's OFFSET category — faithfulness = hard truncation, per Mike's A/B.
+
+**QA — full systematic sweep 2026-07-11 (after Mike caught the first build's failures):**
+`_qa-offsetgeo-sweep.js` builds preview-vs-render side-by-side sheets, frame-aligned from the
+transition start → `_qa/offsetgeo/sweep/sbs_<fam>_<dir>.png`. ALL 19 sub-families reviewed on
+Right + spot-checks on Up and Left Down (57 sheets): pacing signatures align frame-for-frame
+(Hit's sit-still-then-whip + crisp jittering slam, Simple's instant smear plateau, Ease's long
+settle, Ease Out's mid-motion launch, Bounce wobble, Swinging pendulum, Long Hit's 400-blur crash
+to a crisp tail, Warp's smooth flowing bulge). Additional fixes found DURING the sweep: the Hit
+impact "Shake" = the real Geometry2 Position jitter (±3-4% decaying jolts, now a `shake` param;
+the Replicate/Mirror rig is edge-padding, served by our wrap tiles), and the Motion Blur clip
+WINDOW (see mechanism notes). Known cosmetic notes: the wrap seam is the real AE Offset tiling
+(more visible on high-contrast content than the pack's flat white demo footage), and residual
+smear-structure differences are content-dependent (Gaussian vs AE box-ish directional blur).
+
+**Hybrids (Warp + Hit) — added as OPTIONAL engine params, so the pure-push rows are untouched:**
+- **Warp** = the multi-wrap ease push + a keyframed radial **Lens Distortion** (Curvature 0→−59→
+  −11→0, negative = barrel bulge). Implemented as CHAINED `feDisplacementMap` passes over an
+  inlined radial map (`_gen-lens-map.js` → `engines/lensMap.ts`). **The full story (three bugs,
+  all caught by Mike's full-size QA 2026-07-11 — thumbnail QA hid every one of them):**
+  (a) hand-picked `LENS_K=1.4` = ~11px max shift, TWO ORDERS too subtle (the Premiere model
+  `src_r = r·(1+(k/100)·r²)` at k=−59 displaces edge content by hundreds of px). Scale now derived:
+  `LENS_SCALE_PER_K = 540·255/(100·A)`. (b) the map generator had a spurious `/2` halving both
+  axes → r² field a QUARTER strength — the "matching" thumbnail compare never caught it. (c) THE
+  8-BIT WALL: Chromium filter buffers are 8-bit, so no matter how smoothly the map is generated or
+  blurred, it is RE-QUANTIZED before `feDisplacementMap` reads it — every 1-level step then jumps
+  `scale/255` ≈ 11px at peak = HERRINGBONE RIPPLES with exactly that period. Map blur (10→22→40),
+  source pre-soften, and filter-region size all changed NOTHING (diagnosed by rendering the map
+  itself in-filter: perfectly smooth, ripples persist). Premiere renders float; SVG filters don't.
+  FIX = N=4 chained feDisplacementMap passes at scale/4 each → per-step jump scale/(4·255) ≈ 2-3px,
+  passes decorrelate; slight warp compounding vs a single pass (approximate). Filter region −25%..
+  +150% (must cover each pass's ~290px max sample pull or edges hard-clip mid-warp); map drawn 8%
+  overscanned. Honest caveats: r² map profile vs the model's r³; micro-stairsteps on the sharpest
+  streak edges at 100% zoom; the bulge is mostly buried under the multi-wrap blur mid-transition
+  (as in the pack preview). fidelity: approximate. **LESSON: QA scale matters — compare at FULL
+  RESOLUTION; 200px thumbnails hide magnitude and texture defects.**
+- **Hit** = a fast push with LOW motion blur (Blur Length ~8, so it SLAMS crisp instead of smearing)
+  + a **"Deviation"** glitch-fringe flash at the impact. The source recipe is Tint black→GREEN
+  (decode `ff00ff00`) + Emboss (dir 45) + Pin Light, whose VISIBLE result is a green/magenta
+  chromatic edge fringe. The faithful `feConvolveMatrix` emboss is PATHOLOGICALLY SLOW in Chromium
+  (~5 min/demo — a known perf cliff; a full 45° R×R kernel times out outright, and even a 1×R
+  vertical kernel crawled), so we reproduce the same fringe FAST by shifting ONLY the GREEN channel
+  diagonally and adding R+B back (alpha stays ≥1 → arithmetic-add clamps to opaque, dodging the
+  un-premultiply-to-white gotcha). Green/magenta fringes on 21% of the impact-frame edges (vs 1.3%
+  for the too-thin convolve). Honest caveats: mechanism swapped (channel-shift, not emboss) though
+  the look is preserved; and the Mirror/Replicate kaleidoscope "Shake" clip does NOT visibly read in
+  the source preview (no 2×2 replication/mirroring visible) so it is NOT reproduced. fidelity: approximate.
+
+**Render infra gotcha (cost real time):** `bundle()` with `publicDir=../assets` COPIES the whole
+multi-GB assets tree (the Swiftly pack .prproj files!) into %TEMP% every run → filled the disk
+(ENOSPC) twice and stale bundles ate 19 GB. Fix: `_render-offsetgeo.js` takes `OFFSET_PUBDIR` and
+renders against a 1.1 MB minimal pub (just the 2 demo stills + the sfx-offset-*.mp3). Also: a long
+background render was reclaimed at 109/112 when the session went idle — the `.ok` marker-resume made
+it a 3-demo finish, not a restart. SFX for the hybrids: Warp→Camera_01, Hit/Hit Short→Hit_01, Long
+Hit→Perspective_Spin_Hit_01 (Rule-7 trimmed).
+
+---
+
 ## GLITCH / VHS: all 9 built ✅ (2026-07-05, awaiting Mike's review) — GLITCH CATEGORY COMPLETE
 
 `vhs-{max,min,short}-{1,2,3}` (Max ~1.1s / Short 0.64s / Min 0.52s) — rendered + in the
