@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-/** QA sweep for LIGHT LEAKS / Light Leaks: side-by-side sheet per variant — pack
- * preview (top, yellow) vs our render (bottom, cyan), frame-aligned (18-frame
- * demo lead-in, both ~30fps). Writes _qa/lightleaks/sbs_<id>.png. */
+/** QA sweep for the whole LIGHT LEAKS category (Light Leaks, Light Leaks Short,
+ * Soft, Soft Short): side-by-side sheet per variant — pack preview (top, yellow)
+ * vs our render (bottom, cyan), frame-aligned. Writes _qa/lightleaks/sbs_<id>.png. */
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -13,17 +13,23 @@ const TMP = path.join(OUT, '_tmp');
 fs.mkdirSync(OUT, { recursive: true });
 fs.mkdirSync(TMP, { recursive: true });
 
-const VARIANTS = [1,2,3,4,5,6,7,8].map((n) => [String(n)]);
+const SUBS = [
+  ['Light Leaks', 'Light Leaks - ', 'lightleaks-', 8],
+  ['Light Leaks Short', 'Light Leaks Short - ', 'lightleaks-short-', 8],
+  ['Soft', 'Light Leaks Soft - ', 'lightleaks-soft-', 9],
+  ['Soft Short', 'Light Leaks Soft Short - ', 'lightleaks-soft-short-', 9],
+];
+const VARIANTS = SUBS.flatMap(([dir, pvPre, idPre, count]) => Array.from({length: count}, (_, i) => [dir, pvPre, idPre, i + 1]));
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 const sh = (c) => execSync(c, { stdio: ['ignore', 'pipe', 'pipe'] });
 const filter = process.argv[2] || '';
 
 let made = 0, skipped = 0;
-for (const [n] of VARIANTS) {
-  const id = `lightleaks-${n}`;
+for (const [dir, pvPre, idPre, n] of VARIANTS) {
+  const id = idPre + n;
   if (!id.includes(filter)) continue;
-  const pv = path.join(PREVROOT, 'Light Leaks', `Light Leaks - ${n}.mp4`);
-  const my = path.join(ROOT, 'browse/LIGHT LEAKS/Light Leaks', `${id}.mp4`);
+  const pv = path.join(PREVROOT, dir, pvPre + n + '.mp4');
+  const my = path.join(ROOT, 'browse/LIGHT LEAKS', dir, id + '.mp4');
   if (!fs.existsSync(pv) || !fs.existsSync(my)) { skipped++; continue; }
   for (const f of fs.readdirSync(TMP)) fs.unlinkSync(path.join(TMP, f));
   sh(`ffmpeg -y -loglevel error -i "${pv}" -vf "scale=200:112" "${TMP}/pv_%02d.png"`);
