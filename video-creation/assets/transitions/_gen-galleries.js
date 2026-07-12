@@ -83,8 +83,11 @@ for (const [cat, variants] of Object.entries(cats)) {
       const posterFile = `${r.id}.poster.jpg`;
       const hasPoster = makePoster(path.join(dir, mp4), path.join(dir, posterFile));
       if (fs.existsSync(path.join(dir, mp4))) clips++;
-      const poster = hasPoster ? ` poster="${posterFile}"` : '';
-      return `<div class="card"><video controls preload="none"${poster} src="${mp4}"></video>
+      // cache-bust with the file mtime: demo filenames never change across
+      // re-renders, so browsers otherwise serve stale videos (bit Mike 2026-07-11)
+      const v = fs.existsSync(path.join(dir, mp4)) ? `?v=${Math.floor(fs.statSync(path.join(dir, mp4)).mtimeMs)}` : '';
+      const poster = hasPoster ? ` poster="${posterFile}${v}"` : '';
+      return `<div class="card"><video controls preload="none"${poster} src="${mp4}${v}"></video>
 <div class="meta"><div class="label">${r.label}</div>
 <div class="badges"><span class="badge">${r.intensity}</span>
 <span class="badge">${r.durationSeconds}s</span><span class="badge">${r.kind}</span>

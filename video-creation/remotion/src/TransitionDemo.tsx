@@ -22,7 +22,13 @@ const Still: React.FC<{ src: string }> = ({ src }) => (
   </AbsoluteFill>
 );
 
-export type TransitionDemoProps = { id: string };
+export type TransitionDemoProps = {
+  id: string;
+  /** Play the transition over ONE continuous scene (A==B) — how the pack's own
+   * previews demo the subtle accent families (Deviation): the effect reads
+   * clearly instead of being masked by the content change at the cut. */
+  sameScene?: boolean;
+};
 
 /**
  * Renders one library.json transition as a demo: hold still A, play the
@@ -30,9 +36,13 @@ export type TransitionDemoProps = { id: string };
  * composition + Remotion's calculateMetadata covers every row (the preview
  * generator renders each id to browse/<category>/<variant>/<id>.mp4).
  */
-export const TransitionDemo: React.FC<TransitionDemoProps> = ({ id }) => {
+export const TransitionDemo: React.FC<TransitionDemoProps> = ({ id, sameScene }) => {
   const { fps } = useVideoConfig();
   const row = getTransition(id);
+  // single-image demo: explicit prop OR the row's own demoSameScene flag
+  // (accent transitions used for punch-ins/jump cuts of the same scene)
+  const single = sameScene ?? row?.demoSameScene;
+  const SCENE_B_EFF = single ? SCENE_A : SCENE_B;
   if (!row) {
     return (
       <AbsoluteFill style={{ backgroundColor: 'crimson', color: 'white', fontSize: 48, justifyContent: 'center', alignItems: 'center' }}>
@@ -51,16 +61,16 @@ export const TransitionDemo: React.FC<TransitionDemoProps> = ({ id }) => {
       <Sequence from={DEMO_HOLD} durationInFrames={win}>
         <Engine
           from={<Still src={SCENE_A} />}
-          to={<Still src={SCENE_B} />}
+          to={<Still src={SCENE_B_EFF} />}
           fromSrc={SCENE_A}
-          toSrc={SCENE_B}
+          toSrc={SCENE_B_EFF}
           durationInFrames={win}
           params={row.params}
           sfxSrc={row.sfx}
         />
       </Sequence>
       <Sequence from={DEMO_HOLD + win}>
-        <Still src={SCENE_B} />
+        <Still src={SCENE_B_EFF} />
       </Sequence>
       {/* SFX from the transition start, allowed to ring out past the (possibly
           short) window so it isn't clipped — emitted here, not in the engine. */}

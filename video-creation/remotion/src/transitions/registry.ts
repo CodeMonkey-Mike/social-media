@@ -7,6 +7,9 @@ import { GlitchInvert } from './engines/GlitchInvert';
 import { GlitchMonitor } from './engines/GlitchMonitor';
 import { GlitchOffset } from './engines/GlitchOffset';
 import { GlitchRoughly } from './engines/GlitchRoughly';
+import { OffsetSlide } from './engines/OffsetSlide';
+import { DeviationGlitch } from './engines/DeviationGlitch';
+import { ExpandPan } from './engines/ExpandPan';
 import { GlitchTurbulentDisplace } from './engines/GlitchTurbulentDisplace';
 import { GlitchTVSatellite } from './engines/GlitchTVSatellite';
 import { GlitchVHS } from './engines/GlitchVHS';
@@ -30,6 +33,9 @@ export type TransitionRow = {
   durationSeconds: number;
   params: Record<string, unknown>;
   sfx: string | null;
+  /** Demo over ONE continuous image (A==B) — for accent transitions whose real
+   * use is punch-ins / jump cuts of the same scene (e.g. Deviation Shift). */
+  demoSameScene?: boolean;
   used_in: string[];
   /** Picking metadata (aspectRatios, description, energy, tags, useWhen, …). */
   meta?: {
@@ -59,6 +65,9 @@ export const ENGINES: Record<string, React.FC<any>> = {
   GlitchTurbulentDisplace,
   GlitchTVSatellite,
   GlitchVHS,
+  OffsetSlide,
+  DeviationGlitch,
+  ExpandPan,
 };
 
 export const TRANSITIONS = (library as { transitions: TransitionRow[] }).transitions;
