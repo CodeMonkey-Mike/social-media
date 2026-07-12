@@ -59548,6 +59548,6014 @@
         ],
         "useWhen": "Quick organic accent cut (~0.4s); quick soft leak sweep: the gradient blur wipe and leak handover compressed to a blink."
       }
+    },
+    {
+      "id": "melt-equidistant-1",
+      "category": "MELT",
+      "variant": "Equidistant",
+      "intensity": "1",
+      "label": "Melt · Equidistant · 1",
+      "engine": "MeltEquidistant",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "axis": "tilt",
+        "curveIn": [
+          {
+            "t": 0,
+            "v": 0,
+            "iv": -35.366244787433466,
+            "ii": 0.3333333333333333,
+            "ov": -35.366244787433466,
+            "oi": 0.8368705963797556
+          },
+          {
+            "t": 0.2,
+            "v": -90,
+            "iv": -1682.0934506103456,
+            "ii": 0.07952523188049816,
+            "ov": -1682.0934506103456,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "curveOut": [
+          {
+            "t": 0.2,
+            "v": 90,
+            "iv": -727.609210457922,
+            "ii": 0.3333333333333333,
+            "ov": -727.609210457922,
+            "oi": 0.03691123270778219
+          },
+          {
+            "t": 0.48,
+            "v": 3.0522290468215942,
+            "iv": -81.73252660156254,
+            "ii": 0.7506027193168934,
+            "ov": -81.73252660156254,
+            "oi": 0.07899461477492231
+          },
+          {
+            "t": 0.6431,
+            "v": 0,
+            "iv": -6.378692570388158,
+            "ii": 1,
+            "ov": -6.378692570388158,
+            "oi": 0.3333333333333333
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-melt-eq-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt Equidistant",
+        "engineFile": "remotion/src/transitions/engines/MeltEquidistant.tsx",
+        "description": "Spherical melt (tilt down): the frame wraps into swirling pole vortices at the cut and the new scene unwinds back; settles clean. Canvas spherical reprojection (image content; video TODO).",
+        "energy": "medium",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "equidistant",
+          "spherical",
+          "vortex",
+          "warp"
+        ],
+        "useWhen": "Statement spherical melt cut (~0.84s); surreal spatial collapse."
+      }
+    },
+    {
+      "id": "melt-equidistant-2",
+      "category": "MELT",
+      "variant": "Equidistant",
+      "intensity": "2",
+      "label": "Melt · Equidistant · 2",
+      "engine": "MeltEquidistant",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "axis": "tilt",
+        "curveIn": [
+          {
+            "t": 0,
+            "v": 0,
+            "iv": -35.366244787433466,
+            "ii": 0.3333333333333333,
+            "ov": -35.366244787433466,
+            "oi": 0.8368705963797556
+          },
+          {
+            "t": 0.2,
+            "v": 90,
+            "iv": -1682.0934506103456,
+            "ii": 0.07952523188049816,
+            "ov": -1682.0934506103456,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "curveOut": [
+          {
+            "t": 0.2,
+            "v": -90,
+            "iv": -727.609210457922,
+            "ii": 0.3333333333333333,
+            "ov": -727.609210457922,
+            "oi": 0.03691123270778219
+          },
+          {
+            "t": 0.48,
+            "v": -3.0999999046325684,
+            "iv": 83.31193932261083,
+            "ii": 0.7506027193168934,
+            "ov": 83.31193932261083,
+            "oi": 0.07899461477492231
+          },
+          {
+            "t": 0.6431,
+            "v": 0,
+            "iv": -6.378692570388158,
+            "ii": 0.20131073399664579,
+            "ov": -6.378692570388158,
+            "oi": 0.3333333333333333
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-melt-eq-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt Equidistant",
+        "engineFile": "remotion/src/transitions/engines/MeltEquidistant.tsx",
+        "description": "Spherical melt (tilt up): the frame wraps into swirling pole vortices at the cut and the new scene unwinds back; settles clean. Canvas spherical reprojection (image content; video TODO).",
+        "energy": "medium",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "equidistant",
+          "spherical",
+          "vortex",
+          "warp"
+        ],
+        "useWhen": "Statement spherical melt cut (~0.84s); surreal spatial collapse."
+      }
+    },
+    {
+      "id": "melt-equidistant-3",
+      "category": "MELT",
+      "variant": "Equidistant",
+      "intensity": "3",
+      "label": "Melt · Equidistant · 3",
+      "engine": "MeltEquidistant",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "axis": "roll",
+        "curveIn": [
+          {
+            "t": 0,
+            "v": 0,
+            "iv": 29.819277109919135,
+            "ii": 0.3333333333333333,
+            "ov": 29.819277109919135,
+            "oi": 0.36403508770116844
+          },
+          {
+            "t": 0.2,
+            "v": 90,
+            "iv": 2993.7499980357215,
+            "ii": 0.15789473694570422,
+            "ov": 2993.7499980357215,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "curveOut": [
+          {
+            "t": 0.2,
+            "v": -90,
+            "iv": 625.5880870119845,
+            "ii": 0.3333333333333333,
+            "ov": 625.5880870119845,
+            "oi": 0.20651629093105497
+          },
+          {
+            "t": 0.48,
+            "v": -2.421055555343628,
+            "iv": 31.04869646148093,
+            "ii": 0.5097744358623079,
+            "ov": 31.04869646148093,
+            "oi": 0.5176908758365244
+          },
+          {
+            "t": 0.6307,
+            "v": 0,
+            "iv": 4.056197026185783,
+            "ii": 0.7122905039792019,
+            "ov": 4.056197026185783,
+            "oi": 0.3333333333333333
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-melt-eq-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt Equidistant",
+        "engineFile": "remotion/src/transitions/engines/MeltEquidistant.tsx",
+        "description": "Spherical melt (roll clockwise): the frame wraps into swirling pole vortices at the cut and the new scene unwinds back; settles clean. Canvas spherical reprojection (image content; video TODO).",
+        "energy": "medium",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "equidistant",
+          "spherical",
+          "vortex",
+          "warp"
+        ],
+        "useWhen": "Statement spherical melt cut (~0.84s); surreal spatial collapse."
+      }
+    },
+    {
+      "id": "melt-equidistant-4",
+      "category": "MELT",
+      "variant": "Equidistant",
+      "intensity": "4",
+      "label": "Melt · Equidistant · 4",
+      "engine": "MeltEquidistant",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "axis": "roll",
+        "curveIn": [
+          {
+            "t": 0,
+            "v": 0,
+            "iv": 29.819277109919135,
+            "ii": 0.3333333333333333,
+            "ov": 29.819277109919135,
+            "oi": 0.36403508770116844
+          },
+          {
+            "t": 0.2,
+            "v": -90,
+            "iv": 2993.7499980357215,
+            "ii": 0.15789473694570422,
+            "ov": 2993.7499980357215,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "curveOut": [
+          {
+            "t": 0.2,
+            "v": 90,
+            "iv": -304.91974455786374,
+            "ii": 0.3333333333333333,
+            "ov": -304.91974455786374,
+            "oi": 0.22500368587580535
+          },
+          {
+            "t": 0.48,
+            "v": 2.4000000953674316,
+            "iv": -27.657620710410004,
+            "ii": 0.5097744358623079,
+            "ov": -27.657620710410004,
+            "oi": 0.48334976495709103
+          },
+          {
+            "t": 0.64,
+            "v": 0,
+            "iv": -0.7654174736222803,
+            "ii": 0.33333333328412384,
+            "ov": -0.7654174736222803,
+            "oi": 0.3333333333333333
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-melt-eq-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt Equidistant",
+        "engineFile": "remotion/src/transitions/engines/MeltEquidistant.tsx",
+        "description": "Spherical melt (roll counter-clockwise): the frame wraps into swirling pole vortices at the cut and the new scene unwinds back; settles clean. Canvas spherical reprojection (image content; video TODO).",
+        "energy": "medium",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "equidistant",
+          "spherical",
+          "vortex",
+          "warp"
+        ],
+        "useWhen": "Statement spherical melt cut (~0.84s); surreal spatial collapse."
+      }
+    },
+    {
+      "id": "melt-equidistant-short-1",
+      "category": "MELT",
+      "variant": "Equidistant Short",
+      "intensity": "1",
+      "label": "Melt · Equidistant Short · 1",
+      "engine": "MeltEquidistant",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.2727,
+        "axis": "tilt",
+        "curveIn": [
+          {
+            "t": 0,
+            "v": 0,
+            "iv": -35.366244787433466,
+            "ii": 0.3333333333333333,
+            "ov": -35.366244787433466,
+            "oi": 0.8368705963797556
+          },
+          {
+            "t": 0.12,
+            "v": -90,
+            "iv": -1682.0934506103456,
+            "ii": 0.07952523188049816,
+            "ov": -1682.0934506103456,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "curveOut": [
+          {
+            "t": 0.12,
+            "v": 90,
+            "iv": -727.609210457922,
+            "ii": 0.3333333333333333,
+            "ov": -727.609210457922,
+            "oi": 0.03691123270778219
+          },
+          {
+            "t": 0.1969,
+            "v": 3.0522290468215942,
+            "iv": -81.73252660156254,
+            "ii": 0.7506027193168934,
+            "ov": -81.73252660156254,
+            "oi": 0.07899461477492231
+          },
+          {
+            "t": 0.36,
+            "v": 0,
+            "iv": -6.378692570388158,
+            "ii": 1,
+            "ov": -6.378692570388158,
+            "oi": 0.3333333333333333
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-melt-eq-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt Equidistant Short",
+        "engineFile": "remotion/src/transitions/engines/MeltEquidistant.tsx",
+        "description": "Spherical melt (tilt down): the frame wraps into swirling pole vortices at the cut and the new scene unwinds back; settles clean. Canvas spherical reprojection (image content; video TODO).",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "equidistant-short",
+          "spherical",
+          "vortex",
+          "warp"
+        ],
+        "useWhen": "Fast spherical melt cut (~0.44s); surreal spatial collapse."
+      }
+    },
+    {
+      "id": "melt-equidistant-short-2",
+      "category": "MELT",
+      "variant": "Equidistant Short",
+      "intensity": "2",
+      "label": "Melt · Equidistant Short · 2",
+      "engine": "MeltEquidistant",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.2727,
+        "axis": "tilt",
+        "curveIn": [
+          {
+            "t": 0,
+            "v": 0,
+            "iv": -35.366244787433466,
+            "ii": 0.3333333333333333,
+            "ov": -35.366244787433466,
+            "oi": 0.8368705963797556
+          },
+          {
+            "t": 0.12,
+            "v": 90,
+            "iv": -1682.0934506103456,
+            "ii": 0.07952523188049816,
+            "ov": -1682.0934506103456,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "curveOut": [
+          {
+            "t": 0.12,
+            "v": -90,
+            "iv": -727.609210457922,
+            "ii": 0.3333333333333333,
+            "ov": -727.609210457922,
+            "oi": 0.03691123270778219
+          },
+          {
+            "t": 0.1969,
+            "v": -3.0999999046325684,
+            "iv": 83.31193932261083,
+            "ii": 0.7506027193168934,
+            "ov": 83.31193932261083,
+            "oi": 0.07899461477492231
+          },
+          {
+            "t": 0.36,
+            "v": 0,
+            "iv": -6.378692570388158,
+            "ii": 0.20131073399664579,
+            "ov": -6.378692570388158,
+            "oi": 0.3333333333333333
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-melt-eq-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt Equidistant Short",
+        "engineFile": "remotion/src/transitions/engines/MeltEquidistant.tsx",
+        "description": "Spherical melt (tilt up): the frame wraps into swirling pole vortices at the cut and the new scene unwinds back; settles clean. Canvas spherical reprojection (image content; video TODO).",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "equidistant-short",
+          "spherical",
+          "vortex",
+          "warp"
+        ],
+        "useWhen": "Fast spherical melt cut (~0.44s); surreal spatial collapse."
+      }
+    },
+    {
+      "id": "melt-equidistant-short-3",
+      "category": "MELT",
+      "variant": "Equidistant Short",
+      "intensity": "3",
+      "label": "Melt · Equidistant Short · 3",
+      "engine": "MeltEquidistant",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.2727,
+        "axis": "roll",
+        "curveIn": [
+          {
+            "t": 0,
+            "v": 0,
+            "iv": 29.819277109919135,
+            "ii": 0.3333333333333333,
+            "ov": 29.819277109919135,
+            "oi": 0.36403508770116844
+          },
+          {
+            "t": 0.12,
+            "v": 90,
+            "iv": 2993.7499980357215,
+            "ii": 0.15789473694570422,
+            "ov": 2993.7499980357215,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "curveOut": [
+          {
+            "t": 0.12,
+            "v": -90,
+            "iv": 625.5880870119845,
+            "ii": 0.3333333333333333,
+            "ov": 625.5880870119845,
+            "oi": 0.20651629093105497
+          },
+          {
+            "t": 0.2093,
+            "v": -2.421055555343628,
+            "iv": 31.04869646148093,
+            "ii": 0.5097744358623079,
+            "ov": 31.04869646148093,
+            "oi": 0.5176908758365244
+          },
+          {
+            "t": 0.36,
+            "v": 0,
+            "iv": 4.056197026185783,
+            "ii": 0.7122905039792019,
+            "ov": 4.056197026185783,
+            "oi": 0.3333333333333333
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-melt-eq-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt Equidistant Short",
+        "engineFile": "remotion/src/transitions/engines/MeltEquidistant.tsx",
+        "description": "Spherical melt (roll clockwise): the frame wraps into swirling pole vortices at the cut and the new scene unwinds back; settles clean. Canvas spherical reprojection (image content; video TODO).",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "equidistant-short",
+          "spherical",
+          "vortex",
+          "warp"
+        ],
+        "useWhen": "Fast spherical melt cut (~0.44s); surreal spatial collapse."
+      }
+    },
+    {
+      "id": "melt-equidistant-short-4",
+      "category": "MELT",
+      "variant": "Equidistant Short",
+      "intensity": "4",
+      "label": "Melt · Equidistant Short · 4",
+      "engine": "MeltEquidistant",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.2727,
+        "axis": "roll",
+        "curveIn": [
+          {
+            "t": 0,
+            "v": 0,
+            "iv": 29.819277109919135,
+            "ii": 0.3333333333333333,
+            "ov": 29.819277109919135,
+            "oi": 0.36403508770116844
+          },
+          {
+            "t": 0.12,
+            "v": -90,
+            "iv": 2993.7499980357215,
+            "ii": 0.15789473694570422,
+            "ov": 2993.7499980357215,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "curveOut": [
+          {
+            "t": 0.12,
+            "v": 90,
+            "iv": -304.91974455786374,
+            "ii": 0.3333333333333333,
+            "ov": -304.91974455786374,
+            "oi": 0.22500368587580535
+          },
+          {
+            "t": 0.2,
+            "v": 2.4000000953674316,
+            "iv": -27.657620710410004,
+            "ii": 0.5097744358623079,
+            "ov": -27.657620710410004,
+            "oi": 0.48334976495709103
+          },
+          {
+            "t": 0.36,
+            "v": 0,
+            "iv": -0.7654174736222803,
+            "ii": 0.33333333328412384,
+            "ov": -0.7654174736222803,
+            "oi": 0.3333333333333333
+          }
+        ]
+      },
+      "sfx": "transitions/lib/sfx-melt-eq-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt Equidistant Short",
+        "engineFile": "remotion/src/transitions/engines/MeltEquidistant.tsx",
+        "description": "Spherical melt (roll counter-clockwise): the frame wraps into swirling pole vortices at the cut and the new scene unwinds back; settles clean. Canvas spherical reprojection (image content; video TODO).",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "equidistant-short",
+          "spherical",
+          "vortex",
+          "warp"
+        ],
+        "useWhen": "Fast spherical melt cut (~0.44s); surreal spatial collapse."
+      }
+    },
+    {
+      "id": "melt-rgb-1",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "1",
+      "label": "Melt · RGB · 1",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.76,
+      "params": {
+        "cut": 0.3684,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": 50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": 50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": -50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": -50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": -50,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": -50,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 0.5005,
+              "y": 0.2565,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 1.2313,
+              "y": 2.3972,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 0.5005,
+              "y": 0.2565,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 1.2313,
+              "y": 2.3972,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-76.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+50/G-50/B-50): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.76,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.76s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-2",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "2",
+      "label": "Melt · RGB · 2",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.76,
+      "params": {
+        "cut": 0.3684,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": 50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": 50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": -50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": -50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": -29,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": -29,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.6438,
+              "y": 2.9898,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.6438,
+              "y": 2.9898,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-76.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+50/G-50/B-29): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.76,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.76s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-3",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "3",
+      "label": "Melt · RGB · 3",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.76,
+      "params": {
+        "cut": 0.3684,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": -50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": -50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": 50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": 50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": 75,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": 75,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.6438,
+              "y": 2.9898,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.6438,
+              "y": 2.9898,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-76.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R-50/G+50/B+75): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.76,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.76s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-4",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "4",
+      "label": "Melt · RGB · 4",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.76,
+      "params": {
+        "cut": 0.3684,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": -50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": -50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": 50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": 50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": 75,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": 75,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": -0.1307,
+              "y": 1.1157,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": -0.1307,
+              "y": 1.1157,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-76.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R-50/G+50/B+75): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.76,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.76s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-5",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "5",
+      "label": "Melt · RGB · 5",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.76,
+      "params": {
+        "cut": 0.3684,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": 20,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": 20,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": 71,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": 71,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": 10,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": 10,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 1.1922,
+              "y": 0.7222,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.9646,
+              "y": -0.1519,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 1.1922,
+              "y": 0.7222,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.9646,
+              "y": -0.1519,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-76.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+20/G+71/B+10): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.76,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.76s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-6",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "6",
+      "label": "Melt · RGB · 6",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.76,
+      "params": {
+        "cut": 0.3684,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": -71,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": -71,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": 69,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": 69,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": 10,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": 10,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 0.0464,
+              "y": 0.0806,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.9646,
+              "y": -0.363,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 0.0464,
+              "y": 0.0806,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.9646,
+              "y": -0.363,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-76.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R-71/G+69/B+10): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.76,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.76s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-7",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "7",
+      "label": "Melt · RGB · 7",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.76,
+      "params": {
+        "cut": 0.3684,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": -61,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.28,
+              "v": -61,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": 41,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.28,
+              "v": 41,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": 62,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.28,
+              "v": 62,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 0.0083,
+              "y": -0.337,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": -0.7422,
+              "y": -1.5426,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 0.0083,
+              "y": -0.337,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": -0.7422,
+              "y": -1.5426,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-76.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R-61/G+41/B+62): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.76,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.76s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-soft-1",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "Soft 1",
+      "label": "Melt · RGB Soft · 1",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.381,
+        "falloff": 50,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.12,
+              "x": 0.3959,
+              "y": 0.3883,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 0.6927,
+              "y": 0.5454,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.12,
+              "x": 0.3959,
+              "y": 0.3883,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 0.6927,
+              "y": 0.5454,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Soft",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+72/G-28/B-81, soft falloff): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-soft",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.84s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-soft-2",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "Soft 2",
+      "label": "Melt · RGB Soft · 2",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.381,
+        "falloff": 50,
+        "invert": true,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.12,
+              "x": 0.8245,
+              "y": 0.5642,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 0.0797,
+              "y": 0.0926,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.12,
+              "x": 0.8245,
+              "y": 0.5642,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 0.0797,
+              "y": 0.0926,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Soft",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+72/G-28/B-81, soft falloff): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-soft",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.84s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-soft-3",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "Soft 3",
+      "label": "Melt · RGB Soft · 3",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.381,
+        "falloff": 50,
+        "invert": true,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.12,
+              "x": 1.6428,
+              "y": -0.483,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 1.2635,
+              "y": -0.3361,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.12,
+              "x": 1.6428,
+              "y": -0.483,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 1.2635,
+              "y": -0.3361,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Soft",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+72/G-28/B-81, soft falloff): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-soft",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.84s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-soft-4",
+      "category": "MELT",
+      "variant": "RGB",
+      "intensity": "Soft 4",
+      "label": "Melt · RGB Soft · 4",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.381,
+        "falloff": 50,
+        "invert": true,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 39,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 39,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.12,
+              "x": 0.6756,
+              "y": 0.9078,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 1.2635,
+              "y": 0.3639,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.12,
+              "x": 0.6756,
+              "y": 0.9078,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 1.2635,
+              "y": 0.3639,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Soft",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+100/G+39/B-81, soft falloff): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "medium",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-soft",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Statement RGB-split melt cut (~0.84s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-short-1",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "1",
+      "label": "Melt · RGB Short · 1",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": 50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": 50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": -50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": -50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": -50,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": -50,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 0.5005,
+              "y": 0.2565,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 1.2313,
+              "y": 2.3972,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "x": 0.5005,
+              "y": 0.2565,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "x": 1.2313,
+              "y": 2.3972,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+50/G-50/B-50): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.44s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-short-2",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "2",
+      "label": "Melt · RGB Short · 2",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": 50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": 50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": -50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": -50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": -29,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": -29,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.6438,
+              "y": 2.9898,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "x": 0.6438,
+              "y": 2.9898,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+50/G-50/B-29): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.44s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-short-3",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "3",
+      "label": "Melt · RGB Short · 3",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": -50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": -50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": 50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": 50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": 75,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": 75,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.6438,
+              "y": 2.9898,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "x": 0.6438,
+              "y": 2.9898,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R-50/G+50/B+75): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.44s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-short-4",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "4",
+      "label": "Melt · RGB Short · 4",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": -50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": -50,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": 50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": 50,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": 75,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": 75,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": -0.1307,
+              "y": 1.1157,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "x": 1.1781,
+              "y": 1.8537,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "x": -0.1307,
+              "y": 1.1157,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R-50/G+50/B+75): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.44s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-short-5",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "5",
+      "label": "Melt · RGB Short · 5",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": 20,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": 20,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": 71,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": 71,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": 10,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": 10,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 1.1922,
+              "y": 0.7222,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.9646,
+              "y": -0.1519,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "x": 1.1922,
+              "y": 0.7222,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "x": 0.9646,
+              "y": -0.1519,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+20/G+71/B+10): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.44s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-short-6",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "6",
+      "label": "Melt · RGB Short · 6",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": -71,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": -71,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": 69,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": 69,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": 10,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": 10,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 0.0464,
+              "y": 0.0806,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": 0.9646,
+              "y": -0.363,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "x": 0.0464,
+              "y": 0.0806,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "x": 0.9646,
+              "y": -0.363,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R-71/G+69/B+10): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.44s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-short-7",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "7",
+      "label": "Melt · RGB Short · 7",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "falloff": 100,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": -61,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 28.755589403737503,
+              "ii": 0.3333333333333333,
+              "ov": 28.755589403737503,
+              "oi": 0.5671957671957671
+            },
+            {
+              "t": 0.16,
+              "v": -61,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -20.470143232315813,
+              "ii": 0.6811287477735436,
+              "ov": -20.470143232315813,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": 41,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 3.6893882131977307,
+              "ii": 0.3333333333333333,
+              "ov": 3.6893882131977307,
+              "oi": 0.4952380952052889
+            },
+            {
+              "t": 0.16,
+              "v": 41,
+              "iv": 67.15845130017627,
+              "ii": 0.47724867728148357,
+              "ov": 67.15845130017627,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 1.80537450424994,
+              "ii": 0.7051146384261009,
+              "ov": 1.80537450424994,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": 62,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.56,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "v": 0,
+              "iv": 26.95790754974425,
+              "ii": 0.3333333333333333,
+              "ov": 26.95790754974425,
+              "oi": 0.6031746031746031
+            },
+            {
+              "t": 0.16,
+              "v": 62,
+              "iv": -255.06072876158655,
+              "ii": 0.3333333333333333,
+              "ov": -255.06072876158655,
+              "oi": 0.6031746031549193
+            },
+            {
+              "t": 0.32,
+              "v": 0,
+              "iv": 12.095552618668023,
+              "ii": 0.693121693143564,
+              "ov": 12.095552618668023,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.04,
+              "x": 0.0083,
+              "y": -0.337,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "x": -0.7422,
+              "y": -1.5426,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": -0.08,
+              "x": 0.0083,
+              "y": -0.337,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "x": -0.7422,
+              "y": -1.5426,
+              "iv": 0.9751971130656983,
+              "ii": 0.3333333333333333,
+              "ov": 0.9751971130656983,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R-61/G+41/B+62): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.44s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-soft-short-1",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "Soft 1",
+      "label": "Melt · RGB Soft Short · 1",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.6,
+      "params": {
+        "cut": 0.4,
+        "falloff": 50,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.52,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.52,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.52,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.12,
+              "x": 0.3959,
+              "y": 0.3883,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 0.6927,
+              "y": 0.5454,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 0.3959,
+              "y": 0.3883,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.48,
+              "x": 0.6927,
+              "y": 0.5454,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-60.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Soft Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+72/G-28/B-81, soft falloff): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.6,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-soft-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.6s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-soft-short-2",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "Soft 2",
+      "label": "Melt · RGB Soft Short · 2",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.6,
+      "params": {
+        "cut": 0.4,
+        "falloff": 50,
+        "invert": true,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.52,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.52,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.52,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.12,
+              "x": 0.8245,
+              "y": 0.5642,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 0.0797,
+              "y": 0.0926,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 0.8245,
+              "y": 0.5642,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.48,
+              "x": 0.0797,
+              "y": 0.0926,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-60.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Soft Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+72/G-28/B-81, soft falloff): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.6,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-soft-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.6s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-soft-short-3",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "Soft 3",
+      "label": "Melt · RGB Soft Short · 3",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.6,
+      "params": {
+        "cut": 0.4,
+        "falloff": 50,
+        "invert": true,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": 72,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.52,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -28,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.52,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.52,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.12,
+              "x": 1.6428,
+              "y": -0.483,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 1.2635,
+              "y": -0.3361,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 1.6428,
+              "y": -0.483,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.48,
+              "x": 1.2635,
+              "y": -0.3361,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-60.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Soft Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+72/G-28/B-81, soft falloff): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.6,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-soft-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.6s); trippy spectral burst."
+      }
+    },
+    {
+      "id": "melt-rgb-soft-short-4",
+      "category": "MELT",
+      "variant": "RGB Short",
+      "intensity": "Soft 4",
+      "label": "Melt · RGB Soft Short · 4",
+      "engine": "MeltRGB",
+      "kind": "shader",
+      "fidelity": "approximate",
+      "durationSeconds": 0.6,
+      "params": {
+        "cut": 0.4,
+        "falloff": 50,
+        "invert": true,
+        "r": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": 100,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": 73.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": 73.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": 100,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.72,
+              "v": 0,
+              "iv": 20.273116466754168,
+              "ii": 0.7860326895365719,
+              "ov": 20.273116466754168,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "g": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": 39,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": -98.21428571428571,
+              "ii": 0.3333333333333333,
+              "ov": -98.21428571428571,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": 39,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.72,
+              "v": 0,
+              "iv": 3.5479918125433363,
+              "ii": 0.7860326895365719,
+              "ov": 3.5479918125433363,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "b": {
+          "curveIn": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": -17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": -17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.24,
+              "v": -81,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.72,
+              "v": 0,
+              "iv": 11.799101418103875,
+              "ii": 0.7373172716986787,
+              "ov": 11.799101418103875,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "poi": {
+          "curveIn": [
+            {
+              "t": 0.12,
+              "x": 0.6756,
+              "y": 0.9078,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.76,
+              "x": 1.2635,
+              "y": 0.3639,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "curveOut": [
+            {
+              "t": 0.04,
+              "x": 0.6756,
+              "y": 0.9078,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.463018358489229
+            },
+            {
+              "t": 0.68,
+              "x": 1.2635,
+              "y": 0.3639,
+              "iv": 0,
+              "ii": 0.6005685855840353,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-melt-rgb-60.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Melt RGB Soft Short",
+        "engineFile": "remotion/src/transitions/engines/MeltRGB.tsx",
+        "description": "RGB channel melt (R+100/G+39/B-81, soft falloff): the channels scale apart around a drifting center, saturating the frame in spectral ghosting at the cut; settles clean. Pure affine channel scaling, no maps.",
+        "energy": "high",
+        "durationSeconds": 0.6,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "melt",
+          "rgb-soft-short",
+          "rgb",
+          "chromatic",
+          "channel-split",
+          "psychedelic"
+        ],
+        "useWhen": "Fast RGB-split melt cut (~0.6s); trippy spectral burst."
+      }
     }
   ]
 }
