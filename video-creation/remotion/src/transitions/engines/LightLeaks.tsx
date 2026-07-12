@@ -3,6 +3,7 @@ import {
   AbsoluteFill,
   Img,
   OffthreadVideo,
+  Sequence,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
@@ -10,47 +11,69 @@ import {
 import { TransitionProps } from '../types';
 
 /**
- * LIGHT LEAKS / Light Leaks — real leak-footage flash transition (8 variants).
+ * LIGHT LEAKS — real leak-footage flash transitions, ONE engine for all four
+ * subgroups: Light Leaks (8, 1.12s), Light Leaks Short (8, 0.4s),
+ * Soft (9, 1.44s), Soft Short (9, 0.4s).
  *
- * Mechanism (per-clip extracted, _extract-lightleaks.js + the nested
- * "Pre Light Leaks N" sequences via _extract-lightleaks-nested.js):
- *   - CONTENT runs under a shared envelope: Gaussian Blur 0->35->0 peaking at the
- *     cut (0.32s), ProcAmp Brightness 0->25->0 and Contrast 100->200->100
- *     (0.16..0.68) — the flash that hides the A->B swap. All 8 variants share the
- *     SAME envelope (their Blur clips read 2s slots of one rack timeline).
- *   - LEAK LAYERS (1-3 per variant): the pack's REAL leak plates
- *     (Hst - Flr Light Leaks - N/Na/Nb -> lib/leaks/), each exactly 1.0s, window
- *     0..1 of the sequence, composited ABOVE the blurred content (leaks stay
- *     crisp while content blurs — real track order). "Change color here" layers
- *     carry a Change To Color to a decoded ARGB16 target (#0024FF blue, #F600FF
- *     magenta, #FF9C00 orange, #FF00A2 pink...).
- *   - A "Deviation" accent (Texture Adjustment rack slot 151 = a flat Color
- *     Matte + Emboss + green Tint) is present in the project but verified
- *     VISUALLY NIL (window-edge A/B on the preview: YMAX diff 13) — not rendered.
+ * Mechanism (per-clip extracted, _extract-lightleaks*.js + nested sequences):
+ *   - CONTENT under an envelope: Gaussian Blur 0->35->0 + ProcAmp flash
+ *     (Brightness 0->25->0, Contrast 100->200->100) peaking at the cut — BUT the
+ *     envelope is NOT full-frame: the Blur clips are Texture Adjustment RACK
+ *     windows (slots 0-14 = "Blur Map 1..8", slots 16-32 = "Blur Map VH 1..9"),
+ *     i.e. the blurred/flashed content shows through a SELF-LUMA-MATTED animated
+ *     gradient map that SWEEPS across the frame (the Roughly rack semantics).
+ *     Maps converted to alpha-PNG sequences (lib/leaks/maps/, white=opaque,
+ *     30fps) and applied as per-frame CSS masks over an effected content copy
+ *     — the v1 build applied the envelope full-frame; the map decode fixed it
+ *     (2026-07-12, caught via the Soft subgroup's rack in-points).
+ *   - LEAK LAYERS above (crisp, real track order): Light Leaks/Short = the
+ *     nested "Pre Light Leaks N" plate stacks (recolors via decoded ARGB16
+ *     Change To Color targets); Soft/Soft Short = TWO "_Simple Light Leaks"
+ *     files, a DIFFERENT one each side of the cut ((Out) plays from media
+ *     0.04s). Composited as SCREEN (the project's blend param pair
+ *     (22,0)/(22,10) fits no verified enum reading; the previews prove
+ *     additive-with-recolors compositing — preview-matched).
+ *   - The "Deviation" accent (rack slot 151/151.2 = flat Color Matte + Emboss +
+ *     green Tint) is verified VISUALLY NIL (preview window-edge A/B) — ships
+ *     documented, unrendered. Soft variants carry none.
  *
- * fidelity: approximate — plates, curves, colors and timing are real; the
- * documented approximations: (a) the leak stack's Blend Mode params decode
- * ambiguously (pair (22,0)/(22,10) fits no verified enum reading) while the
- * previews PROVE all layers composite additively with recolors -> implemented
- * as SCREEN (standard leak compositing, preview-matched); (b) Change To Color
- * is approximated as a luma->target colorize with a white-core rolloff
- * (out_c = To_c*L + (1-To_c)*L^3); (c) AE blurriness -> Gaussian sigma and the
- * ProcAmp transfer use calibrated linear models (QA'd vs previews).
+ * fidelity: approximate — plates, maps, curves, colors and timing are real;
+ * documented approximations: the Screen blend choice, the ChangeToColor
+ * HSL(H_t,S_t,L_src) colorize, and the blurriness->sigma / ProcAmp transfer
+ * constants (QA'd vs previews at native preview resolution).
  */
 type Handles = { iv?: number; ii?: number; ov?: number; oi?: number };
 type KF = { t: number; v: number } & Handles;
 
+export type LightLeaksLayer = {
+  /** staticFile path of the leak plate (lib/leaks/...). Soft (In) layers use the
+   * PRE-REVERSED asset (…-rev.mp4): the project TIME-REMAPS them backward
+   * (media 1.16 -> 0 over 0.36s) so the leak CRESCENDOS into the cut; a
+   * reversed file played forward at the same rate is the exact equivalent
+   * (OffthreadVideo cannot play backward). */
+  src: string;
+  /** Recolor target [r,g,b] 0..1 (decoded Change To Color), absent = natural. */
+  to?: [number, number, number];
+  /** Sequence-time window this layer occupies. */
+  win: [number, number];
+  /** Media time the plate plays from at win[0]. */
+  mediaStart: number;
+  /** Playback rate from the decoded time-remap slope (default 1). */
+  rate?: number;
+};
+
 export type LightLeaksParams = {
-  /** A->B swap fraction = Blur (In)/(Out) boundary / duration (0.32/1.12). */
+  /** A->B swap fraction of the window. */
   cut: number;
-  /** Leak layers bottom-up; src = staticFile path; to = recolor target [r,g,b] 0..1. */
-  layers: { src: string; to?: [number, number, number] }[];
-  /** Sequence window the leak plates occupy (0..1s). */
-  leakWindow: [number, number];
-  /** Shared content envelope, seq-time keyframes. */
-  blur: KF[];       // AE Gaussian Blur 2 "Blurriness"
-  brightness: KF[]; // ProcAmp Brightness (adds b/100 in 0..1 space)
-  contrast: KF[];   // ProcAmp Contrast (% around 0.5)
+  /** Animated blur-map matte: PNG-seq dir (lib/leaks/maps/bmN | bmvhN), frame
+   * count, and the map-time offset (= the rack in-point minus the slot start —
+   * Short variants read up to 0.2s INTO their slot). */
+  map: { dir: string; frames: number; offset: number };
+  layers: LightLeaksLayer[];
+  /** Envelope keyframes in SEQUENCE time (builder subtracts the rack in-point). */
+  blur: KF[];
+  brightness: KF[];
+  contrast: KF[];
 };
 
 const bez = (a: number, b: number, c: number, d: number, s: number) => {
@@ -95,6 +118,9 @@ const sampleKF = (kfs: KF[], t: number) => {
  * AE's blurriness reads as ~radius, sigma ≈ blurriness/4 — preview-checked). */
 const BLUR_SIGMA_K = 0.25;
 
+/** Map PNG sequences are converted at this fps (fps=30 in the ffmpeg pipeline). */
+const MAP_FPS = 30;
+
 /** ChangeToColor approximation: keep the SOURCE luma, take the TARGET hue/sat —
  * out = HSL(H_to, S_to, L_src), sampled into a per-channel lookup table. White
  * cores stay white (L->1), mids read as BRIGHT target color (the first model,
@@ -136,7 +162,7 @@ export const LightLeaks: React.FC<TransitionProps & { params: LightLeaksParams }
 }) => {
   const frame = useCurrentFrame();
   const { width: W, height: H, fps } = useVideoConfig();
-  const { cut, layers, leakWindow, blur, brightness, contrast } = params;
+  const { cut, map, layers, blur, brightness, contrast } = params;
 
   const tSec = frame / fps;
   const p = frame / Math.max(1, durationInFrames - 1);
@@ -163,7 +189,9 @@ export const LightLeaks: React.FC<TransitionProps & { params: LightLeaksParams }
   const slope = ct;
   const intercept = 0.5 * (1 - ct) + br;
 
-  const leaksOn = tSec >= leakWindow[0] && tSec < leakWindow[1];
+  // animated blur-map matte frame (converted PNG seq; map time = tSec + offset)
+  const mapIdx = Math.min(map.frames, Math.max(1, Math.floor((tSec + map.offset) * MAP_FPS) + 1));
+  const mapUrl = staticFile(`${map.dir}/m_${String(mapIdx).padStart(3, '0')}.png`);
 
   return (
     <AbsoluteFill style={{ backgroundColor: 'black', overflow: 'hidden', isolation: 'isolate' }}>
@@ -199,29 +227,52 @@ export const LightLeaks: React.FC<TransitionProps & { params: LightLeaksParams }
         </defs>
       </svg>
 
-      {/* content under the blur/flash envelope */}
-      <AbsoluteFill style={{ filter: envOn ? `url(#${envId})` : undefined }}>
-        {scene()}
-      </AbsoluteFill>
+      {/* clean content — the base layer */}
+      <AbsoluteFill>{scene()}</AbsoluteFill>
 
-      {/* REAL leak plates, screen-composited ABOVE the blurred content (leaks
-          stay crisp — real track order). Two headless-Chromium compositing
-          rules: (a) blend layers must be SIBLINGS of the filtered content div,
-          never children of it; (b) filter and mix-blend-mode must NOT sit on
-          the SAME element (the recolored layers rendered invisible when they
-          did — 2026-07-12 probe) — blend on the outer, colorize on an inner. */}
-      {leaksOn && layers.map((l, i) => (
-        <AbsoluteFill key={i} style={{ mixBlendMode: 'screen' }}>
-          <AbsoluteFill style={{ filter: l.to ? `url(#lleak-col-${i})` : undefined }}>
-            <OffthreadVideo
-              src={staticFile(l.src)}
-              startFrom={0}
-              style={{ width: `${W}px`, height: `${H}px`, objectFit: 'cover' }}
-              muted
-            />
+      {/* effected content copy, revealed through the ANIMATED blur-map matte
+          (mask on the outer div, filter on the inner — never both on one
+          element, the headless-Chromium compositing rules). */}
+      {envOn && (
+        <AbsoluteFill
+          style={{
+            WebkitMaskImage: `url(${mapUrl})`,
+            maskImage: `url(${mapUrl})`,
+            WebkitMaskSize: `${W}px ${H}px`,
+            maskSize: `${W}px ${H}px`,
+            WebkitMaskRepeat: 'no-repeat',
+            maskRepeat: 'no-repeat',
+          }}
+        >
+          <AbsoluteFill style={{ filter: `url(#${envId})` }}>
+            {scene()}
           </AbsoluteFill>
         </AbsoluteFill>
-      ))}
+      )}
+
+      {/* REAL leak plates, screen-composited crisp on top (real track order).
+          Blend on the outer wrapper, colorize filter on an inner child. Each
+          layer runs in its own window with its own media start (Soft swaps to
+          a DIFFERENT leak file after the cut, playing from 0.04s). */}
+      {layers.map((l, i) => {
+        const from0 = Math.round(l.win[0] * fps);
+        const durF = Math.max(1, Math.round((l.win[1] - l.win[0]) * fps));
+        return (
+          <Sequence key={i} from={from0} durationInFrames={durF} layout="none">
+            <AbsoluteFill style={{ mixBlendMode: 'screen' }}>
+              <AbsoluteFill style={{ filter: l.to ? `url(#lleak-col-${i})` : undefined }}>
+                <OffthreadVideo
+                  src={staticFile(l.src)}
+                  startFrom={Math.round(l.mediaStart * fps)}
+                  playbackRate={l.rate ?? 1}
+                  style={{ width: `${W}px`, height: `${H}px`, objectFit: 'cover' }}
+                  muted
+                />
+              </AbsoluteFill>
+            </AbsoluteFill>
+          </Sequence>
+        );
+      })}
       {/* SFX (Simple_SFX whoosh) is emitted from the wrapper. */}
     </AbsoluteFill>
   );

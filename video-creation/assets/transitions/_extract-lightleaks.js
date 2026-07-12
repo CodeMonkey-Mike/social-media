@@ -179,6 +179,23 @@ function walkGroup(group) {
             const cc = byId(clipRef);
             const ip = cc && (cc.xml.match(/<InPoint>(-?\d+)<\/InPoint>/) || [])[1];
             if (ip !== undefined && ip !== null) clip.inPoint = +(ip / TICKS).toFixed(4);
+            const op = cc && (cc.xml.match(/<OutPoint>(-?\d+)<\/OutPoint>/) || [])[1];
+            if (op !== undefined && op !== null) clip.outPoint = +(op / TICKS).toFixed(4);
+            // TIME REMAPPING (found on the Soft leak clips 2026-07-12: the (In)
+            // side plays its file BACKWARD into the cut). VideoClip ->
+            // TimeRemapping -> TimeComponentParam 'Speed' whose VALUE = media
+            // seconds as a function of clip time.
+            const trRef = cc && (cc.xml.match(/<TimeRemapping ObjectRef="(\d+)"\/>/) || [])[1];
+            if (trRef) {
+              const tr = byId(trRef);
+              const kfRef = tr && (tr.xml.match(/<Keyframes ObjectRef="(\d+)"\/>/) || [])[1];
+              const kp = kfRef && byId(kfRef);
+              const kfRaw = kp && (kp.xml.match(/<Keyframes>([^<]*)<\/Keyframes>/) || [])[1];
+              if (kfRaw) clip.timeRemap = kfRaw.split(';').filter(Boolean).map((k) => {
+                const a = k.split(',');
+                return { t: +(Number(a[0]) / TICKS).toFixed(4), v: +(+a[1]).toFixed(4), a: a.slice(2) };
+              });
+            }
           }
           const mcUid = (sc.xml.match(/<MasterClip ObjectURef="([0-9a-f-]{36})"/) || [])[1];
           const mcRef = (sc.xml.match(/<MasterClip ObjectRef="(\d+)"/) || [])[1];

@@ -23,12 +23,45 @@ values, with a per-folder gallery to browse them.
 
 ---
 
-## LIGHT LEAKS / Light Leaks: all 8 built ✅ (2026-07-12, awaiting Mike's review) — Mike's pick; NEW CATEGORY (first subgroup)
+## LIGHT LEAKS: ALL 34 built ✅ (2026-07-12, awaiting Mike's review) — CATEGORY COMPLETE
 
-`lightleaks-{1..8}` (1.12s, cut 0.32) — engine `remotion/src/transitions/engines/LightLeaks.tsx`,
-browse `browse/LIGHT LEAKS/Light Leaks/`. **fidelity: approximate** (real plates/curves/colors;
-blend + recolor + blur/procamp transfer are the calibrated pieces, all documented). Remaining
-LIGHT LEAKS subgroups (Light Leaks Short 8, Soft 9, Soft Short 9) NOT built yet.
+`lightleaks-{1..8}` (1.12s, cut 0.32) + `lightleaks-short-{1..8}` (0.4s, cut 0.16) +
+`lightleaks-soft-{1..9}` (1.44s, cut 0.32) + `lightleaks-soft-short-{1..9}` (0.4s, cut 0.16) —
+ONE engine `remotion/src/transitions/engines/LightLeaks.tsx`, browse `browse/LIGHT LEAKS/<Sub>/`.
+**fidelity: approximate** (real plates/maps/curves/colors; blend + recolor + blur/procamp
+transfer are the calibrated pieces, all documented).
+
+**v2 — THE BLUR IS MAP-MATTED (found via the Soft subgroup, retrofitted to Light Leaks the same
+day):** the Blur clips are **Texture Adjustment rack windows** (the Roughly rack semantics!) —
+slots 0-14 hold `Blur Map 1..8`, slots 16-32 hold `Blur Map VH 1..9`: self-luma-matted ANIMATED
+GRADIENT videos, so the blur/flash envelope SWEEPS across the frame instead of hitting it
+full-frame (v1's whole-frame envelope was wrong — the sweep even explains v1's "ours blurrier at
+t=0.6" QA residual). Maps ship as 960x540 alpha-PNG sequences (`lib/leaks/maps/bm*/bmvh*`,
+fps=30) applied as per-frame CSS masks over an effected content copy (mask on the outer div,
+filter on the inner). Short reads its slot from a PER-VARIANT offset 0.12-0.2 in (envelope
+timing shifts slightly per variant — real data).
+
+**Subgroup mechanics:**
+- **Light Leaks / Short**: nested "Pre Light Leaks N" plate stacks (recolors via ARGB16
+  Change To Color), screen-composited crisp above; Short = same stacks windowed 0.36s.
+  Deviation rack slot 151 / 151.2 (flat Color Matte) — visually nil, unrendered.
+- **Soft / Soft Short**: NO Deviation, NO nested stack — TWO `_Simple Light Leaks` files
+  (4 exist; each variant pairs two different ones), split at the cut, over the VH map matte.
+  **TIME REMAPPING (new decode — the extractor now captures `TimeRemapping`):** the (In) clip
+  plays its file BACKWARD (media 1.16→0 over 0.36s, uniform across all 18) so the leak
+  CRESCENDOS into the cut; the (Out) remap CANCELS its 0.04 in-point (media starts at 0 at the
+  window start, rate 1.16/1.12). Implemented as PRE-REVERSED assets (`lightleaks-soft-N-rev`)
+  played forward at the remap rate — exact for the linear remap; OffthreadVideo cannot reverse.
+  Without the remap the (In) leak read nuclear-at-start instead of dark (probe QA caught it —
+  ALWAYS check clips whose file-strip brightness contradicts the preview for time remaps).
+- **CONSTANT CLIP RATES stack on top of remaps** (the second speed trap, caught when Short-3 ran
+  ~0.15s late in the sweep): a clip whose MEDIA SPAN (OutPoint−InPoint) ≠ its timeline window
+  plays at rate = span/window even with NO TimeRemapping — Short plays its Pre stack at 2.7x,
+  and Soft Short SQUEEZES its remapped leaks a further 2x/5.6x (net 6.44x reversed / 5.8x).
+  Extract OutPoint for EVERY clip and multiply remap slope by the clip rate.
+
+SFX: `Simple_SFX.mp3` from 0 in all 34, window-truncated per subgroup → `sfx-lightleaks.mp3`
+(1.12s), `sfx-lightleaks-40.mp3` (0.4s, Short + Soft Short), `sfx-lightleaks-soft.mp3` (1.36s).
 
 **Mechanism** (`_extract-lightleaks.js` + nested `_extract-lightleaks-nested.js` →
 `_build-lightleaks-rows.js`): content under a SHARED envelope — Gaussian Blur 0→35→0 peaking at
@@ -64,11 +97,11 @@ stripped) → `lib/leaks/lightleaks-*.mp4` (20 files, exactly 1.0s @25fps each =
 - Truncation gotcha: 16-digit color values printed via a `.slice(0,16)` dump DECODE AS GARBAGE —
   always BigInt the FULL param value (the ARGB16 layout is clean: 4×16-bit, 8-bit<<8 channels).
 
-QA: native-res 4-timestamp grids (variants 1 + 6) + 8 frame-aligned sweep sheets
-(`_qa-lightleaks-sweep.js` → `_qa/lightleaks/`): leak structures, palette, flash timing and
-settle all track the previews frame-for-frame. Honest caveats: hue balance of recolored layers
-reads slightly more magenta than the preview on variant 1 (recolor approximation), and the peak
-blowout breadth differs marginally (ProcAmp transfer model).
+QA: native-res 4-timestamp grids (LL 1+6 v1, LL 1 v2, Short 1, Soft 1 pre/post-remap) + 34
+frame-aligned sweep sheets (`_qa-lightleaks-sweep.js`, all 4 subgroups → `_qa/lightleaks/`):
+leak structures, palette, flash timing, the map sweep and settle all track the previews.
+Honest caveats: recolored-layer hue balance reads slightly more magenta than the preview on
+LL-1 (recolor approximation), and the peak blowout breadth differs marginally (ProcAmp model).
 
 ---
 

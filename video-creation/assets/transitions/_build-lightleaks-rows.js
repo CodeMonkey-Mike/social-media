@@ -64,6 +64,11 @@ function buildRow(seq, i) {
     const ip = clip.inPoint || 0;
     return p.keyframes.map((k) => ({ t: r4(k.t - ip), v: num(k.v), ...handles(k) }));
   };
+  // v2: the Blur clips are Texture Adjustment RACK windows — slot 2(n-1) holds
+  // 'Blur Map n' (self-luma-matted animated gradient) gating the envelope.
+  const slot = 2 * (n - 1);
+  const mapOffset = r4(blurIn.inPoint - slot);
+  if (mapOffset < 0 || mapOffset > 0.5) die(`${seq.name}: map offset ${mapOffset}`);
   const blur = kfsOf(blurIn, 'AE.ADBE Gaussian Blur 2', 'Blurriness');
   const brightness = kfsOf(blurIn, 'AE.ADBE ProcAmp', 'Brightness');
   const contrast = kfsOf(blurIn, 'AE.ADBE ProcAmp', 'Contrast');
@@ -89,7 +94,7 @@ function buildRow(seq, i) {
         die(`${seq.name}: unexpected layer effect ${e.matchName}`);
     }
     const ctc = c.effects.find((e) => e.matchName === 'AE.ADBE Change To Color');
-    const layer = { src: `transitions/lib/leaks/lightleaks-${m[1]}.mp4` };
+    const layer = { src: `transitions/lib/leaks/lightleaks-${m[1]}.mp4`, win: [0, 1], mediaStart: 0 };
     if (ctc) {
       const toP = ctc.params.find((p) => p.name === 'To');
       layer.to = decodeColor(toP.value);
@@ -122,7 +127,7 @@ function buildRow(seq, i) {
     kind: 'footage',
     fidelity: 'approximate',
     durationSeconds,
-    params: { cut, layers, leakWindow: [0, 1], blur, brightness, contrast },
+    params: { cut, map: { dir: `transitions/lib/leaks/maps/bm${n}`, frames: 30, offset: mapOffset }, layers, blur, brightness, contrast },
     sfx: 'transitions/lib/sfx-lightleaks.mp3',
     used_in: [],
     meta: {
