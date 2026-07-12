@@ -23,6 +23,55 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## LIGHT LEAKS / Light Leaks: all 8 built ✅ (2026-07-12, awaiting Mike's review) — Mike's pick; NEW CATEGORY (first subgroup)
+
+`lightleaks-{1..8}` (1.12s, cut 0.32) — engine `remotion/src/transitions/engines/LightLeaks.tsx`,
+browse `browse/LIGHT LEAKS/Light Leaks/`. **fidelity: approximate** (real plates/curves/colors;
+blend + recolor + blur/procamp transfer are the calibrated pieces, all documented). Remaining
+LIGHT LEAKS subgroups (Light Leaks Short 8, Soft 9, Soft Short 9) NOT built yet.
+
+**Mechanism** (`_extract-lightleaks.js` + nested `_extract-lightleaks-nested.js` →
+`_build-lightleaks-rows.js`): content under a SHARED envelope — Gaussian Blur 0→35→0 peaking at
+the cut + ProcAmp flash (Brightness 0→25→0, Contrast 100→200→100, 0.16..0.68) — with the pack's
+REAL leak plates (1-3 per variant) screen-composited ABOVE the blurred content (real track
+order: leaks stay crisp). Variant layers live in nested **"Pre Light Leaks N"** sequences (the
+"(Open it to change colors)" SubClip aliases them — resolve SubClip→MasterClip to find the real
+sequence name); "Change color here" layers carry Change To Color → **ARGB16-packed targets**
+(#0024FF blue / #F600FF magenta / #FF9C00 orange / #FF00A2 pink). All 8 variants share ONE
+envelope (each variant's Blur clips read 2s slots of one rack timeline — kfs are slot-relative).
+SFX `Simple_SFX.mp3` from 0, full 1.12s window → `lib/sfx-lightleaks.mp3`. Plates (audio
+stripped) → `lib/leaks/lightleaks-*.mp4` (20 files, exactly 1.0s @25fps each = the leak window).
+
+**Decode + engine notes (each cost a probe render or a decode detour):**
+- The **"Deviation" clip = Texture Adjustment rack slot 151** (the Roughly/TVSat shared rack) —
+  a flat Color Matte + Emboss + green Tint, **verified VISUALLY NIL** (preview window-edge A/B:
+  YMAX diff 13). Ships documented but unrendered.
+- The leak stack's **Blend Mode param pair (22,0)/(22,10) fits no verified enum reading** (the
+  pair carries TWO different enums: ParameterID 2 bounds 0..26 = Premiere UI list, ParameterID 3
+  bounds 0..31 = the AE 32-mode list — decoded from raw param bounds). The previews PROVE all
+  layers composite additively with recolors active (plate-1 rainbow AND recolored 1a bokeh
+  visible simultaneously at clean timestamps) → implemented as SCREEN, preview-matched.
+- **Headless-Chromium compositing rule #2 (new): filter and mix-blend-mode must NOT sit on the
+  SAME element** — the recolored layers rendered INVISIBLE until the blend moved to an outer
+  wrapper with the colorize filter on an inner child. (Rule #1, from Monitor: blend layers must
+  be siblings of a filtered div, never children.)
+- ChangeToColor ≈ **HSL(H_target, S_target, L_source)** per-channel lookup tables
+  (feComponentTransfer) — preserves source lightness so recolored bokeh stays BRIGHT with white
+  cores (the first model, To·L+(1−To)·L³, dimmed the mids; caught on the probe grid).
+- AE Gaussian Blur Blurriness → σ ≈ **b/4** (b/2 read far too soft), and **compare at the
+  preview's NATIVE 480×270** — upscaling the preview while downscaling ours systematically
+  exaggerates our blur (bit the first probe QA).
+- Truncation gotcha: 16-digit color values printed via a `.slice(0,16)` dump DECODE AS GARBAGE —
+  always BigInt the FULL param value (the ARGB16 layout is clean: 4×16-bit, 8-bit<<8 channels).
+
+QA: native-res 4-timestamp grids (variants 1 + 6) + 8 frame-aligned sweep sheets
+(`_qa-lightleaks-sweep.js` → `_qa/lightleaks/`): leak structures, palette, flash timing and
+settle all track the previews frame-for-frame. Honest caveats: hue balance of recolored layers
+reads slightly more magenta than the preview on variant 1 (recolor approximation), and the peak
+blowout breadth differs marginally (ProcAmp transfer model).
+
+---
+
 ## GLASS: ALL 40 built ✅ (Beveled 12 approved 2026-07-12; Beveled Short 12 + Blocks 4 + Blocks Corner 12 added same day, awaiting review) — GLASS CATEGORY COMPLETE
 
 `glass-beveled-*` (12, Mike-approved) + `glass-beveled-short-*` (12, 0.8s) +
