@@ -23,6 +23,40 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## EXPAND / In · Out · Out In (+ Short): all 12 built ✅ (approved by Mike 2026-07-11) — EXPAND CATEGORY COMPLETE (20)
+
+`expand-{in,out,out-in}[-short]-{horizontal,vertical}` (0.96s / 0.84s Out-V / 0.64s Short) —
+engine `remotion/src/transitions/engines/ExpandZoom.tsx`, browse `browse/EXPAND/<Family>/`.
+**fidelity: approximate** (shutter-blur grading + Mettle dispersion are calibrated; curves/values real).
+
+**Mechanism** (`_extract-expandrest.js` → `_expandrest-clips.json` → `_build-expandzoom-rows.js`;
+5 clips per sequence): two phases + two shared adjustment layers.
+- **rig phases** = Replicate-3 + 4 Mirrors + Geometry2 Scale rig (Shutter 360), animated axis
+  Scale 300→50 ⇒ **S = Scale/300: a COMPRESSION to 1/6 with mirrored-tile padding** filling the
+  sides (identity at 300). ⚠️ First decode read this backwards as a 300/v stretch — the raw kf
+  dump settles it, and the preview's squeeze reads as "smear" only because of the shutter blur.
+- **crop phases** = AECrop BOTH sides keyframed 0→45→0 symmetrically ⇒ kept center sliver
+  stretched to the frame, **S = 1/(1−2·crop/100), peak 10×**. Expand In's crop phase has NO
+  Motion Blur effect (the 10× stretch IS the look); Out/Out In crop phases carry a real
+  Blur Length 0→180→0 curve (uniform directional gaussian, sigma = len·0.55).
+- Families: In = A squeeze | B stretch-relax; Out = A stretch | B decompress; Out In = crop both.
+- Shared **"Glow"** adjustment = Motion Blur 300 static along the axis + opacity 0→100→0 peaking
+  at the cut, blend pair (14,12) ⇒ Overlay. Shared **"Deviation"** = Mettle Master Amplitude
+  0→100→0 chromatic pulse (reuses the DEVIATION linear map, DEV_EDGE_PX=18 — preview-matched at
+  full res) + axis Scale pulse 100→110→100 multiplying the stretch.
+- **Blur lessons (each cost a re-render):** (1) motion blur is SCREEN-SPACE — a gaussian INSIDE
+  the scaleX(10) transform gets multiplied 10×; wrap the filter OUTSIDE the stretch. (2) rig
+  Shutter-360 blur on a center-anchored squeeze is spatially graded (zero at center → huge at
+  edges): ONE uniform gaussian reads as total wash, ONE gently-masked layer reads as "sharp+haze";
+  the working approximation is TWO masked tiers (mid sigma·0.25 ramping in right off center,
+  full sigma past ±25%), sigma = (ΔS/frame / S)·(dim/2)·0.7 capped 140, derivative window-clamped.
+- Frame-aligned full-res QA vs previews (`_qa/offsetgeo/full-expand-in-h/cmp*.png`): In-H rig +
+  crop phases, Out-H both phases, In-V vertical axis — motion character, fringing, settle match;
+  residual = content density (their farm sliver → clean bands, our city center → soft gold masses).
+SFX `Whoosh_02.wav` @ 0, truncated per family audio window → `lib/sfx-expandzoom-{96,84,60}.mp3`.
+
+---
+
 ## EXPAND / Pan: all 8 built ✅ (2026-07-11, Mike's favorite — requested by name)
 
 `expand-pan-{up,down,left,right}` (1.24s) + `expand-pan-short-*` (0.64s) — engine

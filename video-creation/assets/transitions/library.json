@@ -35206,6 +35206,2562 @@
         ],
         "useWhen": "Scene-change push toward right (~0.64s) with the signature stretched-edge smear; great for location/topic changes. Snappy version."
       }
+    },
+    {
+      "id": "expand-in-horizontal",
+      "category": "EXPAND",
+      "variant": "In",
+      "intensity": "Horizontal",
+      "label": "Expand · In · Horizontal",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.96,
+      "params": {
+        "cut": 0.3333,
+        "axis": "x",
+        "phaseIn": {
+          "win": [
+            0.12,
+            0.32
+          ],
+          "kind": "rig",
+          "curve": [
+            {
+              "t": 0.1079,
+              "v": 300,
+              "iv": -91.96716875976904,
+              "ii": 0.3333333333333333,
+              "ov": -91.96716875976904,
+              "oi": 0.9174917489055807
+            },
+            {
+              "t": 0.32,
+              "v": 50,
+              "iv": -10034.84312333266,
+              "ii": 0.03993480258133346,
+              "ov": -10034.84312333266,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.32,
+            0.76
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 80.35714285714285,
+              "ii": 0.3333333333333333,
+              "ov": 80.35714285714285,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": 15.321538619056742,
+              "ii": 0.5562556257372477,
+              "ov": 15.321538619056742,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "opacity": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 111.51255327364737,
+              "ii": 0.3333333333333333,
+              "ov": 111.51255327364737,
+              "oi": 0.4106044785367851
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 6.705560221330635,
+              "ii": 0.592727273478836,
+              "ov": 6.705560221330635,
+              "oi": 0.7960210618264562
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "master": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 0.5517816541953374,
+              "ii": 1,
+              "ov": 0.5517816541953374,
+              "oi": 0.6537918721834273
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.12,
+              "v": 100,
+              "iv": 17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": 17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 100,
+              "iv": 8.267371422581254,
+              "ii": 0.2679738560732666,
+              "ov": 8.267371422581254,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-96.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand In",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored horizontal stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "in",
+          "horizontal",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic horizontal expand cut (~0.96s) with glow + chromatic pulse; scene-change accent."
+      }
+    },
+    {
+      "id": "expand-in-vertical",
+      "category": "EXPAND",
+      "variant": "In",
+      "intensity": "Vertical",
+      "label": "Expand · In · Vertical",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.96,
+      "params": {
+        "cut": 0.3333,
+        "axis": "y",
+        "phaseIn": {
+          "win": [
+            0.12,
+            0.32
+          ],
+          "kind": "rig",
+          "curve": [
+            {
+              "t": 0.12,
+              "v": 300,
+              "iv": -156.25371197577283,
+              "ii": 0.3333333333333333,
+              "ov": -156.25371197577283,
+              "oi": 0.3890264025691295
+            },
+            {
+              "t": 0.32,
+              "v": 50,
+              "iv": -25968.072809706788,
+              "ii": 0.04249174933862434,
+              "ov": -25968.072809706788,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.32,
+            0.76
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.32,
+              "v": 45,
+              "iv": -51.13636363636363,
+              "ii": 0.3333333333333333,
+              "ov": -51.13636363636363,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": 7.200511548590384,
+              "ii": 0.5385538553047482,
+              "ov": 7.200511548590384,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "opacity": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 111.51255327364737,
+              "ii": 0.3333333333333333,
+              "ov": 111.51255327364737,
+              "oi": 0.4106044785367851
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 6.705560221330635,
+              "ii": 0.592727273478836,
+              "ov": 6.705560221330635,
+              "oi": 0.7960210618264562
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "master": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 0.5517816541953374,
+              "ii": 1,
+              "ov": 0.5517816541953374,
+              "oi": 0.6537918721834273
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.12,
+              "v": 100,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 100,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-96.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand In",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored vertical stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "in",
+          "vertical",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic vertical expand cut (~0.96s) with glow + chromatic pulse; scene-change accent."
+      }
+    },
+    {
+      "id": "expand-in-short-horizontal",
+      "category": "EXPAND",
+      "variant": "In Short",
+      "intensity": "Horizontal",
+      "label": "Expand · In Short · Horizontal",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.64,
+      "params": {
+        "cut": 0.3125,
+        "axis": "x",
+        "phaseIn": {
+          "win": [
+            0.08,
+            0.2
+          ],
+          "kind": "rig",
+          "curve": [
+            {
+              "t": -0.0121,
+              "v": 300,
+              "iv": -91.96716875976904,
+              "ii": 0.3333333333333333,
+              "ov": -91.96716875976904,
+              "oi": 0.9174917489055807
+            },
+            {
+              "t": 0.2,
+              "v": 50,
+              "iv": -10034.84312333266,
+              "ii": 0.03993480258133346,
+              "ov": -10034.84312333266,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.2,
+            0.48
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": 80.35714285714285,
+              "ii": 0.3333333333333333,
+              "ov": 80.35714285714285,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": 15.321538619056742,
+              "ii": 0.5562556257372477,
+              "ov": 15.321538619056742,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "opacity": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 111.51255327364737,
+              "ii": 0.3333333333333333,
+              "ov": 111.51255327364737,
+              "oi": 0.4106044785367851
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": 6.705560221330635,
+              "ii": 0.592727273478836,
+              "ov": 6.705560221330635,
+              "oi": 0.7960210618264562
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "master": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": 0.5517816541953374,
+              "ii": 1,
+              "ov": 0.5517816541953374,
+              "oi": 0.6537918721834273
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.08,
+              "v": 100,
+              "iv": 17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": 17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 100,
+              "iv": 8.267371422581254,
+              "ii": 0.2679738560732666,
+              "ov": 8.267371422581254,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-60.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand In Short",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored horizontal stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "in-short",
+          "horizontal",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic horizontal expand cut (~0.64s) with glow + chromatic pulse; scene-change accent. Snappy version."
+      }
+    },
+    {
+      "id": "expand-in-short-vertical",
+      "category": "EXPAND",
+      "variant": "In Short",
+      "intensity": "Vertical",
+      "label": "Expand · In Short · Vertical",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.64,
+      "params": {
+        "cut": 0.3125,
+        "axis": "y",
+        "phaseIn": {
+          "win": [
+            0.08,
+            0.2
+          ],
+          "kind": "rig",
+          "curve": [
+            {
+              "t": 0.08,
+              "v": 300,
+              "iv": -156.25371197577283,
+              "ii": 0.3333333333333333,
+              "ov": -156.25371197577283,
+              "oi": 0.3890264025691295
+            },
+            {
+              "t": 0.2,
+              "v": 50,
+              "iv": -25968.072809706788,
+              "ii": 0.04249174933862434,
+              "ov": -25968.072809706788,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.2,
+            0.48
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.2,
+              "v": 45,
+              "iv": -51.13636363636363,
+              "ii": 0.3333333333333333,
+              "ov": -51.13636363636363,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": 7.200511548590384,
+              "ii": 0.5385538553047482,
+              "ov": 7.200511548590384,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "opacity": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 111.51255327364737,
+              "ii": 0.3333333333333333,
+              "ov": 111.51255327364737,
+              "oi": 0.4106044785367851
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": 6.705560221330635,
+              "ii": 0.592727273478836,
+              "ov": 6.705560221330635,
+              "oi": 0.7960210618264562
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "master": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": 0.5517816541953374,
+              "ii": 1,
+              "ov": 0.5517816541953374,
+              "oi": 0.6537918721834273
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.08,
+              "v": 100,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 100,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-60.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand In Short",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored vertical stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "in-short",
+          "vertical",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic vertical expand cut (~0.64s) with glow + chromatic pulse; scene-change accent. Snappy version."
+      }
+    },
+    {
+      "id": "expand-out-horizontal",
+      "category": "EXPAND",
+      "variant": "Out",
+      "intensity": "Horizontal",
+      "label": "Expand · Out · Horizontal",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.96,
+      "params": {
+        "cut": 0.3333,
+        "axis": "x",
+        "phaseIn": {
+          "win": [
+            0.12,
+            0.32
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 80.35714285714285,
+              "ii": 0.3333333333333333,
+              "ov": 80.35714285714285,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": 15.321538619056742,
+              "ii": 0.5562556257372477,
+              "ov": 15.321538619056742,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.32,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.72,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.32,
+            0.76
+          ],
+          "kind": "rig",
+          "curve": [
+            {
+              "t": 0.2933,
+              "v": 50,
+              "iv": 3385.900778848617,
+              "ii": 0.03993480258133346,
+              "ov": 3385.900778848617,
+              "oi": 0.12708333333333333
+            },
+            {
+              "t": 0.72,
+              "v": 300,
+              "iv": -15.286376953125,
+              "ii": 0.5208333333333334,
+              "ov": -15.286376953125,
+              "oi": 0.9174917489055807
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "opacity": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 111.51255327364737,
+              "ii": 0.3333333333333333,
+              "ov": 111.51255327364737,
+              "oi": 0.4106044785367851
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 6.705560221330635,
+              "ii": 0.592727273478836,
+              "ov": 6.705560221330635,
+              "oi": 0.7960210618264562
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "master": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 0.5517816541953374,
+              "ii": 1,
+              "ov": 0.5517816541953374,
+              "oi": 0.6537918721834273
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.12,
+              "v": 100,
+              "iv": 17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": 17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 100,
+              "iv": 8.267371422581254,
+              "ii": 0.2679738560732666,
+              "ov": 8.267371422581254,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-96.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand Out",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored horizontal stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "out",
+          "horizontal",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic horizontal expand cut (~0.96s) with glow + chromatic pulse; scene-change accent."
+      }
+    },
+    {
+      "id": "expand-out-vertical",
+      "category": "EXPAND",
+      "variant": "Out",
+      "intensity": "Vertical",
+      "label": "Expand · Out · Vertical",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.381,
+        "axis": "y",
+        "phaseIn": {
+          "win": [
+            0.12,
+            0.32
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 140.625,
+              "ii": 0.3333333333333333,
+              "ov": 140.625,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.28,
+              "v": 45,
+              "iv": -3.4155260921118877,
+              "ii": 0.35189768971245905,
+              "ov": -3.4155260921118877,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.28,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.72,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.32,
+            0.76
+          ],
+          "kind": "rig",
+          "curve": [
+            {
+              "t": 0.32,
+              "v": 50,
+              "iv": 3524.425668796442,
+              "ii": 0.3333333333333333,
+              "ov": 3524.425668796442,
+              "oi": 0.1682652640852348
+            },
+            {
+              "t": 0.72,
+              "v": 300,
+              "iv": 16.493837732450537,
+              "ii": 0.4858085807783762,
+              "ov": 16.493837732450537,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "opacity": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 111.51255327364737,
+              "ii": 0.3333333333333333,
+              "ov": 111.51255327364737,
+              "oi": 0.4106044785367851
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 8.90594482421875,
+              "ii": 1,
+              "ov": 8.90594482421875,
+              "oi": 0.3552497127775774
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "master": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 0.6582954713426268,
+              "ii": 1,
+              "ov": 0.6582954713426268,
+              "oi": 0.5480067484116963
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.12,
+              "v": 100,
+              "iv": 17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": 17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.64,
+              "v": 100,
+              "iv": 8.267371422581254,
+              "ii": 0.2679738560732666,
+              "ov": 8.267371422581254,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand Out",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored vertical stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest.",
+        "energy": "high",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "out",
+          "vertical",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic vertical expand cut (~0.84s) with glow + chromatic pulse; scene-change accent."
+      }
+    },
+    {
+      "id": "expand-out-short-horizontal",
+      "category": "EXPAND",
+      "variant": "Out Short",
+      "intensity": "Horizontal",
+      "label": "Expand · Out Short · Horizontal",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.64,
+      "params": {
+        "cut": 0.3125,
+        "axis": "x",
+        "phaseIn": {
+          "win": [
+            0.08,
+            0.2
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 80.35714285714285,
+              "ii": 0.3333333333333333,
+              "ov": 80.35714285714285,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.72,
+              "v": 0,
+              "iv": 15.321538619056742,
+              "ii": 0.5562556257372477,
+              "ov": 15.321538619056742,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.2,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.68,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.2,
+            0.48
+          ],
+          "kind": "rig",
+          "curve": [
+            {
+              "t": 0.1733,
+              "v": 50,
+              "iv": 3385.900778848617,
+              "ii": 0.03993480258133346,
+              "ov": 3385.900778848617,
+              "oi": 0.12708333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 300,
+              "iv": -15.286376953125,
+              "ii": 0.5208333333333334,
+              "ov": -15.286376953125,
+              "oi": 0.9174917489055807
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "opacity": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 111.51255327364737,
+              "ii": 0.3333333333333333,
+              "ov": 111.51255327364737,
+              "oi": 0.4106044785367851
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": 6.705560221330635,
+              "ii": 0.592727273478836,
+              "ov": 6.705560221330635,
+              "oi": 0.7960210618264562
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "master": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": 0.5517816541953374,
+              "ii": 1,
+              "ov": 0.5517816541953374,
+              "oi": 0.6537918721834273
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.08,
+              "v": 100,
+              "iv": 17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": 17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 100,
+              "iv": 8.267371422581254,
+              "ii": 0.2679738560732666,
+              "ov": 8.267371422581254,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-60.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand Out Short",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored horizontal stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "out-short",
+          "horizontal",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic horizontal expand cut (~0.64s) with glow + chromatic pulse; scene-change accent. Snappy version."
+      }
+    },
+    {
+      "id": "expand-out-short-vertical",
+      "category": "EXPAND",
+      "variant": "Out Short",
+      "intensity": "Vertical",
+      "label": "Expand · Out Short · Vertical",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.64,
+      "params": {
+        "cut": 0.3125,
+        "axis": "y",
+        "phaseIn": {
+          "win": [
+            0.08,
+            0.2
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 140.625,
+              "ii": 0.3333333333333333,
+              "ov": 140.625,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 45,
+              "iv": -3.4155260921118877,
+              "ii": 0.35189768971245905,
+              "ov": -3.4155260921118877,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.2,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.68,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.2,
+            0.48
+          ],
+          "kind": "rig",
+          "curve": [
+            {
+              "t": 0.2,
+              "v": 50,
+              "iv": 3524.425668796442,
+              "ii": 0.3333333333333333,
+              "ov": 3524.425668796442,
+              "oi": 0.1682652640852348
+            },
+            {
+              "t": 0.48,
+              "v": 300,
+              "iv": 16.493837732450537,
+              "ii": 0.4858085807783762,
+              "ov": 16.493837732450537,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "opacity": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 111.51255327364737,
+              "ii": 0.3333333333333333,
+              "ov": 111.51255327364737,
+              "oi": 0.4106044785367851
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": 8.90594482421875,
+              "ii": 1,
+              "ov": 8.90594482421875,
+              "oi": 0.3552497127775774
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "master": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": 0.6582954713426268,
+              "ii": 1,
+              "ov": 0.6582954713426268,
+              "oi": 0.5480067484116963
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.08,
+              "v": 100,
+              "iv": 17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": 17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 100,
+              "iv": 8.267371422581254,
+              "ii": 0.2679738560732666,
+              "ov": 8.267371422581254,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-60.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand Out Short",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored vertical stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "out-short",
+          "vertical",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic vertical expand cut (~0.64s) with glow + chromatic pulse; scene-change accent. Snappy version."
+      }
+    },
+    {
+      "id": "expand-out-in-horizontal",
+      "category": "EXPAND",
+      "variant": "Out In",
+      "intensity": "Horizontal",
+      "label": "Expand · Out In · Horizontal",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.96,
+      "params": {
+        "cut": 0.3333,
+        "axis": "x",
+        "phaseIn": {
+          "win": [
+            0.12,
+            0.32
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 80.35714285714285,
+              "ii": 0.3333333333333333,
+              "ov": 80.35714285714285,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": 15.321538619056742,
+              "ii": 0.5562556257372477,
+              "ov": 15.321538619056742,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.32,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.72,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.32,
+            0.76
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 80.35714285714285,
+              "ii": 0.3333333333333333,
+              "ov": 80.35714285714285,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": 15.321538619056742,
+              "ii": 0.5562556257372477,
+              "ov": 15.321538619056742,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.32,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "opacity": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 232.10466816439532,
+              "ii": 0.3333333333333333,
+              "ov": 232.10466816439532,
+              "oi": 0.19727114559712774
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": -2.1206721973530738,
+              "ii": 1,
+              "ov": -2.1206721973530738,
+              "oi": 0.8224673427693889
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "master": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 0.5517816541953374,
+              "ii": 1,
+              "ov": 0.5517816541953374,
+              "oi": 0.6537918721834273
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.12,
+              "v": 100,
+              "iv": 17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": 17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 100,
+              "iv": 8.267371422581254,
+              "ii": 0.2679738560732666,
+              "ov": 8.267371422581254,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-96.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand Out In",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored horizontal stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "out-in",
+          "horizontal",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic horizontal expand cut (~0.96s) with glow + chromatic pulse; scene-change accent."
+      }
+    },
+    {
+      "id": "expand-out-in-vertical",
+      "category": "EXPAND",
+      "variant": "Out In",
+      "intensity": "Vertical",
+      "label": "Expand · Out In · Vertical",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.96,
+      "params": {
+        "cut": 0.3333,
+        "axis": "y",
+        "phaseIn": {
+          "win": [
+            0.12,
+            0.32
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": 3.2902577343047383,
+              "ii": 0.5599395716125255,
+              "ov": 3.2902577343047383,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.32,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.72,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.32,
+            0.76
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": 3.2902577343047383,
+              "ii": 0.5599395716125255,
+              "ov": 3.2902577343047383,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.32,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "opacity": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 232.10466816439532,
+              "ii": 0.3333333333333333,
+              "ov": 232.10466816439532,
+              "oi": 0.19727114559712774
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": -2.1206721973530738,
+              "ii": 1,
+              "ov": -2.1206721973530738,
+              "oi": 0.8224673427693889
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.12,
+            0.76
+          ],
+          "master": [
+            {
+              "t": 0.12,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 100,
+              "iv": 0.5517816541953374,
+              "ii": 1,
+              "ov": 0.5517816541953374,
+              "oi": 0.6537918721834273
+            },
+            {
+              "t": 0.76,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.12,
+              "v": 100,
+              "iv": 17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": 17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.32,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.76,
+              "v": 100,
+              "iv": 8.267371422581254,
+              "ii": 0.2679738560732666,
+              "ov": 8.267371422581254,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-96.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand Out In",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored vertical stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest.",
+        "energy": "high",
+        "durationSeconds": 0.96,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "out-in",
+          "vertical",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic vertical expand cut (~0.96s) with glow + chromatic pulse; scene-change accent."
+      }
+    },
+    {
+      "id": "expand-out-in-short-horizontal",
+      "category": "EXPAND",
+      "variant": "Out In Short",
+      "intensity": "Horizontal",
+      "label": "Expand · Out In Short · Horizontal",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.64,
+      "params": {
+        "cut": 0.3125,
+        "axis": "x",
+        "phaseIn": {
+          "win": [
+            0.08,
+            0.2
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 80.35714285714285,
+              "ii": 0.3333333333333333,
+              "ov": 80.35714285714285,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.72,
+              "v": 0,
+              "iv": 15.321538619056742,
+              "ii": 0.5562556257372477,
+              "ov": 15.321538619056742,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.2,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.68,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.2,
+            0.48
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": 80.35714285714285,
+              "ii": 0.3333333333333333,
+              "ov": 80.35714285714285,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": 15.321538619056742,
+              "ii": 0.5562556257372477,
+              "ov": 15.321538619056742,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.2,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "opacity": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 232.10466816439532,
+              "ii": 0.3333333333333333,
+              "ov": 232.10466816439532,
+              "oi": 0.19727114559712774
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": -2.1206721973530738,
+              "ii": 1,
+              "ov": -2.1206721973530738,
+              "oi": 0.8224673427693889
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "master": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": 0.5517816541953374,
+              "ii": 1,
+              "ov": 0.5517816541953374,
+              "oi": 0.6537918721834273
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.08,
+              "v": 100,
+              "iv": 17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": 17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 100,
+              "iv": 8.267371422581254,
+              "ii": 0.2679738560732666,
+              "ov": 8.267371422581254,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-60.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand Out In Short",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored horizontal stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "out-in-short",
+          "horizontal",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic horizontal expand cut (~0.64s) with glow + chromatic pulse; scene-change accent. Snappy version."
+      }
+    },
+    {
+      "id": "expand-out-in-short-vertical",
+      "category": "EXPAND",
+      "variant": "Out In Short",
+      "intensity": "Vertical",
+      "label": "Expand · Out In Short · Vertical",
+      "engine": "ExpandZoom",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 0.64,
+      "params": {
+        "cut": 0.3125,
+        "axis": "y",
+        "phaseIn": {
+          "win": [
+            0.08,
+            0.2
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.72,
+              "v": 0,
+              "iv": 3.2902577343047383,
+              "ii": 0.5599395716125255,
+              "ov": 3.2902577343047383,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.2,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.68,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "phaseOut": {
+          "win": [
+            0.2,
+            0.48
+          ],
+          "kind": "crop",
+          "curve": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 45,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": 3.2902577343047383,
+              "ii": 0.5599395716125255,
+              "ov": 3.2902577343047383,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "blur": [
+            {
+              "t": 0,
+              "v": 0,
+              "iv": -16.48351124354771,
+              "ii": 0.3333333333333333,
+              "ov": -16.48351124354771,
+              "oi": 1
+            },
+            {
+              "t": 0.2,
+              "v": 180,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.27722772279436464
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -7.9836812886324795,
+              "ii": 1,
+              "ov": -7.9836812886324795,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "glow": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "opacity": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 232.10466816439532,
+              "ii": 0.3333333333333333,
+              "ov": 232.10466816439532,
+              "oi": 0.19727114559712774
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": -2.1206721973530738,
+              "ii": 1,
+              "ov": -2.1206721973530738,
+              "oi": 0.8224673427693889
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -38.59094317860957,
+              "ii": 0.7763412613951305,
+              "ov": -38.59094317860957,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "deviation": {
+          "win": [
+            0.08,
+            0.48
+          ],
+          "master": [
+            {
+              "t": 0.08,
+              "v": 0,
+              "iv": 312.5,
+              "ii": 0.3333333333333333,
+              "ov": 312.5,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 100,
+              "iv": 0.5517816541953374,
+              "ii": 1,
+              "ov": 0.5517816541953374,
+              "oi": 0.6537918721834273
+            },
+            {
+              "t": 0.48,
+              "v": 0,
+              "iv": -34.73320374659925,
+              "ii": 0.5180386128146545,
+              "ov": -34.73320374659925,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "scalePulse": [
+            {
+              "t": 0.08,
+              "v": 100,
+              "iv": 17.857142857142854,
+              "ii": 0.3333333333333333,
+              "ov": 17.857142857142854,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.2,
+              "v": 110,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.48,
+              "v": 100,
+              "iv": 8.267371422581254,
+              "ii": 0.2679738560732666,
+              "ov": 8.267371422581254,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-expandzoom-60.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Expand Out In Short",
+        "engineFile": "remotion/src/transitions/engines/ExpandZoom.tsx",
+        "description": "Center-anchored vertical stretch transition: the frame expands into glowing streaks with a chromatic pulse at the cut, then the new scene contracts back to rest. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.64,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "expand",
+          "out-in-short",
+          "vertical",
+          "stretch",
+          "zoom",
+          "glow"
+        ],
+        "useWhen": "Energetic vertical expand cut (~0.64s) with glow + chromatic pulse; scene-change accent. Snappy version."
+      }
     }
   ]
 }
