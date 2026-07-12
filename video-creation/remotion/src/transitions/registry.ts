@@ -16,6 +16,8 @@ import { GlitchTVSatellite } from './engines/GlitchTVSatellite';
 import { GlitchVHS } from './engines/GlitchVHS';
 import { GlassBeveled } from './engines/GlassBeveled';
 import { LightLeaks } from './engines/LightLeaks';
+import { MeltRGB } from './engines/MeltRGB';
+import { MeltEquidistant } from './engines/MeltEquidistant';
 
 /**
  * The catalog (data) lives in assets/transitions/library.json — the single
@@ -74,6 +76,8 @@ export const ENGINES: Record<string, React.FC<any>> = {
   ExpandZoom,
   GlassBeveled,
   LightLeaks,
+  MeltRGB,
+  MeltEquidistant,
 };
 
 export const TRANSITIONS = (library as { transitions: TransitionRow[] }).transitions;

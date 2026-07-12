@@ -23,6 +23,42 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## MELT: ALL 30 built ✅ (2026-07-12, awaiting Mike's review) — CATEGORY COMPLETE
+
+`melt-equidistant-{1..4}` (+`-short-`, 0.84/0.44s) — engine **MeltEquidistant**;
+`melt-rgb-{1..7}`, `melt-rgb-soft-{1..4}` (+`-short-` twins; 0.76/0.84/0.44/0.6s) — engine
+**MeltRGB**. Browse `browse/MELT/{Equidistant,Equidistant Short,RGB,RGB Short}/` (Soft lives
+inside RGB / RGB Short, mirroring the pack tree). **fidelity: approximate** both.
+
+**Equidistant** = `AE.ADBE VR Projection` (proj enum 1), ONE keyframed rotation per variant:
+Tilt ±90 (1/2) or Roll ±90 (3/4) — A melts into the equirect POLE-SINGULARITY vortices at the
+cut, B unwinds back (real eased tails). Implemented as the library's FIRST CANVAS ENGINE:
+per-pixel inverse equirect→rotate→equirect reprojection (longitude wraps, latitude clamps) —
+SVG filters cannot express a wrapping full-frame warp. QA: the double-vortex collapse matches
+the preview structurally (differences = content density + a slightly faster preview mid-decay).
+**Canvas is IMAGE-content only for now** — the TransitionClip video path needs a video→canvas
+frame feed (documented TODO; pick another family for video cuts until then).
+
+**RGB** (Mike flagged the coloring — handled with care): `AE.Mettle SkyBox Chromatic
+Aberrations` (third-party, closed), keyframed per-channel amounts (7 recipes: 50/−50/−50,
+−71/+69/+10, …; Soft +72/−28/−81 @ Falloff 50) + a keyframed 2D Point of Interest DRIFTING
+OFF-FRAME (RGB-3 vs 4 differ ONLY in POI path). KEY MODEL: radial CA of amount s = uniform
+SCALE r'=r(1+s) about the POI → THREE channel-isolated copies CSS-scaled about the drifting
+center, recombined with plus-lighter (blend outer / channel filter inner). NO maps, no 8-bit
+wall. **Falloff Invert (Soft 2-4 + Soft Short 2-4, caught by a builder assert):** the split is
+strongest NEAR the POI → scaled copy revealed through a radial-gradient mask over the unscaled
+base (preview-matched: locally split, coherent far away). Calibration: SCALE_PER_AB=0.006
+(ab 50 @ falloff 100 ≈ 30% scale; the first 12% guess was far too subtle — peak QA'd), falloff
+normalizes 100/falloff. Honest caveats: the plugin's smears curve slightly (spherical-aware
+even in mono layout) where ours stay affine-straight; peak energy/palette/drift match.
+
+SFX: Equidistant → `Optics_02.wav`, RGB → `Lens_01.wav`, all in-point 0, window-truncated per
+duration → 6 lib files (`sfx-melt-eq-{84,44}`, `sfx-melt-rgb-{76,84,44,60}`). Soft-4 uses
+lowercase "(in)" (the Long Simple gotcha again — match case-insensitively). QA sweep
+`_qa-melt-sweep.js` → `_qa/melt/` (30 sheets + peak/grid compares).
+
+---
+
 ## LIGHT LEAKS: ALL 34 built ✅ (2026-07-12, awaiting Mike's review) — CATEGORY COMPLETE
 
 `lightleaks-{1..8}` (1.12s, cut 0.32) + `lightleaks-short-{1..8}` (0.4s, cut 0.16) +
