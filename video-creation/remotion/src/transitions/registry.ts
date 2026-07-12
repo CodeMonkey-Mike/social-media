@@ -10,6 +10,7 @@ import { GlitchRoughly } from './engines/GlitchRoughly';
 import { OffsetSlide } from './engines/OffsetSlide';
 import { DeviationGlitch } from './engines/DeviationGlitch';
 import { ExpandPan } from './engines/ExpandPan';
+import { ExpandZoom } from './engines/ExpandZoom';
 import { GlitchTurbulentDisplace } from './engines/GlitchTurbulentDisplace';
 import { GlitchTVSatellite } from './engines/GlitchTVSatellite';
 import { GlitchVHS } from './engines/GlitchVHS';
@@ -68,6 +69,7 @@ export const ENGINES: Record<string, React.FC<any>> = {
   OffsetSlide,
   DeviationGlitch,
   ExpandPan,
+  ExpandZoom,
 };
 
 export const TRANSITIONS = (library as { transitions: TransitionRow[] }).transitions;
