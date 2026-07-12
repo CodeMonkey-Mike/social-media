@@ -23,14 +23,31 @@ values, with a per-folder gallery to browse them.
 
 ---
 
-## GLASS / Beveled: all 12 built ✅ (2026-07-12, awaiting Mike's review) — Mike's pick; NEW CATEGORY (subgroup only)
+## GLASS: ALL 40 built ✅ (Beveled 12 approved 2026-07-12; Beveled Short 12 + Blocks 4 + Blocks Corner 12 added same day, awaiting review) — GLASS CATEGORY COMPLETE
 
-`glass-beveled-{1,2}-{up,down,left,right}` + `glass-beveled-{3,4}-{horizontal,vertical}`
-(1.04s L/R/H · 1.08s 3V/4V · 1.12s 1/2 U/D) — engine
-`remotion/src/transitions/engines/GlassBeveled.tsx`, browse `browse/GLASS/Beveled/`.
-**fidelity: near-1:1** — geometry, masks, easings, stagger and compositing order are all real
-project data; no plates, no procedural effects. Mike asked for ONLY the Beveled subgroup
-(GLASS also has Beveled Short 12 / Blocks 4 / Blocks Corner 12 — intentionally NOT built).
+`glass-beveled-*` (12, Mike-approved) + `glass-beveled-short-*` (12, 0.8s) +
+`glass-blocks-{1-left,1-right,2-horizontal,3-horizontal}` (4, 0.84s) +
+`glass-blocks-corner-{1,2,3}-{left,right}-{up,down}` (12, 0.92s fam-1 / 0.8s fam-2/3) —
+ONE engine `remotion/src/transitions/engines/GlassBeveled.tsx`, browse `browse/GLASS/<Sub>/`.
+**fidelity: near-1:1 all 40** — geometry, masks, easings, stagger and compositing order are all
+real project data; no plates, no procedural effects.
+
+**Subgroup differences found in extraction (`_extract-glassrest.js` → `_glassrest-clips.json` →
+`_build-glassrest-rows.js`), all on the same masked-wrap-Offset architecture:**
+- **Beveled Short** = Beveled's exact masks + (In) curves at cut 0.32, but the **(Out) curves are
+  SHIFTED EARLIER — the motion JUMPS AHEAD 0.44s at the cut** (the OFFSET-Short pattern; Beveled
+  proper is continuous). The engine's piecewise curveIn/curveOut sampling covers it.
+- **Blocks** = 7 axis-aligned RECTANGLE panes (row + column bands, variable per-pane durations
+  0.76-1.0s) behind a **DOUBLE flip sandwich (H+V = 180° rotation)**; 2/3-Horizontal add the
+  unmasked base push. Audio plays Skew_Simple_01 **from in-point 0.12** (unlike every other
+  subgroup at 0) — sfx files are chosen by MEASURED (in, window), asserted in the builder.
+- **Blocks Corner** = 8 panes: 4 row-bands pushing y + 4 column-bands pushing x — the corner
+  diagonal is the COMPOSITION of single-axis stages (no diagonal offsets exist; end vectors are
+  only ever 0.5:1.5 / 1.5:0.5). Engine change: wrap axis derived PER STAGE (rows are 'xy').
+- **Corner 3 stacks the SAME panes in a DIFFERENT ORDER after the cut** ((Out) component list
+  permuted vs (In) — matters where panes overlap). Caught by the hash-pairing assert; builder
+  pairs stages BY MASK HASH and ships the (Out) apply order as `outOrder`; the engine reorders
+  the chain after the cut. Corner renders are the slow ones (~90s/demo, 8-stage chains).
 
 **Mechanism** (`_extract-glassbeveled.js` → `_glassbeveled-clips.json` → `_analyze-glassbeveled.js`
 → `_build-glassbeveled-rows.js`): the (In) [0.04..0.4] / (Out) [0.4..end] HST Adjustment pair,
@@ -62,15 +79,19 @@ feather/opacity/expansion / inverted or keyframed masks / mixed axes / unclosed 
   data-URI + feComposite in/over, frame-cropped subregions, frame-keyed filter id, sRGB. No
   displacement maps ⇒ no 8-bit-wall risk. ~13-16s per demo render.
 
-SFX: ALL 12 share `Skew_Simple_01.mp3` (window 0.04..1.04, in 0) → ONE lib file
-`lib/sfx-glassbeveled.mp3` (source truncated to the 1.0s clip window per the OFFSET A/B rule,
-0.04s lead delay baked, 30ms tail guard). QA (`_qa-glassbeveled-sweep.js` → `_qa/glassbeveled/`):
-12 frame-aligned sweep sheets + full-res compares (1-Left ×4 timestamps, 1-Up, 3-H, 4-V) —
-facet lean, stagger cadence, cascade structure, bidirectional splits and settle all match; the
-pack's own preview also ends with the same sub-1% residual at its last frame. Honest caveats:
-residual displacement at matching late timestamps reads slightly stronger than the preview on
-some frames (the bezier-value interpretation is the only fitted piece), and previews are
-25→29.97 pulldown-blended (~1-frame alignment slop).
+SFX: every GLASS variant plays `Skew_Simple_01.mp3`, but the CUT differs per subgroup → FOUR
+lib files, each = source cut at the real in-point, truncated to the real audio-clip window
+(OFFSET A/B rule), 0.04s lead delay baked, 30ms tail guard: `sfx-glassbeveled.mp3` (1.04s),
+`sfx-glassbeveled-short.mp3` (0.8s — also Corner 2/3), `sfx-glassblocks.mp3` (0.84s, source
+from 0.12!), `sfx-glassblockscorner-92.mp3` (0.92s, Corner 1).
+QA (`_qa-glassbeveled-sweep.js`, now covering all 4 subgroups → `_qa/glassbeveled/`): 40
+frame-aligned sweep sheets + full-res compares (Beveled 1-Left ×4 timestamps, 1-Up, 3-H, 4-V;
+Short 1-Left ×2, Blocks 1-Left ×2, Corner 1-Left-Up ×2) — facet lean, stagger cadence, cascade
+structure, rectangular pane grids, bidirectional splits and settle all match; the pack's own
+preview also ends with the same sub-1% residual at its last frame. Honest caveats: residual
+displacement at matching late timestamps reads slightly stronger than the preview on some
+frames (the bezier-value interpretation is the only fitted piece), and previews are 25→29.97
+pulldown-blended (~1-frame alignment slop).
 
 ---
 

@@ -58,10 +58,17 @@ export type GlassBeveledStage = {
 export type GlassBeveledParams = {
   /** A->B swap fraction (0..1 of the window) = the (Out) clip's start / duration. */
   cut: number;
-  /** Push axis of every stage in this row (all Beveled rows are single-axis). */
-  axis: 'x' | 'y';
-  /** Stages in REAL apply order (first-applied first = the pack's bottom-up chain). */
+  /** Row-level push-axis hint ('xy' = Blocks Corner mixes x- and y-stages).
+   * Informational only — the engine derives each stage's wrap axis from its own
+   * displacement (every individual stage is single-axis; builder-asserted). */
+  axis: 'x' | 'y' | 'xy';
+  /** Stages in the (In) clip's REAL apply order (first-applied first = the pack's
+   * bottom-up chain). */
   stages: GlassBeveledStage[];
+  /** OPTIONAL: the (Out) clip's apply order as an index permutation into `stages`
+   * — some sequences (Blocks Corner 3) stack the SAME panes in a DIFFERENT order
+   * after the cut, which matters where panes overlap. Omitted = same order. */
+  outOrder?: number[];
 };
 
 /** Wrap a shift fraction into [-0.5, 0.5) — the merged two-copy wrap covers it. */
@@ -120,7 +127,7 @@ export const GlassBeveled: React.FC<TransitionProps & { params: GlassBeveledPara
 }) => {
   const frame = useCurrentFrame();
   const { width: W, height: H, fps } = useVideoConfig();
-  const { cut, axis, stages } = params;
+  const { cut, stages } = params;
 
   const tSec = frame / fps;
   const p = frame / Math.max(1, durationInFrames - 1);
@@ -152,14 +159,19 @@ export const GlassBeveled: React.FC<TransitionProps & { params: GlassBeveledPara
   // stage reads a frame-confined composite (exactly Premiere's adjustment chain).
   const prims: React.ReactNode[] = [];
   let prev = 'SourceGraphic';
-  stages.forEach((st, i) => {
+  // after the cut, honor the (Out) clip's own stacking order where it differs
+  const order = !beforeCut && params.outOrder ? params.outOrder : stages.map((_, i) => i);
+  order.forEach((i) => {
+    const st = stages[i];
     const { dx, dy } = shifts[i];
-    // second copy completes the torus wrap along the push axis
-    const wx = axis === 'x' ? dx - Math.sign(dx || 1) * W : 0;
-    const wy = axis === 'y' ? dy - Math.sign(dy || 1) * H : 0;
+    // second copy completes the torus wrap along THIS stage's own push axis
+    // (every stage is single-axis; Blocks Corner rows mix x- and y-stages)
+    const stageIsX = Math.abs(dx) >= Math.abs(dy);
+    const wx = stageIsX ? dx - Math.sign(dx || 1) * W : 0;
+    const wy = stageIsX ? 0 : dy - Math.sign(dy || 1) * H;
     prims.push(
       <feOffset key={`o${i}`} in={prev} dx={dx} dy={dy} result={`o${i}`} />,
-      <feOffset key={`w${i}`} in={prev} dx={axis === 'x' ? wx : 0} dy={axis === 'y' ? wy : 0} result={`w${i}`} />,
+      <feOffset key={`w${i}`} in={prev} dx={wx} dy={wy} result={`w${i}`} />,
       <feMerge key={`g${i}`} x={0} y={0} width={W} height={H} result={`g${i}`}>
         <feMergeNode in={`w${i}`} />
         <feMergeNode in={`o${i}`} />
