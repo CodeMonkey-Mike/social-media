@@ -2,7 +2,7 @@
 /** Summarize _glassbeveled-clips.json: per sequence, per (In)/(Out) clip — effect order,
  * each Offset's kf phase + mask geometry (bbox/center + straight-vs-curved corners),
  * so the mechanism can be decoded before building. */
-const data = require('./_glassbeveled-clips.json');
+const data = require(process.argv[2] ? './' + process.argv[2] : './_glassbeveled-clips.json');
 
 function maskSummary(m) {
   if (!m || !m.path || m.path.error) return 'MASK-ERR:' + JSON.stringify(m && m.path);
