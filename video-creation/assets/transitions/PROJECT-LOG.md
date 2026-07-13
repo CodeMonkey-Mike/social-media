@@ -23,6 +23,41 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## SHAKE: ALL 34 built ✅ (2026-07-13, awaiting Mike's review) — CATEGORY COMPLETE
+
+`shake-{hit-1..6x, horizontal-1..7x, long-1..7x, short-1..7x, skew-1..7x}` — NEW engine
+`remotion/src/transitions/engines/ShakeJolt.tsx`, browse `browse/SHAKE/<Sub>/`. Durations:
+Hit 0.4 · Horizontal/Skew 0.36-0.72 · Long 0.96 · Short 0.56. **fidelity: approximate**
+(geometry near-1:1 — real curves; the Deviation fringe mechanism is swapped, look preserved).
+
+**Mechanism** (`_extract-shake.js` → `_shake-clips.json` → `_build-shake-rows.js`): ONE
+full-window rig2 adjustment (Offset 0:0 quadrant swap + Replicate 2 + 4 Mirrors + STATIC
+Scale 200 = mirror-padded IDENTITY, center anchor) carrying a continuous 25fps-keyed
+camera shake — Position jolts (±3-6%) + **Rotation** (Hit/Long/Short) or **Skew**
+(Skew subgroup: Axis 0 = skewX, verticals lean; Horizontal: **Axis 90 = skewY**, horizontals
+tilt — a builder assert caught the axis difference). All curves are real bezier handles and
+every shake ENDS AT REST (asserted). **The A→B cut hides MID-SHAKE at the split between two
+media-continuous "Deviation" clips** — same Tint black→RED white→BLUE + Emboss + Pin Light
+R/B fringe as PERSPECTIVE Hit, bracketing the cut; Emboss dir 45 (Hit/Long/Short, diagonal
+shift) / 90 (Horizontal/Skew, horizontal shift — the GlitchOffset θ→(sin,cos) rule), relief
+scales with the variant's intensity (3-10 → shift 2-7px). Engine: ONE continuous pose (no
+per-side clamping — the same adjustment rides A and B), 3×3 mirror tiles, 16-sample shutter
+accumulation (rotation/skew blur included per sample), window-gated to identity outside the
+rig clip. ~20-45s/demo (blur active most of the window).
+
+**NO SFX — verified 3 ways** (FullHD audio groups empty in all 34, previews VIDEO-ONLY, no
+Shake file in Sound/) → `hasSound:false`, add a hit manually when editing. NOTE: the pack's
+own previews demo SHAKE over ONE continuous scene (their choice; the Deviation split is a
+real editorial cut) — our demos render A→B to show the transition use; flip to same-scene
+demos via demoSameScene if preferred. Previews are NATIVE 25fps (like MOTION).
+
+QA: 34 frame-aligned 12.5fps sweep sheets (`_qa-shake-sweep.js` → `_qa/shake/`) + full-res
+compares (Hit 6x + Skew 7x probes, Horizontal 5x fringe frames at t=0.32/0.40): jolt
+amplitude/decay, shear direction per axis, fringe hue + orientation (horizontal split on
+dir-90 subgroups) and settle timing all track the previews.
+
+---
+
 ## PERSPECTIVE: ALL 72 built ✅ (2026-07-13, awaiting Mike's review) — CATEGORY COMPLETE
 
 `perspective-{ease-in,ease-out,hit-in,hit-out}[-short]-{8 dirs}` (64) +
