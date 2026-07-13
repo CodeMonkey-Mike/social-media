@@ -23,6 +23,36 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## SPIN / 3D subgroups: 24 built ✅ (2026-07-13, awaiting Mike's review) — Mike's first-6 pick; 14 more SPIN subgroups remain (Center/Corner Ease + Swinging + Bounce + Shake + Twirl, each + Short)
+
+`spin-3d-{center,corner}-ease[-short]-{b,t}-{cw,ccw}` (16) + `spin-3d-side-ease[-short]-{4 dirs}` (8)
+— engine **PerspectiveEase** (extended with per-phase `rot` curves + per-phase `shutter`
+override), browse `browse/SPIN/<Sub>/`. Durations 0.88 / 0.44, cut at 0.28 / 0.16.
+**fidelity: near-1:1** — pure transforms, real curves, exact Corner Pin homography.
+
+**Mechanism** (`_extract-spin3d.js` → `_spin3d-clips.json` → `_build-spin3d-rows.js`):
+(In)/(Out) rig2 clips (mirror-padded identity, STATIC Scale 200) with keyframed **ROTATION
+about a pinned anchor** — Center = frame center (In 0→±60°, Out ∓90°→0), Corner = a frame
+CORNER (±28/26°), Side = an EDGE midpoint (±26-60° depending on edge). A spins out, B spins
+in from the opposite angular side; the swap hides under peak rotational blur (**Shutter 320**
+here — and Corner's (In) runs 180 while its (Out) runs 320 → shutter became a PER-PHASE
+param). A full-window 3-kf **Corner Pin** stretches ONE edge (peak ~(−1 .. 1.95) at the cut)
+and settles = the 3D wobble; **B/T variants differ ONLY by which edge the pin stretches**
+(B → top edge, T → bottom edge; same rotation curves). Hand-placed asymmetries shipped as-is
+(26 vs 27 vs 28° on Corner-T/Side rows). Engine additions (additive, PERSPECTIVE rows
+untouched): per-phase rot sampling in the pose + rotate() in the transform, rotation-aware
+blur stillness, full-3×3 tiles whenever rotated (corners expose every side), rotation-aware
+window gating. ~14-22s/demo. SFX `Spin_01.wav` @0.04 from 0, window = duration →
+`lib/sfx-spin3d-{88,44}.mp3` (0.04 lead baked).
+
+QA: 24 frame-aligned 12.5fps sweep sheets (`_qa-spin3d-sweep.js` → `_qa/spin3d/`; NOTE the
+Short PREVIEW FOLDERS carry a "(Slow)" suffix that sequence names don't): rotational smear
+ramp, the vortex swap frame, keystone wobble timing and settle all track the previews.
+Honest caveats: 25→29.97 pulldown slop; our 16-sample rotational blur reads marginally
+stepped on the fastest (Out) launch frames vs the preview's continuous smear.
+
+---
+
 ## SHAKE: ALL 34 built ✅ (2026-07-13, awaiting Mike's review) — CATEGORY COMPLETE
 
 `shake-{hit-1..6x, horizontal-1..7x, long-1..7x, short-1..7x, skew-1..7x}` — NEW engine

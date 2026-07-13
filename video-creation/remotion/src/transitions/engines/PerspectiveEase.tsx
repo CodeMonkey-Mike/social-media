@@ -56,6 +56,10 @@ export type PerspectivePhase = {
   fy: number;
   /** Keyframed pin (Pan 3D: the Geometry2 Position PANS) — overrides fx/fy. */
   pan?: PanKf[];
+  /** Keyframed Rotation in degrees, about the pinned anchor (SPIN 3D). */
+  rot?: ScalarKf[];
+  /** Per-phase shutter override (SPIN 3D Corner's (In) runs 180 vs 320). */
+  shutter?: number;
   /** Mirror-tile padding (rig phases; plain zooms >= 1 always cover). */
   mirror: boolean;
 };
@@ -205,7 +209,7 @@ export const PerspectiveEase: React.FC<TransitionProps & { params: PerspectiveEa
     const t = swapTo ? Math.max(ts, cutT) : Math.min(ts, cutT);
     if (shake && t >= shake.win[0] && t < shake.win[1]) {
       const j = sampleJitter(shake.kfs, t);
-      return { s: 1, cx: 0.5, cy: 0.5, dx: j.x, dy: j.y, mirror: true };
+      return { s: 1, cx: 0.5, cy: 0.5, dx: j.x, dy: j.y, r: 0, mirror: true };
     }
     const ph = swapTo ? outPhase : inPhase;
     // effect clips GATE by WINDOW (the OFFSET Long-Hit lesson): past the (Out)
@@ -214,31 +218,37 @@ export const PerspectiveEase: React.FC<TransitionProps & { params: PerspectiveEa
     // the hard SNAP into the shake IS the pack's hit).
     if (t >= ph.win[1] - 1e-6) {
       const rest = ph.kfs[ph.kfs.length - 1].v / ph.norm;
-      const ended = swapTo || rest === 1; // in-phase holds its end value until the cut
-      if (ended) return { s: 1, cx: 0.5, cy: 0.5, dx: 0, dy: 0, mirror: false };
+      const rotRest = ph.rot ? ph.rot[ph.rot.length - 1].v : 0;
+      const ended = swapTo || (rest === 1 && rotRest === 0); // in-phase holds until the cut
+      if (ended) return { s: 1, cx: 0.5, cy: 0.5, dx: 0, dy: 0, r: 0, mirror: false };
     }
     const s = sampleKfs(ph.kfs, t) / ph.norm;
     const pin = ph.pan ? sample2D(ph.pan, t) : { x: ph.fx, y: ph.fy };
-    return { s, cx: ph.cx, cy: ph.cy, dx: pin.x - ph.cx, dy: pin.y - ph.cy, mirror: ph.mirror };
+    const r = ph.rot ? sampleKfs(ph.rot, t) : 0;
+    return { s, cx: ph.cx, cy: ph.cy, dx: pin.x - ph.cx, dy: pin.y - ph.cy, r, mirror: ph.mirror };
   };
 
-  // shutter 180 = 0.5-frame exposure, centered on the frame time (AE phase -90)
-  const expo = (shutter / 360) / fps;
+  // centered shutter exposure (per-phase override, e.g. SPIN Corner In = 180)
+  const phShutter = (swapTo ? outPhase.shutter : inPhase.shutter) ?? shutter;
+  const expo = (phShutter / 360) / fps;
   const p0 = poseAt(tSec - expo / 2);
   const p1 = poseAt(tSec + expo / 2);
   const still =
     Math.abs(p1.s - p0.s) / Math.max(p0.s, 1e-6) < 0.002 &&
-    Math.abs(p1.dx - p0.dx) < 5e-4 && Math.abs(p1.dy - p0.dy) < 5e-4;
+    Math.abs(p1.dx - p0.dx) < 5e-4 && Math.abs(p1.dy - p0.dy) < 5e-4 &&
+    Math.abs(p1.r - p0.r) < 0.02;
   const NS = still ? 1 : BLUR_SAMPLES;
 
   const group = (pose: ReturnType<typeof poseAt>, key: number, opacity: number) => {
     // mirror tiles only on the sides the pin can expose (pin at an edge/corner
-    // never exposes its own side; the shake pin at center exposes all four)
+    // never exposes its own side; the shake pin at center exposes all four);
+    // any rotation exposes corners on every side -> full 3x3
     const tiles: Array<[number, number]> = [[0, 0]];
     if (pose.mirror) {
       const fx = pose.cx + pose.dx, fy = pose.cy + pose.dy;
-      const xs = [0, ...(fx > 0.01 ? [-1] : []), ...(fx < 0.99 ? [1] : [])];
-      const ys = [0, ...(fy > 0.01 ? [-1] : []), ...(fy < 0.99 ? [1] : [])];
+      const rot = pose.r !== 0;
+      const xs = [0, ...(rot || fx > 0.01 ? [-1] : []), ...(rot || fx < 0.99 ? [1] : [])];
+      const ys = [0, ...(rot || fy > 0.01 ? [-1] : []), ...(rot || fy < 0.99 ? [1] : [])];
       tiles.length = 0;
       for (const i of xs) for (const j of ys) tiles.push([i, j]);
     }
@@ -246,7 +256,7 @@ export const PerspectiveEase: React.FC<TransitionProps & { params: PerspectiveEa
       <AbsoluteFill
         key={key}
         style={{
-          transform: `translate(${pose.dx * width}px, ${pose.dy * height}px) scale(${pose.s})`,
+          transform: `translate(${pose.dx * width}px, ${pose.dy * height}px) rotate(${pose.r}deg) scale(${pose.s})`,
           transformOrigin: `${pose.cx * 100}% ${pose.cy * 100}%`,
           opacity,
         }}

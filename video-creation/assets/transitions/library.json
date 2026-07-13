@@ -115479,6 +115479,4794 @@
         ],
         "useWhen": "Impact-style cut for punchy pacing (~0.72s, silent — add your own hit SFX): the shake sells a physical camera bump and the fringe flash hides the splice. Higher x = stronger jolt."
       }
+    },
+    {
+      "id": "spin-3d-center-ease-b-ccw",
+      "category": "SPIN",
+      "variant": "3D Center Ease",
+      "intensity": "B CCW",
+      "label": "Spin · 3D Center Ease · B CCW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.28,
+              "v": -60,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": 90,
+              "iv": -1047.978004942346,
+              "ii": 0.3333333333333333,
+              "ov": -1047.978004942346,
+              "oi": 0.1650672406462585
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.28,
+              "x": -1,
+              "y": 0,
+              "iv": 5.886737208305943,
+              "ii": 0.34469051673910306,
+              "ov": 5.886737208305943,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.675449377486726,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.28,
+              "x": 1.9547,
+              "y": 0,
+              "iv": 6.183657787002543,
+              "ii": 0.3333333333333333,
+              "ov": 6.183657787002543,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.7177227155401437,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Center Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the frame center: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "center",
+          "b-ccw",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (B CCW) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-center-ease-b-cw",
+      "category": "SPIN",
+      "variant": "3D Center Ease",
+      "intensity": "B CW",
+      "label": "Spin · 3D Center Ease · B CW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.28,
+              "v": 60,
+              "iv": 665.9291694096129,
+              "ii": 0.31841211567381583,
+              "ov": 665.9291694096129,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": -90,
+              "iv": 793.0819581976045,
+              "ii": 0.3333333333333333,
+              "ov": 793.0819581976045,
+              "oi": 0.1495392904081148
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.28,
+              "x": -1,
+              "y": 0,
+              "iv": 5.886737208305943,
+              "ii": 0.34469051673910306,
+              "ov": 5.886737208305943,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.675449377486726,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.28,
+              "x": 1.9547,
+              "y": 0,
+              "iv": 6.183657787002543,
+              "ii": 0.3333333333333333,
+              "ov": 6.183657787002543,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.7177227155401437,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Center Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the frame center: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "center",
+          "b-cw",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (B CW) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-center-ease-t-ccw",
+      "category": "SPIN",
+      "variant": "3D Center Ease",
+      "intensity": "T CCW",
+      "label": "Spin · 3D Center Ease · T CCW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.28,
+              "v": -60,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": 90,
+              "iv": -1047.978004942346,
+              "ii": 0.3333333333333333,
+              "ov": -1047.978004942346,
+              "oi": 0.1650672406462585
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.30227743268796714
+            },
+            {
+              "t": 0.28,
+              "x": -1,
+              "y": 1,
+              "iv": 5.766716947375126,
+              "ii": 0.3333333333333333,
+              "ov": 5.766716947375126,
+              "oi": 0.44272257672804277
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6888483743878056,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3126293995916268
+            },
+            {
+              "t": 0.28,
+              "x": 1.9547,
+              "y": 1,
+              "iv": 5.863416083284037,
+              "ii": 0.34368530023699295,
+              "ov": 5.863416083284037,
+              "oi": 0.438164691571751
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6797326041185551,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Center Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the frame center: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "center",
+          "t-ccw",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (T CCW) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-center-ease-t-cw",
+      "category": "SPIN",
+      "variant": "3D Center Ease",
+      "intensity": "T CW",
+      "label": "Spin · 3D Center Ease · T CW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.28,
+              "v": 60,
+              "iv": 665.9291694096129,
+              "ii": 0.31841211567381583,
+              "ov": 665.9291694096129,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": -90,
+              "iv": 793.0819581976045,
+              "ii": 0.3333333333333333,
+              "ov": 793.0819581976045,
+              "oi": 0.1495392904081148
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.30227743268796714
+            },
+            {
+              "t": 0.28,
+              "x": -1,
+              "y": 1,
+              "iv": 5.766716947375126,
+              "ii": 0.3333333333333333,
+              "ov": 5.766716947375126,
+              "oi": 0.44272257672804277
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6888483743878056,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3126293995916268
+            },
+            {
+              "t": 0.28,
+              "x": 1.9547,
+              "y": 1,
+              "iv": 5.863416083284037,
+              "ii": 0.34368530023699295,
+              "ov": 5.863416083284037,
+              "oi": 0.438164691571751
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6797326041185551,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Center Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the frame center: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "center",
+          "t-cw",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (T CW) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-center-ease-short-b-ccw",
+      "category": "SPIN",
+      "variant": "3D Center Ease Short",
+      "intensity": "B CCW",
+      "label": "Spin · 3D Center Ease Short · B CCW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.16,
+              "v": -60,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": 90,
+              "iv": -1047.978004942346,
+              "ii": 0.3333333333333333,
+              "ov": -1047.978004942346,
+              "oi": 0.1650672406462585
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 0,
+              "iv": 11.547550705186982,
+              "ii": 0.34469051673910306,
+              "ov": 11.547550705186982,
+              "oi": 0.2604735884091291
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.675449377486726,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.16,
+              "x": 1.9547,
+              "y": 0,
+              "iv": 11.55968601411362,
+              "ii": 0.3333333333333333,
+              "ov": 11.55968601411362,
+              "oi": 0.2604735883435164
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.7177227155401437,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Center Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the frame center: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "center",
+          "b-ccw",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (B CCW) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-center-ease-short-b-cw",
+      "category": "SPIN",
+      "variant": "3D Center Ease Short",
+      "intensity": "B CW",
+      "label": "Spin · 3D Center Ease Short · B CW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.16,
+              "v": 60,
+              "iv": 665.9291694096129,
+              "ii": 0.31841211567381583,
+              "ov": 665.9291694096129,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": -90,
+              "iv": 793.0819581976045,
+              "ii": 0.3333333333333333,
+              "ov": 793.0819581976045,
+              "oi": 0.1495392904081148
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 0,
+              "iv": 11.547297431496588,
+              "ii": 0.34469051673910306,
+              "ov": 11.547297431496588,
+              "oi": 0.28888888885608255
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.675449377486726,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.16,
+              "x": 1.9547,
+              "y": 0,
+              "iv": 11.540763176731241,
+              "ii": 0.3333333333333333,
+              "ov": 11.540763176731241,
+              "oi": 0.3111111111111111
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.7177227155401437,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Center Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the frame center: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "center",
+          "b-cw",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (B CW) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-center-ease-short-t-ccw",
+      "category": "SPIN",
+      "variant": "3D Center Ease Short",
+      "intensity": "T CCW",
+      "label": "Spin · 3D Center Ease Short · T CCW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.16,
+              "v": -60,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": 90,
+              "iv": -1047.978004942346,
+              "ii": 0.3333333333333333,
+              "ov": -1047.978004942346,
+              "oi": 0.1650672406462585
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.30227743268796714
+            },
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 1,
+              "iv": 11.51209473621705,
+              "ii": 0.3333333333333333,
+              "ov": 11.51209473621705,
+              "oi": 0.4583353792112083
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6888483743878056,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3126293995916268
+            },
+            {
+              "t": 0.16,
+              "x": 1.9547,
+              "y": 1,
+              "iv": 11.625224071527349,
+              "ii": 0.34368530023699295,
+              "ov": 11.625224071527349,
+              "oi": 0.40693908659859446
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6797326041185551,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Center Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the frame center: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "center",
+          "t-ccw",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (T CCW) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-center-ease-short-t-cw",
+      "category": "SPIN",
+      "variant": "3D Center Ease Short",
+      "intensity": "T CW",
+      "label": "Spin · 3D Center Ease Short · T CW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.16,
+              "v": 60,
+              "iv": 665.9291694096129,
+              "ii": 0.31841211567381583,
+              "ov": 665.9291694096129,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": -90,
+              "iv": 793.0819581976045,
+              "ii": 0.3333333333333333,
+              "ov": 793.0819581976045,
+              "oi": 0.1495392904081148
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.30227743268796714
+            },
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 1,
+              "iv": 11.512441028175315,
+              "ii": 0.3333333333333333,
+              "ov": 11.512441028175315,
+              "oi": 0.44272257672745025
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6888483743878056,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3126293995916268
+            },
+            {
+              "t": 0.16,
+              "x": 1.9547,
+              "y": 1,
+              "iv": 11.62481475318582,
+              "ii": 0.34368530023699295,
+              "ov": 11.62481475318582,
+              "oi": 0.4533622599420059
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6797326041185551,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Center Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the frame center: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "center",
+          "t-cw",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (T CW) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-corner-ease-b-ccw",
+      "category": "SPIN",
+      "variant": "3D Corner Ease",
+      "intensity": "B CCW",
+      "label": "Spin · 3D Corner Ease · B CCW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0,
+          "fx": 0,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -24.264097779534243,
+              "ii": 0.3333333333333333,
+              "ov": -24.264097779534243,
+              "oi": 0.7431212221867913
+            },
+            {
+              "t": 0.28,
+              "v": -28,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 180,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0,
+          "fx": 0,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": 28,
+              "iv": -335.05096934154716,
+              "ii": 0.3333333333333333,
+              "ov": -335.05096934154716,
+              "oi": 0.15494320282065818
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.6658354112864282
+            },
+            {
+              "t": 0.28,
+              "x": -1,
+              "y": 0,
+              "iv": 11.508792619045137,
+              "ii": 0.2781901011812904,
+              "ov": 11.508792619045137,
+              "oi": 0.6827204930999439
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.6519362514888168,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.7323358268442408
+            },
+            {
+              "t": 0.28,
+              "x": 1.9547,
+              "y": 0,
+              "iv": 11.49189501477076,
+              "ii": 0.23358270994740488,
+              "ov": 11.49189501477076,
+              "oi": 0.6058725260705005
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.6102933480342337,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Corner Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the top-left corner: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "corner",
+          "b-ccw",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (B CCW) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-corner-ease-b-cw",
+      "category": "SPIN",
+      "variant": "3D Corner Ease",
+      "intensity": "B CW",
+      "label": "Spin · 3D Corner Ease · B CW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0,
+          "fx": 0,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 43.34436838195873,
+              "ii": 0.3333333333333333,
+              "ov": 43.34436838195873,
+              "oi": 0.7623588473101431
+            },
+            {
+              "t": 0.28,
+              "v": 28,
+              "iv": 272.64095940222546,
+              "ii": 0.33861172271956624,
+              "ov": 272.64095940222546,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 180,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0,
+          "fx": 0,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": -28,
+              "iv": 256.5945744366874,
+              "ii": 0.3333333333333333,
+              "ov": 256.5945744366874,
+              "oi": 0.22970955793820377
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 6.097352245326165,
+              "ii": 0.597147451291271,
+              "ov": 6.097352245326165,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.6658354112864282
+            },
+            {
+              "t": 0.28,
+              "x": -1,
+              "y": 0,
+              "iv": 11.508792619045137,
+              "ii": 0.2781901011812904,
+              "ov": 11.508792619045137,
+              "oi": 0.6827204930999439
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.6519362514888168,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.7323358268442408
+            },
+            {
+              "t": 0.28,
+              "x": 1.9547,
+              "y": 0,
+              "iv": 11.49189501477076,
+              "ii": 0.23358270994740488,
+              "ov": 11.49189501477076,
+              "oi": 0.6058725260705005
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.6102933480342337,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Corner Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the top-left corner: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "corner",
+          "b-cw",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (B CW) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-corner-ease-t-ccw",
+      "category": "SPIN",
+      "variant": "3D Corner Ease",
+      "intensity": "T CCW",
+      "label": "Spin · 3D Corner Ease · T CCW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0,
+          "fx": 1,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -24.264097779534243,
+              "ii": 0.3333333333333333,
+              "ov": -24.264097779534243,
+              "oi": 0.7431212221867913
+            },
+            {
+              "t": 0.28,
+              "v": -28,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 180,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0,
+          "fx": 1,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": 26,
+              "iv": -268.4208961050036,
+              "ii": 0.3333333333333333,
+              "ov": -268.4208961050036,
+              "oi": 0.19340474128219665
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.6231884057172251
+            },
+            {
+              "t": 0.28,
+              "x": -1,
+              "y": 1,
+              "iv": 9.502392949190899,
+              "ii": 0.22981366462480055,
+              "ov": 9.502392949190899,
+              "oi": 0.6180124222817985
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6594202897816148,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.6335403725224658
+            },
+            {
+              "t": 0.28,
+              "x": 1.9547,
+              "y": 1,
+              "iv": 9.18111308425804,
+              "ii": 0.21946169775394725,
+              "ov": 9.18111308425804,
+              "oi": 0.628364389169055
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6749482400714916,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Corner Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the top-right corner: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "corner",
+          "t-ccw",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (T CCW) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-corner-ease-t-cw",
+      "category": "SPIN",
+      "variant": "3D Corner Ease",
+      "intensity": "T CW",
+      "label": "Spin · 3D Corner Ease · T CW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0,
+          "fx": 1,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 19.856408709479936,
+              "ii": 0.3333333333333333,
+              "ov": 19.856408709479936,
+              "oi": 0.7431212221671076
+            },
+            {
+              "t": 0.28,
+              "v": 28,
+              "iv": 307.532252941111,
+              "ii": 0.3215177056760204,
+              "ov": 307.532252941111,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 180,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0,
+          "fx": 1,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": -26,
+              "iv": 238.18743345052533,
+              "ii": 0.3333333333333333,
+              "ov": 238.18743345052533,
+              "oi": 0.17284169225560594
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": 1.0884026738461994,
+              "ii": 0.6389963492759996,
+              "ov": 1.0884026738461994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.6231884057172251
+            },
+            {
+              "t": 0.28,
+              "x": -1,
+              "y": 1,
+              "iv": 9.502392949190899,
+              "ii": 0.22981366462480055,
+              "ov": 9.502392949190899,
+              "oi": 0.6180124222817985
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6594202897816148,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.6335403725224658
+            },
+            {
+              "t": 0.28,
+              "x": 1.9547,
+              "y": 1,
+              "iv": 9.18111308425804,
+              "ii": 0.21946169775394725,
+              "ov": 9.18111308425804,
+              "oi": 0.628364389169055
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6749482400714916,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Corner Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the top-right corner: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "corner",
+          "t-cw",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (T CW) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-corner-ease-short-b-ccw",
+      "category": "SPIN",
+      "variant": "3D Corner Ease Short",
+      "intensity": "B CCW",
+      "label": "Spin · 3D Corner Ease Short · B CCW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0,
+          "fx": 0,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -24.264097779534243,
+              "ii": 0.3333333333333333,
+              "ov": -24.264097779534243,
+              "oi": 0.7431212221867913
+            },
+            {
+              "t": 0.16,
+              "v": -28,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 180,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0,
+          "fx": 0,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": 28,
+              "iv": -335.05096934154716,
+              "ii": 0.3333333333333333,
+              "ov": -335.05096934154716,
+              "oi": 0.15494320282065818
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.6658354112864282
+            },
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 0,
+              "iv": 17.830909735689186,
+              "ii": 0.2781901011812904,
+              "ov": 17.830909735689186,
+              "oi": 0.6202692831497678
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.6519362514888168,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.7323358268442408
+            },
+            {
+              "t": 0.16,
+              "x": 1.9547,
+              "y": 0,
+              "iv": 17.746342312208725,
+              "ii": 0.23358270994740488,
+              "ov": 17.746342312208725,
+              "oi": 0.6058725260557265
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.6102933480342337,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Corner Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the top-left corner: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "corner",
+          "b-ccw",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (B CCW) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-corner-ease-short-b-cw",
+      "category": "SPIN",
+      "variant": "3D Corner Ease Short",
+      "intensity": "B CW",
+      "label": "Spin · 3D Corner Ease Short · B CW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0,
+          "fx": 0,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 43.34436838195873,
+              "ii": 0.3333333333333333,
+              "ov": 43.34436838195873,
+              "oi": 0.7623588473101431
+            },
+            {
+              "t": 0.16,
+              "v": 28,
+              "iv": 272.64095940222546,
+              "ii": 0.33861172271956624,
+              "ov": 272.64095940222546,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 180,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0,
+          "fx": 0,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": -28,
+              "iv": 256.5945744366874,
+              "ii": 0.3333333333333333,
+              "ov": 256.5945744366874,
+              "oi": 0.22970955793820377
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": 6.097352245326165,
+              "ii": 0.597147451291271,
+              "ov": 6.097352245326165,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.6658354112864282
+            },
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 0,
+              "iv": 18.08902886411314,
+              "ii": 0.2781901011812904,
+              "ov": 18.08902886411314,
+              "oi": 0.667107690601042
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.6519362514888168,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.7323358268442408
+            },
+            {
+              "t": 0.16,
+              "x": 1.9547,
+              "y": 0,
+              "iv": 17.746342312208725,
+              "ii": 0.23358270994740488,
+              "ov": 17.746342312208725,
+              "oi": 0.5590341186044524
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.6102933480342337,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Corner Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the top-left corner: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "corner",
+          "b-cw",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (B CW) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-corner-ease-short-t-ccw",
+      "category": "SPIN",
+      "variant": "3D Corner Ease Short",
+      "intensity": "T CCW",
+      "label": "Spin · 3D Corner Ease Short · T CCW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0,
+          "fx": 1,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -24.264097779534243,
+              "ii": 0.3333333333333333,
+              "ov": -24.264097779534243,
+              "oi": 0.7431212221867913
+            },
+            {
+              "t": 0.16,
+              "v": -28,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 180,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0,
+          "fx": 1,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": 26,
+              "iv": -268.4208961050036,
+              "ii": 0.3333333333333333,
+              "ov": -268.4208961050036,
+              "oi": 0.19340474128219665
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.6231884057172251
+            },
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 1,
+              "iv": 17.807899487119563,
+              "ii": 0.22981366462480055,
+              "ov": 17.807899487119563,
+              "oi": 0.5711740148258377
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6594202897816148,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.6335403725224658
+            },
+            {
+              "t": 0.16,
+              "x": 1.9547,
+              "y": 1,
+              "iv": 17.95620488655389,
+              "ii": 0.21946169775394725,
+              "ov": 17.95620488655389,
+              "oi": 0.5971387841991955
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6749482400714916,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Corner Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the top-right corner: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "corner",
+          "t-ccw",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (T CCW) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-corner-ease-short-t-cw",
+      "category": "SPIN",
+      "variant": "3D Corner Ease Short",
+      "intensity": "T CW",
+      "label": "Spin · 3D Corner Ease Short · T CW",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0,
+          "fx": 1,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": 19.856408709479936,
+              "ii": 0.3333333333333333,
+              "ov": 19.856408709479936,
+              "oi": 0.7431212221671076
+            },
+            {
+              "t": 0.16,
+              "v": 28,
+              "iv": 307.532252941111,
+              "ii": 0.3215177056760204,
+              "ov": 307.532252941111,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 180,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0,
+          "fx": 1,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": -26,
+              "iv": 238.18743345052533,
+              "ii": 0.3333333333333333,
+              "ov": 238.18743345052533,
+              "oi": 0.17284169225560594
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": 1.0884026738461994,
+              "ii": 0.6389963492759996,
+              "ov": 1.0884026738461994,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.6231884057172251
+            },
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 1,
+              "iv": 17.807899487119563,
+              "ii": 0.22981366462480055,
+              "ov": 17.807899487119563,
+              "oi": 0.5633676135886453
+            },
+            {
+              "t": 0.4,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6594202897816148,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.6335403725224658
+            },
+            {
+              "t": 0.16,
+              "x": 1.9547,
+              "y": 1,
+              "iv": 17.95620488655389,
+              "ii": 0.21946169775394725,
+              "ov": 17.95620488655389,
+              "oi": 0.5919345166905496
+            },
+            {
+              "t": 0.4,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6749482400714916,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Corner Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the top-right corner: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "corner",
+          "t-cw",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (T CW) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-side-ease-down",
+      "category": "SPIN",
+      "variant": "3D Side Ease",
+      "intensity": "Down",
+      "label": "Spin · 3D Side Ease · Down",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0.5,
+          "fx": 1,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.28,
+              "v": -26,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0.5,
+          "fx": 1,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": 27,
+              "iv": -265.68578461603994,
+              "ii": 0.3333333333333333,
+              "ov": -265.68578461603994,
+              "oi": 0.17574567280437817
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.36658354112864283
+            },
+            {
+              "t": 0.28,
+              "x": 1,
+              "y": -1.0741,
+              "iv": 8.899768891332643,
+              "ii": 0.7323358268770471,
+              "ov": 8.899768891332643,
+              "oi": 0.677690482564999
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.5788733293450927,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3499584371325691
+            },
+            {
+              "t": 0.28,
+              "x": 1,
+              "y": 2,
+              "iv": 7.380589027549238,
+              "ii": 0.7489609307747018,
+              "ov": 7.380589027549238,
+              "oi": 0.7169895771102245
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6172389537394374,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Side Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the right edge midpoint: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "side",
+          "down",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (Down) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-side-ease-left",
+      "category": "SPIN",
+      "variant": "3D Side Ease",
+      "intensity": "Left",
+      "label": "Spin · 3D Side Ease · Left",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0,
+          "fx": 0.5,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.28,
+              "v": 60,
+              "iv": 231.3081534432012,
+              "ii": 0.32151770570882676,
+              "ov": 231.3081534432012,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0,
+          "fx": 0.5,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": -60,
+              "iv": 430.6477243909026,
+              "ii": 0.3333333333333333,
+              "ov": 430.6477243909026,
+              "oi": 0.17574567280437817
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.28,
+              "x": -1,
+              "y": 0,
+              "iv": 5.886737208305943,
+              "ii": 0.34469051673910306,
+              "ov": 5.886737208305943,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.675449377486726,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.28,
+              "x": 1.9547,
+              "y": 0,
+              "iv": 6.183657787002543,
+              "ii": 0.3333333333333333,
+              "ov": 6.183657787002543,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.7177227155401437,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Side Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the top edge midpoint: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "side",
+          "left",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (Left) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-side-ease-right",
+      "category": "SPIN",
+      "variant": "3D Side Ease",
+      "intensity": "Right",
+      "label": "Spin · 3D Side Ease · Right",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 1,
+          "fx": 0.5,
+          "fy": 1,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.28,
+              "v": 60,
+              "iv": 231.3081534432012,
+              "ii": 0.32151770570882676,
+              "ov": 231.3081534432012,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 1,
+          "fx": 0.5,
+          "fy": 1,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": -60,
+              "iv": 430.6477243909026,
+              "ii": 0.3333333333333333,
+              "ov": 430.6477243909026,
+              "oi": 0.17574567280437817
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0.11837121212121193,
+              "ii": 0.3333333333333333,
+              "ov": 0.11837121212121193,
+              "oi": 0.37474120081674644
+            },
+            {
+              "t": 0.28,
+              "x": -1,
+              "y": 1,
+              "iv": 6.099499601051584,
+              "ii": 0.29192546584992024,
+              "ov": 6.099499601051584,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6645962732006383,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0.22601502749956026,
+              "ii": 0.3333333333333333,
+              "ov": 0.22601502749956026,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.28,
+              "x": 1.9547,
+              "y": 1,
+              "iv": 6.304467550984649,
+              "ii": 0.32298136642967373,
+              "ov": 6.304467550984649,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6697722566524681,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Side Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the bottom edge midpoint: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "side",
+          "right",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (Right) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-side-ease-up",
+      "category": "SPIN",
+      "variant": "3D Side Ease",
+      "intensity": "Up",
+      "label": "Spin · 3D Side Ease · Up",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.88,
+      "params": {
+        "cut": 0.3182,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.28
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.28,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0.5,
+          "fx": 0,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.28,
+              "v": -27,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.28,
+            0.8
+          ],
+          "kfs": [
+            {
+              "t": 0.28,
+              "v": 200
+            },
+            {
+              "t": 0.8,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0.5,
+          "fx": 0,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.28,
+              "v": 28,
+              "iv": -286.5924880879609,
+              "ii": 0.3333333333333333,
+              "ov": -286.5924880879609,
+              "oi": 0.16292515998386534
+            },
+            {
+              "t": 0.8,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.37474120078394013
+            },
+            {
+              "t": 0.28,
+              "x": 0,
+              "y": -1.0741,
+              "iv": 7.937954336517857,
+              "ii": 0.6024844720083249,
+              "ov": 7.937954336517857,
+              "oi": 0.5722248765220119
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.6247810160050488,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.42650103517101284
+            },
+            {
+              "t": 0.28,
+              "x": 0,
+              "y": 2,
+              "iv": 7.559657571939115,
+              "ii": 0.6542443063953977,
+              "ov": 7.559657571939115,
+              "oi": 0.6391145086106024
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.5913361999607535,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Side Ease",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the left edge midpoint: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D.",
+        "energy": "high",
+        "durationSeconds": 0.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "side",
+          "up",
+          "keystone"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.88s); the swing direction (Up) picks the motion. Great for energetic reveals and montage beats."
+      }
+    },
+    {
+      "id": "spin-3d-side-ease-short-down",
+      "category": "SPIN",
+      "variant": "3D Side Ease Short",
+      "intensity": "Down",
+      "label": "Spin · 3D Side Ease Short · Down",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0.5,
+          "fx": 1,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.16,
+              "v": -26,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 1,
+          "cy": 0.5,
+          "fx": 1,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": 27,
+              "iv": -265.68578461603994,
+              "ii": 0.3333333333333333,
+              "ov": -265.68578461603994,
+              "oi": 0.17574567280437817
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.36658354112864283
+            },
+            {
+              "t": 0.16,
+              "x": 1,
+              "y": -1.0741,
+              "iv": 14.165807014865619,
+              "ii": 0.7323358268770471,
+              "ov": 14.165807014865619,
+              "oi": 0.6776904825455314
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.5788733293450927,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3499584371325691
+            },
+            {
+              "t": 0.16,
+              "x": 1,
+              "y": 2,
+              "iv": 14.088817710257803,
+              "ii": 0.7489609307747018,
+              "ov": 14.088817710257803,
+              "oi": 0.6876855477888907
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6172389537394374,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Side Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the right edge midpoint: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "side",
+          "down",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (Down) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-side-ease-short-left",
+      "category": "SPIN",
+      "variant": "3D Side Ease Short",
+      "intensity": "Left",
+      "label": "Spin · 3D Side Ease Short · Left",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0,
+          "fx": 0.5,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.16,
+              "v": 60,
+              "iv": 231.3081534432012,
+              "ii": 0.32151770570882676,
+              "ov": 231.3081534432012,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0,
+          "fx": 0.5,
+          "fy": 0,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": -60,
+              "iv": 430.6477243909026,
+              "ii": 0.3333333333333333,
+              "ov": 430.6477243909026,
+              "oi": 0.17574567280437817
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 0,
+              "iv": 12.06218370561517,
+              "ii": 0.34469051673910306,
+              "ov": 12.06218370561517,
+              "oi": 0.3040293040595868
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.675449377486726,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.16,
+              "x": 1.9547,
+              "y": 0,
+              "iv": 12.02740272095935,
+              "ii": 0.3333333333333333,
+              "ov": 12.02740272095935,
+              "oi": 0.28937728945083324
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.7177227155401437,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Side Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the top edge midpoint: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "side",
+          "left",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (Left) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-side-ease-short-right",
+      "category": "SPIN",
+      "variant": "3D Side Ease Short",
+      "intensity": "Right",
+      "label": "Spin · 3D Side Ease Short · Right",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 1,
+          "fx": 0.5,
+          "fy": 1,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.16,
+              "v": 60,
+              "iv": 231.3081534432012,
+              "ii": 0.32151770570882676,
+              "ov": 231.3081534432012,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 1,
+          "fx": 0.5,
+          "fy": 1,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": -60,
+              "iv": 430.6477243909026,
+              "ii": 0.3333333333333333,
+              "ov": 430.6477243909026,
+              "oi": 0.17574567280437817
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0.11837121212121193,
+              "ii": 0.3333333333333333,
+              "ov": 0.11837121212121193,
+              "oi": 0.37474120081674644
+            },
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 1,
+              "iv": 11.645057468413714,
+              "ii": 0.29192546584992024,
+              "ov": 11.645057468413714,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6645962732006383,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.04,
+              "x": 1,
+              "y": 1,
+              "iv": 0.22601502749956026,
+              "ii": 0.3333333333333333,
+              "ov": 0.22601502749956026,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.16,
+              "x": 1.9547,
+              "y": 1,
+              "iv": 11.853355874760172,
+              "ii": 0.32298136642967373,
+              "ov": 11.853355874760172,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.44,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.6697722566524681,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Side Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the bottom edge midpoint: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "side",
+          "right",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (Right) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
+    },
+    {
+      "id": "spin-3d-side-ease-short-up",
+      "category": "SPIN",
+      "variant": "3D Side Ease Short",
+      "intensity": "Up",
+      "label": "Spin · 3D Side Ease Short · Up",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200
+            },
+            {
+              "t": 0.16,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0.5,
+          "fx": 0,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.04,
+              "v": 0,
+              "iv": -10.175798519533297,
+              "ii": 0.3333333333333333,
+              "ov": -10.175798519533297,
+              "oi": 0.5186823197362677
+            },
+            {
+              "t": 0.16,
+              "v": -27,
+              "iv": -283.0026353191865,
+              "ii": 0.32151770572825256,
+              "ov": -283.0026353191865,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200
+            },
+            {
+              "t": 0.4,
+              "v": 200
+            }
+          ],
+          "norm": 200,
+          "cx": 0,
+          "cy": 0.5,
+          "fx": 0,
+          "fy": 0.5,
+          "rot": [
+            {
+              "t": 0.16,
+              "v": 28,
+              "iv": -286.5924880879609,
+              "ii": 0.3333333333333333,
+              "ov": -286.5924880879609,
+              "oi": 0.16292515998386534
+            },
+            {
+              "t": 0.4,
+              "v": 0,
+              "iv": -0.34412849417873215,
+              "ii": 0.5971474512965692,
+              "ov": -0.34412849417873215,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "shutter": 320,
+          "mirror": true
+        },
+        "shutter": 320,
+        "cornerPin": {
+          "win": [
+            0.04,
+            0.44
+          ],
+          "ul": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.37474120078394013
+            },
+            {
+              "t": 0.16,
+              "x": 0,
+              "y": -1.0741,
+              "iv": 14.185056117056478,
+              "ii": 0.6024844720083249,
+              "ov": 14.185056117056478,
+              "oi": 0.4989648032857323
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.6247810160050488,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.04,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.42650103517101284
+            },
+            {
+              "t": 0.16,
+              "x": 0,
+              "y": 2,
+              "iv": 14.050735921222792,
+              "ii": 0.6542443063953977,
+              "ov": 14.050735921222792,
+              "oi": 0.6830705524736349
+            },
+            {
+              "t": 0.44,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.5913361999607535,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-spin3d-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Spin 3D Side Ease Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D spin about the left edge midpoint: the outgoing shot swings away over mirrored padding under heavy rotational blur, the incoming shot swings in from the opposite side and eases to rest while a keystone wobble (one frame edge stretching and flattening) sells the 3D. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "spin",
+          "3d",
+          "rotation",
+          "side",
+          "up",
+          "keystone",
+          "short"
+        ],
+        "useWhen": "Rotational scene change with real 3D feel (~0.44s); the swing direction (Up) picks the motion. Great for energetic reveals and montage beats. Snappy version."
+      }
     }
   ]
 }
