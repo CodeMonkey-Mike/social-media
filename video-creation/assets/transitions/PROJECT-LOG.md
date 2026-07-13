@@ -6,7 +6,7 @@ Remotion transition library. Last updated: 2026-07-13._
 **STATUS / RESUME POINT (2026-07-13): 743 rows across 12 categories, all built + QA'd.**
 GLITCH 89 · OFFSET 152 · DEVIATION 5 · EXPAND 20 · GLASS 40 · LIGHT LEAKS 34 · MELT 30 ·
 MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68 · SPLIT 144. Everything from PERSPECTIVE
-onward (2026-07-13, commits `764bcaf`..) awaits Mike's review in the galleries.
+onward (2026-07-13, commits `764bcaf`..`a4cc66b`) awaits Mike's review in the galleries.
 **Remaining pack categories: TRANSFORM, ZOOM** — same drill: extract per-sequence →
 decode → builder with hard asserts → render → frame-aligned sweep QA. Most non-glitch families
 land on the generalized **PerspectiveEase** phase engine (pinned zoom/pan/rot + Corner Pin +
@@ -18,6 +18,8 @@ A→B while the pack demos them same-scene — flip demoSameScene on those rows 
 Infra reminders: minimal render pubdir (rebuild in the scratchpad: 2 demo stills + all
 `lib/sfx-*.mp3`), `_render-offsetgeo.js <filter>` with `OFFSET_PUBDIR` env, `%TEMP%/sw.xml`
 is the decompressed FullHD project (re-gunzip if evicted), galleries via `_gen-galleries.js`.
+Long render batches get RECLAIMED when the session idles — run them foreground (or keep a
+Monitor alive) and rely on the `.ok` marker-resume; a killed batch is a resume, not a restart.
 
 > **Read `CLAUDE.md` in this folder first** (hard rules: never invent a transition's look; use the
 > project's real values + the pack's own asset files; never overwrite an approved result blindly).
