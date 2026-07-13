@@ -20,6 +20,7 @@ import { MeltRGB } from './engines/MeltRGB';
 import { MeltEquidistant } from './engines/MeltEquidistant';
 import { Motion3D } from './engines/Motion3D';
 import { MotionShake } from './engines/MotionShake';
+import { PerspectiveEase } from './engines/PerspectiveEase';
 
 /**
  * The catalog (data) lives in assets/transitions/library.json — the single
@@ -82,6 +83,7 @@ export const ENGINES: Record<string, React.FC<any>> = {
   MeltEquidistant,
   Motion3D,
   MotionShake,
+  PerspectiveEase,
 };
 
 export const TRANSITIONS = (library as { transitions: TransitionRow[] }).transitions;
