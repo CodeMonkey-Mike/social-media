@@ -33,11 +33,27 @@ const TABLE = [
   ['3D Side Ease', '3D Side Ease', ['Down', 'Left', 'Right', 'Up']],
   ['3D Side Ease Short', '3D Side Ease Short (Slow)', ['Down', 'Left', 'Right', 'Up']],
 ];
+// the non-3D subgroups (folders match variants; Shake previews carry the
+// intensity INSIDE the name: "Spin Shake 1x - CCW" in folder "Shake")
+for (const sub of ['Center Ease', 'Center Swinging', 'Corner Bounce', 'Corner Ease', 'Corner Swinging']) {
+  const dirs = /Corner/.test(sub) ? ['LB', 'LT', 'RB', 'RT'] : ['CCW', 'CW'];
+  for (const short of ['', ' Short']) TABLE.push([`${sub}${short}`, `${sub}${short}`, dirs]);
+}
+for (const short of ['', ' Short']) TABLE.push([`Twirl${short}`, `Twirl${short}`, ['CCW', 'CW']]);
 for (const [variant, pvFolder, dirs] of TABLE) {
   for (const d of dirs) {
     const pvName = `Spin ${variant} - ${d}`;
     const id = ('spin-' + variant + '-' + d).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     VARIANTS.push([variant, pvFolder, pvName, id]);
+  }
+}
+// Shake: "Spin Shake [Short] 1x - CCW" in folders "Shake"/"Shake Short"
+for (const short of ['', ' Short']) {
+  for (const nx of ['1x', '2x']) {
+    for (const d of ['CCW', 'CW']) {
+      VARIANTS.push([`Shake${short}`, `Shake${short}`, `Spin Shake${short} ${nx} - ${d}`,
+        `spin-shake${short ? '-short' : ''}-${nx}-${d.toLowerCase()}`]);
+    }
   }
 }
 const sh = (c) => execSync(c, { stdio: ['ignore', 'pipe', 'pipe'] });
