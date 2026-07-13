@@ -21,6 +21,9 @@ const SUBS = [
   ['Ease Out', 'Perspective Ease Out'], ['Ease Out Short', 'Perspective Ease Out Short'],
   ['Hit In', 'Perspective Hit In'], ['Hit In Short', 'Perspective Hit In Short'],
   ['Hit Out', 'Perspective  Hit Out'], ['Hit Out Short', 'Perspective  Hit Out Short'],
+  // Pan 3D: preview filenames carry "Ease", browse folders/ids don't; 4 dirs only
+  // (the missing diagonal previews are skipped by the existsSync check)
+  ['Pan 3D', 'Perspective Pan 3D Ease'], ['Pan 3D Short', 'Perspective Pan 3D Short Ease'],
 ];
 const VARIANTS = SUBS.flatMap(([sub, prefix]) =>
   DIRS.map((d) => [sub, `${prefix} - ${d}`,

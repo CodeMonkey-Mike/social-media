@@ -23,12 +23,30 @@ values, with a per-folder gallery to browse them.
 
 ---
 
-## PERSPECTIVE: Ease In/Out + Hit In/Out (+ Shorts) = 64 built ✅ (Ease In 16 on 2026-07-13, the other 48 same day; awaiting Mike's review) — Pan 3D ×2 subgroups remain
+## PERSPECTIVE: ALL 72 built ✅ (2026-07-13, awaiting Mike's review) — CATEGORY COMPLETE
 
-`perspective-{ease-in,ease-out,hit-in,hit-out}[-short]-{8 dirs}` — ONE engine
+`perspective-{ease-in,ease-out,hit-in,hit-out}[-short]-{8 dirs}` (64) +
+`perspective-pan-3d[-short]-{down,left,right,up}` (8) — ONE engine
 `remotion/src/transitions/engines/PerspectiveEase.tsx`, browse `browse/PERSPECTIVE/<Sub>/`.
-Durations: Ease 0.84/0.44 · Hit In 0.76/0.4 · Hit Out 0.8/0.4. **fidelity: near-1:1 (Ease),
-approximate (Hit — the Deviation fringe mechanism is swapped, look preserved; OFFSET Hit precedent).**
+Durations: Ease 0.84/0.44 · Hit In 0.76/0.4 · Hit Out 0.8/0.4 · Pan 3D 1.0/0.52.
+**fidelity: near-1:1 (Ease + Pan 3D), approximate (Hit — the Deviation fringe mechanism is
+swapped, look preserved; OFFSET Hit precedent).**
+
+**Pan 3D subgroup (the "3D" one, added last):** (In) = rig2 on A, CENTER-anchored, with the
+Geometry2 **Position KEYFRAMED (a PAN)** to the direction point (~±0.37 screen, hand-placed
+values) while scale eases 200→150 — A shrinks to 75% gliding off over mirror padding. (Out) =
+plain Geometry2 on B, scale 200→100 with Position sliding in from the OPPOSITE edge to center
+(continuous camera motion through the cut), UNDER a separate **"Corner" adjustment clip: a
+keyframed AE Corner Pin** — the entering edge starts stretched to 3× frame height/width
+(corners at −1 and +2) and flattens to identity = the 3D keystone swing. Engine additions:
+per-phase optional `pan` 2D curve (bezier handles, path-length-normalized velocities — the
+OffsetSlide sampleCurve2D convention) + `cornerPin` block rendered as an EXACT homography
+(the MotionShake closed-form 4-point matrix3d solve), sampled per FRAME around the blurred
+accumulation (the Corner clip carries no shutter of its own — AE blurs t1 first, then pins).
+Sequence names carry a trailing "Ease" ("Perspective Pan 3D Ease - Right") that the ids drop.
+SFX `Camera_01.wav` (exactly 1.0s) @0 from 0 → `sfx-perspective-pan3d-{100,52}.mp3`. QA: 8
+sweep sheets + full-res keystone compares (Down at t=0.40/0.52) — the entry fan-out geometry,
+pan pacing and settle match; residual = content density (their glass facade vs our spiky towers).
 
 **Mechanism** (`_extract-perspective.js` → `_perspective-clips.json` → `_build-perspective-rows.js`):
 every phase = a uniform zoom of the current scene about a PINNED point; direction lives ONLY in
