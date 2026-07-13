@@ -49,6 +49,11 @@ export type GlassBeveledStage = {
    * decoded paths carry tangents == anchors), builder-mirrored for flips.
    * null = the unmasked full-frame base push (Beveled 3/4 only). */
   mask: [number, number][] | null;
+  /** OPTIONAL (SPLIT, additive 2026-07-13): the mask used AFTER the cut when
+   * it differs from `mask` (SPLIT's split orientation can change at the cut —
+   * HV/Combs). undefined = same mask both sides; null = unmasked after cut.
+   * GLASS rows never set it — their default path is untouched. */
+  maskOut?: [number, number][] | null;
   /** PIECEWISE wrap-shift curves in SEQUENCE-time seconds ((In) clip before the
    * cut, (Out) after). dx,dy are shift fractions; one full wrap = ±1. */
   curveIn: CurveKf[];
@@ -163,6 +168,8 @@ export const GlassBeveled: React.FC<TransitionProps & { params: GlassBeveledPara
   const order = !beforeCut && params.outOrder ? params.outOrder : stages.map((_, i) => i);
   order.forEach((i) => {
     const st = stages[i];
+    // SPLIT additive: the mask may change at the cut (undefined = unchanged)
+    const mask = !beforeCut && st.maskOut !== undefined ? st.maskOut : st.mask;
     const { dx, dy } = shifts[i];
     // second copy completes the torus wrap along THIS stage's own push axis
     // (every stage is single-axis; Blocks Corner rows mix x- and y-stages)
@@ -177,9 +184,9 @@ export const GlassBeveled: React.FC<TransitionProps & { params: GlassBeveledPara
         <feMergeNode in={`o${i}`} />
       </feMerge>,
     );
-    if (st.mask) {
+    if (mask) {
       prims.push(
-        <feImage key={`m${i}`} href={maskUri(st.mask, W, H)} x={0} y={0} width={W} height={H} preserveAspectRatio="none" result={`m${i}`} />,
+        <feImage key={`m${i}`} href={maskUri(mask, W, H)} x={0} y={0} width={W} height={H} preserveAspectRatio="none" result={`m${i}`} />,
         <feComposite key={`k${i}`} operator="in" in={`g${i}`} in2={`m${i}`} result={`k${i}`} />,
         <feComposite key={`s${i}`} operator="over" in={`k${i}`} in2={prev} x={0} y={0} width={W} height={H} result={`s${i}`} />,
       );

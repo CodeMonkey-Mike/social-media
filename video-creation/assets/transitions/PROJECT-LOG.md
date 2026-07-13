@@ -3,14 +3,15 @@
 _Re-creating the **Swiftly Studio 850 Seamless Transitions** Premiere pack as a browsable
 Remotion transition library. Last updated: 2026-07-13._
 
-**STATUS / RESUME POINT (2026-07-13): 599 rows across 11 categories, all built + QA'd.**
+**STATUS / RESUME POINT (2026-07-13): 743 rows across 12 categories, all built + QA'd.**
 GLITCH 89 · OFFSET 152 · DEVIATION 5 · EXPAND 20 · GLASS 40 · LIGHT LEAKS 34 · MELT 30 ·
-MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68. Everything from PERSPECTIVE onward
-(2026-07-13, commits `764bcaf`..`56804f6`) awaits Mike's review in the galleries.
-**Remaining pack categories: SPLIT, TRANSFORM, ZOOM** — same drill: extract per-sequence →
+MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68 · SPLIT 144. Everything from PERSPECTIVE
+onward (2026-07-13, commits `764bcaf`..) awaits Mike's review in the galleries.
+**Remaining pack categories: TRANSFORM, ZOOM** — same drill: extract per-sequence →
 decode → builder with hard asserts → render → frame-aligned sweep QA. Most non-glitch families
 land on the generalized **PerspectiveEase** phase engine (pinned zoom/pan/rot + Corner Pin +
-shake + deviation); check it first before writing a new engine. Two open flags for Mike:
+shake + deviation) or the **GlassBeveled** masked wrap-offset chain (now with additive
+per-stage `maskOut`); check both before writing a new engine. Two open flags for Mike:
 (1) OFFSET Hit's deviation fringe carries the same RED/BLUE tint pair PERSPECTIVE proved is
 orange/blue — its green implementation may deserve the same correction; (2) SHAKE demos render
 A→B while the pack demos them same-scene — flip demoSameScene on those rows if preferred.
@@ -35,6 +36,67 @@ values, with a per-folder gallery to browse them.
 | Registry | `remotion/src/transitions/registry.ts` | binds row.engine → component. |
 | Demo | `remotion/src/TransitionDemo.tsx` | renders one row between two stills (passes image srcs). |
 | Browser | `browse/<CAT>/<VARIANT>/gallery.html` | per-folder video galleries. |
+
+---
+
+## SPLIT: ALL 144 built ✅ (2026-07-13, awaiting Mike's review) — CATEGORY COMPLETE (14 subgroups, 4 architecture families)
+
+`_extract-split.js` → `_split-clips.json` → `_build-split-rows.js` (hard asserts) → 144 rows;
+browse `browse/SPLIT/<Sub>/` (pack tree: Ease 16 · Easy Short 16 · Easy Offset 8 + Short 8 ·
+Swinging 16 + Short 16 · Swinging Offset 8 + Short 8 · Slide 12 + Short 12 · Slide Cross 8 +
+Short 8 · Perspective 4 + Short 4). Durations: Ease/Swinging/Offset 0.88 (cut 0.24), Shorts
+0.44/0.48 (cut 0.16) · Slide 1.08/0.80 (cut 0.40/0.32) · Perspective 0.84/0.48 (cut 0.48/0.28).
+**fidelity: near-1:1 all 144** — masks, curves, rigs, compositing order all real project data.
+NOTE: a 145th `<Name>Split Percent</Name>` in the prproj is an effect PARAMETER, not a sequence.
+
+**Family A — Ease/Swinging (+Short), 64 rows, NEW engine `SplitPanes.tsx` (pure DOM):**
+each (In)/(Out) HST Adjustment = TWO AEMask-gated Geometry2 layers over the rig2 mirror-padded
+identity (Offset 0:0 quadrant swap + Replicate 2 + the 4 ExpandPan Mirrors). **Geometry2
+uniform scale rides Scale HEIGHT (SW stays 100, ignored — PERSPECTIVE precedent)**: identity
+at 200/pos 0.5, so pane displacement = position − 0.5, UNSCALED. Halves shear apart ALONG the
+split line, mirror padding fills the gap; Swinging (Out) = 4-kf pendulum. The split
+orientation CAN CHANGE at the cut (HV = horizontal in → vertical out; Diagonal Combs flips
+the diagonal). **KEY DECODE: every pane's motion is PARALLEL to its own split edge**
+(builder-asserted, ≤7px hand-authoring wobble) → panes never sample each other's output →
+the adjustment chain reduces to independent clip-path panes over the identity base = plain
+DOM, no filter chain, and **shutter 0 everywhere** (no blur — the scramble IS the look).
+Masks: some carry a real 0.5px anti-seam Mask Expansion (builder expands the quad outward).
+
+**Families B+C — Easy Offset/Swinging Offset 32 + Slide/Slide Cross 40, engine `GlassBeveled`
+(+ additive per-stage `maskOut`):** masked wrap-OFFSETS, the GLASS architecture verbatim.
+B = two half-frame panes counter-wrapping (mask orientation changes at the cut → `maskOut`;
+regression-checked: approved GLASS re-render diff = YAVG 0 every frame). C = 4-5 OVERLAPPING
+strip bands, GLASS-style time-staggered starts (0/0.08/0.16/0.2 + 0.76s spans), each exactly
+ONE full wrap (0.5→1.5, ends at identity), compounding where bands overlap; directions via
+FULL-frame flip sandwiches — Cross interleaves flips between offsets so alternate bands
+counter-slide — resolved analytically in the builder (parity walk bottom-up: mirror mask +
+negate shift; asserts balanced). (Out) curves carry negative-time kfs (mid-flight at the cut).
+
+**Family D — Perspective (+Short), 8 rows, NEW engine `SplitPerspective.tsx`** (sibling of
+PerspectiveEase, same evaluators/blur/cornerPin homography): a masked-flip SANDWICH — two
+flip tracks bracket the transform track, each = unmasked PR Flip + half-masked flip-back =
+NET one half mirrored (H: top half via H-flips; V: left half via V-flips) for the whole
+window, so the halves COUNTER-SLIDE through the move and the outer flip un-mirrors the
+output. Phases: plain zoom 100→300 into an edge-MIDPOINT pin (shutter 180) | rig pan
+(Offset 0:0 + Replicate 2, **NO mirrors = torus WRAP padding**, static 200) sliding half a
+frame to center UNDER a keyframed Corner Pin (entering edge starts stretched ~2.44×, relaxes
+across the A→B cut) | (Out) pin-only relax to identity. Shorts window-TRUNCATE the relax
+curve (the Hit Short snap pattern — engine gates by window). Zoom→pan boundary is a hard
+visual snap (real; the pack cuts mid-move).
+
+SFX by MEASURED (media, start, in-point, window), asserted per sequence: A+B `Simple_SFX.mp3`
+@0 ip0 → `sfx-split-simple-{88,44,48}.mp3`; C `Skew_Simple_01.mp3` @0.04 (lead baked) ip0,
+audio ENDS EARLY (1.00 < 1.08 / 0.76 < 0.80) → `sfx-split-slide-{100,76}.mp3`; D
+`Whoosh_02.wav` @0/@0.04 ip0 → `sfx-split-perspective-{84,44}.mp3`.
+
+QA: 144 frame-aligned 12.5fps sweep sheets (`_qa-split-sweep.js` → `_qa/split/`) + full-res
+probe compares (HV-1 ×4 timestamps incl. peak-shear at 0.20 and the post-cut axis change at
+0.28; Easy Offset Combs 0.18/0.40 incl. the maskOut swap; Slide Cross 2 Up 0.30 mirrored
+counter-bands; Perspective H1 0.20/0.36/0.55 zoom/pan/keystone): split orientations, shear
+directions, mirror vs wrap padding, stagger cadence, pendulum overshoot and keystone swing
+all track the previews. Honest caveats: 25→29.97 pulldown slop (±half-frame reads large near
+the whips); family A's hand-authored curves run up to ~7px off-parallel → a sub-perceptual
+sliver at the split edge at peak differs from Premiere's chain compositing.
 
 ---
 
