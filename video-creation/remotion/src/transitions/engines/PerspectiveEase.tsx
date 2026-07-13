@@ -39,6 +39,7 @@ import { TransitionProps } from '../types';
  */
 type Handles = { iv?: number; ii?: number; ov?: number; oi?: number };
 type ScalarKf = { t: number; v: number } & Handles;
+type PanKf = { t: number; x: number; y: number } & Handles;
 
 export type PerspectivePhase = {
   /** Clip window, seq seconds. */
@@ -53,6 +54,8 @@ export type PerspectivePhase = {
   /** Frame pin point the anchor sits at (the Geometry2 Position). */
   fx: number;
   fy: number;
+  /** Keyframed pin (Pan 3D: the Geometry2 Position PANS) — overrides fx/fy. */
+  pan?: PanKf[];
   /** Mirror-tile padding (rig phases; plain zooms >= 1 always cover). */
   mirror: boolean;
 };
@@ -68,6 +71,11 @@ export type PerspectiveEaseParams = {
   shake?: { win: [number, number]; kfs: { t: number; x: number; y: number }[] };
   /** Hit green-fringe flash window (source Emboss relief 10 -> shift 7px). */
   deviation?: { win: [number, number]; reliefPx: number };
+  /** Pan 3D: the keyframed AE Corner Pin adjustment over the (Out) side — the
+   * entering edge starts stretched (a 3D keystone swing) and flattens to rest.
+   * Applied per FRAME around the blurred accumulation (the Corner clip has no
+   * shutter of its own). Corners as frame fractions; 1 kf = static. */
+  cornerPin?: { win: [number, number]; ul: PanKf[]; ur: PanKf[]; ll: PanKf[]; lr: PanKf[] };
 };
 
 const bez = (a: number, b: number, c: number, d: number, s: number) => {
@@ -106,6 +114,51 @@ const sampleKfs = (kfs: ScalarKf[], t: number) => {
   const a = kfs[i], b = kfs[i + 1];
   const L = b.v - a.v;
   return a.v + L * segProgress(a.t, b.t, a, b, L, t);
+};
+
+/** 2D bezier sample (real handles; velocity normalized by segment path length —
+ * the OffsetSlide sampleCurve2D convention). */
+const sample2D = (kfs: PanKf[], t: number) => {
+  if (t <= kfs[0].t) return { x: kfs[0].x, y: kfs[0].y };
+  const last = kfs[kfs.length - 1];
+  if (t >= last.t) return { x: last.x, y: last.y };
+  let i = 0;
+  while (i < kfs.length - 2 && t > kfs[i + 1].t) i++;
+  const a = kfs[i], b = kfs[i + 1];
+  const L = Math.hypot(b.x - a.x, b.y - a.y);
+  const p = segProgress(a.t, b.t, a, b, L, t);
+  return { x: a.x + (b.x - a.x) * p, y: a.y + (b.y - a.y) * p };
+};
+
+/** Homography mapping the unit square corners to 4 target points (px), as a
+ * CSS matrix3d — the MotionShake closed-form 4-point solve. */
+const cornerPinMatrix = (
+  W: number, H: number,
+  ul: { x: number; y: number }, ur: { x: number; y: number },
+  ll: { x: number; y: number }, lr: { x: number; y: number },
+) => {
+  const x0 = ul.x * W, y0 = ul.y * H;
+  const x1 = ur.x * W, y1 = ur.y * H;
+  const x2 = ll.x * W, y2 = ll.y * H;
+  const x3 = lr.x * W, y3 = lr.y * H;
+  const dx1 = x1 - x3, dx2 = x2 - x3, dy1 = y1 - y3, dy2 = y2 - y3;
+  const sx = x0 - x1 - x2 + x3, sy = y0 - y1 - y2 + y3;
+  const den = dx1 * dy2 - dx2 * dy1;
+  const g = (sx * dy2 - sy * dx2) / den;
+  const h = (sy * dx1 - sx * dy1) / den;
+  const a = x1 - x0 + g * x1;
+  const b = x2 - x0 + h * x2;
+  const c = x0;
+  const d = y1 - y0 + g * y1;
+  const e = y2 - y0 + h * y2;
+  const f = y0;
+  const m = [
+    a / W, d / W, 0, g / W,
+    b / H, e / H, 0, h / H,
+    0, 0, 1, 0,
+    c, f, 0, 1,
+  ];
+  return `matrix3d(${m.map((v) => v.toFixed(6)).join(',')})`;
 };
 
 /** Linear 2D sample of the dense baked jitter keys (25fps spacing). */
@@ -165,7 +218,8 @@ export const PerspectiveEase: React.FC<TransitionProps & { params: PerspectiveEa
       if (ended) return { s: 1, cx: 0.5, cy: 0.5, dx: 0, dy: 0, mirror: false };
     }
     const s = sampleKfs(ph.kfs, t) / ph.norm;
-    return { s, cx: ph.cx, cy: ph.cy, dx: ph.fx - ph.cx, dy: ph.fy - ph.cy, mirror: ph.mirror };
+    const pin = ph.pan ? sample2D(ph.pan, t) : { x: ph.fx, y: ph.fy };
+    return { s, cx: ph.cx, cy: ph.cy, dx: pin.x - ph.cx, dy: pin.y - ph.cy, mirror: ph.mirror };
   };
 
   // shutter 180 = 0.5-frame exposure, centered on the frame time (AE phase -90)
@@ -231,6 +285,25 @@ export const PerspectiveEase: React.FC<TransitionProps & { params: PerspectiveEa
   const devId = 'pease-dev';
 
   let node: React.ReactNode = <AbsoluteFill>{samples}</AbsoluteFill>;
+  // Pan 3D keystone: exact Corner Pin homography, sampled per FRAME (the Corner
+  // adjustment clip carries no shutter — it warps the already-blurred composite).
+  const cp = params.cornerPin;
+  if (cp && tSec >= cp.win[0] && tSec < cp.win[1]) {
+    node = (
+      <AbsoluteFill
+        style={{
+          transform: cornerPinMatrix(
+            width, height,
+            sample2D(cp.ul, tSec), sample2D(cp.ur, tSec),
+            sample2D(cp.ll, tSec), sample2D(cp.lr, tSec),
+          ),
+          transformOrigin: '0 0',
+        }}
+      >
+        {node}
+      </AbsoluteFill>
+    );
+  }
   if (devOn) node = <AbsoluteFill style={{ filter: `url(#${devId})` }}>{node}</AbsoluteFill>;
 
   return (

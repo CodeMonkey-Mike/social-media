@@ -102959,6 +102959,1618 @@
         ],
         "useWhen": "High-energy scene change with a physical IMPACT landing (shake + R/B fringe flash) — great for beat drops and hard reveals (~0.4s). Snappy version."
       }
+    },
+    {
+      "id": "perspective-pan-3d-down",
+      "category": "PERSPECTIVE",
+      "variant": "Pan 3D",
+      "intensity": "Down",
+      "label": "Perspective · Pan 3D · Down",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1,
+      "params": {
+        "cut": 0.32,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.32
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200,
+              "iv": 14.678280333621062,
+              "ii": 0.3333333333333333,
+              "ov": 14.678280333621062,
+              "oi": 0.6940980870299509
+            },
+            {
+              "t": 0.32,
+              "v": 150,
+              "iv": -300.18694911895074,
+              "ii": 0.2576891107909213,
+              "ov": -300.18694911895074,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.4954,
+          "fy": 0.8704,
+          "mirror": true,
+          "pan": [
+            {
+              "t": 0.04,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.5431265855862848
+            },
+            {
+              "t": 0.32,
+              "x": 0.4954,
+              "y": 0.8704,
+              "iv": 4.314828260020671,
+              "ii": 0.20660802344099174,
+              "ov": 4.314828260020671,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "outPhase": {
+          "win": [
+            0.32,
+            0.84
+          ],
+          "kfs": [
+            {
+              "t": 0.32,
+              "v": 200,
+              "iv": -209.45882552953597,
+              "ii": 0.3333333333333333,
+              "ov": -209.45882552953597,
+              "oi": 0.3945578231292517
+            },
+            {
+              "t": 0.84,
+              "v": 100,
+              "iv": -28.25104479032505,
+              "ii": 0.6081513007077078,
+              "ov": -28.25104479032505,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 100,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "mirror": false,
+          "pan": [
+            {
+              "t": 0.32,
+              "x": 0.5,
+              "y": 0.0111,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 4.276956783121544,
+              "oi": 0.5296999225287767
+            },
+            {
+              "t": 0.84,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.6240453844488445,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ]
+        },
+        "shutter": 180,
+        "cornerPin": {
+          "win": [
+            0.32,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0.32,
+              "x": -1,
+              "y": 0,
+              "iv": 5.542411592548635,
+              "ii": 0.3333333333333333,
+              "ov": 5.542411592548635,
+              "oi": 0.29083915343915345
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 0,
+              "iv": 0.030284003792037995,
+              "ii": 0.4467313406968913,
+              "ov": 0.030284003792037995,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.32,
+              "x": 2,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 4.8254669013591505,
+              "oi": 0.31656804734892535
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.46042293248941313,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-perspective-pan3d-100.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Pan 3D",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D camera pan toward down: the outgoing shot shrinks and glides off down over mirrored padding, then the incoming shot sweeps in from the opposite side out of a deep zoom, its entering edge stretched in a 3D keystone swing that flattens as it settles at center.",
+        "energy": "high",
+        "durationSeconds": 1,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "pan-3d",
+          "down",
+          "pan",
+          "3d",
+          "keystone",
+          "ease"
+        ],
+        "useWhen": "High-energy scene change that reads as a 3D camera sweep downward — the keystone swing gives it depth; great for location moves (~1s)."
+      }
+    },
+    {
+      "id": "perspective-pan-3d-left",
+      "category": "PERSPECTIVE",
+      "variant": "Pan 3D",
+      "intensity": "Left",
+      "label": "Perspective · Pan 3D · Left",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1,
+      "params": {
+        "cut": 0.32,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.32
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200,
+              "iv": 14.678280333621062,
+              "ii": 0.3333333333333333,
+              "ov": 14.678280333621062,
+              "oi": 0.6940980870299509
+            },
+            {
+              "t": 0.32,
+              "v": 150,
+              "iv": -300.18694911895074,
+              "ii": 0.2576891107909213,
+              "ov": -300.18694911895074,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.1302,
+          "fy": 0.5,
+          "mirror": true,
+          "pan": [
+            {
+              "t": 0.04,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.5431265855862848
+            },
+            {
+              "t": 0.32,
+              "x": 0.1302,
+              "y": 0.5,
+              "iv": 4.314828260020671,
+              "ii": 0.20660802344099174,
+              "ov": 4.314828260020671,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "outPhase": {
+          "win": [
+            0.32,
+            0.84
+          ],
+          "kfs": [
+            {
+              "t": 0.32,
+              "v": 200,
+              "iv": -209.45882552953597,
+              "ii": 0.3333333333333333,
+              "ov": -209.45882552953597,
+              "oi": 0.3945578231292517
+            },
+            {
+              "t": 0.84,
+              "v": 100,
+              "iv": -28.25104479032505,
+              "ii": 0.6081513007077078,
+              "ov": -28.25104479032505,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 100,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "mirror": false,
+          "pan": [
+            {
+              "t": 0.32,
+              "x": 1,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 4.276956783121544,
+              "oi": 0.5296999225287767
+            },
+            {
+              "t": 0.84,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.6240453844488445,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ]
+        },
+        "shutter": 180,
+        "cornerPin": {
+          "win": [
+            0.32,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.32,
+              "x": 1,
+              "y": -1,
+              "iv": 5.808892037686894,
+              "ii": 0.3333333333333333,
+              "ov": 5.808892037686894,
+              "oi": 0.3129177300157955
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.34354113499210226,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.32,
+              "x": 1,
+              "y": 2,
+              "iv": 5.642408232348327,
+              "ii": 0.3333333333333333,
+              "ov": 5.642408232348327,
+              "oi": 0.34354113499210226
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.32822943250394887,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-perspective-pan3d-100.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Pan 3D",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D camera pan toward left: the outgoing shot shrinks and glides off left over mirrored padding, then the incoming shot sweeps in from the opposite side out of a deep zoom, its entering edge stretched in a 3D keystone swing that flattens as it settles at center.",
+        "energy": "high",
+        "durationSeconds": 1,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "pan-3d",
+          "left",
+          "pan",
+          "3d",
+          "keystone",
+          "ease"
+        ],
+        "useWhen": "High-energy scene change that reads as a 3D camera sweep leftward — the keystone swing gives it depth; great for location moves (~1s)."
+      }
+    },
+    {
+      "id": "perspective-pan-3d-right",
+      "category": "PERSPECTIVE",
+      "variant": "Pan 3D",
+      "intensity": "Right",
+      "label": "Perspective · Pan 3D · Right",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1,
+      "params": {
+        "cut": 0.32,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.32
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200,
+              "iv": 14.678280333621062,
+              "ii": 0.3333333333333333,
+              "ov": 14.678280333621062,
+              "oi": 0.6940980870299509
+            },
+            {
+              "t": 0.32,
+              "v": 150,
+              "iv": -300.18694911895074,
+              "ii": 0.2576891107909213,
+              "ov": -300.18694911895074,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.8854,
+          "fy": 0.5185,
+          "mirror": true,
+          "pan": [
+            {
+              "t": 0.04,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.5431265855862848
+            },
+            {
+              "t": 0.32,
+              "x": 0.8854,
+              "y": 0.5185,
+              "iv": 4.314828260020671,
+              "ii": 0.20660802344099174,
+              "ov": 4.314828260020671,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "outPhase": {
+          "win": [
+            0.32,
+            0.84
+          ],
+          "kfs": [
+            {
+              "t": 0.32,
+              "v": 200,
+              "iv": -209.45882552953597,
+              "ii": 0.3333333333333333,
+              "ov": -209.45882552953597,
+              "oi": 0.3945578231292517
+            },
+            {
+              "t": 0.84,
+              "v": 100,
+              "iv": -28.25104479032505,
+              "ii": 0.6081513007077078,
+              "ov": -28.25104479032505,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 100,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "mirror": false,
+          "pan": [
+            {
+              "t": 0.32,
+              "x": 0,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 4.276956783121544,
+              "oi": 0.5296999225287767
+            },
+            {
+              "t": 0.84,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.6240453844488445,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ]
+        },
+        "shutter": 180,
+        "cornerPin": {
+          "win": [
+            0.32,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0.32,
+              "x": 0,
+              "y": -1,
+              "iv": 6.359264889082055,
+              "ii": 0.3333333333333333,
+              "ov": 6.359264889082055,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.32,
+              "x": 0,
+              "y": 2,
+              "iv": 6.3473449923827445,
+              "ii": 0.3333333333333333,
+              "ov": 6.3473449923827445,
+              "oi": 0.35374893665087115
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-perspective-pan3d-100.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Pan 3D",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D camera pan toward right: the outgoing shot shrinks and glides off right over mirrored padding, then the incoming shot sweeps in from the opposite side out of a deep zoom, its entering edge stretched in a 3D keystone swing that flattens as it settles at center.",
+        "energy": "high",
+        "durationSeconds": 1,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "pan-3d",
+          "right",
+          "pan",
+          "3d",
+          "keystone",
+          "ease"
+        ],
+        "useWhen": "High-energy scene change that reads as a 3D camera sweep rightward — the keystone swing gives it depth; great for location moves (~1s)."
+      }
+    },
+    {
+      "id": "perspective-pan-3d-up",
+      "category": "PERSPECTIVE",
+      "variant": "Pan 3D",
+      "intensity": "Up",
+      "label": "Perspective · Pan 3D · Up",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1,
+      "params": {
+        "cut": 0.32,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.32
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200,
+              "iv": 14.678280333621062,
+              "ii": 0.3333333333333333,
+              "ov": 14.678280333621062,
+              "oi": 0.6940980870299509
+            },
+            {
+              "t": 0.32,
+              "v": 150,
+              "iv": -300.18694911895074,
+              "ii": 0.2576891107909213,
+              "ov": -300.18694911895074,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.1481,
+          "mirror": true,
+          "pan": [
+            {
+              "t": 0.04,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.5431265855862848
+            },
+            {
+              "t": 0.32,
+              "x": 0.5,
+              "y": 0.1481,
+              "iv": 4.314828260020671,
+              "ii": 0.20660802344099174,
+              "ov": 4.314828260020671,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "outPhase": {
+          "win": [
+            0.32,
+            0.84
+          ],
+          "kfs": [
+            {
+              "t": 0.32,
+              "v": 200,
+              "iv": -209.45882552953597,
+              "ii": 0.3333333333333333,
+              "ov": -209.45882552953597,
+              "oi": 0.3945578231292517
+            },
+            {
+              "t": 0.84,
+              "v": 100,
+              "iv": -28.25104479032505,
+              "ii": 0.6081513007077078,
+              "ov": -28.25104479032505,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 100,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "mirror": false,
+          "pan": [
+            {
+              "t": 0.32,
+              "x": 0.5,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 4.276956783121544,
+              "oi": 0.5296999225287767
+            },
+            {
+              "t": 0.84,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.6240453844488445,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ]
+        },
+        "shutter": 180,
+        "cornerPin": {
+          "win": [
+            0.32,
+            0.84
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.32,
+              "x": -1,
+              "y": 1,
+              "iv": 5.3071255055014666,
+              "ii": 0.3333333333333333,
+              "ov": 5.3071255055014666,
+              "oi": 0.3129177300157955
+            },
+            {
+              "t": 0.84,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.4609308540679448,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.32,
+              "x": 2,
+              "y": 1,
+              "iv": 5.685951376980548,
+              "ii": 0.3333333333333333,
+              "ov": 5.685951376980548,
+              "oi": 0.30781382918641104
+            },
+            {
+              "t": 0.84,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.4609308540679448,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-perspective-pan3d-100.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Pan 3D",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D camera pan toward up: the outgoing shot shrinks and glides off up over mirrored padding, then the incoming shot sweeps in from the opposite side out of a deep zoom, its entering edge stretched in a 3D keystone swing that flattens as it settles at center.",
+        "energy": "high",
+        "durationSeconds": 1,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "pan-3d",
+          "up",
+          "pan",
+          "3d",
+          "keystone",
+          "ease"
+        ],
+        "useWhen": "High-energy scene change that reads as a 3D camera sweep upward — the keystone swing gives it depth; great for location moves (~1s)."
+      }
+    },
+    {
+      "id": "perspective-pan-3d-short-down",
+      "category": "PERSPECTIVE",
+      "variant": "Pan 3D Short",
+      "intensity": "Down",
+      "label": "Perspective · Pan 3D Short · Down",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.52,
+      "params": {
+        "cut": 0.3077,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200,
+              "iv": 14.678280333621062,
+              "ii": 0.3333333333333333,
+              "ov": 14.678280333621062,
+              "oi": 0.6940980870299509
+            },
+            {
+              "t": 0.16,
+              "v": 150,
+              "iv": -300.18694911895074,
+              "ii": 0.2576891107909213,
+              "ov": -300.18694911895074,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.4954,
+          "fy": 0.8704,
+          "mirror": true,
+          "pan": [
+            {
+              "t": 0.04,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.5431265855862848
+            },
+            {
+              "t": 0.16,
+              "x": 0.4954,
+              "y": 0.8704,
+              "iv": 4.314828260020671,
+              "ii": 0.20660802344099174,
+              "ov": 4.314828260020671,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200,
+              "iv": -209.45882552953597,
+              "ii": 0.3333333333333333,
+              "ov": -209.45882552953597,
+              "oi": 0.3945578231292517
+            },
+            {
+              "t": 0.4,
+              "v": 100,
+              "iv": -28.25104479032505,
+              "ii": 0.6081513007077078,
+              "ov": -28.25104479032505,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 100,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "mirror": false,
+          "pan": [
+            {
+              "t": 0.16,
+              "x": 0.5,
+              "y": 0.0111,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 4.276956783121544,
+              "oi": 0.5296999225287767
+            },
+            {
+              "t": 0.4,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.6240453844488445,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ]
+        },
+        "shutter": 180,
+        "cornerPin": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "ul": [
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 0,
+              "iv": 5.542411592548635,
+              "ii": 0.3333333333333333,
+              "ov": 5.542411592548635,
+              "oi": 0.29083915343915345
+            },
+            {
+              "t": 0.4,
+              "x": 0,
+              "y": 0,
+              "iv": 0.030284003792037995,
+              "ii": 0.4467313406968913,
+              "ov": 0.030284003792037995,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.16,
+              "x": 2,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 4.8254669013591505,
+              "oi": 0.31656804734892535
+            },
+            {
+              "t": 0.4,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.46042293248941313,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-perspective-pan3d-52.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Pan 3D Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D camera pan toward down: the outgoing shot shrinks and glides off down over mirrored padding, then the incoming shot sweeps in from the opposite side out of a deep zoom, its entering edge stretched in a 3D keystone swing that flattens as it settles at center. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.52,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "pan-3d",
+          "down",
+          "pan",
+          "3d",
+          "keystone",
+          "ease",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that reads as a 3D camera sweep downward — the keystone swing gives it depth; great for location moves (~0.52s). Snappy version."
+      }
+    },
+    {
+      "id": "perspective-pan-3d-short-left",
+      "category": "PERSPECTIVE",
+      "variant": "Pan 3D Short",
+      "intensity": "Left",
+      "label": "Perspective · Pan 3D Short · Left",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.52,
+      "params": {
+        "cut": 0.3077,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200,
+              "iv": 14.678280333621062,
+              "ii": 0.3333333333333333,
+              "ov": 14.678280333621062,
+              "oi": 0.6940980870299509
+            },
+            {
+              "t": 0.16,
+              "v": 150,
+              "iv": -300.18694911895074,
+              "ii": 0.2576891107909213,
+              "ov": -300.18694911895074,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.1302,
+          "fy": 0.5,
+          "mirror": true,
+          "pan": [
+            {
+              "t": 0.04,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.5431265855862848
+            },
+            {
+              "t": 0.16,
+              "x": 0.1302,
+              "y": 0.5,
+              "iv": 4.314828260020671,
+              "ii": 0.20660802344099174,
+              "ov": 4.314828260020671,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200,
+              "iv": -209.45882552953597,
+              "ii": 0.3333333333333333,
+              "ov": -209.45882552953597,
+              "oi": 0.3945578231292517
+            },
+            {
+              "t": 0.4,
+              "v": 100,
+              "iv": -28.25104479032505,
+              "ii": 0.6081513007077078,
+              "ov": -28.25104479032505,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 100,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "mirror": false,
+          "pan": [
+            {
+              "t": 0.16,
+              "x": 1,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 4.276956783121544,
+              "oi": 0.5296999225287767
+            },
+            {
+              "t": 0.4,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.6240453844488445,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ]
+        },
+        "shutter": 180,
+        "cornerPin": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0.16,
+              "x": 1,
+              "y": -1,
+              "iv": 5.808892037686894,
+              "ii": 0.3333333333333333,
+              "ov": 5.808892037686894,
+              "oi": 0.3129177300157955
+            },
+            {
+              "t": 0.4,
+              "x": 1,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.34354113499210226,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ll": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.16,
+              "x": 1,
+              "y": 2,
+              "iv": 5.642408232348327,
+              "ii": 0.3333333333333333,
+              "ov": 5.642408232348327,
+              "oi": 0.34354113499210226
+            },
+            {
+              "t": 0.4,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.32822943250394887,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-perspective-pan3d-52.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Pan 3D Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D camera pan toward left: the outgoing shot shrinks and glides off left over mirrored padding, then the incoming shot sweeps in from the opposite side out of a deep zoom, its entering edge stretched in a 3D keystone swing that flattens as it settles at center. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.52,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "pan-3d",
+          "left",
+          "pan",
+          "3d",
+          "keystone",
+          "ease",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that reads as a 3D camera sweep leftward — the keystone swing gives it depth; great for location moves (~0.52s). Snappy version."
+      }
+    },
+    {
+      "id": "perspective-pan-3d-short-right",
+      "category": "PERSPECTIVE",
+      "variant": "Pan 3D Short",
+      "intensity": "Right",
+      "label": "Perspective · Pan 3D Short · Right",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.52,
+      "params": {
+        "cut": 0.3077,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200,
+              "iv": 14.678280333621062,
+              "ii": 0.3333333333333333,
+              "ov": 14.678280333621062,
+              "oi": 0.6940980870299509
+            },
+            {
+              "t": 0.16,
+              "v": 150,
+              "iv": -300.18694911895074,
+              "ii": 0.2576891107909213,
+              "ov": -300.18694911895074,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.8854,
+          "fy": 0.5185,
+          "mirror": true,
+          "pan": [
+            {
+              "t": 0.04,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.5431265855862848
+            },
+            {
+              "t": 0.16,
+              "x": 0.8854,
+              "y": 0.5185,
+              "iv": 4.314828260020671,
+              "ii": 0.20660802344099174,
+              "ov": 4.314828260020671,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200,
+              "iv": -209.45882552953597,
+              "ii": 0.3333333333333333,
+              "ov": -209.45882552953597,
+              "oi": 0.3945578231292517
+            },
+            {
+              "t": 0.4,
+              "v": 100,
+              "iv": -28.25104479032505,
+              "ii": 0.6081513007077078,
+              "ov": -28.25104479032505,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 100,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "mirror": false,
+          "pan": [
+            {
+              "t": 0.16,
+              "x": 0,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 4.276956783121544,
+              "oi": 0.5296999225287767
+            },
+            {
+              "t": 0.4,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.6240453844488445,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ]
+        },
+        "shutter": 180,
+        "cornerPin": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "ul": [
+            {
+              "t": 0.16,
+              "x": 0,
+              "y": -1,
+              "iv": 6.359264889082055,
+              "ii": 0.3333333333333333,
+              "ov": 6.359264889082055,
+              "oi": 0.3333333333333333
+            },
+            {
+              "t": 0.4,
+              "x": 0,
+              "y": 0,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.16,
+              "x": 0,
+              "y": 2,
+              "iv": 6.3473449923827445,
+              "ii": 0.3333333333333333,
+              "ov": 6.3473449923827445,
+              "oi": 0.35374893665087115
+            },
+            {
+              "t": 0.4,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 1
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-perspective-pan3d-52.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Pan 3D Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D camera pan toward right: the outgoing shot shrinks and glides off right over mirrored padding, then the incoming shot sweeps in from the opposite side out of a deep zoom, its entering edge stretched in a 3D keystone swing that flattens as it settles at center. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.52,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "pan-3d",
+          "right",
+          "pan",
+          "3d",
+          "keystone",
+          "ease",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that reads as a 3D camera sweep rightward — the keystone swing gives it depth; great for location moves (~0.52s). Snappy version."
+      }
+    },
+    {
+      "id": "perspective-pan-3d-short-up",
+      "category": "PERSPECTIVE",
+      "variant": "Pan 3D Short",
+      "intensity": "Up",
+      "label": "Perspective · Pan 3D Short · Up",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.52,
+      "params": {
+        "cut": 0.3077,
+        "inPhase": {
+          "win": [
+            0.04,
+            0.16
+          ],
+          "kfs": [
+            {
+              "t": 0.04,
+              "v": 200,
+              "iv": 14.678280333621062,
+              "ii": 0.3333333333333333,
+              "ov": 14.678280333621062,
+              "oi": 0.6940980870299509
+            },
+            {
+              "t": 0.16,
+              "v": 150,
+              "iv": -300.18694911895074,
+              "ii": 0.2576891107909213,
+              "ov": -300.18694911895074,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 200,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.1481,
+          "mirror": true,
+          "pan": [
+            {
+              "t": 0.04,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.3333333333333333,
+              "ov": 0,
+              "oi": 0.5431265855862848
+            },
+            {
+              "t": 0.16,
+              "x": 0.5,
+              "y": 0.1481,
+              "iv": 5.740614487445052,
+              "ii": 0.0001,
+              "ov": 5.740614487445052,
+              "oi": 0.3333333333333333
+            }
+          ]
+        },
+        "outPhase": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "kfs": [
+            {
+              "t": 0.16,
+              "v": 200,
+              "iv": -209.45882552953597,
+              "ii": 0.3333333333333333,
+              "ov": -209.45882552953597,
+              "oi": 0.3945578231292517
+            },
+            {
+              "t": 0.68,
+              "v": 100,
+              "iv": -28.25104479032505,
+              "ii": 0.6081513007077078,
+              "ov": -28.25104479032505,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "norm": 100,
+          "cx": 0.5,
+          "cy": 0.5,
+          "fx": 0.5,
+          "fy": 0.5,
+          "mirror": false,
+          "pan": [
+            {
+              "t": 0.16,
+              "x": 0.5,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.16666666666666666,
+              "ov": 4.276956783121544,
+              "oi": 0.5296999225287767
+            },
+            {
+              "t": 0.68,
+              "x": 0.5,
+              "y": 0.5,
+              "iv": 0,
+              "ii": 0.6240453844488445,
+              "ov": 0,
+              "oi": 0.16666666666666666
+            }
+          ]
+        },
+        "shutter": 180,
+        "cornerPin": {
+          "win": [
+            0.16,
+            0.4
+          ],
+          "ul": [
+            {
+              "t": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "ur": [
+            {
+              "t": 0,
+              "x": 1,
+              "y": 0
+            }
+          ],
+          "ll": [
+            {
+              "t": 0.16,
+              "x": -1,
+              "y": 1,
+              "iv": 6.777872216506416,
+              "ii": 0.3333333333333333,
+              "ov": 6.777872216506416,
+              "oi": 0.2018066188744016
+            },
+            {
+              "t": 0.4,
+              "x": 0,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.4609308540679448,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ],
+          "lr": [
+            {
+              "t": 0.16,
+              "x": 2,
+              "y": 1,
+              "iv": 7.939550097106967,
+              "ii": 0.3333333333333333,
+              "ov": 7.939550097106967,
+              "oi": 0.23464309741723585
+            },
+            {
+              "t": 0.3787,
+              "x": 1,
+              "y": 1,
+              "iv": 0,
+              "ii": 0.4609308540679448,
+              "ov": 0,
+              "oi": 0.3333333333333333
+            }
+          ]
+        }
+      },
+      "sfx": "transitions/lib/sfx-perspective-pan3d-52.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Pan 3D Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "3D camera pan toward up: the outgoing shot shrinks and glides off up over mirrored padding, then the incoming shot sweeps in from the opposite side out of a deep zoom, its entering edge stretched in a 3D keystone swing that flattens as it settles at center. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.52,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "pan-3d",
+          "up",
+          "pan",
+          "3d",
+          "keystone",
+          "ease",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that reads as a 3D camera sweep upward — the keystone swing gives it depth; great for location moves (~0.52s). Snappy version."
+      }
     }
   ]
 }

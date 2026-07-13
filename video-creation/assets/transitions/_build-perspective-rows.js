@@ -59,6 +59,9 @@ const FAMILY = {
   'Ease Out': { in: [200, 200, 135], out: [100, 300, 100], hit: false },
   'Hit In': { in: [100, 100, 300], out: [300, 150, 300], hit: true },
   'Hit Out': { in: [200, 200, 135], out: [100, 300, 100], hit: true },
+  // Pan 3D: both phases PAN (keyframed Position, center anchor); (Out) rides
+  // under the keyframed Corner Pin keystone ("Corner" adjustment clip).
+  'Pan 3D': { in: [200, 200, 150], out: [100, 200, 100], hit: false, pan: true },
 };
 
 function geoOf(c) {
@@ -113,24 +116,71 @@ function phaseParams(c, name) {
   assert(near(c.outPoint - c.inPoint, c.end - c.start), 'clip rate != 1 on phase in ' + name);
   const { norm, base, factor } = rigKind(c, name);
   const a = xy(pget(g, 'Anchor Point').value);
-  const pos = xy(pget(g, 'Position').value);
+  const posP = pget(g, 'Position');
   const ip = c.inPoint || 0;
-  return {
+  const out = {
     win: [r4(c.start), r4(c.end)],
     kfs: sh.keyframes.map((k) => ({ t: r4(c.start + k.t - ip), v: num(k.v), ...handles(k) })),
     norm,
     cx: r4((a[0] - base) * factor),
     cy: r4((a[1] - base) * factor),
-    fx: r4(pos[0]),
-    fy: r4(pos[1]),
+    fx: 0, fy: 0,
     mirror: norm !== 100,
   };
+  if (posP.keyframes) {
+    // Pan 3D: the pin PANS — ship the real 2D curve; fx/fy = rest point for reference
+    out.pan = posP.keyframes.map((k) => {
+      const [x, y] = xy(k.v);
+      return { t: r4(c.start + k.t - ip), x: r4(x), y: r4(y), ...handles(k) };
+    });
+    out.fx = out.pan[out.pan.length - 1].x;
+    out.fy = out.pan[out.pan.length - 1].y;
+  } else {
+    const pos = xy(posP.value);
+    out.fx = r4(pos[0]);
+    out.fy = r4(pos[1]);
+  }
+  return out;
+}
+
+/** Parse the Pan 3D "Corner" adjustment clip -> Corner Pin kf blocks. */
+function cornerParams(c, name) {
+  const eff = c.effects.find((e) => e.matchName === 'AE.ADBE Corner Pin');
+  assert(eff, 'Corner clip without Corner Pin in ' + name);
+  const ip = c.inPoint || 0;
+  const parse = (pn) => {
+    const p = pget(eff, pn);
+    assert(p, 'Corner Pin missing ' + pn + ' in ' + name);
+    if (p.keyframes) return p.keyframes.map((k) => {
+      const [x, y] = xy(k.v);
+      return { t: r4(c.start + k.t - ip), x: r4(x), y: r4(y), ...handles(k) };
+    });
+    const [x, y] = xy(p.value);
+    return [{ t: 0, x: r4(x), y: r4(y) }];
+  };
+  const cp = {
+    win: [r4(c.start), r4(c.end)],
+    ul: parse('Upper Left'), ur: parse('Upper Right'),
+    ll: parse('Lower Left'), lr: parse('Lower Right'),
+  };
+  // every corner must SETTLE at identity (the keystone flattens to rest)
+  const rest = { ul: [0, 0], ur: [1, 0], ll: [0, 1], lr: [1, 1] };
+  for (const k of ['ul', 'ur', 'll', 'lr']) {
+    const last = cp[k][cp[k].length - 1];
+    assert(near(last.x, rest[k][0], 0.05) && near(last.y, rest[k][1], 0.05),
+      'Corner ' + k + ' does not settle at identity in ' + name);
+  }
+  return cp;
 }
 
 function buildRow(seq) {
-  const m = seq.name.replace(/\s+/g, ' ').match(/^Perspective (Ease In|Ease Out|Hit In|Hit Out)( Short)? - (.+)$/);
-  assert(m, 'bad name ' + seq.name);
-  const fam = m[1], isShort = !!m[2], dir = m[3];
+  const norm = seq.name.replace(/\s+/g, ' ');
+  const mp = norm.match(/^Perspective Pan 3D( Short)? Ease - (.+)$/);
+  const m = mp ? null : norm.match(/^Perspective (Ease In|Ease Out|Hit In|Hit Out)( Short)? - (.+)$/);
+  assert(mp || m, 'bad name ' + seq.name);
+  const fam = mp ? 'Pan 3D' : m[1];
+  const isShort = mp ? !!mp[1] : !!m[2];
+  const dir = mp ? mp[2] : m[3];
   const variant = fam + (isShort ? ' Short' : '');
   const tpl = FAMILY[fam];
   const [px, py] = DIR_POINT[dir] || [];
@@ -155,13 +205,45 @@ function buildRow(seq) {
     assert(ph.norm === t[0] && ph.kfs[0].v === t[1] && ph.kfs[1].v === t[2],
       `phase shape ${ph.norm}:${ph.kfs[0].v}->${ph.kfs[1].v} != template ${t} in ` + seq.name);
   }
-  // direction geometry: pins sit at the direction point; content anchors match
-  // it too (rig3 rows carry small hand-placed offsets — tolerance, real values kept)
-  for (const ph of [inPhase, outPhase]) {
-    const tol = ph.norm === 300 ? 0.03 : 2e-3;
-    assert(near(ph.fx, px, tol) && near(ph.fy, py, tol), 'pin != dir point in ' + seq.name);
-    assert(near(ph.cx, px, ph.norm === 300 ? 0.08 : 2e-3) && near(ph.cy, py, ph.norm === 300 ? 0.08 : 2e-3),
-      'content anchor far from dir point in ' + seq.name);
+  // direction geometry
+  if (tpl.pan) {
+    // Pan 3D: both phases center-anchored; the PAN carries the direction.
+    // (In) pans 0.5 -> the direction (~±0.37 dominant axis, hand-placed);
+    // (Out) enters from the OPPOSITE edge and settles at center.
+    const dvx = px - 0.5, dvy = py - 0.5; // direction vector (one axis ±0.5)
+    for (const ph of [inPhase, outPhase]) {
+      assert(near(ph.cx, 0.5, 2e-3) && near(ph.cy, 0.5, 2e-3), 'Pan 3D anchor not center in ' + seq.name);
+      assert(ph.pan && ph.pan.length === 2, 'Pan 3D phase without 2-kf pan in ' + seq.name);
+    }
+    const iEnd = inPhase.pan[1], oStart = outPhase.pan[0], oEnd = outPhase.pan[1];
+    assert(near(inPhase.pan[0].x, 0.5, 2e-3) && near(inPhase.pan[0].y, 0.5, 2e-3), '(In) pan not from center in ' + seq.name);
+    const along = (iEnd.x - 0.5) * dvx + (iEnd.y - 0.5) * dvy; // >0 = toward the direction
+    assert(along > 0.15 && along < 0.23, '(In) pan direction/magnitude off in ' + seq.name + ': ' + along);
+    assert(near(oStart.x, 0.5 - dvx * 2 * 0.5, 0.06) && near(oStart.y, 0.5 - dvy * 2 * 0.5, 0.06),
+      '(Out) pan not from the opposite edge in ' + seq.name);
+    assert(near(oEnd.x, 0.5, 2e-3) && near(oEnd.y, 0.5, 2e-3), '(Out) pan does not settle at center in ' + seq.name);
+  } else {
+    // pins sit at the direction point; content anchors match it too (rig3 rows
+    // carry small hand-placed offsets — tolerance, real values kept)
+    for (const ph of [inPhase, outPhase]) {
+      const tol = ph.norm === 300 ? 0.03 : 2e-3;
+      assert(near(ph.fx, px, tol) && near(ph.fy, py, tol), 'pin != dir point in ' + seq.name);
+      assert(near(ph.cx, px, ph.norm === 300 ? 0.08 : 2e-3) && near(ph.cy, py, ph.norm === 300 ? 0.08 : 2e-3),
+        'content anchor far from dir point in ' + seq.name);
+    }
+  }
+
+  // ---- Pan 3D extra: the keyframed Corner Pin keystone over the (Out) window
+  let cornerPin = null;
+  const cornerClip = seq.clips.find((c) => c.subClipName === 'Corner');
+  if (tpl.pan) {
+    assert(cornerClip, 'Pan 3D without Corner clip in ' + seq.name);
+    assert(seq.clips.length === 4, seq.name + ': expected 4 clips');
+    cornerPin = cornerParams(cornerClip, seq.name);
+    assert(near(cornerPin.win[0], outPhase.win[0]) && near(cornerPin.win[1], outPhase.win[1]),
+      'Corner window != (Out) window in ' + seq.name);
+  } else {
+    assert(!cornerClip, 'unexpected Corner clip in ' + seq.name);
   }
 
   // ---- Hit extras: Shake + Deviation
@@ -201,7 +283,7 @@ function buildRow(seq) {
     deviation = { win: [r4(devClip.start), r4(devClip.end)], reliefPx: 10 };
   } else {
     assert(!shakeClip && !devClip, 'unexpected Shake/Deviation in ' + seq.name);
-    assert(seq.clips.length === 3, seq.name + ': expected 3 clips');
+    if (!tpl.pan) assert(seq.clips.length === 3, seq.name + ': expected 3 clips');
   }
 
   // ---- audio: measured media + start + in-point + window -> lib file
@@ -211,9 +293,13 @@ function buildRow(seq) {
   const aip = r4(au.inPoint || 0);
   assert(near(au.end, durationSeconds), 'audio window != duration in ' + seq.name);
   const isHit = tpl.hit;
-  assert(media === (isHit ? 'Optics_02.wav' : 'Spin_01.wav'), 'unexpected SFX media ' + media + ' in ' + seq.name);
+  assert(media === (isHit ? 'Optics_02.wav' : tpl.pan ? 'Camera_01.wav' : 'Spin_01.wav'),
+    'unexpected SFX media ' + media + ' in ' + seq.name);
   let sfxFile;
-  if (fam === 'Ease In') {
+  if (fam === 'Pan 3D') {
+    assert(au.start === 0 && aip === 0, 'Pan 3D audio timing off in ' + seq.name);
+    sfxFile = `sfx-perspective-pan3d-${isShort ? '52' : '100'}.mp3`;
+  } else if (fam === 'Ease In') {
     assert(au.start === 0 && aip === 0, 'Ease In audio timing off in ' + seq.name);
     sfxFile = `sfx-perspective-ease-${isShort ? '44' : '84'}.mp3`;
   } else if (fam === 'Ease Out') {
@@ -234,6 +320,7 @@ function buildRow(seq) {
     'Ease Out': `Perspective pull from ${dir.toLowerCase()}: the outgoing shot recedes toward the ${dir.toLowerCase()} ${corner}, shrinking over mirrored padding, then the incoming shot flies out of a deep zoom at that ${corner} and decelerates smoothly to rest.`,
     'Hit In': `Perspective punch toward ${dir.toLowerCase()}: the outgoing shot whip-zooms into the ${dir.toLowerCase()} ${corner}, then the incoming shot SLAMS from half-size to full frame in a tenth of a second, landing with an impact shake and a red/blue chromatic-fringe flash.`,
     'Hit Out': `Perspective punch from ${dir.toLowerCase()}: the outgoing shot recedes toward the ${dir.toLowerCase()} ${corner} over mirrored padding, then the incoming shot crashes down from a deep zoom, landing with an impact shake and a red/blue chromatic-fringe flash.`,
+    'Pan 3D': `3D camera pan toward ${dir.toLowerCase()}: the outgoing shot shrinks and glides off ${dir.toLowerCase()} over mirrored padding, then the incoming shot sweeps in from the opposite side out of a deep zoom, its entering edge stretched in a 3D keystone swing that flattens as it settles at center.`,
   };
 
   return {
@@ -254,6 +341,7 @@ function buildRow(seq) {
       shutter: 180,
       ...(shake ? { shake } : {}),
       ...(deviation ? { deviation } : {}),
+      ...(cornerPin ? { cornerPin } : {}),
     },
     sfx: `transitions/lib/${sfxFile}`,
     used_in: [],
@@ -267,15 +355,16 @@ function buildRow(seq) {
       durationSeconds,
       hasSound: true,
       fidelity: isHit ? 'approximate' : 'near-1:1',
-      tags: ['perspective', 'zoom', fam.toLowerCase().replace(' ', '-'), slug(dir),
-        ...(isHit ? ['hit', 'impact', 'shake'] : ['ease']), ...(isShort ? ['short'] : [])],
-      useWhen: `High-energy scene change ${fam.startsWith('Hit') ? 'with a physical IMPACT landing (shake + R/B fringe flash) — great for beat drops and hard reveals' : `that "flies" ${fam === 'Ease In' ? 'into' : 'out of'} the ${dir.toLowerCase()} ${corner} with a cinematic eased landing`} (~${durationSeconds}s). ${isShort ? 'Snappy version.' : ''}`.trim(),
+      tags: ['perspective', 'zoom', fam.toLowerCase().replace(/ /g, '-'), slug(dir),
+        ...(isHit ? ['hit', 'impact', 'shake'] : tpl.pan ? ['pan', '3d', 'keystone', 'ease'] : ['ease']),
+        ...(isShort ? ['short'] : [])],
+      useWhen: `High-energy scene change ${fam.startsWith('Hit') ? 'with a physical IMPACT landing (shake + R/B fringe flash) — great for beat drops and hard reveals' : tpl.pan ? `that reads as a 3D camera sweep ${dir.toLowerCase()}ward — the keystone swing gives it depth; great for location moves` : `that "flies" ${fam === 'Ease In' ? 'into' : 'out of'} the ${dir.toLowerCase()} ${corner} with a cinematic eased landing`} (~${durationSeconds}s). ${isShort ? 'Snappy version.' : ''}`.trim(),
     },
   };
 }
 
 const rows = clips.map(buildRow);
-assert(rows.length === 64, 'expected 64 rows, got ' + rows.length);
+assert(rows.length === 72, 'expected 72 rows, got ' + rows.length);
 const libPath = path.join(__dirname, 'library.json');
 const lib = JSON.parse(fs.readFileSync(libPath, 'utf8'));
 lib.transitions = lib.transitions.filter((r) => r.category !== 'PERSPECTIVE');

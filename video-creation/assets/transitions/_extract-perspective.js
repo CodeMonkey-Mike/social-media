@@ -331,7 +331,16 @@ const BASES = [
 ];
 // NOTE: "(In)"/"(Out)" are SUBCLIP names on HST Adjustment clips INSIDE each main
 // sequence (verified 2026-07-12), not nested sequences — extract main sequences only.
-const NAMES = [...BASES];
+const NAMES = [...BASES,
+ "Perspective Pan 3D Ease - Down",
+ "Perspective Pan 3D Ease - Left",
+ "Perspective Pan 3D Ease - Right",
+ "Perspective Pan 3D Ease - Up",
+ "Perspective Pan 3D Short Ease - Down",
+ "Perspective Pan 3D Short Ease - Left",
+ "Perspective Pan 3D Short Ease - Right",
+ "Perspective Pan 3D Short Ease - Up"
+];
 
 const filter = process.argv[2];
 const out = [];
