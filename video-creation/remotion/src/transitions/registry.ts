@@ -18,6 +18,8 @@ import { GlassBeveled } from './engines/GlassBeveled';
 import { LightLeaks } from './engines/LightLeaks';
 import { MeltRGB } from './engines/MeltRGB';
 import { MeltEquidistant } from './engines/MeltEquidistant';
+import { Motion3D } from './engines/Motion3D';
+import { MotionShake } from './engines/MotionShake';
 
 /**
  * The catalog (data) lives in assets/transitions/library.json — the single
@@ -78,6 +80,8 @@ export const ENGINES: Record<string, React.FC<any>> = {
   LightLeaks,
   MeltRGB,
   MeltEquidistant,
+  Motion3D,
+  MotionShake,
 };
 
 export const TRANSITIONS = (library as { transitions: TransitionRow[] }).transitions;
