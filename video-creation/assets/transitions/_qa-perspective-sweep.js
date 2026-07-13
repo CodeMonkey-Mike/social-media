@@ -15,11 +15,16 @@ fs.mkdirSync(OUT, { recursive: true });
 fs.mkdirSync(TMP, { recursive: true });
 
 const DIRS = ['Down', 'Left', 'Left Down', 'Left Up', 'Right', 'Right Down', 'Right Up', 'Up'];
-const VARIANTS = [
-  ...DIRS.map((d) => ['Ease In', `Perspective Ease In - ${d}`]),
-  ...DIRS.map((d) => ['Ease In Short', `Perspective Ease In Short - ${d}`]),
-].map(([sub, pvName]) => [sub, pvName,
-  'perspective-' + pvName.replace(/^Perspective /, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')]);
+// preview filenames: "Hit Out" carries a DOUBLE SPACE after "Perspective"
+const SUBS = [
+  ['Ease In', 'Perspective Ease In'], ['Ease In Short', 'Perspective Ease In Short'],
+  ['Ease Out', 'Perspective Ease Out'], ['Ease Out Short', 'Perspective Ease Out Short'],
+  ['Hit In', 'Perspective Hit In'], ['Hit In Short', 'Perspective Hit In Short'],
+  ['Hit Out', 'Perspective  Hit Out'], ['Hit Out Short', 'Perspective  Hit Out Short'],
+];
+const VARIANTS = SUBS.flatMap(([sub, prefix]) =>
+  DIRS.map((d) => [sub, `${prefix} - ${d}`,
+    'perspective-' + `${sub} - ${d}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')]));
 
 const sh = (c) => execSync(c, { stdio: ['ignore', 'pipe', 'pipe'] });
 const filter = process.argv[2] || '';

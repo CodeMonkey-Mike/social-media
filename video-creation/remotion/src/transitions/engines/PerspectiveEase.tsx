@@ -9,44 +9,65 @@ import {
 import { TransitionProps } from '../types';
 
 /**
- * PERSPECTIVE > Ease In / Ease In Short — decoded from the per-clip data:
+ * PERSPECTIVE — Ease In / Ease Out / Hit In / Hit Out (+ Short), decoded from
+ * the per-clip data. ONE mechanism, generalized per phase:
  *
- *   (In) phase: A zooms uniformly 100->300% ANCHORED at the direction point
- *   (e.g. Right = right-edge center, Left Up = top-left corner) — a whip-zoom
- *   INTO that edge/corner under Transform shutter-180 motion blur.
+ *   Every phase is a uniform zoom of the CURRENT scene about a pinned point:
+ *   content point (cx,cy) sits at frame point (fx,fy), scale = kf value / norm.
+ *   - plain phases (norm 100): the raw Geometry2 zoom, always >= 1 (covers).
+ *   - rig phases (norm 200 Replicate-2 / norm 300 Replicate-3): the pack's
+ *     Offset(half-frame quadrant swap, only for even counts) + Replicate +
+ *     4-Mirror rig = a coherent 1/2- or 1/3-size copy at rig center with TRUE
+ *     mirror padding; identity at scale == norm. Padding = mirror tiles here.
  *
- *   (Out) phase: the pack's Offset(half-frame quadrant swap) + Replicate(2) +
- *   4-Mirror rig recomposes ONE coherent half-size B at rig center with TRUE
- *   mirror padding; Geometry2 scales it 135->200% about the quarter-map anchor
- *   positioned at the direction point. Net effective semantics (exact):
- *   B scaled by scale/200 about ITS direction point pinned to the frame's
- *   direction point (identity at 200), mirror-padded on the exposed sides.
+ *   Family shapes: Ease In = plain zoom-in on A, rig2 135->200 on B (eases to
+ *   rest). Ease Out = rig2 200->135 on A (recedes pinned), plain 300->100 on B.
+ *   Hit In = plain zoom-in on A, rig3 150->300 SLAM on B + Shake + Deviation.
+ *   Hit Out = rig2 recede on A, plain 300->100 SLAM on B + Shake + Deviation.
  *
- * Everything is affine -> pure CSS transforms over mirror tiles; the REAL
- * keyframes with bezier handles are sampled piecewise per clip window.
- * Motion blur = the AE Transform shutter (180°), reproduced the way AE itself
- * renders it: N-sample accumulation across the (centered) shutter interval —
- * screen-space, so it lives OUTSIDE nothing and INSIDE nothing: each sample IS
- * a full re-render at its own scale. fidelity: near-1:1.
- * SFX: Spin_01.wav @ 0, window-truncated (emitted by the wrapper).
+ *   Shake (Hit families): a rig2-identity window with the real keyframed
+ *   Position jitter (±3%, mirror-padded) right after the slam.
+ *   Deviation (Hit families): the OFFSET-Hit green-fringe flash (source:
+ *   Tint black->GREEN + Emboss 45 + Pin Light) — reproduced with the proven
+ *   fast green-channel-shift filter (feConvolveMatrix is a Chromium perf cliff).
+ *
+ * All real keyframes with bezier handles, sampled piecewise per clip window.
+ * Motion blur = the AE Transform shutter (180°), rendered the way AE renders
+ * it: 16-sample accumulation across the centered exposure. fidelity: near-1:1
+ * (the Deviation fringe mechanism is swapped, look preserved — documented).
+ * SFX (Spin_01 / Optics_02, window-truncated) is emitted by the wrapper.
  */
 type Handles = { iv?: number; ii?: number; ov?: number; oi?: number };
 type ScalarKf = { t: number; v: number } & Handles;
 
+export type PerspectivePhase = {
+  /** Clip window, seq seconds. */
+  win: [number, number];
+  /** Scale keyframes in percent (kf times are seq-absolute). */
+  kfs: ScalarKf[];
+  /** Scale divisor: 100 plain, 200 rig2, 300 rig3 (identity at scale == norm). */
+  norm: number;
+  /** Content anchor point (fractions; rig anchors mapped back to content space). */
+  cx: number;
+  cy: number;
+  /** Frame pin point the anchor sits at (the Geometry2 Position). */
+  fx: number;
+  fy: number;
+  /** Mirror-tile padding (rig phases; plain zooms >= 1 always cover). */
+  mirror: boolean;
+};
+
 export type PerspectiveEaseParams = {
   /** A->B swap fraction (0..1 of the window) = (Out) start / duration. */
   cut: number;
-  /** Direction point, frame fractions (Right = 1,0.5; Left Up = 0,0; ...). */
-  px: number;
-  py: number;
-  /** (In) window (seq seconds) + uniform-scale curve in percent (100..300). */
-  inWin: [number, number];
-  inScale: ScalarKf[];
-  /** (Out) window + scale curve in percent of the rig (135..200; 200 = identity). */
-  outWin: [number, number];
-  outScale: ScalarKf[];
+  inPhase: PerspectivePhase;
+  outPhase: PerspectivePhase;
   /** AE Transform shutter angle (180). */
   shutter: number;
+  /** Hit impact jitter: rig2-identity window + Position kfs (frame fractions, Position − 0.5). */
+  shake?: { win: [number, number]; kfs: { t: number; x: number; y: number }[] };
+  /** Hit green-fringe flash window (source Emboss relief 10 -> shift 7px). */
+  deviation?: { win: [number, number]; reliefPx: number };
 };
 
 const bez = (a: number, b: number, c: number, d: number, s: number) => {
@@ -87,6 +108,19 @@ const sampleKfs = (kfs: ScalarKf[], t: number) => {
   return a.v + L * segProgress(a.t, b.t, a, b, L, t);
 };
 
+/** Linear 2D sample of the dense baked jitter keys (25fps spacing). */
+const sampleJitter = (kfs: { t: number; x: number; y: number }[], t: number) => {
+  if (!kfs.length) return { x: 0, y: 0 };
+  if (t <= kfs[0].t) return kfs[0];
+  const last = kfs[kfs.length - 1];
+  if (t >= last.t) return last;
+  let i = 0;
+  while (i < kfs.length - 2 && t > kfs[i + 1].t) i++;
+  const a = kfs[i], b = kfs[i + 1];
+  const f = (t - a.t) / Math.max(1e-9, b.t - a.t);
+  return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
+};
+
 /** AE default: 16 motion-blur samples per frame. */
 const BLUR_SAMPLES = 16;
 
@@ -95,10 +129,11 @@ export const PerspectiveEase: React.FC<TransitionProps & { params: PerspectiveEa
 }) => {
   const frame = useCurrentFrame();
   const { width, height, fps } = useVideoConfig();
-  const { px, py, inWin, inScale, outWin, outScale, shutter } = params;
+  const { inPhase, outPhase, shutter, shake, deviation } = params;
 
   const tSec = frame / fps;
-  const swapTo = tSec >= outWin[0] - 1e-6;
+  const cutT = outPhase.win[0];
+  const swapTo = tSec >= cutT - 1e-6;
 
   const src = swapTo ? toSrc : fromSrc;
   const clipFn = swapTo ? inClip : outClip;
@@ -110,58 +145,132 @@ export const PerspectiveEase: React.FC<TransitionProps & { params: PerspectiveEa
       <AbsoluteFill>{content}</AbsoluteFill>
     );
 
-  // effective scale at a time, per phase (kf times are seq-absolute; curves
-  // clamp at their endpoints so out-of-window times settle to identity ends)
-  const scaleAt = (t: number) =>
-    swapTo ? sampleKfs(outScale, Math.max(t, outWin[0])) / 200
-           : sampleKfs(inScale, Math.min(t, inWin[1])) / 100;
+  // The full pose at a sample time: which phase geometry applies + scale + jitter.
+  // Sample times are clamped to the current scene's side of the cut so shutter
+  // samples never cross into the other clip's curve.
+  const poseAt = (ts: number) => {
+    const t = swapTo ? Math.max(ts, cutT) : Math.min(ts, cutT);
+    if (shake && t >= shake.win[0] && t < shake.win[1]) {
+      const j = sampleJitter(shake.kfs, t);
+      return { s: 1, cx: 0.5, cy: 0.5, dx: j.x, dy: j.y, mirror: true };
+    }
+    const ph = swapTo ? outPhase : inPhase;
+    // effect clips GATE by WINDOW (the OFFSET Long-Hit lesson): past the (Out)
+    // window the adjustment is gone -> identity, even where the kf curve would
+    // continue (Hit Short's 1-frame slam clip truncates its curve mid-flight —
+    // the hard SNAP into the shake IS the pack's hit).
+    if (t >= ph.win[1] - 1e-6) {
+      const rest = ph.kfs[ph.kfs.length - 1].v / ph.norm;
+      const ended = swapTo || rest === 1; // in-phase holds its end value until the cut
+      if (ended) return { s: 1, cx: 0.5, cy: 0.5, dx: 0, dy: 0, mirror: false };
+    }
+    const s = sampleKfs(ph.kfs, t) / ph.norm;
+    return { s, cx: ph.cx, cy: ph.cy, dx: ph.fx - ph.cx, dy: ph.fy - ph.cy, mirror: ph.mirror };
+  };
 
   // shutter 180 = 0.5-frame exposure, centered on the frame time (AE phase -90)
   const expo = (shutter / 360) / fps;
-  const s0 = scaleAt(tSec - expo / 2);
-  const s1 = scaleAt(tSec + expo / 2);
-  const still = Math.abs(s1 - s0) / Math.max(s0, 1e-6) < 0.002;
+  const p0 = poseAt(tSec - expo / 2);
+  const p1 = poseAt(tSec + expo / 2);
+  const still =
+    Math.abs(p1.s - p0.s) / Math.max(p0.s, 1e-6) < 0.002 &&
+    Math.abs(p1.dx - p0.dx) < 5e-4 && Math.abs(p1.dy - p0.dy) < 5e-4;
   const NS = still ? 1 : BLUR_SAMPLES;
 
-  const origin = `${px * 100}% ${py * 100}%`;
-
-  // mirror tiles for the B phase (scale < 1 exposes padding on the sides away
-  // from the pinned direction point). A phase zooms >= 1 anchored in-frame ->
-  // always covers, single copy.
-  const tiles: Array<[number, number]> = [[0, 0]];
-  if (swapTo) {
-    const xs = [0, ...(px > 0 ? [-1] : []), ...(px < 1 ? [1] : [])];
-    const ys = [0, ...(py > 0 ? [-1] : []), ...(py < 1 ? [1] : [])];
-    tiles.length = 0;
-    for (const i of xs) for (const j of ys) tiles.push([i, j]);
-  }
-
-  const group = (s: number, key: number, opacity: number) => (
-    <AbsoluteFill key={key} style={{ transform: `scale(${s})`, transformOrigin: origin, opacity }}>
-      {tiles.map(([i, j]) => (
-        <AbsoluteFill
-          key={`${i}_${j}`}
-          style={{
-            transform: `translate(${i * width}px, ${j * height}px) ${i ? 'scaleX(-1)' : ''} ${j ? 'scaleY(-1)' : ''}`.trim(),
-          }}
-        >
-          {scene()}
-        </AbsoluteFill>
-      ))}
-    </AbsoluteFill>
-  );
+  const group = (pose: ReturnType<typeof poseAt>, key: number, opacity: number) => {
+    // mirror tiles only on the sides the pin can expose (pin at an edge/corner
+    // never exposes its own side; the shake pin at center exposes all four)
+    const tiles: Array<[number, number]> = [[0, 0]];
+    if (pose.mirror) {
+      const fx = pose.cx + pose.dx, fy = pose.cy + pose.dy;
+      const xs = [0, ...(fx > 0.01 ? [-1] : []), ...(fx < 0.99 ? [1] : [])];
+      const ys = [0, ...(fy > 0.01 ? [-1] : []), ...(fy < 0.99 ? [1] : [])];
+      tiles.length = 0;
+      for (const i of xs) for (const j of ys) tiles.push([i, j]);
+    }
+    return (
+      <AbsoluteFill
+        key={key}
+        style={{
+          transform: `translate(${pose.dx * width}px, ${pose.dy * height}px) scale(${pose.s})`,
+          transformOrigin: `${pose.cx * 100}% ${pose.cy * 100}%`,
+          opacity,
+        }}
+      >
+        {tiles.map(([i, j]) => (
+          <AbsoluteFill
+            key={`${i}_${j}`}
+            style={{
+              transform: `translate(${i * width}px, ${j * height}px) ${i ? 'scaleX(-1)' : ''} ${j ? 'scaleY(-1)' : ''}`.trim(),
+            }}
+          >
+            {scene()}
+          </AbsoluteFill>
+        ))}
+      </AbsoluteFill>
+    );
+  };
 
   // uniform-average accumulation: k-th layer (bottom-up) at opacity 1/k
   const samples: React.ReactNode[] = [];
   for (let k = 0; k < NS; k++) {
     const ts = tSec + expo * ((k + 0.5) / NS - 0.5);
-    samples.push(group(scaleAt(ts), k, 1 / (k + 1)));
+    samples.push(group(poseAt(ts), k, 1 / (k + 1)));
   }
+
+  // Hit "Deviation": warm-red / blue chromatic fringe flash, active in its window.
+  // Source recipe = Tint black->RED white->BLUE (ARGB16 ff00ff0000000000 /
+  // ff0000000000ff00 — the WHITE end is NOT black here; preview-verified: the
+  // fringes are orange/blue, not OFFSET-Hit green) + Emboss 45 + Pin Light.
+  // Emboss of the red<->blue luma ramp stamps R on one side of every edge and B
+  // on the opposite side = an R/B split along the 45° diagonal — reproduced fast
+  // by shifting R (+d,+d) and B (-d,-d) with G in place (same rationale as the
+  // OffsetSlide green-shift: fringes appear only at edges, mechanism cheap).
+  const devOn = !!deviation && tSec >= deviation.win[0] && tSec < deviation.win[1];
+  const devShift = deviation ? Math.max(1, Math.round(deviation.reliefPx * 0.7)) : 0;
+  const devId = 'pease-dev';
+
+  let node: React.ReactNode = <AbsoluteFill>{samples}</AbsoluteFill>;
+  if (devOn) node = <AbsoluteFill style={{ filter: `url(#${devId})` }}>{node}</AbsoluteFill>;
 
   return (
     <AbsoluteFill style={{ backgroundColor: 'black', overflow: 'hidden' }}>
-      {samples}
-      {/* SFX (Spin_01, window-truncated) is emitted from the wrapper. */}
+      {devOn && (
+        <svg width="0" height="0" style={{ position: 'absolute' }}>
+          <defs>
+            {/* R shifted down-right, B shifted up-left (Emboss dir 45 relief pair),
+                G in place — summed per channel. Alpha stays >=1 -> arithmetic add
+                clamps opaque (no un-premultiply-to-white gotcha). All cheap
+                primitives — no feConvolveMatrix (the Chromium perf cliff). */}
+            <filter id={devId} x="-2%" y="-2%" width="104%" height="104%" colorInterpolationFilters="sRGB">
+              <feColorMatrix
+                in="SourceGraphic"
+                type="matrix"
+                values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"
+                result="rOnly"
+              />
+              <feOffset in="rOnly" dx={devShift} dy={devShift} result="rShift" />
+              <feColorMatrix
+                in="SourceGraphic"
+                type="matrix"
+                values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"
+                result="bOnly"
+              />
+              <feOffset in="bOnly" dx={-devShift} dy={-devShift} result="bShift" />
+              <feColorMatrix
+                in="SourceGraphic"
+                type="matrix"
+                values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0"
+                result="gOnly"
+              />
+              <feComposite in="rShift" in2="bShift" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="rb" />
+              <feComposite in="rb" in2="gOnly" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" />
+            </filter>
+          </defs>
+        </svg>
+      )}
+      {node}
+      {/* SFX (Spin_01 / Optics_02, window-truncated) is emitted from the wrapper. */}
     </AbsoluteFill>
   );
 };

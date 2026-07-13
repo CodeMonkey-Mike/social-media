@@ -23,47 +23,66 @@ values, with a per-folder gallery to browse them.
 
 ---
 
-## PERSPECTIVE: Ease In 8 + Ease In Short 8 built ✅ (2026-07-13, awaiting Mike's review) — Mike's pick; 8 more subgroups remain (Ease Out ×2, Hit In ×2, Hit Out ×2, Pan 3D ×2)
+## PERSPECTIVE: Ease In/Out + Hit In/Out (+ Shorts) = 64 built ✅ (Ease In 16 on 2026-07-13, the other 48 same day; awaiting Mike's review) — Pan 3D ×2 subgroups remain
 
-`perspective-ease-in-{down,left,left-down,left-up,right,right-down,right-up,up}` (0.84s, cut 0.2)
-+ `perspective-ease-in-short-*` (0.44s, cut 0.16) — NEW engine
+`perspective-{ease-in,ease-out,hit-in,hit-out}[-short]-{8 dirs}` — ONE engine
 `remotion/src/transitions/engines/PerspectiveEase.tsx`, browse `browse/PERSPECTIVE/<Sub>/`.
-**fidelity: near-1:1** — pure CSS transforms over the real curves; the only modeled piece is the
-shutter blur, reproduced the way AE itself renders it (16-sample accumulation).
+Durations: Ease 0.84/0.44 · Hit In 0.76/0.4 · Hit Out 0.8/0.4. **fidelity: near-1:1 (Ease),
+approximate (Hit — the Deviation fringe mechanism is swapped, look preserved; OFFSET Hit precedent).**
 
 **Mechanism** (`_extract-perspective.js` → `_perspective-clips.json` → `_build-perspective-rows.js`):
-the (In)/(Out) HST Adjustment pair, 3 clips/sequence, all 16 sharing the EXACT same curves —
-direction lives ONLY in the Geometry2 anchor/position points:
-- **(In)** [0.04..cut]: uniform Scale 100→300 anchored AT the direction point (Right = 1:0.5,
-  Left Up = 0:0 …) — A whip-zooms INTO that edge/corner. Shutter-angle-180 motion blur is the
-  dominant look at peak (velocity 1401 %/s into the cut = near-whiteout).
-- **(Out)** [cut..end]: **the rig's `Offset 0:0` is NOT a no-op** — Shift Center To 0:0 = a
-  HALF-FRAME wrap shift (raw − 0.5, both axes) that quadrant-swaps B so Replicate(2)'s 2×2 grid
-  recomposes ONE coherent half-size B at grid center; the 4 Mirrors (the ExpandPan padding-rig
-  constants) then build TRUE mirror padding around it. Geometry2 scales 135→200 about the
-  quarter-map anchor (0.25 + p/2) positioned at the direction point ⇒ net semantics (exact):
-  **B scaled by scale/200 about ITS direction point pinned to the frame's direction point**
-  (identity at 200), mirror-padded on the exposed sides. Launches at 604 %/s (continuing the
-  In-phase violence through the cut) then a long bezier settle.
-- Short = same curves/handles re-timed (In 0.12s / Out 0.24s); Right Down (Out) runs 0.04s longer
-  (0.72 vs 0.68) with the same kfs — all media rates 1 (asserted, the LIGHT LEAKS trap).
-- Engine: piecewise curveIn/curveOut bezier sampling (OFFSET pattern); B rendered as mirror
-  tiles (only the exposable sides, ≤6 tiles) inside one scaled group; **shutter blur =
-  16-sample accumulation across the centered 0.5-frame exposure** (AE's own default
-  samples-per-frame), k-th layer at opacity 1/k for a uniform average, collapsed to 1 sample
-  when the scale delta over the shutter is <0.2% (the settle tail renders cheap). ~12-21s/demo.
-- Builder hard-fails on any deviation: effect sets, anchor==direction point, quarter-map anchor,
-  mirror rig constants, Replicate 2, Offset 0:0, 100→300/135→200 curves, rate-1 clips, audio.
+every phase = a uniform zoom of the current scene about a PINNED point; direction lives ONLY in
+the Geometry2 anchor/position. Three phase kinds:
+- **plain** (norm 100): raw Geometry2, anchor == position == the direction point, scale always ≥1.
+- **rig2** (norm 200): **`Offset 0:0` is NOT a no-op — it's a HALF-FRAME wrap shift (raw − 0.5)**
+  that quadrant-swaps the frame so Replicate(2)'s 2×2 grid recomposes ONE coherent half-size copy
+  at grid center; the 4 Mirrors (ExpandPan padding-rig constants) build TRUE mirror padding.
+  Identity at scale 200; anchor = 0.25 + p/2 (quarter map).
+- **rig3** (norm 300, Hit In's slam): Replicate(3) + Mirrors at the 1/3 lines, **NO Offset (an odd
+  grid centers itself)**; anchor = 1/3 + p/3, hand-placed with tiny jitter on some rows (REAL
+  values shipped, not snapped).
+Family shapes (all 8 dirs share ONE curve pair per family): **Ease In** = plain 100→300 whip-zoom
+into the direction point (1401 %/s into the cut) | rig2 135→200 pinned ease-up. **Ease Out** =
+rig2 200→135 (A RECEDES pinned, slow start ov=0/oi≈1) | plain 300→100 (B launches at −3341 %/s out
+of a deep zoom, long settle). **Hit In** = plain 100→300 | rig3 150→300 SLAM (0.12s) + Shake +
+Deviation. **Hit Out** = rig2 recede | plain 300→100 SLAM (0.12s) + Shake + Deviation.
+- **Shake** (Hit): a rig2-IDENTITY window right after the slam + the real keyframed Position
+  jitter (±3%, 6 kfs, ends at rest) — mirror padding covers the jolts; sampled linearly (dense
+  25fps bake), jitter blurred by the same shutter accumulation.
+- **Deviation** (Hit): **Tint black→RED white→BLUE (ARGB16 ff00ff0000000000 / ff0000000000ff00 —
+  the white end is NOT black; first read pattern-matched it to OFFSET-Hit "green" and the preview
+  proved that WRONG: fringes are ORANGE/BLUE)** + Emboss 45/10/70 + Pin Light = an R/B split along
+  the 45° diagonal. Implemented fast as R shifted (+7,+7) / B shifted (−7,−7) / G in place
+  (feConvolveMatrix is the known Chromium perf cliff). NOTE for Mike: OFFSET Hit's deviation
+  carries the SAME two tint values — its green-shift fringe may deserve this same R/B correction
+  (not touched: Rule 3, that family is already built awaiting review).
+- **Hit Short slam clips TRUNCATE their curves** (the OFFSET Long-Hit window-gating lesson): the
+  (Out) window is ONE 25fps frame (0.04s) while its kf curve spans 0.12s — the zoom hard-SNAPS
+  mid-flight into the shake. That snap IS the pack's hit; the engine gates every phase by window.
+- Pack data quirks: subclip names are COPY-PASTED across directions and Hit In's "(In" is missing
+  its close paren → the builder classifies phases by SHAPE + ORDER, never by name; "Perspective
+  Hit Out" sequence names carry a DOUBLE SPACE.
+- Engine: per-phase {win, kfs, norm, cx/cy content anchor, fx/fy frame pin, mirror}; piecewise
+  bezier sampling (OFFSET pattern); mirror tiles only on exposable sides; **shutter blur =
+  16-sample accumulation across the centered 0.5-frame exposure** (AE's own default), k-th layer
+  at opacity 1/k, collapsed to 1 sample when still. ~8-21s/demo. Schema refactor regression-checked:
+  old vs new Ease In render diff = isolated edge-AA pixels only (YAVG ≈ 0 every frame).
+- Builder hard-fails on any deviation: phase templates per family, rig constants, quarter/third
+  anchor maps, tint pair, emboss 45/10/70, Pin Light, shake ends at rest, rate-1 clips, audio.
 
-SFX: every variant plays `Spin_01.wav` (1.0s) from in-point 0, window-truncated (OFFSET rule) →
-`lib/sfx-perspective-ease-{84,44}.mp3`. QA: 16 frame-aligned 12.5fps sweep sheets
-(`_qa-perspective-sweep.js` → `_qa/perspective/`) + full-res compares on Right at t=0.12/0.20/
-0.28/0.48 (`_qa/perspective/probe/cmp_*.png`): whip-zoom smear direction, the cut-frame geometry
-(B pinned at the direction edge, mirror seam at exactly 0.325 = scale 135/200 ⇒ 0.675), padding
-sides (the preview's own watermark shows up MIRRORED in the padding — Left Down's flipped
-watermark at top confirms the vertical mirror), and the settle cadence all match frame-for-frame.
-Honest caveats: previews are 25→29.97 pulldown-blended (±half-frame slop at the cut), and our
-16-sample blur reads marginally crisper than the preview's on busy content.
+SFX by MEASURED (media, start, in-point, window), asserted: Ease In = `Spin_01` @0 from 0 →
+`sfx-perspective-ease-{84,44}`; Ease Out = `Spin_01` @0.04 from ip 0.048 (lead baked) →
+`sfx-perspective-easeout-{84,44}`; Hit long = `Optics_02` @0.04 from 0 (lead baked) →
+`sfx-perspective-hit-{76,80}`; Hit Short = `Optics_02` @0 → `sfx-perspective-hit-40`.
+
+QA: 64 frame-aligned 12.5fps sweep sheets (`_qa-perspective-sweep.js` → `_qa/perspective/`) +
+full-res compares (Ease In Right ×4 timestamps; Hit In Right slam + deviation-window frame rows
+`probe/dev_cmp2.png`): whip/recede smear directions, cut-frame geometry (mirror seam at exactly
+0.325 = 135/200), padding sides (the preview's own watermark appears MIRRORED/flipped in the
+padding — instant visual proof of pin side), slam pacing, fringe hue/orientation, and settle
+cadence all match frame-for-frame. Honest caveats: previews are 25→29.97 pulldown-blended
+(±half-frame slop), our 16-sample blur reads marginally crisper on busy content, and the shake
+jitter is sampled linearly between its baked keys.
 
 ---
 
