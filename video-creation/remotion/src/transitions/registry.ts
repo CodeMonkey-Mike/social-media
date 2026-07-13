@@ -22,6 +22,7 @@ import { Motion3D } from './engines/Motion3D';
 import { MotionShake } from './engines/MotionShake';
 import { PerspectiveEase } from './engines/PerspectiveEase';
 import { ShakeJolt } from './engines/ShakeJolt';
+import { SpinTwirl } from './engines/SpinTwirl';
 
 /**
  * The catalog (data) lives in assets/transitions/library.json — the single
@@ -86,6 +87,7 @@ export const ENGINES: Record<string, React.FC<any>> = {
   MotionShake,
   PerspectiveEase,
   ShakeJolt,
+  SpinTwirl,
 };
 
 export const TRANSITIONS = (library as { transitions: TransitionRow[] }).transitions;

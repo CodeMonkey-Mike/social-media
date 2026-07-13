@@ -23,7 +23,45 @@ values, with a per-folder gallery to browse them.
 
 ---
 
-## SPIN / 3D subgroups: 24 built ✅ (2026-07-13, awaiting Mike's review) — Mike's first-6 pick; 14 more SPIN subgroups remain (Center/Corner Ease + Swinging + Bounce + Shake + Twirl, each + Short)
+## SPIN: ALL 68 built ✅ (2026-07-13, awaiting Mike's review) — CATEGORY COMPLETE (3D 24 + flat 40 + Twirl 4)
+
+**Flat subgroups (40, engine PerspectiveEase — same rot-phase machinery as 3D, no Corner Pin):**
+`spin-{center-ease,center-swinging}[-short]-{ccw,cw}` + `spin-{corner-bounce,corner-ease,
+corner-swinging}[-short]-{lb,lt,rb,rt}` + `spin-shake[-short]-{1x,2x}-{ccw,cw}`
+(`_extract-spinrest.js` → `_build-spinrest-rows.js`). Durations 0.72-1.04 / 0.4-0.52.
+fidelity near-1:1. Family shapes (all rig2 mirror-padded, shutter 320):
+- **Center Ease** = center pivot, In 0→±40, Out ∓90→±15→0 (3-kf ease).
+- **Center/Corner Swinging** = Out is a 4-kf PENDULUM (∓40→±15→∓1→0) — overshoots and
+  oscillates to rest. SFX `Swinging_01.wav`.
+- **Corner Bounce** = corner pivot, big In swing (±25), Out a SMALL 4-kf bounce (∓5-10→0→0→0)
+  — B lands almost flat and bounces against rest. SFX `Bounce_01.wav` (ip 0.12).
+- **Corner Ease** = corner pivot both ways (±26 / ∓22-27→∓6→0). SFX `Spin_01` (ip 0!).
+- **Shake 1x/2x** = center spin + DENSE keyframed Position jitter riding BOTH phases (the pan
+  curves) + hand-authored (Out) scale settles (198/240→200 on SOME rows — shipped per-row as-is);
+  audio ENDS EARLY (0.92 < dur). All flat rows' SFX by measured windows →
+  `sfx-{spincenterease,spinswinging,spinbounce,spincornerease,spinshake}-*.mp3` (12 files).
+
+**Twirl (4, NEW canvas engine `SpinTwirl.tsx`, fidelity approximate):** `AE.ADBE Twirl` vortex
+over the rig2 identity — Angle 0→∓180 (In) | ±180→~10→0 (Out), **shutter 0 (no blur — the warp
+IS the look)**. Param decode: Twirl Center raw (1,1) = frame CENTER and Radius raw 30 = 60% of
+width (**the DOUBLED point normalization** — preview-measured: the peak-vs-clean radial diff
+never falls to zero, so the vortex covers the corners; R=1152px at 1080p). Falloff = AE's
+(1−r/R)²; mirror-reflect sampling = the rig padding; per-pixel Canvas2D inverse warp
+(IMAGE-only, the MeltEquidistant limitation). Handedness + arm density QA'd at full res.
+SFX `Spin_03.wav` @0 from ip 0.09 → `sfx-spintwirl-{68,40}.mp3`.
+**NEW REMOTION CANVAS LESSON (cost two black-frame renders):** painting inside the image-load
+promise races BOTH canvas mounting (`canvasRef` null → silent skip) AND the screenshot (React
+hasn't flushed the repaint when continueRender fires) in the CONCURRENT renderer — `remotion
+still` never reproduces it. FIX = paint in a dep-less `useLayoutEffect` from a module cache and
+release the delayRender handle INSIDE that effect, strictly after the paint commits.
+(MeltEquidistant carries the racy pattern — flagged; its rendered demos were clean, but
+re-renders should port this fix.)
+
+QA: 68 sweep sheets total (`_qa-spin3d-sweep.js`, extended: Shake previews carry the intensity
+INSIDE the filename) + Twirl full-res chirality compare (`_qa/spinrest/tw_cmp14.png`) — spin
+pacing, pendulum overshoot cadence, bounce wobble, jitter ride and vortex structure all track.
+
+### (superseded by the section above) SPIN / 3D subgroups: 24 built — original notes
 
 `spin-3d-{center,corner}-ease[-short]-{b,t}-{cw,ccw}` (16) + `spin-3d-side-ease[-short]-{4 dirs}` (8)
 — engine **PerspectiveEase** (extended with per-phase `rot` curves + per-phase `shutter`
