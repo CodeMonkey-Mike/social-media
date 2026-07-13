@@ -23,6 +23,39 @@ values, with a per-folder gallery to browse them.
 
 ---
 
+## MOTION: ALL 55 built ✅ (2026-07-12, awaiting Mike's review) — CATEGORY COMPLETE; SINGLE-SCENE MOVES
+
+`motion-3d-offset-*` 16 + `motion-3d-orbit-*` 16 + `motion-3d-pan-*` 8 (engine **Motion3D**, 5s)
++ `motion-shake-3d-*` 5 + `motion-shake-optics-*` 6 + `motion-shake-simple-*` 4 (engine
+**MotionShake**, 2s). Browse `browse/MOTION/<Sub>/`. **These are NOT A→B transitions** — Mike's
+single-image showcase moves (receipts/articles): every row ships `demoSameScene: true`, demos
+render over ONE image, `sfx: null` + `hasSound: false` (verified 3 ways: empty audio groups,
+silent previews — MOTION previews are also NATIVE 25fps, no pulldown — and no Sound files).
+
+**Motion3D** (fidelity approximate): three adjustment layers — t1 keyframed Geometry2 Position
+drift, t2 AE Basic 3D pose (Swivel/Tilt/Distance; static for Offset, keyframed orbit/pan for
+Orbit/Pan) + static Geometry2 offset/rotation, t3 accents = Lens −1..−? + MASKED Mettle glitch
+(faint chromatic fringe) + MASKED Gaussian blur (accent values vary per variant, 15-20).
+The masks are an INVERTED rounded diamond with 276-484px feather = a soft DEPTH-OF-FIELD EDGE
+VIGNETTE (center sharp) → radial-gradient-masked blurred+fringed overlay. Direction variants
+carry the SAME H/V flip on ALL THREE layers and previews show UPRIGHT content → flips mirror
+the MOTION only, resolved analytically in the builder (mirror drift/geoPos, negate
+swivel/tilt/geoRot per axis — the GLASS pattern). CSS perspective implementation
+(PERSP_PX=1600, DIST_PX_PER_UNIT=12 preview-calibrated; 3×3 overscan covers exposed edges).
+
+**MotionShake**: each variant slices the first ~2s of its own 60s BAKED wiggle master
+(1500 kfs @25fps — builder TRIMS to the window, ~53 kfs/param, keeping library.json sane).
+Shake 3D/Optics = AE Corner Pin per-frame corners → EXACT per-frame homography via CSS
+matrix3d (closed-form 4-point solve) — near-1:1; Optics adds static Lens Distortion (−7..−25,
+scales with intensity) via the proven chained-displacement lens pipeline (approximate; ~2.5
+min/demo render). Shake Simple = baked Position+Rotation + ScaleH 104 overscan — near-1:1.
+
+Gotchas: accent values and lens curvatures VARY per variant (first asserts were too strict);
+render cost — 5s Motion3D demos ≈ 90-100s each (accent filter per frame), full batch ≈ 80 min.
+QA `_qa-motion-sweep.js` (10fps both sides) → `_qa/motion/`.
+
+---
+
 ## MELT: ALL 30 built ✅ (2026-07-12, awaiting Mike's review) — CATEGORY COMPLETE
 
 `melt-equidistant-{1..4}` (+`-short-`, 0.84/0.44s) — engine **MeltEquidistant**;
