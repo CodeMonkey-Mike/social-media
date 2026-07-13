@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Per-clip real data for PERSPECTIVE Ease In + Ease In Short (16 A->B transitions). Full capture incl. masks, in/out points, remaps. */
+/** Per-clip real data for PERSPECTIVE all 8 Ease/Hit subgroups (64 A->B transitions; Hit Out uses a DOUBLE SPACE in its sequence names). Full capture incl. masks, in/out points, remaps. */
 const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
@@ -279,7 +279,55 @@ const BASES = [
  "Perspective Ease In Short - Right",
  "Perspective Ease In Short - Right Down",
  "Perspective Ease In Short - Right Up",
- "Perspective Ease In Short - Up"
+ "Perspective Ease In Short - Up",
+ "Perspective Ease Out - Down",
+ "Perspective Ease Out - Left",
+ "Perspective Ease Out - Left Down",
+ "Perspective Ease Out - Left Up",
+ "Perspective Ease Out - Right",
+ "Perspective Ease Out - Right Down",
+ "Perspective Ease Out - Right Up",
+ "Perspective Ease Out - Up",
+ "Perspective Ease Out Short - Down",
+ "Perspective Ease Out Short - Left",
+ "Perspective Ease Out Short - Left Down",
+ "Perspective Ease Out Short - Left Up",
+ "Perspective Ease Out Short - Right",
+ "Perspective Ease Out Short - Right Down",
+ "Perspective Ease Out Short - Right Up",
+ "Perspective Ease Out Short - Up",
+ "Perspective Hit In - Down",
+ "Perspective Hit In - Left",
+ "Perspective Hit In - Left Down",
+ "Perspective Hit In - Left Up",
+ "Perspective Hit In - Right",
+ "Perspective Hit In - Right Down",
+ "Perspective Hit In - Right Up",
+ "Perspective Hit In - Up",
+ "Perspective Hit In Short - Down",
+ "Perspective Hit In Short - Left",
+ "Perspective Hit In Short - Left Down",
+ "Perspective Hit In Short - Left Up",
+ "Perspective Hit In Short - Right",
+ "Perspective Hit In Short - Right Down",
+ "Perspective Hit In Short - Right Up",
+ "Perspective Hit In Short - Up",
+ "Perspective  Hit Out - Down",
+ "Perspective  Hit Out - Left",
+ "Perspective  Hit Out - Left Down",
+ "Perspective  Hit Out - Left Up",
+ "Perspective  Hit Out - Right",
+ "Perspective  Hit Out - Right Down",
+ "Perspective  Hit Out - Right Up",
+ "Perspective  Hit Out - Up",
+ "Perspective  Hit Out Short - Down",
+ "Perspective  Hit Out Short - Left",
+ "Perspective  Hit Out Short - Left Down",
+ "Perspective  Hit Out Short - Left Up",
+ "Perspective  Hit Out Short - Right",
+ "Perspective  Hit Out Short - Right Down",
+ "Perspective  Hit Out Short - Right Up",
+ "Perspective  Hit Out Short - Up"
 ];
 // NOTE: "(In)"/"(Out)" are SUBCLIP names on HST Adjustment clips INSIDE each main
 // sequence (verified 2026-07-12), not nested sequences — extract main sequences only.
