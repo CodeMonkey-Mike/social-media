@@ -1,7 +1,7 @@
 # Transition Library — Project Log
 
 _Re-creating the **Swiftly Studio 850 Seamless Transitions** Premiere pack as a browsable
-Remotion transition library. Last updated: 2026-07-12._
+Remotion transition library. Last updated: 2026-07-13._
 
 > **Read `CLAUDE.md` in this folder first** (hard rules: never invent a transition's look; use the
 > project's real values + the pack's own asset files; never overwrite an approved result blindly).
@@ -20,6 +20,50 @@ values, with a per-folder gallery to browse them.
 | Registry | `remotion/src/transitions/registry.ts` | binds row.engine → component. |
 | Demo | `remotion/src/TransitionDemo.tsx` | renders one row between two stills (passes image srcs). |
 | Browser | `browse/<CAT>/<VARIANT>/gallery.html` | per-folder video galleries. |
+
+---
+
+## PERSPECTIVE: Ease In 8 + Ease In Short 8 built ✅ (2026-07-13, awaiting Mike's review) — Mike's pick; 8 more subgroups remain (Ease Out ×2, Hit In ×2, Hit Out ×2, Pan 3D ×2)
+
+`perspective-ease-in-{down,left,left-down,left-up,right,right-down,right-up,up}` (0.84s, cut 0.2)
++ `perspective-ease-in-short-*` (0.44s, cut 0.16) — NEW engine
+`remotion/src/transitions/engines/PerspectiveEase.tsx`, browse `browse/PERSPECTIVE/<Sub>/`.
+**fidelity: near-1:1** — pure CSS transforms over the real curves; the only modeled piece is the
+shutter blur, reproduced the way AE itself renders it (16-sample accumulation).
+
+**Mechanism** (`_extract-perspective.js` → `_perspective-clips.json` → `_build-perspective-rows.js`):
+the (In)/(Out) HST Adjustment pair, 3 clips/sequence, all 16 sharing the EXACT same curves —
+direction lives ONLY in the Geometry2 anchor/position points:
+- **(In)** [0.04..cut]: uniform Scale 100→300 anchored AT the direction point (Right = 1:0.5,
+  Left Up = 0:0 …) — A whip-zooms INTO that edge/corner. Shutter-angle-180 motion blur is the
+  dominant look at peak (velocity 1401 %/s into the cut = near-whiteout).
+- **(Out)** [cut..end]: **the rig's `Offset 0:0` is NOT a no-op** — Shift Center To 0:0 = a
+  HALF-FRAME wrap shift (raw − 0.5, both axes) that quadrant-swaps B so Replicate(2)'s 2×2 grid
+  recomposes ONE coherent half-size B at grid center; the 4 Mirrors (the ExpandPan padding-rig
+  constants) then build TRUE mirror padding around it. Geometry2 scales 135→200 about the
+  quarter-map anchor (0.25 + p/2) positioned at the direction point ⇒ net semantics (exact):
+  **B scaled by scale/200 about ITS direction point pinned to the frame's direction point**
+  (identity at 200), mirror-padded on the exposed sides. Launches at 604 %/s (continuing the
+  In-phase violence through the cut) then a long bezier settle.
+- Short = same curves/handles re-timed (In 0.12s / Out 0.24s); Right Down (Out) runs 0.04s longer
+  (0.72 vs 0.68) with the same kfs — all media rates 1 (asserted, the LIGHT LEAKS trap).
+- Engine: piecewise curveIn/curveOut bezier sampling (OFFSET pattern); B rendered as mirror
+  tiles (only the exposable sides, ≤6 tiles) inside one scaled group; **shutter blur =
+  16-sample accumulation across the centered 0.5-frame exposure** (AE's own default
+  samples-per-frame), k-th layer at opacity 1/k for a uniform average, collapsed to 1 sample
+  when the scale delta over the shutter is <0.2% (the settle tail renders cheap). ~12-21s/demo.
+- Builder hard-fails on any deviation: effect sets, anchor==direction point, quarter-map anchor,
+  mirror rig constants, Replicate 2, Offset 0:0, 100→300/135→200 curves, rate-1 clips, audio.
+
+SFX: every variant plays `Spin_01.wav` (1.0s) from in-point 0, window-truncated (OFFSET rule) →
+`lib/sfx-perspective-ease-{84,44}.mp3`. QA: 16 frame-aligned 12.5fps sweep sheets
+(`_qa-perspective-sweep.js` → `_qa/perspective/`) + full-res compares on Right at t=0.12/0.20/
+0.28/0.48 (`_qa/perspective/probe/cmp_*.png`): whip-zoom smear direction, the cut-frame geometry
+(B pinned at the direction edge, mirror seam at exactly 0.325 = scale 135/200 ⇒ 0.675), padding
+sides (the preview's own watermark shows up MIRRORED in the padding — Left Down's flipped
+watermark at top confirms the vertical mirror), and the settle cadence all match frame-for-frame.
+Honest caveats: previews are 25→29.97 pulldown-blended (±half-frame slop at the cut), and our
+16-sample blur reads marginally crisper than the preview's on busy content.
 
 ---
 

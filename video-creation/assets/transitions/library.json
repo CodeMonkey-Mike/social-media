@@ -95151,6 +95151,1342 @@
         ],
         "useWhen": "Showcasing a single still (receipt/article/chart) with an impact shake (~2s). Use over one image, not across a cut."
       }
+    },
+    {
+      "id": "perspective-ease-in-down",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In",
+      "intensity": "Down",
+      "label": "Perspective · Ease In · Down",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "px": 0.5,
+        "py": 1,
+        "inWin": [
+          0.04,
+          0.2
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.2,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.2,
+          0.68
+        ],
+        "outScale": [
+          {
+            "t": 0.2,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.68,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward down: the outgoing shot rockets into the down edge under heavy zoom blur, then the incoming shot appears small, pinned at that same edge over mirrored padding, and eases up to full frame. Full-length with a long, smooth settle.",
+        "energy": "high",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "down"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the down edge (~0.84s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps."
+      }
+    },
+    {
+      "id": "perspective-ease-in-left",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In",
+      "intensity": "Left",
+      "label": "Perspective · Ease In · Left",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "px": 0,
+        "py": 0.5,
+        "inWin": [
+          0.04,
+          0.2
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.2,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.2,
+          0.68
+        ],
+        "outScale": [
+          {
+            "t": 0.2,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.68,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward left: the outgoing shot rockets into the left edge under heavy zoom blur, then the incoming shot appears small, pinned at that same edge over mirrored padding, and eases up to full frame. Full-length with a long, smooth settle.",
+        "energy": "high",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "left"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the left edge (~0.84s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps."
+      }
+    },
+    {
+      "id": "perspective-ease-in-left-down",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In",
+      "intensity": "Left Down",
+      "label": "Perspective · Ease In · Left Down",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "px": 0,
+        "py": 1,
+        "inWin": [
+          0.04,
+          0.2
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.2,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.2,
+          0.68
+        ],
+        "outScale": [
+          {
+            "t": 0.2,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.68,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward left down: the outgoing shot rockets into the left down corner under heavy zoom blur, then the incoming shot appears small, pinned at that same corner over mirrored padding, and eases up to full frame. Full-length with a long, smooth settle.",
+        "energy": "high",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "left-down"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the left down corner (~0.84s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps."
+      }
+    },
+    {
+      "id": "perspective-ease-in-left-up",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In",
+      "intensity": "Left Up",
+      "label": "Perspective · Ease In · Left Up",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "px": 0,
+        "py": 0,
+        "inWin": [
+          0.04,
+          0.2
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.2,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.2,
+          0.68
+        ],
+        "outScale": [
+          {
+            "t": 0.2,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.68,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward left up: the outgoing shot rockets into the left up corner under heavy zoom blur, then the incoming shot appears small, pinned at that same corner over mirrored padding, and eases up to full frame. Full-length with a long, smooth settle.",
+        "energy": "high",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "left-up"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the left up corner (~0.84s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps."
+      }
+    },
+    {
+      "id": "perspective-ease-in-right",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In",
+      "intensity": "Right",
+      "label": "Perspective · Ease In · Right",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "px": 1,
+        "py": 0.5,
+        "inWin": [
+          0.04,
+          0.2
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.2,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.2,
+          0.68
+        ],
+        "outScale": [
+          {
+            "t": 0.2,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.68,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward right: the outgoing shot rockets into the right edge under heavy zoom blur, then the incoming shot appears small, pinned at that same edge over mirrored padding, and eases up to full frame. Full-length with a long, smooth settle.",
+        "energy": "high",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "right"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the right edge (~0.84s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps."
+      }
+    },
+    {
+      "id": "perspective-ease-in-right-down",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In",
+      "intensity": "Right Down",
+      "label": "Perspective · Ease In · Right Down",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "px": 1,
+        "py": 1,
+        "inWin": [
+          0.04,
+          0.2
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.2,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.2,
+          0.72
+        ],
+        "outScale": [
+          {
+            "t": 0.2,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.68,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward right down: the outgoing shot rockets into the right down corner under heavy zoom blur, then the incoming shot appears small, pinned at that same corner over mirrored padding, and eases up to full frame. Full-length with a long, smooth settle.",
+        "energy": "high",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "right-down"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the right down corner (~0.84s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps."
+      }
+    },
+    {
+      "id": "perspective-ease-in-right-up",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In",
+      "intensity": "Right Up",
+      "label": "Perspective · Ease In · Right Up",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "px": 1,
+        "py": 0,
+        "inWin": [
+          0.04,
+          0.2
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.2,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.2,
+          0.68
+        ],
+        "outScale": [
+          {
+            "t": 0.2,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.68,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward right up: the outgoing shot rockets into the right up corner under heavy zoom blur, then the incoming shot appears small, pinned at that same corner over mirrored padding, and eases up to full frame. Full-length with a long, smooth settle.",
+        "energy": "high",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "right-up"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the right up corner (~0.84s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps."
+      }
+    },
+    {
+      "id": "perspective-ease-in-up",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In",
+      "intensity": "Up",
+      "label": "Perspective · Ease In · Up",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.84,
+      "params": {
+        "cut": 0.2381,
+        "px": 0.5,
+        "py": 0,
+        "inWin": [
+          0.04,
+          0.2
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.2,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.2,
+          0.68
+        ],
+        "outScale": [
+          {
+            "t": 0.2,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.68,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-84.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward up: the outgoing shot rockets into the up edge under heavy zoom blur, then the incoming shot appears small, pinned at that same edge over mirrored padding, and eases up to full frame. Full-length with a long, smooth settle.",
+        "energy": "high",
+        "durationSeconds": 0.84,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "up"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the up edge (~0.84s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps."
+      }
+    },
+    {
+      "id": "perspective-ease-in-short-down",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In Short",
+      "intensity": "Down",
+      "label": "Perspective · Ease In Short · Down",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "px": 0.5,
+        "py": 1,
+        "inWin": [
+          0.04,
+          0.16
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.16,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.16,
+          0.4
+        ],
+        "outScale": [
+          {
+            "t": 0.16,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.4,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward down: the outgoing shot rockets into the down edge under heavy zoom blur, then the incoming shot appears small, pinned at that same edge over mirrored padding, and eases up to full frame. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "down",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the down edge (~0.44s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps. Snappy version."
+      }
+    },
+    {
+      "id": "perspective-ease-in-short-left",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In Short",
+      "intensity": "Left",
+      "label": "Perspective · Ease In Short · Left",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "px": 0,
+        "py": 0.5,
+        "inWin": [
+          0.04,
+          0.16
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.16,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.16,
+          0.4
+        ],
+        "outScale": [
+          {
+            "t": 0.16,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.4,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward left: the outgoing shot rockets into the left edge under heavy zoom blur, then the incoming shot appears small, pinned at that same edge over mirrored padding, and eases up to full frame. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "left",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the left edge (~0.44s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps. Snappy version."
+      }
+    },
+    {
+      "id": "perspective-ease-in-short-left-down",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In Short",
+      "intensity": "Left Down",
+      "label": "Perspective · Ease In Short · Left Down",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "px": 0,
+        "py": 1,
+        "inWin": [
+          0.04,
+          0.16
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.16,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.16,
+          0.4
+        ],
+        "outScale": [
+          {
+            "t": 0.16,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.4,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward left down: the outgoing shot rockets into the left down corner under heavy zoom blur, then the incoming shot appears small, pinned at that same corner over mirrored padding, and eases up to full frame. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "left-down",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the left down corner (~0.44s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps. Snappy version."
+      }
+    },
+    {
+      "id": "perspective-ease-in-short-left-up",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In Short",
+      "intensity": "Left Up",
+      "label": "Perspective · Ease In Short · Left Up",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "px": 0,
+        "py": 0,
+        "inWin": [
+          0.04,
+          0.16
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.16,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.16,
+          0.4
+        ],
+        "outScale": [
+          {
+            "t": 0.16,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.4,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward left up: the outgoing shot rockets into the left up corner under heavy zoom blur, then the incoming shot appears small, pinned at that same corner over mirrored padding, and eases up to full frame. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "left-up",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the left up corner (~0.44s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps. Snappy version."
+      }
+    },
+    {
+      "id": "perspective-ease-in-short-right",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In Short",
+      "intensity": "Right",
+      "label": "Perspective · Ease In Short · Right",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "px": 1,
+        "py": 0.5,
+        "inWin": [
+          0.04,
+          0.16
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.16,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.16,
+          0.4
+        ],
+        "outScale": [
+          {
+            "t": 0.16,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.4,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward right: the outgoing shot rockets into the right edge under heavy zoom blur, then the incoming shot appears small, pinned at that same edge over mirrored padding, and eases up to full frame. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "right",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the right edge (~0.44s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps. Snappy version."
+      }
+    },
+    {
+      "id": "perspective-ease-in-short-right-down",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In Short",
+      "intensity": "Right Down",
+      "label": "Perspective · Ease In Short · Right Down",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "px": 1,
+        "py": 1,
+        "inWin": [
+          0.04,
+          0.16
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.16,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.16,
+          0.4
+        ],
+        "outScale": [
+          {
+            "t": 0.16,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.4,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward right down: the outgoing shot rockets into the right down corner under heavy zoom blur, then the incoming shot appears small, pinned at that same corner over mirrored padding, and eases up to full frame. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "right-down",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the right down corner (~0.44s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps. Snappy version."
+      }
+    },
+    {
+      "id": "perspective-ease-in-short-right-up",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In Short",
+      "intensity": "Right Up",
+      "label": "Perspective · Ease In Short · Right Up",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "px": 1,
+        "py": 0,
+        "inWin": [
+          0.04,
+          0.16
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.16,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.16,
+          0.4
+        ],
+        "outScale": [
+          {
+            "t": 0.16,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.4,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward right up: the outgoing shot rockets into the right up corner under heavy zoom blur, then the incoming shot appears small, pinned at that same corner over mirrored padding, and eases up to full frame. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "right-up",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the right up corner (~0.44s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps. Snappy version."
+      }
+    },
+    {
+      "id": "perspective-ease-in-short-up",
+      "category": "PERSPECTIVE",
+      "variant": "Ease In Short",
+      "intensity": "Up",
+      "label": "Perspective · Ease In Short · Up",
+      "engine": "PerspectiveEase",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.44,
+      "params": {
+        "cut": 0.3636,
+        "px": 0.5,
+        "py": 0,
+        "inWin": [
+          0.04,
+          0.16
+        ],
+        "inScale": [
+          {
+            "t": 0.04,
+            "v": 100,
+            "iv": 60.79488880057714,
+            "ii": 0.3333333333333333,
+            "ov": 60.79488880057714,
+            "oi": 1
+          },
+          {
+            "t": 0.16,
+            "v": 300,
+            "iv": 1401.3924846198802,
+            "ii": 0.10253874159221518,
+            "ov": 1401.3924846198802,
+            "oi": 0.3333333333333333
+          }
+        ],
+        "outWin": [
+          0.16,
+          0.4
+        ],
+        "outScale": [
+          {
+            "t": 0.16,
+            "v": 135,
+            "iv": 0,
+            "ii": 0.16666666666666666,
+            "ov": 604.67645766598,
+            "oi": 0.08888681631603258
+          },
+          {
+            "t": 0.4,
+            "v": 200,
+            "iv": 6.538097389767121,
+            "ii": 0.8547008546836103,
+            "ov": 0,
+            "oi": 0.16666666666666666
+          }
+        ],
+        "shutter": 180
+      },
+      "sfx": "transitions/lib/sfx-perspective-ease-44.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Perspective Ease In Short",
+        "engineFile": "remotion/src/transitions/engines/PerspectiveEase.tsx",
+        "description": "Perspective zoom toward up: the outgoing shot rockets into the up edge under heavy zoom blur, then the incoming shot appears small, pinned at that same edge over mirrored padding, and eases up to full frame. Short: fast and punchy.",
+        "energy": "high",
+        "durationSeconds": 0.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "perspective",
+          "zoom",
+          "ease",
+          "up",
+          "short"
+        ],
+        "useWhen": "High-energy scene change that \"flies\" into the up edge (~0.44s); the whip-zoom + eased landing reads cinematic, great for location/topic jumps. Snappy version."
+      }
     }
   ]
 }
