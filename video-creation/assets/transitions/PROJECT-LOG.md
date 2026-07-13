@@ -3,6 +3,21 @@
 _Re-creating the **Swiftly Studio 850 Seamless Transitions** Premiere pack as a browsable
 Remotion transition library. Last updated: 2026-07-13._
 
+**STATUS / RESUME POINT (2026-07-13): 599 rows across 11 categories, all built + QA'd.**
+GLITCH 89 · OFFSET 152 · DEVIATION 5 · EXPAND 20 · GLASS 40 · LIGHT LEAKS 34 · MELT 30 ·
+MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68. Everything from PERSPECTIVE onward
+(2026-07-13, commits `764bcaf`..`56804f6`) awaits Mike's review in the galleries.
+**Remaining pack categories: SPLIT, TRANSFORM, ZOOM** — same drill: extract per-sequence →
+decode → builder with hard asserts → render → frame-aligned sweep QA. Most non-glitch families
+land on the generalized **PerspectiveEase** phase engine (pinned zoom/pan/rot + Corner Pin +
+shake + deviation); check it first before writing a new engine. Two open flags for Mike:
+(1) OFFSET Hit's deviation fringe carries the same RED/BLUE tint pair PERSPECTIVE proved is
+orange/blue — its green implementation may deserve the same correction; (2) SHAKE demos render
+A→B while the pack demos them same-scene — flip demoSameScene on those rows if preferred.
+Infra reminders: minimal render pubdir (rebuild in the scratchpad: 2 demo stills + all
+`lib/sfx-*.mp3`), `_render-offsetgeo.js <filter>` with `OFFSET_PUBDIR` env, `%TEMP%/sw.xml`
+is the decompressed FullHD project (re-gunzip if evicted), galleries via `_gen-galleries.js`.
+
 > **Read `CLAUDE.md` in this folder first** (hard rules: never invent a transition's look; use the
 > project's real values + the pack's own asset files; never overwrite an approved result blindly).
 
