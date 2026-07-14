@@ -5,9 +5,10 @@ Remotion transition library. Last updated: 2026-07-13._
 
 **STATUS / RESUME POINT (2026-07-13): 783 rows across 13 categories, all built + QA'd.**
 GLITCH 89 · OFFSET 152 · DEVIATION 5 · EXPAND 20 · GLASS 40 · LIGHT LEAKS 34 · MELT 30 ·
-MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68 · SPLIT 144 · TRANSFORM 40. Everything from
-PERSPECTIVE onward (2026-07-13, commits `764bcaf`..) awaits Mike's review in the galleries.
-**Remaining pack category: ZOOM** — same drill: extract per-sequence →
+MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68 · SPLIT 144 · TRANSFORM 40 (commit `81be4e5`).
+Everything from PERSPECTIVE onward (2026-07-13, commits `764bcaf`..`81be4e5`) awaits Mike's
+review in the galleries. **NEXT SESSION (Mike's call 2026-07-13: resume tomorrow): ZOOM — the
+LAST pack category.** Same drill: extract per-sequence →
 decode → builder with hard asserts → render → frame-aligned sweep QA. Most non-glitch families
 land on the generalized **PerspectiveEase** phase engine (pinned zoom/pan/rot + Corner Pin +
 shake + deviation) or the **GlassBeveled** masked wrap-offset chain (now with additive
