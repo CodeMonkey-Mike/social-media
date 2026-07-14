@@ -3,16 +3,18 @@
 _Re-creating the **Swiftly Studio 850 Seamless Transitions** Premiere pack as a browsable
 Remotion transition library. Last updated: 2026-07-14._
 
-**STATUS (2026-07-14): 🏁 PACK COMPLETE — 853 rows across ALL 14 categories, built + QA'd.**
+**STATUS (2026-07-14): ✅ PROJECT COMPLETE — 853 rows across ALL 14 categories, built, QA'd,
+and APPROVED by Mike (2026-07-14, full library).**
 GLITCH 89 · OFFSET 152 · DEVIATION 5 · EXPAND 20 · GLASS 40 · LIGHT LEAKS 34 · MELT 30 ·
-MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68 · SPLIT 144 · TRANSFORM 40 · **ZOOM 70 (new)**.
-Everything from PERSPECTIVE onward (commits `764bcaf`.., 2026-07-13/14) awaits Mike's review
-in the galleries (`browse/gallery.html`). Open flags for Mike: (1) OFFSET Hit's deviation
-fringe carries the same RED/BLUE tint pair PERSPECTIVE proved is orange/blue — its green
-implementation may deserve the same correction; (2) SHAKE demos render A→B while the pack
-demos them same-scene — flip demoSameScene on those rows if preferred; (3) ZOOM Optics chroma
-dispersion reads subtler than the preview's rainbow rings (single knob: FX_DISP_SCALE_100 in
-PerspectiveEase.tsx) — see the ZOOM section's caveats.
+MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68 · SPLIT 144 · TRANSFORM 40 · ZOOM 70.
+The library is now in MAINTENANCE mode: browse via `browse/gallery.html`, pick transitions by
+`meta` (aspect/energy/tags), drop into videos via `TransitionClip`. The 2026-07-14 review
+flags (OFFSET Hit green-vs-R/B fringe, SHAKE A→B demos, ZOOM Optics dispersion strength)
+were all accepted as-is with the approval — reopen only if Mike asks. Remaining known TODOs
+if ever needed: canvas engines (MeltEquidistant/SpinTwirl) are IMAGE-content only (video
+needs a video→canvas frame feed); MeltEquidistant still carries the racy paint pattern
+SpinTwirl fixed (port on next touch); vertical (9:16) variants would be NEW rows from the
+pack's Vertical project.
 Infra reminders: minimal render pubdir (rebuild in the scratchpad: 2 demo stills + all
 `lib/sfx-*.mp3`), `_render-offsetgeo.js <filter>` with `OFFSET_PUBDIR` env, `%TEMP%/sw.xml`
 is the decompressed FullHD project (re-gunzip if evicted), galleries via `_gen-galleries.js`.
