@@ -1,26 +1,25 @@
 # Transition Library — Project Log
 
 _Re-creating the **Swiftly Studio 850 Seamless Transitions** Premiere pack as a browsable
-Remotion transition library. Last updated: 2026-07-13._
+Remotion transition library. Last updated: 2026-07-14._
 
-**STATUS / RESUME POINT (2026-07-13): 783 rows across 13 categories, all built + QA'd.**
+**STATUS (2026-07-14): 🏁 PACK COMPLETE — 853 rows across ALL 14 categories, built + QA'd.**
 GLITCH 89 · OFFSET 152 · DEVIATION 5 · EXPAND 20 · GLASS 40 · LIGHT LEAKS 34 · MELT 30 ·
-MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68 · SPLIT 144 · TRANSFORM 40 (commit `81be4e5`).
-Everything from PERSPECTIVE onward (2026-07-13, commits `764bcaf`..`81be4e5`) awaits Mike's
-review in the galleries. **NEXT SESSION (Mike's call 2026-07-13: resume tomorrow): ZOOM — the
-LAST pack category.** Same drill: extract per-sequence →
-decode → builder with hard asserts → render → frame-aligned sweep QA. Most non-glitch families
-land on the generalized **PerspectiveEase** phase engine (pinned zoom/pan/rot + Corner Pin +
-shake + deviation) or the **GlassBeveled** masked wrap-offset chain (now with additive
-per-stage `maskOut`); check both before writing a new engine. Two open flags for Mike:
-(1) OFFSET Hit's deviation fringe carries the same RED/BLUE tint pair PERSPECTIVE proved is
-orange/blue — its green implementation may deserve the same correction; (2) SHAKE demos render
-A→B while the pack demos them same-scene — flip demoSameScene on those rows if preferred.
+MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68 · SPLIT 144 · TRANSFORM 40 · **ZOOM 70 (new)**.
+Everything from PERSPECTIVE onward (commits `764bcaf`.., 2026-07-13/14) awaits Mike's review
+in the galleries (`browse/gallery.html`). Open flags for Mike: (1) OFFSET Hit's deviation
+fringe carries the same RED/BLUE tint pair PERSPECTIVE proved is orange/blue — its green
+implementation may deserve the same correction; (2) SHAKE demos render A→B while the pack
+demos them same-scene — flip demoSameScene on those rows if preferred; (3) ZOOM Optics chroma
+dispersion reads subtler than the preview's rainbow rings (single knob: FX_DISP_SCALE_100 in
+PerspectiveEase.tsx) — see the ZOOM section's caveats.
 Infra reminders: minimal render pubdir (rebuild in the scratchpad: 2 demo stills + all
 `lib/sfx-*.mp3`), `_render-offsetgeo.js <filter>` with `OFFSET_PUBDIR` env, `%TEMP%/sw.xml`
 is the decompressed FullHD project (re-gunzip if evicted), galleries via `_gen-galleries.js`.
 Long render batches get RECLAIMED when the session idles — run them foreground (or keep a
 Monitor alive) and rely on the `.ok` marker-resume; a killed batch is a resume, not a restart.
+QA-frame gotcha: demo mp4s carry an 18-frame (0.6 s) hold before the transition — offset
+preview-vs-ours frame grabs by +0.6 s or you compare against the hold (bit the first ZOOM probe).
 
 > **Read `CLAUDE.md` in this folder first** (hard rules: never invent a transition's look; use the
 > project's real values + the pack's own asset files; never overwrite an approved result blindly).
@@ -39,6 +38,76 @@ values, with a per-folder gallery to browse them.
 | Registry | `remotion/src/transitions/registry.ts` | binds row.engine → component. |
 | Demo | `remotion/src/TransitionDemo.tsx` | renders one row between two stills (passes image srcs). |
 | Browser | `browse/<CAT>/<VARIANT>/gallery.html` | per-folder video galleries. |
+
+---
+
+## ZOOM: ALL 70 built ✅ (2026-07-14, awaiting Mike's review) — CATEGORY COMPLETE (16 subgroups) — THE LAST PACK CATEGORY 🏁
+
+`zoom-{ease,hit,optics,optics-spin,shake-{1x,2x},simple,spin,swinging}[-short]-{in,in-out,out,
+in-impact,in-out-{1,2,3},cw/ccw variants}` — ALL 70 on engine **PerspectiveEase** (zero new
+engines; the phase machinery generalized once more) via `_extract-zoom.js` → `_zoom-clips.json`
+→ `_build-zoom-rows.js` (hard asserts, first-pass green) → browse `browse/ZOOM/<Sub>/`.
+Durations 0.4–1.16 s. **fidelity: near-1:1 (Ease/Simple/Spin/Swinging), approximate (Hit —
+fringe mechanism swapped, PERSPECTIVE precedent; Optics/Optics Spin/Shake — the lens +
+chroma overlays are calibrated pieces).**
+
+**Mechanism: PERSPECTIVE pinned at FRAME CENTER.** Every variant = the PERSPECTIVE phase
+architecture with anchor = position = 0.5:0.5 everywhere (same rig2 quarter-mirror constants,
+same rig3 third-line slam rig, byte-identical Deviation tint pair `ff00ff0000000000`/
+`ff0000000000ff00` + Emboss 45/10/70 + Pin Light, near-identical Shake jitter keys). Kinds:
+In = plain 100→300 whip | rig grow-to-rest; In Out = plain | plain 300→100 (scale never dips —
+no rig); Out = rig2 recede | plain 300→100. Family deltas: **Spin/Optics Spin** add Rotation
+curves riding the phases (±40/±50 in, pendulum/ease-back out; Optics Spin's CCW (Out) starts
++50 like CW — hand-authored pack asymmetry, shipped as-is); **Swinging** = multi-kf scale
+PENDULUM (Out's (Out) enters mid-flight via a negative-time kf: 80@−0.32s→300@0→130→210→200);
+**Simple** = pure LINEAR kfs (mechanical); **Hit** = the PERSPECTIVE Hit trio verbatim,
+centered; **Shake 1x/2x** = dense baked Position jitter + Rotation wobble riding BOTH phases
+(the SPIN-Shake pan convention; 2x = wilder curves + CD peak 75 vs 50).
+
+**NEW (additive) PerspectiveEase `fx` overlay stages** — the Optics/Shake full-window
+adjustment layers, applied over the composed phases in track order (bottom-up; within one
+clip the component stack is glitch → lens → zoom pulse):
+- `color` = **Mettle SkyBox Digital Glitch with ONLY "Color Distortion" keyframed 0→50/75→0**
+  (geometry-distortion group disabled, Master Amplitude static 100, GeomX/Y 100/83, seed 0 —
+  all asserted) = the DEVIATION-category radial spectral dispersion, reused verbatim
+  (LINEAR_MAP per-channel displacement, same constants).
+- `lens` = PR Lens Distortion Curvature pulse. **KEY LESSON (cost one probe render): the
+  OFFSET-Warp LENS_MAP (magnitude growing to the EDGE, calibrated at |k|≤30) is the WRONG
+  model at ZOOM's |k| 70–100 — it porthole'd the frame into black borders.** The pure-lens
+  "Zoom Optics - In Out 3" preview (curvature to −100, NO Geometry2 anywhere) proved the real
+  semantics: an **edge-anchored center-magnifying BULGE whose frame stays FULL**. New map
+  `_gen-sphere-map.js` → `sphereMap.ts`: u = r + (c/100)·n(1−rn²), rn corner-normalized —
+  for negative curvature every sample stays inside the frame (no fill, ever); linear in c so
+  ONE map serves the whole family; adaptive chained passes (also ~4× faster than the old
+  chain: 211 s → 48 s per demo). DeviationGlitch keeps its approved LENS_MAP untouched (Rule 3).
+- `zoom` = In Impact's Geometry2 pulse (100→158.8→100, shutter 80) riding the lens clip —
+  rendered sharp (sub-frame blur at those speeds), covers the positive-curvature overshoot.
+- In Out 3 ships identity phases + PIECEWISE lens stages on its (In)/(Out) clips (the glitch
+  track sits BELOW the lens there — track order asserted).
+
+**Regression discipline:** the fx extension was proven a no-op on existing rows by
+HEAD-vs-edited renders of approved `perspective-ease-in-right` — 89 dB PSNR, ABOVE the
+measured 62 dB run-to-run noise floor of two identical HEAD renders (headless-Chromium AA
+jitter; "PSNR inf" only happens on still frames — don't chase it on blurred rows).
+
+SFX by MEASURED (media, start, in-point, window), asserted per family → 14 lib files:
+`sfx-zoom-ease-{76,40}` (Optics_01 ip.052, shared by Spin) · `sfx-zoom-simple-{68,48}`
+(Camera_01 ip .02/.092!) · `sfx-zoom-swinging-{88,44}` (Swinging_01 ip.16) ·
+`sfx-zoom-shake-{96,48}` (Optics_01 ip.04) · `sfx-zoom-optics-{76,80,44}` (Optics_01 ip0) ·
+`sfx-zoom-optics02-{88,84,44}` (Optics_02 ip0 — 84/44 shared by Hit In-Out long + Optics
+In Impact, identical measured cuts). Leads baked, 30 ms tail guard.
+
+QA: 70 frame-aligned 12.5 fps sweep sheets (`_qa-zoom-sweep.js` → `_qa/zoom/`) + full-res
+probe compares (Ease In ×4 timestamps incl. the rig2 mirror seam at the cut; In Out 3 ×4
+(the bulge ground truth); In Impact ×4; Hit In slam + fringe; Shake 1x ride; Swinging Out
+pendulum): whip/recede smear, rig padding, spin handedness, pendulum cadence, slam + R/B
+fringe, bulge magnitude/timing, jitter ride and settle all track the previews. **Honest
+caveats:** (1) our chroma dispersion reads subtler than the preview's rainbow ring-swirls on
+the Optics families at peak (the DEVIATION-consistent linear map; knob = FX_DISP_SCALE_100);
+(2) at extreme bulge our corners show inward-magnified content where the preview shows
+outward ring-streaks (edge-clamp behavior of the closed plugin); (3) In Impact briefly shows
+a ~3% edge wedge during its positive-curvature crossing where the zoom cover lags our
+overshoot profile; (4) 25→29.97 pulldown slop as everywhere.
 
 ---
 
