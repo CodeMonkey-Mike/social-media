@@ -3,11 +3,11 @@
 _Re-creating the **Swiftly Studio 850 Seamless Transitions** Premiere pack as a browsable
 Remotion transition library. Last updated: 2026-07-13._
 
-**STATUS / RESUME POINT (2026-07-13): 743 rows across 12 categories, all built + QA'd.**
+**STATUS / RESUME POINT (2026-07-13): 783 rows across 13 categories, all built + QA'd.**
 GLITCH 89 · OFFSET 152 · DEVIATION 5 · EXPAND 20 · GLASS 40 · LIGHT LEAKS 34 · MELT 30 ·
-MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68 · SPLIT 144. Everything from PERSPECTIVE
-onward (2026-07-13, commits `764bcaf`..`a4cc66b`) awaits Mike's review in the galleries.
-**Remaining pack categories: TRANSFORM, ZOOM** — same drill: extract per-sequence →
+MOTION 55 · PERSPECTIVE 72 · SHAKE 34 · SPIN 68 · SPLIT 144 · TRANSFORM 40. Everything from
+PERSPECTIVE onward (2026-07-13, commits `764bcaf`..) awaits Mike's review in the galleries.
+**Remaining pack category: ZOOM** — same drill: extract per-sequence →
 decode → builder with hard asserts → render → frame-aligned sweep QA. Most non-glitch families
 land on the generalized **PerspectiveEase** phase engine (pinned zoom/pan/rot + Corner Pin +
 shake + deviation) or the **GlassBeveled** masked wrap-offset chain (now with additive
@@ -38,6 +38,58 @@ values, with a per-folder gallery to browse them.
 | Registry | `remotion/src/transitions/registry.ts` | binds row.engine → component. |
 | Demo | `remotion/src/TransitionDemo.tsx` | renders one row between two stills (passes image srcs). |
 | Browser | `browse/<CAT>/<VARIANT>/gallery.html` | per-folder video galleries. |
+
+---
+
+## TRANSFORM: ALL 40 built ✅ (2026-07-13, awaiting Mike's review) — CATEGORY COMPLETE (8 subgroups)
+
+`transform-{1..4}[-short]-{dir}` — 1: 4 diagonal dirs · 2: 8 dirs · 3/4: 4 diagonals, + Short
+twins (`_extract-transform.js` → `_transform-clips.json` → `_build-transform-rows.js`, hard
+asserts) — NEW engine `remotion/src/transitions/engines/TransformFly.tsx`, browse
+`browse/TRANSFORM/<Sub>/`. Durations 1.56 (cut 0.6) / 0.76 (cut 0.28; **Short 3 Right Down
+cuts at 0.24** — hand-authored quirk, shipped as-is). **fidelity: approximate** (geometry /
+curves / timing all real; calibrated pieces = the OffsetSlide BLUR_K directional-blur constant
+and Motion3D's PERSP_PX/DIST_PX_PER_UNIT Basic-3D mapping).
+
+**Mechanism (effect set CLOSED across all 40, assert-verified: Alpha Adjust + Motion Blur +
+Offset + Basic 3D + Geometry2 + H/V Flips — nothing else):**
+- **(In)/(Out) HST Adjustments** = the OFFSET architecture with two new twists: the wrap-Offset
+  path is a densely 25fps-baked 2D ARC (both axes move, e.g. down then left; (Out) starts
+  multiple wraps out, up to 3.6 screens) and the **Motion Blur Direction is KEYFRAMED — the
+  blur axis ROTATES tracking the path tangent** (OFFSET's was static). Piecewise per clip,
+  swap at the (Out) start, hidden under peak smear (len peaks ~334).
+- **A full-window "3D" HST Adjustment above**: AE Basic 3D Swivel/Tilt/Distance (sparse
+  real-bezier curves, PER SUBGROUP: 1 = one wide tilt swing to −44°; 2 = a 6-kf ±44° multi-swing
+  tumble, the wildest; 3/4 = two-beat swings; Shorts = single swing) over a Geometry2 uniform
+  scale ride (rides Scale HEIGHT 100→125/130→100, SW static 100 — the PERSPECTIVE rule).
+  Bottom-up: scale first, then pose. Negative Distance = closer; the zoom covers the tilt's
+  edge exposure (previews show NO black edges; our 3×3 wrap tiles cover the rest).
+- **Directions = flip sandwiches around per-subgroup identical curves** (balanced pairs on
+  (In)/(Out), a SINGLE flip on the 3D layer, parity asserted equal). Preview tail frames prove
+  content stays UPRIGHT → flips mirror the MOTION only (the MOTION/GLASS precedent), resolved
+  analytically in the builder: H mirrors dx + blur angle (φ→180−φ) + negates Swivel; V mirrors
+  dy + (φ→−φ) + negates Tilt. Engine is flip-free.
+- Engine `TransformFly` = OffsetSlide's rotate-sandwich directional blur (per-frame angle) +
+  piecewise samplers + Motion3D's CSS-perspective Basic 3D, ~10-35s/demo. **ENGINE BUG CAUGHT
+  IN SWEEP QA (the S3-RD quirk): a frame-fraction swap (`p >= cut`) fired one 30fps frame
+  before the (Out) window opened on the only row whose cut (0.24) is off the 30fps grid —
+  that frame rendered B wrap-offset SHARP (curve + blur window both clamp outside their span).
+  Fix = swap on the (Out) clip's real window START (seq-time), which is the Premiere
+  semantics; zero-diff regression on an on-grid row (PSNR inf).** Pack typo shipped around:
+  "Transform Short 1 - Up Rightt (In)" — classify by shape, never by subclip name.
+
+SFX by MEASURED (media, start, in-point, window), asserted: Long `Camera_Flight_Long_01.mp3`
+@0.04 ip 0 win 1.52 → `sfx-transform-152.mp3`; Short `Camera_Flight_Short_01.mp3` @0.04
+ip 0.1351 win 0.72 → `sfx-transform-short-72.mp3` (0.04 lead baked, 30ms tail guard).
+
+QA: 40 frame-aligned 12.5fps sweep sheets (`_qa-transform-sweep.js` → `_qa/transform/`) +
+full-res probes (T1 Down-Left ×7 timestamps; T2 Right keystone pair at 0.96/1.12; S3-RD
+cut-frame triplet post-fix): push arcs, blur-axis rotation through the cut (vertical →
+diagonal → horizontal), 3D wobble/keystone lean, zoom ride and settle all track the previews.
+Honest caveats: ours preserves more content structure at peak smear (their beach flattens,
+our spiky towers read through), and fast-settle frames read crisper than the preview's
+25→29.97 pulldown blends (verified against raw curves: e.g. T2-Right at 1.12s has real Blur
+Length 6.7 while the preview frame carries a ~25px blend ghost).
 
 ---
 
