@@ -7,6 +7,8 @@ import {
   useVideoConfig,
 } from 'remotion';
 import { TransitionProps } from '../types';
+import { LENS_OVERSCAN, LINEAR_MAP } from './lensMap';
+import { SPHERE_MAP, SPHERE_OVERSCAN, SPHERE_SCALE_PER_C } from './sphereMap';
 
 /**
  * PERSPECTIVE — Ease In / Ease Out / Hit In / Hit Out (+ Short), decoded from
@@ -80,6 +82,28 @@ export type PerspectiveEaseParams = {
    * Applied per FRAME around the blurred accumulation (the Corner clip has no
    * shutter of its own). Corners as frame fractions; 1 kf = static. */
   cornerPin?: { win: [number, number]; ul: PanKf[]; ur: PanKf[]; ll: PanKf[]; lr: PanKf[] };
+  /** ZOOM Optics/Shake full-window overlay adjustments, applied over the
+   * composed phases in ARRAY order (= the pack's track order bottom-up: the
+   * Digital-Glitch "Deviation" clip sits BELOW the Lens "Optics" clip, and
+   * within one clip the component stack applies bottom-up: glitch → lens →
+   * zoom pulse). Curves are seq-time, sampled with the same piecewise bezier. */
+  fx?: FxStage[];
+};
+
+export type FxStage = {
+  win: [number, number];
+  /** Mettle SkyBox Digital Glitch "Color Distortion" curve (0..100) — radial
+   * spectral dispersion, the DeviationGlitch machinery (per-channel
+   * displacement over the LINEAR radial map == per-channel scale from center;
+   * Master Amplitude static 100, geometry-distortion group disabled). */
+  color?: ScalarKf[];
+  /** PR.ADBE Lens Distortion Curvature curve — the chained-displacement lens
+   * (LENS_MAP), negative = barrel bulge. */
+  lens?: ScalarKf[];
+  /** Optics "In Impact": a Geometry2 zoom pulse riding the lens clip
+   * (percent, /100, center anchor; its shutter-80 blur at these speeds is
+   * sub-frame — rendered sharp, documented). */
+  zoom?: ScalarKf[];
 };
 
 const bez = (a: number, b: number, c: number, d: number, s: number) => {
@@ -180,6 +204,13 @@ const sampleJitter = (kfs: { t: number; x: number; y: number }[], t: number) => 
 
 /** AE default: 16 motion-blur samples per frame. */
 const BLUR_SAMPLES = 16;
+
+// ---- fx overlay constants (the DeviationGlitch calibration, reused verbatim) --
+/** Base displacement in px at the side edge (nx=1.78) per unit channel coeff
+ * when Color Distortion = 100 (see DeviationGlitch: EDGE_PX=30, LINEAR_A map). */
+const FX_DISP_SCALE_100 = (30 * 255) / (45 * 1.78);
+/** Per-channel displacement coefficients: common-mode ≈1 + R-vs-B dispersion. */
+const FX_CH_R = 1.8, FX_CH_G = 1.0, FX_CH_B = 0.2;
 
 export const PerspectiveEase: React.FC<TransitionProps & { params: PerspectiveEaseParams }> = ({
   from, to, fromSrc, toSrc, outClip, inClip, durationInFrames, params,
@@ -316,6 +347,43 @@ export const PerspectiveEase: React.FC<TransitionProps & { params: PerspectiveEa
   }
   if (devOn) node = <AbsoluteFill style={{ filter: `url(#${devId})` }}>{node}</AbsoluteFill>;
 
+  // ZOOM Optics/Shake overlays: each active stage wraps the composite in
+  // (bottom-up component order) color glitch → lens warp → zoom pulse.
+  const fxActive = (params.fx ?? [])
+    .map((st, i) => ({ st, i }))
+    .filter(({ st }) => tSec >= st.win[0] && tSec < st.win[1]);
+  const fxRender: Array<{ id: string; kind: 'color' | 'lens'; amt: number }> = [];
+  for (const { st, i } of fxActive) {
+    if (st.color) {
+      const cd = Math.max(0, sampleKfs(st.color, tSec));
+      const amp = (cd / 100) * FX_DISP_SCALE_100;
+      if (amp > 1) {
+        const id = `pease-fxc-${i}-${frame}`;
+        fxRender.push({ id, kind: 'color', amt: amp });
+        node = <AbsoluteFill style={{ filter: `url(#${id})` }}>{node}</AbsoluteFill>;
+      }
+    }
+    if (st.lens) {
+      const k = sampleKfs(st.lens, tSec);
+      const lensScale = k * SPHERE_SCALE_PER_C;
+      if (Math.abs(lensScale) > 0.5) {
+        const id = `pease-fxl-${i}-${frame}`;
+        fxRender.push({ id, kind: 'lens', amt: lensScale });
+        node = <AbsoluteFill style={{ filter: `url(#${id})` }}>{node}</AbsoluteFill>;
+      }
+    }
+    if (st.zoom) {
+      const z = sampleKfs(st.zoom, tSec) / 100;
+      if (Math.abs(z - 1) > 1e-4) {
+        node = (
+          <AbsoluteFill style={{ transform: `scale(${z})`, transformOrigin: '50% 50%' }}>
+            {node}
+          </AbsoluteFill>
+        );
+      }
+    }
+  }
+
   return (
     <AbsoluteFill style={{ backgroundColor: 'black', overflow: 'hidden' }}>
       {devOn && (
@@ -349,6 +417,75 @@ export const PerspectiveEase: React.FC<TransitionProps & { params: PerspectiveEa
               <feComposite in="rShift" in2="bShift" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="rb" />
               <feComposite in="rb" in2="gOnly" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" />
             </filter>
+          </defs>
+        </svg>
+      )}
+      {fxRender.length > 0 && (
+        <svg width="0" height="0" style={{ position: 'absolute' }}>
+          <defs>
+            {fxRender.map((f) =>
+              f.kind === 'color' ? (
+                /* Radial spectral dispersion (DeviationGlitch verbatim): per-channel
+                   displacement over the LINEAR radial map == per-channel SCALE from
+                   the center. R out, B in, G a whisper — quiet middle, fringes grow
+                   toward the edges. */
+                <filter key={f.id} id={f.id} x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
+                  <feImage
+                    href={LINEAR_MAP}
+                    x={-LENS_OVERSCAN * width}
+                    y={-LENS_OVERSCAN * height}
+                    width={width * (1 + 2 * LENS_OVERSCAN)}
+                    height={height * (1 + 2 * LENS_OVERSCAN)}
+                    preserveAspectRatio="none"
+                    result="rmap"
+                  />
+                  <feColorMatrix in="SourceGraphic" type="matrix"
+                    values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="chR" />
+                  <feDisplacementMap in="chR" in2="rmap" scale={f.amt * FX_CH_R} xChannelSelector="R" yChannelSelector="G" result="dR" />
+                  <feColorMatrix in="SourceGraphic" type="matrix"
+                    values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="chG" />
+                  <feDisplacementMap in="chG" in2="rmap" scale={f.amt * FX_CH_G} xChannelSelector="R" yChannelSelector="G" result="dG" />
+                  <feColorMatrix in="SourceGraphic" type="matrix"
+                    values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="chB" />
+                  <feDisplacementMap in="chB" in2="rmap" scale={f.amt * FX_CH_B} xChannelSelector="R" yChannelSelector="G" result="dB" />
+                  <feComposite in="dR" in2="dG" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="rg" />
+                  <feComposite in="rg" in2="dB" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" />
+                </filter>
+              ) : (
+                /* Lens Distortion: chained displacement over the EDGE-ANCHORED
+                   spherize map (u = r + (c/100)·n(1−rn²), corners pinned) — the
+                   pure-lens "In Out 3" preview proved big negative curvatures are
+                   a center-magnifying bulge whose frame stays FULL (the OFFSET
+                   LENS_MAP porthole'd at |k|>70; probe QA 2026-07-14). */
+                <filter key={f.id} id={f.id} x="-25%" y="-25%" width="150%" height="150%" colorInterpolationFilters="sRGB">
+                  <feImage
+                    href={SPHERE_MAP}
+                    x={-SPHERE_OVERSCAN * width}
+                    y={-SPHERE_OVERSCAN * height}
+                    width={width * (1 + 2 * SPHERE_OVERSCAN)}
+                    height={height * (1 + 2 * SPHERE_OVERSCAN)}
+                    preserveAspectRatio="none"
+                    result="lmapRaw"
+                  />
+                  <feGaussianBlur in="lmapRaw" stdDeviation="6" result="lmap" />
+                  <feGaussianBlur in="SourceGraphic" stdDeviation={Math.min(1.5, Math.abs(f.amt) / 600)} result="p0" />
+                  {(() => {
+                    const passes = Math.min(8, Math.max(3, Math.ceil(Math.abs(f.amt) / 250)));
+                    return Array.from({ length: passes }, (_, k) => (
+                      <feDisplacementMap
+                        key={k}
+                        in={`p${k}`}
+                        in2="lmap"
+                        scale={f.amt / passes}
+                        xChannelSelector="R"
+                        yChannelSelector="G"
+                        result={`p${k + 1}`}
+                      />
+                    ));
+                  })()}
+                </filter>
+              )
+            )}
           </defs>
         </svg>
       )}
