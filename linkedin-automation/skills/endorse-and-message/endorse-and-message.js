@@ -6,7 +6,10 @@
 // THE ONLY DM IN THIS FOLDER. The folder-wide "no DMs" rule has exactly one
 // sanctioned exception (Mike, 2026-07-02): this script's fixed template, sent
 // ONLY to members who already accepted our connection request AND whose skills
-// we just endorsed. Never a cold DM, never a variable message.
+// we just endorsed. Never a cold DM. The only per-member variable is the
+// recipient's FIRST NAME in the greeting (Mike, 2026-07-14) — read from their
+// profile <h1>, falling back to "Hi there," when no clean name is found; the
+// body below the greeting is fixed.
 //
 // ZERO-SKILLS RULE (Mike): if a member has no endorsable skills, ABANDON them —
 // no endorsements means no DM either (the message says "I just endorsed you",
@@ -47,19 +50,53 @@ const S = require('../../lib/_li-session');
 
 const MEMBERS = path.join(__dirname, '..', '..', 'data', 'members.json');
 
-// The favor-request DM, sent VERBATIM every time (Mike, 2026-07-02: always this
-// exact text, including "a week ago", regardless of the actual connection date).
-// Lines are joined with Shift+Enter in the composer; '' = paragraph break.
-const MESSAGE_LINES = [
-  'Hi there, we connected a week ago. I am trying to build up my profile right now because my biggest issue is that I am getting a lot of recruiters contact me about Front End and React roles... but I have been doing AI Automation for two years. And my LinkedIn profile seems to be overwhelmingly optimized for front-end development. 😱',
+// The favor-request DM. The greeting is personalized with the recipient's first
+// name ("Hi <First>,", Mike 2026-07-14) when we can read a clean one off their
+// profile, otherwise it falls back to "Hi there,". Everything from the greeting
+// on ("we connected a couple of weeks ago...", including that phrasing regardless
+// of the actual connection date) is FIXED. Lines are joined with Shift+Enter in
+// the composer; '' = paragraph break.
+const MESSAGE_INTRO =
+  'we connected a couple of weeks ago. I am trying to build up my profile right now because my biggest issue is that I am getting a lot of recruiters contacting me about Front End and React roles... but I have been doing AI engineering work for almost two years. And my LinkedIn profile seems to be overwhelmingly optimized for front-end development. 😱';
+const MESSAGE_BODY_LINES = [
   '',
-  "I'm asking people if they could endorse some of my skills at the top of my list that are automation related. A direct link is here - https://www.linkedin.com/in/michael-luis/details/skills/",
+  "I'm asking people if they could endorse some of my skills at the top of my list that are AI related. A direct link is here - https://www.linkedin.com/in/michael-luis/details/skills/",
   '',
-  'I just endorsed you for a bunch of your skills. I was just curious if you would be kind enough to return the favor. 😅',
+  'I just endorsed you for a bunch of your skills. I was just curious if you would be kind enough to return the favor.',
   '',
   'Sincerely yours,',
   'Miguel 😇',
 ];
+
+// Build the DM lines for a given first name. `firstName` null/empty -> "Hi there,".
+function buildMessageLines(firstName) {
+  const greeting = firstName ? `Hi ${firstName},` : 'Hi there,';
+  return [`${greeting} ${MESSAGE_INTRO}`, ...MESSAGE_BODY_LINES];
+}
+
+// Reduce a raw profile display name to a usable, presentable FIRST name, or null
+// if nothing clean is available (so the greeting safely falls back to "there").
+// Tokenizes, strips anything that isn't a letter/apostrophe/hyphen, skips a leading
+// honorific ("Dr. Amanda Lee" -> "Amanda"), rejects implausible lengths, and
+// title-cases ALL-CAPS or all-lowercase tokens (leaving mixed case like "McKay").
+const HONORIFICS = new Set([
+  'dr', 'mr', 'mrs', 'ms', 'miss', 'mx', 'prof', 'professor', 'sir', 'dame',
+  'rev', 'er', 'eng', 'capt', 'col', 'lt', 'sgt',
+]);
+function cleanFirstName(raw) {
+  if (!raw) return null;
+  const tokens = String(raw).trim().split(/\s+/)
+    .map(t => t.replace(/[^\p{L}'-]/gu, ''))
+    .filter(Boolean);
+  let idx = 0;
+  while (idx < tokens.length - 1 && HONORIFICS.has(tokens[idx].toLowerCase())) idx++;
+  let tok = tokens[idx];
+  if (!tok || tok.length < 2 || tok.length > 20) return null;
+  if (tok === tok.toUpperCase() || tok === tok.toLowerCase()) {
+    tok = tok.charAt(0).toUpperCase() + tok.slice(1).toLowerCase();
+  }
+  return tok;
+}
 
 // CLI flags.
 const ARGV = process.argv.slice(2);
@@ -99,6 +136,23 @@ async function typeRich(page, text) {
     else await page.keyboard.type(ch);
     await page.waitForTimeout(S.randomBetween(S.CHAR_DELAY_MIN, S.CHAR_DELAY_MAX));
   }
+}
+
+// Read the recipient's first name off the profile top card. LinkedIn profiles
+// have NO <h1> and ship hashed CSS class names (documented in the scraper's
+// readLocation + PROJECT-LOG problem #2), so class/tag selectors find nothing.
+// The stable, well-ordered source is <main>'s innerText, whose FIRST line is the
+// display name (line 2 = headline, then location...). Same technique as the
+// scraper. Returns a clean first name or null (greeting falls back to "there").
+async function firstNameFromProfile(page) {
+  await page.waitForFunction(() => {
+    const m = document.querySelector('main');
+    return m && m.innerText && m.innerText.trim().length > 80;
+  }, { timeout: 15000 }).catch(() => {});
+  const main = await page.$eval('main', el => el.innerText).catch(() => '');
+  if (!main) return null;
+  const lines = main.split('\n').map(s => s.trim()).filter(Boolean);
+  return cleanFirstName(lines[0]);
 }
 
 // If an endorsement follow-up dialog pops ("How do you know ... ?"), dismiss it.
@@ -187,6 +241,12 @@ async function sendDm(page, profileUrl) {
   }
   await S.pause(page, 2500, 5000, 'profile re-render');
 
+  // Read the recipient's first name for the greeting BEFORE the composer overlay
+  // covers the profile. Falls back to "there" if no clean name is found.
+  const firstName = await firstNameFromProfile(page);
+  const messageLines = buildMessageLines(firstName);
+  console.log(`   greeting: "${messageLines[0].split(',')[0]}," ${firstName ? '(first name from profile)' : '(no clean name — fell back to "there")'}`);
+
   // The PROFILE OWNER's Message control (probed 2026-07-02, _probe-message.js):
   // a plain <a> with NO aria-label, visible text exactly "Message", and an href
   // to /messaging/compose/?...recipient=<their urn>. The "More profiles for you"
@@ -236,9 +296,9 @@ async function sendDm(page, profileUrl) {
 
   // Type the template. Line breaks are Shift+Enter — NEVER bare Enter (this
   // account has "Press Enter to send" ON, so a bare Enter fires the message).
-  for (let i = 0; i < MESSAGE_LINES.length; i++) {
-    if (MESSAGE_LINES[i]) await typeRich(page, MESSAGE_LINES[i]);
-    if (i < MESSAGE_LINES.length - 1) {
+  for (let i = 0; i < messageLines.length; i++) {
+    if (messageLines[i]) await typeRich(page, messageLines[i]);
+    if (i < messageLines.length - 1) {
       await page.keyboard.down('Shift');
       await page.keyboard.press('Enter');
       await page.keyboard.up('Shift');

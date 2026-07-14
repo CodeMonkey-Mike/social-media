@@ -12,24 +12,139 @@ location, and capture the ones in **Europe / North America / South America / the
 Caribbean** into `members.json` as `{ profile_url, location }`. A later (separate)
 script will message the captured members using only their `profile_url`.
 
-## Current state (as of 2026-07-07, after the 5-lane run)
+## Current state (as of 2026-07-14, after a lanes 3-5 run — scrape/seed skipped)
 
-- **Queue:** **2426** members (421 from group `9078205`, fully processed + 2005 from group
-  `6665791`, A→J). **491 processed**, **1935 remaining**. The scrape pointer is well inside
-  group `6665791`. _(2026-07-06 earlier: Mike abandoned the remaining 159 unprocessed
-  `9078205` URLs outright — too India-heavy. `groups.json` → `9078205` status `done`. Backup
-  of the pre-trim 2000-entry queue at `data/members-urls.json.bak2`.)_
-- **Prior state (2026-07-06):** 1981 members, 451 processed, 1530 remaining; 75 captured.
-  Today's run seeded 445 J-names (→2426) and processed 40 (→491 processed).
-- **Captured:** **107** members in `members.json`. **53 contacted**; **22 connected**;
-  **31 awaiting acceptance**; **54 still to contact**. **3 DM'd** (sindhura 07-02, kamesh 07-06,
-  praveenser5599 07-07).
-- **Hit rate stays high in group `6665791`:** the 2026-07-07 scrape captured **32/40 = ~80%** —
-  the name-seeded J-cohort (John/James/Joseph/Jennifer) skews heavily Spain / Italy / Latin
-  America, far more in-zone than the India-heavy `9078205`. (Lifetime hit rate was ~12% in the
-  old group; ~83% on the 07-06 Albert/Alberto batch.)
+- **Queue:** **4296** members. **701 processed**, **3595 remaining**. The scrape pointer is
+  well inside group `6665791`.
+- **Prior state (2026-07-12):** 3291 members, 671 processed, 2620 remaining; 214 captured.
+  Today's run seeded 1005 P-names (→4296) and processed 30 (→701 processed).
+- **Captured:** **232** members in `members.json`. **152 contacted**; **34 connected**;
+  **80 still to contact**. **11 DM'd** (sindhura 07-02, kamesh 07-06, praveenser5599 07-07,
+  richard-bystrian 07-08, hamza-moghe 07-09, pietroschena 07-10, mcqueenjames 07-11, syedmsadiq 07-12,
+  manjushree-shivaraju 07-13, neena-parveen 07-14, anup-upadhyay 07-14).
+- **DM greeting is now personalized (Mike, 2026-07-14):** `endorse-and-message.js` opens the DM with
+  **"Hi &lt;First&gt;,"** using the recipient's first name read off `<main>`'s first innerText line
+  (LinkedIn profiles have **no `<h1>`** + hashed classes — same technique as the scraper's
+  `readLocation`; my first attempt used `main h1` and wrongly fell back to "there" every time — fixed).
+  `cleanFirstName` skips honorifics, title-cases ALL-CAPS/all-lowercase, and falls back to "Hi there,"
+  on anything unclean. Verified live: dry-run + live both read **"Hi Anup,"** and the DM sent.
+- **2026-07-14 run (lanes 3-5 only, seed + scrape SKIPPED per Mike, all clean, no restriction):**
+  (3) sent **24 invites** (`--max=25`, `Tally {"sent":24,"error":1}` — Mike's explicit ask above the
+  ≤10/day cap; the 25th, anthony-narjollet-a1b90631, errored on a Send-click timeout and was left
+  `contacted:false` for retry, not marked) → 152 contacted, **80 still to contact**; (4) acceptance
+  check → **1 new: william-andrews-92b5a4291 (07-13)** → 34 connected; (5) endorse+DM **1**:
+  **neena-parveen** (connected 07-01, 13 days — none >14 days so took the oldest ≥7-day eligible per
+  the fallback; **7 of 10** top skills endorsed; the one sanctioned favor-request DM sent + verified,
+  Enter-to-send mode, composer emptied). **Then, after adding the personalized greeting (below), a
+  SECOND endorse+DM: anup-upadhyay** (connected 07-01, 13 days; 8 of 10 skills endorsed — a first
+  attempt DM'd with the old "Hi there," and Mike closed the window mid-send, so the endorsements saved
+  and it resumed straight at the DM; the greeting fix landed the retry as **"Hi Anup,"**, sent +
+  verified) → **11 DM'd total**, 23 connected remain eligible. Profile-view budget **~29/50** (24
+  invites + 2 endorse members + a dry-run re-view; no scrape/seed today; check is free) — under the 50
+  ceiling. Lanes ran strictly sequential (one `li-bot-profile` Chrome), verified no orphan between each.
+- **2026-07-13 run (5 lanes, all clean, no restriction page):** (1) seeded 6 P-names
+  (+1005, 0 profile views: Paul 155, Pete 94, Phil 58, Pat 674, Pam 23, Penny 1 — 4 male
+  + 2 female per Mike's ask; Pat substring-matches heavily → Patricia/Patel/Patrick, hence 674);
+  (2) scraped 30 → **18 captured** (232 total), 0 errors — **~60% hit rate** — regions
+  **7 North America** (Dallas TX, Irvine CA, Henderson NV, Kuna ID, Stanford CA, Nashville TN,
+  + one bare "United States") / **9 Europe** (Brighton UK, Letchworth UK, Manchester UK, London UK,
+  + 2 bare "United Kingdom", Grenoble France, Hannover Germany, Portugal) / **2 South America**
+  (Santiago Metro Chile ×2); many skips were West-Africa/South-Asia (Ghana, Nigeria, Zimbabwe,
+  Morocco, Malaysia) — the pointer is in the Benjamin cohort. **Harness note:** the first two
+  --max scrape attempts were reclaimed mid-run by the idle-background killer (7 + 13 profiles,
+  persisted incrementally, no dupes); finished the remaining 10 as foreground --max=3 chunks;
+  (3) sent **15 invites** (5× `--max=3`, `Tally {"sent":3}` each, Mike's explicit ask above the
+  ≤10/day cap, no failures; several used the More-menu Connect path) → 128 contacted, 104 still
+  to contact; (4) acceptance check → **3 new: andrew-masih (07-13), miguel-albert-villanova
+  (07-13), albertchitiyo (07-12)** → 33 connected; (5) endorse+DM **1**: **manjushree-shivaraju**
+  (connected 06-30, 13 days — none >14 days so took the oldest ≥7-day eligible per the fallback;
+  5 skills endorsed: IT Business Analysis, SQL, Documentation, UiPath, MySQL; DM sent +
+  Enter-to-send, verified). Profile-view budget **46/50** (30 scrape + 15 invites + 1 endorse;
+  seed + check free) — under the 50 ceiling. `groups.json` searched_names now **A→P**.
+- **2026-07-12 run (5 lanes, all clean, no restriction page):** (1) seeded 6 O-names
+  (+209, 0 profile views: Oscar 21, Oliver 15, Owen 13, Omar 89, Olivia 8, Olive 63 — 4 male
+  + 2 female per Mike's ask; Omar/Olive substring-match heavily, e.g. Olive→Oliver/Oliveira);
+  (2) scraped 30 → **15 captured** (214 total), 0 errors — **~50% hit rate** — regions
+  **12 North America** (Metuchen NJ, Frederick MD, Denver CO, LA Metro, Charlottesville VA,
+  Louisville KY, Sacramento CA, Littleton CO, St. Petersburg FL, Choctaw OK, Canton MA,
+  Memphis TN) / **3 Europe** (Ireland, Winterthur Switzerland, London UK). The scrape pointer
+  was processing the earlier **Bill/Benjamin/Andrew** cohort (queue is name-order, pointer
+  lags the seeds), which skews more South-Asian (Pakistan, Bangladesh, India) + a few
+  Nigeria/Singapore — hence the lower hit rate than the Alberto/O cohorts; (3) sent **15 invites**
+  (`Tally {"sent":15}`, Mike's explicit ask above the ≤10/day cap, no failures; one used the
+  More-menu Connect path) → 113 contacted, 101 still to contact; (4) acceptance check → **1 new:
+  luizleite48 (07-11)** → 30 connected; (5) endorse+DM **1**: **syedmsadiq** (connected 06-30,
+  12 days — none >14 days so took the oldest ≥7-day eligible per the fallback; 10 skills
+  endorsed: DAX, Sybase Adaptive Server, Sybase Products, Performance Tuning, Intelligence
+  Analysis, Computer Science, ETL, Python, Problem Solving, Data Modeling; DM sent + Enter-to-send,
+  verified). Profile-view budget **46/50** (30 scrape + 15 invites + 1 endorse; seed + check
+  free) — under the 50 ceiling. `groups.json` searched_names now **A→O**. **Classifier note:**
+  "Greater Lyon Area" was skipped (comma-less metro not in the city list) — Lyon = France =
+  Europe, a known miss (same class as "Greater Orlando" 07-11 / "Greater Porto Alegre" 07-10),
+  not fixed mid-run.
+- **2026-07-11 run (5 lanes, all clean, no restriction page):** (1) seeded 6 N-names
+  (+88, 0 profile views: Nick 29, Nate 8, Neil 11, Norman 7, Nancy 15, Nina 18 — 4 male
+  short forms + 2 female per Mike's ask); (2) scraped 30 → **18 captured** (199 total),
+  0 errors — regions **14 North America** (Columbus OH, Gainesville VA, Austin TX, Greater
+  Chicago, Avon OH, Fort Worth TX, Richmond Hill GA, Tempe AZ, Detroit MI, Hubbardston MA,
+  SF Bay Area, Brampton ON ×2, NYC Metro) / **2 Europe** (Leeds UK, Dublin Ireland) /
+  **2 South America** (Apodi + São Paulo, Brazil) — ~60% hit rate; (3) sent **15 invites**
+  (`Tally {"sent":15}`, Mike's explicit ask above the ≤10/day cap, no failures) → 98
+  contacted, 101 still to contact; (4) acceptance check → **3 new: albertstewart (07-11),
+  sastre (07-10), alberto-bellemo-bullo (07-10)** → 29 connected; (5) endorse+DM **1**:
+  **mcqueenjames** (connected 06-30, 11 days — none >14 days so took the oldest ≥7-day
+  eligible per the fallback; 6 skills endorsed: Marketing, Social Media Marketing, Financial
+  Services, Marketing Strategy, Digital Marketing, Business Development; DM sent + Enter-to-send,
+  verified). Profile-view budget **46/50** (30 scrape + 15 invites + 1 endorse; seed + check
+  free) — under the 50 ceiling. `groups.json` searched_names now **A→N**. **Classifier note:**
+  "Greater Orlando" was skipped (comma-less metro not in the city list) — a known miss, not
+  fixed mid-run.
+- **Superseded state (2026-07-10):** 2994 members, 611 processed; 181 captured, 83 contacted,
+  26 connected, 6 DM'd.
+- **Prior state (2026-07-09):** 2628 members, 571 processed, 2057 remaining; 154 captured.
+  Today's run seeded 366 M-names (→2994) and processed 40 (→611 processed).
+- **Captured:** **181** members in `members.json`. **83 contacted**; **26 connected**;
+  **57 awaiting acceptance**; **98 still to contact**. **6 DM'd** (sindhura 07-02, kamesh 07-06,
+  praveenser5599 07-07, richard-bystrian 07-08, hamza-moghe 07-09, pietroschena 07-10).
+- **Hit rate stays high in group `6665791`:** the 2026-07-10 scrape captured **27/40 = 68%** —
+  the Michael/Mark/Anthony-cohort skewed heavily North America (19 NA, 4 Europe, 4 South
+  America), far more in-zone than the India-heavy `9078205`. (Lifetime hit rate was ~12% in
+  the old group.)
 - Group registry `groups.json`: `9078205` `done`, `6665791` `active`;
-  `6665791` searched_names now **A→J** (added John, James, Joseph, Jennifer 2026-07-07).
+  `6665791` searched_names now **A→M** (added Michael, Mark, Matthew, Mary 2026-07-10 —
+  Michael 150 / Mark 93 / Matthew 41 / Mary 82 new = +366 queued).
+- **2026-07-10 run (5 lanes, all clean, no restriction page):** (1) seeded 4 M-names (+366,
+  0 profile views: Michael 150, Mark 93, Matthew 41, Mary 82); (2) scraped 40 → **27 captured**
+  (181 total) — regions 19 North America / 4 Europe (Swinton, Greater Manchester, Toulouse,
+  Paris) / 4 South America (Venezuela, Peru ×2, Porto Alegre-Brazil); (3) sent **12 invites**
+  (tally sent:12, 98 still to contact) — Mike's explicit ask, above the ≤10/day cap; (4)
+  acceptance check → **1 new: daniele-alberti-844a9363 (07-10)** → 26 connected, 57 awaiting;
+  (5) endorse+DM **1**: pietroschena (connected 06-29, 11 days — none >14 days so took the
+  oldest ≥7-day eligible per the fallback; 7 skills endorsed: SAP ERP, Cross-functional Team
+  Leadership, BlackLine, PeopleSoft, Vendor Management, Workday, ERP Implementations; DM sent +
+  verified, Enter-to-send). **Note:** the scraper LOGGED "Greater Porto Alegre" as `europe`
+  (comma-less whole-string scan matched "Porto"→Portugal), but the region tag is NOT persisted —
+  members.json stores only `{profile_url, location, group_id}`, so the capture is correct; the
+  member is Brazil = South America. Profile-view budget **53/50** (40 scrape + 12 invites + 1
+  endorse; seed + check free) — **3 over** the informal ceiling per Mike's explicit 40/12 ask;
+  no restriction seen, but watch closely on the next run before repeating 40+12 same-day.
+- **2026-07-09 run (5 lanes, all clean, no restriction page):** (1) seeded 4 L-names (+91,
+  0 profile views: Larry 8, Leonard 36, Lawrence 18, Laura 29); (2) scraped 40 → 22 captured
+  (154 total); (3) sent **10 invites** (tally sent:10, 83 still to contact); (4) acceptance
+  check → **2 new: carlos-alberto-mariani (07-09), yanina-silva-76781a255 (07-08)** → 25
+  connected, 46 awaiting; (5) endorse+DM **1**: hamza-moghe (7 skills endorsed; first DM
+  attempt failed `typing_failed` — composer landed 0 chars, a transient glitch matching the
+  07-06 note-textarea flake — script correctly aborted rather than send garbled text; one
+  clean RETRY sent it, no re-endorsement needed since `endorse_status` gated it). Profile-view
+  budget **51/50** (40 scrape + 10 invites + 1 endorse; seed + check free) — 1 over the
+  informal ceiling since Mike's ask was explicitly 40 scrape + 10 invite; no restriction seen,
+  but watch for one on the next run before repeating 40+10 same-day.
+- **2026-07-08 run (5 lanes, all clean, no restriction page):** (1) seeded 4 K-names (+111,
+  0 profile views); (2) scraped 40 → 25 captured; (3) sent **8 invites** (tally sent:8);
+  (4) acceptance check → **1 new: gopi-chand-nelluri** (connected_on 2026-07-08, date not shown,
+  recorded as observed today); (5) endorse+DM **1**: richard-bystrian (5 skills endorsed, DM
+  sent + verified). Profile-view budget **49/50** (40 scrape + 8 invites + 1 endorse; seed +
+  acceptance check free).
 - **Trimmed the old group (2026-07-03):** Mike cut **100 unprocessed `9078205` URLs**
   (the group skews too India-heavy / out-of-zone — not worth the scrape-days). Removed the
   last 100 unprocessed entries only; the 391 already-processed profiles + resume flags
@@ -42,10 +157,15 @@ script will message the captured members using only their `profile_url`.
   now tags each capture with the QUEUE ENTRY's own `group_id` (`entry.group_id`), not the
   hardcoded collect-phase `GROUP_ID='9078205'` — the constant would have mis-attributed every
   `6665791` capture to `9078205`. Verified: all 25 of today's captures tagged `6665791`.
-- **Next run:** resume scrape (`--max=30-40`, detached), then invites (`--max=8`; **54 still to
-  contact**), then the acceptance check, then `endorse-and-message --max=1` (19 eligible, oldest
-  first — next up is richard-bystrian / hamza-moghe / pietroschena, all 06-29). Endorse+DM shares
-  the profile-view budget (today 49/50: 40 scrape + 8 invites + 1 endorse).
+- **Next run:** seed next letter **P** (`seed-by-name.js`, cheap), then resume scrape
+  (`--max=30-40`, detached), then invites (`--max=10-15`; **101 still to contact**), then the
+  acceptance check, then `endorse-and-message --max=1` (**22 eligible**, oldest first — next
+  up is manjushree at 06-30, then neena-parveen/anup-upadhyay at 07-01, then the 07-02 quartet).
+  Budget was 46/50 on 07-12 (Mike's explicit 30 scrape + 15 invite) — if a restriction ever
+  appears, dial invites back to ≤10 and total views to ≤50.
+  Profile-view budget today (2026-07-09) was **51/50** (40 scrape + 10 invites + 1 endorse,
+  1 over the informal ceiling per Mike's explicit 40/10 ask) — watch for a restriction
+  tomorrow and dial back toward ≤50 if one appears.
 - **Profile-view budget on 2026-07-06: 43/50 used** (30 scrape + 6 invites + a 6-invite RETRY
   run + 1 endorse; seed + acceptance check are free). No restriction page on any lane. The
   first invite run only landed 2/6 (4 errored at the note-textarea step on a flaky LinkedIn

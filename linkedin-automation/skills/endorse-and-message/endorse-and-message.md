@@ -21,19 +21,24 @@ Sibling skills: [`scrape-group-members`](../scrape-group-members/scrape-group-me
 The folder rule is **no DMs** — with exactly **one exception** (Mike, 2026-07-02):
 this script's **fixed template**, sent only to a member who (a) already accepted our
 connection request AND (b) whose skills we **just endorsed**. Never a cold DM, never
-a composed/variable message. The template is sent **VERBATIM every time** (Mike's
-explicit call — including "a week ago", regardless of the actual connection date):
+a composed/variable message. The **only** per-member variable is the **first name in
+the greeting** (Mike, 2026-07-14): the script reads the recipient's display name off
+their profile `<h1>` and opens with **"Hi &lt;First&gt;,"**, falling back to
+**"Hi there,"** when no clean first name is found (unreadable name, single glyph,
+title-only, etc.). Everything from the greeting on is sent **VERBATIM every time**
+(Mike's explicit call — including "a couple of weeks ago", regardless of the actual
+connection date). Shown below with the fallback greeting:
 
-> Hi there, we connected a week ago. I am trying to build up my profile right now
-> because my biggest issue is that I am getting a lot of recruiters contact me about
-> Front End and React roles... but I have been doing AI Automation for two years. And
-> my LinkedIn profile seems to be overwhelmingly optimized for front-end development. 😱
+> Hi there, we connected a couple of weeks ago. I am trying to build up my profile right
+> now because my biggest issue is that I am getting a lot of recruiters contacting me about
+> Front End and React roles... but I have been doing AI engineering work for almost two
+> years. And my LinkedIn profile seems to be overwhelmingly optimized for front-end development. 😱
 >
 > I'm asking people if they could endorse some of my skills at the top of my list that
-> are automation related. A direct link is here - https://www.linkedin.com/in/michael-luis/details/skills/
+> are AI related. A direct link is here - https://www.linkedin.com/in/michael-luis/details/skills/
 >
 > I just endorsed you for a bunch of your skills. I was just curious if you would be
-> kind enough to return the favor. 😅
+> kind enough to return the favor.
 >
 > Sincerely yours,
 > Miguel 😇
@@ -69,8 +74,10 @@ file order). A member endorsed on a previous run whose DM failed resumes at the 
    (any follow-up "How do you know…" dialog is Escape-dismissed).
    Zero endorsable → mark `no_skills`, **skip the DM**, continue to next member.
 3. Return to the profile (the skills page's "Navigate back to profile main screen"
-   button), open the **Message** composer, type the template with human keystroke
-   pacing, click **Send**, verify the composer emptied.
+   button), **read the first name off the profile `<h1>`** for the greeting (via
+   `cleanFirstName` — skips honorifics, title-cases ALL-CAPS/all-lowercase, falls
+   back to "there" on anything unclean), open the **Message** composer, type the
+   template with human keystroke pacing, click **Send**, verify the composer emptied.
 4. Record everything on `members.json` (fields below), one write per phase, so any
    interruption resumes cleanly.
 
