@@ -25,6 +25,7 @@ import { ShakeJolt } from './engines/ShakeJolt';
 import { SpinTwirl } from './engines/SpinTwirl';
 import { SplitPanes } from './engines/SplitPanes';
 import { SplitPerspective } from './engines/SplitPerspective';
+import { TransformFly } from './engines/TransformFly';
 
 /**
  * The catalog (data) lives in assets/transitions/library.json — the single
@@ -92,6 +93,7 @@ export const ENGINES: Record<string, React.FC<any>> = {
   SpinTwirl,
   SplitPanes,
   SplitPerspective,
+  TransformFly,
 };
 
 export const TRANSITIONS = (library as { transitions: TransitionRow[] }).transitions;
