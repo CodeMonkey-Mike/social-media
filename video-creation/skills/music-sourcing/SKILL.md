@@ -48,10 +48,14 @@ node scripts/soundstripe.js download-alt <objectID> [--query "<title>"] [--dest 
   - **Algolia AND-matches every word**, so keep queries short/broad ("serene calm", not a 6-word
     phrase) or you get 0–2 hits. `--all-partners` drops the `content_partner.name:Soundstripe`
     facet (default keeps only Soundstripe's own catalog, safest for clearance).
-- **download** — drives the logged-in profile: searches for the track, opens the **Download Song**
-  modal, clicks **MP3** (Full Track), saves the file to `downloads/`, and upserts `library.json`.
-  Resolves the title from the `objectID` via Algolia `getObject`. Leaves diagnostic screenshots in
-  `_recon/shots/d*.png`.
+- **download** — drives the logged-in profile: navigates to the track's OWN page
+  (`/library/songs/<objectID>`, **objectID-exact** — the first `song-license-btn` there is the target
+  track, "Similar Songs" follow below), opens the **Download Song** modal, clicks **MP3** (Full Track),
+  saves the file to `downloads/`, and upserts `library.json`. Resolves the title from the `objectID`
+  via Algolia `getObject`. Leaves diagnostic screenshots in `_recon/shots/d*.png`.
+  - **Why song-page nav, not title search (fixed 2026-07-16):** the old flow searched `filter[q]=<title>`
+    and clicked the first row, which grabbed the WRONG file on title collisions (Diamonds / Like Diamonds
+    / Chocolate Diamonds all coexist). Navigating by objectID is exact. `download-alt` uses the same nav.
 - **download-alt** — grabs the **Alternate Versions** bundle (the broken-up section cuts:
   intro/chorus/verse/bridge, instrumental + bg-vocal mixes) as one WAV zip
   (`<Title>_alternate_tracks_wav.zip`) — the same bundle the modal offers under "Alternate Versions".
@@ -66,6 +70,28 @@ node scripts/soundstripe.js download-alt <objectID> [--query "<title>"] [--dest 
   same `yt_license_code` covers them all. Same modal/auth flow as `download`; it **awaits each download
   to finish** before closing (bg-vocal/stems zips run 130MB+ and used to outrun a fixed timer). It does
   NOT touch the tool's `library.json` log (the master already does).
+
+## 2b. Bulk-download a whole playlist (added 2026-07-16)
+To ingest an entire Soundstripe **private playlist** into the reusable library (full track + license
+code + Alternate-Versions instrumentals, per track), use the three `_playlist*` helpers in `scripts/`
+(they wrap the documented `download` / `download-alt` commands — not a substitute for them):
+```
+node scripts/_playlist-enum.js     <playlistId>              # 1. enumerate the playlist's songs
+node scripts/_playlist-download.js <playlistId> [--limit N] [--skip a,b]  # 2. batch download (resumable)
+node scripts/_register-playlist.js <playlistId> [--skip a,b] # 3. register all into assets/music/library.json
+```
+- **enum** — opens the playlist with the authed profile, sniffs the app API
+  (`/app/playlists/<id>/songs?page[offset]=&page[limit]=`, offset/limit paged), and writes the song list
+  to `_recon/playlist-<id>.json`.
+- **download** — for each not-yet-present track: `download` (full mp3 + license) THEN `download-alt`
+  (instrumentals / section cuts), unzips into `assets/music/<Title>/`, deletes the zip. **Resumable** via
+  `_recon/playlist-<id>-progress.json` — re-invoke to continue; SEQUENTIAL (shared Chrome profile), so
+  run it in bounded chunks (`--limit`) rather than one giant call. `--skip` = objectIDs already in the
+  library. First determine which playlist ids already exist by cross-referencing `soundstripe_id` in
+  `assets/music/library.json`.
+- **register** — upserts one full catalog entry per track (artist/bpm/energy/mood/genre/key from the
+  stored Algolia meta, `yt_license_code`, `folder`, `primary_file`, `sections[]`), keyed by `soundstripe_id`.
+- Precedent run: private playlist **430508** → 39 songs, 2 already present (9141, 11370) → **37 added**.
 
 ## 3. Data model
 - **`library.json`** (this folder) — canonical per-track store. One entry per downloaded track:

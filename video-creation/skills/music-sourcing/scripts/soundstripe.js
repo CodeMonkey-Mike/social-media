@@ -170,18 +170,18 @@ async function cmdDownload() {
   });
 
   try {
-    // load library first so the app emits the bearer token, then search
+    // load library first so the app emits the bearer token, then go straight to the
+    // song's OWN page (objectID-exact). This avoids the fuzzy title search grabbing the
+    // wrong track on collisions (e.g. Diamonds / Like Diamonds / Chocolate Diamonds).
+    // On the song page the FIRST song-license-btn is the target track's row (its own
+    // download control); "Similar Songs" rows follow below.
     await page.goto('https://www.soundstripe.com/library', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(5000);
-    await page.goto(`https://www.soundstripe.com/library/royalty-free-music?filter[q]=${encodeURIComponent(locate)}`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`https://www.soundstripe.com/library/songs/${objectID}`, { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(7000);
     await page.screenshot({ path: path.join(SHOT, 'd1-results.png') }).catch(() => {});
 
-    // find the row whose title matches, else first row
-    let scope = page;
-    const row = page.locator(`tr:has-text("${title || locate}"), [class*="row" i]:has-text("${title || locate}")`).first();
-    const btnInRow = row.locator('button[data-testid="song-license-btn"]').first();
-    const btn = (await btnInRow.count()) ? btnInRow : page.locator('button[data-testid="song-license-btn"]').first();
+    const btn = page.locator('button[data-testid="song-license-btn"]').first();
     await btn.waitFor({ timeout: 15000 });
 
     // robust mouse click on the button center (matches the repo's posting scripts)
@@ -277,7 +277,8 @@ async function cmdDownloadAlt() {
   try {
     await page.goto('https://www.soundstripe.com/library', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(4000);
-    await page.goto(`https://www.soundstripe.com/library/royalty-free-music?filter[q]=${encodeURIComponent(locate)}`, { waitUntil: 'domcontentloaded' });
+    // objectID-exact: go to the song's own page (see cmdDownload note on collisions)
+    await page.goto(`https://www.soundstripe.com/library/songs/${objectID}`, { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(7000);
 
     // open the Download-Song modal (same control the full-track download uses)
