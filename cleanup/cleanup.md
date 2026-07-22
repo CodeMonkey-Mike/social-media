@@ -5,8 +5,11 @@ description: Move no-longer-needed assets to the Windows Recycle Bin across the 
 
 ## What this skill does
 
-A single cleaner with per-target policies. It only ever moves files to the **Recycle Bin**
-(reversible), never hard-deletes. Lives at the repo root because it serves multiple folders.
+A single cleaner with per-target policies. Files are only ever moved to the **Recycle Bin**
+(reversible), never hard-deleted. Lives at the repo root because it serves multiple folders.
+One deliberate exception to reversibility: **ChatGPT image chats** (see the section below) are
+hard-deleted in the ChatGPT UI — they're disposable by design (every image is downloaded at
+generation time), and the sidebar clutter was the problem being solved.
 
 ```
 node cleanup/cleanup.js --target <schedule-tweets|video-creation|all> [--dry-run] [--age-days N]
@@ -33,6 +36,17 @@ item also references it. An **orphan** image (referenced by no queue) is recycle
 since it may be freshly generated and not yet queued. Because active batches are always recent,
 this age threshold protects their art without any batch-id check. Queues scanned:
 `x-tweets`, `x-threads`, `x-polls`, `ig-single-image`, `ig-carousel`, `yt-posts`, `yt-text-polls`.
+
+**Reply-guy image replies (`x-reply-guy/data/reply-images/`) are GC'd here too**, by the same
+reference-count but against the reply queues and keyed by **basename** (the reply queues store
+`image_path` as an ABSOLUTE path, not repo-relative). An image is **kept** while a **pending**
+entry in `replies_to_post.json` links it (reply not sent yet); **recycled** once
+`posted_replies.json` archived that reply as `posted_image` or `uncertain_image` (both mean it
+went out, and per the reply-guy never-retry rule it won't be re-fired, so the local file is spent)
+and no pending entry links it; and an **orphan** (generated but referenced by neither queue) is
+kept until `ORPHAN_AGE_DAYS` (14d), then recycled — so a freshly generated, not-yet-posted image
+survives a normal review cycle. Only image replies carry an `image_path`; text/emoji/GIF entries
+contribute nothing. Runs as part of `--target schedule-tweets`.
 
 **Staged video folders (`longform/<batch>/` and `shorts/<batch>/`) are cleaned WHOLE-FOLDER by
 batch status**, not file-by-file. Each immediate subfolder is one batch's staged deliverables;
@@ -72,6 +86,31 @@ The registry-driven tier reads `../batches.json`:
 - **`shorts/<batch>/`** — each immediate subfolder is matched to a batch by its `directories`. The **whole project folder** is recycled for a completed/archived batch and kept for an active one. A folder tied to no batch (e.g. `_tooling`, or a not-yet-registered project) is left in place — only its **gitignored** per-clip artifacts (`preview.mp4`, `whisper-words.json`, `captions.ts.draft`) are swept; tracked source (`index.html`, `preview.json`, `gen_captions.py`, `whisper.json`, …) is never touched.
 - **`longform-presentation/media/<project>/`, `longform-edited/media/<project>/`, and `vertical-ai-persona/media/<project>/`** — each project subfolder (master `.mkv`, EDIT/FINAL renders, intermediates, deck, transcript, thumbnail) is matched to a batch by `source_media`. The **whole folder** is recycled for a completed/archived batch, kept for an active one, and left alone if it matches no batch. Only `media/<project>/` subfolders are eligible — the track's skill doc and scripts are never touched. (These all share one `classifyMediaProjects` helper in `targets/video-creation.js`.)
 - **`vertical-ai-persona/Yuli y Ana/media/<project>/`** — the Yuli y Ana persona is a **separate channel NOT tracked in `batches.json`**, so every folder here matches no batch and is **always left alone**. These concept folders are a reusable library; the cleaner never auto-recycles them. Remove one only on an explicit, per-folder instruction (and consider registering it as a batch if it should be lifecycle-managed).
+
+### ChatGPT image chats (runs with the `video-creation` target)
+
+After the file targets, cleanup spawns **`repurpose/delete-chats.js`** (skipped under `--only`,
+which scopes a run to file paths). It deletes no-longer-needed ChatGPT image chats from the
+registry `chatgpt-image-chats.json`:
+
+- a chat whose **`batch`** property matches a **completed/archived** batch in `batches.json` is
+  retired and deleted in the ChatGPT UI;
+- anything already on the registry's **`retired`** list (rotation leftovers the gen scripts
+  failed to delete in their own end-of-run sweep) is swept too.
+
+Chats with no `batch` (evergreen purposes: `x-tweets`, `yt-posts`, `broll`, …) are never touched
+here — they self-delete on cap rotation. A `batch` matching no `batches.json` entry is kept, same
+as the file policies. `--dry-run` prints the deletion plan and never opens a browser; a **live run
+opens the shared `chatgpt-profile` Chrome briefly**, so don't run live cleanup while an image-gen
+batch is in flight (a locked profile fails loudly and the chats stay queued for the next run).
+One-off retirement of a batchless chat: `node repurpose/delete-chats.js --retire <purpose>`.
+
+**TITLE GATE (Mike, 2026-07-22 — canonical spec in `repurpose/SKILL.md`):** no matter how a chat
+got queued, `chat-delete.js` refuses to delete any chat whose **live ChatGPT title does not START
+with `b-roll` or `social`** (the prefix `chat-pool.js confirmAndRegister` sets at registration).
+Refusals leave the queue and land on the registry's `title_gate_skipped` list for Mike to handle
+manually. Deletes are verified against the backend API (the chat must actually 404) — a bounce or
+a 200 without verification is not success.
 
 ## Empty-folder pruning (all targets)
 
