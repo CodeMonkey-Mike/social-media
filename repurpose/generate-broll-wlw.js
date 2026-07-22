@@ -114,14 +114,19 @@ async function main() {
     if (!ok) { console.log('  retrying once...'); ok = await generateImage(page, prompt, outputPath); }
     if (ok) {
       if (!OVERRIDE && pendingFresh) {
-        const u = page.url();
-        if (/chatgpt\.com\/c\//.test(u)) { pool.registerNewChat(PURPOSE, u); navigatedUrl = u; pendingFresh = false; }
+        // API-confirmed registration + gated rename ("b-roll:"/"social:" title) — never trust
+        // page.url() alone, its id can diverge from the real conversation id (2026-07-22).
+        const reg = await pool.confirmAndRegister(page, PURPOSE);
+        if (reg) { navigatedUrl = reg.url; pendingFresh = false; }
       }
       if (!OVERRIDE) pool.recordImage(PURPOSE);
       done++;
     } else console.log(`  FAILED ${file}`);
   }
   console.log(`\nDone: ${done}/${IMAGES.length} images.` + (OVERRIDE ? '' : `  broll chat now ${pool.countFor(PURPOSE)}/${pool.cap()}`));
+  // Delete rotated-out/dead chats while the browser is still open (registry `retired` list).
+  try { await require('./chat-delete').sweepRetired(page); }
+  catch (e) { console.log('  [chat-delete] sweep error: ' + e.message.split('\n')[0]); }
   await browser.close();
 }
 

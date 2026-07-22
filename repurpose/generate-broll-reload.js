@@ -161,7 +161,12 @@ async function generateOne(page, prompt, outPath, seen) {
     console.log(`\n[${done + 1}/${IMAGES.length}] ${path.basename(outPath)}`);
     const url = await generateOne(page, prompt, outPath, seen);
     if (url) {
-      if (pendingFresh && /chatgpt\.com\/c\//.test(url)) { pool.registerNewChat(PURPOSE, url); pendingFresh = false; }
+      if (pendingFresh) {
+        // API-confirmed registration + gated rename ("b-roll:"/"social:" title) — never trust
+        // page.url() alone, its id can diverge from the real conversation id (2026-07-22).
+        const reg = await pool.confirmAndRegister(page, PURPOSE);
+        if (reg) pendingFresh = false;
+      }
       pool.recordImage(PURPOSE);
       done++;
     } else console.log(`  FAILED ${path.basename(outPath)}`);

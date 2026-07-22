@@ -85,7 +85,9 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > ```
 > No hand-recorded chat URLs anymore — the pool manages them. `items.json` = `[{ "image_id":"<8hex>",
 > "slug":"<kebab>", "prompt":"...", "ref":"<optional logo path>" }]`; skips already-existing files (resumable).
-> B-roll uses the same pool (purpose `broll`) via **`generate-broll-reload.js`** — the RELIABLE capture that supersedes the flaky DOM-poll `generate-broll-wlw.js` (outputs to `video-creation/assets/`; a `..\shorts\...\render-assets\` prefix in the `file` field lands it in a clip folder).
+> B-roll uses the same pool (purpose `broll`) via **`generate-broll-reload.js`** — the RELIABLE capture that supersedes the flaky DOM-poll `generate-broll-wlw.js` (outputs to `video-creation/assets/`; a `..\shorts\...\render-assets\` prefix in the `file` field lands it in a clip folder). The `file` path is joined onto `video-creation/assets/`, so it must be **RELATIVE** to that dir (e.g. `../longform-edited/media/<project>/assets/img/x.png`), NEVER an absolute `C:\...` path (that produces a broken concatenated dir).
+>
+> **⚠️ ALWAYS state the target ASPECT RATIO / orientation in EVERY b-roll prompt — GPT-Image DEFAULTS TO PORTRAIT (1024×1536) (Mike, 2026-07-10).** Omit it and you get vertical stills that don't fit the frame. For a **16:9 track** (longform-edited / longform-presentation) START the prompt with *"Wide landscape 16:9 horizontal image."* and end with *"Horizontal landscape orientation."* (yields ~1672×941 / 1536×1024 landscape). For **9:16 shorts / vertical-ai-persona** say *"vertical 9:16 portrait."* This bit the Clarity-Act longform b-roll (portrait 1024×1536 → fixed to 1672×941 by adding the landscape instruction). Same rule as the X-image aspect note below — but the b-roll generator needs it stated too, because b-roll prompts are atmosphere descriptions that easily forget it.
 >
 > **⚠️ ChatGPT image generation GETS STUCK in the automated (bot-detected) browser — RELOAD the chat after ~80s to unstick it (Mike, 2026-07-09).** After a prompt is sent, the automated Chrome's live DOM often never surfaces the finished image (it just spins) even though the image IS finished server-side — you can confirm by opening the same chat in a normal/Edge browser and seeing it there. **The fix: wait up to ~80s, then RELOAD the chat room and grab the finished image from the reloaded page** (do NOT re-send the prompt — that starts a duplicate generation). `generate-broll-reload.js` does exactly this and also: keys capture on the stable estuary `file_id` (so it never grabs a wrong/pre-existing image); waits for a fresh chat's `/c/<id>` URL before reloading (else the first image of a fresh chat is lost); and dismisses the full-screen "Compare responses" A/B modal (`role=dialog`, `inset-0`) that ChatGPT sometimes overlays on the composer and hangs the next prompt. The older scripts (`gen-images.js`, `generate-broll-wlw.js`) do NOT reload and so hang / mis-capture — prefer `generate-broll-reload.js`, or port this reload-after-~80s behavior into them, for any ChatGPT image run.
 > **Background (why the pool exists):** a ChatGPT chat degrades past ~25 images — it either stops rendering
@@ -93,6 +95,20 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > prompt, 2026-06-07). The pool caps + rotates to prevent both. Always QA a generated frame regardless.
 > `gen-batch.js` / `gen-batch-freshchat.js` are SUPERSEDED (kept for reference); their hardcoded persistent
 > chat URLs are overloaded/contaminated. **Do NOT loop `generate-image.js`** (a new chat per image = orphan-chat sprawl).
+>
+> **Every automation chat is RENAMED at birth, and that name is the deletion gate** (Mike, 2026-07-22).
+> `chat-pool.js confirmAndRegister(page, purpose)` runs right after a fresh chat's first successful
+> generation: it confirms the REAL conversation id via the backend API (never bare `page.url()` — its
+> id silently diverged for ~2 weeks, leaving every registered pointer 404 while the real chats piled
+> up unregistered in the sidebar), renames the chat to **`b-roll: <purpose>`** (any purpose containing
+> `broll` — video b-roll for longform/shorts/persona) or **`social: <purpose>`** (all post-image
+> purposes: x-tweets, yt-posts, ig-single, reply-images, carousels...), verifies the rename stuck, and
+> registers the confirmed URL. **The ULTIMATE deletion check is the live title: `chat-delete.js`
+> refuses to delete ANY chat whose title does not START with `b-roll` or `social`** — so a human's
+> personal chat can never be swept even if the registry is wrong. Gate refusals land on the registry's
+> `title_gate_skipped` list for Mike to handle; deletes are verified (API 404) or reported as failed.
+> Reconcile tools: `list-chats-api.js` (inventory all conversations vs the registry, read-only),
+> `test-chat-lifecycle.js` (end-to-end smoke test with throwaway chats).
 >
 > **Spent chats are DELETED, not abandoned** (Mike, 2026-07-08 — the sidebar was drowning in dead image
 > chats; safe because every image downloads to the project folder at generation time). Two mechanisms,
@@ -992,6 +1008,27 @@ Near-black background, dramatic lighting, bold all-caps white + neon green typog
 > **CAUTION (learned 2026-05-24) — image-capture bug in history-heavy chats:** The batch generators (`generate-yt-post-images-batch.js`, etc.) can save the WRONG image to a slide. In a persistent chat already full of prior generations, the response-capture sometimes grabs a *stale history image* instead of the freshly-generated one, so slides get cross-assigned (confirmed: a d3 slide's file contained an e1-e4 slide's image; an earlier d3 slide contained an old "retail flows back" graphic). **This affects all versions — it is NOT a V1-vs-V2 issue.** The single `generate-image.js` has robust baseline logic (block history during load → scroll to exhaust → 5s grace → baseline → only accept URLs ≥10s after prompt); the batch scripts used a thinner version that fails when history is large.
 >
 > **FIXED 2026-05-24:** all three batch scripts (`generate-yt-post-images-batch.js`, `generate-broll-batch.js`, `generate-tweet-images-batch.js`) now set `CHAT_URL = 'https://chatgpt.com/'` (a **fresh chat per run**, no history to mis-grab) plus a guard that forces a new conversation if redirected to `/c/`. Verified: re-running the YT carousels produced correctly-placed slides. **Keep batch chats fresh; still spot-check 1–2 slides per run.**
+>
+> **⛔ REGRESSED IN `gen-images.js` — RE-CONFIRMED 2026-07-14. The cross-assignment above is BACK, for a
+> second reason, and the pool is what reinstated it.** `gen-images.js` types prompt N+1 **before image N has
+> landed**, so two generations are in flight at once, finish out of order, and bind to the WRONG filenames
+> (confirmed: two finished tweet images came back cleanly SWAPPED; both renders were fine, only the binding
+> was wrong — the fix is to swap the files, NOT to regenerate). The 05-24 mitigation was *fresh chat per
+> run*; `chat-pool.js` deliberately REUSES a chat up to ~25 images, which restores the history-heavy
+> condition. Mike's old loop of the single `generate-image.js` was structurally immune (one prompt in
+> flight = nothing to race).
+> - **MITIGATION: run ONE ITEM PER INVOCATION** whenever binding matters (a `--reference` is attached,
+>   carousels, or anything you will not eyeball). Slower, correct.
+> - **VERIFY BY PIXELS, NEVER BY md5/bytes.** ChatGPT's CDN re-encodes PNGs, so a mis-captured copy of your
+>   own uploaded `--reference` has a DIFFERENT md5 but IDENTICAL pixels. That false negative is exactly why
+>   the 2026-07-11 session wrongly concluded "ChatGPT reproduces the carousel exemplar verbatim" and logged
+>   it as an unresolved model quirk — it was this capture bug all along (see the carousel section; the
+>   must-attach-version-ref rule STANDS). Test with PIL: `np.abs(a-b).max()==0` means it IS the reference.
+> - **Two guards now in `gen-images.js` (2026-07-14):** the ref is uploaded BEFORE the baseline snapshot,
+>   and a **post-send re-baseline** folds everything on the page 3s after Enter into `before` (a generation
+>   never completes in 3s, so anything present is by definition not the result).
+> - This defect is INVISIBLE to anyone who does not open the file and compare it to the intended subject.
+>   Always run the visual-QA gate over a generated batch.
 
 Prompt template:
 ```

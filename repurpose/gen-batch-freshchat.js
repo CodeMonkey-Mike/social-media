@@ -7,7 +7,10 @@
 // gen-batch-freshchat.js — same robust capture + reference-upload as gen-batch.js, but opens
 // a FRESH ChatGPT chat (chatgpt.com/) instead of a persistent /c/ chat.
 // Usage: node gen-batch-freshchat.js --list=<items.json> --prefix=broll
-//          [--batch=<id> | --outdir=<abs dir>] [--purpose=longform-broll]
+//          [--batch=<id> | --outdir=<abs dir>] [--purpose=longform-broll] [--chat-batch=<id>]
+//   --chat-batch : batches.json id to tie the ChatGPT chat to (defaults to --batch). Cleanup
+//                  deletes the chat once that batch is completed/archived — pass it with --outdir
+//                  runs (longform/persona) where --batch isn't used for routing.
 //   items.json: [{ "image_id":"ab12cd34", "slug":"my-slug", "prompt":"...", "ref":"C:\\...png"(optional) }]
 //   --batch=<id>  : SHORTS b-roll — writes to video-creation/shorts/<id>/render-assets/ (the
 //                   batch's OWN self-contained public dir; NEVER video-creation/assets/ or
@@ -132,14 +135,21 @@ async function genOne(page, allSeen, urlTs, bufs, item) {
     if (!r) { console.log('   retry once...'); r = await genOne(page, allSeen, urlTs, bufs, item); }
     if (r) {
       ok++;
-      // after the first successful gen the fresh chat has its /c/<id> URL: register it
-      if (!registered && /chatgpt\.com\/c\//.test(page.url())) {
-        pool.registerNewChat(PURPOSE, page.url().split('?')[0]);
-        registered = true;
+      // after the first successful gen the fresh chat has its /c/<id> URL: register it.
+      // Tie it to a batch id (--chat-batch, falling back to --batch) so cleanup deletes the
+      // chat once that batch completes; without one the chat is only deleted on rotation.
+      if (!registered) {
+        // API-confirmed registration + gated rename ("b-roll:"/"social:" title) — never trust
+        // page.url() alone, its id can diverge from the real conversation id (2026-07-22).
+        const reg = await pool.confirmAndRegister(page, PURPOSE, A['chat-batch'] || A.batch || null);
+        if (reg) registered = true;
       }
       pool.recordImage(PURPOSE);
     }
   }
   console.log(`\nDone: ${ok}/${LIST.length}` + (registered ? ` (chat registered under "${PURPOSE}")` : ''));
+  // Delete rotated-out/dead chats while the browser is still open (registry `retired` list).
+  try { await require('./chat-delete').sweepRetired(page); }
+  catch (e) { console.log('  [chat-delete] sweep error: ' + e.message.split('\n')[0]); }
   await browser.close();
 })().catch(e => { console.error(e); process.exit(1); });
