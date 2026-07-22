@@ -126,10 +126,22 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     }
   }
   // ── livestream-repurpose/transcripts — batch-aware ─────────────────────────
-  // One folder per livestream, named EXACTLY by livestream_title (so prefix match
-  // works here where it can't for media/). Legacy loose files handled too.
+  // One folder (or legacy loose file) per livestream. Match on the batch's OWN
+  // `transcripts_dir` pointer first: folders are named after the LOW BPS master
+  // ("robinhood LOW BPS VERTICAL"), NOT after `livestream_title` ("Best Meme Coins
+  // on the Robinhood Chain (rh FINAL)"), so the title prefix-match below never fired
+  // for a real repurpose batch and every transcript was silently kept forever
+  // (Mike 2026-07-22). Title match stays as the fallback for legacy/loose entries.
   const titled = batches.filter(b => b.livestream_title);
-  const batchFor = (name) => {
+  const batchForTranscript = (name) => {
+    const nameLower = name.toLowerCase();
+    const byPointer = batches.find((b) => {
+      if (!b.transcripts_dir) return false;
+      const td = b.transcripts_dir.replace(/\\/g, '/').toLowerCase().replace(/\/+$/, '');
+      const rel = `video-creation/livestream-repurpose/transcripts/${nameLower}`;
+      return td === rel || td.startsWith(rel + '/');
+    });
+    if (byPointer) return byPointer;
     let best = null;
     for (const b of titled) {
       if (name.startsWith(b.livestream_title) &&
@@ -137,6 +149,7 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
     }
     return best;
   };
+  const batchFor = batchForTranscript;
   const classifyByBatch = (full, name, kind) => {
     const b = batchFor(name);
     if (!b) skipped.push({ path: full, reason: `${kind} — not in batch registry` });
