@@ -28,6 +28,7 @@ livestream → Phase 1: re-encode → "LOW BPS" master  (video-creation/SKILL.md
 | Post pending queued content to a platform | `schedule-tweets/skills/SKILL.md` | `playbooks/posting.md` |
 | Make/render a vertical short or AI-persona video | `video-creation/SKILL.md` · `video-creation/vertical-ai-persona/SKILL.md` | `playbooks/video.md` |
 | Source stock video b-roll (Envato Elements) | `video-creation/skills/envato-broll/SKILL.md` | `playbooks/video.md` |
+| Find/pick music for a video (or source new tracks) | `video-creation/skills/music-sourcing/SKILL.md` (§2c: PICK from the analyzed catalog `assets/music/library.json`, no listening; longform bed plans → `music-placement-strategist` agent) | `playbooks/video.md` |
 | Make a longform 16:9 video (slide presentation OR heavily-edited) | `video-creation/longform-presentation/longform-presentation.md` (frozen, slide-deck) · `video-creation/longform-edited/longform-edited.md` (evolving, edit-driven) | `playbooks/video.md` |
 | Defumble a recording (remove false starts/retakes, no clipped words) | `video-creation/skills/defumbler/defumbler.md` (canonical, track-agnostic) | `playbooks/video.md` |
 | Desilence / tighten pacing (remove silence, rapid-fire) | `video-creation/skills/desilencer/desilencer.md` (canonical, track-agnostic; ALL tracks use it) | `playbooks/video.md` |
@@ -41,9 +42,10 @@ Prefix every command with `cd C:\Users\mnede\Documents\Claude\social-media &&` (
 |---|---|
 | Start dashboard (port 8766) | `python schedule-tweets/scripts/serve_dashboard.py` → http://localhost:8766 · detail `schedule-tweets/skills/dashboard.md` |
 | Count pending across all queues | see `schedule-tweets/skills/pending-social-posts.md` |
+| Post next YT Quiz ("post next YT Quiz" = post the single next `pending` entry, no preview, one attempt, then report) | `cd schedule-tweets && node scripts/post-yt-quiz.js` (queue `schedule-tweets/data/yt-quizzes.json`) · full procedure `schedule-tweets/skills/yt-post-quiz.md` |
 | Move a finalized render batch into the queue | `python scripts/publish-shorts.py <batch> [--date YYYY-MM-DD] [--dry-run]` · detail `video-creation/PUBLISH-SHORTS.md` |
 | Lint queue data (persona/format) | `python scripts/persona-lint.py [--file <path>] [--fix]` |
-| Refresh the Topic Radar dashboard (topic finding) | `node video-creation/topic-radar/build-dashboard.js` → open `video-creation/topic-radar/dashboard.html` · full procedure `video-creation/TOPIC-FINDING-PLAYBOOK.md` §Topic Radar |
+| **Find new topics** / refresh the Topic Radar dashboard | `node video-creation/topic-radar/build-dashboard.js` → open `video-creation/topic-radar/dashboard.html` · full procedure `video-creation/topic-radar/CLAUDE.md` (topic-finding doctrine: `video-creation/topic-radar/PLAYBOOK.md`) |
 | Recycle no-longer-needed assets | `node cleanup/cleanup.js --target all --dry-run` (ALWAYS dry-run first; targets: schedule-tweets / video-creation / all) · detail `cleanup/cleanup.md` |
 | Defumble a recording (map its takes) | `python video-creation/skills/defumbler/scripts/chunk_map.py "<recording>"` → read `<name>._chunkmap.txt` · full procedure `video-creation/skills/defumbler/defumbler.md` |
 | Desilence a recording (tighten pacing) | `python video-creation/skills/desilencer/scripts/desilence.py "<defumbled>" --out "<out>" --split 18 --sil-pre 0.25 --sil-post 0.5` · full procedure `video-creation/skills/desilencer/desilencer.md` |
@@ -68,7 +70,26 @@ All voice / terminology / brand rules: **`persona/persona.json`** (single source
 ## Orchestrator status
 **Phase 1** — this routing table + `playbooks/`, human-driven (Mike says which skill runs next).
 **Automatic** spawnable-DAG orchestration (a fleet that self-dispatches lanes) is **deferred to Phase 2**;
-do not build that yet. See `ORCHESTRATOR-PLAN.md`. **Hand-authored advisory subagents ARE allowed** in
-`.claude/agents/` — single specialists the Opus orchestrator/main-loop consults for one judgment step and
-that Mike reviews (e.g. `clip-strategist.md`, Fable/max, Lane 2 clip selection). These are versioned with
-the repo on purpose; they do not constitute the deferred DAG automation.
+do not build that yet. See `ORCHESTRATOR-PLAN.md`.
+
+### Advisor/executor model routing (authoritative — self-contained, no memory needed)
+The pipeline runs on an **advisor/executor split**, so any fresh checkout behaves the same:
+- **Executor / orchestrator = the Opus main loop.** It holds the shared context and the task list,
+  runs the mechanical pipeline and Lanes 1 & 3 inline, and executes the plans the subagents return.
+  The reusable entry point is the slash command **`.claude/commands/repurpose-livestream.md`**
+  (`model: opus`, `effort: medium`) — path is the only arg, trailing text = per-run overrides.
+- **Specialist subagents live in `.claude/agents/`**, each a single Mike-reviewed slice, versioned with
+  the repo. Two kinds, split by whether the slice is judgment or execution:
+  - **Fable/max advisors (read-only, return a JSON plan):**
+    - **`clip-strategist.md`** — selects shorts from the transcript, scatter-gathers segments scattered
+      across the stream into one short (Lane 2 / Phase 3-4).
+    - **`tighten-strategist.md`** — authors the Phase 5 tighten removal spans for a clip.
+    - **`longform-edited/transition-strategist.md`** — authors the whole `TRANSITIONS.md` plan from the
+      CUE-SHEET/EDIT-PLAN placement + the `assets/transitions/library.json` meta: assigns every scene
+      change across the 3 buckets AND strategically reserves the library's MELT (transform/reform) and
+      SPIN (new-facet turn) families for the marquee diagram/chart reveals (text containers stay quiet).
+  - **Opus/xhigh executors (write code + render, return a build + self-QA for Mike to gate):**
+    - **`remotion-builder.md`** — builds ONE short's Remotion composition + render (Phase 7). xhigh effort
+      because the composition code is bug-sensitive (frame math, overlay collisions) and precision pays off.
+- These ARE allowed and versioned on purpose; they are NOT the deferred DAG automation (no auto-spawning
+  fleet). Rule of thumb: judgment slice -> Fable/max advisor; intricate execution slice -> Opus/high executor.

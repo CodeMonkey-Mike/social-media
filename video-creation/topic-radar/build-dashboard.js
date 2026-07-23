@@ -12,7 +12,8 @@
 //
 //   node video-creation/topic-radar/build-dashboard.js [--days 5]
 //
-// Companion doc: video-creation/TOPIC-FINDING-PLAYBOOK.md (Lanes 2 & 3).
+// Companion docs (same folder): CLAUDE.md = how to operate/refresh this tool;
+// PLAYBOOK.md = the topic-finding doctrine it implements (Lanes 1-3).
 
 const fs = require("fs");
 const path = require("path");
