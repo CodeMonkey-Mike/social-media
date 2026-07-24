@@ -1,0 +1,40 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--card:#12151c;--green:#00e68a;--cyan:#00c2ff;--gold:#ffd700;--red:#ff4060;--tp:#e8eaf0;--ts:#8892a4;--tm:#505a6e;--bd:#1e2330}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1920px;height:1080px;background:var(--bg);color:var(--tp);font-family:'DM Sans',sans-serif;overflow:hidden;position:relative;padding:80px 110px}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.28;pointer-events:none;width:520px;height:520px;background:var(--red);top:-150px;right:-100px}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ey{font-size:1rem;text-transform:uppercase;letter-spacing:.2em;color:var(--tm);font-weight:700;margin-bottom:16px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:4rem;line-height:1.03;letter-spacing:-.02em}
+.divider{width:80px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--red),var(--gold));margin:24px 0 0}
+.chart{margin-top:90px;position:relative}
+.row{display:flex;align-items:center;gap:30px;margin-bottom:40px}
+.lbl{flex:0 0 240px;font-size:1.7rem;font-weight:700;color:var(--tp)}
+.track{flex:1;height:64px;background:var(--card);border:1px solid var(--bd);border-radius:12px;position:relative;overflow:hidden}
+.fill{height:100%;border-radius:11px;display:flex;align-items:center;justify-content:flex-end;padding-right:24px}
+.fill .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.7rem;color:#0a0c10}
+.f30{width:96%;background:linear-gradient(90deg,var(--gold),var(--red))}
+.f20{width:95%;background:linear-gradient(90deg,var(--gold),var(--red))}
+.f10{width:82%;background:linear-gradient(90deg,var(--cyan),var(--green))}
+.f10 .v{color:#0a0c10}
+.mark{position:absolute;top:-10px;bottom:-46px;left:88%;width:3px;background:repeating-linear-gradient(180deg,var(--red) 0 8px,transparent 8px 16px)}
+.mark span{position:absolute;top:-34px;left:8px;font-family:'JetBrains Mono',monospace;color:var(--red);font-weight:700;font-size:1.1rem;white-space:nowrap}
+.take{position:absolute;bottom:78px;left:110px;right:110px;background:linear-gradient(135deg,rgba(255,64,96,.08),rgba(255,215,0,.05));border:1px solid rgba(255,64,96,.28);border-radius:16px;padding:28px 40px}
+.take .t{font-size:1.9rem;font-weight:700;color:var(--tp);line-height:1.3} .take b{color:var(--red)}
+.src{position:absolute;bottom:40px;left:110px;font-size:.95rem;color:var(--tm);font-family:'JetBrains Mono',monospace}
+</style></head>
+<body>
+<div class="grain"></div><div class="orb"></div>
+<div class="ey">CH6 · the buyer problem</div>
+<h1>Long-Term Yields Near Multi-Decade Highs</h1>
+<div class="divider"></div>
+<div class="chart">
+  <div class="row"><div class="lbl">30-year</div><div class="track"><div class="fill f30"><span class="v">&gt; 5.0%</span></div><div class="mark"><span>5% line</span></div></div></div>
+  <div class="row"><div class="lbl">20-year</div><div class="track"><div class="fill f20"><span class="v">&gt; 5.0%</span></div></div></div>
+  <div class="row"><div class="lbl">10-year</div><div class="track"><div class="fill f10"><span class="v">4.56%</span></div></div></div>
+</div>
+<div class="take"><div class="t">The government needs the world to keep buying its debt, and <b>real demand is thin.</b></div></div>
+<div class="src">US Treasury daily par yields / FRED · early July 2026 · [VERIFY — reprice at render]</div>
+</body></html>

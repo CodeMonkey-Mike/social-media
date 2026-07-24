@@ -16,6 +16,15 @@ on the rendered spine, snapped to the word-level transcript.
 
 ---
 
+## ⛔ ORDER (Mike, 2026-07-18) — these are PRE-BUILD blueprints, authored BEFORE the Remotion comp
+`CUE-SHEET.md`, `EDIT-PLAN-prep.md`, and `EDIT-PLAN.md` are ALL authored **before** the Remotion build — they
+are the pre-build **blueprint / gate the comp is built TO**, timecoded off the **word-level transcript** (which
+exists as soon as the spine is desilenced). Their whole purpose is to have every element assigned to a
+timestamp and reconciled (zero orphans) BEFORE any comp work — "so we have everything in check before we do
+the build" (Mike). **We do NOT generate them from the comp after the fact.** The `_gen_editplan.js` "generate
+EDIT-PLAN from the comp" wording below is an OPTIONAL as-built reconciliation only (Mike has never used it) —
+treat it as legacy, NOT how the plan is authored. Author the plan from the transcript; build the comp to it.
+
 ## 0. Lifecycle — the PREP file vs the FINAL pair (don't skip the rename)
 The two files above are **post-record** artifacts (they need the recorded + desilenced spine and its word-timings;
 EDIT-PLAN is GENERATED from the comp). But planning starts BEFORE the VO exists, so each video has THREE files

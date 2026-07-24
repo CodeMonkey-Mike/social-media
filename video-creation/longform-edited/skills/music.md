@@ -1,7 +1,9 @@
 # longform-edited · MUSIC placement (canonical)
 
 How music is laid INTO the edit (levels, looping, fades, end-align, ducking). Sourcing/license is a separate
-skill: `../../skills/music-sourcing/`. The edit MUST ship with music — never render a silent pass
+skill: `../../skills/music-sourcing/`; CHOOSING which track/cut is also not this file — query the analyzed
+catalog `../../assets/music/library.json` (music-sourcing `SKILL.md` §2c; whole-video plans =
+`music-placement-strategist`). The edit MUST ship with music — never render a silent pass
 (longform-edited.md #10). (Consolidated 2026-06-21 after the bed-A-ran-out / no-loop violation on kaspa.)
 
 ## Beds

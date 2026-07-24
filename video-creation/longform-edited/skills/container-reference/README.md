@@ -5,12 +5,37 @@ you to display the CSS containers. In the first few videos it was very easy with
 this folder are frames from two of those early videos. **When you build explainer containers for a
 longform-edited video, they must look like these.** This is the canonical visual target; match it.
 
+## ⛔ START HERE: copy the locked stylesheet, do NOT re-derive the CSS (Mike, 2026-07-12)
+The recurring drift (wrong accent teal, Inter instead of Playfair/DM-Sans, colored eyebrows, missing
+divider) happens because each build re-invents the CSS. **`container-canonical.css` in this folder is the
+locked stylesheet — paste it into the project's `assets/containers/containers.html`, then build one
+full-frame `<div class="frame" id="<slug>">` per beat and screenshot each.** Palette + fonts match
+`presentation.md` and the reference frames below. The zebec build
+(`media/zebec/assets/containers/containers.html`) is the worked example. Never swap the tokens.
+
 ## The reference frames
 - `banks-card-fiat-112s.jpg`, `banks-card-fractional-125s.jpg` — *banks-own-chain* (YouTube N8LNdp2lfBg). The
   **card** variant: one rounded card, top-accent line, with the eyebrow + title + date + body INSIDE it.
 - `bittensor-text-dualcitizens-70s.jpg`, `bittensor-text-fixed-130s.jpg`, `bittensor-text-economic-220s.jpg` —
   *bittensor-for-the-future* (`renders/bittensor-FULL-v8-sfx.mp4`). The **text** variant: same anatomy, no card
   box — just the eyebrow + serif headline + body on dark bg (sometimes over b-roll).
+
+## Rich DIAGRAM slides — the OVERVIEW-slide archetype (Mike, 2026-07-10)
+- `diagram-timeline-dollar-won-twice.png` — a **timeline** (1944 → 1971 → 1974 → TODAY, nodes on a rail with a
+  label + blurb each, headline on top, takeaway bar on the bottom).
+- `diagram-flow-stablecoin-treasury.png` — a **flow** (three linked cards, `phone → stablecoin → US Treasuries`,
+  arrows between, headline + takeaway).
+- `diagram-bittensor-*.png` (subnets-network, miners-validators, yuma-consensus, dtao, tao-token) — **system-design
+  topology** diagrams from bittensor-for-the-future: nodes + edges laying out how a system's parts connect. Same
+  role as a timeline/flow — a full-screen overview a viewer traces once, held while explained.
+
+These are the **info-dense full-screen slides** — GOOD visuals, not the enemy. They are the **section overview**:
+show one ONCE, full-screen, **held ~10s** so the viewer can digest the whole chain, then **break it up** into the
+smaller spotlight containers above (one per sub-point, ~5s each) as the narration walks through each piece. The
+overview slide and its break-up containers **coexist** — never repeat the full slide per sub-point, never delete
+it. This is THE balance rule; full text in `../broll-and-containers.md` ("⛔ THE BALANCE"). Declare these in the
+comp as `// DIAGRAM_REFS:` so they're exempt from the whole-slide lint (they earn it by appearing once, as the
+overview).
 
 ## The anatomy (every container has these, as ONE self-contained unit)
 1. **LEFT-aligned**, vertically centered, occupying the left ~55-62% of the frame. Large and generous.

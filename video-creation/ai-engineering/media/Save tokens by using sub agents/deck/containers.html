@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Save Tokens with Sub-Agents — standalone containers (one per chunk)</title>
+<!-- Built per ai-engineering/skills/deck-and-containers.md → longform-edited/skills/broll-and-containers.md
+     + container-reference/ (locked canonical CSS). ONE self-contained full-frame container per SCRIPT chunk.
+     LEFT-aligned eyebrow + Playfair headline (accent keyword) + body/diagram/table. Title INSIDE. Never a
+     cropped deck. Stylesheet reused verbatim from need-lang-graph/deck/containers.html + this video's
+     components (roster table, pricing table, dials, before/after bars, PLANNED rows).
+     Accent meaning THIS video: green=savings/real/safe · cyan=neutral/model/strong-coder · gold=attention/
+     effort/most-capable(Fable) · red=cost/waste/flaky · purple=orchestrator. -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0c10; --card:#12151c; --border:#1e2330;
+  --g:#00e68a; --c:#00c2ff; --go:#ffd700; --re:#ff4060; --pu:#a855f7;
+  --t1:#e8eaf0; --t2:#8892a4; --t3:#505a6e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;font-family:'DM Sans',sans-serif;color:var(--t1)}
+.frame{width:1920px;height:1080px;position:relative;overflow:hidden;background:var(--bg);display:flex;align-items:center;margin:0 auto 40px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.34;pointer-events:none}
+.inner{position:relative;z-index:1;padding:0 150px;max-width:1660px;width:100%}
+.ey{display:block;font-family:'JetBrains Mono',monospace;font-size:23px;font-weight:600;text-transform:uppercase;letter-spacing:.26em;color:var(--t3);margin-bottom:28px}
+.hl{font-family:'Playfair Display',serif;font-weight:800;font-size:80px;line-height:1.06;letter-spacing:-.01em}
+.hl.sm{font-size:66px}
+.hl .g{color:var(--g)} .hl .c{color:var(--c)} .hl .go{color:var(--go)} .hl .re{color:var(--re)} .hl .pu{color:var(--pu)}
+.divider{width:74px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--g),var(--c));margin:32px 0 38px}
+.body{font-size:31px;line-height:1.6;color:var(--t2);max-width:1240px}
+.body .mono{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--t1)}
+.body .g{color:var(--g)} .body .go{color:var(--go)} .body .c{color:var(--c)} .body .re{color:var(--re)} .body b{color:var(--t1);font-weight:700}
+
+/* code block */
+.code{font-family:'JetBrains Mono',monospace;font-size:30px;line-height:1.7;color:var(--t1);white-space:pre;margin-top:38px;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:40px 46px;max-width:1300px;overflow:hidden}
+.code .cm{color:var(--t3)} .code .g{color:var(--g)} .code .go{color:var(--go)} .code .c{color:var(--c)} .code .pu{color:var(--pu)} .code .re{color:var(--re)}
+.code .kw{color:var(--pu)} .code .str{color:var(--go)} .code .fn{color:var(--c)}
+.code .hi{background:rgba(0,230,138,.14);border-radius:6px;padding:3px 8px;margin:0 -8px;box-shadow:inset 0 0 0 1px rgba(0,230,138,.3)}
+.codecap{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--t3);margin-top:22px;letter-spacing:.04em}
+
+/* 2-up compare (the ONE sanctioned multi-card shape) */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:44px;max-width:1400px}
+.col{padding:38px 44px;border-radius:20px}
+.col.norm{background:rgba(80,90,110,.08);border:1px solid var(--border)}
+.col.cov{background:linear-gradient(135deg,rgba(0,230,138,.07),rgba(0,194,255,.05));border:1px solid rgba(0,230,138,.3)}
+.col.bad{background:rgba(255,64,96,.06);border:1px solid rgba(255,64,96,.28)}
+.col .ml{display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:22px}
+.col .ml.g{color:var(--g)} .col .ml.re{color:var(--re)} .col .ml.c{color:var(--c)}
+.col .big{font-family:'Playfair Display',serif;font-weight:800;font-size:46px;color:var(--t1);margin-bottom:12px}
+.col .sub{font-size:27px;color:var(--t2);line-height:1.5}
+
+/* hero / quote card */
+.hero{font-family:'Playfair Display',serif;font-weight:900;font-size:82px;line-height:1.16;margin-top:10px;
+  background:linear-gradient(135deg,var(--g),var(--c));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.quote{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:52px;line-height:1.4;color:var(--t1);max-width:1320px;margin-top:16px}
+.quote .g{color:var(--g);font-style:normal} .quote .c{color:var(--c);font-style:normal}
+.chips{display:flex;gap:18px;margin-top:44px;flex-wrap:wrap}
+.chip{padding:16px 32px;border-radius:100px;background:rgba(0,194,255,.1);border:1px solid rgba(0,194,255,.35);color:var(--c);font-family:'JetBrains Mono',monospace;font-size:26px}
+.chip.g{background:rgba(0,230,138,.1);border-color:rgba(0,230,138,.35);color:var(--g)}
+.chip.go{background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.35);color:var(--go)}
+.chip.pu{background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.35);color:var(--pu)}
+.note{font-size:26px;color:var(--t3);margin-top:30px;font-style:italic}
+
+/* ===== GRAPH DIAGRAM HELPERS (reused from need-lang-graph) ===== */
+.gwrap{display:flex;align-items:center;gap:0;margin-top:50px;flex-wrap:nowrap}
+.gnode{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px 30px;text-align:center;min-width:190px;position:relative}
+.gnode .nm{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:27px;color:var(--t1);display:flex;align-items:center;gap:12px;justify-content:center;white-space:nowrap}
+.gnode .sub{font-family:'DM Sans';font-weight:400;font-size:19px;color:var(--t3);margin-top:6px}
+.gnode.in{border-color:rgba(0,194,255,.45)}
+.gnode.pub{border-color:rgba(255,215,0,.45)}
+.gnode.good{border-color:rgba(0,230,138,.5);background:linear-gradient(135deg,rgba(0,230,138,.09),rgba(0,194,255,.04))}
+.gnode.orch{border-color:rgba(168,85,247,.55);background:linear-gradient(135deg,rgba(168,85,247,.10),transparent);box-shadow:0 0 30px rgba(168,85,247,.14)}
+.gnode.tuned{border-color:rgba(0,230,138,.55);box-shadow:0 0 26px rgba(0,230,138,.12)}
+.lanes{display:flex;flex-direction:column;gap:22px}
+.arrow{width:64px;height:3px;background:var(--t3);position:relative;flex:none}
+.arrow::after{content:'';position:absolute;right:-2px;top:-5px;border-left:11px solid var(--t3);border-top:6.5px solid transparent;border-bottom:6.5px solid transparent}
+.svgconn{flex:none}
+.tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:20px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);padding:7px 15px;border:1px solid var(--border);border-radius:8px;margin-top:12px}
+.tag.g{color:var(--g);border-color:rgba(0,230,138,.4)} .tag.re{color:var(--re);border-color:rgba(255,64,96,.4)} .tag.go{color:var(--go);border-color:rgba(255,215,0,.4)}
+
+/* effort ladder (steps) */
+.steps{display:flex;align-items:flex-end;gap:16px;margin-top:52px}
+.step{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px 30px;text-align:center;min-width:150px}
+.step .l{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:27px;color:var(--t1)}
+.step.def{border-color:rgba(0,230,138,.5);background:linear-gradient(135deg,rgba(0,230,138,.08),transparent)}
+.step.burn{border-color:rgba(255,64,96,.6);background:linear-gradient(135deg,rgba(255,64,96,.12),transparent);color:var(--re)}
+.step.burn .l{color:var(--re)}
+
+/* ===== NEW for this video ===== */
+/* before/after token bars */
+.bars{margin-top:48px;max-width:1320px}
+.barrow{margin-bottom:40px}
+.barrow .bl{display:flex;justify-content:space-between;align-items:baseline;font-family:'JetBrains Mono',monospace;margin-bottom:14px}
+.barrow .bl .nm{font-size:26px;color:var(--t2);letter-spacing:.06em;text-transform:uppercase}
+.barrow .bl .amt{font-size:40px;font-weight:600}
+.track{height:56px;border-radius:12px;background:rgba(255,255,255,.05);overflow:hidden}
+.track i{display:block;height:100%;border-radius:12px}
+.barrow.bad .amt{color:var(--re)} .barrow.bad .track i{background:linear-gradient(90deg,var(--re),#ff7a54);width:100%}
+.barrow.good .amt{color:var(--g)} .barrow.good .track i{background:linear-gradient(90deg,var(--g),var(--c));width:68%}
+.delta{display:inline-block;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:30px;color:var(--g);border:1px solid rgba(0,230,138,.4);border-radius:10px;padding:12px 26px}
+
+/* MODEL / EFFORT dials */
+.dials{display:flex;gap:40px;margin-top:46px}
+.dial{flex:1;max-width:340px;border:1px solid var(--border);border-radius:20px;background:var(--card);padding:34px 38px;text-align:center}
+.dial .dl{font-family:'JetBrains Mono',monospace;font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);margin-bottom:22px}
+.dial .knob{width:150px;height:150px;border-radius:50%;margin:0 auto;border:6px solid var(--border);position:relative;background:radial-gradient(circle at 50% 40%,#181c26,#0d1017)}
+.dial .knob::after{content:'';position:absolute;left:50%;top:14px;width:5px;height:44px;border-radius:3px;background:var(--g);transform-origin:bottom center}
+.dial.m .knob::after{background:var(--c);transform:translateX(-50%) rotate(-34deg)}
+.dial.e .knob::after{background:var(--go);transform:translateX(-50%) rotate(48deg)}
+.dial .val{font-family:'JetBrains Mono',monospace;font-size:28px;margin-top:22px;font-weight:600}
+.dial.m .val{color:var(--go)} .dial.e .val{color:var(--go)}
+
+/* pricing table */
+.ptab{margin-top:40px;border-collapse:collapse;font-family:'JetBrains Mono',monospace;min-width:920px}
+.ptab th{font-size:21px;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);text-align:right;padding:0 34px 18px;font-weight:600;border-bottom:1px solid var(--border)}
+.ptab th:first-child{text-align:left}
+.ptab td{font-size:33px;color:var(--t2);padding:20px 34px;text-align:right;border-bottom:1px solid rgba(30,35,48,.6)}
+.ptab td:first-child{text-align:left;color:var(--t1);font-size:30px}
+.ptab tr.hot td{background:rgba(255,215,0,.10)} .ptab tr.hot td:first-child{color:var(--go)}
+.ptab tr.hot td.num{color:var(--go)}
+.ptab .x2{display:inline-block;margin-top:26px;font-size:27px;color:var(--go);border:1px solid rgba(255,215,0,.4);border-radius:10px;padding:12px 24px}
+
+/* roster table */
+.rtab{width:100%;max-width:1660px;margin-top:30px;border-collapse:collapse;font-family:'JetBrains Mono',monospace}
+.rtab th{font-size:18px;text-transform:uppercase;letter-spacing:.11em;color:var(--t3);text-align:left;padding:0 18px 15px;font-weight:600;border-bottom:1px solid var(--border)}
+.rtab td{font-size:21px;color:var(--t2);padding:15px 18px;border-bottom:1px solid rgba(30,35,48,.55);white-space:nowrap}
+.rtab td.slice{font-family:'DM Sans';font-size:22px;color:var(--t1);white-space:normal}
+.rtab tr.on td{background:rgba(0,230,138,.10)}
+.rtab tr.on td.slice{color:#fff}
+.rtab tr.dim{opacity:.32}
+.rtab tr.planned td{opacity:.5;border-top:1px dashed rgba(120,130,150,.35);border-bottom:1px dashed rgba(30,35,48,.55)}
+.rtab tr.planned td.slice{color:var(--t3)}
+/* proposed dials in a PLANNED row are desaturated to grey — they are NOT real assignments; the gold PLANNED badge carries the label */
+.rtab tr.planned .pill{color:var(--t3);border-color:var(--border)}
+.pill{display:inline-block;padding:5px 13px;border-radius:8px;font-size:18px;border:1px solid var(--border);color:var(--t2)}
+.pill.fable{color:var(--go);border-color:rgba(255,215,0,.4)}
+.pill.opus{color:var(--c);border-color:rgba(0,194,255,.4)}
+.pill.sonnet{color:var(--t3);border-color:var(--border)}
+.pill.max,.pill.xhigh{color:var(--t1);border-color:rgba(255,255,255,.18)}
+.ro{color:var(--g)} .rw{color:var(--go)} .tool{color:var(--t3)}
+.ptag{color:var(--go);font-size:16px;letter-spacing:.14em;border:1px dashed rgba(255,215,0,.5);border-radius:7px;padding:4px 11px}
+.flag{color:var(--re);font-size:17px}
+.stamp{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;color:var(--g);border:2px solid var(--g);border-radius:10px;padding:10px 24px;margin-top:26px;letter-spacing:.14em;transform:rotate(-4deg)}
+
+/* file-vs-file (contract gap) */
+.files{display:flex;align-items:center;gap:70px;margin-top:48px}
+.filecard{width:360px;border:1px solid var(--border);border-radius:16px;background:var(--card);padding:30px 34px}
+.filecard .fn{font-family:'JetBrains Mono',monospace;font-size:24px;color:var(--t2);margin-bottom:18px}
+.filecard .ln{font-family:'JetBrains Mono',monospace;font-size:20px;color:var(--t3);padding:6px 0}
+.filecard.read{border-color:rgba(0,194,255,.5)}
+.filecard.read .fn{color:var(--c)}
+.filecard .rule{color:var(--go)}
+.filecard.orphan{border-style:dashed;border-color:rgba(255,64,96,.5)}
+.rdlabel{font-family:'JetBrains Mono',monospace;font-size:20px;color:var(--c);letter-spacing:.1em}
+</style>
+</head>
+<body>
+
+<!-- Shared SVG defs (arrowheads) -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#505a6e"/></marker>
+  <marker id="ahg" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#00e68a"/></marker>
+  <marker id="ahpu" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#a855f7"/></marker>
+</defs></svg>
+
+
+<!-- ═══════════ CHAPTER 1 — HOOK ═══════════ -->
+
+<!-- CHUNK 01 — the operation (title + 3-lane fan) -->
+<section class="frame" id="c01">
+  <div class="orb" style="width:660px;height:660px;background:var(--g);top:-180px;left:-160px"></div>
+  <div class="orb" style="width:520px;height:520px;background:var(--pu);bottom:-160px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">AI Engineering Simplified</span>
+    <div class="hl" style="font-size:92px">One livestream,<br>a <span class="g">whole week</span> of content</div>
+    <div class="divider"></div>
+    <div class="gwrap">
+      <div class="gnode in"><div class="nm">livestream</div><div class="sub">one recording</div></div>
+      <svg class="svgconn" width="96" height="260" viewBox="0 0 96 260">
+        <path d="M2,130 C50,130 50,44 94,44" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,130 H94" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,130 C50,130 50,216 94,216" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+      </svg>
+      <div class="lanes">
+        <div class="gnode"><div class="nm">long-form</div></div>
+        <div class="gnode"><div class="nm">shorts</div></div>
+        <div class="gnode"><div class="nm">text + image</div></div>
+      </div>
+      <svg class="svgconn" width="96" height="260" viewBox="0 0 96 260">
+        <path d="M2,44 C50,44 50,130 94,130" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,130 H94" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,216 C50,216 50,130 94,130" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+      </svg>
+      <div class="gnode pub"><div class="nm">dozens of posts</div><div class="sub">X · IG · FB · TikTok · YT · +2</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 02 — the before/after -->
+<section class="frame" id="c02">
+  <div class="orb" style="width:560px;height:560px;background:var(--re);top:-140px;left:-120px"></div>
+  <div class="orb" style="width:520px;height:520px;background:var(--g);bottom:-150px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Before &amp; After</span>
+    <div class="hl">Same output, <span class="g">a third</span> less</div>
+    <div class="bars">
+      <div class="barrow bad"><div class="bl"><span class="nm">One agent, straight line</span><span class="amt mono">~200K</span></div><div class="track"><i></i></div></div>
+      <div class="barrow good"><div class="bl"><span class="nm">A roster of sub-agents</span><span class="amt mono">~130-140K</span></div><div class="track"><i></i></div></div>
+    </div>
+    <span class="delta mono">≈ 30% fewer tokens</span>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 2 — THE PROBLEM ═══════════ -->
+
+<!-- CHUNK 03 — the balloon -->
+<section class="frame" id="c03">
+  <div class="orb" style="width:620px;height:620px;background:var(--re);top:-160px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Trap</span>
+    <div class="hl">One agent holds <span class="re">everything</span></div>
+    <div class="divider"></div>
+    <p class="body">One context window, running every lane end to end. Every file it reads, every transcript, every render log <b>stays</b> in that window... and gets <span class="re">re-sent on every step after</span>.</p>
+    <div class="bars" style="margin-top:40px;max-width:1180px">
+      <div class="barrow bad"><div class="bl"><span class="nm">Context, re-sent each step</span><span class="amt mono">↑ ↑ ↑</span></div><div class="track"><i></i></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 04 — the cost shape -->
+<section class="frame" id="c04">
+  <div class="orb" style="width:560px;height:560px;background:var(--re);bottom:-150px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Cost Shape</span>
+    <div class="hl">Cost scales with <span class="re">context</span>,<br>not with the work</div>
+    <svg width="1180" height="440" viewBox="0 0 1180 440" style="margin-top:36px">
+      <line x1="80" y1="380" x2="1120" y2="380" stroke="#1e2330" stroke-width="2"/>
+      <line x1="80" y1="40" x2="80" y2="380" stroke="#1e2330" stroke-width="2"/>
+      <!-- work done: linear -->
+      <path d="M80,360 L1080,150" stroke="#505a6e" stroke-width="4" fill="none"/>
+      <text x="1090" y="150" fill="#8892a4" font-family="'JetBrains Mono'" font-size="26">work</text>
+      <!-- tokens paid: quadratic -->
+      <path d="M80,370 Q760,360 1060,70" stroke="#ff4060" stroke-width="5" fill="none"/>
+      <text x="1000" y="52" fill="#ff4060" font-family="'JetBrains Mono'" font-size="26">tokens</text>
+      <circle cx="1055" cy="74" r="7" fill="#ff4060"/>
+      <text x="905" y="108" fill="#ff4060" font-family="'JetBrains Mono'" font-size="27">~200K</text>
+    </svg>
+    <p class="note">And as the window fills with stale detail, the model gets dumber. (context rot)</p>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 3 — LEVER 1: ISOLATION ═══════════ -->
+
+<!-- CHUNK 05 — the fresh window -->
+<section class="frame" id="c05">
+  <div class="orb" style="width:560px;height:560px;background:var(--g);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">Lever One · Isolation</span>
+    <div class="hl">A sub-agent gets its <span class="g">own</span> window</div>
+    <div class="gwrap" style="margin-top:46px">
+      <div class="gnode orch"><div class="nm">orchestrator</div><div class="sub">stays small</div></div>
+      <div style="width:4px;height:200px;background:repeating-linear-gradient(180deg,#2a3040,#2a3040 12px,transparent 12px,transparent 24px);margin:0 46px"></div>
+      <div class="gnode" style="border-color:rgba(0,230,138,.5);min-width:300px"><div class="nm">sub-agent</div><div class="sub">the messy work, over here</div></div>
+    </div>
+    <p class="note">Dozens of tool calls deep, a big working transcript... all of it on the far side of the wall, never in your main loop.</p>
+  </div>
+</section>
+
+<!-- CHUNK 06 — what comes back -->
+<section class="frame" id="c06">
+  <div class="orb" style="width:540px;height:540px;background:var(--c);bottom:-140px;right:-110px"></div>
+  <div class="inner">
+    <span class="ey">What Crosses Back</span>
+    <div class="hl">Just the <span class="c">final answer</span></div>
+    <div class="gwrap" style="margin-top:46px">
+      <div class="gnode" style="border-color:rgba(0,230,138,.5);min-width:260px"><div class="nm">sub-agent</div><div class="sub">fat transcript</div><div class="tag re">thrown away</div></div>
+      <svg class="svgconn" width="240" height="90" viewBox="0 0 240 90"><path d="M6,45 H228" stroke="#00c2ff" stroke-width="3" fill="none" marker-end="url(#ah)"/><text x="80" y="34" fill="#00c2ff" font-family="'JetBrains Mono'" font-size="24">~1-2K</text></svg>
+      <div class="gnode orch" style="min-width:240px"><div class="nm">orchestrator</div><div class="sub">keeps the plan only</div></div>
+    </div>
+    <p class="note">A compact plan, or a short build report. The transcript it built up along the way is disposable.</p>
+  </div>
+</section>
+
+<!-- CHUNK 07 — the trick, stated plainly -->
+<section class="frame" id="c07">
+  <div class="orb" style="width:600px;height:600px;background:var(--g);top:-160px;right:-140px"></div>
+  <div class="inner">
+    <span class="ey">The Trick</span>
+    <div class="cmp" style="margin-top:8px">
+      <div class="col cov"><div class="ml g">isolate it</div><div class="big" style="color:var(--g)">Pay once,<br>throw it away</div></div>
+      <div class="col bad"><div class="ml re">hold it all</div><div class="big" style="color:var(--re)">Pay once,<br>re-send forever</div></div>
+    </div>
+    <div class="quote" style="margin-top:44px">Like an employee who <span class="g">tells you what they found</span>... not one who reads you <span class="c">every email they opened</span>.</div>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 4 — THE OPERATION: THREE LANES ═══════════ -->
+
+<!-- CHUNK 08 — the three lanes -->
+<section class="frame" id="c08">
+  <div class="orb" style="width:600px;height:600px;background:var(--c);top:-150px;left:-130px"></div>
+  <div class="inner">
+    <span class="ey">The Operation</span>
+    <div class="hl">One stream, <span class="c">three lanes</span></div>
+    <div class="gwrap" style="margin-top:46px">
+      <div class="gnode in"><div class="nm">livestream</div></div>
+      <svg class="svgconn" width="96" height="290" viewBox="0 0 96 290">
+        <path d="M2,145 C50,145 50,48 94,48" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,145 H94" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+        <path d="M2,145 C50,145 50,242 94,242" stroke="#505a6e" stroke-width="3" fill="none" marker-end="url(#ah)"/>
+      </svg>
+      <div class="lanes">
+        <div class="gnode good"><div class="nm">1 · long-form</div><div class="sub">Rumble · BitChute · FB</div></div>
+        <div class="gnode good"><div class="nm">2 · vertical shorts</div><div class="sub">every platform</div></div>
+        <div class="gnode good"><div class="nm">3 · text + image</div><div class="sub">tweets · threads · IG · YT</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 09 — the orchestrator divides it -->
+<section class="frame" id="c09">
+  <div class="orb" style="width:560px;height:560px;background:var(--pu);top:-130px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Who Does What</span>
+    <div class="hl">The orchestrator hands off<br>the <span class="g">heavy</span> slices</div>
+    <div class="gwrap" style="margin-top:44px">
+      <div class="gnode orch" style="min-width:250px"><div class="nm">orchestrator</div><div class="sub">plan + the light lanes, itself</div></div>
+      <svg class="svgconn" width="130" height="240" viewBox="0 0 130 240">
+        <path d="M2,120 C64,120 64,40 126,40" stroke="#00e68a" stroke-width="3" fill="none" marker-end="url(#ahg)"/>
+        <path d="M2,120 H126" stroke="#00e68a" stroke-width="3" fill="none" marker-end="url(#ahg)"/>
+        <path d="M2,120 C64,120 64,200 126,200" stroke="#00e68a" stroke-width="3" fill="none" marker-end="url(#ahg)"/>
+      </svg>
+      <div class="lanes">
+        <div class="gnode tuned"><div class="nm">sub-agent</div><div class="sub">tuned</div></div>
+        <div class="gnode tuned"><div class="nm">sub-agent</div><div class="sub">tuned</div></div>
+        <div class="gnode tuned"><div class="nm">sub-agent</div><div class="sub">tuned</div></div>
+      </div>
+    </div>
+    <p class="note">And here is the part that saves the money. Every one of those gets tuned.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 5 — LEVER 2: TWO DIALS ═══════════ -->
+
+<!-- CHUNK 10 — the two dials -->
+<section class="frame" id="c10">
+  <div class="orb" style="width:540px;height:540px;background:var(--c);top:-120px;left:-110px"></div>
+  <div class="orb" style="width:540px;height:540px;background:var(--go);bottom:-140px;right:-110px"></div>
+  <div class="inner">
+    <span class="ey">Lever Two · Two Dials</span>
+    <div class="hl">Two lines in a <span class="c">markdown</span> file</div>
+    <div style="display:flex;gap:60px;align-items:center;margin-top:20px">
+      <div class="dials" style="margin-top:26px">
+        <div class="dial m"><div class="dl">Model</div><div class="knob"></div><div class="val">fable</div></div>
+        <div class="dial e"><div class="dl">Effort</div><div class="knob"></div><div class="val">max</div></div>
+      </div>
+      <div class="code" style="margin-top:0;font-size:27px"><span class="cm"># .claude/agents/clip-strategist.md</span>
+<span class="hi">model: <span class="go">fable</span></span>
+<span class="hi">effort: <span class="go">max</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 11 — kill the myth (pricing) -->
+<section class="frame" id="c11">
+  <div class="orb" style="width:560px;height:560px;background:var(--go);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Kill The Myth</span>
+    <div class="hl sm">Fable is <span class="go">not</span> the cheap model</div>
+    <table class="ptab">
+      <tr><th>Model</th><th>In / 1M</th><th>Out / 1M</th></tr>
+      <tr class="hot"><td>Fable 5</td><td class="num">$10</td><td class="num">$50</td></tr>
+      <tr><td>Opus 4.8</td><td>$5</td><td>$25</td></tr>
+      <tr><td>Haiku 4.5</td><td>$1</td><td>$5</td></tr>
+    </table>
+    <div><span class="x2 mono">Fable ≈ 2× the price of Opus</span></div>
+  </div>
+</section>
+
+<!-- CHUNK 12 — what the model dial is for -->
+<section class="frame" id="c12">
+  <div class="orb" style="width:560px;height:560px;background:var(--c);bottom:-150px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Model Dial</span>
+    <div class="hl">Not cheap vs expensive.<br>A <span class="c">kind-of-thinking</span> dial</div>
+    <div class="cmp" style="margin-top:44px">
+      <div class="col cov"><div class="ml g">hard judgment</div><div class="big" style="color:var(--g)">Strongest reasoner</div><div class="sub">Fable</div></div>
+      <div class="col norm" style="border-color:rgba(0,194,255,.3)"><div class="ml c">intricate code</div><div class="big" style="color:var(--c)">Strongest coder</div><div class="sub">Opus</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHUNK 13 — the effort dial (ladder) -->
+<section class="frame" id="c13">
+  <div class="orb" style="width:560px;height:560px;background:var(--go);top:-130px;right:-110px"></div>
+  <div class="inner">
+    <span class="ey">The Effort Dial</span>
+    <div class="hl">Match it to the <span class="go">difficulty</span></div>
+    <div class="steps">
+      <div class="step"><div class="l">low</div></div>
+      <div class="step"><div class="l">medium</div></div>
+      <div class="step def"><div class="l">high</div><div class="tag g" style="margin-top:12px">default</div></div>
+      <div class="step"><div class="l">xhigh</div></div>
+      <div class="step burn"><div class="l">max</div></div>
+    </div>
+    <p class="note">Max on a job that only needed medium is money you set on fire.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 6 — THE ROSTER (TODAY) ═══════════ -->
+<!-- Same real roster table, spotlight-highlighted per chunk (c14 bottom → c15 top → c16 exec → c17 QA) -->
+
+<!-- CHUNK 14 — the bottom of the roster -->
+<section class="frame" id="c14">
+  <div class="orb" style="width:520px;height:520px;background:var(--g);bottom:-150px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Roster · Start At The Bottom</span>
+    <div class="hl sm">Mechanical work → <span class="go">cheap model, low effort</span></div>
+    <table class="rtab">
+      <tr><th>Slice</th><th>Sub-agent</th><th>Model</th><th>Effort</th><th>Access</th></tr>
+      <tr class="dim"><td class="slice">pick which moments become shorts</td><td>clip-strategist</td><td><span class="pill fable">fable</span></td><td><span class="pill max">max</span></td><td class="ro">read-only</td></tr>
+      <tr class="dim"><td class="slice">author the tighten cuts</td><td>tighten-strategist</td><td><span class="pill fable">fable</span></td><td><span class="pill max">max</span></td><td class="ro">read-only</td></tr>
+      <tr class="dim"><td class="slice">build + render one short</td><td>remotion-builder</td><td><span class="pill opus">opus</span></td><td><span class="pill xhigh">xhigh</span></td><td class="rw">read/write</td></tr>
+      <tr class="dim"><td class="slice">remove retakes, no clipped words</td><td>defumbler</td><td><span class="pill opus">opus</span></td><td><span class="pill xhigh">xhigh</span></td><td class="rw">read/write</td></tr>
+      <tr class="dim"><td class="slice">adversarial visual QA</td><td>visual-qa</td><td><span class="pill opus">opus</span></td><td>high</td><td class="ro">read-only</td></tr>
+      <tr class="dim"><td class="slice">transcript · captions · burst-fix</td><td>transcriber · +2</td><td><span class="pill opus">opus</span></td><td>medium</td><td>mixed</td></tr>
+      <tr class="dim"><td class="slice">black out cover beats</td><td>cover-blackout</td><td><span class="pill sonnet">sonnet</span></td><td>high</td><td class="tool">tool</td></tr>
+      <tr class="on"><td class="slice">strip the silence</td><td>desilencer</td><td><span class="pill sonnet">sonnet</span></td><td><span class="pill low">low</span></td><td class="tool">tool</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- CHUNK 15 — the hardest judgment -->
+<section class="frame" id="c15">
+  <div class="orb" style="width:520px;height:520px;background:var(--go);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">Now Go To The Top</span>
+    <div class="hl sm">Hardest judgment → <span class="go">strongest reasoner, max</span>, locked read-only</div>
+    <table class="rtab">
+      <tr><th>Slice</th><th>Sub-agent</th><th>Model</th><th>Effort</th><th>Access</th></tr>
+      <tr class="on"><td class="slice">pick which moments become shorts</td><td>clip-strategist</td><td><span class="pill fable">fable</span></td><td><span class="pill max">max</span></td><td class="ro">🔒 read-only</td></tr>
+      <tr class="dim"><td class="slice">author the tighten cuts</td><td>tighten-strategist</td><td><span class="pill fable">fable</span></td><td><span class="pill max">max</span></td><td class="ro">🔒 read-only</td></tr>
+      <tr class="dim"><td class="slice">build + render one short</td><td>remotion-builder</td><td><span class="pill opus">opus</span></td><td><span class="pill xhigh">xhigh</span></td><td class="rw">read/write</td></tr>
+      <tr class="dim"><td class="slice">remove retakes, no clipped words</td><td>defumbler</td><td><span class="pill opus">opus</span></td><td><span class="pill xhigh">xhigh</span></td><td class="rw">read/write</td></tr>
+      <tr class="dim"><td class="slice">adversarial visual QA</td><td>visual-qa</td><td><span class="pill opus">opus</span></td><td>high</td><td class="ro">read-only</td></tr>
+      <tr class="dim"><td class="slice">transcript · captions · burst-fix</td><td>transcriber · +2</td><td><span class="pill opus">opus</span></td><td>medium</td><td>mixed</td></tr>
+      <tr class="dim"><td class="slice">black out cover beats</td><td>cover-blackout</td><td><span class="pill sonnet">sonnet</span></td><td>high</td><td class="tool">tool</td></tr>
+      <tr class="dim"><td class="slice">strip the silence</td><td>desilencer</td><td><span class="pill sonnet">sonnet</span></td><td><span class="pill low">low</span></td><td class="tool">tool</td></tr>
+    </table>
+    <p class="note">It hands back a plan. It cannot touch a single file.</p>
+  </div>
+</section>
+
+<!-- CHUNK 16 — the precise execution -->
+<section class="frame" id="c16">
+  <div class="orb" style="width:520px;height:520px;background:var(--c);bottom:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Precise, Breakable Execution</span>
+    <div class="hl sm">Strongest coder, highest precision → <span class="c">allowed to write</span></div>
+    <table class="rtab">
+      <tr><th>Slice</th><th>Sub-agent</th><th>Model</th><th>Effort</th><th>Access</th></tr>
+      <tr class="dim"><td class="slice">pick which moments become shorts</td><td>clip-strategist</td><td><span class="pill fable">fable</span></td><td><span class="pill max">max</span></td><td class="ro">read-only</td></tr>
+      <tr class="dim"><td class="slice">author the tighten cuts</td><td>tighten-strategist</td><td><span class="pill fable">fable</span></td><td><span class="pill max">max</span></td><td class="ro">read-only</td></tr>
+      <tr class="on"><td class="slice">build + render one short</td><td>remotion-builder</td><td><span class="pill opus">opus</span></td><td><span class="pill xhigh">xhigh</span></td><td class="rw">✎ read/write</td></tr>
+      <tr class="on"><td class="slice">remove retakes, no clipped words</td><td>defumbler</td><td><span class="pill opus">opus</span></td><td><span class="pill xhigh">xhigh</span></td><td class="rw">✎ read/write</td></tr>
+      <tr class="dim"><td class="slice">adversarial visual QA</td><td>visual-qa</td><td><span class="pill opus">opus</span></td><td>high</td><td class="ro">read-only</td></tr>
+      <tr class="dim"><td class="slice">transcript · captions · burst-fix</td><td>transcriber · +2</td><td><span class="pill opus">opus</span></td><td>medium</td><td>mixed</td></tr>
+      <tr class="dim"><td class="slice">black out cover beats</td><td>cover-blackout</td><td><span class="pill sonnet">sonnet</span></td><td>high</td><td class="tool">tool</td></tr>
+      <tr class="dim"><td class="slice">strip the silence</td><td>desilencer</td><td><span class="pill sonnet">sonnet</span></td><td><span class="pill low">low</span></td><td class="tool">tool</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- CHUNK 17 — the QA gate -->
+<section class="frame" id="c17">
+  <div class="orb" style="width:520px;height:520px;background:var(--g);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Then A Separate Gate</span>
+    <div class="hl sm">Nothing is trusted until <span class="g">QA opens the pixels</span></div>
+    <table class="rtab">
+      <tr><th>Slice</th><th>Sub-agent</th><th>Model</th><th>Effort</th><th>Access</th></tr>
+      <tr><td class="slice">pick which moments become shorts</td><td>clip-strategist</td><td><span class="pill fable">fable</span></td><td><span class="pill max">max</span></td><td class="ro">read-only</td></tr>
+      <tr><td class="slice">author the tighten cuts</td><td>tighten-strategist</td><td><span class="pill fable">fable</span></td><td><span class="pill max">max</span></td><td class="ro">read-only</td></tr>
+      <tr><td class="slice">build + render one short</td><td>remotion-builder</td><td><span class="pill opus">opus</span></td><td><span class="pill xhigh">xhigh</span></td><td class="rw">read/write</td></tr>
+      <tr><td class="slice">remove retakes, no clipped words</td><td>defumbler</td><td><span class="pill opus">opus</span></td><td><span class="pill xhigh">xhigh</span></td><td class="rw">read/write</td></tr>
+      <tr class="on"><td class="slice">adversarial visual QA</td><td>visual-qa</td><td><span class="pill opus">opus</span></td><td>high</td><td class="ro">→ PASS / FAIL</td></tr>
+      <tr><td class="slice">transcript · captions · burst-fix</td><td>transcriber · +2</td><td><span class="pill opus">opus</span></td><td>medium</td><td>mixed</td></tr>
+      <tr><td class="slice">black out cover beats</td><td>cover-blackout</td><td><span class="pill sonnet">sonnet</span></td><td>high</td><td class="tool">tool</td></tr>
+      <tr><td class="slice">strip the silence</td><td>desilencer</td><td><span class="pill sonnet">sonnet</span></td><td><span class="pill low">low</span></td><td class="tool">tool</td></tr>
+    </table>
+    <span class="stamp">✓ PASS</span>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 7 — WHERE THIS IS GOING (ROADMAP, ASPIRATIONAL) ═══════════ -->
+<!-- ⛔ PLANNED rows are dashed + tagged. NOT real repo files. Do NOT show fabricated frontmatter. -->
+
+<!-- CHUNK 18 — the roadmap for judgment slices -->
+<section class="frame" id="c18">
+  <div class="orb" style="width:540px;height:540px;background:var(--pu);top:-140px;left:-120px"></div>
+  <div class="inner">
+    <span class="ey">Where This Is Going · The Other Two Lanes</span>
+    <div class="hl sm">The same two dials tell me how to <span class="pu">split them</span></div>
+    <table class="rtab">
+      <tr><th>Slice</th><th>Sub-agent</th><th>Model</th><th>Effort</th><th>Access</th></tr>
+      <tr><td class="slice">shorts lane (running today)</td><td>clip · tighten · builder · QA</td><td>fable / opus</td><td>max → low</td><td>mixed</td></tr>
+      <tr class="planned"><td class="slice">long-form title + thumbnail</td><td>meta-strategist <span class="ptag">PLANNED</span></td><td><span class="pill fable">fable</span></td><td>high</td><td class="ro">read-only</td></tr>
+      <tr class="planned"><td class="slice">tweets + threads drafting</td><td>copy-strategist <span class="ptag">PLANNED</span></td><td><span class="pill fable">fable</span></td><td><span class="pill max">max</span></td><td class="ro">read-only</td></tr>
+    </table>
+    <p class="note">Those two lanes I still run mostly by hand. Judgment → a read-only strategist that just hands back drafts.</p>
+  </div>
+</section>
+
+<!-- CHUNK 19 — the executor + harden-the-tool lesson -->
+<section class="frame" id="c19">
+  <div class="orb" style="width:520px;height:520px;background:var(--re);bottom:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Last Slice · Harden The Tool First</span>
+    <div class="hl sm">Delegate a <span class="g">reliable</span> tool, never a <span class="re">flaky</span> one</div>
+    <table class="rtab" style="max-width:1500px">
+      <tr><th>Slice</th><th>Sub-agent</th><th>Model</th><th>Effort</th><th>Access</th></tr>
+      <tr class="planned"><td class="slice">image-post generation</td><td>image-builder <span class="ptag">PLANNED</span></td><td><span class="pill opus">opus</span></td><td>high</td><td class="rw">read/write &nbsp;<span class="flag">⚑ needs a hardened tool</span></td></tr>
+    </table>
+    <div class="twin" style="display:flex;gap:26px;margin-top:40px;max-width:1200px">
+      <div style="flex:1;border:1px solid rgba(255,64,96,.4);border-radius:14px;padding:26px 32px;font-family:'JetBrains Mono';font-size:27px;color:var(--re)">✗ hangs on a browser popup</div>
+      <div style="flex:1;border:1px solid rgba(0,230,138,.4);border-radius:14px;padding:26px 32px;font-family:'JetBrains Mono';font-size:27px;color:var(--g)">✓ reload + stable-id capture</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 8 — THE PAYOFF ═══════════ -->
+
+<!-- CHUNK 20 — the payoff -->
+<section class="frame" id="c20">
+  <div class="orb" style="width:560px;height:560px;background:var(--g);top:-140px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">The Payoff · Same Weekly Run</span>
+    <div class="hl">About <span class="g">a third</span> less</div>
+    <div class="bars">
+      <div class="barrow bad"><div class="bl"><span class="nm">One agent, straight line</span><span class="amt mono">~200K</span></div><div class="track"><i></i></div></div>
+      <div class="barrow good"><div class="bl"><span class="nm">Tuned sub-agent roster</span><span class="amt mono">~130-140K</span></div><div class="track"><i></i></div></div>
+    </div>
+    <span class="delta mono">≈ 30% fewer tokens · same output</span>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 9 — THE HONEST PART ═══════════ -->
+
+<!-- CHUNK 21 — the contract gap -->
+<section class="frame" id="c21">
+  <div class="orb" style="width:540px;height:540px;background:var(--re);top:-130px;left:-110px"></div>
+  <div class="inner">
+    <span class="ey">The Honest Part</span>
+    <div class="hl sm">A sub-agent is only as good as its <span class="go">contract</span></div>
+    <div class="files">
+      <div class="filecard read">
+        <div class="fn">skill-the-agent-reads.md</div>
+        <div class="ln">setup...</div>
+        <div class="ln">steps...</div>
+        <div class="rdlabel">↑ the agent reads THIS</div>
+      </div>
+      <div class="vs" style="font-family:'Playfair Display';font-style:italic;font-size:40px;color:var(--t3)">but</div>
+      <div class="filecard orphan">
+        <div class="fn">other-skill.md</div>
+        <div class="ln rule" style="color:var(--go)">★ the rule I cared about</div>
+        <div class="ln" style="color:var(--re)">...orphaned over here</div>
+      </div>
+    </div>
+    <p class="note">It never infers your unwritten standards. Put the rule where the agent actually reads it.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════ CHAPTER 10 — BUILD IT + CTA ═══════════ -->
+
+<!-- CHUNK 22 — the definition + CTA (real clip-strategist.md frontmatter) -->
+<section class="frame" id="c22">
+  <div class="orb" style="width:640px;height:640px;background:var(--g);top:-170px;left:-150px"></div>
+  <div class="orb" style="width:520px;height:520px;background:var(--pu);bottom:-150px;right:-120px"></div>
+  <div class="inner">
+    <span class="ey">Build It</span>
+    <div class="hl sm">The whole thing is a <span class="g">markdown</span> file</div>
+    <div class="code" style="font-size:29px"><span class="cm"># .claude/agents/clip-strategist.md</span>
+<span class="hi"><span class="fn">name</span>: clip-strategist</span>
+<span class="hi"><span class="fn">description</span>: <span class="str">&gt; reads a transcript, picks the shorts...</span></span>
+<span class="hi"><span class="fn">tools</span>: Read, Grep, Glob, Bash</span>
+<span class="hi"><span class="fn">model</span>: <span class="go">fable</span></span>
+<span class="hi"><span class="fn">effort</span>: <span class="go">max</span></span></div>
+    <div class="chips"><span class="chip g">@aiEngineeringSimplified</span><span class="chip">which slice would you hand off first?</span></div>
+  </div>
+</section>
+
+</body>
+</html>

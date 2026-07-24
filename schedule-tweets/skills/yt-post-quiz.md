@@ -135,3 +135,11 @@ read the log before doing anything else.
 ## Re-logging in
 
 Same as polls — see [[yt-post-poll]] (`ytbot-profile`, log into @CodeMonkeyMike, close with the X).
+
+## ⚠ `Correct-answer button aria-pressed=null` — the CONFIRMATION SIGNAL is unreliable, not the mark (3 occurrences: 2026-07-15, 07-21, 07-22)
+
+When marking the correct answer, the script reads `aria-pressed` on the correct-answer button and expects `"true"`; it logs `null` intermittently (clean on 2026-07-20, present on the three dates above). **Every time, the post still went live with the explanation correctly attached to the right option's field** — so the mark itself works. What is broken is the signal used to confirm it.
+
+**Current status: known-benign. Do NOT treat `aria-pressed=null` as a failure and do NOT re-run the script on it** (re-running duplicates a live community post).
+
+**Owed fix (escalation threshold reached at the 3rd occurrence):** the next time `post-yt-quiz.js` is edited, replace the `aria-pressed` read with a signal that actually reflects state — e.g. the checked/selected class on the option row, or re-reading the option element after the click — rather than continuing to log-and-shrug. Until that lands, an occasional visual spot-check of which option shows as correct on a live quiz post is worthwhile.

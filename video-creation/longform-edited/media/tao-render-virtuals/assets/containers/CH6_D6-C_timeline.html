@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--accent-green:#00e68a;--accent-cyan:#00c2ff;--accent-gold:#ffd700;--text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+.ey{font-size:27px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:20px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:74px;line-height:1.06;letter-spacing:-.02em}
+.g{color:var(--accent-green)}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:30px 0}
+.dg{margin-top:20px;width:100%}
+.foot{margin-top:40px;font-size:31px;color:var(--text-secondary);max-width:1500px;line-height:1.5}.foot b{color:var(--text-primary)}
+svg .dt{font-family:'JetBrains Mono';font-weight:600;font-size:26px;text-anchor:middle}
+svg .lb{font-weight:700;font-size:30px;fill:var(--text-primary);text-anchor:middle}
+svg .bl{font-size:22px;fill:var(--text-secondary);text-anchor:middle}
+</style></head>
+<body>
+<div class="frame" id="dcentimeline">
+  <div class="orb" style="width:760px;height:760px;background:var(--accent-green);top:120px;right:-100px;opacity:.1"></div>
+  <span class="ey">Pillar two · The center keeps dissolving</span>
+  <h1>Removing itself from the <span class="g">center.</span></h1>
+  <div class="divider"></div>
+  <div class="dg">
+    <svg viewBox="0 0 1640 360" width="100%">
+      <!-- rail -->
+      <line x1="150" y1="150" x2="1490" y2="150" stroke="#1e2330" stroke-width="5"/>
+      <line x1="150" y1="150" x2="1240" y2="150" stroke="url(#rg)" stroke-width="5"/>
+      <defs><linearGradient id="rg"><stop offset="0" stop-color="#00e68a"/><stop offset="1" stop-color="#49e0c8"/></linearGradient></defs>
+      <!-- stops -->
+      <g>
+        <circle cx="230" cy="150" r="15" fill="#00e68a"/>
+        <text class="dt" x="230" y="90" fill="#8892a4">2021</text><text class="lb" x="230" y="215">Fair launch</text><text class="bl" x="230" y="248">no VC, no premine</text>
+        <circle cx="640" cy="150" r="15" fill="#00e68a"/>
+        <text class="dt" x="640" y="90" fill="#00c2ff">FEB 13, 2025</text><text class="lb" x="640" y="215">dTAO</text><text class="bl" x="640" y="248">the committee is fired</text>
+        <circle cx="1050" cy="150" r="15" fill="#00e68a"/>
+        <text class="dt" x="1050" y="90" fill="#00c2ff">FEB 13, 2026</text><text class="lb" x="1050" y="215">Steeves steps down</text><text class="bl" x="1050" y="248">the founder steps back</text>
+        <circle cx="1440" cy="150" r="19" fill="none" stroke="#00e68a" stroke-width="3" stroke-dasharray="5 6"/>
+        <text class="dt" x="1440" y="90" fill="#505a6e">ahead</text><text class="lb" x="1440" y="215" fill="#00e68a">Nobody in charge</text>
+      </g>
+    </svg>
+  </div>
+  <div class="foot"><b>dTAO</b> took emission control off the 64 root validators. Then <b>Jacob Steeves</b>, the Opentensor CEO, announced he's stepping down. The center keeps dissolving itself.</div>
+</div>
+</body></html>

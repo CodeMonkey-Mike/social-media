@@ -50,18 +50,22 @@ whole folder to a batch) instead of a flat dump of 4×N files.
 The pipeline phases, in order. **This is the source of truth for phase numbers — do not renumber
 casually, and when you add a phase, follow the convention below.**
 
-| Phase | Name |
-|---|---|
-| **1** | Intake → LOW BPS (Step 1) + Verticalize (Step 1B) |
-| **2** | Transcribe the vertical |
-| **3** | Find topics |
-| **4** | Clip selection + timestamp definition |
-| **4b** | Clip review dashboard (Mike approves / skips) |
-| **5** | Tighten pass (`tighten_clips.py`) |
-| **5B** | Silence removal (`delete_silences.py`) |
-| **6** | Whisper captions |
-| **7** | Production / render |
-| **8** | Publish (handoff to `/publish-shorts`) |
+| Phase | Name | Canonical instructions |
+|---|---|---|
+| **1** | Intake → LOW BPS (Step 1) + Verticalize (Step 1B) | `livestream-repurpose/skills/intake-verticalize/SKILL.md` |
+| **2** | Transcribe the vertical | `livestream-repurpose/skills/transcribe-vertical/SKILL.md` |
+| **3** | Find topics | `livestream-repurpose/skills/topic-finding/SKILL.md` |
+| **4** | Clip selection + timestamp definition | `livestream-repurpose/skills/clip-selection-dashboard/SKILL.md` |
+| **4b** | Clip review dashboard (Mike approves / skips) | `livestream-repurpose/skills/clip-selection-dashboard/SKILL.md` |
+| **5** | Tighten pass | `livestream-repurpose/skills/tighten-pass/SKILL.md` |
+| **5B** | Silence removal (`delete_silences.py`) | `skills/desilencer/desilencer.md` (track-agnostic) |
+| **5C** | **Filler removal** (um/uh/you know/discourse-like) | `skills/filler-removal/filler-removal.md` (track-agnostic) |
+| **6** | Whisper captions | `skills/captions/captions.md` (track-agnostic) |
+| **7** | Production / render | `livestream-repurpose/skills/remotion-shorts-build/SKILL.md` (contract + gate) + this file's PRODUCTION REFERENCE |
+| **8** | Publish (handoff to `/publish-shorts`) | `PUBLISH-SHORTS.md` (multi-track, stays at root) |
+
+_(Phases 1-5 moved to per-track skill files 2026-07-08 — livestream-specific instructions live in the
+livestream-repurpose track, per the per-track-skills convention; pointer stubs below redirect.)_
 
 **Numbering convention (so this never gets confusing again):**
 - Phases are **whole numbers** in pipeline order. No decimals (no "4b.5"), no letter-only phases.
@@ -76,449 +80,38 @@ casually, and when you add a phase, follow the convention below.**
 
 ## Phase 1 — Intake + Verticalize the livestream — replaces the Premiere pass
 
-Phase 1 has two steps: **Step 1** reduces the high-bitrate source to a `LOW BPS` working copy (the
-pipeline master) and queues a *silence-removed derivative* of it as the long-form, then **Step 1B**
-verticalizes that `LOW BPS` master (16:9 → 9:16).
-
-### Step 1 — High-bitrate source → LOW BPS (+ queue the long-form)
-
-Mike records the livestream at a very high bitrate (often multiple GB — e.g. a 75-min 1080p stream
-at ~6 Mbps is ~3.5 GB). The first thing Phase 1 does is re-encode that landscape recording down to
-a small `LOW BPS` working copy, then queue the long-form for the dashboard. Only after this do we
-verticalize. (Historically Mike made the LOW BPS file by hand before handing it over; this step
-folds that into the pipeline.)
-
-**Source-file housekeeping (do this BEFORE Step 1, no need to ask):**
-- **Container:** the source may be `.mkv` (OBS default), not `.mp4`. That's fine — Step 1 re-encodes
-  anyway, so just point ffmpeg at the `.mkv` and write an `.mp4`. As long as the source is h264/aac
-  (probe with `ffprobe` if unsure) the container swap is free; no separate convert step.
-- **Filename:** OBS names recordings with a timestamp (e.g. `2026-06-04 19-43-53.mkv`), but the
-  livestream lives in a descriptively-named folder (e.g. `media/4-year cycle zombie class/`). The
-  whole naming chain (`LOW BPS` → `VERTICAL` → `transcripts/<name VERTICAL>/`) keys off the source
-  filename, so a timestamp name poisons every downstream artifact. **Immediately rename the source
-  to match its folder** (`4-year cycle zombie class.mkv`) before running Step 1 — don't ask, just do
-  it and mention it. Then all working copies read cleanly: `4-year cycle zombie class LOW BPS.mp4`,
-  `… LOW BPS VERTICAL.mp4`, `transcripts/4-year cycle zombie class LOW BPS VERTICAL/`.
-
-1. **Re-encode to ~0.7 Mbps and append `LOW BPS` (caps) to the filename.** Keep the landscape
-   resolution; only the bitrate drops. NVENC single-pass VBR is plenty for a working/transcription
-   copy:
-
-   ```
-   ffmpeg -y -i "<name>.mp4" \
-     -c:v h264_nvenc -b:v 700k -maxrate 1000k -bufsize 1400k -preset p5 \
-     -c:a aac -b:a 96k \
-     "<name> LOW BPS.mp4"
-   ```
-
-   Naming chain: `<name>.mp4` → `<name> LOW BPS.mp4` (this step) → `<name> LOW BPS VERTICAL.mp4`
-   (Step 1B). The `LOW BPS` token is load-bearing — every downstream batch artifact is named off it.
-
-2. **Queue a silence-removed derivative as the long-form — SEPARATE from the shorts pipeline.**
-   The published long-form gets a tighter cut: copy the LOW BPS file (delete_silences.py overwrites
-   in place, so copy first), run `livestream-repurpose/scripts/delete_silences.py <copy>` to drop
-   dead air, and queue THAT file. This desilenced derivative is **queue-only** — it does NOT feed
-   Step 1B / verticalize / clip selection. Those run on the untouched `LOW BPS` master (natural
-   timeline); per-clip silence removal happens later at Phase 5B. The livestream folder ships a PNG
-   thumbnail next to the video. Stage the desilenced mp4 + that PNG into a **per-video subfolder**
-   `schedule-tweets/longform/<slug>/` (one folder per long-form — NEVER drop loose mp4/png files in
-   the `longform/` root; it clutters fast), using **no-spaces slug filenames** (so the dashboard
-   video player resolves cleanly), then append
-   an entry to `schedule-tweets/data/longs.json` per its `$post_schema`: all platforms `pending`,
-   `thumbnail_path` = the staged PNG, `width`/`height` 1920×1080, real (post-cut) `duration_seconds`,
-   and a clean `description` (no em dashes in the JSON). This is what makes it show on the **Longs**
-   tab. **Important — keep it small.** `delete_silences.py` re-encodes segments at libx264 crf 18,
-   which balloons the bitrate. That output is only an intermediate: after the cut, **re-compress
-   the result back to ~0.7 Mbps** (the same NVENC settings as Step 1) before staging, then delete
-   the crf-18 intermediate. The entire point of the LOW BPS long-form is a small file that uploads
-   fast on a poor connection — never queue the crf-18 version. (Because the cut also shortens the
-   video, the final low-bps long-form ends up smaller than the LOW BPS master.)
-
-Then continue to Step 1B.
-
-### Step 1B — Verticalize the LOW BPS file (16:9 → 9:16)
-
-The pipeline's input is a **1080×1920 vertical** video of the *whole* livestream with the
-screen-share content on top and Mike's face on the bottom. Historically Mike laid this out by
-hand in Premiere Pro. **That manual step is now automated** — we reproduce his exact Premiere
-framing in code, so no Premiere is needed.
-
-**Flow (do NOT pick clips first):** verticalize the *entire* livestream → drop the resulting
-vertical MP4 into `livestream-repurpose/media/` → **then** transcribe it (Phase 2+ run on the
-vertical). Clip selection happens late, off the transcript, in the Phase 4b dashboard. We do not
-decide clips before verticalizing.
-
-**Naming convention:** the verticalized file keeps the original livestream name with **`VERTICAL`
-appended in all caps**, e.g. `best cryptos to make your wife lose weight LOW BPS.mp4` →
-`best cryptos to make your wife lose weight LOW BPS VERTICAL.mp4`. The transcript folder
-(`transcripts/<name>/`) is then named after this `…VERTICAL` filename, matching existing batches.
-
-### The learned framing (extracted from Mike's Premiere Effect Controls, 2026-05-31)
-
-Premiere sequence **1080×1920**. Both layers are the **same 1920×1080 source**; each clip's
-Anchor Point is the source center **(960, 540)**. Premiere "Motion" maps a source pixel to the
-sequence as `seq = Position + (Scale/100)·((x,y) − Anchor)`.
-
-| Layer | Premiere Scale | Premiere Position | Role |
-|---|---|---|---|
-| **Content** (top, drawn in front) | 81% | 696, 416 | screen-share band, top ~44% |
-| **Face** (bottom, full-frame, behind) | 258% | −1317, 1005 | webcam, fills the frame behind |
-
-Z-order: face is full-frame and drawn first; content is drawn on top and covers the upper band.
-They meet flush (no divider). Reference screenshots + a frame-accurate Premiere-vs-output
-comparison live in `livestream-repurpose/media/` (`top element.png`, `bottom element.png`,
-`premiere-vs-remotion-compare.png`).
-
-### Port rule — Premiere Motion → CSS/Remotion (anchor = origin = 960,540)
-
-```
-scale            = Scale / 100
-transform-origin = 960px 540px
-transform        = translate(PositionX − 960, PositionY − 540) scale(scale)
-```
-
-→ Content: `translate(-264px, -124px) scale(0.81)` · Face: `translate(-2277px, 465px) scale(2.58)`
-
-**Remotion implementation:** `remotion/src/LivestreamRepurpose.tsx` (`CONTENT_FRAMING` /
-`FACE_FRAMING`, with the math documented in its header). Face layer is `muted`; the content layer
-carries the audio (both layers are the same source — muting one avoids doubled audio).
-
-### Port rule — Premiere Motion → ffmpeg (the fast path for the full-length pass)
-
-The whole-livestream pass is a *static* two-layer composite (no animated graphics/captions —
-those come later, per selected clip), so **ffmpeg in one GPU pass is far faster than rendering
-54 min frame-by-frame in Remotion.** A scaled layer's top-left in the 1080×1920 canvas is
-`Position + (Scale/100)·(−Anchor)` → face (−3794, −388) at 4954×2786, content (−82, −21) at
-1555×875:
-
-```
-ffmpeg -y -init_hw_device cuda=cu -filter_hw_device cu \
-  -hwaccel cuda -hwaccel_output_format cuda -hwaccel_device cu -i "livestream LOW BPS.mp4" \
-  -filter_complex \
-  "color=c=black:s=1080x1920,format=nv12,hwupload[bg];\
-   [0:v]split=2[v0][v1];\
-   [v0]scale_cuda=4954:2786[face];[v1]scale_cuda=1555:875[content];\
-   [bg][face]overlay_cuda=x=-3794:y=-388:shortest=1[t];\
-   [t][content]overlay_cuda=x=-82:y=-21[vg];[vg]setsar=1[vgo]" \
-  -map "[vgo]" -map 0:a -c:v h264_nvenc -rc vbr -b:v 600k -maxrate 800k -bufsize 1200k -preset p5 \
-  -c:a aac -b:a 96k -progress prog.txt "livestream LOW BPS VERTICAL.mp4"
-```
-
-**Bitrate — match the LOW BPS source; keep it UNDER 1 Mbps.** Use `-rc vbr -b:v 600k -maxrate 800k`
-(validated 2026-06-04: lands ~0.57 Mbps, like the source). **Set `-rc vbr` explicitly** — with a bare
-`-b:v`/`-maxrate` and no `-rc`, nvenc does NOT honor the cap and overshot to ~1.2 Mbps / multi-GB.
-NEVER use a quality target like `-cq` — on an already-low-bps source it re-bloats to multiple GB
-(~7 Mbps) for detail that isn't there (a 75-min stream ballooned to ~2.6 GB that way). The vertical
-is only a transcription / clip-selection master (shorts are re-rendered in Remotion later) and is
-viewed on phones, so it must never exceed the source bitrate.
-
-**GPU gotchas (learned 2026-06-04 — keep all three):**
-- **`-init_hw_device cuda=cu -filter_hw_device cu` is REQUIRED.** Without it, `hwupload` (for the
-  black base) errors `A hardware device reference is required`. Decode + uploaded base must share the
-  device (`-hwaccel_device cu`) or `overlay_cuda` can't combine them.
-- **Use a real `color=…1080x1920` base, NOT `scale_cuda=1080:1920`.** `scale_cuda` rounds width up to
-  a multiple of 16 (→ 1088), which breaks the 1080-wide pipeline. The color base locks exactly 1080;
-  the face overlay covers it fully (so it's never seen), and `shortest=1` ends output with the video,
-  not the infinite color source.
-- **`setsar=1` at the end is mandatory.** `scale_cuda` stamps the source's 16:9 display aspect onto
-  the frame as `SAR 256:81`, which renders STRETCHED. `setsar=1` forces square pixels. Always probe
-  the output: it must read `1080x1920, SAR 1:1, DAR 9:16` (matches existing batches).
-
-**CPU fallback** (only if CUDA filters are unavailable — much slower, scale/overlay run on the CPU):
-
-```
-ffmpeg -i "livestream LOW BPS.mp4" -filter_complex \
- "[0:v]scale=4954:2786,setsar=1[face];[0:v]scale=1555:875,setsar=1[content];\
-  color=c=black:s=1080x1920[bg];[bg][face]overlay=-3794:-388[t];[t][content]overlay=-82:-21[v]" \
- -map "[v]" -map 0:a -c:v h264_nvenc -rc vbr -b:v 600k -maxrate 800k -bufsize 1200k -c:a aac -b:a 96k "livestream LOW BPS VERTICAL.mp4"
-```
-
-If Mike's OBS webcam/screen-share layout changes, re-extract the two Premiere values from a fresh
-pair of Effect-Controls screenshots and re-derive with the port rules above.
-
----
+> **MOVED (2026-07-08): canonical = `livestream-repurpose/skills/intake-verticalize/SKILL.md`** - LOW BPS re-encode + Lane-1 longform queue (Step 1) and the 16:9->9:16 verticalize with the learned Premiere framing (Step 1B). Legacy OBS crop coordinates are its appendix.
+> Read that file in full before doing this phase's work; it wins on conflict.
 
 ## Phase 2 — Transcribe the vertical livestream
 
-Phase 3+ all read a transcript, so it must exist first. Transcribe the **`…VERTICAL.mp4`** produced
-in Phase 1 (transcribe the vertical, not the raw 16:9 — keeps one canonical artifact name across
-the whole batch).
-
-### Output layout
-All transcript artifacts live in a per-livestream folder named after the VERTICAL file:
-`livestream-repurpose/transcripts/<name VERTICAL>/`, holding:
-- `<name VERTICAL>.json` — raw Whisper output with per-word `start`/`end` (the source of truth)
-- `<name VERTICAL>_plain.txt` — readable paragraph text
-- `<name VERTICAL>_words.txt` — flat word + timestamp list
-- `<name VERTICAL>_chunks_90s.txt` — 90-second windows (the working artifact for Phase 3 tagging)
-
-### Steps
-1. **Run local Whisper** (installed on this machine; no API key) on the VERTICAL mp4, word-level,
-   writing the JSON straight into the transcript folder:
-   ```
-   python -m whisper "livestream-repurpose/media/<name> VERTICAL.mp4" \
-     --model small --word_timestamps True --output_format json \
-     --output_dir "livestream-repurpose/transcripts/<name> VERTICAL/"
-   ```
-   `small` is the right accuracy/speed trade for a ~1-hour stream; `base` is reserved for the
-   short per-clip caption pass (Phase 6).
-2. **Derive the text artifacts** from that JSON — `parse_transcript.py` writes `_plain.txt` /
-   `_words.txt` and `chunk_transcript.py` writes `_chunks_90s.txt`, both next to the `.json`, so
-   they land in the folder automatically.
-3. **Apply STT corrections** — Whisper mishears Mike's crypto vocabulary. Fix every occurrence:
-   **Kaspa** (not Casper/Kaspy/Kasy/Kappy — any K-prefixed mishearing), **GhostDAG** (not
-   "ghost"), **D-Agent AI** (pronounced "D-Agent AI" — Whisper renders it "DAG AI" / "de-agent
-   ai" / "dagent"; the correct token is **D-Agent AI**), **TAO** (Mike PRONOUNCES $TAO as "tau",
-   so Whisper writes "tau"; the ticker is always **TAO**, NEVER "tau" in any caption/title — the
-   Greek letter tau is only correct as the coin's logo glyph), and the other brand names per the
-   repurpose skill's correction list. These errors otherwise poison topic-finding and captions
-   downstream.
-
-The `_chunks_90s.txt` then feeds **Phase 3** directly.
-
----
+> **MOVED (2026-07-08): canonical = `livestream-repurpose/skills/transcribe-vertical/SKILL.md`** - Whisper word-level transcription of the VERTICAL file, the transcripts/<name VERTICAL>/ artifact layout (_plain/_words/_chunks_90s), STT corrections.
+> Read that file in full before doing this phase's work; it wins on conflict.
 
 ## Phase 3 — Find topics in the transcript
 
-### Default method: 90-second chunk-and-group
-
-**Do NOT do a single holistic read — it skips topics.** (Real miss, 2026-05-23: a one-pass read of the Weekend Red stream missed a SUI segment entirely and under-weighted Kaspa; a 90s chunk pass caught SUI plus 4 more gems.) Instead:
-
-1. **Chunk** the Whisper JSON into **90-second windows** (preserve each window's start/end). 90s is the right size: each window holds 1–2 topics, so tagging is precise and hook boundaries stay tight. Bigger windows (3 min) blend topics together and bury the punchy 10–15s moments.
-2. **Tag each window independently** — list the topics it covers, even briefly. Going window-by-window forces attention so nothing gets skipped.
-3. **Group by topic** — merge windows sharing a topic into one entry with multiple timestamp ranges. This re-joins any topic split across a 90s boundary, so smaller-then-merge is strictly safer than larger chunks.
-4. **Output:** "here are N topics; topic X appears in M segments" — feeds straight into Phase 4 multi-snippet cutting.
-
-Background: `Chunk Possibilities.md`. After building the inventory, apply the short-worthiness criteria below to filter it. (A generated 90s-window transcript like `livestream-repurpose/transcript_chunks_90s.txt` is the working artifact for the tagging pass.)
-
-### Read the whole transcript — via the chunks
-
-Don't sample. Work through every 90s window before finalizing the topic list. Topics that seem minor early in the stream often pay off later, and the best hooks are frequently not in the first few minutes.
-
-### The multi-snippet rule
-
-**A topic does not have to be a single contiguous block of the transcript.** If Mike discusses the same subject at multiple separate points in the livestream — even 30 or 40 minutes apart — every one of those segments is valid source material for a single short.
-
-The editor's job is to find the best version of each moment across the whole stream, not just the first time it comes up. A short built from three non-contiguous clips that each hit the same thesis is often stronger than one built from a single uninterrupted passage.
-
-When identifying a topic, note every timestamp range where Mike touches it, even briefly. The production phase can then choose which clips to use and in what order.
-
-### What makes a topic short-worthy
-
-A topic is worth surfacing if it has all three of these:
-
-1. **A hook that earns a scroll-stop.** A specific number, a named opponent, a contradiction, a strong outcome, or a personal story with stakes. Vague takes ("crypto is going to be big") don't qualify.
-2. **Self-contained meaning.** Someone who never watched the livestream should be able to understand and feel the point of the short without prior context.
-3. **Emotional or tribal energy.** Mike's delivery has to be live in at least one of the clips — conviction, anger, humor, excitement, or disbelief. Flat explainer segments without energy don't carry a short.
-
-### Content priority — lead with hype and conviction, NOT market-state recaps (Mike's standing preference, added 2026-06-11)
-
-**Rank hype / project / philosophical / inspiring clips ABOVE time-bound market-data clips. This is a repeated, explicitly-flagged miss:** a first pass on a stream tends to over-pick news-like clips (what just happened in crypto, the current CPI/jobs/Fed print, what the chart or market is "about to do", recent headlines, double-bottom calls) and under-pick the project-hype and inspirational moments Mike actually wants to lead with. He was "surprised to see basically nothing" hype/project-oriented in a first selection. Do not repeat that.
-
-Prioritize, in this rough order:
-1. **Project hype** — bullish, excited takes on named projects Mike champions (Kaspa, ElizaOS, $TAO, $TON, Linea, Housecoin, and community calls/wins like the LAB 353x). If he gets genuinely hyped about a project, that is a clip — even a short one.
-2. **Philosophical / inspiring / motivational** — conviction, tribal identity, "stick through the pain and you win," fair-launch / decentralization ethos, the long-game vision. Evergreen and shareable, not tied to this week's candle.
-3. **Tribal contrast** — Mike vs a named group (four-year cycle zombies, BTC maxis).
-
-De-prioritize (clip these ONLY when they carry strong hype/conviction/tribal energy, NEVER as a flat readout):
-- News-like recaps of recent crypto/market events ("here's what happened this week", a fresh CPI/jobs/Fed print, an exchange or Saylor headline).
-- Current market-state commentary and chart/price predictions ("what the market/charts are going to look like", "we hit a double bottom", "where BTC goes this summer").
-
-These macro/data segments go stale in days and are low on hype; a batch made of only these is the failure mode. Macro earns a clip ONLY when it is really a conviction / tribal / philosophical take wearing a macro coat (e.g. the four-year-cycle-zombie thesis), not a data readout. When in doubt, pick the moment that makes a viewer FEEL something or want to ape a project, not the moment that reports a number. (This sharpens criterion 3 above and the "Topic types that work best" ranking below — apply it as the tie-breaker on every batch.)
-
-### What does NOT make a topic short-worthy
-
-- **Stream housekeeping — the opening welcome / greeting and the closing sign-off.** "What's going on, how's everybody doing, let me welcome all the [X]," and the end-of-stream "alright that's it for me, click the link, catch you later." These have NO substance — no claim, number, or argument to react to — so they NEVER make a clip on their own, no matter how on-brand the phrasing sounds (e.g. "welcome all the four-year cycle zombies" is a greeting, not a take). The *thesis* a welcome gestures at is the clip; the welcome itself is not. Skip them by default.
-- Segments that are primarily audience interaction ("what's going on Brian?", chat responses, shoutouts) unless there's a payoff moment embedded in them
-- Technical jargon runs that Mike himself says he doesn't fully understand — unless paired with a "here's what it means for your money" moment
-- Price predictions with heavy hedging ("we'll see, we'll see, who knows") — these don't give the viewer something to react to
-- Segments that rely on a screen share that can't be recreated with static b-roll
-
-### How many topics to surface
-
-Surface **5–10 topics** per transcript. Fewer than 5 means you're undershooting what's in a typical 2-3 hour stream. More than 10 becomes overwhelming to review.
-
-For each topic, provide:
-- A short title (4–8 words). **Match the title's tense to the tense Mike uses for the core claim
-  in that clip.** If he recounts something as a completed past event ("it *was* the opposite of how
-  it's always been," "we *did* a 353x"), the title is past tense ("Zombies *Were* Selling Into the
-  Crash"). If he frames it as still-true / ongoing ("the economy *is* the strongest since 1948"),
-  keep it present. This is tense FIDELITY, not a blanket switch to past — a present-tense title on a
-  past-tense recount misleads the viewer into thinking it's happening live, and a past-tense title on
-  a still-true claim drains the urgency. Check the clip's actual verbs before titling.
-- A one-sentence hook summary using Mike's actual words or framing (same tense-fidelity rule applies)
-- Every timestamp range in the transcript where he touches the topic
-- A note on whether it needs multi-snippet assembly or is a single contiguous block
-- **Peak beat(s):** within the topic's run, flag the single most impactful 5–15s moment(s) — the line that hits hardest — with its own timestamp(s). This is identification only; capture it now while you're reading the whole transcript, because it's the seed for a short high-impact cut variant in Phase 4 (see length variants there). A topic can have more than one peak beat.
-
-### Topic types that work best for Mike's shorts
-
-In rough order of past performance:
-
-1. **Tribal contrast** — Mike vs a named group ("four-year cycle zombies", "BTC maxis", "the stable coin crowd"). Highest engagement because it gives viewers a side to pick.
-2. **Personal conviction story** — Something Mike did or believed that turned out wrong or right. The excavator story, cashing out BTC to buy Kaspa. Relatable and shareable.
-3. **Data-anchored take** — Specific numbers that land hard: 98x on LAB, 80% of poll chose Kaspa, 4 years of contractionary territory never seen since 1948. Credibility + scroll-stop.
-4. **Outsized prediction with a reason** — "$3 Kaspa is realistic. Here's why." Not just the claim; the reasoning is what earns the share.
-5. **Technical thing explained plainly** — "You keep hearing about covenants. Here's what it actually means for your money." Works when Mike's plain-English explanation is vivid.
-6. **Analogy-anchored thesis** — Mike Tyson / Buster Douglas / Kaspa. The slingshot. When the analogy is strong enough to carry the visual.
-
----
+> **MOVED (2026-07-08): canonical = `livestream-repurpose/skills/topic-finding/SKILL.md`** - 90-second chunk-and-group method, multi-snippet/scatter rule, short-worthiness criteria, hype-over-market-data priority, peak beats, topic output format. The clip-strategist agent's method doc.
+> Read that file in full before doing this phase's work; it wins on conflict.
 
 ## Measuring livestream crop coordinates
 
-Before writing any FFmpeg crop command, verify the exact pixel boundaries of each zone. Do not estimate from visual inspection of thumbnail frames — the proportions are easy to misjudge.
-
-**Mandatory: always extract and verify a test frame before any full clip extraction.**
-
-This is not optional. Never skip this step, even if coordinates look correct from visual inspection.
-
-Steps:
-1. Extract a single full-resolution frame: `ffmpeg -i livestream.mp4 -ss 00:05:00 -vframes 1 full-frame.jpg`
-2. Extract a test face crop using your estimated x-start: `ffmpeg -i livestream.mp4 -ss 00:05:00 -vframes 1 -vf "crop=<estimated_w>:<h>:<x>:<y>" face-test.jpg`
-3. Read the face-test.jpg. If any screen share content appears on the left edge, the x-start is too far left — increase x and repeat until only face cam content is visible.
-4. Only after the test frame shows a clean face crop, proceed with extracting the full clips.
-
-Skipping this check caused a full re-extraction (all 6 clips) after the face crop turned out to include screen share content. The test frame takes 5 seconds; a full re-extraction takes 10+ minutes.
-
-**Known layout for Mike's current OBS setup (verified 2026-05-18):**
-- Screen share: `crop=1430:1080:0:0` (left 74% of 1920px frame)
-- Premium Membership CTA: x=1430, y=0, w=490, h=308
-- Face cam: `crop=490:772:1430:308` (right 26% of frame, below CTA)
-
-If the OBS scene layout ever changes, re-verify before using these coordinates.
-
-**Superseded by Phase 1.** This per-zone crop math is legacy. The face/content zones are now
-laid out automatically by the **Phase 1 verticalize step** (one 1080×1920 vertical of the whole
-livestream, face bottom + content top), which removes the crop step entirely. Keep this section
-only for the OBS zone reference numbers.
+> **MOVED (2026-07-08): canonical = `livestream-repurpose/skills/intake-verticalize/SKILL.md`** - legacy OBS zone reference, now the appendix of intake-verticalize (superseded by Phase 1 verticalize).
+> Read that file in full before doing this phase's work; it wins on conflict.
 
 ## Phase 4 — Clip selection and timestamp definition
 
-Once topics are chosen, define precise in/out timestamps for every clip that will be used.
-
-- Use the transcript word-level timestamps where available (Whisper output). If only paragraph-level timestamps exist, estimate from surrounding context.
-- For multi-snippet topics, list clips in the order they'll appear in the short — this doesn't have to match their order in the livestream.
-- Flag any segment where Mike's energy drops or he's distracted (chat tangents, technical difficulties) so those seconds can be cut even if the words are relevant.
-- **Length follows the moment — there is no fixed minimum.** A *punch* (one self-contained killer line or hook) can be a tight **10–20s** short; a *build* (setup + payoff, data, or a story) runs longer, up to the ~3 minute cap. ~40s is a typical middle (the sample average in `style-guide/broll-analysis.md`), not a target to force — **never pad a punchline to fill time.** (Lower bound added 2026-05-23.)
-- **Hard cap: keep a single short under 3 minutes (~180s).** A YouTube Short stays a Short up to **3 minutes**; past that YT reclassifies it as a long-form video. IG Reels and TikTok allow even longer, so 3 minutes is the binding ceiling (NOT 120s — that older cap was superseded 2026-06-07 when Mike confirmed the 3-min YT Shorts threshold). **Shorter still usually performs better:** a tighter short with stronger moments beats a longer one with filler, so do not pad to fill time. Only exceed 3 minutes if a clip is deliberately destined for the long-form section, not Shorts.
-
-### Length variants — one topic can ship more than one cut
-
-A single topic does not have to become a single short. From one topic you can produce **multiple cuts at different lengths**:
-
-- A **long version** — the full arc (setup + payoff, data, or story), up to the ~3 minute cap.
-- One or more **short high-impact versions** — built from the **peak beat(s)** flagged in Phase 3: either the single hardest-hitting 5–15s moment on its own, OR 2–3 short 5–10s beats stitched together (the multi-snippet rule applies, so the beats can be non-contiguous in the livestream).
-
-The short version is **not** a trimmed long version — it's the *most impactful* slice, assembled for punch. Decide here which variants are worth rendering: not every topic needs both, but a high-energy topic with a clear peak often does (e.g. the 353x batch shipped a `reveal-medium` and a `reveal-long` of the same reveal). Each variant becomes its own entry through Phase 4b → production → the shorts queue.
-
-### Start at the hook — no preamble
-
-**Every clip must start at the first sentence that is directly on-topic.** Do not include lead-up banter, audience interaction, or segue phrases ("so anyway", "I wanted to talk about") before the hook line.
-
-- Read the transcript to find the exact sentence where Mike makes the core claim or starts the relevant argument.
-- Start the clip at that sentence, not at the beginning of the broader section.
-- Likewise, end the clip when the topic is complete — do not run into the next topic or chat interaction.
-- When reviewing in the dashboard, the user will identify the precise in/out point within a preview clip. Use those points (not the broader section range) for the final production extraction.
-
-A clip that opens cold on the hook is always better than one that builds up to it. The viewer decides to scroll past in the first 2 seconds.
-
-### Cut-boundary + selection quality rules (learned 2026-06-04 from Mike's review)
-
-Recurring misses caught in review — apply at cut time:
-
-- **Skip the livestream's opening countdown / intro card.** The first ~60s of a stream is often a static countdown-timer screen with no real picture, even though Mike is already talking. NEVER start a clip there — the audio may be on-topic but the visual is dead. Start where the actual face-cam + screen-share content begins.
-- **Tighten the END hard — the #1 recurring miss.** End on the topic's final word. Do NOT let the opening of the *next* sentence or the *next* topic dangle at the tail (caught on multiple clips, 2026-06-04). When unsure, cut a beat EARLY rather than late. "End when the topic is complete" is not enough on its own — verify the last second isn't the start of something new.
-- **No clips that disparage a specific project.** Do not ship a short whose core is negative about a named project (e.g. trashing XRP, "X makes Y useless"). Mike critiques markets and behavior, not a project's worth. Skip these even when the take is sharp. (This is a SHORTS rule; tweets may pivot differently.)
-- **Energy bar — skip "boring" clips.** A factually-fine but low-delivery-energy explainer is still a skip. The clip needs conviction / humor / excitement in the *delivery*, not just good info (reinforces the Phase 3 short-worthiness criteria).
-
----
+> **MOVED (2026-07-08): canonical = `livestream-repurpose/skills/clip-selection-dashboard/SKILL.md`** - precise cutting rules (re-encode never -c copy), multi-snippet concat, length variants.
+> Read that file in full before doing this phase's work; it wins on conflict.
 
 ## Phase 4b — Clip review dashboard (runs before Remotion production)
 
-Before building any Remotion composition, extract per-topic clips from the Premiere-formatted vertical video and present them in a browser dashboard for review. This separates content selection (human judgment) from production (automated).
-
-### Input
-A single vertical video (1080×1920) of the full livestream, with face zone and content zone
-already laid out — produced by the **Phase 1 verticalize step** (or, legacy, exported from
-Premiere). No cropping needed — just timestamp cuts.
-
-### Process
-1. Use the topic list and timestamp ranges from Phase 3
-2. For each topic, run FFmpeg `-ss`/`-to` cuts on the vertical video — **always re-encode, never `-c copy`**. Using `-c copy` preserves source timestamps that can cause audio/video drift in Remotion. Always use: `-c:v libx264 -preset fast -crf 18 -c:a aac -b:a 192k -avoid_negative_ts make_zero`
-3. **Multi-snippet topics** (same subject at multiple points in the stream) get concatenated into a single clip using FFmpeg's concat demuxer. Do not present separate cards per segment — one clip per topic
-4. Build an HTML dashboard (single `.html` file, no server needed) with one card per topic: title, source timestamps, duration, and a `<video>` player
-5. Save clips to `shorts/<batch>/<topic-slug>/preview.mp4` and the dashboard to `shorts/<batch>/dashboard.html`
-6. **Register the batch in the repo-root registry `batches.json` — MANDATORY when a batch is created.**
-   Add a batch object (`status: "active"`, schema matches the existing entries: `batch`, `date`,
-   `livestream_title`, `source_media`, `transcript_plain`, `transcripts_dir`, `dashboard`,
-   `directories: ["video-creation/remotion/out/<batch>", "video-creation/shorts/<batch>"]`,
-   `pipelines: {shorts, repurpose}`; paths relative to repo root). **Why this is not optional:**
-   `cleanup/targets/video-creation.js` reads `batches.json` and protects ONLY active batches'
-   `directories` — every unregistered `remotion/out/<batch>/`, `shorts/`, and source artifact is
-   treated as recyclable scratch and can be deleted. An unregistered batch is unprotected.
-   Use the shared helper **`scripts/register_batch.py`** (`register_batch(batch=…, date=…,
-   livestream_title=…, source_media=…, transcripts_dir=…, dashboard=…)`, or its CLI) — it
-   upserts by batch name (idempotent). The `cut_topics_<batch>.py` script that writes the
-   dashboard + `progress.json` calls it automatically (see `cut_topics_353x.py`), so a normal
-   batch build registers itself.
-
-### Output naming convention (where renders go)
-The Phase-5 render of clip `<n>` writes to **`remotion/out/<batch>/<n>-<topic-slug>.mp4`** (per-batch
-folder, clip-number prefix). Record that path on each clip entry in `shorts/<batch>/progress.json`
-as `output_mp4` (relative to `video-creation/`). This convention is also stated in
-`PUBLISH-SHORTS.md`, which consumes it. Do NOT drop renders as loose files in `out/`.
-
-### User review
-User plays each clip in the browser dashboard and marks topics as approved for production. Only approved topics proceed to silence removal (Phase 5B) and then production.
-
-### Why this order matters
-Building a full Remotion composition takes 1–2 hours. Reviewing a raw clip takes 30 seconds. Always get approval on the clip before investing in production.
+> **MOVED (2026-07-08): canonical = `livestream-repurpose/skills/clip-selection-dashboard/SKILL.md`** - the review dashboard convention (ONE cell per short, stable numbering, processing replaces in place), batch registration in batches.json (MANDATORY), render output naming.
+> Read that file in full before doing this phase's work; it wins on conflict.
 
 ## Phase 5 — Tighten pass (`tighten_clips.py`) — AFTER review, BEFORE silence removal
 
-A mandatory polish between the raw preview clips and silence removal. It does what `delete_silences`
-does NOT: it removes *spoken* content (run-off, fillers, asides), where silence removal only removes
-gaps. Order: **raw cut (4b) → tighten (5) → 2nd review → delete_silences (5B) → captions (6)**.
-
-For each kept clip:
-1. **Re-lock the outer boundaries to phrase anchors** — start on the real hook, end on the topic's
-   final word. This is the fix for trailing run-off (the #1 review miss) and dead lead-in (the opening
-   countdown card). NOT capped — it corrects a bad cut. (On 2026-06-04 this alone took economy-1992
-   from 92s→58s, the 353x punch 28s→12s, and cut pippin's "what was the point I was trying to make" tail.)
-2. **Auto-remove filler disfluencies** inside the kept range — `um/uh/erm/hmm`, `you know`, `i mean`,
-   and `right?`/`right,` tics — each excised with an 8ms **declick** fade (same anti-pop technique as
-   delete_silences) so the splice never pops. Word boundaries come from the Whisper word JSON.
-   **Filler tics are the FLOOR, not the whole job.**
-3. **Cut the least-relevant content until the best ~90% remains** — this is the real point of the pass.
-   After the filler tics, systematically detect and remove fumbles and low-value spans: false starts,
-   restarts ("so like... so"), restatements / repeated phrasings, self-corrections ("179, I mean 172"),
-   hesitation stalls, rambling run-on, and tangents/asides ("hold on let me share my screen"). Author
-   these as explicit time spans (or phrase pairs) per clip from the transcript. Mike's disfluencies are
-   mostly "like" / "I'm like" / restating, which the step-2 tic list does NOT catch, so step 2 alone
-   typically removes only 1-3% — that is a FAILED tighten, not a clean clip.
-
-**Target ~10%, hard ceiling ~15%.** Every clip over ~10 seconds should come back trimmed by **roughly
-10%** (keep the strongest ~90%). A clip over 10s that returns at only -1 to -3% was not actually
-tightened — go back and author real span cuts. **Only clips under ~10 seconds are exempt** (too short
-to have 10% of slack). Boundary re-lock in step 1 is separate and uncapped; the 10% target / 15% ceiling
-applies to the content removal in steps 2+3. (Aggressiveness confirmed by Mike 2026-06-07; see also the
-aggressive-fumble-removal rule.)
-
-**Output + review:** writes `<slug>/tightened.mp4`, logs every removed span to `tighten_log.json`
-(auditable), and **overwrites the SAME `shorts/<batch>/dashboard.html` in place** to show the
-**tightened** clips with a `-N% / what-was-removed` tag for a **second review**. Mike approves the
-tightened clips before delete_silences runs. Cut from the MASTER vertical at absolute timestamps
-(cleanest quality), never from the preview.
-
-> ⛔ **NEVER create a new/second dashboard file** (e.g. `dashboard-tightened.html`, `dashboard-v2.html`)
-> for clips Mike has already reviewed. Every pass after the first review (tighten, silence removal, etc.)
-> **rebuilds the one existing `dashboard.html` in place** — Mike keeps that single URL open and refreshes
-> it. A parallel dashboard means he refreshes the old one and never sees the new clips. (Deviation logged
-> 2026-06-07.) Same rule for all batches; `tighten_clips_zombie.py` is the reference (it overwrites
-> `dashboard.html`).
-
-Per-batch script: `scripts/tighten_clips.py` (clip list = phrase anchors + optional asides; the filler
-set + declick render are shared logic). Model new batches on it like `cut_topics_<batch>.py`.
+> **MOVED (2026-07-08): canonical = `livestream-repurpose/skills/tighten-pass/SKILL.md`** - boundary re-lock + filler tics + content cuts to the best ~90% (10% target / 15% ceiling), tighten_log.json, dashboard rebuild in place. The tighten-strategist agent's method doc.
+> Read that file in full before doing this phase's work; it wins on conflict.
 
 ## Phase 5B — Silence removal (delete_silences.py) — runs on each APPROVED clip
 
@@ -609,6 +202,13 @@ The result should look like the `CAPTIONS` array in `remotion/src/constants.ts` 
 
 ## Phase 7 — Production
 
+> ⛔ **The finalized-short CONTRACT + mechanical gate live in
+> `livestream-repurpose/skills/remotion-shorts-build/SKILL.md` — read it first.** It defines what
+> "done" means for a livestream-derived short (b-roll coverage every 1-3s + SFX + captions +
+> frame-0 thumbnail, ALL mandatory, waivable by no delegation) and its
+> `scripts/finalized_short_gate.py` must PASS before any short is reported finished. Added
+> 2026-07-08 after a 7-clip batch shipped with no b-roll/SFX on a bad delegation.
+
 Once topics and timestamps are locked, move to production using the **PRODUCTION REFERENCE** section at the bottom of this file. It handles:
 - Layout (split-screen zones, face-cam position)
 - Captions (caption1 style per `style-guide/captions.md`)
@@ -656,16 +256,33 @@ Word-level captions sit in the band **at the divider** between the zones. Visual
 
 **Never discard the video base.** "No full face shots" means do NOT blow the face up full-screen — it does NOT mean hide the face. The webcam plays in the face zone the whole time unless a full-screen b-roll deliberately covers it. An image must never sit over the entire frame for the full runtime.
 
-### B-roll coverage budget (REVISED 2026-05-24 — reveal the screen-share)
+### B-roll coverage budget (HALVED 2026-07-14 — was REVISED 2026-05-24)
 
 **Do NOT blanket the base video with b-roll.** Mike's content zone (the upper-50% screen-share — charts, articles, CoinMarketCap, Google Trends, project pages) is itself valuable footage and must be visible in real stretches. Earlier batches covered it ~85–100% of the time; that was wrong.
 
-- **Target ~55–65% generated b-roll, ~35–45% base-video showing.** Leave deliberate gaps with NO b-roll image so the original content zone shows — especially when Mike is pointing at something on screen.
-- **Full-screen b-roll** only at the **hook, major transitions, and the climax**. Generated images filling the whole 1080×1920 (batch via `repurpose/generate-broll-batch.js`, chatgpt-profile).
-- **Content-zone b-roll** used sparingly — generated images over the upper 50% only; webcam visible below.
+> **⛔ HALVED BY MIKE 2026-07-14 — applies to ALL shorts going forward.** After reviewing
+> `millionaires-are-made-full` (16 b-roll images / 17 beats / 66.8% coverage, which met the OLD target)
+> Mike's verdict was: *"I think it's too much. Can you decrease the number of content zone b-roll? Cut it
+> by half of what we're doing? This is for all future shorts going forward."* The previous target
+> (~55–65% b-roll / ~35–45% base) is **superseded** by the halved numbers below. The old band is kept
+> here only so nobody "restores" it from an older batch.
+
+- **Target ~30% generated b-roll (band ~25–35%), ~70% base-video showing (band ~65–75%).** Halved from
+  the old ~55–65% / ~35–45%. Leave deliberate gaps with NO b-roll image so the original content zone
+  shows — especially when Mike is pointing at something on screen. **Base-showing is now the DEFAULT
+  state of the clip; b-roll is the exception that earns its place on a specific beat.**
+- **Image count follows the budget, roughly HALF what we were producing.** A ~75s short lands around
+  **6–8 distinct images, not ~16** (the 16-image build is the anti-example). Image count is an OUTPUT of
+  the budget, never a target: do not over-produce, and never pad with a 1–2 image loop.
+- **Full-screen b-roll** only at the **hook, major transitions, and the climax** — **1–3x total, and that
+  cap is now firm** (the 74.8s `millionaires-are-made-full` build ran 5 contiguous full-screens; that is
+  over). Generated images filling the whole 1080×1920 (chatgpt-profile).
+- **Content-zone b-roll is SPARING and tied to a specific talking point** — a distinct cutaway for that
+  beat, then get out. Webcam visible below.
 - **Graphics overlays** — code-built badges/cards over the base video. They're small and do NOT blanket the content zone, so they are *not* a substitute for revealing the screen-share.
 - **No full-screen face shots this batch.**
-- Reference model for the right density: trimmed `BROLL_RUG` in `remotion/src/constants-rug.ts` (~50% base showing).
+- Reference model: trimmed `BROLL_RUG` in `remotion/src/constants-rug.ts` is ~50% base showing — that is
+  now **too b-roll-heavy**; treat it as an upper bound to cut back from, not a target.
 
 Captions: word-level (caption1 style) as standard — `style-guide/captions.md`.
 

@@ -41,10 +41,10 @@ const CHAR_DELAY_MIN  = 60;
 const CHAR_DELAY_MAX  = 150;
 const ACTION_MIN      = 2000;
 const ACTION_MAX      = 3500;
-const PRE_COMPOSE_MIN = 30000;
-const PRE_COMPOSE_MAX = 90000;
-const PRE_POST_MIN    = 30000;
-const PRE_POST_MAX    = 90000;
+const PRE_COMPOSE_MIN = +(process.env.YTQ_PRE_COMPOSE_MIN || 30000);
+const PRE_COMPOSE_MAX = +(process.env.YTQ_PRE_COMPOSE_MAX || 90000);
+const PRE_POST_MIN    = +(process.env.YTQ_PRE_POST_MIN    || 30000);
+const PRE_POST_MAX    = +(process.env.YTQ_PRE_POST_MAX    || 90000);
 
 function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;

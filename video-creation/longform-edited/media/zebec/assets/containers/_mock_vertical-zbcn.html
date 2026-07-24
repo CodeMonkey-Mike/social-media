@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden}
+  body{background:radial-gradient(1000px 900px at 62% 55%,#0d1a2b 0%,#070b16 60%,#04060d 100%);
+    font-family:Inter,system-ui,sans-serif;color:#e8eef6;position:relative}
+  svg{position:absolute;inset:0;width:1920px;height:1080px;z-index:1}
+  .txt{position:absolute;left:150px;top:50%;transform:translateY(-50%);z-index:2}
+  .eyebrow{font-size:28px;letter-spacing:.34em;text-transform:uppercase;color:#2dd4bf;font-weight:800;margin-bottom:26px}
+  .ticker{display:inline-flex;align-items:center;gap:22px}
+  .logo{width:104px;height:104px;border-radius:50%;background:linear-gradient(135deg,#2dd4bf,#0f7d70);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:50px;color:#04121a;box-shadow:0 0 70px rgba(45,212,191,.5)}
+  h1{font-size:120px;font-weight:800;letter-spacing:.02em;color:#2dd4bf;text-shadow:0 0 70px rgba(45,212,191,.4)}
+</style></head><body>
+  <svg viewBox="0 0 1920 1080" preserveAspectRatio="none">
+    <defs><linearGradient id="c" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2dd4bf" stop-opacity=".4"/><stop offset=".7" stop-color="#2dd4bf"/><stop offset="1" stop-color="#eafffb"/></linearGradient>
+    <filter id="gl"><feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <path d="M 250 1000 C 900 990, 1250 950, 1420 620 C 1470 500, 1490 300, 1500 40" fill="none" stroke="url(#c)" stroke-width="12" stroke-linecap="round" filter="url(#gl)"/>
+  </svg>
+  <div class="txt">
+    <div class="eyebrow">Eventually, parabolic</div>
+    <div class="ticker"><div class="logo">Z</div><h1>ZBCN</h1></div>
+  </div>
+</body></html>

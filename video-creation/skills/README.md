@@ -15,6 +15,7 @@ table or the track docs that reference them).
 | `captions/` | `captions.md` | — | Whisper word-level captions; 2 presets (montserrat lowercase-bounce; arial-black uppercase-karaoke); CORRECTIONS dict is the single source. |
 | `cover-blackout/` | `cover-blackout.md` | — | Bake black over the video on COVER (non-FACE) beats, audio untouched (drawbox paint, zero drift). Face-gates the recorded spine so the off-screen-reading face never leaks. Track-agnostic; runs after defumble/desilence. |
 | `defumbler/` | `defumbler.md` | `/defumbler` | Remove false starts/retakes WITHOUT clipping words (silence-segmented chunk-map; cut only in silence). Track-agnostic. |
+| `filler-removal/` | `filler-removal.md` | — | **Phase 5C**: strip `um`/`uh`/`you know`/discourse-`like` from a FINISHED clip. Whisper de-disfluences and whole-clip alignment lies, so detection uses **windowed** decoding (10s/3s) + a per-splice clipped-neighbour gate. Ceiling 8%. |
 | `desilencer/` | `desilencer.md` | — | Remove silence / tighten pacing (dual-threshold −57/−52 RMS + declick; min-silence duration is the only knob). The ONE silence tool; all tracks use it. |
 | `elevenlabs-lipsync/` | `SKILL.md` | — | ElevenLabs lip-sync (UI-only; driven via Playwright). |
 | `envato-broll/` | `SKILL.md` | — | Source stock video b-roll from Envato Elements. |
@@ -27,6 +28,8 @@ table or the track docs that reference them).
 **External tooling** these wrap (CLI + login, not committed) — install per machine: see
 `../SKILLS-SETUP.md` (currently the `higgsfield` CLI for the higgsfield-* skills).
 
-Per-track skills stay in their own track folder, not here. Track *pipelines* (`longform-edited/`,
+Per-track skills stay in their own track folder, not here (e.g.
+`livestream-repurpose/skills/remotion-shorts-build/` — the finalized-short contract + gate for
+shorts cut from livestreams). Track *pipelines* (`longform-edited/`,
 `longform-presentation/`, `vertical-ai-persona/`, `livestream-repurpose/`) and infrastructure
 (`assets/`, `remotion/`, `shorts/`, `style-guide/`) live at the `video-creation/` root, not under `skills/`.

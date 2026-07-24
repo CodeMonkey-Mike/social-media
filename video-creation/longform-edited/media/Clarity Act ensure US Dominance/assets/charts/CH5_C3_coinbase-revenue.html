@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--card:#12151c;--green:#00e68a;--cyan:#00c2ff;--gold:#ffd700;--red:#ff4060;--tp:#e8eaf0;--ts:#8892a4;--tm:#505a6e;--bd:#1e2330}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1920px;height:1080px;background:var(--bg);color:var(--tp);font-family:'DM Sans',sans-serif;overflow:hidden;position:relative;padding:80px 110px}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.28;pointer-events:none;width:520px;height:520px;background:var(--gold);top:-150px;right:-100px}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ey{font-size:1rem;text-transform:uppercase;letter-spacing:.2em;color:var(--tm);font-weight:700;margin-bottom:16px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:3.8rem;line-height:1.03;letter-spacing:-.02em}
+.divider{width:80px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--gold),var(--green));margin:22px 0 0}
+.chart{margin-top:90px}
+.row{display:flex;align-items:center;gap:34px;margin-bottom:56px}
+.lbl{flex:0 0 380px;font-size:1.7rem;font-weight:700;color:var(--tp);text-align:right}
+.lbl small{display:block;font-size:1rem;color:var(--tm);font-weight:500;font-family:'JetBrains Mono',monospace}
+.track{flex:1;height:78px;position:relative}
+.fill{height:100%;border-radius:12px;display:flex;align-items:center;justify-content:flex-end;padding-right:28px}
+.fill .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:2rem;color:#0a0c10}
+.bank .fill{width:11%;background:linear-gradient(90deg,var(--tm),#6b7688)} .bank .v{color:#0a0c10;position:absolute;left:calc(11% + 20px);color:var(--ts)}
+.cb .fill{width:92%;background:linear-gradient(90deg,var(--gold),var(--green))}
+.take{position:absolute;bottom:74px;left:110px;right:110px;background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(0,230,138,.05));border:1px solid rgba(255,215,0,.28);border-radius:16px;padding:26px 40px}
+.take .t{font-size:1.85rem;font-weight:700;color:var(--tp)} .take b{color:var(--gold)}
+.src{position:absolute;bottom:36px;left:110px;font-size:.9rem;color:var(--tm);font-family:'JetBrains Mono',monospace}
+</style></head>
+<body>
+<div class="grain"></div><div class="orb"></div>
+<div class="ey">CH5 · what you're paid to hold dollars</div>
+<h1>Why the Loophole Is Irresistible</h1>
+<div class="divider"></div>
+<div class="chart">
+  <div class="row bank"><div class="lbl">Traditional bank<small>savings APY</small></div><div class="track"><div class="fill"></div><span class="v">~0.4%</span></div></div>
+  <div class="row cb"><div class="lbl">Coinbase USDC<small>"loyalty reward"</small></div><div class="track"><div class="fill"><span class="v">~3.5%</span></div></div></div>
+</div>
+<div class="take"><div class="t">Nearly 9x the bank, on money that just sits there. The loophole is worth <b>~$1.35 billion a year to Coinbase alone.</b></div></div>
+<div class="src">Bank savings APY vs Coinbase USDC rewards ~3.5% · Coinbase rewards revenue ~$1.35B/yr · Forbes/Yahoo · [VERIFY]</div>
+</body></html>

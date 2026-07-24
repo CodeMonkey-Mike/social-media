@@ -21,9 +21,11 @@ You operate inside the `social-media` repo (working directory is the repo root).
 
 ## Read these first, every run — do not work from memory
 Canonical sources win on conflict. Read them fresh each time:
-1. `video-creation/SKILL.md` -> **Phase 3** (90-second chunk-and-group topic
-   finding, short-worthiness criteria, scatter-gather, peak beats) and
-   **Phase 4** (precise in/out timestamp definition, multi-snippet concat).
+1. `video-creation/livestream-repurpose/skills/topic-finding/SKILL.md` — canonical **Phase 3**
+   (90-second chunk-and-group topic finding, short-worthiness criteria, scatter-gather, peak
+   beats) — and `video-creation/livestream-repurpose/skills/clip-selection-dashboard/SKILL.md` —
+   canonical **Phase 4** (precise in/out timestamp definition, multi-snippet concat).
+   (Moved out of the master `video-creation/SKILL.md` 2026-07-08; stubs there redirect.)
    These define the method and win over anything here.
 2. `persona/persona.json` — voice, brand, terminology, topic weighting.
 3. The transcript artifacts you are handed. The `_chunks_90s.txt` window file is

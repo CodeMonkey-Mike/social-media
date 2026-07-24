@@ -1,16 +1,35 @@
 // Batch Seed Speech generation over CDP for the CURRENTLY-SELECTED voice.
-// Usage: node _batch-generate.js <chunks.json> <audioDir>
+// Usage: node _batch-generate.js <chunks.json> <audioDir> [SCRIPT.md]
 //   chunks.json = [{ "file":"chunk-04.mp3", "text":"...TTS-ready text..." }, ...]
 // Writes each result to <audioDir>/_manifest.json incrementally: [{file, ok, url, err}].
 // Does NOT download — capture URLs, then curl them (cloudfront paths are stable/unsigned).
-// SAFETY: aborts if the selected voice is not MIKE-CLONE (guard against wrong-voice batches).
+// SAFETY GATES (both abort BEFORE spending any credits):
+//   1. SCRIPT gate — if a SCRIPT.md is passed (3rd arg or HF_SCRIPT env), every chunk's text
+//      MUST match the canonical script (verify-tts.js). Added 2026-07-16 after tts-chunks.json
+//      was hand-authored from a stale draft and 10 chunks got voiced with wrong text.
+//   2. VOICE gate — aborts if the selected voice is not MIKE-CLONE (wrong-voice batches).
 const { connect } = require('./_cdp');
 const fs = require('fs');
 
 const chunksFile = process.argv[2];
 const audioDir = process.argv[3];
+const scriptPath = process.argv[4] || process.env.HF_SCRIPT || null;
 const EXPECT_VOICE = process.env.HF_VOICE || 'MIKE-CLONE';
 const chunks = JSON.parse(fs.readFileSync(chunksFile, 'utf8'));
+
+// GATE 1 — canonical-script match (no browser, no credits until this passes).
+if (scriptPath) {
+  const { check } = require('./verify-tts');
+  const { ok, mismatches } = check(scriptPath, chunks);
+  if (!ok) {
+    console.error('SCRIPT GATE FAILED — tts-chunks do NOT match ' + scriptPath + ' (no credits spent):');
+    for (const m of mismatches) console.error('  chunk ' + m.n + ': ' + m.reason);
+    process.exit(3);
+  }
+  console.log('SCRIPT GATE OK — ' + chunks.length + ' chunks match ' + scriptPath);
+} else {
+  console.log('WARNING: no SCRIPT.md passed — running WITHOUT the script-match gate. Prefer: node _batch-generate.js <chunks.json> <audioDir> <SCRIPT.md>');
+}
 
 const readVoice = (page) => page.evaluate(() => {
   for (const e of document.querySelectorAll('*')) {

@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--accent-green:#00e68a;--accent-cyan:#00c2ff;--accent-gold:#ffd700;--text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+.ey{font-size:27px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:20px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:78px;line-height:1.06;letter-spacing:-.02em;color:var(--text-primary)}
+.c{color:var(--accent-cyan)}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:30px 0}
+.dg{margin-top:6px;width:100%}
+.foot{margin-top:30px;font-size:31px;color:var(--text-secondary);max-width:1440px;line-height:1.5}.foot b{color:var(--text-primary)}
+svg .nt{fill:var(--text-primary);font:700 40px 'DM Sans';text-anchor:middle}
+svg .ns{fill:var(--text-secondary);font:400 24px 'DM Sans';text-anchor:middle}
+</style></head>
+<body>
+<div class="frame" id="migration">
+  <div class="orb" style="width:760px;height:760px;background:var(--accent-cyan);top:80px;right:-120px;opacity:.12"></div>
+  <span class="ey">Render · The chain story</span>
+  <h1>It lives on <span class="c">someone else's</span> chain.</h1>
+  <div class="divider"></div>
+  <div class="dg">
+    <svg viewBox="0 0 1640 380" width="100%">
+      <defs><marker id="ar" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#00c2ff"/></marker></defs>
+      <!-- Ethereum node -->
+      <rect x="40" y="90" width="380" height="200" rx="20" fill="#12151c" stroke="#1e2330" stroke-width="1.5"/>
+      <text class="nt" x="230" y="185">Ethereum</text><text class="ns" x="230" y="222">where RNDR started</text>
+      <!-- arrow -->
+      <path d="M430,190 L610,190" fill="none" stroke="#00c2ff" stroke-width="3.5" marker-end="url(#ar)"/>
+      <!-- Wormhole bridge node -->
+      <rect x="630" y="90" width="380" height="200" rx="20" fill="#0e2530" stroke="#00c2ff" stroke-width="2.5"/>
+      <text x="820" y="72" text-anchor="middle" font-family="JetBrains Mono" font-weight="600" font-size="24" fill="#00c2ff">NOV 2023</text>
+      <text class="nt" x="820" y="180" fill="#00c2ff">Wormhole</text><text class="ns" x="820" y="217">a bridge between chains</text>
+      <!-- arrow -->
+      <path d="M1010,190 L1190,190" fill="none" stroke="#00c2ff" stroke-width="3.5" marker-end="url(#ar)"/>
+      <!-- Solana node -->
+      <rect x="1210" y="90" width="380" height="200" rx="20" fill="#12151c" stroke="#1e2330" stroke-width="1.5"/>
+      <text class="nt" x="1400" y="185">Solana</text><text class="ns" x="1400" y="222">where RENDER lives now</text>
+      <!-- 1:1 label -->
+      <text x="820" y="345" text-anchor="middle" font-family="JetBrains Mono" font-weight="600" font-size="30" fill="#e8eaf0">1 RNDR  =  1 RENDER</text>
+    </svg>
+  </div>
+  <div class="foot">A token on <b>Solana</b>, not its own chain. File that away — it matters a lot in the comparison.</div>
+</div>
+</body></html>

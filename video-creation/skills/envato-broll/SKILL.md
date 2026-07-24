@@ -77,6 +77,13 @@ Validated 2026-06-11 on the new app:
   Download licenses the item to the account and starts a real browser download — scripts use
   `acceptDownloads` + `waitForEvent('download')`. No project-name dialog in the current UI;
   download-envato.js still handles one defensively if it appears.
+- **⚠ DOWNLOAD-FLOW FIX (2026-07-10): the browser download is CANCELED (`download.saveAs: canceled`).** Envato's
+  item page RE-RENDERS on the Download click, aborting the in-flight browser download. But the `download` EVENT
+  still exposes the real **signed file URL** (`video-downloads.elements.envatousercontent.com/…`). Fix: capture
+  that URL from the event, then **FETCH it via the authenticated session and STREAM to disk** (Node `fetch` with
+  the context cookies + UA, fallback to `context.request.get`) — never `download.saveAs`. The button is
+  `button[data-cy="idp-download-button"]`. Default resolution is 4K (~1.3GB); download-envato.js then applies the
+  disk rule (transcode >800MB → ~100MB 1080p, keep only the `.cap.mp4`). Validated end-to-end 2026-07-10.
 - **Downloads arrive as `.zip`**, often with multiple variants inside (`Main files/RGB_0N.mp4`
   + `Alpha_0N.mp4` mattes on 3D/motion items). Extract with `Expand-Archive`, keep the
   variants in a per-clip subfolder of the project's `assets/video/`, and keep alpha mattes

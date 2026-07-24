@@ -212,6 +212,8 @@ dashes anywhere.
 3. Draft each chapter as **Outline (beats)** with `[FACE]/[COVER]` + Title-card flag + facts/`[VERIFY]`.
 4. Build the **system-design containers** for explainer chapters (Convention 4).
 5. Resolve open decisions + run live `[VERIFY]` checks.
-6. Pull music (LUFS + MUSIC_DB) + write **BROLL-PLAN.md** (cover every non-`[FACE]` beat).
+6. Pull music (LUFS + MUSIC_DB) + write **BROLL-PLAN.md** (cover every non-`[FACE]` beat). Music is
+   PICKED from the analyzed catalog `video-creation/assets/music/library.json` (music-sourcing `SKILL.md`
+   §2c; whole-video bed plan = the `music-placement-strategist` agent) — no listening/auditioning pass.
 7. Record -> Phase 1-4 per `longform-edited.md`.
 ```

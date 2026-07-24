@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden}
+  body{background:radial-gradient(1200px 800px at 50% 30%,#0d1a2b 0%,#070b16 60%,#04060d 100%);
+    font-family:Inter,system-ui,sans-serif;color:#e8eef6;display:flex;flex-direction:column;justify-content:center;padding:80px 110px}
+  .eyebrow{font-size:26px;letter-spacing:.32em;text-transform:uppercase;color:#2dd4bf;font-weight:800;margin-bottom:14px}
+  h1{font-size:56px;font-weight:800;letter-spacing:-.02em;margin-bottom:64px;line-height:1.1}h1 .g{color:#2dd4bf}
+  svg{width:100%}
+  .node{fill:rgba(45,212,191,.08);stroke:#2dd4bf;stroke-width:3}
+  .rails{fill:rgba(120,140,170,.06);stroke:#8aa0b6;stroke-width:2.5}
+  .nt{fill:#fff;font-weight:800;font-size:34px;text-anchor:middle}
+  .ns{fill:#9fb3c8;font-size:21px;text-anchor:middle}
+  .rt{fill:#dfe7f0;font-weight:800;font-size:30px;text-anchor:middle}
+  .endt{fill:#c7d5e4;font-size:24px;text-anchor:middle;font-weight:600}
+  .flow{stroke:#2dd4bf;stroke-width:5;fill:none}
+  .cap{fill:#b7c7d8;font-size:26px;text-anchor:middle}.cap b{fill:#fff}
+</style></head><body>
+  <div class="eyebrow">Zebec joined the Payments Innovation Alliance</div>
+  <h1>Nacha runs the <span class="g">ACH plumbing</span></h1>
+  <svg viewBox="0 0 1520 430">
+    <defs><marker id="a" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#2dd4bf"/></marker></defs>
+    <rect class="node" x="20" y="130" width="330" height="150" rx="18"/>
+    <text class="nt" x="185" y="195">Nacha</text><text class="ns" x="185" y="232">member: Zebec</text>
+    <path class="flow" d="M 350 205 L 500 205" marker-end="url(#a)"/>
+    <rect class="rails" x="500" y="130" width="330" height="150" rx="18"/>
+    <text class="rt" x="665" y="195">ACH rails</text><text class="ns" x="665" y="232">the US payments network</text>
+    <path class="flow" d="M 830 205 L 980 205" marker-end="url(#a)"/>
+    <g><rect class="node" x="980" y="60" width="510" height="90" rx="14"/><text class="endt" x="1235" y="115">Direct deposit paychecks</text></g>
+    <g><rect class="node" x="980" y="170" width="510" height="90" rx="14"/><text class="endt" x="1235" y="225">Bank transfers</text></g>
+    <text class="cap" x="760" y="410">Basically every direct deposit in the country runs on it. Zebec is a <tspan fill="#fff" font-weight="800">member</tspan>, not a governing seat.</text>
+  </svg>
+</body></html>

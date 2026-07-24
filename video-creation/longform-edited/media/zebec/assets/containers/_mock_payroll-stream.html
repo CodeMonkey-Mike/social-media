@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700;800&family=Inter:wght@400;600;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden}
+  body{background:radial-gradient(1200px 800px at 50% 30%,#0d1a2b 0%,#070b16 60%,#04060d 100%);
+    font-family:Inter,system-ui,sans-serif;color:#e8eef6;display:flex;flex-direction:column;justify-content:center;padding:80px 110px}
+  .eyebrow{font-size:26px;letter-spacing:.32em;text-transform:uppercase;color:#2dd4bf;font-weight:800;margin-bottom:12px}
+  h1{font-size:58px;font-weight:800;letter-spacing:-.02em;margin-bottom:70px}h1 .g{color:#2dd4bf}
+  svg{width:100%}
+  .box{fill:rgba(45,212,191,.07);stroke:#2dd4bf;stroke-width:2.5}
+  .bt{fill:#fff;font-weight:800;font-size:30px;text-anchor:middle}.bs{fill:#9fb3c8;font-size:21px;text-anchor:middle}
+  .stream{fill:none;stroke:#2dd4bf;stroke-width:5}
+  .drop{fill:#2dd4bf}
+  .cap{fill:#7d92aa;font-size:22px;text-anchor:middle;font-style:italic}
+  .counter{fill:#ffd166;font-family:'JetBrains Mono';font-weight:800;font-size:40px;text-anchor:middle}
+</style></head><body>
+  <div class="eyebrow">Instead of payday, a faucet that's always on</div>
+  <h1>Payroll, <span class="g">streamed by the second</span></h1>
+  <svg viewBox="0 0 1520 440">
+    <defs><marker id="a" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#2dd4bf"/></marker></defs>
+    <!-- employer -->
+    <rect class="box" x="40" y="150" width="330" height="150" rx="18"/>
+    <text class="bt" x="205" y="215">Employer wallet</text><text class="bs" x="205" y="250">funds payroll once</text>
+    <!-- stream w/ droplets -->
+    <path class="stream" d="M 370 225 L 1150 225" marker-end="url(#a)"/>
+    <circle class="drop" cx="520" cy="225" r="8"/><circle class="drop" cx="640" cy="225" r="8"/><circle class="drop" cx="760" cy="225" r="8"/><circle class="drop" cx="880" cy="225" r="8"/><circle class="drop" cx="1000" cy="225" r="8"/>
+    <text class="counter" x="760" y="150">+$0.00019 / sec</text>
+    <text class="cap" x="760" y="300">continuous, real-time salary</text>
+    <!-- employee -->
+    <rect class="box" x="1150" y="150" width="330" height="150" rx="18"/>
+    <text class="bt" x="1315" y="215">Employee wallet</text><text class="bs" x="1315" y="250">paid every second</text>
+  </svg>
+</body></html>

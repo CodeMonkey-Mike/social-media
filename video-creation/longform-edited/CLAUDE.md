@@ -38,17 +38,27 @@ do NOT render-then-explain-it-as-an-open-item.
    each is a deliberate callback, not a lazy repeat) and **LONG HOLD** (a container held >35s — a system-design
    DIAGRAM may hold while explained, but a TEXT container/slide must spotlight ONE sub-point at a time, never the
    whole slide; sub-spotlight or break it). An unjustified WARN is a violation — clear or justify every one.
-6c. **THREE MORE MECHANICAL GATES (added 2026-06-30 after Mike: "the violations are really, really bad… doubles
+6c. **FOUR MORE MECHANICAL GATES (added 2026-06-30 after Mike: "the violations are really, really bad… doubles
    the production time"). The plan-linter (6b) checks the PLAN; these check the PIXELS / AUDIO it could not see:**
    - `python skills/lint-deck-containers.py <comp.tsx> <render-assets/deck>` — **FAILS** if a deck PNG is a WHOLE
      SLIDE (2+ card-boxes) instead of one container (caught the bio slide AND the s9 comparison). Declare real
-     diagrams `// DIAGRAM_REFS: …` and deliberate A-vs-B contrasts `// COMPARISON_REFS: …` in the comp to exempt.
-   - `python skills/lint-pause-silence.py <comp.tsx> <source-spine.mp4>` — **FAILS** if any card-pause/clip INSERT
+     diagrams `// DIAGRAM_REFS: …`, deliberate A-vs-B contrasts `// COMPARISON_REFS: …`, and deliberate
+     all-cards-at-once overviews (~ONE per chapter, comp-build §5) `// OVERVIEW_REFS: …` in the comp to exempt;
+     end the declaration lines with a plain comment (e.g. `// (end declared refs)`) so the last ref parses clean.
+   - `python skills/lint-pause-silence.py <comp.tsx> <source-spine.mp4>` — **FAILS** unless every card-pause/clip
+     INSERT point sits INSIDE a silence dip (containment at the cut itself, ~30ms guard — upgraded 2026-07-19
+     after the tao CH2 pause split the word "Now": the old dip-within-±150ms proximity check passed a cut that
+     landed ON a word onset 140ms after the real trough; on failure it prints the trough to snap to). Also
      point is MID-WORD (no silence dip within ±150ms). Run on the SOURCE spine BEFORE baking pauses/clips. (Would
      have caught the CH4 pause splitting "ago".)
    - `DUCK=$(python skills/bed-duck-expr.py <comp.tsx>)` — derives the music-bed duck windows from the comp's clip
      inserts; the bed mix MUST use this expression so the bed always drops under the talk (never hand-type the
      windows). Prevention by construction for "the bed played over the R-TALK clip."
+   - `node skills/lint-slide-balance.js <comp.tsx>` — **FAILS** if the slide/container BALANCE breaks: a full
+     diagram slide (`kind: 'deck'`) shown more than ONCE (the "over and over" repeat), OR a comp that is ALL
+     slides / ALL containers (the swing). Enforces "⛔ THE BALANCE" (broll-and-containers.md): a rich slide once,
+     then broken up into spotlight containers. (Added 2026-07-10 after the Clarity Act container swing cost a
+     full day of rework.)
 7. **video-qa.md passes on 10s CHUNKS (motion + audio), not stills**, before you call it done or hand it off.
 
 ## Read FIRST, by what you're doing

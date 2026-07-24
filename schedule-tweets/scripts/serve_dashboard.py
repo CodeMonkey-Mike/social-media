@@ -91,7 +91,11 @@ class CORSHandler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
         pass
 
+class ThreadingHTTPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+    daemon_threads = True
+    allow_reuse_address = True
+
 os.chdir(BASE_DIR)
 print("Dashboard at http://localhost:8766", flush=True)
-with socketserver.TCPServer(("", 8766), CORSHandler) as httpd:
+with ThreadingHTTPServer(("", 8766), CORSHandler) as httpd:
     httpd.serve_forever()

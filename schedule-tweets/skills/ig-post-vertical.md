@@ -100,3 +100,19 @@ fs.writeFileSync('data/shorts.json', JSON.stringify(d, null, 2));
 ## Hashtag policy (added 2026-05-29)
 
 Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
+
+## ⚠ Dying at `input[type="file"]` is NOT always the blocking-modal bug — grep the log for `Clicked Post ✓` first (2026-07-22)
+
+`locator.waitFor: Timeout 15000ms exceeded — waiting for locator('input[type="file"]')` is the same error the 2026-05-25 "Turn on Notifications" blocking-modal bug produced, so it is easy to misdiagnose. On 2026-07-22 it was instead a **transient miss on the Create → Post sub-link click**: `_diag-ig-create.js` showed the flow completely healthy (no dialogs, Post sub-link present and clickable, `input[type=file] count: 1`).
+
+**The tell is in the script's own log:**
+- healthy: `Opening Create → Post...` → **`Clicked Post ✓`** → `Uploading video...`
+- transient miss: `Opening Create → Post...` → *(no `Clicked Post ✓`)* → `Uploading video...` → timeout
+
+The script advances past the un-registered click and then waits for a file input that was never going to be injected.
+
+**Triage order:**
+1. Grep the failed log for `Clicked Post ✓`. **Absent → transient click miss.**
+2. Only if the flow genuinely looks broken, run `scripts/_diag-ig-create.js` to check for a new blocking modal (notifications / save-login / consent).
+
+**A single retry IS allowed here and does not violate the one-attempt rule.** The failure is strictly *pre-upload*: no bytes sent, no composer filled, nothing published, zero duplicate risk. This is categorically different from a kill after a point-of-no-return signal. Recovery: reset the platform row `failed` → `pending`, delete its `error`, per-profile kill igbot Chrome, run once. Worked first try on 2026-07-22.

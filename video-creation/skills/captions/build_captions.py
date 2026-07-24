@@ -21,6 +21,8 @@ CORRECTIONS = [
     (r"\bcas+per\b", "kaspa"), (r"\bkas+per\b", "kaspa"), (r"\bcaspa\b", "kaspa"),
     (r"\bsailor\b", "saylor"),
     (r"\btau\b", "tao"),   # Mike says "tau" for $TAO; the ticker is ALWAYS TAO, never "tau"
+    (r"\bzbank\b", "zbcn"), (r"\bzbcm\b", "zbcn"),   # Zebec token is ZBCN (Whisper: "ZBank"/"ZBCM")
+    (r"\bthapalia\b", "thapaliya"),   # founder Sam Thapaliya (Whisper: "Thapalia")
     (r"\btok+at+a\b", "toccata"), (r"\btocata\b", "toccata"),   # Kaspa "Toccata" hardfork (Whisper: "Tokata")
     (r"\bk[cr]20s?\b", "krc20"), (r"\bkc\s*20s?\b", "krc20"),   # KRC20 (Whisper: "KC20"/"KR20")
     (r"\bcroak\b", "kroak"),       # Kroak (KRC20 meme; Whisper hears "croak")
@@ -30,7 +32,75 @@ CORRECTIONS = [
     (r"\bbeten[sz][eo]r\b", "bittensor"), (r"\bbtenz[eo]r\b", "bittensor"),
     (r"\bb[ei]tens[eo]r\b", "bittensor"), (r"\bbittenz[eo]r\b", "bittensor"),
     (r"\bpatenz[ao]\b", "bittensor"),
+    (r"\bpotenz[ao]\b", "bittensor"),   # Whisper also hears Bittensor as "Potenza" (companion to Patenza)
+    (r"\bvirtuos\b", "virtuals"),   # Virtuals token (Whisper: "Virtuos")
+    # Whisper regularly splits "Bittensor" into TWO tokens and hears the "bit-" syllable as a real
+    # word ("But Tenzer" / "the Tenser"). Correct the tail here; the stray leading syllable is merged
+    # away in cleanup() (see BIT_SYLLABLE). Non-words, so global correction is safe.
+    (r"\btenz[eo]r\b", "bittensor"), (r"\btens[e]r\b", "bittensor"),
+    # --- October-pumps batch, 2026-07-23 ---
+    # Whisper hears $TAO as "towel" as often as "tau". A literal towel cannot occur in this catalogue.
+    (r"\btowels?\b", "tao"),
+    (r"\bninehood\b", "ninehood"), (r"\bnindhood\b", "ninehood"),
+    # Whisper splits this as "post" + "-having"; the hyphen merge in cleanup() rejoins it and then
+    # re-runs clean_token, so this single-token form is the one that actually fires.
+    (r"\bpost-?having\b", "post-halving"),
+    # NOTE: every other October-pumps mishear is MULTI-WORD and lives in PHRASE_CORRECTIONS below.
 ]
+
+# PHRASE corrections — applied to the TOKEN SEQUENCE, not to single tokens.
+#
+# ⛔ WHY THIS EXISTS (2026-07-23): CORRECTIONS above is applied by clean_token() to ONE word at a
+# time, so ANY multi-word pattern placed there can never match and SILENTLY NO-OPS. Three real
+# mishears shipped uncorrected exactly that way ("nine hood", "market cat", "any means") before this
+# was caught. **Multi-word mishears go HERE, never in CORRECTIONS.**
+#
+# Each entry is (tuple-of-word-cores, replacement-words). Matching is on core() (letters+digits,
+# lowercased) so punctuation and case never block a match. A 1-word replacement MERGES the matched
+# tokens and keeps the whole span (first .t -> last .end); an N-word replacement rewrites in place.
+# A replacement longer than the match is not supported (there are no timings to invent).
+PHRASE_CORRECTIONS = [
+    (("nine", "hood"), ["ninehood"]),
+    (("market", "cat"), ["market", "cap"]),
+    (("financial", "vice"), ["financial", "advice"]),
+    (("any", "means"), ["any", "memes"]),
+    (("stop", "buying", "up"), ["start", "buying", "up"]),
+    (("new", "bottle"), ["new", "bottom"]),
+    (("robin", "hood"), ["robinhood"]),
+    (("robber", "hood"), ["robinhood"]),
+    (("roba", "hood"), ["robinhood"]),
+    (("post", "having"), ["post-halving"]),
+    (("posts", "having"), ["post-halving"]),
+]
+
+
+def apply_phrases(words):
+    """Rewrite multi-word mishears on the token sequence. Runs AFTER cleanup()."""
+    out, i = [], 0
+    while i < len(words):
+        hit = None
+        for key, rep in PHRASE_CORRECTIONS:
+            n = len(key)
+            if i + n <= len(words) and tuple(core(w["w"]) for w in words[i:i + n]) == key:
+                hit = (n, rep)
+                break
+        if not hit:
+            out.append(words[i])
+            i += 1
+            continue
+        n, rep = hit
+        span = words[i:i + n]
+        if len(rep) == 1:
+            out.append({"t": span[0]["t"], "end": span[-1]["end"], "w": rep[0]})
+        else:
+            for w, r in zip(span, rep):
+                out.append({"t": w["t"], "end": w["end"], "w": r})
+        i += n
+    return out
+# Leading syllable Whisper mishears as a word when it splits "Bittensor" in two. Merged into the
+# following "bittensor" token ONLY when it is a sub-0.18s blip butted straight against it (a real
+# spoken "but"/"the" is longer and has a gap) — same class of fix as pre + mine -> premine.
+BIT_SYLLABLE = {"bit", "but", "bid", "the"}
 FILLER = {"uh", "um", "uhh", "umm", "mm", "hmm"}
 
 
@@ -77,12 +147,30 @@ def cleanup(raw):
             i += 1; continue
         if c == "pre" and i + 1 < len(norm) and core(norm[i+1]["w"]) in {"mind", "mine"}:
             words.append({"t": cur["t"], "end": norm[i+1]["end"], "w": "premine"}); i += 2; continue
+        # "bit-" syllable + bittensor -> bittensor. Whisper splits "Bittensor" and renders the "bit-"
+        # as a word ("But Tenzer", "the Tenser"). Merge ONLY a sub-0.18s blip butted straight against
+        # the following bittensor token: a genuinely spoken "but"/"the" is longer AND has a gap, so a
+        # real "but bittensor is going to be big" survives intact.
+        if (c in BIT_SYLLABLE and i + 1 < len(norm) and core(norm[i+1]["w"]) == "bittensor"
+                and (cur["end"] - cur["t"]) <= 0.18 and (norm[i+1]["t"] - cur["end"]) <= 0.02):
+            words.append({"t": cur["t"], "end": norm[i+1]["end"], "w": "bittensor"}); i += 2; continue
         if re.fullmatch(r"\d+", c) and i + 1 < len(norm):
             nxt = core(norm[i+1]["w"])
             if nxt in {"", "percent"} or norm[i+1]["w"].strip().startswith("%"):
                 words.append({"t": cur["t"], "end": norm[i+1]["end"], "w": c + "%"}); i += 2; continue
             if nxt == "x":
                 words.append({"t": cur["t"], "end": norm[i+1]["end"], "w": c + "x"}); i += 2; continue
+        # Hyphen continuation: Whisper emits compound words as TWO tokens, "front" + " -run",
+        # "four" + " -year". Grouping can then land the tail in its OWN caption, which renders on
+        # screen as a bare "-run." (5 such captions shipped in October-pumps clip 2 before this was
+        # caught, 2026-07-23). Merge the tail back into the previous word and keep the whole span.
+        # The merge happens AFTER clean_token(), so it can CREATE a token no correction has seen
+        # ("post" + "-having" -> "post-having", which shipped uncorrected). Re-run the corrections
+        # on the merged token.
+        if cur["w"].strip().startswith("-") and len(cur["w"].strip()) > 1 and words:
+            words[-1]["w"] = clean_token(words[-1]["w"].rstrip() + cur["w"].strip())
+            words[-1]["end"] = cur["end"]
+            i += 1; continue
         if words and core(words[-1]["w"]) == c and c:
             i += 1; continue
         words.append({"t": cur["t"], "end": cur["end"], "w": cur["w"]}); i += 1
@@ -160,7 +248,7 @@ def main():
     args = ap.parse_args()
 
     raw = transcribe(args.transcribe) if args.transcribe else load_words(args.words)
-    words = cleanup(raw)
+    words = apply_phrases(cleanup(raw))
     print(f"clean words: {len(words)}  end: {words[-1]['end']:.2f}s", file=sys.stderr)
 
     if args.style == "montserrat":

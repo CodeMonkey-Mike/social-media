@@ -2,6 +2,25 @@
 
 Specific cover-layer rules for the longform-edited track (extends `longform-edited.md` house rules #1-#3).
 
+## ⛔ RECEIPTS-FIRST placement — assign receipts BEFORE b-roll, always (Mike, 2026-07-11)
+When deciding what covers each beat, **place the receipts FIRST, then b-roll, then containers fill the rest.**
+Do not scatter b-roll across the timeline and slot receipts into the gaps; it is the reverse. Walk the
+transcript, and for **every beat that states a fact, a number, a claim, a market/price/supply figure, a
+partnership, or a date**, assign a **real receipt** to that beat before anything else competes for it.
+- **A coin-aggregator screenshot IS a receipt** (CoinMarketCap, CoinGecko, TradingView, CryptoRank, DefiLlama,
+  DexScreener), not only a news article. A price/market-cap/supply/unlocks/holders panel or a real trading
+  chart is the strongest possible cover for a data beat: real site, real data, "verify it yourself." Prefer a
+  real aggregator screenshot over redrawing a market chart (charts.md: never an image model as a number source;
+  and a real chart beats a re-draw for a MARKET figure — our own animated charts are for numbers WE control).
+- **Order of assignment (this is the priority stack):** (1) receipts / real-aggregator screenshots on every
+  data/claim beat → (2) our own animated charts + system-design containers/diagrams/timelines on the
+  explainer beats → (3) the sparse b-roll budget (house rule #2) on the atmospheric/conceptual beats that a
+  receipt does not fit. B-roll gets what is LEFT, not first pick.
+- **Know where everything goes before capturing:** reconcile the whole cover list against the transcript and
+  lock receipt positions first (zero-orphans), then fill. This is exactly what the `coverage-strategist`
+  advisor does; this rule makes it canonical so it holds on every video whether or not it is restated.
+
+
 ## ⛔ CSS CONTAINERS — build them like the reference, do NOT crop a deck (Mike, 2026-06-30)
 **See `container-reference/` (screenshots from banks-own-chain + bittensor — the look Mike wants) + its README.**
 The recurring failure: building a multi-card *presentation deck* and CROPPING slides out of it. Cropping drags in
@@ -15,6 +34,28 @@ videos were easy because each container was its **own full-frame element**. So:
   comparison is the only exception). One self-contained container per talking point, shown contiguously.
 - Gated by `lint-deck-containers.py` (a 2+-card PNG FAILs as a whole-slide) — but the gate checks pixels, the
   reference + this rule are how you BUILD them right in the first place.
+
+## ⛔ THE BALANCE — a rich slide ONCE, then BREAK IT UP into containers (Mike, 2026-07-10)
+This is THE recurring struggle on every video since the first two. The failure is always one of two extremes,
+and **both are wrong**:
+- **(a) Repeat:** show one info-dense full-screen slide, then show that SAME full slide over and over for each
+  sub-point. (What Mike flagged: "you were showing it over and over again.")
+- **(b) Over-correct:** delete the good full slide entirely and replace everything with small text containers.
+  (The equal-and-opposite error — "you removed them :(").
+
+**The answer is a gentle balance, and it is not optional — the full slide and its break-up containers COEXIST:**
+1. A rich **DIAGRAM slide** (a timeline, a flow, a multi-node system view — e.g. the "How the Dollar Won Twice"
+   `1944 → 1971 → 1974 → TODAY` timeline) is a GOOD visual. **Show it ONCE, full-screen, held ~10s, as the
+   section OVERVIEW.** Never delete it; it is the anchor the viewer gets to digest.
+2. **Do NOT re-show that same full slide** for each sub-point. Instead, after the overview, **BREAK IT UP:**
+   spotlight each piece of it as its **own smaller container** (~5s each) as the narration walks through that
+   piece, contiguously, with ≤4s b-roll cutaways punching through.
+3. So a rich section = **one overview diagram slide (once, ~10s) → several break-up spotlight containers (one
+   per sub-point, ~5s) + b-roll cutaways + the section's chart.** Balanced, never all-one-type.
+4. A chapter that is **100% full-slides (repeated)** OR **100% containers (no anchor diagram)** is the
+   violation. Aim for the mix in every rich section. (Dwell floors: see "Minimum dwell time" below. Rich
+   diagram slides are declared `// DIAGRAM_REFS:` so they're exempt from the whole-slide lint — they are
+   allowed BECAUSE they appear once as the overview, not repeated.)
 
 ## The manifest is the contract — file-level, ZERO ORPHANS (hard gate)
 (The manifest lives inside `EDIT-PLAN.md` — the per-beat layer table that editing can't start without; see the
@@ -100,6 +141,21 @@ through on top.
   **multiple containers spotlight-swapping** one point at a time (~5-12s each), with the occasional ≤4s
   b-roll cut between — NEVER one container/diagram held for 30-60s, NEVER a gap between cues.
 - Cover beats with no planned b-roll **default to a deck container** (house rule #9).
+
+## Minimum dwell time — give the viewer time to read (Mike, 2026-07-10)
+How long a cover holds is driven by how much there is to DIGEST, with a **floor per type** so nothing flashes
+by before it can be read:
+- **Single-card container** (one eyebrow + headline + a short body or 3-item list — the spotlight card):
+  **≥ 5 seconds on screen.** Long enough to read the card once unhurried; still spotlight-swap to the next
+  point after.
+- **Full slide / multi-element diagram** (a timeline, a flow, a linear chain, a labelled system view — several
+  nodes the eye has to walk across): **≥ 10 seconds on screen.** These carry far more to parse — e.g. the
+  "How the Dollar Won Twice" `1944 → 1971 → 1974 → TODAY` timeline — so hold them roughly **double** a single
+  card. The viewer needs to trace the whole chain.
+- These are **floors, not the ≤4s image/video-b-roll cap** (that punctuation cap is unchanged) and they do not
+  override the LONG-HOLD ceiling (a TEXT container still must not sit 30-60s — spotlight-swap; a system-design
+  DIAGRAM may hold longer while it is actively being explained). Set the real hold by the narration over that
+  beat, but never below these floors.
 
 ## Container STYLE — match the slide deck
 - Containers must look like the project's **slide deck** (`<project>-deck.html`), NOT a generic card:

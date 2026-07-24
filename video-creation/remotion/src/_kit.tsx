@@ -23,7 +23,8 @@ export const FONT   = "'Montserrat', 'Arial Black', sans-serif";
 export type Caption = { t: number; h: string };
 export type BrollEv = { src: string; tIn: number; tOut: number; mode: 'full' | 'content' };
 export type Gfx     = { id: string; tIn: number; tOut: number };
-export type Sfx     = { t: number; src: string };
+// vol/dur are optional per-event overrides (default 0.55 / 2s, the historical LivestreamShort values).
+export type Sfx     = { t: number; src: string; vol?: number; dur?: number };
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 export function fadeInOut(t: number, tIn: number, tOut: number, fadeS = 0.15) {
@@ -67,7 +68,10 @@ export const CaptionLayer: React.FC<{ captions: Caption[]; fps: number }> = ({ c
 };
 
 // ─── B-roll layer (over the video base) ─────────────────────────────────────────
-export const BrollLayer: React.FC<{ broll: BrollEv[]; t: number }> = ({ broll, t }) => {
+// `seam` = the measured screen-share/webcam divider of THIS clip's base video (content-mode b-roll
+// covers 0..seam). Defaults to CONTENT_BOTTOM so every existing caller is unchanged; measure the seam
+// per clip (row-gradient scan) and pass it, because it varies between livestream layouts.
+export const BrollLayer: React.FC<{ broll: BrollEv[]; t: number; seam?: number }> = ({ broll, t, seam = CONTENT_BOTTOM }) => {
   const idx = broll.findIndex(e => t >= e.tIn && t < e.tOut);
   if (idx < 0) return null;
   const ev = broll[idx];
@@ -95,7 +99,7 @@ export const BrollLayer: React.FC<{ broll: BrollEv[]; t: number }> = ({ broll, t
   // content-zone: image covers ONLY the upper zone; webcam (base video) plays below.
   return (
     <AbsoluteFill style={{ opacity: op }}>
-      <div style={{ position: 'absolute', top: 0, left: 0, width: 1080, height: CONTENT_BOTTOM, overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, width: 1080, height: seam, overflow: 'hidden' }}>
         <Img src={ev.src} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${kb})` }} />
         <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: 5, background: TEAL, boxShadow: `0 0 18px ${TEAL}` }} />
       </div>

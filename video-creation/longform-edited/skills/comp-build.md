@@ -5,9 +5,16 @@ self-contained** — every load-bearing code pattern is embedded below as a skel
 with NO files from any `media/<project>/` folder (those are deletable by the cleanup job). (Mike, 2026-06-30:
 "imagine we delete the smartmoney project — how would we do the next video?")
 
-**Worked references (non-authoritative, may be deleted):** the surviving comps in `video-creation/remotion/src/`
-— `SmkFull.tsx` (full longform, the closest exemplar), `SmChartsAnim.tsx` (animated charts), `_kit.tsx`,
-`transitions/`. If they are gone, build from the skeletons here. Companion skills: `edit-plan-and-cue-sheet.md`
+**⛔ NEVER open a per-batch comp to copy from.** The skeletons in THIS skill are the ONLY authority for comp
+structure, captions, and house style. Do NOT open `SmkFull.tsx`, `ClarityTest.tsx`, or any other
+`video-creation/remotion/src/*.tsx` belonging to a finished video to "match the exemplar" — those are
+outdated-format hazards (they drift, and the cleanup job DELETES a comp once its batch is completed). If a
+pattern you need is not in these skeletons, that is a gap to ADD to this skill, not a comp to go read.
+
+**The ONLY `remotion/src/` files that persist and may be imported are the shared-infra layer:** `_kit.tsx`
+(shared comp kit), `transitions/` (engines + registry), and `LivestreamShort.tsx` (the shorts renderer).
+Everything else in `src/` is a disposable per-batch comp (plus its private `constants-*` / `data*` / `*Charts`
+/ `*Captions` files) and is recycled when its batch completes. Companion skills: `edit-plan-and-cue-sheet.md`
 (the EDIT-PLAN/CUE-SHEET that drive the comp), `charts.md` (animated data charts), `captions.md`,
 `overlays.md`, `broll-and-containers.md`, `../longform-edited.md` (house rules + the PRE-RENDER GATE).
 
@@ -129,32 +136,59 @@ scale-in on each container/sub-point swap (hand-rolled `interpolate`, NOT `Trans
     Film burn = warm radial flash ±0.38s (the standing default, `longform-edited.md` #5). Blocks·Max glitch =
     `blocks-max-*` on the cut to face (sanctioned per-video alternative, Mike 2026-06-20/30). On a face beat
     > ~2s add a ~15-20% **punch-in** zoom mid-beat (re-engage), short glitch optional. NEVER a plain cross-fade to face.
-  - **Envato VIDEO b-roll = fade** (opacity ~0.5s). **Container/chart swap = cross-fade + scale-in.**
+  - **Envato VIDEO b-roll = fade** (opacity ~0.5s). **TEXT-container swap = cross-fade + scale-in (the quiet default).**
   ```tsx
   const FilmBurn: React.FC<{frame:number}> = ({frame}) => { /* orange radial gradient, ~11f flash */ };
   ```
+- **4th layer — DIAGRAM / CHART MARQUEES → reserved MELT + SPIN** (Mike, 2026-07-18): the library's **MELT**
+  (`melt-rgb-*`/`melt-equidistant-*`, chromatic/spherical "reform") and **SPIN** (`spin-3d-side-ease-*` 3D turn ·
+  `spin-twirl-*` vortex) families are deployed **only** on the handful of marquee system-diagram/chart beats, so
+  those thesis moments read as motion-designed while text containers stay on the quiet cross-fade. Rules: **ONE
+  melt look + ONE spin look per video** (like the single card pick); **MELT = TRANSFORM** (before→after, a
+  re-highlighted callback of an earlier diagram — e.g. a constellation reforming into its superset variant);
+  **SPIN = NEW FACET** (rotate a new contender's system-diagram / a verdict board in; 3D spin echoes a `cube`
+  card). Reserve them — a small deliberate count, never sprayed. Placed via `TransitionClip` (cover→cover,
+  full-frame so the spine never peeks); both carry SFX that **must duck under the continuing VO**. The
+  `transition-strategist` agent (`.claude/agents/longform-edited/`) authors the whole plan incl. this layer.
 
 ## 7. Animated data charts (`charts.md` — NEVER a PNG with a wipe)
 Charts are **code-built React components that draw/grow/count via `useCurrentFrame`** (bars interpolate up,
-numbers count). Pattern lives in `src/SmChartsAnim.tsx` (survives in src/). Values are `[VERIFY]` at render and
-**never sourced from an image model**. A chart PNG held with a wipe is a GATE VIOLATION (`longform-edited.md` draft rule).
+numbers count). The full method is in `charts.md` (self-contained; do NOT open an old chart comp). Values are
+`[VERIFY]` at render and **never sourced from an image model**. A chart PNG held with a wipe is a GATE VIOLATION
+(`longform-edited.md` draft rule).
 
-## 8. Captions (`captions.md`; OFF by default, opt-in per video)
+## 8. Captions (`captions.md`; **ON by default — every longform ships captioned**)
+**⛔ Captions are ON unless Mike EXPLICITLY says otherwise for a specific video.** (Corrected 2026-07-19:
+this section previously said "OFF by default, opt-in" — prose that contradicted actual practice (zebec,
+smk, every recent longform opted in), and tao-render-virtuals' doc set silently inherited the false default,
+reaching Mike's draft review uncaptioned. Mike: "we're supposed to have them on. I never said not to have
+them." A default is a decision-maker of last resort — it must match practice, and turning captions OFF is a
+per-video Mike decision recorded in the CUE-SHEET as `CAPTIONS: OFF (Mike, <date>)`, never a bare default.)
+**⛔ CAPTIONS COME FROM ONE PLACE — `skills/captions/build_captions.py`. NEVER hand-roll them, and NEVER copy an
+old comp's inline caption block (Mike, 2026-07-12: I did exactly that on zebec — copied `SmkFull`'s inline
+Arial-Black single-word captions — and shipped the wrong font + single words. Captions had NEVER broken before).**
+- **DATA:** generate with `python video-creation/skills/captions/build_captions.py --words <spine-words.json>
+  --style montserrat --max-words 2 --max-short 4` (longform-edited grouping = **2 words/line, up to 4 if every
+  word is ≤4 chars** — this is why the reference reads "it up is a", not one word). It applies the brand
+  CORRECTIONS + cleanup. Filter the emitted array to the caption windows; do NOT retype words by hand.
+- **RENDER STYLE (self-contained below — do NOT open an old comp to copy it):**
+  `fontFamily: "Montserrat,'Arial Black','Segoe UI',sans-serif"` (LOAD Montserrat via `@remotion/google-fonts/Montserrat`),
+  `fontWeight: 900`, `textTransform: 'lowercase'`, `WebkitTextStroke: '12px #000'`, `paintOrder: 'stroke fill'`,
+  pop `scale 0.7→1.12→1`, bottom-center, TOPMOST. The font is **Montserrat** — Arial Black is only the fallback.
 ```tsx
-export const CAPTIONS: { t: number; h: string }[] = [ { t: 0.0, h: 'there' }, { t: 0.2, h: 'is' }, /* … */ ];
-const CAPS = CAPTIONS.map((c) => ({ tf: sh(c.t), h: c.h }));   // word-level, re-mapped
-const CAPTION_WINDOWS = CAPTION_SRC.map(([a,b]) => [sh(a), sh(b)] as [number,number]);  // the face spans that get captions
-const COVER_WINDOWS   = COVERS.map((c) => [sh(c.tIn), sh(c.tOut)] as [number,number]);
+// DATA is generated (above) into zebecCaptions.ts as ZCAPTIONS = [{t, h:'real companies.'}, {t, h:'tens of'}, …]
+const CAPS = ZCAPTIONS.map((c) => ({ tf: sh(c.t), h: c.h }));   // phrase-level, re-mapped
 const Captions: React.FC = () => {
   const t = useCurrentFrame() / FPS;
-  if (!CAPTION_WINDOWS.some(([a,b]) => t>=a && t<b)) return null;     // ONLY inside the captioned face spans
-  if (COVER_WINDOWS.some(([a,b]) => t>=a && t<b)) return null;        // NEVER over a cover / container / receipt
-  const w = [...CAPS].reverse().find((c) => c.tf <= t && t < c.tf + 1.1);
-  // … render `w.h`: montserrat preset 1 word/line (2 if <=4 chars), pop 0.7→1.12→1 over ~9f. Captions render TOPMOST (above light leak).
+  if (!CAPTION_WINDOWS.some(([a,b]) => t>=a && t<b)) return null;     // only inside the caption windows
+  let cur = null; for (const c of CAPS) { if (c.tf <= t) cur = c; else break; }
+  const nextT = (CAPS.find((c) => c.tf > cur.tf) || {tf: Infinity}).tf;
+  if (!cur || t >= Math.min(nextT, cur.tf + 1.3)) return null;        // hold until next phrase / clear on a gap
+  // render cur.h with the Montserrat style above.
 };
 ```
-- Build the array with `video-creation/skills/captions/build_captions.py --transcribe <spine> --style <preset>`,
-  fix the CORRECTIONS dict (Whisper mangles names/tickers), then gate to the windows per the video's caption policy.
+- A hook (0-31s over covers) or other over-cover caption window is a DELIBERATE per-video choice; the default is
+  captions ONLY over the face spine (never over a cover). **The `captions-builder` agent runs this end to end.**
 
 ## 9. Music + SFX = ffmpeg POST-mix, NOT in the comp
 The comp renders VIDEO + the spine's VO audio only. Beds, risers, impacts, ducks, fades are mixed onto the
@@ -191,6 +225,9 @@ npx remotion render src/index.ts <CompId> "$OUT/<project>-draft-vN.mp4" \
   --public-dir "../<track>/media/<project>/render-assets" \
   --log=verbose 2>&1 | tee "$OUT/<project>-draft-render.log"
 # FINAL (quality):  swap --video-bitrate=200k for  --crf=18   (the two are mutually exclusive)
+# ⛔ BEFORE any FINAL render: REMOVE the comp's build/WIP watermark (the corner tag naming batch+pass).
+#    It is a draft-only aid with no auto-removal — it shipped in tao-render-virtuals FINAL v1's first 2s
+#    (Mike caught it, 2026-07-19) and cost a first-chunk re-render + splice.
 # Slice for QA chunks:  add  --frames=A-B   (the chunk mp4 + its extracted QA frames also land under $OUT — see video-qa.md STEP 0)
 ```
 - **⛔ OUTPUT LOCATION IS MECHANICAL: the render mp4, any preflight still, AND the render log ALL go to
@@ -212,7 +249,12 @@ npx remotion render src/index.ts <CompId> "$OUT/<project>-draft-vN.mp4" \
 
 ## 12. Workflow
 1. Spine recorded → defumbled → cover-blackout (face-gate) → desilenced → card pauses inserted = the paused spine.
-2. Transcribe the paused spine (word-level). Build `CUE-SHEET.md` (sub-point timing) + `EDIT-PLAN-prep.md`.
+2. Transcribe the final spine (word-level). Author the FULL pre-build doc set off the transcript (all timecoded
+   from it, NOT from the comp): `AS-RECORDED` · `DATA` · `BROLL-PLAN` · `TRANSITIONS` · `EDIT-PLAN-prep` ·
+   **`EDIT-PLAN`** (time-ordered event log) · `CUE-SHEET` · `MUSIC-PLAN.json`. These ARE the blueprint the comp is built to.
+2b. **⛔ PRE-BUILD GATE — run `node skills/lint-docset.js <track>/media/<project>` and it MUST exit 0 before ANY
+   comp work.** It enforces the §13 doc set + the spine/ naming (§13a) + ordering in CODE, so a required doc can't
+   be silently skipped (the pre-BUILD sibling of the §6b `lint-covers.js` pre-RENDER gate). Review every WARN.
 3. Build the comp: `COVERS`, `CARDS`/`CARD_T`, `PUNCH_SRC`, `CAPTION_SRC`, `CAPTIONS`, wired through `sh()`/`F()`.
    Populate `render-assets/`. Build REAL animated charts + code containers.
 4. Reconcile the comp to EDIT-PLAN/CUE-SHEET (zero orphans, every documented element present — the PRE-RENDER GATE).
@@ -221,7 +263,9 @@ npx remotion render src/index.ts <CompId> "$OUT/<project>-draft-vN.mp4" \
    a deliberate exception, flag the cover entry (`lead: true` for a ≤5s leading dolly, `cap: true` for captions over
    that cover) — the linter respects the flags, so exceptions are explicit, not silent.
 5. Draft render (`--video-bitrate=200k`) → QA 10s chunks (motion+audio) per `video-qa.md` → fix → final render.
-6. Generate `EDIT-PLAN.md` (event log) from the comp (`_gen_editplan` — see `_gen_editplan.example.js`). ffmpeg-mix music+SFX.
+6. ffmpeg-mix music+SFX. (⛔ The `EDIT-PLAN.md` event log + `CUE-SHEET.md` are authored PRE-build as the
+   blueprint the comp is built TO — see `edit-plan-and-cue-sheet.md` §0 ORDER note — NOT generated from the
+   comp. Any `_gen_editplan` run is only an optional as-built reconciliation, never how the plan is authored.)
 
 ## 13. The per-video document set (every longform-edited video carries ALL of these)
 A new `media/<project>/` folder should contain this full set — if one is missing, that's a gap to fill, not a
@@ -230,14 +274,39 @@ them all; it is deletable, so the set is recorded HERE.) Formats are canonical i
 project.
 | File | What it is | Format owner |
 |---|---|---|
-| `SCREENPLAY.md` | the script (tagged FACE/COVER/SHOW lines) | `../screenplay.md` |
-| `DATA.md` | chart-source index + market snapshot for every `[VERIFY]` number | `skills/charts.md` |
+| `SCREENPLAY.md` | the pre-production script (tagged FACE/COVER/SHOW lines) | `../screenplay.md` |
+| `AS-RECORDED.md` | the as-BUILT, timecoded script derived from the FINAL-spine transcript. **Build the edit to THIS, not the screenplay, where they differ.** Carries the FACE windows + the script divergences (ad-libs / dropped / changed lines). Produced once the spine is transcribed. | `../screenplay.md` (as-built variant); exemplar `media/zebec/AS-RECORDED.md` |
+| `DATA.md` | the **research dump** (every number carries a source) + do-not-air numbers + CHART-SOURCE INDEX + market snapshot for every `[VERIFY]` number. This IS the fact source the screenplay is written from. **Put verified research HERE — never in a separate `DOSSIER.md`** (that is an undocumented file; the research dump belongs in DATA.md per `charts.md` §1). | `skills/charts.md` |
 | `BROLL-PLAN.md` | b-roll acquisition worklist (prompts / Envato terms / status) | `edit-plan-and-cue-sheet.md` §0 |
 | `EDIT-PLAN-prep.md` | pre-record beat-indexed plan (Layer model, every asset placed/REJECTED) | `edit-plan-and-cue-sheet.md` §0 |
 | `CUE-SHEET.md` | layer-grouped watch-along, sub-point timing off the transcript | `edit-plan-and-cue-sheet.md` §2 |
 | **`TRANSITIONS.md`** | **the per-video transition plan — how EVERY cut is bridged** | **§14 below** |
 | `EDIT-PLAN.md` | post-comp time-ordered EVENT LOG (generated) | `edit-plan-and-cue-sheet.md` §1 |
 | `PROJECT-LOG.md` | decision trail + resume pointer | (free-form) |
+
+### 13a. The per-video FOLDER layout — where masters, spine-prep, and outputs live (FIXED location + naming)
+The docs above sit at the `media/<project>/` root; the media assets live in these SUBFOLDERS. **The spine-prep
+intermediates have a FIXED folder AND a FIXED naming scheme — write them here, with these names, so every project
+reads the same way and Mike can identify each stage on sight.** (This was undocumented and drifted — outputs landed
+loose in the project root with ad-hoc names; recorded HERE now so it can't recur.)
+```
+media/<project>/
+  raw/            camera masters ONLY (the .mkv/.mp4 straight off OBS). NEVER edit/delete — deletions go to the Recycle Bin.
+  spine/          ALL spine-prep intermediates (the defumble -> blackout -> desilence -> pause chain), each named:
+                      <segment>.<letter>.<stage>.<ext>
+                  - segment = the recorded take's chapter range (CH1-CH3, CH4-CH7, ...), or ALL for the joined full spine.
+                  - letters run IN PIPELINE ORDER (insert a new letter for any extra cleanup step):
+                      a.defumbled    (+ sidecars  ._chunkmap.json/.txt , .mp4.spans.json )   <- defumbler
+                      b.blackout     (+ .mp4.cover.json = the FACE/COVER map )                <- cover-blackout
+                      c.desilenced   (+ .map.json = the cut/keep map )                        <- desilencer (at the stated min-silence)
+                      d.paused       (+ .paused.json )  card-pause spine (+1s per chapter card)
+                    (burst-removal / a re-desilence insert their own next letter, e.g. d.cleaned -> e.desilenced -> f.final.)
+                  - MULTI-TAKE recordings: name each take by its range, process each through the chain, then JOIN to
+                    ALL (sync-safe `filter_complex`, NEVER the concat-demuxer) -> ALL.c.desilenced.mp4.
+  render-assets/  comp INPUTS only (§10). The final paused spine is copied here as render-assets/spine.mp4.
+  _previews/      draft / QA render outputs + logs (§11). NEVER in render-assets/ or the shared remotion/out/.
+```
+Exemplar folders to copy the naming from: `media/carry-trade/spine/` and `media/Kaspa founder genius or over-rated/spine/`.
 
 ## 14. TRANSITIONS.md — the per-video transition plan (self-contained skeleton)
 A short doc that PINS this video's transition choices so the build (and a picky review) has one place to check.
@@ -247,6 +316,13 @@ It applies §6's three-bucket policy to THIS video's cuts. Skeleton (fill the pi
 _Three-bucket policy (canonical: ../../assets/transitions/README.md + longform-edited.md #5). Glitch ids:
 assets/transitions/library.json. Do NOT collapse all cuts into the glitch library._
 
+**Transition SOURCE prefix (tag EVERY transition in TRANSITIONS.md / EDIT-PLAN-prep / CUE-SHEET / EDIT-PLAN so a
+reviewer can tell the source at a glance — Mike, 2026-07-10):**
+- `rmn:` 📦 = out-of-the-box `@remotion/transitions` (slide, fade, iris, cube…).
+- `lib:` 🧩 = OURS, from the transition library (`../../assets/transitions/library.json`), e.g. `lib:badsignal-short-1`.
+- `hand:` ✋ = hand-rolled overlay code (film-burn, xfade+scale, punch-in, pop — not a package/library).
+The three prefixes = the three buckets below; a bare transition name (no prefix) is a gap to fix.
+
 ## 1. Chapter / title cards → ONE pick for the whole video
 This video = <cube|slide|flip|book-flip|swap>. Cards ON at: <CH#s with a music-bed change>. Self-contained
 @remotion/transitions scene — never wrap the locked spine in TransitionSeries.
@@ -254,7 +330,14 @@ This video = <cube|slide|flip|book-flip|swap>. Cards ON at: <CH#s with a music-b
 ## 2. Glitchy-fast hits → glitch library (AI / atmosphere stills ONLY)
 ChatGPT stills + the AI clip → random Cinematic Bad Signal (badsignal-short/max-*) on ingress.
 
-## 3. Face + b-roll + containers → hand-rolled overlays on the spine (house rule #5)
+## 3. Face + b-roll + TEXT-containers → hand-rolled overlays on the spine (house rule #5)
 - FACE cut in/out → <film burn | Blocks·Max glitch>  (the per-video pick) + ~15-20% punch-in on face beats >2s.
-- Envato VIDEO b-roll → fade (~0.5s).   Container/diagram/chart swap → cross-fade + 0.93→1 scale-in.
+- Envato VIDEO b-roll → fade (~0.5s).   TEXT-container swap → cross-fade + 0.93→1 scale-in (the quiet default).
+
+## 4. DIAGRAM / CHART MARQUEES → reserved MELT (transform) + SPIN (new facet)
+ONE melt look (`lib:melt-rgb-*`) + ONE spin look (`lib:spin-3d-side-ease-*`) for the whole video, deployed ONLY
+on the marquee diagram/chart beats (a small deliberate count, never sprayed). MELT = TRANSFORM (before→after /
+re-highlighted callback of an earlier diagram). SPIN = NEW FACET (rotate a new contender/board in; echoes cube).
+cover→cover full-frame; SFX ducks under the VO. Table: | TC | move | id | TRANSFORM-vs-NEWFACET why |. Everything
+else stays §1-3. (Authored by the `transition-strategist` agent.)
 ```
