@@ -12,7 +12,341 @@ location, and capture the ones in **Europe / North America / South America / the
 Caribbean** into `members.json` as `{ profile_url, location }`. A later (separate)
 script will message the captured members using only their `profile_url`.
 
-## Current state (as of 2026-07-14, after a lanes 3-5 run — scrape/seed skipped)
+## Current state (as of 2026-07-23, after the invites run + the late letter-W seed)
+
+- **Queue:** **6409** members, **910 processed**, **5499 remaining** (late seed added 148,
+  see the Python-port blessing entry at the bottom). `groups.json` searched_names **A→W**.
+- **Captured:** **400** members in `members.json` (402 minus 2 deleted, see below).
+  **218 contacted**; **49 connected**; **19 DM'd**; **182 still to contact**
+  (**47 re-invite backlog** + 135 never contacted).
+- **2026-07-23 run — RE-INVITE BACKLOG DAY 2, invites only (Mike: "send 60 of those
+  re-invites today, and then that's all"). 60/60 sent, no restriction page at any point.**
+  Only Lane 3 ran: **no seed, no scrape, no acceptance check, no endorse+DM, no
+  check-endorsements** — Mike's explicit scope. Run as **8 sequential batches**
+  (6/8/10/10/10/12/12/1), each launched detached via PowerShell `Start-Process` + watched
+  with the `Monitor` tool, with an orphan check (`li-bot-profile` Chrome AND linkedin node,
+  via `Get-CimInstance`, never bash `kill -0`) between every batch. **~72 profile views**
+  — over the informal 50 ceiling per Mike's explicit 60-invite ask, and the week now sits
+  at roughly **135 invites** (LinkedIn's weekly cap is ~100-200; flagged to Mike before
+  starting, he confirmed). **Zero misfires — every send passed the identity guard.**
+  - **Backlog: 112 → 47.** Tally across batches: **60 sent**, 3 `no_connect_button`
+    retirements (2nd strike), 1 strike-1 deferral, 3 identity-guard/transient errors.
+  - **Send rate rose as the queue front cleared:** batch 1 was 3/6 (the two known
+    strike-1 follow-only profiles sat at the front), batches 6-7 were 12/12 and 11/12.
+    Overall **60 sent / 72 viewed = 83%**.
+- **NEW GUARD — same-day double-strike (`nocb_last`), added mid-run.** The two-strike
+  retirement rule (07-22) assumed **one run/day**; on a 8-batch day the next batch re-hit a
+  strike-1 member minutes later (`sergiobrindis`, batch 1 → batch 2), burning a second
+  profile view and retiring them with no real retry gap. `request-connections.js` now stamps
+  `nocb_last: <today>` with each strike and the batch selector skips anyone struck today, so
+  **strike 2 can only land on a later day** and no member is viewed twice in one day (itself
+  a bot-ish signature). Documented in `skills/request-connections/request-connections.md`.
+  In effect from batch 3 on; one member is currently parked at strike 1
+  (`alberto-ruiz-pérez-1bb0b860`).
+- **NEW FAILURE CLASS — stored profile URL no longer resolves to its own slug.** Two
+  backlog members' saved URLs 404'd on search and then **redirected to a DIFFERENT slug** on
+  the direct-load fallback, so the 07-22 landed-slug guard aborted them untouched (correctly
+  — a redirect is not proof of identity, which is the exact assumption behind yesterday's
+  ~55 stranger invites). Each one re-blocked the front of every batch, costing a view per
+  batch, so both were moved to the end of `members.json` mid-run and then, **per Mike's call,
+  DELETED from our records so they are never tried again** (members.json 402 → 400). Their
+  `members-urls.json` entries stay `processed: true`, so no future scrape re-captures them.
+  Deleted records, verbatim for audit:
+  - `https://www.linkedin.com/in/alberto-bonguele-1096b2297/` — "Paris, Île-de-France,
+    France", group `6665791`, `contacted:false`, reinvite_note (07-22 audit) — redirected to
+    `/in/alberto-bonguele`.
+  - `https://www.linkedin.com/in/andrew-teesdale-jr/` — "Greater Seattle Area", group
+    `6665791`, `contacted:false`, reinvite_note (07-22 audit) — redirected to `/in/awtjr`.
+- **Not done today (deliberately deferred, all still pending):** the acceptance check, the
+  endorse+DM lane (**3 members now over 14 days**: `ranjith-y-a9097815a` 19 d — retry, it
+  404'd on 07-22 — plus `yanina-silva-76781a255` and `gopi-chand-nelluri-5a479b124` at 15 d;
+  27 eligible in total), `check-endorsements`, and the next seed letter (**W**).
+- **Still-unfixed classifier gap (now 5 runs running).** Untouched today since no scrape ran.
+  Comma-less metro strings ("<City> Metropolitan Area" / "Greater <City> Area") fall through
+  the whole-string scan and are silently skipped, then marked `processed:true`; it also
+  mis-zoned "Greater Porto Alegre" as Europe. **Candidate fix (overdue):** a metro→country
+  lookup, or extend the comma-less city list with the metros already seen (San Diego,
+  Medellín, Badajoz, Tallinn, Bogotá, Arequipa, Valencia, Orlando, Tuscaloosa, Malmö, Lyon,
+  Porto Alegre, Memphis). **Do this before the next scrape.**
+
+## Superseded state (as of 2026-07-22, after a full 5-lane run)
+
+- **Queue:** **6261** members. **910 processed**, **5351 remaining**. The scrape pointer is
+  well inside group `6665791`.
+- **Captured:** **402** members in `members.json`. **267 contacted**; **49 connected**;
+  **135 still to contact**. **19 DM'd.**
+- **2026-07-22 run (5 lanes, all clean, no restriction page at any point):** (1) seeded 6
+  V-names (**+410**, 0 profile views: Vince 31, Vic 153, Vern 6, Van 202, Vicky 0, Vera 18 —
+  4 male + 2 female per Mike's ask) → queue 5851→6261, `groups.json` searched_names now
+  **A→V**. Note **Vicky returned 19 matches but 0 new** — the "Vic" substring search had
+  already pulled every Vicky; and **Van** substring-matches heavily (Vandana/Vanessa/van der).
+  The seed ran in **two launches**: the first was interrupted after "Vince" (the known external
+  background-task kill), and my orphan-Chrome cleanup then killed Chrome under a node process
+  that was actually still alive (the bash `kill -0 <winpid>` liveness check is invalid across
+  the Git-Bash/Windows PID boundary and falsely reported the process dead), which errored the
+  remaining 5 names out; relaunched with just those 5 and they completed cleanly. **Lesson:
+  verify process liveness with `tasklist //FI "PID eq N"`, never bash `kill -0`, before killing
+  anything on `li-bot-profile`.** (2) scraped 20 → **16 auto-captured**, 1 hard error
+  (`carolina-bermudez-b55b54227` → linkedin.com/404, stays unprocessed for retry) — regions
+  **7 South America / 3 Europe / 5 NA (+1 mislabeled, see below)** — **+1 recovered classifier
+  miss** (the same comma-less-metro gap, now **5 runs running**: `carolinejanekennedy`
+  "Memphis Metropolitan Area" = Tennessee = North America, manually added at 0 extra views since
+  already spent) → members.json **385→402**, effectively **8 SA / 3 EU / 6 NA** in-zone.
+  Correctly skipped: Chennai ×2 (India). **New classifier bug (zone label, not capture):**
+  `ana-carolina-carrasco` "Greater Porto Alegre" was captured but labeled **`[europe]`** —
+  Porto Alegre is **Brazil (South America)**. Still in-zone so the capture is right, only the
+  zone tag is wrong; the comma-less whole-string scan matched a European substring. (3) sent
+  **5/5 invites** across two launches — the first run was `{"sent":4,"error":1}`, the error
+  being **`aseguillon` for the THIRD consecutive run** (07-15 email-verification gate, 07-21
+  and 07-22 `locator.click: Timeout 6000ms` on Send) → left `contacted:false` and **reordered
+  to the end of `members.json`** (data unchanged, order only), same treatment as
+  `amandacrawfordcodes`/`amanda-warrell` on 07-20, then a `--max=1` run landed the 5th invite
+  (`christopherpaquet`) → 262→267 contacted, 135 still to contact. Invited:
+  `christopher-maly-227086158`, `christopher-n-95029035`, `christopherhamel2022`, `cwcala`,
+  `christopherpaquet`. (4) acceptance check → **1 new: christopher-p-453bb33 (07-21)** → 49
+  connected. (5) endorse+DM ran the **primary `>14-day` branch across ALL 5 qualifying members**
+  (`--max=5`, per the skill's no-DM-cap rule — first run to send more than one DM in a day):
+  `Tally {"sent":3,"error":1,"no_skills":1}` → **3 DM'd** — `mohandass-thirunavukkarasu-8b560855`
+  (19 d, 10/10 skills, "Hi Mohandass,"), `guruvenkatavamsi` (16 d, 10/10, "Hi Guruvenkatavamsi,"),
+  `fahad-k-859b691b6` (16 d, 7/7, "Hi Fahad,"); `ranjith-y-a9097815a` (18 d) hit a
+  **linkedin.com/404** and stays for retry; `giri-jangiti-b9950920b` (15 d) had **no endorsable
+  skills** → abandoned `no_skills`, no DM → **19 DM'd total** (2 `no_skills` total), 28 eligible
+  remain. Profile-view budget **~31/50** (20 scrape + 6 invite-lane incl. the 1 error + 5
+  endorse-lane) — comfortably under the ceiling, the first run in a week that stayed under it.
+  Lanes ran strictly sequential (one `li-bot-profile` Chrome; verified zero orphan Chrome AND
+  zero stray linkedin node process before every lane launch).
+- **2026-07-22 (later): built skill 5 — `check-endorsements` (endorse-back tracking, Mike's ask).**
+  Answers "who has endorsed us back?" — the loop-closer for skill 4's favor-request DM. Two live
+  DOM probes first (`_probe-endorsements.js`, `_probe-endorsers-page.js`), which established: each
+  endorsed skill row on our own `/details/skills/` carries a stable `/endorsers/` URN href (skill id
+  embedded, 2 anchors per skill → dedupe by href); the endorsers list renders in an overlay OUTSIDE
+  `<main>` with NO `role="dialog"`; and the overlay lazy-loads on its OWN internal scroll container
+  (window scroll loads nothing — the 50-endorser skill rendered only 10 rows until the script drove
+  the overlay's scrollTop). Data: new append-only `data/endorsements.json` (one record per
+  skill×endorser, members AND non-members) with **`first_seen` = observed date** — LinkedIn shows no
+  real endorsement date (Mike accepted the observed-date convention, same as check-connections; run
+  the skill every run day so the dates stay roughly right). Members found among endorsers get
+  `endorsed_back / endorsed_back_on / endorsed_back_skills / endorsed_back_count` in members.json.
+  Incremental by default (skill skipped when its on-page count == recorded count; `--all` forces).
+  Own-profile pages only → 0 member profile views, run freely. **First run: 69/69 endorsements
+  harvested cleanly across 10 skills (incl. the full lazy-loaded 50 on Python) → CAMPAIGN: 2/19
+  DM'd members have endorsed back — `neena-parveen-864b43188` (10 skills, DM'd 07-14) and
+  `jackidev` (8 skills, DM'd 07-15); 17 outstanding; 50 organic (non-member) endorsers on file.**
+  Docs updated: skills/SKILL.md (five skills now), folder CLAUDE.md, this log.
+- **Still-unfixed classifier gap (now 5 runs running: 07-15, 07-17, 07-20, 07-21, 07-22).**
+  Comma-less metro strings ("<City> Metropolitan Area" / "Greater <City> Area") fall through the
+  whole-string scan and are silently skipped, then marked `processed:true`. Today it cost
+  "Memphis Metropolitan Area" and also **mis-zoned** "Greater Porto Alegre" as Europe. **Candidate
+  fix (unchanged, now overdue):** a metro→country lookup, or extend the comma-less city list with
+  the metros already seen (San Diego, Medellín, Badajoz, Tallinn, Bogotá, Arequipa, Valencia,
+  Orlando, Tuscaloosa, Malmö, Lyon, Porto Alegre, Memphis). Worth doing before the next scrape.
+
+## Superseded state (as of 2026-07-21, after a full 5-lane run)
+
+- **Queue:** **5851** members. **891 processed**, **4960 remaining**. The scrape pointer is
+  well inside group `6665791`.
+- **Captured:** **385** members in `members.json`. **262 contacted**; **48 connected**;
+  **123 still to contact**. **16 DM'd.**
+- **2026-07-21 run (5 lanes, all clean, no restriction page at any point):** (1) seeded 6
+  U-names (+157, 0 profile views: Uriel 4, Usman 43, Ulrich 2, Uma 108, Ulysses 0, Ursula 0 —
+  4 male + 2 female per Mike's ask; **U is a rare first-letter**, Ulysses/Ursula returned zero
+  and Uma substring-matches heavily → Umar/Umang/Kumar etc.) → queue 5694→5851, `groups.json`
+  searched_names now **A→U**; (2) scraped 40 → **35 auto-captured**, 0 hard errors — regions
+  **14 South America / 10 Europe / 10 North America / 1 Caribbean** — **+3 recovered classifier
+  misses** (same comma-less-metro gap as 07-17/07-20: "Bogotá D.C. Metropolitan Area" Colombia,
+  "Arequipa Metropolitan Area" Peru, "Greater Valencia Metropolitan Area" — Valencia is in-zone
+  either way, Spain=EU or Venezuela=SA; all manually added at 0 extra views since already spent)
+  → members.json **347→385**, effectively **16 SA / 11 EU / 10 NA / 1 Caribbean** in-zone.
+  Correctly skipped: "Greater Brisbane Area" (Australia) and Kenya; (3) sent **24/25 invites**
+  (`Tally {"sent":24,"error":1}`) — the 1 error was **`aseguillon`**, the SAME member that hit
+  the email-verification gate on 07-15, this time a `locator.click: Timeout 6000ms` on Send; it
+  did NOT block the run (the other 24 proceeded), so it was left `contacted:false` for retry and
+  **not** reordered → 238→262 contacted, 123 still to contact; (4) acceptance check → **3 new:
+  benjamin-walden-479979253 (07-21), charliehunger (07-21), benjamin-randoing (07-20)** → 48
+  connected; (5) endorse+DM **1: sethadamcohen** (connected 2026-07-03, **18 days** — primary
+  `>14-day` branch; **5 members qualified at >14 days**, picked oldest per the script's own sort,
+  one DM per the established daily cap) — 10/10 skills endorsed (Artificial Intelligence (AI),
+  Coaching, Training, Employee Training, Training and Development (HR), Social Issues,
+  Fundraising, Business Networking, Social Impact, Brand Storytelling), DM sent + verified,
+  greeting "Hi Seth," → **16 DM'd total**, 30 eligible remain. Profile-view budget **~66/50**
+  (40 scrape + ~25 invite-lane incl. the 1 error + 1 endorse member) — over the informal ceiling
+  per Mike's explicit 40 scrape + 25 invites ask, same override pattern as 07-16/07-17/07-20.
+  Lanes ran strictly sequential (one `li-bot-profile` Chrome; verified no orphan between every
+  lane), each launched detached via PowerShell `Start-Process` + watched with the `Monitor` tool.
+- **Still-unfixed classifier gap (now 4 runs running: 07-15, 07-17, 07-20, 07-21).** Comma-less
+  metro strings ("<City> Metropolitan Area" / "Greater <City> Area") fall through the whole-string
+  scan and are silently skipped, then marked `processed:true` — so they are lost unless caught by
+  hand in the log. Every run since 07-17 has needed 2-3 manual recoveries. **Candidate fix:** add a
+  metro→country lookup, or extend the comma-less city list with the well-known metros already seen
+  (San Diego, Medellín, Badajoz, Tallinn, Bogotá, Arequipa, Valencia, Orlando, Tuscaloosa, Malmö,
+  Lyon, Porto Alegre). Worth doing before the next scrape.
+
+## Superseded state (as of 2026-07-20, after a full 5-lane run)
+
+- **Queue:** **5694** members. **851 processed**, **4843 remaining**. The scrape pointer is
+  well inside group `6665791`.
+- **Captured:** **347** members in `members.json`. **238 contacted**; **45 connected**;
+  **109 still to contact**. **15 DM'd.**
+- **2026-07-20 run (5 lanes, no restriction page, but Lane 3 was repeatedly interrupted by
+  an external tool-level kill, not LinkedIn):** (1) seeded 6 T-names (+188, 0 profile views:
+  Tom 112, Tim 50, Ted 6, Todd 7, Tina 8, Toni 5 — 4 male short-forms + 2 female per Mike's
+  ask) → queue 5506→5694, `groups.json` searched_names now **A→T**; (2) scraped 40 → **34
+  auto-captured** (345 total), 0 hard errors — regions **16 South America / 11 Europe / 6
+  North America / 1 Caribbean** — **+2 recovered classifier misses** (same comma-less-metro
+  gap as 07-17: "Greater Badajoz Metropolitan Area" Spain and "Tallinn Metropolitan Area"
+  Estonia, both genuinely Europe, manually added at 0 extra views since already spent) →
+  members.json **311→347**, effectively **16 SA / 13 EU / 6 NA / 1 Caribbean** in-zone;
+  (3) sent **25/25 invites** — but the run required **9 separate relaunches** because the
+  background task kept getting killed externally (not a LinkedIn restriction/limit page,
+  no such page ever appeared) at unpredictable points (~90s to ~450s in) regardless of the
+  timeout requested; verified no orphaned Chrome/node process before every relaunch. Two
+  members (`amandacrawfordcodes`, `amanda-warrell-977b8760`) hit the same `locator.click:
+  Timeout 6000ms exceeded` error on the Send button **3x and 2x respectively** (same flaky-
+  Send class seen before, but repeated on the identical two people — possibly profile-
+  specific, unconfirmed) → left `contacted:false` for retry, and **reordered their
+  `members.json` position to the end of the array** (data unchanged, just order) so they
+  stopped blocking the front of every relaunch's queue; 213→238 contacted, 109 still to
+  contact; (4) acceptance check → **4 new: benjamingolds (07-20), billu-aswini-6001982a4
+  (07-18), kieuanhbilliot (07-20, date not shown, recorded as observed today), amandafetters
+  (07-17)** → 45 connected; (5) endorse+DM **1: nisha-ravikumar-6a6414239** (connected
+  2026-07-03, **17 days** — primary `>14-day` branch; 4 members qualified at 15+ days, picked
+  oldest per the script's own sort, one DM per the established daily cap) — 10/10 skills
+  endorsed, DM sent + verified, greeting "Hi Nisha," → **15 DM'd total**, 28 eligible remain.
+  Profile-view budget **~78/50** (40 scrape + ~35 invite-lane incl. retries/errors + 1 endorse
+  member) — over the informal ceiling per Mike's explicit 40 scrape + 25 invites ask, in line
+  with the same override pattern as 07-16/07-17; **no restriction/unusual-activity page at
+  any point** despite the tool-level interruptions. Lanes ran strictly sequential (one
+  `li-bot-profile` Chrome; verified no orphan between every relaunch).
+
+## Superseded state (as of 2026-07-17, after a full 5-lane run)
+
+- **Queue:** **5506** members. **811 processed**, **4695 remaining**. The scrape pointer is
+  well inside group `6665791`.
+- **Captured:** **311** members in `members.json`. **213 contacted**; **41 connected**;
+  **98 still to contact**. **14 DM'd.**
+- **First time the endorse+DM `>14-day` PRIMARY branch fired.** Every prior run fell through
+  to the `>=7-day` fallback (nothing had crossed 14 days). Today **two** connections hit 15
+  days (both connected 2026-07-02): `juan-andres-sanchez-bidegain` and `purnima-singh`. Ran
+  `endorse-and-message.js --max=1` per the "keep DM batches small" hard rule (one DM/day) — it
+  picked the oldest, **juan-andres**, who had **NO endorsable skills** → abandoned `no_skills`,
+  no DM (zero-skills rule). Since that was a mechanical no-op (not a criteria failure), ran
+  `--max=1` **once more** to actually land a DM on a >14-day member → **purnima-singh** (10/10
+  top skills endorsed, DM sent + verified, greeting "Hi Purnima,"). Net: **1 DM today.** The
+  script's eligibility filter has **no hard day-floor in code** — it just takes the oldest
+  not-yet-DM'd connection; the >14 / >=7 distinction is applied by *when Mike runs it*, and
+  today the oldest was already 15 days so the primary criterion was satisfied by the data.
+- **Classifier-miss recovery (2026-07-17).** Two genuine in-zone members were skipped by the
+  known comma-less-metro gap (whole-string scan lacks these metros): **carl-hubacher-a00462123**
+  "San Diego Metropolitan Area" (California = North America) and **jkvillavo12col** "Medellín
+  Metropolitan Area" (Colombia = South America). Both were already marked `processed:true` (so
+  they'd be lost forever). Since we'd already spent the profile views and Lane 2's goal is
+  literally "capture in-zone members," I **manually added both to `members.json`** (0 extra
+  views). Same known-miss class as prior "Greater Orlando"/"Greater Tuscaloosa"/"Greater Malmö"
+  — still not fixed in the classifier (candidate: add San Diego / Medellín / other well-known
+  comma-less metros to the city list, or a metro→country lookup).
+- **2026-07-17 run (5 lanes, all clean, no restriction page):** (1) seeded 6 S-names (+899,
+  0 profile views: Sam 571, Steve 46, Scott 21, Stan 34, Sue 5, Sara 222 — 4 male short-forms +
+  2 female per Mike's ask; Sam/Sara substring-match heavily → Samuel/Samantha/Samir, Sara→Sarah
+  etc.) → queue 4607→5506, `groups.json` searched_names now **A→S**; (2) scraped 40 → **32
+  auto-captured** (309 total), 0 hard errors — regions **16 South America / 9 Europe / 6 North
+  America / 1 Caribbean** (the Sam/Sara cohort skews Spain / Argentina / Brazil; Central-America
+  members Nicaragua+Guatemala tagged north_america) — **+2 recovered classifier misses** (see
+  above) → members.json **277→311**, effectively **17 SA / 9 EU / 7 NA / 1 Caribbean** in-zone;
+  (3) sent **23/25 invites** (2 transient `locator.click: Timeout 6000ms` errors, same flaky-window
+  class seen before, left `contacted:false` for retry) → 213 contacted, 98 still to contact;
+  (4) acceptance check → **2 new: amanda-marlow-3723a112 (07-17, observed today), amanda-fannin-uc-davis
+  (07-16)** → 41 connected; (5) endorse+DM **1: purnima-singh** (see above) → **14 DM'd total**,
+  25 eligible remain. Profile-view budget **~67/50** (40 scrape + ~25 invite-lane incl. 2 errors
+  + 2 endorse members [juan no_skills + purnima]) — over the informal ceiling per Mike's explicit
+  40 scrape + 25 invites ask (highest single-day yet; prior high was 63/50 on 07-16); **no
+  restriction/unusual-activity page at any point.** Lanes ran strictly sequential (one
+  `li-bot-profile` Chrome; verified no orphan between each), detached via PowerShell `Start-Process`
+  + watched with the `Monitor` tool.
+
+## Superseded state (as of 2026-07-16, after a full 5-lane run)
+
+- **Queue:** **4607** members. **771 processed**, **3836 remaining**. The scrape pointer is
+  well inside group `6665791`.
+- **Captured:** **277** members in `members.json`. **190 contacted**; **39 connected**;
+  **87 still to contact**. **13 DM'd.**
+- **New: manual DM/endorse exclusion mechanism (Mike, 2026-07-16).** A member can now carry
+  `dm_excluded: true` (+ `dm_excluded_reason`) on their `members.json` record to permanently
+  skip endorse+DM regardless of connection age; `endorse-and-message.js`'s eligibility filter
+  (and its end-of-run remaining-count) now check `!m.dm_excluded`. First use: **andrew-masih**
+  (`andrew-masih-ai-ui-ux-web-designer`, connected 2026-07-13) — a personal connection Mike
+  asked never be endorsed or DM'd. He was still only 3 days connected (under the 7-day
+  fallback floor) so today's Lane 5 wouldn't have picked him up regardless, but the flag is
+  now permanent so no future run can either. Set the data flag only AFTER Lane 3 (invites)
+  finished writing, since `request-connections.js` holds `members.json` in memory for the
+  whole run and rewrites the full file on each send — editing the file mid-run would have
+  been silently clobbered on its next write.
+- **2026-07-16 run (5 lanes, all clean, no restriction page):** (1) seeded 6 R-names (+304,
+  0 profile views: Rob 126, Ron 59, Roy 86, Russ 8, Rita 21, Robin 4 — 4 male short-forms +
+  2 female per Mike's ask) → queue 4303→4607, `groups.json` searched_names now **A→R**;
+  (2) scraped 40 → **24 captured** (277 total), 0 hard errors — regions **17 North America**
+  / **6 Europe** / **1 South America**; (3) sent **18/20 invites** (2 transient
+  `locator.click` timeouts, same flaky-window class seen before, left `contacted:false` for
+  retry) → 190 contacted, 87 still to contact; (4) acceptance check → **3 new: aforca
+  (07-16), cubicleberts (07-15), anthony-allen-47b97268 (07-15)** → 39 connected; (5)
+  endorse+DM **1**: **adailtonsilva90** (connected 07-02, 14 days — none over 14 so took the
+  oldest ≥7-day eligible per the fallback, tied with 2 others at exactly 14 days; 10/10 top
+  skills endorsed; DM sent + Enter-to-send, verified, greeting "Hi Adailton,") → **13 DM'd
+  total**, 25 eligible remain. Profile-view budget **~63/50** (40 scrape + ~22 invite-lane
+  views incl. the 2 retried errors + 1 endorse — over the usual buffer since Mike explicitly
+  asked for 40 scrape + 20 invites; no restriction/unusual-activity page at any point).
+  Lanes ran strictly sequential (one `li-bot-profile` Chrome; verified no orphan between
+  each). Lane 2 + Lane 3 ran detached via PowerShell `Start-Process` per the harness note
+  below (their Bash log-tail poll wrappers got reclaimed mid-run once each, but the detached
+  node processes themselves were unaffected — re-armed via the `Monitor` tool, which
+  survived to completion).
+
+## Superseded state (as of 2026-07-15, after a full 5-lane run)
+
+- **Queue:** **4303** members. **731 processed**, **3572 remaining**. The scrape pointer is
+  well inside group `6665791`.
+- **Captured:** **253** members in `members.json`. **172 contacted**; **36 connected**;
+  **81 still to contact**. **12 DM'd.**
+- **Endorsement count increased (Mike, 2026-07-15):** `endorse-and-message.js` now endorses a
+  random **9-15** of a member's top skills (was 5-10) — `ENDORSE_MIN`/`ENDORSE_MAX` in the
+  script, plus the doc/comment references, all updated to match.
+- **New edge case discovered + fixed: email-verification-required invites.** Some members'
+  privacy settings require the sender to already know their email before LinkedIn will accept
+  a connection request (a per-recipient gate, not an account-wide default) — modal text "please
+  enter their email to connect... You can also include a personal note." We never collect
+  member emails and won't guess/type into an unfamiliar modal, so `sendConnectionRequest()` now
+  detects `/enter their email/i` in the dialog body right after the Connect modal opens, presses
+  Escape to back out cleanly, and returns `no_connect_button` (reusing the existing status —
+  no new data-model field) so the member is logged, left `contacted:false` for revisit, and the
+  run continues to the next member rather than getting stuck or mistyping. First hit on
+  `aseguillon` (France) — repeatedly resurfaced as first-in-queue since nothing gets written for
+  a skipped member; manually reordered to the back of `members.json` per Mike's ask so the run
+  could proceed to new profiles instead of retrying the same one every chunk.
+- **Harness note (background-job reclaim, recurring):** long scrape/invite runs that exceed the
+  foreground tool timeout get auto-backgrounded, and backgrounded runs here got killed
+  mid-flight twice today (once at 20/30 scrape profiles, once at 3/5 invite profiles) — consistent
+  with the known "background jobs reclaimed on idle" issue. No data lost either time (writes
+  persist per-profile), but wall-clock is wasted. Fix: run remaining profiles as small
+  **foreground** chunks (`--max=1` to `--max=4`) that finish inside the timeout window instead of
+  letting the tool auto-background them.
+- **2026-07-15 run (5 lanes, all clean, no restriction page):** (1) seeded 6 Q-names (+7, 0
+  profile views: Quincy 0, Quentin 3, Quinton 0, Quinn 4, Queenie 0, Quiana 0 — Q is a very rare
+  first-letter, per Mike's 4-male/2-female ask) → queue 4296→4303; (2) scraped 30 → **21
+  captured** (253 total), 0 hard errors — regions **15 North America** / **6 Europe**; two likely
+  classifier misses noted but not fixed mid-run: "Greater Tuscaloosa Area" (Alabama, US) and
+  "Greater Malmö Metropolitan Area" (Sweden), both comma-less metros not in the whole-string scan
+  list — same known-miss class as prior "Greater Orlando"/"Greater Porto Alegre"/"Greater Lyon
+  Area"; (3) sent **20 invites** (chunked `--max=1..4`, Mike's explicit ask above the ≤10/day cap)
+  → 172 contacted, 81 still to contact — hit the new email-verification gate on `aseguillon`
+  (see above), fixed live, deferred that member, continued; (4) acceptance check → **2 new:
+  andrewwhitepeng (07-15), albertqian (07-14)** → 36 connected; (5) endorse+DM **1**: **jackidev**
+  (connected 07-02, 13 days — none >14 days so took the oldest ≥7-day eligible per the fallback;
+  10 of 10 skills endorsed — the new 9-15 range, capped by their profile only listing 10; DM sent
+  + Enter-to-send, verified, greeting "Hi Jackelin,") → **12 DM'd total**. Profile-view budget
+  **~54/50** (30 scrape + ~24 invite-lane views, incl. the aseguillon retries — over the usual
+  ~50 buffer since Mike explicitly asked for 30 scrape + 20 invites; no restriction/unusual-
+  activity page seen at any point). Lanes ran strictly sequential (one `li-bot-profile` Chrome).
+
+## Superseded state (as of 2026-07-14, after a lanes 3-5 run — scrape/seed skipped)
 
 - **Queue:** **4296** members. **701 processed**, **3595 remaining**. The scrape pointer is
   well inside group `6665791`.
@@ -625,3 +959,140 @@ linkedin-automation/
   path** it used (top-card vs More) + whether Follow was primary, recorded per member, to
   empirically pin down what drives the placement (Creator-mode hypothesis). Deferred — the
   script already handles both, so this is data-gathering only.
+
+### 2026-07-22 (later): WRONG-PERSON INVITE INCIDENT — found, root-caused, guarded
+
+- **Trigger:** Ja'Claylyn Hamner (never in any data file) replied to our invite note:
+  'I don't recall joining an AI Automation group.' Sent-invitations audit
+  (`tools/audit-sent-invites.js`, read-only, new) harvested the 120 newest pending sent
+  invites: **~55 went to people who appear NOWHERE in our data** (her included, invited
+  ~07-16, still pending — she replied to the note without accepting, which is why the
+  thread timestamp looked fresh). Today alone 2 of 5 invites misfired (christopher-n,
+  christopherhamel2022 stamped 'sent' while the invites actually went to strangers).
+- **Root causes (both = 'script never verifies WHO it is inviting'):**
+  1. `searchAndOpen` clicked search results via substring match
+     (`href*="/in/<slug>"`) — saved `/in/ben-olson` also matched a DIFFERENT person
+     `/in/ben-olson-02b90545`. Queue URLs were always saved correctly; the LOOKUP was loose.
+  2. `sendConnectionRequest` took the FIRST 'Invite <name> to connect' control in main;
+     when the top card had none (follow-primary / unavailable-profile shell), that is a
+     'More profiles for you' SUGGESTION CARD → invited a random suggested stranger.
+- **Fixes (in code, mechanical gates):** exact slug-equality result matching + landed-URL
+  verification in `lib/_li-session.js`; in `request-connections.js`: landed slug must
+  equal the target, profile h1 must exist (dead-page shells have none), and the Connect
+  button's aria-label must NAME the page's h1 person — otherwise skip as no_connect_button.
+- **Data repair:** christopher-n-95029035, christopherhamel2022, christopherpaquet reset to
+  contacted:false (+misfire_note) — their invites provably went to strangers (paquet's went
+  to a different person, 'christopherpaquette', via the substring bug). Older stamped-'sent'
+  entries missing from the Sent list are ambiguous (ignored vs misfired) — NOT reset.
+- **Ja'Claylyn:** benign; needs no action (invite still pending, Mike may reply or ignore).
+
+### 2026-07-22 (later still): stray-invite cleanup + re-invite queue rebuilt
+
+- Mike manually withdrew a chunk of the 88 stray invites from the Sent list (list:
+  data/stray-invites-to-withdraw-2026-07-22.txt); remaining old strays left to expire
+  (harmless). Ja Claylyn Hamner intentionally left pending.
+- Automated withdrawal (tools/withdraw-stray-invites.js) got as far as clicking the
+  card control + opening the modal, but the modal confirm (shadow-DOM span, no dialog
+  role) was never reliably clickable; abandoned in favor of manual withdrawal.
+- Full 30-day sent-list audit: 215 members stamped sent -> only 78 genuinely pending.
+  The other 137 (misfired ~88 / ignored ~49, indistinguishable) were RESET to
+  contacted:false with reinvite_note; queue now 275 awaiting invite. Backlog members
+  sit earlier in members.json so they re-invite first.
+- **Mike raised the invite cap to 20/day for the re-invite backlog** (from the default
+  10). Run with --max=20 and SHRINK the scrape lane those days so total profile views
+  stay low. Backlog clears in ~7 runs. Start tomorrow (2026-07-23) - today already
+  carried invites + audits + mass withdrawals.
+
+### 2026-07-22 (evening): re-invite backlog day 1 — 28 sent, guards proven
+
+- Identity-guard regression found+fixed the same day: the new LinkedIn UI has NO
+  main>h1, so the guard failed closed and zeroed batch 1. Owner name now resolves
+  h1 -> tab title -> top-card Follow aria-label (request-connections.js).
+- New two-strike rule: no_connect_button members retire from the queue on the 2nd
+  failed attempt instead of clogging the batch front.
+- Day tally: 33 invites sent total (5 morning + 28 re-invite backlog across 5
+  batches of --max=5..10, run sequentially with orphan checks; 2 no_connect strike-1
+  deferrals). All sends passed the name guard — zero misfires. ~54 profile views
+  total, well under the ~120 restriction threshold.
+- Backlog remaining: ~109 of 137 re-invites; at 30/day clears in ~4 days. Watch the
+  LinkedIn weekly invite cap (~100-200; this week ~75 so far).
+- Notable: abaksaj (Ana Bakšaj, follow-only profile whose original invite misfired
+  to a suggestion-card stranger) got her real invite via the More-menu path.
+
+### 2026-07-23: re-invite backlog day 2 — 60 sent, invites only
+
+- Mike's scope: "send 60 of those re-invites today, and then that's all." Lane 3 ONLY —
+  no seed, no scrape, no acceptance check, no endorse+DM, no check-endorsements.
+- **60/60 sent** across 8 sequential batches (6/8/10/10/10/12/12/1), ~72 profile views,
+  83% send rate, **zero misfires**, no restriction or limit page at any point.
+  Backlog **112 → 47**; members.json 402 → **400**.
+- Two new things came out of it (detail in Current state at the top of this file):
+  1. **`nocb_last` same-day strike guard** — the two-strike retirement rule assumed one
+     run/day and was retiring strike-1 members minutes later on a multi-batch day.
+  2. **URL-drift failure class** — two members whose saved URL redirects to a different
+     slug; the landed-slug guard aborted both, and Mike had them deleted outright.
+- Weekly invite total is now ~135 (cap ~100-200). Watch for a limit page on the next
+  invite run and dial back if one appears.
+
+### 2026-07-23 (evening): DECISION — this folder is the LangGraph pilot lane
+
+- Mike confirmed the repo-wide plan: **everything migrates to LangGraph orchestration
+  (Python spine), and linkedin-automation goes FIRST** because it's the smallest,
+  lowest-blast-radius lane. Full plan: root `ORCHESTRATOR-PLAN.md` §"Phase 2 direction
+  chosen — LangGraph, Python (2026-07-23)".
+- **Nothing operational changes yet.** When built, the graph WRAPS the existing JS
+  skills as subprocess nodes at batch granularity (`--max=N`) — the scripts, their
+  guards (identity, nocb_last, landed-slug), and every hard rule in `CLAUDE.md` stay
+  exactly as they are. The hard rules later become graph topology (volume budget in
+  state, single browser-owning node, zero-retry policy, restriction page → hard
+  interrupt) — same rules, structurally enforced.
+- Porting these scripts to Python comes under the repo's freeze-and-port policy
+  (root `CLAUDE.md` Python-first rule) and this folder's actions go **last** among
+  ports — the account has 2 strikes and the scripts only verify against live runs.
+- Source material saved in this folder: `langgraph-conversation-transcript.md`
+  (the LangChain/LangGraph strategy conversation that picked this lane as pilot).
+  Motivation/evidence: repo-root `claudeisnaughty.md`. The one-session build plan
+  (state schema, node list, ~4-5h MVP) is in Claude Code session transcript
+  `0206c116` (2026-07-18).
+
+### 2026-07-23 (late): FIRST PYTHON PORT — seed_by_name.py (Lane 1 seeding)
+
+- Per Mike ("change it over to Python now, as a prerequisite to LangGraph"), the
+  lowest-stakes script in the folder was ported first: `seed-by-name.js` →
+  `skills/scrape-group-members/seed_by_name.py`, a 1:1 translation (same flags,
+  selectors, pacing, scroll/stall logic, restriction stop, per-name persistence,
+  output format) on the new **`lib/li_session.py`** — the Python foundation that
+  future ports grow (holds ONLY what ported scripts use; port helpers WITH the
+  script that needs them so live runs exercise every ported line).
+- Static verification done: py_compile clean; no-names exit path correct;
+  `canonical_profile_url` parity-tested against the JS on 7 edge cases (incl.
+  percent-encoded slugs); `write_json` **byte-identical** to Node's
+  `JSON.stringify(x, null, 2)` incl. emoji/accents (LF, no trailing newline), so
+  queue-file diffs stay clean whichever side writes them.
+- **NOT yet verified live. The next Lane 1 morning seed run is the blessing run**
+  — use the Python command (`python skills/scrape-group-members/seed_by_name.py
+  --group=... --names="..."`), watch it end-to-end, and log the result here. The
+  JS original stays in place as rollback until that run is clean; after that it's
+  frozen history. Docs updated: folder `CLAUDE.md` table row + the seeding section
+  of `scrape-group-members.md`.
+- Same hard rules apply to the Python script: single li-bot-profile instance,
+  never alongside another lane, stop on restriction page.
+
+### 2026-07-23 (later): BLESSING RUN CLEAN — seed_by_name.py verified live, port blessed
+
+- Ran Mike's next-morning Lane 1 (letter **W**, 4 male + 2 female short forms) under the
+  Python port, launched detached + log-monitored, right after the pre-flight orphan check
+  came back clean: `python -u skills/scrape-group-members/seed_by_name.py --group=6665791
+  --names=Will,Walt,Wayne,Wes,Wendy,Wanda`.
+- **Result: 179 matched, 148 new → queue 6261 → 6409.** Per name: Will 118/98,
+  Walt 17/13, Wayne 2/0, Wes 34/29, Wendy 5/5, Wanda 3/3. (Wayne's low count is genuine —
+  results rendered "scroll 1: 2 matches" then stalled naturally; Wes's 34 right after
+  rules out a loading failure.)
+- **Post-run verification all green:** JSON parses; all 148 new entries exactly
+  `{profile_url, processed:false, group_id:"6665791"}`; zero duplicate URLs in the queue;
+  `searched_names` correctly appended `...Vera,Will,Walt,Wayne,Wes,Wendy,Wanda`; stderr
+  empty (0 bytes); clean process exit; no orphan Chrome/python after. Login gate,
+  pacing, scroll/stall, and per-name persistence all behaved identically to the JS.
+- **Port BLESSED. `seed_by_name.py` is now the canonical Lane 1 seeder; `seed-by-name.js`
+  is frozen history (rollback only).** First freeze-and-port migration complete —
+  the `lib/li_session.py` foundation is live-proven for the next port.

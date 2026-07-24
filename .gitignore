@@ -43,4 +43,10 @@ uploading/new/
 schedule-tweets/config/
 
 # ── Chrome profile directories ────────────────────────────────────────────────
+# A mis-quoted profile path creates a literal "UsersmnedeAppData..." folder wherever
+# the script ran from — ignore the accident at any depth, not just schedule-tweets/.
+UsersmnedeAppData*/
 schedule-tweets/UsersmnedeAppData*/
+
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/

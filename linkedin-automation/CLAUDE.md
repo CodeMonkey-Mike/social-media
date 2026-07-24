@@ -24,13 +24,14 @@ persistent-profile pattern of the `schedule-tweets` posting scripts.
 
 | Script | Lane / job |
 |---|---|
-| `skills/scrape-group-members/seed-by-name.js --group=<id> --names="A,B,C"` | **Seed the queue by name.** For a large group, search member names in the group's in-page "Search members" box and capture every match into `data/members-urls.json`. Does NOT visit profiles. Records the searched names onto `data/groups.json`. |
+| `python skills/scrape-group-members/seed_by_name.py --group=<id> --names="A,B,C"` | **Seed the queue by name.** For a large group, search member names in the group's in-page "Search members" box and capture every match into `data/members-urls.json`. Does NOT visit profiles. Records the searched names onto `data/groups.json`. _Python port, blessed live 2026-07-23 (first freeze-and-port); `seed-by-name.js` = frozen rollback._ |
 | `skills/scrape-group-members/scrape-group-members.js --max=N` | **Process the queue.** Visit the next N unprocessed profiles, read location, classify, capture target-region members into `data/members.json`. Each profile = 1 view against the volume budget. |
 | `skills/request-connections/request-connections.js --max=N` | **Invite.** Send a connection request + note to N not-yet-contacted members from `data/members.json`. Each = 1 profile view. Default/cap **10/day**. |
 | `skills/check-connections/check-connections.js` | **Track acceptances.** Scan the My Network connections list, stamp `connected_on` + `contact_status: connected`. One list page — cheap. |
-| `skills/endorse-and-message/endorse-and-message.js --max=N` | **Endorse + ask back.** For accepted connections (oldest first): endorse a random 5-10 of their top skills, then send THE one sanctioned favor-request DM. Zero endorsable skills = abandon (no DM), marked `no_skills`. Each member = 1 profile view. Default/cap **3/day**. |
+| `skills/endorse-and-message/endorse-and-message.js --max=N` | **Endorse + ask back.** For accepted connections (oldest first): endorse a random 9-15 of their top skills, then send THE one sanctioned favor-request DM. Zero endorsable skills = abandon (no DM), marked `no_skills`. Each member = 1 profile view. **No one-DM-per-day cap** — send to ALL members connected >14 days ago (set `--max` to cover them); fallback = one member ≥7 days if none are older. `--max` default 3 is a floor, not a ceiling. |
+| `skills/check-endorsements/check-endorsements.js` | **Track endorse-backs.** Read OUR OWN skills page's endorser overlays, record who endorsed each skill into `data/endorsements.json` (`first_seen` = observed date; LinkedIn shows no real date, so run often), stamp `endorsed_back` onto matching members. Own profile only — 0 member profile views, run freely. |
 
-Typical lifecycle: **seed → scrape (≤50/day) → invite (≤10/day) → check (freely) → endorse+DM (small batches)**.
+Typical lifecycle: **seed → scrape (≤50/day) → invite (≤10/day) → check (freely) → endorse+DM (ALL members >14 days connected — no DM-count cap; volume is the only limit) → check-endorsements (freely, every run day)**.
 
 ## HARD RULES (do not violate — the account has been restricted twice; a 3rd strike risks a permanent ban)
 
@@ -62,7 +63,8 @@ Typical lifecycle: **seed → scrape (≤50/day) → invite (≤10/day) → chec
 
 - `groups.json` — group registry `{ group_id, name, url, members_url, status, searched_names? }`.
 - `members-urls.json` — work queue `{ profile_url, processed, group_id }`; `processed` is the resume point.
-- `members.json` — deliverable + outreach state `{ profile_url, location, group_id, contacted, contacted_at, contact_status, connected_on, endorse_status, endorsed_at, endorsed_count, dm_status, dm_sent_at }`.
+- `members.json` — deliverable + outreach state `{ profile_url, location, group_id, contacted, contacted_at, contact_status, connected_on, endorse_status, endorsed_at, endorsed_count, dm_status, dm_sent_at, endorsed_back, endorsed_back_on, endorsed_back_skills, endorsed_back_count }`.
+- `endorsements.json` — incoming-endorsement registry, append-only, one record per (skill, endorser) with `first_seen` observed date (members AND non-members).
 
 Edit JSON with **Node, never PowerShell `ConvertFrom/To-Json`** (mangles emoji) — same as
 the repo-wide rule.

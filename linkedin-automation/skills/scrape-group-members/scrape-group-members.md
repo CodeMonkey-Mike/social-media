@@ -82,18 +82,25 @@ add keywords to `ZONES`; to fix a false positive, add to `EXCLUDE`.
 
 ---
 
-## Companion: seeding a large group by name (`seed-by-name.js`)
+## Companion: seeding a large group by name (`seed_by_name.py`)
 
 For a huge group (tens of thousands) where enumerating every member is impractical,
-`seed-by-name.js` searches a handful of **names** in the group's in-page "Search members"
+`seed_by_name.py` searches a handful of **names** in the group's in-page "Search members"
 box and captures every match into the queue (LinkedIn substring-matches, so "David" also
 pulls "Davidson"). It only writes `members-urls.json` — it does **not** visit profiles.
 We walk the alphabet, 3 common male + 1 common female name per letter (group `6665791`,
 A→D as of 2026-06-29).
 
 ```bash
-node linkedin-automation/skills/scrape-group-members/seed-by-name.js --group=<id> --names="David,Daniel,Donald,Deborah"
+python linkedin-automation/skills/scrape-group-members/seed_by_name.py --group=<id> --names="David,Daniel,Donald,Deborah"
 ```
+
+**Port status (2026-07-23): BLESSED.** `seed_by_name.py` is the repo's FIRST freeze-and-port
+Python port (root `CLAUDE.md` Python-first rule) — a 1:1 translation of `seed-by-name.js` on
+the new `lib/li_session.py` foundation (helpers byte-parity-tested against `_li-session.js`,
+incl. the JSON writer). Its blessing run (letter W, 2026-07-23: 6 names, 148 new members,
+zero errors, clean data verification — see PROJECT-LOG) passed, so the Python version is
+canonical; `seed-by-name.js` is frozen history, kept only as rollback.
 
 It records the searched names onto `data/groups.json` (`searched_names`). Searching the
 member list is cheap (no profile views) — the captured URLs are processed later by the
