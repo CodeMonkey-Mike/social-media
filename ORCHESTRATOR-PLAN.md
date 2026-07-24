@@ -194,6 +194,7 @@ observed first.
   set and pipeline stabilize.
 - **Phase 2 (later, only if it earns it):** add the spawnable orchestration above (DAG-driven parallel
   fan-out via `.claude/agents/`), per the Execution-model section. Revisit after the observation window.
+  → **Direction chosen 2026-07-23: LangGraph (Python)** — see the dated section below.
 
 ## Next step
 
@@ -202,6 +203,42 @@ clumsy** — wrong/stale commands, capabilities that want their own playbook, ru
 the always-loaded `CLAUDE.md`. Fold those observations back into the routing table/playbooks. Only after
 that, and only if it earns it, move to Phase 2 (the spawnable DAG orchestration). Optional tidy-up:
 the full stale-path audit of the 23 `schedule-tweets/skills/` files.
+
+---
+
+## Phase 2 direction chosen — LangGraph, Python (2026-07-23)
+
+_Supersedes the open "only if it earns it" question above: Mike confirmed the pain is real
+(daily batches, manual gate-shepherding, crash re-renders) and set the direction. Still **NOT built** —
+this section records the decisions so no future session re-litigates them._
+
+- **Phase 2 = LangGraph StateGraphs, Python spine.** Supervisor pattern (the "peers never spawn
+  peers" rule *is* supervisor topology), SQLite checkpointing, human gates as interrupts surfaced in
+  the existing :8766 dashboard, hard rules encoded as topology (single posting node, zero-retry
+  policies, idempotency guards: record "attempted" → act → verify → record "complete").
+- **Strangler-fig order: LinkedIn first** (smallest, lowest blast radius — see
+  `linkedin-automation/PROJECT-LOG.md` 2026-07-23), then repurpose, then longform as a subgraph,
+  then the full batch orchestrator; the posting layer, where the hardest rules live, migrates last.
+- **Partial-lane migration works by design.** Steps communicate through files on disk +
+  `batches.json` stamps, so a lane keeps functioning with only its first N steps graphed — the
+  graph's END is a frontier that advances one node at a time. The rule that keeps this true:
+  **on-disk artifacts remain the contract**; graph state never exclusively carries anything a
+  downstream (still-manual) step needs. `batches.json` stays the human-readable source of truth;
+  the checkpoint DB is only LangGraph's private resume mechanism. Optional later pattern: full-span
+  graphs where un-migrated steps are interrupt placeholders ("do step 3 by hand, mark done") for
+  lane-wide dashboard visibility before lane-wide automation.
+- **Language consolidation rides along (freeze-and-port).** Endpoint = **all-Python except Remotion**
+  (root `CLAUDE.md` Python-first hard rule, commit `f093be2`). Each JS script is first wrapped as a
+  subprocess node at batch granularity, then ported to Python when its lane migrates — JS→Python
+  Playwright translation is near-mechanical (mirrored APIs; the platform quirks travel with the
+  code), and **live verification is the bottleneck, not translation**: order ports by blast radius,
+  read-only tooling first, posting scripts + LinkedIn actions last.
+- **Source documents:** `linkedin-automation/langgraph-conversation-transcript.md` (the strategy
+  conversation: architecture, checkpointing, idempotency, interrupts, migration),
+  `claudeisnaughty.md` (evidence/motivation: the 2026-07-18/19 failure log — what a graph fixes
+  structurally vs what still needs exemplars/gates/QA inside nodes), root `CLAUDE.md` Python-first
+  rule, Claude Code session `0206c116` (2026-07-18: the LinkedIn one-session build plan — state
+  schema, node list, ~4-5h MVP).
 
 _Source: session `6dc1c3b9` (2026-05-24). Related but distinct: the old `social-video-upload`
 orchestrator is recoverable from git at `86709d6~1` (`uploading/` subtree, removed in the refactor)._
