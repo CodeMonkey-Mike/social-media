@@ -36,10 +36,37 @@ node linkedin-automation/skills/request-connections/request-connections.js [--ma
 ## Flow per member
 
 Reach the profile via the shared search-and-click navigation (see
-[`../SKILL.md`](../SKILL.md)) → read
-nothing (no name needed) → click **Connect** (top-card button, or via the **More**
-menu) → **Add a note** → type the message → **Send**. On success it sets
-`contacted: true`, `contacted_at: <YYYY-MM-DD>`, `contact_status: sent`.
+[`../SKILL.md`](../SKILL.md)) → **verify identity** → click **Connect** (top-card
+button, or via the **More** menu) → **Add a note** → type the message → **Send**.
+On success it sets `contacted: true`, `contacted_at: <YYYY-MM-DD>`,
+`contact_status: sent`.
+
+**Identity guards (2026-07-22 — do not remove).** Before this date the script sent
+~55 invites to complete strangers (see PROJECT-LOG): search-result clicks matched by
+URL *substring* (so `/in/ben-olson` clicked a different person at
+`/in/ben-olson-02b90545`), and when a top card had no Connect the first
+"Invite <name> to connect" control in `main` was a **"More profiles for you"
+suggestion card**. Three mechanical gates now prevent both:
+
+1. search-result clicks require the result URL slug to **equal** the saved slug
+   (`lib/_li-session.js`);
+2. after navigation the landed URL slug must equal the target's or the member errors
+   out untouched;
+3. the profile owner's name must resolve (sources in order: `main h1` → tab title →
+   top-card "Follow <Name>" aria-label; the 2026 UI has no `main h1`) and the Connect
+   control's aria-label must **contain that name** — any other "to connect" button
+   on the page (e.g. a "More profiles for you" suggestion card) is ignored.
+
+Members that come back `no_connect_button` twice are **retired** (stamped
+`contacted: true, contact_status: no_connect_button`) so follow-only profiles don't
+clog the queue front on every run.
+
+**Same-day strike guard (2026-07-23).** The two-strike rule assumes **one run/day**. On a
+multi-batch day (the 60-invite backlog run) the next batch re-hit a strike-1 member minutes
+later, burning a second profile view and retiring them with no real retry gap. A strike now
+also stamps `nocb_last: <YYYY-MM-DD>`, and the batch selector skips anyone whose
+`nocb_last` is today — so strike 2 can only land on a **later day**, and nobody is viewed
+twice in one day (which is also a bot-ish signature).
 
 ## Where the Connect button lives (READ THIS — it has two axes of variation)
 
@@ -80,7 +107,9 @@ On top of the base pacing in `lib/_li-session.js`, this skill adds:
 ## `contact_status` values
 
 `sent` · `already_pending` · `already_connected` (all three set `contacted: true`) ·
-`no_connect_button` (follow-only / out of network; left `contacted:false` to revisit).
+`no_connect_button` (follow-only / out of network, OR the member requires an email to
+verify you know them before connecting, which we never have; left `contacted:false` to
+revisit — logged and skipped, not stopped).
 If LinkedIn shows a **limit** (weekly invite or personalized-note cap) or a
 **restriction** page, the run **STOPS immediately** and does not mark that member — it
 never hammers.

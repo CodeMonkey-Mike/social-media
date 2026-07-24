@@ -95,17 +95,45 @@
       "reference_the_screen": "Points at what's on screen as he talks. 'Look look, I hover over these prices, four hundred thousand, five hundred thousand.' 'we'll take that up here.' For a slide deck VO, occasional 'look at this', 'right here', 'up here' ties the voice to the visuals. (Verified hits: 'look at this' 11, 'right here' 43, 'up here' 7, 'look look' 4, 'look at that' 20. NOT 'check this out', 0 hits.)",
       "now_transition": "Opens a new point or pivots to the next section with 'Now,' (comma), or the longform section-transition 'Now we get to X / Now we get into X.' Strongly grounded (34 standalone 'Now,' + 58 'Now we get...'). Real examples: 'Now, this is interesting, right?' / 'Now, there is the opposite case scenario.' / 'Now, here's where most...' / 'Now we get to the escalation.' / 'Now we get into the blueprint.' A softer lead-in he uses constantly is 'it's like ...' (80 hits) to launch a comparison or analogy; 'it's like this' (only 3 hits) is just one variant of that base phrase, not a separate device."
     },
-    "fillers_and_connectors": ["so", "right?", "like", "I mean", "you know", "I guess", "look", "look look", "look at that", "and so on", "or whatever", "man", "folks", "here's the thing"],
+    "fillers_and_connectors": [
+      "so",
+      "right?",
+      "like",
+      "I mean",
+      "you know",
+      "I guess",
+      "look",
+      "look look",
+      "look at that",
+      "and so on",
+      "or whatever",
+      "man",
+      "folks",
+      "here's the thing"
+    ],
     "sentence_rhythm": "Starts sentences with And / So / Because / Like. Short punch lines mixed with long run-ons chained by 'and' and 'so'. Conversational and unproofread, not literary. Contractions always (gonna, gotta, kinda, I'm like, it's gonna). NO clever/literary fragment constructions or roundabout rhetorical setups he'd never actually say out loud (anti-example, caught 2026-07-01: 'So that is what this video is. A map.' -- reads as ad-copy, even Mike didn't parse it; say it plainly: 'So think of this video as a map.'). A punch-line fragment is fine only when it's how he really talks; when in doubt, say the plain version.",
-    "intensifiers": ["literally", "quite literally", "absolutely", "definitely", "crazy", "wild", "off the charts", "on fire", "parabolic", "holy crap", "oh my god"],
+    "intensifiers": [
+      "literally",
+      "quite literally",
+      "absolutely",
+      "definitely",
+      "crazy",
+      "wild",
+      "off the charts",
+      "on fire",
+      "parabolic",
+      "holy crap",
+      "oh my god"
+    ],
     "profanity_register": "Off-the-cuff shorts get spicy ('goddamn', 'what the hell', 'punching the balls'). For polished presentations, dial to mild only: 'freaking', 'holy crap', 'man', 'crazy'. Avoid the harder stuff in explainer/longform unless Mike asks for it.",
     "cta_style": "Sign off by asking for engagement in his own loose words, then plug the community, then a warm outro. Real longform pattern: 'if you like this vid, make sure you give it a like. Comment below, let me know your thoughts, what you think is gonna happen over the next couple years... hit the like and subscribe and click the link in the description to get involved in the best community ever.' He asks for COMMENTS (engagement driver) not just likes, plugs his community/courses/swing-trading tools when it fits, and closes with his real sign-off 'I'm gonna catch you guys, later.' (NOT 'catch you in the next one' or 'see you next time', those aren't his.) His EXACT button phrasing is 'click that like button and click the subscribe button' - he NEVER says 'smash that like button' (0 hits; that's generic YouTuber-speak, do not use it). The other real longform close (the QE-before-Bitcoin video) plugs his track record: 'if you like the content... because we all love crypto, we don't make tons of money off of crypto, right? And if you do want to make tons of money off of crypto, click the link in the description below. You can take a look at my most recent call, which earned us a freaking 353X on the LAB token. Absolutely went parabolic in a bear market. So click the link in the description below, click that like button and click the subscribe button if you want to see more content like this.' Use a CURRENT call/number at posting time (update the multiplier to reality per verified_claims_only). Caveat: the 'we don't make tons of money off of crypto' setup line is real but reads ambiguous on the page sitting next to the track-record brag (sounds like a contradiction); disambiguate it ('most people don't...') or skip straight to 'if you want to actually make some money in this space, click the link in the description.' For longform he often does a quick recap-in-a-nutshell right before the CTA.",
     "tts_note": "When the script is for the ElevenLabs voice clone: keep the tics (right?, doubling, quoted-thought, analogies, direct address) because they ARE him, but REMOVE mid-sentence self-interruptions and false restarts (they synthesize as broken audio). Spell out version numbers, dates, symbols, and big numbers as words so the model reads them correctly (e.g. 'Claude Opus four point eight', 'May twenty ninth', 'over three billion dollars'). No em dashes (see terminology_rules.no_em_dashes). Default is to strip UNINTENTIONAL false starts and uh/um, BUT a single deliberate, sparse 'um...' or 'ah...' can be added on request to make a line sound like he's genuinely reading/thinking aloud (Mike asked for one on the Zcash video, slide 7 only); use it surgically, never sprinkle it.",
+    "no_premature_whole_video_summary": "In longform video scripts (screenplays / VO), NEVER write a spoken line that tells the viewer what the whole video is about, or that a given point IS the whole video. Banned shapes: 'this is basically the whole video', 'this entire video is about X', 'that fact is the whole point', 'remember that, because later it becomes a weapon / the key to everything'. WHY: it is a retention killer. The moment you hand the viewer the thesis/payoff up front, the open loop is closed and they have no reason to keep watching (a core YouTube-educator retention principle Mike follows). HOW TO WRITE IT INSTEAD: keep the payoff an OPEN LOOP. You may foreshadow with intrigue that withholds the answer ('this one detail changes how you see all three of these', without stating the conclusion), but never pre-summarize, never say a point equals the whole video, and never tell the viewer to remember something because it pays off later. This applies to every longform-edited screenplay and any spoken script. (Mike, 2026-07-18, after 'that fact is basically the whole video' and 'remember that, it becomes a weapon' slipped into the tao-render-virtuals screenplay; he notes it is a recurring pattern across videos, not a one-off.)",
     "word_choice_rules": {
       "_purpose": "Living list of specific words/phrasings Mike does NOT say (and the term he prefers) in spoken scripts. He builds this as he catches diction that doesn't sound like him while reviewing outlines/scripts. Apply these when drafting any spoken narration; add to it whenever he corrects a word choice.",
       "manually_written_not_handwritten": "For code, NEVER 'hand-write / hand-writing / hand-written' (Mike reads that as literal pen-and-paper). Say 'manually write / manually written' (e.g. 'manually writing low-level opcodes'). Corrected on the silverscript outline 2026-06-13.",
       "tack_on_not_bolt_on": "Prefer 'tack on' over 'bolt on' for the add-an-extra-layer idiom (e.g. 'it doesn't tack on a virtual machine'). Mike wasn't sure he'd say 'bolt'. Corrected on the silverscript outline 2026-06-13.",
-    "caught_off_guard_not_flat_footed": "Never 'caught flat-footed'. Say 'caught off-guard' instead. Corrected on the carry-trade CH7 outline 2026-07-06 (he recorded it as 'off-guard' despite the script saying 'flat-footed')."
+      "caught_off_guard_not_flat_footed": "Never 'caught flat-footed'. Say 'caught off-guard' instead. Corrected on the carry-trade CH7 outline 2026-07-06 (he recorded it as 'off-guard' despite the script saying 'flat-footed')."
     }
   },
   "brand_voice_patterns": {
@@ -183,7 +211,8 @@
     "name_the_asset": "Any coin that represents a SPECIFIC asset (Kaspa, TON, BTC, etc.) must be named in the prompt with its identifying mark. Abstract phrasing like 'a glowing coin' / 'a radiant gem' / 'reveal a glowing event' makes the model invent a generic gold coin or a wrong (often Ethereum-like) symbol. Root cause of several wrong coins on 2026-05-26: the prompt never said the coin was Kaspa.",
     "kaspa_coin": "When a coin is meant to be Kaspa, prompt it EXPLICITLY: 'a Kaspa coin showing the backwards-K (mirrored-K) Kaspa logo, glowing greenish-cyan / teal'. Greenish-cyan (teal) is Kaspa's signature glow color, never gold. ChatGPT renders the Kaspa logo correctly when told explicitly; the wrong renders happened only because earlier prompts left the coin abstract.",
     "kaspa_logo_reference": "Optional safety net: attach schedule-tweets/images/reference/kaspa-logo.png and say 'the backwards-K Kaspa logo shown in the attached reference'. CAUTION (learned 2026-05-26): when EDITING a complex multi-element scene, do NOT attach the standalone logo-coin image as a reference -- the model may reproduce that whole coin full-frame and discard the scene (this happened to the magician/audience image). For scene edits, describe the backwards-K in WORDS ('a mirrored/backwards capital K, greenish-cyan') instead. Reserve the logo-image reference for single-coin spotlight images where copying the coin is fine.",
-    "editing_existing_images": "To fix one element of an existing image, upload the original as the base image and instruct 'keep the scene and style identical, change ONLY X'. For a Kaspa-logo fix, also attach kaspa-logo.png as a second reference and point to it as the symbol source."
+    "editing_existing_images": "To fix one element of an existing image, upload the original as the base image and instruct 'keep the scene and style identical, change ONLY X'. For a Kaspa-logo fix, also attach kaspa-logo.png as a second reference and point to it as the symbol source.",
+    "robinhood_coin": "For Robinhood or Robinhood-chain themed coins/glow, use Robinhood's brand colors: bright neon/lime green (approx #CCFF00) as primary, or Robinhood yellow as the alternate. NEVER render Robinhood coins in the greenish-cyan / teal glow (that is Kaspa's signature color, kaspa_coin above, and misreads as Kaspa). Mike flagged 2026-07-17 that teal Robinhood coins looked like Kaspa/9Hood."
   },
   "project_handles": {
     "note": "Map of project name (lowercase, no $ prefix) -> X handle for the official project account. When drafting tweets that focus on a specific project, append a final line: \"Follow: @<handle>\". Skip for Kaspa-focused tweets (Mike IS the Kaspa voice). Skip if handle is null/unknown. Adding the follow line tags the project and often earns retweets.",
@@ -209,7 +238,9 @@
       "kroak": null,
       "mother": null,
       "housecoin_alt": null,
-      "kasper": "@KasperCoin"
+      "kasper": "@KasperCoin",
+      "ninehood": "@ninehood_h",
+      "9hood": "@ninehood_h"
     }
   }
 }

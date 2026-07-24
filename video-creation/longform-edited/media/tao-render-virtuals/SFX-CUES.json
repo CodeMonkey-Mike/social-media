@@ -1,0 +1,212 @@
+{
+  "_readme": [
+    "Transition SFX cue list for the ffmpeg POST-mix (comp-build §9: comp is video-only, every engine ran sfx=false).",
+    "Times are PAUSED-spine seconds (= the finished render timeline; card pauses at 77.8/364.42/595.24 ends).",
+    "sfx paths resolve under video-creation/assets/transitions/ (NOT the render pubdir).",
+    "HARD RULE: every cue DUCKS UNDER the VO (short-term/peak vs VO, never integrated-LUFS-only; video-qa.md).",
+    "Start each sfx at sfx_start_paused (the FX window straddles the cut)."
+  ],
+  "generated": "2026-07-19",
+  "cues": [
+    {
+      "label": "STILL glitch IMG-1",
+      "id": "badsignal-short-1",
+      "sfx": "transitions/lib/sfx-badsignal-short.mp3",
+      "cut_paused": 17,
+      "sfx_start_paused": 16.767,
+      "window_s": 0.48
+    },
+    {
+      "label": "FACE cut-in #1",
+      "id": "blocks-max-1",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 48.7,
+      "sfx_start_paused": 48.233,
+      "window_s": 0.96
+    },
+    {
+      "label": "FACE cut-in #2",
+      "id": "blocks-max-2",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 124,
+      "sfx_start_paused": 123.533,
+      "window_s": 0.96
+    },
+    {
+      "label": "FACE cut-in #3",
+      "id": "blocks-max-3",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 182.87,
+      "sfx_start_paused": 182.403,
+      "window_s": 0.96
+    },
+    {
+      "label": "STILL glitch IMG-2",
+      "id": "badsignal-short-2",
+      "sfx": "transitions/lib/sfx-badsignal-short.mp3",
+      "cut_paused": 266.34,
+      "sfx_start_paused": 266.107,
+      "window_s": 0.48
+    },
+    {
+      "label": "FACE cut-in #4",
+      "id": "blocks-max-1",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 295.03,
+      "sfx_start_paused": 294.563,
+      "window_s": 0.96
+    },
+    {
+      "label": "MARQUEE melt D3-D before→after",
+      "id": "melt-rgb-short-1",
+      "sfx": "transitions/lib/sfx-melt-rgb-44.mp3",
+      "cut_paused": 322.6,
+      "sfx_start_paused": 322.4,
+      "window_s": 0.44
+    },
+    {
+      "label": "FACE cut-in #5",
+      "id": "blocks-max-2",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 354.63,
+      "sfx_start_paused": 354.163,
+      "window_s": 0.96
+    },
+    {
+      "label": "MARQUEE spin D4-A in",
+      "id": "spin-3d-side-ease-right",
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "cut_paused": 373,
+      "sfx_start_paused": 372.567,
+      "window_s": 0.88
+    },
+    {
+      "label": "STILL glitch IMG-3",
+      "id": "badsignal-short-3",
+      "sfx": "transitions/lib/sfx-badsignal-short.mp3",
+      "cut_paused": 413,
+      "sfx_start_paused": 412.767,
+      "window_s": 0.48
+    },
+    {
+      "label": "FACE cut-in #6",
+      "id": "blocks-max-3",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 458.8,
+      "sfx_start_paused": 458.333,
+      "window_s": 0.96
+    },
+    {
+      "label": "MARQUEE spin D5-A in",
+      "id": "spin-3d-side-ease-left",
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "cut_paused": 481,
+      "sfx_start_paused": 480.567,
+      "window_s": 0.88
+    },
+    {
+      "label": "STILL glitch IMG-4",
+      "id": "badsignal-short-1",
+      "sfx": "transitions/lib/sfx-badsignal-short.mp3",
+      "cut_paused": 516.32,
+      "sfx_start_paused": 516.087,
+      "window_s": 0.48
+    },
+    {
+      "label": "FACE cut-in #7",
+      "id": "blocks-max-1",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 577.03,
+      "sfx_start_paused": 576.563,
+      "window_s": 0.96
+    },
+    {
+      "label": "MARQUEE spin CH6 card→D6-A board",
+      "id": "spin-3d-side-ease-up",
+      "sfx": "transitions/lib/sfx-spin3d-88.mp3",
+      "cut_paused": 595.24,
+      "sfx_start_paused": 594.807,
+      "window_s": 0.88
+    },
+    {
+      "label": "MARQUEE HERO melt D6-A→D6-B superset",
+      "id": "melt-rgb-1",
+      "sfx": "transitions/lib/sfx-melt-rgb-76.mp3",
+      "cut_paused": 638.4,
+      "sfx_start_paused": 638.033,
+      "window_s": 0.76
+    },
+    {
+      "label": "FACE cut-in #8",
+      "id": "blocks-max-2",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 657.37,
+      "sfx_start_paused": 656.903,
+      "window_s": 0.96
+    },
+    {
+      "label": "FACE cut-in #9",
+      "id": "blocks-max-3",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 733.13,
+      "sfx_start_paused": 732.663,
+      "window_s": 0.96
+    },
+    {
+      "label": "STILL glitch IMG-5",
+      "id": "badsignal-short-2",
+      "sfx": "transitions/lib/sfx-badsignal-short.mp3",
+      "cut_paused": 748.84,
+      "sfx_start_paused": 748.607,
+      "window_s": 0.48
+    },
+    {
+      "label": "MARQUEE melt →C2 chart",
+      "id": "melt-rgb-1",
+      "sfx": "transitions/lib/sfx-melt-rgb-76.mp3",
+      "cut_paused": 752.5,
+      "sfx_start_paused": 752.133,
+      "window_s": 0.76
+    },
+    {
+      "label": "FACE cut-in #10",
+      "id": "blocks-max-1",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 816.03,
+      "sfx_start_paused": 815.563,
+      "window_s": 0.96
+    },
+    {
+      "label": "STILL glitch IMG-6",
+      "id": "badsignal-short-3",
+      "sfx": "transitions/lib/sfx-badsignal-short.mp3",
+      "cut_paused": 825.6,
+      "sfx_start_paused": 825.367,
+      "window_s": 0.48
+    },
+    {
+      "label": "STILL glitch IMG-7",
+      "id": "badsignal-short-1",
+      "sfx": "transitions/lib/sfx-badsignal-short.mp3",
+      "cut_paused": 836.8,
+      "sfx_start_paused": 836.567,
+      "window_s": 0.48
+    },
+    {
+      "label": "FACE cut-in #11",
+      "id": "blocks-max-2",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 861.57,
+      "sfx_start_paused": 861.103,
+      "window_s": 0.96
+    },
+    {
+      "label": "FACE cut-in #12",
+      "id": "blocks-max-3",
+      "sfx": "transitions/lib/sfx-blocks-max.mp3",
+      "cut_paused": 876.73,
+      "sfx_start_paused": 876.263,
+      "window_s": 0.96
+    }
+  ]
+}

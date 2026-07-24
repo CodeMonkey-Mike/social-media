@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg-deep:#0a0c10;--accent-green:#00e68a;--accent-cyan:#00c2ff;--accent-gold:#ffd700;
+  --text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1920px;height:1080px;background:var(--bg-deep);font-family:'DM Sans',sans-serif;color:var(--text-primary);overflow:hidden;position:relative}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(130px);opacity:.32;pointer-events:none}
+.frame{position:absolute;inset:0;padding:70px 110px;display:flex;flex-direction:column;z-index:1}
+.ey{font-size:1rem;text-transform:uppercase;letter-spacing:.22em;color:var(--text-muted);font-weight:600;margin-bottom:12px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:4rem;line-height:1.03;letter-spacing:-.02em}
+.g{color:var(--accent-green)}
+.heur{position:absolute;top:76px;right:110px;padding:12px 22px;border-radius:100px;border:1px solid rgba(255,215,0,.4);background:rgba(255,215,0,.07);
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:1.05rem;color:var(--accent-gold);letter-spacing:.04em}
+.stagewrap{flex:1;display:flex;align-items:center;justify-content:center;margin-top:2px}
+</style></head>
+<body>
+<div class="orb" style="width:560px;height:560px;background:var(--accent-gold);top:40px;right:120px"></div>
+<div class="orb" style="width:520px;height:520px;background:var(--accent-green);bottom:-220px;left:-120px"></div>
+<div class="heur">A HEURISTIC, NOT A VALUATION</div>
+<div class="frame">
+  <span class="ey">CH6 · Network value laws</span>
+  <h1>Breadth <span class="g">compounds.</span></h1>
+  <div class="stagewrap"><svg id="stage" width="1660" height="640" viewBox="0 0 1660 640"></svg></div>
+</div>
+<script>
+const xL=170,xR=1540,yB=520,yT=70,W=xR-xL,H=yB-yT;
+const px=t=>xL+t*W, py=v=>yB-Math.min(1,v)*H;
+function path(fn,peak){let d='';for(let i=0;i<=120;i++){const t=i/120;const y=py(fn(t)*peak);d+=(i?'L':'M')+px(t).toFixed(1)+','+y.toFixed(1)+' ';}return d;}
+const reality=t=> (t*Math.log(1+9*t)/Math.log(10));          // ~n·log n, gentle
+const metcalfe=t=> t*t;                                       // n^2
+const reed=t=> (Math.pow(2,10*t)-1)/(Math.pow(2,10)-1);       // 2^n, rockets
+const axes=`<line x1="${xL}" y1="${yB}" x2="${xR}" y2="${yB}" stroke="#2a3342" stroke-width="1.5"/>`
+  +`<line x1="${xL}" y1="${yT-14}" x2="${xL}" y2="${yB}" stroke="#2a3342" stroke-width="1.5"/>`
+  +`<text x="${xL}" y="${yB+40}" font-family="DM Sans" font-size="22" fill="#8892a4">one lane</text>`
+  +`<text x="${xR}" y="${yB+40}" text-anchor="end" font-family="DM Sans" font-size="22" fill="#8892a4">120+ lanes (a network of networks)  →</text>`
+  +`<text x="${xL-14}" y="${yT-24}" font-family="DM Sans" font-size="22" fill="#8892a4">value (conceptual)  ↑</text>`;
+const curves=`<path d="${path(reality,.34)}" fill="none" stroke="#00c2ff" stroke-width="4" stroke-dasharray="9 8" opacity=".85"/>`
+  +`<path d="${path(metcalfe,.72)}" fill="none" stroke="#00e68a" stroke-width="5"/>`
+  +`<path d="${path(reed,1)}" fill="none" stroke="#ffd700" stroke-width="5"/>`;
+// end labels
+const lbl=(fn,peak,txt,sub,color,dy)=>{const y=py(fn(1)*peak);return `<text x="${xR+0}" y="${Math.max(yT+6,y)+dy}" text-anchor="end" font-family="JetBrains Mono" font-weight="600" font-size="23" fill="${color}">${txt}</text>`+(sub?`<text x="${xR+0}" y="${Math.max(yT+6,y)+dy+24}" text-anchor="end" font-family="DM Sans" font-size="17" fill="#8892a4">${sub}</text>`:'');};
+const leg=(y,color,dash,txt)=>`<line x1="215" y1="${y}" x2="258" y2="${y}" stroke="${color}" stroke-width="5"${dash?' stroke-dasharray="9 8"':''}/><text x="274" y="${y+7}" font-family="JetBrains Mono" font-weight="600" font-size="22" fill="${color}">${txt}</text>`;
+const labels=leg(150,'#ffd700',false,'Reed · 2ⁿ (overestimate)')+leg(190,'#00e68a',false,'Metcalfe · n² (overestimate)')+leg(230,'#00c2ff',true,'reality · ~n·log n');
+document.getElementById('stage').innerHTML=axes+curves+labels;
+</script>
+</body></html>

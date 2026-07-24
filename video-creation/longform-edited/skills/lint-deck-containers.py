@@ -32,6 +32,12 @@ def _declared(tag):
     return set(x.strip() for x in mm.group(1).split(',')) if mm else set()
 diagrams = _declared('DIAGRAM_REFS')        # system-design diagrams (nodes) — exempt
 comparisons = _declared('COMPARISON_REFS')  # deliberate 2-up A-vs-B contrasts (one rhetorical unit) — exempt
+overviews = _declared('OVERVIEW_REFS')      # deliberate all-cards-at-once overview (spotlight contract,
+                                            # comp-build §5: narration genuinely addresses every card at once;
+                                            # expect ~ONE per chapter, never the default) — exempt
+                                            # (tag added 2026-07-19, tao-render-virtuals: the sanctioned class
+                                            # existed in prose but had no mechanical exemption, so legit
+                                            # chip-row overviews hard-failed the gate)
 
 fails, oks = [], []
 for ref in deck_refs:
@@ -43,6 +49,8 @@ for ref in deck_refs:
         oks.append(f'{ref}: exempt (declared DIAGRAM)'); continue
     if ref in comparisons:
         oks.append(f'{ref}: exempt (declared COMPARISON, A-vs-B)'); continue
+    if ref in overviews:
+        oks.append(f'{ref}: exempt (declared OVERVIEW, all cards addressed at once)'); continue
     paths = glob.glob(os.path.join(deckdir, ref + '.png'))
     if not paths:
         fails.append(f'{ref}: deck/{ref}.png NOT FOUND'); continue

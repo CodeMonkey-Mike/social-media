@@ -137,8 +137,16 @@ def main():
     src_dir = Path(args.out_root) / batch
     dest_dir = Path(args.dest_root) / f"{batch}-{date}"
     shorts_json = Path(args.shorts_json)
-    progress_json = Path(args.progress_json) if args.progress_json \
-        else REPO_ROOT / "video-creation" / "shorts" / f"{batch}-progress.json"
+    # Canonical location is shorts/<batch>/progress.json (video-creation/CLAUDE.md: "each batch lives
+    # in its own folder shorts/<batch>/ and keeps its progress JSON at shorts/<batch>/progress.json").
+    # The old flat shorts/<batch>-progress.json is still accepted for legacy batches. Getting this
+    # wrong is SILENT: load_titles() returns {} and every short publishes with a BLANK title.
+    if args.progress_json:
+        progress_json = Path(args.progress_json)
+    else:
+        nested = REPO_ROOT / "video-creation" / "shorts" / batch / "progress.json"
+        flat = REPO_ROOT / "video-creation" / "shorts" / f"{batch}-progress.json"
+        progress_json = nested if nested.is_file() else flat
 
     if not src_dir.is_dir():
         raise SystemExit(f"ERROR: render folder not found: {src_dir}")

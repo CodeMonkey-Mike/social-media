@@ -28,11 +28,11 @@ queue file; edit `data/*.json` with Node, never PowerShell; every image unique).
 ## Lane 1 -> Long-form video
 
 Queue a new longform video in `longs` based on this livestream.
-(Canonical: `video-creation/SKILL.md` Phase 1 -> `schedule-tweets/data/longs.json`.)
+(Canonical: `video-creation/livestream-repurpose/skills/intake-verticalize/SKILL.md` (Phase 1) -> `schedule-tweets/data/longs.json`.)
 
 ## Lane 2 -> Vertical shorts (up to clip generation only)
 
-Run Lane 2 (`video-creation/SKILL.md` Phases 1B-3) far enough to have the vertical master
+Run Lane 2 (Phases 1B-3; canonical skills in `video-creation/livestream-repurpose/skills/`: `intake-verticalize`, `transcribe-vertical`, `topic-finding`) far enough to have the vertical master
 and its transcript, then **delegate the topic/clip SELECTION step to the `clip-strategist`
 subagent** (Fable). Hand it the transcript; it returns the clip plan.
 

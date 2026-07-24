@@ -26,6 +26,46 @@
   },
   "batches": [
     {
+      "batch": "October-pumps",
+      "status": "active",
+      "date": "2026-07-21",
+      "livestream_title": "October-pumps LOW BPS VERTICAL",
+      "shorts_source": "schedule-tweets/shorts/October-pumps-2026-07-23",
+      "source_media": "video-creation/livestream-repurpose/media/October-pumps/October-pumps LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/October-pumps LOW BPS VERTICAL/October-pumps LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/October-pumps LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/October-pumps/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/October-pumps",
+        "video-creation/shorts/October-pumps"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      },
+      "note": "livestream-repurpose 2026-07-22 via /repurpose-livestream. Lane1 DONE (longform desilenced 27:00->19:17, queued in longs.json for rumble/bitchute/facebook). Lane3 DONE (6 tweets+images, 2 threads, 1 X poll, 2 YT polls, 2 YT posts + 2 carousels; NO IG single-image because the run gated that on a Kaspa image and this stream has zero Kaspa). Lane2: clip 5 deleted by Mike; remaining 7 (numbers STABLE 1,2,3,4,6,7,8) tightened + desilenced and awaiting his 2nd review on the dashboard before captions/render/publish. Stream has NO Kaspa/TON/Housecoin/Pengu; TAO is the only lineup coin discussed (Whisper rendered it \"towel\"). WHATIF/NineHood/RAT/BOMO numbers were NOT verifiable in press and were deliberately kept out of the queues per verified_claims_only."
+    },
+    {
+      "batch": "robinhood",
+      "status": "completed",
+      "date": "2026-07-17",
+      "livestream_title": "Best Meme Coins on the Robinhood Chain (rh FINAL)",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/robinhood/robinhood LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/robinhood LOW BPS VERTICAL/robinhood LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/robinhood LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/robinhood/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/robinhood",
+        "video-creation/shorts/robinhood"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done"
+      },
+      "note": "livestream-repurpose 2026-07-17, taken end to end. Lane1 longform queued (custom ROBINHOOD MEMES thumbnail wired). Lane3 done. Lane2: 6 shorts tightened+desilenced+rendered (all gate PASS), coin name NineHood (not 9Hood, clip3 re-rendered), then PUBLISHED to shorts.json via publish-shorts (id r-20260717-*, staged in schedule-tweets/shorts/robinhood-2026-07-17/, ALL 7 platforms pending). Titles=open-loop, captions hashtag-free, CryptoRich link on yt/rumble/bitchute only. NEXT: per-platform posting (sequential) = Mike's call. CashCat 225M=ATH (correct). Tweet #4 coins left teal per Mike."
+    },
+    {
       "batch": "better-coins",
       "status": "completed",
       "date": "2026-06-29",
@@ -493,6 +533,93 @@
         "longform": "done"
       },
       "note": "longform-edited Kaspa Covenants / Toccata hardfork explainer (7:35, FINAL kaspa-covenants-FINAL.mp4). Published to YouTube @CodeMonkeyMike 2026-06-22 (watch?v=mc1bqf7Ph30, with chapters + 3 Soundstripe YT codes GV8XEWTBX0UWWEFB/7BIQSDGTEZT05I1N/UKUXQMODJ3JLHRXO). Queued in longs.json for rumble/bitchute/facebook (YT done manually). Vertical teaser = batch kaspa-covenants-short."
+    },
+    {
+      "batch": "pump-season-is-back",
+      "track": "livestream-repurpose",
+      "status": "active",
+      "date": "2026-07-08",
+      "livestream_title": "Pump Season is Back! - Market Update",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/pump season is back/",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/pump season is back LOW BPS VERTICAL/pump season is back LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/pump season is back LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/pump-season-is-back/dashboard.html",
+      "directories": [
+        "video-creation/livestream-repurpose/media/pump season is back",
+        "video-creation/shorts/pump-season-is-back"
+      ],
+      "pipelines": {
+        "shorts": "clips-approved-remotion-pending",
+        "repurpose": "pending",
+        "longform": "done"
+      },
+      "note": "livestream repurpose run 2026-07-08 via /repurpose-livestream; 44.5 min source."
+    },
+    {
+      "batch": "where-millionaires-are-made",
+      "status": "completed",
+      "date": "2026-07-14",
+      "livestream_title": "Crypto Live: Where Millionaires Are Made",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/where millionaires are made/where millionaires are made LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/where millionaires are made LOW BPS VERTICAL/where millionaires are made LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/where millionaires are made LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/where-millionaires-are-made/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/where-millionaires-are-made",
+        "video-creation/shorts/where-millionaires-are-made"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done",
+        "longform": "done"
+      },
+      "note": "livestream repurpose run 2026-07-14 via /repurpose-livestream, COMPLETED 2026-07-15. All 3 lanes done and queued. Lane 2: Mike kept clips 1+4, deleted 2+3. Short 1 = wmam-20260715-millionaires-are-made-full (posted everywhere, 66.8% coverage under the OLD b-roll budget = the anti-example). Short 2 = wmam-20260715-tao-buy-the-dip (built 2026-07-15, gate PASS, 33.5% b-roll / 8 images / 2 full-screens = IN BAND for the halved budget; pending on 7 platforms). Mike decided SHIP AS-IS at 33.5%, accepting ~9.5s of visible Kraken ad + ~6.1s of out-of-focus webcam rather than waive the band; do not re-raise. See PROJECT-LOG.md.",
+      "project_log": "video-creation/shorts/where-millionaires-are-made/PROJECT-LOG.md"
+    },
+    {
+      "batch": "clarity-act",
+      "status": "active",
+      "date": "2026-07-19",
+      "livestream_title": "Clarity Act + Robinhood Memes (Sunday stream)",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/clarity-act/clarity-act LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/clarity-act LOW BPS VERTICAL/clarity-act LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/clarity-act LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/clarity-act/dashboard.html",
+      "directories": [
+        "video-creation/shorts/clarity-act"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done",
+        "longform": "done"
+      },
+      "note": "livestream repurpose run 2026-07-19 via /repurpose-livestream. Per-run override: MAX 3 vertical shorts; Lane 2: 3 clips cut, then Mike dropped clip 1 segment 3 (the 24:22 scatter-gathered taunt, read as out of place) and approved a tighten + desilence pass on all 3. Phase 5 + 5B done, then Mike approved the full build: Phase 6 captions (canonical skill), Phase 7 Remotion builds (one remotion-builder per clip, all 3 gate PASS), Phase 8 published to shorts.json as ca-20260720-*. Parallel-build stage lock added at shorts/_tooling/stage_lock.py. Lane 1 queued (lf-20260719-clarity-act-three-weeks). Lane 3 done: 6 tweets + images, 2 YT polls, 2 YT posts + 2 carousels, 2 threads. NO Kaspa/TAO/TON/HouseCoin/Pengu in this stream, so the topic-weighting rule and both downstream conditionals (IG 4:5 Kaspa repurpose, X polls) yielded zero entries."
+    },
+    {
+      "batch": "rh-overtakes-base",
+      "track": "longform-edited",
+      "status": "active",
+      "date": "2026-07-23",
+      "livestream_title": null,
+      "title": "Robinhood Chain Overtakes Base on Daily Active Users",
+      "shorts_source": null,
+      "source_media": "video-creation/longform-edited/media/rh-overtakes-base/",
+      "transcript_plain": null,
+      "transcripts_dir": null,
+      "dashboard": null,
+      "directories": [
+        "video-creation/longform-edited/media/rh-overtakes-base"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "skip",
+        "longform": "skip"
+      },
+      "note": "One-off vertical short (76.1s, 1080x1920) authored by Mike 2026-07-23 off the Topic Radar find (The Defiant: Robinhood Chain overtakes Base on DAU, July 21). Not a livestream repurpose, so publish-shorts.py did not apply; staged by hand against the PUBLISH-SHORTS.md schema. Queued at shorts.json index 0 to post ahead of the existing backlog."
     }
   ]
 }

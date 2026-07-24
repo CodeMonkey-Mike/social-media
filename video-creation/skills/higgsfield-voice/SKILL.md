@@ -109,10 +109,20 @@ An `.mp3` voice track in the consuming project (e.g. `vertical-ai-persona/Yuli y
 Then lip-sync the Seedance clip to it (`seedance_2_0 --audio <track>` + a MINIMAL prompt — a verbose prompt
 makes Seedance ignore `--audio` and invent its own speech; see `YULI-SPEC.md` Production route).
 
-## TODO (not yet built — flow is proven, just not packaged into one command)
-Wrap steps 2–6 into a single re-runnable `hf-voice.js --voice <preset> --model "Seed Speech" --text-file
-<f> --out <mp3>` driver (building on `_cdp.js`). It needs a live logged-in CDP session to develop/verify
-(especially the modal-portal click-by-rect), so build it interactively with Mike's Chrome attached.
+## Batch generation (BUILT — use it, don't hand-roll per-chunk clicking)
+`_batch-generate.js <chunks.json> <audioDir> [SCRIPT.md]` drives all chunks for the CURRENTLY-SELECTED voice:
+fills the prompt, clicks GENERATE, captures each `hf_*.mp3` cloudfront URL, writes `<audioDir>/_manifest.json`
+incrementally. It does NOT download — `curl` the manifest URLs after. Two **pre-credit gates** (both abort
+before the browser is even touched):
+- **SCRIPT gate (3rd arg / `HF_SCRIPT` env):** runs `verify-tts.js` — every chunk's text must match the
+  canonical `SCRIPT.md` (pronunciation/caps normalized). ⛔ **Always pass the SCRIPT.md.** Added 2026-07-16
+  after `tts-chunks.json` was hand-authored from a stale draft and 10 chunks were voiced with wrong text
+  (and QA falsely passed because it compared audio↔tts-chunks, not audio↔SCRIPT.md). Never author
+  `tts-chunks.json` from memory — derive it from `SCRIPT.md`, then let this gate prove it.
+- **VOICE gate:** aborts if the selected preset isn't `MIKE-CLONE` (override via `HF_VOICE`).
+
+`verify-tts.js` is also a standalone check: `node verify-tts.js <SCRIPT.md> <tts-chunks.json>` → `ALL N MATCH`
+(exit 0) or a per-chunk drift report (exit 1). QA the finished audio against `SCRIPT.md`, not `tts-chunks.json`.
 
 ## Notes
 - Voice clone references Mike provided live in `vertical-ai-persona/Yuli y Ana/voice-samples/` (short, ~10%

@@ -1,6 +1,6 @@
 // endorse-and-message.js
 // For each already-CONNECTED member in members.json (oldest connected_on first):
-// endorse a random 5-10 of their top skills, then send ONE fixed favor-request
+// endorse a random 9-15 of their top skills, then send ONE fixed favor-request
 // DM asking them to endorse Mike's automation skills back.
 //
 // THE ONLY DM IN THIS FOLDER. The folder-wide "no DMs" rule has exactly one
@@ -22,6 +22,11 @@
 //   endorsed_count   how many skills we endorsed
 //   dm_status        sent
 //   dm_sent_at       date (YYYY-MM-DD) the favor-request DM went out
+//
+// MANUAL EXCLUSIONS: a member can carry `dm_excluded: true` (+ optional
+// `dm_excluded_reason`) to permanently skip endorse+DM regardless of connected_on
+// age — set by hand for a specific person Mike names (e.g. andrew-masih,
+// 2026-07-16: a personal connection, never endorse/DM). Never cleared automatically.
 //
 // Run:  node linkedin-automation/skills/endorse-and-message/endorse-and-message.js [--max=N] [--dry-run]
 //   --max=N     process at most N members this run. DEFAULT 3 — each member is a
@@ -106,10 +111,10 @@ const MAX_MEMBERS = (() => {
 })();
 const DRY_RUN = ARGV.includes('--dry-run');
 
-// How many skills to endorse: random 5-10 (Mike's manual habit), fewer if the
+// How many skills to endorse: random 9-15 (Mike, 2026-07-15), fewer if the
 // member lists fewer.
-const ENDORSE_MIN = 5;
-const ENDORSE_MAX = 10;
+const ENDORSE_MIN = 9;
+const ENDORSE_MAX = 15;
 
 // Pacing (ms). Endorse clicks are quick human actions (2-6s apart); the DM flow
 // gets wider invite-style gaps before each click; members get a wide gap between.
@@ -166,7 +171,7 @@ async function dismissDialog(page) {
 
 // ----------------------------------------------------------------------------
 // Phase 1 — endorse: open <profile>/details/skills/, click Endorse on a random
-// 5-10 of the TOP skills. Returns { status: 'endorsed'|'no_skills'|'error', count }.
+// 9-15 of the TOP skills. Returns { status: 'endorsed'|'no_skills'|'error', count }.
 // ----------------------------------------------------------------------------
 async function endorseSkills(page, profileUrl) {
   const base = S.canonicalProfileUrl(profileUrl) || profileUrl;
@@ -363,7 +368,7 @@ async function sendDm(page, profileUrl) {
   // Eligible: accepted our invite, not yet DM'd, not abandoned for zero skills.
   // Oldest connection first (stable sort keeps file order on ties).
   const todo = members
-    .filter(m => m.contact_status === 'connected' && !m.dm_sent_at && m.endorse_status !== 'no_skills')
+    .filter(m => m.contact_status === 'connected' && !m.dm_sent_at && m.endorse_status !== 'no_skills' && !m.dm_excluded)
     .sort((a, b) => String(a.connected_on || '9999').localeCompare(String(b.connected_on || '9999')));
 
   console.log(`members.json: ${members.length} total, ${todo.length} connected member(s) eligible for endorse+DM.`);
@@ -450,7 +455,7 @@ async function sendDm(page, profileUrl) {
       if (i < batch.length) await S.pause(page, MEMBER_MIN, MEMBER_MAX, 'between members');
     }
 
-    const remaining = members.filter(m => m.contact_status === 'connected' && !m.dm_sent_at && m.endorse_status !== 'no_skills').length;
+    const remaining = members.filter(m => m.contact_status === 'connected' && !m.dm_sent_at && m.endorse_status !== 'no_skills' && !m.dm_excluded).length;
     console.log('\n============================================================');
     console.log(` DONE this run. ${done} member(s) endorsed + DM'd.`);
     console.log(` Tally: ${JSON.stringify(tally)}`);

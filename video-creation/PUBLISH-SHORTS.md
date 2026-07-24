@@ -20,6 +20,55 @@ publish that subset.
 
 ---
 
+## ⛔ Two invocation traps (BOTH cost a real incident; read before running)
+
+**1. `--date` SILENTLY DEFEATS THE DEDUPE → it can RE-POST a live short.**
+The entry id is `<prefix>-<date_compact>-<slug>` and the idempotency check is **on id**. The script also
+**globs EVERY `*.mp4`** in `remotion/out/<batch>/`, including shorts you published in an earlier run. So
+publishing a batch's later clips under a **different `--date`** re-adds every already-published mp4 under
+a **NEW id** and re-queues an **already-live** short.
+
+> **Rule: publish a batch's later clips under the SAME `--date` as the first clip.** That is correct
+> anyway, since they share one livestream: one `shorts/<batch>-<date>/` folder, one `source_livestream`.
+> **Always `--dry-run` first** and confirm you see `copy SKIP (exists)` + `entry SKIP (present)` for every
+> previously-published clip. A run is only safe when the SKIP lines match what you expect.
+
+**2. `--progress-json` used to default to the WRONG path. FIXED 2026-07-23.**
+It defaulted to the flat `video-creation/shorts/<batch>-progress.json` while the convention is the
+nested `video-creation/shorts/<batch>/progress.json`, so titles came back **blank** with no error.
+The script now prefers the nested path and falls back to the flat one for legacy batches, so the
+flag is no longer required. **Still check the `titles :` line in the dry-run output**: `progress JSON`
+means titles resolved, `none found` means every short would publish with a BLANK title.
+
+```bash
+python scripts/publish-shorts.py <batch> --date <SAME-DATE-AS-FIRST-CLIP> \
+  --progress-json "video-creation/shorts/<batch>/progress.json" --dry-run
+```
+
+---
+
+**3. Publishing while a builder is still working STAGES A STALE RENDER. (Cost a real incident 2026-07-23.)**
+`publish-shorts` copies whatever mp4 is on disk *right now*. A parallel `remotion-builder` that
+finds a defect in QA will **re-render to the same path**, so an mp4 existing is NOT proof it is
+final. On 2026-07-23 the orchestrator saw all 7 mp4s on disk, inferred the last builder had
+finished, and published; that builder then re-rendered clip 3 an hour later after fixing a badge
+overflow and two bad b-roll fade boundaries. The staged copy was the pre-fix render.
+
+> **Rule: do not publish until EVERY builder has reported back.** An mp4 on disk and a released
+> stage lock are not completion signals. After publishing, prove the staged copy is the shipped
+> render:
+>
+> ```bash
+> for f in video-creation/remotion/out/<batch>/*.mp4; do
+>   b=$(basename "$f"); d="schedule-tweets/shorts/<batch>-<date>/$b"
+>   [ "$(md5sum "$f"|cut -d' ' -f1)" = "$(md5sum "$d"|cut -d' ' -f1)" ] && echo "MATCH $b" || echo "STALE $b"
+> done
+> ```
+>
+> Re-copy anything that reads STALE and re-probe its `duration_seconds` in `shorts.json`.
+
+---
+
 ## What it does
 
 For each approved short in the batch:

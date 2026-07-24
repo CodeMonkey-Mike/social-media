@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--accent-green:#00e68a;--accent-cyan:#00c2ff;--accent-purple:#a855f7;--text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+.ey{font-size:27px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:20px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:78px;line-height:1.06;letter-spacing:-.02em}
+.pu{color:var(--accent-purple)}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-purple),var(--accent-cyan));margin:30px 0}
+.dg{margin-top:6px;width:100%}
+.base{margin-top:22px;text-align:center;font-family:'JetBrains Mono';font-weight:600;font-size:26px;color:var(--accent-purple)}
+.foot{margin-top:22px;font-size:31px;color:var(--text-secondary);max-width:1480px;line-height:1.5}.foot b{color:var(--text-primary)}
+svg .nt{fill:var(--text-primary);font:700 28px 'DM Sans';text-anchor:middle}
+svg .ns{fill:var(--text-secondary);font:400 21px 'DM Sans';text-anchor:middle}
+</style></head>
+<body>
+<div class="frame" id="launchpad">
+  <div class="orb" style="width:740px;height:740px;background:var(--accent-purple);top:120px;left:560px;opacity:.1"></div>
+  <span class="ey">Virtuals · What it is</span>
+  <h1>A launchpad for <span class="pu">AI agents.</span></h1>
+  <div class="divider"></div>
+  <div class="dg">
+    <svg viewBox="0 0 1640 320" width="100%">
+      <defs><marker id="ap" markerWidth="11" markerHeight="11" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a855f7"/></marker></defs>
+      <g fill="none" stroke="#a855f7" stroke-width="3.5" marker-end="url(#ap)"><path d="M368,150 L428,150"/><path d="M808,150 L868,150"/><path d="M1248,150 L1308,150"/></g>
+      <g>
+        <rect x="20" y="60" width="348" height="180" rx="18" fill="#12151c" stroke="#1e2330" stroke-width="1.5"/><text x="194" y="120" text-anchor="middle" font-size="40">🧑‍💻</text><text class="nt" x="194" y="175">Anyone</text><text class="ns" x="194" y="208">a creator</text>
+        <rect x="448" y="60" width="358" height="180" rx="18" fill="#170f24" stroke="rgba(168,85,247,.4)" stroke-width="2"/><text x="627" y="120" text-anchor="middle" font-size="40">🤖</text><text class="nt" x="627" y="175" fill="#c98bff">Builds an AI agent</text><text class="ns" x="627" y="208">on the platform</text>
+        <rect x="888" y="60" width="358" height="180" rx="18" fill="#12151c" stroke="#1e2330" stroke-width="1.5"/><text class="nt" x="1067" y="130">Turns it into</text><text class="nt" x="1067" y="170" fill="#c98bff">a token</text><text class="ns" x="1067" y="208">paired with VIRTUAL</text>
+        <rect x="1328" y="60" width="292" height="180" rx="18" fill="#12151c" stroke="#1e2330" stroke-width="1.5"/><text x="1474" y="120" text-anchor="middle" font-size="40">👥</text><text class="nt" x="1474" y="175">Crowd co-owns</text><text class="ns" x="1474" y="208">the agent</text>
+      </g>
+    </svg>
+  </div>
+  <div class="base">▚  all of it runs on Base</div>
+  <div class="foot">Anybody can create an AI agent, tokenize it, and co-own it with the crowd. <b>One vertical.</b> One lane.</div>
+</div>
+</body></html>

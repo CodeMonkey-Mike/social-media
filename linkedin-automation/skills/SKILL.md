@@ -33,6 +33,9 @@ linkedin-automation/
     endorse-and-message/               skill 4: endorse skills + favor-request DM
       endorse-and-message.md / .js
       _probe-endorse.js  _probe-message.js
+    check-endorsements/                skill 5: who endorsed us back
+      check-endorsements.md / .js
+      _probe-endorsements.js  _probe-endorsers-page.js
   lib/_li-session.js                   shared session + navigation module
   data/  groups.json · members-urls.json · members.json
   tools/_grab-group-name.js            one-off utility
@@ -43,20 +46,25 @@ All commands run **from the repo root**, e.g.
 
 ---
 
-## The four skills
+## The five skills
 
 | # | Skill (doc) | Script | What it does |
 |---|---|---|---|
 | 1 | [`scrape-group-members`](scrape-group-members/scrape-group-members.md) | `skills/scrape-group-members/scrape-group-members.js` | **Find + classify.** Collect a group's members into the work queue, then visit each profile, read its location, and capture the target-region ones into `members.json`. (Collect + process are two phases of this one script, not separate skills.) |
 | 2 | [`request-connections`](request-connections/request-connections.md) | `skills/request-connections/request-connections.js` | **Invite.** Send a connection request with a note to each captured member not yet contacted, then record the outcome. |
 | 3 | [`check-connections`](check-connections/check-connections.md) | `skills/check-connections/check-connections.js` | **Track acceptances.** Scan the My Network connections page and stamp `connected_on` for members who accepted. |
-| 4 | [`endorse-and-message`](endorse-and-message/endorse-and-message.md) | `skills/endorse-and-message/endorse-and-message.js` | **Endorse + ask back.** For accepted connections (oldest first): endorse a random 5-10 of their top skills, then send THE one sanctioned favor-request DM asking them to endorse back. Zero endorsable skills = abandon (no DM), marked `no_skills`. |
+| 4 | [`endorse-and-message`](endorse-and-message/endorse-and-message.md) | `skills/endorse-and-message/endorse-and-message.js` | **Endorse + ask back.** For accepted connections (oldest first): endorse a random 9-15 of their top skills, then send THE one sanctioned favor-request DM asking them to endorse back. Zero endorsable skills = abandon (no DM), marked `no_skills`. |
+| 5 | [`check-endorsements`](check-endorsements/check-endorsements.md) | `skills/check-endorsements/check-endorsements.js` | **Track endorse-backs.** Read OUR OWN skills page's endorser overlays, record who endorsed each skill into `data/endorsements.json` (`first_seen` = observed date — LinkedIn shows no endorsement date, so run often), and stamp `endorsed_back` onto matching members. Closes skill 4's loop. |
 
 Typical lifecycle: **(1) scrape** a group at ≤50 profiles/day until the queue is
 drained → **(2) invite** the captures at ≤10/day → **(3) check** acceptances every day
-or two → **(4) endorse + DM** the accepted connections in small batches. Skills 1, 2
-and 4 all consume the per-day profile-view budget (see "LinkedIn limits"); skill 3 is
-cheap.
+or two → **(4) endorse + DM** the accepted connections — send to ALL members connected
+more than 14 days ago (no one-per-day / small-batch cap; set `--max` to cover them all;
+fallback = one member ≥7 days if none are older) → **(5) check endorse-backs** every
+run day (own-profile only, so its observed `first_seen` dates stay near the real
+endorsement dates). Skills 1, 2
+and 4 all consume the per-day profile-view budget (see "LinkedIn limits"); skills 3
+and 5 are cheap (one list page / own-profile pages only).
 
 ---
 
@@ -71,11 +79,13 @@ doc). The shared pieces are:
 | `data/groups.json` | **Group registry.** `{ group_id, name, url, members_url, status, notes }`. `status` ∈ `active` / `completed` / `paused` / `pending`. |
 | `data/members-urls.json` | **Work queue.** `{ profile_url, processed }` per member; `processed` is the resume point that makes the scrape batchable. |
 | `data/members.json` | **Deliverable + outreach state.** Target-region members + invite/acceptance state (see Data model). |
+| `data/endorsements.json` | **Incoming-endorsement registry.** One append-only record per (skill, endorser) with `first_seen` observed date — members and non-members alike (skill 5 writes it). |
 | `tools/_grab-group-name.js` | One-off utility — prints a group's public name (to fill `data/groups.json`). |
 
 Each skill folder also carries its own diagnostic probe(s) — `_probe-location.js` /
 `_probe-search.js` (scraper), `_probe-connect.js` (invite), `_probe-connections.js`
-(acceptances) — documented in that skill's Troubleshooting section.
+(acceptances), `_probe-endorsements.js` / `_probe-endorsers-page.js` (endorse-backs) —
+documented in that skill's Troubleshooting section.
 
 ---
 
@@ -97,6 +107,9 @@ Each skill folder also carries its own diagnostic probe(s) — `_probe-location.
 //   "endorse_status": "endorsed", "endorsed_at": "2026-07-02", "endorsed_count": 7,
 //   "dm_status": "sent", "dm_sent_at": "2026-07-02"
 // (or "endorse_status": "no_skills" = abandoned: nothing to endorse, so NO DM, never revisited)
+// after check-endorsements.js sees them among OUR endorsers (they returned the favor):
+//   "endorsed_back": true, "endorsed_back_on": "2026-07-22",   // first OBSERVED date
+//   "endorsed_back_skills": ["AI Solutions"], "endorsed_back_count": 1
 ```
 
 `group_id` joins `members.json` back to `groups.json` (which holds the group name).

@@ -114,3 +114,13 @@ The scanner stores the full `tweet_text` in `auto_reply_candidates.json`, but it
 ## Throttle note
 
 Auto-replies count against the same X reply budget as the curated flow (~24–30 replies / ~4-hour window before throttle). Since this fires one at a time per invocation, normal task-list cadence stays well under that.
+
+## ⚠ Skip a candidate that is a NEWS ACCOUNT COVERING THE TWEET YOU ALREADY REPLIED TO (2026-07-22)
+
+The already-replied guardrail (#4 above) matches on **tweet URL**, so it cannot catch the case where a news account reports on a statement you replied to at the source minutes earlier. Different URL, different author, **same story**.
+
+Seen 2026-07-22: run-1 replied to @SenLummis's own CLARITY Act post; run-2's candidate pool then surfaced Cointelegraph's writeup of that exact statement. Replying to both would have read as Mike repeating himself on one news item inside an hour, to overlapping audiences.
+
+**Rule:** before drafting, check the chosen candidate's *subject* against the recent entries in `posted_replies.json` (not just their URLs). If it is the same underlying story as a reply already fired in this session, pick the next candidate instead. This matters most when a run has just published a batch on that topic, since that is exactly when the on-thesis story is both most tempting and most likely to be duplicated across accounts.
+
+**Related:** also vary the ANGLE when replying to an account you have replied to recently. Same run, @MartyBent drew a Jevons-paradox take specifically because the grid-flexibility take had been used on that same account on 2026-07-21.

@@ -93,6 +93,29 @@ node scripts/_register-playlist.js <playlistId> [--skip a,b] # 3. register all i
   stored Algolia meta, `yt_license_code`, `folder`, `primary_file`, `sections[]`), keyed by `soundstripe_id`.
 - Precedent run: private playlist **430508** → 39 songs, 2 already present (9141, 11370) → **37 added**.
 
+## 2c. Waveform analysis — the catalog is the picker's eyes (added 2026-07-17)
+Every library track gets a MACHINE-WRITTEN `analysis` block per audio file (full master + every
+section cut; stems excluded) so music is **chosen from `assets/music/library.json` alone — no
+audio scanning at selection time**. Schema + semantics live in the `$analysis_note` key at the top
+of that file: `env` = the waveform as a 0-9 text sparkline (2s per char, absolute dBFS scale, so
+char_index*2 = seconds and digits compare across files), `aggression` 0-100 (punchy vs smooth),
+`segments` (ready [tIn,tOut] energy regions for slicing on the video timeline), `opening`/`ending`
+classes (`ending: epic_hit` = "ends epically"), and derived `roles[]` (intro_hype / hype_peak /
+explainer_bed / epic_outro). Loudness uses ffmpeg volumedetect semantics; calibrated 2026-07-17
+against the hand-measured Common High Speeds numbers (exact match).
+```
+python scripts/analyze-music.py <track-id>        # (re)analyze one library track -> writes library.json
+python scripts/analyze-music.py --all             # every track missing analysis_complete (backfill/ingest sweep)
+python scripts/analyze-music.py --file "<path>"   # analyze ANY audio file, print JSON, write nothing
+```
+- **Ingest rule:** run the analyzer after EVERY download/promote into `assets/music/` — the §2b playlist
+  flow is enum → download → register → **analyze**. An entry without `analysis_complete: true` is not done.
+- **Picking rule (any track/agent):** query the catalog, never re-scan audio that has an `analysis` block.
+  For music NOT in the library (project-local beds under `longform-edited/media/<project>/`), use
+  `--file` so the numbers stay comparable — NEVER hand-roll a different ffmpeg/RMS pass.
+- `analysis` blocks are machine-written: never hand-edit, re-run the script. Human judgment lives in
+  `vibe` / `roles_pinned[]` / `used_in[]` / `*_note`.
+
 ## 3. Data model
 - **`library.json`** (this folder) — canonical per-track store. One entry per downloaded track:
   `{ objectID, title, file, license_code, source, downloaded_at, meta{...} }`. The code belongs to
@@ -136,6 +159,7 @@ video-creation/skills/music-sourcing/
   SKILL.md             <- this file
   scripts/
     soundstripe.js     <- the skill (search + download)
+    analyze-music.py   <- waveform analyzer (env sparkline / aggression / segments -> library.json, §2c)
     _*.js              <- throwaway recon/discovery (explore, autodrive, grab, inspect)
   library.json         <- downloaded tracks + license codes (SOURCE OF TRUTH)
   candidates.json      <- last search results

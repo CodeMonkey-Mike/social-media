@@ -34,6 +34,22 @@ function syncBatchStatus(dryRun) {
   const res = spawnSync(process.execPath, args, { stdio: 'inherit', cwd: REPO_ROOT });
   if (res.status !== 0) console.error('  WARNING: reconcile failed; proceeding with existing batches.json status.');
 }
+// ChatGPT image chats are cleaned alongside files: a chat tied (via its `batch` property in
+// chatgpt-image-chats.json) to a completed/archived batch is deleted in the ChatGPT UI, plus any
+// rotation leftovers on the registry's `retired` list. The browser work lives in
+// repurpose/delete-chats.js (next to the other ChatGPT Playwright code) — this engine only spawns
+// it. It opens the shared chatgpt-profile Chrome briefly on a LIVE run (never in --dry-run), so
+// don't run a live cleanup while an image-gen batch is in flight; a locked profile fails loudly
+// and the chats stay queued for the next run.
+function runChatCleanup(dryRun) {
+  const script = path.join(REPO_ROOT, 'repurpose', 'delete-chats.js');
+  if (!fs.existsSync(script)) return;
+  console.log(`\n--- ChatGPT image chats (repurpose/delete-chats.js${dryRun ? ' --dry-run' : ''}) ---`);
+  const args = [script];
+  if (dryRun) args.push('--dry-run');
+  const res = spawnSync(process.execPath, args, { stdio: 'inherit', cwd: REPO_ROOT });
+  if (res.status !== 0) console.error('  WARNING: chat deletion incomplete (profile busy or UI drift); retired chats stay queued for the next run.');
+}
 const TARGETS = {
   'schedule-tweets': require('./targets/schedule-tweets'),
   'video-creation': require('./targets/video-creation'),
@@ -132,6 +148,11 @@ function main() {
     const r = runTarget(name, opts);
     totalMoved += r.moved; totalBytes += r.bytes;
   }
+
+  // Chat cleanup rides with the video-creation target (its batch lifecycle drives eligibility).
+  // Skipped under --only: that's a folder-scoped file run, and chats aren't paths.
+  if (names.includes('video-creation') && !opts.only) runChatCleanup(opts.dryRun);
+
   if (names.length > 1 && !opts.dryRun) {
     console.log(`\n=== total: recycled ${totalMoved} item(s), freed ~${lib.fmtBytes(totalBytes)} ===`);
   }

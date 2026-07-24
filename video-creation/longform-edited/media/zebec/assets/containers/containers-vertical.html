@@ -1,0 +1,743 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>zebec containers - canonical build</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET
+   Source of truth: skills/presentation.md + skills/container-reference/
+   Palette + typography are LOCKED. Do NOT invent tokens per-container.
+   ============================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{
+  width:1080px;height:1920px;background:var(--bg-deep);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 72px;color:var(--text-primary);
+}
+/* film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:72px;line-height:1.08;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:936px}
+h1.sm{font-size:60px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:34px;line-height:1.55;color:var(--text-secondary);max-width:936px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+b{color:var(--text-primary);font-weight:700}
+
+/* hero (big serif statement, no separate headline) */
+.hero{font-family:'Playfair Display',serif;font-weight:700;font-size:58px;line-height:1.2;
+  color:var(--text-primary);max-width:936px}
+
+/* chips row */
+.chips{display:flex;flex-direction:column;gap:22px;margin-top:44px;max-width:936px}
+.chip{flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:34px;position:relative;overflow:hidden}
+.chip .top{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent-green),transparent)}
+.chip.cyan .top{background:linear-gradient(90deg,var(--accent-cyan),transparent)}
+.chip.gold .top{background:linear-gradient(90deg,var(--accent-gold),transparent)}
+.chip.red .top{background:linear-gradient(90deg,var(--accent-red),transparent)}
+.chip .n{font-weight:700;font-size:33px;color:var(--text-primary);margin-bottom:12px}
+.chip .d,.chip .s{font-size:24px;color:var(--text-secondary);line-height:1.42}
+.chip.hot{border-color:rgba(0,230,138,.4);background:linear-gradient(135deg,rgba(0,230,138,.09),rgba(0,194,255,.05))}
+
+/* stat cards */
+.stats{display:flex;flex-direction:column;gap:24px;margin-top:44px;max-width:936px}
+.stat{flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:40px}
+.stat .k{font-size:22px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-muted);
+  margin-bottom:18px;font-weight:600}
+.stat .v{font-family:'JetBrains Mono';font-weight:700;font-size:74px;color:var(--text-primary);line-height:1}
+.stat .sub{font-size:23px;color:var(--text-secondary);margin-top:16px}
+.stat.hl{border-color:rgba(0,230,138,.30);background:linear-gradient(135deg,rgba(0,230,138,.07),rgba(0,194,255,.04))}
+
+/* card w/ top accent */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:46px 50px;margin-top:44px;position:relative;overflow:hidden;max-width:1480px}
+.card .top{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent-green),transparent)}
+.card .big{font-family:'Playfair Display',serif;font-weight:700;font-size:44px;color:var(--text-primary);line-height:1.2}
+.card .sub{font-size:26px;color:var(--text-secondary);margin-top:14px}
+
+.foot{margin-top:42px;font-size:31px;color:var(--text-secondary);max-width:1420px;line-height:1.5}
+
+/* name badges */
+.names{display:flex;gap:20px;margin-top:40px;flex-wrap:wrap}
+.name{padding:16px 30px;border-radius:100px;background:rgba(255,255,255,.03);
+  border:1px solid var(--border);font-family:'JetBrains Mono';font-weight:600;
+  font-size:27px;color:var(--text-primary)}
+
+/* rule/check rows */
+.rows{margin-top:38px;display:flex;flex-direction:column;gap:22px}
+.rrow{display:flex;align-items:flex-start;gap:22px;font-size:34px;color:var(--text-primary);font-weight:500}
+.rrow .ic{font-size:34px;line-height:1.2;flex:none}
+.rrow.dim{color:var(--text-muted)}
+.rrow .num{font-family:'JetBrains Mono';font-weight:700;color:var(--text-muted);font-size:30px}
+
+/* big number hero block */
+.bignum{font-family:'JetBrains Mono';font-weight:700;font-size:150px;line-height:1;
+  color:var(--text-primary)}
+.accentword{font-family:'Playfair Display',serif;font-weight:900;font-size:140px;line-height:1;letter-spacing:-.02em}
+
+/* 2-col compare */
+.cmp{display:flex;flex-direction:column;gap:24px;margin-top:44px;max-width:936px}
+.col{flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:38px 40px}
+.col.good{border-color:rgba(0,230,138,.28);background:linear-gradient(135deg,rgba(0,230,138,.06),transparent)}
+.col.tok{border-color:rgba(255,215,0,.24);background:linear-gradient(135deg,rgba(255,215,0,.05),transparent)}
+.col .ct{font-size:22px;text-transform:uppercase;letter-spacing:.14em;color:var(--text-muted);font-weight:600;margin-bottom:8px}
+.col .cd{font-size:24px;color:var(--text-secondary);margin-bottom:24px}
+.col ul{list-style:none;display:flex;flex-direction:column;gap:16px}
+.col li{font-size:26px;color:var(--text-primary);display:flex;gap:16px;align-items:flex-start;line-height:1.35}
+.col li .m{flex:none}
+
+/* diagram wrapper */
+.dg{margin-top:40px;width:100%;max-width:936px}
+svg .node{fill:var(--bg-card);stroke:var(--border);stroke-width:1.5}
+svg .node.burn{fill:rgba(255,64,96,.10);stroke:rgba(255,64,96,.45)}
+svg .node.good{fill:rgba(0,230,138,.09);stroke:rgba(0,230,138,.4)}
+svg .nt{fill:var(--text-primary);font:700 31px 'DM Sans';text-anchor:middle}
+svg .ns{fill:var(--text-secondary);font:400 22px 'DM Sans';text-anchor:middle}
+svg .flow{stroke:var(--accent-green);stroke-width:3.5;fill:none}
+svg .cap{fill:var(--text-secondary);font:400 26px 'DM Sans';text-anchor:middle}
+
+/* flow words (payfi) */
+.flowwords{display:flex;align-items:center;gap:40px;margin-top:50px}
+.flowwords .w{font-family:'Playfair Display',serif;font-weight:900;font-size:76px}
+.flowwords .old{color:var(--text-muted);text-decoration:line-through;text-decoration-thickness:4px}
+.flowwords .arr{font-size:70px;color:var(--text-muted)}
+.flowwords .new{color:var(--accent-green)}
+
+/* struck line */
+.struck{font-family:'Playfair Display',serif;font-weight:700;font-size:64px;margin-top:10px}
+.struck s{color:var(--text-muted)}
+.struck .no{color:var(--accent-red)}
+
+/* warn chip */
+.warn{margin-top:40px;display:inline-flex;align-items:center;gap:20px;padding:26px 34px;border-radius:16px;
+  background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.28);font-size:32px;color:var(--text-primary)}
+.warn .ic{font-size:34px}
+
+/* quote */
+.quote{margin-top:44px}
+.quote .q{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:72px;color:var(--accent-red)}
+.quote .src{font-size:26px;color:var(--text-muted);margin-top:14px;letter-spacing:.04em}
+
+/* like button */
+.like{margin-top:52px;display:inline-flex;align-items:center;gap:26px;padding:30px 46px;border-radius:100px;
+  background:linear-gradient(135deg,rgba(0,230,138,.14),rgba(0,194,255,.08));border:1px solid rgba(0,230,138,.4)}
+.like .thumb{font-size:56px}
+.like .t{font-size:40px;font-weight:700;color:var(--text-primary)}
+.tags{display:flex;gap:20px;margin-top:6px}
+.tags .tg{padding:14px 30px;border-radius:100px;font-family:'JetBrains Mono';font-weight:700;font-size:30px;
+  letter-spacing:.06em;background:rgba(0,194,255,.12);color:var(--accent-cyan)}
+
+/* brand ticker */
+.ticker{display:flex;align-items:center;gap:26px;margin-top:6px}
+.ticker .logo{width:92px;height:92px;border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,#123331,#0a1a19);border:4px solid var(--accent-teal);
+  box-shadow:0 0 44px rgba(73,224,200,.5),inset 0 0 30px rgba(73,224,200,.22);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-weight:900;font-size:56px;color:var(--accent-teal)}
+.ticker .tk{font-family:'JetBrains Mono';font-weight:700;font-size:60px;color:var(--accent-teal);letter-spacing:.04em}
+.pre{font-size:30px;color:var(--text-secondary);margin-bottom:22px}
+.pre b{color:var(--accent-green)}
+
+/* timeline rail */
+.rail{position:relative;margin-top:120px;height:300px;max-width:1620px}
+.rail .line{position:absolute;top:0;left:2%;right:0;height:3px;background:var(--border)}
+.rail .lfill{position:absolute;top:0;left:2%;width:82%;height:3px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan))}
+.rail .dot{position:absolute;top:-11px;width:24px;height:24px;border-radius:50%;
+  background:var(--bg-deep);border:3px solid var(--accent-green);transform:translateX(-50%)}
+.rail .yr{position:absolute;top:-72px;transform:translateX(-50%);font-family:'JetBrains Mono';
+  font-weight:700;font-size:44px;color:var(--text-primary)}
+.rail .lab{position:absolute;top:44px;transform:translateX(-50%);width:300px;text-align:center}
+.rail .lab b{display:block;font-size:28px;color:var(--text-primary);margin-bottom:8px;font-weight:700}
+.rail .lab{font-size:23px;color:var(--text-secondary);line-height:1.4}
+.note{position:absolute;bottom:60px;left:140px;right:140px;font-size:27px;color:var(--text-muted);line-height:1.5}
+
+/* flags grid (under-the-hood) */
+.flags{display:grid;grid-template-columns:1fr;gap:20px;margin-top:40px;max-width:936px}
+.flag{display:flex;gap:22px;align-items:flex-start;background:var(--bg-card);border:1px solid var(--border);
+  border-left:3px solid var(--accent-red);border-radius:14px;padding:26px 30px}
+.flag .ic{font-size:38px;flex:none}
+.flag .n{font-weight:700;font-size:28px;color:var(--text-primary);margin-bottom:6px}
+.flag .d{font-size:22px;color:var(--text-secondary);line-height:1.4}
+.tophead{display:flex;justify-content:space-between;align-items:baseline;max-width:1500px}
+.asof{font-size:23px;color:var(--text-muted);letter-spacing:.04em}
+
+.up{margin-top:34px;font-size:40px;font-weight:700;color:var(--accent-green)}
+.up .arr{color:var(--text-muted);margin-right:14px}
+.lead{font-size:34px;color:var(--text-secondary);margin-bottom:22px;max-width:1300px;line-height:1.4}
+.ans{margin-top:34px;font-size:38px;color:var(--text-primary)}
+.ans span{color:var(--accent-gold);font-weight:700}
+
+/* VERTICAL flow: stacked cards + down arrows */
+.vflow{display:flex;flex-direction:column;gap:0;margin-top:40px;max-width:840px;margin-left:auto;margin-right:auto;width:100%}
+.vnode{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:30px 34px;text-align:center}
+.vnode .nt{font-family:'DM Sans';font-weight:700;font-size:38px;color:var(--text-primary)}
+.vnode .ns{font-family:'DM Sans';font-size:27px;color:var(--text-secondary);margin-top:8px}
+.vnode.good{border-color:rgba(0,230,138,.4);background:linear-gradient(135deg,rgba(0,230,138,.08),transparent)}
+.vnode.good .nt{color:var(--accent-green)}
+.vnode.burn{border-color:rgba(255,64,96,.45);background:rgba(255,64,96,.08)}
+.vnode.burn .nt{color:var(--accent-red)}
+.vnode.machine{border-style:solid;min-height:200px;display:flex;flex-direction:column;justify-content:center}
+.varr{text-align:center;font-size:56px;color:var(--accent-green);line-height:1;margin:12px 0}
+.varr.c{color:var(--accent-cyan)}
+.vcap{text-align:center;font-size:29px;color:var(--text-secondary);margin-top:30px;max-width:900px;margin-left:auto;margin-right:auto;line-height:1.4}
+.vcap b{color:var(--text-primary);font-weight:700}
+/* VERTICAL timeline */
+.vrail{margin-top:44px;position:relative;padding-left:62px;max-width:900px}
+.vrail .vline{position:absolute;left:22px;top:8px;bottom:8px;width:3px;background:linear-gradient(180deg,var(--accent-green),var(--accent-cyan))}
+.vstop{position:relative;margin-bottom:42px}
+.vstop:last-child{margin-bottom:0}
+.vstop .vdot{position:absolute;left:-51px;top:6px;width:24px;height:24px;border-radius:50%;background:var(--bg-deep);border:3px solid var(--accent-green)}
+.vstop .vyr{font-family:'JetBrains Mono';font-weight:700;font-size:44px;color:var(--text-primary)}
+.vstop .vlab{font-size:28px;color:var(--text-secondary);margin-top:6px;line-height:1.4}
+.vstop .vlab b{color:var(--text-primary);font-weight:700;display:block;margin-bottom:3px}
+</style></head>
+<body>
+
+<!-- 1 backers -->
+<div class="frame" id="backers">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-green);top:-140px;right:-80px"></div>
+  <div class="ey">Serious names attached</div>
+  <h1>Blue-chip <span class="g">backers</span></h1>
+  <div class="divider"></div>
+  <div class="chips">
+    <div class="chip"><div class="top"></div><div class="n">Circle</div><div class="s">USDC issuer</div></div>
+    <div class="chip"><div class="top"></div><div class="n">Solana Ventures</div><div class="s">L1 backer</div></div>
+    <div class="chip"><div class="top"></div><div class="n">Coinbase Ventures</div><div class="s">exchange arm</div></div>
+  </div>
+  <div class="foot"><span class="mono g" style="font-size:44px">$28M+</span> &nbsp;raised across the three</div>
+</div>
+
+<!-- 2 business-vs-token -->
+<div class="frame" id="business-vs-token">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-green);bottom:-160px;left:-100px"></div>
+  <div class="ey">How I actually think about a coin</div>
+  <h1 class="sm">Separate the <span class="g">business</span> from the token</h1>
+  <div class="divider"></div>
+  <div class="cmp">
+    <div class="col good"><div class="ct">The Business</div><div class="cd">real, growing, measurable</div>
+      <ul>
+        <li><span class="m g">&#10003;</span><span><span class="mono">$500M+</span>/yr payroll, <span class="mono">12.6K</span> employees</span></li>
+        <li><span class="m g">&#10003;</span>Mastercard card in <span class="mono">97</span> countries</li>
+        <li><span class="m g">&#10003;</span>Nacha member, USD1 integrated</li>
+      </ul></div>
+    <div class="col tok"><div class="ct">The Token</div><div class="cd">the claim on that business</div>
+      <ul>
+        <li><span class="m go">&#9679;</span>fixed <span class="mono">100B</span> float, no more unlocks</li>
+        <li><span class="m go">&#9679;</span>deflationary buyback (revenue-fed)</li>
+        <li><span class="m go">&#9679;</span>sub-cent, <span class="mono">~$220M</span> cap</li>
+      </ul></div>
+  </div>
+  <div class="foot">The business is real. The only question left: <b>does it pull the token up with it?</b></div>
+</div>
+
+<!-- 3 code-questioned -->
+<div class="frame" id="code-questioned">
+  <div class="orb" style="width:480px;height:480px;background:var(--accent-gold);top:-120px;right:-60px"></div>
+  <div class="ey">Older reports</div>
+  <h1 class="sm">Even the app and <span class="go">code activity</span> got questioned</h1>
+  <div class="divider"></div>
+  <p>App health, GitHub activity, on-chain flags, all from older teardowns.</p>
+  <div class="card"><div class="top" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div>
+    <div class="big">Do not repeat old flags. <span class="go">CHECK them.</span></div>
+    <div class="sub">And so should you.</div></div>
+</div>
+
+<!-- 4 competition -->
+<div class="frame" id="competition">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-cyan);top:-160px;right:-120px"></div>
+  <div class="ey">Who owns payroll already</div>
+  <h1 class="sm">Not killing ADP, <span class="c">becoming a rail inside it</span></h1>
+  <div class="divider"></div>
+  <div class="vflow">
+    <div class="vnode machine"><div class="nt" style="font-size:42px">ADP + Microsoft</div><div class="ns">full enterprise software + cloud + payroll bundle</div>
+      <div style="display:flex;gap:14px;justify-content:center;margin-top:20px;flex-wrap:wrap">
+        <span style="padding:11px 22px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid var(--border);font-size:23px;color:var(--text-secondary)">HR / cloud</span>
+        <span style="padding:11px 22px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid var(--border);font-size:23px;color:var(--text-secondary)">enterprise payroll</span>
+        <span style="padding:11px 22px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid var(--border);font-size:23px;color:var(--text-secondary)">benefits</span>
+      </div>
+    </div>
+    <div class="varr c">&uarr;</div>
+    <div class="vnode good"><div class="nt">Zebec</div><div class="ns">a small crypto rail plugging in</div></div>
+  </div>
+  <div class="vcap">The realistic path: <b>plug INTO the giants, not replace them.</b></div>
+</div>
+
+<!-- 5 depends -->
+<div class="frame" id="depends">
+  <div class="orb" style="width:480px;height:480px;background:var(--accent-gold);top:-120px;left:-80px"></div>
+  <div class="ey">A matter of time...</div>
+  <h1>But it <span class="go">depends</span></h1>
+  <div class="divider"></div>
+  <div class="chips">
+    <div class="chip gold"><div class="top"></div><div class="n">The Market</div><div class="d">broad risk appetite for crypto</div></div>
+    <div class="chip gold"><div class="top"></div><div class="n">The Bear Market</div><div class="d">how and when this cycle turns</div></div>
+    <div class="chip gold"><div class="top"></div><div class="n">Outside Factors</div><div class="d">things none of us control</div></div>
+  </div>
+</div>
+
+<!-- 6 dyor-cta -->
+<div class="frame" id="dyor-cta">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-green);top:-140px;right:-100px"></div>
+  <div class="ey">Nothing here is financial advice</div>
+  <h1 class="sm">Do your own <span class="g">research</span></h1>
+  <div class="divider"></div>
+  <div class="tags"><div class="tg">NFA</div><div class="tg">DYOR</div></div>
+  <div class="like"><span class="thumb">&#128077;</span><span class="t">Click that Like button</span></div>
+</div>
+
+<!-- 7 float-fixed -->
+<div class="frame" id="float-fixed">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-green);bottom:-180px;right:-120px"></div>
+  <div class="ey">Think about what that changes</div>
+  <h1 class="sm">The one force guaranteed to push the price down, month over month, is <span class="re">gone.</span></h1>
+  <div class="divider"></div>
+  <div class="card"><div class="top"></div>
+    <div class="big">The float is fixed &nbsp;<span class="mono g" style="font-size:56px">100B</span></div>
+    <div class="sub">No more unlocks. No more.</div></div>
+</div>
+
+<!-- 8 flywheel-buyback -->
+<div class="frame" id="flywheel-buyback">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-green);top:-140px;right:-90px"></div>
+  <div class="ey">Point real businesses at it</div>
+  <h1 class="sm">Revenue <span class="g">buys back</span> the token and burns it</h1>
+  <div class="divider"></div>
+  <div class="vflow">
+    <div class="vnode"><div class="nt">Payroll + card</div><div class="ns">real product revenue</div></div>
+    <div class="varr">&darr;</div>
+    <div class="vnode good"><div class="nt">Buy ZBCN</div><div class="ns">a cut of revenue</div></div>
+    <div class="varr">&darr;</div>
+    <div class="vnode burn"><div class="nt">Burn</div><div class="ns">supply pulled off market</div></div>
+  </div>
+</div>
+
+<!-- 9 flywheel-staking -->
+<div class="frame" id="flywheel-staking">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-green);top:-140px;left:-90px"></div>
+  <div class="ey">Stake it in the app</div>
+  <h1 class="sm">Rewards on your <span class="g">card spending</span> pull more off the market</h1>
+  <div class="divider"></div>
+  <div class="vflow">
+    <div class="vnode good"><div class="nt">Stake ZBCN</div><div class="ns">in the SuperApp</div></div>
+    <div class="varr">&darr;</div>
+    <div class="vnode"><div class="nt">Card rewards</div><div class="ns">on real spending</div></div>
+    <div class="varr">&darr;</div>
+    <div class="vnode"><div class="nt">Supply off the market</div><div class="ns">less float, more demand</div></div>
+  </div>
+</div>
+
+<!-- 10 good-bad-why -->
+<div class="frame" id="good-bad-why">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-green);top:-150px;right:-100px"></div>
+  <div class="ey">Here is the plan</div>
+  <h1 class="sm">The good, the bad, and the <span class="go">why</span></h1>
+  <div class="divider"></div>
+  <div class="chips">
+    <div class="chip"><div class="top"></div><div class="n g">The Good</div><div class="d">real revenue, real adoption, blue-chip backers</div></div>
+    <div class="chip red"><div class="top"></div><div class="n re">The Bad</div><div class="d">penny-stock history, VC insiders, open questions</div></div>
+    <div class="chip gold"><div class="top"></div><div class="n go">The Why</div><div class="d">the unlocks are finally over</div></div>
+  </div>
+  <div class="foot">And honestly... I am <span class="g" style="font-weight:700">BULLISH.</span></div>
+</div>
+
+<!-- 11 history-timeline -->
+<div class="frame" id="history-timeline">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-cyan);top:-160px;right:-120px"></div>
+  <div class="ey">This is not a fresh launch</div>
+  <h1 class="sm">The token has <span class="c">two lives</span></h1>
+  <div class="vrail">
+    <div class="vline"></div>
+    <div class="vstop"><div class="vdot"></div><div class="vyr">2021</div><div class="vlab"><b>Company founded</b>streaming payments idea</div></div>
+    <div class="vstop"><div class="vdot"></div><div class="vyr">2022</div><div class="vlab"><b>ZBC launches</b>IDO <span class="mono g">~$0.021</span>, peak <span class="mono g">~$0.053</span></div></div>
+    <div class="vstop"><div class="vdot"></div><div class="vyr">2024</div><div class="vlab"><b>Relaunch as ZBCN</b>1:10 split, the chart you see today</div></div>
+    <div class="vstop"><div class="vdot"></div><div class="vyr">2026</div><div class="vlab"><b>Today</b>~flat vs 2022 launch, off its highs</div></div>
+  </div>
+  <div class="vcap" style="margin-top:38px">The chart only goes back to <b>April 2024</b>, but the story starts in 2021. (No "-98%": split-adjusted it is roughly where it launched.)</div>
+</div>
+
+<!-- 12 insiders -->
+<div class="frame" id="insiders">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-red);top:-140px;right:-90px"></div>
+  <div class="ey">Remember those serious names</div>
+  <h1 class="sm">The opposite of a <span class="go">fair launch</span></h1>
+  <div class="divider"></div>
+  <div class="names"><div class="name">Circle</div><div class="name">Coinbase</div><div class="name">Solana Ventures</div></div>
+  <div class="foot" style="margin-top:36px">Insiders have a <b>cost basis you and I will never see.</b></div>
+  <div class="foot" style="margin-top:14px;color:var(--text-muted)">The exact opposite of the coins I usually care about.</div>
+</div>
+
+<!-- 13 link-fixed -->
+<div class="frame" id="link-fixed">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-green);bottom:-160px;right:-100px"></div>
+  <div class="ey">The thing that always broke the link</div>
+  <h1 class="sm">Endless new supply is <span class="re">gone</span></h1>
+  <div class="divider"></div>
+  <div class="vflow">
+    <div class="vnode good"><div class="nt" style="font-size:48px">BUSINESS</div><div class="ns">real, measurable</div></div>
+    <div style="text-align:center;margin:22px 0">
+      <div style="display:inline-block;padding:16px 32px;border-radius:14px;background:rgba(255,64,96,.09);border:1px solid rgba(255,64,96,.45)">
+        <span style="font-family:'DM Sans';font-size:28px;color:#ff8ba0;text-decoration:line-through;text-decoration-color:#ff4060;text-decoration-thickness:4px">endless new supply</span>
+      </div>
+      <div style="font-family:'Playfair Display';font-weight:900;font-size:56px;color:var(--accent-red);letter-spacing:2px;margin-top:16px">GONE</div>
+    </div>
+    <div class="vnode good"><div class="nt" style="font-size:48px">TOKEN</div><div class="ns">fixed 100B float</div></div>
+  </div>
+</div>
+
+<!-- 14 nacha-ach -->
+<div class="frame" id="nacha-ach">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-cyan);top:-150px;right:-100px"></div>
+  <div class="ey">Zebec joined the Payments Innovation Alliance</div>
+  <h1 class="sm">Nacha runs the <span class="c">ACH plumbing</span></h1>
+  <div class="divider"></div>
+  <div class="vflow">
+    <div class="vnode"><div class="nt">Nacha</div><div class="ns">member: Zebec</div></div>
+    <div class="varr c">&darr;</div>
+    <div class="vnode"><div class="nt">ACH rails</div><div class="ns">the US payments network</div></div>
+    <div class="varr c">&darr;</div>
+    <div class="vnode"><div class="nt" style="font-size:33px">Direct deposits + bank transfers</div></div>
+  </div>
+  <div class="vcap">Basically every direct deposit runs on it. Zebec is a <b>member</b>, not a governing seat.</div>
+</div>
+
+<!-- 15 one-sentence -->
+<div class="frame" id="one-sentence">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-green);top:-160px;left:-120px"></div>
+  <div class="ey">The setup in one sentence</div>
+  <div class="hero">A real company generating real revenue, buying back a token that <span class="g">can no longer be diluted.</span></div>
+</div>
+
+<!-- 16 other-way-around -->
+<div class="frame" id="other-way-around">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-green);top:-140px;right:-90px"></div>
+  <div class="ey">Here it is the other way around</div>
+  <h1>The business is <span class="g">real.</span></h1>
+  <div class="divider"></div>
+  <div class="rows">
+    <div class="rrow"><span class="num">01</span>Not even debatable</div>
+    <div class="rrow"><span class="num">02</span>The only question left: does it pull the <span class="go">&nbsp;token&nbsp;</span> up?</div>
+  </div>
+</div>
+
+<!-- 17 parabolic-ponder -->
+<div class="frame" id="parabolic-ponder">
+  <svg viewBox="0 0 1080 1920" preserveAspectRatio="none" style="position:absolute;inset:0;z-index:0;opacity:.55">
+    <defs><linearGradient id="pc" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#00e68a"/><stop offset="1" stop-color="#ffd700"/></linearGradient>
+    <filter id="pgl"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <path d="M 90 1800 C 480 1760, 640 1480, 760 980 C 850 560, 900 240, 970 110" fill="none" stroke="url(#pc)" stroke-width="12" stroke-linecap="round" filter="url(#pgl)"/>
+  </svg>
+  <div class="ey">When everything goes parabolic</div>
+  <h1>A question to <span class="go">ponder</span></h1>
+  <div class="divider"></div>
+</div>
+
+<!-- 18 payfi -->
+<div class="frame" id="payfi">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-green);top:-140px;right:-90px"></div>
+  <div class="ey">The pivot</div>
+  <div class="flowwords"><span class="w old">Streaming</span><span class="arr">&rarr;</span><span class="w new">PayFi</span></div>
+  <div class="foot" style="margin-top:50px"><b>PayFi</b> = payment-focused crypto finance: real payroll, a card, and an app.</div>
+</div>
+
+<!-- 19 payroll-stream -->
+<div class="frame" id="payroll-stream">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-cyan);top:-150px;left:-90px"></div>
+  <div class="ey">Instead of payday, a faucet that's always on</div>
+  <h1 class="sm">Payroll, <span class="c">streamed by the second</span></h1>
+  <div class="divider"></div>
+  <div class="vflow">
+    <div class="vnode"><div class="nt">Employer wallet</div><div class="ns">funds payroll once</div></div>
+    <div class="varr c">&darr;</div>
+    <div style="text-align:center;font-family:'JetBrains Mono';font-weight:700;font-size:40px;color:var(--accent-green)">+$0.00019 / sec</div>
+    <div style="text-align:center;font-size:26px;color:var(--text-muted);margin-top:6px">continuous, real-time salary</div>
+    <div class="varr c">&darr;</div>
+    <div class="vnode"><div class="nt">Employee wallet</div><div class="ns">paid every second</div></div>
+  </div>
+</div>
+
+<!-- 20 penny-stock-q -->
+<div class="frame" id="penny-stock-q">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-gold);top:-140px;right:-90px"></div>
+  <div class="ey">The bad</div>
+  <h1>Why is this still a <span class="go">penny stock?</span></h1>
+  <div class="divider"></div>
+  <div class="ans">Part of the answer: this is <span>not a fresh launch.</span></div>
+</div>
+
+<!-- 21 price-vs-mcap -->
+<div class="frame" id="price-vs-mcap">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-gold);top:-140px;left:-80px"></div>
+  <div class="ey">Still down here</div>
+  <h1><span class="go">Sub-cent</span> micro-cap</h1>
+  <div class="divider"></div>
+  <div class="stats">
+    <div class="stat"><div class="k">Price</div><div class="v go">$0.0022</div><div class="sub">about a fifth of a penny</div></div>
+    <div class="stat"><div class="k">Market cap</div><div class="v">~$221M</div><div class="sub">CoinMarketCap rank #121</div></div>
+  </div>
+  <div class="foot">ZBCN relaunched <b>April 2024</b>, but the company has been building since <b>2021</b>.</div>
+</div>
+
+<!-- 22 real-real-real -->
+<div class="frame" id="real-real-real">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-green);top:-140px;right:-90px"></div>
+  <div class="ey">Not a mystery project</div>
+  <div class="struck"><s>Anonymous team?</s> &nbsp;<span class="no">NO.</span></div>
+  <div class="chips">
+    <div class="chip"><div class="top"></div><div class="n"><span class="g">&#10003;</span> Real project</div></div>
+    <div class="chip"><div class="top"></div><div class="n"><span class="g">&#10003;</span> Real backing</div></div>
+    <div class="chip"><div class="top"></div><div class="n"><span class="g">&#10003;</span> Real utility</div></div>
+  </div>
+</div>
+
+<!-- 23 serious-names -->
+<div class="frame" id="serious-names">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-green);top:-140px;right:-90px"></div>
+  <div class="ey">Hold that thought</div>
+  <h1 class="sm">Some <span class="g">serious names</span> attached to it</h1>
+  <div class="divider"></div>
+  <div class="names"><div class="name">Circle</div><div class="name">Solana Ventures</div><div class="name">Coinbase Ventures</div></div>
+  <div class="cmp" style="margin-top:38px">
+    <div class="col good"><div class="ct" style="color:#00e68a"><span style="font-size:30px">&#10003;</span> The best thing about it</div></div>
+    <div class="col tok"><div class="ct" style="color:#ffd700"><span style="font-size:30px">&#9888;</span> And one of the problems</div></div>
+  </div>
+</div>
+
+<!-- 24 small-rail -->
+<div class="frame" id="small-rail">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-cyan);top:-150px;right:-100px"></div>
+  <div class="ey">The realistic path</div>
+  <h1 class="sm">Not <span class="re">killing ADP</span>, a small rail inside it</h1>
+  <div class="divider"></div>
+  <div class="vflow">
+    <div class="vnode machine"><div class="nt" style="font-size:42px">A very big machine</div><div class="ns">the entrenched enterprise payroll stack</div></div>
+    <div class="varr c">&uarr;</div>
+    <div class="vnode good"><div class="nt">Zebec</div><div class="ns">a small rail plugging in</div></div>
+  </div>
+  <div class="vcap">Not replace the giants: <b>plug into them.</b></div>
+</div>
+
+<!-- 25 solana-chip -->
+<div class="frame" id="solana-chip">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-cyan);top:-140px;right:-90px"></div>
+  <div class="ey">Why Solana</div>
+  <h1>Built on <span class="c">Solana</span></h1>
+  <div class="divider"></div>
+  <div class="card"><div class="top" style="background:linear-gradient(90deg,var(--accent-cyan),transparent)"></div>
+    <div class="big">Cheap, fast rails</div>
+    <div class="sub">you need it cheap to stream pay by the second</div></div>
+  <div class="foot" style="color:var(--text-muted)">But streaming pay by itself never really caught on.</div>
+</div>
+
+<!-- 26 split-adjusted -->
+<div class="frame" id="split-adjusted">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-cyan);top:-140px;left:-80px"></div>
+  <div class="ey">Split-adjusted, done right</div>
+  <h1 class="sm">Roughly where it <span class="c">first launched</span></h1>
+  <div class="divider"></div>
+  <div class="stats">
+    <div class="stat"><div class="k">vs the 2022 launch</div><div class="v c">~flat</div><div class="sub">$0.021 launch, split-adjusted</div></div>
+    <div class="stat"><div class="k">vs the 2022 peak</div><div class="v go">~-58%</div><div class="sub">$0.053 peak, split-adjusted</div></div>
+  </div>
+  <div class="foot">The market has had <b>plenty of chances</b> to price it.</div>
+</div>
+
+<!-- 27 squint -->
+<div class="frame" id="squint">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-gold);top:-140px;right:-90px"></div>
+  <div class="ey">Bullish, but honest</div>
+  <h1 class="sm">I should not have to <span class="go">squint</span> to see who is in charge.</h1>
+  <div class="divider"></div>
+  <div class="warn"><span class="ic">&#9888;</span><span>A type of discrepancy I do not care for.</span></div>
+</div>
+
+<!-- 28 still-has-to -->
+<div class="frame" id="still-has-to">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-green);top:-140px;right:-90px"></div>
+  <div class="ey">Keeping it honest</div>
+  <h1 class="sm">It still has to <span class="g">execute</span></h1>
+  <div class="divider"></div>
+  <div class="rows">
+    <div class="rrow"><span class="ic g">&#10003;</span>Revenue still has to grow</div>
+    <div class="rrow"><span class="ic g">&#10003;</span>The company still has to execute</div>
+  </div>
+  <div class="foot">But it looks good, and <b>crypto is the future.</b></div>
+  <div class="up"><span class="arr">&rarr;</span>upside</div>
+</div>
+
+<!-- 29 the-knock (clean container-only, no card box) -->
+<div class="frame" id="the-knock">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-red);top:-140px;right:-90px"></div>
+  <div class="ey">The whole reason for this video</div>
+  <h1 class="sm">Now for <span class="c">the token itself</span></h1>
+  <div class="divider"></div>
+  <p style="font-size:40px;margin-top:6px;max-width:1340px"><span class="re" style="font-weight:700">The knock:</span> constant unlocks. New supply hitting the market every single month.</p>
+</div>
+
+<!-- nacha-member (replaces the blank-white R4 receipt @175.94-182) -->
+<div class="frame" id="nacha-member">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-cyan);top:-150px;right:-100px"></div>
+  <div class="ey">Zebec joined it</div>
+  <h1 class="sm">Nacha's <span class="c">Payments Innovation Alliance</span></h1>
+  <div class="divider"></div>
+  <p style="font-size:36px;max-width:1360px">Nacha runs the <b>ACH network</b>, the plumbing behind basically every direct deposit in the country.</p>
+  <div class="foot" style="color:var(--text-muted);margin-top:26px">A member of the alliance, not a governing seat.</div>
+</div>
+
+<!-- 30 title-question -->
+<div class="frame" id="title-question">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-teal);top:-160px;right:-120px"></div>
+  <div class="pre">Is this real? &nbsp;&rarr;&nbsp; <b>It IS real.</b></div>
+  <div class="ey">The real question</div>
+  <div class="ticker"><div class="logo">Z</div><div class="tk">ZBCN</div></div>
+  <h1 style="margin-top:26px">About to go <span class="g">vertical?</span></h1>
+</div>
+
+<!-- 31 trust-question -->
+<div class="frame" id="trust-question">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-red);top:-140px;right:-90px"></div>
+  <div class="ey">Attributed, not asserted</div>
+  <div class="quote"><div class="q">&ldquo;A rug.&rdquo;</div><div class="src">some critics of ZBC</div></div>
+  <div class="foot" style="margin-top:40px">I am not saying that. <b>But there is history.</b></div>
+</div>
+
+<!-- 32 under-the-hood -->
+<div class="frame" id="under-the-hood">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-gold);top:-150px;right:-100px"></div>
+  <div class="tophead"><div class="ey" style="margin-bottom:0">What marketing will never tweet</div><div class="asof">Older findings, re-check live</div></div>
+  <h1 class="sm" style="margin-top:24px">When people looked <span class="go">under the hood</span></h1>
+  <div class="divider"></div>
+  <div class="flags">
+    <div class="flag"><span class="ic">&#128167;</span><div><div class="n">Thin liquidity</div><div class="d">small pool against the whole market cap</div></div></div>
+    <div class="flag"><span class="ic">&#127974;</span><div><div class="n">CEX-propped price</div><div class="d">held up on exchanges, not on-chain demand</div></div></div>
+    <div class="flag"><span class="ic">&#128011;</span><div><div class="n">Whale outflows</div><div class="d">big wallets distributing to late buyers</div></div></div>
+    <div class="flag"><span class="ic">&#128187;</span><div><div class="n">Code health</div><div class="d">app and repo activity questioned</div></div></div>
+  </div>
+</div>
+
+<!-- 33 usd1-tailwind -->
+<div class="frame" id="usd1-tailwind">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-green);top:-140px;right:-90px"></div>
+  <div class="ey">Whatever you think of it politically</div>
+  <h1 class="sm">A stablecoin with <span class="g">that name</span> is a tailwind</h1>
+  <div class="divider"></div>
+  <div class="chips">
+    <div class="chip"><div class="top"></div><div class="n">Distribution</div><div class="d">USD1 payroll reaches tens of thousands</div></div>
+    <div class="chip cyan"><div class="top"></div><div class="n">Narrative</div><div class="d">a story the market pays attention to</div></div>
+    <div class="chip hot"><div class="top"></div><div class="n g">Tailwind</div><div class="d">right market, right moment</div></div>
+  </div>
+</div>
+
+<!-- 34 vertical-zbcn -->
+<div class="frame" id="vertical-zbcn">
+  <svg viewBox="0 0 1080 1920" preserveAspectRatio="none" style="position:absolute;inset:0;z-index:0;opacity:.7">
+    <defs><linearGradient id="vc" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#49e0c8" stop-opacity=".35"/><stop offset=".7" stop-color="#00e68a"/><stop offset="1" stop-color="#eafffb"/></linearGradient>
+    <filter id="vgl"><feGaussianBlur stdDeviation="11" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <path d="M 150 1820 C 560 1780, 720 1560, 820 1040 C 890 660, 910 320, 940 80" fill="none" stroke="url(#vc)" stroke-width="14" stroke-linecap="round" filter="url(#vgl)"/>
+  </svg>
+  <div class="ey">Eventually, parabolic</div>
+  <div class="ticker" style="margin-top:12px"><div class="logo" style="width:120px;height:120px;font-size:70px">Z</div><div class="tk" style="font-size:96px">ZBCN</div></div>
+</div>
+
+<!-- 35 who-runs-it -->
+<div class="frame" id="who-runs-it">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-gold);top:-140px;right:-90px"></div>
+  <div class="ey">One last thing... it bugs me</div>
+  <div class="lead">When I went digging on who actually runs this company,</div>
+  <h1 class="sm">Who actually <span class="go">runs</span> this company?</h1>
+  <div class="divider"></div>
+  <div class="ans">I got <span>different answers.</span></div>
+</div>
+
+<!-- zebec-stack (CH2 104-116: pay + card + app in one place) -->
+<div class="frame" id="zebec-stack">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-green);top:-150px;right:-100px"></div>
+  <div class="ey">One place: pay, spend, stake</div>
+  <h1 class="sm">The whole <span class="g">PayFi stack</span></h1>
+  <div class="divider"></div>
+  <div style="display:flex;flex-direction:column;gap:22px;margin-top:40px;max-width:1520px">
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-left:5px solid var(--accent-green);border-radius:16px;padding:28px 42px">
+      <div style="font-family:'DM Sans';font-weight:700;font-size:34px;color:var(--accent-green);margin-bottom:8px">Payroll</div>
+      <div style="font-family:'DM Sans';font-size:26px;color:var(--text-secondary)">real payroll for real companies, streamed by the second</div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-left:5px solid var(--accent-cyan);border-radius:16px;padding:28px 42px">
+      <div style="font-family:'DM Sans';font-weight:700;font-size:34px;color:var(--accent-cyan);margin-bottom:8px">Zebec Card</div>
+      <div style="font-family:'DM Sans';font-size:26px;color:var(--text-secondary)">a Mastercard that spends like any other card, 97 countries</div>
+    </div>
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-left:5px solid var(--accent-gold);border-radius:16px;padding:28px 42px">
+      <div style="font-family:'DM Sans';font-weight:700;font-size:34px;color:var(--accent-gold);margin-bottom:8px">SuperApp</div>
+      <div style="font-family:'DM Sans';font-size:26px;color:var(--text-secondary)">submitted to Apple and Google Play, ties pay + card + staking into one place</div>
+    </div>
+  </div>
+</div>
+
+<!-- r9-unlocks (vertical fallback for the paywalled CryptoRank mobile capture; illustrative, no invented numbers) -->
+<div class="frame" id="r9-unlocks">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-red);top:-140px;right:-90px"></div>
+  <div class="ey">For years, the knock</div>
+  <h1 class="sm">New supply, <span class="re">every single month</span></h1>
+  <div class="divider"></div>
+  <div class="dg" style="max-width:900px"><svg viewBox="0 0 900 470" width="100%">
+    <line x1="40" y1="430" x2="880" y2="430" stroke="#1e2330" stroke-width="2"/>
+    <defs><linearGradient id="ubar" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#00e68a"/><stop offset="1" stop-color="#ff4060"/></linearGradient></defs>
+    <rect x="60" y="382" width="64" height="48" rx="6" fill="url(#ubar)" opacity=".85"/>
+    <rect x="150" y="344" width="64" height="86" rx="6" fill="url(#ubar)" opacity=".85"/>
+    <rect x="240" y="300" width="64" height="130" rx="6" fill="url(#ubar)" opacity=".85"/>
+    <rect x="330" y="252" width="64" height="178" rx="6" fill="url(#ubar)" opacity=".85"/>
+    <rect x="420" y="206" width="64" height="224" rx="6" fill="url(#ubar)" opacity=".85"/>
+    <rect x="510" y="166" width="64" height="264" rx="6" fill="url(#ubar)" opacity=".85"/>
+    <rect x="600" y="128" width="64" height="302" rx="6" fill="url(#ubar)" opacity=".85"/>
+    <rect x="690" y="96" width="64" height="334" rx="6" fill="url(#ubar)" opacity=".85"/>
+    <rect x="780" y="64" width="64" height="366" rx="6" fill="url(#ubar)"/>
+    <text x="60" y="466" fill="#505a6e" font="400 22px 'DM Sans'">every month, more supply &#8594;</text>
+  </svg></div>
+  <div class="foot" style="color:var(--text-muted)">new tokens hitting the market, diluting everyone who bought</div>
+</div>
+
+<!-- 37 sam-vs-simon (draft cover for R8B until Mike confirms the 'Simon' source) -->
+<div class="frame" id="sam-vs-simon">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-gold);top:-140px;right:-90px"></div>
+  <div class="ey">Who actually runs it</div>
+  <h1 class="sm">The sources <span class="go">disagree</span></h1>
+  <div class="divider"></div>
+  <div class="cmp">
+    <div class="col good"><div class="ct" style="color:#00e68a">Some sources</div><div class="cd">point to the founder</div>
+      <ul><li><span class="m g">&#10003;</span>Sam Thapaliya, Founder</li></ul></div>
+    <div class="col tok"><div class="ct" style="color:#ffd700">Others who met the team</div><div class="cd">call the CEO</div>
+      <ul><li><span class="m go">?</span>someone named Simon</li></ul></div>
+  </div>
+</div>
+
+<!-- 36 why-bullish -->
+<div class="frame" id="why-bullish">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-green);bottom:-160px;left:-100px"></div>
+  <div class="ey">Why I am bullish</div>
+  <h1 class="sm" style="margin-bottom:10px">The cap is <span class="g">out of the way</span></h1>
+  <div class="divider"></div>
+  <div class="rows">
+    <div class="rrow dim"><span class="ic re">&#10007;</span>Not because it is cheap</div>
+    <div class="rrow"><span class="ic g">&#10003;</span>The one thing that was capping us is out of the way</div>
+  </div>
+  <div style="margin-top:40px"><span class="accentword go" style="font-size:110px">FINALLY.</span></div>
+</div>
+
+</body></html>

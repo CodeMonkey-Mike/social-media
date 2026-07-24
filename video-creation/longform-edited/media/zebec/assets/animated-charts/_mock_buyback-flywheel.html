@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Inter:wght@400;700;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden}
+  body{background:radial-gradient(1200px 800px at 50% 40%,#0d1a2b 0%,#070b16 60%,#04060d 100%);
+    font-family:Inter,system-ui,sans-serif;color:#e8eef6;display:flex;flex-direction:column;align-items:center;padding:70px}
+  .eyebrow{font-size:26px;letter-spacing:.32em;text-transform:uppercase;color:#2dd4bf;font-weight:800;margin-bottom:10px}
+  h1{font-size:56px;font-weight:800;letter-spacing:-.02em;margin-bottom:24px;text-align:center}
+  h1 .g{color:#2dd4bf}
+  svg{flex:1}
+  .node{fill:rgba(45,212,191,.07);stroke:#2dd4bf;stroke-width:2.5}
+  .center{fill:rgba(45,212,191,.14);stroke:#2dd4bf;stroke-width:3.5}
+  .nt{fill:#fff;font-weight:800;font-size:30px;text-anchor:middle;font-family:Inter}
+  .ns{fill:#9fb3c8;font-size:21px;text-anchor:middle;font-family:Inter}
+  .ct{fill:#2dd4bf;font-weight:800;font-size:46px;text-anchor:middle;font-family:'JetBrains Mono'}
+  .cs{fill:#cfe;font-size:22px;text-anchor:middle}
+  .arc{fill:none;stroke:#2dd4bf;stroke-width:4;opacity:.85;marker-end:url(#ah)}
+</style></head><body>
+  <div class="eyebrow">A real company, feeding a shrinking token</div>
+  <h1>The <span class="g">buyback flywheel</span></h1>
+  <svg viewBox="0 0 1200 760" width="1200">
+    <defs><marker id="ah" markerWidth="12" markerHeight="12" refX="8" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#2dd4bf"/></marker></defs>
+    <!-- ring arcs between 4 nodes -->
+    <path class="arc" d="M 600 150 A 300 300 0 0 1 900 470"/>
+    <path class="arc" d="M 880 520 A 300 300 0 0 1 460 640"/>
+    <path class="arc" d="M 320 560 A 300 300 0 0 1 300 300"/>
+    <path class="arc" d="M 340 250 A 300 300 0 0 1 560 150"/>
+    <!-- center -->
+    <circle class="center" cx="600" cy="400" r="118"/>
+    <text class="ct" x="600" y="392">ZBCN</text>
+    <text class="cs" x="600" y="428">fixed 100B float</text>
+    <!-- nodes -->
+    <g><rect class="node" x="470" y="70" width="260" height="96" rx="16"/><text class="nt" x="600" y="112">Product revenue</text><text class="ns" x="600" y="144">payroll + card fees</text></g>
+    <g><rect class="node" x="860" y="360" width="250" height="96" rx="16"/><text class="nt" x="985" y="402">Buy ZBCN</text><text class="ns" x="985" y="434">off the open market</text></g>
+    <g><rect class="node" x="470" y="620" width="260" height="96" rx="16"/><text class="nt" x="600" y="662">Burn</text><text class="ns" x="600" y="694">supply removed forever</text></g>
+    <g><rect class="node" x="95" y="360" width="255" height="96" rx="16"/><text class="nt" x="222" y="402">Stake to hold</text><text class="ns" x="222" y="434">card rewards, less float</text></g>
+  </svg>
+</body></html>

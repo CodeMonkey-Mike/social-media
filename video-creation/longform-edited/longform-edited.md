@@ -41,30 +41,49 @@ visuals. This file (`longform-edited.md`) governs the EDIT; `screenplay.md` gove
 
 ## Folder convention
 
-Each video is its own project folder under `media/<project name>/`. Scripts in `scripts/` all take
-paths as arguments — point them at the project folder.
+Each video is its own project folder under `media/<project name>/`. Scripts in `scripts/` all take paths
+as arguments — point them at the project folder. **Working spines are NOT loose in the project root — they
+live in `spine/` with a stage-letter naming chain.** That naming is owned by the cover-blackout skill
+(canonical: `../skills/cover-blackout/cover-blackout.md` §"Naming convention"); render INPUTS live in
+`render-assets/` and kept deliverables in `renders/` (canonical: `skills/comp-build.md` §10). The full
+per-video document set is `comp-build.md` §13. **When passing output paths to the defumbler / cover-blackout /
+desilencer sub-agents, use these `spine/` paths — do not hard-code loose root paths** (that drift was caught
+on `zebec`, 2026-07-11: files landed in the project root and had to be moved).
 
 ```
 media/<project>/
-  <project>.mkv                  master raw (OBS) — never edit, never delete
-  <project> LOW BPS.mp4          working master (Phase 1)
-  <project> LOW BPS.medium-words.json   canonical transcript (Phase 2)
-  <project> EDIT.mp4             cleaned base cut (Phase 3) — the canvas the edit is built on
-  <project> FINAL.mp4            the finished, fully-edited deliverable (Phase 4+)
+  <docs>.md                    SCREENPLAY · AS-RECORDED · DATA · EDIT-PLAN · CUE-SHEET · TRANSITIONS · PROJECT-LOG …
+  raw/
+    <scope>.mkv                master raw (OBS) — never edit, never delete   (<scope> = ALL, or CH1-CH3, CH7 …)
+    <scope>._chunkmap.*        raw chunk map (defumbler diagnosis)
+  spine/                       ← ALL spine-prep working files live here (NOT the project root)
+    <scope>.lowbps.mp4         optional Phase-1 working proxy (to_low_bps)
+    <scope>.a.defumbled.mp4    defumbler out (Phase 3a)   + ._chunkmap.* / .mp4.spans.json
+    <scope>.b.blackout.mp4     cover-blackout out (gate)  + .mp4.cover.json
+    <scope>.c.desilenced.mp4   desilencer out (Phase 3b)  + .map.json + .medium-words.json (the CUE transcript)
+    <scope>.d.paused.mp4       card-pause spine (comp-build) + jumpcuts-final.json
+  render-assets/               comp INPUTS only (spine.mp4 = the paused spine, deck/, img/, vid/ …)  [comp-build §10]
+  renders/                     KEPT deliverable passes (`<project> FINAL.mp4`)
+  _previews/                   disposable drafts / QA frame-grabs
 ```
+
+Sidecars carry the same stem as their spine (cover-blackout.md §Naming convention). The word-level
+transcript you cue the edit off is the FINAL spine's `.medium-words.json` (`comp-build.md` §12), not the
+Phase-1 proxy's.
 
 ---
 
-## Phase 1 — compress to a LOW BPS mp4
+## Phase 1 — compress to a low-bitrate working proxy (`spine/<scope>.lowbps.mp4`)
 
 Transcode the heavy raw `.mkv` down to a lighter working mp4. Single-pass NVENC, **no silence cutting**.
 
 ```
-python scripts/to_low_bps.py "media/<project>/<project>.mkv"
+python scripts/to_low_bps.py "media/<project>/raw/<scope>.mkv" --out "media/<project>/spine/<scope>.lowbps.mp4"
 ```
 
-- Default target 2 Mbps video + AAC 128k (maxrate/bufsize auto-scale off `--bps`). Output written
-  beside the source as `<name> LOW BPS.mp4`. Override with `--bps 2.5M` / `--out <path>`.
+- Default target 2 Mbps video + AAC 128k (maxrate/bufsize auto-scale off `--bps`). Write it into `spine/`
+  as `<scope>.lowbps.mp4` (pass `--out`; the default writes beside the source). Override bitrate with
+  `--bps 2.5M`. (`<scope>` = `ALL` for a single continuous take, or `CH1-CH3` / `CH7` for segmented raws.)
 - **No hard floor here** (unlike presentation's 2 Mbps slide-text rule) — this track has no
   fine on-screen text to protect, so you can go lighter for a talking-head source if you want a
   smaller working file. Keep the master `.mkv` pristine; the edit's quality comes from re-grabbing
@@ -75,7 +94,7 @@ python scripts/to_low_bps.py "media/<project>/<project>.mkv"
 ## Phase 2 — transcribe (word-level)
 
 ```
-python scripts/transcribe.py "media/<project>/<project> LOW BPS.mp4"   # --model medium (default), GPU auto
+python scripts/transcribe.py "media/<project>/spine/<scope>.lowbps.mp4"   # --model medium (default), GPU auto
 ```
 
 - Defaults to **`medium`** on GPU. Use medium, not base: base "cleans up" disfluencies (stammers,
@@ -88,8 +107,11 @@ python scripts/transcribe.py "media/<project>/<project> LOW BPS.mp4"   # --model
 
 ## Phase 3 — base cut: defumble, THEN (optionally) tighten silence
 
-Produce the clean spoken base (`EDIT.mp4`) the edit is built on. **Two SEPARATE passes — never both
-at once** (combining them is what clipped words and missed fumbles on silverscript, 3x).
+Produce the clean spoken base (`spine/<scope>.c.desilenced.mp4`) the edit is built on, via the stage-letter
+chain in `spine/` (`.a.defumbled` → optional `.b.blackout` → `.c.desilenced`). **Two SEPARATE passes — never
+both at once** (combining them is what clipped words and missed fumbles on silverscript, 3x). Each pass is a
+shared sub-agent (defumbler, then cover-blackout for gated-face videos, then desilencer); **pass each its
+`spine/` output path — never a loose project-root path** (the zebec drift, 2026-07-11).
 
 ### Phase 3a — defumble (CANONICAL: `video-creation/skills/defumbler/defumbler.md`)
 
@@ -97,11 +119,19 @@ Removing fumbles ("say-it, stop, retake" → keep the last clean take) is its ow
 follow `defumbler.md`** — do not re-derive it here. The one-line summary of why the old approach kept
 failing: Whisper HIDES retakes and its word timings DRIFT, so you must cut at SILENCE boundaries off
 a silence-segmented, per-chunk transcript (`defumbler/scripts/chunk_map.py`), never on a word
-timestamp, and get Mike's text cut-plan approved before rendering. Output is `<project> EDIT.mp4`
+timestamp, and get Mike's text cut-plan approved before rendering. Output is `spine/<scope>.a.defumbled.mp4`
 (rendered by `defumbler/scripts/remove_spans.py`).
 
 > The old per-track helpers `detect_fumbles.py` / `audit_coverage.py` are **diagnosis/context only**
 > — never cut directly from them. They stay in `scripts/` but defer to `defumbler.md`.
+
+### Phase 3a.5 — cover-blackout (gated-face videos only, CANONICAL: `../skills/cover-blackout/cover-blackout.md`)
+
+For a **gated full-screen face** spine (house rule #6), bake the black base layer under every `[COVER]` beat
+BEFORE desilencing (it maps FACE/COVER on the defumbled spine, so it must run before timecodes shift). Output
+is `spine/<scope>.b.blackout.mp4` (audio untouched, paint-not-cut). Skip this step for the webcam-strip model
+(house rule #1) where the face is always on screen. Then desilence the `.b.blackout.mp4` (or, if you skipped
+blackout, the `.a.defumbled.mp4`).
 
 ### Phase 3b — tighten silence (separate pass, ZONE-based) → use the **desilencer skill**
 
@@ -109,10 +139,11 @@ Silence-only, sync-safe. This is NOT a track-local script — it is the canonica
 **desilencer** (`video-creation/skills/desilencer/desilencer.md`, tool `desilence.py`). Read it before running.
 **Mike's standard (2026-06-13): tight INTRO, relaxed BODY** — punchy hook, breathing-room rest:
 ```
-python ../skills/desilencer/scripts/desilence.py "media/<project>/<project> EDIT.mp4" \
-    --out "media/<project>/<project> EDIT-tight.mp4" \
-    --split <hook-end-sec> --sil-pre 0.25 --sil-post 0.5 --map-out "media/<project>/rapid-map.json" --nvenc
+python ../skills/desilencer/scripts/desilence.py "media/<project>/spine/<scope>.b.blackout.mp4" \
+    --out "media/<project>/spine/<scope>.c.desilenced.mp4" \
+    --split <hook-end-sec> --sil-pre 0.25 --sil-post 0.5 --map-out "media/<project>/spine/<scope>.c.desilenced.map.json" --nvenc
 ```
+(Input is `<scope>.b.blackout.mp4` for gated-face videos, or `<scope>.a.defumbled.mp4` if you skipped blackout.)
 - `--sil-pre` = INTRO zone min-silence; `--sil-post` = BODY zone min-silence. **The min-silence DURATION
   is the only knob.** Pick it BELOW the speaker's natural pause cluster (run the histogram/sweep in
   `desilencer.md`) — at the cluster it barely cuts. Silverscript: pauses clustered ~0.6s, so 600ms did
@@ -170,7 +201,7 @@ If an element genuinely can't be built, **STOP and tell Mike BEFORE rendering** 
 QA must check "does it meet every documented requirement," not just "does it play / no black gaps."
 
 ### ⛔ HARD GATE — build the EDIT-PLAN before ANY editing (Mike, 2026-06-18)
-After the A-roll is recorded, **gated, and desilenced** (the `EDIT.mp4` spine + Phase-2 word-timings exist)
+After the A-roll is recorded, **gated, and desilenced** (the `spine/<scope>.c.desilenced.mp4` spine + Phase-2 word-timings exist)
 and **BEFORE any editing / Remotion work begins**, build `media/<project>/EDIT-PLAN.md`. **Editing may not
 start without it.** The EDIT-PLAN is the edit's companion to the screenplay (read alongside the spoken text):
 it lists **every beat / spoken line in order**, and against each, **every layer that lands on it**, each with
@@ -229,7 +260,7 @@ exact regression: kaspa-covenants C1 held 18s, C2a showed the full hardfork slid
   each window); when you add/change a cut, EVERY time value must route through `sh()` (incl. hardcoded constants
   — music beds, CTA windows — and caption times). See memory `feedback_shift_every_time_value_on_cut`.
 
-The base cut (`EDIT.mp4`) is the spoken spine. The edit layers production value on top of it. Tools
+The base cut (`spine/<scope>.c.desilenced.mp4`) is the spoken spine. The edit layers production value on top of it. Tools
 already in the repo to draw from — don't reinvent:
 
 - **B-roll:** `video-creation/generate-broll-batch.js` / `generate-broll-batch` flow, Higgsfield
@@ -240,6 +271,10 @@ already in the repo to draw from — don't reinvent:
   `media/<project>/EDIT-PLAN.md` (the HARD GATE above) for Mike's review before capturing assets.
 - **Music:** `video-creation/skills/music-sourcing/` — Soundstripe search + download + license-code (see
   `project_music_sourcing_skill`); persist the license code into the queue caption_override once.
+  **PICKING a bed = query the machine-written `analysis` blocks in `video-creation/assets/music/library.json`**
+  (env sparkline / aggression / segments / opening / ending / roles — semantics in its `$analysis_note`;
+  procedure in music-sourcing `SKILL.md` §2c). Never re-scan audio the catalog already covers; whole-video
+  bed plans come from the `music-placement-strategist` agent. Laying the bed INTO the edit = `skills/music.md`.
 - **Motion graphics / overlays / captions / spotlight:** the repo Remotion project
   `video-creation/remotion/` and the canonical **caption skill** (`video-creation/skills/captions/captions.md` —
   captions are OFF by default for longform-edited; only add them when Mike explicitly asks).

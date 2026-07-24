@@ -5,10 +5,16 @@ canonical caption skill `video-creation/skills/captions/captions.md`; THIS file 
 
 - **OFF by default.** A longform-edited video has NO captions unless Mike explicitly asks
   (`feedback_cover_every_cover_beat`). Never add them on your own.
-- **When he asks: `montserrat` preset, but tighter than shorts.** Density (Mike, evolving):
-  - **1 word per line, up to 2 words if the words are very small (<=4 chars).** (2026-06-17.)
-  - Build: `python video-creation/skills/captions/build_captions.py --transcribe <clip> --style montserrat
-    --max-words 1 --max-short 2 --out <project>/captions-intro.ts`
+- **When he asks: `montserrat` preset.** Density (Mike, evolving):
+  - **2 words per line, up to 4 words if the words are very small (<=4 chars).** (Mike, 2026-07-12: "we
+    should be able to fit more than one word in MOST cases" — the reference reads "it up is a", not one word.
+    Reverted the tighter 1/2; 1-word-per-line was wrong.)
+  - Build: `python video-creation/skills/captions/build_captions.py --words <spine>.medium-words.json --style
+    montserrat --max-words 2 --max-short 4 --out <project>Captions.ts` (or `--transcribe <clip>`).
+  - **FONT = Montserrat** (`fontFamily: "Montserrat,'Arial Black','Segoe UI',sans-serif"`, LOAD it via
+    `@remotion/google-fonts/Montserrat`; Arial Black is only the fallback), fontWeight 900, lowercase,
+    `WebkitTextStroke:'12px #000'`, `paintOrder:'stroke fill'`, pop 0.7->1.12->1. **Run the `captions-builder`
+    agent** — never hand-roll or copy an old comp's inline captions (zebec 2026-07-12 regression).
 - **Scope = EVERY sustained-face hold > 5s, automatically (Mike, 2026-06-18; corrected — NOT a per-video
   pick).** When a video uses captions, they appear on **every** gated-face hold longer than 5s — the same
   > 5s face-view trigger as the light-leak overlay (`skills/overlays.md`). It is not optional per-hold; if the

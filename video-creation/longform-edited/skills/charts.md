@@ -47,6 +47,15 @@ Three build modes + one hard guardrail:
    sub) for a prettier on-style redraw, OR as a STYLE SPEC (get the pretty look, then rebuild in `code` with the
    real values). Trend / shape / atmosphere ONLY.
 
+**⛔ ANIMATED IN THE DRAFT TOO (Mike, 2026-07-12).** A beat the plan tags `animated-chart` (or a `code` chart
+that is meant to draw/count) MUST render its **real `useCurrentFrame` component in the 0.2 Mbps DRAFT**, not a
+static PNG placeholder. "The draft is the FULL feature set at low bitrate, never a reduced one" (longform-edited.md
+HARD RULE) — so deferring the animation to the HQ pass is a violation, not an option. A static PNG standing in for
+an `animated-chart` beat is a **GATE VIOLATION** (comp-build.md §7). The executor building the Remotion comp must
+route every `animated-chart` ref to a component. **MECHANICAL GATE (run before every render):**
+`node skills/lint-animated-charts.js <comp.tsx> <covers.ts>` — FAILS if any `chart` cover renders a static PNG.
+(Origin: on zebec I shipped the CH1 buyback-flywheel as a static PNG in the draft "to animate in HQ" — wrong.)
+
 **⛔ HARD GUARDRAIL — never let an image model be the source of a NUMBER.** If a specific number is the message
 ("107.3M KAS", "86% in loss", "38%"), the data MUST come from `code` (#1) or stay the real `screencap` (#2).
 NEVER source that number from an image model (ChatGPT restyle OR Higgsfield): image models reinterpret
@@ -126,6 +135,7 @@ One method per source; parse the real series, don't eyeball the picture.
 - **Jitter QA:** sample multiple frames across a chart hold; if labels/ticks shift frame-to-frame it's
   re-measuring per frame (positioned HTML, not SVG `<text>`; or reveal-a-bitmap for dense series).
 
-## Exemplar (an EXAMPLE, not the source of truth)
-`media/smartmoney-backing-kaspa/` (DATA.md C1-C13, `assets/charts/`, `remotion/src/SmChartsAnim.tsx`) is the
-worked reference. If that folder is gone, this skill is still the method.
+## This skill is the method — do NOT go read an old comp
+The animated-chart method above is self-contained. Do NOT open a per-batch chart comp to copy from
+(they get deleted when their batch completes — [[feedback_no_remotion_comp_references]]). If a
+pattern you need is not written here, that is a gap to ADD to this skill, not a comp to go read.

@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--accent-green:#00e68a;--accent-cyan:#00c2ff;--accent-gold:#ffd700;--accent-red:#ff4060;--text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+.ey{font-size:27px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:20px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:78px;line-height:1.06;letter-spacing:-.02em}
+.g{color:var(--accent-green)}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:30px 0}
+.two{display:flex;align-items:center;gap:24px;margin-top:10px}
+.panel{flex:1;border-radius:20px;padding:40px 44px;min-height:300px}
+.before{background:rgba(80,90,110,.06);border:1px solid var(--border)}
+.after{background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.04));border:1px solid rgba(0,230,138,.35)}
+.pl{font-size:23px;text-transform:uppercase;letter-spacing:.14em;color:var(--text-muted);margin-bottom:8px}
+.after .pl{color:var(--accent-green)}
+.pt{font-family:'Playfair Display';font-weight:700;font-size:40px;margin-bottom:20px}
+.before .pt{color:var(--text-secondary)}
+.pb{font-size:27px;color:var(--text-secondary);line-height:1.45}.pb .m{font-family:'JetBrains Mono';font-weight:600;color:var(--text-primary)}
+.stamp{display:inline-block;margin-top:18px;padding:8px 20px;border:2px solid var(--accent-red);color:var(--accent-red);border-radius:8px;font-family:'JetBrains Mono';font-weight:700;font-size:26px;transform:rotate(-4deg)}
+.arr{font-size:60px;color:var(--text-muted);flex:none}
+.foot{margin-top:30px;font-size:31px;color:var(--text-secondary);max-width:1500px;line-height:1.5}.foot b{color:var(--text-primary)}
+</style><style>
+.after{opacity:.14;filter:saturate(.25)}
+.after .pl,.after .pt,.after .pb{color:var(--text-muted)!important}
+.arr{opacity:.3}
+.foot{opacity:.16}
+</style></head>
+<body>
+<div class="frame" id="dtao">
+  <div class="orb" style="width:720px;height:720px;background:var(--accent-green);top:140px;right:-100px;opacity:.11"></div>
+  <span class="ey">dTAO · February 13, 2025</span>
+  <h1>The committee got <span class="g">fired.</span></h1>
+  <div class="divider"></div>
+  <div class="two">
+    <div class="panel before">
+      <div class="pl">Before</div>
+      <div class="pt">A committee</div>
+      <div class="pb"><span class="m">64</span> root validators voted on which subnets got the emissions.</div>
+      <span class="stamp">FIRED</span>
+    </div>
+    <div class="arr">→</div>
+    <div class="panel after">
+      <div class="pl">After · dTAO</div>
+      <div class="pt" style="color:var(--accent-green)">The market decides</div>
+      <div class="pb">Stake TAO into a subnet's pool. Demand for its <b style="color:#e8eaf0">alpha token</b> sets its slice of emissions.</div>
+    </div>
+  </div>
+  <div class="foot">Each subnet's own token is capped at <b>21M</b>, mirroring TAO's halving. Money now flows to what the market actually believes in.</div>
+</div>
+</body></html>

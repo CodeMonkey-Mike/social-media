@@ -81,3 +81,24 @@ fs.writeFileSync('data/shorts.json', JSON.stringify(d, null, 2));
 ## Hashtag policy (added 2026-05-29)
 
 Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
+
+## ⛔ URL capture can write a WRONG (stale, already-used) id — always grep before trusting it (2026-07-22)
+
+The post-upload "Capturing short URL from /account/content (matching by title)" step can **false-match a fresh upload onto an older grid entry** and write that entry's URL to `shorts.json`. On 2026-07-22 both shorts in the same run captured the identical `https://rumble.com/shorts/v7d0pt4` — an id already recorded for a *different* short on 2026-07-21 — while the liveness retries reported the title of a *third*, older short.
+
+This is NOT the same as the long-known `posted_unverified` processing lag. Tell them apart:
+
+| | Benign lag (normal) | This bug (URL is wrong) |
+|---|---|---|
+| Captured id | new, unseen | **already present in `shorts.json`** |
+| Liveness | shows a stale title | shows a stale title |
+| Post live? | yes | yes |
+| URL correct? | yes | **no** |
+
+**Rule: after any Rumble short post, grep the captured `/shorts/v<id>` against `shorts.json`. If it already appears on another row, the URL is wrong** — null it out or mark it for `scripts/recapture-rumble-url.js` rather than leaving a duplicate id sitting on two rows. A `null` is honest; a wrong URL silently corrupts the record.
+
+**Never re-upload on this** — the post is live either way (the standing never-retry rule applies).
+
+**Script fix worth doing:** have `post-rumble-short.js` do that duplicate check itself before writing, and fall back to `url: null` when the captured id is already in use.
+
+**Backlog implication:** the ~73-75 row `rumble.status === "posted_unverified"` backlog may contain *duplicated* URLs, not merely unverified ones. Check for repeated ids when that sweep is finally run.

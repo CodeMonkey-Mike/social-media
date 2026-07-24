@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden}
+  body{background:radial-gradient(1200px 800px at 50% 30%,#0d1a2b 0%,#070b16 60%,#04060d 100%);
+    font-family:Inter,system-ui,sans-serif;color:#e8eef6;display:flex;flex-direction:column;justify-content:center;padding:80px 110px}
+  .eyebrow{font-size:26px;letter-spacing:.32em;text-transform:uppercase;color:#2dd4bf;font-weight:800;margin-bottom:26px}
+  h1{font-size:58px;font-weight:800;letter-spacing:-.02em;margin-bottom:64px;line-height:1.1}h1 .s{color:#6b7f99;text-decoration:line-through;text-decoration-color:#ff6b6b;text-decoration-thickness:5px}
+  svg{width:100%}
+  .machine{fill:rgba(120,140,170,.06);stroke:#6b7f99;stroke-width:2.5}
+  .mt{fill:#9fb3c8;font-weight:800;font-size:30px;text-anchor:middle}
+  .rail-node{fill:rgba(45,212,191,.12);stroke:#2dd4bf;stroke-width:3}
+  .zt{fill:#2dd4bf;font-weight:800;font-size:30px;text-anchor:middle}
+  .zs{fill:#bfeee6;font-size:22px;text-anchor:middle}
+  .rail{stroke:#2dd4bf;stroke-width:5;stroke-dasharray:10 8}
+  .cap{fill:#b7c7d8;font-size:26px;text-anchor:middle}.cap b{fill:#fff}
+</style></head><body>
+  <div class="eyebrow">The realistic path</div>
+  <h1>Not <span class="s">killing ADP</span>, a small rail inside it</h1>
+  <svg viewBox="0 0 1520 420">
+    <rect class="machine" x="520" y="30" width="960" height="330" rx="22"/>
+    <text class="mt" x="1000" y="200">A very big machine</text>
+    <rect class="rail-node" x="60" y="130" width="360" height="140" rx="18"/>
+    <text class="zt" x="240" y="185">Zebec</text><text class="zs" x="240" y="222">a small rail</text>
+    <path class="rail" d="M 420 200 L 518 200" marker-end="url(#a)"/>
+    <defs><marker id="a" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#2dd4bf"/></marker></defs>
+    <text class="cap" x="760" y="405">Not replace the giants: <tspan fill="#fff" font-weight="800">plug into them.</tspan></text>
+  </svg>
+</body></html>

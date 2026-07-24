@@ -19,6 +19,31 @@ const path = require('path');
 const ST_ROOT = path.resolve(__dirname, '..', '..');
 const LONGS_JSON = path.join(ST_ROOT, 'data', 'longs.json');
 
+// Longform is fanned out to EXACTLY these platforms. YouTube longform is uploaded by Mike
+// HIMSELF, by hand — it is NOT a queue recipient and there is no upload-longform-youtube script.
+// A stray `youtube` (or any other) platform on a longs.json entry pins that entry in the dashboard
+// forever (it never terminalizes) and no uploader can ever clear it. So this is a HARD rule:
+// longs.json entries may only carry these platforms. (Shorts DO go to YouTube — that's shorts.json,
+// a separate queue; this allow-list is longform-only.)
+const ALLOWED_PLATFORMS = new Set(['rumble', 'bitchute', 'facebook']);
+
+// Throw if any entry declares a platform outside the allow-list. Called on every read below, so no
+// upload script can ever act on (or even load) a longs.json with a disallowed platform — it fails
+// loudly, naming the offenders, and forces the field to be removed. Exported for the lint suite too.
+function assertAllowedPlatforms(longs) {
+  const bad = [];
+  for (const l of longs || []) {
+    for (const plat of Object.keys(l.platforms || {})) {
+      if (!ALLOWED_PLATFORMS.has(plat)) bad.push(`"${(l.title || '?').slice(0, 50)}" -> ${plat}`);
+    }
+  }
+  if (bad.length) {
+    throw new Error(
+      `longs.json has disallowed longform platform(s). Allowed: ${[...ALLOWED_PLATFORMS].join(', ')}. ` +
+      `YouTube longform is uploaded manually, never queued — remove these:\n  ` + bad.join('\n  '));
+  }
+}
+
 // Queue paths (video_path / thumbnail_path) are relative to the schedule-tweets root.
 function resolveRel(rel) {
   if (!rel) return null;
@@ -31,6 +56,7 @@ function resolveRel(rel) {
 // scripts already consume). thumbPath is null when absent or missing on disk.
 function pickNextLongform(platform) {
   const longs = JSON.parse(fs.readFileSync(LONGS_JSON, 'utf8')).longs || [];
+  assertAllowedPlatforms(longs);
   const entry = longs.find(l =>
     l.platforms && l.platforms[platform] && l.platforms[platform].status === 'pending');
   if (!entry) return null;
@@ -55,4 +81,4 @@ function stripMusicCredits(desc) {
   return kept.join('\n\n').trim();
 }
 
-module.exports = { pickNextLongform, LONGS_JSON, stripMusicCredits };
+module.exports = { pickNextLongform, LONGS_JSON, stripMusicCredits, ALLOWED_PLATFORMS, assertAllowedPlatforms };

@@ -14,7 +14,10 @@ export type BadgeEv = { tIn: number; tOut: number; color: string; line1: string;
 // for true alpha PNGs (alpha-from-luminance) so they show over LIGHT backgrounds too
 // (screen blend can't darken white, so a bright overlay vanishes over a light screen-share).
 export type OverlayEv = { src: string; tIn: number; tOut: number; top?: number; left?: number; width?: number; blend?: 'normal' | 'screen' };
-export type ThumbDef = { title: string; chip: string; chipColor?: string; titleSize?: number; durS?: number };
+// `img` = an optional generated background image for the frame-0 cover; the title/chip stay CODE-drawn
+// on top of it (never baked into the art, per SKILL "B-ROLL IMAGE GENERATION RULES"). Omit it and the
+// cover is the historical gradient-over-video card.
+export type ThumbDef = { title: string; chip: string; chipColor?: string; titleSize?: number; durS?: number; img?: string };
 // Real-logo compositing (e.g. the actual $LAB logo PNG) — a persistent corner watermark
 // and/or a timed reveal plate. Uses the real asset, so the wordmark is pixel-perfect.
 export type LogoDef = {
@@ -29,6 +32,8 @@ export type ShortData = {
   fps: number;
   durationS: number;
   capY?: number;
+  /** measured screen-share/webcam seam of THIS clip; content-mode b-roll covers 0..seam */
+  seam?: number;
   captions: Caption[];
   broll?: BrollEv[];
   badges?: BadgeEv[];
@@ -145,7 +150,7 @@ export const LivestreamShort: React.FC<{ data: ShortData }> = ({ data }) => {
         <OffthreadVideo src={data.clip} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </AbsoluteFill>
 
-      {data.broll && <BrollLayer broll={data.broll} t={t} />}
+      {data.broll && <BrollLayer broll={data.broll} t={t} seam={data.seam} />}
 
       {/* readability scrim across the caption band */}
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 36%, rgba(0,0,0,0.5) 43%, rgba(0,0,0,0) 52%)' }} />
@@ -158,9 +163,13 @@ export const LivestreamShort: React.FC<{ data: ShortData }> = ({ data }) => {
       {data.logo && <Logo logo={data.logo} t={t} fps={fps} thumbUp={thumbUp} />}
 
       {data.thumb && t < thumbDur && (
-        <AbsoluteFill style={{ zIndex: 300 }}>
+        <AbsoluteFill style={{
+          zIndex: 300,
+          opacity: thumbDur <= 0.1 ? 1 : interpolate(t, [0, thumbDur - 0.25, thumbDur], [1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
+        }}>
+          {data.thumb.img && <Img src={data.thumb.img} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
           <Thumb
-            op={thumbDur <= 0.1 ? 1 : interpolate(t, [0, thumbDur - 0.25, thumbDur], [1, 1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })}
+            op={1}
             title={<span dangerouslySetInnerHTML={{ __html: data.thumb.title.replace(/\n/g, '<br/>') }} />}
             chip={data.thumb.chip}
             chipColor={data.thumb.chipColor ?? TEAL}
@@ -170,8 +179,8 @@ export const LivestreamShort: React.FC<{ data: ShortData }> = ({ data }) => {
       )}
 
       {data.sounds && data.sounds.map((s, i) => (
-        <Sequence key={i} from={Math.round(s.t * fps)} durationInFrames={fps * 2}>
-          <Audio src={s.src} volume={0.55} />
+        <Sequence key={i} from={Math.round(s.t * fps)} durationInFrames={Math.max(1, Math.round((s.dur ?? 2) * fps))}>
+          <Audio src={s.src} volume={s.vol ?? 0.55} />
         </Sequence>
       ))}
     </AbsoluteFill>

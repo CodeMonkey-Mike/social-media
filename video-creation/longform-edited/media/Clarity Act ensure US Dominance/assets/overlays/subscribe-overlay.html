@@ -1,0 +1,25 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=DM+Sans:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--green:#00e68a;--cyan:#00c2ff;--red:#ff0033;--tp:#e8eaf0;--tm:#505a6e;--bd:#1e2330}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1920px;height:1080px;font-family:'DM Sans',sans-serif;overflow:hidden;position:relative;
+  background:radial-gradient(circle at 50% 46%,#12151c,#050608);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px}
+.orb{position:absolute;border-radius:50%;filter:blur(130px);opacity:.22;pointer-events:none}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ey{font-size:1.05rem;text-transform:uppercase;letter-spacing:.34em;color:var(--tm);font-weight:700}
+.rowb{display:flex;align-items:center;gap:34px}
+.btn{display:inline-flex;align-items:center;gap:24px;background:var(--red);color:#fff;font-weight:900;font-size:3.8rem;letter-spacing:.01em;
+  padding:28px 56px;border-radius:18px;box-shadow:0 20px 70px rgba(255,0,51,.42);text-transform:uppercase}
+.btn .yt{width:82px;height:58px;background:#fff;border-radius:13px;position:relative;flex:0 0 auto}
+.btn .yt::after{content:"";position:absolute;top:50%;left:53%;transform:translate(-50%,-50%);border-style:solid;border-width:16px 0 16px 28px;border-color:transparent transparent transparent var(--red)}
+.bell{width:96px;height:96px;border-radius:50%;border:3px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:3rem;box-shadow:0 0 34px rgba(0,194,255,.4)}
+.line{width:340px;height:5px;border-radius:3px;background:linear-gradient(90deg,var(--green),var(--cyan))}
+</style></head>
+<body>
+<div class="grain"></div>
+<div class="orb" style="width:560px;height:560px;background:var(--red);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+<div class="ey">Follow the story</div>
+<div class="rowb"><div class="btn"><span class="yt"></span>Subscribe</div><div class="bell">🔔</div></div>
+<div class="line"></div>
+</body></html>

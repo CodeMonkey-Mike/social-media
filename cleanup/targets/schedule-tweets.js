@@ -146,6 +146,41 @@ function plan({ repoRoot }) {
     }
   }
 
+  // Reply-guy image replies (x-reply-guy/data/reply-images/). Reference-counted GC, same shape
+  // as the images/ block above, but against the REPLY queues and keyed by BASENAME — the reply
+  // queues store image_path as an ABSOLUTE Windows path, not a repo-relative one.
+  //   * KEEP    — a PENDING entry in replies_to_post.json links it (reply not sent yet).
+  //   * RECYCLE — posted_replies.json archived it as posted_image | uncertain_image (both mean the
+  //               reply went out; per the reply-guy never-retry rule it won't be re-fired) and no
+  //               pending entry links it -> the local file is spent (already uploaded to X).
+  //   * ORPHAN  — generated but referenced by neither queue -> recycle once >= ORPHAN_AGE_DAYS old
+  //               (a freshly generated, not-yet-posted image survives a normal review cycle).
+  // Only image replies carry an image_path; text/emoji/GIF entries contribute nothing here.
+  const REPLY_IMAGES_DIR = path.join(repoRoot, 'x-reply-guy', 'data', 'reply-images');
+  const RG_DATA = path.join(repoRoot, 'x-reply-guy', 'data');
+  const baseName = (p) => (p ? path.basename(String(p)).toLowerCase() : null);
+  const readJsonArr = (f) => { try { const d = JSON.parse(fs.readFileSync(f, 'utf8')); return Array.isArray(d) ? d : []; } catch { return []; } };
+  const replyActiveNames = new Set(); // basenames a pending reply still needs (KEEP)
+  const replyPostedNames = new Set(); // basenames whose reply already went out (RECYCLE)
+  for (const e of readJsonArr(path.join(RG_DATA, 'replies_to_post.json'))) {
+    const n = baseName(e.image_path);
+    if (n) replyActiveNames.add(n);
+  }
+  const POSTED_IMG_RESULTS = new Set(['posted_image', 'uncertain_image']);
+  for (const e of readJsonArr(path.join(RG_DATA, 'posted_replies.json'))) {
+    const n = baseName(e.image_path);
+    if (n && POSTED_IMG_RESULTS.has(e.result)) replyPostedNames.add(n);
+  }
+  if (fs.existsSync(REPLY_IMAGES_DIR)) {
+    for (const img of walkFiles(REPLY_IMAGES_DIR)) {
+      const n = path.basename(img).toLowerCase();
+      if (replyActiveNames.has(n)) skipped.push({ path: img, reason: 'reply image (pending reply links it)' });
+      else if (replyPostedNames.has(n)) recycle.push({ path: img, reason: 'reply image (posted, no pending link)' });
+      else if (ageDays(img) >= ORPHAN_AGE_DAYS) recycle.push({ path: img, reason: `reply image orphan (no queue ref, >=${ORPHAN_AGE_DAYS}d old)` });
+      else skipped.push({ path: img, reason: `reply image orphan (no queue ref, <${ORPHAN_AGE_DAYS}d — may be ungenerated/unqueued)` });
+    }
+  }
+
   // Loose top-level artifacts in schedule-tweets/ — recycle once >=24h old so the current
   // posting session is preserved. Top-level only, so the Chrome bot-profile LevelDB logs deeper
   // in the tree, and the real post images under images/, are never touched.

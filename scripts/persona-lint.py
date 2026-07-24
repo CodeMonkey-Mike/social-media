@@ -42,6 +42,28 @@ CHECKS = [
     ("'Casper' (should be Kaspa)", re.compile(r"\bCasper\b"), None),
 ]
 
+# Structural rule (not a string regex): a longs.json entry may only fan out to these platforms.
+# YouTube longform is uploaded by Mike HIMSELF, by hand — it is NOT a queue recipient and there is
+# no upload-longform-youtube script, so a stray platform (e.g. "youtube") pins the entry in the
+# dashboard forever. Mirrors ALLOWED_PLATFORMS in scripts/lib/longform-queue.js. Report only.
+ALLOWED_LONGFORM_PLATFORMS = {"rumble", "bitchute", "facebook"}
+
+
+def lint_longs_platforms(fp, data):
+    """Flag any longs.json entry declaring a platform outside the longform allow-list."""
+    if not (isinstance(data, dict) and isinstance(data.get("longs"), list)):
+        return 0
+    violations = 0
+    for entry in data["longs"]:
+        plats = (entry or {}).get("platforms") or {}
+        for plat in plats:
+            if plat not in ALLOWED_LONGFORM_PLATFORMS:
+                violations += 1
+                title = str((entry or {}).get("title", "?"))[:50]
+                print(f"  [disallowed longform platform '{plat}'] {fp.name}: \"{title}\"")
+                print("      longform goes to rumble/bitchute/facebook only; YouTube is manual, never queued")
+    return violations
+
 
 def walk(node, path, hits):
     """Recursively collect (json_path, string_value) for every string in the JSON."""
@@ -74,6 +96,7 @@ def lint_file(fp, fix):
                 snippet = val[s:e].replace("\n", " ")
                 print(f"  [{label}] {jpath}")
                 print(f"      ...{snippet}...")
+    violations += lint_longs_platforms(fp, data)
     fixes = 0
     if fix:
         raw = text

@@ -17,6 +17,8 @@ Writes top posts to `data/feed.json`, `data/following_feed.json`, and `data/fory
 > ⚠ **All reply-guy data files live under `data/`** — `feed.json`, `following_feed.json`, `foryou_feed.json`, `reply_opportunities.json`, `replies_to_post.json` (the single reply queue: text + emoji + GIF), `posted_replies.json`. The dashboard and every `*.py` script read/write the `data/` copies. Writing to the folder root instead is the #1 way drafts silently never appear in the dashboard. (Fixed 2026-06-02.)
 
 ### 2. Draft reply opportunities
+> Prefer delegating this judgment step to the **`reply-opportunity-strategist`** agent (`.claude/agents/`, Opus/high, read-only): scrape first (step 1), then hand off. It reads the feeds + persona + image library, drafts the batch in Mike's voice, hits the quotas, and overwrites `data/reply_opportunities.json`, then returns a summary for Mike to review in the dashboard. Draft inline only when the agent is unavailable. The rest of this section is the canonical spec the agent (and any inline drafting) must follow.
+
 Read `data/feed.json`, `data/following_feed.json`, and `data/foryou_feed.json`. For each post, evaluate against Mike's engages_with list in `persona.json`.
 Draft replies using his voice rules. **Overwrite `data/reply_opportunities.json` with only the new session's entries** — do not append to old content, do not carry over previous entries. This file holds opportunities Mike has NOT yet reviewed; once he approves an entry (via the dashboard's "Queue" button, or you writing it on his pick), it moves to `data/replies_to_post.json` as a pending queued reply.
 

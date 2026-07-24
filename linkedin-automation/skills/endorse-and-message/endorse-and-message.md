@@ -1,7 +1,7 @@
 # endorse-and-message — endorsement + favor-request DM skill
 
 For each member who has **accepted** our connection request (oldest `connected_on`
-first): endorse a random **5-10 of their top skills**, then send **one fixed
+first): endorse a random **9-15 of their top skills**, then send **one fixed
 favor-request DM** asking them to endorse Mike's automation skills back.
 
 This is one of four skills in the `linkedin-automation` toolkit. See the index
@@ -49,16 +49,39 @@ are marked `endorse_status: "no_skills"` and never revisited.
 
 ---
 
+## HOW MANY DMs PER RUN (read this — Mike, 2026-07-21)
+
+**There is NO one-DM-per-day cap. Send to ALL qualifying members.** The default run
+policy is: **every member connected more than 14 days ago who has not yet been DM'd
+gets endorsed + DM'd this run** — not just the oldest one. Do not stop at one and do
+not ask; that is the intended behavior, so run it straight through.
+
+- **Set `--max` to cover all qualifiers.** Count the eligible >14-day members first
+  (connected, `dm_status !== "sent"`, not `no_skills`, not `dm_excluded`), then pass
+  `--max=<that count>` (or higher). The old `--max=3` default is just a floor for a
+  bare invocation — it is NOT a daily ceiling.
+- **Fallback when none are >14 days old:** send to **one** member connected at least
+  **7 days** ago (oldest first). If none meet even that, do nothing.
+- The only per-member gate is still the **zero-skills rule** (no skills → no DM) and
+  the manual **`dm_excluded`** flag.
+- The genuine constraint is **total profile-view volume**, not a DM count — see Limits
+  below. Watch for a restriction page and stop for the day if one appears, but do not
+  self-limit the DM count for its own sake.
+
+---
+
 ## Running it
 
 ```bash
 node linkedin-automation/skills/endorse-and-message/endorse-and-message.js [--max=N] [--dry-run]
 ```
 
-- `--max=N` — process at most **N** members this run. **Default 3.** Each member is a
-  profile view against the same daily **volume budget** as the scraper and invite
-  sender, PLUS ~10 endorse clicks and a DM — a **new action signature** for this
-  twice-restricted account, so keep runs small and don't stack with a big scrape.
+- `--max=N` — process at most **N** members this run. **Default 3 is only a floor for a
+  bare call, NOT a daily cap** — set `--max` to cover all qualifying members (see "HOW
+  MANY DMs PER RUN" above). Each member is a profile view against the same daily
+  **volume budget** as the scraper and invite sender, PLUS ~10 endorse clicks and a DM.
+  The binding limit is total profile-view VOLUME, not the DM count; don't stack a large
+  endorse run on top of a big same-day scrape if together they push total views high.
 - `--dry-run` — navigate, count endorsable skills, locate the Message button; endorse
   and send **nothing**.
 
@@ -70,7 +93,7 @@ file order). A member endorsed on a previous run whose DM failed resumes at the 
 
 1. Reach the profile via the shared **search-and-click** navigation.
 2. Open `<profile>/details/skills/`. Harvest endorsable skills, take the **top**
-   `random(5..10)` (display order), click **Endorse** on each with a 2-6 s gap
+   `random(9..15)` (display order), click **Endorse** on each with a 2-6 s gap
    (any follow-up "How do you know…" dialog is Escape-dismissed).
    Zero endorsable → mark `no_skills`, **skip the DM**, continue to next member.
 3. Return to the profile (the skills page's "Navigate back to profile main screen"
@@ -127,8 +150,10 @@ file order). A member endorsed on a previous run whose DM failed resumes at the 
 
 - Each member = **1 profile view** (same volume budget as scraping/inviting: the
   restriction history in [`../SKILL.md`](../SKILL.md) applies). Endorsements and DMs
-  are *additional* novel actions — start with 1-3 members/day and watch for any
-  warning page; **stop for the day** if one appears.
+  are *additional* novel actions. There is **no cap on the DM count** — send to all
+  qualifying members (see "HOW MANY DMs PER RUN") — but watch for any warning page and
+  **stop for the day** if one appears. The lever that matters is total profile-view
+  volume, not how many DMs.
 - Don't run on the same day as a big scrape + invite batch that already used the
   budget (a 40-scrape + 8-invite day is already ~48/50).
 

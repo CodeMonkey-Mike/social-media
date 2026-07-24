@@ -1,0 +1,106 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>zebec charts - canonical build</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* CANONICAL stylesheet (same lock as containers.html / presentation.md). Static draft PNGs; animated in HQ. */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --accent-green:#00e68a; --accent-cyan:#00c2ff;
+  --accent-gold:#ffd700; --accent-red:#ff4060; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e; --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.28;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+.ey{font-size:27px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:24px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:78px;line-height:1.07;letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:30px 0}
+.subline{font-size:27px;color:var(--text-secondary);margin-top:20px}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:700}
+
+/* scoreboard grid */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:44px;max-width:1620px}
+.scard{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;padding:34px 36px;position:relative;overflow:hidden}
+.scard .top{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent-green),transparent)}
+.scard .num{font-family:'JetBrains Mono';font-weight:700;font-size:76px;color:var(--accent-green);line-height:1}
+.scard .num .u{font-size:44px;color:var(--accent-cyan)}
+.scard .lbl{font-size:24px;color:var(--text-secondary);margin-top:14px;line-height:1.35}
+.foot{margin-top:38px;display:flex;align-items:center;gap:24px}
+.foot .badge{padding:12px 24px;border-radius:100px;background:rgba(0,194,255,.12);color:var(--accent-cyan);
+  font-family:'JetBrains Mono';font-weight:600;font-size:24px}
+.foot .src{font-size:23px;color:var(--text-muted)}
+
+/* svg charts */
+.dg{margin-top:36px;width:100%;max-width:1600px}
+svg .node{fill:var(--bg-card);stroke:var(--border);stroke-width:1.5}
+svg .nt{fill:var(--text-primary);font:700 30px 'DM Sans';text-anchor:middle}
+svg .ns{fill:var(--text-secondary);font:400 21px 'DM Sans';text-anchor:middle}
+</style></head>
+<body>
+
+<!-- traction-scoreboard (CH3 151.32-172.10) -->
+<div class="frame" id="traction-scoreboard">
+  <div class="orb" style="width:540px;height:540px;background:var(--accent-green);top:-160px;right:-100px"></div>
+  <div class="ey">The adoption is not made up</div>
+  <h1>Real money, <span class="g">running through it</span></h1>
+  <div class="divider"></div>
+  <div class="grid">
+    <div class="scard"><div class="top"></div><div class="num">$47<span class="u">M</span></div><div class="lbl">monthly payroll volume</div></div>
+    <div class="scard"><div class="top"></div><div class="num">$500<span class="u">M+</span></div><div class="lbl">annualized payroll</div></div>
+    <div class="scard"><div class="top"></div><div class="num">12,600</div><div class="lbl">employees paid</div></div>
+    <div class="scard"><div class="top"></div><div class="num">239</div><div class="lbl">enterprise clients</div></div>
+    <div class="scard"><div class="top"></div><div class="num">$60<span class="u">M</span></div><div class="lbl">Zebec Card annualized volume</div></div>
+    <div class="scard"><div class="top"></div><div class="num">97</div><div class="lbl">countries (card issued)</div></div>
+  </div>
+  <div class="foot"><span class="badge">as of Nov 2025</span><span class="src">source: Zebec network reports / CoinChapter</span></div>
+</div>
+
+<!-- buyback-flywheel FULL ring (CH1 52.86-64.18, the rich diagram shown once) -->
+<div class="frame" id="buyback-flywheel">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-green);top:50%;left:50%;transform:translate(-50%,-50%);opacity:.16"></div>
+  <div class="ey">A real company, feeding a shrinking token</div>
+  <h1>The <span class="g">buyback flywheel</span></h1>
+  <div class="divider"></div>
+  <div class="dg" style="display:flex;justify-content:center"><svg viewBox="0 0 1200 720" width="820">
+    <defs><marker id="ah" markerWidth="12" markerHeight="12" refX="8" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#00e68a"/></marker></defs>
+    <path d="M 640 150 A 280 280 0 0 1 880 430" fill="none" stroke="#00e68a" stroke-width="3.5" marker-end="url(#ah)"/>
+    <path d="M 860 500 A 280 280 0 0 1 470 620" fill="none" stroke="#00e68a" stroke-width="3.5" marker-end="url(#ah)"/>
+    <path d="M 330 560 A 280 280 0 0 1 320 300" fill="none" stroke="#00e68a" stroke-width="3.5" marker-end="url(#ah)"/>
+    <path d="M 360 250 A 280 280 0 0 1 560 152" fill="none" stroke="#00e68a" stroke-width="3.5" marker-end="url(#ah)"/>
+    <circle cx="600" cy="400" r="118" fill="rgba(0,230,138,.08)" stroke="rgba(0,230,138,.4)" stroke-width="1.5"/>
+    <text class="nt" x="600" y="392" fill="#00e68a" style="font-size:38px">ZBCN</text>
+    <text class="ns" x="600" y="428">fixed 100B float</text>
+    <rect class="node" x="470" y="66" width="260" height="96" rx="16"/><text class="nt" x="600" y="108">Product revenue</text><text class="ns" x="600" y="140">payroll + card fees</text>
+    <rect class="node" x="850" y="352" width="260" height="96" rx="16"/><text class="nt" x="980" y="394">Buy ZBCN</text><text class="ns" x="980" y="426">off the open market</text>
+    <rect class="node" x="470" y="620" width="260" height="96" rx="16"/><text class="nt" x="600" y="662">Burn</text><text class="ns" x="600" y="694">supply removed forever</text>
+    <rect class="node" x="90" y="352" width="260" height="96" rx="16"/><text class="nt" x="220" y="394">Stake to hold</text><text class="ns" x="220" y="426">card rewards, less float</text>
+  </svg></div>
+</div>
+
+<!-- demand-vs-float conceptual (CH5 416.78-427.86) -->
+<div class="frame" id="demand-vs-float">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-gold);top:-140px;right:-90px"></div>
+  <div class="ey">Demand rising against a supply that cannot grow</div>
+  <h1>When demand meets a <span class="c">fixed float</span></h1>
+  <div class="subline">conceptual, not a price prediction</div>
+  <div class="dg"><svg viewBox="0 0 1400 640" width="100%">
+    <line x1="120" y1="560" x2="1340" y2="560" stroke="#1e2330" stroke-width="2"/>
+    <line x1="120" y1="40" x2="120" y2="560" stroke="#1e2330" stroke-width="2"/>
+    <text x="1180" y="600" fill="#505a6e" font="400 22px 'DM Sans'">time / adoption &#8594;</text>
+    <line x1="120" y1="380" x2="1340" y2="380" stroke="#00c2ff" stroke-width="3" stroke-dasharray="10 8"/>
+    <text x="150" y="362" fill="#00c2ff" font="600 22px 'JetBrains Mono'">FIXED FLOAT — 100B, no more unlocks</text>
+    <path d="M 120 510 C 480 495, 760 420, 980 320 C 1120 255, 1230 185, 1340 130" fill="none" stroke="#00e68a" stroke-width="4"/>
+    <text x="1010" y="300" fill="#00e68a" font="700 24px 'DM Sans'">DEMAND</text>
+    <path d="M 120 540 C 500 535, 900 515, 1080 490 L 1150 230 L 1180 90" fill="none" stroke="#ffd700" stroke-width="4"/>
+    <text x="1120" y="80" fill="#ffd700" font="700 24px 'DM Sans'">PRICE</text>
+    <text x="1000" y="430" fill="#8892a4" font="400 27px 'DM Sans'">it doesn't drift up.</text>
+    <text x="1000" y="466" fill="#ffd700" font="800 30px 'Playfair Display'">it moves fast.</text>
+  </svg></div>
+</div>
+
+</body></html>

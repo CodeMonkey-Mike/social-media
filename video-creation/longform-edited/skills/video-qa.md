@@ -41,7 +41,7 @@ Name files with the project prefix so they travel with the folder and get recycl
 QA those first.** Single still frames CANNOT catch motion (a light-leak drift), audio (impact loudness vs VO),
 or timing (a black dip / mis-timed overlay) — that's why issues kept slipping. A chunk is a real clip: you see
 the motion and can mix/measure the audio.
-- Render a slice: `npx remotion render src/index.ts BittensorCh1to6 "$QA/<project>-ch1-chunk.mp4" --frames=A-B --public-dir <PUB>`
+- Render a slice: `npx remotion render src/index.ts <CompId> "$QA/<project>-ch1-chunk.mp4" --frames=A-B --public-dir <PUB>`
   (A-B = `time*30`; `$QA` from the box above — never a bare `out/…`). ~10s = ~300 frames, renders in well under a minute.
 - Extract frames / stacks into `$QA` too: `ffmpeg -i "$QA/<project>-ch1-chunk.mp4" -vf 'select=...' "$QA/<project>-qa-t%03d.png"`.
 - For each change, render the chunk that contains it (a light-leak hold, the CTA/caption beat, an impact, a

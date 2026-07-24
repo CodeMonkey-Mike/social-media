@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;800&family=Inter:wght@400;600;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1920px;height:1080px;overflow:hidden}
+  body{background:radial-gradient(1200px 800px at 60% 20%,#0d1a2b 0%,#070b16 60%,#04060d 100%);
+    font-family:Inter,system-ui,sans-serif;color:#e8eef6;display:flex;flex-direction:column;justify-content:center;padding:90px 120px}
+  .eyebrow{font-size:26px;letter-spacing:.32em;text-transform:uppercase;color:#2dd4bf;font-weight:800;margin-bottom:14px}
+  h1{font-size:64px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+  h1 .g{color:#2dd4bf}
+  .sub{font-size:24px;color:#8aa0b6;margin-bottom:50px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
+  .card{background:linear-gradient(180deg,rgba(45,212,191,.06),rgba(45,212,191,.015));border:1px solid rgba(45,212,191,.22);
+    border-radius:20px;padding:38px 40px;position:relative;overflow:hidden}
+  .card::before{content:'';position:absolute;left:0;top:0;height:100%;width:5px;background:#2dd4bf;opacity:.8}
+  .num{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:72px;line-height:1;color:#fff}
+  .num .u{font-size:38px;color:#2dd4bf;margin-left:4px}
+  .lbl{font-size:24px;color:#9fb3c8;margin-top:16px;font-weight:600}
+  .foot{margin-top:46px;display:flex;justify-content:space-between;align-items:center;color:#5f728a;font-size:20px}
+  .foot .src{font-family:'JetBrains Mono',monospace}
+  .badge{display:inline-block;background:rgba(45,212,191,.12);border:1px solid rgba(45,212,191,.35);color:#2dd4bf;
+    font-size:20px;font-weight:700;padding:6px 16px;border-radius:999px;font-family:'JetBrains Mono',monospace}
+</style></head><body>
+  <div class="eyebrow">The adoption is not made up</div>
+  <h1>Real money, <span class="g">running through it</span></h1>
+  <div class="sub">Zebec Network payroll + card, actual usage</div>
+  <div class="grid">
+    <div class="card"><div class="num">$47<span class="u">M</span></div><div class="lbl">monthly payroll volume</div></div>
+    <div class="card"><div class="num">$500<span class="u">M+</span></div><div class="lbl">annualized payroll</div></div>
+    <div class="card"><div class="num">12,600</div><div class="lbl">employees paid</div></div>
+    <div class="card"><div class="num">239</div><div class="lbl">enterprise clients</div></div>
+    <div class="card"><div class="num">$60<span class="u">M</span></div><div class="lbl">Zebec Card annualized volume</div></div>
+    <div class="card"><div class="num">97</div><div class="lbl">countries (card issued)</div></div>
+  </div>
+  <div class="foot"><span class="badge">as of Nov 2025</span><span class="src">source: Zebec network reports / coinchapter</span></div>
+</body></html>

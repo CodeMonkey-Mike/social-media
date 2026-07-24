@@ -1,0 +1,47 @@
+{
+  "batch": "October-pumps",
+  "generated_at": "2026-07-23",
+  "pass": "Phase 5C filler removal (NEW - closes the gap Mike caught 2026-07-23)",
+  "why": "Phase 5 tighten step 2 ('auto-remove filler disfluencies, word boundaries come from the Whisper word JSON') silently no-opped: Whisper de-disfluences, so the 27-min master transcript contained 3 'um's for the whole stream and the `medium` model returned ZERO on the clips. Whole-clip decoding also produced BROKEN alignment (a 3.30s token 'to' that windowed decoding resolves as a 10-word sentence; a 0.40s 'uh' that is really '240'). Spans below come from a WINDOWED word map (10s windows, 3s overlap) via skills/filler-removal/scripts/filler_map.py, which keeps alignment honest.",
+  "input": "<slug>-tightened-desilenced.mp4",
+  "output": "<slug>-final.mp4",
+  "timebase": "CLIP-LOCAL seconds into the tightened-desilenced file (NOT master absolute)",
+  "kept_deliberately": [
+    "every comparative 'like' (like me / like crazy / like I said / like any minute)",
+    "every quotative 'like' (with FOMO like, oh my god)",
+    "the VERB 'like' in 'NineHood is one of the ones I like' (the detector false-positived it)",
+    "clip 3's 'especially like with TAO' - the 2026-07-22 QA incident clipped 'especially' here; not worth 0.38s"
+  ],
+  "clips": {
+    "whatif-cto-100x-call": [
+      { "start": 16.00, "end": 16.18, "text": "like", "why": "hedge inside 'it would constantly, like every 12 hours, switch'" },
+      { "start": 22.82, "end": 22.94, "text": "Like", "why": "sentence-initial discourse marker before 'other than that'" },
+      { "start": 45.08, "end": 45.36, "text": "you know", "why": "pure stall inside 'it's got some, you know, some good strength'" },
+      { "start": 47.38, "end": 47.58, "text": "like", "why": "hedge on a number: 'short term to like 20 million'" },
+      { "start": 70.10, "end": 70.70, "text": "you know", "why": "pure stall before the 100x ladder" },
+      { "start": 74.72, "end": 75.12, "text": "like", "why": "hedge: 'or maybe like we could even be'" },
+      { "start": 95.08, "end": 95.40, "text": "like", "why": "discourse marker before 'oh, what an extraordinary'" }
+    ],
+    "october-bottom-frontrun": [
+      { "start": 23.94, "end": 24.18, "text": "like", "why": "first of a doubled hedge, 'happen like very soon like in August'; second kept" }
+    ],
+    "tao-under-200-last-chance": [],
+    "rally-basket-ninehood-cashcat": [
+      { "start": 13.12, "end": 13.52, "text": "uh", "why": "the one CERTAIN tic in the batch, between 'could run' and 'NineHood'" },
+      { "start": 25.94, "end": 26.20, "text": "you know", "why": "pure stall: 'a few months and then, you know, what does this do'" },
+      { "start": 32.30, "end": 32.50, "text": "like", "why": "hedge on a number: 'go to like 20 million'" },
+      { "start": 36.34, "end": 36.48, "text": "like", "why": "hedge on a number: 'ran to like 10 million'" },
+      { "start": 37.80, "end": 38.06, "text": "you know", "why": "pure stall: 'So, you know, let's get a rally'" },
+      { "start": 39.36, "end": 39.48, "text": "You know", "why": "pure stall opening the next clause" }
+    ],
+    "whatif-cto-100x-call-impact": [
+      { "start": 5.84, "end": 6.00, "text": "like", "why": "hedge on a number: 'short term to like 20 million'" },
+      { "start": 12.08, "end": 12.50, "text": "like", "why": "hedge: 'or maybe like we could even be'" },
+      { "_withdrawn": "WITHDRAWN 2026-07-23 by the per-splice gate: after this 0.14s cut the preceding word 'be' started decoding as 'get' ('we could even get 100x'), the same clipped-neighbour signature as the 2026-07-22 clip-3 'especially' incident. Not worth 0.14s.", "start": 13.42, "end": 13.42, "text": "like", "why": "withdrawn, see _withdrawn" }
+    ],
+    "october-bottom-frontrun-impact": [
+      { "start": 12.30, "end": 12.82, "text": "like, you know", "why": "the stacked 'they're gonna be like, you know,' stall; sibling clip 2 already cut this at master time, this clip kept it" }
+    ],
+    "tao-under-200-last-chance-impact": []
+  }
+}

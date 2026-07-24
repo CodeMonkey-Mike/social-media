@@ -66,9 +66,28 @@ async function bodyText(page) {
 // Returns: 'sent' | 'already_pending' | 'already_connected' | 'no_connect_button'
 //          | 'limit_reached' | 'error' | 'dry-found' | 'dry-none'
 // ----------------------------------------------------------------------------
+const norm = s => String(s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+
 async function sendConnectionRequest(page) {
   await page.waitForSelector('main', { timeout: 15000 }).catch(() => {});
   await S.pause(page, S.ACTION_MIN, S.ACTION_MAX, 'read profile');
+
+  // The profile owner's displayed name — the anchor for the identity guard.
+  // Sources in order: legacy `main h1`; the tab title ("(3) Ana Bakšaj | LinkedIn"
+  // — the new 2026 UI has NO h1 in main, which silently zeroed out a whole batch
+  // on 2026-07-22); the top-card "Follow <Name>" aria-label. No name = fail closed.
+  let profileName = norm(await page.locator('main h1').first().innerText({ timeout: 2500 }).catch(() => ''));
+  if (!profileName) {
+    const t = await page.title().catch(() => '');
+    const cand = norm(t.replace(/^\(\d+\)\s*/, '').split('|')[0].split(' - ')[0]);
+    if (cand && !/linkedin/i.test(cand)) profileName = cand;
+  }
+  if (!profileName) {
+    const fol = await page.locator('main [aria-label^="Follow "]').first().getAttribute('aria-label').catch(() => '');
+    profileName = norm((fol || '').replace(/^follow\s+/i, ''));
+  }
+  if (!profileName) return 'no_connect_button';
+  console.log(`   profile owner: "${profileName}"`);
 
   // Already invited?
   if (await page.locator('button[aria-label*="Pending" i]').first().count().catch(() => 0)) {
@@ -82,14 +101,20 @@ async function sendConnectionRequest(page) {
   // (href=/preload/custom-invite, aria-label "Invite <Name> to connect", with a
   // <span>Connect</span> inside). We MUST match BOTH tags: matching only <button>
   // missed the anchor form and fell through to More, which then has no Connect
-  // either -> false "no_connect_button" (hamza-moghe, 2026-06-29). The aria-label
-  // carries the person's name, so this stays specific to THIS profile's primary
-  // Connect, and .first() (top card renders before any in-page modules) avoids any
-  // suggested-profile Connect.
-  let connect = page.locator(
+  // either -> false "no_connect_button" (hamza-moghe, 2026-06-29).
+  // IDENTITY GUARD (2026-07-22): the aria-label must name the person whose profile
+  // this is. A bare .first() grabbed "More profiles for you" suggestion-card
+  // Connect buttons whenever the top card had none, inviting ~50 strangers with
+  // our note (Ja'Claylyn Hamner incident). A button naming anyone else is skipped.
+  let connect = null;
+  const candidates = page.locator(
     'main button[aria-label*="to connect" i], main a[aria-label*="to connect" i]'
-  ).first();
-  let haveConnect = (await connect.count().catch(() => 0)) && (await connect.isVisible().catch(() => false));
+  );
+  for (const el of await candidates.all().catch(() => [])) {
+    const label = norm(await el.getAttribute('aria-label').catch(() => ''));
+    if (label.includes(profileName) && await el.isVisible().catch(() => false)) { connect = el; break; }
+  }
+  let haveConnect = !!connect;
   if (!haveConnect) {
     // Open the top-card "More" menu. The VISIBLE More button has no aria-label and
     // text exactly "More" (there's also a hidden aria-label="More" duplicate, and
@@ -120,6 +145,16 @@ async function sendConnectionRequest(page) {
   // A weekly-limit or restriction modal can appear right here.
   if (/weekly invitation limit|reached the limit|no invitations left|temporarily restricted/i.test(await bodyText(page))) {
     return 'limit_reached';
+  }
+
+  // Some members require the sender to enter their email to verify they know them
+  // (a per-member privacy setting) before a note can even be added. We never have
+  // a member's email, and guessing/typing into an unfamiliar modal is unsafe, so
+  // treat this exactly like no_connect_button: close the dialog and skip them.
+  if (/enter their email/i.test(await bodyText(page))) {
+    await page.keyboard.press('Escape').catch(() => {});
+    await S.pause(page, 500, 1000, 'closed email-verification modal');
+    return 'no_connect_button';
   }
 
   // The modal opens on "Add a note" / "Send without a note". Click "Add a note"
@@ -161,7 +196,11 @@ async function sendConnectionRequest(page) {
 // ----------------------------------------------------------------------------
 (async () => {
   const members = S.readJson(MEMBERS, []);
-  const todo = members.filter(m => m.contacted !== true);
+  // Skip anyone who already took a no_connect_button strike TODAY. The two-strike
+  // retirement rule assumes one run/day; on a multi-batch day (60-invite backlog
+  // run, 2026-07-23) the next batch would re-hit a strike-1 member minutes later,
+  // burning a second profile view and retiring them without a real retry gap.
+  const todo = members.filter(m => m.contacted !== true && m.nocb_last !== today());
   console.log(`members.json: ${members.length} total, ${members.length - todo.length} already contacted, ${todo.length} to contact.`);
   if (DRY_RUN) console.log('** DRY RUN ** — will locate the Connect button but NOT send anything.\n');
   console.log(`--max=${MAX_INVITES}: sending at most ${MAX_INVITES} invite(s) this run.\n`);
@@ -188,7 +227,11 @@ async function sendConnectionRequest(page) {
           console.log('\n!! LinkedIn restriction / unusual-activity page detected. STOPPING.');
           break;
         }
-        if (!/\/in\//.test(page.url())) throw new Error(`not on a profile page (${page.url()})`);
+        // Must be on the EXACT profile we intended — a redirect or wrong search
+        // click means any Connect on this page belongs to someone else.
+        const landed = (S.slugFromUrl(page.url()) || '').toLowerCase();
+        const wanted = (S.slugFromUrl(url) || '').toLowerCase();
+        if (!landed || landed !== wanted) throw new Error(`landed on wrong page (${page.url()})`);
 
         const status = await sendConnectionRequest(page);
         tally[status] = (tally[status] || 0) + 1;
@@ -207,8 +250,23 @@ async function sendConnectionRequest(page) {
           console.log(`   ${status === 'sent' ? 'INVITE SENT' : status}`);
         } else if (status === 'dry-found') {
           console.log(`   [dry] Connect available — would send the note.`);
+        } else if (status === 'no_connect_button') {
+          // Retire after 2 strikes so follow-only profiles don't clog the front
+          // of the queue on every run (matters with the 137-member re-invite
+          // backlog, 2026-07-22).
+          m.nocb_count = (m.nocb_count || 0) + 1;
+          m.nocb_last = today();   // gates same-day re-attempts (see todo filter)
+          if (m.nocb_count >= 2) {
+            m.contacted = true;
+            m.contacted_at = today();
+            m.contact_status = 'no_connect_button';
+            console.log('   no_connect_button (2nd strike — retired from queue)');
+          } else {
+            console.log('   no_connect_button (strike 1, one retry left)');
+          }
+          S.writeJson(MEMBERS, members);
         } else {
-          // no_connect_button / error -> leave contacted:false so it's retried.
+          // error -> leave contacted:false so it's retried.
           console.log(`   ${status} (left for retry next run)`);
         }
       } catch (err) {

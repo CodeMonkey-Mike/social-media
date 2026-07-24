@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c10;--card:#12151c;--green:#00e68a;--cyan:#00c2ff;--gold:#ffd700;--tp:#e8eaf0;--ts:#8892a4;--tm:#505a6e;--bd:#1e2330}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1920px;height:1080px;background:var(--bg);color:var(--tp);font-family:'DM Sans',sans-serif;overflow:hidden;position:relative;padding:80px 110px}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.28;pointer-events:none;width:520px;height:520px;background:var(--green);top:-150px;right:-100px}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.ey{font-size:1rem;text-transform:uppercase;letter-spacing:.2em;color:var(--tm);font-weight:700;margin-bottom:16px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:3.8rem;line-height:1.03;letter-spacing:-.02em}
+.divider{width:80px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--green),var(--cyan));margin:22px 0 0}
+.chart{margin-top:60px;display:flex;align-items:flex-end;gap:44px;height:520px;padding-left:20px;border-left:2px solid var(--bd);border-bottom:2px solid var(--bd)}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar{width:78%;border-radius:10px 10px 0 0;background:linear-gradient(180deg,var(--cyan),rgba(0,194,255,.25));position:relative}
+.bar .v{position:absolute;top:-42px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.25rem;color:var(--ts);white-space:nowrap}
+.col.proj .bar{background:linear-gradient(180deg,var(--green),rgba(0,230,138,.3));box-shadow:0 0 40px rgba(0,230,138,.35)}
+.col.proj .bar .v{color:var(--green);font-size:1.7rem}
+.yr{margin-top:16px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:1.2rem;color:var(--ts)}
+.col.proj .yr{color:var(--green)}
+.take{position:absolute;bottom:70px;left:110px;right:110px;text-align:center}
+.take .t{font-size:1.85rem;font-weight:700;color:var(--tp)} .take b{color:var(--green)}
+.src{position:absolute;bottom:36px;left:110px;font-size:.9rem;color:var(--tm);font-family:'JetBrains Mono',monospace}
+</style></head>
+<body>
+<div class="grain"></div><div class="orb"></div>
+<div class="ey">CH6 · stablecoins = the new Treasury buyer</div>
+<h1>Stablecoin Reserves Are Climbing Into US Debt</h1>
+<div class="divider"></div>
+<div class="chart">
+  <div class="col"><div class="bar" style="height:6%"><span class="v">$28B</span></div><div class="yr">2020</div></div>
+  <div class="col"><div class="bar" style="height:32%"><span class="v">$150B</span></div><div class="yr">2022</div></div>
+  <div class="col"><div class="bar" style="height:40%"><span class="v">$180B</span></div><div class="yr">2024</div></div>
+  <div class="col"><div class="bar" style="height:56%"><span class="v">$250B+</span></div><div class="yr">2026</div></div>
+  <div class="col proj"><div class="bar" style="height:100%"><span class="v">$2–3T</span></div><div class="yr">PROJ.</div></div>
+</div>
+<div class="take"><div class="t">A fresh, captive lender for the government, worth <b>trillions</b> in new Treasury demand over the coming years.</div></div>
+<div class="src">Stablecoin market cap by year + projected new Treasury demand · estimate, keep conditional · [VERIFY]</div>
+</body></html>

@@ -187,14 +187,30 @@ async function searchAndOpen(page, entry) {
     // The human "look" at the results before clicking.
     await pause(page, 3000, 15000, 'scan search results');
 
-    // Click the result whose href matches our target slug.
-    const link = page.locator(`a[href*="/in/${slug}"]`).first();
-    if (await link.count().catch(() => 0)) {
+    // Click ONLY a result whose URL slug EQUALS our target. Never a substring
+    // match: `href*="/in/ben-olson"` also matches a DIFFERENT person at
+    // /in/ben-olson-02b90545, and that mismatch sent ~50 invites to strangers
+    // (found via the Sent-invitations audit, 2026-07-22).
+    const want = slug.toLowerCase();
+    const exactHref = await page.$$eval('a[href*="/in/"]', (els, want) => {
+      for (const a of els) {
+        const h = a.getAttribute('href') || '';
+        const m = h.match(/\/in\/([^/?#]+)/);
+        if (!m) continue;
+        let s = m[1];
+        try { s = decodeURIComponent(s); } catch {}
+        if (s.toLowerCase() === want) return h;
+      }
+      return null;
+    }, want).catch(() => null);
+    if (exactHref) {
+      const link = page.locator(`a[href="${exactHref}"]`).first();
       await link.scrollIntoViewIfNeeded().catch(() => {});
       await pause(page, 400, 1100, 'before click');
       await link.click({ timeout: 8000 });
       await page.waitForURL(/\/in\//, { timeout: 12000 }).catch(() => {});
-      if (/\/in\//.test(page.url())) return 'clicked';
+      // Confirm we landed on the profile we meant to open.
+      if ((slugFromUrl(page.url()) || '').toLowerCase() === want) return 'clicked';
       await page.goto(url, { waitUntil: 'domcontentloaded' });
       return 'goto-error';
     }
