@@ -12,13 +12,42 @@ location, and capture the ones in **Europe / North America / South America / the
 Caribbean** into `members.json` as `{ profile_url, location }`. A later (separate)
 script will message the captured members using only their `profile_url`.
 
-## Current state (as of 2026-07-23, after the invites run + the late letter-W seed)
+## Current state (as of 2026-07-24, after the re-invite backlog was cleared)
 
-- **Queue:** **6409** members, **910 processed**, **5499 remaining** (late seed added 148,
-  see the Python-port blessing entry at the bottom). `groups.json` searched_names **A→W**.
+- **Queue:** **6409** members, **910 processed**, **5499 remaining** (unchanged 07-24 — invites
+  only, no scrape/seed). `groups.json` searched_names **A→W**.
 - **Captured:** **400** members in `members.json` (402 minus 2 deleted, see below).
-  **218 contacted**; **49 connected**; **19 DM'd**; **182 still to contact**
-  (**47 re-invite backlog** + 135 never contacted).
+  **259 contacted**; **49 connected**; **19 DM'd**; **141 still to contact**
+  (**3 re-invite backlog deferred** + 138 never contacted).
+- **2026-07-24 run — RE-INVITE BACKLOG CLEARED, invites only (Mike: "continue with the
+  re-invites, do all of the remaining"). 40/44 sent, no restriction page at any point.**
+  Only Lane 3 ran. The 44 remaining `reinvite_note` members had scattered to indices 10-263
+  after the 07-23 run, so they were re-ordered to the front of `members.json` first, then run
+  as **5 sequential batches** (8/8/8/8/12), each launched detached via PowerShell
+  `Start-Process` + watched with `Monitor`, orphan-checked (`Get-CimInstance`) between every
+  batch. **~44 profile views; the week now sits at ~175 invites** (LinkedIn weekly cap
+  ~100-200; flagged to Mike before starting). **Zero misfires — every send passed the identity
+  guard**, including `ben-olson` (the exact substring-bug name from 07-22: reached via exact-slug
+  click, owner "benjamin olson" confirmed — NOT the `-02b90545` stranger).
+  - **Backlog 44 → cleared.** Tally: **40 sent**, 1 `no_connect_button` strike-2 retirement
+    (`alberto-ruiz-pérez`, parked at strike 1 on 07-23), and **3 deferred to the next run day**:
+    `cwcala` (follow-only, `no_connect_button` strike 1) and two **safe-abort transient errors**
+    (`christopher-taylor`, `christopher-maly` — identity verified, Connect modal opened, then the
+    note/textarea step failed, so the script aborted WITHOUT sending a blank invite; left
+    `contacted:false`). **Not retried same-day on purpose:** two consecutive modal failures at the
+    tail of a 40-invite day can be an early soft-throttle signal, and with the account one strike
+    from a permanent ban it wasn't worth hammering. Overall **40 sent / 44 viewed = 91%**.
+  - **First launch failed at startup** (Chrome closed during Playwright connect,
+    `launchPersistentContext: ...browser has been closed`) — no invite sent, no orphan. Cause was
+    the detached `Start-Process -WindowStyle Hidden` flag interfering with the headful Chrome
+    launch; **dropping `-WindowStyle Hidden` fixed it** and every batch launched cleanly after.
+  - **Mike asked why it still searches by name** rather than going straight to profile URLs (his
+    concern: search is what invited strangers on 07-22). Clarified + confirmed no change needed:
+    the stranger invites came from **URL-substring** result matching (fixed 07-22 → exact-slug
+    equality), not from searching; the flow already falls back to direct navigation when search
+    finds no exact-slug match, and re-verifies the landed slug + Connect-button owner either way.
+    Search-first is also a **hard anti-detection rule** (`CLAUDE.md`: bare `goto` is a flagged
+    signature), so it stays.
 - **2026-07-23 run — RE-INVITE BACKLOG DAY 2, invites only (Mike: "send 60 of those
   re-invites today, and then that's all"). 60/60 sent, no restriction page at any point.**
   Only Lane 3 ran: **no seed, no scrape, no acceptance check, no endorse+DM, no
@@ -1096,3 +1125,32 @@ linkedin-automation/
 - **Port BLESSED. `seed_by_name.py` is now the canonical Lane 1 seeder; `seed-by-name.js`
   is frozen history (rollback only).** First freeze-and-port migration complete —
   the `lib/li_session.py` foundation is live-proven for the next port.
+
+### 2026-07-24: re-invite backlog cleared — 40 sent, invites only
+
+Mike: "continue with the re-invites, do all of the remaining." Invites-only, Lane 3 only.
+The 44 remaining `reinvite_note` members had scattered through indices 10-263 after the
+07-23 run, so they were re-ordered to the front of `members.json` first (so `--max` draws
+only the backlog, never spilling into the 135 never-contacted). Then run as 5 sequential
+detached batches (8/8/8/8/12), Monitor-watched, orphan-checked between each.
+
+- **40/44 sent, zero misfires, no restriction page.** `ben-olson` (the 07-22 substring-bug
+  name) sent cleanly via exact-slug click, owner confirmed. ~44 profile views; the week is
+  now ~175 invites (weekly cap ~100-200; flagged before starting).
+- **3 deferred to the next run day:** `cwcala` (follow-only, no_connect strike 1, blocked
+  same-day by the `nocb_last` guard) + two safe-abort transient errors (`christopher-taylor`,
+  `christopher-maly` — identity verified, Connect modal opened, note step failed, aborted
+  without sending a blank invite). Not retried same-day: two modal failures at the tail of a
+  40-invite day can be an early soft-throttle signal, and the account is one strike from a
+  permanent ban. `alberto-ruiz-pérez` retired at strike 2 (was parked at strike 1 on 07-23).
+- **Startup gotcha:** the first launch died during Playwright connect
+  (`launchPersistentContext: ...browser has been closed`) — no send, no orphan. Cause was the
+  detached `Start-Process -WindowStyle Hidden` flag; dropping it fixed the headful launch.
+- **Nav question (Mike):** clarified the search-then-goto-fallback flow already does what he
+  wanted — direct navigation when search finds no exact-slug match, with landed-slug +
+  Connect-owner re-verification either way. The 07-22 stranger invites were a URL-substring
+  match bug (fixed → exact-slug), not "searching." Search-first stays: it's a hard
+  anti-detection rule (bare `goto` is a flagged signature). No code change.
+- **Deferred lanes unchanged** from 07-23: acceptance check, endorse+DM (the 3 members flagged
+  >14 d on 07-23, now a day older, plus any others aging into the window), check-endorsements,
+  next seed letter (W done → X), and the comma-less-metro classifier gap before the next scrape.
