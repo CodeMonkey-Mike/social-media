@@ -21,8 +21,9 @@ Sibling skills: [`scrape-group-members`](../scrape-group-members/scrape-group-me
 node linkedin-automation/skills/request-connections/request-connections.js [--max=N] [--dry-run]
 ```
 
-- `--max=N` — send at most **N** invites this run. **Default 10** (Mike's self-imposed
-  daily cap). Run this **once per day**, not several batches that add up past ~10.
+- `--max=N` — send at most **N** invites this run. **Default 10** if omitted; no fixed
+  daily cap (rescinded 2026-07-28) — pass `--max` per Mike's ask each run. Run this
+  **once per day**, not several batches that add up past what Mike asked for.
 - `--dry-run` — navigate to each profile and locate the Connect button, but **don't
   click or send anything**. The safe way to confirm the flow after a LinkedIn change.
 
@@ -120,8 +121,8 @@ never hammers.
   capped at ~5 notes/month.
 - There is still a **weekly invitation cap** (~100–200) regardless of notes.
 - Each invite is also a profile view, so it counts toward the same **volume** limit
-  that restricted the scraper on 2026-06-27 — keep the daily count low (≤10), and
-  don't run a big scrape and a batch of invites on the same day if it pushes total
+  that restricted the scraper on 2026-06-27 — no fixed daily cap, but stay volume-aware,
+  and don't run a big scrape and a batch of invites on the same day if it pushes total
   profile views high (see [`../SKILL.md`](../SKILL.md) "LinkedIn limits").
 - The account was restricted twice in late June 2026; a third strike risks a
   **permanent** ban. If a run hits a limit/restriction page, stop for the day.

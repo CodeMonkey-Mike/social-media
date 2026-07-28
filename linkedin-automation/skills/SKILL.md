@@ -57,7 +57,7 @@ All commands run **from the repo root**, e.g.
 | 5 | [`check-endorsements`](check-endorsements/check-endorsements.md) | `skills/check-endorsements/check-endorsements.js` | **Track endorse-backs.** Read OUR OWN skills page's endorser overlays, record who endorsed each skill into `data/endorsements.json` (`first_seen` = observed date — LinkedIn shows no endorsement date, so run often), and stamp `endorsed_back` onto matching members. Closes skill 4's loop. |
 
 Typical lifecycle: **(1) scrape** a group at ≤50 profiles/day until the queue is
-drained → **(2) invite** the captures at ≤10/day → **(3) check** acceptances every day
+drained → **(2) invite** the captures (no fixed daily cap; `--max` per Mike's ask) → **(3) check** acceptances every day
 or two → **(4) endorse + DM** the accepted connections — send to ALL members connected
 more than 14 days ago (no one-per-day / small-batch cap; set `--max` to cover them all;
 fallback = one member ≥7 days if none are older) → **(5) check endorse-backs** every
@@ -179,7 +179,7 @@ warning; the volume one is the hard ban (it comes with a lift time).
 **Operating rules:**
 - **Scraping: ≤ 50 profiles/day**, one run/day (`--max=50`). We tripped the limit at
   ~120/24 h, so 50/day stays well under.
-- **Inviting: ≤ 10/day** (the script default). Each invite is also a profile view.
+- **Inviting: no fixed daily cap** (rescinded 2026-07-28) — set `--max` to Mike's ask each run. Each invite is also a profile view, so it still counts toward the volume budget.
 - **Don't run a big scrape and a batch of invites on the same day** if it pushes total
   profile views high — both feed the same volume budget. (A 30-scrape + 5-invite day =
   35 views, which is fine.)

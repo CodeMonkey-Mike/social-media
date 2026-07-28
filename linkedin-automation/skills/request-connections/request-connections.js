@@ -11,8 +11,8 @@
 //   contact_status   sent | already_pending | already_connected | no_connect_button
 //
 // Run:  node linkedin-automation/request-connections.js [--max=N] [--dry-run]
-//   --max=N     send at most N invites this run, then stop. DEFAULT 10 (Mike's
-//               self-imposed daily cap — run this ONCE per day, not repeatedly).
+//   --max=N     send at most N invites this run, then stop. DEFAULT 10 if omitted
+//               (no fixed daily cap as of 2026-07-28 — pass --max per Mike's ask).
 //   --dry-run   navigate to each profile and locate the Connect button, but DON'T
 //               click/send anything. Safe way to verify the flow.
 //
