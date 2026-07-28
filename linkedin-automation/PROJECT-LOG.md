@@ -12,11 +12,13 @@ location, and capture the ones in **Europe / North America / South America / the
 Caribbean** into `members.json` as `{ profile_url, location }`. A later (separate)
 script will message the captured members using only their `profile_url`.
 
-## Current state (as of 2026-07-28 evening, after the full 5-lane run + the first-ever LangGraph Lane 1 seed)
+## Current state (as of 2026-07-28 night: 5-lane morning run + LangGraph Lanes 1 AND 2 both blessed)
 
-- **Queue:** **6435** members, **1007 processed**, **5428 remaining** (+50 processed in the
-  morning run; +26 seeded in the evening X-letter run — the first run through LangGraph).
-  `groups.json` searched_names **A→X**.
+- **Queue:** **6435** members, **1012 processed**, **5423 remaining** (+50 processed in the
+  morning run, +4 in the evening Lane 2 graph bless, +1 chronic-404 retirement).
+  `groups.json` searched_names **A→X**. **Captured: 470** members (+2 evening: Michigan,
+  Toronto). Lanes 1 AND 2 now run through `graph/run.py` (LangGraph), both Python
+  end-to-end; `seed-by-name.js` + `scrape-group-members.js` = frozen rollback.
 - **Captured:** **468** members in `members.json` (+29 today: 21 NA / 6 EU / 2 SA true
   zones; a Tbilisi-Georgia capture mislabeled `[north_america]` — same classifier gap
   as the Porto Alegre case below).
@@ -1301,5 +1303,99 @@ topology → checkpoints — which carries to Lanes 2-5).
   log, checkpoint thread `seed-6665791-20260728-live` holds 4 snapshots.
 - **GRAPH BLESSED. `graph/run.py` is now the canonical way to run Lane 1** (Claude still
   picks the names conversationally each morning; the graph replaces execution, not
-  judgment). Direct `seed_by_name.py` invocation remains as fallback. Next frontier:
-  Lane 2 (scrape) node + the first `interrupt()` volume gate.
+  judgment). Direct `seed_by_name.py` invocation remains as fallback.
+
+### 2026-07-28 (later): Lane 2 graph BUILT (stub-tested) — bless pending on the next morning run
+
+Mike's Lane 2 contract, decided this session: he types just **"Lane 2, N"** (N = his
+per-day number: 10/40/50, whatever) → `python linkedin-automation/graph/run.py --lane 2
+--max N`. **No interrupt gate** — the number in the ask IS the human decision; no
+lane-chaining / "run my morning" graph for LinkedIn, lanes stay individually invoked.
+The **regions breakdown is built into the run report** (his standing "tell me what
+regions they were from"), never asked for.
+
+- **Built:** `scrape` node (subprocess-wraps the frozen `scrape-group-members.js
+  --max=N`, byte-untouched) + `verify_scrape` (re-reads queue processed flags +
+  `members.json` count, cross-checks disk delta vs parsed CAPTURE lines, composes the
+  regions report from the CAPTURE zone tags). CLI hard-refuses `--max>50` (daily scrape
+  cap). Checkpoint threads: `scrape-<YYYYMMDD>`.
+- **Wrapper kill-switch (new safety the frozen JS lacks):** the scraper never calls
+  `isRestricted` and its per-profile try/catch swallows errors, so a mid-run
+  restriction/logout/DOM-change would grind through the whole batch failing. The
+  wrapper watches the stream: **5 CONSECUTIVE per-profile errors → `taskkill /T` the
+  process tree** (node + its own Playwright Chrome only — never main Chrome) →
+  `failed`, diagnose before any rerun. Restriction phrasing anywhere in output
+  (`temporarily restricted|unusual activity|high volume...|access to your account`) →
+  `halted_restricted`, exit 2, stop for the day.
+- **Stub tests all green** (no browser, no writes): ok (regions report renders,
+  disk-delta cross-check works), errors (kill-switch fired at exactly 5), restricted
+  (halt, exit 2), fail (FATAL + exit code caught, exit 1). Lane 1 regression stub also
+  green after the shared-runner refactor.
+- **NOT blessed live yet — deliberately.** Today's scrape budget was already spent by
+  the morning run (50 views; hard rule: ≤50/day, one scrape run/day). **The blessing
+  run is the next morning "Lane 2, N"** — useful work as verification, same as the
+  Lane 1 pattern. Until it's blessed, direct `node skills/scrape-group-members/
+  scrape-group-members.js --max=N` remains the canonical Lane 2 command.
+
+### 2026-07-28 (last): scrape_group_members.py — the scraper PORTED to Python (bless pending)
+
+Mike corrected the ordering mid-session: Lane 1's precedent is **port first, graph
+second**, so the scraper port happens NOW, not after the wrapper blesses. Written
+tonight, statically verified, NOT yet live-blessed:
+
+- **`lib/li_session.py` grew** (per-port doctrine): `type_human`, `slug_from_url`,
+  `name_query_from_url`, nav `SEARCH_BOX`, and `search_and_open` — incl. the
+  exact-slug-only result click (the 2026-07-22 stranger-invites lesson) and the
+  search-then-goto fallback modes (`clicked`/`goto-notfound`/`goto-noquery`/`goto-error`).
+- **`skills/scrape-group-members/scrape_group_members.py`**: 1:1 port — ZONES/EXCLUDE
+  classifier, `read_location` (main-innerText anchor method), collect phase, batch loop,
+  identical pacing (60-300s between profiles, 5-8 min rest every 18), identical output
+  format (the graph wrapper parses it). **One deliberate divergence, documented in the
+  header:** collect-phase "Show more" selector = exact visible text only (the JS still
+  carries the broad `aria-label*="more"` member-row-menu bug fixed in the seeder
+  2026-06-29; the port applies the documented fix instead of re-importing the bug).
+- **Parity battery: 54/54 PASS** (Node evaluating the real JS vs the port):
+  `classify()` over 30 locations — bug-for-bug identical incl. the known mislabels
+  (Porto Alegre→europe, Tbilisi-Georgia→north_america) and the fixed cases
+  (Sydney→None, Cardiff-Wales→europe); `slugFromUrl`/`nameQueryFromUrl`/
+  `canonicalProfileUrl` over 8 URL shapes. ("Washington, D.C."→None is a shared gap
+  in BOTH sides — parity holds; noted, not fixed.)
+- **The Lane 2 graph node now launches the Python port** (`SCRAPE_SCRIPT` in
+  `graph/lane_graph.py`; the JS path stays one line away as `SCRAPE_SCRIPT_JS`
+  rollback). Stub suite re-run green after the switch.
+- **Blessing plan (next morning "Lane 2, N"):** run through the graph — it blesses the
+  port AND the wrapper together; the wrapper is observational-only around the script
+  (tee + parse + verify-from-disk) and its kill-switch actively protects the port's
+  maiden run. If the run misbehaves: rollback = swap `SCRAPE_SCRIPT` to the JS, and
+  the JS direct command stays canonical meanwhile.
+
+### 2026-07-28 (night): "Lane 2, 5" BLESSING RUN CLEAN — scraper port + Lane 2 graph both blessed
+
+Mike moved the bless up to the same evening ("Lane 2, 5") rather than waiting for
+morning — his call on budget: ~69 morning views + 5 = ~74, well under the ~120/24h
+threshold; the one-scrape-run/day doctrine deliberately bent this once. Pre-flight
+orphan check clean; launched detached + Monitor-watched via
+`python -u linkedin-automation/graph/run.py --lane 2 --max 5 --thread scrape-20260728-bless5`.
+
+- **Result: 5/5 visited, 2 captured, 2 skipped out-of-zone, 1 known error. No
+  restriction page.** Per profile: `carolina-bermudez` → 404 again (3rd consecutive;
+  stayed `processed:false`, exactly right); `nitzan-davidson` → clicked, "Tel Aviv
+  District, Israel" skip; `davidwillliamsdev` → goto-notfound fallback (dash-less slug
+  → junk name query, documented path), **CAPTURE [north_america] Rockwood, Michigan**;
+  `david-jeannette-ph-d-01560522` → clicked (name-query "david jeannette ph d" worked),
+  **CAPTURE [north_america] Toronto, Ontario, Canada**; `david-adamu` → clicked,
+  "Abuja, Nigeria" skip. Search-and-click landed exact slugs every time it fired.
+- **Verification all green:** queue 1007→1011 processed (error member correctly NOT
+  marked), members.json 468→470, both captures perfectly shaped incl. `group_id:
+  "6665791"` from the queue entry, zero duplicates, stderr 0 bytes, no orphan
+  processes, checkpoint thread `scrape-20260728-bless5` = 4 snapshots, graph regions
+  report (2x north_america) matches disk.
+- **Post-run: `carolina-bermudez-b55b54227` RETIRED (Mike's call)** — `processed:true`
+  via the byte-parity writer, so no future batch draws her; done after the run
+  completed (never edit the queue mid-run: the scraper rewrites the whole file from
+  memory after every profile). Queue now 1012 processed / 5423 remaining.
+- **BOTH BLESSED: `scrape_group_members.py` is the canonical scraper and
+  `graph/run.py --lane 2 --max N` is the canonical Lane 2 command.**
+  `scrape-group-members.js` = frozen rollback (`SCRAPE_SCRIPT_JS` one-line swap).
+  Lanes 1 and 2 are now Python end-to-end under LangGraph; next frontier: Lane 3
+  (invite) — port first, then wrap, same as this.

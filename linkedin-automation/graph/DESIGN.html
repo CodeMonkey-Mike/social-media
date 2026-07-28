@@ -154,20 +154,32 @@
 
           <div class="fnode end"><div class="name">END · run report → PROJECT-LOG entry (graph END = migration frontier; Lanes 2–5 still manual, exactly as today)</div></div>
 
-          <div style="margin-top:34px; opacity:.45; border-top:1px dashed var(--line); padding-top:18px;">
-            <div style="font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--faint); font-weight:700; margin-bottom:12px;">
-              Future frontier — NOT in this build (Lane 2 joins next)</div>
-            <div class="fnode jsnode">
-              <div class="kind">Node · subprocess wrapper</div>
-              <div class="name">scrape (Lane 2) <span class="pill js">JS · FROZEN</span></div>
-              <div class="desc"><code>scrape-group-members.js --max=N</code> — visits profiles,
-                classifies location, writes <code>members.json</code>. <b>N comes straight from
-                Mike's ask ("Lane 2, 50")</b> — the number IS the human decision, so there is no
-                interrupt gate (decided 2026-07-28). Its verify node always ends the report with
-                the REGIONS breakdown of the new captures (from the <code>members.json</code>
-                delta), built in, never asked for. Then Lanes 3–5, same pattern.
-                <code>interrupt()</code> stays off the LinkedIn roadmap unless a genuinely
-                mid-run decision ever appears.</div>
+          <div style="margin-top:34px; border-top:1px dashed var(--line); padding-top:18px;">
+            <div style="font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:12px;">
+              Lane 2 graph — BLESSED live 2026-07-28 (5-profile run: 2 captured, 2 skipped, 1 chronic-404 handled)</div>
+            <div class="fnode pynode">
+              <div class="kind">Node · subprocess wrapper · invoked "Lane 2, N" → <code>run.py --lane 2 --max N</code></div>
+              <div class="name">scrape <span class="pill py">PYTHON · BLESSED</span></div>
+              <div class="desc"><code>scrape_group_members.py --max=N</code> (ported 2026-07-28,
+                54/54 parity checks vs the JS incl. the full classifier battery, bug-for-bug;
+                <code>scrape-group-members.js</code> = one-line rollback until blessed) — visits
+                profiles, classifies location, writes <code>members.json</code>. <b>N comes straight
+                from Mike's ask</b> — the number IS the human decision; no interrupt gate. The CLI
+                refuses <code>--max&gt;50</code> (the daily scrape cap).
+                <b>Wrapper kill-switch:</b> the frozen JS has NO restriction check of its own
+                (per-profile try/catch swallows errors), so 5 CONSECUTIVE profile errors kill the
+                process tree (<code>taskkill /T</code> — node + its own Chrome only) and halt;
+                restriction phrasing anywhere in output → <code>halted_restricted</code>.</div>
+            </div>
+            <div class="arrow short"></div>
+            <div class="fnode verify">
+              <div class="kind">Node · idempotency check + standing report</div>
+              <div class="name">verify_scrape <span class="pill okp">READS DISK</span></div>
+              <div class="desc">Re-reads the queue's <code>processed</code> flags +
+                <code>members.json</code> count, cross-checks the disk delta against the parsed
+                CAPTURE lines, and always ends the report with the <b>REGIONS breakdown</b> of the
+                new captures (zone counts + locations) — built in, never asked for
+                (Mike, 2026-07-28). Then Lanes 3–5 follow the same parameterized pattern.</div>
             </div>
           </div>
         </div>
@@ -230,8 +242,8 @@
               <td>RESTRICTED in wrapper output → HALT edge. The graph cannot structurally continue past it.</td></tr>
           <tr><td>Human typing + pacing in the search box</td>
               <td>Live inside the wrapped script, untouched — wrapping at batch granularity means the quirks travel with the code.</td></tr>
-          <tr><td style="color:var(--faint)">Volume budget (Lane 2+, future)</td>
-              <td style="color:var(--faint)">The per-run <code>--max=N</code> from Mike's "Lane 2, N" ask is the human decision — captured as an argument, not an <code>interrupt()</code> (decided 2026-07-28; no lane-chaining planned for LinkedIn).</td></tr>
+          <tr><td>Volume budget (Lane 2: ≤50 scrape/day)</td>
+              <td>The per-run <code>--max=N</code> from Mike's "Lane 2, N" ask is the human decision — an argument, not an <code>interrupt()</code> (decided 2026-07-28). The CLI hard-refuses <code>--max&gt;50</code>; the kill-switch stops a systemically failing run instead of letting the frozen JS grind on.</td></tr>
         </table>
       </div>
 
@@ -239,7 +251,7 @@
         <h2>Files we create</h2>
         <table>
           <tr><td><code>graph/lane_graph.py</code></td><td>StateGraph definition: nodes, edges, halt routing, checkpointer wiring.</td></tr>
-          <tr><td><code>graph/run.py</code></td><td>CLI runner: <code>python graph/run.py --names "Xavier" [--resume]</code>. Owns the terminal interrupt prompt.</td></tr>
+          <tr><td><code>graph/run.py</code></td><td>CLI runner. Lane 1: <code>--names "Xavier,Xander"</code> · Lane 2: <code>--lane 2 --max 50</code> · <code>--stub</code> = browser-free structural test.</td></tr>
           <tr><td><code>graph/DESIGN.html</code></td><td>This document.</td></tr>
           <tr><td colspan="2" style="color:var(--faint); font-size:11.5px">Existing scripts + data files: <b>zero edits</b>. <code>.gitignore</code> gains the checkpoint DB.</td></tr>
         </table>
@@ -251,9 +263,9 @@
           <li><b>Install</b> — <code>pip install langgraph langgraph-checkpoint-sqlite</code>. ✓ DONE 2026-07-28 (langgraph 1.2.10).</li>
           <li><b>Skeleton</b> — graph + runner; stub tests ok/restricted/fail. ✓ DONE 2026-07-28 (all three routes green).</li>
           <li><b>Bless Lane 1 live</b> — ✓ DONE 2026-07-28: Xavier/Xander/Ximena/Xiomara → 27 matched, 26 new, queue 6409→6435, verification all green. The graph is now the canonical Lane 1 entry point.</li>
-          <li class="future"><b>Lane 2 joins</b> — scrape node, invoked as "Lane 2, N": <code>--max=N</code> from Mike's ask (no gate — the number is the human decision), regions report built into verify.</li>
+          <li><b>Lane 2 joins</b> — ✓ BLESSED 2026-07-28 (evening, Mike's call on budget): "Lane 2, 5" through the graph — 5/5 visited, 2 captured (Michigan, Toronto → north_america), 2 skipped out-of-zone, the chronic-404 member errored correctly and was retired after the run. Regions report + disk verification green. The graph is now the canonical Lane 2 entry point.</li>
           <li class="future"><b>Lanes 3–5 join</b> — invite → check → endorse nodes, same parameterized wrap-verify pattern ("Lane 3, 15").</li>
-          <li class="future"><b>Port scrape-group-members.js to Python</b> — freeze-and-port, blessed on a live run; then its JS is rollback-only.</li>
+          <li><b>Port scrape-group-members.js to Python</b> — ✓ BLESSED 2026-07-28 (port-first order per Mike, matching Lane 1's precedent): <code>scrape_group_members.py</code> + <code>li_session.py</code> grown (search_and_open etc.), 54/54 parity checks, then the live 5-profile bless. <code>scrape-group-members.js</code> = frozen rollback (one-line swap via <code>SCRAPE_SCRIPT_JS</code>).</li>
         </ol>
       </div>
 

@@ -21,9 +21,27 @@ Sibling skills: [`request-connections`](../request-connections/request-connectio
 ## Running it
 
 ```bash
-# from repo root
-node linkedin-automation/skills/scrape-group-members/scrape-group-members.js [--max=N] [--collect-only]
+# from repo root — canonical (the Lane 2 graph: wraps scrape_group_members.py, verifies
+# from disk, kill-switch on consecutive errors, regions report built into the output)
+python linkedin-automation/graph/run.py --lane 2 --max N
+
+# direct script (same scraper, no graph supervision)
+python linkedin-automation/skills/scrape-group-members/scrape_group_members.py [--max=N] [--collect-only]
 ```
+
+**Port status (2026-07-28): BLESSED.** `scrape_group_members.py` is a 1:1 port of
+`scrape-group-members.js` on `lib/li_session.py` (which gained `search_and_open`,
+`type_human`, and the slug/name-query helpers). Parity-tested (54 checks incl. the full
+`classify()` battery, bug-for-bug — the known Porto-Alegre/Georgia mislabels reproduce
+identically), then blessed live the same evening: 5 profiles through the graph — 2
+captured (correct zones + `group_id`), 2 correctly skipped out-of-zone, 1 chronic-404
+error handled correctly (stayed unprocessed; retired after the run), search-and-click
+landed exact slugs, all data verification green. ONE deliberate divergence from the JS:
+the collect-phase "Show more" selector uses exact visible text only (the JS still
+carries the broad `aria-label*="more"` clause — the member-row-menu bug fixed in the
+seeder on 2026-06-29). **`scrape-group-members.js` is now frozen history, kept only as
+rollback** (`SCRAPE_SCRIPT_JS` in `graph/lane_graph.py` is the one-line swap), like
+`seed-by-name.js`.
 
 - `--max=N` — process only the next **N** unprocessed members this run, then stop.
   Run again any time to continue; there is **no state to manage** (the `processed`
