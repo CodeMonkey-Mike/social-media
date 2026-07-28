@@ -123,7 +123,6 @@
     <span><span class="sw" style="background:var(--py)"></span> Python (blessed port)</span>
     <span><span class="sw" style="background:var(--js)"></span> JS (frozen, wrapped — ported later)</span>
     <span><span class="sw" style="background:var(--ok)"></span> verify-from-disk node</span>
-    <span><span class="sw" style="background:var(--gate)"></span> human gate (interrupt)</span>
     <span><span class="sw" style="background:var(--halt)"></span> halt route (no retry)</span>
   </div>
 
@@ -158,18 +157,17 @@
           <div style="margin-top:34px; opacity:.45; border-top:1px dashed var(--line); padding-top:18px;">
             <div style="font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--faint); font-weight:700; margin-bottom:12px;">
               Future frontier — NOT in this build (Lane 2 joins next)</div>
-            <div class="fnode gatenode">
-              <div class="kind">interrupt() · first human gate</div>
-              <div class="name">HUMAN GATE <span class="pill gate">MIKE</span></div>
-              <div class="desc">Debuts when Lane 2 joins: approve <code>max_views</code> before
-                the first budget-spending node runs (~120 views/24h threshold; scraping ≤50/day).</div>
-            </div>
-            <div class="arrow short"></div>
             <div class="fnode jsnode">
               <div class="kind">Node · subprocess wrapper</div>
               <div class="name">scrape (Lane 2) <span class="pill js">JS · FROZEN</span></div>
               <div class="desc"><code>scrape-group-members.js --max=N</code> — visits profiles,
-                classifies location, writes <code>members.json</code>. Then Lanes 3–5, same pattern.</div>
+                classifies location, writes <code>members.json</code>. <b>N comes straight from
+                Mike's ask ("Lane 2, 50")</b> — the number IS the human decision, so there is no
+                interrupt gate (decided 2026-07-28). Its verify node always ends the report with
+                the REGIONS breakdown of the new captures (from the <code>members.json</code>
+                delta), built in, never asked for. Then Lanes 3–5, same pattern.
+                <code>interrupt()</code> stays off the LinkedIn roadmap unless a genuinely
+                mid-run decision ever appears.</div>
             </div>
           </div>
         </div>
@@ -233,7 +231,7 @@
           <tr><td>Human typing + pacing in the search box</td>
               <td>Live inside the wrapped script, untouched — wrapping at batch granularity means the quirks travel with the code.</td></tr>
           <tr><td style="color:var(--faint)">Volume budget (Lane 2+, future)</td>
-              <td style="color:var(--faint)">Seeding spends zero profile views, so no gate yet. The <code>interrupt()</code> gate debuts when Lane 2's scrape node joins.</td></tr>
+              <td style="color:var(--faint)">The per-run <code>--max=N</code> from Mike's "Lane 2, N" ask is the human decision — captured as an argument, not an <code>interrupt()</code> (decided 2026-07-28; no lane-chaining planned for LinkedIn).</td></tr>
         </table>
       </div>
 
@@ -253,9 +251,8 @@
           <li><b>Install</b> — <code>pip install langgraph langgraph-checkpoint-sqlite</code>. ✓ DONE 2026-07-28 (langgraph 1.2.10).</li>
           <li><b>Skeleton</b> — graph + runner; stub tests ok/restricted/fail. ✓ DONE 2026-07-28 (all three routes green).</li>
           <li><b>Bless Lane 1 live</b> — ✓ DONE 2026-07-28: Xavier/Xander/Ximena/Xiomara → 27 matched, 26 new, queue 6409→6435, verification all green. The graph is now the canonical Lane 1 entry point.</li>
-          <li class="future"><b>Lane 2 joins</b> — scrape node + the first <code>interrupt()</code> gate (approve <code>max_views</code> before budget is spent).</li>
-          <li class="future"><b>Lanes 3–5 join</b> — invite → check → endorse nodes, same wrap-verify-gate pattern.</li>
-          <li class="future"><b>Dashboard interrupts</b> — surface pending gates on :8766 instead of the terminal.</li>
+          <li class="future"><b>Lane 2 joins</b> — scrape node, invoked as "Lane 2, N": <code>--max=N</code> from Mike's ask (no gate — the number is the human decision), regions report built into verify.</li>
+          <li class="future"><b>Lanes 3–5 join</b> — invite → check → endorse nodes, same parameterized wrap-verify pattern ("Lane 3, 15").</li>
           <li class="future"><b>Port scrape-group-members.js to Python</b> — freeze-and-port, blessed on a live run; then its JS is rollback-only.</li>
         </ol>
       </div>
