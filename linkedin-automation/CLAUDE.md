@@ -24,24 +24,25 @@ persistent-profile pattern of the `schedule-tweets` posting scripts.
 
 | Script | Lane / job |
 |---|---|
-| `python skills/scrape-group-members/seed_by_name.py --group=<id> --names="A,B,C"` | **Seed the queue by name.** For a large group, search member names in the group's in-page "Search members" box and capture every match into `data/members-urls.json`. Does NOT visit profiles. Records the searched names onto `data/groups.json`. _Python port, blessed live 2026-07-23 (first freeze-and-port); `seed-by-name.js` = frozen rollback._ |
+| `python graph/run.py --names "A,B,C" [--group=<id>]` | **Seed the queue by name — via the Lane 1 LangGraph graph (canonical since 2026-07-28).** Wraps the blessed `seed_by_name.py` untouched, verifies the queue delta from disk, halts (no retry) on restriction/failure, checkpoints to `data/graph_checkpoints.sqlite`. `--stub ok\|restricted\|fail` = browser-free structural test. Design: `graph/DESIGN.html`. Direct `python skills/scrape-group-members/seed_by_name.py --group=<id> --names="A,B,C"` remains as fallback. _Seeder port blessed 2026-07-23; graph blessed 2026-07-28; `seed-by-name.js` = frozen rollback._ |
 | `skills/scrape-group-members/scrape-group-members.js --max=N` | **Process the queue.** Visit the next N unprocessed profiles, read location, classify, capture target-region members into `data/members.json`. Each profile = 1 view against the volume budget. |
-| `skills/request-connections/request-connections.js --max=N` | **Invite.** Send a connection request + note to N not-yet-contacted members from `data/members.json`. Each = 1 profile view. Default/cap **10/day**. |
+| `skills/request-connections/request-connections.js --max=N` | **Invite.** Send a connection request + note to N not-yet-contacted members from `data/members.json`. Each = 1 profile view. No fixed daily cap (rescinded 2026-07-28) — `--max` set per Mike's instruction each run. |
 | `skills/check-connections/check-connections.js` | **Track acceptances.** Scan the My Network connections list, stamp `connected_on` + `contact_status: connected`. One list page — cheap. |
 | `skills/endorse-and-message/endorse-and-message.js --max=N` | **Endorse + ask back.** For accepted connections (oldest first): endorse a random 9-15 of their top skills, then send THE one sanctioned favor-request DM. Zero endorsable skills = abandon (no DM), marked `no_skills`. Each member = 1 profile view. **No one-DM-per-day cap** — send to ALL members connected >14 days ago (set `--max` to cover them); fallback = one member ≥7 days if none are older. `--max` default 3 is a floor, not a ceiling. |
 | `skills/check-endorsements/check-endorsements.js` | **Track endorse-backs.** Read OUR OWN skills page's endorser overlays, record who endorsed each skill into `data/endorsements.json` (`first_seen` = observed date; LinkedIn shows no real date, so run often), stamp `endorsed_back` onto matching members. Own profile only — 0 member profile views, run freely. |
 
-Typical lifecycle: **seed → scrape (≤50/day) → invite (≤10/day) → check (freely) → endorse+DM (ALL members >14 days connected — no DM-count cap; volume is the only limit) → check-endorsements (freely, every run day)**.
+Typical lifecycle: **seed → scrape (≤50/day) → invite (per Mike's ask that run, no fixed cap) → check (freely) → endorse+DM (ALL members >14 days connected — no DM-count cap; volume is the only limit) → check-endorsements (freely, every run day)**.
 
 ## HARD RULES (do not violate — the account has been restricted twice; a 3rd strike risks a permanent ban)
 
 - **VOLUME is the binding limit.** Total profiles accessed over time, regardless of HOW
   you navigate. Restriction hit at ~120 views/24h on 2026-06-27.
   - **Scraping ≤ 50 profile views/day**, one run/day.
-  - **Inviting ≤ 10/day** (each invite is also a profile view).
+  - **Inviting: no fixed daily cap** (Mike rescinded the earlier 10/day self-imposed
+    limit on 2026-07-28) — set `--max` to whatever Mike asks for that run, watching
+    total combined volume against the ~120/24h restriction threshold.
   - **Don't stack** a big scrape AND a batch of invites the same day if it pushes total
-    views high. A small scrape + a few invites (e.g. 10 + 3) is fine. Acceptance checks
-    are cheap (one list page) and don't count meaningfully.
+    views high. Acceptance checks are cheap (one list page) and don't count meaningfully.
 - **STOP on any restriction / "unusual activity" page** — for the rest of the day. The
   scripts detect it and stop themselves; never override and re-run.
 - **One Chrome instance only.** `li-bot-profile` is single-instance — **never run two of

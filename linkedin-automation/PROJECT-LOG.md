@@ -12,13 +12,45 @@ location, and capture the ones in **Europe / North America / South America / the
 Caribbean** into `members.json` as `{ profile_url, location }`. A later (separate)
 script will message the captured members using only their `profile_url`.
 
-## Current state (as of 2026-07-24, after the re-invite backlog was cleared)
+## Current state (as of 2026-07-28 evening, after the full 5-lane run + the first-ever LangGraph Lane 1 seed)
 
-- **Queue:** **6409** members, **910 processed**, **5499 remaining** (unchanged 07-24 — invites
-  only, no scrape/seed). `groups.json` searched_names **A→W**.
-- **Captured:** **400** members in `members.json` (402 minus 2 deleted, see below).
-  **259 contacted**; **49 connected**; **19 DM'd**; **141 still to contact**
-  (**3 re-invite backlog deferred** + 138 never contacted).
+- **Queue:** **6435** members, **1007 processed**, **5428 remaining** (+50 processed in the
+  morning run; +26 seeded in the evening X-letter run — the first run through LangGraph).
+  `groups.json` searched_names **A→X**.
+- **Captured:** **468** members in `members.json` (+29 today: 21 NA / 6 EU / 2 SA true
+  zones; a Tbilisi-Georgia capture mislabeled `[north_america]` — same classifier gap
+  as the Porto Alegre case below).
+  **280 contacted**; **71 connected** (+3 today); **30 DM'd** (+3 today);
+  **188 still to contact**.
+- **2026-07-26 run — full 5-lane run, no restriction page at any point (~67 profile
+  views: 50 scrape + 8 invite-lane incl. 2 errors + 9 endorse-lane incl. 1 error).**
+  - **Lane 2 (scrape 50):** 39 new captures, 1 hard error (`carolina-bermudez-b55b54227`
+    → 404, stays unprocessed for retry), 8 skipped as out-of-zone. Regions (true, after
+    correcting the known mislabel): **17 North America, 11 Europe, 11 South America.**
+    **Recovered the same recurring classifier bug** (comma-less metro string): `david-helfer`
+    "Greater Porto Alegre" captured correctly (in-zone, Brazil = South America) but tagged
+    `[europe]` by the whole-string scan — zone LABEL wrong, capture right, left as-is per
+    the standing "still-unfixed, candidate fix overdue" note.
+  - **Lane 3 (invite 5): ran as two batches, 5/8 viewed sent (63%).** Batch 1 (`--max=5`,
+    the reordered-to-front backlog): `christopher-n-95029035` and `christopherhamel2022`
+    sent; `cwcala` retired at **2nd `no_connect_button` strike**; `christopher-taylor` and
+    `christopher-maly` both failed again at the note/Send step — their **3rd and 2nd**
+    consecutive transient failure respectively across 07-24 and today, so (matching the
+    documented repeat-offender fix used for other stuck members on 07-20/07-22) **both were
+    reordered to the end of `members.json`** (data unchanged, order only) so they stop
+    blocking the front of the queue. Batch 2 (`--max=3`, drawn after the reorder):
+    `christopherpaquet`, `christopher-lafumee-488685327`, `christopher-bartsch-12a09a201` all
+    **sent** — reaching the requested 5 total for the day.
+  - **Lane 4 (check-connections):** **19 new acceptances** dated 07-23 through 07-26 (7 exact
+    same-day, rest backfilled from relative "N days ago" text) — 49→68 connected.
+  - **Lane 5 (endorse+DM, `--max=9`):** all 9 members connected **>14 days ago** (15-22 d)
+    with no DM yet. **8/9 endorsed + DM'd** (`ranjith-y-a9097815a`, 22 d, hit its now-familiar
+    `linkedin.com/404` — 4th run in a row it's failed to load, still unprocessed for retry).
+    Sent: `yanina-silva-76781a255` (18 d, 7 skills), `gopi-chand-nelluri-5a479b124` (18 d, 10),
+    `carlos-alberto-mariani-80357b148` (17 d, 10), `daniele-alberti-844a9363` (16 d, 10),
+    `sastre` (16 d, 10), `alberto-bellemo-bullo` (16 d, 10), `albertstewart` (15 d, 6),
+    `luizleite48` (15 d, 10). `albertchitiyo` (exactly 14 d) intentionally left out of this
+    batch — "more than 14 days" read as strict, so it rolls into the next >14-day cohort.
 - **2026-07-24 run — RE-INVITE BACKLOG CLEARED, invites only (Mike: "continue with the
   re-invites, do all of the remaining"). 40/44 sent, no restriction page at any point.**
   Only Lane 3 ran. The 44 remaining `reinvite_note` members had scattered to indices 10-263
@@ -1154,3 +1186,120 @@ detached batches (8/8/8/8/12), Monitor-watched, orphan-checked between each.
 - **Deferred lanes unchanged** from 07-23: acceptance check, endorse+DM (the 3 members flagged
   >14 d on 07-23, now a day older, plus any others aging into the window), check-endorsements,
   next seed letter (W done → X), and the comma-less-metro classifier gap before the next scrape.
+
+### 2026-07-26: full 5-lane run — scrape 50 → invite 5 → check → endorse+DM 8
+
+Mike's ask: scrape 50 into `members.json` (report regions), invite 5, check acceptances,
+then endorse+DM anyone connected >14 days with no DM yet (fallback ≥7 days if none older).
+Ran as a straight sequential 5-lane day; every lane detached via PowerShell `Start-Process`
++ `Monitor`-watched, orphan-checked (`Get-CimInstance`) before every launch. **No restriction
+page at any point.** Flagged the combined scrape+invite+endorse profile-view budget
+(~67) to Mike before starting — well under the ~120/24h threshold that tripped the two June
+restrictions.
+
+- **Lane 2 (scrape, `--max=50`):** 50 visited, **39 captured** (queue 400→439), 1 hard error
+  (`carolina-bermudez-b55b54227` → `linkedin.com/404`, stays `processed:false` for retry),
+  8 skipped out-of-zone (Uganda, Nigeria x2, Australia, Sweden, Spain-Sevilla, Armenia, Ghana).
+  **Regions: 17 North America, 11 Europe, 11 South America** (true zones). Recovered the
+  **same recurring comma-less-metro classifier bug** (now spanning many runs): `david-helfer`'s
+  "Greater Porto Alegre" (Brazil, South America) was captured correctly but zone-tagged
+  `[europe]` by the whole-string scan. Capture is right, only the label is wrong; left as-is
+  per the standing note that a metro→country lookup fix is overdue, not done today.
+- **Lane 3 (invite, requested 5 sent):** first batch (`--max=5`, backlog reordered to front)
+  landed only **2/5** — `christopher-n-95029035` and `christopherhamel2022` sent; `cwcala`
+  retired at 2nd `no_connect_button` strike; `christopher-taylor-1076b8272` and
+  `christopher-maly-227086158` both failed again at the Add-a-note/Send step (identity
+  verified, Connect modal opened, then the step itself errored — same failure class as
+  07-24). That makes 2 (christopher-maly) and effectively 3 (christopher-taylor, which also
+  hit this on 07-15/07-21 in a different flow) consecutive transient failures for these two,
+  so — matching the repeat-offender reorder used for other stuck members on 07-20/07-22 —
+  **both were moved to the end of `members.json`** (data unchanged, order only) via a Node
+  one-off script (never PowerShell `ConvertFrom/To-Json`) so they stop occupying the front of
+  every future batch. A follow-up `--max=3` batch then drew fresh candidates and **sent all
+  3** (`christopherpaquet`, `christopher-lafumee-488685327`, `christopher-bartsch-12a09a201`),
+  bringing the day's total to **5 sent / 8 viewed (63%)** — matching the requested count.
+- **Lane 4 (check-connections):** **19 new acceptances** (49→68 connected), dated 07-23
+  through 07-26 across a mix of exact "Connected on ..." text and relative "N days/weeks ago"
+  fallback parsing. Single list-page scan, effectively free against the volume budget.
+- **Lane 5 (endorse+DM, `--max=9`):** selected the exact >14-day cohort by hand (the script
+  itself has no day-threshold logic — it just processes oldest-`connected_on`-first up to
+  `--max`, so the caller sets `--max` to cover the cohort). 9 members qualified at 15-22 days
+  connected with no DM yet; a 10th (`albertchitiyo`, exactly 14 days) was deliberately left
+  out under a strict reading of "more than 14 days" and rolls into the next run's cohort.
+  **8/9 endorsed (6-10 skills each) + DM'd**; `ranjith-y-a9097815a` (22 d, the longest-waiting
+  member) hit `linkedin.com/404` yet again — its 4th failed load across recent runs — and
+  stays unprocessed for retry. DM'd count: 19→**27** total.
+- **Net for the day:** queue 6409/910→959 processed; members.json 400→439; contacted
+  259→265; connected 49→68; DM'd 19→27.
+
+## 2026-07-28 — full 5-lane run, no restriction page at any point (~69 profile views:
+50 scrape + 15 invite + 4 endorse-lane incl. 1 error). Mike rescinded the ≤10/day invite
+cap this session (it was never a LinkedIn-imposed limit, just his own earlier
+self-imposed default) — `CLAUDE.md`/`skills/SKILL.md`/`request-connections.md` updated
+to drop the fixed cap; `--max` is now set per Mike's ask each run, still volume-aware.
+
+- **Lane 2 (scrape 50):** ran as two batches (`--max=7` then `--max=43`, the first
+  auto-backgrounded past the 600s foreground window). **29 new captures**, 1 skip-error
+  (`carolina-bermudez-b55b54227` → 404 again, this is at least its 2nd consecutive
+  failed load — chronic, still unprocessed for retry, worth considering for retirement
+  if it keeps failing), several out-of-zone skips (Nigeria x5, South Africa, Tanzania,
+  Pakistan, Kenya, India, Rwanda, Australia-area). **Regions: 21 North America, 6
+  Europe, 2 South America.** Recovered a **new instance of the classifier's
+  comma-less/ambiguous-string gap**: `david-maisuradze`'s "Tbilisi, Georgia" (the
+  country) was captured correctly (in-zone... arguably — flagged for Mike, not
+  auto-corrected) but zone-tagged `[north_america]` because the country-tail matcher
+  read "Georgia" as the US state. Same class of bug as the Porto Alegre mislabel; left
+  as-is pending the standing metro/country-disambiguation fix. Per-profile pacing ran
+  much longer than the documented 30-90s baseline (observed 60-435s between profiles,
+  incl. two "longer human break" pauses) — not a script fault, just slower live pacing
+  than the doc describes; noted for future run-time estimates.
+- **Lane 3 (invite 15, above the now-rescinded 10/day default): 15/15 sent, zero
+  failures, no restriction page.** Every identity guard passed; no repeat-offender
+  reorders needed.
+- **Lane 4 (check-connections):** **3 new acceptances** — `coderssolutions` and
+  `lucas-reis-cea-pqo-07441a188` (07-27), `andrew-ahabwe-475b4312a` (07-26). 68→71
+  connected. Single list-page scan, effectively free against the volume budget.
+- **Lane 5 (endorse+DM, `--max=4`):** exactly 4 members qualified at >14 days connected
+  with no DM yet (`ranjith-y-a9097815a` 24d, `albertchitiyo` 16d,
+  `miguel-albert-villanova-359b4763` 15d, `william-andrews-92b5a4291` 15d) — no >7-day
+  fallback needed since the >14-day cohort was non-empty. **3/4 endorsed (9-10 skills
+  each) + DM'd**; `ranjith-y-a9097815a` hit `linkedin.com/404` yet again — its 5th
+  failed load across recent runs (see 07-26 entry for the 4th). **Retired (Mike's call)
+  via `dm_excluded: true`** rather than left for another retry — permanently out of the
+  endorse+DM pool now. DM'd count: 27→**30** total.
+- **Net for the day:** queue 6409/959→1007 processed; members.json 439→468; contacted
+  265→280; connected 68→71; DM'd 27→30.
+
+### 2026-07-28 (evening): FIRST LANGGRAPH RUN — Lane 1 seed through the graph, BLESSED
+
+The Phase 2 pilot's first actual graph (ORCHESTRATOR-PLAN §"Phase 2 direction chosen").
+Scope deliberately Lane 1 ONLY (Mike: this is the learning MVP; Lane 1 likely retires
+after letter Z, so the *pattern* is the deliverable — wrap → verify-from-disk → halt
+topology → checkpoints — which carries to Lanes 2-5).
+
+- **Built `graph/`**: `lane_graph.py` (StateGraph: `seed` subprocess-wraps the blessed
+  `seed_by_name.py` byte-untouched + streams output; `verify_seed` re-reads the queue +
+  `groups.json` from disk; conditional halt edge; zero retries) + `run.py` (CLI with
+  `--stub ok|restricted|fail` structural tests; exit 0/2/1 = done/halted/failed) +
+  `DESIGN.html` (the system-design page Mike reviewed). Installed `langgraph 1.2.10` +
+  `langgraph-checkpoint-sqlite 3.1.0` (Python 3.12; no API keys — deterministic graph).
+  Checkpoint DB `data/graph_checkpoints.sqlite` gitignored: it's LangGraph's private
+  resume mechanism, holds LaneState snapshots (counts/status only, never member data);
+  the JSONs remain the source of truth.
+- **Restriction detection nuance:** the seeder exits 0 after a restriction (it saves
+  partial progress first), so the wrapper detects the printed marker line
+  ("restriction/unusual-activity page"), not the exit code → `halted_restricted`, exit 2.
+- **Stub tests green** (no browser, no writes): ok → DONE; restricted → halt route,
+  verify skipped; fail → FAILED with output tail preserved.
+- **Blessing run (live, detached + Monitor-watched):** `python linkedin-automation/graph/run.py
+  --names "Xavier,Xander,Ximena,Xiomara" --thread seed-6665791-20260728-live`.
+  **26 new → queue 6409→6435.** Per name: Xavier 22/21, Xander 1/1, Ximena 4/4,
+  Xiomara 0/0 (genuine zero — Mike predicted the thin X letter). No restriction page.
+- **Post-run verification all green:** queue exactly 6435, zero duplicate URLs, every
+  entry `{profile_url, processed, group_id}`, searched_names appended
+  `...Wanda,Xavier,Xander,Ximena,Xiomara`, stderr 0 bytes, no warnings/errors in the
+  log, checkpoint thread `seed-6665791-20260728-live` holds 4 snapshots.
+- **GRAPH BLESSED. `graph/run.py` is now the canonical way to run Lane 1** (Claude still
+  picks the names conversationally each morning; the graph replaces execution, not
+  judgment). Direct `seed_by_name.py` invocation remains as fallback. Next frontier:
+  Lane 2 (scrape) node + the first `interrupt()` volume gate.

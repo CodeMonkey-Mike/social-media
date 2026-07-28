@@ -209,8 +209,10 @@ the full stale-path audit of the 23 `schedule-tweets/skills/` files.
 ## Phase 2 direction chosen — LangGraph, Python (2026-07-23)
 
 _Supersedes the open "only if it earns it" question above: Mike confirmed the pain is real
-(daily batches, manual gate-shepherding, crash re-renders) and set the direction. Still **NOT built** —
-this section records the decisions so no future session re-litigates them._
+(daily batches, manual gate-shepherding, crash re-renders) and set the direction. This section
+records the decisions so no future session re-litigates them. **Build status: the first graph
+exists and is BLESSED** — `linkedin-automation/graph/` (Lane 1 seed, 2026-07-28, see that
+folder's `DESIGN.html` + PROJECT-LOG entry); everything else below is still direction, not build._
 
 - **Phase 2 = LangGraph StateGraphs, Python spine.** Supervisor pattern (the "peers never spawn
   peers" rule *is* supervisor topology), SQLite checkpointing, human gates as interrupts surfaced in

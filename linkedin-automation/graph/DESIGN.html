@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn Lane → LangGraph — System Design (MVP)</title>
+<style>
+  :root{
+    --bg:#0a0f1e; --panel:#111a30; --panel2:#0d1526; --line:#22304f;
+    --text:#dce6f5; --dim:#8fa3c4; --faint:#5a6d8f;
+    --py:#4ec9b0; --js:#e8c264; --gate:#b48cf2; --halt:#e46a6a;
+    --ok:#6fcf97; --accent:#5aa2f0;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--text);
+    font-family:'Segoe UI',system-ui,sans-serif; line-height:1.5; padding:36px 28px 80px;}
+  .wrap{max-width:1240px; margin:0 auto;}
+
+  h1{font-size:26px; font-weight:700; letter-spacing:.2px;}
+  h1 .tag{font-size:12px; color:var(--bg); background:var(--accent); border-radius:4px;
+    padding:2px 8px; vertical-align:middle; margin-left:10px; font-weight:600;}
+  .sub{color:var(--dim); margin-top:6px; font-size:14px; max-width:860px;}
+  .sub code{color:var(--text);}
+  code{font-family:'Cascadia Code','Consolas',monospace; font-size:.92em;
+    background:#0c1322; border:1px solid var(--line); border-radius:4px; padding:1px 5px;}
+
+  .cols{display:grid; grid-template-columns:minmax(380px,460px) 1fr; gap:28px; margin-top:30px;}
+  @media (max-width:980px){ .cols{grid-template-columns:1fr;} }
+
+  /* ── flow column ── */
+  .flow{display:flex; flex-direction:column; align-items:stretch;}
+  .fnode{background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    padding:13px 16px; position:relative;}
+  .fnode .kind{font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase;
+    color:var(--faint); font-weight:700;}
+  .fnode .name{font-size:16px; font-weight:700; margin-top:1px;}
+  .fnode .desc{font-size:12.5px; color:var(--dim); margin-top:5px;}
+  .fnode .desc code{font-size:11.5px;}
+  .fnode.start,.fnode.end{border-style:dashed; background:var(--panel2); text-align:center;
+    padding:9px 16px;}
+  .fnode.start .name,.fnode.end .name{font-size:13.5px; color:var(--dim); font-weight:600;}
+  .fnode.pynode{border-left:4px solid var(--py);}
+  .fnode.jsnode{border-left:4px solid var(--js);}
+  .fnode.verify{border-left:4px solid var(--ok);}
+  .fnode.gatenode{border-left:4px solid var(--gate); background:#161028;}
+  .pill{display:inline-block; font-size:10px; font-weight:700; letter-spacing:.6px;
+    border-radius:3px; padding:1px 6px; margin-left:8px; vertical-align:2px;}
+  .pill.py{background:rgba(78,201,176,.15); color:var(--py); border:1px solid rgba(78,201,176,.4);}
+  .pill.js{background:rgba(232,194,100,.13); color:var(--js); border:1px solid rgba(232,194,100,.4);}
+  .pill.gate{background:rgba(180,140,242,.14); color:var(--gate); border:1px solid rgba(180,140,242,.4);}
+  .pill.okp{background:rgba(111,207,151,.13); color:var(--ok); border:1px solid rgba(111,207,151,.4);}
+
+  .arrow{align-self:center; width:2px; height:26px; background:var(--line); position:relative;}
+  .arrow::after{content:''; position:absolute; bottom:-1px; left:-4px;
+    border:5px solid transparent; border-top-color:var(--line);}
+  .arrow.short{height:18px;}
+
+  /* halt lane */
+  .flowgrid{display:grid; grid-template-columns:1fr 118px; gap:0 14px;}
+  .haltlane{grid-row:1; display:flex; flex-direction:column; justify-content:center; padding-top:40px;}
+  .haltbox{background:#1d1013; border:1px solid #4a2430; border-left:4px solid var(--halt);
+    border-radius:10px; padding:12px 12px;}
+  .haltbox .name{color:var(--halt); font-weight:700; font-size:13.5px;}
+  .haltbox .desc{font-size:11px; color:#c79aa2; margin-top:5px;}
+  .haltnote{font-size:10.5px; color:var(--faint); margin-top:8px; line-height:1.45;}
+
+  /* ── right column panels ── */
+  .panel{background:var(--panel); border:1px solid var(--line); border-radius:12px;
+    padding:18px 20px; margin-bottom:22px;}
+  .panel h2{font-size:13px; letter-spacing:1.4px; text-transform:uppercase; color:var(--accent);
+    font-weight:700; margin-bottom:12px;}
+  .panel p{font-size:13px; color:var(--dim); margin-bottom:8px;}
+  .panel p b{color:var(--text);}
+
+  pre.schema{background:#0c1322; border:1px solid var(--line); border-radius:8px;
+    padding:14px 16px; font-family:'Cascadia Code','Consolas',monospace; font-size:12px;
+    line-height:1.65; overflow-x:auto; color:var(--text);}
+  pre.schema .k{color:var(--accent);} pre.schema .t{color:var(--py);}
+  pre.schema .c{color:var(--faint);}
+
+  table{width:100%; border-collapse:collapse; font-size:12.5px;}
+  th{color:var(--faint); text-transform:uppercase; font-size:10.5px; letter-spacing:1px;
+    text-align:left; padding:0 10px 8px 0; border-bottom:1px solid var(--line);}
+  td{padding:9px 10px 9px 0; border-bottom:1px solid #182545; vertical-align:top; color:var(--dim);}
+  td:first-child{color:var(--text); font-weight:600; white-space:nowrap;}
+  tr:last-child td{border-bottom:none;}
+
+  /* disk contract */
+  .disk{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px;}
+  @media (max-width:640px){ .disk{grid-template-columns:1fr;} }
+  .diskbox{background:var(--panel2); border:1px solid var(--line); border-radius:8px; padding:12px 14px;}
+  .diskbox .t1{font-size:12px; font-weight:700;}
+  .diskbox .t2{font-size:11px; color:var(--dim); margin-top:4px; line-height:1.5;}
+  .diskbox.truth{border-left:3px solid var(--ok);}
+  .diskbox.priv{border-left:3px solid var(--faint);}
+
+  /* roadmap */
+  .steps{list-style:none; counter-reset:s;}
+  .steps li{counter-increment:s; display:flex; gap:12px; padding:8px 0; font-size:13px; color:var(--dim);}
+  .steps li::before{content:counter(s); flex:0 0 22px; height:22px; border-radius:50%;
+    background:var(--panel2); border:1px solid var(--line); color:var(--accent);
+    font-size:11.5px; font-weight:700; display:flex; align-items:center; justify-content:center;}
+  .steps li b{color:var(--text);}
+  .steps li.future{opacity:.5;}
+  .steps li.future::before{color:var(--faint);}
+
+  .legend{display:flex; flex-wrap:wrap; gap:14px; margin-top:26px; font-size:11.5px; color:var(--dim);}
+  .legend span{display:flex; align-items:center; gap:6px;}
+  .sw{width:12px; height:12px; border-radius:3px; display:inline-block;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>LinkedIn Lane 1 → LangGraph <span class="tag">MVP · Phase 2 pilot</span></h1>
+  <p class="sub">First StateGraph of the repo migration: <b>Lane 1 only</b> — seed the queue by
+    name (<code>seed_by_name.py</code>), wrapped as a thin subprocess node. Lanes 2–5 (scrape,
+    invite, check, endorse) stay manual; they join the graph later, one node at a time. Per
+    <code>ORCHESTRATOR-PLAN.md</code> §"Phase 2 direction chosen": Python spine, SQLite checkpoints,
+    files on disk stay the contract. No LLM calls, no API keys — pure deterministic orchestration.</p>
+
+  <div class="legend">
+    <span><span class="sw" style="background:var(--py)"></span> Python (blessed port)</span>
+    <span><span class="sw" style="background:var(--js)"></span> JS (frozen, wrapped — ported later)</span>
+    <span><span class="sw" style="background:var(--ok)"></span> verify-from-disk node</span>
+    <span><span class="sw" style="background:var(--gate)"></span> human gate (interrupt)</span>
+    <span><span class="sw" style="background:var(--halt)"></span> halt route (no retry)</span>
+  </div>
+
+  <div class="cols">
+
+    <!-- ════════ LEFT: the graph ════════ -->
+    <div>
+      <div class="flowgrid">
+        <div class="flow" style="grid-column:1">
+          <div class="fnode start"><div class="name">START · thread = group 6665791 · resumes from checkpoint</div></div>
+          <div class="arrow short"></div>
+
+          <div class="fnode pynode">
+            <div class="kind">Node · subprocess wrapper</div>
+            <div class="name">seed <span class="pill py">PYTHON · BLESSED</span></div>
+            <div class="desc">Runs <code>seed_by_name.py --group --names</code> exactly as today.
+              Script stays byte-frozen; wrapped, not imported (promote to import once the graph earns trust).
+              Zero profile views.</div>
+          </div>
+          <div class="arrow"></div>
+
+          <div class="fnode verify">
+            <div class="kind">Node · idempotency check</div>
+            <div class="name">verify_seed <span class="pill okp">READS DISK</span></div>
+            <div class="desc">Re-reads <code>members-urls.json</code> + <code>groups.json</code>,
+              records the actual deltas (new URLs, searched_names) into state. Act → verify → record.</div>
+          </div>
+          <div class="arrow"></div>
+
+          <div class="fnode end"><div class="name">END · run report → PROJECT-LOG entry (graph END = migration frontier; Lanes 2–5 still manual, exactly as today)</div></div>
+
+          <div style="margin-top:34px; opacity:.45; border-top:1px dashed var(--line); padding-top:18px;">
+            <div style="font-size:10.5px; letter-spacing:1.2px; text-transform:uppercase; color:var(--faint); font-weight:700; margin-bottom:12px;">
+              Future frontier — NOT in this build (Lane 2 joins next)</div>
+            <div class="fnode gatenode">
+              <div class="kind">interrupt() · first human gate</div>
+              <div class="name">HUMAN GATE <span class="pill gate">MIKE</span></div>
+              <div class="desc">Debuts when Lane 2 joins: approve <code>max_views</code> before
+                the first budget-spending node runs (~120 views/24h threshold; scraping ≤50/day).</div>
+            </div>
+            <div class="arrow short"></div>
+            <div class="fnode jsnode">
+              <div class="kind">Node · subprocess wrapper</div>
+              <div class="name">scrape (Lane 2) <span class="pill js">JS · FROZEN</span></div>
+              <div class="desc"><code>scrape-group-members.js --max=N</code> — visits profiles,
+                classifies location, writes <code>members.json</code>. Then Lanes 3–5, same pattern.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="haltlane">
+          <div class="haltbox">
+            <div class="name">⛔ HALT</div>
+            <div class="desc">status =<br><code>halted_restricted</code><br>or <code>failed</code></div>
+          </div>
+          <div class="haltnote">Every wrapper checks output for RESTRICTED / non-zero exit and
+            routes HERE → END. Retry count is <b>zero by topology</b>: one attempt per run,
+            read the log, never relaunch. Stopped = stopped for the day.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════ RIGHT: panels ════════ -->
+    <div>
+
+      <div class="panel">
+        <h2>Graph state (bookkeeping only)</h2>
+<pre class="schema"><span class="k">class</span> <span class="t">LaneState</span>(TypedDict):
+    group_id: <span class="t">str</span>          <span class="c"># "6665791"</span>
+    names: <span class="t">list[str]</span>       <span class="c"># seed targets, e.g. ["Wade", "Wyatt"]</span>
+    seeded: <span class="t">dict</span>          <span class="c"># {matched, new, per_name}  ← verify_seed</span>
+    status: <span class="t">str</span>           <span class="c"># running | done | failed | halted_restricted</span>
+    error: <span class="t">str | None</span>     <span class="c"># last stderr tail for diagnosis</span></pre>
+        <p style="margin-top:10px">State never exclusively carries anything a downstream manual step
+        needs — <b>the JSON files remain the contract</b>. Delete the checkpoint DB and nothing
+        downstream breaks.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Persistence — two layers, different owners</h2>
+        <div class="disk">
+          <div class="diskbox truth">
+            <div class="t1">📄 data/*.json — source of truth (human-readable)</div>
+            <div class="t2"><code>members-urls.json</code> work queue — seed appends matches here<br>
+              <code>groups.json</code> registry — seed records <code>searched_names</code><br>
+              Written by <code>seed_by_name.py</code> itself, exactly as today.
+              (<code>members.json</code> is Lane 2's file — untouched by this graph.)</div>
+          </div>
+          <div class="diskbox priv">
+            <div class="t1">🗄 data/graph_checkpoints.sqlite — LangGraph private</div>
+            <div class="t2">SqliteSaver checkpoint per node step. Only job: resume a crashed or
+              interrupted run mid-lane. Gitignored. Disposable.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Hard rules → enforced by structure, not memory</h2>
+        <table>
+          <tr><th>Rule (linkedin-automation/CLAUDE.md)</th><th>How the graph enforces it</th></tr>
+          <tr><td>One Chrome instance, lanes sequential</td>
+              <td>Strictly linear edges — the topology has no parallel branch that could touch <code>li-bot-profile</code> twice.</td></tr>
+          <tr><td>One attempt per run, never relaunch</td>
+              <td>Node retry policy = 0. Failure routes to HALT, carrying the stderr tail for diagnosis.</td></tr>
+          <tr><td>STOP on restriction page, rest of day</td>
+              <td>RESTRICTED in wrapper output → HALT edge. The graph cannot structurally continue past it.</td></tr>
+          <tr><td>Human typing + pacing in the search box</td>
+              <td>Live inside the wrapped script, untouched — wrapping at batch granularity means the quirks travel with the code.</td></tr>
+          <tr><td style="color:var(--faint)">Volume budget (Lane 2+, future)</td>
+              <td style="color:var(--faint)">Seeding spends zero profile views, so no gate yet. The <code>interrupt()</code> gate debuts when Lane 2's scrape node joins.</td></tr>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h2>Files we create</h2>
+        <table>
+          <tr><td><code>graph/lane_graph.py</code></td><td>StateGraph definition: nodes, edges, halt routing, checkpointer wiring.</td></tr>
+          <tr><td><code>graph/run.py</code></td><td>CLI runner: <code>python graph/run.py --names "Xavier" [--resume]</code>. Owns the terminal interrupt prompt.</td></tr>
+          <tr><td><code>graph/DESIGN.html</code></td><td>This document.</td></tr>
+          <tr><td colspan="2" style="color:var(--faint); font-size:11.5px">Existing scripts + data files: <b>zero edits</b>. <code>.gitignore</code> gains the checkpoint DB.</td></tr>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h2>Rollout — bless one node at a time</h2>
+        <ol class="steps">
+          <li><b>Install</b> — <code>pip install langgraph langgraph-checkpoint-sqlite</code>. ✓ DONE 2026-07-28 (langgraph 1.2.10).</li>
+          <li><b>Skeleton</b> — graph + runner; stub tests ok/restricted/fail. ✓ DONE 2026-07-28 (all three routes green).</li>
+          <li><b>Bless Lane 1 live</b> — ✓ DONE 2026-07-28: Xavier/Xander/Ximena/Xiomara → 27 matched, 26 new, queue 6409→6435, verification all green. The graph is now the canonical Lane 1 entry point.</li>
+          <li class="future"><b>Lane 2 joins</b> — scrape node + the first <code>interrupt()</code> gate (approve <code>max_views</code> before budget is spent).</li>
+          <li class="future"><b>Lanes 3–5 join</b> — invite → check → endorse nodes, same wrap-verify-gate pattern.</li>
+          <li class="future"><b>Dashboard interrupts</b> — surface pending gates on :8766 instead of the terminal.</li>
+          <li class="future"><b>Port scrape-group-members.js to Python</b> — freeze-and-port, blessed on a live run; then its JS is rollback-only.</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
