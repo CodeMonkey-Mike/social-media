@@ -1,0 +1,130 @@
+[
+  {
+    "run_id": "intake-stub-20260802-171931@2026-08-02T17:19:31",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-stub-20260802-171931",
+    "started_at": "2026-08-02T17:19:31",
+    "ended_at": "2026-08-02T17:19:32",
+    "duration_s": 0.5,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": {
+      "slug": "stub-stream",
+      "sandbox": false,
+      "master_duration_s": 4520.0,
+      "master_mbps": null,
+      "longform": {
+        "duration_s": 4100.0,
+        "removed_s": 420.0,
+        "mbps": null,
+        "thumb_staged": null,
+        "queued_id": "lf-20260101-stub-stream",
+        "already_present": false,
+        "queue_total": null
+      },
+      "vertical": {
+        "geometry": null,
+        "duration_s": null
+      },
+      "words": 0,
+      "segments": null,
+      "glossary": "Kaspa:3 TAO:12",
+      "flags": [
+        "'kaspy' x2 at [01:10.00, 44:02.10] — real KRC20 token or Kaspa mishear? Human call at the Phase 3 seam; NOT auto-changed."
+      ]
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-stub-20260802-171940@2026-08-02T17:19:40",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-stub-20260802-171940",
+    "started_at": "2026-08-02T17:19:40",
+    "ended_at": "2026-08-02T17:19:41",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": null,
+    "error": "encode_low_bps.py exit code 3; output tail:\nstub: pretending to work\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "intake-graph-test-stream-20260802@2026-08-02T17:21:07",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-graph-test-stream-20260802",
+    "started_at": "2026-08-02T17:21:07",
+    "ended_at": "2026-08-02T17:23:09",
+    "duration_s": 122.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "graph-test-stream",
+    "summary": {
+      "slug": "graph-test-stream",
+      "sandbox": true,
+      "master_duration_s": 63.534341,
+      "master_mbps": 0.81,
+      "longform": {
+        "duration_s": 56.8,
+        "removed_s": 6.74,
+        "mbps": 0.97,
+        "thumb_staged": true,
+        "queued_id": "lf-20260802-graph-test-stream",
+        "already_present": false,
+        "queue_total": 1
+      },
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 63.6
+      },
+      "words": 311,
+      "segments": 34,
+      "glossary": "Kaspa:1",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-test-fix@2026-08-02T17:24:03",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-test-fix",
+    "started_at": "2026-08-02T17:24:03",
+    "ended_at": "2026-08-02T17:25:44",
+    "duration_s": 101.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "graph-test-stream",
+    "summary": {
+      "slug": "graph-test-stream",
+      "sandbox": true,
+      "master_duration_s": 63.534341,
+      "master_mbps": 0.81,
+      "longform": {
+        "duration_s": 56.8,
+        "removed_s": 6.74,
+        "mbps": 0.97,
+        "thumb_staged": true,
+        "queued_id": "lf-20260802-graph-test-stream",
+        "already_present": false,
+        "queue_total": 1
+      },
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 63.6
+      },
+      "words": 309,
+      "segments": 34,
+      "glossary": "Kaspa:1",
+      "flags": []
+    },
+    "error": null
+  }
+]

@@ -25,16 +25,29 @@ queue file; edit `data/*.json` with Node, never PowerShell; every image unique).
 
 ---
 
-## Lane 1 -> Long-form video
+## Lanes 1 + 2 mechanical head -> the INTAKE GRAPH (one invocation, canonical since 2026-08-02)
 
-Queue a new longform video in `longs` based on this livestream.
-(Canonical: `video-creation/livestream-repurpose/skills/intake-verticalize/SKILL.md` (Phase 1) -> `schedule-tweets/data/longs.json`.)
+Phase 1 (LOW BPS), Lane 1 (longform desilence + stage + queue), Phase 1B (verticalize) and
+Phase 2 (transcribe + STT glossary) run as ONE LangGraph invocation:
 
-## Lane 2 -> Vertical shorts (up to clip generation only)
+1. **Author `longform-meta.json` next to the recording FIRST** — title / description / tags for
+   the longs.json entry, in my brand voice per `persona/persona.json` (no em dashes). This is the
+   judgment seam; the graph validates it before any encoding starts.
+2. Run (foreground): `python video-creation/livestream-repurpose/graph/run.py --source "<recording>" --min-sil 0.5`
+   — honor any per-run overrides (`--skip-longform` if "skip Lane 1"). If the run is killed,
+   re-run the same command with `--resume` (completed nodes skip). Live state: dashboard
+   LangGraph -> Livestream tab.
+3. **Adjudicate any GLOSSARY FLAGS from the run report** (kaspy/kasy/kappy/kasper = real KRC20
+   token vs Kaspa mishear) in the transcript artifacts before Phase 3.
 
-Run Lane 2 (Phases 1B-3; canonical skills in `video-creation/livestream-repurpose/skills/`: `intake-verticalize`, `transcribe-vertical`, `topic-finding`) far enough to have the vertical master
-and its transcript, then **delegate the topic/clip SELECTION step to the `clip-strategist`
-subagent** (Fable). Hand it the transcript; it returns the clip plan.
+(Canonical detail: `video-creation/livestream-repurpose/skills/intake-verticalize/SKILL.md` +
+`transcribe-vertical/SKILL.md`, each with the graph banner.)
+
+## Lane 2 -> Vertical shorts (from Phase 3, up to clip generation only)
+
+With the vertical master + transcript on disk (produced by the intake graph), **delegate the
+topic/clip SELECTION step to the `clip-strategist` subagent** (Fable). Hand it the transcript;
+it returns the clip plan.
 
 - Constraints for the strategist: **best 5 topics, no more than 8 clips total.** It may define a
   long clip AND a small clip of a very impactful section within it. It may stitch scattered
