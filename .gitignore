@@ -53,3 +53,14 @@ __pycache__/
 
 # ── LangGraph checkpoints (private resume DB — data/*.json is the source of truth)
 linkedin-automation/data/graph_checkpoints.sqlite*
+
+# LangGraph live heartbeat — rewritten every second while a lane runs; the run
+# HISTORY (lane_runs.json) is committed, this transient snapshot is not.
+linkedin-automation/data/lane_progress.json
+linkedin-automation/data/*.tmp
+
+# Livestream-repurpose graph: same policy as linkedin's (history committed,
+# heartbeat + checkpoints not).
+video-creation/livestream-repurpose/graph/data/graph_checkpoints.sqlite*
+video-creation/livestream-repurpose/graph/data/lane_progress.json
+video-creation/livestream-repurpose/graph/data/*.tmp

@@ -242,5 +242,57 @@ folder's `DESIGN.html` + PROJECT-LOG entry); everything else below is still dire
   rule, Claude Code session `0206c116` (2026-07-18: the LinkedIn one-session build plan — state
   schema, node list, ~4-5h MVP).
 
+---
+
+## Livestream-repurpose migration plan (2026-08-02) — the second automation
+
+_The strangler-fig's next bite per the order above (LinkedIn lanes 1-5 all blessed → repurpose).
+Decisions locked with Mike 2026-08-02; do not re-litigate:_
+
+- **Same template as LinkedIn:** PORT FIRST, graph second · wrap blessed scripts as subprocesses ·
+  verify from disk · zero retries, halt topology · SQLite checkpoints · stub modes · replaced
+  script frozen as rollback · bless on a live run. Two documented extensions for this pipeline:
+  **verify nodes can halt** (every downstream node consumes the verified artifact), and
+  **judgment seams** — one graph per MECHANICAL SEGMENT; a segment ends where an advisor
+  (clip-strategist, tighten-strategist, Lane 3 drafting, publish metadata) or a Mike gate begins,
+  the plan lands on disk (`clip-plan.json`, `tighten-plan.json`, `longform-meta.json`), and the
+  next invocation consumes it. No interrupts; the ask is the decision.
+- **Wave order** (one wave at a time — port to Python, wrap as graph nodes, bless on a real
+  stream, then the next wave):
+  1. **intake** (Ph 1 + Lane 1 + 1B + 2) — **BUILT 2026-08-02**:
+     `video-creation/livestream-repurpose/graph/` (`run.py --source "<recording>" --min-sil N`,
+     `--resume` after a kill, `--stub ok|fail`, `--test-sandbox` for scratch runs). New ports:
+     `encode_low_bps.py`, `verticalize.py` (skill commands frozen verbatim), `longform_stage.py`,
+     `longs_append.py` (replaces `_lane1_longs_rip.js`-style writers, which stay as frozen
+     rollback), `fix_transcript_glossary.py` (deterministic tier auto-fixed, KRC20-name lookalikes
+     flag-only). Full sandbox e2e green on real audio (the glossary caught a live Casper→Kaspa
+     mishear on its first run); **live bless pending the next livestream.** Dashboard: LangGraph →
+     Livestream tab (feeds: `graph/data/lane_runs.json` + `lane_progress.json`).
+  2. **cut** (Ph 4 exec) — de-fork the 17 `cut_topics_<batch>.py` into one parameterized script
+     reading `clip-plan.json`; graph: cut → dashboard → register → verify.
+  3. **tighten** (Ph 5 exec) — de-fork the 12 `tighten_clips_<batch>.py`; contract change:
+     strategist spans persist to `tighten-plan.json` instead of pasted Python literals.
+  4. **finish** (5B desilence + 5C filler + 6 captions) — wraps only (tools already canonical
+     Python); per-clip loop with the consecutive-failure kill-switch; 5C's discourse-like review
+     stays a seam.
+  5. **render slice** (Ph 7) — port `setup-batch-render-assets.js`; `render_clip` graph =
+     disk/temp/zombie preflight → supervised foreground render → `finalized_short_gate.py` →
+     teardown. remotion-builder agents keep authoring comps (TSX stays — hard rule) and invoke
+     the graph instead of raw render commands; `stage_lock.py` semaphores stay.
+  6. **publish** (Ph 8) — wrap `publish-shorts.py` + a mechanical guard for the documented
+     `--date` re-queue idempotency hole + persona-lint gate after the metadata-authoring seam.
+  7. **lane 3** — a Python queue-writer module (schemas + image-id-uniqueness + no-em-dash lint)
+     replaces the per-batch `_lane3_*.js` throwaway writers; **the ChatGPT browser stack
+     (`gen-images.js` / `chat-pool.js` / `chat-delete.js` / `generate-broll-reload.js`) ports
+     LAST** (Mike, 2026-08-02) — li_session-style lib growth, staged bless (read-only registry →
+     generation → deletion last), the title-deletion gate preserved exactly.
+- **Lane 1 silence method = the canonical desilencer** (Mike, 2026-08-02): `desilence.py --nvenc
+  --bps 700k`, dual-threshold, ONE pass, no crf-18 intermediate. The six
+  `longform_desilence_<batch>.py` forks (single-threshold `silencedetect` — the banned method)
+  are retired reference, not rollback.
+- **Cadence:** Mike runs the blessed frontier on each new stream and continues the remaining
+  phases manually as today; the next wave ports when the next stream lands. The posting layer
+  still migrates last (unchanged).
+
 _Source: session `6dc1c3b9` (2026-05-24). Related but distinct: the old `social-video-upload`
 orchestrator is recoverable from git at `86709d6~1` (`uploading/` subtree, removed in the refactor)._

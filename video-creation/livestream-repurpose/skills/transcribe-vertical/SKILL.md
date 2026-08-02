@@ -2,6 +2,16 @@
 
 _Moved VERBATIM from `video-creation/SKILL.md` on 2026-07-08 (Mike: per-track skills live in the track folder; this predates that convention). **This file is now canonical**; the master SKILL.md keeps a pointer stub and the phase-map table points here. Paths inside are written relative to `video-creation/` exactly as in the original._
 
+> **Canonical invocation (2026-08-02 — LangGraph migration Wave 1):** Phase 2 runs inside the
+> intake graph (`graph/run.py`, see intake-verticalize/SKILL.md), which wraps the whisper
+> command + `parse_transcript.py` + `chunk_transcript.py` below IN ORDER, with one addition:
+> `scripts/fix_transcript_glossary.py` runs on the Whisper JSON BEFORE parse/chunk, so every
+> derived artifact inherits the corrections. It mechanizes the DETERMINISTIC tier of Step 3
+> (tau->TAO, Casper->Kaspa, GhostDAG, D-Agent AI — auto-fixed, counts reported) and only FLAGS
+> kaspy/kasy/kappy/kasper with timestamps (real KRC20 token names; token-vs-mishear is a human
+> call at the Phase 2->3 seam — the graph report lists every flag; adjudicate them before
+> Phase 3). The prose below remains the SPEC and the manual fallback.
+
 ## Phase 2 — Transcribe the vertical livestream
 
 Phase 3+ all read a transcript, so it must exist first. Transcribe the **`…VERTICAL.mp4`** produced

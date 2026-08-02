@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LangGraph — LinkedIn lanes</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Page system: inherited from the existing dashboard, not invented here. */
+      --bg:        #f0f2f5;
+      --surface:   #ffffff;
+      --line:      #e4e6ea;
+      --ink:       #1a1a1a;
+      --ink-2:     #65676b;
+      --ink-muted: #8a8d91;
+      --accent:    #1877f2;
+      --accent-wash: #e7f0fd;
+
+      /* Status palette — fixed, never themed. `serious` is deliberately unused:
+         it measures ΔE 13.6 from `warning` and both sit under 3:1 on white, so
+         they are hard to tell apart. Every status below ships an ICON + a TEXT
+         LABEL, so colour never carries the meaning alone. */
+      --st-good:     #0ca30c;
+      --st-warning:  #fab219;
+      --st-critical: #d03b3b;
+
+      /* Sequential blue ramp (one hue, light -> dark) for the volume meter. */
+      --seq-100: #cde2fb;
+      --seq-450: #2a78d6;
+      --seq-600: #184f95;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── left nav (shared with index.html) ───────────────────────────────── */
+    .sidenav {
+      width: 190px;
+      flex: 0 0 190px;
+      background: var(--surface);
+      border-right: 1px solid var(--line);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+    .sidenav .brand {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      padding: 0 18px 12px;
+    }
+    .sidenav a {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 18px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink-2);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+    }
+    .sidenav a:hover { background: #f5f6f7; color: var(--ink); }
+    .sidenav a.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-wash);
+      font-weight: 600;
+    }
+    .sidenav a .ico { width: 16px; text-align: center; font-size: 13px; }
+
+    .main { flex: 1; min-width: 0; }
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    header h1 { font-size: 17px; font-weight: 600; }
+    header .sub { font-size: 12.5px; color: var(--ink-muted); }
+    header .refresh { margin-left: auto; font-size: 11.5px; color: var(--ink-muted); }
+
+    .wrap { padding: 20px 24px 60px; max-width: 1100px; }
+    section { margin-bottom: 26px; }
+    h2 {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 10px;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    /* ── status pills: colour + icon + label, never colour alone ─────────── */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 2px 9px 2px 7px;
+      border-radius: 11px;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+    .pill .dot { font-size: 10px; line-height: 1; }
+    .pill.running  { color: #0b57c2; background: var(--accent-wash); border-color: #c5dcfa; }
+    .pill.done     { color: #067806; background: #e8f6e8; border-color: #c3e6c3; }
+    .pill.failed   { color: #8a6100; background: #fdf3dc; border-color: #f3dfae; }
+    .pill.halted   { color: #a52a2a; background: #fbe9e9; border-color: #f1c9c9; }
+    .pill.idle     { color: var(--ink-muted); background: #f0f1f3; border-color: var(--line); }
+    .pill.past     { color: var(--ink-muted); background: #f0f1f3; border-color: var(--line); }
+    .pill.stale    { color: #8a6100; background: #fdf3dc; border-color: #f3dfae; }
+
+    @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+    .pill.running .dot { animation: pulse 1.4s ease-in-out infinite; }
+
+    /* ── live strip ──────────────────────────────────────────────────────── */
+    .live { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+    .live .who { min-width: 210px; }
+    .live .lane-title { font-size: 19px; font-weight: 700; margin: 4px 0 2px; }
+    .live .meta { font-size: 12.5px; color: var(--ink-2); }
+    .live .event {
+      flex: 1;
+      min-width: 260px;
+      font-family: 'Cascadia Code', Consolas, monospace;
+      font-size: 12px;
+      color: var(--ink-2);
+      background: #f7f8fa;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 9px 11px;
+      word-break: break-word;
+    }
+    .live .event .lbl {
+      display: block;
+      font-family: inherit;
+      font-size: 10px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 3px;
+    }
+
+    .progbar {
+      height: 6px;
+      background: var(--seq-100);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 9px;
+    }
+    .progbar > i { display: block; height: 100%; background: var(--seq-450); border-radius: 3px; }
+
+    .warnbox {
+      margin-top: 12px;
+      font-size: 12.5px;
+      padding: 9px 12px;
+      border-radius: 7px;
+      background: #fdf3dc;
+      border: 1px solid #f3dfae;
+      color: #7a5600;
+    }
+    .warnbox.crit { background: #fbe9e9; border-color: #f1c9c9; color: #8f2525; }
+
+    /* ── lane diagram ────────────────────────────────────────────────────── */
+    .lanes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    @media (max-width: 900px) { .lanes { grid-template-columns: repeat(2, 1fr); } }
+    .lane {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 13px;
+      position: relative;
+    }
+    .lane.is-running { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
+    /* Tabs — one per automation. Same look as the Social page's tab bar. */
+    .tabs {
+      background: #fff; border-bottom: 1px solid var(--line);
+      padding: 0 24px; display: flex; flex-wrap: wrap;
+    }
+    .tab {
+      background: none; border: none; border-bottom: 2px solid transparent;
+      cursor: pointer; padding: 13px 14px; font-size: 13px; font-weight: 500;
+      color: var(--ink-muted); white-space: nowrap;
+      display: flex; align-items: center; gap: 7px; transition: color .15s;
+    }
+    .tab:hover { color: var(--ink); }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+    /* A tab's dot is how a run — or an interrupt waiting on a human — stays visible
+       while you are looking at a DIFFERENT automation's tab. */
+    .tab .tdot { font-size: 9px; line-height: 1; }
+    .tab .tdot.running { color: var(--accent); animation: pulse 1.4s ease-in-out infinite; }
+    .tab .tdot.attn    { color: #a52a2a; }
+    .tab .tdot.warn    { color: #8a6100; }
+    .tab .tdot.idle    { color: #c9ccd1; }
+    .tab .tcount {
+      background: #eef0f2; color: var(--ink-muted); font-size: 11px; font-weight: 700;
+      padding: 1px 6px; border-radius: 10px; min-width: 20px; text-align: center;
+    }
+    .tab.active .tcount { background: var(--accent-wash); color: var(--accent); }
+    /* A blocked graph is the loudest state on this page — it stays stopped until a
+       human answers, so the tab says so in WORDS and keeps saying it while active. */
+    .tab .tcount.attn { background: #fbe9e9; color: #a52a2a; }
+    .tab .tcount.warn { background: #fdf3dc; color: #8a6100; }
+    .tab.needs, .tab.needs:hover { color: #a52a2a; }
+    .tab.needs .tdot { animation: pulse 1.4s ease-in-out infinite; }
+    .tab.needs.active { border-bottom-color: #a52a2a; }
+
+    .lane.retired { opacity: .55; }
+    /* While one lane is live, the others recede so the running one is the only
+       thing reading as present-tense. */
+    .lane { transition: opacity .35s ease; }
+    .lane.dimmed { opacity: .55; }
+    .lane .n {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--ink-muted);
+      text-transform: uppercase;
+    }
+    .lane .nm { font-size: 15px; font-weight: 700; margin: 1px 0 8px; }
+    .lane .when { font-size: 11px; color: var(--ink-muted); margin-top: 8px; }
+    .lane .headline { font-size: 11.5px; color: var(--ink-2); margin-top: 6px; line-height: 1.45; }
+
+    /* the inner 2-node pipeline every lane graph actually is */
+    .nodes { display: flex; align-items: center; gap: 4px; margin-top: 9px; }
+    .node {
+      flex: 1;
+      font-size: 9.5px;
+      font-weight: 700;
+      text-align: center;
+      padding: 4px 2px;
+      border-radius: 5px;
+      background: #f0f1f3;
+      color: var(--ink-muted);
+      border: 1px solid var(--line);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .node.active {
+      background: var(--accent-wash);
+      color: #0b57c2;
+      border-color: var(--accent);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    .node.ok { background: #e8f6e8; color: #067806; border-color: #c3e6c3; }
+    .node.bad { background: #fbe9e9; color: #a52a2a; border-color: #f1c9c9; }
+    .arrow { color: var(--ink-muted); font-size: 10px; flex: 0 0 auto; }
+
+    /* expanded graph for the focused lane */
+    .graph {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 4px 0 2px;
+    }
+    .gnode {
+      border: 1px solid var(--line);
+      background: #f7f8fa;
+      border-radius: 8px;
+      padding: 8px 13px;
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+    .gnode.term { background: transparent; border-style: dashed; color: var(--ink-muted); font-weight: 500; }
+    .gnode.active { background: var(--accent-wash); border-color: var(--accent); color: #0b57c2; }
+    .gnode.ok { background: #e8f6e8; border-color: #c3e6c3; color: #067806; }
+    .gnode.halt { background: #fbe9e9; border-color: #f1c9c9; color: #a52a2a; }
+    .garrow { color: var(--ink-muted); font-size: 13px; }
+    .ghalt { font-size: 11.5px; color: var(--ink-muted); margin-top: 8px; }
+
+    /* ── meter (single ratio against a limit) ────────────────────────────── */
+    .kpi { display: flex; align-items: baseline; gap: 10px; }
+    .kpi .hero { font-size: 44px; font-weight: 700; line-height: 1; }
+    .kpi .of { font-size: 13px; color: var(--ink-2); }
+    .meter {
+      position: relative;
+      height: 12px;
+      background: var(--seq-100);
+      border-radius: 6px;
+      margin: 14px 0 6px;
+      overflow: hidden;
+    }
+    .meter > i { display: block; height: 100%; background: var(--seq-450); border-radius: 6px; }
+    .meter > i.over { background: var(--st-critical); }
+    .meter-scale { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink-muted); }
+    .breakdown { margin-top: 12px; font-size: 12.5px; color: var(--ink-2); display: flex; gap: 16px; flex-wrap: wrap; }
+    .breakdown b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+    /* ── history table ───────────────────────────────────────────────────── */
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    th {
+      text-align: left;
+      font-size: 10.5px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      padding: 0 10px 8px 0;
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+    }
+    td { padding: 9px 10px 9px 0; border-bottom: 1px solid #f0f1f3; vertical-align: top; color: var(--ink-2); }
+    tr:last-child td { border-bottom: none; }
+    td.num { font-variant-numeric: tabular-nums; }
+    td.lane-cell { color: var(--ink); font-weight: 600; white-space: nowrap; }
+    .stub-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink-muted);
+      background: #f0f1f3;
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-left: 5px;
+    }
+    .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .toolbar label { font-size: 12px; color: var(--ink-2); display: flex; align-items: center; gap: 5px; cursor: pointer; }
+    .empty { color: var(--ink-muted); padding: 26px 0; text-align: center; font-size: 13px; }
+    .note { font-size: 12px; color: var(--ink-muted); margin-top: 10px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<nav class="sidenav">
+  <div class="brand">Dashboard</div>
+  <a href="index.html"><span class="ico">📋</span> Social</a>
+  <a href="langgraph.html" class="active"><span class="ico">🕸</span> LangGraph</a>
+</nav>
+
+<div class="main">
+  <header>
+    <h1>LangGraph</h1>
+    <span class="sub" id="sub">…</span>
+    <span class="refresh" id="refresh">…</span>
+  </header>
+
+  <!-- One tab per LangGraph automation. LinkedIn is the first; each new automation
+       is one entry in AUTOMATIONS. Tabs carry live status so a run (or an interrupt
+       waiting on Mike) on an INACTIVE tab is still visible. -->
+  <div class="tabs" id="tabs"></div>
+
+  <div class="wrap">
+
+    <section>
+      <h2>Now running</h2>
+      <div class="card" id="live"><div class="empty">Loading…</div></div>
+    </section>
+
+    <section>
+      <h2>Lanes</h2>
+      <div class="lanes" id="lanes"></div>
+      <div class="card" style="margin-top:10px" id="focus"></div>
+    </section>
+
+    <section id="volSection">
+      <h2 id="volTitle">Budget today</h2>
+      <div class="card" id="volume"><div class="empty">Loading…</div></div>
+    </section>
+
+    <section>
+      <h2>Run history</h2>
+      <div class="card">
+        <div class="toolbar">
+          <label><input type="checkbox" id="showStubs"> show structural (stub) runs</label>
+        </div>
+        <div id="history"><div class="empty">Loading…</div></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+// ── config ──────────────────────────────────────────────────────────────────
+// Mirrors linkedin-automation/graph/lane_graph.py. Each lane is its OWN 2-node
+// StateGraph (work -> verify, plus a halt edge) — five graphs, not one five-node
+// graph. Lane 1 is retired from the daily rotation per Mike (2026-08-01).
+// THE AUTOMATION REGISTRY. One entry per LangGraph automation; LinkedIn is the
+// first of what will be several. Adding another is one entry here plus its feed
+// route in serve_dashboard.py — nothing below this block is LinkedIn-specific.
+const AUTOMATIONS = [
+  {
+    id: 'linkedin',
+    label: 'LinkedIn',
+    sub: 'morning lanes',
+    feed: { progress: '/linkedin/lane_progress.json', runs: '/linkedin/lane_runs.json' },
+    // Each lane is its OWN 2-node StateGraph (work -> verify, plus a halt edge) —
+    // five graphs, not one five-node graph. Lane 1 is retired from the daily
+    // rotation per Mike (2026-08-01).
+    lanes: [
+      { n: 1, name: 'seed',    work: 'seed',    verify: 'verify_seed',    retired: true,  views: false },
+      { n: 2, name: 'scrape',  work: 'scrape',  verify: 'verify_scrape',  retired: false, views: true  },
+      { n: 3, name: 'invite',  work: 'invite',  verify: 'verify_invite',  retired: false, views: true  },
+      { n: 4, name: 'check',   work: 'check',   verify: 'verify_check',   retired: false, views: false },
+      { n: 5, name: 'endorse', work: 'endorse', verify: 'verify_endorse', retired: false, views: true  },
+    ],
+    // The rationed resource, per automation — what gets budgeted differs by
+    // automation, and some will have none (omit `budget` and the section hides).
+    budget: {
+      title: 'Profile views today',
+      field: 'profile_views',
+      limit: 120,               // the ~120/24h level that restricted the account twice
+      unit: 'profile views',
+      note: 'the level that restricted this account twice',
+      scale: '~120 / 24h',
+    },
+    // One line of "what did this run actually do", per lane.
+    headline(run) {
+      const s = run && run.summary;
+      if (!s) return run && run.error ? clip(run.error, 90) : '';
+      switch (run.lane) {
+        case 1: return `+${s.new ?? 0} queued (${s.queue_after ?? '?'} total)`;
+        case 2: return `${s.captured_delta ?? 0} captured · ${s.skipped_out_of_zone ?? 0} out of zone · ${s.errors ?? 0} err`;
+        case 3: return `${s.sent ?? 0} sent · ${s.already_pending ?? 0} pending · ${s.errors ?? 0} err`;
+        case 4: return s.nothing_to_check ? 'nothing to check'
+                  : `${s.newly_connected_count ?? 0} new acceptance(s)`;
+        case 5: return s.nothing_to_do ? 'nothing qualified'
+                  : `${s.endorsed ?? 0} endorsed (${s.skills_endorsed ?? 0} skills) · ${s.dm_sent ?? 0} DM`;
+        default: return '';
+      }
+    },
+  },
+  {
+    id: 'livestream',
+    label: 'Livestream',
+    sub: 'repurpose intake — wave 1 (Phases 1-2 + Lane 1 longform)',
+    feed: { progress: '/livestream/lane_progress.json', runs: '/livestream/lane_runs.json' },
+    staleNote: 'Check whether ffmpeg/whisper is still alive (Task Manager) before relaunching; a killed run resumes with --resume, skipping completed nodes.',
+    // ONE graph = ONE mechanical segment of the pipeline (six work+verify pairs in
+    // sequence — `nodes` lists the work nodes; each has a verify_<name> after it).
+    // Wave 2+ segments (cut, tighten, finish, render, publish, lane3) get their own
+    // lane entries here as they are built and blessed.
+    lanes: [
+      { n: 1, name: 'intake', work: 'intake', verify: 'verify',
+        nodes: ['encode', 'longform', 'queue', 'vertical', 'transcribe', 'derive'],
+        haltNote: 'halt edge: every node → END on a non-zero exit or a failed from-disk verify.',
+        retired: false, views: false },
+    ],
+    headline(run) {
+      const s = run && run.summary;
+      if (!s) return run && run.error ? clip(run.error, 90) : '';
+      const lf = s.longform;
+      const lfTxt = lf === 'skipped' ? 'longform skipped'
+        : (lf && lf.queued_id ? `longform queued (${Math.round(lf.duration_s || 0)}s)` : 'longform ?');
+      return `${Math.round(s.master_duration_s || 0)}s master · ${lfTxt} · `
+           + `${s.words || 0} words${(s.flags || []).length ? ` · ▲ ${s.flags.length} glossary flag(s)` : ''}`
+           + (s.sandbox ? ' · SANDBOX' : '');
+    },
+  },
+];
+
+const STALE_AFTER_S  = 90;    // a "running" heartbeat older than this was probably reaped
+const POLL_MS        = 3000;
+
+// Active tab, remembered across reloads and shareable via #hash.
+let ACTIVE = (location.hash || '').replace('#', '')
+          || localStorage.getItem('lgTab')
+          || AUTOMATIONS[0].id;
+if (!AUTOMATIONS.some(a => a.id === ACTIVE)) ACTIVE = AUTOMATIONS[0].id;
+const A = () => AUTOMATIONS.find(x => x.id === ACTIVE) || AUTOMATIONS[0];
+// id -> { prog, runs }. EVERY automation is polled, not just the visible one, so
+// an inactive tab can still show that it is running or needs a human.
+const FEEDS = {};
+
+// ── helpers ─────────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g,
+  c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+async function getJSON(url, fallback) {
+  try {
+    const r = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) return fallback;
+    return await r.json();
+  } catch { return fallback; }
+}
+
+const parseTs = s => { const d = new Date(s); return isNaN(d) ? null : d; };
+function agoText(sec) {
+  if (sec == null) return '';
+  if (sec < 60) return Math.round(sec) + 's ago';
+  if (sec < 3600) return Math.round(sec / 60) + 'm ago';
+  if (sec < 86400) return Math.round(sec / 3600) + 'h ago';
+  return Math.round(sec / 86400) + 'd ago';
+}
+function durText(s) {
+  if (s == null) return '';
+  if (s < 60) return s.toFixed(0) + 's';
+  return Math.floor(s / 60) + 'm ' + Math.round(s % 60) + 's';
+}
+const secSince = iso => { const d = parseTs(iso); return d ? (Date.now() - d.getTime()) / 1000 : null; };
+function clockText(iso) {
+  const d = parseTs(iso);
+  return d ? d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '—';
+}
+function dayText(iso) {
+  const d = parseTs(iso);
+  if (!d) return '—';
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  return d >= today ? 'today' : d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+}
+const isToday = iso => { const d = parseTs(iso); if (!d) return false;
+  const t = new Date(); t.setHours(0,0,0,0); return d >= t; };
+
+// Status -> {cls, icon, label}. Colour is NEVER the only signal: every pill
+// carries an icon and a word.
+function statusChip(status, stale) {
+  if (stale) return { cls: 'stale', icon: '▲', label: 'stale' };
+  switch (status) {
+    case 'running':           return { cls: 'running', icon: '●', label: 'running' };
+    case 'done':              return { cls: 'done',    icon: '✓', label: 'done' };
+    case 'node_done':         return { cls: 'running', icon: '●', label: 'verifying' };
+    case 'halted_restricted': return { cls: 'halted',  icon: '⛔', label: 'halted' };
+    case 'failed':
+    case 'node_failed':       return { cls: 'failed',  icon: '▲', label: 'failed' };
+    case 'killed':            return { cls: 'halted',  icon: '⛔', label: 'killed' };
+    case 'crashed':           return { cls: 'failed',  icon: '▲', label: 'crashed' };
+    case 'awaiting_input':    return { cls: 'running', icon: '⏸', label: 'needs you' };
+    default:                  return { cls: 'idle',    icon: '○', label: status || 'idle' };
+  }
+}
+// A run that finished fine is HISTORY, not current state. Only a lane that is
+// actually running — or one whose last run left an unresolved problem — earns a
+// status colour; a past success renders neutral ("past"). Without this, a lane
+// that finished this morning reads as present-tense next to a live one.
+const RESOLVED_OK = new Set(['done', 'node_done']);
+const pill = (s, stale, past) => {
+  const c = statusChip(s, stale);
+  const cls = (past && RESOLVED_OK.has(s)) ? 'past' : c.cls;
+  return `<span class="pill ${cls}"><span class="dot">${c.icon}</span>${esc(c.label)}</span>`;
+};
+
+// "22m ago" while it is still fresh, else an absolute stamp.
+function relText(iso) {
+  const sec = secSince(iso);
+  if (sec == null) return '';
+  return sec < 3600 ? agoText(sec) : dayText(iso) + ' ' + clockText(iso);
+}
+
+// Truncate BEFORE escaping — slicing escaped text can cut an entity in half
+// (`&amp;` -> `&am`) and emit broken markup.
+function clip(s, n) {
+  const t = String(s == null ? '' : s).split('\n')[0];
+  return esc(t.length > n ? t.slice(0, n - 1).trimEnd() + '…' : t);
+}
+
+// A one-line "what did this run actually do", per lane.
+// Delegates to the active automation's own summariser (see AUTOMATIONS).
+function headline(run) {
+  const f = A().headline;
+  return f ? f(run) : (run && run.error ? clip(run.error, 90) : '');
+}
+
+// ── render: live strip ──────────────────────────────────────────────────────
+function renderLive(prog, runs) {
+  const el = $('live');
+  const inFlight = prog && (prog.status === 'running' || prog.status === 'awaiting_input');
+  const age = prog ? secSince(prog.updated_at) : null;
+  const stale = inFlight && age != null && age > STALE_AFTER_S;
+
+  if (!inFlight) {
+    const last = runs.find(r => !r.stub) || runs[0];
+    el.innerHTML = `<div class="live">
+      <div class="who">
+        ${pill('idle')}
+        <div class="lane-title">No run in flight</div>
+        <div class="meta">${last
+          ? `Last: Lane ${last.lane} ${esc(last.lane_name)} · ${dayText(last.started_at)} ${clockText(last.started_at)} · ${esc(headline(last))}`
+          : 'No runs recorded yet.'}</div>
+      </div></div>`;
+    return;
+  }
+
+  const pct = (prog.total ? Math.round(100 * (prog.index || 0) / prog.total) : null);
+  el.innerHTML = `<div class="live">
+    <div class="who">
+      ${pill(prog.status, stale)}${prog.stub ? '<span class="stub-tag">STUB</span>' : ''}
+      <div class="lane-title">Lane ${prog.lane} · ${esc(prog.lane_name || '')}</div>
+      <div class="meta">
+        node <b>${esc(prog.node || '')}</b>${prog.total ? ` · member ${prog.index || 0} of ${prog.total}` : ''}<br>
+        started ${clockText(prog.started_at)} · updated ${agoText(age)}<br>
+        ${prog.ok || 0} ok · ${prog.errors || 0} error(s)${prog.pid ? ` · pid ${prog.pid}` : ''}
+      </div>
+      ${pct != null ? `<div class="progbar"><i style="width:${pct}%"></i></div>` : ''}
+    </div>
+    <div class="event"><span class="lbl">last event</span>${esc(prog.last_event || '')}</div>
+  </div>
+  ${stale ? `<div class="warnbox">▲ <b>Stale heartbeat</b> — no update for ${agoText(age)}.
+     A run this quiet is usually a background-task kill (the reaper has stopped runs
+     mid-flight before). ${esc(A().staleNote || 'Check whether the process is still alive before relaunching: relaunching collides on the shared li-bot-profile Chrome.')}</div>` : ''}`;
+}
+
+// ── render: lane cards + focused graph ──────────────────────────────────────
+function renderLanes(prog, runs) {
+  const running = prog && prog.status === 'running' ? prog : null;
+  const stale = running && secSince(running.updated_at) > STALE_AFTER_S;
+
+  const LANES = A().lanes;
+  $('lanes').innerHTML = LANES.map(L => {
+    const last = runs.find(r => r.lane === L.n && !r.stub);
+    const isRunning = running && running.lane === L.n;
+    // Recency alone is NOT currency: a run that finished ten minutes ago is as
+    // much history as one from last week, and must not read present-tense while
+    // another lane is live. The one exception is an unresolved outcome (failed /
+    // halted / killed) — that still needs a decision, so it keeps its colour
+    // until the lane is run again.
+    const unresolved = !!last && !RESOLVED_OK.has(last.status);
+    let chipStatus = 'idle', past = false;
+    if (isRunning)       { chipStatus = 'running'; }
+    else if (unresolved) { chipStatus = last.status; }
+    else if (last)       { chipStatus = last.status; past = true; }
+    else if (L.retired)  { chipStatus = 'retired'; }
+
+    // Inner 2-node pipeline: lit ONLY while live. A past success is neutral —
+    // green here was the main thing making finished lanes look active.
+    let w = 'node', v = 'node';
+    if (isRunning) { w = 'node active'; }
+    else if (unresolved) { w = 'node bad'; }
+
+    // Live card shows live numbers; otherwise the previous run's summary. Showing
+    // the old summary under a running lane would describe the wrong run.
+    let headTxt;
+    if (isRunning) {
+      const bits = [];
+      if (running.total) bits.push(`member ${Number(running.index) || 0} of ${Number(running.total) || 0}`);
+      bits.push(`${Number(running.ok) || 0} ok`);
+      if (running.errors) bits.push(`${Number(running.errors) || 0} err`);
+      headTxt = esc(bits.join(' · '));
+    } else if (last) { headTxt = esc(headline(last)); }
+    else { headTxt = '<span style="color:#8a8d91">no recorded run</span>'; }
+
+    const dim = !!running && !isRunning;
+
+    return `<div class="lane ${isRunning ? 'is-running' : ''} ${dim ? 'dimmed' : ''} ${L.retired && !isRunning ? 'retired' : ''}">
+      <div class="n">Lane ${L.n}</div>
+      <div class="nm">${esc(L.name)}</div>
+      ${pill(chipStatus, isRunning && stale, past)}
+      <div class="nodes">
+        ${L.nodes
+          ? `<span class="${w}">${esc(L.nodes[0])}</span><span class="arrow">→</span><span class="${w === 'node active' ? 'node' : w}">…</span><span class="arrow">→</span><span class="${v}">${esc(L.nodes[L.nodes.length - 1])}</span>`
+          : `<span class="${w}">${esc(L.work)}</span><span class="arrow">→</span><span class="${v}">verify</span>`}
+      </div>
+      <div class="headline">${headTxt}</div>
+      <div class="when">${isRunning ? 'running now' : (last ? 'last run ' + esc(relText(last.started_at)) : '')}${L.retired ? ' · not in daily rotation' : ''}</div>
+    </div>`;
+  }).join('');
+
+  // The expanded graph: whichever lane is running, else the most recent real run.
+  const focusLane = running ? running.lane : (runs.find(r => !r.stub) || {}).lane;
+  const L = A().lanes.find(x => x.n === focusLane);
+  if (!L) { $('focus').innerHTML = '<div class="empty">No lane to show yet.</div>'; return; }
+  const isRunning = running && running.lane === L.n;
+  const last = runs.find(r => r.lane === L.n && !r.stub);
+  const halted = !isRunning && last && (last.status === 'halted_restricted' || last.status === 'failed');
+
+  const workCls = isRunning ? 'gnode active' : (halted ? 'gnode halt' : (last ? 'gnode ok' : 'gnode'));
+  const verCls  = isRunning ? 'gnode' : (halted ? 'gnode' : (last ? 'gnode ok' : 'gnode'));
+
+  $('focus').innerHTML = `
+    <h2 style="margin-bottom:12px">Lane ${L.n} graph — ${esc(L.name)}${
+      isRunning ? ' <span style="color:#0b57c2">(live)</span>'
+                : (last ? ` <span style="color:#6b6e73;font-weight:400">(last run ${esc(relText(last.started_at))})</span>` : '')}</h2>
+    <div class="graph">
+      <span class="gnode term">START</span>
+      ${L.nodes
+        ? L.nodes.map(n => {
+            const live = isRunning && running && (running.node === n || running.node === 'verify_' + n);
+            const cls = live ? 'gnode active'
+                      : (isRunning ? 'gnode' : (halted ? 'gnode halt' : (last ? 'gnode ok' : 'gnode')));
+            return `<span class="garrow">→</span><span class="${cls}">${esc(n)}</span>`;
+          }).join('')
+        : `<span class="garrow">→</span><span class="${workCls}">${esc(L.work)}</span><span class="garrow">→</span><span class="${verCls}">${esc(L.verify)}</span>`}
+      <span class="garrow">→</span>
+      <span class="gnode term">END</span>
+    </div>
+    <div class="ghalt">⛔ ${L.haltNote ? esc(L.haltNote)
+      : `halt edge: <code>${esc(L.work)}</code> → END on a restriction page,
+      a kill-switch trip, or a non-zero exit.`} Retry count is zero by topology — one
+      attempt per run, never relaunch automatically.</div>
+    ${last && last.error ? `<div class="warnbox ${last.status === 'halted_restricted' ? 'crit' : ''}">
+      ${last.status === 'halted_restricted' ? '⛔' : '▲'} <b>Last run ${esc(last.status)}:</b>
+      ${clip(last.error, 240)}</div>` : ''}`;
+}
+
+// ── render: volume meter ────────────────────────────────────────────────────
+function renderVolume(runs) {
+  // An automation without a rationed resource simply has no budget section.
+  const B = A().budget;
+  $('volSection').style.display = B ? '' : 'none';
+  if (!B) return;
+  $('volTitle').textContent = B.title;
+
+  const today = runs.filter(r => !r.stub && isToday(r.started_at));
+  const perLane = {};
+  let total = 0;
+  today.forEach(r => {
+    const v = r[B.field] || 0;
+    if (!v) return;
+    perLane[r.lane_name] = (perLane[r.lane_name] || 0) + v;
+    total += v;
+  });
+  const pct = Math.min(100, Math.round(100 * total / B.limit));
+  const over = total >= B.limit;
+  const near = !over && total >= B.limit * 0.66;
+
+  $('volume').innerHTML = `
+    <div class="kpi">
+      <span class="hero">${total}</span>
+      <span class="of">of ~${B.limit} ${esc(B.unit)} · ${esc(B.note)}</span>
+    </div>
+    <div class="meter"><i class="${over ? 'over' : ''}" style="width:${pct}%"></i></div>
+    <div class="meter-scale"><span>0</span><span>${esc(B.scale)}</span></div>
+    <div class="breakdown">
+      ${Object.keys(perLane).length
+        ? Object.entries(perLane).map(([k, v]) => `<span>${esc(k)} <b>${v}</b></span>`).join('')
+        : '<span style="color:#8a8d91">no view-consuming run recorded today</span>'}
+    </div>
+    ${over ? `<div class="warnbox crit">⛔ <b>At or past the restriction level.</b> Stop for the day.</div>`
+      : near ? `<div class="warnbox">▲ <b>Two thirds of the way to the restriction level.</b>
+                 Don't stack another big lane today.</div>` : ''}
+    <div class="note">Counted from the run log, which only began recording on 2026-08-01 —
+      Lane 2 scrape views were never dated anywhere on disk before that, so runs older than
+      the log are not represented. Lane 1 (name search) and Lane 4 (one list page) cost
+      ~0 views and are excluded by design.</div>`;
+}
+
+// ── render: history ─────────────────────────────────────────────────────────
+function renderHistory(runs) {
+  const showStubs = $('showStubs').checked;
+  const rows = runs.filter(r => showStubs || !r.stub);
+  if (!rows.length) {
+    $('history').innerHTML = '<div class="empty">No runs recorded yet.</div>';
+    return;
+  }
+  $('history').innerHTML = `<table>
+    <thead><tr>
+      <th>When</th><th>Lane</th><th>Status</th><th>Result</th>
+      <th style="text-align:right">Views</th><th style="text-align:right">Took</th>
+    </tr></thead>
+    <tbody>${rows.map(r => `<tr>
+      <td class="num" style="white-space:nowrap">${dayText(r.started_at)} ${clockText(r.started_at)}</td>
+      <td class="lane-cell">${r.lane} ${esc(r.lane_name)}${r.stub ? `<span class="stub-tag">${esc(r.stub)}</span>` : ''}${r.dry_run ? '<span class="stub-tag">DRY</span>' : ''}${r.backfilled ? '<span class="stub-tag">BACKFILL</span>' : ''}</td>
+      <td>${pill(r.status)}</td>
+      <td>${esc(headline(r))}</td>
+      <td class="num" style="text-align:right">${r.profile_views || 0}</td>
+      <td class="num" style="text-align:right">${durText(r.duration_s)}</td>
+    </tr>`).join('')}</tbody></table>`;
+}
+
+// ── render: tabs ────────────────────────────────────────────────────────────
+// A tab's dot is the ONLY thing that makes an inactive automation visible. The
+// whole point of this page is catching a run that needs a human, and that stops
+// working the moment the interesting automation is the one you are not looking at.
+function tabState(f) {
+  if (!f) return { cls: 'idle', title: 'no data yet' };
+  const p = f.prog, runs = f.runs || [];
+  // An interrupt is the loudest thing this page reports: it BLOCKS a graph until
+  // a human answers, so it gets a word, not just a coloured dot.
+  if (p && p.status === 'awaiting_input')
+    return { cls: 'attn', title: 'waiting for you', icon: '⏸', badge: 'needs you' };
+  if (p && p.status === 'running') {
+    const stale = secSince(p.updated_at) > STALE_AFTER_S;
+    return stale ? { cls: 'warn', title: 'running but stale', icon: '▲', badge: 'stale' }
+                 : { cls: 'running', title: 'running now' };
+  }
+  const last = runs.find(r => !r.stub);
+  if (last && !RESOLVED_OK.has(last.status))
+    return { cls: 'attn', title: 'last run ' + last.status, icon: '▲',
+             badge: last.status === 'halted_restricted' ? 'halted' : 'failed' };
+  return { cls: 'idle', title: last ? 'idle · last run ' + relText(last.started_at) : 'no runs yet' };
+}
+
+function renderTabs() {
+  $('tabs').innerHTML = AUTOMATIONS.map(a => {
+    const f = FEEDS[a.id];
+    const st = tabState(f);
+    const today = (f && f.runs || []).filter(r => !r.stub && isToday(r.started_at)).length;
+    return `<button class="tab ${a.id === ACTIVE ? 'active' : ''} ${st.cls === 'attn' ? 'needs' : ''}"
+              data-tab="${esc(a.id)}" title="${esc(a.label)} — ${esc(st.title)}">
+      <span class="tdot ${st.cls}">${st.icon || '●'}</span>${esc(a.label)}
+      ${st.badge ? `<span class="tcount ${st.cls}">${esc(st.badge)}</span>`
+                 : (today ? `<span class="tcount">${today}</span>` : '')}
+    </button>`;
+  }).join('');
+  $('sub').textContent = A().sub || '';
+}
+
+$('tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.tab');
+  if (!btn || btn.dataset.tab === ACTIVE) return;
+  ACTIVE = btn.dataset.tab;
+  localStorage.setItem('lgTab', ACTIVE);
+  history.replaceState(null, '', '#' + ACTIVE);
+  paint();
+});
+window.addEventListener('hashchange', () => {
+  const h = (location.hash || '').replace('#', '');
+  if (h && AUTOMATIONS.some(a => a.id === h) && h !== ACTIVE) { ACTIVE = h; paint(); }
+});
+
+// ── poll ────────────────────────────────────────────────────────────────────
+// Paint from whatever is already in FEEDS — instant on a tab switch, no refetch.
+function paint() {
+  renderTabs();
+  const f = FEEDS[ACTIVE] || { prog: null, runs: [] };
+  renderLive(f.prog, f.runs);
+  renderLanes(f.prog, f.runs);
+  renderVolume(f.runs);
+  renderHistory(f.runs);
+}
+
+async function tick() {
+  // EVERY automation is fetched, not just the visible one — that is what lets an
+  // inactive tab report that it is running or waiting on you.
+  await Promise.all(AUTOMATIONS.map(async a => {
+    const [prog, runsRaw] = await Promise.all([
+      getJSON(a.feed.progress, null),
+      getJSON(a.feed.runs, []),
+    ]);
+    FEEDS[a.id] = {
+      prog,
+      runs: (Array.isArray(runsRaw) ? runsRaw : []).slice().reverse(),  // newest first
+    };
+  }));
+  paint();
+  $('refresh').textContent = 'updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+$('showStubs').addEventListener('change', paint);
+tick();
+setInterval(tick, POLL_MS);
+</script>
+</body>
+</html>

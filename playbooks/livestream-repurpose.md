@@ -11,6 +11,13 @@ Everything starts with **Phase 1 Step 1** in `video-creation/SKILL.md`: the high
 is re-encoded down to a small **`LOW BPS`** working copy (the pipeline master). The `LOW BPS` token is
 load-bearing — every downstream artifact is named off it. From that single file, three lanes branch.
 
+> **Canonical since 2026-08-02 (LangGraph Wave 1):** the whole Phase 1 → Phase 2 span (LOW BPS +
+> Lane 1 longform + verticalize + transcribe + STT glossary) is ONE graph invocation —
+> `python video-creation/livestream-repurpose/graph/run.py --source "<recording>" --min-sil 0.5`
+> (author `longform-meta.json` next to the recording first). Lanes 2 (from Phase 3) and 3 then
+> continue off the produced transcript exactly as below. Live state shows on the dashboard's
+> **LangGraph → Livestream** tab. Detail: `intake-verticalize/SKILL.md` banner.
+
 ```
 livestream recording
    └─► Phase 1 Step 1: re-encode → "<name> LOW BPS.mp4"  (the master)
@@ -22,13 +29,14 @@ livestream recording
 ```
 
 ## Lane 1 — Long-form video
-**Branches directly off the LOW BPS file, before any verticalizing.** Copy the LOW BPS master →
-`livestream-repurpose/scripts/delete_silences.py` to drop dead air → **re-compress back to ~0.7 Mbps**
-(never queue the crf-18 intermediate) → stage the mp4 + its PNG thumbnail into
-`schedule-tweets/longform/<slug>/` (no-spaces slug, one folder per long-form) → append an entry to
-`schedule-tweets/data/longs.json`. **Queue-only** — this desilenced derivative does NOT feed
-verticalize / clip selection. Shows on the dashboard **Longs** tab.
-- **Canonical detail:** `video-creation/SKILL.md` → Phase 1 Step 1.
+**Branches directly off the LOW BPS file, before any verticalizing.** Runs inside the intake graph:
+canonical desilencer (`desilence.py --nvenc`, one pass, ~0.7 Mbps direct — no crf-18 intermediate) →
+stage the mp4 + its PNG thumbnail into `schedule-tweets/longform/<slug>/` (no-spaces slug, one folder
+per long-form) → append an entry to `schedule-tweets/data/longs.json` (title/description/tags come
+from `longform-meta.json`, authored before the run). **Queue-only** — this desilenced derivative does
+NOT feed verticalize / clip selection. Shows on the dashboard **Longs** tab.
+- **Canonical detail:** `video-creation/livestream-repurpose/skills/intake-verticalize/SKILL.md`
+  (Phase 1 Step 1 + the graph banner).
 
 ## Lane 2 — Vertical shorts
 **Step 1B** verticalizes the LOW BPS master (16:9 → 9:16, face bottom + content top) → transcribe the

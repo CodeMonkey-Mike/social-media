@@ -10,23 +10,51 @@ REPLY_GUY_PREFIX = "/x-reply-guy/"
 QUEUE_PATH       = os.path.join(REPLY_GUY_DIR, "data", "replies_to_post.json")
 OPPS_PATH        = os.path.join(REPLY_GUY_DIR, "data", "reply_opportunities.json")
 
+# The LangGraph page's feeds — one entry per automation, matching AUTOMATIONS in
+# langgraph.html. Adding an automation is one line here.
+#
+# Deliberately an ALLOWLIST of filenames, not a directory mount like /x-reply-guy/:
+# linkedin-automation also holds members.json, the project log and the restriction
+# history, and the page needs exactly these two files. Keep it that way — a new
+# automation gets a folder entry, never a wildcard.
+GRAPH_FEED_DIRS = {
+    "linkedin": os.path.join(os.path.dirname(BASE_DIR), "linkedin-automation", "data"),
+    "livestream": os.path.join(os.path.dirname(BASE_DIR), "video-creation",
+                               "livestream-repurpose", "graph", "data"),
+}
+GRAPH_FEED_ALLOWED = {"lane_runs.json", "lane_progress.json"}
+
 class CORSHandler(http.server.SimpleHTTPRequestHandler):
+    def _serve_file(self, full, no_store=False):
+        if not os.path.isfile(full):
+            self.send_error(404)
+            return
+        with open(full, "rb") as f:
+            data = f.read()
+        ctype = mimetypes.guess_type(full)[0] or "application/json"
+        self.send_response(200)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(data)))
+        if no_store:
+            # The LangGraph page polls these while a run writes them — a cached
+            # heartbeat is a lying heartbeat.
+            self.send_header("Cache-Control", "no-store")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.end_headers()
+        self.wfile.write(data)
+
     def do_GET(self):
         if self.path.startswith(REPLY_GUY_PREFIX):
             rel = self.path[len(REPLY_GUY_PREFIX):].split("?")[0]
-            full = os.path.join(REPLY_GUY_DIR, rel)
-            if os.path.isfile(full):
-                with open(full, "rb") as f:
-                    data = f.read()
-                ctype = mimetypes.guess_type(full)[0] or "application/json"
-                self.send_response(200)
-                self.send_header("Content-Type", ctype)
-                self.send_header("Content-Length", str(len(data)))
-                self.send_header("Access-Control-Allow-Origin", "*")
-                self.end_headers()
-                self.wfile.write(data)
-            else:
+            self._serve_file(os.path.join(REPLY_GUY_DIR, rel))
+            return
+        # /<automation>/<feed file> for any registered LangGraph automation.
+        parts = self.path.lstrip("/").split("?")[0].split("/")
+        if len(parts) == 2 and parts[0] in GRAPH_FEED_DIRS:
+            if parts[1] not in GRAPH_FEED_ALLOWED:   # allowlist, not a directory mount
                 self.send_error(404)
+                return
+            self._serve_file(os.path.join(GRAPH_FEED_DIRS[parts[0]], parts[1]), no_store=True)
             return
         super().do_GET()
 

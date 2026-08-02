@@ -2,6 +2,23 @@
 
 _Moved VERBATIM from `video-creation/SKILL.md` on 2026-07-08 (Mike: per-track skills live in the track folder; this predates that convention). **This file is now canonical**; the master SKILL.md keeps a pointer stub and the phase-map table points here. Paths inside are written relative to `video-creation/` exactly as in the original._
 
+> **Canonical invocation (2026-08-02 — LangGraph migration Wave 1):** Phase 1 (both steps),
+> Lane 1, and Phase 2 now run as ONE graph invocation:
+> ```
+> python video-creation/livestream-repurpose/graph/run.py --source "<recording>" --min-sil 0.5
+> ```
+> Prereq: author `longform-meta.json` (title / description / tags for the longs.json entry,
+> Mike's voice, no em dashes) next to the recording first — the graph validates it before any
+> encoding. `--skip-longform` omits Lane 1; `--resume` continues a killed run (completed nodes
+> skip); `--stub ok|fail` is the browser-free structural test. The graph wraps
+> `scripts/encode_low_bps.py`, `scripts/longform_stage.py`, `scripts/longs_append.py`, and
+> `scripts/verticalize.py`, each freezing the commands below VERBATIM, and verifies every
+> artifact from disk (duration, bitrate cap, 1080x1920 SAR 1:1, queue entry).
+> **Lane 1's silence method is the canonical desilencer** (`desilence.py --nvenc`, dual-threshold,
+> one pass, no crf-18 intermediate — Mike's call, 2026-08-02); the per-batch
+> `longform_desilence_<batch>.py` forks are retired (single-threshold `silencedetect`, the banned
+> method). The prose below remains the SPEC and the manual fallback.
+
 ## Phase 1 — Intake + Verticalize the livestream — replaces the Premiere pass
 
 Phase 1 has two steps: **Step 1** reduces the high-bitrate source to a `LOW BPS` working copy (the
