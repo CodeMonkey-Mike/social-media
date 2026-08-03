@@ -28,9 +28,22 @@ Usage:
   python desilence.py in.mp4 --out out.mp4 --split 18 --sil-pre 0.2 --sil-post 0.6
   # export the cut/keep map so a downstream editor can remap its cue times
   python desilence.py in.mp4 --out out.mp4 --min-sil 0.6 --map-out map.json
+
+RENDER TRANSPORT (2026-08-02, method UNCHANGED): the original single filtergraph
+(every keep-span as a trim/atrim branch into one concat) is O(spans x frames) and
+STALLED live on an hour-long livestream (878 spans: ~17% output in ~110 min, ffmpeg
+pegged on one core — what-if-1000x Lane 1). Above RENDER_BATCH_AUTO spans the render
+now runs in seek-windowed BATCHES: each batch input-seeks its window, applies the
+IDENTICAL trim/atrim + 8 ms afade declick graph (times shifted), encodes with the
+IDENTICAL codec params, and the parts are concat-demuxer stream-copied. Same cut
+points, same fades, same output — different transport. Small files (shorts, chapter
+files) still take the original single-pass path, byte-for-byte the same behavior.
+--render-batch N forces a batch size (testing); 0 = auto. Also stdout is now
+line-buffered so long renders stream progress instead of buffering it silently.
 """
 import argparse, json, os, re, subprocess, sys, io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace",
+                              line_buffering=True)
 
 # FIXED METHOD CONSTANTS — do not expose as CLI knobs (see module docstring).
 #   MIN_AUD = blip-absorb ceiling: an audio island shorter than this is treated as a click/lip-smack
@@ -40,6 +53,9 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 #   (<60 ms) while preserving every real word.
 SIL_TH, AUD_TH, MIN_AUD, WIN = -57.0, -52.0, 0.08, 0.02
 FADE = 0.008  # 8 ms declick fade at each kept-segment edge
+# Batched-render thresholds (transport only, see header). Auto-batch above 60 spans;
+# 40 spans/window keeps each part's filtergraph tiny and each render seconds long.
+RENDER_BATCH_AUTO, RENDER_BATCH_SIZE = 60, 40
 
 
 def dur(p):
@@ -130,40 +146,95 @@ def complement(cuts, total):
     return keeps, removed
 
 
-def render(src, keeps, out, vid, bps, nvenc, declick):
+def _filter_script(keeps, vid, declick, t0=0.0):
+    """The ONE trim/atrim(+afade declick)+concat graph, span times shifted by t0
+    (0 for the single-pass path; the window start for a batched part)."""
     parts, labels = [], []
     for i, (a, b) in enumerate(keeps):
         seg = b - a
+        ra, rb = a - t0, b - t0
         if vid:
-            parts.append(f"[0:v]trim=start={a:.3f}:end={b:.3f},setpts=PTS-STARTPTS[v{i}];")
-        af = f"[0:a]atrim=start={a:.3f}:end={b:.3f},asetpts=PTS-STARTPTS"
+            parts.append(f"[0:v]trim=start={ra:.3f}:end={rb:.3f},setpts=PTS-STARTPTS[v{i}];")
+        af = f"[0:a]atrim=start={ra:.3f}:end={rb:.3f},asetpts=PTS-STARTPTS"
         if declick:
             fo = max(0.0, seg - FADE)
             af += f",afade=t=in:st=0:d={FADE},afade=t=out:st={fo:.3f}:d={FADE}"
         parts.append(af + f"[a{i}];")
         labels.append((f"[v{i}]" if vid else "") + f"[a{i}]")
-    n = len(keeps)
-    parts.append("".join(labels) + f"concat=n={n}:v={1 if vid else 0}:a=1["
+    parts.append("".join(labels) + f"concat=n={len(keeps)}:v={1 if vid else 0}:a=1["
                  + ("outv][outa]" if vid else "outa]"))
-    fc = out + ".filter.txt"
-    with open(fc, "w", encoding="utf-8") as f:
-        f.write("\n".join(parts))
-    cmd = ["ffmpeg", "-y", "-i", src, "-filter_complex_script", fc]
+    return "\n".join(parts)
+
+
+def _encode_args(vid, bps, nvenc):
+    args = []
     if vid:
-        cmd += ["-map", "[outv]"]
+        args += ["-map", "[outv]"]
         if nvenc:
-            cmd += ["-c:v", "h264_nvenc", "-rc", "vbr", "-b:v", bps, "-maxrate", "2.5M",
-                    "-bufsize", "4M", "-preset", "p5"]
+            args += ["-c:v", "h264_nvenc", "-rc", "vbr", "-b:v", bps, "-maxrate", "2.5M",
+                     "-bufsize", "4M", "-preset", "p5"]
         else:
-            cmd += ["-c:v", "libx264", "-preset", "slow", "-crf", "18"]
-    cmd += ["-map", "[outa]", "-c:a", "aac", "-b:a", "192k", out]
+            args += ["-c:v", "libx264", "-preset", "slow", "-crf", "18"]
+    args += ["-map", "[outa]", "-c:a", "aac", "-b:a", "192k"]
+    return args
+
+
+def _ffmpeg_graph(in_args, src, fc_text, fc_path, enc_args, out):
+    with open(fc_path, "w", encoding="utf-8") as f:
+        f.write(fc_text)
+    cmd = ["ffmpeg", "-y", *in_args, "-i", src, "-filter_complex_script", fc_path,
+           *enc_args, out]
     r = subprocess.run(cmd, capture_output=True, text=True)
     try:
-        os.remove(fc)
+        os.remove(fc_path)
     except OSError:
         pass
     if r.returncode != 0:
         print("FFMPEG FAIL:\n", r.stderr[-2000:]); sys.exit(1)
+
+
+def render(src, keeps, out, vid, bps, nvenc, declick, batch=0):
+    n = len(keeps)
+    enc = _encode_args(vid, bps, nvenc)
+    size = batch if batch > 0 else (RENDER_BATCH_SIZE if n > RENDER_BATCH_AUTO else 0)
+    if not size or n <= size:
+        # single-pass path — unchanged behavior for shorts / chapter-length files
+        _ffmpeg_graph([], src, _filter_script(keeps, vid, declick), out + ".filter.txt",
+                      enc, out)
+        return
+
+    # batched path (see header): seek-windowed parts + stream-copy concat
+    groups = [keeps[i:i + size] for i in range(0, n, size)]
+    part_files = []
+    try:
+        for gi, g in enumerate(groups):
+            w0, w1 = g[0][0], g[-1][1]
+            part = f"{out}.part{gi:03d}.mp4"
+            part_files.append(part)
+            print(f"  render part {gi + 1}/{len(groups)}: {len(g)} spans, "
+                  f"window {w0:.1f}s-{w1:.1f}s")
+            _ffmpeg_graph(["-ss", f"{w0:.3f}", "-to", f"{w1 + 0.05:.3f}"], src,
+                          _filter_script(g, vid, declick, t0=w0), part + ".filter.txt",
+                          enc, part)
+        lst = out + ".concat.txt"
+        with open(lst, "w", encoding="utf-8") as f:
+            for p in part_files:
+                f.write("file '" + os.path.abspath(p).replace("\\", "/") + "'\n")
+        r = subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", lst,
+                            "-c", "copy", "-fflags", "+genpts", out],
+                           capture_output=True, text=True)
+        try:
+            os.remove(lst)
+        except OSError:
+            pass
+        if r.returncode != 0:
+            print("FFMPEG FAIL (concat):\n", r.stderr[-2000:]); sys.exit(1)
+    finally:
+        for p in part_files:
+            try:
+                os.remove(p)
+            except OSError:
+                pass
 
 
 def main():
@@ -181,6 +252,9 @@ def main():
     ap.add_argument("--nvenc", action="store_true", help="use h264_nvenc --bps instead of libx264 crf18")
     ap.add_argument("--bps", default="2M")
     ap.add_argument("--map-out", default=None, help="write cut/keep JSON (source coords) for cue remap")
+    ap.add_argument("--render-batch", type=int, default=0,
+                    help="force batched-render window size (0 = auto: batch only above "
+                         f"{RENDER_BATCH_AUTO} spans; transport only, method unchanged)")
     args = ap.parse_args()
 
     if not os.path.isfile(args.src):
@@ -211,7 +285,8 @@ def main():
                        "keeps": [[round(a, 3), round(b, 3)] for a, b in keeps]}, f, indent=1)
         print("map ->", args.map_out)
 
-    render(args.src, keeps, args.out, vid, args.bps, args.nvenc, not args.no_declick)
+    render(args.src, keeps, args.out, vid, args.bps, args.nvenc, not args.no_declick,
+           batch=args.render_batch)
     od = dur(args.out)
     print(f"DONE  {total:.2f}s -> {od:.2f}s   out={args.out}")
 
