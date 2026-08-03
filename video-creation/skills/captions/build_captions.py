@@ -42,10 +42,28 @@ CORRECTIONS = [
     # Whisper hears $TAO as "towel" as often as "tau". A literal towel cannot occur in this catalogue.
     (r"\btowels?\b", "tao"),
     (r"\bninehood\b", "ninehood"), (r"\bnindhood\b", "ninehood"),
+    (r"\bmadenet\b", "mainnet"), (r"\bmainnnet\b", "mainnet"),   # Kaspa mainnet (Whisper: "MadeNet")
     # Whisper splits this as "post" + "-having"; the hyphen merge in cleanup() rejoins it and then
     # re-runs clean_token, so this single-token form is the one that actually fires.
     (r"\bpost-?having\b", "post-halving"),
     # NOTE: every other October-pumps mishear is MULTI-WORD and lives in PHRASE_CORRECTIONS below.
+    # --- new-bottom batch, 2026-07-25 ---
+    # Whisper ALSO renders DAGKnight as ONE token ("Dagnight"/"Dagnite"), which the ("dag","night")
+    # PHRASE rule can never match (it needs two tokens). Single-token forms belong here.
+    (r"\bdagnight\b", "dagknight"), (r"\bdagnite\b", "dagknight"),
+    # ton-gram-rename clip: Whisper renders "TON" as "tun" every single time ("TUN COIN", "so it's
+    # TUN is the chain"). "tun" is not a word in this catalogue, so the global single-token fix is
+    # safe, and it feeds the ("ton","coin") -> "toncoin" PHRASE rule below (phrases run AFTER
+    # clean_token). The token formerly called Toncoin is now GRAM; Whisper hears it as "Graham"
+    # (\b anchors mean the "gram" inside "telegram" is never touched).
+    (r"\btun\b", "ton"),
+    (r"\bgraham\b", "gram"),
+    # --- peach-minute batch, 2026-07-29 ---
+    # NOTE: "cast" -> "kaspa" deliberately does NOT live here. It was added as a global single-token
+    # rule on 2026-07-29 and rescoped the same day: unlike casper/kasper/caspa (non-words in this
+    # catalogue), "cast" IS a real word, and on Farcaster a post is literally called a "cast", so a
+    # global rule would silently rewrite a legitimate token in some future batch. The evidence base
+    # was also one livestream. It is a keyed PHRASE rule in PHRASE_CORRECTIONS instead.
 ]
 
 # PHRASE corrections — applied to the TOKEN SEQUENCE, not to single tokens.
@@ -71,11 +89,160 @@ PHRASE_CORRECTIONS = [
     (("roba", "hood"), ["robinhood"]),
     (("post", "having"), ["post-halving"]),
     (("posts", "having"), ["post-halving"]),
+    # --- kaspa 30bps batch, 2026-07-25 (Kaspa consensus terms Whisper garbles) ---
+    (("dag", "night"), ["dagknight"]),        # DAGKnight, the 2026 consensus fork
+    (("dag", "knight"), ["dagknight"]),
+    (("ghost", "dag"), ["ghostdag"]),         # GHOSTDAG, the protocol it replaces
+    (("dark", "night"), ["dark", "knight"]),  # the Batman analogy, not a dark night
+    (("heart", "fork"), ["hard", "fork"]),
+    (("heart", "forks"), ["hard", "forks"]),
+    # CASCADING: fires on the SECOND pass, after ("dag","night") -> "dagknight" ("in the DAGKnight era").
+    (("dagknight", "area"), ["dagknight", "era"]),
+    # --- new-bottom batch, 2026-07-25 ---
+    # "they're gonna get one LAST buy in September" — Whisper hears "last" as "less". "One less buy"
+    # is not a thing anyone says about front-running a bottom; the phrase is always "one last buy".
+    (("one", "less", "buy"), ["one", "last", "buy"]),
+    # ton-gram-rename clip: after "tun" -> "ton", the coin name arrives as TWO tokens ("ton coin").
+    # The chain is TON and the token is GRAM, so the two must stay visually distinct on screen:
+    # "ton coin" MERGES to "toncoin", while a lone "ton" stays "ton".
+    (("ton", "coin"), ["toncoin"]),
+    # --- peach-minute batch, 2026-07-29 (zombie-confession clip) ---
+    # "TARIFF season is what really changed me" — Whisper hears "terror season" (p=0.17). Verified on a
+    # medium-model re-transcribe of 15.8-24.6s: "tariff season is where...". Nobody says "terror season".
+    (("terror", "season"), ["tariff", "season"]),
+    # "you think KASPA was gonna be a dollar" / "how much I wish KASPA will be a dollar" — this
+    # livestream's audio makes Whisper render Kaspa as "cast". Keyed on the preceding verb rather
+    # than applied globally: "cast" is a real English word AND a Farcaster term of art (a post is a
+    # "cast"), so a bare \bcast\b rule would corrupt a legitimate token in a future batch. These two
+    # pairs are the only occurrences in the peach-minute clips.
+    (("think", "cast"), ["think", "kaspa"]),
+    (("wish", "cast"), ["wish", "kaspa"]),
+    # "running like MAD, like MAD, you know, MAD bulls running" — Whisper hears the name "Matt".
+    # Keyed on the doubled phrase / the "mad bulls" pair so a REAL Matt (e.g. Matt Furie, who has his
+    # own short in this repo) is never rewritten by a bare \bmatt\b rule.
+    (("like", "matt", "like", "matt"), ["like", "mad", "like", "mad"]),
+    (("matt", "bulls"), ["mad", "bulls"]),
+    # Persona: the 50-week simple moving average is ALWAYS captioned "50-week SMA", never "50WMA",
+    # never "50-week MA". 4 tokens -> 2 words (the trailing two token timings are dropped, which is
+    # supported: the group simply ends earlier and the caption holds until the next chunk).
+    (("50", "week", "moving", "average"), ["50-week", "sma"]),
+    # --- peach-minute batch, 2026-07-29 (housecoin-still-holding clip) ---
+    # "we got an email TODAY, Kraken is gonna delist..." — Whisper renders "today" as "to Decken"
+    # (p=0.38 on a non-word). 2 tokens -> 1 merged word keeps the whole 1.32-2.44 s span.
+    (("to", "decken"), ["today"]),
+    # "I had somebody ASK IN the group" — heard as "as somebody acts in". 4 tokens -> 3 words
+    # (the 4th timing is dropped, which is supported).
+    (("as", "somebody", "acts", "in"), ["somebody", "asked", "in"]),
+    # "should I just dump Housecoin, is it safe?" — heard as "should have just dumped ... as a safe".
+    # Both rules are keyed tightly (the second on "housecoin") so no unrelated clip can match.
+    (("should", "have", "just", "dumped"), ["should", "i", "just", "dump"]),
+    (("housecoin", "as", "a", "safe"), ["housecoin", "is", "it", "safe?"]),
+    (("theyre", "still", "got"), ["they", "still", "got"]),
+    # "which is good for A MEME in a bear market" — Whisper drops the article (and the base model
+    # heard "for me"). A replacement can never be LONGER than the match, so the article rides on the
+    # preceding token; it renders as normal words on screen.
+    (("good", "for", "meme"), ["good", "for a", "meme"]),
+    # Multiples are ALWAYS captioned as digits: "a thousand X" -> "1000x" (cleanup()'s numeric merge
+    # only fires on a literal digit token, so the spelled-out form needs this phrase rule).
+    (("a", "thousand", "x"), ["1000x"]),
+    # --- what-if-1000x batch, 2026-08-03 (1000x-math-ten-coins clip) ---
+    # Housecoin is a named project with a real reference logo on disk; Whisper always splits it into
+    # "house" + "coin". Same class as ("nine","hood") -> "ninehood".
+    (("house", "coin"), ["housecoin"]),
+    (("house", "coins"), ["housecoin"]),
+    # Multiples as digits, spelled-out forms the numeric merge cannot reach ("a TWO X coin number
+    # seven"). Keyed on the "<number> x" pair so a bare "five" / "two" is never rewritten.
+    (("two", "x"), ["2x"]),
+    (("five", "x"), ["5x"]),
+    # "a lot of THOUSAND X'S out there" — plural multiple. core() strips the apostrophe, so the key
+    # is ("thousand","xs"); the emitted text keeps it readable.
+    (("thousand", "xs"), ["1000x's"]),
+    # Money and market caps render as figures, not words: "a THOUSAND DOLLARS" -> "$1,000",
+    # "a 900 K market cap" -> "900k" (cleanup()'s digit merge only fires on ""/"percent"/"x").
+    (("a", "thousand", "dollars"), ["$1,000"]),
+    (("900", "k"), ["900k"]),
+    # "just go to the GOD DAMN moon" — one word on screen.
+    (("god", "damn"), ["goddamn"]),
+    # "10 different good COIN" — Whisper drops the plural s; he is describing ten coins.
+    (("different", "good", "coin"), ["different", "good", "coins"]),
+    # "and then maybe THE, your winner" — a false start that survives the tighten pass in the audio
+    # but renders on screen as a standalone caption "maybe the, your". 4 tokens -> 3 words (the 4th
+    # timing is dropped, which is supported). Keyed on the full four-token run so nothing else matches.
+    (("maybe", "the", "your", "winner"), ["maybe", "your", "winner"]),
+    # --- what-if-1000x batch, 2026-08-03 (lab-called-20x-did-353x clip) ---
+    # Companion to ("two","x") above: "two X in my bag, THREE X in my bag".
+    (("three", "x"), ["3x"]),
+    # "a 20x off OF LAB" — Whisper (base AND medium) renders "of" as "a" every time. Keyed on the
+    # LAB token so a legitimate "off a ..." elsewhere is never rewritten.
+    (("off", "a", "lab"), ["off", "of", "lab"]),
+    # "...off of LAB. THAT'S crazy, ended up doing 350x" — the whole-clip pass hears "as crazy",
+    # which cannot open that clause. VERIFIED 2026-08-03 by re-transcribing the region in isolation
+    # with medium three ways (2.6-5.6 s, 1.0-5.5 s, and 1.0-5.5 s at 0.7x): all three return
+    # "THAT IS crazy", so the word is "that's" — not "it's". Keyed on the preceding "lab", so it
+    # fires on the fixpoint pass AFTER the rule above rewrites "off a lab", and a real "as crazy as"
+    # elsewhere is untouched.
+    (("lab", "as", "crazy"), ["lab", "that's", "crazy"]),
+    # "I had IT listed as a private gem" — the whole-clip pass garbles the word ORDER into "had to
+    # list it" (base heard "had a listed"). VERIFIED 2026-08-03 by re-transcribing 4.5-9.5 s in
+    # isolation with medium three ways (1x, 0.75x, and with a LAB-biased initial_prompt): all three
+    # return "I had IT listed", so the word is "it", NOT "lab" — do not put "lab" on screen here.
+    # 5 tokens -> 4 words (the 5th timing is dropped, which is supported).
+    (("i", "had", "to", "list", "it"), ["i", "had", "it", "listed"]),
+    (("i", "had", "a", "listed"), ["i", "had", "it", "listed"]),
+    # ...as a private GEM (the private-gem list in his community), never a private jet.
+    (("private", "jet"), ["private", "gem"]),
+    # "IT was just nuts how that worked out" — heard as "I was just nuts", which puts the word on
+    # Mike instead of on the trade.
+    (("i", "was", "just", "nuts"), ["it", "was", "just", "nuts"]),
+    # "the 85x ON PIPPIN" — heard as "on Pippen" (medium: "I'm pippin"). Keyed on the preceding word
+    # so the basketball surname could never be rewritten by a bare token rule.
+    (("on", "pippen"), ["on", "pippin"]),
+    (("im", "pippin"), ["on", "pippin"]),
+    # "selling this damn thing at like $25 or $27" — Whisper drops the $ on the FIRST price only, so
+    # the pair renders as "25 or $27". Keyed on "like" so no bare number is ever touched.
+    (("like", "25", "or"), ["like", "$25", "or"]),
+    # --- what-if-1000x batch, 2026-08-03 (whatif-next-dogecoin clip) ---
+    # "the next day it was listed on GATE AND MEXC" — Whisper renders the two exchange names as
+    # "gate/gait and Mexi/maxi" on every pass. Both tails are non-names, and the receipt on Mike's
+    # own screen-share reads "ahead of Gate.io and MEXC the next day", so the fix is verified.
+    (("gate", "and", "mexi"), ["gate", "and", "mexc"]),
+    (("gait", "and", "mexi"), ["gate", "and", "mexc"]),
+    (("gate", "and", "maxi"), ["gate", "and", "mexc"]),
+    (("gait", "and", "maxi"), ["gate", "and", "mexc"]),
+    # "I mean, I'M SO TIRED of all these animals that keep coming out" — the shipped word pass heard
+    # "I'm gonna go tired" (verified against a medium re-transcribe of 8.9-13.6 s, which returns
+    # "I mean, I'm so tired of all these animals"). 4 tokens -> 3 words (4th timing dropped).
+    (("im", "gonna", "go", "tired"), ["i'm", "so", "tired"]),
+    # Closing line — NO RULE, deliberately. An earlier build added
+    #   (("robinhood","lists","what","if","right"), ["robinhood","lists","it","and it","runs"])
+    # off the ORIGINAL master transcript ("lists run it"). RE-VERIFIED 2026-08-03 on this clip's own
+    # audio and REMOVED: four separate 1x medium passes (the shipped word pass, an isolated
+    # 61.3-64.8 s re-transcribe, an 0.8x pass, and a pass on the UNTIGHTENED source with full
+    # surrounding context) all return "What if Robin Hood lists WHAT IF, right?" — Mike naming the
+    # token, which is exactly how the rest of the clip captions it ("with the what if is", "even what
+    # if might be"). Only TIME-STRETCHED passes (0.5x/0.65x/0.7x, an artifact-prone transform) hear
+    # "run it". Shipping "lists it and it runs" would put words on screen that no 1x pass produced
+    # and would fail the final-render whisper-verify. Do not re-add it.
 ]
 
 
-def apply_phrases(words):
-    """Rewrite multi-word mishears on the token sequence. Runs AFTER cleanup()."""
+def apply_phrases(words, _passes=4):
+    """Rewrite multi-word mishears on the token sequence. Runs AFTER cleanup().
+
+    Runs to a FIXPOINT (bounded): one correction can CREATE the input of another
+    ("dag night area" -> "dagknight area" -> "dagknight era"), and a single pass never
+    re-scans a token it just emitted. Existing non-cascading rules are unaffected (a second
+    pass over already-corrected text is a no-op), so this cannot change past output.
+    """
+    for _ in range(_passes):
+        nxt = _apply_phrases_once(words)
+        if [ (w["t"], w["w"]) for w in nxt ] == [ (w["t"], w["w"]) for w in words ]:
+            return nxt
+        words = nxt
+    return words
+
+
+def _apply_phrases_once(words):
     out, i = [], 0
     while i < len(words):
         hit = None
@@ -90,6 +257,14 @@ def apply_phrases(words):
             continue
         n, rep = hit
         span = words[i:i + n]
+        # Carry the LAST matched token's trailing punctuation onto the replacement: grouping
+        # breaks on [.?!], so dropping it silently welds two sentences into one caption
+        # ("Dag Night. It's" -> "dagknight it's", kaspa 30bps 2026-07-25).
+        tail = re.search(r"[.,?!]+$", span[-1]["w"].strip())
+        tail = tail.group(0) if tail else ""
+        rep = list(rep)
+        if tail and not re.search(r"[.,?!]+$", rep[-1]):
+            rep[-1] = rep[-1] + tail
         if len(rep) == 1:
             out.append({"t": span[0]["t"], "end": span[-1]["end"], "w": rep[0]})
         else:
@@ -101,7 +276,10 @@ def apply_phrases(words):
 # following "bittensor" token ONLY when it is a sub-0.18s blip butted straight against it (a real
 # spoken "but"/"the" is longer and has a gap) — same class of fix as pre + mine -> premine.
 BIT_SYLLABLE = {"bit", "but", "bid", "the"}
-FILLER = {"uh", "um", "uhh", "umm", "mm", "hmm"}
+# "m" added 2026-07-25: Whisper emits a bare " M." for a closed-mouth hum at a clip head (real case:
+# ton-gram-rename frame 0, which would have rendered the first caption as "m. i just"). A standalone
+# single-letter "m" token is always that hum, never a word — same class as "mm"/"hmm".
+FILLER = {"uh", "um", "uhh", "umm", "mm", "hmm", "m"}
 
 
 def clean_token(w):
@@ -160,6 +338,16 @@ def cleanup(raw):
                 words.append({"t": cur["t"], "end": norm[i+1]["end"], "w": c + "%"}); i += 2; continue
             if nxt == "x":
                 words.append({"t": cur["t"], "end": norm[i+1]["end"], "w": c + "x"}); i += 2; continue
+        # Decimal continuation: Whisper splits a decimal number into TWO tokens, "2" + ".7"
+        # (same failure class as the hyphen continuation below). Grouping can then open a caption
+        # with a bare ".7 cents", and the price the whole short is about reads as two fragments.
+        # Merge the tail into the previous numeric token and keep the whole span.
+        # (new-bottom / kaspa-dagknight-100x, 2026-07-25: "it's at 2 .7 cents".)
+        if (re.fullmatch(r"\.\d+[.,!?]*", cur["w"].strip()) and words
+                and re.fullmatch(r"\d+", core(words[-1]["w"]))):
+            words[-1]["w"] = words[-1]["w"].rstrip() + cur["w"].strip()
+            words[-1]["end"] = cur["end"]
+            i += 1; continue
         # Hyphen continuation: Whisper emits compound words as TWO tokens, "front" + " -run",
         # "four" + " -year". Grouping can then land the tail in its OWN caption, which renders on
         # screen as a bare "-run." (5 such captions shipped in October-pumps clip 2 before this was

@@ -1,5 +1,12 @@
 import React from 'react';
 import { Composition } from 'remotion';
+import { Kaspa40Bps, K40_FPS, K40_DURATION } from './Kaspa40Bps';
+import { C1Preview } from './Kaspa40ChartC1';
+import { ChartsPreview } from './Kaspa40Charts';
+import { Kaspa40Vertical, K40V_FPS, K40V_DURATION } from './Kaspa40Vertical';
+import { Kaspa40Short, K40S_DURATION } from './Kaspa40Short';
+import { C1VPreview } from './Kaspa40VerticalChartC1';
+import { ChartsVPreview } from './Kaspa40VerticalCharts';
 import { Zebec, ZEBEC_FPS, ZEBEC_DURATION } from './Zebec';
 import { ZebecVertical, ZV_FPS, ZV_DURATION } from './ZebecVertical';
 import { CarryTradeFull, CT_FPS, CT_DURATION } from './CarryTradeFull';
@@ -62,6 +69,19 @@ import { OctoberBottomFrontrunImpact } from './OctoberBottomFrontrunImpact';
 import { OBFI_FPS, OBFI_DURATION } from './constants-obfi';
 import { OctoberBottomFrontrun } from './OctoberBottomFrontrun';
 import { OBFR_FPS, OBFR_DURATION } from './constants-obfr';
+import { KaspaOverDollar } from './KaspaOverDollar';
+import { K89_FPS, K89_DURATION } from './constants-k89';
+import { WhatifPeanut52x } from './WhatifPeanut52x';
+import { WHIF_FPS, WHIF_DURATION } from './constants-whatif';
+import { WOBF, WOBF_FPS, WOBF_DURATION } from './constants-wobf';
+import { TDBTG, TDBTG_FPS, TDBTG_DURATION } from './constants-tdbtg';
+import { NBA, NBA_FPS, NBA_DURATION } from './constants-nba';
+import { KDK, KDK_FPS, KDK_DURATION } from './constants-kdk';
+import { TonGramRename } from './TonGramRename';
+import { TGR_FPS, TGR_DURATION } from './constants-tgr';
+import { PainStickThrough } from './PainStickThrough';
+import { PSP_FPS, PSP_DURATION } from './constants-psp';
+import { ZOMB, ZOMB_FPS, ZOMB_DURATION } from './constants-zomb';
 import { TransitionDemo, demoDurationFrames } from './TransitionDemo';
 import { TransitionTest } from './TransitionTest';
 import { WLW_TITLE, WLW_UNICORN, WLW_LAB115X, WLW_KASPA3, WLW_WF, WLW_BOUNTY, WLW_ROTATION, WLW_LABWONT, WLW_KASPAHOLD, WLW_KASPATON, WLW_PENGU, FRAMES } from './wlwData';
@@ -76,10 +96,45 @@ import { D_TIGR_1, D_TIGR_2, D_TIGR_3, FRAMES_TIGR } from './dataTigr';
 import { D_BC_TAO, D_BC_LAB, D_BC_AI, D_BC_LINEA, FRAMES_BC } from './dataBestCoin';
 import { D_KC_COVENANTS, D_KC_FIRST, D_KC_ELIZA, D_KC_KRC20, FRAMES_KC } from './dataKaspaChanges';
 import { D_BCM_LEARN, D_BCM_BREAKAGE, D_BCM_TAO, D_BCM_BTC200, D_BCM_WHALES, D_BCM_SHITCOIN, D_BCM_STOPWAIT, D_BCM_1992, FRAMES_BCM } from './dataBetterCoins';
+// batch: what-if-1000x, clip #7 "100x From Here (Impact Cut)"
+import { D_WI7, WI7_FPS, WI7_FRAMES } from './constants-wi7';
+// batch: peach-minute, clip #3 "Three Out of Ten Kaspa Comments Are Negative Now"
+import { KaspaHateBottomSignal } from './KaspaHateBottomSignal';
+import { PM3_DURATION, PM3_FPS } from './constants-pm3';
+// batch: peach-minute, clip #5 "Housecoin Just Got Delisted. I Want My 1000x."
+import { HousecoinStillHolding } from './HousecoinStillHolding';
+import { HSC_DURATION, HSC_FPS } from './constants-hsc';
+import { EthereumRwa, DUR as ETH_DUR, FPS as ETH_FPS } from './EthereumRwa';
+// batch: what-if-1000x, clip #1 "$1,000 Into 10 Coins: The Real 1000x Math"
+import { TenCoins1000xMath } from './TenCoins1000xMath';
+import { TC_DURATION, TC_FPS } from './constants-tc';
+// batch what-if-1000x / clip #2
+import { WhatifBiggerThanBrett } from './WhatifBiggerThanBrett';
+import { W1BB_FPS, W1BB_DURATION } from './constants-w1bb';
+// batch: what-if-1000x, clip #4 "We Estimated 20x. LAB Did 353x."
+import { LabCalled20xDid353x } from './LabCalled20xDid353x';
+import { L353_DURATION, L353_FPS } from './constants-lab353';
+// batch: what-if-1000x, clip #3 "The October Bottom Defeats Itself"
+import { D_OBSD, OBSD_FPS, OBSD_FRAMES } from './constants-obsd';
+// batch: what-if-1000x, clip #5 "What If Could Be the Next Dogecoin"
+import { WhatifNextDogecoin } from './WhatifNextDogecoin';
+import { WND_DURATION, WND_FPS } from './constants-wnd';
+// batch: what-if-1000x, clip #6 "Five Lose. One Does 1000x." (impact cut)
+import { MathLadderImpact } from './MathLadderImpact';
+import { MLI_DURATION, MLI_FPS } from './constants-mli';
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* batch: peach-minute, clip #3 "03-kaspa-hate-bottom-signal" */}
+      <Composition
+        id="KaspaHateBottomSignal"
+        component={KaspaHateBottomSignal}
+        durationInFrames={PM3_DURATION}
+        fps={PM3_FPS}
+        width={1080}
+        height={1920}
+      />
       <Composition
         id="ClarityTest"
         component={ClarityTest}
@@ -330,12 +385,134 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
       />
+      {/* batch: whatif, clip #3 "WHATIF Could Be Another Peanut 52x" (variant: full) */}
+      <Composition
+        id="WhatifPeanut52x"
+        component={WhatifPeanut52x}
+        durationInFrames={WHIF_DURATION}
+        fps={WHIF_FPS}
+        width={1080}
+        height={1920}
+      />
       {/* batch: October-pumps, clip #4 "Some Of These Things Could Run" (variant: full) */}
       <Composition
         id="RallyBasketNinehoodCashcat"
         component={RallyBasketNinehoodCashcat}
         durationInFrames={RB_DURATION}
         fps={RB_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch: whatif, clip #1 "The October Bottom Is Getting Front-Run" (variant: full) */}
+      <Composition
+        id="WhatifOctoberBottom"
+        component={LivestreamShort}
+        durationInFrames={WOBF_DURATION}
+        fps={WOBF_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ data: WOBF }}
+      />
+      {/* batch: whatif, clip #2 "89% Said Kaspa Over the Dollar" (variant: full) */}
+      <Composition
+        id="KaspaOverDollar"
+        component={KaspaOverDollar}
+        durationInFrames={K89_DURATION}
+        fps={K89_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch: new-bottom, clip #1 "The New Bottom Hits in August, Not October" (variant: full) */}
+      <Composition
+        id="NewBottomAugust"
+        component={LivestreamShort}
+        durationInFrames={NBA_DURATION}
+        fps={NBA_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ data: NBA }}
+      />
+      {/* batch: new-bottom, clip #2 "Kaspa at 2.7 Cents: Absolutely Unbelievable" (variant: full) */}
+      <Composition
+        id="KaspaDagknight100x"
+        component={LivestreamShort}
+        durationInFrames={KDK_DURATION}
+        fps={KDK_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ data: KDK }}
+      />
+      {/* batch: new-bottom, clip #3 "TAO Under $200: Don't Be That Guy" (variant: full) */}
+      <Composition
+        id="TaoDontBeThatGuy"
+        component={LivestreamShort}
+        durationInFrames={TDBTG_DURATION}
+        fps={TDBTG_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ data: TDBTG }}
+      />
+      {/* batch: new-bottom, clip #4 "I'd Be a TON Maxi If Kaspa Never Existed" (variant: full) */}
+      <Composition
+        id="TonGramRename"
+        component={TonGramRename}
+        durationInFrames={TGR_DURATION}
+        fps={TGR_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch: peach-minute, clip #2 "If You Can Stick Through This Pain, You Win" (variant: full) */}
+      <Composition
+        id="PainStickThrough"
+        component={PainStickThrough}
+        durationInFrames={PSP_DURATION}
+        fps={PSP_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch: peach-minute, clip #4 "Kaspa $1 by the End of the Year" (variant: full) */}
+      <Composition
+        id="PmZombie"
+        component={LivestreamShort}
+        durationInFrames={ZOMB_DURATION}
+        fps={ZOMB_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={{ data: ZOMB }}
+      />
+      {/* batch: peach-minute, clip #5 "Housecoin Just Got Delisted. I Want My 1000x." (variant: long) */}
+      <Composition
+        id="HousecoinStillHolding"
+        component={HousecoinStillHolding}
+        durationInFrames={HSC_DURATION}
+        fps={HSC_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch: what-if-1000x, clip #1 "$1,000 Into 10 Coins: The Real 1000x Math" (variant: long) */}
+      <Composition
+        id="TenCoins1000xMath"
+        component={TenCoins1000xMath}
+        durationInFrames={TC_DURATION}
+        fps={TC_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch: what-if-1000x, clip #5 "What If Could Be the Next Dogecoin" (variant: solo, 64.73 s @30) */}
+      <Composition
+        id="WhatifNextDogecoin"
+        component={WhatifNextDogecoin}
+        durationInFrames={WND_DURATION}
+        fps={WND_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch: what-if-1000x, clip #4 "We Estimated 20x. LAB Did 353x." (variant: solo, 61.20 s @30) */}
+      <Composition
+        id="LabCalled20xDid353x"
+        component={LabCalled20xDid353x}
+        durationInFrames={L353_DURATION}
+        fps={L353_FPS}
         width={1080}
         height={1920}
       />
@@ -478,7 +655,34 @@ export const RemotionRoot: React.FC = () => {
       <Composition id="MmSaylor" component={LivestreamShort} durationInFrames={FRAMES_MM.c3} fps={30} width={1080} height={1920} defaultProps={{ data: D_MM_3 }} />
       <Composition id="WcgAiJobs" component={LivestreamShort} durationInFrames={FRAMES_WCG.c1} fps={30} width={1080} height={1920} defaultProps={{ data: D_WCG_1 }} />
       <Composition id="WcgPunch" component={LivestreamShort} durationInFrames={FRAMES_WCG.c2} fps={30} width={1080} height={1920} defaultProps={{ data: D_WCG_2 }} />
-      
+
+      {/* kaspa 30bps (longform-edited) — the video, plus two chart-preview comps whose
+          frame N renders source-time N/30 so a chart still can be checked in isolation. */}
+      <Composition id="Kaspa40Bps" component={Kaspa40Bps} durationInFrames={K40_DURATION} fps={K40_FPS} width={1920} height={1080} />
+      <Composition id="C1Preview" component={C1Preview} durationInFrames={14000} fps={30} width={1920} height={1080} />
+      <Composition id="ChartsPreview" component={ChartsPreview} durationInFrames={14000} fps={30} width={1920} height={1080} />
+
+      {/* kaspa 30bps VERTICAL (1080x1920) — same duration/fps/spine as the 16:9, reframed. */}
+      <Composition id="Kaspa40Vertical" component={Kaspa40Vertical} durationInFrames={K40V_DURATION} fps={K40V_FPS} width={1080} height={1920} />
+      <Composition id="Kaspa40Short" component={Kaspa40Short} durationInFrames={K40S_DURATION} fps={30} width={1080} height={1920} />
+      <Composition id="C1VPreview" component={C1VPreview} durationInFrames={14000} fps={30} width={1080} height={1920} />
+      <Composition id="ChartsVPreview" component={ChartsVPreview} durationInFrames={14000} fps={30} width={1080} height={1920} />
+
+
+      {/* ethereum-rwa (longform-edited) — 16:9, paused spine 12600f */}
+      <Composition id="EthereumRwa" component={EthereumRwa} durationInFrames={ETH_DUR} fps={ETH_FPS} width={1920} height={1080} />
+
+      {/* batch what-if-1000x / clip #2 — whatif-100x-bigger-than-brett (73.90 s @30) */}
+      <Composition id="WhatifBiggerThanBrett" component={WhatifBiggerThanBrett} durationInFrames={W1BB_DURATION} fps={W1BB_FPS} width={1080} height={1920} />
+
+      {/* batch what-if-1000x / clip #7 — whatif-100x-impact (12.567 s @30, impact cut) */}
+      <Composition id="WhatIf7Impact" component={LivestreamShort} durationInFrames={WI7_FRAMES} fps={WI7_FPS} width={1080} height={1920} defaultProps={{ data: D_WI7 }} />
+
+      {/* batch what-if-1000x / clip #3 — october-bottom-self-defeating (59.167 s @30) */}
+      <Composition id="OctoberBottomSelfDefeating" component={LivestreamShort} durationInFrames={OBSD_FRAMES} fps={OBSD_FPS} width={1080} height={1920} defaultProps={{ data: D_OBSD }} />
+
+      {/* batch what-if-1000x / clip #6 — 1000x-math-ladder-impact (24.20 s @30, impact cut) */}
+      <Composition id="MathLadderImpact" component={MathLadderImpact} durationInFrames={MLI_DURATION} fps={MLI_FPS} width={1080} height={1920} />
     </>
   );
 };
