@@ -3,83 +3,161 @@
   "track": "livestream-repurpose",
   "source_livestream": "what-if-1000x",
   "livestream_date": "2026-08-02",
-  "last_updated": "2026-08-02T20:43:11",
+  "last_updated": "2026-08-03",
   "dashboard": "video-creation/shorts/what-if-1000x/dashboard.html",
-  "dashboard_status": "raw cuts awaiting Mike's Phase 4b review (delete calls by clip number)",
-  "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
+  "dashboard_status": "ALL 7 shorts BUILT, GATED (7/7 PASS) and QUEUED 2026-08-03. Staged to schedule-tweets/shorts/what-if-1000x-2026-08-03/, queued in shorts.json (ids wi1-20260803-*), all 7 platforms pending. md5 of every staged copy verified against its FINAL render, including clip 5 after its post-QA re-render.",
+  "numbering_note": "clip numbers frozen at initial dashboard build; Mike deleted clip 8 on 2026-08-03, survivors keep 1-7 and are NEVER renumbered (he refers to clips by number)",
   "clips": [
     {
       "n": 1,
       "slug": "1000x-math-ten-coins",
       "title": "The Realistic 1000x Math: $1,000 Into Ten Coins",
       "variant": "long",
-      "duration_seconds": 102.799,
-      "phase": "cut",
-      "gate": "awaiting-4b-review"
+      "duration_seconds": 73.53,
+      "phase": "8-queued",
+      "gate": "PASS",
+      "output_mp4": "1000x-math-ten-coins/1000x-math-ten-coins-tightened-desilenced.mp4",
+      "build_state_2026_08_03": "DONE 2026-08-03: gate PASS, 8 b-roll beats / 32.1% coverage, 21 SFX, housecoin.webp reference attached to the Housecoin beat, captions reproduced byte-for-byte from the canonical builder. All 4 concepts shared with clip 6 were re-designed (different composition/angle/palette) per the no-duplicate-b-roll rule; no sibling asset read or copied.",
+      "render_mp4": "video-creation/remotion/out/what-if-1000x/1-1000x-math-ten-coins.mp4",
+      "broll_pct": 32.1,
+      "base_showing_pct": 67.9,
+      "sfx_events": 21,
+      "needs_review": [
+        "MIKE EYES: two long deliberate BASE stretches (13.1s over the $913.63K Housecoin CoinMarketCap page while he says \"a 900k market cap\", and 16.9s over the LAB page carrying a live-chat line reading \"spray and prey is a good one great saying\" while he says \"you can't just be random about your plays\"). Both are the clip's receipts and both carry a badge, but they are the longest no-image stretches in the batch. Confirm the pacing reads right.",
+        "Two SFX volumes swept DOWN from the plan (71.28s whoosh 0.38 -> 0.20, riser 0.13 -> 0.10) because the planned mix MASKED the payoff word \"pop\". The payoff impact itself was NOT lowered. Evidence recorded in BROLL-PLAN.md."
+      ],
+      "queue_id": "wi1-20260803-1000x-math-ten-coins"
     },
     {
       "n": 2,
       "slug": "whatif-100x-bigger-than-brett",
       "title": "What If 100x: Bigger Than Brett on a Bigger Chain",
       "variant": "long",
-      "duration_seconds": 124.535,
-      "phase": "cut",
-      "gate": "awaiting-4b-review"
+      "duration_seconds": 73.96,
+      "phase": "8-queued",
+      "gate": "PASS",
+      "output_mp4": "whatif-100x-bigger-than-brett/whatif-100x-bigger-than-brett-tightened-desilenced.mp4",
+      "build_state_2026_08_03": "DONE 2026-08-03: gate PASS, 8 b-roll beats / 31.5% coverage, 19 SFX events, 3 full-screens, whisper-verify clean on the final mix. Builder renamed the 9 temp-named pngs to canonical broll-w1bb-<beat>.png (no image regenerated). Fixed a ghost double-exposure on the last 4 frames (climax tOut sat exactly at comp end so the fade-out dissolved back to Mike's face); tOut parked past the final frame and re-rendered.",
+      "render_mp4": "video-creation/remotion/out/what-if-1000x/2-whatif-100x-bigger-than-brett.mp4",
+      "broll_pct": 31.5,
+      "base_showing_pct": 68.5,
+      "sfx_events": 19,
+      "needs_review": [
+        "CAPTION: on-screen reads \"in december of 2024, not 2020\"; three whisper passes (word-level, full-mix, isolated window) all return 2020 though the clip plan expected \"not 2025\". Left as transcribed rather than invented. Mike's call.",
+        "CAPTION: at 62.68 on-screen reads \"i'll be crazy\"; the full-mix pass reads the more idiomatic \"that would be crazy\". Left as transcribed. One-token edit if Mike prefers."
+      ],
+      "queue_id": "wi1-20260803-whatif-100x-bigger-than-brett"
     },
     {
       "n": 3,
       "slug": "october-bottom-self-defeating",
       "title": "The October Bottom Defeats Itself",
       "variant": "long",
-      "duration_seconds": 87.927,
-      "phase": "cut",
-      "gate": "awaiting-4b-review"
+      "duration_seconds": 59.17,
+      "phase": "8-queued",
+      "gate": "PASS",
+      "output_mp4": "october-bottom-self-defeating/october-bottom-self-defeating-tightened-desilenced.mp4",
+      "build_state_2026_08_03": "DONE 2026-08-03: the interrupted run's render was VERIFIED correct, not re-rendered (gate PASS, 7 b-roll beats / 29.7% coverage, 12 SFX cues all detected by residual analysis, blackdetect+freezedetect clean, zero orphans, 31 pngs across the batch with zero md5 collisions).",
+      "render_mp4": "video-creation/remotion/out/what-if-1000x/3-october-bottom-self-defeating.mp4",
+      "broll_pct": 29.7,
+      "base_showing_pct": 70.3,
+      "sfx_events": 12,
+      "needs_review": [
+        "Draft/chunk-QA step was not repeated after the interrupt; the FINAL render was QA'd at higher rigor instead (16 extracted frames, residual SFX detection, whisper on the final mix). Process gap reported honestly.",
+        "Badge D (50.60-53.40) wraps to two lines and dips ~24px past the green-screen seam into the top of the webcam zone. Frame-verified NOT a collision (clears caption glyph tops by ~23px) but tighter than the other three. Geometry + fix recorded in BROLL-PLAN.md.",
+        "BATCH-WIDE: integrated loudness -17.0 LUFS, under the -14 LUFS social norm. Inherited from the spine (-17.1), NOT introduced by the build, so it affects every clip in this batch equally if Mike wants it raised.",
+        "Final caption is a hand-merged 4-word group (\"but they flipped it\") that exceeds the strict montserrat max-3 rule; it exists to kill a 0.18s orphan caption on the last frame and is within the shorts style guide 2-4 words. Reversible in one line."
+      ],
+      "queue_id": "wi1-20260803-october-bottom-self-defeating"
     },
     {
       "n": 4,
       "slug": "lab-called-20x-did-353x",
       "title": "We Estimated 20x. LAB Did 353x.",
       "variant": "solo",
-      "duration_seconds": 90.559,
-      "phase": "cut",
-      "gate": "awaiting-4b-review"
+      "duration_seconds": 61.2,
+      "phase": "8-queued",
+      "gate": "PASS",
+      "output_mp4": "lab-called-20x-did-353x/lab-called-20x-did-353x-tightened-desilenced.mp4",
+      "build_state_2026_08_03": "DONE 2026-08-03: gate PASS, 7 b-roll beats / 32.8% coverage, 11 SFX (impact lands exactly on 353x), 8 images generated with LAB.png + velvet.png references attached, zero md5 dups, whisper-verify 0.931 similarity with every diff an intended correction. Fixed a 4-frame base flash between adjacent b-roll beats (a sub-EPS gap does NOT hard-cut; butt tOut===tIn).",
+      "render_mp4": "video-creation/remotion/out/what-if-1000x/4-lab-called-20x-did-353x.mp4",
+      "broll_pct": 32.8,
+      "base_showing_pct": 67.2,
+      "sfx_events": 11,
+      "needs_review": [
+        "REJECTED two of the orchestrator's pre-authored caption fixes as WRONG against the audio, with evidence from 3 isolated Whisper passes each: \"i had to list it\" ships as \"i had it listed\" (NOT \"had LAB listed\" - even a LAB-biased prompt never produces \"lab\"), and \"lab as crazy\" ships as \"that's crazy\" (NOT \"it's crazy\"). Both corrected at source in build_captions.py PHRASE_CORRECTIONS and the captions file regenerated, never hand-edited.",
+        "JUDGMENT CALL for Mike: \"i was just nuts\" shipped as \"it was just nuts\". An isolated pass still hears \"I\", but \"I was just nuts how that worked out\" is ungrammatical and \"I was just nuts\" on screen reads as Mike calling himself nuts (persona: never self-deprecating). Vetoable.",
+        "SHARED-FILE EDIT: two entries changed in video-creation/skills/captions/build_captions.py PHRASE_CORRECTIONS, scoped to this clip's block and keyed on token runs unique to this clip.",
+        "Max base gap 11.73s (29.55-41.28) is deliberate: the CoinMarketCap LAB chart IS the receipt in that stretch."
+      ],
+      "queue_id": "wi1-20260803-lab-called-20x-did-353x"
     },
     {
       "n": 5,
       "slug": "whatif-next-dogecoin",
       "title": "What If Could Be the Next Dogecoin",
       "variant": "solo",
-      "duration_seconds": 101.823,
-      "phase": "cut",
-      "gate": "awaiting-4b-review"
+      "duration_seconds": 64.8,
+      "phase": "8-queued",
+      "gate": "PASS",
+      "output_mp4": "whatif-next-dogecoin/whatif-next-dogecoin-tightened-desilenced.mp4",
+      "build_state_2026_08_03": "DONE 2026-08-03: gate PASS, 7 b-roll beats / 31.4% coverage, 16 SFX, what-if.jpg reference on 4 generations. Fixed an SFX masking defect: the two cover-cut whooshes were swallowing the token's OWN NAME (\"the WHAT IF\" transcribed as \"the 1F\"); swept 0.42->0.30 and 0.46->0.22 until Whisper recovered it, then re-rendered. Also smoothed a 76x88px region of the climax statue in place (front-facing anatomical detail = platform-moderation risk on IG/TikTok/YT); no regeneration, no beat remap.",
+      "queue_id": "wi1-20260803-whatif-next-dogecoin",
+      "broll_pct": 31.4,
+      "base_showing_pct": 68.6,
+      "sfx_events": 16,
+      "needs_review": [
+        "JUDGMENT CALL: the closing caption ships as \"lists what if / right?\". Every 1x Whisper pass hears \"...Robin Hood lists WHAT IF, right?\"; only time-stretched passes hear \"run it\". The orchestrator-supplied fix (\"lists it and it runs\") would have REPLACED the \"what if\" every pass hears, so it was rejected and the rule DELETED from build_captions.py. Override if you know from the livestream what was actually said.",
+        "broll_max_gap 13.1s is deliberate: it is the on-screen HTX/Gate.io/MEXC research receipt, which the halved budget requires showing."
+      ]
     },
     {
       "n": 6,
       "slug": "1000x-math-ladder-impact",
       "title": "1000x Math Ladder (Impact Cut)",
       "variant": "short",
-      "duration_seconds": 34.023,
-      "phase": "cut",
-      "gate": "awaiting-4b-review"
+      "duration_seconds": 24.2,
+      "phase": "8-queued",
+      "gate": "PASS",
+      "output_mp4": "1000x-math-ladder-impact/1000x-math-ladder-impact-tightened-desilenced.mp4",
+      "build_state_2026_08_03": "DONE 2026-08-03: gate PASS, 4 b-roll beats / 33.6% coverage, 11 SFX cues measured present by peak-delta vs spine, whisper-verify returns the full VO verbatim. Zero images regenerated. Own draft deleted.",
+      "render_mp4": "video-creation/remotion/out/what-if-1000x/6-1000x-math-ladder-impact.mp4",
+      "broll_pct": 33.6,
+      "base_showing_pct": 66.4,
+      "sfx_events": 11,
+      "needs_review": [
+        "By design: broll_max_gap_s 10.15s is a DELIBERATE base stretch, not a missing beat. The code-drawn ladder overlay lands a new rung at 11.70/13.76/15.76/17.76s so the frame still changes every 1.1-2.1s while the screen-share stays visible.",
+        "MINOR: caption \"all right.\" holds only 0.24s (7 frames), the canonical builder's own sentence-break grouping. Left as-is rather than hand-merged."
+      ],
+      "queue_id": "wi1-20260803-1000x-math-ladder-impact"
     },
     {
       "n": 7,
       "slug": "whatif-100x-impact",
       "title": "100x From Here (Impact Cut)",
       "variant": "short",
-      "duration_seconds": 20.463,
-      "phase": "cut",
-      "gate": "awaiting-4b-review"
-    },
-    {
-      "n": 8,
-      "slug": "october-90-percent-impact",
-      "title": "90% Believe October. So It Won't Be. (Impact Cut)",
-      "variant": "short",
-      "duration_seconds": 15.527,
-      "phase": "cut",
-      "gate": "awaiting-4b-review"
+      "duration_seconds": 12.57,
+      "phase": "8-queued",
+      "gate": "PASS",
+      "output_mp4": "whatif-100x-impact/whatif-100x-impact-tightened-desilenced.mp4",
+      "build_state_2026_08_03": "DONE 2026-08-03: gate PASS, 3 b-roll beats / 33.8% coverage, 6 SFX, what-if.jpg reference on both $WHATIF beats + cover + watermark. FIXED the misplaced assets: moved logo/sfx/spine from the batch-root render-assets/ into the clip folder and removed the stray batch-root folder (it broke convention and would have collided across the 5 parallel builders). Applied clip 2's lesson: closing beat tOut parked past the last frame so the payoff never ghosts back onto Mike's face. Hard-out preserved, no CTA or tail beat.",
+      "render_mp4": "video-creation/remotion/out/what-if-1000x/7-whatif-100x-impact.mp4",
+      "broll_pct": 33.8,
+      "base_showing_pct": 66.2,
+      "sfx_events": 6,
+      "needs_review": [],
+      "queue_id": "wi1-20260803-whatif-100x-impact"
     }
   ],
-  "resume_protocol": "Phase 4b: Mike reviews dashboard.html and names clips to delete by number. Then per surviving clip: tighten-strategist -> tighten -> 2nd review -> desilence (5B) -> filler pass (5C, optional) -> captions (6) -> remotion-builder (7) -> publish-shorts (8). STT garble fixes for captions are listed in clip-plan.json stt_garble_flags."
+  "resume_protocol": "Batch complete through the schedule-tweets handoff. Posting cadence/order is a schedule-tweets decision (playbooks/posting.md), NOT a repurpose-lane step. Do NOT re-run publish-shorts for this batch, and NEVER under a different --date (the id dedupe is on id, so a new date re-queues already-published clips).",
+  "phase": "8-published",
+  "status": "queued_pending",
+  "tighten_log": "video-creation/shorts/what-if-1000x/tighten_log.json",
+  "tighten_plan": "video-creation/shorts/what-if-1000x/tighten-plan.json",
+  "build_incident": "2026-08-03: the first 7 parallel remotion-builder agents were all killed mid-run by an API session limit (reset 12:40pm ET). No defect in their work. Two stage locks were left HELD by dead owners (chatgpt 208 min, render 200 min), which had blocked clips 1/4/5 from generating any b-roll; locks cleared manually before relaunch. Relaunching in WAVES OF THREE instead of all seven so a future limit hit cannot destroy every in-flight build at once. Builders are told to RESUME (verify + finish) and never to regenerate images already on disk.",
+  "publish_hazard": "BEFORE running publish-shorts: sweep every _draft-*.mp4 out of video-creation/remotion/out/what-if-1000x/. publish-shorts.py globs EVERY *.mp4 in that folder and would queue the drafts as if they were clips. Do the sweep only after ALL builders report (a live builder's draft must not be deleted out from under it).",
+  "caption_flag_lesson": "IMPORTANT (found on clip 3, 2026-08-03): clip-plan.json stt_garble_flags were derived from the ORIGINAL master transcript and DO NOT all survive into the per-clip Whisper-medium transcripts. On clip 3 two flagged garbles (\"I'm sell\"->\"I'll sell\", \"phone moment\"->\"FOMO moment\") did not exist at all; the spine actually says \"so I'm going to sell\" and \"buying in out of FOMO\". Applying them blindly would have made the captions WRONG against the audio. Every builder must VERIFY a flagged garble actually appears in its own whisper-words.json before correcting it.",
+  "render_gop_finding": "BATCH-WIDE RENDER BUG (found on clip 6, 2026-08-03): the desilenced spines ship a 250-frame GOP (keyframes only every ~10s) with B-frames. Under Remotion's 8 concurrent OffthreadVideo seeks this fails intermittently with \"No frame found at position N\" and kills the render mid-way (clip 6 died at frame 565). It is NOT disk pressure and NOT an edit defect. FIX: re-encode the RENDER-ASSETS COPY ONLY to a seek-friendly GOP (-crf 16 -g 25 -keyint_min 25 -bf 0 -sc_threshold 0 -vsync cfr -r 25 -c:a copy), audio stream copied bit-identical, PSNR 51-53 dB. The canonical <slug>-tightened-desilenced.mp4 spine is NEVER touched (this is not a re-cut and not a re-desilence). Relay this to any builder whose render dies the same way.",
+  "broll_adjacency_finding": "BUILD FINDING (clip 4, 2026-08-03): BrollLayer's ~0.18s adjacency EPS window only suppresses the FADES between two beats; findIndex still returns -1 across the gap, so the base video FLASHES for a few frames. Any plan relying on a sub-EPS gap to \"hard cut\" between two b-roll beats is wrong: butt the windows exactly (tOut === tIn).",
+  "vo_masking_finding": "QA WORKING AS DESIGNED (clip 1, 2026-08-03): whisper-verifying the FINAL MIX (not the spine) caught a 0.38-gain whoosh swallowing the payoff word \"pop\" at 71.36s. Swept offline against Whisper until the word returned (0.20), never lowering the payoff impact itself. This is the exact failure mode the contract calls out: an SFX cue that masks the VO is a build defect, not a mixing taste call."
 }

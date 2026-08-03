@@ -1,5 +1,5 @@
 {
-  "$doc": "Registry of the ChatGPT chats used for image generation, grouped by PURPOSE. Every image-gen script (repurpose/gen-images.js, gen-batch-freshchat.js, generate-broll-wlw.js, etc.) consults this via repurpose/chat-pool.js. A ChatGPT chat degrades past ~25 images (stops rendering OR returns off-prompt/style-contaminated images), so each chat is capped and auto-rotated. Chats are also keyed by purpose so different visual styles never share a chat and cross-contaminate. Flow: getActiveUrl(purpose) -> if a chat for that purpose has count<cap, reuse it; else the caller opens a fresh chatgpt.com/ chat, generates, captures the /c/<id> URL, and registerNewChat() replaces the full one. A replaced/dead chat is MOVED to the retired list and then DELETED in the ChatGPT UI (chats are disposable: every image is downloaded at generation time) -- the gen scripts sweep retired at end of run via chat-delete.js, and repurpose/delete-chats.js (spawned by cleanup/cleanup.js) sweeps leftovers. Optional per-chat batch = a batches.json id; when that batch is completed/archived, delete-chats.js retires+deletes the chat (no batch = evergreen purpose, rotation-only deletion; batch matching no batches.json entry = kept). recordImage(purpose) increments only on a SUCCESSFUL save. markDead(purpose) retires a chat that would not load (conversation-not-found) so a fresh one is made. TITLE CONVENTION (Mike 2026-07-22): confirmAndRegister() renames every automation chat at registration to start with \"b-roll\" (purposes containing broll) or \"social\" (all other image purposes); that live-title prefix is the ULTIMATE deletion gate — chat-delete.js refuses to delete any chat whose title does not start with b-roll/social (refusals recorded on title_gate_skipped). Registration is API-confirmed (real conversation id, never bare page.url()): the 2026-07 capture bug stored ids that 404d while real chats piled up unregistered; all dead entries were purged 2026-07-22 and every purpose re-seeds fresh on next use.",
+  "$doc": "Registry of the ChatGPT chats used for image generation, grouped by PURPOSE. Every image-gen script (repurpose/gen-images.js, gen-batch-freshchat.js, generate-broll-wlw.js, etc.) consults this via repurpose/chat-pool.js. A ChatGPT chat degrades past ~25 images (stops rendering OR returns off-prompt/style-contaminated images), so each chat is capped and auto-rotated. Chats are also keyed by purpose so different visual styles never share a chat and cross-contaminate. Flow: getActiveUrl(purpose) -> if a chat for that purpose has count<cap, reuse it; else the caller opens a fresh chatgpt.com/ chat, generates, captures the /c/<id> URL, and registerNewChat() replaces the full one. A replaced/dead chat is MOVED to the retired list and then DELETED in the ChatGPT UI (chats are disposable: every image is downloaded at generation time) -- the gen scripts sweep retired at end of run via chat-delete.js, and repurpose/delete-chats.js (spawned by cleanup/cleanup.js) sweeps leftovers. Optional per-chat batch = a batches.json id; when that batch is completed/archived, delete-chats.js retires+deletes the chat (no batch = evergreen purpose, rotation-only deletion; batch matching no batches.json entry = kept). recordImage(purpose) increments only on a SUCCESSFUL save. markDead(purpose) retires a chat that would not load (conversation-not-found) so a fresh one is made. TITLE CONVENTION (Mike 2026-07-22): confirmAndRegister() renames every automation chat at registration to start with \"b-roll\" (purposes containing broll) or \"social\" (all other image purposes); that live-title prefix is the ULTIMATE deletion gate — chat-delete.js refuses to delete any chat whose title does not start with b-roll/social (refusals recorded on title_gate_skipped). AUTO-TITLE RACE (2026-07-30): ChatGPT titles a new conversation asynchronously, and when that landed after the gated rename it silently overwrote it (chat showed e.g. 'Cinematic Trading Hall'); confirmAndRegister now waits out the auto-title before renaming, and sweepRetired first runs healTitles(), which re-renames any registry chat whose recorded gated `title` (verified-rename provenance = ours) no longer matches the live title, requeueing healed title_gate_skipped entries for deletion. Entries without that provenance are never touched. Registration is API-confirmed (real conversation id, never bare page.url()): the 2026-07 capture bug stored ids that 404d while real chats piled up unregistered; all dead entries were purged 2026-07-22 and every purpose re-seeds fresh on next use.",
   "cap": 25,
   "purposes": [
     "x-tweets",
@@ -11,24 +11,48 @@
   ],
   "chats": [
     {
-      "purpose": "x-tweets",
-      "url": "https://chatgpt.com/c/6a615a68-c960-83ea-8bfe-1f2d0e783c4a",
+      "purpose": "ig-single",
+      "url": "https://chatgpt.com/c/6a635274-e3a8-83ea-810e-19f97a8cb0a3",
       "count": 7,
-      "created_at": "2026-07-23T00:05:30.708Z",
+      "created_at": "2026-07-24T11:56:03.482Z",
+      "title": "social: ig-single"
+    },
+    {
+      "purpose": "longform-broll",
+      "url": "https://chatgpt.com/c/6a650c69-c23c-83ea-a79c-a0512d366bef",
+      "count": 6,
+      "created_at": "2026-07-25T19:22:20.391Z",
+      "batch": "kaspa-30bps-vertical",
+      "title": "b-roll: longform-broll"
+    },
+    {
+      "purpose": "x-tweets",
+      "url": "https://chatgpt.com/c/6a69f621-37ac-83ea-933a-1796e30364e9",
+      "count": 7,
+      "created_at": "2026-07-29T12:48:28.236Z",
       "title": "social: x-tweets"
     },
     {
       "purpose": "yt-posts",
-      "url": "https://chatgpt.com/c/6a615fdd-7ab8-83ea-825c-c61f34ef178e",
-      "count": 12,
-      "created_at": "2026-07-23T00:28:55.038Z",
+      "url": "https://chatgpt.com/c/6a6a0129-bb58-83ea-ab1a-1fa468d8cc1a",
+      "count": 20,
+      "created_at": "2026-07-29T13:35:39.996Z",
       "title": "social: yt-posts"
     },
     {
+      "purpose": "broll-ref",
+      "url": "https://chatgpt.com/c/6a70cab0-e988-83ea-9a9b-33113d126757",
+      "count": 1,
+      "created_at": "2026-08-03T17:08:52.272Z",
+      "batch": "what-if-1000x",
+      "title": "b-roll: broll-ref"
+    },
+    {
       "purpose": "broll",
-      "url": "https://chatgpt.com/c/6a622988-f588-83ea-8f62-e1ef70ba1ef6",
-      "count": 20,
-      "created_at": "2026-07-23T14:49:20.861Z",
+      "url": "https://chatgpt.com/c/6a70de41-90a8-83ea-821e-93c7ebe71260",
+      "count": 3,
+      "created_at": "2026-08-03T18:32:27.856Z",
+      "batch": "what-if-1000x",
       "title": "b-roll: broll"
     }
   ],

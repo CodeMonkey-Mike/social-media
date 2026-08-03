@@ -26,8 +26,68 @@
   },
   "batches": [
     {
-      "batch": "October-pumps",
+      "batch": "what-if-1000x",
       "status": "active",
+      "date": "2026-08-02",
+      "livestream_title": "what-if-1000x LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/what-if-1000x/what-if-1000x LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/what-if-1000x LOW BPS VERTICAL/what-if-1000x LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/what-if-1000x LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/what-if-1000x/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/what-if-1000x",
+        "video-creation/shorts/what-if-1000x"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      },
+      "note": "Wave 1 LangGraph intake bless batch (2026-08-02). All 3 lanes DONE: Lane 1 longform queued (lf-20260802-what-if-1000x, thumbnail staged 2026-08-03), Lane 2 shorts 7/8 built+queued (clip 8 deleted at Phase 4b), Lane 3 text/image done incl. both YT carousels."
+    },
+    {
+      "batch": "new-bottom",
+      "status": "completed",
+      "date": "2026-07-25",
+      "livestream_title": "new bottom LOW BPS VERTICAL",
+      "shorts_source": "schedule-tweets/shorts/new-bottom-2026-07-25",
+      "source_media": "video-creation/livestream-repurpose/media/new bottom/new bottom LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/new bottom LOW BPS VERTICAL/new bottom LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/new bottom LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/new-bottom/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/new-bottom",
+        "video-creation/shorts/new-bottom"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      },
+      "note": "livestream-repurpose 2026-07-25 via /repurpose-livestream. Per-run override: no X threads, no YT posts, EXACTLY 4 clips. ALL LANES DONE. Lane1: longform desilenced 26:33->20:21, queued lf-20260725-new-bottom (rumble/bitchute/facebook pending). Lane2: 4 clips selected -> approved -> tightened (12.5-14.3%) -> desilenced (250ms single-zone x3, two-zone on kaspa-dagknight-100x to protect its dramatic pause) -> Phase 7 remotion-builder x4 PARALLEL via stage_lock (all gates PASS; b-roll cut ~50% per Mike mid-build, 4 images/25.3-27.0% coverage each, at the floor of the 25-35% band) -> Phase 8 published via publish-shorts.py, staged + MD5-verified, shorts.json filled in persona voice (ids nb-20260725-*, 7 platforms pending). Lane3: 4 tweets+2 one-liners+images, 2 IG 4:5 (Kaspa-ecosystem), 2 YT polls mirrored to X polls; all fact-checked live. Open flags: no DAGKnight Dog reference logo (clip 2 climax used generic treatment); clip 3 b-roll asset had stray Bitcoin marks, cropped clean rather than regenerated. NEXT: sequential per-platform posting, Mike-gated (YT via post-yt-short-api.js only)."
+    },
+    {
+      "batch": "whatif",
+      "status": "completed",
+      "date": "2026-07-24",
+      "livestream_title": "whatif LOW BPS VERTICAL",
+      "shorts_source": "schedule-tweets/shorts/whatif-2026-07-24",
+      "source_media": "video-creation/livestream-repurpose/media/whatif/whatif LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/whatif LOW BPS VERTICAL/whatif LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/whatif LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/whatif/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/whatif",
+        "video-creation/shorts/whatif"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      },
+      "note": "livestream-repurpose 2026-07-24 via /repurpose-livestream. Per-run override: 3 clips, 1 YT post, 1 thread. ALL 3 LANES DONE. Lane1: longform desilenced 41:26->29:58 (fast NVENC), queued lf-20260724-whatif (rumble/bitchute/facebook pending). Lane3: 6 tweets+imgs, 2 IG 4:5 (Kaspa), 2 YT polls (1 also X poll), 1 YT post + v4 carousel(5), 1 thread; all 13 images visual-QA PASS. Lane2: 3 clips (october-bottom-front-run, 89-percent-kaspa-over-dollar, whatif-peanut-52x); Mike removed the 4-hour-candle joke from clip3; tighten -10/10/15% + desilence (clip2 disbelief-pause protected); 3 remotion-builds PARALLEL via stage_lock, all gate PASS; published to shorts.json w-20260724-* (7 platforms pending). STT: Casper=Kaspa, tau/towel=TAO, knighthood=NineHood, nyx=MYX. NEXT: sequential per-platform posting, Mike-gated."
+    },
+    {
+      "batch": "October-pumps",
+      "status": "completed",
       "date": "2026-07-21",
       "livestream_title": "October-pumps LOW BPS VERTICAL",
       "shorts_source": "schedule-tweets/shorts/October-pumps-2026-07-23",
@@ -537,7 +597,7 @@
     {
       "batch": "pump-season-is-back",
       "track": "livestream-repurpose",
-      "status": "active",
+      "status": "completed",
       "date": "2026-07-08",
       "livestream_title": "Pump Season is Back! - Market Update",
       "title": null,
@@ -552,7 +612,7 @@
       ],
       "pipelines": {
         "shorts": "clips-approved-remotion-pending",
-        "repurpose": "pending",
+        "repurpose": "done",
         "longform": "done"
       },
       "note": "livestream repurpose run 2026-07-08 via /repurpose-livestream; 44.5 min source."
@@ -581,7 +641,7 @@
     },
     {
       "batch": "clarity-act",
-      "status": "active",
+      "status": "completed",
       "date": "2026-07-19",
       "livestream_title": "Clarity Act + Robinhood Memes (Sunday stream)",
       "shorts_source": null,
@@ -602,7 +662,7 @@
     {
       "batch": "rh-overtakes-base",
       "track": "longform-edited",
-      "status": "active",
+      "status": "completed",
       "date": "2026-07-23",
       "livestream_title": null,
       "title": "Robinhood Chain Overtakes Base on Daily Active Users",
@@ -620,6 +680,30 @@
         "longform": "skip"
       },
       "note": "One-off vertical short (76.1s, 1080x1920) authored by Mike 2026-07-23 off the Topic Radar find (The Defiant: Robinhood Chain overtakes Base on DAU, July 21). Not a livestream repurpose, so publish-shorts.py did not apply; staged by hand against the PUBLISH-SHORTS.md schema. Queued at shorts.json index 0 to post ahead of the existing backlog."
+    },
+    {
+      "batch": "peach-minute",
+      "track": "livestream-repurpose",
+      "status": "completed",
+      "date": "2026-07-27",
+      "livestream_title": "peach-minute",
+      "title": "Kaspa Hate Is At An All Time High, And That Is The Signal",
+      "shorts_source": "video-creation/livestream-repurpose/media/peach-minute/peach-minute LOW BPS VERTICAL.mp4",
+      "source_media": "video-creation/livestream-repurpose/media/peach-minute/",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/peach-minute LOW BPS VERTICAL/peach-minute LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/peach-minute LOW BPS VERTICAL/",
+      "dashboard": "video-creation/shorts/peach-minute/dashboard.html",
+      "directories": [
+        "video-creation/livestream-repurpose/media/peach-minute",
+        "video-creation/livestream-repurpose/transcripts/peach-minute LOW BPS VERTICAL",
+        "video-creation/shorts/peach-minute",
+        "schedule-tweets/longform/peach-minute"
+      ],
+      "pipelines": {
+        "shorts": "done",
+        "repurpose": "done"
+      },
+      "note": "Livestream 2026-07-27 (51:15). Lane 1 longform queued (longs.json lf-20260729-peach-minute). Lane 3 repurpose done. Lane 2: 8 clips cut, Mike deleted 1/6/7/8, remaining 4 tightened + desilenced (450ms), Remotion-built (all 4 gates PASS), and published to shorts.json as peach-minute-2026-07-29 with all 7 platforms pending. Numbering frozen at 2,3,4,5."
     }
   ]
 }

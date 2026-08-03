@@ -6,6 +6,123 @@ linkedin-automation/PROJECT-LOG.md.)_
 
 ---
 
+## 2026-08-03 (later) — `what-if-1000x` BATCH COMPLETE: all 7 shorts built, gated and queued
+
+All three lanes are now done. **7 shorts built through Phase 7 and queued** (`wi1-20260803-*`, staged to
+`schedule-tweets/shorts/what-if-1000x-2026-08-03/`, all 7 platforms `pending`, every staged md5 matching
+its render, persona-lint clean). Longform thumbnail staged and `thumbnail_path` patched. `batches.json`
+→ `shorts: done`, `repurpose: done`.
+
+| n | short | final | b-roll | SFX |
+|---|---|---|---|---|
+| 1 | 1000x-math-ten-coins | 73.6s | 32.1% | 21 |
+| 2 | whatif-100x-bigger-than-brett | 74.0s | 31.5% | 19 |
+| 3 | october-bottom-self-defeating | 59.3s | 29.7% | 12 |
+| 4 | lab-called-20x-did-353x | 61.3s | 32.8% | 11 |
+| 5 | whatif-next-dogecoin | 64.8s | 31.4% | 16 |
+| 6 | 1000x-math-ladder-impact | 24.3s | 33.6% | 11 |
+| 7 | whatif-100x-impact | 12.6s | 33.8% | 6 |
+
+### THE INCIDENT — 7 parallel builders all killed at once, and a 200-minute lock wedge
+
+The first fleet of 7 `remotion-builder` agents was killed mid-run by an **API session limit**. No defect
+in their work, but two consequences worth institutionalizing:
+
+1. **Dead agents left both stage locks HELD** (`chatgpt` 208 min, `render` 200 min). `stage_lock.py`
+   auto-breaks at 90 min, but only on a NEW acquire attempt, and the three blocked builders had already
+   entered their poll loop and never re-evaluated. Net effect: clips 1/4/5 spent their entire lives
+   queued behind a corpse and generated **zero** b-roll. Locks had to be cleared by hand.
+2. **Relaunching in waves of 3 beat relaunching all 7**, purely for blast radius. Builders were handed a
+   verified on-disk inventory and told to RESUME (verify + finish), never to regenerate an existing
+   image. Zero images were regenerated across the whole recovery.
+
+### Findings the builders surfaced (all now in `progress.json`)
+
+- **`clip-plan.json` `stt_garble_flags` DO NOT all survive into the per-clip Whisper-medium transcripts.**
+  They were derived from the original master transcript. Clip 3 found two flagged garbles that did not
+  exist at all ("I'm sell", "phone moment"); clip 4 **rejected two orchestrator-authored fixes as wrong
+  against the audio** with 3 isolated Whisper passes each ("i had **it** listed", not "had LAB listed";
+  "**that's** crazy", not "it's crazy") and corrected them at source in `build_captions.py`. **Every
+  builder must verify a flagged garble against its OWN whisper-words.json before applying it.**
+- **Desilenced spines ship a 250-frame GOP with B-frames** → Remotion's 8 concurrent `OffthreadVideo`
+  seeks fail intermittently with `No frame found at position N` and kill the render mid-way (clip 6, at
+  frame 565). Fix: re-encode the **render-assets copy only** to a seek-friendly GOP
+  (`-g 25 -keyint_min 25 -bf 0 -sc_threshold 0`); the canonical spine is never touched.
+- **A sub-EPS gap does NOT hard-cut two adjacent b-roll beats** (clip 4): `BrollLayer`'s adjacency window
+  only suppresses the FADES, `findIndex` still returns -1 across the gap, so the base flashes for a few
+  frames. **Butt the windows exactly (`tOut === tIn`).**
+- **A closing beat whose `tOut` sits exactly at the comp end ghosts** (clip 2): its fade-out plays over
+  the last frames and dissolves the artwork back onto Mike's face. Park `tOut` past the final frame.
+- **Whisper-verifying the FINAL MIX earned its keep, twice.** Clip 1: a 0.38-gain whoosh was swallowing
+  the payoff word "pop" (swept to 0.20 until it returned; the payoff impact itself was never lowered).
+  Clip 5, worse: the two cover-cut whooshes were masking **the token's own name** ("the WHAT IF"
+  transcribing as "the 1F"); 0.46/0.32/0.26/0.24 all still failed, 0.22 restored it, and the clip was
+  re-rendered. **A cue that masks the VO is a build defect, not a mixing taste call.**
+- **Persona inspection is a platform-safety gate too** (clip 5): the generated climax statue came back
+  front-facing with explicit anatomical detail, a moderation risk on IG/TikTok/YT. Fixed with a localized
+  tone-matched smoothing of a 76x88 px region in place, no regeneration and no beat remap.
+
+### Open for Mike
+
+- Caption judgment calls: clip 2 "in december of 2024, not **2020**" (3 passes agree, plan expected 2025)
+  and "i'll be crazy"; clip 4 "**it** was just nuts" (isolated pass still hears "I", but "I was just nuts"
+  reads as self-deprecating). All vetoable in one token each.
+- **BATCH-WIDE: integrated loudness ~-17 LUFS**, under the -14 social norm, inherited from the spines and
+  NOT introduced by the builds. One normalization decision across the batch if he wants it raised.
+- Clip 1 carries the two longest no-image stretches (13.1s over the $913.63K Housecoin CMC page, 16.9s
+  over the LAB page). Both deliberate receipts, both badge-carried; pacing worth his eye.
+- Clip 5's closing caption ships as "lists what if, right?". Every 1x Whisper pass hears "...Robin Hood
+  lists WHAT IF, right?"; only time-stretched passes hear "run it". The orchestrator-supplied fix
+  ("lists it and it runs") would have REPLACED the "what if" every pass hears, so it was rejected and
+  the rule deleted from `build_captions.py`. Override only from the livestream itself.
+
+> **Publish-time note:** clip 5 was queued while its builder was still running, then its report revealed
+> a post-QA re-render. The staged copy was re-md5'd against the final render and MATCHED (the re-render
+> landed before the publish), so nothing was stale. **All 7 staged copies verified against their FINAL
+> renders.** This is the 2026-07-23 hazard and the md5 sweep is what makes publishing-before-every-report
+> survivable: nothing posts until Mike runs a poster, so a stale stage is always recoverable.
+
+---
+
+## 2026-08-03 — `what-if-1000x`: Lane 3 carousels DONE + Phase 4b verdict executed (clip 8 deleted, 1-7 tightened + desilenced)
+
+**Lane 3 finished.** The two YT carousels are complete: slide 02 (`b6795e2f`) was recovered from
+the yt-posts pool chat (it HAD finished server-side when the 2026-08-02 run was stopped — probed the
+chat read-only, downloaded, never re-sent), slides 03-10 generated via `gen-images.js` one item per
+invocation (pool chat now 20/25). All 10 spot-QA'd clean. `images[]` wired onto
+`yt-post-2026-08-02-whatif-vs-pepe` (Post A) + `yt-post-2026-08-02-1000x-math` (Post B) from
+`l3-car-meta.json`; persona-lint clean on both (28 flags in file are all pre-existing posted
+entries). `batches.json` → `pipelines.repurpose: "done"`.
+
+**Phase 4b verdict (Mike): delete clip 8, keep 1-7.** `october-90-percent-impact/` folder removed;
+survivors keep their frozen numbers.
+
+**Phase 5 + 5B run (per Mike, 2nd review moved after desilence).** 7 tighten-strategist agents
+(one per clip, parallel) authored `tighten-plan.json`; new per-batch script
+`scripts/tighten_clips_whatif1000x.py` (modeled verbatim on the October-pumps reference: master-
+absolute cuts, 8 ms declick, voiced-content ceiling gate vs Whisper words, canonical
+`delete_silences.py` on a copy) executed it. All 7 clips passed the 15% voiced ceiling:
+
+| n | clip | raw → final | voiced cut |
+|---|---|---|---|
+| 1 | 1000x-math-ten-coins | 102.5s → 73.6s (-28.3%) | -14.6% |
+| 2 | whatif-100x-bigger-than-brett | 124.2s → 73.9s (-40.5%) | -14.1% |
+| 3 | october-bottom-self-defeating | 87.8s → 59.2s (-32.7%) | -12.9% |
+| 4 | lab-called-20x-did-353x | 90.3s → 61.2s (-32.2%) | -13.2% |
+| 5 | whatif-next-dogecoin | 101.5s → 64.8s (-36.2%) | -10.6% |
+| 6 | 1000x-math-ladder-impact | 33.9s → 24.2s (-28.7%) | -10.1% |
+| 7 | whatif-100x-impact | 20.4s → 12.6s (-38.4%) | -12.3% |
+
+Dashboard rebuilt IN PLACE with the tightened+desilenced clips → **awaiting Mike's 2nd review**;
+only then 5C (optional) → captions → remotion-builder → publish. Extra caption-time STT fixes
+surfaced by the strategists are in `tighten-plan.json` notes (clip 4: "had LAB listed", "off of
+LAB"; clip 1: ~3171.3 "your plays").
+
+**Still open:** Mike's longform thumbnail PNG (`lf-20260802-what-if-1000x` thumb still null) ·
+$WHATIF X handle for `persona.json`.
+
+---
+
 ## 2026-08-02 — Wave 1 intake graph: built, committed, LIVE-BLESSED (with findings) on `what-if-1000x`
 
 **Migration status:** Wave 1 (intake: Ph1 LOW BPS + Lane 1 longform + 1B verticalize + Ph2
