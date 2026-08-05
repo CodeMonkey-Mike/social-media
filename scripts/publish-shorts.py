@@ -167,7 +167,10 @@ def main():
 
     if not src_dir.is_dir():
         raise SystemExit(f"ERROR: render folder not found: {src_dir}")
-    mp4s = sorted(src_dir.glob("*.mp4"), key=sort_key)
+    # skip _* files: builders park draft proxies (_draft-*.mp4) in the render folder,
+    # and a draft that reaches the queue is a publish hazard (2026-08-05 october-bottom)
+    mp4s = sorted((p for p in src_dir.glob("*.mp4") if not p.name.startswith("_")),
+                  key=sort_key)
     if not mp4s:
         raise SystemExit(f"ERROR: no .mp4 files in {src_dir}")
 

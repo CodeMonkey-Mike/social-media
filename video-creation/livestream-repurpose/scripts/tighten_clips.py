@@ -1,268 +1,471 @@
+"""tighten_clips.py — CANONICAL Phase 5 tighten + 5B desilence (livestream-repurpose shorts, Wave 3).
+
+De-forks the per-batch `tighten_clips_<batch>.py` scripts (ORCHESTRATOR-PLAN.md
+§"Livestream-repurpose migration plan" wave 3). The per-batch forks are FROZEN as rollback
+reference — `tighten_clips_october_bottom.py` (modeled on the whatif1000x reference) is the
+blueprint this canonicalizes. New batches run this one script, parameterized by --batch,
+wrapped by the tighten segment of graph/shorts_graph.py (or invoked directly with --stage all).
+
+Reads shorts/<batch>/tighten-plan.json (the tighten-strategist's judgment artifact) plus
+clip-plan.json (segments / assembly_order / titles, incl. Mike's 4b retitles), and executes
+against the VERTICAL MASTER at absolute timestamps (never against a preview):
+
+  tighten    per clip: segments IN assembly_order -> apply boundary_relock (uncapped,
+             excluded from the ceiling) -> subtract the strategist's removals, guarded by
+             the VOICED-CONTENT ceiling measured against Whisper word spans (~10% target,
+             15% HARD ceiling — computed here, never trusted from the plan) -> render each
+             keep span off the master with an 8 ms declick fade in/out -> concat ->
+             <slug>/<slug>-tightened.mp4 -> 5B: the ONE canonical desilencer
+             (skills/desilencer/scripts/desilence.py) renders
+             <slug>/<slug>-tightened-desilenced.mp4 at the CALLER'S --min-sil
+             (Mike's per-batch knob, recent batches 0.25 and 0.45; NEVER defaulted here,
+             per the desilencer doctrine) -> every span logged to tighten_log.json
+  finalize   rebuilds the ONE dashboard.html IN PLACE (canonical builder, never a second
+             file) + patches progress.json to the 2nd-review gate — REFUSES to touch a
+             batch whose progress is already past 5B (--force to override)
+  all        both (the manual one-shot; the graph runs the stages as separate nodes)
+
+ORDER IS LOAD-BEARING: raw cut -> tighten -> desilence. Silence removal only removes gaps;
+the tighten pass is what removes spoken content. 4b deletes never renumber survivors.
+
+5B note: the frozen forks called scripts/delete_silences.py (a thin wrapper that bakes the
+250 ms shorts default). The canonical script calls the same underlying tool the wrapper
+calls — skills/desilencer/scripts/desilence.py — directly, because the min-sil is Mike's
+per-batch call and must never be baked. delete_silences.py remains for hand runs.
+
+Single-clip corrections: `--only <slug> [<slug> ...]` re-renders only those clips and reuses
+the previous tighten_log entries for the rest; the dashboard still rebuilds from the COMPLETE
+set (fork behavior, kept).
+
+Usage:
+    python video-creation/livestream-repurpose/scripts/tighten_clips.py --batch <batch>
+        --min-sil 0.25 [--stage all|tighten|finalize] [--plan PATH] [--clip-plan PATH]
+        [--master PATH] [--transcript PATH] [--out-base DIR] [--title TEXT]
+        [--subtitle TEXT] [--only SLUG ...] [--force]
+
+Defaults: plan = video-creation/shorts/<batch>/tighten-plan.json · clip-plan =
+video-creation/shorts/<batch>/clip-plan.json · master = the clip-plan's `source_vertical` ·
+transcript = video-creation/livestream-repurpose/transcripts/<master stem>/<master stem>.json ·
+out-base = video-creation/shorts/<batch>.
+
+Prints `PROGRESS n%` + per-clip `TIGHT ...` lines (graph heartbeat) and machine-readable
+`LOG=` / `DASHBOARD=` / `PROGRESSFILE=` lines (graph verification).
 """
-Phase 5 — Tighten pass (runs AFTER raw preview clips, BEFORE delete_silences).
+import argparse
+import json
+import os
+import subprocess
+import sys
+import tempfile
+from datetime import datetime
+from pathlib import Path
 
-For each kept clip it:
-  1. Re-locks the OUTER boundaries to phrase anchors (start = the real hook, end = the
-     topic's final word) — this fixes trailing run-off into the next sentence/topic and
-     skips dead lead-in (e.g. the opening countdown card).
-  2. Auto-removes filler disfluencies (um/uh/erm/hmm, "you know", "i mean", "right?" tics)
-     inside the kept range, each excised with an 8ms declick fade so the splice never pops.
-  3. Removes any authored mid-asides (chat tangents / "hold on let me share").
-Removal of content (2+3) is capped at ~15% of the re-locked range; boundary re-lock (1) is
-not capped (it's fixing a bad cut, not trimming content).
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-Writes <slug>/tightened.mp4, rebuilds the dashboard to show the tightened clips for a 2nd
-review, logs every removed span, and updates progress.json. Cut from the MASTER vertical at
-absolute timestamps (cleanest quality). Does NOT run silence removal — that is the next phase
-after Mike approves the tightened clips.
-"""
-import json, subprocess, os, sys, tempfile, shutil
+REPO_ROOT = Path(__file__).resolve().parents[3]           # scripts/ -> livestream-repurpose -> video-creation -> repo
+sys.path.insert(0, str(REPO_ROOT / "video-creation" / "shorts" / "_tooling"))
+from build_clip_dashboard import build_dashboard          # noqa: E402
 
-BASE     = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\livestream-repurpose"
-NAME     = "Best 350x Cryptos To Make Me Millions! LOW BPS VERTICAL"
-SRC      = os.path.join(BASE, "media", "Best 350x Cryptos That Will Make me a Millionaire", NAME + ".mp4")
-JSON_SRC = os.path.join(BASE, "transcripts", NAME, NAME + ".json")
-OUT_BASE = r"C:\Users\mnede\Documents\Claude\social-media\video-creation\shorts\best-350x"
-DASHBOARD = os.path.join(OUT_BASE, "dashboard.html")
-PROGRESS  = os.path.join(OUT_BASE, "progress.json")
-FADE = 0.008
-CAP  = 0.15  # max fraction of the re-locked range removable as content (fillers+asides)
+DESILENCE = REPO_ROOT / "video-creation" / "skills" / "desilencer" / "scripts" / "desilence.py"
 
-# Filler tics to auto-remove (matched on normalized tokens; pairs matched on consecutive words)
-FILLER_SINGLES = {"um", "umm", "uh", "uhh", "erm", "hmm"}
-FILLER_TIC     = {"right"}          # only when the raw token is "right?" or "right," (a verbal tic)
-FILLER_PAIRS   = [("you", "know"), ("i", "mean")]
+FADE = 0.008   # 8 ms declick, same anti-pop technique as the desilencer
+CAP = 0.15     # HARD ceiling on VOICED content removal (boundary re-lock is uncapped + excluded)
+NOTE_FLOOR = 0.05  # below this, the strategist must have justified the light touch in notes
 
-with open(JSON_SRC, encoding="utf-8") as f:
-    data = json.load(f)
-ALL = []
-for seg in data["segments"]:
-    for w in seg.get("words", []):
-        ALL.append({"raw": w["word"].strip(),
-                    "word": w["word"].strip().lower().strip(".,!?'\""),
-                    "start": w.get("start", seg["start"]),
-                    "end":   w.get("end",   seg["end"])})
+ENC = ["-c:v", "libx264", "-preset", "fast", "-crf", "18",
+       "-c:a", "aac", "-b:a", "192k", "-avoid_negative_ts", "make_zero"]
 
-def _norm(p): return [x.strip().lower().strip(".,!?'\"") for x in p.split()]
-def find_start(phrase, after=0.0):
-    ws = _norm(phrase); n = len(ws)
-    for i, w in enumerate(ALL):
-        if w["start"] < after: continue
-        if [x["word"] for x in ALL[i:i+n]] == ws: return ALL[i]["start"]
-    return None
-def find_end(phrase, after=0.0):
-    ws = _norm(phrase); n = len(ws)
-    for i, w in enumerate(ALL):
-        if w["start"] < after: continue
-        if [x["word"] for x in ALL[i:i+n]] == ws: return ALL[i+n-1]["end"]
-    return None
+NOT_PAST_5B = (None, "cut", "tightened", "5B-desilenced")   # any other phase = past this stage
 
-# ── 8 kept clips (dropped: moon-bag [boring], linea-xrp-useless [project-negative]) ──
-CLIPS = [
-    {"slug": "353x-20x-punch", "title": "I Said 20x. It Did 353x.",
-     "hook": "\"I said lab was going to be a goddamn 20x, and then I'm doing a 353x. Isn't it good to be wrong?\"",
-     "start_ph": "i said lab was going to be a 20x", "end_ph": "holy crap", "after": 1265,
-     "removes": [], "fb": (1271, 1286)},
-    {"slug": "353x-reveal", "title": "353x on LAB: The Private Gem I Called at a 40x",
-     "hook": "\"Lab was a private gem. We got in at a 40x, that's when I exposed it, and it just kept pumping. 353x.\"",
-     "start_ph": "look at this lab", "end_ph": "353x it's crazy", "after": 1410,
-     "removes": [], "fb": (1419, 1456)},
-    {"slug": "short-squeeze-leverage", "title": "Why Leverage Is a Trap: You're Betting Against the System",
-     "hook": "\"The market makers buy the supply and liquidate the shorts. You're betting against the people who run the system, and they want you to lose.\"",
-     "start_ph": "whenever the market makers decide", "end_ph": "want you to lose", "after": 1710,
-     "removes": [], "fb": (1717, 1748)},
-    {"slug": "saylor-fraction-panic", "title": "Saylor Sold a Fraction of a Percent and Everyone Panicked",
-     "hook": "\"We broke the channel because Michael Saylor sold a fraction of a percent. Everybody freaked out.\"",
-     "start_ph": "the reason why we broke down", "end_ph": "everybody freaked out", "after": 2000,
-     "removes": [], "fb": (2009, 2033)},
-    {"slug": "economy-1992", "title": "We're in 1992: The Four-Year-Cycle Zombies Are About to Be Wrong",
-     "hook": "\"The economy is screaming. The four-year-cycle zombies calling 32k don't see it yet.\"",
-     "start_ph": "even when all this", "end_ph": "pulling us back down", "after": 2250,
-     "removes": [], "fb": (2256, 2330)},
-    {"slug": "ai-dwarfs-dotcom", "title": "AI Is Going to Dwarf the Dot-Com Explosion",
-     "hook": "\"AI is a massive economic expansion. It's going to dwarf the dot-com era.\"",
-     "start_ph": "the ai in my opinion", "end_ph": "started in 1992", "after": 630,
-     "removes": [], "fb": (636, 716),
-     "note": "Has a ~25s internet/telecom digression in the middle that a >15% cut would remove; left in (over cap). Flag for Mike."},
-    {"slug": "pippin-85x-cex-tell", "title": "How I Caught an 85x on Pippin: Watch the Exchange Listings",
-     "hook": "\"It went dead in August. Then it got listed on four exchanges in a single day, and Pippin started ripping. 85x.\"",
-     "start_ph": "okay it's dead but then suddenly", "end_ph": "one after another after another", "after": 4260,
-     "removes": [], "fb": (4268, 4345)},
-    {"slug": "elizaos-freebie", "title": "Don't Sleep on ElizaOS: A Free 24x I Already Called",
-     "hook": "\"Don't sleep on ElizaOS. That's a freebie. 24x on AI16Z, and it's just a rebrand.\"",
-     "start_ph": "don't be sleeping on", "end_ph": "sleeping on that", "after": 940,
-     "removes": [], "fb": (944, 968)},
-]
-DROPPED = ["moon-bag", "linea-xrp-useless"]
 
-def detect_fillers(s, e):
-    """Return list of (start,end,label) filler spans within [s,e]."""
-    idx = [i for i, w in enumerate(ALL) if w["start"] >= s and w["end"] <= e]
-    spans = []
-    i = 0
-    while i < len(idx):
-        wi = idx[i]; w = ALL[wi]
-        # pair fillers
-        paired = False
-        if i + 1 < len(idx) and idx[i+1] == wi + 1:
-            w2 = ALL[wi+1]
-            if (w["word"], w2["word"]) in FILLER_PAIRS:
-                spans.append((w["start"], w2["end"], w["word"] + " " + w2["word"])); i += 2; paired = True
-        if paired: continue
-        if w["word"] in FILLER_SINGLES:
-            spans.append((w["start"], w["end"], w["word"]))
-        elif w["word"] in FILLER_TIC and (w["raw"].endswith("?") or w["raw"].endswith(",")):
-            spans.append((w["start"], w["end"], w["raw"]))
-        i += 1
-    return spans
+def dur(p):
+    return float(subprocess.check_output(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
+         str(p)]).decode().strip())
+
+
+def die(msg):
+    print(f"ABORT: {msg}", file=sys.stderr)
+    sys.exit(1)
+
+
+def overlap(a1, a2, b1, b2):
+    return max(0.0, min(a2, b2) - max(a1, b1))
+
 
 def complement(s, e, removes):
-    """Keep-spans = [s,e] minus removes."""
-    rs = sorted([(max(s, a), min(e, b)) for a, b in removes if b > s and a < e])
-    keeps = []; cur = s
+    """Keep spans = [s,e] minus the removal spans."""
+    rs = sorted((max(s, a), min(e, b)) for a, b in removes if b > s and a < e)
+    keeps, cur = [], s
     for a, b in rs:
-        if a > cur: keeps.append((cur, a))
+        if a > cur:
+            keeps.append((cur, a))
         cur = max(cur, b)
-    if cur < e: keeps.append((cur, e))
+    if cur < e:
+        keeps.append((cur, e))
     return [(a, b) for a, b in keeps if b - a > 0.05]
 
-def render(keeps, out_path, work):
-    parts = []
-    for i, (a, b) in enumerate(keeps):
-        d = b - a; fo = max(0.0, d - FADE)
-        af = f"afade=t=in:st=0:d={FADE},afade=t=out:st={fo:.3f}:d={FADE}"
-        t = os.path.join(work, f"k{i}.mp4")
-        r = subprocess.run(["ffmpeg", "-y", "-ss", f"{a:.3f}", "-i", SRC, "-t", f"{d:.3f}",
-                            "-af", af, "-c:v", "libx264", "-preset", "fast", "-crf", "18",
-                            "-c:a", "aac", "-b:a", "192k", "-avoid_negative_ts", "make_zero", t],
-                           capture_output=True, text=True)
-        if r.returncode == 0: parts.append(t)
-        else: print("   seg err:", r.stderr[-200:])
-    lst = os.path.join(work, "c.txt")
-    with open(lst, "w") as f:
-        for t in parts: f.write(f"file '{t.replace(os.sep,'/')}'\n")
-    r = subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-c", "copy", out_path],
-                       capture_output=True, text=True)
-    return r.returncode == 0
 
-print("== Tighten pass ==")
-log = []
-for c in CLIPS:
-    s = find_start(c["start_ph"], c["after"]); e = find_end(c["end_ph"], s if s else c["after"])
-    if s is None or e is None or e <= s:
-        s, e = c["fb"]; print(f"  {c['slug']:24s} anchors unresolved -> fallback {s}-{e}")
-    raw_dur = e - s
-    fillers = detect_fillers(s, e)
-    mids = [(find_start(a, s), find_end(b, find_start(a, s) or s)) for a, b in c["removes"]]
-    mids = [(a, b) for a, b in mids if a is not None and b is not None]
-    removes = fillers + [(a, b, "aside") for a, b in mids]
-    removed_t = sum(b - a for a, b, *_ in removes)
-    # enforce cap on CONTENT removal (drop smallest fillers until under cap)
-    if removed_t > CAP * raw_dur:
-        removes.sort(key=lambda r: r[1] - r[0])
-        while removes and removed_t > CAP * raw_dur:
-            r0 = removes.pop(0); removed_t -= (r0[1] - r0[0])
-    keeps = complement(s, e, [(a, b) for a, b, *_ in removes])
-    out_dir = os.path.join(OUT_BASE, c["slug"]); os.makedirs(out_dir, exist_ok=True)
-    out_path = os.path.join(out_dir, "tightened.mp4")
+def load_words(transcript_path):
+    """Whisper word spans: the source of truth for what counts as 'content'."""
+    with open(transcript_path, encoding="utf-8") as f:
+        return [(w.get("start", seg["start"]), w.get("end", seg["end"]))
+                for seg in json.load(f)["segments"] for w in seg.get("words", [])]
+
+
+def assembled_segments(cp_clip, t_clip):
+    """The clip's master-time segments IN assembly order, with the strategist's
+    boundary re-locks applied. Returns (segs, raw_dur, relocked_dur)."""
+    segs_src = cp_clip["segments"]
+    order = cp_clip.get("assembly_order") or list(range(len(segs_src)))
+    segs = [(float(segs_src[i]["start"]), float(segs_src[i]["end"])) for i in order]
+    raw_dur = sum(b - a for a, b in segs)
+    for rl in (t_clip.get("boundary_relock") or []):
+        si = rl["segment_index"]
+        k = order.index(si) if si in order else si
+        a, b = segs[k]
+        segs[k] = (float(rl.get("new_start", a)), float(rl.get("new_end", b)))
+    relocked_dur = sum(b - a for a, b in segs)
+    return segs, raw_dur, relocked_dur
+
+
+def clip_measures(cp_clip, t_clip, words):
+    """Everything the ceiling gate and the verify nodes need, computed one way:
+    keeps, expected tightened duration, voiced totals. Never trusts the plan's
+    own est_removed_pct."""
+    segs, raw_dur, relocked_dur = assembled_segments(cp_clip, t_clip)
+    removals = [(float(r["start"]), float(r["end"]))
+                for r in t_clip.get("removals", []) if float(r["end"]) - float(r["start"]) > 0.001]
+    for a, b in removals:
+        if not any(b > ss and a < se for ss, se in segs):
+            die(f"{t_clip['id']}: removal {a:.2f}-{b:.2f} falls outside every kept segment "
+                f"{[(round(x, 2), round(y, 2)) for x, y in segs]}. Planning error, not a no-op. "
+                "Have the strategist re-author.")
+    keeps = []
+    for a, b in segs:
+        keeps.extend(complement(a, b, removals))
+    if not keeps:
+        die(f"{t_clip['id']}: removals consumed the entire clip")
+    voiced_total = sum(overlap(ws, we, ss, se) for ws, we in words for ss, se in segs)
+    voiced_cut = sum(overlap(ws, we, max(a, ss), min(b, se))
+                     for ws, we in words
+                     for a, b in removals for ss, se in segs if b > ss and a < se)
+    kept_voiced = voiced_total - voiced_cut
+    pct_voiced = voiced_cut / voiced_total if voiced_total else 0.0
+    return {"segs": segs, "removals": removals, "keeps": keeps,
+            "raw_dur": raw_dur, "relocked_dur": relocked_dur,
+            "tight_s": sum(b - a for a, b in keeps),
+            "voiced_total": voiced_total, "kept_voiced_s": kept_voiced,
+            "pct_voiced": pct_voiced}
+
+
+def validate_tighten_plan(tighten, clip_plan, master_len, words):
+    """Fail fast with a planning-error message instead of a mid-render surprise.
+    Returns {slug: measures} for every clip in the tighten plan (the runner derives
+    its `expected` from this — one source of truth)."""
+    if not isinstance(tighten.get("clips"), list) or not tighten["clips"]:
+        die("tighten-plan.json has no clips[]")
+    cp_by_slug = {c["slug"]: c for c in clip_plan.get("clips", [])}
+    seen = set()
+    measures = {}
+    for t in tighten["clips"]:
+        slug = t.get("id")
+        if not slug or not isinstance(t.get("n"), int):
+            die(f"tighten clip missing id/n: {t}")
+        if slug in seen:
+            die(f"duplicate tighten clip id: {slug}")
+        seen.add(slug)
+        cp = cp_by_slug.get(slug)
+        if cp is None:
+            die(f"tighten clip {slug!r} not in clip-plan.json (deleted at 4b? then it must "
+                "not be in the tighten plan either)")
+        if cp.get("clip_id") != t["n"]:
+            die(f"{slug}: tighten n={t['n']} != clip-plan clip_id={cp.get('clip_id')} "
+                "(numbers are frozen at the 4b dashboard; never renumber)")
+        n_segs = len(cp["segments"])
+        for rl in (t.get("boundary_relock") or []):
+            si = rl.get("segment_index")
+            if not isinstance(si, int) or not (0 <= si < n_segs):
+                die(f"{slug}: boundary_relock segment_index {si!r} out of range 0..{n_segs - 1}")
+            ns, ne = rl.get("new_start"), rl.get("new_end")
+            if ns is not None and ne is not None and not (float(ne) > float(ns)):
+                die(f"{slug}: boundary_relock {ns}-{ne} is not a positive span")
+            for v in (ns, ne):
+                if v is not None and float(v) > master_len + 0.5:
+                    die(f"{slug}: boundary_relock time {v} beyond the master ({master_len:.2f}s)")
+        for r in t.get("removals", []):
+            if not (isinstance(r.get("start"), (int, float)) and isinstance(r.get("end"), (int, float))
+                    and float(r["end"]) > float(r["start"])):
+                die(f"{slug}: bad removal {r}")
+        m = clip_measures(cp, t, words)     # includes the inside-a-segment check
+        if m["pct_voiced"] > CAP:
+            die(f"{slug}: voiced-content removal is {m['pct_voiced']:.1%}, over the "
+                f"{CAP:.0%} hard ceiling (measured vs Whisper words). Have the strategist "
+                "re-author.")
+        measures[slug] = m
+    return measures
+
+
+def render(master, keeps, out_path):
+    """Cut each keep span from the MASTER with an 8 ms declick, then concat."""
     with tempfile.TemporaryDirectory() as work:
-        ok = render(keeps, out_path, work)
-    final = sum(b - a for a, b in keeps)
-    c["final_dur"] = final; c["raw_dur"] = raw_dur; c["ok"] = ok
-    c["removed"] = [{"start": round(a, 2), "end": round(b, 2), "label": (r[2] if len(r) > 2 else "?")} for r in removes for a, b in [(r[0], r[1])]]
-    pct = (1 - final / raw_dur) * 100 if raw_dur else 0
-    print(f"  {c['slug']:24s} {int(s//60)}:{int(s%60):02d}-{int(e//60)}:{int(e%60):02d}  "
-          f"{raw_dur:.0f}s -> {final:.0f}s (-{pct:.0f}%, {len(removes)} cuts) {'OK' if ok else 'FAIL'}")
-    log.append({"slug": c["slug"], "range": f"{int(s//60)}:{int(s%60):02d}-{int(e//60)}:{int(e%60):02d}",
-                "raw_s": round(raw_dur, 1), "final_s": round(final, 1), "removed_pct": round(pct, 1),
-                "removed": c["removed"], "note": c.get("note", "")})
+        parts = []
+        for i, (a, b) in enumerate(keeps):
+            d = b - a
+            fo = max(0.0, d - FADE)
+            af = f"afade=t=in:st=0:d={FADE},afade=t=out:st={fo:.3f}:d={FADE}"
+            t = os.path.join(work, f"k{i:03d}.mp4")
+            r = subprocess.run(["ffmpeg", "-y", "-ss", f"{a:.3f}", "-i", str(master),
+                                "-t", f"{d:.3f}", "-af", af, *ENC, t],
+                               capture_output=True, text=True)
+            if r.returncode != 0:
+                die(f"ffmpeg keep-span cut failed ({a:.2f}-{b:.2f}) for {out_path}:\n"
+                    f"{r.stderr[-600:]}")
+            parts.append(t)
+        lst = os.path.join(work, "concat.txt")
+        with open(lst, "w", encoding="utf-8") as f:
+            for t in parts:
+                f.write(f"file '{t.replace(os.sep, '/')}'\n")
+        r = subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", lst,
+                            "-c", "copy", str(out_path)], capture_output=True, text=True)
+        if r.returncode != 0:
+            die(f"ffmpeg concat failed for {out_path}:\n{r.stderr[-600:]}")
 
-# drop the cut clips' dirs
-for d in DROPPED:
-    p = os.path.join(OUT_BASE, d)
-    if os.path.isdir(p): shutil.rmtree(p); print(f"  dropped dir: {d}")
 
-with open(os.path.join(OUT_BASE, "tighten_log.json"), "w", encoding="utf-8") as f:
-    json.dump(log, f, indent=2)
+def desilence(tight_path, desil_path, min_sil):
+    """5B via the ONE canonical desilencer, at the caller's min-sil. Renders to a
+    temp name in the same folder, then replaces atomically."""
+    tmp = str(desil_path) + ".part.mp4"
+    r = subprocess.run([sys.executable, str(DESILENCE), str(tight_path),
+                        "--out", tmp, "--min-sil", f"{min_sil}"],
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        if os.path.exists(tmp):
+            os.remove(tmp)
+        die(f"canonical desilencer failed for {tight_path}:\n{r.stdout[-400:]}\n{r.stderr[-800:]}")
+    os.replace(tmp, desil_path)
 
-# ── Dashboard (review #2 — tightened clips) ──────────────────────────────────────
-card_data = [{
-    "slug": c["slug"], "title": c["title"], "hook": c["hook"],
-    "dur": f"{int(c['final_dur']//60)}m {int(c['final_dur']%60):02d}s",
-    "trim": f"-{round((1-c['final_dur']/c['raw_dur'])*100)}% ({len(c['removed'])} cuts)",
-    "cuts": ", ".join(sorted({r['label'] for r in c['removed']})) or "boundary only",
-    "note": c.get("note", ""),
-} for c in CLIPS]
-cards_js = json.dumps(card_data, indent=2)
 
-html = f"""<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Best 350x — Tightened Clips (Review 2)</title>
-<style>
-  *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0;}}
-  body{{background:#0d0d0d;color:#e0e0e0;font-family:'Segoe UI',system-ui,sans-serif;padding:32px 24px 80px;}}
-  header{{margin-bottom:40px;border-bottom:1px solid #2a2a2a;padding-bottom:20px;}}
-  header h1{{font-size:22px;font-weight:700;color:#fff;letter-spacing:0.04em;}}
-  header p{{margin-top:6px;font-size:13px;color:#666;}}
-  .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:28px;}}
-  .card{{background:#161616;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;transition:border-color .2s;}}
-  .card:hover{{border-color:#444;}} .card.approved{{border-color:#00e5ff;box-shadow:0 0 0 1px #00e5ff22;}} .card.skipped{{opacity:.45;}}
-  .video-wrap{{background:#000;aspect-ratio:9/16;max-height:520px;overflow:hidden;}}
-  .video-wrap video{{width:100%;height:100%;object-fit:contain;display:block;}}
-  .card-body{{padding:16px 18px 20px;}}
-  .topic-num{{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#555;margin-bottom:4px;}}
-  .card-title{{font-size:17px;font-weight:700;color:#fff;margin-bottom:6px;line-height:1.3;}}
-  .card-hook{{font-size:13px;color:#9a9a9a;margin-bottom:12px;line-height:1.4;font-style:italic;}}
-  .meta{{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}}
-  .tag{{font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase;}}
-  .tag-dur{{background:#1e2620;color:#5caf82;border:1px solid #2d4035;}} .tag-trim{{background:#26201e;color:#d49a5c;border:1px solid #40352d;}}
-  .cuts{{font-size:11px;color:#666;margin-bottom:6px;}} .note{{font-size:11px;color:#d4a017;margin-bottom:12px;}}
-  .actions{{display:flex;gap:10px;}}
-  .btn{{flex:1;padding:9px 0;border:none;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.04em;}}
-  .btn:hover{{opacity:.85;}} .btn-approve{{background:#00e5ff;color:#000;}} .btn-skip{{background:#2a2a2a;color:#888;}}
-  .btn-approved{{background:#00e5ff22;color:#00e5ff;border:1px solid #00e5ff44;}} .btn-skipped{{background:#1e1e1e;color:#555;border:1px solid #333;}}
-  .summary-bar{{position:fixed;bottom:0;left:0;right:0;background:#111;border-top:1px solid #2a2a2a;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;font-size:13px;}}
-  .summary-bar span{{color:#666;}} .summary-bar strong{{color:#00e5ff;}}
-</style></head><body>
-<header><h1>Best 350x Cryptos — Tightened Clips (Review 2)</h1>
-<p>8 clips (dropped moon-bag + linea) &nbsp;·&nbsp; boundaries re-locked + fillers removed &nbsp;·&nbsp; still NO silence removal yet &nbsp;·&nbsp; Approve or Skip</p></header>
-<div class="grid" id="grid"></div>
-<div class="summary-bar"><span>Approved: <strong id="count">0</strong></span><div id="approved-list" style="color:#aaa;font-size:12px;">—</div></div>
-<script>
-const topics = {cards_js};
-const state = {{}}; topics.forEach(t => state[t.slug]='none');
-function render() {{
-  const grid = document.getElementById('grid'); grid.innerHTML='';
-  topics.forEach((t,i) => {{
-    const s = state[t.slug];
-    const ab = s==='approved' ? `<button class="btn btn-approved" onclick="tg('${{t.slug}}','approved')">✓ Approved</button>` : `<button class="btn btn-approve" onclick="tg('${{t.slug}}','approved')">Approve</button>`;
-    const sb = s==='skipped' ? `<button class="btn btn-skipped" onclick="tg('${{t.slug}}','skipped')">Skipped</button>` : `<button class="btn btn-skip" onclick="tg('${{t.slug}}','skipped')">Skip</button>`;
-    const note = t.note ? `<div class="note">⚠ ${{t.note}}</div>` : '';
-    const card = document.createElement('div');
-    card.className = 'card' + (s==='approved'?' approved':s==='skipped'?' skipped':'');
-    card.innerHTML = `<div class="video-wrap"><video controls preload="metadata" src="${{t.slug}}/tightened.mp4"></video></div>
-      <div class="card-body"><div class="topic-num">Clip ${{i+1}} of ${{topics.length}}</div>
-      <div class="card-title">${{t.title}}</div><div class="card-hook">${{t.hook}}</div>
-      <div class="meta"><span class="tag tag-dur">${{t.dur}}</span><span class="tag tag-trim">${{t.trim}}</span></div>
-      <div class="cuts">removed: ${{t.cuts}}</div>${{note}}<div class="actions">${{ab}}${{sb}}</div></div>`;
-    grid.appendChild(card);
-  }});
-  const a = topics.filter(t=>state[t.slug]==='approved');
-  document.getElementById('count').textContent=a.length;
-  document.getElementById('approved-list').textContent=a.length?a.map(t=>t.title).join(' · '):'—';
-}}
-function tg(slug,act){{ state[slug]=state[slug]===act?'none':act; render(); }}
-render();
-</script></body></html>"""
-with open(DASHBOARD, "w", encoding="utf-8") as f: f.write(html)
+def stage_tighten(args, clip_plan, tighten, master, out_base, measures):
+    cp_by_slug = {c["slug"]: c for c in clip_plan["clips"]}
+    clips = tighten["clips"]
+    only = set(args.only or [])
+    unknown = only - {t["id"] for t in clips}
+    if unknown:
+        die(f"--only names not in the tighten plan: {sorted(unknown)}")
 
-# ── progress.json update ─────────────────────────────────────────────────────────
-prog = json.load(open(PROGRESS, encoding="utf-8")) if os.path.exists(PROGRESS) else {}
-prog["dashboard_status"] = ("Tighten pass done: 8 clips (dropped moon-bag + linea), boundaries re-locked + "
-                            "fillers removed. AWAITING Mike's 2nd review on tightened.mp4. Next phase = delete_silences on approved.")
-prog["tighten_log"] = "shorts/best-350x/tighten_log.json"
-with open(PROGRESS, "w", encoding="utf-8") as f: json.dump(prog, f, indent=2)
+    prev_log = {}
+    log_path = out_base / "tighten_log.json"
+    if only and log_path.is_file():
+        prev_log = {e["slug"]: e for e in json.loads(log_path.read_text(encoding="utf-8"))}
+        print(f"re-rendering ONLY: {', '.join(sorted(only))}", flush=True)
 
-ok_n = sum(1 for c in CLIPS if c.get("ok"))
-print(f"\n{ok_n}/{len(CLIPS)} tightened")
-print(f"Dashboard: {DASHBOARD}")
+    log = []
+    for ci, t in enumerate(clips):
+        slug = t["id"]
+        cp = cp_by_slug[slug]
+        m = measures[slug]
+        d = out_base / slug
+        d.mkdir(parents=True, exist_ok=True)
+        tight = d / f"{slug}-tightened.mp4"
+        desil = d / f"{slug}-tightened-desilenced.mp4"
+
+        if only and slug not in only and desil.is_file():
+            p = prev_log.get(slug, {})
+            tdur = p.get("tightened_s") or dur(tight)
+            ddur = p.get("desilenced_s") or dur(desil)
+            print(f"TIGHT n={t['n']} slug={slug} cuts={len(m['removals'])} "
+                  f"tight={tdur:.3f} desil={ddur:.3f} (unchanged, reusing existing render)",
+                  flush=True)
+        else:
+            if m["pct_voiced"] < NOTE_FLOOR:
+                print(f"NOTE {slug}: only {m['pct_voiced']:.1%} of voiced content removed "
+                      "(the strategist must have justified this explicitly in the plan notes).",
+                      flush=True)
+            render(master, m["keeps"], tight)
+            tdur = dur(tight)
+            desilence(tight, desil, args.min_sil)
+            ddur = dur(desil)
+            print(f"TIGHT n={t['n']} slug={slug} cuts={len(m['removals'])} "
+                  f"tight={tdur:.3f} desil={ddur:.3f}", flush=True)
+
+        pct_span = (1 - tdur / m["relocked_dur"]) * 100 if m["relocked_dur"] else 0
+        pct_total = (1 - ddur / m["raw_dur"]) * 100 if m["raw_dur"] else 0
+        log.append({
+            "n": t["n"], "slug": slug, "variant": t.get("variant", cp.get("variant", "full")),
+            "raw_s": round(m["raw_dur"], 1), "relocked_s": round(m["relocked_dur"], 1),
+            "tightened_s": round(tdur, 1), "desilenced_s": round(ddur, 1),
+            "span_removed_pct": round(pct_span, 1),
+            "voiced_content_removed_pct": round(m["pct_voiced"] * 100, 1),
+            "voiced_gate": f"measured against Whisper word spans; ceiling {CAP:.0%}",
+            "min_sil_5b": args.min_sil,
+            "total_reduction_pct": round(pct_total, 1),
+            "boundary_relock": t.get("boundary_relock"),
+            "removals": t.get("removals", []),
+            "notes": t.get("notes", ""),
+        })
+        print(f"PROGRESS {int(100 * (ci + 1) / len(clips))}% clip {ci + 1}/{len(clips)}",
+              flush=True)
+
+    log_path.write_text(json.dumps(log, indent=2), encoding="utf-8")
+    print(f"LOG={log_path}", flush=True)
+    print("STAGE-DONE tighten", flush=True)
+    return log
+
+
+def stage_finalize(args, clip_plan, tighten, out_base):
+    log_path = out_base / "tighten_log.json"
+    if not log_path.is_file():
+        die(f"finalize needs {log_path} — run --stage tighten first")
+    log = json.loads(log_path.read_text(encoding="utf-8"))
+    by_slug = {e["slug"]: e for e in log}
+    topics = {t["topic_id"]: t for t in clip_plan.get("topics", [])}
+    cp_by_slug = {c["slug"]: c for c in clip_plan["clips"]}
+    batch = args.batch
+
+    # clobber guard BEFORE the dashboard rebuild — a batch past 5B keeps its state
+    prog_path = out_base / "progress.json"
+    prog = {}
+    if prog_path.is_file():
+        try:
+            prog = json.loads(prog_path.read_text(encoding="utf-8"))
+        except Exception:
+            prog = {}
+        past = [c.get("slug") for c in prog.get("clips", [])
+                if c.get("slug") in by_slug and c.get("phase") not in NOT_PAST_5B]
+        if past and not args.force:
+            die(f"progress.json clips already past 5B: {past} — refusing to reset them "
+                "(re-run with --force only if you mean to re-tighten a built batch)")
+
+    cards = []
+    for e in log:
+        slug = e["slug"]
+        cp = cp_by_slug.get(slug, {})
+        t = next((c for c in tighten["clips"] if c["id"] == slug), {})
+        segs, _, _ = assembled_segments(cp, t) if cp else ([], 0, 0)
+        seg_desc = " + ".join(f"{a:.1f}-{b:.1f}" for a, b in segs)
+        hook = topics.get(cp.get("topic_id"), {}).get("hook_summary", "")
+        cards.append(dict(
+            n=e["n"], title=cp.get("title", slug),
+            video=f"{slug}/{slug}-tightened-desilenced.mp4", variant=e["variant"],
+            status="tightened+desilenced", duration=e["desilenced_s"],
+            src=f"{e['variant']} - {len(segs)} segment(s) [{seg_desc}] - raw {e['raw_s']:.0f}s "
+                f"-> {e['desilenced_s']:.0f}s (-{e['total_reduction_pct']:.0f}% total; "
+                f"{len(e.get('removals', []))} tighten cuts = "
+                f"-{e['voiced_content_removed_pct']:.0f}% voiced content)",
+            note=(hook + "  |  TIGHTEN: " + e.get("notes", ""))[:600],
+        ))
+
+    ms = f" ({args.min_sil * 1000:.0f} ms)" if args.min_sil else ""
+    dash = build_dashboard(
+        batch, str(out_base), cards,
+        title=args.title or f"{batch} — Phase 5 tightened + 5B desilenced{ms}",
+        subtitle_extra=args.subtitle or
+        "tightened per the strategist plan + desilenced via the canonical desilencer; "
+        "awaiting Mike's 2nd review")
+    print(f"DASHBOARD={dash}", flush=True)
+
+    prog.setdefault("batch", batch)
+    prog["phase"] = "5B-desilenced"
+    prog["status"] = "awaiting-2nd-review"
+    prog["last_updated"] = datetime.now().isoformat(timespec="seconds")
+    prog["dashboard_status"] = ("tightened + desilenced clips awaiting Mike's 2nd review; "
+                                "then 5C (optional) -> captions (6) -> remotion-builder (7) "
+                                "-> publish (8)")
+    prog["tighten_log"] = f"video-creation/shorts/{batch}/tighten_log.json"
+    prog["tighten_plan"] = f"video-creation/shorts/{batch}/tighten-plan.json"
+    for c in prog.get("clips", []):
+        e = by_slug.get(c.get("slug"))
+        if e:
+            c["duration_seconds"] = e["desilenced_s"]
+            c["output_mp4"] = f"{c['slug']}/{c['slug']}-tightened-desilenced.mp4"
+            c["phase"] = "5B-desilenced"
+            c["gate"] = "awaiting-2nd-review"
+    prog_path.write_text(json.dumps(prog, indent=2), encoding="utf-8")
+    print(f"PROGRESSFILE={prog_path}", flush=True)
+    print("STAGE-DONE finalize", flush=True)
+
+
+def main():
+    ap = argparse.ArgumentParser(description="Canonical Phase 5 tighten + 5B desilence (Wave 3).")
+    ap.add_argument("--batch", required=True)
+    ap.add_argument("--stage", choices=["all", "tighten", "finalize"], default="all")
+    ap.add_argument("--min-sil", type=float, default=None,
+                    help="5B min-silence seconds — Mike's per-batch knob, REQUIRED for the "
+                         "tighten stage (the desilencer doctrine: the caller specifies the "
+                         "silence definition every time; recent batches used 0.25 and 0.45)")
+    ap.add_argument("--plan", default=None, help="tighten-plan.json")
+    ap.add_argument("--clip-plan", default=None)
+    ap.add_argument("--master", default=None)
+    ap.add_argument("--transcript", default=None,
+                    help="whisper json with word timestamps (default: derived from the master stem)")
+    ap.add_argument("--out-base", default=None)
+    ap.add_argument("--title", default=None)
+    ap.add_argument("--subtitle", default=None)
+    ap.add_argument("--only", nargs="*", default=None,
+                    help="re-render only these slugs; others keep their existing renders/log")
+    ap.add_argument("--force", action="store_true",
+                    help="let finalize reset progress entries already past 5B")
+    args = ap.parse_args()
+
+    out_base = Path(args.out_base) if args.out_base else (
+        REPO_ROOT / "video-creation" / "shorts" / args.batch)
+    plan_path = Path(args.plan) if args.plan else out_base / "tighten-plan.json"
+    cplan_path = Path(args.clip_plan) if args.clip_plan else out_base / "clip-plan.json"
+    for p, what in ((plan_path, "tighten-plan.json"), (cplan_path, "clip-plan.json")):
+        if not p.is_file():
+            die(f"{what} not found: {p}")
+    try:
+        tighten = json.loads(plan_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        die(f"tighten-plan.json is not valid JSON: {e}")
+    try:
+        clip_plan = json.loads(cplan_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        die(f"clip-plan.json is not valid JSON: {e}")
+
+    if args.master:
+        master = Path(args.master)
+    else:
+        sv = clip_plan.get("source_vertical")
+        if not sv:
+            die("clip-plan.json has no source_vertical and no --master given")
+        master = Path(sv) if os.path.isabs(sv) else REPO_ROOT / sv
+    if not master.is_file():
+        die(f"vertical master not found: {master}")
+
+    stem = master.stem
+    transcript = Path(args.transcript) if args.transcript else (
+        REPO_ROOT / "video-creation" / "livestream-repurpose" / "transcripts" / stem
+        / f"{stem}.json")
+    if not transcript.is_file():
+        die(f"whisper transcript not found: {transcript} (word timestamps are the ceiling "
+            "gate's source of truth)")
+
+    if args.stage in ("all", "tighten"):
+        if args.min_sil is None:
+            die("--min-sil is required for the tighten stage (Mike's per-batch 5B knob; "
+                "recent batches: 0.25 and 0.45)")
+        if not (0.15 <= args.min_sil <= 2.0):
+            die(f"--min-sil {args.min_sil}s is outside the sane 0.15-2.0s range")
+    if args.min_sil is None:
+        args.min_sil = 0.0     # finalize-only invocations read it for the dashboard title
+
+    words = load_words(transcript)
+    if not words:
+        die(f"transcript has no word timestamps: {transcript}")
+    master_len = dur(master)
+
+    print(f"tighten_clips | batch {args.batch} | {len(tighten.get('clips', []))} clips | "
+          f"stage {args.stage} | min-sil {args.min_sil}s", flush=True)
+    measures = validate_tighten_plan(tighten, clip_plan, master_len, words)
+
+    if args.stage in ("all", "tighten"):
+        stage_tighten(args, clip_plan, tighten, master, out_base, measures)
+    if args.stage in ("all", "finalize"):
+        stage_finalize(args, clip_plan, tighten, out_base)
+
+
+if __name__ == "__main__":
+    main()

@@ -438,11 +438,21 @@ const AUTOMATIONS = [
         default: return '';
       }
     },
+    // Per-lane "TODAY so far" across ALL of today's runs. The card headline only
+    // describes the LAST run, which lies on a chunked day — 2026-08-05 the invite
+    // card read "4 sent" (the final, reaper-killed chunk) while the day's 8 runs
+    // had sent 21. Only lanes that batch across runs need this.
+    dayline(laneN, todays) {
+      if (laneN !== 3 || todays.length < 2) return null;
+      let sent = 0, errs = 0;
+      todays.forEach(r => { const s = r.summary || {}; sent += s.sent || 0; errs += s.errors || 0; });
+      return `today: ${sent} sent across ${todays.length} runs${errs ? ` · ${errs} err` : ''}`;
+    },
   },
   {
     id: 'livestream',
     label: 'Livestream',
-    sub: 'repurpose — wave 1 intake (Ph 1-2 + Lane 1) · wave 2 cut (Ph 4 exec)',
+    sub: 'repurpose — wave 1 intake (Ph 1-2 + Lane 1) · wave 2 cut (Ph 4) · wave 3 tighten (Ph 5+5B)',
     feed: { progress: '/livestream/lane_progress.json', runs: '/livestream/lane_runs.json' },
     staleNote: 'Check whether ffmpeg/whisper is still alive (Task Manager) before relaunching; a killed run resumes with --resume, skipping completed nodes.',
     // ONE graph = ONE mechanical segment of the pipeline (`nodes` lists the work
@@ -459,10 +469,19 @@ const AUTOMATIONS = [
         nodes: ['cut', 'finalize'],
         haltNote: 'runs after clip-plan.json lands (clip-strategist seam); ends at Mike\'s Phase 4b dashboard review. Halt edge on every node.',
         retired: false, views: false },
+      { n: 3, name: 'tighten', work: 'tighten', verify: 'verify',
+        nodes: ['tighten', 'finalize'],
+        haltNote: 'runs after Mike\'s 4b verdicts + tighten-plan.json land (tighten-strategist seam); --min-sil = Mike\'s per-batch 5B knob; ends at his 2nd review of the tightened clips. Halt edge on every node.',
+        retired: false, views: false },
     ],
     headline(run) {
       const s = run && run.summary;
       if (!s) return run && run.error ? clip(run.error, 90) : '';
+      if (run.lane === 3) {
+        return `${s.clips ?? 0} clips tightened+desilenced (min-sil ${s.min_sil ?? '?'}s) · `
+             + `${Math.round(s.total_s || 0)}s total · at 2nd-review gate`
+             + (s.sandbox ? ' · SANDBOX' : '');
+      }
       if (run.lane === 2) {
         return `${s.clips ?? 0} clips cut · ${Math.round(s.total_s || 0)}s total · `
              + `${s.registered ? 'registered' : 'UNREGISTERED'} · at 4b gate`
@@ -589,12 +608,19 @@ function renderLive(prog, runs) {
 
   if (!inFlight) {
     const last = runs.find(r => !r.stub) || runs[0];
+    // Same day-aggregate as the lane cards: "Last: ... 4 sent" alone misreads as
+    // the daily total on a chunked day.
+    let dayTxt = null;
+    if (last && A().dayline) {
+      const todays = runs.filter(r => r.lane === last.lane && !r.stub && isToday(r.started_at));
+      dayTxt = A().dayline(last.lane, todays);
+    }
     el.innerHTML = `<div class="live">
       <div class="who">
         ${pill('idle')}
         <div class="lane-title">No run in flight</div>
         <div class="meta">${last
-          ? `Last: Lane ${last.lane} ${esc(last.lane_name)} · ${dayText(last.started_at)} ${clockText(last.started_at)} · ${esc(headline(last))}`
+          ? `Last: Lane ${last.lane} ${esc(last.lane_name)} · ${dayText(last.started_at)} ${clockText(last.started_at)} · ${esc(headline(last))}${dayTxt ? ` · <b>${esc(dayTxt)}</b>` : ''}`
           : 'No runs recorded yet.'}</div>
       </div></div>`;
     return;
@@ -660,6 +686,12 @@ function renderLanes(prog, runs) {
 
     const dim = !!running && !isRunning;
 
+    // The day aggregate, when the automation defines one for this lane. The
+    // headline above is one run's story; on a chunked day the daily total is
+    // the number a human actually wants.
+    const todays = runs.filter(r => r.lane === L.n && !r.stub && isToday(r.started_at));
+    const dayTxt = A().dayline ? A().dayline(L.n, todays) : null;
+
     return `<div class="lane ${isRunning ? 'is-running' : ''} ${dim ? 'dimmed' : ''} ${L.retired && !isRunning ? 'retired' : ''}">
       <div class="n">Lane ${L.n}</div>
       <div class="nm">${esc(L.name)}</div>
@@ -670,6 +702,7 @@ function renderLanes(prog, runs) {
           : `<span class="${w}">${esc(L.work)}</span><span class="arrow">→</span><span class="${v}">verify</span>`}
       </div>
       <div class="headline">${headTxt}</div>
+      ${dayTxt ? `<div class="headline" style="color:var(--ink);font-weight:600">${esc(dayTxt)}</div>` : ''}
       <div class="when">${isRunning ? 'running now' : (last ? 'last run ' + esc(relText(last.started_at)) : '')}${L.retired ? ' · not in daily rotation' : ''}</div>
     </div>`;
   }).join('');
