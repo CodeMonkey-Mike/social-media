@@ -1,0 +1,67 @@
+{
+  "batch": "peach-minute",
+  "track": "livestream-repurpose",
+  "source_livestream": "peach-minute LOW BPS VERTICAL",
+  "livestream_date": "2026-07-27",
+  "last_updated": "2026-07-29",
+  "dashboard": "video-creation/shorts/peach-minute/dashboard.html",
+  "dashboard_status": "ALL 4 shorts FULLY PRODUCED and PUBLISHED. Every gate printed PASS; staged to schedule-tweets/shorts/peach-minute-2026-07-29/ and queued in shorts.json (ids pm-20260729-*), all 7 platforms pending. md5 of every staged copy matches its render.",
+  "numbering_note": "Numbering was frozen at initial-dashboard time. Mike deleted clips 1, 6, 7 and 8 on 2026-07-29, so the surviving shorts keep 2, 3, 4, 5 and are NEVER renumbered (he refers to shorts by number).",
+  "clips": [
+    {
+      "n": 2,
+      "slug": "02-the-pain-stick-through",
+      "title": "If You Can Stick Through This Pain, You Win",
+      "hook": "This is the pain, man. The pain.",
+      "render_mp4": "video-creation/remotion/out/peach-minute/2-the-pain-stick-through.mp4",
+      "duration_seconds": 47.367,
+      "phase": "done",
+      "gate": "PASS",
+      "broll_pct": 31.6,
+      "base_showing_pct": 68.4,
+      "sfx_events": 10
+    },
+    {
+      "n": 3,
+      "slug": "03-kaspa-hate-bottom-signal",
+      "title": "Three Out of Ten Kaspa Comments Are Negative Now",
+      "hook": "A year ago I would hardly get any negative comments about Kaspa.",
+      "render_mp4": "video-creation/remotion/out/peach-minute/3-kaspa-hate-bottom-signal.mp4",
+      "duration_seconds": 40.433,
+      "phase": "done",
+      "gate": "PASS",
+      "broll_pct": 33.2,
+      "base_showing_pct": 66.8,
+      "sfx_events": 10
+    },
+    {
+      "n": 4,
+      "slug": "04-i-was-a-zombie",
+      "title": "Kaspa $1 by the end of the year",
+      "hook": "Everybody asking me, you think Kaspa is going to be a dollar by the end of the year?",
+      "render_mp4": "video-creation/remotion/out/peach-minute/4-i-was-a-zombie.mp4",
+      "duration_seconds": 54.25,
+      "phase": "done",
+      "gate": "PASS",
+      "broll_pct": 31.7,
+      "base_showing_pct": 68.3,
+      "sfx_events": 8,
+      "title_note": "Title chosen by Mike directly on 2026-07-29."
+    },
+    {
+      "n": 5,
+      "slug": "05-housecoin-still-holding",
+      "title": "Once This Happens, Housecoin Goes 1,000x.",
+      "hook": "Definitely still holding a lot of Housecoin. I love it.",
+      "render_mp4": "video-creation/remotion/out/peach-minute/5-housecoin-still-holding.mp4",
+      "duration_seconds": 32.448,
+      "phase": "done",
+      "gate": "PASS",
+      "broll_pct": 29.1,
+      "base_showing_pct": 70.9,
+      "sfx_events": 9,
+      "title_note": "Retitled by Mike on 2026-07-29 (three passes). Final: the delisting is never named (it read bearish and closed the loop) and the tense is PRESENT (\"Happens\", not \"Happened\" - the past tense was a voice-to-text slip and implied the move already ran). Frame-0 cover rebuilt and the clip re-rendered each time, because the cover is baked into the mp4."
+    }
+  ],
+  "resume_protocol": "Batch complete through the schedule-tweets handoff. Nothing left in the shorts lane. Posting cadence/order is a schedule-tweets decision (playbooks/posting.md), NOT a repurpose-lane step. Do NOT re-run publish-shorts.py for this batch, and never under a different --date (the id dedupe is on id, so a new date re-queues already-published clips)."
+}

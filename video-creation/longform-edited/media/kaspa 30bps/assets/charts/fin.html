@@ -1,0 +1,85 @@
+<!doctype html>
+<html data-state="today">
+<head>
+<meta charset="utf-8">
+<title>FIN finality drop</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --accent-green:#00e68a; --accent-cyan:#00c2ff;
+  --accent-gold:#ffd700; --accent-red:#ff4060; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e; --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.3;pointer-events:none;z-index:0}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.ey{font-family:'DM Sans';font-size:26px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:66px;line-height:1.05;letter-spacing:-.02em}
+.g{color:var(--accent-green)}
+header{position:absolute;left:90px;top:56px;z-index:2}
+html[data-state="today"] .only-collapse{display:none!important}
+
+.rows{position:absolute;left:90px;right:90px;top:330px;z-index:1}
+.rlab{font-family:'DM Sans';font-weight:700;font-size:32px;margin-bottom:18px;display:flex;align-items:center;gap:26px;height:56px}
+.rlab .mono-int{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;color:var(--text-muted)}
+.track{height:96px;border-radius:16px;background:var(--bg-card);border:1px solid var(--border);position:relative}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:16px;display:flex;align-items:center}
+.fval{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:42px;white-space:nowrap}
+.row1{margin-bottom:70px}
+.row1 .fill{width:100%;background:linear-gradient(90deg,#0e5d8c,var(--accent-cyan))}
+.row1 .fval{color:#04060d;margin-left:auto;margin-right:30px}
+.row2 .fill{width:14.3%;background:linear-gradient(90deg,#0a7a54,var(--accent-green));
+  box-shadow:0 0 44px rgba(0,230,138,.35)}
+.row2 .fval{color:var(--accent-green);position:absolute;left:calc(14.3% + 30px);top:50%;transform:translateY(-50%)}
+.row2 .empty{position:absolute;inset:0;display:flex;align-items:center;padding-left:30px;
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;color:var(--text-muted)}
+html[data-state="collapse"] .row1{opacity:.72}
+
+.chip{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:22px;letter-spacing:.08em;
+  padding:10px 22px;border-radius:100px;text-transform:uppercase;white-space:nowrap;
+  background:rgba(255,215,0,.1);color:var(--accent-gold);border:2px solid rgba(255,215,0,.45)}
+
+.axis{display:flex;justify-content:space-between;margin-top:30px;
+  font-family:'JetBrains Mono',monospace;font-size:20px;color:var(--text-muted)}
+.foot{position:absolute;left:90px;bottom:44px;font-family:'DM Sans';font-size:20px;color:var(--text-muted);z-index:1}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="orb" style="width:520px;height:520px;right:-160px;top:-170px;background:var(--accent-cyan);opacity:.14"></div>
+  <div class="orb" style="width:520px;height:520px;left:-180px;bottom:-190px;background:var(--accent-green);opacity:.13"></div>
+
+  <header>
+    <div class="ey">Finality</div>
+    <h1>How long until a transaction is <span class="g">final</span></h1>
+  </header>
+
+  <div class="rows">
+    <div class="row1">
+      <div class="rlab">Today</div>
+      <div class="track"><div class="fill"><span class="fval">UNDER 7 SECONDS</span></div></div>
+    </div>
+    <div class="row2">
+      <div class="rlab">DAGKnight era <span class="chip only-collapse">Potential · on proof of work</span></div>
+      <div class="track">
+        <div class="empty" style="display:none"></div>
+        <div class="fill only-collapse"></div>
+        <span class="fval only-collapse">UNDER 1 SECOND</span>
+      </div>
+    </div>
+    <div class="axis">
+      <span>0 s</span><span>1 s</span><span>2 s</span><span>3 s</span><span>4 s</span><span>5 s</span><span>6 s</span><span>7 s</span>
+    </div>
+  </div>
+
+  <div class="foot">DAGKnight opens the door to sub-second settlement: a potential, not a promise</div>
+</div>
+<script>
+const s=(location.hash||'').slice(1); if(s) document.documentElement.dataset.state=s;
+</script>
+</body>
+</html>

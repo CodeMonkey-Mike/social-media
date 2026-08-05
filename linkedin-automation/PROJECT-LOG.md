@@ -12,7 +12,144 @@ location, and capture the ones in **Europe / North America / South America / the
 Caribbean** into `members.json` as `{ profile_url, location }`. A later (separate)
 script will message the captured members using only their `profile_url`.
 
-## Current state (as of 2026-07-28 night: 5-lane morning run + LangGraph Lanes 1 AND 2 both blessed)
+## Current state (as of 2026-08-04, after the full 5-lane run — see entry below)
+
+- **Queue:** **6525** members (unchanged, no Lane 1 seed run), **1208 processed**
+  (+60 today, Lane 2), **5317 remaining**. **Captured: 613** members (+42 today).
+  **430 contacted** (+26 today, Lane 3 — stopped early on LinkedIn's own weekly
+  invite limit, not our choice); **120 connected** (+9 today); **41 DM'd** (+2 today);
+  **183 still to contact**; **310 contacted and still awaiting acceptance**;
+  **76 eligible for endorse+DM (0 past 14 days, 29 in the 7-14 day band).**
+- **Lane commands are the graph for all five lanes** (see `CLAUDE.md`): `--lane 1`
+  seed · `--lane 2 --max N` scrape · `--lane 3 --max N` invite · `--lane 4` check ·
+  `--lane 5` endorse+DM (blessed 2026-08-01) — **Lane 5 takes NO number**, the
+  14/7-day rule is a mechanical gate (`lane5_plan`/`lane5_gate`).
+- **Next port: `check-endorsements`** (the 6th lane) — still JS, along with `tools/`
+  and the frozen lane 1-5 JS rollbacks.
+- **2026-07-30 run — full 5-lane run. Mike asked for Lane 2 = 60 and, when flagged
+  against the documented 50/day cap, explicitly chose to override it and run all 60
+  anyway. The script's own mechanical gate (`graph/run.py`, `--max > 50` hard-blocks,
+  no override flag) refused regardless of that choice, so the run was capped at 50
+  by the tool, not by Mike's decision.**
+  - **Lane 1 (seed 6 Z-names, 0 profile views):** 4 male short forms + 2 female per
+    Mike's ask — **Zach** 15 matched/12 new (biggest hit), **Zane** 6/5, **Zeke** 0/0
+    (no matches, rare-letter class same as Yancy/Quincy), **Zed** 1/1, **Zoe** 6/6,
+    **Zara** 11/10 → queue 6491→6525. `groups.json` searched_names now spans the full
+    alphabet A→Z.
+  - **Lane 2 (scrape 50, exactly 50 profile views across the whole session): 35 new
+    captures, 3 errors (repeat 404 on the same stale URL, left for retry), a genuinely
+    rough day.** In order:
+    - **First `--max=60` attempt refused outright** by the script's own hard-coded gate
+      (`graph/run.py:104`, `Lane 2 hard rule: scraping <= 50 profile views/day.`) — not
+      a bug, working as designed; re-ran at `--max=50`.
+    - **NEW BUG — `UnicodeEncodeError` crashed the whole graph 6 profiles in**
+      (`andreea-david`'s "Braşov, Romania" capture): `lane_graph.py`'s live-tee
+      `print(line, ...)` hit Windows' cp1252 console encoding on the accented
+      character. Confirmed **zero data lost** (the capture had already been written to
+      disk before the print crashed) and **fixed the root cause**: added
+      `sys.stdout/stderr.reconfigure(encoding="utf-8")` to the top of `graph/run.py` so
+      the outer process can't choke on non-ASCII profile text again (the subprocess it
+      wraps already had `PYTHONIOENCODING=utf-8`; the outer process didn't).
+    - **Orphaned Chrome blocked the resume**: the crash left `li-bot-profile` Chrome
+      running (never closed cleanly), so the next launch hit
+      `TargetClosedError: ...browser has been closed`. Confirmed via
+      `Get-CimInstance` (never bash `kill -0`) this was the dedicated automation
+      profile (not Mike's main Chrome), force-closed the orphaned tree, retried clean.
+    - **Then an unusually aggressive run of the background-task reaper** — killed
+      **six separate chunk launches within 10-20s of starting** (far faster than the
+      previously documented ~90-450s), with a couple of chunks finishing clean in
+      between. Each kill was orphan-checked (clean every time, nothing left running)
+      and resumed via the standard smaller-chunk retry (`--max=6`/`5`), same pattern
+      as 07-28/07-29 but a noticeably worse day for it. **Zero data lost across every
+      kill/resume boundary.** Total distinct chunk launches to complete the 50: 12
+      (2 pre-empted by the bug/orphan issues above, ~6 reaper-killed, 4 completed
+      clean).
+    - **Correctly skipped:** Nigeria x2, Ghana, Kenya x2, Israel, India, South Korea,
+      Botswana.
+  - **Lane 3 (invite 25): 25/25 sent, zero errors, one continuous run** — a heavy
+    Carlos/Carl cohort. 293→318 contacted, 200 still to contact.
+  - **Lane 4 (check-connections): 10 new acceptances** — `robertocarlosmedina`,
+    `juan-carlos-ojeda-62489525`, `carlosoeiras`, `carlos-eduardo-de-sousa-81847852`,
+    `sergiocncruz`, `benjamin-goldschmidt-07547524a`, `carlacopper`, `cafl`,
+    `lnogueram`, `carlos-eduardo-2753a92b5` → 74→84 connected.
+  - **Lane 5 (endorse+DM, Mike's stated criteria this run: DM everyone >14 days with
+    no DM yet, fallback one member >=7 days if none qualify, else do nothing):**
+    computed the eligible pool (49 connected, no DM yet, not `no_skills`) **before**
+    picking `--max` this time (lesson from 07-29's `--max=3` miscount) — exactly
+    **one** member cleared the strict >14-day bar: `anthony-allen-47b97268` (15d),
+    so the >=7-day fallback wasn't needed. Ran `--max=1`: 10/10 skills endorsed,
+    "Hi Anthony," sent. 33→34 DM'd, 48 eligible remain.
+  - **Post-run policy change (Mike): scrape cap raised 50→75/day.** Mike asked for
+    Lane 2 = 60 mid-run; the hard-coded gate in `graph/run.py` refused it outright
+    (no override flag), and Mike then said he'd believed the scrape cap was already
+    lifted (it wasn't — only the **invite** cap was rescinded 2026-07-28, scrape
+    stayed at 50). Mike's call: raise the ceiling rather than remove it outright.
+    Updated the mechanical gate (`graph/run.py:107`, now `--max > 75`) plus every
+    doc reference (`CLAUDE.md`, `skills/SKILL.md`,
+    `skills/scrape-group-members/scrape-group-members.md`). Underlying restriction
+    risk is unchanged (still ~120/24h trips it) — 75/day leaves less headroom than
+    50 did if a big invite/endorse batch runs the same day.
+
+- **Queue:** **6491** members (+56 from Lane 1's Y-name seed), **1032 processed** (+20 from
+  Lane 2), **5459 remaining**. `groups.json` searched_names now **A→Y**. **Captured: 483**
+  members (+15 today, all in-zone: 7 North America / 5 Europe / 2 South America /
+  1 Caribbean; then **-2** for the `no_skills` cleanup below). **295 contacted** (+15);
+  **76 connected** (+5); **33 DM'd** (+3); **188 still to contact**.
+- **2026-07-29 run — full 5-lane run, no restriction page at any point (~38 profile views:
+  20 scrape + 15 invite-lane + 3 endorse-lane, comfortably under the 50/day scrape
+  ceiling).**
+  - **Lane 1 (seed 6 Y-names, 0 profile views):** 4 male short forms + 2 female per Mike's
+    ask — **Yale** 1 matched/1 new, **Yancy** 0/0 (Y is a very rare letter, same class as
+    Q/U), **Yves** 4/4, **Yusuf** 46 matched/**43 new** (by far the biggest hit — heavy
+    substring match), **Yvonne** 6/5 new, **Yolanda** 3/3 new → queue 6435→6491,
+    `groups.json` searched_names now **A→Y**.
+  - **Lane 2 (scrape 20): 15 new captures, 0 hard errors** — regions **7 North America /
+    5 Europe / 2 South America / 1 Caribbean**. Correctly skipped: Lagos Nigeria, Nairobi
+    Kenya ×2, Chengdu China. **NEW FAILURE CLASS — the background-task reaper killed the
+    LangGraph Lane 2 port mid-run, the first time this has hit the Python port.** The
+    initial `--max=20` launch was silently reclaimed after profile 7/20 (no LinkedIn
+    restriction page, no script error — the same external idle/background-task kill
+    documented for the old JS scraper on 2026-06-30/07-01, now confirmed on `graph/run.py`
+    too). Verified the checkpointed writes were intact (`processed` 1012→1019, `captured`
+    470→475, exactly matching the last printed profile) and confirmed no orphan
+    `li-bot-profile` Chrome or stray python process via `Get-CimInstance` (never bash
+    `kill -0`), then **finished the remaining 13 profiles as three small foreground chunks**
+    (`--max=4`, `--max=5`, `--max=4`) — each ran to completion (one auto-backgrounded by the
+    tool's own timeout but finished cleanly on its own, not reaper-killed). Zero data lost
+    across every kill/resume boundary — same lesson as the 06-30 harness notes, now
+    confirmed to apply to `graph/run.py` as well.
+  - **Lane 3 (invite 15): 15/15 sent, zero errors.** One continuous run (not reaper-killed
+    this time), mostly a Carlos/David/Andrew cohort. 280→295 contacted, 190 still to
+    contact.
+  - **Lane 4 (check-connections): 5 new acceptances** — `andrew-koziol-26313439b`,
+    `juan-carlos-lumbreras-diaz-93440611b`, `molerocarlos`, `carlos-anegon-arenas`,
+    `chris-andaur-ing` (all dated 07-28/07-29) → 71→76 connected.
+  - **Lane 5 (endorse+DM, `--max=3`): 3/3 sent.** Per Mike's stated criteria this run (DM
+    everyone connected >14 days with no DM yet; fall back to one ≥7-day member if none
+    qualify). The script's own eligible pool (42, not the 44 I'd first counted) permanently
+    excludes two members already stuck at `endorse_status: no_skills`
+    (`juan-andres-sanchez-bidegain-a64747197` 27d and `giri-jangiti-b9950920b` 22d, both
+    abandoned no-DM back on 07-17/07-22 — genuinely zero endorsable skills). So the true
+    >14-day primary-branch match was **only `albertqian`** (15d, 9/10 top skills endorsed,
+    "Hi Albert," sent). **Flag for Mike:** I sized `--max=3` off my own count of 3 apparent
+    >14-day members *before* checking `endorse_status`, so the script's own oldest-first
+    sort filled the other 2 slots from the next tier down — `cubicleberts` and
+    `andrewwhitepeng`, both connected **exactly 14 days** (07-15→07-29), not strictly over
+    14. This is the same boundary the 07-28 run deliberately excluded `albertchitiyo` on
+    ("more than 14 days" read as strict). Both DMs already sent (10/10 and 10/10 skills
+    endorsed, "Hi Alberto," and "Hi Andrew,") — cannot be undone; flagging for awareness
+    only. 30→33 DM'd, 39 eligible remain.
+  - **Post-run cleanup (Mike's ask): removed both `endorse_status: no_skills` members
+    from `members.json` entirely** — `juan-andres-sanchez-bidegain-a64747197` and
+    `giri-jangiti-b9950920b`, confirmed as the only two in the whole file. Note the
+    endorse+DM eligibility filter (`skills/endorse-and-message/endorse-and-message.js`)
+    already excludes `endorse_status === 'no_skills'` from its own `todo` list, so this
+    was already a structural no-visit — the removal is purely a data-cleanup ask, not a
+    behavior fix. Their `members-urls.json` queue entries stay `processed: true` (same
+    treatment as the two redirect-deletions on 07-22), so no future scrape re-captures
+    them. Captured 485→483.
+
+## Superseded state (as of 2026-07-28 night: 5-lane morning run + LangGraph Lanes 1 AND 2 both blessed)
 
 - **Queue:** **6435** members, **1012 processed**, **5423 remaining** (+50 processed in the
   morning run, +4 in the evening Lane 2 graph bless, +1 chronic-404 retirement).
@@ -1399,3 +1536,544 @@ orphan check clean; launched detached + Monitor-watched via
   `scrape-group-members.js` = frozen rollback (`SCRAPE_SCRIPT_JS` one-line swap).
   Lanes 1 and 2 are now Python end-to-end under LangGraph; next frontier: Lane 3
   (invite) — port first, then wrap, same as this.
+
+### 2026-07-30 (evening): Lane 3 (invite) — PORT + GRAPH BUILT, bless pending
+
+Lane 3 built on the Lane 1/2 precedent: **port first, graph second**, JS frozen as
+rollback until a live bless run.
+
+- **`skills/request-connections/request_connections.py`** — 1:1 freeze-and-port of
+  `request-connections.js` onto `lib/li_session.py` (which already held every helper
+  Lane 3 needs from the earlier ports; zero lib growth this time). Logic, selectors,
+  pacing (5-20s click gaps, 40-90s between invites), the 2026-07-22 identity guards
+  (exact-slug landing + profile-owner name in the Connect aria-label), the two-strike
+  no_connect_button retirement with the same-day gate, limit/restriction stops, and
+  the OUTPUT FORMAT are byte-identical — the graph wrapper parses the lines.
+  `--max` default 10, `--dry-run` supported. Startup smoke test (`--max=0`, no
+  browser): reads members.json correctly (518/318/200), exits clean.
+- **Lane 3 graph** (`graph/lane_graph.py` + `run.py --lane 3 --max N [--dry-run]`):
+  same wrap-subprocess → verify-from-disk → halt topology. `invite` node launches the
+  port, tees output, watches for the inviter's own restriction-stop marker line +
+  restriction phrasing (→ `halted_restricted`, exit 2) and runs the 5-consecutive-
+  error kill-switch (streak-reset patterns generalized per lane — Lane 2's
+  capture/skip lines vs Lane 3's sent/already/no-connect lines). `verify_invite`
+  trusts disk: members.json contacted-per-status deltas, remaining-to-contact, and a
+  parsed-sent vs disk-sent mismatch check. A weekly invite/note LIMIT stop is NOT a
+  halt (the account is fine) — it reports `GRAPH DONE` with a loud do-not-rerun
+  WARNING. Thread id `invite-YYYYMMDD`.
+- **Stub suite green** (`--stub ok | restricted | fail | errors | limit` — limit is
+  new, Lane 3 only): correct routing + exit codes on all five, and the Lane 2 ok-stub
+  re-run green after the kill-switch generalization. No browser, no data writes.
+- **Bless plan:** next invite ask runs through the graph
+  (`python linkedin-automation/graph/run.py --lane 3 --max N`) — a small live batch
+  blesses port + wrapper together. Optional extra-cautious first step:
+  `--dry-run` locates Connect on real profiles without sending (still burns profile
+  views). Rollback = swap `INVITE_SCRIPT` to `INVITE_SCRIPT_JS` in `lane_graph.py`;
+  `request-connections.js` direct stays canonical until the bless.
+
+### 2026-07-30 (night): "Lane 3, 5" BLESSING RUN CLEAN — inviter port + Lane 3 graph both blessed
+
+Mike called the bless run the same evening the lane was built ("lane 3, 5"). Budget:
+~75-80 views already today (50 scrape + morning invites) + 5 = ~85, under the ~120/24h
+threshold. Pre-flight orphan check clean; ran detached via
+`python -u linkedin-automation/graph/run.py --lane 3 --max 5 --thread invite-20260730-bless5`.
+No reaper kill this time — completed in one launch (~11 min).
+
+- **Result: 5/5 INVITE SENT, zero errors, no restriction page, no limit.** Members:
+  `carlos-antonio-dos-santos-43950037`, `jeancjunior`, `carlos-eduardo-oliveira-a8570a32`,
+  `carlos-avila-7b281621`, `cv-mx`. Both Connect paths exercised live: More-menu
+  Connect on 4 profiles, top-card primary on 1 (`cv-mx`). Identity guard resolved the
+  owner name on every profile (incl. `jeancjunior` -> "jean carlos vieira junior",
+  where slug != display name, and `cv-mx` -> "carlos v.") and every send went through
+  the Add-a-note -> type -> Send invitation flow.
+- **All 5 navigations were `goto-notfound`** (search typed + results scanned, but the
+  exact slug wasn't on page 1 -> documented direct-visit fallback). Expected for this
+  batch: very common LatAm names (three Carloses) bury the exact match. The
+  human-looking search traffic still preceded every visit, and the exact-slug landing
+  guard passed 5/5. Watch on future runs: a batch with rarer names should show
+  `clicked` again (Lane 2's bless did).
+- **Verification all green:** graph verify-from-disk reports contacted delta
+  `sent +5`, parsed-vs-disk mismatch check silent, members.json entries perfectly
+  shaped (contacted / contacted_at 2026-07-30 / contact_status sent on top of
+  profile_url / location / group_id), 195 still to contact, no orphan Chrome after
+  close, checkpoint thread `invite-20260730-bless5` written. Sent-today total now 27
+  (22 morning JS run + 5 bless).
+- **BOTH BLESSED: `request_connections.py` is the canonical inviter and
+  `graph/run.py --lane 3 --max N` is the canonical Lane 3 command.**
+  `request-connections.js` = frozen rollback (`INVITE_SCRIPT_JS` one-line swap).
+  Lanes 1, 2, and 3 are now Python end-to-end under LangGraph; next frontier:
+  Lane 4 (check-connections) — port first, then wrap, same pattern.
+
+### 2026-07-30 (night): Lane 4 (check acceptances) — PORT + GRAPH BUILT, bless pending
+
+Same evening as the Lane 3 bless; Mike asked for Lane 4 next. Same discipline:
+**port first, graph second**, JS frozen as rollback.
+
+- **`skills/check-connections/check_connections.py`** — port of
+  `check-connections.js` onto `lib/li_session.py` (again zero lib growth: the
+  scanner only needs session/login/restriction/JSON/pause helpers already there).
+  Card-isolation JS (climb while distinctSlugs === 1, keep the last ancestor
+  containing "Connected") kept verbatim as an `eval_on_selector_all` string; scroll
+  caps (10 rounds / 5 stalls), date parsing, and output lines all 1:1.
+- **TWO DELIBERATE, DOCUMENTED DIVERGENCES — both fix live defects** (header of the
+  port + the skill md spell them out, so a rollback to the JS is an informed choice):
+  1. **Percent-encoded slugs never matched in the JS.** `outstanding` is keyed by
+     `slugFromUrl()` (decoded) but `harvestCards`' `slugOf` reads the href **raw**, so
+     e.g. `alberto-ruiz-pérez-1bb0b860` (map) vs
+     `alberto-ruiz-p%C3%A9rez-1bb0b860` (card) can never be equal. **Verified against
+     live data: members.json holds 16 percent-encoded members, 8 of them contacted,
+     and ZERO have ever received a `connected_on` — vs 84/315 (~27%) of ASCII-slug
+     contacted members.** Those 8 acceptances were being silently missed on every run
+     since the skill was written. The port decodes + lowercases both sides
+     (`match_key()`), which also makes the CONNECTED log line human-readable.
+  2. **Relative month/year math clamps instead of overflowing.** JS setMonth/setFullYear
+     roll forward off a short month ("1 month ago" on May 31 -> May 1; "1 year ago" on
+     Feb 29 -> Mar 1); the port gives Apr 30 / Feb 28. Edge case only (LinkedIn shows
+     the exact "Connected on <Month D, YYYY>" form in practice), but `connected_on`
+     feeds Lane 5's ">14 days connected" DM gate, so an accurate date matters.
+- **Lane 4 graph** (`graph/lane_graph.py` + `run.py --lane 4 [--dry-run]`): same
+  wrap → verify-from-disk → halt topology. **No `--max`** (one list page; `--max` is
+  rejected outright) and **no kill-switch** — there is no per-member visit loop to go
+  systemically wrong, so the only failure modes are a restriction page (halt, exit 2)
+  or a crash (fail, exit 1). `verify_check` compares the disk `connected_on` delta
+  against the parsed CONNECTED lines, and on `--dry-run` asserts the OPPOSITE: any
+  write at all is a defect and gets flagged. Report lists every newly-connected member
+  with their date and marks inexact/observed dates. Default thread is
+  `check-YYYYMMDD-HHMM` (not just the date) because this lane is run repeatedly.
+- **Tests green:** all four Lane 4 stubs (`ok`/`restricted`/`fail`/`nothing`, the last
+  being the no-browser empty-queue path), the arg guards (`--max` on lane 4,
+  `--stub nothing` off lane 4, `--dry-run` on lanes 1-2), Lanes 1/2/3 stub regressions
+  after the shared-code edits, and a unit pass over `parse_connected_date` (9 cases:
+  exact/abbreviated/comma-less months, today/yesterday, N days/weeks, unparseable ->
+  observed-today-inexact) plus a live-data proof of the slug fix (JS match False,
+  port match True on `alberto-ruiz-p%C3%A9rez-1bb0b860`).
+- **Bless plan:** next "Lane 4" ask runs through the graph. Because of fix 1, expect
+  the first blessed run to possibly catch acceptances from the 8 accented-slug members
+  that the JS could never see — that would be the fix proving itself. Rollback =
+  `CHECK_SCRIPT_JS` swap (which reintroduces both defects).
+
+### 2026-07-30 (night): "Lane 4" BLESSING RUN CLEAN — scanner port + Lane 4 graph both blessed, and the slug fix caught a member the JS never could
+
+Ran immediately after the Lane 4 build, foreground (short single-page scan, so no
+exposure to the background reaper): `python -u linkedin-automation/graph/run.py --lane 4
+--thread check-20260730-bless`. Pre-flight orphan check clean, ~40s total, ~0 profile
+views.
+
+- **Result: 7 members newly marked connected** (239 awaiting -> 232). `carlos-avila-7b281621`,
+  `juan-carlos-françois`, `shaunsummerlin`, `davidcarlondata`, `luiz-viana-ceo-vorcon`
+  (no date shown -> recorded as observed today, correctly flagged), `juan-carlos-pereda`,
+  `vinicius-alberto`. members.json `connected_on` 84 -> 91, `contact_status: connected`
+  also 91 (the two counts agree exactly), verify-from-disk delta +7 = the 7 parsed
+  CONNECTED lines, no mismatch warning, no orphan Chrome.
+- **THE PERCENT-ENCODED SLUG FIX PAID OFF ON ITS FIRST RUN:
+  `juan-carlos-fran%C3%A7ois` was matched.** He was invited hours earlier in the Lane 3
+  bless run and accepted the same day. Under the JS he would have been invisible to
+  every future scan -- stuck in the "awaiting acceptance" bucket permanently and never
+  becoming eligible for Lane 5's endorse+DM. This is the exact failure the port's
+  documented divergence 1 predicted, caught in production the first time it ran.
+  (The other 7 contacted encoded-slug members simply haven't accepted yet.)
+- **Scroll behaviour matched the documented limitation exactly:** 20 cards on the page,
+  no growth across rounds, stall counter tripped at 5 -> exited after round 6 of a
+  possible 10, so only the top-of-recently-added slice is read (7/239 of ours). That is
+  the known `window.scrollBy` ceiling recorded in the skill md, not a port defect --
+  and the reason this lane is meant to be run often.
+- **BOTH BLESSED: `check_connections.py` is the canonical acceptance scanner and
+  `graph/run.py --lane 4` is the canonical Lane 4 command.** `check-connections.js` =
+  frozen rollback (`CHECK_SCRIPT_JS` one-line swap, which reintroduces both defects).
+  **Lanes 1, 2, 3 and 4 are now Python end-to-end under LangGraph**; next frontier:
+  Lane 5 (endorse-and-message) -- port first, then wrap, same pattern. Note for that
+  port: Lane 5's ">14 days connected" gate reads `connected_on`, the field this lane
+  writes, so the two ports share a contract worth re-checking there.
+
+### 2026-07-31 (morning): full 5-lane run — Lane 2/10, Lane 3/50, Lane 4, Lane 5;
+an unusually aggressive reaper day on Lane 3, worked through via foreground chunking
+plus a stuck-profile reorder fix
+
+Mike's ask: Lane 2=10, Lane 3=50, Lane 4 (no number), Lane 5 = all members connected
+>14 days with no DM yet, fallback one member ≥7 days if none qualify, else nothing.
+Pre-flight orphan check clean before every launch, as always.
+
+- **Lane 2 (scrape 10): clean, one continuous background run, no kill.** 8 new
+  captures (5 Europe, 2 North America, 1 South America), 1 skipped out-of-zone
+  (Bologna), 1 error (stale 404 on `david-61293b107`, left for retry). 518→526
+  captured, queue 5447→5438 remaining.
+- **Lane 3 (invite 50): by far the roughest Lane 3 to date — 7 separate kills before
+  it finished, but zero data lost across every one.** The first background launch got
+  reaper-killed at 29/50 (26 genuinely sent) — normal, matches prior days. The next
+  **6 relaunches in a row all died within ~40-70s of starting, every one before
+  completing even a single invite** — a materially more aggressive kill pattern than
+  any prior day's log entry. Diagnosed two compounding issues:
+  1. **Two members were genuinely stuck, not reaper victims**: `amandacrawfordcodes`
+     and `amanda-warrell-977b8760` both hit a real `Locator.click: Timeout 6000ms
+     exceeded` on the Send button, repeatedly, and since they sat first in
+     `members.json`'s array order, every relaunch re-burned ~90s retrying them before
+     reaching fresh profiles. Fix (precedent from 07-20, see
+     `reference_linkedin_bg_task_kills`): moved both entries to the end of the array
+     via a Node one-liner (order-only, zero field changes, count unchanged) so future
+     runs skip past them to unstuck members. They remain in the eligible queue for a
+     future run/manual look, just no longer blocking the front.
+  2. **The reaper itself was hitting `run_in_background: true` launches almost
+     immediately** (not the documented ~90-450s window — more like 40-70s today).
+     Switching to a **foreground** Bash call (`timeout: 600000`, no
+     `run_in_background`) reliably survived past that window every time; small chunks
+     (`--max=4`) completed cleanly inside the 10-minute foreground cap without ever
+     touching the background path. Two larger foreground attempts (`--max=20`,
+     `--max=24`) ran past 10 minutes, auto-converted to background by the harness, and
+     were then vulnerable again (one killed after landing 4 more invites first, no
+     data lost) — so **for this account, small foreground chunks that finish inside
+     the 10-minute window are the reliable pattern, not just "foreground over
+     background" in general.**
+  - Final tally: **50/50 invited** (26 initial + 4+4+4+4+4+4 across six foreground
+    `--max=4` chunks after the reorder fix). 323→373 contacted, 153 still to contact.
+- **Lane 4 (check-connections): clean, foreground, ~40s, no kill.** 4 new
+  acceptances — `carlos-gomes-financeiro`, `carlos-bistrain-69278b46`,
+  `carloschuquillanqui`, `charlie-bamford-175a062a1` → 91→95 connected.
+- **Lane 5 (endorse+DM):** computed the eligible pool from disk **before** picking
+  `--max` (per the 07-30 lesson) — 59 connected/no-DM/not-`no_skills`/not-excluded
+  members, of which exactly **2** cleared the strict >14-day bar (both connected
+  2026-07-16, 15 days): `aforca` ("Hi Anthony," off-profile name) and
+  `amanda-fannin-uc-davis` ("Hi Amanda,"). The 7-day fallback wasn't needed since the
+  primary pool wasn't empty. Ran `--max=2`: 10/10 and 9/10 skills endorsed, both DMs
+  sent clean, one continuous foreground run. 34→36 DM'd, 57 eligible remain.
+- **Total profile views today: ~10 (Lane 2) + 50 (Lane 3) + 2 (Lane 4 list page ≈0) +
+  2 (Lane 5) ≈ 62** — well inside the ~120/24h restriction threshold, no restriction
+  page seen at any point despite the rough Lane 3 reaper day.
+
+---
+
+## 2026-08-01 — Lane 5 (endorse+DM) ported to Python + joined the LangGraph graph
+
+**Mike's ask:** port everything lane-5 related from JS to Python, then move Lane 5 onto
+the graph, ready for a live run. Done; **bless pending on that live run.** Lanes 1-4 were
+already on the graph, so this closes the morning-lane migration for the five lanes Mike
+runs daily.
+
+**Ported (freeze-and-port, same policy as lanes 1-4 — the JS originals stay as rollback):**
+- `endorse-and-message.js` → **`endorse_and_message.py`**, 1:1: same selectors, same
+  pacing constants, same DM template, same zero-skills rule, same one-write-per-phase
+  resume behaviour, and **byte-identical output lines** (the graph parses them).
+- The three probes → **`_probe_endorse.py` · `_probe_message.py` · `_probe_send.py`**.
+- Two Python-specific notes, both deliberate:
+  - `\p{L}` has no `re` equivalent, so `clean_first_name` uses `str.isalpha()` — the same
+    Unicode letter class. Verified identical on 37 name cases (see parity below).
+  - Added `sys.stdout.reconfigure(encoding="utf-8")`: this script PRINTS skill names and
+    display names, and Windows' cp1252 console is exactly what crashed the Lane 2 run on
+    07-30. The wrapper already sets `PYTHONIOENCODING`; this covers a direct call.
+
+**Parity test (JS vs Python, byte-diff of a JSON dump — identical apart from line
+endings).** The harness `eval`s the REAL `cleanFirstName` / `buildMessageLines` sliced out
+of the JS file, so it compares shipped code, not a retyped copy. Covered: both greeting
+forms + all 8 DM lines incl. both emoji; 37 first-name cases (honorifics, ALL-CAPS,
+all-lowercase, hyphens, apostrophes, accented/Cyrillic/CJK/emoji, too-short, too-long,
+title-only, empty/null); and the eligibility filter + oldest-first stable sort across 12
+member shapes (missing/empty `connected_on`, `dm_excluded`, `no_skills`, already endorsed).
+
+**Lane 5 graph** (`graph/lane_graph.py` + `--lane 5 --max N [--dry-run]` in `run.py`),
+same wrap → verify-from-disk → halt shape as lanes 2-4:
+- Halts on the restriction marker from **either** the profile page or the skills page
+  (this script has two).
+- Kill-switch on 5 consecutive per-member errors (process tree, `taskkill /T`).
+- Verification is stricter than other lanes because **a DM cannot be unsent**: all three
+  members.json deltas (`endorse_status=endorsed`, `=no_skills`, `dm_sent_at`) must equal
+  their parsed line counts, or the report carries a WARNING.
+- **Dry-run quirk found while wiring this and preserved on purpose:** `--dry-run` endorses
+  and DMs nothing but still records a genuine zero-skills finding (the JS does this too —
+  the skills page really was opened and really had nothing to endorse). So the dry-run
+  check allows exactly that one delta and flags any `endorsed`/`dm_sent` movement. Also
+  documented in `endorse-and-message.md`.
+- **Standing report** (the Lane 2 REGIONS precedent): names every member endorsed / DM'd /
+  abandoned, plus the eligible pool bucketed by connection age (>14d · 7-14d · <7d), and
+  WARNS when `--max` under-covered the >14-day members. This is the 07-29 `--max=3`
+  miscount turned into a mechanical check instead of a remembered procedure — the graph
+  still never picks `--max`, it only shows the number it should have come from.
+- `_wrap_cmd()` added: picks `node` for a `.js` path, so the Lane 5 rollback really is a
+  one-line `ENDORSE_SCRIPT` → `ENDORSE_SCRIPT_JS` swap. Lanes 1-4 predate it, untouched.
+- **Stub sweep green:** `ok` (exit 0) · `restricted` (exit 2) · `fail` (exit 1) · `errors`
+  (kill-switch, exit 1) · `nothing` (exit 0), plus `ok --dry-run`. Lanes 1-4 stubs re-run
+  after the edits: no regression. No browser, no writes, no DM in any stub.
+
+**Pool as of today (read from disk, for the live run):** 57 eligible members, of which
+**2 are connected more than 14 days ago** — `amandafetters` and `amanda-marlow-3723a112`,
+both connected 2026-07-17 (15 days). So the documented rule gives **`--lane 5 --max 2`**;
+the 7-day fallback is not needed. 21 more cross the 14-day line within a week.
+
+**Still JavaScript in this folder** (flagged to Mike — porting Lane 5 did not empty it):
+`skills/check-endorsements/` (the 6th lane, not yet ported or graphed) · `tools/`
+(`audit-sent-invites.js`, `withdraw-stray-invites.js`, `_grab-group-name.js`, 2 probes) ·
+`lib/_li-session.js` and the frozen lane 1-4 rollback scripts + their probes, which the
+freeze-and-port policy keeps until each port is blessed (lanes 1-4 all are, so those are
+deletable on Mike's call).
+
+### Same day — the 14/7-day rule became a MECHANICAL GATE (Mike's call)
+
+Mike: *"whenever I process this every morning, I use those instructions about the 14 days
+and 7 days... The only thing I need to do in the morning is to just say 'run lane five'
+without any further instructions."* Agreed and built — **`--lane 5` now takes no number.**
+
+**Why this lane and not lanes 2/3:** on Lane 2 and Lane 3 the `--max` is a genuine
+judgment call (how much of the day's volume budget to spend). On Lane 5 it never was — it
+is a documented rule applied to the data, which is exactly why it got miscounted by hand
+on 07-29. So deriving it does not violate the 07-28 "the number in the ask IS the human
+decision" contract; it recognises that on this lane there was no decision to make.
+
+**What the audit found before building it** (this is the bug the gate closes): the age
+rule lived only in the doc and in Mike's head. **Nothing in any code path implemented
+it** — not the JS, not the port, not the wrapper. The script's only filter is
+connected / not-DM'd / not-`no_skills` / not-`dm_excluded`, oldest first, then `--max`
+takes the top N *regardless of age*. And the wrapper's under-coverage warning is
+one-directional (fires when `--max` is too SMALL). Verified against the real logic:
+
+- none >14d but some in the 7-14 band → `--max 3` silently endorses+DMs a 3-day-old
+  connection. No warning.
+- **none >14d and none ≥7d** (rule says: do nothing) → `--max 1` cheerfully DMs a 5-day
+  connection. No warning, no halt.
+- above the line too: today `over_14d = 2`, and `--max 5` would have reached into three
+  members connected 12 days ago.
+
+An irreversible DM, unguarded, on a rule executed from memory every morning.
+
+**The gate** — `lane5_plan()` (rule, in `lane_graph.py`) + `lane5_gate()` (enforcement,
+in `run.py`, before Chrome opens, matching Lane 2's `--max > 75` precedent):
+
+| Situation | Behaviour |
+|---|---|
+| Nothing qualifies under either rule | prints why, **exit 0**, no browser |
+| Rule selects ≤ 10 | runs it, no argument needed |
+| Rule selects > 10 (`LANE5_AUTO_MAX`) | **REFUSES** — the volume call goes back to Mike via an explicit `--max` |
+| `--max` reaches PAST the rule | **REFUSES** — those connections are too recent to DM |
+| `--max` below the rule | allowed (reducing override for a heavy-volume day) |
+
+**On the ceiling (Mike chose refuse-above-10 over auto-capping):** the doc's own binding
+constraint is total profile-view VOLUME, not DM count, and each member here is a view
+PLUS ~10 endorse clicks PLUS a DM. A 24-member run on a 60-scrape day is ~85 views
+against the ~120/24h threshold that restricted this account twice. Above 10 the tool
+refuses rather than decide for him.
+
+**Blind spot, documented not papered over:** the gate prints the day's views it can see
+on disk (`contacted_at` + `endorsed_at`), but **Lane 2 scrape views are dated NOWHERE**
+(no `processed_at` on the queue, no capture date), so that number is a floor. A future
+`data/lane_runs.json` written by the graph would close it for every lane.
+
+Also: Lane 5's default checkpoint thread now carries the time (`endorse-YYYYMMDD-HHMM`,
+same as Lane 4) — a refused run is meant to be re-run immediately with an explicit
+`--max`, so same-day repeats are the normal flow.
+
+**Tests: 13/13 gate branches** verified against synthetic pools (at/above/below the ceiling,
+both fallback shapes, nothing-qualifies with and without an explicit number, `--max 0`,
+stub bypass), plus the full lane 5 stub sweep and the lane 1-4 regression re-run. The
+`--stub` path bypasses the gate on purpose (a stub never reads real member data), so the
+gate is tested directly instead.
+
+**A direct `endorse_and_message.py --max=N` call is UNGATED** — the rule is enforced by
+the graph, not the script. Noted in bold in the skill doc; go through `--lane 5`.
+
+### LIVE RUN — Lane 5 BLESSED (2026-08-01, ~11:55)
+
+Bare `python graph/run.py --lane 5`, **no number given** — the gate derived it. First run
+of the ported script, the graph, and the gate, all three together.
+
+```
+Lane 5 rule: 2 member(s) connected more than 14 days ago (oldest 15 days).
+  eligible pool: 57  (>14d: 2, 7-14d: 21, <7d: 34)
+Lane 5 endorse+DM graph | max 2 (auto, from the rule)
+  - amandafetters:            9/10 skill(s) endorsed, "Hi Amanda," DM SENT
+  - amanda-marlow-3723a112:  10/10 skill(s) endorsed, "Hi Amanda," DM SENT
+  members.json delta: endorsed +2 | no_skills +0 | dm_sent +2   (matched parsed lines)
+  eligible remaining: 55  (>14d: 0, 7-14d: 21, <7d: 34)
+```
+
+- **2/2 members, 19 skills endorsed, 2 DMs sent, ZERO errors** — no endorse failures, no
+  DM failures, no `no_skills` abandons, no restriction page.
+- **Verification green:** all three from-disk deltas equalled their parsed line counts,
+  so no mismatch WARNING. The `--max` under-coverage warning correctly stayed silent
+  (the run covered the whole >14-day pool: it is now 0).
+- **The gate did its job unassisted:** Mike typed no number anywhere. Both selected
+  members were exactly the two 15-day connections; the 21 members in the 7-14 day band
+  were correctly left alone.
+- Both profiles used the Enter-to-send path (`no Send button + send-toggle present`), as
+  documented — the account still has "Press Enter to send" ON.
+- **One continuous FOREGROUND run, ~5 minutes, no reaper kill.** Orphan check
+  (`Get-CimInstance`, li-bot-profile only) run before launching: clean.
+- **Volume today: 2 profile views.** Nothing else run today.
+
+**Status: port + graph + gate all BLESSED.** `endorse-and-message.js` stays as frozen
+rollback per policy but is now deletable on Mike's call, same as lanes 1-4.
+
+**Next `--lane 5` will report "nothing qualifies today, exit 0"** — `>14d` is 0 and the
+7-day fallback only fires when the >14d pool is empty AND the 7-14 band is non-empty, so
+it will select ONE member from the 21 in that band. Worth watching on the next run day
+that the fallback branch behaves live the way it does in the branch tests.
+
+### Same day — run log, live heartbeat, and the dashboard's LangGraph page
+
+Mike asked to visualise graph progress in the dashboard: a left nav (`Social` |
+`LangGraph`), a **diagram** rather than only a table, and specifically *"which nodes are
+currently active"* — with the eventual main use case being *"see if the human-in-the-loop
+interrupt has fired"*. Built steps 1-3 of the four proposed; step 4 (interrupt capture)
+deliberately deferred until a graph actually interrupts.
+
+**Two corrections that shaped the design, both worth remembering:**
+
+1. **It is not five nodes — it is five graphs of two nodes each** (`work → verify` + a
+   halt edge). Only one runs at a time (the single-Chrome rule). The page draws both
+   levels: five lane cards each showing their own inner pipeline, plus the focused lane's
+   full `START → work → verify → END`.
+2. **LangGraph's checkpoints cannot provide live progress here.** LangGraph checkpoints
+   only BETWEEN nodes, and each lane's work node is a single long subprocess — Lane 5's
+   ran ~5 minutes, during which the graph knew only "endorse is running". The granularity
+   exists in the subprocess STREAM, which `_run_streaming` already parses. So the
+   heartbeat is written from there, which means **one change in one shared function gave
+   all five lanes live progress**.
+
+**Why not build on `graph_checkpoints.sqlite`** (checked before deciding): it holds 89
+threads of which **only 14 are real runs** — the rest are stub tests; it is gitignored and
+documented as *disposable*; and its two tables are LangGraph's internal msgpack
+serialization, not our schema. A UI on it breaks the first time someone deletes it, which
+the design says is safe. So: two purpose-built files instead.
+
+- **`data/lane_runs.json`** — committed history, one record per finished run (lane,
+  status, duration, the whole verify block, profile views), written by `run.py` at END.
+  Stub runs are recorded but flagged and hidden by default. **This also closes the volume
+  blind spot** found while building the Lane 5 gate: `members-urls.json` has no
+  `processed_at`, so a same-day profile-view total existed nowhere. Now it does, and the
+  Lane 5 gate's flat ceiling of 10 can eventually become a real budget.
+- **`data/lane_progress.json`** — transient, gitignored, rewritten while a run is in
+  flight. Atomic writes (temp + `os.replace`) because the page polls it mid-write, and
+  every write is wrapped in try/except: **a dashboard feed must never break a live run.**
+- The 11:55 bless run was **backfilled** into the log (flagged `backfilled: true`) since
+  it predates the log by an hour.
+
+**Staleness is a first-class state, because of this repo's history.** A reaper kill leaves
+a `running` heartbeat that simply stops updating. Anything with no update for 90 s renders
+as **stale** with an explicit "check whether the process is still alive before
+relaunching" warning — relaunching collides on the shared `li-bot-profile` Chrome.
+
+**Dashboard changes:** `serve_dashboard.py` gained a `/linkedin/<file>` route that is an
+**allowlist** (the two feed files), not a directory mount — that folder also holds
+`members.json` and the restriction history. Served `no-store`. `index.html` gained the
+shared left nav and was renamed **Social**; its tab bar now wraps (the 190px nav had
+pushed Shorts/Longs off-screen at 1280px).
+
+**Design notes:** status colours come from the dataviz skill's fixed status palette, and
+every status ships an **icon + text label** so colour never carries the meaning alone —
+the skill's own validator flagged `warning`↔`serious` at ΔE 13.6 (hard to tell apart) with
+both under 3:1 on white, so `serious` is unused and *running* uses the dashboard's accent
+blue instead. The view budget is a **meter** (single ratio against a limit), not a chart.
+
+**Verified:** all 20 lane × stub-mode combinations still exit correctly; the Lane 5 gate
+still passes 13/13 branches; both pages screenshot-checked with zero console errors; the
+live state was captured mid-flight by driving the REAL `_run_streaming` with a slow
+synthetic stream (stub runs finish in 0.2 s, too fast to catch); the stale path was
+verified by backdating a `running` heartbeat. Also fixed a real bug found in review: the
+page sliced strings AFTER escaping them, which can cut an HTML entity in half.
+
+## 2026-08-01 evening — 4-lane sequence on the new dashboard (Mike: "Lane 2, 6 / Lane 3, 3 / Lane 4 / Lane 5")
+
+First run watched live on the LangGraph dashboard page. **12 profile views total** for
+the day (2 morning endorse + 6 scrape + 3 invite + 1 endorse), against the ~120 that
+restricted the account. Run strictly sequentially, one attempt each, zero relaunches.
+
+- **Lane 4 (pre-sequence, 0 views):** **13 newly connected** off 278 awaiting —
+  `connected_on` 95 → 108. Scroll plateaued at 20 cards on all 6 rounds: LinkedIn only
+  renders the most recently added connections, so this lane sees a WINDOW, not history.
+  Frequency, not depth, is what gives coverage. A second run 25 min later found 0 (correct).
+- **Lane 2 (scrape 6):** visited 6, processed +5, **captured +4** (Zug CH, Bogotá CO,
+  Argentina, San Francisco US), skipped 1 out-of-zone (Lagos), 1 dead URL (`/404/`,
+  correctly left unconsumed to retry). Queue 5433 remaining. Wall clock ~17 min — the
+  inter-profile gaps ran 88-196s, so **6 profiles is a ~15+ minute run**; it exceeded the
+  600s foreground tool ceiling and finished in the background. Expect that, do not relaunch.
+- **Lane 3 (invite 3):** **3/3 sent**, zero errors, zero strikes. 154 still to contact.
+- **Lane 5 (gate-derived, no number):** rule picked **max 1** (nobody past 14 days →
+  the 7-14 day fallback). The selected member had **no endorsable skills** → abandoned,
+  **no DM**, marked `no_skills`. Correct: the sanctioned DM only goes to someone whose
+  skills we just endorsed.
+
+### Fixed this run
+
+- **The Lane 5 gate's printed view total silently omitted scrape** — the single BIGGEST
+  consumer of the daily budget (a scrape run is up to 75 views). It read only
+  members.json's dated fields (`contacted_at`/`endorsed_at`), which structurally cannot
+  see Lane 2, and printed an obsolete caveat saying so. That caveat predated
+  `lane_runs.json`, which has recorded scrape views correctly since it was added.
+  `_views_today()` now **merges both sources, taking the larger per category**: the run
+  log is the only source for scrape, while members.json still catches invite/endorse from
+  a DIRECT ungated script call the run log never sees. The gate now prints
+  `N of ~120 (scrape + invite + endorse)` and warns past 80. Verified: reported 12,
+  matching the hand tally. Gate rule re-tested, 11/11 branches pass.
+- **Dashboard lane cards showed stale runs as current** (Mike, watching Lane 2 run):
+  Lanes 4 and 5 rendered bright green `done` beside the live lane, so three lanes looked
+  equally active. The card status keyed off `isToday`, but **recency is not currency** —
+  a run from ten minutes ago is as much history as one from last week. Now: only the
+  running lane is present-tense (color, lit node, live counters); every other lane dims
+  to 55% with a neutral pill and `last run 22m ago`; the inner `work → verify` nodes
+  light ONLY while live. **Deliberate exception: failed/halted/killed keeps its warning
+  colour** until that lane runs again — greying out an unresolved restriction would bury
+  the most important thing on the page. The live card also now shows live counters
+  instead of the previous run's headline, which described the wrong run.
+
+### Open, not fixed
+
+- **`goto-notfound` fallback rate is high.** Lane 2 reached **4 of 6** profiles by direct
+  navigation because search-and-click found no match; Lane 3, 1 of 3. The hard rule says
+  reach profiles via search-and-click precisely because bare `goto(profileUrl)` is a
+  flagged signature. The pacing (88-196s gaps) means these are nowhere near the
+  back-to-back pattern the rule targets, so this is not an incident — but two thirds of a
+  scrape sample taking the fallback path is a pattern worth diagnosing, likely in how the
+  search query is built from the URL slug.
+- **Lane 3's completion line still prints "run again, max 3/day"** — a stale string from
+  the self-imposed invite cap Mike **rescinded 2026-07-28**. `CLAUDE.md` says no fixed
+  daily cap. Cosmetic, but it contradicts the canonical doc inside a blessed script.
+
+### Dashboard: LangGraph page generalized to tabs (same session)
+
+Mike: the LangGraph section will need tabs like the Social page does, because this page is
+currently all-LinkedIn and there will be several LangGraph automations.
+
+The page now renders from an **`AUTOMATIONS` registry** — lane cards, graph diagram, budget
+meter and run-history summaries all come from the active entry, so nothing on it is
+LinkedIn-specific. LinkedIn is tab 1. The server route generalized from a hardcoded
+`/linkedin/` to a folder registry, still a **filename allowlist, not a directory mount**
+(this folder holds members.json and the restriction history; re-verified both 404).
+
+**Tabs carry live status, and every automation is polled — not just the visible one.** The
+stated purpose of this page is catching a graph that needs a human, which fails the moment
+the interesting automation is the one you are not looking at. `awaiting_input` shows a red
+**needs you** badge (a word, not just a colour — the graph stays blocked until answered);
+also running / stale / halted / failed / idle. Verified against four simulated automations
+driven into different states.
+
+The budget meter is per-automation and hides itself when an automation rations nothing —
+profile views vs the restriction threshold is a LinkedIn fact, not a LangGraph one.
+
+**Canonical detail (incl. how to add an automation) lives in
+`schedule-tweets/skills/dashboard.md`** — not duplicated here.
+
+## 2026-08-04 — full 5-lane run (Lane 2=60, Lane 3=30, Lane 4, Lane 5)
+
+Ran all four active lanes via `graph/run.py`, chunked `--max=4`/`5` foreground calls per
+the reaper-mitigation pattern (checked for orphaned `li-bot-profile` Chrome before every
+relaunch; killed chunks were confirmed safely persisted to disk, no data lost, just retried).
+
+- **Lane 2 (scrape 60): 60/60 profile views, 0 errors across all 15 chunks.** 571→613
+  captured (+42). Two chunks (9, 10) got reaper-killed after landing all/most of their
+  profiles; disk state confirmed intact both times before resuming.
+- **Lane 3 (invite, asked 30): sent 26, then LinkedIn's own weekly invite/note limit hit
+  and the script self-stopped ("do NOT rerun today") — a platform-side stop, not pushed
+  past.** 404→~431 contacted. **Fix applied mid-run:** `aseguillon` and
+  `ana-carolina-barbosa-8996621ba` failed at the identical Send-button timeout twice in a
+  row, burning two batch slots each time with zero progress — moved both to the end of
+  `members.json` (order only, no field changes), same mitigation as the 07-20/07-31
+  incidents. Every chunk after the reorder sent clean.
+- **Lane 4 (check): 9 new acceptances** — `david-redondo-jimenez-40432535`,
+  `luiz-carlos-aparecido-rosa-321901293`, `david-j-carroll`, `ana-carolina-fbrito`,
+  `caroline-kennedy-81110980`, `ana-carolina-carrasco`, `carolinemsabino`,
+  `caroline-de-castro-vidal-343572127`, `aloisiocarolina` → 111→120 connected.
+- **Lane 5 (endorse+DM, no number — mechanical 14/7-day gate): 2 members** cleared the
+  strict >14-day bar (`benjamingolds`, `benjamin-randoing`, both connected 2026-07-20,
+  15 days) — 10 skills endorsed + DM sent each, 0 errors. Gate's own running total read
+  85/120 profile views before this lane ran (53 scrape + 32 invite by its accounting,
+  which merges `lane_runs.json` with `members.json` timestamps and reads slightly
+  different from the raw per-chunk sums above); ended the day comfortably under the
+  ~120/24h restriction threshold.
+
+No restriction pages hit at any point. Lane 3 not retried today per its own limit warning.

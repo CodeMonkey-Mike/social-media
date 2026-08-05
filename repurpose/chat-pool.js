@@ -138,6 +138,20 @@ async function confirmAndRegister(page, purpose, batch) {
         id = it.id;
       }
 
+      // RACE (found 2026-07-30): ChatGPT auto-titles a new conversation ASYNCHRONOUSLY after the
+      // first response; if that lands after our PATCH it silently overwrites the gated title (the
+      // read-back below passes, yet the chat later shows e.g. "Cinematic Trading Hall" and the
+      // deletion gate refuses it). So wait for the auto-title to land FIRST — once it has, our
+      // rename is the last write and sticks. Bounded: if it never lands, rename anyway and let
+      // chat-delete's healTitles() end-of-run backstop re-assert.
+      for (let i = 0; i < 9; i++) {
+        const g = await fetch('/backend-api/conversation/' + id, { credentials: 'include', headers: H })
+          .then(x => (x.ok ? x.json() : null)).catch(() => null);
+        const t = g && g.title;
+        if (t && !/^new chat$/i.test(t)) break;
+        await new Promise(res => setTimeout(res, 5000));
+      }
+
       // Rename to the gated title, then read it back — the rename must VERIFIABLY stick,
       // because this title is what later authorizes deletion.
       const p = await fetch('/backend-api/conversation/' + id, {
@@ -220,10 +234,24 @@ function recordGateSkip(chat, note) {
   save(d);
 }
 
+// A gate-skipped chat whose live title has been HEALED back to its gated title (chat-delete's
+// healTitles): move it back onto the retired queue so the sweep can delete it. Only healTitles
+// calls this, and only for entries with verified-rename provenance (a recorded gated `title`).
+function requeueGateSkipped(url) {
+  const d = load();
+  const hit = (d.title_gate_skipped || []).find(x => x.url === url);
+  if (!hit) return false;
+  d.title_gate_skipped = d.title_gate_skipped.filter(x => x.url !== url);
+  const { gate_skipped_at, gate_note, ...chat } = hit;
+  pushRetired(d, chat, 'requeued: live title healed back to the gated title');
+  save(d);
+  return true;
+}
+
 function status() { return load(); }
 
 module.exports = {
   getActiveUrl, registerNewChat, confirmAndRegister, recordImage, markDead, retire,
-  getRetired, removeRetired, recordGateSkip, countFor, cap, status, REG,
+  getRetired, removeRetired, recordGateSkip, requeueGateSkipped, countFor, cap, status, REG,
   TITLE_GATE_RE, titleFor,
 };

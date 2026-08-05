@@ -55,9 +55,19 @@ async function main() {
   const reg = pool.status();
   const statuses = batchStatusMap();
 
-  // Plan: already-retired leftovers + batch-completed actives + explicitly requested purposes.
+  // Plan: already-retired leftovers + healable title-gate refusals + batch-completed actives +
+  // explicitly requested purposes.
   const plan = [];
   for (const c of reg.retired) plan.push({ ...c, why: c.reason || 'previously retired' });
+  // Gate-skipped chats WITH verified-rename provenance (a recorded gated title): ChatGPT's
+  // auto-title overwrote our rename. The sweep's healTitles() re-renames + requeues + deletes
+  // them; they belong on the plan so the browser opens for them. No-provenance entries stay
+  // strictly human-decision.
+  for (const c of reg.title_gate_skipped || []) {
+    if (c.title && pool.TITLE_GATE_RE.test(c.title)) {
+      plan.push({ ...c, why: 'gate-skipped, healable (title drifted off the verified rename)' });
+    }
+  }
   const toRetire = [];
   for (const c of reg.chats) {
     const st = c.batch ? statuses.get(String(c.batch).toLowerCase()) : null;
@@ -99,6 +109,12 @@ async function main() {
   }
   try {
     const page = await browser.newPage();
+    // Land on the chatgpt.com origin BEFORE sweeping. deleteChat's title-gate pre-check runs
+    // `fetch('/api/auth/session')` — a RELATIVE url — and it runs BEFORE the per-chat goto, so on
+    // a fresh about:blank page it has no origin to resolve against and every chat dies with
+    // "pre-check HTTP 0 no access token" regardless of login state. The image-gen callers never
+    // hit this because they pass an already-navigated authed page. (Mike 2026-07-28)
+    await page.goto('https://chatgpt.com/', { waitUntil: 'domcontentloaded', timeout: 30000 });
     const { failed } = await require('./chat-delete').sweepRetired(page);
     if (failed > 0) process.exitCode = 1;
   } finally {

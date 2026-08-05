@@ -98,3 +98,44 @@ Stay within the SPA. Never call `navigate` or trigger a full page reload on a lo
 
 ### Rule 2 — ALWAYS use clipboard paste to enter text into X
 Write full text to system clipboard, verify composer is empty, focus, `Ctrl+V`, screenshot to verify. Character-by-character typing and `execCommand` approaches are banned.
+
+---
+
+## ⛔ NEW 2026-07-30 — `tweetTextarea_5` visibility timeout: the composer cannot grow past 5 tweets in-viewport
+
+`post-thread.js` failed **deterministically, twice in a row** on a 6-tweet thread
+(`thread-2026-07-29-three-out-of-ten`), at exactly the same point both times:
+
+```
+Typing tweet 5/6 ... Tweet 5 verified ✓
+  ~ pause (before addButton)
+Posting failed: page.waitForSelector: Timeout 10000ms exceeded.
+  - waiting for locator('[data-testid="tweetTextarea_5"]') to be visible
+```
+
+Tweets 1-5 typed and verified fine; the failure is always on the SIXTH textarea.
+
+**Both attempts died BEFORE the Post click, so nothing went live** (verified: `thread_root_url`
+empty, no partial thread on the profile). Zero duplicate risk. This is the one thread-failure
+class where nothing needs reconciling.
+
+**Diagnosis (unconfirmed but strongly indicated):** the wait is a *visibility* check, not an
+existence check. With 5 tweets composed the thread modal has grown taller than the viewport, so
+the newly-added 6th textarea is created but scrolled out of view and never satisfies
+`toBeVisible()`. The 10s timeout is also short relative to the 4-7s action pauses around it.
+
+**Do NOT keep retrying** — it reproduced identically on attempt 2, so it is a code defect, not a
+transient click miss. Retrying just burns 7 minutes per attempt.
+
+**Fix to apply next time the script is touched** (in order of likelihood):
+1. `scrollIntoViewIfNeeded()` on the new textarea (or `page.mouse.wheel`) before the visibility
+   wait, and/or wait on `state: 'attached'` then focus via `robustClick`/`fill` rather than
+   requiring visibility.
+2. Raise the per-textarea timeout from 10s to ~30s.
+3. Same overlay caveat as `post-x-poll.js` applies inside the composer — prefer
+   `fill()` / native JS click over coordinate clicks.
+
+**Threshold to watch:** 5-tweet-and-under threads have posted fine for months (6/6 and 7/7
+threads succeeded through 2026-07-25), so the break is recent and may be an X composer change
+rather than a hard 5-tweet cap. Confirm the tweet count at which it starts failing before
+assuming the cause.

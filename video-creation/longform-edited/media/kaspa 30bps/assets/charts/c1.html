@@ -1,0 +1,164 @@
+<!doctype html>
+<html data-state="build">
+<head>
+<meta charset="utf-8">
+<title>C1 the upgrade ladder</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --accent-green:#00e68a; --accent-cyan:#00c2ff;
+  --accent-gold:#ffd700; --accent-red:#ff4060; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e; --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.3;pointer-events:none;z-index:0}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.ey{font-family:'DM Sans';font-size:26px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:66px;line-height:1.05;letter-spacing:-.02em}
+.c{color:var(--accent-cyan)}
+header{position:absolute;left:90px;top:56px;z-index:2}
+
+.rail{position:absolute;left:300px;top:230px;bottom:60px;width:5px;border-radius:3px;
+  background:linear-gradient(180deg,#1e2330,#1e2330);z-index:1}
+.dot{position:absolute;left:283px;width:39px;height:39px;border-radius:50%;background:var(--bg-card);
+  border:3px solid var(--text-muted);z-index:2}
+.dot.lit{border-color:var(--accent-green);box-shadow:0 0 26px rgba(0,230,138,.7)}
+.dot.cy{border-color:var(--accent-cyan);box-shadow:0 0 22px rgba(0,194,255,.55)}
+.dot.au{border-color:var(--accent-gold);box-shadow:0 0 22px rgba(255,215,0,.5)}
+
+.rung{position:absolute;left:370px;width:1250px;height:165px;background:var(--bg-card);
+  border:1px solid var(--border);border-radius:16px;display:flex;align-items:center;gap:44px;
+  padding:0 42px;z-index:2}
+.rung .val{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:40px;width:360px;flex:none}
+.rung .mid{flex:1}
+.rung .name{font-family:'Playfair Display',serif;font-weight:700;font-size:40px;line-height:1.1}
+.rung .desc{font-family:'DM Sans';font-size:22px;color:var(--text-secondary);margin-top:8px}
+.chips{display:flex;flex-direction:column;gap:12px;align-items:flex-end;flex:none}
+.chip{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:19px;letter-spacing:.06em;
+  padding:8px 18px;border-radius:100px;text-transform:uppercase;white-space:nowrap}
+.chip.date{background:rgba(136,146,164,.1);color:var(--text-secondary);border:1px solid var(--border)}
+.chip.green{background:rgba(0,230,138,.12);color:var(--accent-green);border:1px solid rgba(0,230,138,.4)}
+.chip.gold{background:rgba(255,215,0,.1);color:var(--accent-gold);border:1px solid rgba(255,215,0,.4)}
+.chip.lock{background:rgba(80,90,110,.12);color:var(--text-muted);border:1px solid var(--border)}
+
+#r4{top:222px} #r3{top:432px} #r2{top:642px} #r1{top:852px}
+.d4{top:285px} .d3{top:495px} .d2{top:705px} .d1{top:915px}
+
+#r1 .val{color:var(--accent-green)} #r2 .val{color:var(--text-secondary)}
+#r3 .val{color:var(--accent-green)} #r4 .val{color:var(--text-primary)}
+
+/* state helpers */
+.ghost{border:2px dashed #1e2330;background:rgba(18,21,28,.35)}
+.ghost>*{visibility:hidden}
+.glow{border-color:rgba(0,230,138,.6);box-shadow:0 0 55px rgba(0,230,138,.18)}
+.dim{opacity:.55}
+.soft{opacity:.85}
+
+.flash4x{position:absolute;right:70px;top:396px;z-index:3;transform:rotate(-4deg);
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:44px;color:var(--accent-green);
+  border:4px solid var(--accent-green);border-radius:12px;padding:10px 26px;
+  background:rgba(0,230,138,.08);box-shadow:0 0 40px rgba(0,230,138,.25)}
+.stamp{position:absolute;right:-26px;top:-24px;transform:rotate(7deg);z-index:3;
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:30px;letter-spacing:.1em;
+  border-radius:10px;padding:8px 20px;visibility:visible!important}
+.stamp.done{color:var(--accent-green);border:4px solid var(--accent-green);background:rgba(0,230,138,.1)}
+.stamp.targeted{color:var(--accent-gold);border:4px solid var(--accent-gold);background:rgba(255,215,0,.08)}
+.summernote{font-family:'DM Sans';font-weight:600;font-size:19px;color:var(--accent-green);margin-top:6px}
+
+/* ---------- states ---------- */
+html[data-state="build"] #r3,html[data-state="build"] #r4{border:2px dashed #1e2330;background:rgba(18,21,28,.35)}
+html[data-state="build"] #r3>*,html[data-state="build"] #r4>*{visibility:hidden}
+html[data-state="build"] .d3,html[data-state="build"] .d4{border-color:#1e2330;box-shadow:none}
+
+html[data-state="rung3"] #r4{border:2px dashed #1e2330;background:rgba(18,21,28,.35)}
+html[data-state="rung3"] #r4>*{visibility:hidden}
+html[data-state="rung3"] .d4{border-color:#1e2330;box-shadow:none}
+html[data-state="rung3"] #r3{border-color:rgba(0,230,138,.6);box-shadow:0 0 55px rgba(0,230,138,.18)}
+html[data-state="rung3"] #r1,html[data-state="rung3"] #r2{opacity:.85}
+
+html[data-state="rung4locked"] #r4{opacity:.55}
+html[data-state="callback"] #r3{border-color:rgba(0,230,138,.6);box-shadow:0 0 55px rgba(0,230,138,.18)}
+html[data-state="assembly"] #r3{border-color:rgba(0,230,138,.45);box-shadow:0 0 40px rgba(0,230,138,.14)}
+
+/* per-state chip/stamp/flash visibility */
+.flash4x{display:none} html[data-state="rung3"] .flash4x{display:block}
+.stamp{display:none} html[data-state="assembly"] .stamp{display:block}
+.summernote{display:none} html[data-state="assembly"] .summernote{display:block}
+.chip.lockclosed{display:none} .chip.lockopen{display:none}
+html[data-state="rung4locked"] .chip.lockclosed{display:block}
+html[data-state="callback"] .chip.lockopen{display:block}
+html[data-state="assembly"] .chip.lockopen{display:block}
+html[data-state="build"] .chip.lockclosed,html[data-state="rung3"] .chip.lockclosed{display:none}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="orb" style="width:520px;height:520px;right:-160px;top:-160px;background:var(--accent-green);opacity:.13"></div>
+  <div class="orb" style="width:520px;height:520px;left:-180px;bottom:-200px;background:var(--accent-cyan);opacity:.13"></div>
+
+  <header>
+    <div class="ey">The upgrade ladder</div>
+    <h1>Every rung is a <span class="c">hard fork</span></h1>
+  </header>
+
+  <div class="rail"></div>
+  <div class="dot d1 lit"></div>
+  <div class="dot d2 cy"></div>
+  <div class="dot d3 au"></div>
+  <div class="dot d4"></div>
+
+  <div class="rung" id="r4">
+    <div class="val">100 BPS</div>
+    <div class="mid">
+      <div class="name">The 2027 Fork</div>
+      <div class="desc">the rung after: it only exists if DAGKnight lands first</div>
+    </div>
+    <div class="chips">
+      <span class="chip gold">2027 target</span>
+      <span class="chip lock lockclosed">Locked · needs DAGKnight</span>
+      <span class="chip green lockopen">Unlocked by DAGKnight</span>
+    </div>
+  </div>
+
+  <div class="rung" id="r3">
+    <div class="val">UP TO 40 BPS</div>
+    <div class="mid">
+      <div class="name">DAGKnight</div>
+      <div class="desc">new consensus protocol, four times today's speed</div>
+    </div>
+    <div class="chips"><span class="chip gold">Target: end of 2026</span></div>
+    <div class="stamp targeted">TARGETED</div>
+  </div>
+
+  <div class="rung" id="r2">
+    <div class="val">STILL 10 BPS</div>
+    <div class="mid">
+      <div class="name">Toccata</div>
+      <div class="desc">programmability: covenants, native tokens, ZK verification</div>
+      <div class="summernote">shipped this summer</div>
+    </div>
+    <div class="chips"><span class="chip date">Jun 30, 2026</span><span class="chip green">Shipped</span></div>
+    <div class="stamp done">DONE</div>
+  </div>
+
+  <div class="rung" id="r1">
+    <div class="val">1 &#8594; 10 BPS</div>
+    <div class="mid">
+      <div class="name">Crescendo</div>
+      <div class="desc">100 ms blocks, running live today</div>
+    </div>
+    <div class="chips"><span class="chip date">May 2025</span><span class="chip green">Live</span></div>
+    <div class="stamp done">DONE</div>
+  </div>
+
+  <div class="flash4x">4x THE SPEED</div>
+</div>
+<script>
+const s=(location.hash||'').slice(1); if(s) document.documentElement.dataset.state=s;
+</script>
+</body>
+</html>

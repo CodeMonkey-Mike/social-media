@@ -6,6 +6,147 @@ linkedin-automation/PROJECT-LOG.md.)_
 
 ---
 
+## 2026-08-04 (later) — `october-bottom` END-OF-SESSION WRAP: Lanes 1+3 DONE, Lane 2 tightened+desilenced with clip 2 BUILT, 5 builders in flight
+
+Session wrapped ahead of the API limit. **This entry is tomorrow's resume contract.**
+
+### Done today after the Wave 1+2 bless (entry below)
+
+- **4b verdicts executed (Mike):** clip 6 DELETED (folder removed; numbers frozen at 1,2,3,4,5,7);
+  clip 4 retitled "Meme Coin: Unc Goes Down Down Down..." with the ENTIRE Johnny Cash span removed
+  (relock at 1342.82 master, RMS-verified -68.6 dB trough, zero licensed audio survives); clip 7
+  retitled "OMG: Kaspa Dipped Under 2.6 Cents 😱". **2nd review waived; build + publish authorized
+  by Mike (posting stays his).**
+- **Phase 5 + 5B DONE (all six, one fork run, 250 ms):** via `tighten_clips_october_bottom.py`
+  (modeled verbatim on the whatif1000x reference) off `tighten-plan.json` authored by SIX
+  tighten-strategist agents. Mid-run incident: the API session limit killed 3 strategists;
+  **SendMessage resume recovered all 3 with their analysis context intact** — the resume path works.
+
+  | n | clip | raw → desil | voiced cut |
+  |---|---|---|---|
+  | 1 | october-mandela-myth | 171.6 → 114.7s (then 114.2 after burst fix) | -13.7% |
+  | 2 | kaspa-dip-bought-more | 95.4 → 55.0s | -14.2% |
+  | 3 | whatif-organic-dogecoin | 149.1 → 86.0s | -13.2% |
+  | 4 | ring-of-fire-meme-judgment | 98.1 → 48.8s | -9.8% |
+  | 5 | cooper-robinhood-real-dog | 124.3 → 66.2s | -14.6% |
+  | 7 | kaspa-dip-impact | 19.7 → 13.4s | 0% (relocks only) |
+
+- **Burst removal clip 1:** cough at 47.68 clip-time excised (-0.52s, 13 frames), verified on the
+  render ("But"/"related" both whole); spine replaced in place, re-transcribed (375 words);
+  **the join has a visible head-position jump — clip 1's builder MUST cover 47.6-48.9 with b-roll**
+  (instruction already in its dispatch + progress.json note).
+- **Per-clip whisper-words.json: all six current** (clip 1 redone post-fix).
+- **Lane 3 COMPLETE** (`pipelines.repurpose: done`): 15 lint-clean entries — 6 X tweets (4 long +
+  2 one-liners), 2 IG 4:5 Kaspa companions, 2 YT posts (october-mandela v4 carousel + if-organic v1
+  carousel, 5 slides each, wired into `images[]`), 2 YT polls, 1 X poll (Kaspa only; October poll
+  is YT-only per the topic filter), 2 threads. **All 17 images passed adversarial visual-qa — it
+  took 3 rounds** (caught: a KASPA logo standing in for $IF, real Binance/Coinbase/Kraken marks on
+  a slide, duplicate "5 OF 5" badges leaked from the v1 exemplar, chartreuse palette drift, garbled
+  Kaspa glyphs on both IG images, and a bar chart contradicting its own "6TH WORST OF 12" box).
+  **Prompt lesson institutionalized: the model obeys labels and ignores geometry — specify the
+  twelve bar values / the glyph strokes / "no badge", and move occluders away; that fixed both
+  final stragglers in one round.** Drafts: `repurpose/output/2026-08-04_october-bottom*`.
+- **Clip 2 BUILT + gate PASS** (first of six): 54.92s, 33.4% b-roll / 9 beats / 3 full-screens,
+  12 SFX, -17.9 LUFS, whisper-verified final mix, persona-clean; its builder verified
+  "this guy's an opportunity" is actually "this gives an opportunity" (5 isolated passes) and
+  persisted the phrase rule in `skills/captions/build_captions.py`. progress.json → `7-built PASS`.
+
+### IN FLIGHT AT WRAP — resume protocol for tomorrow (in order)
+
+1. **Builders for clips 1, 3, 4, 5, 7 were RUNNING at wrap** (two waves, lock-serialized). First:
+   check what landed on disk per clip — `out/october-bottom/<n>-<slug>.mp4`, `constants-*.ts` +
+   `captions*.ts` in `remotion/src` + Root.tsx registration, `<clip>/BROLL-PLAN.md`, images in
+   `shorts/october-bottom/render-assets/`, gate output. **If a builder died: SWEEP STALE LOCKS
+   FIRST** (`python video-creation/shorts/_tooling/stage_lock.py` status/break for `chatgpt` AND
+   `render` — dead agents leave them held and the auto-break only fires on acquire attempts; this
+   wedged 200 min on 2026-08-03), then relaunch that clip's builder with RESUME framing: verified
+   on-disk inventory in the prompt, "verify + finish, NEVER regenerate an existing image."
+2. **After all six gate PASS → publish per Mike's standing approval:**
+   `python scripts/publish-shorts.py october-bottom` → fill hook/caption/tags per entry in persona
+   voice (titles: Mike's exact titles for 4 + 7; open-loop titles for the rest; captions
+   hashtag-free; CryptoRich link ONLY yt/rumble/bitchute; **$IF never $WHATIF**; no em dashes) →
+   **md5-verify every staged copy against its FINAL render** (re-verify any clip whose builder
+   re-rendered post-QA — the 2026-07-23 hazard) → `persona-lint.py` on shorts.json. **POSTING
+   remains Mike-gated, sequential, one poster at a time.**
+3. progress.json: patch each clip to `7-built PASS` as verified (clip 2 already done).
+4. Batch registry note + this log get the batch-complete entry when publish lands.
+
+### Open for Mike / follow-ups
+
+- **Missing references:** Cooper (real-dog generic shipped) and CashCat (text/generic shipped) —
+  drop PNGs in `schedule-tweets/images/reference/` to unlock branded beats in future batches.
+- **Unknown X handles:** $IF and $COOPER (Follow lines omitted today) — add to
+  `persona.json → project_handles` when known.
+- Retired b-roll pool chat deletion kept 429ing during sweeps — harmless, stays queued; next
+  gen run's sweep will clear it.
+- Longform `lf-20260804-october-bottom` queued with Mike's thumbnail staged; posting when he runs
+  the posters.
+
+**Migration status unchanged: Waves 1+2 fully blessed (entry below). Wave 3 (tighten de-fork) is
+the next stream's bite — today's `tighten_clips_october_bottom.py` is the LAST manual tighten fork
+if Wave 3 lands next time.**
+
+---
+
+## 2026-08-04 — `october-bottom`: Wave 1 FULL live bless + Wave 2 (cut) built, sandbox-blessed AND live-blessed
+
+**Migration status: Waves 1-2 both fully blessed.** One stream, per the one-wave-per-stream cadence.
+
+### Wave 1 — the pending full bless landed (all 12 nodes in-graph, no manual driver)
+
+`run.py --source ".../october-bottom/2026-08-03 17-18-06.mkv" --min-sil 0.5` ran the whole intake
+unattended (detached + log/heartbeat watcher): 55.3-min stream → 0.64 Mbps master · longform
+desilenced 3320.7s → 2144.8s (-19.6 min at min-sil 0.5, batched renderer 19 parts — the 2026-08-03
+fix proved again) staged at 0.82 Mbps · queued `lf-20260804-october-bottom` "There Is No October
+Bottom" (longs total 39, **thumbnail NULL — Mike to drop a PNG in, then patch the entry**) ·
+vertical verified 1080x1920 SAR 1:1 · whisper 7360 words / 485 segments · glossary Kaspa:3 TAO:7,
+**zero KRC20 flags** (no adjudication seam needed). The `longform → derive` nodes that ran outside
+the graph last stream all ran in-graph this time.
+
+### Wave 2 — cut segment: built, de-forked, blessed twice
+
+- **`scripts/cut_topics.py`** (canonical) de-forks the 17 `cut_topics_<batch>.py` (frozen as
+  rollback): validates clip-plan.json hard (permutation check on assembly_order, segment bounds vs
+  master, dup ids), cuts re-encoded segments + concats per assembly order, `_cut_results.json`,
+  canonical dashboard, `register_batch()`, progress.json at the 4b gate. `--stage cut|finalize|all`;
+  finalize REFUSES to clobber a progress.json past the cut phase (--force to override).
+- **`graph/shorts_graph.py`** cut segment = cut → verify_cut (ffprobe each clip vs plan-sum ±1s +
+  geometry == master) → finalize → verify_finalize (dashboard carries every slug + stable Clip N
+  chips, registry entry active, progress at 4b). Invoked `run.py cut --batch <batch>` (legacy
+  no-segment invocation stays intake). Dashboard: lane 2 "cut" added to LangGraph → Livestream.
+- **Blessed:** stub ok/fail (halt topology) · sandbox e2e green first try (scratch 2-clip batch,
+  non-chronological assembly, prod isolation verified, missing-master preflight halt, clobber
+  guard) · then **LIVE**: 7 clips / 684.5s cut in one green invocation on this batch, exit 0.
+
+### Batch `october-bottom` state (registered, active)
+
+| Lane | State |
+|---|---|
+| Lane 1 longform | **QUEUED** (`lf-20260804-october-bottom`, thumb null — needs Mike's PNG) |
+| Lane 2 shorts | **7 clips CUT via the cut graph, dashboard awaiting Mike's Phase 4b review** → `video-creation/shorts/october-bottom/dashboard.html` (5 full 95.6-172.0s + 2 impact 19.8/24.9s; clip-strategist plan with dropped-list + stt_garble_flags in `clip-plan.json`) |
+| Lane 3 text/image | **NOT STARTED** (out of today's scope per Mike; transcript ready) |
+
+### Open for Mike (4b + follow-ups)
+
+- **4b delete calls by clip number** on the dashboard.
+- **Clip 4 production flag:** the licensed Johnny Cash recording may be audible under his Ring of
+  Fire singalong (1345-1368 master time) — call is mute-under / trim to vocal / accept.
+- **Clip 5 energy flag:** weakest delivery of the five (browsing register); strategist says cut it
+  first if it reads flat.
+- **Ticker gate discovered by the strategist: the What If token's ticker is `$IF`, never
+  `$WHATIF`** — recorded in clip-plan.json stt_garble_flags; also relevant to the still-open
+  "$WHATIF X handle" item in persona.json from the last batch.
+- Longform meta was authored + queued in-run (title "There Is No October Bottom"); patch
+  longs.json if Mike wants different wording.
+- Phase 5 (when 4b verdicts land): tighten-strategists → hand-forked
+  `tighten_clips_october_bottom.py` off the whatif1000x reference (manual until Wave 3);
+  **min-sil for 5B is Mike's call** (recent batches: 250 ms and 450 ms).
+
+**Next wave (next stream): Wave 3 — tighten de-fork** (strategist spans already persist to
+tighten-plan.json, so the contract change is halfway done).
+
+---
+
 ## 2026-08-03 (later) — `what-if-1000x` BATCH COMPLETE: all 7 shorts built, gated and queued
 
 All three lanes are now done. **7 shorts built through Phase 7 and queued** (`wi1-20260803-*`, staged to

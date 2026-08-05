@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>C4 &middot; ETH lock-up</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"><style>
+/* ==== LOCKED longform-edited container stylesheet - copied, not re-derived ====
+   skills/container-reference/container-canonical.css + skills/presentation.md  */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  --rh-neon:#ccff00; --rh-yellow:#ffe500;   /* ROBINHOOD ONLY, never teal */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;
+  align-items:flex-start;gap:36px;padding:36px 0}
+.frame{width:1920px;height:1080px;flex:0 0 1080px;background:var(--bg-deep);position:relative;
+  overflow:hidden;color:var(--text-primary);padding:70px 110px 48px;
+  display:flex;flex-direction:column}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* --- anatomy: muted eyebrow -> Playfair headline -> gradient divider -> body --- */
+.ey{font-size:24px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:66px;line-height:1.06;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1560px}
+h1.sm{font-size:56px} h1.xs{font-size:50px} h1.big{font-size:80px}
+h1 .mono{font-size:.94em;letter-spacing:-.01em}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:24px 0 0}
+.divider.rh{background:linear-gradient(90deg,var(--rh-neon),var(--rh-yellow))}
+.divider.go{background:linear-gradient(90deg,var(--accent-gold),var(--accent-red))}
+.divider.pu{background:linear-gradient(90deg,var(--accent-purple),var(--accent-cyan))}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .rh{color:var(--rh-neon)}
+.mu{color:var(--text-muted)} .sec{color:var(--text-secondary)}
+
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative}
+
+/* --- takeaway bar (bottom thesis line) --- */
+.take{background:linear-gradient(100deg,rgba(0,230,138,.09),rgba(0,194,255,.04));
+  border:1px solid rgba(0,230,138,.22);border-radius:14px;padding:24px 32px;
+  font-size:31px;line-height:1.36;color:var(--text-primary);font-weight:500}
+.take.rh{background:linear-gradient(100deg,rgba(204,255,0,.09),rgba(255,229,0,.04));
+  border-color:rgba(204,255,0,.26)}
+.take.gold{background:linear-gradient(100deg,rgba(255,215,0,.09),rgba(255,64,96,.04));
+  border-color:rgba(255,215,0,.24)}
+.take.pu{background:linear-gradient(100deg,rgba(168,85,247,.10),rgba(0,194,255,.04));
+  border-color:rgba(168,85,247,.26)}
+.take b{color:#fff;font-weight:700}
+
+/* --- source / provenance line --- */
+.src{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:18px;color:#414c60;
+  letter-spacing:.01em;margin-top:16px;line-height:1.5}
+
+/* --- generic chips / pills --- */
+.chip{display:inline-flex;align-items:center;gap:10px;padding:11px 22px;border-radius:100px;
+  border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--text-secondary);
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.03em}
+.chip.g{border-color:rgba(0,230,138,.4);background:rgba(0,230,138,.08);color:var(--accent-green)}
+.chip.c{border-color:rgba(0,194,255,.4);background:rgba(0,194,255,.08);color:var(--accent-cyan)}
+.chip.go{border-color:rgba(255,215,0,.42);background:rgba(255,215,0,.08);color:var(--accent-gold)}
+.chip.re{border-color:rgba(255,64,96,.42);background:rgba(255,64,96,.08);color:var(--accent-red)}
+.chip.pu{border-color:rgba(168,85,247,.42);background:rgba(168,85,247,.09);color:var(--accent-purple)}
+.chip.rh{border-color:rgba(204,255,0,.44);background:rgba(204,255,0,.08);color:var(--rh-neon)}
+.chip.dim{border-color:#232a38;background:rgba(255,255,255,.015);color:var(--text-muted)}
+.chiprow{display:flex;gap:18px;flex-wrap:wrap}
+
+/* --- stat block --- */
+.stat .lbl{font-size:20px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);
+  font-weight:600;margin-bottom:8px}
+.stat .val{font-family:'JetBrains Mono',monospace;font-weight:700;line-height:1;font-size:76px}
+.stat .sub{font-size:22px;color:var(--text-secondary);margin-top:10px}
+
+/* --- node card (flow diagrams) --- */
+.node{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:28px 26px;text-align:center;position:relative;overflow:hidden}
+.node .nt{font-size:30px;font-weight:700;letter-spacing:.01em;margin-top:16px}
+.node .ns{font-size:21px;line-height:1.42;color:var(--text-secondary);margin-top:12px}
+.node .topacc{position:absolute;top:0;left:0;right:0;height:2px}
+
+.hide{visibility:hidden}
+.o0{opacity:0}
+
+/* ---- chart-local components ---- */
+.plotwrap{position:relative;width:1700px;height:566px;margin:0 auto}
+.abs{position:absolute}
+.dnwrap{position:relative;width:1700px;height:624px}
+.legrow{display:flex;align-items:center;gap:22px;margin-bottom:30px}
+.legsw{width:26px;height:26px;border-radius:7px;flex:0 0 26px}
+.legnm{font-size:35px;font-weight:700;letter-spacing:.01em}
+.legval{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:31px;margin-left:auto}
+.track{width:1700px;border:1px solid var(--border);border-radius:16px;
+  background:rgba(255,255,255,.018);display:flex;overflow:hidden}
+.seg{height:100%;position:relative}
+.tinylbl{font-size:19px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);
+  font-weight:600}
+.bigv{font-family:'JetBrains Mono',monospace;font-weight:700;line-height:1}
+.railwrap{position:relative;width:1700px;height:120px}
+.statcard{flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:34px 34px 30px;position:relative;overflow:hidden}
+.statcard .topacc{position:absolute;top:0;left:0;right:0;height:3px}
+.scopebar{display:flex;align-items:center;gap:18px;border-left:4px solid var(--accent-gold);
+  background:rgba(255,215,0,.06);border-radius:0 12px 12px 0;padding:18px 26px;
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:23px;color:#e9c94a;
+  letter-spacing:.04em}
+.c4row{position:absolute;left:0}
+</style></head><body><div class="frame " id="C4-s1"><div class="orb" style="left:-250px;top:-200px;width:620px;height:620px;background:#00e68a;opacity:.13"></div><div class="orb" style="left:1280px;top:620px;width:560px;height:560px;background:#00c2ff;opacity:.10"></div><div class="hd"><div class="ey">ETH CIRCULATING SUPPLY &middot; LOCKED UP OR HELD</div><h1 class="">Start with <span class="g">supply</span></h1><div class="divider "></div></div><div class="body"><div style="position:relative;width:1700px;height:510px"><div class="c4row" style="top:0;width:1700px">
+<div style="display:flex;justify-content:space-between;margin-bottom:14px">
+<div class="mono" style="font-size:20px;color:#46516a;letter-spacing:.06em">0%</div>
+<div class="mono" style="font-size:20px;color:#46516a;letter-spacing:.06em">100% OF ETH CIRCULATING SUPPLY</div></div>
+<div style="height:22px;border:1px solid #202737;border-radius:6px;
+ background:repeating-linear-gradient(90deg,rgba(255,255,255,.022) 0 8px,transparent 8px 16px)"></div></div><div class="c4row" style="top:92px;width:1700px">
+<div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+<div style="font-size:31px;font-weight:700;letter-spacing:.13em;color:#e8eaf0">STAKED</div>
+<div class="mono" style="font-size:21px;color:#5b6780">35.5M ETH</div></div>
+<div style="position:relative;height:86px">
+<div style="position:absolute;left:0;top:0;height:86px;width:28.91%;border-radius:10px;
+ background:linear-gradient(180deg,rgba(0,230,138,.42),rgba(0,230,138,.17));
+ border:1px solid rgba(0,230,138,.5);box-shadow:0 0 46px rgba(0,230,138,.16)"></div>
+<div class="abs bigv" style="left:28.91%;margin-left:32px;top:8px;font-size:66px;color:#00e68a">28.91%</div></div></div><div class="c4row o0" style="top:262px">
+<div class="chiprow"><div class="chip g">LOCKED UP</div>
+<div class="chip g">SECURING THE NETWORK</div><div class="chip g">EARNING YIELD</div></div></div><div class="c4row o0" style="left:1058px;top:120px;width:642px;
+ border:1px solid #202737;border-radius:16px;background:rgba(255,255,255,.018);padding:26px 30px">
+<div class="tinylbl">THE LINE TO GET IN vs THE LINE TO GET OUT</div>
+<div style="display:flex;align-items:center;gap:26px;margin-top:20px">
+<div class="bigv" style="font-size:64px;color:#00e68a">~10:1</div>
+<div style="flex:1">
+ <div style="height:14px;border-radius:7px;background:#00e68a;width:100%;opacity:.85"></div>
+ <div class="mono" style="font-size:17px;color:#5b6780;margin-top:7px">~90-100K ETH entering</div>
+ <div style="height:14px;border-radius:7px;background:#39445a;width:8.4%;margin-top:16px"></div>
+ <div class="mono" style="font-size:17px;color:#5b6780;margin-top:7px">~8K exiting</div></div></div></div><div class="c4row o0" style="top:368px;width:1700px">
+<div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+<div style="font-size:31px;font-weight:700;letter-spacing:.13em;color:#e8eaf0">CORPORATE TREASURIES</div>
+<div class="mono" style="font-size:21px;color:#5b6780">7,879,816 ETH &middot; public companies, Jul 22 2026</div></div>
+<div style="position:relative;height:86px">
+<div style="position:absolute;left:0;top:0;height:86px;width:6.59%;border-radius:10px;
+ background:linear-gradient(180deg,rgba(0,194,255,.40),rgba(0,194,255,.16));
+ border:1px solid rgba(0,194,255,.5);box-shadow:0 0 40px rgba(0,194,255,.13)"></div>
+<div class="abs bigv" style="left:6.59%;margin-left:32px;top:8px;font-size:66px;color:#00c2ff">6.59%</div></div></div></div></div><div class="take  hide"><b>28.91% staked</b> and <b>6.59% held in corporate treasuries.</b> Two separate bites out of the same supply.</div><div class="src">ETH staked 35.5M, 28.91% of circulating supply &middot; public company treasuries 7,879,816 ETH, ~6.59%, Jul 22 2026 &middot; ainvest.com &middot; coinpaper.com<br>Measured separately against the same circulating supply. Staked ETH and corporate held ETH can overlap, so they are NOT summed here.</div></div>
+<div class="frame " id="C4-s2"><div class="orb" style="left:-250px;top:-200px;width:620px;height:620px;background:#00e68a;opacity:.13"></div><div class="orb" style="left:1280px;top:620px;width:560px;height:560px;background:#00c2ff;opacity:.10"></div><div class="hd"><div class="ey">ETH CIRCULATING SUPPLY &middot; LOCKED UP OR HELD</div><h1 class="">Start with <span class="g">supply</span></h1><div class="divider "></div></div><div class="body"><div style="position:relative;width:1700px;height:510px"><div class="c4row" style="top:0;width:1700px">
+<div style="display:flex;justify-content:space-between;margin-bottom:14px">
+<div class="mono" style="font-size:20px;color:#46516a;letter-spacing:.06em">0%</div>
+<div class="mono" style="font-size:20px;color:#46516a;letter-spacing:.06em">100% OF ETH CIRCULATING SUPPLY</div></div>
+<div style="height:22px;border:1px solid #202737;border-radius:6px;
+ background:repeating-linear-gradient(90deg,rgba(255,255,255,.022) 0 8px,transparent 8px 16px)"></div></div><div class="c4row" style="top:92px;width:1700px">
+<div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+<div style="font-size:31px;font-weight:700;letter-spacing:.13em;color:#e8eaf0">STAKED</div>
+<div class="mono" style="font-size:21px;color:#5b6780">35.5M ETH</div></div>
+<div style="position:relative;height:86px">
+<div style="position:absolute;left:0;top:0;height:86px;width:28.91%;border-radius:10px;
+ background:linear-gradient(180deg,rgba(0,230,138,.42),rgba(0,230,138,.17));
+ border:1px solid rgba(0,230,138,.5);box-shadow:0 0 46px rgba(0,230,138,.16)"></div>
+<div class="abs bigv" style="left:28.91%;margin-left:32px;top:8px;font-size:66px;color:#00e68a">28.91%</div></div></div><div class="c4row" style="top:262px">
+<div class="chiprow"><div class="chip g">LOCKED UP</div>
+<div class="chip g">SECURING THE NETWORK</div><div class="chip g">EARNING YIELD</div></div></div><div class="c4row o0" style="left:1058px;top:120px;width:642px;
+ border:1px solid #202737;border-radius:16px;background:rgba(255,255,255,.018);padding:26px 30px">
+<div class="tinylbl">THE LINE TO GET IN vs THE LINE TO GET OUT</div>
+<div style="display:flex;align-items:center;gap:26px;margin-top:20px">
+<div class="bigv" style="font-size:64px;color:#00e68a">~10:1</div>
+<div style="flex:1">
+ <div style="height:14px;border-radius:7px;background:#00e68a;width:100%;opacity:.85"></div>
+ <div class="mono" style="font-size:17px;color:#5b6780;margin-top:7px">~90-100K ETH entering</div>
+ <div style="height:14px;border-radius:7px;background:#39445a;width:8.4%;margin-top:16px"></div>
+ <div class="mono" style="font-size:17px;color:#5b6780;margin-top:7px">~8K exiting</div></div></div></div><div class="c4row o0" style="top:368px;width:1700px">
+<div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+<div style="font-size:31px;font-weight:700;letter-spacing:.13em;color:#e8eaf0">CORPORATE TREASURIES</div>
+<div class="mono" style="font-size:21px;color:#5b6780">7,879,816 ETH &middot; public companies, Jul 22 2026</div></div>
+<div style="position:relative;height:86px">
+<div style="position:absolute;left:0;top:0;height:86px;width:6.59%;border-radius:10px;
+ background:linear-gradient(180deg,rgba(0,194,255,.40),rgba(0,194,255,.16));
+ border:1px solid rgba(0,194,255,.5);box-shadow:0 0 40px rgba(0,194,255,.13)"></div>
+<div class="abs bigv" style="left:6.59%;margin-left:32px;top:8px;font-size:66px;color:#00c2ff">6.59%</div></div></div></div></div><div class="take  hide"><b>28.91% staked</b> and <b>6.59% held in corporate treasuries.</b> Two separate bites out of the same supply.</div><div class="src">ETH staked 35.5M, 28.91% of circulating supply &middot; public company treasuries 7,879,816 ETH, ~6.59%, Jul 22 2026 &middot; ainvest.com &middot; coinpaper.com<br>Measured separately against the same circulating supply. Staked ETH and corporate held ETH can overlap, so they are NOT summed here.</div></div>
+<div class="frame " id="C4-s3"><div class="orb" style="left:-250px;top:-200px;width:620px;height:620px;background:#00e68a;opacity:.13"></div><div class="orb" style="left:1280px;top:620px;width:560px;height:560px;background:#00c2ff;opacity:.10"></div><div class="hd"><div class="ey">ETH CIRCULATING SUPPLY &middot; LOCKED UP OR HELD</div><h1 class="">Start with <span class="g">supply</span></h1><div class="divider "></div></div><div class="body"><div style="position:relative;width:1700px;height:510px"><div class="c4row" style="top:0;width:1700px">
+<div style="display:flex;justify-content:space-between;margin-bottom:14px">
+<div class="mono" style="font-size:20px;color:#46516a;letter-spacing:.06em">0%</div>
+<div class="mono" style="font-size:20px;color:#46516a;letter-spacing:.06em">100% OF ETH CIRCULATING SUPPLY</div></div>
+<div style="height:22px;border:1px solid #202737;border-radius:6px;
+ background:repeating-linear-gradient(90deg,rgba(255,255,255,.022) 0 8px,transparent 8px 16px)"></div></div><div class="c4row" style="top:92px;width:1700px">
+<div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+<div style="font-size:31px;font-weight:700;letter-spacing:.13em;color:#e8eaf0">STAKED</div>
+<div class="mono" style="font-size:21px;color:#5b6780">35.5M ETH</div></div>
+<div style="position:relative;height:86px">
+<div style="position:absolute;left:0;top:0;height:86px;width:28.91%;border-radius:10px;
+ background:linear-gradient(180deg,rgba(0,230,138,.42),rgba(0,230,138,.17));
+ border:1px solid rgba(0,230,138,.5);box-shadow:0 0 46px rgba(0,230,138,.16)"></div>
+<div class="abs bigv" style="left:28.91%;margin-left:32px;top:8px;font-size:66px;color:#00e68a">28.91%</div></div></div><div class="c4row" style="top:262px">
+<div class="chiprow"><div class="chip g">LOCKED UP</div>
+<div class="chip g">SECURING THE NETWORK</div><div class="chip g">EARNING YIELD</div></div></div><div class="c4row" style="left:1058px;top:120px;width:642px;
+ border:1px solid #202737;border-radius:16px;background:rgba(255,255,255,.018);padding:26px 30px">
+<div class="tinylbl">THE LINE TO GET IN vs THE LINE TO GET OUT</div>
+<div style="display:flex;align-items:center;gap:26px;margin-top:20px">
+<div class="bigv" style="font-size:64px;color:#00e68a">~10:1</div>
+<div style="flex:1">
+ <div style="height:14px;border-radius:7px;background:#00e68a;width:100%;opacity:.85"></div>
+ <div class="mono" style="font-size:17px;color:#5b6780;margin-top:7px">~90-100K ETH entering</div>
+ <div style="height:14px;border-radius:7px;background:#39445a;width:8.4%;margin-top:16px"></div>
+ <div class="mono" style="font-size:17px;color:#5b6780;margin-top:7px">~8K exiting</div></div></div></div><div class="c4row o0" style="top:368px;width:1700px">
+<div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+<div style="font-size:31px;font-weight:700;letter-spacing:.13em;color:#e8eaf0">CORPORATE TREASURIES</div>
+<div class="mono" style="font-size:21px;color:#5b6780">7,879,816 ETH &middot; public companies, Jul 22 2026</div></div>
+<div style="position:relative;height:86px">
+<div style="position:absolute;left:0;top:0;height:86px;width:6.59%;border-radius:10px;
+ background:linear-gradient(180deg,rgba(0,194,255,.40),rgba(0,194,255,.16));
+ border:1px solid rgba(0,194,255,.5);box-shadow:0 0 40px rgba(0,194,255,.13)"></div>
+<div class="abs bigv" style="left:6.59%;margin-left:32px;top:8px;font-size:66px;color:#00c2ff">6.59%</div></div></div></div></div><div class="take  hide"><b>28.91% staked</b> and <b>6.59% held in corporate treasuries.</b> Two separate bites out of the same supply.</div><div class="src">ETH staked 35.5M, 28.91% of circulating supply &middot; public company treasuries 7,879,816 ETH, ~6.59%, Jul 22 2026 &middot; ainvest.com &middot; coinpaper.com<br>Measured separately against the same circulating supply. Staked ETH and corporate held ETH can overlap, so they are NOT summed here.</div></div>
+<div class="frame " id="C4-s4"><div class="orb" style="left:-250px;top:-200px;width:620px;height:620px;background:#00e68a;opacity:.13"></div><div class="orb" style="left:1280px;top:620px;width:560px;height:560px;background:#00c2ff;opacity:.10"></div><div class="hd"><div class="ey">ETH CIRCULATING SUPPLY &middot; LOCKED UP OR HELD</div><h1 class="">Start with <span class="g">supply</span></h1><div class="divider "></div></div><div class="body"><div style="position:relative;width:1700px;height:510px"><div class="c4row" style="top:0;width:1700px">
+<div style="display:flex;justify-content:space-between;margin-bottom:14px">
+<div class="mono" style="font-size:20px;color:#46516a;letter-spacing:.06em">0%</div>
+<div class="mono" style="font-size:20px;color:#46516a;letter-spacing:.06em">100% OF ETH CIRCULATING SUPPLY</div></div>
+<div style="height:22px;border:1px solid #202737;border-radius:6px;
+ background:repeating-linear-gradient(90deg,rgba(255,255,255,.022) 0 8px,transparent 8px 16px)"></div></div><div class="c4row" style="top:92px;width:1700px">
+<div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+<div style="font-size:31px;font-weight:700;letter-spacing:.13em;color:#e8eaf0">STAKED</div>
+<div class="mono" style="font-size:21px;color:#5b6780">35.5M ETH</div></div>
+<div style="position:relative;height:86px">
+<div style="position:absolute;left:0;top:0;height:86px;width:28.91%;border-radius:10px;
+ background:linear-gradient(180deg,rgba(0,230,138,.42),rgba(0,230,138,.17));
+ border:1px solid rgba(0,230,138,.5);box-shadow:0 0 46px rgba(0,230,138,.16)"></div>
+<div class="abs bigv" style="left:28.91%;margin-left:32px;top:8px;font-size:66px;color:#00e68a">28.91%</div></div></div><div class="c4row" style="top:262px">
+<div class="chiprow"><div class="chip g">LOCKED UP</div>
+<div class="chip g">SECURING THE NETWORK</div><div class="chip g">EARNING YIELD</div></div></div><div class="c4row" style="left:1058px;top:120px;width:642px;
+ border:1px solid #202737;border-radius:16px;background:rgba(255,255,255,.018);padding:26px 30px">
+<div class="tinylbl">THE LINE TO GET IN vs THE LINE TO GET OUT</div>
+<div style="display:flex;align-items:center;gap:26px;margin-top:20px">
+<div class="bigv" style="font-size:64px;color:#00e68a">~10:1</div>
+<div style="flex:1">
+ <div style="height:14px;border-radius:7px;background:#00e68a;width:100%;opacity:.85"></div>
+ <div class="mono" style="font-size:17px;color:#5b6780;margin-top:7px">~90-100K ETH entering</div>
+ <div style="height:14px;border-radius:7px;background:#39445a;width:8.4%;margin-top:16px"></div>
+ <div class="mono" style="font-size:17px;color:#5b6780;margin-top:7px">~8K exiting</div></div></div></div><div class="c4row" style="top:368px;width:1700px">
+<div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+<div style="font-size:31px;font-weight:700;letter-spacing:.13em;color:#e8eaf0">CORPORATE TREASURIES</div>
+<div class="mono" style="font-size:21px;color:#5b6780">7,879,816 ETH &middot; public companies, Jul 22 2026</div></div>
+<div style="position:relative;height:86px">
+<div style="position:absolute;left:0;top:0;height:86px;width:6.59%;border-radius:10px;
+ background:linear-gradient(180deg,rgba(0,194,255,.40),rgba(0,194,255,.16));
+ border:1px solid rgba(0,194,255,.5);box-shadow:0 0 40px rgba(0,194,255,.13)"></div>
+<div class="abs bigv" style="left:6.59%;margin-left:32px;top:8px;font-size:66px;color:#00c2ff">6.59%</div></div></div></div></div><div class="take "><b>28.91% staked</b> and <b>6.59% held in corporate treasuries.</b> Two separate bites out of the same supply.</div><div class="src">ETH staked 35.5M, 28.91% of circulating supply &middot; public company treasuries 7,879,816 ETH, ~6.59%, Jul 22 2026 &middot; ainvest.com &middot; coinpaper.com<br>Measured separately against the same circulating supply. Staked ETH and corporate held ETH can overlap, so they are NOT summed here.</div></div>
+<div class="frame " id="C4-lockup@end"><div class="orb" style="left:-250px;top:-200px;width:620px;height:620px;background:#00e68a;opacity:.13"></div><div class="orb" style="left:1280px;top:620px;width:560px;height:560px;background:#00c2ff;opacity:.10"></div><div class="hd"><div class="ey">ETH CIRCULATING SUPPLY &middot; LOCKED UP OR HELD</div><h1 class="">Locked up. <span class="c">Or held.</span></h1><div class="divider "></div></div><div class="body"><div style="position:relative;width:1700px;height:430px"><div class="abs" style="right:30px;top:30px;opacity:.055"><svg viewBox="0 0 256 417" width="245.6" height="400" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg></div><div class="c4row" style="top:0;width:1700px">
+<div style="display:flex;justify-content:space-between;margin-bottom:14px">
+<div class="mono" style="font-size:20px;color:#46516a;letter-spacing:.06em">0%</div>
+<div class="mono" style="font-size:20px;color:#46516a;letter-spacing:.06em">100% OF ETH CIRCULATING SUPPLY</div></div>
+<div style="height:22px;border:1px solid #202737;border-radius:6px;
+ background:repeating-linear-gradient(90deg,rgba(255,255,255,.022) 0 8px,transparent 8px 16px)"></div></div><div class="c4row" style="top:108px;width:1700px">
+<div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+<div style="font-size:31px;font-weight:700;letter-spacing:.13em;color:#e8eaf0">STAKED</div>
+<div class="mono" style="font-size:21px;color:#5b6780">35.5M ETH</div></div>
+<div style="position:relative;height:86px">
+<div style="position:absolute;left:0;top:0;height:86px;width:28.91%;border-radius:10px;
+ background:linear-gradient(180deg,rgba(0,230,138,.42),rgba(0,230,138,.17));
+ border:1px solid rgba(0,230,138,.5);box-shadow:0 0 46px rgba(0,230,138,.16)"></div>
+<div class="abs bigv" style="left:28.91%;margin-left:32px;top:8px;font-size:66px;color:#00e68a">28.91%</div></div></div><div class="c4row" style="top:296px;width:1700px">
+<div style="display:flex;align-items:baseline;gap:22px;margin-bottom:16px">
+<div style="font-size:31px;font-weight:700;letter-spacing:.13em;color:#e8eaf0">CORPORATE TREASURIES</div>
+<div class="mono" style="font-size:21px;color:#5b6780">7,879,816 ETH &middot; public companies, Jul 22 2026</div></div>
+<div style="position:relative;height:86px">
+<div style="position:absolute;left:0;top:0;height:86px;width:6.59%;border-radius:10px;
+ background:linear-gradient(180deg,rgba(0,194,255,.40),rgba(0,194,255,.16));
+ border:1px solid rgba(0,194,255,.5);box-shadow:0 0 40px rgba(0,194,255,.13)"></div>
+<div class="abs bigv" style="left:6.59%;margin-left:32px;top:8px;font-size:66px;color:#00c2ff">6.59%</div></div></div></div></div><div class="take "><b>28.91% staked</b> and <b>6.59% held in corporate treasuries.</b> Two separate bites out of the same supply.</div><div class="src">ETH staked 35.5M, 28.91% of circulating supply &middot; public company treasuries 7,879,816 ETH, ~6.59%, Jul 22 2026 &middot; ainvest.com &middot; coinpaper.com<br>Measured separately against the same circulating supply. Staked ETH and corporate held ETH can overlap, so they are NOT summed here.</div></div></body></html>

@@ -8,6 +8,7 @@ import {
   useVideoConfig,
 } from 'remotion';
 import { TransitionProps } from '../types';
+import { WrapLayer } from '../WrapLayer';
 
 export type GlitchBlocksOffset = { dx: number; dy: number };
 
@@ -41,6 +42,8 @@ export const GlitchBlocks: React.FC<TransitionProps & { params: GlitchBlocksPara
   to,
   fromSrc,
   toSrc,
+  outClip,
+  inClip,
   durationInFrames,
   sfx = true,
   sfxSrc,
@@ -61,6 +64,12 @@ export const GlitchBlocks: React.FC<TransitionProps & { params: GlitchBlocksPara
   const swapTo = p >= opacityPeak; // cut buried at the opacity peak
   const srcNow = swapTo ? toSrc : fromSrc;
   const content = swapTo ? to : from;
+  // Over a longform edit the scenes are LIVE nodes (spine video / cover elements), not bitmaps:
+  // displace those through the same masks instead of a background-image copy. Without this the
+  // glitch layer renders empty over video and the cut plays bare (the other footage engines were
+  // upgraded for live clips; this one was missed).
+  const clipFn = swapTo ? inClip : outClip;
+  const useClips = !srcNow && Boolean(clipFn);
 
   // pick the real mask frame for this moment in the window
   const maskIdx = Math.min(maskCount, Math.max(1, Math.round(p * (maskCount - 1)) + 1));
@@ -79,6 +88,15 @@ export const GlitchBlocks: React.FC<TransitionProps & { params: GlitchBlocksPara
           const offX = o.dx * width;
           const offY = o.dy * height;
           const pos = `${offX}px ${offY}px`;
+          if (useClips) {
+            const stretched = sy === 1 ? clipFn! : () => (
+              <AbsoluteFill style={{ transform: `scaleY(${sy})` }}>{clipFn!()}</AbsoluteFill>
+            );
+            return (
+              <WrapLayer key={i} render={stretched} x={offX} y={offY}
+                maskUrl={maskUrl} maskRepeat="repeat" maskPosition={pos} />
+            );
+          }
           return (
             <AbsoluteFill
               key={i}

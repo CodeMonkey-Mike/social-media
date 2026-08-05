@@ -40,7 +40,7 @@ do NOT render-then-explain-it-as-an-open-item.
    whole slide; sub-spotlight or break it). An unjustified WARN is a violation — clear or justify every one.
 6c. **FOUR MORE MECHANICAL GATES (added 2026-06-30 after Mike: "the violations are really, really bad… doubles
    the production time"). The plan-linter (6b) checks the PLAN; these check the PIXELS / AUDIO it could not see:**
-   - `python skills/lint-deck-containers.py <comp.tsx> <render-assets/deck>` — **FAILS** if a deck PNG is a WHOLE
+   - `python skills/lint-deck-containers.py <comp.tsx> <assets/deck>` — **FAILS** if a deck PNG is a WHOLE
      SLIDE (2+ card-boxes) instead of one container (caught the bio slide AND the s9 comparison). Declare real
      diagrams `// DIAGRAM_REFS: …`, deliberate A-vs-B contrasts `// COMPARISON_REFS: …`, and deliberate
      all-cards-at-once overviews (~ONE per chapter, comp-build §5) `// OVERVIEW_REFS: …` in the comp to exempt;
@@ -54,6 +54,14 @@ do NOT render-then-explain-it-as-an-open-item.
    - `DUCK=$(python skills/bed-duck-expr.py <comp.tsx>)` — derives the music-bed duck windows from the comp's clip
      inserts; the bed mix MUST use this expression so the bed always drops under the talk (never hand-type the
      windows). Prevention by construction for "the bed played over the R-TALK clip."
+   - `node skills/lint-transition-assets.js <comp.tsx> <public-dir> [TRANSITIONS.md]` — **FAILS** if a
+     transition PLANNED in `TRANSITIONS.md` is never referenced by the comp, or if a referenced transition's
+     plate/tile/mask/SFX assets are missing from the project's lean `assets/transitions/`. (Added 2026-08-01
+     after ethereum-rwa shipped v6 AND v7 with both planned badsignal ingresses silently absent — `STILL_FX`
+     declared but never consumed — and their tile sets never copied. Neither failure errors at render time;
+     the effect is just missing. Engines read the dirs out of `row.params`, NOT off the row, which is why
+     eyeballing top-level keys passes on a broken render.) Deliberate supersessions declare
+     `// TRANSITIONS_WAIVED: <id> — reason` in the comp.
    - `node skills/lint-slide-balance.js <comp.tsx>` — **FAILS** if the slide/container BALANCE breaks: a full
      diagram slide (`kind: 'deck'`) shown more than ONCE (the "over and over" repeat), OR a comp that is ALL
      slides / ALL containers (the swing). Enforces "⛔ THE BALANCE" (broll-and-containers.md): a rich slide once,
@@ -67,7 +75,8 @@ do NOT render-then-explain-it-as-an-open-item.
 |---|---|
 | **Writing / outlining a video's script** | **`screenplay.md`** (this folder) — how to write `SCREENPLAY.md` |
 | **Editing / building the Phase-4 render** | **`longform-edited.md`** (this folder) + its **`skills/`** rules |
-| **Repurposing a finished 16:9 into a vertical (9:16) cut** | **`skills/vertical-repurpose.md`** |
+| **Repurposing a finished 16:9 into a vertical (9:16) cut** | **`skills/vertical-repurpose.md`** — run it with the slash command **`/vertical-repurpose <project folder>`** (`.claude/commands/vertical-repurpose.md`) |
+| **Condensing a finished VERTICAL cut into a ~40s short** | **`skills/longform-to-short.md`** — run it with the slash command **`/longform-short <project folder> [seconds]`** (`.claude/commands/longform-short.md`) |
 | **Resuming a specific video** | that video's `media/<project>/SCREENPLAY.md` + `PROJECT-LOG.md` |
 
 `screenplay.md` governs the SCRIPT; `longform-edited.md` governs the EDIT. They are siblings.
@@ -91,6 +100,12 @@ do NOT render-then-explain-it-as-an-open-item.
   stitch handle-ceiling — memory `reference_remotion_stitch_handle_ceiling`), reuse of the 16:9 mix, and
   vertical-specific QA (concat seam + framing + audio parity). The content is locked; the vertical is a
   reframe, not a re-edit.
+- **`skills/longform-to-short.md`** — condensing an APPROVED vertical cut into a **~40s short** with a
+  spoken CTA outro: the two sources and their one clock (master VIDEO + spine VO, which also sheds the
+  master's ~42.7 ms AAC priming lag), the hook/body/kicker/CTA shape, the span rules and their mechanical
+  gate (`skills/lint-short-spans.py`), the burned-caption trap (the longform captions FACE beats only, so
+  COVER-sourced spans need a caption track added), and the Higgsfield MIKE-CLONE outro line. The cut plan
+  is authored by the **`short-cut-strategist`** agent (fable/max), NOT inline.
 - **`skills/charts.md`** — the canonical method for **data charts / animated data-graphics** (DATA.md
   chart-source index · the code/screencap/restyle build-mode decision · the never-AI-as-the-source-of-a-number
   guardrail · animate-for-real vs reveal-a-bitmap). Durable so it survives a project folder being deleted;
@@ -126,13 +141,34 @@ do NOT render-then-explain-it-as-an-open-item.
   over the face spine** → hand-rolled fade / cross-warp / film-burn (`longform-edited.md` #5, never
   `TransitionSeries` on the locked spine). Do NOT collapse all three into the glitch library.
 
+## Agents for this track (registry: `.claude/agents/` — check BEFORE doing a phase inline)
+- **Spine-prep + cleanup (shared/):** `defumbler` → `cover-blackout` → `desilencer` (+ on-demand
+  `burst-removal`) → `transcriber`; `captions-builder` at comp time. Outputs per comp-build.md §13a.
+- **Advisors (read-only plans, Mike gates):** `screenplay-strategist` · `coverage-strategist` ·
+  `music-placement-strategist` · `transition-strategist` · `short-cut-strategist` (the ~40s short's cut
+  plan off a finished vertical) (+ repo-root `tighten-strategist`).
+- **Asset factory (longform-edited/, added 2026-07-24 — build the plan's assets, `visual-qa` gates
+  every output):** `slide-builder` (title/card slides) · `chart-builder` (system-design stills +
+  animated-chart design states) · `receipt-capturer` (verified captures/recordings) · `envato-sourcer`
+  (video b-roll) · `image-gen` (ChatGPT images). Dispatch with EXACT §10 output paths.
+
 ## Per-video folder
 
 Each video is `media/<project>/` and carries the **FULL document set** (if one is missing, that's a gap to fill,
 not a choice to skip — the complete list + format owners is in **`skills/comp-build.md` §13**):
 `SCREENPLAY.md` · `DATA.md` · `BROLL-PLAN.md` · `EDIT-PLAN-prep.md` · `CUE-SHEET.md` · **`TRANSITIONS.md`**
 (the per-video transition plan — skeleton in `comp-build.md` §14) · `EDIT-PLAN.md` (generated event-log) ·
-`PROJECT-LOG.md` · plus the master `.mkv` / `LOW BPS` / `EDIT` / `FINAL` mp4s and `render-assets/`.
+`PROJECT-LOG.md` · plus the master `.mkv` / `LOW BPS` / `EDIT` / `FINAL` mp4s and these folders
+(canonical layout + full detail: **comp-build.md §10 + §13a**; the old separate `render-assets/` is
+retired for new projects, Mike 2026-07-24):
+```
+raw/            camera masters ONLY          spine/          spine-prep chain (§13a letter naming)
+assets/         MERGED sources + comp inputs (= the per-render --public-dir):
+  title-slides/ · card-slides/               (the two slide types, PNGs + state variants)
+  charts/ (Type 1 ANIMATED, png+html) · diagrams/ (Type 2 SYSTEM-DESIGN, png+html)
+  receipts/ · img/ · vid/ · slide-sources/ (containers.html + driver) · transitions/ · spine.mp4
+_previews/      render outputs + logs, NEVER inside assets/
+```
 
 ## Non-negotiables (canonical copies cited above — do not violate)
 

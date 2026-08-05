@@ -122,6 +122,17 @@ import { WND_DURATION, WND_FPS } from './constants-wnd';
 // batch: what-if-1000x, clip #6 "Five Lose. One Does 1000x." (impact cut)
 import { MathLadderImpact } from './MathLadderImpact';
 import { MLI_DURATION, MLI_FPS } from './constants-mli';
+// batch: october-bottom, clip #1 "The October Bottom Is a Mandela Effect"
+import { OctoberMandelaMyth } from './OctoberMandelaMyth';
+import { D_WOD, WOD_FPS, WOD_FRAMES } from './constants-wod';
+import { OMM_DURATION, OMM_FPS } from './constants-omm';
+// batch: october-bottom, clip #2 "Kaspa Under 2.6 Cents: That Is When I Bought More"
+import { D_KDBM, KDBM_FPS, KDBM_FRAMES } from './constants-kdbm';
+import { D_ROF, ROF_FPS, ROF_FRAMES } from './constants-rof';
+// batch: october-bottom, clip #5 "Cooper: The Real Robinhood Office Dog at 237k"
+import { D_CRD, CRD_FPS, CRD_FRAMES } from './constants-crd';
+// batch: october-bottom, clip #7 "OMG: Kaspa Dipped Under 2.6 Cents" (impact cut)
+import { D_KDI, KDI_FPS, KDI_FRAMES } from './constants-kdi';
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -683,6 +694,24 @@ export const RemotionRoot: React.FC = () => {
 
       {/* batch what-if-1000x / clip #6 — 1000x-math-ladder-impact (24.20 s @30, impact cut) */}
       <Composition id="MathLadderImpact" component={MathLadderImpact} durationInFrames={MLI_DURATION} fps={MLI_FPS} width={1080} height={1920} />
+
+      {/* batch october-bottom / clip #1 — october-mandela-myth (114.167 s @30) */}
+      <Composition id="OctoberMandelaMyth" component={OctoberMandelaMyth} durationInFrames={OMM_DURATION} fps={OMM_FPS} width={1080} height={1920} />
+
+      {/* batch october-bottom / clip #3 — whatif-organic-dogecoin (86.04 s @25, spine is native 25 fps) */}
+      <Composition id="WhatifOrganicDogecoin" component={LivestreamShort} durationInFrames={WOD_FRAMES} fps={WOD_FPS} width={1080} height={1920} defaultProps={{ data: D_WOD }} />
+
+      {/* batch october-bottom / clip #2 — kaspa-dip-bought-more (54.96 s @25, spine is native 25 fps) */}
+      <Composition id="KaspaDipBoughtMore" component={LivestreamShort} durationInFrames={KDBM_FRAMES} fps={KDBM_FPS} width={1080} height={1920} defaultProps={{ data: D_KDBM }} />
+
+      {/* batch october-bottom / clip #4 — ring-of-fire-meme-judgment (48.84 s @25, spine is native 25 fps) */}
+      <Composition id="RingOfFireMemeJudgment" component={LivestreamShort} durationInFrames={ROF_FRAMES} fps={ROF_FPS} width={1080} height={1920} defaultProps={{ data: D_ROF }} />
+
+      {/* batch october-bottom / clip #5 — cooper-robinhood-real-dog (66.20 s @25, spine is native 25 fps) */}
+      <Composition id="CooperRobinhoodRealDog" component={LivestreamShort} durationInFrames={CRD_FRAMES} fps={CRD_FPS} width={1080} height={1920} defaultProps={{ data: D_CRD }} />
+
+      {/* batch october-bottom / clip #7 — kaspa-dip-impact (13.36 s @25, spine is native 25 fps, IMPACT cut) */}
+      <Composition id="KaspaDipImpact" component={LivestreamShort} durationInFrames={KDI_FRAMES} fps={KDI_FPS} width={1080} height={1920} defaultProps={{ data: D_KDI }} />
     </>
   );
 };

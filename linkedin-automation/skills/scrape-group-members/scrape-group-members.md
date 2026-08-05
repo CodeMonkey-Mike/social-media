@@ -46,8 +46,8 @@ rollback** (`SCRAPE_SCRIPT_JS` in `graph/lane_graph.py` is the one-line swap), l
 - `--max=N` — process only the next **N** unprocessed members this run, then stop.
   Run again any time to continue; there is **no state to manage** (the `processed`
   flag in the queue is the resume point). This is the normal way to run it — in
-  batches, here and there. **Keep N ≤ 50/day** (see [`../SKILL.md`](../SKILL.md)
-  "LinkedIn limits").
+  batches, here and there. **Keep N ≤ 75/day** (raised from 50, Mike, 2026-07-30; see
+  [`../SKILL.md`](../SKILL.md) "LinkedIn limits").
 - `--collect-only` — just (re)collect the member list into the queue, don't visit
   any profiles.
 - No flags — process **all** remaining members in one (long) run.
@@ -122,7 +122,7 @@ canonical; `seed-by-name.js` is frozen history, kept only as rollback.
 
 It records the searched names onto `data/groups.json` (`searched_names`). Searching the
 member list is cheap (no profile views) — the captured URLs are processed later by the
-main scraper at ≤50/day.
+main scraper at ≤75/day.
 
 ## Troubleshooting
 

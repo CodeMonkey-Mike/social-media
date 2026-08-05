@@ -43,7 +43,13 @@ via Google. If a launch shows you logged out, just re-auth in that profile once 
 Seed Speech reads flat if you hand it plain text. Mike wants energy, so mark up the prompt:
 - **ALL CAPS** on the emphasis word (the *content* word carrying the point).
 - **`...`** for a deliberate pause/beat.
-- **`!`** where the line should lift.
+- **`!`** where the line should lift. ⛔ **A trailing `!` lifts the LAST WORD, so only use it when the
+  final word is the one that should punch.** (Mike, 2026-07-25.) The kaspa-30bps short's CTA was written
+  `Click below to WATCH the full video!` and he caught it on first listen: "it seems like video is
+  emphasized." Measured, the `!` take held "video" for 0.62s at 0.6 dB under the line peak (i.e. still at
+  peak, stressed); re-rolled with a period it held 0.50s at 3.9 dB under the peak, so the line falls away
+  and the CAPS on WATCH becomes the only emphasis. **When the payload word is mid-sentence, end with a
+  period and let the CAPS carry the stress.**
 
 ⛔ **CONFIRMED PATTERN (Mike, 2026-07-01, after 5 instances): ALL-CAPS on a SHORT word clips or mangles it.**
 Seen on `ISN'T`, `ALL` (twice), `OWN`, `EDGE` — each came out clipped/garbled (whisper heard "it bent" /

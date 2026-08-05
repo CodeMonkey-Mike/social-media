@@ -261,3 +261,49 @@ spine-naming convention documented (comp-build §13a), DOSSIER→DATA consolidat
 to §13, the edit-plan/cue-sheet pre-build ordering corrected in the skills, and a persona rule against
 whole-video-spoiler lines. LangGraph would make these gates *nodes in a pipeline you can watch*, instead of rules
 the assistant has to choose to honor.
+
+---
+
+## 2026-07-31 — ethereum-rwa: the whole transition/motion layer was planned, verified, then never wired
+
+**What happened.** `TRANSITIONS.md` was authored by the transition-strategist, then *hardened twice* by me: I
+verified all 11 concrete `lib:` ids against the 853-row `library.json`, caught and corrected a wrong spin
+direction (`ease-in-right` pointed AWAY from the ETHA column it existed to indicate), and caught that the plan's
+`rmn:cube` does not exist in `@remotion/transitions` at all. Then I built the comp, cleared five mechanical
+gates, ran chunk QA, rendered the full 12,600 frames, mixed music, and shipped it to Mike for review — with
+**zero** of that layer implemented. `TransitionClip` appeared in the comp exactly once, as an unused import.
+
+Absent from the render: the 9 face-cut Blocks glitches · the 11 strips glitches on the jump-cut re-frames ·
+badsignal on the AI stills · **all six reserved MELT/SPIN marquees** (the D3-A settlement stack and the
+three-state tollbooth — the beats the whole visual argument rests on) · and every single-image motion effect on
+the receipts. Every cut in a 7-minute video was a plain cross-fade or a 5% scale push.
+
+**Two distinct failures, worth separating.**
+
+1. **Plan-to-implementation drop.** I treated "the gates pass" as "the comp is complete." It is not the same
+   claim. Authoring a plan, verifying it, and *correcting* it built a strong feeling of having done the work —
+   which is precisely when the actual wiring got skipped without noticing.
+2. **A conceptual error I then repeated back to Mike.** I filed the receipt motion effects under "transitions."
+   They are not. A single-image motion effect is the SAME asset on both sides of the engine, running for the
+   **entire** time the asset is on screen — the frame moves, nothing is revealed. A cut transition is two
+   DIFFERENT assets at a boundary for ~0.4-0.9s. Mike had to correct me on this after I had already presented a
+   "what's missing" table that mis-categorised it. `broll-and-containers.md` §2 documents the distinction; I had
+   read it, cited it, and still collapsed the two.
+
+**Why the gates did not catch it.** All five (`lint-covers`, `lint-slide-balance`, `lint-deck-containers`,
+`lint-pause-silence`, `lint-docset`) check the COVER layer and the doc set. **Not one asserts that a project with
+a `TRANSITIONS.md` actually calls a transition.** A comp with a fully-authored transition plan and zero
+transition calls passes everything green. That is mechanically detectable and should be a gate:
+*if TRANSITIONS.md declares N `lib:` ids, the comp must reference them.*
+
+**Also this session, same class:** the paused spine was built at 29.97fps while the comp declared `fps 30`, so
+the render silently ran out of frames 0.42s early and **clipped the final words of the video**. Nothing errored.
+Root-caused to burst-removal re-encoding at `30000/1001` while every earlier stage held `30/1`. Now documented in
+`comp-build.md` §1 + `burst-removal.md`, plus a `check-spine-fps.sh` gate that fails correctly on this project.
+
+**The LangGraph argument this strengthens.** Every one of these is structural, not a knowledge gap: the plan
+existed and was correct; the rule existed and I had cited it; the failure was that *nothing forced the step to
+run*. A graph makes "wire the transitions" a node with an input contract (TRANSITIONS.md) and an output
+assertion (the comp references those ids) that cannot be silently skipped because the assistant felt finished.
+The fps bug is the same shape — a node boundary where an artifact's properties should be asserted, not assumed.
+Mike caught both by watching the video. That is the wrong last line of defence.

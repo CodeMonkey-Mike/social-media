@@ -1,0 +1,45 @@
+{
+  "source": "ALL.c.desilenced.mp4",
+  "output": "ALL.d.cleaned.mp4",
+  "stage": "c->d burst-removal",
+  "source_duration_s": 459.18,
+  "output_duration_s": 458.444,
+  "cuts": [
+    {
+      "cut_start": 103.25,
+      "cut_end": 104.02,
+      "removed_s": 0.77,
+      "word_before": "year",
+      "word_after": "This",
+      "reason": "two anomalous sound bursts in the year->This gap",
+      "burst1_peak_dB": -19.0,
+      "burst1_span": [
+        103.27,
+        103.45
+      ],
+      "burst2_peak_dB": -19.8,
+      "burst2_span": [
+        103.81,
+        104.01
+      ],
+      "edge_troughs": {
+        "after_year": [
+          103.25,
+          103.26
+        ],
+        "before_This": [
+          104.02,
+          104.02
+        ]
+      },
+      "both_edges_in_silence": true
+    }
+  ],
+  "verified_on_output": {
+    "join_rms_valley_dB": -90.2,
+    "whisper_across_join": "single year. This second one",
+    "both_words_whole": true
+  },
+  "visual": "blacked COVER region, black->black join, head-jump hidden",
+  "render": "sync-safe filter_complex trim/atrim+concat, -r 30, crf18, aac 128k"
+}

@@ -116,3 +116,36 @@ The script advances past the un-registered click and then waits for a file input
 2. Only if the flow genuinely looks broken, run `scripts/_diag-ig-create.js` to check for a new blocking modal (notifications / save-login / consent).
 
 **A single retry IS allowed here and does not violate the one-attempt rule.** The failure is strictly *pre-upload*: no bytes sent, no composer filled, nothing published, zero duplicate risk. This is categorically different from a kill after a point-of-no-return signal. Recovery: reset the platform row `failed` → `pending`, delete its `error`, per-profile kill igbot Chrome, run once. Worked first try on 2026-07-22.
+
+---
+
+## ⚠ NEW 2026-07-30 — `IG returned an error after Share: try again` is a THIRD, distinct IG Reel failure class (post-Share, do NOT auto-retry)
+
+`post-ig-reel.js` failed on `pm-20260729-housecoin-still-holding` with:
+
+```
+Clicking Share...
+Waiting up to 9 minutes for upload to finish ...
+  upload wait result: error (after 4s)
+Failed: IG returned an error after Share: try again.
+```
+
+This is **not** either documented failure mode, and the triage order must now distinguish three:
+
+| Signature | Stage | Cause | Retry? |
+|---|---|---|---|
+| Timeout on `input[type="file"]`, log has **no** `Clicked Post ✓` | pre-upload | transient Post sub-link click miss (2026-07-22) | ✅ safe — no bytes sent |
+| Timeout on `input[type="file"]`, create flow genuinely broken | pre-upload | new blocking modal (2026-05-25); dump with `_diag-ig-create.js` | ✅ safe after fixing |
+| **`error after Share` toast, seconds after Share** | **post-Share** | **IG server-side rejection of the share itself** | ❌ **do not auto-retry** |
+
+**Why the third one is not auto-retryable:** the video bytes were already uploaded and the Share
+button was already clicked, so the run is past the point of no return in the same sense a clicked
+Post is. IG's generic "try again" does not distinguish "we rejected it, nothing published" from
+"we published it and the client lost the response." A blind re-run risks a duplicate reel.
+
+**Correct handling:** leave the row `failed`, report it at the end of the run, and let Mike
+eyeball the IG profile grid. If the reel is genuinely absent, reset `ig_reels.status` to
+`pending` and run once; if it is there, mark it `posted` and fill in the URL by hand.
+
+Note the fast fail time (4s) is weak evidence of a genuine rejection rather than a lost response,
+but it is not strong enough to override the never-blind-retry-after-a-submit rule.

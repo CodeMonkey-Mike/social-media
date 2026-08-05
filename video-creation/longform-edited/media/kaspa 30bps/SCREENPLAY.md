@@ -1,29 +1,37 @@
 # kaspa 30bps - SCREENPLAY
 
-- **Working title:** Kaspa's 30 Blocks Per Second (the DAGKnight story)
+> **STATUS: RECORDED 2026-07-24 — this file is now the PLAN; build the edit from `AS-RECORDED.md`.**
+> The spine is recorded, prepped (`spine/ALL.e.desilenced.mp4`, 7:35.2) and transcribed. Where the
+> take diverges from this plan, AS-RECORDED wins for the edit (house rule #6). Key divergences +
+> the open CTA-pickup and community-plug-trim decisions live in AS-RECORDED "Divergences".
+
+- **Working title:** Kaspa's 40 Blocks Per Second (the DAGKnight story)
 - **Track:** longform-edited (16:9, heavily edited)
 - **Archetype / register:** EPIC informative. Declarative conviction, no price-prediction thesis. Gear map: CH1 = gear 3 (peak epic hook) → CH2 = gear 2 (explainer with declarative edges) → CH3 = gear 2 teach, gear 3 landing → CH4 = gear 2.5 rising → CH5 = gear 3 epic close. This arc drives the voice, the music beds, and the title cards below.
-- **Spine architecture:** single-thread ladder story: the claim (hook) → the real roadmap (ladder) → the marquee teach (DAGKnight parameterless consensus) → what it unlocks (numbers + the Solana beat) → conviction close + CTA.
-- **Target runtime:** ~5:00 (Mike: "not too long"). Spoken-word budget ~750-780 total; per-chapter budgets on each chapter header. If a take runs long, cut the lines flagged 💬 trim-first before touching anything else.
+- **Spine architecture:** single-thread ladder story: the target (hook) → the real roadmap (ladder) → the marquee teach (DAGKnight parameterless consensus) → what it unlocks (numbers + the Solana beat) → conviction close + CTA.
+- **Target runtime:** ~5:10 (Mike: "not too long"; +~12s for the CH3 community plug). Spoken-word budget ~790-820 total; per-chapter budgets on each chapter header. If a take runs long, cut the lines flagged 💬 trim-first before touching anything else.
 - **Fact source:** every number, date, and name in this screenplay traces to `DATA.md` in this folder (compiled + source-verified 2026-07-23). Chart IDs C1-C5 = DATA.md CHART-SOURCE INDEX.
 
 ---
 
 ## THE HOOK / THESIS
 
-The influencers said it almost as a throwaway: Kaspa goes from 10 blocks a second to "25 to 40, call it 30" before the end of the year. The number is real. It is the DAGKnight consensus hard fork, the second of Kaspa's two 2026 forks, and the tech behind it (parameterless consensus: the network measures the real internet and runs at its speed, instead of a hardcoded worst-case guess) is one of the coolest advancements in crypto. The ladder: Crescendo (10 bps, live) → Toccata (programmability, live June 30) → DAGKnight (~30 bps, TARGETED end of 2026) → 100 bps (2027 target).
+Kaspa's own roadmap targets a jump from 10 blocks a second to as much as 40 before the end of the year. The number is real. It is the DAGKnight consensus hard fork, the second of Kaspa's two 2026 forks, and the tech behind it (parameterless consensus: the network measures the real internet and runs at its speed, instead of a hardcoded worst-case guess) is one of the coolest advancements in crypto. The ladder: Crescendo (10 bps, live) → Toccata (programmability, live June 30) → DAGKnight (up to 40 bps, TARGETED end of 2026) → 100 bps (2027 target). This is a STANDALONE informative video: no stream reference, no reaction framing.
 
 > [!WARNING]
-> **DO NOT AIR "scheduled" / "confirmed" for the ~30 bps date.** The 25-40 bps jump end-of-2026 is a core-dev TARGET, not a locked schedule (DAGKnight prototype was pre-testnet at the last public report). Every spoken and on-screen mention uses "target / targeted / aiming for," and "before the end of the year" is the safe envelope. (DATA.md §5)
+> **NO stream / reaction framing anywhere (Mike, 2026-07-24).** The video never mentions the Crypto Archie stream, Krux, or "I was watching a live stream." The research trail lives in DATA.md §0 as provenance only; on air this is Mike telling the upgrade story cold. Also the reason the aired number is 40, not 30: differentiation from the stream's "call it 30."
+
+> [!WARNING]
+> **DO NOT AIR "scheduled" / "confirmed" for the 40 bps date.** The 25-40 bps jump end-of-2026 is a core-dev TARGET, not a locked schedule (DAGKnight prototype was pre-testnet at the last public report). Every spoken and on-screen mention uses "target / targeted / aiming for," and "before the end of the year" is the safe envelope. **Also: 40 is the TOP of the sourced 25-40 bps range**, so outside the locked CH1 hook every spoken mention is "up to 40," never a flat "it runs at 40." (DATA.md §5)
 
 > [!WARNING]
 > **DO NOT say Toccata raised the block rate.** Toccata = programmability ONLY (covenants, native assets, ZK verification, SilverScript). Block rate today is still 10 bps. CH2 states this negation explicitly on purpose. (DATA.md §5)
 
 > [!WARNING]
-> **15,000 TPS = THEORETICAL CAPACITY, never demonstrated throughput.** Demonstrated peak is 5,584 TPS (mainnet, 2025-10-05). Air the 15k number only as "roughly 15,000 transactions a second of capacity." (DATA.md §4, §5)
+> **TPS numbers = THEORETICAL CAPACITY, never demonstrated throughput.** Demonstrated peak is 5,584 TPS (mainnet, 2025-10-05). At 40 bps the sourced capacity figure is ~20,000+ TPS (DATA.md §4); air it only as "around 20,000 transactions a second of capacity." (DATA.md §4, §5)
 
 > [!WARNING]
-> **Keep the fork-contents ambiguity soft.** Whether the 25-40 ms block time ships in the exact same fork as the consensus swap, or as a fast follow-up tune, is not locked. Approved phrasing: "the DAGKnight era takes Kaspa to roughly 30 blocks a second." Never promise the mechanics of the rollout. (DATA.md §5)
+> **Keep the fork-contents ambiguity soft.** Whether the 25-40 ms block time ships in the exact same fork as the consensus swap, or as a fast follow-up tune, is not locked. Approved phrasing: "the DAGKnight era takes Kaspa to up to 40 blocks a second." Never promise the mechanics of the rollout. (DATA.md §5)
 
 > [!WARNING]
 > **Persona guards:** decentralization is framed ARCHITECTURALLY (PoW, permissionless, fair launch, no premine), never holder distribution. No price predictions anywhere in this video. No em dashes on any screen text.
@@ -34,10 +42,10 @@ The influencers said it almost as a throwaway: Kaspa goes from 10 blocks a secon
 
 | CH | Production name | Job | Bed | Card | Budget |
 |---|---|---|---|---|---|
-| CH1 | THE CLAIM | Hook: the 30 bps number is real (opens the video, no cold open) | Bed A starts | OFF (pure hook) | ~50s / ~140 words |
+| CH1 | THE TARGET | Hook: the 40 bps target, told cold (opens the video, no cold open, no stream reference) | Bed A starts | OFF (pure hook) | ~50s / ~140 words |
 | CH2 | THE LADDER | The real roadmap: Crescendo → Toccata → DAGKnight → 100 (C1 + C5) | Bed B starts | **ON: "THE UPGRADE LADDER"** | ~65s / ~170 words |
-| CH3 | DAGKNIGHT | Marquee teach: parameterless consensus (C4) | Bed C starts | **ON: "DAGKNIGHT"** | ~85s / ~205 words |
-| CH4 | WHAT 30 UNLOCKS | Cadence race, capacity, the Solana irony, the honest-target beat (C2 + C3) | Bed C continues | OFF (mandatory: continuing bed) | ~65s / ~155 words |
+| CH3 | DAGKNIGHT | Marquee teach: parameterless consensus (C4) + mid-roll community plug | Bed C starts | **ON: "DAGKNIGHT"** | ~95s / ~245 words |
+| CH4 | WHAT 40 UNLOCKS | Cadence race, capacity, the Solana irony, the honest-target beat (C2 + C3) | Bed C continues | OFF (mandatory: continuing bed) | ~65s / ~155 words |
 | CH5 | THE CLOSE | Conviction recap + CTA | Bed D starts | OFF (close/framing default) | ~55s / ~120 words |
 
 ---
@@ -69,36 +77,36 @@ The influencers said it almost as a throwaway: Kaspa goes from 10 blocks a secon
 
 ---
 
-## CH1 - THE CLAIM
+## CH1 - THE TARGET
 **Register:** gear 3, peak epic. Short hammer sentences, no hedging, no "right?" tags.
 **Title card:** OFF. **Music:** Bed A starts (aggressive, driving; see MUSIC-MOOD-PLAN).
 **Budget:** ~50s, ~140 spoken words.
 
 **Beat 1 - the number (LOCKED opening)**
 
-🔒 `[SAY-EXACT]` `[FACE]` **Thirty blocks. Every single second. On proof of work.**
+🔒 `[SAY-EXACT]` `[FACE]` **Forty blocks. Every single second. On proof of work.**
 🔒 `[SAY-EXACT]` `[COVER]` That is where Kaspa is headed next. Not someday. Not in five years. The target, is this year.
-🎬 `[SHOW]` Open on Mike's face for the first line only, then cut to a full-frame "30 BLOCKS / SECOND" motion type card over dark BlockDAG atmosphere b-roll. Bed A hits cold with the first word.
+🎬 `[SHOW]` Open on Mike's face for the first line only, then cut to a full-frame "40 BLOCKS / SECOND" motion type card over dark BlockDAG atmosphere b-roll. Bed A hits cold with the first word.
 
-**Beat 2 - the clip**
+**Beat 2 - the setup**
 
-🗣️ `[COVER]` A few weeks back, I'm watching a live stream, and a Kaspa YouTuber named Krux drops a number, that most people just scrolled right past.
-🗣️ `[COVER]` He says Kaspa goes from 10 blocks a second today, to somewhere between 25 and 40, before the end of the year. And then he just goes, I'll just say 30.
-🎬 `[SHOW]` Stylized quote-card receipt: verbatim caption text "anywhere between 25 to 40 blocks per second. I just say 30." with the stream title + date (Crypto Archie live, 2026-06-25). Verbatim from DATA.md §0, do not paraphrase on the card.
-👤 `[FACE]` I went and checked. The number is real.
-🗣️ `[COVER]` And the tech behind it, is honestly one of the coolest advancements in all of crypto right now.
+🗣️ `[COVER]` Kaspa already runs at 10 blocks a second. Today. Live. That alone makes it the fastest chain in all of proof of work, and it's not even close.
+🗣️ `[COVER]` But 10 was never the finish line. Because the next jump on Kaspa's roadmap takes those 10 blocks a second, and pushes them up to 40. Targeted, before the end of this year.
+🎬 `[SHOW]` H1 hook counter (code-built motion type, NOT the C1 ladder; the ladder debuts in CH2): a live-ticking "10 BLOCKS / SEC" readout that slams upward to 40 with a "TARGET: 2026" stamp.
+👤 `[FACE]` And the tech that makes that possible, is honestly one of the coolest advancements in all of crypto right now.
 
 **Beat 3 - the open loop**
 
-🗣️ `[COVER]` But here's the thing. You do not just triple the speed of the fastest chain in proof of work. At this level there is no dial to turn. Something at the very core of Kaspa has to change.
+🗣️ `[COVER]` But here's the thing. You do not just quadruple the speed of the fastest chain in proof of work. At this level there is no dial to turn. Something at the very core of Kaspa has to change.
 🗣️ `[COVER]` So let's dive into all this.
 💬 `[NOTE]` Keep the loop OPEN: do not say what the core change is yet, and do not preview the rest of the video.
 
 > [!IMPORTANT]
 > CH1 verify list:
-> - Quote-card text must match the stream captions verbatim (DATA.md §0, segment 53:26-54:33). 🔍 `[VERIFY]` pull the exact frame/timestamp when building the receipt.
 > - "Fastest chain in proof of work" = block-cadence claim. 🔍 `[VERIFY]` soft-check at build time that no major PoW chain runs anywhere near 10 bps (C2 data supports it; BTC ~600s, LTC/DOGE/XMR all multi-second-to-minutes).
 > - The hook says "the target is this year," never "it happens this year" (WARNING box 1 is live from the first ten seconds).
+> - Beat 2 already carries the "up to 40" honesty ("pushes them up to 40"); do not flatten it to "goes to 40" at record time (WARNING box 1).
+> - No stream / Krux / "I was watching" language anywhere in this chapter (WARNING box 0, Mike 2026-07-24).
 
 ---
 
@@ -119,10 +127,10 @@ The influencers said it almost as a throwaway: Kaspa goes from 10 blocks a secon
 
 **Beat 2 - rung three: the name reveal**
 
-🗣️ `[COVER]` Which brings us to the second hard fork of 2026. Two hard forks, in a single year. This one is the speed fork: 10 blocks a second, up to somewhere between 25 and 40. Call it 30. Targeted, before this year is out.
+🗣️ `[COVER]` Which brings us to the second hard fork of 2026. Two hard forks, in a single year. This one is the speed fork: from 10 blocks a second, up to 40. Four times the speed. Targeted, before this year is out.
 👤 `[FACE]` And it has maybe the best name in all of crypto: DAGKnight.
 🗣️ `[COVER]` Like the Dark Knight. And trust me, the name fits.
-💬 `[NOTE]` Pronounce it "DAG-night" (the stream host says "the Dag Knight"). The "trust me, the name fits" line is trim-first if the chapter runs long.
+💬 `[NOTE]` Pronounce it "DAG-night". The "trust me, the name fits" line is trim-first if the chapter runs long.
 
 **Beat 3 - rung four: the tease**
 
@@ -134,7 +142,7 @@ The influencers said it almost as a throwaway: Kaspa goes from 10 blocks a secon
 > - Crescendo: 2025-05-05, 1 → 10 bps, 100 ms interval (DATA.md §1). On-screen date = "May 2025".
 > - Toccata: ACTIVATED 2026-06-30, rusty-kaspa v2.0.0, DAA score 474,165,565 (DATA.md §1). 🔍 `[VERIFY]` re-screencap the live release page at build time for C5.
 > - "Two hard forks in 2026" framing is sourced (Kaspa Commons quoting hashdag, DATA.md §1).
-> - DAGKnight date is spoken ONLY as "targeted before this year is out" (WARNING box 1).
+> - DAGKnight date is spoken ONLY as "targeted before this year is out" (WARNING box 1). The sourced range is 25-40 bps; spoken form is "up to 40" and the C1 rung-3 label reads "UP TO 40 bps" (never a flat 40).
 > - The Toccata negation line ("did not touch the block rate") is load-bearing, do not cut it (WARNING box 2).
 
 ---
@@ -142,7 +150,7 @@ The influencers said it almost as a throwaway: Kaspa goes from 10 blocks a secon
 ## CH3 - DAGKNIGHT
 **Register:** gear 2 for the teach, gear 3 on the landing lines. The marquee chapter: slowest pacing, biggest diagram.
 **Title card:** ON, "DAGKNIGHT". **Music:** Bed C starts (dark cinematic, subtle under the teach, rising late).
-**Budget:** ~85s, ~205 spoken words.
+**Budget:** ~95s, ~245 spoken words (includes the ~12s Beat 2b community plug).
 
 **Beat 1 - the problem: a chain that runs at the speed of a guess**
 
@@ -160,9 +168,16 @@ The influencers said it almost as a throwaway: Kaspa goes from 10 blocks a secon
 🗣️ `[COVER]` And it does this while staying secure, even with up to half the network acting malicious.
 🗣️ `[COVER]` Kaspa's finality today, the point where your transaction is locked in for good, is already under 7 seconds. DAGKnight opens the door to finality in under ONE second. On proof of work.
 
+**Beat 2b - the community plug (quick mid-roll, rides the sub-second high)**
+
+👤 `[FACE]` And real quick: if you want this stuff tracked for you, the upgrades, the setups, the calls, that is exactly what my community does, every single week.
+🗣️ `[COVER]` Link's in the description if you want in. Alright, back to DAGKnight.
+🎬 `[SHOW]` Lower-third "LINK IN THE DESCRIPTION" pointer + a quick community graphic/montage (coverage-strategist's pick). Bed C stays at its quiet floor, no swell; this is a breath, not a beat drop.
+💬 `[NOTE]` Keep the plug under ~12 seconds; it must not deflate the Beat 3 landing. This is a THIRD face moment for CH3, sanctioned as a deliberate direct-address break (Mike's addition, 2026-07-24). Optional at record time: swap "the calls" for a current verified multiplier (persona cta_style, verified claims only).
+
 **Beat 3 - why the whole ladder rests on it**
 
-🗣️ `[COVER]` And now the ladder makes sense. Once the network stops paying rent to a worst-case guess, cranking the block rate stops being reckless. That's why roughly 30 becomes the target. That's why 100 sits behind it.
+🗣️ `[COVER]` And now the ladder makes sense. Once the network stops paying rent to a worst-case guess, cranking the block rate stops being reckless. That's why a number like 40 becomes the target. That's why 100 sits behind it.
 👤 `[FACE]` DAGKnight is the reason everything above 10 becomes possible.
 🎬 `[SHOW]` After the face line, quick C1 callback flash: rungs 3 and 4 light up.
 
@@ -172,29 +187,29 @@ The influencers said it almost as a throwaway: Kaspa goes from 10 blocks a secon
 > - Parameterless / measures-real-latency / responsiveness claims per DATA.md §2 (Gate DAGKnight guide + roadmap).
 > - 🔍 `[VERIFY]` the "up to half the network" security line: confirm the exact 50%-Byzantine-tolerance phrasing against the paper/summary before it becomes on-screen text; keep the spoken form as "up to half."
 > - Finality: current <7s is sourced (DATA.md §4); sub-second is spoken as "opens the door to," a potential, never a promise.
-> - Use the approved soft shape everywhere: "the DAGKnight era takes Kaspa to roughly 30 blocks a second" (WARNING box 4).
+> - Use the approved soft shape everywhere: "the DAGKnight era takes Kaspa to up to 40 blocks a second" (WARNING box 4).
 
 ---
 
-## CH4 - WHAT 30 UNLOCKS
+## CH4 - WHAT 40 UNLOCKS
 **Register:** gear 2.5, rising. Numbers with care, then the irony beat, then the honesty beat.
 **Title card:** OFF (Bed C continues; flows straight in). **Music:** Bed C continues, intent rises through the chapter.
 **Budget:** ~65s, ~155 spoken words.
 
 **Beat 1 - the cadence race**
 
-🎬 `[SHOW]` C2, the animated block-cadence race (code-built, DATA.md §6): BTC ~600s vs ETH ~12s vs SOL ~0.4s slot vs Kaspa 0.1s → ~0.033s. Bars pulse at their real cadence.
-🗣️ `[COVER]` Put this next to the rest of crypto. Bitcoin: one block, every 10 minutes. Ethereum: one every 12 seconds. Kaspa, right now, today: 10 every second. And the DAGKnight era: a block roughly every 33 milliseconds.
-🗣️ `[COVER]` A blink of your eye takes about 100 milliseconds. That's three blocks, per blink.
+🎬 `[SHOW]` C2, the animated block-cadence race (code-built, DATA.md §6): BTC ~600s vs ETH ~12s vs SOL ~0.4s slot vs Kaspa 0.1s → ~0.025s. Bars pulse at their real cadence.
+🗣️ `[COVER]` Put this next to the rest of crypto. Bitcoin: one block, every 10 minutes. Ethereum: one every 12 seconds. Kaspa, right now, today: 10 every second. And the DAGKnight era: a block, every 25 milliseconds.
+🗣️ `[COVER]` A blink of your eye takes about 100 milliseconds. That's four blocks, per blink.
 
 **Beat 2 - the capacity**
 
-🎬 `[SHOW]` C3, TPS capacity bars (code-built, DATA.md §4): 5k+ → 12.5k+ → 20k+ → 50k+, big "THEORETICAL CAPACITY" label, plus the demonstrated 5,584 marker flagged "DEMONSTRATED, mainnet, Oct 2025".
-🗣️ `[COVER]` In capacity terms, 10 blocks a second gives Kaspa room for over 5,000 transactions a second. And that's not a whiteboard number: last October, the network demonstrated over 5,500 a second, live on mainnet. At roughly 30 blocks a second, you're looking at around 15,000 transactions a second of capacity. Capacity, to be clear. But they've already proven the theory holds at 10.
+🎬 `[SHOW]` C3, TPS capacity bars (code-built, DATA.md §4): 5k+ → 12.5k+ → 20k+ → 50k+, big "THEORETICAL CAPACITY" label, plus the demonstrated 5,584 marker flagged "DEMONSTRATED, mainnet, Oct 2025". The 20k+ bar (the 40 bps rung) is the spotlighted one.
+🗣️ `[COVER]` In capacity terms, 10 blocks a second gives Kaspa room for over 5,000 transactions a second. And that's not a whiteboard number: last October, the network demonstrated over 5,500 a second, live on mainnet. At 40 blocks a second, you're looking at around 20,000 transactions a second of capacity. Capacity, to be clear. But they've already proven the theory holds at 10.
 
 **Beat 3 - the Solana beat**
 
-🗣️ `[COVER]` Now, here's the part that made me smile. Same stream, a few minutes earlier, they're hyping Solana's new upgrade, because it pushes finality down under one second. And fine, that is impressive. But Kaspa is chasing that same sub-second club, on a fair-launched, no-premine, permissionless, proof-of-work network.
+🗣️ `[COVER]` Now, here's the part that makes me smile. Right now, the whole industry is hyping Solana's new upgrade, because it pushes finality down under one second. And fine, that is impressive. But Kaspa is chasing that same sub-second club, on a fair-launched, no-premine, permissionless, proof-of-work network.
 👤 `[FACE]` Sub-second finality. On proof of work.
 🗣️ `[COVER]` That's a different sentence entirely.
 
@@ -205,10 +220,10 @@ The influencers said it almost as a throwaway: Kaspa goes from 10 blocks a secon
 
 > [!IMPORTANT]
 > CH4 verify list:
-> - TPS figures + demonstrated 5,584 on 2025-10-05 + finality <7s: DATA.md §4. The 15k number airs ONLY with the word "capacity" attached (WARNING box 3).
+> - TPS figures + demonstrated 5,584 on 2025-10-05 + finality <7s: DATA.md §4. The 20k number airs ONLY with the word "capacity" attached (WARNING box 3), and it is the 40 bps row of the sourced table.
 > - BTC/ETH/SOL cadence figures on C2: 🔍 `[VERIFY]` re-verify the on-screen numbers at build time (DATA.md §6 flags them as common-knowledge, re-check on screen text).
-> - Blink ~100ms: 🔍 `[VERIFY]` common-knowledge check before the "three blocks per blink" line airs.
-> - Solana/Alpenglow numbers are ATTRIBUTED to the stream ("they're hyping"), never stated as our own claim (DATA.md §6).
+> - Blink ~100ms: 🔍 `[VERIFY]` common-knowledge check before the "four blocks per blink" line airs.
+> - Solana/Alpenglow sub-second finality is now aired UNATTRIBUTED (the stream reference is gone, WARNING box 0). 🔍 `[VERIFY]` confirm the sub-second finality claim against a public Alpenglow source before recording; if it doesn't hold up independently, soften or cut the beat.
 > - 🔍 `[VERIFY]` DAGKnight dev status is LIVE-DRIFT: "not hit testnet yet" was true per the kasmedia sneak peek as of 2026-07-23. Re-check kasmedia / core-dev updates the week of recording; if the prototype has advanced, update this beat's wording upward, never downward.
 
 ---
@@ -222,7 +237,7 @@ The influencers said it almost as a throwaway: Kaspa goes from 10 blocks a secon
 
 🗣️ `[COVER]` So the next time somebody tells you proof of work is legacy tech, that it peaked with Bitcoin, that all the real innovation lives on the premined VC chains... show them this ladder.
 🎬 `[SHOW]` C1 grand callback: the full ladder assembles fast, each rung stamping in.
-🗣️ `[COVER]` One to ten. Done. Programmability. Done, shipped this summer. Roughly 30, targeted before this year is out. And 100, sitting right behind it.
+🗣️ `[COVER]` One to ten. Done. Programmability. Done, shipped this summer. Up to 40, targeted before this year is out. And 100, sitting right behind it.
 🗣️ `[COVER]` Fair launched. No premine. About 95 percent of the supply already mined, already out in the world. And a consensus upgrade coming, that lets the network run at the speed of the actual internet.
 👤 `[FACE]` This is why Kaspa is my number one.
 
@@ -246,11 +261,11 @@ Picked from `video-creation/assets/music/library.json` analysis meta (aggression
 
 | CH | Bed | Mood / gear | Intent | Bed change? | Candidate tracks (shortlist, by catalog meta) |
 |---|---|---|---|---|---|
-| CH1 | **A** | Dark driving conviction-tech, gear 3 | AGGRESSIVE, hits cold with the locked line | **STARTS NEW BED** | 1) `common-high-speeds` (agg 91, cold_hot open, epic_hit end, on-theme title, has 18s section cuts) · 2) `hold-the-line` (agg 89, cold_hot, dark blockbuster orchestral) · 3) `born-every-minute` (agg 92, cold_hot, dark DnB Tron energy) |
+| CH1 | **A** | Dark driving conviction-tech, gear 3 | AGGRESSIVE, hits cold with the locked line | **STARTS NEW BED** | **MIKE'S PICK (2026-07-24): `hold-the-line`** (agg 89, cold_hot, dark blockbuster orchestral). Passed over: `common-high-speeds`, `born-every-minute` |
 | CH2 | **B** | Focused explainer, gear 2 | SUBTLE, sits far under the teach | **STARTS NEW BED** → card ON | 1) `accomplishments-subtle` (Mike-designated explainer bed, role explainer_bed, fade end) · 2) `focuser` (cold_hot, underscore/reflective mood, fade end) · 3) `the-invaders` (agg 52, build open, atmospheric) if Mike wants CH2 warmer |
 | CH3 | **C** | Dark cinematic suspense rising to awe, gear 2→3 | SUBTLE under the C4 teach, allowed to swell on the Beat-3 face landing | **STARTS NEW BED** → card ON | 1) `going-dark` (283s, agg 69, suspenseful cinematic, steady open, epic_hit end; long enough to span CH3+CH4 without looping) · 2) `the-invaders` (217s, build→intense, epic_hit) · 3) `tesseract` (agg 55, dark sci-fi electronic, epic_hit) |
 | CH4 | C (cont.) | Same bed riding its natural build through the numbers + irony beat | Rising, still under VO; momentary lift on "Sub-second finality" face line | continues (card OFF) | same track as CH3 (pick a candidate whose back half builds; `going-dark` is the safest single-track span) |
-| CH5 | **D** | Inspiring epic closer, gear 3 | AGGRESSIVE-EPIC, END-ALIGNED: the track's epic_hit must land on the sign-off | **STARTS NEW BED** | 1) `searching-for-signs-of-life` (agg 43, inspiring epic orchestral, epic_hit end, cataloged as a soaring closing bed) · 2) `revenant` (106s, epic battle build, epic_hit) · 3) `a-champion-from-the-ashes` (inspiring/hopeful, epic_hit) |
+| CH5 | **D** | Inspiring epic closer, gear 3 | AGGRESSIVE-EPIC, END-ALIGNED: the track's epic_hit must land on the sign-off | **STARTS NEW BED** | **MIKE'S PICK (2026-07-24): `a-champion-from-the-ashes`** (inspiring/hopeful, epic_hit). Passed over: `searching-for-signs-of-life`, `revenant` |
 
 Notes for the placement agent: bed level per house rule (measure LUFS first, ~16-18 dB under VO); one breath at each bed change (A→B, B→C, C→D); the C4 diagram teach in CH3 needs the quietest floor of the video; reserve the biggest moment for Bed D's end-aligned hit.
 
@@ -263,11 +278,11 @@ Charts guardrail: every number we control = our own code-rendered animated chart
 | ID | What | Chapter | Build mode (per DATA.md index) |
 |---|---|---|---|
 | **C4** | **THE CENTERPIECE:** GHOSTDAG fixed-k vs DAGKnight adaptive, one system-design container with two states: LEFT = nodes throttled by a hardcoded "ASSUMED worst-case latency" box + pinned-low speed readout; RIGHT = the box shatters into a live "MEASURED latency" gauge, readout climbs. Spotlight-swap synced to CH3 Beats 1→2. Role colors: nodes cyan, the assumption box red, the live gauge teal. | CH3 | code (system-design container, Convention 4) |
-| **C1** | The bps ladder timeline: 1 → 10 (Crescendo, May 2025) → programmability (Toccata, Jun 30 2026) → ~30 (DAGKnight, TARGET EOY 2026) → 100 (2027 target, "unlocked by DAGKnight" link). Rungs animate in one at a time; rung 4 renders locked until CH3's callback. Reused three times by design: CH2 build, CH3 flash callback, CH5 grand assembly. | CH2 / CH3 / CH5 | code (animated) |
-| **C2** | Block-cadence race: BTC ~600s vs ETH ~12s vs SOL ~0.4s slot vs Kaspa 0.1s → ~0.033s; bars pulse at real cadence; "3 blocks per blink" annotation lands with the spoken line. | CH4 | code (animated) |
-| **C3** | TPS capacity bars 5k+ / 12.5k+ / 20k+ / 50k+ with a big THEORETICAL CAPACITY label + the demonstrated 5,584 marker (mainnet, Oct 2025). The label is load-bearing (WARNING box 3). | CH4 | code |
+| **C1** | The bps ladder timeline: 1 → 10 (Crescendo, May 2025) → programmability (Toccata, Jun 30 2026) → UP TO 40 (DAGKnight, TARGET EOY 2026) → 100 (2027 target, "unlocked by DAGKnight" link). Rungs animate in one at a time; rung 4 renders locked until CH3's callback. Reused three times by design: CH2 build, CH3 flash callback, CH5 grand assembly. | CH2 / CH3 / CH5 | code (animated) |
+| **C2** | Block-cadence race: BTC ~600s vs ETH ~12s vs SOL ~0.4s slot vs Kaspa 0.1s → ~0.025s; bars pulse at real cadence; "4 blocks per blink" annotation lands with the spoken line. | CH4 | code (animated) |
+| **C3** | TPS capacity bars 5k+ / 12.5k+ / 20k+ / 50k+ with a big THEORETICAL CAPACITY label + the demonstrated 5,584 marker (mainnet, Oct 2025). The label is load-bearing (WARNING box 3); the 20k+ bar (40 bps) is the spotlighted one. | CH4 | code |
 | **C5** | Toccata activation receipt: rusty-kaspa v2.0.0 GitHub release page (DAA score 474,165,565 visible as page text). | CH2 | screencap (real site) |
-| - | Krux quote card: verbatim caption text + stream title/date. Alternative: a 5-8s clip excerpt of the stream itself (Mike's call, see Open Questions). | CH1 | stylized quote card (verbatim text) |
+| **H1** | CH1 hook counter: live-ticking "10 BLOCKS / SEC" readout slamming up to 40 with a "TARGET: 2026" stamp. Motion type, not a data chart; distinct from C1. | CH1 | code (motion type) |
 
 Explainer bullets in CH2/CH3 each get their own spotlight container (Convention 4, one per talking point); the coverage-strategist expands this into the full BROLL-PLAN with every `[COVER]` beat hidden.
 
@@ -277,30 +292,30 @@ Explainer bullets in CH2/CH3 each get their own spotlight container (Convention 
 
 | On-air item | DATA.md |
 |---|---|
-| Krux quote, stream, date (2026-06-25) | §0 |
 | Crescendo 2025-05-05, 1→10 bps, 100 ms | §1 |
 | Toccata 2026-06-30, v2.0.0, feature list, DAA score | §1 |
-| DAGKnight fork: 10 → 25-40 bps, TARGET end of 2026 | §1 + §5 guard |
+| DAGKnight fork: 10 → 25-40 bps (aired as "up to 40"), TARGET end of 2026 | §1 + §5 guard |
 | 100 bps = 2027 target, unlocked by DAGKnight | §1 |
 | Parameterless consensus, Sutton & Sompolinsky 2022, 50% tolerance, sub-second finality potential | §2 |
-| TPS table, demonstrated 5,584 (2025-10-05), finality <7s | §4 |
+| TPS table (~20,000+ capacity at 40 bps), demonstrated 5,584 (2025-10-05), finality <7s | §4 |
 | ~95% supply mined (as of 2026-07-10) | §6 |
-| Solana/Alpenglow stream irony (attributed to Krux) | §6 |
+| Solana/Alpenglow sub-second finality (aired UNATTRIBUTED; re-verify vs a public source) | §6 |
 | BTC/ETH/SOL cadence comparators | §6 (re-verify on-screen text) |
+
+(The Krux stream quote in §0 is research provenance ONLY; it no longer appears on air. WARNING box 0.)
 
 ---
 
 ## OPEN QUESTIONS / NEXT SESSION
 
-1. **Mike gates this screenplay** before containers/recording begin.
-2. **YouTube title options** (pick or riff, no em dashes): "Kaspa Is About To Get 3x Faster (DAGKnight Explained)" · "The Real Story Behind Kaspa's 30 Blocks Per Second" · "Kaspa's DAGKnight: The Coolest Upgrade In Proof Of Work".
-3. **CH1 receipt: quote card vs actual stream clip.** Scripted as a stylized verbatim quote card; if Mike prefers the real clip excerpt (5-8s), that's a rights/tone call he makes.
-4. **Name Krux aloud?** Scripted as "a Kaspa YouTuber named Krux" (friendly attribution). Easy swap to "a Kaspa YouTuber" if Mike prefers not to name.
-5. **Optional "god willing" color line** in CH4 Beat 4: keep or cut at record time.
-6. **Live 🔍 VERIFY checklist (run the week of recording):**
+1. **Mike gates this screenplay** before containers/recording begin. (CH1 reaction framing removed + 30→40 swap done 2026-07-24 per Mike's notes; re-gate from the top.)
+2. **YouTube title options** (pick or riff, no em dashes): "Kaspa Is About To Get 4x Faster (DAGKnight Explained)" · "The Real Story Behind Kaspa's 40 Blocks Per Second" · "Kaspa's DAGKnight: The Coolest Upgrade In Proof Of Work".
+3. **Optional "god willing" color line** in CH4 Beat 4: keep or cut at record time.
+4. **Live 🔍 VERIFY checklist (run the week of recording):**
    - DAGKnight dev status (kasmedia / core-dev updates): still pre-testnet? Update CH4 Beat 4 wording to current reality.
    - Supply-mined percentage (drifts upward from ~95%).
    - C5 screencap: re-capture the live rusty-kaspa v2.0.0 release page.
    - C2 on-screen cadence figures (BTC/ETH/SOL) + the ~100 ms blink figure.
    - Exact 50%-Byzantine-tolerance phrasing before it becomes C4 on-screen text.
-7. **Music:** Mike confirms one track per bed from the shortlists; `music-placement-strategist` carves exact placement AFTER the spine is recorded.
+   - Solana/Alpenglow sub-second finality vs a PUBLIC source (now aired unattributed, CH4 Beat 3).
+5. **Music:** Mike confirms one track per bed from the shortlists; `music-placement-strategist` carves exact placement AFTER the spine is recorded.

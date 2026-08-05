@@ -1,0 +1,77 @@
+{
+  "$meta": {
+    "project": "ethereum-rwa",
+    "spine": "spine/ALL.e.desilenced.mp4",
+    "spine_duration_sec": 417.41,
+    "timebase": "FINAL e-spine seconds. The three card-pauses (~1s each at 48.92 / 129.92 / 200.34) are inserted at comp build and shift every later cue through the comp's sh() mapping. Cues below are PRE-pause e-spine coords.",
+    "authored_by": "coverage-strategist, 2026-07-31, verified by orchestrator (exact partition: 44 cues, 301.59s = 301.59s cover, no gaps/overlaps/FACE collisions)",
+    "priority_order": "Mike 2026-07-31: RECEIPTS first, CHARTS second, containers third, video/image b-roll last as <=4s punctuation.",
+    "detail": "Full build spec + acquisition worklists live in BROLL-PLAN.md. This file is the machine-readable placement contract.",
+    "face_windows": [[0.0, 8.44], [29.96, 30.73], [107.54, 111.88], [142.74, 144.78], [279.18, 286.12], [306.27, 391.19], [409.04, 417.41]],
+    "cover_spans": [[8.44, 29.96], [30.73, 107.54], [111.88, 142.74], [144.78, 279.18], [286.12, 306.27], [391.19, 409.04]],
+    "budget": {"envato_max": 10, "envato_used": 9, "chatgpt_max": 5, "chatgpt_used": 3},
+    "type_counts": {"R(article)": 3, "R(other)": 4, "CHART(anim)": 8, "CHART(sysdesign)": 6, "CARD SLIDE": 10, "TITLE SLIDE": 3, "VIDEO": 9, "IMAGE": 3}
+  },
+  "covers": [
+    {"id": "V1",        "ch": "CH1", "type": "VIDEO",           "tIn": 8.44,   "tOut": 11.32,  "asset": "vid/br-skyline.mp4",        "verify": false},
+    {"id": "R1",        "ch": "CH1", "type": "R(other)",        "tIn": 11.32,  "tOut": 15.26,  "asset": "receipts/R1-rwaxyz.png",    "verify": true},
+    {"id": "C1",        "ch": "CH1", "type": "CHART(anim)",     "tIn": 15.26,  "tOut": 26.22,  "asset": "charts/C1-rwa-growth",      "verify": true},
+    {"id": "C2-A",      "ch": "CH1", "type": "CHART(anim)",     "tIn": 26.22,  "tOut": 29.96,  "asset": "charts/C2-dominance#A",     "verify": true},
+
+    {"id": "C2-B",      "ch": "CH1", "type": "CHART(anim)",     "tIn": 30.73,  "tOut": 36.04,  "asset": "charts/C2-dominance#B",     "verify": false},
+    {"id": "D1-TEASE",  "ch": "CH1", "type": "CARD SLIDE",      "tIn": 36.04,  "tOut": 48.92,  "asset": "card-slides/D1-tease-s1.png", "state2": "card-slides/D1-tease-s2.png @~44.5 (roadmap chips lit)",  "verify": false},
+    {"id": "D2-A",      "ch": "CH2", "type": "CHART(sysdesign)","tIn": 48.92,  "tOut": 65.76,  "asset": "diagrams/D2-A-tokenization","verify": false},
+    {"id": "V2",        "ch": "CH2", "type": "VIDEO",           "tIn": 65.76,  "tOut": 69.58,  "asset": "vid/br-hq-tower.mp4",       "verify": false},
+    {"id": "R2",        "ch": "CH2", "type": "R(other)",        "tIn": 69.58,  "tOut": 75.32,  "asset": "receipts/R2-buidl.png",     "verify": true},
+    {"id": "D2-B",      "ch": "CH2", "type": "CARD SLIDE",      "tIn": 75.32,  "tOut": 85.30,  "asset": "card-slides/D2-B-buidl.png","verify": true},
+    {"id": "C6",        "ch": "CH2", "type": "CHART(anim)",     "tIn": 85.30,  "tOut": 93.20,  "asset": "charts/C6-buidl-chains",    "verify": true},
+    {"id": "C7",        "ch": "CH2", "type": "CHART(anim)",     "tIn": 93.20,  "tOut": 100.88, "asset": "charts/C7-market-mix",      "verify": false},
+    {"id": "I1",        "ch": "CH2", "type": "IMAGE",           "tIn": 100.88, "tOut": 104.84, "asset": "img/I1-stampede.png",       "verify": false},
+    {"id": "V3",        "ch": "CH2", "type": "VIDEO",           "tIn": 104.84, "tOut": 107.54, "asset": "vid/br-vault.mp4",          "verify": false},
+
+    {"id": "R3",        "ch": "CH2", "type": "R(article)",      "tIn": 111.88, "tOut": 118.00, "asset": "receipts/R3-theblock.png",  "verify": true},
+    {"id": "D2-C",      "ch": "CH2", "type": "CARD SLIDE",      "tIn": 118.00, "tOut": 129.92, "asset": "card-slides/D2-C-2t-s1.png", "state2": "card-slides/D2-C-2t-s2.png @~127.4 (direction arrow lit)",   "verify": false},
+    {"id": "V4",        "ch": "CH3", "type": "VIDEO",           "tIn": 129.92, "tOut": 133.30, "asset": "vid/br-trader-react.mp4",   "verify": false},
+    {"id": "R4",        "ch": "CH3", "type": "R(article)",      "tIn": 133.30, "tOut": 142.74, "asset": "receipts/R4-rh-launch.png", "verify": true},
+
+    {"id": "D3-A",      "ch": "CH3", "type": "CHART(sysdesign)","tIn": 144.78, "tOut": 161.26, "asset": "diagrams/D3-A-stack",       "verify": false, "marquee": true},
+    {"id": "D3-B",      "ch": "CH3", "type": "CARD SLIDE",      "tIn": 161.26, "tOut": 170.00, "asset": "card-slides/D3-B-stocks.png","verify": false},
+    {"id": "V5",        "ch": "CH3", "type": "VIDEO",           "tIn": 170.00, "tOut": 173.46, "asset": "vid/br-phone-app.mp4",      "verify": false},
+    {"id": "C3",        "ch": "CH3", "type": "CHART(anim)",     "tIn": 173.46, "tOut": 185.10, "asset": "charts/C3-rh-momentum",     "verify": true},
+    {"id": "C8",        "ch": "CH3", "type": "CHART(anim)",     "tIn": 185.10, "tOut": 192.60, "asset": "charts/C8-solana-equities", "verify": true},
+    {"id": "D3-A-L1",   "ch": "CH3", "type": "CHART(sysdesign)","tIn": 192.60, "tOut": 200.34, "asset": "diagrams/D3-A-stack#L1",    "verify": false},
+    {"id": "V6",        "ch": "CH4", "type": "VIDEO",           "tIn": 200.34, "tOut": 202.96, "asset": "vid/br-eth-coin.mp4",       "verify": false},
+    {"id": "C4",        "ch": "CH4", "type": "CHART(anim)",     "tIn": 202.96, "tOut": 222.88, "asset": "charts/C4-lockup",          "verify": true},
+    {"id": "R5",        "ch": "CH4", "type": "R(other)",        "tIn": 222.88, "tOut": 231.88, "asset": "receipts/R5-bitmine.png",   "verify": true},
+    {"id": "V7",        "ch": "CH4", "type": "VIDEO",           "tIn": 231.88, "tOut": 234.82, "asset": "vid/br-ticker-floor.mp4",   "verify": false},
+    {"id": "R6",        "ch": "CH4", "type": "R(other)",        "tIn": 234.82, "tOut": 239.94, "asset": "receipts/R6-etf-flows.png", "verify": true},
+    {"id": "D4-B",      "ch": "CH4", "type": "CARD SLIDE",      "tIn": 239.94, "tOut": 246.54, "asset": "card-slides/D4-B-etf.png",  "verify": true},
+    {"id": "D4-C-1",    "ch": "CH4", "type": "CHART(sysdesign)","tIn": 246.54, "tOut": 253.40, "asset": "diagrams/D4-C-toll#1",      "verify": false, "marquee": true},
+    {"id": "D4-C-2",    "ch": "CH4", "type": "CHART(sysdesign)","tIn": 253.40, "tOut": 261.68, "asset": "diagrams/D4-C-toll#2",      "verify": true,  "marquee": true},
+    {"id": "R7",        "ch": "CH4", "type": "R(article)",      "tIn": 261.68, "tOut": 266.60, "asset": "receipts/R7-vitalik.png",   "verify": true},
+    {"id": "D4-C-3",    "ch": "CH4", "type": "CHART(sysdesign)","tIn": 266.60, "tOut": 279.18, "asset": "diagrams/D4-C-toll#3",      "verify": true,  "marquee": true},
+
+    {"id": "I2",        "ch": "CH4", "type": "IMAGE",           "tIn": 286.12, "tOut": 289.54, "asset": "img/I2-tollbooth.png",      "verify": false},
+    {"id": "MONT-1",    "ch": "CH5", "type": "CARD SLIDE",      "tIn": 289.54, "tOut": 293.50, "asset": "card-slides/D2-B-buidl@end.png",  "verify": false, "montage": true},
+    {"id": "MONT-2",    "ch": "CH5", "type": "CARD SLIDE",      "tIn": 293.50, "tOut": 297.62, "asset": "diagrams/D3-A-stack@end.png",     "verify": false, "montage": true},
+    {"id": "MONT-3",    "ch": "CH5", "type": "CARD SLIDE",      "tIn": 297.62, "tOut": 301.88, "asset": "charts/C4-lockup@end.png",        "verify": false, "montage": true},
+    {"id": "MONT-4",    "ch": "CH5", "type": "CARD SLIDE",      "tIn": 301.88, "tOut": 304.20, "asset": "card-slides/D4-B-etf@end.png",    "verify": false, "montage": true},
+    {"id": "MONT-5",    "ch": "CH5", "type": "CARD SLIDE",      "tIn": 304.20, "tOut": 306.27, "asset": "diagrams/D4-C-toll@end.png",      "verify": false, "montage": true},
+
+    {"id": "V8",        "ch": "CH5", "type": "VIDEO",           "tIn": 391.19, "tOut": 395.00, "asset": "vid/br-wave.mp4",           "verify": false},
+    {"id": "I3",        "ch": "CH5", "type": "IMAGE",           "tIn": 395.00, "tOut": 398.24, "asset": "img/I3-real-assets.png",    "verify": false},
+    {"id": "V9",        "ch": "CH5", "type": "VIDEO",           "tIn": 398.24, "tOut": 402.78, "asset": "vid/br-bank-lobby.mp4",     "verify": false, "lead": true},
+    {"id": "D5-CLOSE",  "ch": "CH5", "type": "CARD SLIDE",      "tIn": 402.78, "tOut": 409.04, "asset": "card-slides/D5-close.png",  "verify": false}
+  ],
+  "title_cards": [
+    {"id": "T-CH2", "t": 48.92,  "text": "THE PROOF",       "note": "rides a ~1s inserted card-pause (rule #11); zero e-spine seconds"},
+    {"id": "T-CH3", "t": 129.92, "text": "ROBINHOOD CHAIN", "note": "neon green #CCFF00 accent, never teal"},
+    {"id": "T-CH4", "t": 200.34, "text": "THE BULL CASE",   "note": "bed D starts here"}
+  ],
+  "verification": {
+    "partition": "EXACT — 44 cues, 301.59s assigned vs 301.59s cover total. No gaps, no overlaps, no FACE collisions (orchestrator-verified 2026-07-31).",
+    "caps": "All VIDEO/IMAGE <=4s except V9 4.54s (lead:true, <=5s exception). Longest holds: C4 19.92s + D2-A 16.84s + D3-A 16.48s, all actively narrated, all <35s ceiling.",
+    "reuse": "Zero file-level reuse. C2 (#A/#B), D3-A (+#L1), D4-C (#1/#2/#3) and the five @end montage stills are DISTINCT exported state variants, not repeats. Pre-justified for lint-covers CONTAINER SCATTER warns.",
+    "montage_exemption": "MONT-1..5 run 2.07-4.26s, under the 5s card floor. Justified: scripted rapid callback of already-read assets riding the building bed (screenplay CH5 Beat 1). PENDING Mike's confirmation."
+  }
+}

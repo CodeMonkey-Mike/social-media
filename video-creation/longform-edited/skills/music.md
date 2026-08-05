@@ -35,6 +35,22 @@ catalog `../../assets/music/library.json` (music-sourcing `SKILL.md` §2c; whole
 - When Mike asks the bed to "come down when it gets loud, up when subtle," bake it into the track:
   `ffmpeg -i bed -af dynaudnorm=f=200:g=15:p=0.6:m=8 out.wav`, then play that at one constant low gain.
 
+## ⛔ PERSIST THE MIX — the command is a project artifact, not shell history (ethereum-rwa, 2026-08-01)
+The bed mix gets re-run every time the picture changes, so **write the ffmpeg mix into a script in the project
+folder** (e.g. `media/<project>/mix-music.sh`) the first time you run it, and reference THAT on every re-mix.
+On ethereum-rwa the approved 4-bed mix existed only in a dead session's shell; the PROJECT-LOG said "copy the
+command from the v5 mix" and there was nothing to copy. Reconstructing it from `MUSIC-PLAN.json` means redoing
+every span shift, breath, duck and end-alignment by hand, and getting any one wrong is inaudible-until-Mike.
+
+**Recovery, if it is already lost:** the bed can be extracted by SUBTRACTING the un-mixed render from the mixed
+one — `[1:a]volume=-1[i];[0:a][i]amix=inputs=2:normalize=0` — which yields the exact bed as a file you can
+re-apply to any later cut with one `amix` and `-c:v copy`. Verify the recovered bed three ways before trusting
+it: (1) integrated LUFS lands in the 15-18 dB-under-VO window; (2) its per-chapter levels track the APPROVED
+per-bed gains, not the VO envelope (that is what proves it is the bed and not codec residue); (3) the
+comp→source time mapping puts the file's last sample on the final frame. Note a bed that measures silent near
+the end is usually just the track's own decay scaled down by the bed gain, not a misalignment — check the
+source file's tail before "fixing" anything.
+
 ## QA (mandatory — the gap the LUFS shortcut missed)
 - Verify the **music floor in a no-VO breath of EACH bed** (not just "overall loudness is non-zero" — that can be
   the VO alone while a bed has run out). Confirm no silent stretch, beds transition cleanly, the final bed reaches

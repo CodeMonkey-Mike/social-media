@@ -105,12 +105,29 @@ def build_entry(*, id_, batch, slug, source_livestream, video_path, duration, wi
 
 
 def load_titles(progress_json: Path):
-    """slug -> title from the batch progress JSON, if it exists."""
+    """slug -> title from the batch progress JSON, if it exists.
+
+    Keyed on the NUMBER-STRIPPED slug, and stored under both the raw and stripped forms.
+    Why (2026-07-29): clip FOLDERS are conventionally zero-padded (`02-the-pain-stick-through`,
+    so they sort correctly in the dashboard) while RENDER filenames are not (`2-the-pain-...`).
+    slug_from_filename() strips the prefix off the render side only, so a progress.json written
+    with the folder slugs never matched and every short published with a BLANK title. That failure
+    was SILENT in a way the documented guard did not catch: the `titles :` line prints
+    "progress JSON" whenever the dict is merely non-empty, so it read as a pass while every
+    lookup missed. Normalising both sides makes the two conventions interoperate.
+    """
     if not progress_json.is_file():
         return {}
     try:
         data = json.loads(progress_json.read_text(encoding="utf-8"))
-        return {c["slug"]: c.get("title", "") for c in data.get("clips", []) if "slug" in c}
+        out = {}
+        for c in data.get("clips", []):
+            if "slug" not in c:
+                continue
+            title = c.get("title", "")
+            out[c["slug"]] = title
+            out.setdefault(NUM_PREFIX.sub("", c["slug"]), title)
+        return out
     except Exception:
         return {}
 

@@ -30,9 +30,9 @@ linkedin-automation/
     check-connections/                 skill 3: track acceptances
       check-connections.md / .js
       _probe-connections.js
-    endorse-and-message/               skill 4: endorse skills + favor-request DM
-      endorse-and-message.md / .js
-      _probe-endorse.js  _probe-message.js
+    endorse-and-message/               skill 4 (Lane 5): endorse skills + favor-request DM
+      endorse-and-message.md · endorse_and_message.py (+ .js frozen rollback)
+      _probe_endorse.py  _probe_message.py  _probe_send.py
     check-endorsements/                skill 5: who endorsed us back
       check-endorsements.md / .js
       _probe-endorsements.js  _probe-endorsers-page.js
@@ -53,14 +53,14 @@ All commands run **from the repo root**, e.g.
 | 1 | [`scrape-group-members`](scrape-group-members/scrape-group-members.md) | `skills/scrape-group-members/scrape-group-members.js` | **Find + classify.** Collect a group's members into the work queue, then visit each profile, read its location, and capture the target-region ones into `members.json`. (Collect + process are two phases of this one script, not separate skills.) |
 | 2 | [`request-connections`](request-connections/request-connections.md) | `skills/request-connections/request-connections.js` | **Invite.** Send a connection request with a note to each captured member not yet contacted, then record the outcome. |
 | 3 | [`check-connections`](check-connections/check-connections.md) | `skills/check-connections/check-connections.js` | **Track acceptances.** Scan the My Network connections page and stamp `connected_on` for members who accepted. |
-| 4 | [`endorse-and-message`](endorse-and-message/endorse-and-message.md) | `skills/endorse-and-message/endorse-and-message.js` | **Endorse + ask back.** For accepted connections (oldest first): endorse a random 9-15 of their top skills, then send THE one sanctioned favor-request DM asking them to endorse back. Zero endorsable skills = abandon (no DM), marked `no_skills`. |
+| 4 | [`endorse-and-message`](endorse-and-message/endorse-and-message.md) | `graph/run.py --lane 5` — **no number** (wraps `endorse_and_message.py`; the 14/7-day rule is a mechanical gate) | **Endorse + ask back.** For accepted connections (oldest first): endorse a random 9-15 of their top skills, then send THE one sanctioned favor-request DM asking them to endorse back. Zero endorsable skills = abandon (no DM), marked `no_skills`. |
 | 5 | [`check-endorsements`](check-endorsements/check-endorsements.md) | `skills/check-endorsements/check-endorsements.js` | **Track endorse-backs.** Read OUR OWN skills page's endorser overlays, record who endorsed each skill into `data/endorsements.json` (`first_seen` = observed date — LinkedIn shows no endorsement date, so run often), and stamp `endorsed_back` onto matching members. Closes skill 4's loop. |
 
-Typical lifecycle: **(1) scrape** a group at ≤50 profiles/day until the queue is
+Typical lifecycle: **(1) scrape** a group at ≤75 profiles/day until the queue is
 drained → **(2) invite** the captures (no fixed daily cap; `--max` per Mike's ask) → **(3) check** acceptances every day
-or two → **(4) endorse + DM** the accepted connections — send to ALL members connected
-more than 14 days ago (no one-per-day / small-batch cap; set `--max` to cover them all;
-fallback = one member ≥7 days if none are older) → **(5) check endorse-backs** every
+or two → **(4) endorse + DM** the accepted connections — run `--lane 5` with **no number**;
+the graph derives it from the rule (ALL members connected >14 days ago; else exactly one
+member ≥7 days; else nothing) and refuses rather than guess → **(5) check endorse-backs** every
 run day (own-profile only, so its observed `first_seen` dates stay near the real
 endorsement dates). Skills 1, 2
 and 4 all consume the per-day profile-view budget (see "LinkedIn limits"); skills 3
@@ -177,8 +177,8 @@ profile data"). This is separate from the earlier navigation-pattern "unusual ac
 warning; the volume one is the hard ban (it comes with a lift time).
 
 **Operating rules:**
-- **Scraping: ≤ 50 profiles/day**, one run/day (`--max=50`). We tripped the limit at
-  ~120/24 h, so 50/day stays well under.
+- **Scraping: ≤ 75 profiles/day**, one run/day (`--max=75`, raised from 50 by Mike,
+  2026-07-30). We tripped the limit at ~120/24 h, so 75/day still leaves margin.
 - **Inviting: no fixed daily cap** (rescinded 2026-07-28) — set `--max` to Mike's ask each run. Each invite is also a profile view, so it still counts toward the volume budget.
 - **Don't run a big scrape and a batch of invites on the same day** if it pushes total
   profile views high — both feed the same volume budget. (A 30-scrape + 5-invite day =

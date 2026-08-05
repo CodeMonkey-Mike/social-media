@@ -213,6 +213,128 @@ PHRASE_CORRECTIONS = [
     # "I'm gonna go tired" (verified against a medium re-transcribe of 8.9-13.6 s, which returns
     # "I mean, I'm so tired of all these animals"). 4 tokens -> 3 words (4th timing dropped).
     (("im", "gonna", "go", "tired"), ["i'm", "so", "tired"]),
+    # --- october-bottom batch, 2026-08-04 (kaspa-dip-bought-more clip) ---
+    # Bitcoin price levels: Whisper always splits them into "<digits>" + "K" ("62 K", "40 K.",
+    # "maybe 50 K,"). Same class as ("900","k") above — cleanup()'s digit merge only fires on
+    # ""/"percent"/"x", so a thousands "k" needs a keyed pair here. Keyed on the exact number so no
+    # bare digit is ever rewritten; the trailing punctuation rides along automatically.
+    (("62", "k"), ["62k"]),
+    (("40", "k"), ["40k"]),
+    (("50", "k"), ["50k"]),
+    # "...actually go below 2 cents. WOW, THIS GIVES AN opportunity to buy more." The shipped word
+    # pass (base) heard "this guy's an opportunity", which is not English. VERIFIED 2026-08-04 across
+    # FIVE 1x passes of this clip's own audio: base whole-clip "wow. this guy's an", medium whole-clip
+    # "Wow. This guy has an", large-v3 on the FINAL MIX 47.9-50.4 s "Wow, this guy has an", medium on
+    # an isolated 47.8-50.3 s "Well, I guess it's an", large-v3 on 46.3-50.5 s "um well there's guys
+    # an". Every pass returns the same /g..z ən/ cluster before "opportunity"; "guy's"/"guy has" is
+    # meaningless here (there is no "guy" in the clip, he is talking about the price dip), and the
+    # three passes that include the leading word hear "wow". So only the VERB is rewritten:
+    # "gives". Keyed on the 3-token run so a real "this guys ..." elsewhere could not match.
+    (("this", "guys", "an"), ["this", "gives", "an"]),
+    # --- october-bottom batch, 2026-08-04 (whatif-organic-dogecoin clip) ---
+    # CashCat is a named project Whisper always splits ("cash cat"), same class as ("nine","hood").
+    (("cash", "cat"), ["cashcat"]),
+    # "CASHCAT GOT LISTED ON a whole bunch of centralized exchanges" — the shipped word pass heard
+    # "Cash can listen to". VERIFIED 2026-08-04 by a medium re-transcribe of 39.9-43.4 s in isolation,
+    # which returns verbatim "CashCat got listed on a whole bunch of centralized exchanges."
+    (("cash", "can", "listen", "to"), ["cashcat", "got", "listed", "on"]),
+    # "if this thing is trading above a market cap OF CASHCAT" — heard as "of cash cap". Keyed on the
+    # preceding "of" so a real "cash cap" (none in this catalogue) is never rewritten blind; the
+    # referent is the same CashCat market cap he names 14 s earlier ("flip cash cat").
+    (("of", "cash", "cap"), ["of", "cashcat"]),
+    # "the next day it was GATE and then MEXC" — companion to the gate/mexi pairs above; this clip's
+    # word pass renders the tail as "Maxie"/"maxi" with a "then" between the two exchange names.
+    (("gate", "and", "then", "maxie"), ["gate", "and", "then", "mexc"]),
+    (("gate", "and", "then", "maxi"), ["gate", "and", "then", "mexc"]),
+    (("gait", "and", "then", "maxie"), ["gate", "and", "then", "mexc"]),
+    (("gait", "and", "then", "maxi"), ["gate", "and", "then", "mexc"]),
+    # HTX arrives as three tokens ("H" + ".T" + ".X."); the hyphen/decimal merges cannot reach a
+    # leading "." on a non-numeric token, so it would render on screen as "h .t .x.". Merged here.
+    (("h", "t", "x"), ["htx"]),
+    # Market caps render as FIGURES, not spelled-out words (same rule class as ("900","k") -> "900k").
+    # All three numbers verified by isolated medium re-transcribes 2026-08-04: 12.2-14.3 returns
+    # "The high is 169 million", 14.9-17.0 returns "The high is $353 million", 16.6-19.0 returns
+    # "and over here the high is 1.8 billion" — which also confirms "the highest" is "the high is".
+    # Emitted in the "900k" short form so each figure survives as ONE token: a group holding the
+    # 7-char word "million" caps at 3 words and strands "million." alone on screen for ~1s, while
+    # "169m." is <=4 chars, so the whole line "the high is 169m." rides one caption chunk.
+    (("the", "high", "is", "one", "hundred", "sixty", "nine", "million"),
+     ["the", "high", "is", "169m"]),
+    (("the", "highest", "three", "hundred", "fifty", "three", "million"),
+     ["the", "high", "is", "353m"]),
+    (("the", "high", "is", "one", "point", "eight", "billion"), ["the", "high", "is", "1.8b"]),
+    # --- october-bottom batch, 2026-08-04 (ring-of-fire-meme-judgment clip) ---
+    # The EXCHANGE is MEXC; Whisper hears "maxi" on every pass (base word pass p 0.42/0.55, a medium
+    # re-transcribe of 6.9-11.7 s returns "got like maxi ... on maxi"). NOT a global \bmaxi\b rule:
+    # "maxi" is a real crypto word ("Bitcoin maxi"), so both occurrences are keyed on their 3-token
+    # run. Same class as the gate/mexi pairs above; the clip's tighten log carries the same gate.
+    (("got", "like", "maxi"), ["got", "like", "mexc"]),
+    (("get", "on", "maxi"), ["get", "on", "mexc"]),
+    # "there's some freaking 500 K market cap" — thousands split, same keyed-pair class as ("62","k").
+    (("500", "k"), ["500k"]),
+    # "...500k market cap, BUT IT doesn't, it only goes down down down" — the base word pass hears
+    # "market capital that doesn't", which is not English. VERIFIED 2026-08-04 by a medium
+    # re-transcribe of 16.6-21.6 s in isolation, which returns verbatim "it's a freaking 500k market
+    # cap, but it doesn't it only goes down down". Keyed on the full four-token run.
+    (("market", "capital", "that", "doesnt"), ["market", "cap", "but it", "doesn't"]),
+    # "the projects that actually make money other than THEIR CRYPTO" + the tightener's elision join.
+    # The clip's base pass renders the span as "other than the crib, three the 58x on velvet" (the
+    # "three" is the first syllable of the elided restatement). The livestream master transcript reads
+    # "make money other than their crypto" at 1384.54, and a medium pass on the clip returns "other
+    # than their crib through". 4 tokens -> 3 words (the 4th timing is dropped, which is supported),
+    # and the added period breaks the caption group exactly on the elision join.
+    (("the", "crib", "three", "the"), ["their", "crypto.", "the"]),
+    # "and then THE MONTH BEFORE THAT, 350x on LAB" — the base pass hears "the monthly for that", a
+    # 0.6x pass hears "the mafia for that". The livestream master transcript reads "and then the month
+    # before that 350x on lab" verbatim at 1391.16, in full context.
+    (("the", "monthly", "for", "that"), ["the", "month", "before", "that"]),
+    # "those are real PROJECTS" — the tighten elision starts mid-word, so the clip pass drops the
+    # plural s ("those are real project."). The master transcript reads "those are real projects".
+    (("are", "real", "project"), ["are", "real", "projects"]),
+    # --- october-bottom batch, 2026-08-04 (october-mandela-myth clip) ---
+    # Compound multiplier of a noun: Whisper emits "four" + "year" as two separate tokens (NOT as the
+    # "-year" hyphen continuation cleanup() already handles), so "four year cycle" can straddle two
+    # caption chunks and render as a bare "year cycle". Merging keeps the whole span and puts the
+    # house spelling "four-year cycle" on screen. Both occurrences in this clip (11.04 s "a four-year
+    # cycle even unrelated to Bitcoin" and 77.16 s "all your four-year cycle zombies") are fixed by it.
+    (("four", "year"), ["four-year"]),
+    # "It's a SIX out of 12 months" — Whisper hears "sick" on BOTH passes (base word pass p 0.83 at
+    # 63.68 s; a medium re-transcribe of 62.80-65.40 s returns "It's a sick out of twelve months,
+    # it's the sex"). He is ranking October 6 of 12, and his own slide on screen reads "6th Worst".
+    # "sick out of" is not an English phrase, so the 3-token key can never match anything legitimate.
+    (("sick", "out", "of"), ["six", "out", "of"]),
+    # "The two events spread across 90 years is not a pattern, it's an OUTLIER." Three neutral 1x
+    # passes (the shipped word pass p 0.63, medium on 55.90-58.90 s, medium on 53.60-58.60 s) all
+    # return the non-sequitur "outline"; a medium 1x pass over the SAME 53.60-58.60 s audio with a
+    # market-statistics initial_prompt returns "...is not a pattern, it's an outlier", which is also
+    # what the clip-strategist recorded off the master transcript. Keyed on the full four-token run
+    # (never a bare "an outline") so a legitimate "an outline" elsewhere is untouched.
+    (("pattern", "its", "an", "outline"), ["pattern.", "it's", "an", "outlier"]),
+    # --- october-bottom batch, 2026-08-04 (cooper-robinhood-real-dog clip) ---
+    # Market cap thousands: Whisper splits "a 237 K market cap" into "237" + "K" (46.70-47.78 s,
+    # p 0.98 / 0.73). Same keyed-pair class as ("62","k")/("900","k") — cleanup()'s digit merge only
+    # fires on ""/"percent"/"x". This is the payoff number of the clip (he self-corrects from a
+    # mis-spoken "2.37 market cap"), so it must land on screen as ONE token, "237k".
+    (("237", "k"), ["237k"]),
+    # NOT corrected, deliberately (cooper-robinhood-real-dog): the batch gate listed 'armstorms' ->
+    # Armstrong's, 'bryan' -> Brian and 'russle' -> Russell. All three are NO-OPS against THIS clip's
+    # own whisper-words.json, which already reads " Brian" (p 0.79) + " Armstrong's" (p 0.75) at
+    # 18.90-19.94 s and " Russell" (p 0.98 / 0.99 / 0.84) at 51.98, 52.52 and 56.66 s. ("robin","hood")
+    # -> ["robinhood"] above already covers this clip's four "Robin Hood" splits. Do not add rules.
+    # NOT corrected, deliberately (october-mandela-myth): the delegated batch gate listed
+    # "every remembers" -> "everybody remembers", "October return positive" -> "October returned
+    # positive" and "the Nelson Mandela" -> "Nelson Mandela". All three were checked against THIS
+    # clip's own whisper-words.json and are NO-OPS: the word pass already reads "everyone remembers"
+    # (p 0.88, and a medium re-transcribe of 47.20-52.60 s returns "everyone remembers 1929 and
+    # 1987"), already reads "returned" (p 0.81), and already reads "believe that Nelson Mandela"
+    # (confirmed by a medium pass on 24.80-30.40 s). Forcing "everybody" would put a word on screen
+    # that no 1x pass produced. Do not add rules for them.
+    # NOT corrected, deliberately: "so they launched and then suddenly THEY'RE GOING TO LISTEN TO all
+    # these centralized exchanges" (28.9-31.1 s) reads like "getting listed on", and the batch plan
+    # flagged it as a likely garble. FOUR 1x medium passes on this clip's own audio (28.6-31.4,
+    # 27.2-32.6, the same span at 0.85x, and a pass with an exchange-listing initial_prompt) ALL
+    # return "they're going to listen to all these centralized exchanges". Same precedent as the
+    # whatif-next-dogecoin closing line below: never ship words no 1x pass produced.
     # Closing line — NO RULE, deliberately. An earlier build added
     #   (("robinhood","lists","what","if","right"), ["robinhood","lists","it","and it","runs"])
     # off the ORIGINAL master transcript ("lists run it"). RE-VERIFIED 2026-08-03 on this clip's own

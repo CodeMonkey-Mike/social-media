@@ -64,8 +64,8 @@ CHECKPOINT_DB = DATA / "graph_checkpoints.sqlite"
 LANE_RUNS = DATA / "lane_runs.json"                       # committed history feed
 LANE_PROGRESS = DATA / "lane_progress.json"               # transient heartbeat, gitignored
 LANE_RUNS_KEEP = 500
-LANE_NAMES = {1: "intake"}
-LANE_SUMMARY_KEY = {1: "intake"}
+LANE_NAMES = {1: "intake", 2: "cut"}          # 2+ = Lane 2 shorts segments (shorts_graph.py)
+LANE_SUMMARY_KEY = {1: "intake", 2: "cut"}
 
 PROGRESS_RE = re.compile(r"^PROGRESS (\d+)%")
 WHISPER_TS_RE = re.compile(r"^\[(\d+):(\d+)(?:\.\d+)? -->")

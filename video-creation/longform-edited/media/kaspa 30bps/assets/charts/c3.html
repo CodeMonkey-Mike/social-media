@@ -1,0 +1,119 @@
+<!doctype html>
+<html data-state="bars">
+<head>
+<meta charset="utf-8">
+<title>C3 TPS capacity</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --accent-green:#00e68a; --accent-cyan:#00c2ff;
+  --accent-gold:#ffd700; --accent-red:#ff4060; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e; --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.3;pointer-events:none;z-index:0}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.ey{font-family:'DM Sans';font-size:26px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:66px;line-height:1.05;letter-spacing:-.02em}
+.g{color:var(--accent-green)}
+header{position:absolute;left:90px;top:56px;z-index:2}
+
+.rows{position:absolute;left:90px;right:90px;top:300px;z-index:1}
+.row{display:flex;align-items:center;gap:40px;margin-bottom:52px;position:relative}
+.rlabel{width:330px;flex:none}
+.rbps{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:33px}
+.rsub{font-family:'DM Sans';font-weight:600;font-size:20px;color:var(--text-muted);margin-top:6px;text-transform:uppercase;letter-spacing:.1em}
+.trackwrap{flex:1;position:relative}
+.track{height:58px;border-radius:12px;background:var(--bg-card);border:1px solid var(--border);position:relative}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:12px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan))}
+.rval{position:absolute;top:50%;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;
+  font-weight:700;font-size:32px;color:var(--text-primary);white-space:nowrap}
+.rval small{font-size:20px;color:var(--text-secondary);font-weight:600;margin-left:10px}
+
+/* demonstrated marker on the 10 bps row */
+.demo{position:absolute;left:calc(11.17% - 2px);top:-56px;bottom:-12px;width:4px;border-radius:2px;
+  background:var(--accent-green);box-shadow:0 0 18px rgba(0,230,138,.7);z-index:3}
+.demotag{position:absolute;left:calc(11.17% + 16px);top:-60px;z-index:3;white-space:nowrap;
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:23px;color:var(--accent-green);
+  background:rgba(0,230,138,.1);border:2px solid rgba(0,230,138,.5);border-radius:10px;padding:8px 18px}
+
+.foot{position:absolute;left:90px;bottom:44px;font-family:'DM Sans';font-size:20px;color:var(--text-muted);z-index:1}
+
+/* spotlight state: the 40 bps row */
+html[data-state="spotlight"] .row.r10,html[data-state="spotlight"] .row.r25,html[data-state="spotlight"] .row.r100{opacity:.35}
+html[data-state="spotlight"] .row.r40 .track{border-color:rgba(0,230,138,.65);box-shadow:0 0 55px rgba(0,230,138,.22)}
+html[data-state="spotlight"] .row.r40 .rbps{color:var(--accent-green)}
+
+/* capacity slam state */
+.capstamp{display:none}
+html[data-state="capacity"] .capstamp{display:block}
+html[data-state="capacity"] .rows{opacity:.5}
+.capstamp{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%) rotate(-4deg);z-index:5;text-align:center}
+.capstamp .big{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:96px;letter-spacing:.04em;
+  color:var(--accent-gold);border:8px solid var(--accent-gold);border-radius:20px;padding:26px 54px;
+  background:rgba(10,12,16,.82);box-shadow:0 0 90px rgba(255,215,0,.22)}
+.capstamp .sub{font-family:'DM Sans';font-weight:600;font-size:30px;color:var(--text-secondary);margin-top:26px;
+  display:inline-block;background:rgba(10,12,16,.88);border:1px solid var(--border);border-radius:12px;padding:14px 28px}
+.capstamp .sub .mono{color:var(--accent-green)}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="orb" style="width:520px;height:520px;right:-160px;top:-170px;background:var(--accent-green);opacity:.13"></div>
+  <div class="orb" style="width:500px;height:500px;left:-170px;bottom:-190px;background:var(--accent-gold);opacity:.10"></div>
+
+  <header>
+    <div class="ey">Transactions per second · capacity</div>
+    <h1>What each block rate <span class="g">can carry</span></h1>
+  </header>
+
+  <div class="rows">
+    <div class="row r10">
+      <div class="rlabel"><div class="rbps">10 BPS</div><div class="rsub">today</div></div>
+      <div class="trackwrap">
+        <div class="track"><div class="fill" style="width:10%"></div></div>
+        <div class="rval" style="left:calc(11.17% + 30px)">5,000+<small>TPS</small></div>
+        <div class="demo"></div>
+        <div class="demotag">DEMONSTRATED: 5,584 · mainnet · Oct 2025</div>
+      </div>
+    </div>
+    <div class="row r25">
+      <div class="rlabel"><div class="rbps">25 BPS</div><div class="rsub">DAGKnight range</div></div>
+      <div class="trackwrap">
+        <div class="track"><div class="fill" style="width:25%"></div></div>
+        <div class="rval" style="left:calc(25% + 22px)">12,500+<small>TPS</small></div>
+      </div>
+    </div>
+    <div class="row r40">
+      <div class="rlabel"><div class="rbps">UP TO 40 BPS</div><div class="rsub">target: end of 2026</div></div>
+      <div class="trackwrap">
+        <div class="track"><div class="fill" style="width:40%"></div></div>
+        <div class="rval" style="left:calc(40% + 22px)">20,000+<small>TPS</small></div>
+      </div>
+    </div>
+    <div class="row r100">
+      <div class="rlabel"><div class="rbps">100 BPS</div><div class="rsub">2027 target</div></div>
+      <div class="trackwrap">
+        <div class="track"><div class="fill" style="width:100%"></div></div>
+        <div class="rval" style="left:auto;right:26px;color:#04060d">50,000+<small style="color:rgba(4,6,13,.7)">TPS</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="capstamp">
+    <div class="big">THEORETICAL CAPACITY</div>
+    <div class="sub">ceilings, not throughput · demonstrated so far: <span class="mono">5,584 TPS</span></div>
+  </div>
+
+  <div class="foot">capacity ceilings by block rate · demonstrated peak: 5,584 TPS on mainnet, Oct 2025</div>
+</div>
+<script>
+const s=(location.hash||'').slice(1); if(s) document.documentElement.dataset.state=s;
+</script>
+</body>
+</html>

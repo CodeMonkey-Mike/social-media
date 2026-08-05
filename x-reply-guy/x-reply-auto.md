@@ -124,3 +124,21 @@ Seen 2026-07-22: run-1 replied to @SenLummis's own CLARITY Act post; run-2's can
 **Rule:** before drafting, check the chosen candidate's *subject* against the recent entries in `posted_replies.json` (not just their URLs). If it is the same underlying story as a reply already fired in this session, pick the next candidate instead. This matters most when a run has just published a batch on that topic, since that is exactly when the on-thesis story is both most tempting and most likely to be duplicated across accounts.
 
 **Related:** also vary the ANGLE when replying to an account you have replied to recently. Same run, @MartyBent drew a Jevons-paradox take specifically because the grid-flexibility take had been used on that same account on 2026-07-21.
+
+## ✅ An AMA / open-question tweet is reply-worthy — ask the sharpest QUESTION, don't force a take (2026-07-30)
+
+Run-2's pool was thin: an @jaltucher "Weekly Q&A, ask me anything" announcement and a Pomp hiring-thread
+teaser. Neither makes a claim, so neither offers anything to agree or disagree with — the shape this skill
+usually optimizes for.
+
+**Don't no-op on that, and don't manufacture a take.** An AMA explicitly invites a reply, and the format's
+correct reply is a **question**. Picked Altucher and asked whether the four-year cycle survives an ETF desk
+being the marginal buyer instead of retail.
+
+Why this is a good auto-fire target: it is high-visibility, the reply cannot misread the tweet (there is no
+argument to misread, which sidesteps the worst failure mode in this skill), and a sharp niche question from
+a smaller account has a real chance of being answered on-stream — more upside than a take that gets scrolled.
+
+**Rule:** on an AMA / "ask me anything" / open-prompt tweet, draft one on-brand question in Mike's reply
+voice rather than a thesis. Keep the persona register (lowercase opener, conversational) and make the
+question something only someone deep in the space would ask.

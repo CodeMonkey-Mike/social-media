@@ -1,0 +1,266 @@
+TRANSCRIPT BREAKDOWN — kaspa 30bps (DAGKnight / 40 blocks per second)
+Spine: ALL.e.desilenced.mp4  (455.22 s / 7:35.2, 1080p30)
+Word-time JSON (cue source): ALL.e.desilenced.words.json  (Whisper medium, GPU, word-level)
+Model: medium  |  segments: 187  |  words: 1357
+
+NOTE: Timecodes are EXACT to the audio (cue source). Text below has persona + project
+mishear corrections applied; the word-time JSON is left true-to-audio and must NOT be edited.
+Corrections are TEXT-ONLY. Full substitution list at the bottom.
+
+================================================================================
+CH1 — THE TARGET   [opens 0.00 "40 blocks every single second..."]
+FACE windows in this chapter (blackdetect): 0.00-4.70, 32.40-38.53
+================================================================================
+[   0.00-   4.56] 40 blocks every single second on a proof of work.
+[   4.74-   6.74] This is where Kaspa is headed next.
+[   6.98-   9.36] Not someday, not in five years.
+[   9.54-  11.42] The target is this year.
+[  11.70-  15.66] Kaspa already runs at 10 blocks a second today live.
+[  15.80-  18.02] That alone makes it the fastest chain
+[  18.02-  19.30] in all of proof of work.
+[  19.30-  20.54] And it's not even close,
+[  20.90-  23.18] but 10 was never the finish line
+[  23.18-  25.68] because the next jump on Kaspa's roadmap
+[  25.68-  29.82] takes those 10 blocks a second and pushes them up to 40.
+[  29.82-  32.40] Targeted before the end of this year.
+[  32.54-  34.74] And the tech that makes all that possible
+[  34.74-  38.42] is one of the most amazing achievements in all of crypto.
+[  38.56-  39.38] But here's the thing,
+[  39.38-  41.24] you don't just quadruple the speed
+[  41.24-  43.18] of the fastest chain in proof of work.
+[  43.26-  45.94] At this level, there's no dial to turn.
+[  46.06-  48.90] Something at the very core of Kaspa has to change.
+[  49.00-  50.40] So let's get into all of this
+[  50.40-  52.66] and I'm gonna show you some of the coolest things ever.
+
+================================================================================
+CH2 — THE LADDER   [opens 52.84 "So Kaspa's story is like a ladder..."]
+FACE windows in this chapter (blackdetect): 107.93-112.37
+================================================================================
+[  52.84-  55.10] So Kaspa's story is like a ladder
+[  55.10-  57.66] and every rung on it is a hard fork.
+[  57.66-  62.10] Rung one, Crescendo, May, 2025, over a year ago now,
+[  62.14-  65.76] it took Kaspa from one block a second to 10 blocks a second.
+[  65.90-  68.52] One block every 100 milliseconds.
+[  68.72-  70.72] So that's live running right now.
+[  70.84-  72.04] Rung two, Toccata.
+[  72.16-  75.26] This one landed just a few weeks ago, June 30th.
+[  75.26-  77.94] And this fork was not about speed at all.
+[  78.34-  79.62] It's a programmability fork.
+[  79.74-  83.04] Programmable spending rules, escrow, vaults, time locks,
+[  83.30-  84.80] native tokens on the base layer,
+[  84.90-  87.50] and even verifying zero knowledge proofs.
+[  88.38-  91.54] So notice what Toccata did not touch, a block rate.
+[  91.98-  94.60] Today, Kaspa still runs at 10 blocks a second.
+[  94.66-  97.72] Which brings us to the second hard fork of 2026.
+[  97.88- 100.02] Two hard forks in a single year.
+[ 100.16- 102.22] This second one is the speed fork.
+[ 102.48- 106.06] From 10 blocks a second to up to 40, four times the speed.
+[ 106.12- 107.92] And that's targeted before this year is out.
+[ 107.94- 111.14] And in my opinion, I think it has a really cool name
+[ 111.14- 112.34] this time, DAGKnight.
+[ 112.42- 115.70] It's like Dark Knight, but it does a good job of honing in
+[ 115.70- 117.88] on exactly what it is and what is not.
+[ 118.16- 119.88] It's not a chain, it's a dag.
+[ 120.04- 121.70] It's a directed acyclic graph.
+[ 121.78- 123.22] And look at the top of this ladder.
+[ 123.36- 126.68] There's one more rung up there, and it says 100.
+[ 126.78- 128.24] 100 blocks a second.
+[ 128.32- 130.20] That's the 2027 target.
+[ 130.30- 132.48] But that hard fork will only exist
+[ 132.48- 134.42] if DAGKnight lands first.
+
+================================================================================
+CH3 — DAGKNIGHT   [opens 134.52 "So what actually is DAGKnight..."]
+FACE windows in this chapter (blackdetect): 184.97-191.30, 227.77-305.07 (community plug), 321.50-326.27
+COMMUNITY PLUG (ad-libbed FACE window): 227.77-305.07  (see block below)
+================================================================================
+[ 134.52- 137.02] So what actually is DAGKnight?
+[ 137.10- 138.84] It's a new consensus protocol.
+[ 139.00- 141.30] The rule book every node uses to agree
+[ 141.30- 142.64] on the order of blocks.
+[ 142.82- 144.88] It comes from Kaspa's own researchers,
+[ 144.88- 147.36] Yonatan Sompolinsky and Michael Sutton,
+[ 147.40- 148.98] in a paper from 2022.
+[ 148.98- 152.48] And it replaces the protocol that Kaspa runs today,
+[ 152.76- 154.04] which is called GHOSTDAG.
+[ 154.14- 156.54] Now don't get me wrong, GHOSTDAG is brilliant,
+[ 156.56- 159.32] but it has this one built-in cost.
+[ 159.40- 161.82] There's a number hard-coded into it.
+[ 161.88- 163.32] A worst-case guess.
+[ 163.56- 165.56] A guess about how slow the internet
+[ 165.56- 167.38] between two nodes ever get.
+[ 167.42- 170.26] And to stay safe, the whole network has to run
+[ 170.26- 171.80] as slow as that guess.
+[ 171.92- 174.72] It's like a highway where the speed limit is set
+[ 174.72- 177.86] for the worst storm of the year and it never changes.
+[ 178.38- 181.52] Sunny day, empty road, doesn't matter.
+[ 181.66- 184.94] Everybody drives at storm speed every single day.
+[ 185.02- 188.40] So the chain doesn't run as fast as the internet allows.
+[ 188.86- 191.20] It runs as fast as the assumption allows.
+[ 191.36- 192.80] And that was the exact ceiling
+[ 192.80- 194.72] that DAGKnight was invented to break.
+[ 194.80- 196.58] DAGKnight deletes the guess.
+[ 196.72- 198.92] No hard-coded number, no dial.
+[ 199.06- 200.74] That's what parameterless means.
+[ 200.88- 204.06] The protocol measures the real network in real time
+[ 204.06- 205.38] and adapts to it.
+[ 205.46- 207.20] The internet's fast, great.
+[ 207.30- 208.48] The chain runs faster.
+[ 208.78- 210.40] Conditions change, okay.
+[ 210.52- 212.46] It adjusts and it does it on its own.
+[ 212.60- 214.54] And it does all this while staying secure,
+[ 214.60- 217.08] even with up to half of the network acting malicious.
+[ 217.36- 218.64] Kaspa's finality today,
+[ 218.84- 221.18] the point where your transaction is locked in for good,
+[ 221.30- 223.08] is already under seven seconds.
+[ 223.34- 226.82] DAGKnight opens the door to finality in under one second.
+[ 226.94- 227.74] On proof of work.
+
+--- COMMUNITY PLUG (ad-libbed FACE window, 227.77-305.07) --------------------
+[ 227.80- 229.80] By the way, if you like all these upgrades
+[ 229.80- 232.78] and all this tech, then you're gonna love my community.
+[ 232.78- 235.22] I have one of the greatest communities ever.
+[ 235.22- 237.68] And it's not just me scratching my back, you know?
+[ 237.68- 240.66] Just last week, we did a 10X on a call.
+[ 241.06- 242.84] I was about to make it public.
+[ 243.16- 245.74] And I call at the same time that I called 10,
+[ 245.76- 250.00] I called MYX back in like last year, April, May.
+[ 250.06- 252.52] It took us about four months, five months
+[ 252.52- 255.52] to do a 550X on MYX.
+[ 255.52- 256.70] And I call this other one,
+[ 256.70- 258.52] it's finally started popping right now.
+[ 258.58- 261.08] It retraced and we bought back in
+[ 261.08- 262.94] using my swing trading software
+[ 262.94- 265.44] that's exclusively available to my members.
+[ 265.48- 267.18] Not only that, last month,
+[ 267.18- 268.84] I guess like three or four weeks ago,
+[ 268.84- 271.22] we did a 58X on the Velvet Token.
+[ 271.60- 275.76] A month before that, we did a 350X on the Lab Token.
+[ 275.82- 278.02] It just keeps coming and coming and coming.
+[ 278.68- 280.04] All this tech doesn't lie.
+[ 280.16- 284.22] When other communities are bragging about five and 10Xs,
+[ 284.32- 287.60] we're doing 100Xs, 300Xs, 500Xs.
+[ 287.68- 289.64] So click that link in the description below
+[ 289.64- 291.24] to get in on all the action.
+[ 291.40- 293.24] The membership costs half the price
+[ 293.24- 295.04] of all these other communities out there
+[ 295.04- 296.52] who call less good calls.
+[ 296.62- 299.24] And if you don't buy the lifetime membership upfront,
+[ 299.58- 301.96] even if you pay monthly, you become a lifetime member
+[ 301.96- 303.36] and your payments eventually stop.
+[ 303.44- 305.02] How can you get a better deal than that?
+--- END COMMUNITY PLUG -------------------------------------------------------
+
+[ 305.14- 308.68] But going back to Kaspa, now this ladder makes sense.
+[ 308.94- 311.24] One network stops paying rent
+[ 311.24- 312.98] to a worst case scenario guess.
+[ 313.10- 315.66] Cranking the block rate stops being reckless.
+[ 315.94- 319.24] That's why a number of 40 becomes a target.
+[ 319.24- 321.60] And then that's why 100 sits behind it.
+[ 321.80- 325.24] DAGKnight is a reason everything above 10 blocks per second
+[ 325.24- 326.26] becomes possible.
+
+================================================================================
+CH4 — WHAT 40 UNLOCKS   [opens 326.32 "Now put this next to the rest of crypto..."]
+FACE windows in this chapter (blackdetect): 392.30-394.90
+================================================================================
+[ 326.32- 328.34] Now put this next to the rest of crypto.
+[ 328.48- 331.32] Bitcoin, one block every 10 minutes.
+[ 331.56- 333.82] Ethereum, every 12 seconds.
+[ 334.20- 337.54] Kaspa right now, today, 10 every second.
+[ 337.62- 339.72] And DAGKnight, in the DAGKnight era,
+[ 339.80- 342.56] it'll be one block every 25 milliseconds.
+[ 342.88- 345.70] A blink of your eye takes about 100 milliseconds.
+[ 345.78- 347.32] That's four blocks per blink.
+[ 347.32- 351.38] In capacity terms, 10 blocks a second gives Kaspa room
+[ 351.38- 354.44] for over 5,000 transactions a second.
+[ 354.52- 357.20] That's not exactly a whiteboard number.
+[ 357.80- 361.90] Last October, the network demonstrated over 5,500 a second
+[ 361.90- 363.44] live on mainnet.
+[ 363.48- 365.32] At 40 blocks a second,
+[ 365.40- 368.74] you're looking at around 20,000 transactions a second.
+[ 369.18- 370.60] Capacity to be clear,
+[ 370.90- 373.26] but they've already proven the theory holds at 10.
+[ 373.26- 375.20] So here's the part that makes me smile.
+[ 375.20- 378.60] The whole industry is hyping up Solana's new upgrade
+[ 378.60- 382.12] just because it pushes finality down to under one second.
+[ 382.38- 384.36] And fine, that's impressive, okay.
+[ 384.46- 387.50] But Kaspa's chasing the same sub-second club
+[ 387.50- 390.14] on a fair launched, no pre-mine,
+[ 390.32- 392.28] permissionless proof of work network.
+[ 392.52- 394.88] Sub-second finality on proof of work.
+[ 394.92- 397.24] That's just a different sentence entirely.
+[ 397.36- 398.64] But one thing to be clear,
+[ 398.68- 400.82] this is just a target for the end of the year.
+[ 400.98- 402.78] The core devs are gunning for it.
+[ 402.82- 405.00] The prototype is being built out in the open.
+[ 405.00- 406.62] And it has not hit test net yet.
+[ 406.72- 408.68] Nobody's really selling you a locked schedule.
+[ 408.84- 410.38] And honestly, I prefer that way.
+[ 410.44- 413.24] No marketing deck, just engineering you can watch happen.
+
+================================================================================
+CH5 — THE CLOSE   [opens 413.46 "So the next time somebody tells you proof of work is legacy tech..."]
+FACE windows in this chapter (blackdetect): 452.33-455.22 (end)
+(NOTE: CH5's closing CTA was never recorded; the spine ends at "This is why Kaspa is my number one".)
+================================================================================
+[ 413.46- 414.96] So the next time somebody tells you
+[ 414.96- 416.82] that proof of work is legacy tech,
+[ 417.08- 419.10] that it gets as good as it gets with Bitcoin,
+[ 419.32- 423.80] or that all the real innovation lives on pre-mine VC chains,
+[ 423.94- 425.20] show them this ladder.
+[ 425.40- 426.96] One to 10, done.
+[ 427.76- 428.88] Programmability, done.
+[ 429.52- 431.06] Ship this summer, done.
+[ 431.24- 432.90] Up to 40 blocks per second
+[ 432.90- 434.56] targeted before the end of this year.
+[ 434.56- 436.04] And then 100 next year.
+[ 436.30- 437.86] Fair launch, no pre-mine.
+[ 438.28- 441.30] About 95% of the supply is already mined,
+[ 441.40- 442.86] already out there in the world.
+[ 442.96- 445.26] So you know that means deflation comes next,
+[ 445.56- 447.12] and your bags start pumping.
+[ 447.34- 449.10] And a consensus upgrade coming
+[ 449.10- 452.28] that lets your network run as speeds of the actual internet.
+[ 452.44- 455.22] This is why Kaspa is my number one.
+
+================================================================================
+CORRECTIONS APPLIED (text-only; word-time JSON untouched)
+================================================================================
+Standing persona + project mishears:
+  Casper/Caspa -> Kaspa .............................. 13x
+    (incl. final line "This is why Caspa is my number one" -> "Kaspa")
+  Dag Night / Dag night / dag night -> DAGKnight ..... 8x
+    (incl. "in the dag night area" -> "in the DAGKnight era" @339.72; see area->era below)
+  Tokata -> Toccata .................................. 2x  (@72.04, @91.54)
+  Ghost Dag -> GHOSTDAG .............................. 2x  (@154.04, @156.54)
+  Yadintin Sampolinsky -> Yonatan Sompolinsky ........ 1x  (@147.36)
+    (Michael Sutton was already correct)
+
+Clear word-level mishears (what he said, mis-spelled by Whisper):
+  heart fork -> hard fork ............................ 4x  (@57.66, @94.66, @97.72, @132.48)
+  Unapproved of work -> On proof of work ............. 1x  (@226.94)
+  scenario guests -> scenario guess ................. 1x  (@312.98)
+  dag night area -> DAGKnight era .................... 1x  (@339.72)
+  MadeNet -> mainnet ................................. 1x  (@363.44)  [see FLAG]
+  spinning rules -> spending rules .................. 1x  (@79.74)   [see FLAG]
+  volts -> vaults ................................... 1x  (@79.74)   [see FLAG]
+  Dark Night -> Dark Knight ......................... 1x  (@112.42)  [see FLAG]
+
+Left as-is (real coins / proper nouns, NOT mishears):
+  MYX, Velvet Token, Lab Token, Crescendo, Solana, Bitcoin, Ethereum.
+
+================================================================================
+FLAGS (review — Whisper-mangled words not in a known glossary)
+================================================================================
+- @79.74 "Programmable spinning rules ... volts, time locks": read as
+  "spending rules ... vaults, time locks" (programmability-fork feature list). Both are
+  near-homophone mishears; corrected on that reading. Confirm against the audio if unsure.
+- @112.42 "It's like Dark Night": the DAGKnight name is a pun on the Batman film "The Dark
+  KNIGHT"; corrected the spelling to "Dark Knight". Purely the movie-title spelling.
+- @363.44 "live on MadeNet" -> "mainnet" (the 5,500 tx/s Oct demo was on mainnet). Clear
+  mishear; flagging because it was not in the supplied glossary.
+- No garbled Toccata intro instance was present on this spine; both occurrences transcribed
+  cleanly as "Tokata" and were corrected to "Toccata".
+- @308.94 "One network stops paying rent" (Whisper: "rents") — trivially normalized to "rent".

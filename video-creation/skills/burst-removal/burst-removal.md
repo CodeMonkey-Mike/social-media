@@ -1,5 +1,14 @@
 # burst-removal — excise ONE anomalous sound burst between two words
 
+> [!WARNING]
+> **PRESERVE THE SOURCE FRAME RATE. Pass `-r <source fps>` on the cut render and verify it after.**
+> On ethereum-rwa (2026-07-31) this step silently re-encoded a `30/1` spine to `30000/1001`. Every
+> downstream stage inherited 29.97, and because the comp declares `fps 30`, the finished render ran
+> out of frames 0.42s early and **clipped the last words of the video**. Nothing errored.
+> Check with `ffprobe -v error -select_streams v -show_entries stream=r_frame_rate -of csv=p=0 <out>`
+> and confirm it matches the input before returning.
+
+
 Reusable, track-agnostic procedure to surgically remove a single **anomalous sound burst** — a
 throat-clear, cough, click, lip-smack, mic-bump, swallow, breath-pop — from a finished spoken track,
 **without clipping the words on either side**. Point it at any video or audio file. Used by

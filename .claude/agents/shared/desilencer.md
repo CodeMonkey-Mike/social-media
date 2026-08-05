@@ -50,6 +50,17 @@ pass before Remotion.)
    level (−16 to −25 dB) inside a cut = a clipped word → inspect the spot (do NOT lower MIN_AUD). A −45 to
    −52 dB flag is a faint breath (false positive), fine.
 
+## Output location + naming (FIXED — do not improvise; this kept getting violated)
+For any **longform-edited** project (input under `longform-edited/media/<project>/`), your output goes in
+the **`spine/` SUBFOLDER** of the project, named **`<segment>.c.desilenced.mp4`** with the cut/keep map
+(when requested) named **`<segment>.c.desilenced.map.json`**, matching the input's `<segment>` (`CH1-CH3`,
+... or `ALL`). Canonical layout: **`longform-edited/skills/comp-build.md` §13a** (read it; it wins on
+conflict). Exemplar: `media/carry-trade/spine/`. An EXPLICIT output path from the caller overrides this; a
+vague one ("the project folder", "the skill's naming convention") does NOT — vague means §13a. Inventing a
+name in the project root is the exact recurring violation this section exists to stop (Mike, 2026-07-24).
+On other tracks, follow that track's documented layout; if none is documented, keep the stage-suffix naming
+beside the input.
+
 ## Scope discipline
 - **Run every render in the FOREGROUND; NEVER background it.** A backgrounded ffmpeg render gets reclaimed
   when your context ends, leaving a truncated (moov-less) file. Block on the render to completion, THEN QA.

@@ -1,0 +1,379 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>D3-A &middot; settlement stack</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"><style>
+/* ==== LOCKED longform-edited container stylesheet - copied, not re-derived ====
+   skills/container-reference/container-canonical.css + skills/presentation.md  */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  --rh-neon:#ccff00; --rh-yellow:#ffe500;   /* ROBINHOOD ONLY, never teal */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;
+  align-items:flex-start;gap:36px;padding:36px 0}
+.frame{width:1920px;height:1080px;flex:0 0 1080px;background:var(--bg-deep);position:relative;
+  overflow:hidden;color:var(--text-primary);padding:70px 110px 48px;
+  display:flex;flex-direction:column}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* --- anatomy: muted eyebrow -> Playfair headline -> gradient divider -> body --- */
+.ey{font-size:24px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:66px;line-height:1.06;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1560px}
+h1.sm{font-size:56px} h1.xs{font-size:50px} h1.big{font-size:80px}
+h1 .mono{font-size:.94em;letter-spacing:-.01em}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:24px 0 0}
+.divider.rh{background:linear-gradient(90deg,var(--rh-neon),var(--rh-yellow))}
+.divider.go{background:linear-gradient(90deg,var(--accent-gold),var(--accent-red))}
+.divider.pu{background:linear-gradient(90deg,var(--accent-purple),var(--accent-cyan))}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .rh{color:var(--rh-neon)}
+.mu{color:var(--text-muted)} .sec{color:var(--text-secondary)}
+
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative}
+
+/* --- takeaway bar (bottom thesis line) --- */
+.take{background:linear-gradient(100deg,rgba(0,230,138,.09),rgba(0,194,255,.04));
+  border:1px solid rgba(0,230,138,.22);border-radius:14px;padding:24px 32px;
+  font-size:31px;line-height:1.36;color:var(--text-primary);font-weight:500}
+.take.rh{background:linear-gradient(100deg,rgba(204,255,0,.09),rgba(255,229,0,.04));
+  border-color:rgba(204,255,0,.26)}
+.take.gold{background:linear-gradient(100deg,rgba(255,215,0,.09),rgba(255,64,96,.04));
+  border-color:rgba(255,215,0,.24)}
+.take.pu{background:linear-gradient(100deg,rgba(168,85,247,.10),rgba(0,194,255,.04));
+  border-color:rgba(168,85,247,.26)}
+.take b{color:#fff;font-weight:700}
+
+/* --- source / provenance line --- */
+.src{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:18px;color:#414c60;
+  letter-spacing:.01em;margin-top:16px;line-height:1.5}
+
+/* --- generic chips / pills --- */
+.chip{display:inline-flex;align-items:center;gap:10px;padding:11px 22px;border-radius:100px;
+  border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--text-secondary);
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.03em}
+.chip.g{border-color:rgba(0,230,138,.4);background:rgba(0,230,138,.08);color:var(--accent-green)}
+.chip.c{border-color:rgba(0,194,255,.4);background:rgba(0,194,255,.08);color:var(--accent-cyan)}
+.chip.go{border-color:rgba(255,215,0,.42);background:rgba(255,215,0,.08);color:var(--accent-gold)}
+.chip.re{border-color:rgba(255,64,96,.42);background:rgba(255,64,96,.08);color:var(--accent-red)}
+.chip.pu{border-color:rgba(168,85,247,.42);background:rgba(168,85,247,.09);color:var(--accent-purple)}
+.chip.rh{border-color:rgba(204,255,0,.44);background:rgba(204,255,0,.08);color:var(--rh-neon)}
+.chip.dim{border-color:#232a38;background:rgba(255,255,255,.015);color:var(--text-muted)}
+.chiprow{display:flex;gap:18px;flex-wrap:wrap}
+
+/* --- stat block --- */
+.stat .lbl{font-size:20px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);
+  font-weight:600;margin-bottom:8px}
+.stat .val{font-family:'JetBrains Mono',monospace;font-weight:700;line-height:1;font-size:76px}
+.stat .sub{font-size:22px;color:var(--text-secondary);margin-top:10px}
+
+/* --- node card (flow diagrams) --- */
+.node{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:28px 26px;text-align:center;position:relative;overflow:hidden}
+.node .nt{font-size:30px;font-weight:700;letter-spacing:.01em;margin-top:16px}
+.node .ns{font-size:21px;line-height:1.42;color:var(--text-secondary);margin-top:12px}
+.node .topacc{position:absolute;top:0;left:0;right:0;height:2px}
+
+.hide{visibility:hidden}
+.o0{opacity:0}
+
+.abs{position:absolute}
+.wrap{position:relative;width:1700px;margin:0 auto}
+.lay{position:absolute;border-radius:18px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center}
+.lay .lt{font-size:44px;font-weight:700;letter-spacing:.01em;line-height:1}
+.lay .ls{font-size:22px;color:var(--text-secondary);margin-top:12px}
+.badge{display:inline-flex;align-items:center;padding:11px 22px;border-radius:100px;
+  border:1px solid rgba(204,255,0,.44);background:rgba(204,255,0,.075);color:var(--rh-neon);
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.02em}
+.connlbl{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:20px;
+  letter-spacing:.09em}
+.dim{border-color:#232a38 !important;background:rgba(255,255,255,.014) !important;
+  box-shadow:none !important}
+.ghost{border:1px solid #1b2230;border-radius:12px;background:rgba(255,255,255,.012);
+  padding:16px 20px;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;
+  color:#39435a;letter-spacing:.05em;margin-bottom:16px;text-align:center}
+</style></head><body><div class="frame " id="D3-A-stack-s1"><div class="orb" style="left:1290px;top:-230px;width:620px;height:620px;background:#ccff00;opacity:.085"></div><div class="orb" style="left:-250px;top:640px;width:600px;height:600px;background:#00e68a;opacity:.13"></div><div class="hd"><div class="ey">ROBINHOOD CHAIN &middot; WHAT IT ACTUALLY SITS ON</div><h1 class="">Fast up top. <span class="g">Anchored underneath.</span></h1><div class="divider "></div></div><div class="body"><div class="wrap" style="height:590px">
+
+<div class="lay" style="left:410px;top:0;width:880px;height:102px;
+ border:1px solid rgba(204,255,0,.30);background:rgba(204,255,0,.035)">
+ <div class="lt" style="font-size:33px;color:#ccff00;letter-spacing:.06em">ROBINHOOD APP &middot; WALLET</div>
+ <div class="ls" style="margin-top:8px">where the trade is placed</div></div>
+
+<svg width="600" height="56" viewBox="0 0 600 56" class="abs" style="left:550px;top:104px"
+ fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="300" y1="2" x2="300" y2="38" stroke="#5a6a2e" stroke-width="2.4"/>
+<path d="M292 32 L300 42 L308 32" stroke="#ccff00" stroke-width="2.6" stroke-linecap="round"
+ stroke-linejoin="round" opacity=".8"/></svg>
+<div class="abs connlbl" style="left:876px;top:116px;color:#6c7a3a">ORDERS &middot; TRADES &middot; TOKENIZED STOCKS</div>
+
+<div class="lay" style="left:225px;top:158px;width:1250px;height:214px;
+ border:2px solid rgba(204,255,0,.52);border-radius:20px;
+ background:linear-gradient(180deg,rgba(204,255,0,.085),rgba(204,255,0,.018));
+ box-shadow:0 0 70px rgba(204,255,0,.10)">
+ <div class="abs" style="left:0;right:0;top:0;height:3px;
+  background:linear-gradient(90deg,transparent,#ccff00,transparent)"></div>
+ <div class="lt" style="font-size:50px;color:#ccff00;letter-spacing:.02em">ROBINHOOD CHAIN</div>
+ <div class="ls" style="margin-top:9px">fast and cheap up top</div>
+ <div class="chiprow" style="justify-content:center;gap:16px;margin-top:24px"><div class="badge">ETHEREUM LAYER 2</div><div class="badge" style="opacity:0">BUILT ON ARBITRUM</div><div class="badge" style="opacity:0">100ms BLOCKS</div><div class="badge" style="opacity:0">GAS = ETH</div></div></div>
+
+<svg width="700" height="82" viewBox="0 0 700 82" class="abs" style="left:500px;top:374px"
+ fill="none" xmlns="http://www.w3.org/2000/svg" opacity=".35">
+<line x1="308" y1="0" x2="308" y2="54" stroke="#2b3446" stroke-width="2" stroke-dasharray="7 9"/>
+<line x1="350" y1="0" x2="350" y2="54" stroke="#2b3446" stroke-width="2" stroke-dasharray="7 9"/>
+<line x1="392" y1="0" x2="392" y2="54" stroke="#2b3446" stroke-width="2" stroke-dasharray="7 9"/>
+<path d="M336 56 L350 72 L364 56" stroke="#2b3446" stroke-width="3" stroke-linecap="round"
+ stroke-linejoin="round"/></svg>
+<div class="abs connlbl" style="left:922px;top:396px;color:#333c4e">ANCHORS DOWN &middot; SETTLES</div>
+
+<div class="abs" style="left:330px;top:534px;width:1040px;height:76px;border-radius:50%;
+ background:#00e68a;filter:blur(70px);opacity:0"></div>
+<div class="lay" style="left:70px;top:452px;width:1560px;height:138px;
+ border:2px solid #232a38;border-radius:20px;background:rgba(255,255,255,.014);;
+ flex-direction:row;gap:34px">
+ <svg viewBox="0 0 256 417" width="49.1" height="80" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#2b3446" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#2b3446" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#2b3446" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#2b3446" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#2b3446" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#2b3446" opacity=".75"/></svg>
+ <div style="text-align:left">
+  <div class="lt" style="font-size:50px;color:#39435a">ETHEREUM L1</div>
+  <div class="mono" style="font-size:24px;letter-spacing:.13em;margin-top:11px;
+   color:#4e9b7f;opacity:0">SECURITY + SETTLEMENT</div></div></div>
+</div></div><div class="take ">The app is Robinhood. The blocks are Robinhood. <b>The security and the settlement are Ethereum.</b></div><div class="src">Robinhood Chain: an Ethereum Layer 2 on the Arbitrum Orbit stack &middot; 100ms blocks &middot; ETH as native gas &middot; mainnet Jul 1, 2026 &middot; docs.robinhood.com/chain</div></div>
+<div class="frame " id="D3-A-stack-s2"><div class="orb" style="left:1290px;top:-230px;width:620px;height:620px;background:#ccff00;opacity:.085"></div><div class="orb" style="left:-250px;top:640px;width:600px;height:600px;background:#00e68a;opacity:.13"></div><div class="hd"><div class="ey">ROBINHOOD CHAIN &middot; WHAT IT ACTUALLY SITS ON</div><h1 class="">Fast up top. <span class="g">Anchored underneath.</span></h1><div class="divider "></div></div><div class="body"><div class="wrap" style="height:590px">
+
+<div class="lay" style="left:410px;top:0;width:880px;height:102px;
+ border:1px solid rgba(204,255,0,.30);background:rgba(204,255,0,.035)">
+ <div class="lt" style="font-size:33px;color:#ccff00;letter-spacing:.06em">ROBINHOOD APP &middot; WALLET</div>
+ <div class="ls" style="margin-top:8px">where the trade is placed</div></div>
+
+<svg width="600" height="56" viewBox="0 0 600 56" class="abs" style="left:550px;top:104px"
+ fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="300" y1="2" x2="300" y2="38" stroke="#5a6a2e" stroke-width="2.4"/>
+<path d="M292 32 L300 42 L308 32" stroke="#ccff00" stroke-width="2.6" stroke-linecap="round"
+ stroke-linejoin="round" opacity=".8"/></svg>
+<div class="abs connlbl" style="left:876px;top:116px;color:#6c7a3a">ORDERS &middot; TRADES &middot; TOKENIZED STOCKS</div>
+
+<div class="lay" style="left:225px;top:158px;width:1250px;height:214px;
+ border:2px solid rgba(204,255,0,.52);border-radius:20px;
+ background:linear-gradient(180deg,rgba(204,255,0,.085),rgba(204,255,0,.018));
+ box-shadow:0 0 70px rgba(204,255,0,.10)">
+ <div class="abs" style="left:0;right:0;top:0;height:3px;
+  background:linear-gradient(90deg,transparent,#ccff00,transparent)"></div>
+ <div class="lt" style="font-size:50px;color:#ccff00;letter-spacing:.02em">ROBINHOOD CHAIN</div>
+ <div class="ls" style="margin-top:9px">fast and cheap up top</div>
+ <div class="chiprow" style="justify-content:center;gap:16px;margin-top:24px"><div class="badge">ETHEREUM LAYER 2</div><div class="badge" style="opacity:0">BUILT ON ARBITRUM</div><div class="badge" style="opacity:0">100ms BLOCKS</div><div class="badge" style="opacity:0">GAS = ETH</div></div></div>
+
+<svg width="700" height="82" viewBox="0 0 700 82" class="abs" style="left:500px;top:374px"
+ fill="none" xmlns="http://www.w3.org/2000/svg" opacity=".95">
+<line x1="308" y1="0" x2="308" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<line x1="350" y1="0" x2="350" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<line x1="392" y1="0" x2="392" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<path d="M336 56 L350 72 L364 56" stroke="#00e68a" stroke-width="3" stroke-linecap="round"
+ stroke-linejoin="round"/></svg>
+<div class="abs connlbl" style="left:922px;top:396px;color:#3f7a63">ANCHORS DOWN &middot; SETTLES</div>
+
+<div class="abs" style="left:330px;top:534px;width:1040px;height:76px;border-radius:50%;
+ background:#00e68a;filter:blur(70px);opacity:.16"></div>
+<div class="lay" style="left:70px;top:452px;width:1560px;height:138px;
+ border:2px solid rgba(0,230,138,.55);border-radius:20px;background:linear-gradient(180deg,rgba(0,230,138,.11),rgba(0,230,138,.02));box-shadow:0 20px 80px rgba(0,230,138,.20);
+ flex-direction:row;gap:34px">
+ <svg viewBox="0 0 256 417" width="49.1" height="80" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+ <div style="text-align:left">
+  <div class="lt" style="font-size:50px;color:#00e68a">ETHEREUM L1</div>
+  <div class="mono" style="font-size:24px;letter-spacing:.13em;margin-top:11px;
+   color:#4e9b7f;opacity:1">SECURITY + SETTLEMENT</div></div></div>
+</div></div><div class="take ">The app is Robinhood. The blocks are Robinhood. <b>The security and the settlement are Ethereum.</b></div><div class="src">Robinhood Chain: an Ethereum Layer 2 on the Arbitrum Orbit stack &middot; 100ms blocks &middot; ETH as native gas &middot; mainnet Jul 1, 2026 &middot; docs.robinhood.com/chain</div></div>
+<div class="frame " id="D3-A-stack-s3"><div class="orb" style="left:1290px;top:-230px;width:620px;height:620px;background:#ccff00;opacity:.085"></div><div class="orb" style="left:-250px;top:640px;width:600px;height:600px;background:#00e68a;opacity:.13"></div><div class="hd"><div class="ey">ROBINHOOD CHAIN &middot; WHAT IT ACTUALLY SITS ON</div><h1 class="">Fast up top. <span class="g">Anchored underneath.</span></h1><div class="divider "></div></div><div class="body"><div class="wrap" style="height:590px">
+
+<div class="lay" style="left:410px;top:0;width:880px;height:102px;
+ border:1px solid rgba(204,255,0,.30);background:rgba(204,255,0,.035)">
+ <div class="lt" style="font-size:33px;color:#ccff00;letter-spacing:.06em">ROBINHOOD APP &middot; WALLET</div>
+ <div class="ls" style="margin-top:8px">where the trade is placed</div></div>
+
+<svg width="600" height="56" viewBox="0 0 600 56" class="abs" style="left:550px;top:104px"
+ fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="300" y1="2" x2="300" y2="38" stroke="#5a6a2e" stroke-width="2.4"/>
+<path d="M292 32 L300 42 L308 32" stroke="#ccff00" stroke-width="2.6" stroke-linecap="round"
+ stroke-linejoin="round" opacity=".8"/></svg>
+<div class="abs connlbl" style="left:876px;top:116px;color:#6c7a3a">ORDERS &middot; TRADES &middot; TOKENIZED STOCKS</div>
+
+<div class="lay" style="left:225px;top:158px;width:1250px;height:214px;
+ border:2px solid rgba(204,255,0,.52);border-radius:20px;
+ background:linear-gradient(180deg,rgba(204,255,0,.085),rgba(204,255,0,.018));
+ box-shadow:0 0 70px rgba(204,255,0,.10)">
+ <div class="abs" style="left:0;right:0;top:0;height:3px;
+  background:linear-gradient(90deg,transparent,#ccff00,transparent)"></div>
+ <div class="lt" style="font-size:50px;color:#ccff00;letter-spacing:.02em">ROBINHOOD CHAIN</div>
+ <div class="ls" style="margin-top:9px">fast and cheap up top</div>
+ <div class="chiprow" style="justify-content:center;gap:16px;margin-top:24px"><div class="badge">ETHEREUM LAYER 2</div><div class="badge">BUILT ON ARBITRUM</div><div class="badge" style="opacity:0">100ms BLOCKS</div><div class="badge" style="opacity:0">GAS = ETH</div></div></div>
+
+<svg width="700" height="82" viewBox="0 0 700 82" class="abs" style="left:500px;top:374px"
+ fill="none" xmlns="http://www.w3.org/2000/svg" opacity=".95">
+<line x1="308" y1="0" x2="308" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<line x1="350" y1="0" x2="350" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<line x1="392" y1="0" x2="392" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<path d="M336 56 L350 72 L364 56" stroke="#00e68a" stroke-width="3" stroke-linecap="round"
+ stroke-linejoin="round"/></svg>
+<div class="abs connlbl" style="left:922px;top:396px;color:#3f7a63">ANCHORS DOWN &middot; SETTLES</div>
+
+<div class="abs" style="left:330px;top:534px;width:1040px;height:76px;border-radius:50%;
+ background:#00e68a;filter:blur(70px);opacity:.16"></div>
+<div class="lay" style="left:70px;top:452px;width:1560px;height:138px;
+ border:2px solid rgba(0,230,138,.55);border-radius:20px;background:linear-gradient(180deg,rgba(0,230,138,.11),rgba(0,230,138,.02));box-shadow:0 20px 80px rgba(0,230,138,.20);
+ flex-direction:row;gap:34px">
+ <svg viewBox="0 0 256 417" width="49.1" height="80" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+ <div style="text-align:left">
+  <div class="lt" style="font-size:50px;color:#00e68a">ETHEREUM L1</div>
+  <div class="mono" style="font-size:24px;letter-spacing:.13em;margin-top:11px;
+   color:#4e9b7f;opacity:1">SECURITY + SETTLEMENT</div></div></div>
+</div></div><div class="take ">The app is Robinhood. The blocks are Robinhood. <b>The security and the settlement are Ethereum.</b></div><div class="src">Robinhood Chain: an Ethereum Layer 2 on the Arbitrum Orbit stack &middot; 100ms blocks &middot; ETH as native gas &middot; mainnet Jul 1, 2026 &middot; docs.robinhood.com/chain</div></div>
+<div class="frame " id="D3-A-stack-s4"><div class="orb" style="left:1290px;top:-230px;width:620px;height:620px;background:#ccff00;opacity:.085"></div><div class="orb" style="left:-250px;top:640px;width:600px;height:600px;background:#00e68a;opacity:.13"></div><div class="hd"><div class="ey">ROBINHOOD CHAIN &middot; WHAT IT ACTUALLY SITS ON</div><h1 class="">Fast up top. <span class="g">Anchored underneath.</span></h1><div class="divider "></div></div><div class="body"><div class="wrap" style="height:590px">
+
+<div class="lay" style="left:410px;top:0;width:880px;height:102px;
+ border:1px solid rgba(204,255,0,.30);background:rgba(204,255,0,.035)">
+ <div class="lt" style="font-size:33px;color:#ccff00;letter-spacing:.06em">ROBINHOOD APP &middot; WALLET</div>
+ <div class="ls" style="margin-top:8px">where the trade is placed</div></div>
+
+<svg width="600" height="56" viewBox="0 0 600 56" class="abs" style="left:550px;top:104px"
+ fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="300" y1="2" x2="300" y2="38" stroke="#5a6a2e" stroke-width="2.4"/>
+<path d="M292 32 L300 42 L308 32" stroke="#ccff00" stroke-width="2.6" stroke-linecap="round"
+ stroke-linejoin="round" opacity=".8"/></svg>
+<div class="abs connlbl" style="left:876px;top:116px;color:#6c7a3a">ORDERS &middot; TRADES &middot; TOKENIZED STOCKS</div>
+
+<div class="lay" style="left:225px;top:158px;width:1250px;height:214px;
+ border:2px solid rgba(204,255,0,.52);border-radius:20px;
+ background:linear-gradient(180deg,rgba(204,255,0,.085),rgba(204,255,0,.018));
+ box-shadow:0 0 70px rgba(204,255,0,.10)">
+ <div class="abs" style="left:0;right:0;top:0;height:3px;
+  background:linear-gradient(90deg,transparent,#ccff00,transparent)"></div>
+ <div class="lt" style="font-size:50px;color:#ccff00;letter-spacing:.02em">ROBINHOOD CHAIN</div>
+ <div class="ls" style="margin-top:9px">fast and cheap up top</div>
+ <div class="chiprow" style="justify-content:center;gap:16px;margin-top:24px"><div class="badge">ETHEREUM LAYER 2</div><div class="badge">BUILT ON ARBITRUM</div><div class="badge">100ms BLOCKS</div><div class="badge" style="opacity:0">GAS = ETH</div></div></div>
+
+<svg width="700" height="82" viewBox="0 0 700 82" class="abs" style="left:500px;top:374px"
+ fill="none" xmlns="http://www.w3.org/2000/svg" opacity=".95">
+<line x1="308" y1="0" x2="308" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<line x1="350" y1="0" x2="350" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<line x1="392" y1="0" x2="392" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<path d="M336 56 L350 72 L364 56" stroke="#00e68a" stroke-width="3" stroke-linecap="round"
+ stroke-linejoin="round"/></svg>
+<div class="abs connlbl" style="left:922px;top:396px;color:#3f7a63">ANCHORS DOWN &middot; SETTLES</div>
+
+<div class="abs" style="left:330px;top:534px;width:1040px;height:76px;border-radius:50%;
+ background:#00e68a;filter:blur(70px);opacity:.16"></div>
+<div class="lay" style="left:70px;top:452px;width:1560px;height:138px;
+ border:2px solid rgba(0,230,138,.55);border-radius:20px;background:linear-gradient(180deg,rgba(0,230,138,.11),rgba(0,230,138,.02));box-shadow:0 20px 80px rgba(0,230,138,.20);
+ flex-direction:row;gap:34px">
+ <svg viewBox="0 0 256 417" width="49.1" height="80" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+ <div style="text-align:left">
+  <div class="lt" style="font-size:50px;color:#00e68a">ETHEREUM L1</div>
+  <div class="mono" style="font-size:24px;letter-spacing:.13em;margin-top:11px;
+   color:#4e9b7f;opacity:1">SECURITY + SETTLEMENT</div></div></div>
+</div></div><div class="take ">The app is Robinhood. The blocks are Robinhood. <b>The security and the settlement are Ethereum.</b></div><div class="src">Robinhood Chain: an Ethereum Layer 2 on the Arbitrum Orbit stack &middot; 100ms blocks &middot; ETH as native gas &middot; mainnet Jul 1, 2026 &middot; docs.robinhood.com/chain</div></div>
+<div class="frame " id="D3-A-stack"><div class="orb" style="left:1290px;top:-230px;width:620px;height:620px;background:#ccff00;opacity:.085"></div><div class="orb" style="left:-250px;top:640px;width:600px;height:600px;background:#00e68a;opacity:.13"></div><div class="hd"><div class="ey">ROBINHOOD CHAIN &middot; WHAT IT ACTUALLY SITS ON</div><h1 class="">Fast up top. <span class="g">Anchored underneath.</span></h1><div class="divider "></div></div><div class="body"><div class="wrap" style="height:590px">
+
+<div class="lay" style="left:410px;top:0;width:880px;height:102px;
+ border:1px solid rgba(204,255,0,.30);background:rgba(204,255,0,.035)">
+ <div class="lt" style="font-size:33px;color:#ccff00;letter-spacing:.06em">ROBINHOOD APP &middot; WALLET</div>
+ <div class="ls" style="margin-top:8px">where the trade is placed</div></div>
+
+<svg width="600" height="56" viewBox="0 0 600 56" class="abs" style="left:550px;top:104px"
+ fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="300" y1="2" x2="300" y2="38" stroke="#5a6a2e" stroke-width="2.4"/>
+<path d="M292 32 L300 42 L308 32" stroke="#ccff00" stroke-width="2.6" stroke-linecap="round"
+ stroke-linejoin="round" opacity=".8"/></svg>
+<div class="abs connlbl" style="left:876px;top:116px;color:#6c7a3a">ORDERS &middot; TRADES &middot; TOKENIZED STOCKS</div>
+
+<div class="lay" style="left:225px;top:158px;width:1250px;height:214px;
+ border:2px solid rgba(204,255,0,.52);border-radius:20px;
+ background:linear-gradient(180deg,rgba(204,255,0,.085),rgba(204,255,0,.018));
+ box-shadow:0 0 70px rgba(204,255,0,.10)">
+ <div class="abs" style="left:0;right:0;top:0;height:3px;
+  background:linear-gradient(90deg,transparent,#ccff00,transparent)"></div>
+ <div class="lt" style="font-size:50px;color:#ccff00;letter-spacing:.02em">ROBINHOOD CHAIN</div>
+ <div class="ls" style="margin-top:9px">fast and cheap up top</div>
+ <div class="chiprow" style="justify-content:center;gap:16px;margin-top:24px"><div class="badge">ETHEREUM LAYER 2</div><div class="badge">BUILT ON ARBITRUM</div><div class="badge">100ms BLOCKS</div><div class="badge">GAS = ETH</div></div></div>
+
+<svg width="700" height="82" viewBox="0 0 700 82" class="abs" style="left:500px;top:374px"
+ fill="none" xmlns="http://www.w3.org/2000/svg" opacity=".95">
+<line x1="308" y1="0" x2="308" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<line x1="350" y1="0" x2="350" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<line x1="392" y1="0" x2="392" y2="54" stroke="#00e68a" stroke-width="2" stroke-dasharray="7 9"/>
+<path d="M336 56 L350 72 L364 56" stroke="#00e68a" stroke-width="3" stroke-linecap="round"
+ stroke-linejoin="round"/></svg>
+<div class="abs connlbl" style="left:922px;top:396px;color:#3f7a63">ANCHORS DOWN &middot; SETTLES</div>
+
+<div class="abs" style="left:330px;top:534px;width:1040px;height:76px;border-radius:50%;
+ background:#00e68a;filter:blur(70px);opacity:.16"></div>
+<div class="lay" style="left:70px;top:452px;width:1560px;height:138px;
+ border:2px solid rgba(0,230,138,.55);border-radius:20px;background:linear-gradient(180deg,rgba(0,230,138,.11),rgba(0,230,138,.02));box-shadow:0 20px 80px rgba(0,230,138,.20);
+ flex-direction:row;gap:34px">
+ <svg viewBox="0 0 256 417" width="49.1" height="80" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+ <div style="text-align:left">
+  <div class="lt" style="font-size:50px;color:#00e68a">ETHEREUM L1</div>
+  <div class="mono" style="font-size:24px;letter-spacing:.13em;margin-top:11px;
+   color:#4e9b7f;opacity:1">SECURITY + SETTLEMENT</div></div></div>
+</div></div><div class="take ">The app is Robinhood. The blocks are Robinhood. <b>The security and the settlement are Ethereum.</b></div><div class="src">Robinhood Chain: an Ethereum Layer 2 on the Arbitrum Orbit stack &middot; 100ms blocks &middot; ETH as native gas &middot; mainnet Jul 1, 2026 &middot; docs.robinhood.com/chain</div></div>
+<div class="frame " id="D3-A-stack-L1"><div class="orb" style="left:1300px;top:-220px;width:600px;height:600px;background:#ccff00;opacity:.075"></div><div class="orb" style="left:-260px;top:560px;width:640px;height:640px;background:#00e68a;opacity:.16"></div><div class="hd"><div class="ey">ROBINHOOD CHAIN &middot; THE CHOICE THEY MADE</div><h1 class="">They could have built <span class="rh">anywhere</span>.</h1><div class="divider "></div></div><div class="body"><div class="wrap" style="height:552px">
+
+<div class="abs" style="left:0;top:158px;width:272px">
+ <div class="mono" style="font-size:18px;letter-spacing:.15em;color:#3d4658;margin-bottom:20px">
+  COULD HAVE GONE<br>ANYWHERE</div><div class="ghost">SOLANA</div><div class="ghost">BASE</div><div class="ghost">BNB CHAIN</div><div class="ghost">THEIR OWN L1</div></div>
+
+<div class="abs" style="left:640px;top:16px;width:800px;height:150px;border-radius:18px;
+ border:2px solid rgba(204,255,0,.55);
+ background:linear-gradient(180deg,rgba(204,255,0,.09),rgba(204,255,0,.02));
+ box-shadow:0 0 60px rgba(204,255,0,.12);display:flex;flex-direction:column;
+ align-items:center;justify-content:center">
+ <div style="font-size:44px;font-weight:700;color:#ccff00;letter-spacing:.02em">ROBINHOOD CHAIN</div>
+ <div style="font-size:21px;color:var(--text-secondary);margin-top:10px">their own name on the door</div>
+ <div class="abs" style="left:130px;bottom:-26px;width:78px;height:28px;border-radius:0 0 7px 7px;background:rgba(204,255,0,.6);box-shadow:0 8px 26px rgba(204,255,0,.4)"></div><div class="abs" style="left:365px;bottom:-26px;width:78px;height:28px;border-radius:0 0 7px 7px;background:rgba(204,255,0,.6);box-shadow:0 8px 26px rgba(204,255,0,.4)"></div><div class="abs" style="left:600px;bottom:-26px;width:78px;height:28px;border-radius:0 0 7px 7px;background:rgba(204,255,0,.6);box-shadow:0 8px 26px rgba(204,255,0,.4)"></div></div>
+
+<svg width="120" height="66" viewBox="984 0 120 66" class="abs" style="left:984px;top:196px"
+ xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M1029,4 L1044,18 L1059,4" stroke="#00e68a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".3"/><path d="M1029,22 L1044,36 L1059,22" stroke="#00e68a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><path d="M1029,40 L1044,54 L1059,40" stroke="#00e68a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/></svg>
+
+<div class="abs" style="left:340px;top:250px;width:1400px;height:130px;border-radius:50%;
+ background:#00e68a;filter:blur(85px);opacity:.20"></div>
+<div class="abs" style="left:366px;top:230px;width:1348px;height:296px;border-radius:26px;
+ border:2px solid rgba(0,230,138,.28);box-shadow:0 0 90px rgba(0,230,138,.16)"></div>
+<div class="abs" style="left:390px;top:252px;width:1300px;height:252px;border-radius:22px;
+ border:2px solid rgba(0,230,138,.72);
+ background:linear-gradient(180deg,rgba(0,230,138,.15),rgba(0,230,138,.03));
+ box-shadow:0 22px 90px rgba(0,230,138,.24);display:flex;align-items:center;
+ justify-content:center;gap:44px">
+ <div class="abs" style="left:376px;top:-2px;width:86px;height:24px;border-radius:0 0 8px 8px;background:#080b11;border:1px solid rgba(0,230,138,.45);border-top:none"></div><div class="abs" style="left:611px;top:-2px;width:86px;height:24px;border-radius:0 0 8px 8px;background:#080b11;border:1px solid rgba(0,230,138,.45);border-top:none"></div><div class="abs" style="left:846px;top:-2px;width:86px;height:24px;border-radius:0 0 8px 8px;background:#080b11;border:1px solid rgba(0,230,138,.45);border-top:none"></div>
+ <svg viewBox="0 0 256 417" width="76.1" height="124" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+ <div style="text-align:left">
+  <div style="font-size:66px;font-weight:700;color:#00e68a;line-height:1">ETHEREUM L1</div>
+  <div class="mono" style="font-size:26px;letter-spacing:.13em;color:#4e9b7f;margin-top:14px">
+   SECURITY + SETTLEMENT</div></div></div>
+</div></div><div class="take ">With their own name on the door, <b>they anchored to Ethereum.</b></div><div class="src">Robinhood Chain: an Ethereum Layer 2 on the Arbitrum Orbit stack &middot; mainnet Jul 1, 2026 &middot; docs.robinhood.com/chain</div></div>
+<div class="frame " id="D3-A-stack@end"><div class="orb" style="left:1310px;top:-230px;width:580px;height:580px;background:#ccff00;opacity:.08"></div><div class="orb" style="left:-250px;top:560px;width:620px;height:620px;background:#00e68a;opacity:.17"></div><div class="hd"><div class="ey">ROBINHOOD CHAIN &middot; ON ETHEREUM</div><h1 class="big"><span class="g">Anchored to Ethereum.</span></h1><div class="divider "></div></div><div class="body"><div class="wrap" style="height:520px">
+<div class="abs" style="left:440px;top:0;width:820px;height:170px;border-radius:18px 18px 0 0;
+ border:2px solid rgba(204,255,0,.6);border-bottom:none;
+ background:linear-gradient(180deg,rgba(204,255,0,.12),rgba(204,255,0,.03));
+ box-shadow:0 0 70px rgba(204,255,0,.14);display:flex;flex-direction:column;
+ align-items:center;justify-content:center">
+ <div style="font-size:48px;font-weight:700;color:#ccff00;letter-spacing:.02em">ROBINHOOD CHAIN</div>
+ <div style="font-size:22px;color:var(--text-secondary);margin-top:10px">mainnet live since July 1, 2026</div></div>
+<div class="abs" style="left:440px;top:168px;width:820px;height:5px;background:#00e68a;
+ box-shadow:0 0 34px 6px rgba(0,230,138,.6)"></div>
+
+<div class="abs" style="left:210px;top:200px;width:1280px;height:130px;border-radius:50%;
+ background:#00e68a;filter:blur(80px);opacity:.20"></div>
+<div class="abs" style="left:180px;top:186px;width:1340px;height:290px;border-radius:24px;
+ border:2px solid rgba(0,230,138,.72);
+ background:linear-gradient(180deg,rgba(0,230,138,.15),rgba(0,230,138,.03));
+ box-shadow:0 22px 90px rgba(0,230,138,.24);display:flex;align-items:center;
+ justify-content:center;gap:44px">
+ <svg viewBox="0 0 256 417" width="85.9" height="140" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+ <div style="text-align:left">
+  <div style="font-size:72px;font-weight:700;color:#00e68a;line-height:1">ETHEREUM L1</div>
+  <div class="mono" style="font-size:27px;letter-spacing:.13em;color:#4e9b7f;margin-top:14px">
+   SECURITY + SETTLEMENT</div></div></div></div></div><div class="take ">Robinhood built its own chain <b>on top of Ethereum.</b></div><div class="src">Robinhood Chain: an Ethereum Layer 2 &middot; mainnet Jul 1, 2026</div></div></body></html>

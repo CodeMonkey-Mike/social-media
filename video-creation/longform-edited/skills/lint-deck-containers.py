@@ -22,8 +22,10 @@ from PIL import Image
 from scipy import ndimage
 
 if len(sys.argv) < 3:
-    print('usage: lint-deck-containers.py <comp.tsx> <deckdir>'); sys.exit(2)
-comp, deckdir = sys.argv[1], sys.argv[2]
+    print('usage: lint-deck-containers.py <comp.tsx> <deckdir> [<deckdir> ...]'); sys.exit(2)
+# The merged assets layout (comp-build.md §10, 2026-07-24) splits the old single deck/ folder into
+# title-slides/ + card-slides/ (+ diagrams/), so accept several dirs and search all of them.
+comp, deckdirs = sys.argv[1], sys.argv[2:]
 src = open(comp, encoding='utf-8').read()
 block = (re.search(r'COVERS[^=]*=\s*\[(.*?)\];', src, re.S) or [None, ''])[1]
 deck_refs = sorted(set(re.findall(r"kind:\s*'deck'\s*,\s*ref:\s*'([^']+)'", block)))
@@ -51,9 +53,9 @@ for ref in deck_refs:
         oks.append(f'{ref}: exempt (declared COMPARISON, A-vs-B)'); continue
     if ref in overviews:
         oks.append(f'{ref}: exempt (declared OVERVIEW, all cards addressed at once)'); continue
-    paths = glob.glob(os.path.join(deckdir, ref + '.png'))
+    paths = [p for d in deckdirs for p in glob.glob(os.path.join(d, ref + '.png'))]
     if not paths:
-        fails.append(f'{ref}: deck/{ref}.png NOT FOUND'); continue
+        fails.append(f'{ref}: {ref}.png NOT FOUND in ' + ', '.join(deckdirs)); continue
     a = np.array(Image.open(paths[0]).convert('RGB')).astype(int)
     H, W = a.shape[:2]
     bg = a[3, 3].mean(); lum = a.mean(2)
@@ -63,8 +65,17 @@ for ref in deck_refs:
     big = 0
     for i in range(1, n + 1):
         ys, xs = np.where(lab == i)
-        if (xs.max() - xs.min()) > 0.25 * W and (ys.max() - ys.min()) > 0.12 * H:
-            big += 1
+        if not ((xs.max() - xs.min()) > 0.25 * W and (ys.max() - ys.min()) > 0.12 * H):
+            continue
+        # A CARD BOX has crisp internal structure (border, type, row fills). The decorative blurred
+        # ORBS in the deck background are just as large but are soft gradients, and at PORTRAIT aspect
+        # (1080 wide) an orb easily clears the size test and got counted as a second card — two
+        # correct vertical slides failed this gate that way (kaspa 30bps, 2026-07-25). Measured
+        # separation is wide: orbs ~0.6 mean |gradient|, real cards ~1.3-1.8.
+        box = lum[ys.min():ys.max(), xs.min():xs.max()]
+        if box.size and np.abs(np.diff(box, axis=1)).mean() < 1.0:
+            continue
+        big += 1
     if big > 1:
         fails.append(f'{ref}: {big} large card-boxes on screen -> this is a WHOLE SLIDE, not one container. '
                      f'Crop to a single card (or split the slide into separate refs); add to DIAGRAM_REFS only if it is a system-design diagram.')

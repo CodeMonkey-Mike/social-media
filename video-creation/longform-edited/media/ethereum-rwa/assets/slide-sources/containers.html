@@ -1,0 +1,450 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>ethereum-rwa containers - canonical build (title slides + card slides)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET — COPIED, NOT re-derived.
+   Source of truth: skills/container-reference/container-canonical.css
+   Palette + typography are LOCKED. Do NOT invent tokens per-container.
+   ----------------------------------------------------------------------------
+   Accent meaning assigned for THIS video (kept consistent, no drift):
+     .g green  = Ethereum / the real, verified fact / bullish
+     .c cyan   = neutral supporting structure (L2, mechanics)
+     .go gold  = FORECAST / guard / "this is a projection, not a fact"
+     .re red   = risk / the gap
+     .tl teal  = UNUSED in this video (teal reads as Kaspa — forbidden here)
+   ADDITIVE token (not a swap): --rh #CCFF00 = Robinhood ONLY, per BROLL-PLAN
+     hard rule "Robinhood assets use neon green #CCFF00 / yellow, NEVER teal".
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  --rh:#CCFF00; --rh-2:#eaff7a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+b{color:var(--text-primary);font-weight:700}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+.rh{color:var(--rh)}
+
+/* ==== slide-builder additions (tokens unchanged, layout only) ==== */
+
+/* full-frame hero type (TITLE SLIDES, no box) */
+.hero{font-family:'Playfair Display',serif;font-weight:900;line-height:1.02;letter-spacing:-.02em;
+  color:var(--text-primary);font-size:150px}
+.hero.two{font-size:132px}
+.stamp{font-family:'JetBrains Mono';font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  font-size:31px;color:var(--text-secondary);margin-top:38px}
+.divider.rhline{background:linear-gradient(90deg,var(--rh),var(--accent-gold))}
+
+/* rounded CARD box with top accent (CARD SLIDES) */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:24px;
+  padding:64px 70px;position:relative;overflow:hidden;max-width:1640px}
+.card .top{position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--accent-green),transparent)}
+.card.gold .top{background:linear-gradient(90deg,var(--accent-gold),transparent)}
+.card.rhc .top{background:linear-gradient(90deg,var(--rh),transparent)}
+.card .ct{font-family:'Playfair Display',serif;font-weight:700;font-size:48px;color:var(--text-primary);line-height:1.15}
+.card .cey{font-family:'DM Sans';font-size:24px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.16em;color:var(--text-muted);margin-bottom:18px}
+.card .cdiv{width:66px;height:4px;border-radius:2px;margin:38px 0;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan))}
+.card.rhc .cdiv{background:linear-gradient(90deg,var(--rh),var(--accent-gold))}
+.card.gold .cdiv{background:linear-gradient(90deg,var(--accent-gold),var(--accent-green))}
+
+/* big numbers */
+.big{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:126px;line-height:1;
+  letter-spacing:-.02em;color:var(--text-primary)}
+.bigger{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:140px;line-height:1;
+  letter-spacing:-.03em;color:var(--accent-gold)}
+.mark{font-family:'Playfair Display',serif;font-weight:900;font-size:124px;line-height:1;
+  letter-spacing:-.01em;color:var(--accent-green)}
+.sub{font-family:'DM Sans';font-size:30px;color:var(--text-secondary);line-height:1.5}
+.fine{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:25px;
+  letter-spacing:.06em;color:var(--text-muted);text-transform:uppercase}
+
+/* FORECAST guard tag — deliberately large + unmissable (DATA.md: never a stated fact) */
+.tag{display:inline-flex;align-items:center;gap:16px;padding:16px 30px;border-radius:12px;
+  border:2px solid rgba(255,215,0,.55);background:rgba(255,215,0,.10);
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:32px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent-gold)}
+.tag .dot{width:14px;height:14px;border-radius:50%;background:var(--accent-gold);flex:none}
+
+/* fact chips */
+.chips{display:flex;gap:20px;flex-wrap:wrap}
+.chip{font-family:'DM Sans';font-weight:600;font-size:30px;letter-spacing:.04em;
+  padding:22px 32px;border-radius:14px;background:rgba(255,255,255,.045);
+  border:1px solid var(--border);color:var(--text-secondary)}
+.chip .n{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--text-primary)}
+.chip.gc{border-color:rgba(0,230,138,.30);color:var(--text-primary)}
+.chip.rhchip{border-color:rgba(204,255,0,.35);color:var(--text-primary)}
+/* reveal groups (D1 roadmap chips, D2-C direction arrow).
+   RESTING = muted but READABLE, never invisible (Mike 2026-07-24: elements dimmed to
+   nothing made card slides read as empty). The .on state adds emphasis, it does not
+   toggle visibility, and the card geometry is identical across both states. */
+.reveal{opacity:.34}
+.reveal.on{opacity:1}
+.chip.road{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:27px;letter-spacing:.10em;
+  text-transform:uppercase;border-color:rgba(0,194,255,.32);color:var(--text-primary);
+  background:linear-gradient(135deg,rgba(0,194,255,.09),transparent)}
+.chip.road .k{color:var(--accent-cyan);margin-right:14px}
+
+/* stacked slab diagram (D1 dock) */
+.dock{display:flex;flex-direction:column;align-items:flex-start;gap:0;margin:34px 0 0}
+.slab{border-radius:18px;border:1px solid var(--border);background:rgba(255,255,255,.03);
+  padding:24px 34px;display:flex;align-items:center;gap:26px;min-width:940px}
+.slab .q{font-family:'Playfair Display',serif;font-weight:900;font-size:64px;color:var(--text-muted);
+  width:88px;height:88px;border-radius:16px;border:2px dashed #2b3244;display:flex;
+  align-items:center;justify-content:center;flex:none}
+.slab .lbl{font-family:'DM Sans';font-weight:700;font-size:32px;color:var(--text-secondary)}
+.slab .lbl small{display:block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;
+  letter-spacing:.10em;text-transform:uppercase;color:var(--text-muted);margin-top:8px}
+.slab.l1{border-color:rgba(0,230,138,.35);background:linear-gradient(135deg,rgba(0,230,138,.10),transparent)}
+.slab.l1 .lbl{color:var(--text-primary)}
+.slab.l1 .ethdot{width:88px;height:88px;flex:none;display:flex;align-items:center;justify-content:center}
+.dockarrow{margin:0 0 0 60px;display:flex;flex-direction:column;align-items:center}
+
+/* orbit motif (D3-B) */
+.orbitwrap{display:flex;align-items:center;gap:64px;margin-top:34px}
+.side{display:flex;flex-direction:column;gap:24px}
+.statline{display:flex;align-items:baseline;gap:20px}
+.statline .v{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:76px;color:var(--rh);line-height:1}
+.statline .k{font-family:'DM Sans';font-weight:600;font-size:29px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--text-secondary)}
+
+/* demand -> lockup flow strip (D4-B) */
+.flow{display:flex;align-items:center;gap:28px;margin-top:34px}
+.flow .node{font-family:'DM Sans';font-weight:700;font-size:29px;letter-spacing:.05em;
+  text-transform:uppercase;padding:18px 28px;border-radius:14px;border:1px solid var(--border);
+  background:rgba(255,255,255,.04);color:var(--text-secondary)}
+.flow .node.hot{border-color:rgba(0,230,138,.35);color:var(--text-primary)}
+
+.foot{margin-top:34px;font-family:'DM Sans';font-size:28px;color:var(--text-muted);line-height:1.5}
+.row{display:flex;align-items:center;gap:40px}
+
+/* ==== CH5 RECAP states (@end stills for the rapid callback montage) ====
+   Same card geometry / palette / frame as the base slide so the viewer recognises
+   it instantly, but the ONE payload of the callback line is promoted to hero size
+   and the supporting chips + fine print are dropped: nobody re-reads a dense stat
+   card in 2-4s. Layout-only additions, ZERO new tokens. */
+.mark.xl{font-size:200px;letter-spacing:-.02em}
+.big.xl{font-size:190px;letter-spacing:-.03em}
+.flow.xl{gap:36px;margin-top:44px}
+.flow.xl .node{font-size:40px;padding:26px 42px;border-radius:18px}
+</style></head>
+<body>
+
+<!-- =========================================================================
+     TITLE SLIDES (no card box) — chapter cards, ride the ~1s inserted pauses
+     ========================================================================= -->
+
+<!-- T-CH2 :: t=48.92 :: "THE PROOF" -->
+<div class="frame" id="T-CH2">
+  <div class="orb" style="width:900px;height:900px;background:#00e68a;top:-260px;right:-180px"></div>
+  <div class="orb" style="width:760px;height:760px;background:#00c2ff;bottom:-300px;left:-220px;opacity:.18"></div>
+  <div class="ey">Chapter 02</div>
+  <div class="hero">THE <span class="g">PROOF</span></div>
+  <div class="divider" style="margin-top:40px"></div>
+  <div class="stamp" style="margin-top:6px">Real assets. Real institutions.</div>
+</div>
+
+<!-- T-CH3 :: t=129.92 :: "ROBINHOOD CHAIN" — neon green #CCFF00, NEVER teal -->
+<div class="frame" id="T-CH3">
+  <div class="orb" style="width:900px;height:900px;background:#CCFF00;top:-280px;right:-200px;opacity:.20"></div>
+  <div class="orb" style="width:720px;height:720px;background:#ffd700;bottom:-320px;left:-240px;opacity:.13"></div>
+  <div class="ey">Chapter 03</div>
+  <div class="hero two">ROBINHOOD <span class="rh">CHAIN</span></div>
+  <div class="divider rhline" style="margin-top:40px"></div>
+  <div class="stamp" style="margin-top:6px">Mainnet live, July 1, 2026</div>
+</div>
+
+<!-- T-CH4 :: t=200.34 :: "THE BULL CASE" -->
+<div class="frame" id="T-CH4">
+  <div class="orb" style="width:900px;height:900px;background:#00e68a;top:-240px;right:-200px"></div>
+  <div class="orb" style="width:700px;height:700px;background:#a855f7;bottom:-300px;left:-200px;opacity:.14"></div>
+  <div class="ey">Chapter 04</div>
+  <div class="hero two">THE <span class="g">BULL CASE</span></div>
+  <div class="divider" style="margin-top:40px"></div>
+  <div class="stamp" style="margin-top:6px">Ethereum, the asset</div>
+</div>
+
+<!-- =========================================================================
+     CARD SLIDES
+     ========================================================================= -->
+
+<!-- D1-TEASE :: CH1 36.04-48.92 :: brokerage stays UNNAMED. No Robinhood mark
+     and NO #CCFF00 anywhere on this slide (the name is CH3's reveal).
+     s1 = resting (no roadmap chips) · s2 = the three roadmap chips revealed (~44.5) -->
+<div class="frame" id="D1-tease">
+  <div class="orb" style="width:860px;height:860px;background:#00e68a;top:-280px;right:-200px;opacity:.22"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="cey">One month ago</div>
+    <div class="ct">One of the biggest brokerages in America plugged<br><span class="g">a brand new chain of their own</span> straight onto Ethereum</div>
+
+    <div class="dock">
+      <div class="slab">
+        <div class="q">?</div>
+        <div class="lbl">A major US brokerage<small>Their own chain</small></div>
+      </div>
+      <div class="dockarrow">
+        <svg width="60" height="86" viewBox="0 0 60 86">
+          <path d="M30 4 V60" stroke="#2b3244" stroke-width="4" fill="none" stroke-dasharray="10 9"/>
+          <path d="M30 78 L14 54 H46 Z" fill="#00e68a" fill-opacity=".85"/>
+        </svg>
+      </div>
+      <div class="slab l1">
+        <div class="ethdot">
+          <svg width="52" height="84" viewBox="0 0 256 417">
+            <g fill="#00e68a">
+              <path d="M127.96 0 124.61 11.36v274.06l3.35 3.34 127.95-75.63z" fill-opacity=".62"/>
+              <path d="M127.96 0 0 212.32l127.96 75.63V154.16z"/>
+              <path d="M127.96 312.19l-1.89 2.3v97.54l1.89 5.51L256 236.59z" fill-opacity=".62"/>
+              <path d="M127.96 416.91v-104.72L0 236.59z"/>
+              <path d="M127.96 288.2l127.95-75.63-127.95-58.16z" fill-opacity=".2"/>
+              <path d="M0 212.57l127.96 75.63V154.41z" fill-opacity=".45"/>
+            </g>
+          </svg>
+        </div>
+        <div class="lbl">Ethereum L1<small>Security and settlement</small></div>
+      </div>
+    </div>
+
+    <div class="cdiv"></div>
+    <div class="chips reveal" id="d1-chips">
+      <div class="chip road"><span class="k">01</span>Who is building</div>
+      <div class="chip road"><span class="k">02</span>What just launched</div>
+      <div class="chip road"><span class="k">03</span>Why it is mispriced</div>
+    </div>
+  </div>
+</div>
+
+<!-- D2-B :: CH2 75.32-85.30 :: BUIDL stat card. Also exported as D2-B-buidl@end.png -->
+<div class="frame" id="D2-B-buidl">
+  <div class="orb" style="width:880px;height:880px;background:#00c2ff;top:-300px;right:-220px;opacity:.20"></div>
+  <div class="orb" style="width:620px;height:620px;background:#00e68a;bottom:-280px;left:-200px;opacity:.16"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="cey">BlackRock, the biggest asset manager on the planet</div>
+    <div class="mark">BUIDL</div>
+    <div class="sub" style="margin-top:22px;font-size:36px;color:var(--text-primary)">
+      <span class="g">B</span>lackRock <span class="g">U</span>SD
+      <span class="g">I</span>nstitutional <span class="g">D</span>igital
+      <span class="g">L</span>iquidity Fund
+    </div>
+    <div class="cdiv"></div>
+    <div class="chips">
+      <div class="chip gc">Launched <span class="n">March 2024</span></div>
+      <div class="chip gc">via <span class="n">Securitize</span></div>
+      <div class="chip gc">on <span class="n">Ethereum</span> first</div>
+    </div>
+    <div class="fine" style="margin-top:30px">$1.00 NAV &nbsp;·&nbsp; ~3.4% 7 day yield</div>
+  </div>
+</div>
+
+<!-- D2-C :: CH2 118.00-129.92 :: $2T BY 2028. The FORECAST tag is NON-NEGOTIABLE.
+     s1 = resting (no direction arrow) · s2 = direction arrow up (~127.4) -->
+<div class="frame" id="D2-C-2t">
+  <div class="orb" style="width:900px;height:900px;background:#ffd700;top:-300px;right:-220px;opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;background:#00e68a;bottom:-300px;left:-200px;opacity:.14"></div>
+  <div class="card gold">
+    <div class="top"></div>
+    <div class="cey">The size of the prize</div>
+    <div class="tag"><span class="dot"></span>Forecast, not a promise</div>
+    <div class="row" style="margin-top:34px">
+      <div>
+        <div class="bigger">$2T BY 2028</div>
+        <div class="sub" style="margin-top:20px">Tokenized real world assets, with the vast majority of it on Ethereum</div>
+      </div>
+      <div class="reveal" id="d2c-arrow" style="margin-left:auto;text-align:center">
+        <svg width="150" height="176" viewBox="0 0 150 176">
+          <path d="M75 12 L128 92 H98 V164 H52 V92 H22 Z" fill="#00e68a" fill-opacity=".92"/>
+        </svg>
+        <div class="fine" style="margin-top:12px;color:var(--accent-green)">The direction</div>
+      </div>
+    </div>
+    <div class="cdiv"></div>
+    <div class="fine">Standard Chartered projection &nbsp;·&nbsp; a forecast, not a stated fact</div>
+  </div>
+</div>
+
+<!-- D3-B :: CH3 161.26-170.00 :: what trades on it. Neon green #CCFF00, NEVER teal -->
+<div class="frame" id="D3-B-stocks">
+  <div class="orb" style="width:880px;height:880px;background:#CCFF00;top:-300px;right:-220px;opacity:.16"></div>
+  <div class="orb" style="width:620px;height:620px;background:#ffd700;bottom:-300px;left:-200px;opacity:.10"></div>
+  <div class="card rhc">
+    <div class="top"></div>
+    <div class="cey">What trades on Robinhood Chain</div>
+    <div class="ct">Real stocks, as tokens, <span class="rh">around the clock</span></div>
+
+    <div class="orbitwrap">
+      <svg width="580" height="372" viewBox="0 0 580 372">
+        <!-- one clean orbit ring -->
+        <ellipse cx="290" cy="185" rx="230" ry="150" fill="none" stroke="#CCFF00" stroke-opacity=".18" stroke-width="2"/>
+        <!-- 24/7 clock at the centre -->
+        <circle cx="290" cy="185" r="92" fill="#12151c" stroke="#CCFF00" stroke-opacity=".55" stroke-width="3"/>
+        <path d="M290 185 V126" stroke="#CCFF00" stroke-width="6" stroke-linecap="round"/>
+        <path d="M290 185 L334 208" stroke="#eaff7a" stroke-width="6" stroke-linecap="round"/>
+        <circle cx="290" cy="185" r="7" fill="#CCFF00"/>
+        <text x="290" y="250" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700"
+              font-size="30" fill="#CCFF00" letter-spacing="2">24/7</text>
+        <!-- ticker tokens ON the ring -->
+        <g font-family="JetBrains Mono, monospace" font-weight="700" font-size="26" fill="#e8eaf0">
+          <rect x="231" y="8" width="118" height="54" rx="14" fill="#181c26" stroke="#CCFF00" stroke-opacity=".45" stroke-width="2"/>
+          <text x="290" y="43" text-anchor="middle">NVDA</text>
+          <rect x="461" y="158" width="112" height="54" rx="14" fill="#181c26" stroke="#CCFF00" stroke-opacity=".45" stroke-width="2"/>
+          <text x="517" y="193" text-anchor="middle">GOOG</text>
+          <rect x="58" y="254" width="112" height="54" rx="14" fill="#181c26" stroke="#CCFF00" stroke-opacity=".45" stroke-width="2"/>
+          <text x="114" y="289" text-anchor="middle">AAPL</text>
+        </g>
+      </svg>
+
+      <div class="side">
+        <div class="statline">
+          <div class="v">120+</div>
+          <div class="k">countries</div>
+        </div>
+        <div class="chips" style="max-width:760px">
+          <div class="chip rhchip">Uniswap and 1inch, live day one</div>
+        </div>
+        <div class="fine">Tradeable through the Robinhood wallet</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- D4-B :: CH4 239.94-246.54 :: ETF pipe. Also exported as D4-B-etf@end.png. [VERIFY] weekly figure -->
+<div class="frame" id="D4-B-etf">
+  <div class="orb" style="width:880px;height:880px;background:#00e68a;top:-300px;right:-220px;opacity:.20"></div>
+  <div class="orb" style="width:620px;height:620px;background:#00c2ff;bottom:-300px;left:-200px;opacity:.14"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="cey">The ETF pipe</div>
+    <div class="big"><span class="g">$196.4M</span></div>
+    <div class="sub" style="margin-top:20px;font-size:34px;color:var(--text-primary)">
+      Net inflows &nbsp;·&nbsp; <span class="mono">July 14-21</span> &nbsp;·&nbsp; ETHA leading
+    </div>
+    <div class="cdiv"></div>
+    <div class="chips">
+      <div class="chip gc">Staking ETFs now live</div>
+      <div class="chip">Grayscale</div>
+      <div class="chip">iShares</div>
+    </div>
+    <div class="flow">
+      <div class="node">Wall Street demand</div>
+      <svg width="110" height="34" viewBox="0 0 110 34">
+        <path d="M2 17 H82" stroke="#00e68a" stroke-width="4" stroke-opacity=".85"/>
+        <path d="M106 17 L78 3 V31 Z" fill="#00e68a" fill-opacity=".9"/>
+      </svg>
+      <div class="node hot">Supply lockup</div>
+    </div>
+  </div>
+</div>
+
+<!-- MONT-1 :: CH5 289.54-293.50 (3.96s) :: RECAP state of D2-B, exported as D2-B-buidl@end.png
+     Line under it: "the biggest asset manager on earth, building on Ethereum,"
+     PROMOTED: BUIDL + on Ethereum.  DROPPED: acronym gloss, March 2024 / Securitize /
+     Ethereum-first chips, $1.00 NAV + ~3.4% 7-day yield fine print.
+     Same orbs, same card frame, same accents as D2-B-buidl (recognition is the point). -->
+<div class="frame" id="D2-B-buidl-recap">
+  <div class="orb" style="width:880px;height:880px;background:#00c2ff;top:-300px;right:-220px;opacity:.20"></div>
+  <div class="orb" style="width:620px;height:620px;background:#00e68a;bottom:-280px;left:-200px;opacity:.16"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="cey">BlackRock, the biggest asset manager on the planet</div>
+    <div class="mark xl">BUIDL</div>
+    <div class="cdiv"></div>
+    <div class="row" style="gap:44px">
+      <svg width="98" height="160" viewBox="0 0 256 417" style="flex:none">
+        <g fill="#00e68a">
+          <path d="M127.96 0 124.61 11.36v274.06l3.35 3.34 127.95-75.63z" fill-opacity=".62"/>
+          <path d="M127.96 0 0 212.32l127.96 75.63V154.16z"/>
+          <path d="M127.96 312.19l-1.89 2.3v97.54l1.89 5.51L256 236.59z" fill-opacity=".62"/>
+          <path d="M127.96 416.91v-104.72L0 236.59z"/>
+          <path d="M127.96 288.2l127.95-75.63-127.95-58.16z" fill-opacity=".2"/>
+          <path d="M0 212.57l127.96 75.63V154.41z" fill-opacity=".45"/>
+        </g>
+      </svg>
+      <div class="hero" style="font-size:98px">BUILDING ON <span class="g">ETHEREUM</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- MONT-4 :: CH5 301.88-304.20 (2.32s) :: RECAP state of D4-B, exported as D4-B-etf@end.png
+     Line under it: "Wall Street buying through tickers,"
+     PROMOTED: $196.4M (with its exact window, so the claim stays as precise as the base
+     card) + the WALL STREET DEMAND -> SUPPLY LOCKUP strip.
+     DROPPED: "ETHA leading", staking-ETFs-live / Grayscale / iShares chips. -->
+<div class="frame" id="D4-B-etf-recap">
+  <div class="orb" style="width:880px;height:880px;background:#00e68a;top:-300px;right:-220px;opacity:.20"></div>
+  <div class="orb" style="width:620px;height:620px;background:#00c2ff;bottom:-300px;left:-200px;opacity:.14"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="cey">The ETF pipe</div>
+    <div class="big xl"><span class="g">$196.4M</span></div>
+    <div class="fine" style="margin-top:26px">Net inflows &nbsp;·&nbsp; July 14-21</div>
+    <div class="cdiv"></div>
+    <div class="flow xl">
+      <div class="node">Wall Street demand</div>
+      <svg width="132" height="40" viewBox="0 0 132 40">
+        <path d="M2 20 H98" stroke="#00e68a" stroke-width="5" stroke-opacity=".85"/>
+        <path d="M128 20 L94 4 V36 Z" fill="#00e68a" fill-opacity=".9"/>
+      </svg>
+      <div class="node hot">Supply lockup</div>
+    </div>
+  </div>
+</div>
+
+<!-- D5-CLOSE :: CH5 402.78-409.04 :: closing verdict. FORECAST tag retained. -->
+<div class="frame" id="D5-close">
+  <div class="orb" style="width:900px;height:900px;background:#00e68a;top:-260px;right:-180px;opacity:.24"></div>
+  <div class="orb" style="width:700px;height:700px;background:#ffd700;bottom:-320px;left:-220px;opacity:.12"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="cey">If the banks are even half right</div>
+    <div class="row" style="align-items:center;gap:56px">
+      <div>
+        <div class="tag"><span class="dot"></span>Forecast, not a promise</div>
+        <div class="bigger" style="margin-top:24px">$2T BY 2028</div>
+      </div>
+      <div style="flex:none;margin-left:auto;margin-right:60px">
+        <svg width="148" height="240" viewBox="0 0 256 417">
+          <g fill="#00e68a">
+            <path d="M127.96 0 124.61 11.36v274.06l3.35 3.34 127.95-75.63z" fill-opacity=".62"/>
+            <path d="M127.96 0 0 212.32l127.96 75.63V154.16z"/>
+            <path d="M127.96 312.19l-1.89 2.3v97.54l1.89 5.51L256 236.59z" fill-opacity=".62"/>
+            <path d="M127.96 416.91v-104.72L0 236.59z"/>
+            <path d="M127.96 288.2l127.95-75.63-127.95-58.16z" fill-opacity=".2"/>
+            <path d="M0 212.57l127.96 75.63V154.41z" fill-opacity=".45"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="cdiv"></div>
+    <div class="hero" style="font-size:96px">NOT <span class="g">PRICED FOR IT</span></div>
+    <div class="fine" style="margin-top:26px">Standard Chartered projection &nbsp;·&nbsp; the chain underneath the wave</div>
+  </div>
+</div>
+
+</body></html>

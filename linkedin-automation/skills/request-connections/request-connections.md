@@ -17,6 +17,20 @@ Sibling skills: [`scrape-group-members`](../scrape-group-members/scrape-group-me
 
 ## Running it
 
+**Via the Lane 3 LangGraph graph (canonical since 2026-07-30 — port + graph blessed
+on the "Lane 3, 5" live run, 5/5 sent):**
+
+```bash
+python linkedin-automation/graph/run.py --lane 3 --max N [--dry-run]
+```
+
+The graph launches the Python port **`request_connections.py`** (1:1 with the JS:
+same selectors, pacing, identity guards, output lines), verifies the members.json
+deltas from disk, kill-switches on 5 consecutive per-member errors, halts on a
+restriction page, and reports (without halting) if the weekly invite limit stops the
+run. Rollback = swap `INVITE_SCRIPT` to `INVITE_SCRIPT_JS` in `graph/lane_graph.py`;
+the frozen JS original still runs directly:
+
 ```bash
 node linkedin-automation/skills/request-connections/request-connections.js [--max=N] [--dry-run]
 ```

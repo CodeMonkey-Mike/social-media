@@ -109,8 +109,15 @@ function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + mi
     const dur = parseFloat(execSync(`ffprobe -v error -show_entries format=duration -of csv=p=0 "${target}"`).toString().trim());
     const br = Math.round(100 * 8 * 1000 / dur * 0.92);
     const cap = target.replace(/\.[^.]+$/, '') + '.cap.mp4';
-    console.error('transcoding ' + (fs.statSync(target).size / 1e6).toFixed(0) + 'MB -> ~100MB (' + br + 'k)...');
-    execSync(`ffmpeg -y -loglevel error -i "${target}" -vf scale=-2:1080 -c:v libx264 -b:v ${br}k -maxrate ${br}k -bufsize ${br * 2}k -an "${cap}"`);
+    // ⚠ ORIENTATION-AWARE (fixed 2026-07-25): "1080p" means 1080 on the LONG-EDGE-of-the-frame's
+    // counterpart, i.e. 1920x1080 for landscape but 1080x1920 for PORTRAIT. The old hardcoded
+    // `scale=-2:1080` capped a vertical 4K source to 608x1080 — only 608px wide for a 1080-wide
+    // vertical comp, i.e. a silent downscale. Scale the SHORT edge to 1080 instead.
+    const dims = execSync(`ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "${target}"`).toString().trim().split(',').map(Number);
+    const portrait = dims[1] > dims[0];
+    const vf = portrait ? 'scale=1080:-2' : 'scale=-2:1080';
+    console.error('transcoding ' + (fs.statSync(target).size / 1e6).toFixed(0) + 'MB -> ~100MB (' + br + 'k, ' + (portrait ? 'portrait' : 'landscape') + ' ' + vf + ')...');
+    execSync(`ffmpeg -y -loglevel error -i "${target}" -vf ${vf} -c:v libx264 -b:v ${br}k -maxrate ${br}k -bufsize ${br * 2}k -an "${cap}"`);
     fs.unlinkSync(target); saved = cap;
   }
   console.log(JSON.stringify({ saved, bytes: fs.statSync(saved).size, source: itemUrl.split('?')[0] }, null, 2));

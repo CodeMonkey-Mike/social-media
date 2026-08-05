@@ -33,17 +33,48 @@ across its life:
 1. **`EDIT-PLAN-prep.md`** — the **pre-record planning file**. Beat-indexed (chapter/beat tables are fine here),
    provisional, NO real timecodes. Maps every beat → every layer/asset/transition, zero orphans, so asset prep
    can proceed. This is a PLANNING doc, not the gate. (Name it `-prep` from the start.)
-2. **`EDIT-PLAN.md`** — the **post-record final**, the time-ordered EVENT LOG in §1. After the spine is recorded +
-   transcribed, GENERATE this with `_gen_editplan.js/.py` from the comp + transcript; preserve the old planning
-   detail in `EDIT-PLAN-prep.md` (it is NOT overwritten — it stays as the prep record).
-3. **`CUE-SHEET.md`** — the **post-record** layer-grouped watch-along in §2, hand-authored / generated from the
-   same comp tables.
+2. **`EDIT-PLAN.md`** — the **post-record final**, the time-ordered EVENT LOG in §1. As soon as the spine is
+   recorded + transcribed, AUTHOR this off the transcript + placement plan (pre-build, per the ⛔ ORDER note);
+   preserve the old planning detail in `EDIT-PLAN-prep.md` (it is NOT overwritten — it stays as the prep record).
+3. **`CUE-SHEET.md`** — the **post-record** layer-grouped watch-along in §2, hand-authored from the same
+   transcript + placement plan (pre-build).
 
 **Optional companion: `BROLL-PLAN.md`** (Mike, 2026-06-29) — the b-roll ACQUISITION worklist (atmospheric
 shots, the prompts / Envato search terms / sourcing status, a place to keep ADDING b-roll). It feeds the
 `EDIT-PLAN-prep` b-roll rows but is not the placement gate: keep heavy shot detail HERE so the screenplay's
-`🎬 [SHOW]` lines stay short references and don't bloat. Data visuals (diagrams/charts/containers) do NOT go in
-it. (Both `smartmoney-backing-kaspa` and `Kaspa founder genius or over-rated` carry one alongside the prep file.)
+`🎬 [SHOW]` lines stay short references and don't bloat. **Every BROLL-PLAN ALSO carries TWO build-worklist
+sections (Mike, 2026-07-24: these assets were invisible when they lived only as ids in the cue sheet):**
+- **"CHARTS build worklist"** — the TWO chart types: Type 1 = ANIMATED charts (motion, code-built, animate
+  for real) and Type 2 = SYSTEM-DESIGN charts (NO motion: code-rendered HTML/SVG stills screenshotted into
+  the comp, movement only from comp-level spotlights/transitions). Each row: id · what moves (or which
+  states/stills) · placement timecodes · build status.
+- **"SLIDES build worklist"** — the CSS containers, in the TWO named slide types: **TITLE SLIDES** (NO box:
+  eyebrow + serif headline with accent-colored key words + body on dark bg — container-reference's former
+  "text variant") and **CARD SLIDES** (same anatomy INSIDE the rounded card box with top-accent line — the
+  former "card variant"). Visual spec + locked stylesheet: `container-reference/README.md` +
+  `container-canonical.css`. Each row: id · eyebrow/headline/content · placement · build status.
+- The **RECEIPTS capture worklist** (when the plan has receipts) types every row **R(article) or R(other)**
+  per `broll-and-containers.md` "Cover STYLE devices" §1 — article receipts carry the mandatory
+  reading/motion treatment (push-in / single-image camera-move), other receipts are treatment-per-capture.
+
+### ⛔ The IMAGES worklist carries a REFERENCE column (Mike, 2026-07-25 — root-caused, not a reminder)
+**Every image row whose beat names a REAL, identifiable thing — a token, a project, a company, a person,
+a product — MUST fill a `Reference` column**, whose value is either a concrete path or the explicit string
+`none exists (generic approved)`. The shared library is
+**`schedule-tweets/images/reference/`** (kaspa-logo, velvet, LAB, bittensor-tao, linea, michael-saylor, …);
+if the mark is not there, source it and add it, or write the explicit no-reference note.
+
+Why this column exists: on kaspa 30bps the row for the "58X on the Velvet Token" beat read *"themed coin,
+NO invented logo/text"*. That guard was correct — it stops us fabricating fake branding — but the worklist
+had nowhere to point at the REAL mark, and neither the plan nor the image-gen agent def mentioned that the
+reference folder exists. So "don't invent a logo" silently became "produce a blank coin", twice, even though
+`velvet.png` was sitting in the shared folder the whole time.
+
+**Also fix the wording wherever it appears.** Write **"use the REAL mark from the reference image; never
+invent one"** — never a bare "NO logo/text", which bans the symptom AND the cure. The prohibition is on
+INVENTING branding, not on depicting a real brand we have a reference for.
+(Both `smartmoney-backing-kaspa` and `Kaspa founder genius or over-rated` carry a BROLL-PLAN alongside the
+prep file; `kaspa 30bps` is the first with the CHARTS + SLIDES sections.)
 
 **The trap this prevents (kaspa-covenants, 2026-06-20→21):** a pre-record beat-table plan gets written as
 `EDIT-PLAN.md` (no `-prep`), then nobody splits it into the event-log EDIT-PLAN + the layer-grouped CUE-SHEET, and
@@ -53,11 +84,12 @@ file: **rename it `EDIT-PLAN-prep.md`**, and produce the event-log `EDIT-PLAN.md
 ---
 
 ## 1. EDIT-PLAN.md — a TIME-ORDERED EVENT LOG (not a beat table)
-Every spoken line interleaved with every layer event that lands on it, in time order. **Generate it from the
-comp + transcript** with `media/<project>/_gen_editplan.js` (it reads the comp's SCENES/BROLL/FACE/etc. tables +
-the spine word-json and emits the log). Re-run after every comp edit. The generator is a PER-PROJECT convenience
-script, not durable — if no copy survives (every `media/<project>/` is deletable), **hand-author from the
-skeleton below; the format here is the source of truth, not any one project's script.**
+Every spoken line interleaved with every layer event that lands on it, in time order. **AUTHOR it by hand
+from the word-level transcript + the placement plan, PRE-build (the §0 ⛔ ORDER note governs — the comp is
+built TO this log).** The old "generate it from the comp with `_gen_editplan.js`" wording is LEGACY: a
+generator run is only an optional as-built reconciliation after the comp exists, never how the plan is
+authored (that wording caused the wrong "post-comp" call two videos running — Mike, 2026-07-24). The format
+below is the source of truth, not any one project's script.
 
 Format (one event per line, time-sorted):
 ```
@@ -141,9 +173,9 @@ CONTAINER / CHART scene changes = cross-fade + 0.93→1 scale-in (see CONTAINER 
 
 ---
 
-## Workflow
-1. Build the comp to the FULL spec (PRE-RENDER GATE in `../CLAUDE.md`).
-2. Transcribe the final spine (word-level).
-3. Run `_gen_editplan.js` → `EDIT-PLAN.md` (event log). Hand-author / generate `CUE-SHEET.md` (layer-grouped)
-   from the same comp tables.
-4. Reconcile the comp against both before the render (zero orphans). The render confirms; it never discovers.
+## Workflow (order per the §0 ⛔ ORDER note — plans FIRST, comp built TO them)
+1. Transcribe the final spine (word-level).
+2. Author `EDIT-PLAN.md` (event log) + `CUE-SHEET.md` (layer-grouped) off the transcript + placement plan.
+3. Build the comp to the FULL spec, TO those plans (PRE-RENDER GATE in `../CLAUDE.md`).
+4. Reconcile the comp against both before the render (zero orphans; a `_gen_editplan` run is an optional
+   as-built reconciliation here). The render confirms; it never discovers.

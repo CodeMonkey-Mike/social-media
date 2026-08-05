@@ -24,7 +24,21 @@ const fs = require('fs');
 const BROLL = new Set(['still', 'stillglitch', 'vid', 'vidglitch']);
 const path = process.argv[2];
 if (!path) { console.error('usage: lint-covers.js <comp.tsx>'); process.exit(2); }
-const src = fs.readFileSync(path, 'utf8');
+let src = fs.readFileSync(path, 'utf8');
+
+// A VERTICAL (or any derived) comp IMPORTS the timing tables from its 16:9 parent instead of
+// duplicating them — that is the point, so the two cuts cannot drift. Follow the import and lint the
+// file that actually declares COVERS, rather than reporting "could not parse".
+if (!/COVERS[^=]*=\s*\[/.test(src)) {
+  const imp = src.match(/import\s*\{[^}]*\bCOVERS\b[^}]*\}\s*from\s*['"]\.\/([\w.-]+)['"]/);
+  if (imp) {
+    const p2 = require('path').join(require('path').dirname(path), imp[1].replace(/\.tsx?$/, '') + '.tsx');
+    if (fs.existsSync(p2)) {
+      console.log(`  note  COVERS is imported from ./${imp[1]} — linting that file's table (shared by both cuts).`);
+      src = fs.readFileSync(p2, 'utf8');
+    }
+  }
+}
 
 // --- extract COVERS entries ---
 const block = (src.match(/COVERS[^=]*=\s*\[([\s\S]*?)\];/) || [])[1] || '';

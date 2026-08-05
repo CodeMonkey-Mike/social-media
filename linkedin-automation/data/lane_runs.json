@@ -1,0 +1,2421 @@
+[
+  {
+    "run_id": "endorse-20260801-1155@2026-08-01T11:55:12",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "endorse-20260801-1155",
+    "started_at": "2026-08-01T11:55:12",
+    "ended_at": "2026-08-01T12:00:31",
+    "duration_s": 319.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 2,
+    "profile_views": 2,
+    "backfilled": true,
+    "summary": {
+      "requested": 2,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 2,
+      "endorsed": 2,
+      "skills_endorsed": 19,
+      "no_skills": 0,
+      "dm_sent": 2,
+      "dm_failed": 0,
+      "endorse_failed": 0,
+      "already_endorsed": 0,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 0,
+      "per_member": [
+        {
+          "slug": "amandafetters",
+          "skills": 9,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "amanda-marlow-3723a112",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        }
+      ],
+      "members_delta": {
+        "endorsed": 2,
+        "no_skills": 0,
+        "dm_sent": 2
+      },
+      "eligible_before": {
+        "total": 57,
+        "over_14d": 2,
+        "days_7_to_14": 21,
+        "under_7d": 34,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 55,
+        "over_14d": 0,
+        "days_7_to_14": 21,
+        "under_7d": 34,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "feed-test-1@2026-08-01T20:25:36",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "feed-test-1",
+    "started_at": "2026-08-01T20:25:36",
+    "ended_at": "2026-08-01T20:25:36",
+    "duration_s": 0.2,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 0,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 5,
+      "endorsed": 2,
+      "skills_endorsed": 20,
+      "no_skills": 1,
+      "dm_sent": 2,
+      "dm_failed": 1,
+      "endorse_failed": 0,
+      "already_endorsed": 1,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 1,
+      "per_member": [
+        {
+          "slug": "stub-a",
+          "skills": 11,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "stub-b",
+          "skills": null,
+          "skills_dry": false,
+          "dm": null,
+          "note": "no endorsable skills (abandoned, no DM)"
+        },
+        {
+          "slug": "stub-c",
+          "skills": null,
+          "skills_dry": false,
+          "dm": "not_verified",
+          "note": "already endorsed on an earlier run"
+        },
+        {
+          "slug": "stub-d",
+          "skills": null,
+          "skills_dry": false,
+          "dm": null,
+          "note": "error (retry next run)"
+        },
+        {
+          "slug": "stub-e",
+          "skills": 9,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        }
+      ],
+      "members_delta": {
+        "endorsed": 0,
+        "no_skills": 0,
+        "dm_sent": 0
+      },
+      "eligible_before": {
+        "total": 55,
+        "over_14d": 0,
+        "days_7_to_14": 21,
+        "under_7d": 34,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 55,
+        "over_14d": 0,
+        "days_7_to_14": 21,
+        "under_7d": 34,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "hist-2-ok@2026-08-01T20:26:08",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "hist-2-ok",
+    "started_at": "2026-08-01T20:26:08",
+    "ended_at": "2026-08-01T20:26:08",
+    "duration_s": 0.2,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": 12,
+    "profile_views": 0,
+    "summary": {
+      "requested": 12,
+      "visited": 4,
+      "processed_delta": 0,
+      "captured_delta": 0,
+      "captured_total": 526,
+      "queue_remaining": 5438,
+      "already": 0,
+      "skipped_out_of_zone": 1,
+      "errors": 1,
+      "regions": {
+        "north_america": [
+          "Austin, Texas, United States"
+        ],
+        "europe": [
+          "Cardiff, Wales, United Kingdom"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "hist-3-ok@2026-08-01T20:26:11",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "hist-3-ok",
+    "started_at": "2026-08-01T20:26:11",
+    "ended_at": "2026-08-01T20:26:11",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": 8,
+    "profile_views": 0,
+    "summary": {
+      "requested": 8,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 1,
+      "already_pending": 1,
+      "already_connected": 0,
+      "nocb_strike1": 1,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {},
+      "remaining_to_contact": 153,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "hist-4-ok@2026-08-01T20:26:14",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "hist-4-ok",
+    "started_at": "2026-08-01T20:26:14",
+    "ended_at": "2026-08-01T20:26:14",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 278,
+      "rounds": 2,
+      "cards_seen": 34,
+      "newly_connected": [
+        {
+          "slug": "stub-a-1234",
+          "date": "2026-07-29",
+          "inexact": false
+        },
+        {
+          "slug": "stub-b-5678",
+          "date": "2026-07-28",
+          "inexact": false
+        },
+        {
+          "slug": "stub-c-9012",
+          "date": "2026-07-30",
+          "inexact": true
+        }
+      ],
+      "newly_connected_count": 3,
+      "inexact_dates": 1,
+      "connected_delta": 0,
+      "connected_total": 95,
+      "still_outstanding": 278,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "hist-2-restricted@2026-08-01T20:26:17",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "hist-2-restricted",
+    "started_at": "2026-08-01T20:26:17",
+    "ended_at": "2026-08-01T20:26:17",
+    "duration_s": 0.1,
+    "status": "halted_restricted",
+    "stub": "restricted",
+    "dry_run": false,
+    "requested": 20,
+    "profile_views": 0,
+    "summary": null,
+    "error": "Restriction-page phrasing in scraper output — STOP for the rest of the day. Never rerun after this."
+  },
+  {
+    "run_id": "hist-3-errors@2026-08-01T20:26:19",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "hist-3-errors",
+    "started_at": "2026-08-01T20:26:19",
+    "ended_at": "2026-08-01T20:26:20",
+    "duration_s": 0.5,
+    "status": "failed",
+    "stub": "errors",
+    "dry_run": false,
+    "requested": 9,
+    "profile_views": 0,
+    "summary": null,
+    "error": "5 consecutive per-profile errors — systemic failure (restriction / logout / DOM change). Killing the run; diagnose before any rerun. NO retry today if it looks like a restriction."
+  },
+  {
+    "run_id": "hist-5-fail@2026-08-01T20:26:23",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "hist-5-fail",
+    "started_at": "2026-08-01T20:26:23",
+    "ended_at": "2026-08-01T20:26:23",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 0,
+    "summary": null,
+    "error": "endorser exit code 3; output tail:\nmembers.json: 526 total, 48 connected member(s) eligible for endorse+DM. [STUB fail]\n--max=4: processing at most 4 member(s) this run.\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "hist-4-nothing@2026-08-01T20:26:25",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "hist-4-nothing",
+    "started_at": "2026-08-01T20:26:25",
+    "ended_at": "2026-08-01T20:26:25",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "nothing",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": true,
+      "outstanding_before": 278,
+      "rounds": 0,
+      "cards_seen": 0,
+      "newly_connected": [],
+      "newly_connected_count": 0,
+      "inexact_dates": 0,
+      "connected_delta": 0,
+      "connected_total": 95,
+      "still_outstanding": 278,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "rg-1-ok@2026-08-01T20:35:05",
+    "lane": 1,
+    "lane_name": "seed",
+    "thread": "rg-1-ok",
+    "started_at": "2026-08-01T20:35:05",
+    "ended_at": "2026-08-01T20:35:05",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": 1,
+    "profile_views": 0,
+    "summary": {
+      "queue_before": 6525,
+      "queue_after": 6525,
+      "new": 0,
+      "per_name": {
+        "Zed": {
+          "matched": 3,
+          "added": 0
+        }
+      },
+      "names_skipped": [],
+      "searched_names_missing": [
+        "(stub run - searched_names check skipped)"
+      ]
+    },
+    "error": null
+  },
+  {
+    "run_id": "rg-1-restricted@2026-08-01T20:35:07",
+    "lane": 1,
+    "lane_name": "seed",
+    "thread": "rg-1-restricted",
+    "started_at": "2026-08-01T20:35:07",
+    "ended_at": "2026-08-01T20:35:07",
+    "duration_s": 0.1,
+    "status": "halted_restricted",
+    "stub": "restricted",
+    "dry_run": false,
+    "requested": 1,
+    "profile_views": 0,
+    "summary": null,
+    "error": "LinkedIn restriction page hit; seeder stopped itself. No more runs today."
+  },
+  {
+    "run_id": "rg-1-fail@2026-08-01T20:35:09",
+    "lane": 1,
+    "lane_name": "seed",
+    "thread": "rg-1-fail",
+    "started_at": "2026-08-01T20:35:09",
+    "ended_at": "2026-08-01T20:35:09",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": 1,
+    "profile_views": 0,
+    "summary": null,
+    "error": "seeder exit code 3; output tail:\nQueue starts at 0 members. [STUB fail]\nstub failure\n"
+  },
+  {
+    "run_id": "rg-2-ok@2026-08-01T20:35:11",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "rg-2-ok",
+    "started_at": "2026-08-01T20:35:11",
+    "ended_at": "2026-08-01T20:35:12",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 0,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 0,
+      "captured_delta": 0,
+      "captured_total": 526,
+      "queue_remaining": 5438,
+      "already": 0,
+      "skipped_out_of_zone": 1,
+      "errors": 1,
+      "regions": {
+        "north_america": [
+          "Austin, Texas, United States"
+        ],
+        "europe": [
+          "Cardiff, Wales, United Kingdom"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "rg-2-restricted@2026-08-01T20:35:14",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "rg-2-restricted",
+    "started_at": "2026-08-01T20:35:14",
+    "ended_at": "2026-08-01T20:35:14",
+    "duration_s": 0.1,
+    "status": "halted_restricted",
+    "stub": "restricted",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 0,
+    "summary": null,
+    "error": "Restriction-page phrasing in scraper output — STOP for the rest of the day. Never rerun after this."
+  },
+  {
+    "run_id": "rg-2-errors@2026-08-01T20:35:16",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "rg-2-errors",
+    "started_at": "2026-08-01T20:35:16",
+    "ended_at": "2026-08-01T20:35:16",
+    "duration_s": 0.4,
+    "status": "failed",
+    "stub": "errors",
+    "dry_run": false,
+    "requested": 9,
+    "profile_views": 0,
+    "summary": null,
+    "error": "5 consecutive per-profile errors — systemic failure (restriction / logout / DOM change). Killing the run; diagnose before any rerun. NO retry today if it looks like a restriction."
+  },
+  {
+    "run_id": "rg-2-fail@2026-08-01T20:35:18",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "rg-2-fail",
+    "started_at": "2026-08-01T20:35:18",
+    "ended_at": "2026-08-01T20:35:19",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 0,
+    "summary": null,
+    "error": "scraper exit code 3; output tail:\nQueue: 6435 members, 1007 processed, 5428 remaining. [STUB fail]\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "rg-3-ok@2026-08-01T20:35:21",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "rg-3-ok",
+    "started_at": "2026-08-01T20:35:21",
+    "ended_at": "2026-08-01T20:35:21",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 0,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 1,
+      "already_pending": 1,
+      "already_connected": 0,
+      "nocb_strike1": 1,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {},
+      "remaining_to_contact": 153,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "rg-3-limit@2026-08-01T20:35:23",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "rg-3-limit",
+    "started_at": "2026-08-01T20:35:23",
+    "ended_at": "2026-08-01T20:35:23",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "limit",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 0,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 1,
+      "sent": 0,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": true,
+      "contacted_delta": {},
+      "remaining_to_contact": 153,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "rg-3-errors@2026-08-01T20:35:25",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "rg-3-errors",
+    "started_at": "2026-08-01T20:35:25",
+    "ended_at": "2026-08-01T20:35:25",
+    "duration_s": 0.4,
+    "status": "failed",
+    "stub": "errors",
+    "dry_run": false,
+    "requested": 9,
+    "profile_views": 0,
+    "summary": null,
+    "error": "5 consecutive per-profile errors — systemic failure (restriction / logout / DOM change). Killing the run; diagnose before any rerun. NO retry today if it looks like a restriction."
+  },
+  {
+    "run_id": "rg-3-fail@2026-08-01T20:35:27",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "rg-3-fail",
+    "started_at": "2026-08-01T20:35:27",
+    "ended_at": "2026-08-01T20:35:28",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 0,
+    "summary": null,
+    "error": "inviter exit code 3; output tail:\nmembers.json: 518 total, 318 already contacted, 200 to contact. [STUB fail]\n--max=4: sending at most 4 invite(s) this run.\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "rg-4-ok@2026-08-01T20:35:30",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "rg-4-ok",
+    "started_at": "2026-08-01T20:35:30",
+    "ended_at": "2026-08-01T20:35:30",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 278,
+      "rounds": 2,
+      "cards_seen": 34,
+      "newly_connected": [
+        {
+          "slug": "stub-a-1234",
+          "date": "2026-07-29",
+          "inexact": false
+        },
+        {
+          "slug": "stub-b-5678",
+          "date": "2026-07-28",
+          "inexact": false
+        },
+        {
+          "slug": "stub-c-9012",
+          "date": "2026-07-30",
+          "inexact": true
+        }
+      ],
+      "newly_connected_count": 3,
+      "inexact_dates": 1,
+      "connected_delta": 0,
+      "connected_total": 95,
+      "still_outstanding": 278,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "rg-4-nothing@2026-08-01T20:35:32",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "rg-4-nothing",
+    "started_at": "2026-08-01T20:35:32",
+    "ended_at": "2026-08-01T20:35:32",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "nothing",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": true,
+      "outstanding_before": 278,
+      "rounds": 0,
+      "cards_seen": 0,
+      "newly_connected": [],
+      "newly_connected_count": 0,
+      "inexact_dates": 0,
+      "connected_delta": 0,
+      "connected_total": 95,
+      "still_outstanding": 278,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "rg-4-restricted@2026-08-01T20:35:35",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "rg-4-restricted",
+    "started_at": "2026-08-01T20:35:35",
+    "ended_at": "2026-08-01T20:35:35",
+    "duration_s": 0.1,
+    "status": "halted_restricted",
+    "stub": "restricted",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": null,
+    "error": "Restriction page — scanner stopped itself. STOP for the rest of the day. Never rerun after this."
+  },
+  {
+    "run_id": "rg-4-fail@2026-08-01T20:35:37",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "rg-4-fail",
+    "started_at": "2026-08-01T20:35:37",
+    "ended_at": "2026-08-01T20:35:38",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": null,
+    "error": "scanner exit code 3; output tail:\nmembers.json: 518 total, 239 contacted & awaiting acceptance. [STUB fail]\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "rg-5-ok@2026-08-01T20:35:40",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "rg-5-ok",
+    "started_at": "2026-08-01T20:35:40",
+    "ended_at": "2026-08-01T20:35:40",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 0,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 5,
+      "endorsed": 2,
+      "skills_endorsed": 20,
+      "no_skills": 1,
+      "dm_sent": 2,
+      "dm_failed": 1,
+      "endorse_failed": 0,
+      "already_endorsed": 1,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 1,
+      "per_member": [
+        {
+          "slug": "stub-a",
+          "skills": 11,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "stub-b",
+          "skills": null,
+          "skills_dry": false,
+          "dm": null,
+          "note": "no endorsable skills (abandoned, no DM)"
+        },
+        {
+          "slug": "stub-c",
+          "skills": null,
+          "skills_dry": false,
+          "dm": "not_verified",
+          "note": "already endorsed on an earlier run"
+        },
+        {
+          "slug": "stub-d",
+          "skills": null,
+          "skills_dry": false,
+          "dm": null,
+          "note": "error (retry next run)"
+        },
+        {
+          "slug": "stub-e",
+          "skills": 9,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        }
+      ],
+      "members_delta": {
+        "endorsed": 0,
+        "no_skills": 0,
+        "dm_sent": 0
+      },
+      "eligible_before": {
+        "total": 55,
+        "over_14d": 0,
+        "days_7_to_14": 21,
+        "under_7d": 34,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 55,
+        "over_14d": 0,
+        "days_7_to_14": 21,
+        "under_7d": 34,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "rg-5-restricted@2026-08-01T20:35:43",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "rg-5-restricted",
+    "started_at": "2026-08-01T20:35:43",
+    "ended_at": "2026-08-01T20:35:43",
+    "duration_s": 0.1,
+    "status": "halted_restricted",
+    "stub": "restricted",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 0,
+    "summary": null,
+    "error": "Restriction / unusual-activity page — endorser stopped itself. STOP for the rest of the day. Never rerun after this."
+  },
+  {
+    "run_id": "rg-5-errors@2026-08-01T20:35:45",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "rg-5-errors",
+    "started_at": "2026-08-01T20:35:45",
+    "ended_at": "2026-08-01T20:35:46",
+    "duration_s": 0.5,
+    "status": "failed",
+    "stub": "errors",
+    "dry_run": false,
+    "requested": 9,
+    "profile_views": 0,
+    "summary": null,
+    "error": "5 consecutive per-profile errors — systemic failure (restriction / logout / DOM change). Killing the run; diagnose before any rerun. NO retry today if it looks like a restriction."
+  },
+  {
+    "run_id": "rg-5-fail@2026-08-01T20:35:48",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "rg-5-fail",
+    "started_at": "2026-08-01T20:35:48",
+    "ended_at": "2026-08-01T20:35:48",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 0,
+    "summary": null,
+    "error": "endorser exit code 3; output tail:\nmembers.json: 526 total, 48 connected member(s) eligible for endorse+DM. [STUB fail]\n--max=5: processing at most 5 member(s) this run.\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "rg-5-nothing@2026-08-01T20:35:50",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "rg-5-nothing",
+    "started_at": "2026-08-01T20:35:50",
+    "ended_at": "2026-08-01T20:35:50",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "nothing",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 0,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "nothing_to_do": true,
+      "visited": 0,
+      "endorsed": 0,
+      "skills_endorsed": 0,
+      "no_skills": 0,
+      "dm_sent": 0,
+      "dm_failed": 0,
+      "endorse_failed": 0,
+      "already_endorsed": 0,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 0,
+      "per_member": [],
+      "members_delta": {
+        "endorsed": 0,
+        "no_skills": 0,
+        "dm_sent": 0
+      },
+      "eligible_before": {
+        "total": 55,
+        "over_14d": 0,
+        "days_7_to_14": 21,
+        "under_7d": 34,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 55,
+        "over_14d": 0,
+        "days_7_to_14": 21,
+        "under_7d": 34,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "check-20260801-2102@2026-08-01T21:02:31",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "check-20260801-2102",
+    "started_at": "2026-08-01T21:02:31",
+    "ended_at": "2026-08-01T21:03:06",
+    "duration_s": 35.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 278,
+      "rounds": 6,
+      "cards_seen": 20,
+      "newly_connected": [
+        {
+          "slug": "carlosdgarcia1",
+          "date": "2026-08-01",
+          "inexact": false
+        },
+        {
+          "slug": "carlospascualfernandez",
+          "date": "2026-08-01",
+          "inexact": false
+        },
+        {
+          "slug": "carlos-buchelli-848b40102",
+          "date": "2026-08-01",
+          "inexact": false
+        },
+        {
+          "slug": "carlosodini",
+          "date": "2026-07-31",
+          "inexact": false
+        },
+        {
+          "slug": "carloseduardoleosantos",
+          "date": "2026-08-01",
+          "inexact": true
+        },
+        {
+          "slug": "carlosgarciaponc",
+          "date": "2026-07-31",
+          "inexact": false
+        },
+        {
+          "slug": "juan-gallardo-saavedra",
+          "date": "2026-07-31",
+          "inexact": false
+        },
+        {
+          "slug": "carla-testoni-lunelli-49411957",
+          "date": "2026-07-31",
+          "inexact": false
+        },
+        {
+          "slug": "carlosvlz",
+          "date": "2026-08-01",
+          "inexact": true
+        },
+        {
+          "slug": "carla-ramos-76a716157",
+          "date": "2026-07-31",
+          "inexact": false
+        },
+        {
+          "slug": "andreas-c-3901b3ab",
+          "date": "2026-07-31",
+          "inexact": false
+        },
+        {
+          "slug": "miguel-carlos-vargas-serrano-5b9672199",
+          "date": "2026-07-31",
+          "inexact": false
+        },
+        {
+          "slug": "carlosrogeriodasdores",
+          "date": "2026-07-31",
+          "inexact": false
+        }
+      ],
+      "newly_connected_count": 13,
+      "inexact_dates": 2,
+      "connected_delta": 13,
+      "connected_total": 108,
+      "still_outstanding": 265,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260801@2026-08-01T21:04:03",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260801",
+    "started_at": "2026-08-01T21:04:03",
+    "ended_at": "2026-08-01T21:21:34",
+    "duration_s": 1050.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 6,
+    "profile_views": 6,
+    "summary": {
+      "requested": 6,
+      "visited": 6,
+      "processed_delta": 5,
+      "captured_delta": 4,
+      "captured_total": 530,
+      "queue_remaining": 5433,
+      "already": 0,
+      "skipped_out_of_zone": 1,
+      "errors": 1,
+      "regions": {
+        "europe": [
+          "Zug, Switzerland"
+        ],
+        "south_america": [
+          "Bogota, D.C., Capital District, Colombia",
+          "Argentina"
+        ],
+        "north_america": [
+          "San Francisco, California, United States"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260801@2026-08-01T21:21:55",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260801",
+    "started_at": "2026-08-01T21:21:55",
+    "ended_at": "2026-08-01T21:29:35",
+    "duration_s": 459.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 3,
+    "profile_views": 3,
+    "summary": {
+      "requested": 3,
+      "dry_run": false,
+      "visited": 3,
+      "sent": 3,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 3
+      },
+      "remaining_to_contact": 154,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "check-20260801-2129@2026-08-01T21:29:45",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "check-20260801-2129",
+    "started_at": "2026-08-01T21:29:45",
+    "ended_at": "2026-08-01T21:30:16",
+    "duration_s": 30.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 268,
+      "rounds": 6,
+      "cards_seen": 20,
+      "newly_connected": [],
+      "newly_connected_count": 0,
+      "inexact_dates": 0,
+      "connected_delta": 0,
+      "connected_total": 108,
+      "still_outstanding": 268,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "endorse-20260801-2130@2026-08-01T21:30:23",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "endorse-20260801-2130",
+    "started_at": "2026-08-01T21:30:23",
+    "ended_at": "2026-08-01T21:31:22",
+    "duration_s": 58.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 1,
+    "summary": {
+      "requested": 1,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 1,
+      "endorsed": 0,
+      "skills_endorsed": 0,
+      "no_skills": 1,
+      "dm_sent": 0,
+      "dm_failed": 0,
+      "endorse_failed": 0,
+      "already_endorsed": 0,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 0,
+      "per_member": [
+        {
+          "slug": "billu-aswini-6001982a4",
+          "skills": null,
+          "skills_dry": false,
+          "dm": null,
+          "note": "no endorsable skills (abandoned, no DM)"
+        }
+      ],
+      "members_delta": {
+        "endorsed": 0,
+        "no_skills": 1,
+        "dm_sent": 0
+      },
+      "eligible_before": {
+        "total": 68,
+        "over_14d": 0,
+        "days_7_to_14": 21,
+        "under_7d": 47,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 67,
+        "over_14d": 0,
+        "days_7_to_14": 20,
+        "under_7d": 47,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260803@2026-08-03T08:46:53",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260803",
+    "started_at": "2026-08-03T08:46:53",
+    "ended_at": "2026-08-03T09:02:19",
+    "duration_s": 926.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "visited": 5,
+      "processed_delta": 4,
+      "captured_delta": 4,
+      "captured_total": 534,
+      "queue_remaining": 5429,
+      "already": 0,
+      "skipped_out_of_zone": 0,
+      "errors": 1,
+      "regions": {
+        "north_america": [
+          "Dallas-Fort Worth Metroplex",
+          "Indianapolis, Indiana, United States"
+        ],
+        "europe": [
+          "Rodez, Occitanie, France",
+          "Milan, Lombardy, Italy"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260803@2026-08-03T09:02:38",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260803",
+    "started_at": "2026-08-03T09:02:38",
+    "ended_at": "2026-08-03T09:23:05",
+    "duration_s": 1227.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "visited": 5,
+      "processed_delta": 4,
+      "captured_delta": 3,
+      "captured_total": 537,
+      "queue_remaining": 5425,
+      "already": 0,
+      "skipped_out_of_zone": 1,
+      "errors": 1,
+      "regions": {
+        "north_america": [
+          "Hamilton, Ohio, United States",
+          "Canada"
+        ],
+        "europe": [
+          "Nuremberg, Bavaria, Germany"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260803@2026-08-03T09:23:23",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260803",
+    "started_at": "2026-08-03T09:23:23",
+    "ended_at": "2026-08-03T09:41:01",
+    "duration_s": 1057.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "visited": 5,
+      "processed_delta": 4,
+      "captured_delta": 4,
+      "captured_total": 541,
+      "queue_remaining": 5421,
+      "already": 0,
+      "skipped_out_of_zone": 0,
+      "errors": 1,
+      "regions": {
+        "europe": [
+          "Brussels, Brussels Region, Belgium",
+          "Greater Barcelona Metropolitan Area"
+        ],
+        "north_america": [
+          "McHenry, Illinois, United States",
+          "Vaughan, Ontario, Canada"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260803@2026-08-03T12:44:00",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260803",
+    "started_at": "2026-08-03T12:44:00",
+    "ended_at": "2026-08-03T13:07:19",
+    "duration_s": 1398.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "visited": 5,
+      "processed_delta": 4,
+      "captured_delta": 3,
+      "captured_total": 544,
+      "queue_remaining": 5417,
+      "already": 0,
+      "skipped_out_of_zone": 1,
+      "errors": 1,
+      "regions": {
+        "south_america": [
+          "Quito Canton, Pichincha, Ecuador",
+          "Cuenca Canton, Azuay, Ecuador",
+          "Bogota, D.C., Capital District, Colombia"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260803@2026-08-03T13:08:20",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260803",
+    "started_at": "2026-08-03T13:08:20",
+    "ended_at": "2026-08-03T13:24:46",
+    "duration_s": 985.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "visited": 5,
+      "processed_delta": 5,
+      "captured_delta": 3,
+      "captured_total": 547,
+      "queue_remaining": 5412,
+      "already": 0,
+      "skipped_out_of_zone": 2,
+      "errors": 0,
+      "regions": {
+        "europe": [
+          "Denmark"
+        ],
+        "caribbean": [
+          "San Juan, Puerto Rico"
+        ],
+        "south_america": [
+          "Cali, Valle del Cauca, Colombia"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260803@2026-08-03T13:25:02",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260803",
+    "started_at": "2026-08-03T13:25:02",
+    "ended_at": "2026-08-03T13:47:16",
+    "duration_s": 1334.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "visited": 5,
+      "processed_delta": 5,
+      "captured_delta": 5,
+      "captured_total": 552,
+      "queue_remaining": 5407,
+      "already": 0,
+      "skipped_out_of_zone": 0,
+      "errors": 0,
+      "regions": {
+        "europe": [
+          "Ústí n. Orlicí, Pardubice, Czechia",
+          "Frankfurt Rhine-Main Metropolitan Area"
+        ],
+        "north_america": [
+          "San Antonio, Texas, United States",
+          "Blainville, Quebec, Canada"
+        ],
+        "south_america": [
+          "Brazil"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260803@2026-08-03T14:16:52",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260803",
+    "started_at": "2026-08-03T14:16:52",
+    "ended_at": "2026-08-03T15:42:42",
+    "duration_s": 5150.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 27,
+    "profile_views": 27,
+    "summary": {
+      "requested": 27,
+      "visited": 27,
+      "processed_delta": 27,
+      "captured_delta": 16,
+      "captured_total": 571,
+      "queue_remaining": 5377,
+      "already": 0,
+      "skipped_out_of_zone": 11,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Calgary, Alberta, Canada",
+          "Los Angeles Metropolitan Area",
+          "Seattle, Washington, United States",
+          "Los Angeles, California, United States"
+        ],
+        "europe": [
+          "Agen, Nouvelle-Aquitaine, France",
+          "Niort, Nouvelle-Aquitaine, France",
+          "Alicante, Valencian Community, Spain",
+          "Milan, Lombardy, Italy",
+          "Ukraine",
+          "Rome, Latium, Italy",
+          "Chieti, Abruzzi, Italy",
+          "Como, Lombardy, Italy",
+          "Madrid, Community of Madrid, Spain",
+          "Badalona, Catalonia, Spain"
+        ],
+        "south_america": [
+          "Peru",
+          "Betim, Minas Gerais, Brazil"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260803@2026-08-03T15:44:28",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260803",
+    "started_at": "2026-08-03T15:44:28",
+    "ended_at": "2026-08-03T17:06:47",
+    "duration_s": 4939.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 30,
+    "profile_views": 30,
+    "summary": {
+      "requested": 30,
+      "dry_run": false,
+      "visited": 30,
+      "sent": 28,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 2,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 28
+      },
+      "remaining_to_contact": 167,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "check-20260803-1708@2026-08-03T17:08:26",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "check-20260803-1708",
+    "started_at": "2026-08-03T17:08:26",
+    "ended_at": "2026-08-03T17:08:57",
+    "duration_s": 31.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 296,
+      "rounds": 6,
+      "cards_seen": 20,
+      "newly_connected": [
+        {
+          "slug": "carlos-henrique-stow-chaves-537b60b3",
+          "date": "2026-08-02",
+          "inexact": false
+        },
+        {
+          "slug": "carlosmanuelarias",
+          "date": "2026-08-02",
+          "inexact": false
+        },
+        {
+          "slug": "juan-carlos-ramón-simón-78704513",
+          "date": "2026-08-02",
+          "inexact": false
+        }
+      ],
+      "newly_connected_count": 3,
+      "inexact_dates": 0,
+      "connected_delta": 3,
+      "connected_total": 111,
+      "still_outstanding": 293,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "endorse-20260803-1711@2026-08-03T17:11:28",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "endorse-20260803-1711",
+    "started_at": "2026-08-03T17:11:28",
+    "ended_at": "2026-08-03T17:15:18",
+    "duration_s": 230.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 1,
+    "summary": {
+      "requested": 1,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 1,
+      "endorsed": 1,
+      "skills_endorsed": 10,
+      "no_skills": 0,
+      "dm_sent": 1,
+      "dm_failed": 0,
+      "endorse_failed": 0,
+      "already_endorsed": 0,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 0,
+      "per_member": [
+        {
+          "slug": "kieuanhbilliot",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        }
+      ],
+      "members_delta": {
+        "endorsed": 1,
+        "no_skills": 0,
+        "dm_sent": 1
+      },
+      "eligible_before": {
+        "total": 70,
+        "over_14d": 0,
+        "days_7_to_14": 28,
+        "under_7d": 42,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 69,
+        "over_14d": 0,
+        "days_7_to_14": 27,
+        "under_7d": 42,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T07:16:45",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T07:16:45",
+    "ended_at": "2026-08-04T07:31:27",
+    "duration_s": 882.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 3,
+      "captured_total": 574,
+      "queue_remaining": 5373,
+      "already": 0,
+      "skipped_out_of_zone": 1,
+      "errors": 0,
+      "regions": {
+        "europe": [
+          "London, England, United Kingdom",
+          "London, England, United Kingdom",
+          "Valladolid, Castilla and Leon, Spain"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T07:31:44",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T07:31:44",
+    "ended_at": "2026-08-04T07:45:55",
+    "duration_s": 851.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 4,
+      "captured_total": 578,
+      "queue_remaining": 5369,
+      "already": 0,
+      "skipped_out_of_zone": 0,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Washington DC-Baltimore Area",
+          "Mexico City, Mexico"
+        ],
+        "europe": [
+          "Sibiu, Romania",
+          "Bucharest, Romania"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T07:46:10",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T07:46:10",
+    "ended_at": "2026-08-04T07:56:24",
+    "duration_s": 613.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 2,
+      "captured_total": 580,
+      "queue_remaining": 5365,
+      "already": 0,
+      "skipped_out_of_zone": 2,
+      "errors": 0,
+      "regions": {
+        "europe": [
+          "Milan, Lombardy, Italy",
+          "Coimbra, Portugal"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T07:56:37",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T07:56:37",
+    "ended_at": "2026-08-04T08:06:06",
+    "duration_s": 569.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 2,
+      "captured_total": 582,
+      "queue_remaining": 5361,
+      "already": 0,
+      "skipped_out_of_zone": 2,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Overland Park, Kansas, United States"
+        ],
+        "europe": [
+          "United Kingdom"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T08:06:17",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T08:06:17",
+    "ended_at": "2026-08-04T08:16:27",
+    "duration_s": 609.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 3,
+      "captured_total": 585,
+      "queue_remaining": 5357,
+      "already": 0,
+      "skipped_out_of_zone": 1,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Redmond, Washington, United States",
+          "Miami, Florida, United States"
+        ],
+        "south_america": [
+          "Franca, São Paulo, Brazil"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T08:16:43",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T08:16:43",
+    "ended_at": "2026-08-04T08:29:38",
+    "duration_s": 775.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 4,
+      "captured_total": 589,
+      "queue_remaining": 5353,
+      "already": 0,
+      "skipped_out_of_zone": 0,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Brownsville, Texas, United States"
+        ],
+        "south_america": [
+          "São José do Rio Preto, São Paulo, Brazil",
+          "Bogota, D.C., Capital District, Colombia",
+          "Rio de Janeiro, Brazil"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T08:29:58",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T08:29:58",
+    "ended_at": "2026-08-04T08:45:38",
+    "duration_s": 939.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 3,
+      "captured_total": 592,
+      "queue_remaining": 5349,
+      "already": 0,
+      "skipped_out_of_zone": 1,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Hastings, Nebraska, United States",
+          "Irvine, California, United States",
+          "Onaga, Kansas, United States"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T08:45:53",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T08:45:53",
+    "ended_at": "2026-08-04T08:57:11",
+    "duration_s": 677.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 1,
+      "captured_total": 593,
+      "queue_remaining": 5345,
+      "already": 0,
+      "skipped_out_of_zone": 3,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Austin, Texas, United States"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T09:24:13",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T09:24:13",
+    "ended_at": "2026-08-04T09:36:45",
+    "duration_s": 752.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 2,
+      "captured_total": 598,
+      "queue_remaining": 5334,
+      "already": 0,
+      "skipped_out_of_zone": 2,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Lansing, Michigan, United States"
+        ],
+        "europe": [
+          "Spain"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T09:36:59",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T09:36:59",
+    "ended_at": "2026-08-04T09:47:05",
+    "duration_s": 606.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 3,
+      "captured_total": 601,
+      "queue_remaining": 5330,
+      "already": 0,
+      "skipped_out_of_zone": 1,
+      "errors": 0,
+      "regions": {
+        "south_america": [
+          "Barinas, Barinas State, Venezuela"
+        ],
+        "europe": [
+          "Cracow, Małopolskie, Poland"
+        ],
+        "north_america": [
+          "Bogart, Georgia, United States"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T09:47:20",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T09:47:20",
+    "ended_at": "2026-08-04T09:58:46",
+    "duration_s": 686.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 4,
+      "captured_total": 605,
+      "queue_remaining": 5326,
+      "already": 0,
+      "skipped_out_of_zone": 0,
+      "errors": 0,
+      "regions": {
+        "europe": [
+          "Norwich, England, United Kingdom"
+        ],
+        "north_america": [
+          "Palmyra, New Jersey, United States",
+          "Glastonbury, Connecticut, United States",
+          "Fishers, Indiana, United States"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T09:59:00",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T09:59:00",
+    "ended_at": "2026-08-04T10:12:05",
+    "duration_s": 784.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "visited": 4,
+      "processed_delta": 4,
+      "captured_delta": 4,
+      "captured_total": 609,
+      "queue_remaining": 5322,
+      "already": 0,
+      "skipped_out_of_zone": 0,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Knoxville, Tennessee, United States",
+          "West Linn, Oregon, United States",
+          "St. Petersburg, Florida, United States"
+        ],
+        "europe": [
+          "Poland"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260804@2026-08-04T10:12:20",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260804",
+    "started_at": "2026-08-04T10:12:20",
+    "ended_at": "2026-08-04T10:25:55",
+    "duration_s": 815.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "visited": 5,
+      "processed_delta": 5,
+      "captured_delta": 4,
+      "captured_total": 613,
+      "queue_remaining": 5317,
+      "already": 0,
+      "skipped_out_of_zone": 1,
+      "errors": 0,
+      "regions": {
+        "europe": [
+          "Turin, Piedmont, Italy",
+          "Madrid, Community of Madrid, Spain"
+        ],
+        "south_america": [
+          "Goiânia, Goiás, Brazil",
+          "Peru"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260804@2026-08-04T10:26:14",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260804",
+    "started_at": "2026-08-04T10:26:14",
+    "ended_at": "2026-08-04T10:34:43",
+    "duration_s": 509.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 1,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 1,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 2,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 1
+      },
+      "remaining_to_contact": 208,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260804@2026-08-04T10:35:00",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260804",
+    "started_at": "2026-08-04T10:35:00",
+    "ended_at": "2026-08-04T10:45:15",
+    "duration_s": 615.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 2,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 2,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 2
+      },
+      "remaining_to_contact": 206,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260804@2026-08-04T10:45:40",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260804",
+    "started_at": "2026-08-04T10:45:40",
+    "ended_at": "2026-08-04T10:55:39",
+    "duration_s": 598.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 4,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 4
+      },
+      "remaining_to_contact": 202,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260804@2026-08-04T10:55:54",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260804",
+    "started_at": "2026-08-04T10:55:54",
+    "ended_at": "2026-08-04T11:05:22",
+    "duration_s": 567.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 4,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 4
+      },
+      "remaining_to_contact": 198,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260804@2026-08-04T11:05:33",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260804",
+    "started_at": "2026-08-04T11:05:33",
+    "ended_at": "2026-08-04T11:15:29",
+    "duration_s": 596.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 4,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 4
+      },
+      "remaining_to_contact": 194,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260804@2026-08-04T11:15:39",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260804",
+    "started_at": "2026-08-04T11:15:39",
+    "ended_at": "2026-08-04T11:26:23",
+    "duration_s": 644.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 4,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 4
+      },
+      "remaining_to_contact": 190,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260804@2026-08-04T11:26:36",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260804",
+    "started_at": "2026-08-04T11:26:36",
+    "ended_at": "2026-08-04T11:36:29",
+    "duration_s": 593.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 4,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 4
+      },
+      "remaining_to_contact": 186,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260804@2026-08-04T11:36:41",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260804",
+    "started_at": "2026-08-04T11:36:41",
+    "ended_at": "2026-08-04T11:45:39",
+    "duration_s": 537.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 3,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": true,
+      "contacted_delta": {
+        "sent": 3
+      },
+      "remaining_to_contact": 183,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "check-20260804-1145@2026-08-04T11:45:59",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "check-20260804-1145",
+    "started_at": "2026-08-04T11:45:59",
+    "ended_at": "2026-08-04T11:46:47",
+    "duration_s": 47.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 319,
+      "rounds": 6,
+      "cards_seen": 20,
+      "newly_connected": [
+        {
+          "slug": "david-redondo-jimenez-40432535",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "luiz-carlos-aparecido-rosa-321901293",
+          "date": "2026-08-04",
+          "inexact": true
+        },
+        {
+          "slug": "david-j-carroll",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "ana-carolina-fbrito",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "caroline-kennedy-81110980",
+          "date": "2026-08-04",
+          "inexact": true
+        },
+        {
+          "slug": "ana-carolina-carrasco",
+          "date": "2026-08-03",
+          "inexact": false
+        },
+        {
+          "slug": "carolinemsabino",
+          "date": "2026-08-03",
+          "inexact": false
+        },
+        {
+          "slug": "caroline-de-castro-vidal-343572127",
+          "date": "2026-08-03",
+          "inexact": false
+        },
+        {
+          "slug": "aloisiocarolina",
+          "date": "2026-08-03",
+          "inexact": false
+        }
+      ],
+      "newly_connected_count": 9,
+      "inexact_dates": 2,
+      "connected_delta": 9,
+      "connected_total": 120,
+      "still_outstanding": 310,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "endorse-20260804-1146@2026-08-04T11:46:59",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "endorse-20260804-1146",
+    "started_at": "2026-08-04T11:46:59",
+    "ended_at": "2026-08-04T11:54:56",
+    "duration_s": 477.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 2,
+    "summary": {
+      "requested": 2,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 2,
+      "endorsed": 2,
+      "skills_endorsed": 20,
+      "no_skills": 0,
+      "dm_sent": 2,
+      "dm_failed": 0,
+      "endorse_failed": 0,
+      "already_endorsed": 0,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 0,
+      "per_member": [
+        {
+          "slug": "benjamingolds",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "benjamin-randoing",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        }
+      ],
+      "members_delta": {
+        "endorsed": 2,
+        "no_skills": 0,
+        "dm_sent": 2
+      },
+      "eligible_before": {
+        "total": 78,
+        "over_14d": 2,
+        "days_7_to_14": 29,
+        "under_7d": 47,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 76,
+        "over_14d": 0,
+        "days_7_to_14": 29,
+        "under_7d": 47,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  }
+]
