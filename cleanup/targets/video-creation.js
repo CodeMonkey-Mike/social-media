@@ -1,16 +1,19 @@
 'use strict';
 
 // Policy: HYBRID.
-//  - Protected (never touch): assets/{sfx,music,fonts,transitions}/, assets/logo-*.png,
-//    and every <batch>-progress.json.
-//  - Always sweep: any _bad-*/ reject folder (regardless of age).
+//  - Protected (never touch): the WHOLE assets/ tree, and every <batch>-progress.json.
+//    assets/ is the STATIC, REUSABLE shared library (sfx, music, fonts, transitions, vo,
+//    banners, broll, STYLE-GUIDE.md, TODO.md) — nothing in it is spent per-batch output, so
+//    it is never age-swept (Mike 2026-07-28: age-sweeping it was flagging durable assets).
+//    Per-batch working assets live in the project's OWN folder, not here.
+//  - Always sweep: any _bad-*/ reject folder (regardless of age), incl. under assets/.
 //  - Registry-driven (assets/projects/<batch>/ — LEGACY per-batch asset home for pre-2026-06-25
 //    shorts batches; new shorts use shorts/<batch>/render-assets/ instead, covered by the
 //    whole-folder shorts tier below): keep folders whose <batch> is ACTIVE in batches.json,
-//    recycle those of an ARCHIVED batch; a folder matching no batch falls back to age-based.
-//  - Age-based (recycle if older than --age-days, default 30): everything else under
-//    assets/ (legacy loose b-roll PNGs, *-clip.mp4, overlays in the root and non-projects/
-//    subdirs), livestream-repurpose transcripts, and any livestream-repurpose/media entry
+//    recycle those of an ARCHIVED batch; a folder matching no batch is KEPT (assets/ is
+//    protected by default). This tier is dormant — assets/projects/ no longer exists.
+//  - Age-based (recycle if older than --age-days, default 30): livestream-repurpose
+//    transcripts, and any livestream-repurpose/media entry
 //    tied to no batch (protects a just-recorded stream until it ages out or gets registered).
 //  - Whole-folder, batch-aware (recycle the ENTIRE project folder for a completed/archived
 //    batch, keep an active one, leave an unregistered folder alone):
@@ -88,10 +91,11 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
       const status = batchStatus.get(batch);
       if (status === 'active') { skipped.push({ path: f, reason: `project asset — active batch (${batch})` }); continue; }
       if (status === 'completed' || status === 'archived') { recycle.push({ path: f, reason: `project asset — ${status} batch (${batch})` }); continue; }
-      // no matching batch in the registry — fall through to age-based (safe default).
-      classifyAge(f, `project asset — batch "${batch}" not in registry`); continue;
+      // no matching batch in the registry — KEEP (assets/ is protected by default).
+      skipped.push({ path: f, reason: `project asset — batch "${batch}" not in registry` }); continue;
     }
-    classifyAge(f, 'asset');
+    // Everything else under assets/ is the static reusable library — never age-swept.
+    skipped.push({ path: f, reason: 'static shared asset (assets/ is protected)' });
   }
 
   // ── livestream-repurpose/media — whole-folder + loose-file, batch-aware ────
@@ -273,10 +277,9 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
   classifyMediaProjects(YULI_MEDIA, 'video-creation/vertical-ai-persona/Yuli y Ana/media', 'yuli-y-ana');
 
   // Empty folders left after a recycle pass are pruned by the engine across these roots, so a
-  // cleaned-out <batch>/ or render folder never lingers. The protected asset libraries
-  // (sfx/music/fonts/transitions) are skipped so they're never pruned even if momentarily empty.
+  // cleaned-out <batch>/ or render folder never lingers. assets/ is NOT a prune root: the whole
+  // tree is protected, so an empty shared-library folder is left exactly as the user left it.
   const pruneRoots = [
-    ASSETS,
     SHORTS_DIR,
     OUT,
     path.join(ROOT, 'livestream-repurpose', 'media'),

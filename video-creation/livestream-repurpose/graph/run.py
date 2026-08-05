@@ -1,8 +1,15 @@
-# run.py — CLI runner for the livestream-repurpose intake graph (intake_graph.py).
+# run.py — CLI runner for the livestream-repurpose graphs.
 #
+#   INTAKE (Wave 1, the default when no segment word is given):
 #   python video-creation/livestream-repurpose/graph/run.py \
 #       --source "video-creation/livestream-repurpose/media/<folder>/<recording>.mkv" \
 #       --min-sil 0.5
+#
+#   CUT (Wave 2 — Lane 2 Phase 4 exec, AFTER the clip-strategist's clip-plan.json
+#   lands in shorts/<batch>/; ends at Mike's Phase 4b dashboard review):
+#   python video-creation/livestream-repurpose/graph/run.py cut --batch <batch>
+#       [--plan PATH] [--master PATH] [--thread ID] [--resume]
+#       [--stub ok|fail] [--test-sandbox DIR] [--no-register] [--force]
 #
 # Wave 1 of the livestream migration (ORCHESTRATOR-PLAN.md §"Livestream migration"):
 # ONE invocation runs Phase 1 (LOW BPS) + Lane 1 (longform desilence/stage/queue) +
@@ -60,10 +67,14 @@ sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from intake_graph import (  # noqa: E402
     CHECKPOINT_DB, DATA, LONGS_FILE, STAGED_ROOT, TRANSCRIPTS,
-    build_intake_graph, finish_progress, record_run,
+    _ffprobe_geometry, build_intake_graph, finish_progress, record_run,
 )
+from shorts_graph import build_cut_graph  # noqa: E402
 
 from langgraph.checkpoint.sqlite import SqliteSaver  # noqa: E402
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
+LSR_SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 
 VIDEO_EXTS = {".mp4", ".mkv", ".mov"}
 MIN_FREE_GB = 5   # LOW BPS + vertical + staged longform for a 1-2h stream, with margin
@@ -133,6 +144,168 @@ def report_intake(final) -> int:
     print("  next: Phase 3+ as usual — clip-strategist off the _chunks_90s file, "
           "Lane 3 off the _plain transcript.")
     return 0
+
+
+def report_cut(final) -> int:
+    status = final.get("status", "?")
+    print(f"GRAPH {status.upper()}")
+    if status != "done":
+        print(f"  {final.get('error', 'no error detail')}")
+        return 1
+    s = final["cut"]
+    if s.get("sandbox"):
+        print("  ** TEST SANDBOX RUN — nothing was written to production paths **")
+    if s.get("stub"):
+        print(f"  batch: {s.get('batch')} (stub) · {s.get('clips')} clips")
+        return 0
+    print(f"  batch: {s['batch']} · {s['clips']} clips · "
+          f"{s.get('total_s') or '?'}s total")
+    for slug, d in (s.get("clip_durations") or {}).items():
+        print(f"    - {slug}: {d:.1f}s")
+    print(f"  dashboard:  {s.get('dashboard')}")
+    print(f"  registered: {'yes (active)' if s.get('registered') else 'SKIPPED (--no-register)'}"
+          " · progress.json at the 4b gate")
+    print("  next: Mike's Phase 4b review on the dashboard (delete calls by clip number); "
+          "then tighten-strategist per survivor (manual path until Wave 3).")
+    return 0
+
+
+def main_cut():
+    sys.path.insert(0, str(LSR_SCRIPTS))
+    from cut_topics import validate_plan  # noqa: E402  (one source of truth)
+
+    ap = argparse.ArgumentParser(prog="run.py cut",
+                                 description="Run the Lane 2 CUT segment (Phase 4 exec) "
+                                             "through LangGraph.")
+    ap.add_argument("--batch")
+    ap.add_argument("--plan", default=None)
+    ap.add_argument("--master", default=None)
+    ap.add_argument("--out-base", default=None)
+    ap.add_argument("--registry-root", default=None)
+    ap.add_argument("--date", default=str(date.today()))
+    ap.add_argument("--note", default=None)
+    ap.add_argument("--no-register", action="store_true")
+    ap.add_argument("--force", action="store_true",
+                    help="let finalize overwrite a progress.json already past the cut phase")
+    ap.add_argument("--thread", default=None)
+    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    ap.add_argument("--test-sandbox", default="")
+    args = ap.parse_args()
+
+    if args.stub:
+        init = {
+            "batch": "stub-batch", "plan_path": "stub-plan.json", "master": "stub.mp4",
+            "out_base": "stub-out", "registry_root": "stub-root",
+            "run_date": args.date, "note": None, "no_register": False, "force": False,
+            "test_sandbox": "", "stub": args.stub,
+            "expected": [{"n": 1, "slug": "stub-clip", "sum_s": 42.0},
+                         {"n": 2, "slug": "stub-clip-b", "sum_s": 21.0}],
+            "master_geometry": "1080x1920", "status": "running",
+        }
+        thread = args.thread or f"cut-stub-{datetime.now():%Y%m%d-%H%M%S}"
+        banner = f"Cut graph | STUB MODE: {args.stub}"
+    else:
+        if not args.batch:
+            print("--batch is required for a real run.", file=sys.stderr)
+            sys.exit(1)
+        if args.test_sandbox:
+            sandbox = os.path.abspath(args.test_sandbox)
+            out_base = os.path.join(sandbox, "shorts", args.batch)
+            registry_root = sandbox
+            os.makedirs(out_base, exist_ok=True)
+            reg_file = os.path.join(registry_root, "batches.json")
+            if not os.path.isfile(reg_file):
+                with open(reg_file, "w", encoding="utf-8") as f:
+                    json.dump({"$note": "TEST SANDBOX batches.json — not production",
+                               "batches": []}, f, indent=2)
+        else:
+            out_base = args.out_base or str(
+                REPO_ROOT / "video-creation" / "shorts" / args.batch)
+            registry_root = args.registry_root or str(REPO_ROOT)
+
+        plan_path = os.path.abspath(args.plan) if args.plan else os.path.join(
+            out_base, "clip-plan.json")
+        if not os.path.isfile(plan_path):
+            print(f"clip-plan.json not found: {plan_path}\n"
+                  "The clip-strategist's plan must land on disk BEFORE the cut segment "
+                  "runs (the judgment seam).", file=sys.stderr)
+            sys.exit(1)
+        try:
+            with open(plan_path, encoding="utf-8") as f:
+                plan = json.load(f)
+        except Exception as e:
+            print(f"clip-plan.json is not valid JSON: {e}", file=sys.stderr)
+            sys.exit(1)
+
+        if args.master:
+            master = os.path.abspath(args.master)
+        else:
+            sv = plan.get("source_vertical")
+            if not sv:
+                print("clip-plan.json has no source_vertical and no --master given.",
+                      file=sys.stderr)
+                sys.exit(1)
+            master = sv if os.path.isabs(sv) else str(REPO_ROOT / sv)
+        if not os.path.isfile(master):
+            print(f"vertical master not found: {master}", file=sys.stderr)
+            sys.exit(1)
+
+        validate_plan(plan, master)          # fail fast, same checks the cutter runs
+        geo = _ffprobe_geometry(master)
+        if geo is None:
+            print(f"cannot probe the master: {master}", file=sys.stderr)
+            sys.exit(1)
+        master_geometry = f"{geo[0]}x{geo[1]}"
+        if not args.test_sandbox and master_geometry != "1080x1920":
+            print(f"WARNING: master geometry {master_geometry} != 1080x1920 — a real "
+                  "batch master should be the verified VERTICAL.", file=sys.stderr)
+
+        expected = [{"n": c["clip_id"], "slug": c["slug"],
+                     "sum_s": round(sum(float(s["end"]) - float(s["start"])
+                                        for s in c["segments"]), 3)}
+                    for c in plan["clips"]]
+        init = {
+            "batch": args.batch, "plan_path": plan_path, "master": master,
+            "out_base": out_base, "registry_root": registry_root,
+            "run_date": args.date, "note": args.note,
+            "no_register": args.no_register, "force": args.force,
+            "test_sandbox": args.test_sandbox, "stub": "",
+            "expected": expected, "master_geometry": master_geometry,
+            "status": "running",
+        }
+        thread = args.thread or f"cut-{args.batch}-{date.today():%Y%m%d}"
+        banner = (f"Cut graph | {args.batch} | {len(expected)} clips | master {master_geometry}"
+                  + (f" | TEST SANDBOX {args.test_sandbox}" if args.test_sandbox else ""))
+
+    DATA.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(CHECKPOINT_DB), check_same_thread=False)
+    app = build_cut_graph(checkpointer=SqliteSaver(conn))
+
+    print(banner)
+    print(f"thread: {thread} | checkpoints: {CHECKPOINT_DB.name}"
+          + (" | RESUME" if args.resume else ""))
+    print("-" * 60)
+
+    started_at, t0 = datetime.now().isoformat(timespec="seconds"), time.monotonic()
+    try:
+        final = app.invoke(None if args.resume else init,
+                           config={"configurable": {"thread_id": thread}})
+    except BaseException as e:
+        finish_progress("crashed", f"{type(e).__name__}: {e}")
+        if args.resume:
+            print("\n(--resume needs a thread that already has a checkpoint; run without "
+                  "--resume for a fresh batch.)", file=sys.stderr)
+        raise
+    print("-" * 60)
+
+    record_run(lane=2, thread=thread, final=final, started_at=started_at,
+               ended_at=datetime.now().isoformat(timespec="seconds"),
+               duration_s=time.monotonic() - t0, stub=args.stub,
+               requested=init.get("batch") if not args.stub else "stub")
+    finish_progress(final.get("status", "unknown"), final.get("error"))
+
+    sys.exit(report_cut(final))
 
 
 def main():
@@ -274,5 +447,11 @@ def main():
     sys.exit(report_intake(final))
 
 
+SEGMENTS = {"cut": main_cut}     # wave 3+ segments join here as they are blessed
+
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] in SEGMENTS:
+        seg = sys.argv.pop(1)    # legacy no-segment invocation stays intake (Wave 1)
+        SEGMENTS[seg]()
+    else:
+        main()

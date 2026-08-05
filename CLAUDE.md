@@ -29,6 +29,7 @@ livestream → Phase 1: re-encode → "LOW BPS" master  (video-creation/SKILL.md
 | Make/render a vertical short or AI-persona video | `video-creation/SKILL.md` · `video-creation/vertical-ai-persona/SKILL.md` | `playbooks/video.md` |
 | Source stock video b-roll (Envato Elements) | `video-creation/skills/envato-broll/SKILL.md` | `playbooks/video.md` |
 | Find/pick music for a video (or source new tracks) | `video-creation/skills/music-sourcing/SKILL.md` (§2c: PICK from the analyzed catalog `assets/music/library.json`, no listening; longform bed plans → `music-placement-strategist` agent) | `playbooks/video.md` |
+| Make the VERTICAL (9:16) cut of a finished longform video | run **`/vertical-repurpose <project folder>`** · canonical `video-creation/longform-edited/skills/vertical-repurpose.md` | `playbooks/video.md` |
 | Make a longform 16:9 video (slide presentation OR heavily-edited) | `video-creation/longform-presentation/longform-presentation.md` (frozen, slide-deck) · `video-creation/longform-edited/longform-edited.md` (evolving, edit-driven) | `playbooks/video.md` |
 | Defumble a recording (remove false starts/retakes, no clipped words) | `video-creation/skills/defumbler/defumbler.md` (canonical, track-agnostic) | `playbooks/video.md` |
 | Desilence / tighten pacing (remove silence, rapid-fire) | `video-creation/skills/desilencer/desilencer.md` (canonical, track-agnostic; ALL tracks use it) | `playbooks/video.md` |
@@ -40,7 +41,7 @@ Prefix every command with `cd C:\Users\mnede\Documents\Claude\social-media &&` (
 
 | Task | Command / pointer |
 |---|---|
-| Start dashboard (port 8766) | `python schedule-tweets/scripts/serve_dashboard.py` → http://localhost:8766 · detail `schedule-tweets/skills/dashboard.md` |
+| Start dashboard (port 8766) | `python schedule-tweets/scripts/serve_dashboard.py` → http://localhost:8766 · left nav: **Social** (pending posts) · **LangGraph** (live LinkedIn lane state, node-by-node, + profile-view budget) · detail `schedule-tweets/skills/dashboard.md` |
 | Count pending across all queues | see `schedule-tweets/skills/pending-social-posts.md` |
 | Post next YT Quiz ("post next YT Quiz" = post the single next `pending` entry, no preview, one attempt, then report) | `cd schedule-tweets && node scripts/post-yt-quiz.js` (queue `schedule-tweets/data/yt-quizzes.json`) · full procedure `schedule-tweets/skills/yt-post-quiz.md` |
 | Move a finalized render batch into the queue | `python scripts/publish-shorts.py <batch> [--date YYYY-MM-DD] [--dry-run]` · detail `video-creation/PUBLISH-SHORTS.md` |
@@ -89,8 +90,20 @@ The pipeline runs on an **advisor/executor split**, so any fresh checkout behave
       CUE-SHEET/EDIT-PLAN placement + the `assets/transitions/library.json` meta: assigns every scene
       change across the 3 buckets AND strategically reserves the library's MELT (transform/reform) and
       SPIN (new-facet turn) families for the marquee diagram/chart reveals (text containers stay quiet).
-  - **Opus/xhigh executors (write code + render, return a build + self-QA for Mike to gate):**
-    - **`remotion-builder.md`** — builds ONE short's Remotion composition + render (Phase 7). xhigh effort
-      because the composition code is bug-sensitive (frame math, overlay collisions) and precision pays off.
+  - **Executor agents (build/capture assets or code, self-QA, Mike gates). Tier per Mike's rule
+    (2026-07-24): formulaic execution = medium · diligence-heavy mechanical = sonnet/xhigh · design
+    judgment = max:**
+    - **`remotion-builder.md`** — builds ONE short's Remotion composition + render (Phase 7). opus/xhigh
+      because the composition code is bug-sensitive (frame math, overlay collisions).
+    - **The longform-edited ASSET FACTORY (`.claude/agents/longform-edited/`, added 2026-07-24):**
+      `slide-builder` (opus/medium, title+card slides off the locked stylesheet) · `chart-builder`
+      (opus/max, system-design chart stills + animated-chart design states/specs) · `receipt-capturer`
+      (sonnet/xhigh, verified real-site captures/recordings) · `envato-sourcer` (opus/medium, b-roll
+      clip picking + canonical download tooling) · `image-gen` (sonnet/xhigh, ChatGPT browser-pipeline
+      images). All five outputs gate through `visual-qa` before Mike.
+- **The full agent registry IS `.claude/agents/`** (`shared/` = track-agnostic spine-prep/QA:
+  defumbler, cover-blackout, desilencer, burst-removal, transcriber, captions-builder, visual-qa;
+  `longform-edited/` = the strategists + asset factory). When planning any phase, check the registry
+  before doing the work inline — these agents exist so slices are NOT hand-rolled in the main loop.
 - These ARE allowed and versioned on purpose; they are NOT the deferred DAG automation (no auto-spawning
   fleet). Rule of thumb: judgment slice -> Fable/max advisor; intricate execution slice -> Opus/high executor.

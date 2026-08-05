@@ -143,7 +143,7 @@ time as Mike speaks each bullet (cued to Phase-2 word-timings; one-container-at-
   then copy out (the Documents folder blocks direct headless writes). **SVG `<text>` does NOT honor
   `<b>`** — use `<tspan fill=...>` for emphasis or the rest of the line silently drops.
 - Role color-coding helps readability (e.g. miners=cyan, validators=indigo, money/TAO=amber, rogue=red).
-- See `media/bittensor-for-the-future/graphics/` for the worked set + `feedback_diagrams_system_design_not_tables` memory.
+- Full doctrine + rationale: the `feedback_diagrams_system_design_not_tables` memory.
 
 ---
 
@@ -202,6 +202,65 @@ dashes anywhere.
 - Never frame Mike's own calls as a timing mistake (`avoid_in_drafts`: no self-undermining). Conviction
   reads vindicated and forward-looking.
 - Put any debunked-claim warning in a VERIFIED-FALSE box near the thesis so it can't creep back on screen.
+
+---
+
+## AS-RECORDED.md — the as-BUILT variant (self-contained skeleton)
+
+After the spine is FINAL and transcribed, every project carries an **`AS-RECORDED.md`** beside its
+SCREENPLAY. The screenplay is pre-production INTENT; AS-RECORDED is what Mike actually said, timecoded on
+the final spine. **The edit is built to AS-RECORDED, never to the screenplay, wherever they differ**
+(`longform-edited.md` #6: build to the transcript, the recorded take diverges).
+
+Its job: make every divergence explicit so nobody rebuilds a beat he didn't say, or misses one he ad-libbed.
+
+```
+# <project> — AS-RECORDED (build the edit to THIS, not the plan)
+
+_Authoritative as-built script, transcribed from the FINAL spine after the full spine-prep chain
+(<the chain actually run, with each min-silence value, e.g. defumble -> cover-blackout -> two-zone
+desilence 250ms CH1 / 600ms body @58.4s -> burst-removal x1). Per longform-edited house rule #6 the
+edit is cued off THIS, not SCREENPLAY.md. Divergences are listed at the bottom._
+
+- **Final spine:** `spine/<segment>.<letter>.<stage>.mp4` — <duration> (<m:ss>), 1080p30. LOCKED.
+- **Transcript (cue source):** `spine/<...>.medium-words.json` (word-level, NOT hand-edited).
+  Human-review breakdown: `spine/<...>.segments.txt`.
+- **Timecode chain:** every remap file in order, WITH the shift each stage applied, e.g.
+  `<...>.c.desilenced.map.json` (raw->c) -> `<...>.d.cleaned.cuts.json` (c->d: >=103.25s shifts -0.77s)
+  -> `<...>.e.desilenced.map.json` (d->e). State plainly that the timecodes BELOW are already final-spine
+  coords so the comp cues directly off them. (Skipping this is how cues silently land a stage early.)
+- Spine-prep chain in `spine/`: `a.defumbled` -> `b.blackout` -> `c.desilenced` -> ...
+
+## FACE windows        table: # | window (s) | content. From `blackdetect` on the blacked picture (non-black
+                       = FACE); EVERYTHING ELSE IS BLACK VIDEO and must be covered in the comp. State the
+                       face/cover % and confirm ZERO orphans (every window lands on a scripted [FACE] beat).
+
+## Whisper mishears to FIX in any captions / on-screen text        <- FIRST-CLASS SECTION, not a footnote
+   The word-time JSON stays un-edited (it is the cue/timing source), so THIS list is what gets re-applied
+   at caption build. One line per correction: wrong -> right, with the timecode and any "why" that matters.
+   A mishear that only shows up in a title/description still belongs here.
+
+## AS-RECORDED beats (timecodes = FINAL spine)
+### CH<n> — <TITLE> (<start>-<end>) · card ON "<on-screen card text>" | card OFF · Bed <X>
+   table: TC | as recorded (the actual words) | vs screenplay
+   Mark every row KEPT / CHANGED / AD-LIB / DROPPED. Quote the real words, never the scripted ones.
+   Flag on the row any line carrying a [!WARNING] guard, and whether that guard HELD on the take.
+
+## Divergences from SCREENPLAY.md    Dropped (scripted lines not said) · Added (ad-libs) · which guards HELD.
+                       **Record Mike's ruling inline and mark it RESOLVED or OPEN** (e.g. "1 + 2 RESOLVED by
+                       Mike 2026-07-24; 3 still open") so the ruling travels with the edit.
+## Flags carried into the edit    ambiguous audio, fact-framing traps (a VO number the on-screen chart must
+                       NOT copy verbatim), and [VERIFY] items.
+```
+
+Rules that keep it honest:
+- **Quote what was SAID.** Only Whisper MISHEARS get corrected in the text; never "tidy" his phrasing.
+- The word-time JSON stays un-edited (it is the cue source); text corrections live in this doc and get
+  re-applied at caption build.
+- **A long ad-lib is CONTENT, not overrun.** The defumbler already removed every retake, so whatever
+  survived is what he chose to say. Record it and its timecodes; never author trim guidance unless Mike
+  asks (Mike, 2026-07-31: "There's nothing that I want to cut out.").
+- Record Mike's rulings IN this file (trim/no-trim, hard-out vs pickup) so the ruling travels with the edit.
 
 ---
 

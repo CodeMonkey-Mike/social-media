@@ -268,8 +268,17 @@ Decisions locked with Mike 2026-08-02; do not re-litigate:_
      flag-only). Full sandbox e2e green on real audio (the glossary caught a live Casper→Kaspa
      mishear on its first run); **live bless pending the next livestream.** Dashboard: LangGraph →
      Livestream tab (feeds: `graph/data/lane_runs.json` + `lane_progress.json`).
-  2. **cut** (Ph 4 exec) — de-fork the 17 `cut_topics_<batch>.py` into one parameterized script
-     reading `clip-plan.json`; graph: cut → dashboard → register → verify.
+  2. **cut** (Ph 4 exec) — **BUILT + SANDBOX-BLESSED 2026-08-04**: canonical
+     `livestream-repurpose/scripts/cut_topics.py` (de-forks the 17 `cut_topics_<batch>.py`,
+     which freeze as rollback) reads `clip-plan.json` and cuts/concats per assembly_order;
+     graph `graph/shorts_graph.py` = cut → verify_cut → finalize (dashboard + register +
+     progress.json) → verify_finalize, invoked as `run.py cut --batch <batch>` (same
+     stub/sandbox/thread contract as intake; plan validation fails fast in the runner AND the
+     script; finalize refuses to clobber a progress.json past the cut phase). Segment starts
+     AFTER the clip-strategist's plan lands (judgment seam) and ends at Mike's 4b review.
+     Sandbox e2e green (scratch 2-clip batch incl. non-chronological assembly, prod-isolation
+     + halt + clobber-guard cases). **LIVE-BLESSED 2026-08-04 on october-bottom** (7 clips /
+     684.5s, one green invocation; same stream also completed Wave 1's full all-nodes bless).
   3. **tighten** (Ph 5 exec) — de-fork the 12 `tighten_clips_<batch>.py`; contract change:
      strategist spans persist to `tighten-plan.json` instead of pasted Python literals.
   4. **finish** (5B desilence + 5C filler + 6 captions) — wraps only (tools already canonical

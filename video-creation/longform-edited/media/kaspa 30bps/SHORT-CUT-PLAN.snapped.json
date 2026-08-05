@@ -1,0 +1,98 @@
+{
+ "$meta": {
+  "authored": "short-cut-strategist (fable/max) 2026-07-25",
+  "lane": "video-creation/longform-edited/skills/longform-to-short.md",
+  "clock": "final-video seconds of kaspa-40bps-VERTICAL.mp4 (= paused-spine seconds)",
+  "note": "Boundaries here are the STRATEGIST's choices. The build uses SHORT-CUT-PLAN.snapped.json, produced by skills/lint-short-spans.py, which moves each edge to the measured trough."
+ },
+ "source_video": "kaspa-40bps-VERTICAL.mp4",
+ "source_audio": "spine/ALL.f.paused.mp4",
+ "target_seconds": 40.0,
+ "outro_seconds": 3.26,
+ "claim": "Kaspa, already running 10 blocks a second, jumps to up to 40 this year: the DAGKnight era means a block every 25 milliseconds on proof of work, and the shipped upgrade ladder proves they deliver.",
+ "spans": [
+  {
+   "role": "hook",
+   "order": 1,
+   "start": 0.0,
+   "end": 11.48,
+   "sourced": "MIXED",
+   "says": "40 blocks every single second on a proof of work. This is where Kaspa is headed next. Not someday, not in five years. The target is this year.",
+   "on_screen": "F1 face (bg-swap clip) with burned captions to 4.70, blocks-max glitch into the 40 BLOCKS / SECOND title slide; TARGET: THIS YEAR sub-line ~9.5."
+  },
+  {
+   "role": "body",
+   "order": 2,
+   "start": 330.41,
+   "end": 344.79,
+   "sourced": "COVER",
+   "says": "Bitcoin, one block every 10 minutes. Ethereum, every 12 seconds. Kaspa right now, today, 10 every second. And DAGKnight, in the DAGKnight era, it'll be one block every 25 milliseconds.",
+   "on_screen": "C2 cadence-race chart full-frame; BTC bar pulses 330.5, ETH 333.6, Kaspa-today 336.2, DAGKnight-era 25ms 339.6."
+  },
+  {
+   "role": "kicker",
+   "order": 3,
+   "start": 427.3,
+   "end": 438.11,
+   "sourced": "COVER",
+   "says": "One to 10, done. Programmability, done. Ship this summer, done. Up to 40 blocks per second targeted before the end of this year. And then 100 next year.",
+   "on_screen": "C1 ladder GRAND ASSEMBLY full-frame; DONE stamps at 427.4 / 429.8 / 431.5, UP TO 40 TARGETED 433.2, 100 2027 436.6."
+  }
+ ],
+ "outro": {
+  "line": "Click below to WATCH the full video!",
+  "card": "assets/vertical/title-slides/card-cta-watch.png",
+  "behind": "frozen last frame of span 3 (the fully stamped C1 ladder), dimmed",
+  "voice": "video-creation/assets/vo/cta-watch-full.mp3 (SHARED take, MIKE-CLONE via higgsfield-voice)"
+ },
+ "captions": {
+  "burned_already": "only 0.00-4.70 of span 1 (the longform captions FACE beats only)",
+  "needs_track": "span 1 from 4.70 to its end, plus ALL of spans 2 and 3",
+  "face_table_final_clock": [
+   [
+    0.0,
+    4.7
+   ],
+   [
+    32.4,
+    38.53
+   ],
+   [
+    108.93,
+    113.37
+   ],
+   [
+    186.97,
+    193.3
+   ],
+   [
+    229.77,
+    307.07
+   ],
+   [
+    323.5,
+    328.27
+   ],
+   [
+    394.3,
+    396.9
+   ],
+   [
+    454.33,
+    457.22
+   ]
+  ],
+  "face_table_note": "The FACE table in Kaspa40Bps.tsx is SOURCE time and is routed through sh() by the comp. The list above is that table already shifted to final-video time (+1s after 52.81, +2s after 137.0667). Caught by the strategist after the run prompt supplied the unshifted values.",
+  "mishears_to_correct": {
+   "Casper": "Kaspa",
+   "dag night": "DAGKnight",
+   "dag night area": "DAGKnight era"
+  }
+ },
+ "music": {
+  "bed": "A",
+  "id": "hold-the-line",
+  "file": "video-creation/assets/music/Hold The Line/Wicked_Cinema_Hold_The_Line_instrumental_3_09.mp3",
+  "yt_license_code": "2RSEUREJAJSKKSNX"
+ }
+}

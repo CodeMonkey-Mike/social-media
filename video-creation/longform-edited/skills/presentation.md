@@ -5,6 +5,12 @@ description: Build dark cinematic, scroll-based HTML presentations (slide decks,
 
 # Dark Cinematic Scroll Presentation
 
+> **Longform-edited container naming (Mike, 2026-07-24):** the video containers styled off this system have
+> THREE official type names — **TITLE SLIDE** (no box), **CARD SLIDE** (rounded card box), and
+> **SYSTEM-DESIGN CHART** (full-screen overview diagram). Exemplars + anatomy + the locked stylesheet live
+> in `container-reference/README.md` (canonical — read it before building video containers); each video's
+> build worklist for them = its BROLL-PLAN CHARTS + SLIDES sections.
+
 Build visually striking, scroll-based HTML presentations with a dark editorial aesthetic. They are designed to look great on a screen — ideal for recording video, screen sharing, or embedding.
 
 Follow this design system exactly unless the user explicitly asks to change it. The CSS blocks below are the canonical, tested versions — copy them rather than reinventing.

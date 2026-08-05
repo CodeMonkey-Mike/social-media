@@ -1,0 +1,286 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>D4-C &middot; the fee tollbooth</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"><style>
+/* ==== LOCKED longform-edited container stylesheet - copied, not re-derived ====
+   skills/container-reference/container-canonical.css + skills/presentation.md  */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  --rh-neon:#ccff00; --rh-yellow:#ffe500;   /* ROBINHOOD ONLY, never teal */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;
+  align-items:flex-start;gap:36px;padding:36px 0}
+.frame{width:1920px;height:1080px;flex:0 0 1080px;background:var(--bg-deep);position:relative;
+  overflow:hidden;color:var(--text-primary);padding:70px 110px 48px;
+  display:flex;flex-direction:column}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* --- anatomy: muted eyebrow -> Playfair headline -> gradient divider -> body --- */
+.ey{font-size:24px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:66px;line-height:1.06;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1560px}
+h1.sm{font-size:56px} h1.xs{font-size:50px} h1.big{font-size:80px}
+h1 .mono{font-size:.94em;letter-spacing:-.01em}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:24px 0 0}
+.divider.rh{background:linear-gradient(90deg,var(--rh-neon),var(--rh-yellow))}
+.divider.go{background:linear-gradient(90deg,var(--accent-gold),var(--accent-red))}
+.divider.pu{background:linear-gradient(90deg,var(--accent-purple),var(--accent-cyan))}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .rh{color:var(--rh-neon)}
+.mu{color:var(--text-muted)} .sec{color:var(--text-secondary)}
+
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative}
+
+/* --- takeaway bar (bottom thesis line) --- */
+.take{background:linear-gradient(100deg,rgba(0,230,138,.09),rgba(0,194,255,.04));
+  border:1px solid rgba(0,230,138,.22);border-radius:14px;padding:24px 32px;
+  font-size:31px;line-height:1.36;color:var(--text-primary);font-weight:500}
+.take.rh{background:linear-gradient(100deg,rgba(204,255,0,.09),rgba(255,229,0,.04));
+  border-color:rgba(204,255,0,.26)}
+.take.gold{background:linear-gradient(100deg,rgba(255,215,0,.09),rgba(255,64,96,.04));
+  border-color:rgba(255,215,0,.24)}
+.take.pu{background:linear-gradient(100deg,rgba(168,85,247,.10),rgba(0,194,255,.04));
+  border-color:rgba(168,85,247,.26)}
+.take b{color:#fff;font-weight:700}
+
+/* --- source / provenance line --- */
+.src{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:18px;color:#414c60;
+  letter-spacing:.01em;margin-top:16px;line-height:1.5}
+
+/* --- generic chips / pills --- */
+.chip{display:inline-flex;align-items:center;gap:10px;padding:11px 22px;border-radius:100px;
+  border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--text-secondary);
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.03em}
+.chip.g{border-color:rgba(0,230,138,.4);background:rgba(0,230,138,.08);color:var(--accent-green)}
+.chip.c{border-color:rgba(0,194,255,.4);background:rgba(0,194,255,.08);color:var(--accent-cyan)}
+.chip.go{border-color:rgba(255,215,0,.42);background:rgba(255,215,0,.08);color:var(--accent-gold)}
+.chip.re{border-color:rgba(255,64,96,.42);background:rgba(255,64,96,.08);color:var(--accent-red)}
+.chip.pu{border-color:rgba(168,85,247,.42);background:rgba(168,85,247,.09);color:var(--accent-purple)}
+.chip.rh{border-color:rgba(204,255,0,.44);background:rgba(204,255,0,.08);color:var(--rh-neon)}
+.chip.dim{border-color:#232a38;background:rgba(255,255,255,.015);color:var(--text-muted)}
+.chiprow{display:flex;gap:18px;flex-wrap:wrap}
+
+/* --- stat block --- */
+.stat .lbl{font-size:20px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);
+  font-weight:600;margin-bottom:8px}
+.stat .val{font-family:'JetBrains Mono',monospace;font-weight:700;line-height:1;font-size:76px}
+.stat .sub{font-size:22px;color:var(--text-secondary);margin-top:10px}
+
+/* --- node card (flow diagrams) --- */
+.node{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:28px 26px;text-align:center;position:relative;overflow:hidden}
+.node .nt{font-size:30px;font-weight:700;letter-spacing:.01em;margin-top:16px}
+.node .ns{font-size:21px;line-height:1.42;color:var(--text-secondary);margin-top:12px}
+.node .topacc{position:absolute;top:0;left:0;right:0;height:2px}
+
+.hide{visibility:hidden}
+.o0{opacity:0}
+
+.abs{position:absolute}
+.wrap{position:relative;width:1700px;margin:0 auto}
+.lay{position:absolute;border-radius:18px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center}
+.lay .lt{font-size:44px;font-weight:700;letter-spacing:.01em;line-height:1}
+.lay .ls{font-size:22px;color:var(--text-secondary);margin-top:12px}
+.badge{display:inline-flex;align-items:center;padding:11px 22px;border-radius:100px;
+  border:1px solid rgba(204,255,0,.44);background:rgba(204,255,0,.075);color:var(--rh-neon);
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.02em}
+.connlbl{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:20px;
+  letter-spacing:.09em}
+.dim{border-color:#232a38 !important;background:rgba(255,255,255,.014) !important;
+  box-shadow:none !important}
+.ghost{border:1px solid #1b2230;border-radius:12px;background:rgba(255,255,255,.012);
+  padding:16px 20px;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;
+  color:#39435a;letter-spacing:.05em;margin-bottom:16px;text-align:center}
+</style></head><body><div class="frame " id="D4-C-toll-1"><div class="orb" style="left:1240px;top:-240px;width:640px;height:640px;background:#ffd700;opacity:.10"></div><div class="orb" style="left:-260px;top:620px;width:600px;height:600px;background:#00e68a;opacity:.12"></div><div class="hd"><div class="ey">LAYER 2 ACTIVITY &middot; WHERE THE FEES ACTUALLY GO</div><h1 class="">The activity is up here. <span class="go">The fees stay up here.</span></h1><div class="divider go"></div></div><div class="body"><div class="wrap" style="height:640px"><svg width="1700" height="640" viewBox="0 0 1700 640" class="abs"
+ style="left:0;top:0" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M430,56 L446,76 L430,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M548,56 L564,76 L548,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M666,56 L682,76 L666,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M784,56 L800,76 L784,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M902,56 L918,76 L902,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1020,56 L1036,76 L1020,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1138,56 L1154,76 L1138,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1256,56 L1272,76 L1256,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1374,56 L1390,76 L1374,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1492,56 L1508,76 L1492,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1622,46 1700,86 1622,126" fill="#ffd700" opacity=".55"/>
+<line x1="850" y1="134" x2="850" y2="486" stroke="#39445a" stroke-width="4" stroke-dasharray="10 12"/><path d="M839,472 L850,490 L861,472" stroke="#39445a" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="850" cy="210" r="4" fill="#39445a" opacity=".8"/><circle cx="850" cy="310" r="4" fill="#39445a" opacity=".5"/><circle cx="850" cy="410" r="4" fill="#39445a" opacity=".3"/></svg><div class="abs" style="left:0;top:38px;width:1610px;height:96px;
+ border-radius:12px;border:1px solid rgba(255,215,0,.48);
+ background:linear-gradient(90deg,rgba(255,215,0,.09),rgba(255,215,0,.32));
+ box-shadow:0 0 70px rgba(255,215,0,.13)"></div><div class="abs" style="left:0;top:0;width:1700px;display:flex;
+ justify-content:space-between;align-items:baseline">
+<div class="mono" style="font-size:24px;color:#ffd700;letter-spacing:.1em">FEES PAID ON LAYER 2s</div>
+<div class="mono" style="font-size:21px;color:#8a7a2e;letter-spacing:.1em">MOSTLY KEPT UP TOP</div></div><div class="abs mono"
+ style="left:44px;top:58px;font-size:56px;color:#ffd700;line-height:1;opacity:0">~$816K</div>
+<div class="abs mono" style="left:2px;top:146px;font-size:22px;opacity:0;
+ color:#a8912f;letter-spacing:.08em">ROBINHOOD CHAIN FEES &middot;
+ <span style="color:#ffd700">CUMULATIVE THROUGH JULY 13, 2026</span></div><div class="chiprow abs" style="left:0;top:190px;gap:18px;opacity:0">
+<div class="chip go">~90% KEPT BY ROBINHOOD</div>
+<div class="chip go">~$80K TO ARBITRUM</div></div><div class="abs o0" style="left:0;top:258px;width:1610px;
+ height:84px;border-radius:12px;border:1px solid rgba(255,215,0,.55);
+ background:linear-gradient(180deg,rgba(255,215,0,.13),rgba(255,215,0,.03));
+ box-shadow:0 0 50px rgba(255,215,0,.12);display:flex;align-items:center;
+ justify-content:space-between;padding:0 30px">
+<div style="text-align:left">
+ <div style="font-size:31px;font-weight:700;color:#ffd700;letter-spacing:.03em">FUSAKA &middot; FEE FLOOR</div>
+ <div style="font-size:20px;color:var(--text-secondary);margin-top:5px">a minimum toll for using Ethereum's security</div></div>
+<div class="chip go" style="font-size:19px">FLOORS START LOW TODAY &middot; A FIX IN PROGRESS</div></div><div class="abs"
+ style="left:150px;top:358px;width:640px;text-align:right;opacity:0">
+<div class="mono" style="font-size:74px;color:#ff4060;line-height:1">0.15%</div>
+<div class="mono" style="font-size:20px;color:#8a4152;margin-top:10px;letter-spacing:.07em">
+ OF THOSE FEES REACH THE BASE LAYER</div></div>
+<div class="abs"
+ style="left:920px;top:366px;width:620px;opacity:0">
+<div class="mono" style="font-size:50px;color:#ff4060;line-height:1">~$1.5K</div>
+<div class="mono" style="font-size:20px;color:#8a4152;margin-top:10px;letter-spacing:.07em">
+ TO ETHEREUM L1</div></div><div class="abs" style="left:920px;top:376px;width:660px">
+<div class="mono" style="font-size:27px;color:#5b6780;letter-spacing:.07em">WHAT REACHES THE BASE LAYER</div>
+<div style="font-size:23px;color:#414c60;margin-top:9px">almost nothing, so far</div></div><div class="abs" style="left:420px;top:490px;width:860px;height:150px;
+ border-radius:20px;border:2px solid rgba(0,230,138,.62);
+ background:linear-gradient(180deg,rgba(0,230,138,.12),rgba(0,230,138,.02));
+ box-shadow:0 18px 76px rgba(0,230,138,.18);display:flex;align-items:center;
+ justify-content:center;gap:30px">
+<svg viewBox="0 0 256 417" width="49.1" height="80" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+<div style="text-align:left">
+<div style="font-size:46px;font-weight:700;color:#00e68a;line-height:1">ETHEREUM L1</div>
+<div class="mono" style="font-size:22px;letter-spacing:.13em;color:#4e9b7f;margin-top:11px">
+ SECURITY + SETTLEMENT</div></div></div></div></div><div class="take gold">All of this activity lives on Layer 2s, and <b>almost none of those fees reach Ethereum yet.</b></div><div class="src">Layer 2 fee flow &middot; mechanism view, figures land next</div></div>
+<div class="frame " id="D4-C-toll-2"><div class="orb" style="left:1240px;top:-240px;width:640px;height:640px;background:#ffd700;opacity:.10"></div><div class="orb" style="left:-260px;top:620px;width:600px;height:600px;background:#00e68a;opacity:.12"></div><div class="hd"><div class="ey">LAYER 2 ACTIVITY &middot; WHERE THE FEES ACTUALLY GO</div><h1 class="">Ethereum's cut: <span class="re">0.15%</span></h1><div class="divider go"></div></div><div class="body"><div class="wrap" style="height:640px"><svg width="1700" height="640" viewBox="0 0 1700 640" class="abs"
+ style="left:0;top:0" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M430,56 L446,76 L430,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M548,56 L564,76 L548,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M666,56 L682,76 L666,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M784,56 L800,76 L784,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M902,56 L918,76 L902,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1020,56 L1036,76 L1020,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1138,56 L1154,76 L1138,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1256,56 L1272,76 L1256,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1374,56 L1390,76 L1374,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1492,56 L1508,76 L1492,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1622,46 1700,86 1622,126" fill="#ffd700" opacity=".55"/>
+<line x1="850" y1="134" x2="850" y2="486" stroke="#ff4060" stroke-width="4" stroke-dasharray="10 12"/><path d="M839,472 L850,490 L861,472" stroke="#ff4060" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="850" cy="210" r="4" fill="#ff4060" opacity=".8"/><circle cx="850" cy="310" r="4" fill="#ff4060" opacity=".5"/><circle cx="850" cy="410" r="4" fill="#ff4060" opacity=".3"/></svg><div class="abs" style="left:0;top:38px;width:1610px;height:96px;
+ border-radius:12px;border:1px solid rgba(255,215,0,.48);
+ background:linear-gradient(90deg,rgba(255,215,0,.09),rgba(255,215,0,.32));
+ box-shadow:0 0 70px rgba(255,215,0,.13)"></div><div class="abs" style="left:0;top:0;width:1700px;display:flex;
+ justify-content:space-between;align-items:baseline">
+<div class="mono" style="font-size:24px;color:#ffd700;letter-spacing:.1em">FEES PAID ON LAYER 2s</div>
+<div class="mono" style="font-size:21px;color:#8a7a2e;letter-spacing:.1em">MOSTLY KEPT UP TOP</div></div><div class="abs mono"
+ style="left:44px;top:58px;font-size:56px;color:#ffd700;line-height:1;opacity:1">~$816K</div>
+<div class="abs mono" style="left:2px;top:146px;font-size:22px;opacity:1;
+ color:#a8912f;letter-spacing:.08em">ROBINHOOD CHAIN FEES &middot;
+ <span style="color:#ffd700">CUMULATIVE THROUGH JULY 13, 2026</span></div><div class="chiprow abs" style="left:0;top:190px;gap:18px;opacity:1">
+<div class="chip go">~90% KEPT BY ROBINHOOD</div>
+<div class="chip go">~$80K TO ARBITRUM</div></div><div class="abs o0" style="left:0;top:258px;width:1610px;
+ height:84px;border-radius:12px;border:1px solid rgba(255,215,0,.55);
+ background:linear-gradient(180deg,rgba(255,215,0,.13),rgba(255,215,0,.03));
+ box-shadow:0 0 50px rgba(255,215,0,.12);display:flex;align-items:center;
+ justify-content:space-between;padding:0 30px">
+<div style="text-align:left">
+ <div style="font-size:31px;font-weight:700;color:#ffd700;letter-spacing:.03em">FUSAKA &middot; FEE FLOOR</div>
+ <div style="font-size:20px;color:var(--text-secondary);margin-top:5px">a minimum toll for using Ethereum's security</div></div>
+<div class="chip go" style="font-size:19px">FLOORS START LOW TODAY &middot; A FIX IN PROGRESS</div></div><div class="abs"
+ style="left:150px;top:358px;width:640px;text-align:right;opacity:1">
+<div class="mono" style="font-size:74px;color:#ff4060;line-height:1">0.15%</div>
+<div class="mono" style="font-size:20px;color:#8a4152;margin-top:10px;letter-spacing:.07em">
+ OF THOSE FEES REACH THE BASE LAYER</div></div>
+<div class="abs"
+ style="left:920px;top:366px;width:620px;opacity:1">
+<div class="mono" style="font-size:50px;color:#ff4060;line-height:1">~$1.5K</div>
+<div class="mono" style="font-size:20px;color:#8a4152;margin-top:10px;letter-spacing:.07em">
+ TO ETHEREUM L1</div></div><div class="abs o0" style="left:920px;top:376px;width:660px">
+<div class="mono" style="font-size:27px;color:#5b6780;letter-spacing:.07em">WHAT REACHES THE BASE LAYER</div>
+<div style="font-size:23px;color:#414c60;margin-top:9px">almost nothing, so far</div></div><div class="abs" style="left:420px;top:490px;width:860px;height:150px;
+ border-radius:20px;border:2px solid rgba(0,230,138,.62);
+ background:linear-gradient(180deg,rgba(0,230,138,.12),rgba(0,230,138,.02));
+ box-shadow:0 18px 76px rgba(0,230,138,.18);display:flex;align-items:center;
+ justify-content:center;gap:30px">
+<svg viewBox="0 0 256 417" width="49.1" height="80" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+<div style="text-align:left">
+<div style="font-size:46px;font-weight:700;color:#00e68a;line-height:1">ETHEREUM L1</div>
+<div class="mono" style="font-size:22px;letter-spacing:.13em;color:#4e9b7f;margin-top:11px">
+ SECURITY + SETTLEMENT</div></div></div></div></div><div class="take gold">Almost none of it reaches the base layer. <b>Yet.</b></div><div class="src">per chain fee data, July 2026</div></div>
+<div class="frame " id="D4-C-toll-3"><div class="orb" style="left:1240px;top:-240px;width:640px;height:640px;background:#ffd700;opacity:.10"></div><div class="orb" style="left:-260px;top:620px;width:600px;height:600px;background:#00e68a;opacity:.12"></div><div class="hd"><div class="ey">LAYER 2 ACTIVITY &middot; WHERE THE FEES ACTUALLY GO</div><h1 class="">Fusaka puts a <span class="go">floor</span> under it</h1><div class="divider go"></div></div><div class="body"><div class="wrap" style="height:640px"><svg width="1700" height="640" viewBox="0 0 1700 640" class="abs"
+ style="left:0;top:0" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M430,56 L446,76 L430,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M548,56 L564,76 L548,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M666,56 L682,76 L666,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M784,56 L800,76 L784,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M902,56 L918,76 L902,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1020,56 L1036,76 L1020,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1138,56 L1154,76 L1138,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1256,56 L1272,76 L1256,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1374,56 L1390,76 L1374,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1492,56 L1508,76 L1492,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1622,46 1700,86 1622,126" fill="#ffd700" opacity=".55"/>
+<line x1="850" y1="134" x2="850" y2="258" stroke="#ff4060" stroke-width="4"/><line x1="850" y1="342" x2="850" y2="486" stroke="#ffd700" stroke-width="13" stroke-dasharray="12 10" opacity=".5"/><path d="M837,470 L850,490 L863,470" stroke="#ffd700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="abs" style="left:0;top:38px;width:1610px;height:96px;
+ border-radius:12px;border:1px solid rgba(255,215,0,.48);
+ background:linear-gradient(90deg,rgba(255,215,0,.09),rgba(255,215,0,.32));
+ box-shadow:0 0 70px rgba(255,215,0,.13)"></div><div class="abs" style="left:0;top:0;width:1700px;display:flex;
+ justify-content:space-between;align-items:baseline">
+<div class="mono" style="font-size:24px;color:#ffd700;letter-spacing:.1em">FEES PAID ON LAYER 2s</div>
+<div class="mono" style="font-size:21px;color:#8a7a2e;letter-spacing:.1em">MOSTLY KEPT UP TOP</div></div><div class="abs mono"
+ style="left:44px;top:58px;font-size:56px;color:#ffd700;line-height:1;opacity:.4">~$816K</div>
+<div class="abs mono" style="left:2px;top:146px;font-size:22px;opacity:.4;
+ color:#a8912f;letter-spacing:.08em">ROBINHOOD CHAIN FEES &middot;
+ <span style="color:#ffd700">CUMULATIVE THROUGH JULY 13, 2026</span></div><div class="chiprow abs" style="left:0;top:190px;gap:18px;opacity:.4">
+<div class="chip go">~90% KEPT BY ROBINHOOD</div>
+<div class="chip go">~$80K TO ARBITRUM</div></div><div class="abs" style="left:0;top:258px;width:1610px;
+ height:84px;border-radius:12px;border:1px solid rgba(255,215,0,.55);
+ background:linear-gradient(180deg,rgba(255,215,0,.13),rgba(255,215,0,.03));
+ box-shadow:0 0 50px rgba(255,215,0,.12);display:flex;align-items:center;
+ justify-content:space-between;padding:0 30px">
+<div style="text-align:left">
+ <div style="font-size:31px;font-weight:700;color:#ffd700;letter-spacing:.03em">FUSAKA &middot; FEE FLOOR</div>
+ <div style="font-size:20px;color:var(--text-secondary);margin-top:5px">a minimum toll for using Ethereum's security</div></div>
+<div class="chip go" style="font-size:19px">FLOORS START LOW TODAY &middot; A FIX IN PROGRESS</div></div><!-- state 3 de-emphasis: NOT a wrapper opacity. Group opacity .4 crushed these to 1.8:1 / 1.4:1
+     and banded out through h264. The past-state red is pre-blended instead: #bb324a is 72% of
+     #ff4060 over the card bg (3.3:1) and #92505f is the muted caption rose (3.2:1). Still visibly
+     receded against the full-strength #ff4060 of state 2 and the live Fusaka gold on this card. -->
+<div class="abs"
+ style="left:150px;top:358px;width:640px;text-align:right;opacity:1">
+<div class="mono" style="font-size:74px;color:#bb324a;line-height:1">0.15%</div>
+<div class="mono" style="font-size:20px;color:#92505f;margin-top:10px;letter-spacing:.07em">
+ OF THOSE FEES REACH THE BASE LAYER</div></div>
+<div class="abs"
+ style="left:920px;top:366px;width:620px;opacity:1">
+<div class="mono" style="font-size:50px;color:#bb324a;line-height:1">~$1.5K</div>
+<div class="mono" style="font-size:20px;color:#92505f;margin-top:10px;letter-spacing:.07em">
+ TO ETHEREUM L1</div></div><div class="abs o0" style="left:920px;top:376px;width:660px">
+<div class="mono" style="font-size:27px;color:#5b6780;letter-spacing:.07em">WHAT REACHES THE BASE LAYER</div>
+<div style="font-size:23px;color:#414c60;margin-top:9px">almost nothing, so far</div></div><div class="abs" style="left:420px;top:490px;width:860px;height:150px;
+ border-radius:20px;border:2px solid rgba(0,230,138,.62);
+ background:linear-gradient(180deg,rgba(0,230,138,.12),rgba(0,230,138,.02));
+ box-shadow:0 18px 76px rgba(0,230,138,.18);display:flex;align-items:center;
+ justify-content:center;gap:30px">
+<svg viewBox="0 0 256 417" width="49.1" height="80" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+<div style="text-align:left">
+<div style="font-size:46px;font-weight:700;color:#00e68a;line-height:1">ETHEREUM L1</div>
+<div class="mono" style="font-size:22px;letter-spacing:.13em;color:#4e9b7f;margin-top:11px">
+ SECURITY + SETTLEMENT</div></div></div></div></div><div class="take gold">The toll booth is being built <b>while the traffic is already here.</b></div><div class="src">Fusaka upgrade: fee floors for Layer 2 activity &middot; Ethereum protocol roadmap, 2026 &middot; the floors exist but are extremely low at current economics</div></div>
+<div class="frame " id="D4-C-toll@end"><div class="orb" style="left:1240px;top:-240px;width:640px;height:640px;background:#ffd700;opacity:.10"></div><div class="orb" style="left:-260px;top:620px;width:600px;height:600px;background:#00e68a;opacity:.12"></div><div class="hd"><div class="ey">LAYER 2 ACTIVITY &middot; WHERE THE FEES ACTUALLY GO</div><h1 class="sm">The value capture upgrade, <span class="go">already in motion</span></h1><div class="divider go"></div></div><div class="body"><div class="wrap" style="height:640px"><svg width="1700" height="640" viewBox="0 0 1700 640" class="abs"
+ style="left:0;top:0" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M430,56 L446,76 L430,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M548,56 L564,76 L548,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M666,56 L682,76 L666,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M784,56 L800,76 L784,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M902,56 L918,76 L902,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1020,56 L1036,76 L1020,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1138,56 L1154,76 L1138,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1256,56 L1272,76 L1256,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1374,56 L1390,76 L1374,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/><path d="M1492,56 L1508,76 L1492,96" stroke="#ffd700" stroke-width="3" fill="none" opacity=".26" stroke-linecap="round" stroke-linejoin="round"/>
+<polygon points="1622,46 1700,86 1622,126" fill="#ffd700" opacity=".55"/>
+<line x1="850" y1="134" x2="850" y2="258" stroke="#39445a" stroke-width="4"/><line x1="850" y1="342" x2="850" y2="486" stroke="#ffd700" stroke-width="13" stroke-dasharray="12 10" opacity=".5"/><path d="M837,470 L850,490 L863,470" stroke="#ffd700" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="abs" style="left:0;top:38px;width:1610px;height:96px;
+ border-radius:12px;border:1px solid rgba(255,215,0,.48);
+ background:linear-gradient(90deg,rgba(255,215,0,.09),rgba(255,215,0,.32));
+ box-shadow:0 0 70px rgba(255,215,0,.13)"></div><div class="abs" style="left:0;top:0;width:1700px;display:flex;
+ justify-content:space-between;align-items:baseline">
+<div class="mono" style="font-size:24px;color:#ffd700;letter-spacing:.1em">FEES PAID ON LAYER 2s</div>
+<div class="mono" style="font-size:21px;color:#8a7a2e;letter-spacing:.1em">MOSTLY KEPT UP TOP</div></div><div class="abs mono"
+ style="left:44px;top:58px;font-size:56px;color:#ffd700;line-height:1;opacity:0">~$816K</div>
+<div class="abs mono" style="left:2px;top:146px;font-size:22px;opacity:0;
+ color:#a8912f;letter-spacing:.08em">ROBINHOOD CHAIN FEES &middot;
+ <span style="color:#ffd700">CUMULATIVE THROUGH JULY 13, 2026</span></div><div class="chiprow abs" style="left:0;top:190px;gap:18px;opacity:0">
+<div class="chip go">~90% KEPT BY ROBINHOOD</div>
+<div class="chip go">~$80K TO ARBITRUM</div></div><div class="abs" style="left:0;top:258px;width:1610px;
+ height:84px;border-radius:12px;border:1px solid rgba(255,215,0,.55);
+ background:linear-gradient(180deg,rgba(255,215,0,.13),rgba(255,215,0,.03));
+ box-shadow:0 0 50px rgba(255,215,0,.12);display:flex;align-items:center;
+ justify-content:space-between;padding:0 30px">
+<div style="text-align:left">
+ <div style="font-size:31px;font-weight:700;color:#ffd700;letter-spacing:.03em">FUSAKA &middot; FEE FLOOR</div>
+ <div style="font-size:20px;color:var(--text-secondary);margin-top:5px">a minimum toll for using Ethereum's security</div></div>
+<div class="chip go" style="font-size:19px">FLOORS START LOW TODAY &middot; A FIX IN PROGRESS</div></div><div class="abs"
+ style="left:150px;top:358px;width:640px;text-align:right;opacity:0">
+<div class="mono" style="font-size:74px;color:#ff4060;line-height:1">0.15%</div>
+<div class="mono" style="font-size:20px;color:#8a4152;margin-top:10px;letter-spacing:.07em">
+ OF THOSE FEES REACH THE BASE LAYER</div></div>
+<div class="abs"
+ style="left:920px;top:366px;width:620px;opacity:0">
+<div class="mono" style="font-size:50px;color:#ff4060;line-height:1">~$1.5K</div>
+<div class="mono" style="font-size:20px;color:#8a4152;margin-top:10px;letter-spacing:.07em">
+ TO ETHEREUM L1</div></div><div class="abs o0" style="left:920px;top:376px;width:660px">
+<div class="mono" style="font-size:27px;color:#5b6780;letter-spacing:.07em">WHAT REACHES THE BASE LAYER</div>
+<div style="font-size:23px;color:#414c60;margin-top:9px">almost nothing, so far</div></div><div class="abs" style="left:420px;top:490px;width:860px;height:150px;
+ border-radius:20px;border:2px solid rgba(0,230,138,.62);
+ background:linear-gradient(180deg,rgba(0,230,138,.12),rgba(0,230,138,.02));
+ box-shadow:0 18px 76px rgba(0,230,138,.18);display:flex;align-items:center;
+ justify-content:center;gap:30px">
+<svg viewBox="0 0 256 417" width="49.1" height="80" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+<div style="text-align:left">
+<div style="font-size:46px;font-weight:700;color:#00e68a;line-height:1">ETHEREUM L1</div>
+<div class="mono" style="font-size:22px;letter-spacing:.13em;color:#4e9b7f;margin-top:11px">
+ SECURITY + SETTLEMENT</div></div></div></div></div><div class="take gold"><b>Fusaka puts a fee floor under the Layer 2s.</b> A fix in progress, not a finished pipeline.</div><div class="src">Fusaka upgrade: fee floors for Layer 2 activity &middot; Ethereum protocol roadmap, 2026</div></div></body></html>

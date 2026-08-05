@@ -42,6 +42,12 @@ NOT feed verticalize / clip selection. Shows on the dashboard **Longs** tab.
 **Step 1B** verticalizes the LOW BPS master (16:9 → 9:16, face bottom + content top) → transcribe the
 vertical (Phase 2) → find topics, 90s chunk-and-group (Phase 3) → clip selection (4) → review dashboard
 (4b) → tighten (5) → silence removal (5B) → Whisper captions (6) → Remotion render (7) → publish (8).
+
+> **Canonical since 2026-08-04 (LangGraph Wave 2):** the Phase 4 cut exec is ONE graph invocation —
+> `python video-creation/livestream-repurpose/graph/run.py cut --batch <batch>` — run AFTER the
+> clip-strategist's `clip-plan.json` lands in `video-creation/shorts/<batch>/` (the judgment seam).
+> It cuts every planned clip, builds the canonical dashboard, registers the batch, and ENDS at
+> Mike's Phase 4b review. Phases 5+ continue manually until Waves 3-6 port them.
 Publish hands off via **`/publish-shorts`**, which writes `schedule-tweets/data/shorts.json`. Shows on the
 **Shorts** tab.
 - **Canonical detail:** `video-creation/SKILL.md` (Phases 1B–8) + `video-creation/PUBLISH-SHORTS.md`.

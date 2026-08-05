@@ -55,6 +55,10 @@ persists in the profile. Never use the main Chrome profile, never kill all Chrom
 > BR=$(python -c "print(int(100*8*1000/float($D)*0.92))")                      # kbps for ~100 MB
 > ffmpeg -i "<orig>" -vf scale=-2:1080 -c:v libx264 -b:v ${BR}k -maxrate ${BR}k -bufsize $((BR*2))k -an "<orig>.cap.mp4"
 > ```
+> **⚠ ORIENTATION (fixed 2026-07-25, vertical-repurpose sourcing):** `scale=-2:1080` is the LANDSCAPE
+> form. On a PORTRAIT (9:16) source it caps a vertical 4K master to **608x1080** — only 608 px wide for a
+> 1080-wide vertical comp, a silent downscale. For portrait sources use **`scale=1080:-2`** (1080 on the
+> SHORT edge → 1080x1920). `download-envato.js` now probes the source and picks the right form automatically.
 > (If a plain `-crf 23 -vf scale=-2:1080 -an` already lands under 100 MB, that's fine too.) This is
 > SEPARATE from the per-slot 1920x1080 render proxy (longform-edited house rule #4) — it just keeps
 > the saved SOURCE lean.

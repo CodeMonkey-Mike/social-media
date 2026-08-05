@@ -11,7 +11,50 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f0f2f5;
       color: #1a1a1a;
+      display: flex;
+      min-height: 100vh;
     }
+
+    /* ── left nav (shared with langgraph.html) ─────────────────────────── */
+    .sidenav {
+      width: 190px;
+      flex: 0 0 190px;
+      background: white;
+      border-right: 1px solid #e4e6ea;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+    .sidenav .brand {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #8a8d91;
+      padding: 0 18px 12px;
+    }
+    .sidenav a {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 18px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #65676b;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+    }
+    .sidenav a:hover { background: #f5f6f7; color: #1a1a1a; }
+    .sidenav a.active {
+      color: #1877f2;
+      border-left-color: #1877f2;
+      background: #e7f0fd;
+      font-weight: 600;
+    }
+    .sidenav a .ico { width: 16px; text-align: center; font-size: 13px; }
+
+    .main { flex: 1; min-width: 0; }
 
     header {
       background: white;
@@ -22,13 +65,16 @@
       gap: 10px;
     }
     header h1 { font-size: 17px; font-weight: 600; }
+    header .sub { font-size: 12.5px; color: #8a8d91; }
 
     .tabs {
       background: white;
       border-bottom: 1px solid #e4e6ea;
       padding: 0 24px;
       display: flex;
-      overflow-x: auto;
+      /* Wrap rather than clip: the left nav costs 190px, which pushed the last two
+         tabs off-screen at 1280px. Still one row on a wide window. */
+      flex-wrap: wrap;
     }
     .tab {
       background: none;
@@ -328,8 +374,17 @@
 </head>
 <body>
 
+<nav class="sidenav">
+  <div class="brand">Dashboard</div>
+  <a href="index.html" class="active"><span class="ico">📋</span> Social</a>
+  <a href="langgraph.html"><span class="ico">🕸</span> LangGraph</a>
+</nav>
+
+<div class="main">
+
 <header>
-  <h1>Pending Posts</h1>
+  <h1>Social</h1>
+  <span class="sub">pending posts across every queue</span>
 </header>
 
 <nav class="tabs" id="tabs">
@@ -359,6 +414,8 @@
 <div id="tab-replyopp"   class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-shorts"     class="tab-content"><div class="loading">Loading…</div></div>
 <div id="tab-longs"      class="tab-content"><div class="loading">Loading…</div></div>
+
+</div><!-- /.main -->
 
 <div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
 

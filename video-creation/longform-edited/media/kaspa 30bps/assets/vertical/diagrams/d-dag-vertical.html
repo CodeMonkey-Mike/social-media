@@ -1,0 +1,134 @@
+<!doctype html>
+<html data-state="base">
+<head>
+<meta charset="utf-8">
+<title>D-DAG Not a chain, a DAG — VERTICAL 1080x1920</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<!--
+  PORTRAIT RE-SHOOT of assets/diagrams/d-dag.html. Same palette, fonts, copy, accent roles and
+  panel SVG geometry (the chain + the BlockDAG meshes are UNCHANGED, viewBox 780x420 each).
+  Reflow only: the headline wraps to two lines, and the two panels that sat SIDE BY SIDE in 16:9
+  now STACK — A CHAIN on top, A BLOCKDAG beneath, each full frame width.
+  States: #base | #highlight (BlockDAG panel lit green, chain panel dimmed) — unchanged.
+-->
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --accent-green:#00e68a; --accent-cyan:#00c2ff;
+  --accent-gold:#ffd700; --accent-red:#ff4060; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e; --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1080px;height:1920px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.ey{font-family:'DM Sans';font-size:26px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);margin-bottom:22px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:96px;line-height:1.05;letter-spacing:-.02em}
+/* nowrap keeps the accent phrase whole so the portrait headline breaks after the comma
+   ("NOT A CHAIN," / "A DAG"), never orphaning "DAG" onto its own line */
+.g{color:var(--accent-green);white-space:nowrap}
+header{position:absolute;left:60px;top:64px;width:800px;z-index:2}
+
+.panels{position:absolute;left:60px;right:60px;top:392px;bottom:88px;display:flex;flex-direction:column;gap:40px;z-index:1}
+.panel{flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:22px;position:relative;
+  padding:40px 44px;display:flex;flex-direction:column;transition:none}
+.plabel{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:32px;letter-spacing:.14em;text-transform:uppercase}
+.panel.chain .plabel{color:var(--text-secondary)}
+.panel.dag .plabel{color:var(--accent-cyan)}
+.pcap{font-family:'DM Sans';font-size:26px;color:var(--text-secondary);margin-top:auto}
+.pcap .mono{font-size:24px}
+.panel svg{flex:1;width:100%;margin:14px 0}
+
+.blk{fill:#181c26;stroke:#8892a4;stroke-width:2.5;rx:6}
+.chainarrow{stroke:#505a6e;stroke-width:3}
+.dblk{fill:rgba(0,194,255,.10);stroke:var(--accent-cyan);stroke-width:2.5}
+.dagarrow{stroke:rgba(0,194,255,.55);stroke-width:2.5}
+
+/* highlight state: DAG side lights, chain side falls back */
+html[data-state="highlight"] .panel.chain{opacity:.42}
+html[data-state="highlight"] .panel.dag{border-color:rgba(0,230,138,.65);box-shadow:0 0 60px rgba(0,230,138,.22)}
+html[data-state="highlight"] .panel.dag .plabel{color:var(--accent-green)}
+html[data-state="highlight"] .dblk{stroke:var(--accent-green);fill:rgba(0,230,138,.10)}
+html[data-state="highlight"] .dagarrow{stroke:rgba(0,230,138,.6)}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="orb" style="width:560px;height:560px;right:-160px;top:-180px;background:var(--accent-cyan);opacity:.16"></div>
+  <div class="orb" style="width:560px;height:560px;left:-180px;bottom:-200px;background:var(--accent-green);opacity:.13"></div>
+
+  <header>
+    <div class="ey">Block structure</div>
+    <h1>NOT A CHAIN, <span class="g">A DAG</span></h1>
+  </header>
+
+  <div class="panels">
+    <div class="panel chain">
+      <div class="plabel">A chain</div>
+      <svg viewBox="0 0 780 420">
+        <defs><marker id="ca" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+          <path d="M0,0 L10,5 L0,10 z" fill="#505a6e"/></marker></defs>
+        <rect class="blk" x="30"  y="175" width="100" height="70" rx="8"/>
+        <rect class="blk" x="190" y="175" width="100" height="70" rx="8"/>
+        <rect class="blk" x="350" y="175" width="100" height="70" rx="8"/>
+        <rect class="blk" x="510" y="175" width="100" height="70" rx="8"/>
+        <rect class="blk" x="670" y="175" width="100" height="70" rx="8"/>
+        <line class="chainarrow" x1="134" y1="210" x2="182" y2="210" marker-end="url(#ca)"/>
+        <line class="chainarrow" x1="294" y1="210" x2="342" y2="210" marker-end="url(#ca)"/>
+        <line class="chainarrow" x1="454" y1="210" x2="502" y2="210" marker-end="url(#ca)"/>
+        <line class="chainarrow" x1="614" y1="210" x2="662" y2="210" marker-end="url(#ca)"/>
+      </svg>
+      <div class="pcap">one lane. one block at a time, single file.</div>
+    </div>
+
+    <div class="panel dag">
+      <div class="plabel">A BlockDAG</div>
+      <svg viewBox="0 0 780 420">
+        <defs>
+          <marker id="da" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="rgba(0,194,255,.8)"/></marker>
+          <marker id="dg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="rgba(0,230,138,.85)"/></marker>
+        </defs>
+        <!-- edges: later block -> earlier parents (left to right flow) -->
+        <g>
+          <line class="dagarrow" x1="196" y1="90"  x2="132" y2="118" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="196" y1="102" x2="136" y2="266" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="196" y1="215" x2="134" y2="150" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="196" y1="228" x2="134" y2="290" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="196" y1="345" x2="136" y2="300" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="376" y1="150" x2="304" y2="102" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="376" y1="162" x2="304" y2="222" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="376" y1="290" x2="304" y2="238" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="376" y1="300" x2="304" y2="348" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="556" y1="218" x2="484" y2="162" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="556" y1="230" x2="484" y2="292" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="556" y1="210" x2="306" y2="96"  marker-end="url(#da)"/>
+          <line class="dagarrow" x1="716" y1="200" x2="664" y2="222" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="720" y1="188" x2="482" y2="156" marker-end="url(#da)"/>
+          <line class="dagarrow" x1="720" y1="212" x2="482" y2="296" marker-end="url(#da)"/>
+        </g>
+        <rect class="dblk" x="60"  y="100" width="76" height="56" rx="8"/>
+        <rect class="dblk" x="60"  y="250" width="76" height="56" rx="8"/>
+        <rect class="dblk" x="228" y="70"  width="76" height="56" rx="8"/>
+        <rect class="dblk" x="228" y="196" width="76" height="56" rx="8"/>
+        <rect class="dblk" x="228" y="322" width="76" height="56" rx="8"/>
+        <rect class="dblk" x="408" y="130" width="76" height="56" rx="8"/>
+        <rect class="dblk" x="408" y="266" width="76" height="56" rx="8"/>
+        <rect class="dblk" x="588" y="196" width="76" height="56" rx="8"/>
+        <rect class="dblk" x="700" y="172" width="76" height="56" rx="8"/>
+      </svg>
+      <div class="pcap"><span class="mono" style="color:var(--accent-cyan)">DIRECTED ACYCLIC GRAPH</span> · blocks in parallel, every block woven in.</div>
+    </div>
+  </div>
+</div>
+<script>
+const s=(location.hash||'').slice(1); if(s) document.documentElement.dataset.state=s;
+if(document.documentElement.dataset.state==='highlight'){
+  document.querySelectorAll('.dagarrow').forEach(l=>l.setAttribute('marker-end','url(#dg)'));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>C2 &middot; dominance</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"><style>
+/* ==== LOCKED longform-edited container stylesheet - copied, not re-derived ====
+   skills/container-reference/container-canonical.css + skills/presentation.md  */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  --rh-neon:#ccff00; --rh-yellow:#ffe500;   /* ROBINHOOD ONLY, never teal */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;
+  align-items:flex-start;gap:36px;padding:36px 0}
+.frame{width:1920px;height:1080px;flex:0 0 1080px;background:var(--bg-deep);position:relative;
+  overflow:hidden;color:var(--text-primary);padding:70px 110px 48px;
+  display:flex;flex-direction:column}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* --- anatomy: muted eyebrow -> Playfair headline -> gradient divider -> body --- */
+.ey{font-size:24px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:66px;line-height:1.06;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1560px}
+h1.sm{font-size:56px} h1.xs{font-size:50px} h1.big{font-size:80px}
+h1 .mono{font-size:.94em;letter-spacing:-.01em}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:24px 0 0}
+.divider.rh{background:linear-gradient(90deg,var(--rh-neon),var(--rh-yellow))}
+.divider.go{background:linear-gradient(90deg,var(--accent-gold),var(--accent-red))}
+.divider.pu{background:linear-gradient(90deg,var(--accent-purple),var(--accent-cyan))}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .rh{color:var(--rh-neon)}
+.mu{color:var(--text-muted)} .sec{color:var(--text-secondary)}
+
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative}
+
+/* --- takeaway bar (bottom thesis line) --- */
+.take{background:linear-gradient(100deg,rgba(0,230,138,.09),rgba(0,194,255,.04));
+  border:1px solid rgba(0,230,138,.22);border-radius:14px;padding:24px 32px;
+  font-size:31px;line-height:1.36;color:var(--text-primary);font-weight:500}
+.take.rh{background:linear-gradient(100deg,rgba(204,255,0,.09),rgba(255,229,0,.04));
+  border-color:rgba(204,255,0,.26)}
+.take.gold{background:linear-gradient(100deg,rgba(255,215,0,.09),rgba(255,64,96,.04));
+  border-color:rgba(255,215,0,.24)}
+.take.pu{background:linear-gradient(100deg,rgba(168,85,247,.10),rgba(0,194,255,.04));
+  border-color:rgba(168,85,247,.26)}
+.take b{color:#fff;font-weight:700}
+
+/* --- source / provenance line --- */
+.src{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:18px;color:#414c60;
+  letter-spacing:.01em;margin-top:16px;line-height:1.5}
+
+/* --- generic chips / pills --- */
+.chip{display:inline-flex;align-items:center;gap:10px;padding:11px 22px;border-radius:100px;
+  border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--text-secondary);
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.03em}
+.chip.g{border-color:rgba(0,230,138,.4);background:rgba(0,230,138,.08);color:var(--accent-green)}
+.chip.c{border-color:rgba(0,194,255,.4);background:rgba(0,194,255,.08);color:var(--accent-cyan)}
+.chip.go{border-color:rgba(255,215,0,.42);background:rgba(255,215,0,.08);color:var(--accent-gold)}
+.chip.re{border-color:rgba(255,64,96,.42);background:rgba(255,64,96,.08);color:var(--accent-red)}
+.chip.pu{border-color:rgba(168,85,247,.42);background:rgba(168,85,247,.09);color:var(--accent-purple)}
+.chip.rh{border-color:rgba(204,255,0,.44);background:rgba(204,255,0,.08);color:var(--rh-neon)}
+.chip.dim{border-color:#232a38;background:rgba(255,255,255,.015);color:var(--text-muted)}
+.chiprow{display:flex;gap:18px;flex-wrap:wrap}
+
+/* --- stat block --- */
+.stat .lbl{font-size:20px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);
+  font-weight:600;margin-bottom:8px}
+.stat .val{font-family:'JetBrains Mono',monospace;font-weight:700;line-height:1;font-size:76px}
+.stat .sub{font-size:22px;color:var(--text-secondary);margin-top:10px}
+
+/* --- node card (flow diagrams) --- */
+.node{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:28px 26px;text-align:center;position:relative;overflow:hidden}
+.node .nt{font-size:30px;font-weight:700;letter-spacing:.01em;margin-top:16px}
+.node .ns{font-size:21px;line-height:1.42;color:var(--text-secondary);margin-top:12px}
+.node .topacc{position:absolute;top:0;left:0;right:0;height:2px}
+
+.hide{visibility:hidden}
+.o0{opacity:0}
+
+/* ---- chart-local components ---- */
+.plotwrap{position:relative;width:1700px;height:566px;margin:0 auto}
+.abs{position:absolute}
+.dnwrap{position:relative;width:1700px;height:624px}
+.legrow{display:flex;align-items:center;gap:22px;margin-bottom:30px}
+.legsw{width:26px;height:26px;border-radius:7px;flex:0 0 26px}
+.legnm{font-size:35px;font-weight:700;letter-spacing:.01em}
+.legval{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:31px;margin-left:auto}
+.track{width:1700px;border:1px solid var(--border);border-radius:16px;
+  background:rgba(255,255,255,.018);display:flex;overflow:hidden}
+.seg{height:100%;position:relative}
+.tinylbl{font-size:19px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);
+  font-weight:600}
+.bigv{font-family:'JetBrains Mono',monospace;font-weight:700;line-height:1}
+.railwrap{position:relative;width:1700px;height:120px}
+.statcard{flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:34px 34px 30px;position:relative;overflow:hidden}
+.statcard .topacc{position:absolute;top:0;left:0;right:0;height:3px}
+.scopebar{display:flex;align-items:center;gap:18px;border-left:4px solid var(--accent-gold);
+  background:rgba(255,215,0,.06);border-radius:0 12px 12px 0;padding:18px 26px;
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:23px;color:#e9c94a;
+  letter-spacing:.04em}
+.c4row{position:absolute;left:0}
+</style></head><body><div class="frame " id="C2-A"><div class="orb" style="left:1150px;top:-190px;width:660px;height:660px;background:#00e68a;opacity:.15"></div><div class="orb" style="left:-240px;top:600px;width:520px;height:520px;background:#00c2ff;opacity:.11"></div><div class="hd"><div class="ey">TOKENIZED RWA VALUE BY CHAIN &middot; JULY 2026</div><h1 class="">Most of it settles on <span class="go">one chain</span></h1><div class="divider "></div></div><div class="body"><div class="dnwrap"><svg width="624" height="624" viewBox="0 0 624 624"
+ xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:1020px;top:0px">
+<defs><filter id="glA" x="-30%" y="-30%" width="160%" height="160%">
+<feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/>
+<feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<circle cx="312.0" cy="312.0" r="250.0" fill="none" stroke="#171d29" stroke-width="62.0"/>
+<circle cx="312.0" cy="312.0" r="250.0" fill="none" stroke="#00e68a" stroke-width="62.0" stroke-dasharray="958.19 612.61" stroke-linecap="butt" transform="rotate(-90 312.0 312.0)" filter="url(#glA)"/></svg><div class="abs" style="left:1020px;top:196px;width:624px;text-align:center"><div style="height:104px;display:flex;align-items:center;justify-content:center"><div style="font-family:'Playfair Display',serif;font-weight:900;font-size:118px;line-height:.86;color:#46516a">?</div></div><div class="mono" style="font-size:70px;color:#e8eaf0;line-height:1;margin-top:16px">61-65%</div><div style="font-size:18px;letter-spacing:.17em;color:#5b6780;margin-top:14px;font-weight:600">OF ALL VALUE ONCHAIN</div></div><div class="abs" style="left:0;top:118px;width:770px">
+<div class="chip c" style="margin-bottom:56px">TOTAL ONCHAIN &middot; OVER $37B</div>
+<div class="legrow"><div class="legsw" style="background:#00e68a;
+ box-shadow:0 0 22px rgba(0,230,138,.5)"></div>
+<div class="legnm" style="color:#e8eaf0">ONE CHAIN</div>
+<div class="legval" style="color:#e8eaf0">61-65%</div></div>
+<div class="legrow"><div class="legsw" style="background:#232a38"></div>
+<div class="legnm" style="color:#5b6780">EVERYTHING ELSE</div>
+<div class="legval" style="color:#46516a">35-39%</div></div>
+<div class="chiprow o0" style="margin-top:46px"><div class="chip dim">NOT THE FASTEST</div><div class="chip dim">NOT THE CHEAPEST</div></div></div></div></div><div class="take ">Over <b>$37B</b> of tokenized real world assets, and the majority of it lands in exactly one place.</div><div class="src">Ethereum share of total onchain RWA value &middot; KuCoin 65% &middot; Yahoo Finance / Cryptic 61% &middot; Jul 2026<br>The arc is drawn at the low end of the sourced range, 61%. Total onchain value: rwa.xyz, Jul 2026.</div></div>
+<div class="frame " id="C2-B"><div class="orb" style="left:1150px;top:-190px;width:660px;height:660px;background:#00e68a;opacity:.15"></div><div class="orb" style="left:-240px;top:600px;width:520px;height:520px;background:#00c2ff;opacity:.11"></div><div class="hd"><div class="ey">TOKENIZED RWA VALUE BY CHAIN &middot; JULY 2026</div><h1 class=""><span class="g">Ethereum.</span></h1><div class="divider "></div></div><div class="body"><div class="dnwrap"><svg width="624" height="624" viewBox="0 0 624 624"
+ xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:1020px;top:0px">
+<defs><filter id="glB" x="-30%" y="-30%" width="160%" height="160%">
+<feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/>
+<feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<circle cx="312.0" cy="312.0" r="250.0" fill="none" stroke="#171d29" stroke-width="62.0"/>
+<circle cx="312.0" cy="312.0" r="250.0" fill="none" stroke="#00e68a" stroke-width="62.0" stroke-dasharray="958.19 612.61" stroke-linecap="butt" transform="rotate(-90 312.0 312.0)" filter="url(#glB)"/></svg><div class="abs" style="left:1020px;top:196px;width:624px;text-align:center"><div style="height:104px;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 256 417" width="61.4" height="100" style="" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg></div><div class="mono" style="font-size:70px;color:#00e68a;line-height:1;margin-top:16px">61-65%</div><div style="font-size:18px;letter-spacing:.17em;color:#5b6780;margin-top:14px;font-weight:600">OF ALL VALUE ONCHAIN</div></div><div class="abs" style="left:0;top:118px;width:770px">
+<div class="chip c" style="margin-bottom:56px">TOTAL ONCHAIN &middot; OVER $37B</div>
+<div class="legrow"><div class="legsw" style="background:#00e68a;
+ box-shadow:0 0 22px rgba(0,230,138,.5)"></div><svg viewBox="0 0 256 417" width="23.3" height="38" style="margin-right:4px" xmlns="http://www.w3.org/2000/svg"><path d="M127.9611 0L125.1667 9.5V285.168L127.9611 287.958L255.9222 212.32z" fill="#00e68a" opacity=".55"/><path d="M127.962 0L0 212.32L127.962 287.959V154.158z" fill="#00e68a" opacity=".95"/><path d="M127.9611 312.1866L126.3861 314.1066V412.3056L127.9611 416.9066L255.9997 236.5866z" fill="#00e68a" opacity=".55"/><path d="M127.962 416.9052V312.1852L0 236.5852z" fill="#00e68a" opacity=".95"/><path d="M127.9611 287.9577L255.9211 212.3207L127.9611 154.1587z" fill="#00e68a" opacity=".33"/><path d="M0 212.3208L127.962 287.9578V154.1588z" fill="#00e68a" opacity=".75"/></svg>
+<div class="legnm" style="color:#00e68a">ETHEREUM</div>
+<div class="legval" style="color:#00e68a">61-65%</div></div>
+<div class="legrow"><div class="legsw" style="background:#232a38"></div>
+<div class="legnm" style="color:#5b6780">ALL OTHER CHAINS</div>
+<div class="legval" style="color:#46516a">35-39%</div></div>
+<div class="chiprow" style="margin-top:46px"><div class="chip dim">NOT THE FASTEST</div><div class="chip dim">NOT THE CHEAPEST</div></div></div></div></div><div class="take ">Not the fastest. Not the cheapest. <b>The one the big money trusts.</b></div><div class="src">Ethereum share of total onchain RWA value &middot; KuCoin 65% &middot; Yahoo Finance / Cryptic 61% &middot; Jul 2026<br>The arc is drawn at the low end of the sourced range, 61%. Total onchain value: rwa.xyz, Jul 2026.</div></div></body></html>

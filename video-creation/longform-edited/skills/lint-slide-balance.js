@@ -15,12 +15,28 @@
 const fs = require('fs');
 const file = process.argv[2];
 if (!file) { console.error('usage: node lint-slide-balance.js <comp.tsx>'); process.exit(2); }
-const src = fs.readFileSync(file, 'utf8');
+let src = fs.readFileSync(file, 'utf8');
+
+// A derived comp (e.g. the VERTICAL cut) imports COVERS from its 16:9 parent so the two cannot
+// drift — follow the import and lint the declaring file.
+if (!/COVERS\s*:\s*Cover\[\]\s*=\s*\[/.test(src)) {
+  const imp = src.match(/import\s*\{[^}]*\bCOVERS\b[^}]*\}\s*from\s*['"]\.\/([\w.-]+)['"]/);
+  if (imp) {
+    const p2 = require('path').join(require('path').dirname(file), imp[1].replace(/\.tsx?$/, '') + '.tsx');
+    if (fs.existsSync(p2)) {
+      console.log(`  note  COVERS imported from ./${imp[1]} — linting that file's table.`);
+      src = fs.readFileSync(p2, 'utf8');
+    }
+  }
+}
 
 const m = src.match(/COVERS\s*:\s*Cover\[\]\s*=\s*\[([\s\S]*?)\n\];/);
 if (!m) { console.error('lint-slide-balance: could not find `const COVERS: Cover[] = [...]` in ' + file); process.exit(2); }
 const covers = [];
-const re = /\{\s*tIn:\s*([\d.]+),\s*tOut:\s*([\d.]+),\s*kind:\s*'([^']+)',\s*ref:\s*'([^']+)'\s*\}/g;
+// Trailing fields are REQUIRED by the other gates (comp-build §5: every deck row declares a
+// `state`; lint-covers reads lead/cap too), so the row shape is `{tIn, tOut, kind, ref, ...}` —
+// matching only rows that END at `ref` silently parsed 0 covers and exited 2 (kaspa 30bps).
+const re = /\{\s*tIn:\s*([\d.]+),\s*tOut:\s*([\d.]+),\s*kind:\s*'([^']+)',\s*ref:\s*'([^']+)'[^}]*\}/g;
 let mm;
 while ((mm = re.exec(m[1]))) covers.push({ tIn: +mm[1], tOut: +mm[2], kind: mm[3], ref: mm[4] });
 if (!covers.length) { console.error('lint-slide-balance: parsed 0 covers from COVERS array'); process.exit(2); }

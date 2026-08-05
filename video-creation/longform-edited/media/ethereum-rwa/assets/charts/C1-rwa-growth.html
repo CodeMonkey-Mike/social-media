@@ -1,0 +1,160 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>C1 &middot; RWA growth</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet"><style>
+/* ==== LOCKED longform-edited container stylesheet - copied, not re-derived ====
+   skills/container-reference/container-canonical.css + skills/presentation.md  */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  --rh-neon:#ccff00; --rh-yellow:#ffe500;   /* ROBINHOOD ONLY, never teal */
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;
+  align-items:flex-start;gap:36px;padding:36px 0}
+.frame{width:1920px;height:1080px;flex:0 0 1080px;background:var(--bg-deep);position:relative;
+  overflow:hidden;color:var(--text-primary);padding:70px 110px 48px;
+  display:flex;flex-direction:column}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* --- anatomy: muted eyebrow -> Playfair headline -> gradient divider -> body --- */
+.ey{font-size:24px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;
+  color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:66px;line-height:1.06;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1560px}
+h1.sm{font-size:56px} h1.xs{font-size:50px} h1.big{font-size:80px}
+h1 .mono{font-size:.94em;letter-spacing:-.01em}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:24px 0 0}
+.divider.rh{background:linear-gradient(90deg,var(--rh-neon),var(--rh-yellow))}
+.divider.go{background:linear-gradient(90deg,var(--accent-gold),var(--accent-red))}
+.divider.pu{background:linear-gradient(90deg,var(--accent-purple),var(--accent-cyan))}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .rh{color:var(--rh-neon)}
+.mu{color:var(--text-muted)} .sec{color:var(--text-secondary)}
+
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative}
+
+/* --- takeaway bar (bottom thesis line) --- */
+.take{background:linear-gradient(100deg,rgba(0,230,138,.09),rgba(0,194,255,.04));
+  border:1px solid rgba(0,230,138,.22);border-radius:14px;padding:24px 32px;
+  font-size:31px;line-height:1.36;color:var(--text-primary);font-weight:500}
+.take.rh{background:linear-gradient(100deg,rgba(204,255,0,.09),rgba(255,229,0,.04));
+  border-color:rgba(204,255,0,.26)}
+.take.gold{background:linear-gradient(100deg,rgba(255,215,0,.09),rgba(255,64,96,.04));
+  border-color:rgba(255,215,0,.24)}
+.take.pu{background:linear-gradient(100deg,rgba(168,85,247,.10),rgba(0,194,255,.04));
+  border-color:rgba(168,85,247,.26)}
+.take b{color:#fff;font-weight:700}
+
+/* --- source / provenance line --- */
+.src{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:18px;color:#414c60;
+  letter-spacing:.01em;margin-top:16px;line-height:1.5}
+
+/* --- generic chips / pills --- */
+.chip{display:inline-flex;align-items:center;gap:10px;padding:11px 22px;border-radius:100px;
+  border:1px solid var(--border);background:rgba(255,255,255,.02);color:var(--text-secondary);
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.03em}
+.chip.g{border-color:rgba(0,230,138,.4);background:rgba(0,230,138,.08);color:var(--accent-green)}
+.chip.c{border-color:rgba(0,194,255,.4);background:rgba(0,194,255,.08);color:var(--accent-cyan)}
+.chip.go{border-color:rgba(255,215,0,.42);background:rgba(255,215,0,.08);color:var(--accent-gold)}
+.chip.re{border-color:rgba(255,64,96,.42);background:rgba(255,64,96,.08);color:var(--accent-red)}
+.chip.pu{border-color:rgba(168,85,247,.42);background:rgba(168,85,247,.09);color:var(--accent-purple)}
+.chip.rh{border-color:rgba(204,255,0,.44);background:rgba(204,255,0,.08);color:var(--rh-neon)}
+.chip.dim{border-color:#232a38;background:rgba(255,255,255,.015);color:var(--text-muted)}
+.chiprow{display:flex;gap:18px;flex-wrap:wrap}
+
+/* --- stat block --- */
+.stat .lbl{font-size:20px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);
+  font-weight:600;margin-bottom:8px}
+.stat .val{font-family:'JetBrains Mono',monospace;font-weight:700;line-height:1;font-size:76px}
+.stat .sub{font-size:22px;color:var(--text-secondary);margin-top:10px}
+
+/* --- node card (flow diagrams) --- */
+.node{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:28px 26px;text-align:center;position:relative;overflow:hidden}
+.node .nt{font-size:30px;font-weight:700;letter-spacing:.01em;margin-top:16px}
+.node .ns{font-size:21px;line-height:1.42;color:var(--text-secondary);margin-top:12px}
+.node .topacc{position:absolute;top:0;left:0;right:0;height:2px}
+
+.hide{visibility:hidden}
+.o0{opacity:0}
+
+/* ---- chart-local components ---- */
+.plotwrap{position:relative;width:1700px;height:566px;margin:0 auto}
+.abs{position:absolute}
+.dnwrap{position:relative;width:1700px;height:624px}
+.legrow{display:flex;align-items:center;gap:22px;margin-bottom:30px}
+.legsw{width:26px;height:26px;border-radius:7px;flex:0 0 26px}
+.legnm{font-size:35px;font-weight:700;letter-spacing:.01em}
+.legval{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:31px;margin-left:auto}
+.track{width:1700px;border:1px solid var(--border);border-radius:16px;
+  background:rgba(255,255,255,.018);display:flex;overflow:hidden}
+.seg{height:100%;position:relative}
+.tinylbl{font-size:19px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);
+  font-weight:600}
+.bigv{font-family:'JetBrains Mono',monospace;font-weight:700;line-height:1}
+.railwrap{position:relative;width:1700px;height:120px}
+.statcard{flex:1;background:var(--bg-card);border:1px solid var(--border);border-radius:18px;
+  padding:34px 34px 30px;position:relative;overflow:hidden}
+.statcard .topacc{position:absolute;top:0;left:0;right:0;height:3px}
+.scopebar{display:flex;align-items:center;gap:18px;border-left:4px solid var(--accent-gold);
+  background:rgba(255,215,0,.06);border-radius:0 12px 12px 0;padding:18px 26px;
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:23px;color:#e9c94a;
+  letter-spacing:.04em}
+.c4row{position:absolute;left:0}
+</style></head><body><div class="frame " id="C1-start"><div class="orb" style="left:1180px;top:-180px;width:620px;height:620px;background:#00e68a;opacity:.16"></div><div class="orb" style="left:-220px;top:620px;width:560px;height:560px;background:#00c2ff;opacity:.13"></div><div class="hd"><div class="ey">TOTAL TOKENIZED REAL WORLD ASSET VALUE &middot; ALL CHAINS</div><h1 class="">The money is already moving <span class="g">onchain</span></h1><div class="divider "></div></div><div class="body"><div class="plotwrap"><svg width="1700" height="566" viewBox="0 0 1700 566"
+ xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:0;top:0">
+<defs><linearGradient id="g1C1-start" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#00e68a" stop-opacity=".26"/>
+<stop offset="100%" stop-color="#00e68a" stop-opacity="0"/></linearGradient></defs>
+<line x1="168.0" y1="370.0" x2="1450.0" y2="370.0" stroke="#161c28" stroke-width="1.5"/><line x1="168.0" y1="270.0" x2="1450.0" y2="270.0" stroke="#161c28" stroke-width="1.5"/><line x1="168.0" y1="170.0" x2="1450.0" y2="170.0" stroke="#161c28" stroke-width="1.5"/><line x1="168.0" y1="70.0" x2="1450.0" y2="70.0" stroke="#161c28" stroke-width="1.5"/>
+<line x1="168.0" y1="470.0" x2="1450.0" y2="470.0" stroke="#2a3446" stroke-width="2"/>
+<line x1="168.0" y1="30.0" x2="168.0" y2="470.0" stroke="#2a3446" stroke-width="2"/>
+<line x1="381.67" y1="470.0" x2="381.67" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="595.33" y1="470.0" x2="595.33" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="809.00" y1="470.0" x2="809.00" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="1022.67" y1="470.0" x2="1022.67" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="1236.33" y1="470.0" x2="1236.33" y2="481.0" stroke="#1c2432" stroke-width="2"/>
+<circle cx="168.0" cy="420.00" r="14" fill="#00c2ff" opacity=".20"/>
+<circle cx="168.0" cy="420.00" r="7.5" fill="#00c2ff"/>
+</svg><div class="abs mono" style="left:0;top:354.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$10B</div><div class="abs mono" style="left:0;top:254.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$20B</div><div class="abs mono" style="left:0;top:154.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$30B</div><div class="abs mono" style="left:0;top:54.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$40B</div><div class="abs mono" style="left:0;top:454.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$0</div><div class="abs" style="left:194.0px;top:429.1px">
+<div class="mono" style="font-size:38px;color:#00c2ff;line-height:1">~$5B</div>
+<div class="mono" style="font-size:20px;color:#5b6780;margin-top:9px;letter-spacing:.06em">JAN 2025</div></div></div></div><div class="take  hide">Real treasuries, real funds, real stocks. <b>Over $37B of them are already sitting on a blockchain</b>, and almost nobody is talking about it.</div><div class="src">Total tokenized real world asset value, all chains &middot; rwa.xyz &middot; The Block &middot; Yellow.com &middot; Cryptic, Jul 2026<br>End value read live off rwa.xyz at $37.55B. Both endpoints are sourced, the line between them is a straight interpolation.</div></div>
+<div class="frame " id="C1-mid"><div class="orb" style="left:1180px;top:-180px;width:620px;height:620px;background:#00e68a;opacity:.16"></div><div class="orb" style="left:-220px;top:620px;width:560px;height:560px;background:#00c2ff;opacity:.13"></div><div class="hd"><div class="ey">TOTAL TOKENIZED REAL WORLD ASSET VALUE &middot; ALL CHAINS</div><h1 class="">The money is already moving <span class="g">onchain</span></h1><div class="divider "></div></div><div class="body"><div class="plotwrap"><svg width="1700" height="566" viewBox="0 0 1700 566"
+ xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:0;top:0">
+<defs><linearGradient id="g1C1-mid" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#00e68a" stop-opacity=".26"/>
+<stop offset="100%" stop-color="#00e68a" stop-opacity="0"/></linearGradient></defs>
+<line x1="168.0" y1="370.0" x2="1450.0" y2="370.0" stroke="#161c28" stroke-width="1.5"/><line x1="168.0" y1="270.0" x2="1450.0" y2="270.0" stroke="#161c28" stroke-width="1.5"/><line x1="168.0" y1="170.0" x2="1450.0" y2="170.0" stroke="#161c28" stroke-width="1.5"/><line x1="168.0" y1="70.0" x2="1450.0" y2="70.0" stroke="#161c28" stroke-width="1.5"/>
+<line x1="168.0" y1="470.0" x2="1450.0" y2="470.0" stroke="#2a3446" stroke-width="2"/>
+<line x1="168.0" y1="30.0" x2="168.0" y2="470.0" stroke="#2a3446" stroke-width="2"/>
+<line x1="381.67" y1="470.0" x2="381.67" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="595.33" y1="470.0" x2="595.33" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="809.00" y1="470.0" x2="809.00" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="1022.67" y1="470.0" x2="1022.67" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="1236.33" y1="470.0" x2="1236.33" y2="481.0" stroke="#1c2432" stroke-width="2"/><path d="M168.0,420.00 L873.10,240.98 L873.10,470.0 L168.0,470.0 Z" fill="url(#g1C1-mid)"/><line x1="168.0" y1="420.00" x2="873.10" y2="240.98" stroke="#00e68a" stroke-width="5" stroke-linecap="round"/>
+<circle cx="168.0" cy="420.00" r="14" fill="#00c2ff" opacity=".20"/>
+<circle cx="168.0" cy="420.00" r="7.5" fill="#00c2ff"/>
+<circle cx="873.10" cy="240.98" r="13" fill="#00e68a" opacity=".28"/><circle cx="873.10" cy="240.98" r="7" fill="#00e68a"/></svg><div class="abs mono" style="left:0;top:354.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$10B</div><div class="abs mono" style="left:0;top:254.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$20B</div><div class="abs mono" style="left:0;top:154.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$30B</div><div class="abs mono" style="left:0;top:54.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$40B</div><div class="abs mono" style="left:0;top:454.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$0</div><div class="abs" style="left:194.0px;top:429.1px">
+<div class="mono" style="font-size:38px;color:#00c2ff;line-height:1">~$5B</div>
+<div class="mono" style="font-size:20px;color:#5b6780;margin-top:9px;letter-spacing:.06em">JAN 2025</div></div></div></div><div class="take  hide">Real treasuries, real funds, real stocks. <b>Over $37B of them are already sitting on a blockchain</b>, and almost nobody is talking about it.</div><div class="src">Total tokenized real world asset value, all chains &middot; rwa.xyz &middot; The Block &middot; Yellow.com &middot; Cryptic, Jul 2026<br>End value read live off rwa.xyz at $37.55B. Both endpoints are sourced, the line between them is a straight interpolation.</div></div>
+<div class="frame " id="C1-end"><div class="orb" style="left:1180px;top:-180px;width:620px;height:620px;background:#00e68a;opacity:.16"></div><div class="orb" style="left:-220px;top:620px;width:560px;height:560px;background:#00c2ff;opacity:.13"></div><div class="hd"><div class="ey">TOTAL TOKENIZED REAL WORLD ASSET VALUE &middot; ALL CHAINS</div><h1 class="">The money is already moving <span class="g">onchain</span></h1><div class="divider "></div></div><div class="body"><div class="plotwrap"><svg width="1700" height="566" viewBox="0 0 1700 566"
+ xmlns="http://www.w3.org/2000/svg" style="position:absolute;left:0;top:0">
+<defs><linearGradient id="g1C1-end" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#00e68a" stop-opacity=".26"/>
+<stop offset="100%" stop-color="#00e68a" stop-opacity="0"/></linearGradient></defs>
+<line x1="168.0" y1="370.0" x2="1450.0" y2="370.0" stroke="#161c28" stroke-width="1.5"/><line x1="168.0" y1="270.0" x2="1450.0" y2="270.0" stroke="#161c28" stroke-width="1.5"/><line x1="168.0" y1="170.0" x2="1450.0" y2="170.0" stroke="#161c28" stroke-width="1.5"/><line x1="168.0" y1="70.0" x2="1450.0" y2="70.0" stroke="#161c28" stroke-width="1.5"/>
+<line x1="168.0" y1="470.0" x2="1450.0" y2="470.0" stroke="#2a3446" stroke-width="2"/>
+<line x1="168.0" y1="30.0" x2="168.0" y2="470.0" stroke="#2a3446" stroke-width="2"/>
+<line x1="381.67" y1="470.0" x2="381.67" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="595.33" y1="470.0" x2="595.33" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="809.00" y1="470.0" x2="809.00" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="1022.67" y1="470.0" x2="1022.67" y2="481.0" stroke="#1c2432" stroke-width="2"/><line x1="1236.33" y1="470.0" x2="1236.33" y2="481.0" stroke="#1c2432" stroke-width="2"/><path d="M168.0,420.00 L1450.00,94.50 L1450.00,470.0 L168.0,470.0 Z" fill="url(#g1C1-end)"/><line x1="168.0" y1="420.00" x2="1450.00" y2="94.50" stroke="#00e68a" stroke-width="5" stroke-linecap="round"/>
+<circle cx="168.0" cy="420.00" r="14" fill="#00c2ff" opacity=".20"/>
+<circle cx="168.0" cy="420.00" r="7.5" fill="#00c2ff"/>
+<circle cx="1450.0" cy="94.50" r="18" fill="#00e68a" opacity=".22"/><circle cx="1450.0" cy="94.50" r="9.5" fill="#00e68a"/></svg><div class="abs mono" style="left:0;top:354.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$10B</div><div class="abs mono" style="left:0;top:254.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$20B</div><div class="abs mono" style="left:0;top:154.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$30B</div><div class="abs mono" style="left:0;top:54.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$40B</div><div class="abs mono" style="left:0;top:454.0px;width:146px;text-align:right;font-size:22px;color:#46516a">$0</div><div class="abs" style="left:194.0px;top:429.1px">
+<div class="mono" style="font-size:38px;color:#00c2ff;line-height:1">~$5B</div>
+<div class="mono" style="font-size:20px;color:#5b6780;margin-top:9px;letter-spacing:.06em">JAN 2025</div></div><div class="abs" style="left:1484.0px;top:64.5px;width:230px">
+<div class="mono" style="font-size:50px;color:#00e68a;line-height:1">$37.5B+</div>
+<div class="mono" style="font-size:20px;color:#5b6780;margin-top:10px;letter-spacing:.06em">JUL 2026</div>
+<div style="font-size:18px;color:#414c60;margin-top:6px;letter-spacing:.13em;font-weight:600">TOTAL ONCHAIN</div></div><div class="abs" style="left:470px;top:104px;width:306px;padding:22px 0 24px;
+ text-align:center;border:1px solid rgba(0,230,138,.42);border-radius:16px;
+ background:linear-gradient(160deg,rgba(0,230,138,.13),rgba(0,230,138,.03));
+ box-shadow:0 0 44px rgba(0,230,138,.14)">
+<div style="font-size:18px;letter-spacing:.2em;color:#5f8f7c;font-weight:700">MORE THAN</div>
+<div class="mono" style="font-size:62px;color:#00e68a;line-height:1;margin-top:8px">+400%</div>
+<div style="font-size:19px;color:#5b6780;margin-top:10px">in about 18 months</div></div></div></div><div class="take ">Real treasuries, real funds, real stocks. <b>Over $37B of them are already sitting on a blockchain</b>, and almost nobody is talking about it.</div><div class="src">Total tokenized real world asset value, all chains &middot; rwa.xyz &middot; The Block &middot; Yellow.com &middot; Cryptic, Jul 2026<br>End value read live off rwa.xyz at $37.55B. Both endpoints are sourced, the line between them is a straight interpolation.</div></div></body></html>

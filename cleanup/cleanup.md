@@ -74,13 +74,20 @@ never touched):
 ### `video-creation` — hybrid
 | Tier | Paths | Rule |
 |---|---|---|
-| **Never touch** | `assets/{sfx,music,fonts,transitions}/`, `assets/logo-*.png`, every `*-progress.json` | protected |
+| **Never touch** | the WHOLE `assets/` tree, every `*-progress.json` | protected |
 | **Always sweep** | any `_bad-*/` reject folder | recycled regardless of age |
-| **Registry-driven** | `assets/projects/<batch>/`, `remotion/out/`, `livestream-repurpose/{media,transcripts}`, `shorts/<batch>/`, `longform-{presentation,edited}/media/<project>/`, `vertical-ai-persona/media/<project>/`, `vertical-ai-persona/Yuli y Ana/media/<project>/` | keep only what belongs to an **active** batch (per `batches.json`); recycle the rest. For `assets/projects/<batch>/` the folder name is matched to a batch id — a folder matching no batch falls back to age-based. |
-| **Age-based** | legacy loose assets in the `assets/` root + non-`projects/` subdirs (old b-roll PNGs, `*-clip.mp4`, overlays) | recycled if older than `--age-days` |
+| **Registry-driven** | `assets/projects/<batch>/`, `remotion/out/`, `livestream-repurpose/{media,transcripts}`, `shorts/<batch>/`, `longform-{presentation,edited}/media/<project>/`, `vertical-ai-persona/media/<project>/`, `vertical-ai-persona/Yuli y Ana/media/<project>/` | keep only what belongs to an **active** batch (per `batches.json`); recycle the rest. For `assets/projects/<batch>/` the folder name is matched to a batch id — a folder matching no batch is kept. |
+| **Age-based** | `livestream-repurpose/{media,transcripts}` entries tied to no batch | recycled if older than `--age-days` |
+
+**`assets/` is protected in full** (Mike, 2026-07-28). It is the static, reusable shared library —
+`sfx/ music/ fonts/ transitions/ vo/ banners/ broll/ STYLE-GUIDE.md TODO.md` — and nothing in it is
+spent per-batch output, so it is never age-swept. Per-batch working assets belong in the project's
+own folder, not here. (The old age-based sweep of the `assets/` root kept flagging durable files.)
+The only exceptions inside `assets/` are `_bad-*/` reject folders and the dormant legacy
+`assets/projects/<batch>/` registry tier (that directory no longer exists).
 
 The registry-driven tier reads `../batches.json`:
-- **`assets/projects/<batch>/`** — LEGACY per-batch asset home for shorts batches created before 2026-06-25 (new shorts use `shorts/<batch>/render-assets/`, recycled via the `shorts/<batch>/` tier below). The folder name is the batch id: an **active** batch's folder is kept, an **archived** batch's folder is recycled, and a folder matching no batch falls back to age-based (so old/unregistered junk still ages out at `--age-days`). Loose files in the `assets/` root and non-`projects/` subdirs remain age-based.
+- **`assets/projects/<batch>/`** — LEGACY per-batch asset home for shorts batches created before 2026-06-25 (new shorts use `shorts/<batch>/render-assets/`, recycled via the `shorts/<batch>/` tier below). The folder name is the batch id: an **active** batch's folder is kept, an **archived** batch's folder is recycled, and a folder matching no batch is kept. Everything else under `assets/` is protected outright.
 - **`remotion/out/`** — keep the render `directories` of `status: "active"` batches; recycle every other batch folder and all loose files. (Disposable scratch: posted shorts live in the `schedule-tweets/` queue and every comp is in git.)
 - **`livestream-repurpose/`** — `media/` files (flat) and `transcripts/<livestream>/` folders (one per livestream) are matched to a batch by `livestream_title`; active batch → keep, archived → recycle, no match → left alone. (Source recordings are on YouTube; transcripts are regenerable.)
 - **`shorts/<batch>/`** — each immediate subfolder is matched to a batch by its `directories`. The **whole project folder** is recycled for a completed/archived batch and kept for an active one. A folder tied to no batch (e.g. `_tooling`, or a not-yet-registered project) is left in place — only its **gitignored** per-clip artifacts (`preview.mp4`, `whisper-words.json`, `captions.ts.draft`) are swept; tracked source (`index.html`, `preview.json`, `gen_captions.py`, `whisper.json`, …) is never touched.
@@ -119,9 +126,9 @@ anywhere in its subtree) under each target's managed roots, so a cleaned-out `<b
 never lingers as an empty shell. It's computed against the planned recycle set, so `--dry-run`
 lists the folders that *would* be left empty and the live run removes them in the same single
 move. The managed roots are declared per target (`pruneRoots`): `longform/` and `shorts/` for
-schedule-tweets; `assets/`, `shorts/`, `remotion/out/`, `livestream-repurpose/{media,transcripts}`,
-and `longform-{presentation,edited}/media/` for video-creation. Protected libraries
-(`assets/{sfx,music,fonts,transitions}/`) are never pruned even if momentarily empty, and the
+schedule-tweets; `shorts/`, `remotion/out/`, `livestream-repurpose/{media,transcripts}`,
+and `longform-{presentation,edited}/media/` for video-creation. `assets/` is deliberately NOT a
+prune root — the whole tree is protected, so an empty shared-library folder is left alone, and the
 root folders themselves are kept — only their empty contents are removed.
 
 ## How to run

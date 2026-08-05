@@ -10,15 +10,24 @@ The recurring drift (wrong accent teal, Inter instead of Playfair/DM-Sans, color
 divider) happens because each build re-invents the CSS. **`container-canonical.css` in this folder is the
 locked stylesheet — paste it into the project's `assets/containers/containers.html`, then build one
 full-frame `<div class="frame" id="<slug>">` per beat and screenshot each.** Palette + fonts match
-`presentation.md` and the reference frames below. The zebec build
-(`media/zebec/assets/containers/containers.html`) is the worked example. Never swap the tokens.
+`presentation.md` and the reference frames below. `container-canonical.css` + the reference frames in THIS
+folder are the worked example — never a sibling project's build (those folders get deleted after publish).
+Never swap the tokens.
 
-## The reference frames
-- `banks-card-fiat-112s.jpg`, `banks-card-fractional-125s.jpg` — *banks-own-chain* (YouTube N8LNdp2lfBg). The
-  **card** variant: one rounded card, top-accent line, with the eyebrow + title + date + body INSIDE it.
-- `bittensor-text-dualcitizens-70s.jpg`, `bittensor-text-fixed-130s.jpg`, `bittensor-text-economic-220s.jpg` —
-  *bittensor-for-the-future* (`renders/bittensor-FULL-v8-sfx.mp4`). The **text** variant: same anatomy, no card
-  box — just the eyebrow + serif headline + body on dark bg (sometimes over b-roll).
+## The reference frames — the THREE official type names (Mike, 2026-07-24)
+This folder carries exemplars of the three container types. Use these NAMES everywhere (BROLL-PLAN's
+CHARTS/SLIDES worklist sections, cue sheets, comps) — they were previously the unnamed "variants" and
+kept getting re-described:
+1. **CARD SLIDE** (formerly the "card" variant) — `banks-card-fiat-112s.jpg`, `banks-card-fractional-125s.jpg`
+   (*banks-own-chain*, YouTube N8LNdp2lfBg): one rounded card, top-accent line, with the eyebrow + title +
+   date + body INSIDE it.
+2. **TITLE SLIDE** (formerly the "text" variant) — `bittensor-text-dualcitizens-70s.jpg`,
+   `bittensor-text-fixed-130s.jpg`, `bittensor-text-economic-220s.jpg` (*bittensor-for-the-future*): same
+   anatomy, NO card box — just the eyebrow + serif headline + body on dark bg (sometimes over b-roll).
+3. **SYSTEM-DESIGN CHART** — the `diagram-*` files (next section): full-screen overview diagrams
+   (topology / flow / timeline). In the BROLL-PLAN chart taxonomy these are CHART(sysdesign): static
+   code-rendered stills, movement only from comp spotlights/transitions (the ANIMATED charts, CHART(anim),
+   are data charts and have no exemplar here).
 
 ## Rich DIAGRAM slides — the OVERVIEW-slide archetype (Mike, 2026-07-10)
 - `diagram-timeline-dollar-won-twice.png` — a **timeline** (1944 → 1971 → 1974 → TODAY, nodes on a rail with a

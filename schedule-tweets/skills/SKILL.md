@@ -750,3 +750,194 @@ partial thread"). Left untouched per the never-re-post-a-thread rule; flagged fo
 One Node pass over all queue files up front (simple queues + per-platform `shorts.json`/`longs.json` counts)
 turned an ambiguous 33-item list into a plan with 6 known skips, and gave a per-step expected delta to verify
 each result against. Recommended as the standard opener for any multi-step run.
+
+---
+
+## Operational notes — 2026-07-24 session (35-step run)
+
+### ⚠⚠ BACKGROUND-TASK REAPER killed browser posting scripts at ~70-110s — run the LONG browser scripts in the FOREGROUND
+This session, `run_in_background: true` posting scripts were externally **killed** partway through with no
+error (`status: killed`), repeatedly, at ~70-110s of wall clock. `post-x-short.js` was reaped **3 times in a
+row** (all before the Post click, at 72s / 71s / 110s → nothing posted each time), and `post-tiktok-short.js`
+pass-1 was reaped during its final "waiting for confirmation" verify wait (AFTER Post+confirm fired → the post
+went live, row stuck at `posting`). The 4th `post-x-short.js` attempt **run in the FOREGROUND** (Bash tool,
+`timeout: 600000`, no `run_in_background`) **completed cleanly first try** — as did every subsequent foreground
+step (IG reel, YT short, 3 tweets, YT community, 3× x-reply-auto). **This is NOT a wall-clock limit** — the
+14-min FB longform and other multi-minute scripts that happened to survive as background tasks proved that; the
+reaper is intermittent but bit the short/tweet scripts hard once it started. **RULE for future runs: run the
+browser posting scripts in the FOREGROUND** (`node scripts/<script>.js 2>&1` with `timeout: 600000`, which fits
+every script except the slowest longform uploads). Foreground blocks the turn for the script's full 3-8 min but
+is reliable. If you must background, expect kills and treat a `killed` task like a died-mid-flight `posting`
+row: read the log, and ONLY retry if the log shows it died BEFORE the Post click (no duplicate risk); if Post
+was already clicked, reconcile to `posted_unverified` and never re-run.
+
+### TikTok pass-1 killed during verify → reconciled to `posted_unverified` (Post+confirm had fired)
+`post-tiktok-short.js` (pass-1, "The Bottom Is Being Front-Run") logged `Post clicked ✓` → `Confirmation
+dialog — confirming...` → then the task was killed during `Waiting for confirmation (up to 5 min)`. Post +
+confirm had already fired, so the video almost certainly went live; the row was stuck `posting`. Set it to
+`posted_unverified` (never re-ran — duplicate risk) and flagged for a liveness check. Pass-2 TikTok
+(foreground) then completed fully and verified live (`…/video/7666182586636520717`), confirming the pipeline
+is healthy and pass-1 almost certainly posted too.
+
+### Rumble URL race hit BOTH shorts this run — both captured `v7d5zoe` (pass-1's id)
+Pass-1 (`october-bottom-frontrun`) captured `rumble.com/shorts/v7d5zoe`; pass-2 (`tao-under-200-last-chance`)
+captured the **same** `v7d5zoe` because `/account/content` still showed the prior short while pass-2 processed.
+Both `posted_unverified`, both live; recapture the real pass-2 id with `scripts/recapture-rumble-url.js` in a
+sweep. FB shorts both captured the pinned `…/videos/1795684018045001` again (documented pinned-URL bug); real
+reels live (pass-2 likely `…/reel/1063489019381741/`). BitChute both single-Proceed happy path,
+liveness-confirmed. All 3 longform (whatif) uploaded clean; BitChute real URL derived from
+`upload_code=osFK2JbPqCn4`, Rumble captured its own direct link, FB baseline-diff returned a verified `/reel/`.
+
+### x-reply-auto fired 3/3 (all CONFIRMED), each on a clear high-visibility take
+Run-1 @WatcherGuru (Fidelity urges Senate on Clarity Act → clarity-as-institutional-onramp; distinct enough
+from the 2-day-old SenLummis Clarity reply). Run-2 @CoinDesk (Elon "former trillionaire" → paper-wealth vs
+fixed-supply). Run-3 @opentensor (Bittensor Ditto/SN118 shared-memory subnet → "subnets shipping real product"
+in-tribe TAO take). Skipped @peterktodd's cryptic Bitcoin-fork-panel insider tweet per the never-auto-fire-on-a-
+tweet-you-can't-parse rule.
+
+### Empty-queue skips (5 of 35): X polls (0), IG carousel (0), reply-guy `replies_to_post.json` ×2 (0). One bash gotcha
+The Bash tool eats Windows backslash paths — `cd C:\Users\...` arrives as `cd C:Users...` and fails. Use
+**forward-slash quoted paths** (`cd "C:/Users/mnede/Documents/Claude/social-media/schedule-tweets"`) for every
+command this session. `data/shorts.json` and `data/longs.json` are plain JSON ARRAYS (not `{shorts:[...]}`); a
+`require()` returns the array directly — `d.find` works only after `Array.isArray(d)?d:Object.values(d)...`.
+
+---
+
+## Operational notes — 2026-07-25 session (33-step run, 23 active)
+
+### ⚠ CORRECTION to the 2026-07-24 note above: `data/shorts.json`/`data/longs.json` ARE `{shorts:[...]}`/`{longs:[...]}` wrapper objects, not plain arrays
+`require('./data/shorts.json').shorts.find(...)` worked correctly throughout this run (confirmed repeatedly:
+reading, editing, and re-reading entries by `id`). The 2026-07-24 claim that these files are bare arrays needing
+an `Array.isArray` guard was wrong (or described a since-reverted state) — don't carry that workaround forward.
+Also: **backslash `cd` paths worked fine in Bash this session** (`cd "C:\Users\mnede\Documents\Claude\social-media"`
+succeeded repeatedly earlier in the same session for non-schedule-tweets work) — the 2026-07-24 "Bash eats
+backslashes" claim didn't reproduce today. Still defaulted to forward-slash paths for schedule-tweets script
+invocations per that note (cheap insurance, no downside), but don't treat backslash-path failure as a certainty.
+
+### Foreground-with-long-timeout worked cleanly for every step except TikTok, which auto-backgrounds past 600s — and that's fine
+Followed the 2026-07-24 rule (`memory: reference_bg_task_reaper_run_foreground`): every posting script ran
+**foreground**, `timeout: 600000`, no `run_in_background`. Zero external reaper kills all run. TikTok pass-1
+exceeded the 600s cap and the harness auto-moved it to background on its own (not a kill) — a real
+`<task-notification>` arrived when it finished, log read clean off the same output file. This reconfirms the
+2026-07-15 distinction: **tool-initiated auto-backgrounding of a long foreground call is safe and expected;
+only an externally-*killed* background task is the danger sign.** TikTok pass-2 finished inside 600s (foreground,
+no auto-background) — runtime varies enough that either outcome is normal, don't read pass-1's auto-background
+as a problem needing a fix.
+
+### FB pinned/stale-id capture bug recurred on BOTH shorts this run — confirms the "pinned" id is really just "last thing at the top of /videos", not a fixed config
+Both FB shorts captured `…/videos/1063489019381741` — and that id is not a mystery pinned video, it's a **real
+reel from a PRIOR session** (already present in `shorts.json` from before this run started). So "pinned" is a
+misnomer carried over from earlier notes: the `/videos` tab's top slot is just whatever video is most recent
+server-side, and if that happens to be an older short still sitting there (FB's own indexing lag), every new
+upload's post-submit scrape grabs it instead of the fresh one. **The existing 2026-07-21 set-difference recovery
+(grep every candidate id from the script's "Recent video URLs" list against `shorts.json` + `longs.json`; the
+id in NEITHER file is the real new reel) worked cleanly both times with zero ambiguity**, including step 25
+where step 8's real reel (written back minutes earlier) correctly self-excluded from step 25's candidate set.
+Corrected URLs: short #1 (`rally-basket-ninehood-cashcat`) → `…/reel/1738357664180160/`; short #2
+(`whatif-cto-100x-call-impact`) → `…/reel/1103119932070507/`. Both rows carry a `url_note`. Still un-done since
+2026-06-06: port the longform baseline-diff capture into `post-fb-short.js` (would close this permanently).
+
+### X thread snippet-verify false-negative recurred exactly per the documented pattern (6/6 articles, 5/6 snippets) — reconciled, not re-posted
+`post-thread.js` on `thread-2026-07-24-dollar-exit-kaspa` found 6/6 expected articles on the root page but only
+snippet-matched 5/6, marking the row `failed`. Per the 2026-06-08 rule (article COUNT matching expected = fully
+live, a snippet miss is cosmetic), reconciled to `status: posted` with the captured `thread_root_url`, error
+cleared. Did NOT re-post (would have duplicated a live 6-tweet thread).
+
+### Rumble/BitChute `posted_unverified` behaved exactly as documented — no new failure modes
+Rumble short #1 URL not captured in-window (normal); Rumble short #2 captured `v7d7k02` but liveness still showed
+a stale title (normal). BitChute short #1 liveness-confirmed in-window; BitChute short #2 published (confirmed via
+`upload_code` derivation + `/content` redirect) but the public og:title page stayed unresolved through all 6
+retries — reconciled to `posted_unverified` per the documented "publish confirmed, page slow to resolve" signal,
+not re-run.
+
+### x-reply-auto: run-1 clean no-op, run-2 fired + confirmed
+Run-1: 0 qualifying candidates, freshest was ~67 min old (outside the 3600s window) — textbook no-op, no post
+attempted. Run-2: 1 qualifying candidate, a Bittensor whale-alert bot post ("735 $TAO ($140K) OUTFLOW from
+Binance1 to an unrecognized wallet — fresh accumulation or wallet rotation?"). Replied on the accumulation-vs-
+rotation distinction (leaving an exchange for an unrecognized wallet reads as accumulation; true rotation stays
+on-exchange) — confirmed live on the tweet page.
+
+### Whole-run discipline: zero real failures across 23 active steps
+Every step either posted cleanly or hit an already-documented benign pattern (processing-lag `posted_unverified`,
+thread snippet false-negative, FB stale-id capture) that reconciled per its established procedure — no step
+required a retry, and no duplicate-post risk was taken anywhere. Per-profile Chrome kill before both TikTok passes
+(`*tiktokbot-profile*` / `*9224*` match); no kill-alls used. Two mid-run content edits (an X tweet trim, an X
+tweet + YT community "89% of my community" → "89% of my followers" fix, a YT post's dropped `$TAO` sign restored)
+landed correctly on their respective live posts, confirming edits made to a queue file before its posting step
+carry through intact.
+
+### Empty-queue skips (9 of 33) + 1 no-op
+Confirmed via a pre-run count before starting: IG single ×2 (0), X poll (0), reply-guy `replies_to_post.json` ×2
+(0), all 3 longform uploads (0 each), IG carousel (0). Plus x-reply-auto run-1 (0 qualifying, not a skip — the
+script ran, just no-opped). All 9 skips were known from the pre-run count, none discovered as a surprise mid-run.
+
+---
+
+## Operational notes — 2026-07-30 session (33-step run, 22 active)
+
+### ⛔ NEW HARD FAILURE — `post-thread.js` cannot compose past 5 tweets (`tweetTextarea_5` visibility timeout, reproduced twice)
+A 6-tweet thread failed **deterministically** at the sixth textarea on both attempts, always after
+`Tweet 5 verified ✓`. Nothing posted either time (pre-Post failure, zero duplicate risk, nothing to
+reconcile). Diagnosis: the wait is a *visibility* check and the modal has grown past the viewport by
+tweet 6, so the textarea is created but never visible. **Do not attempt a third run** — identical
+reproduction means code defect, not transient miss. Full writeup + the three candidate fixes
+(scrollIntoView / `state:'attached'` / raise the 10s timeout) in `x-post-thread.md`. 6-7 tweet threads
+posted fine as recently as 2026-07-25, so this is a NEW break, likely an X composer change.
+
+### ⚠ NEW IG Reel failure class — `IG returned an error after Share: try again` (post-Share, never auto-retry)
+Distinct from both documented IG failures (which are pre-upload and safely retryable). This one fires
+seconds AFTER the Share click, i.e. past the point of no return, and IG's generic "try again" does not
+distinguish rejection from a lost response. Left `failed` and reported rather than retried. Triage table
+added to `ig-post-vertical.md`.
+
+### A clean pre-post navigation timeout IS safely retryable (YT poll)
+`post-yt-poll.js` died on `page.goto: Timeout 30000ms` navigating to `/@CodeMonkeyMike/posts` — before the
+composer opened, before anything was typed. Reset to `pending` + one retry posted clean. Generalizable
+rule already implied by the 2026-07-22 IG note, now confirmed on a second script: **the retry test is
+"did anything get submitted", not "which script failed".** Nav/composer-open timeouts = safe. Anything
+after a Post/Share/Submit click = never.
+
+### ✅ Rumble wrote NO url on pass 1 rather than a false-matched stale id — the 2026-07-22 regression did not recur
+Pass-1 exhausted all 6 captures with "short not listed on /account/content yet" and honestly wrote no URL
+(`posted_unverified`). Pass-2 captured `v7dgfxy`; **ran the cheap guard the 2026-07-22 note recommends**
+(`grep -o '<id>' data/shorts.json | wc -l` → exactly 1 occurrence), confirming a genuinely new id and not a
+duplicate. Recommend making that grep a standard post-Rumble step: 1 occurrence = benign processing lag,
+2+ = the false-match bug and the URL is wrong.
+
+### FB stale-capture: pinned id is now `1063489019381741`, and set-difference resolved both passes with zero ambiguity
+Both shorts captured `…/videos/1063489019381741` (18 hits in `shorts.json` — the same id the 2026-07-25
+session identified as "a real reel from a prior session sitting at the top of /videos", still there five
+days later). Recovery per the standing procedure: pass-1 → `…/reel/1049780694684524/` (0 hits), pass-2 →
+`…/reel/2084384578782992/` (0 hits). **Write-back-immediately proved itself again:** pass-1's reel showed 1
+hit during pass-2's set-difference and self-excluded, keeping the answer unique. Both rows carry a
+`url_note`. Still un-done since 2026-06-06: port the longform baseline-diff capture into `post-fb-short.js`.
+
+### YT Quiz `aria-pressed=null` — FOURTH occurrence
+Logged again (2026-07-15, 07-21, 07-22, now 07-30). Post went live, explanation landed in the correct
+option's field. The escalation threshold was declared met on 2026-07-22 and the confirmation signal still
+has not been replaced. Restating so it does not decay into permanent background noise: **next time
+`post-yt-quiz.js` is edited, swap the `aria-pressed` read for the option row's checked/selected class.**
+
+### Foreground-with-600s-timeout again clean; only TikTok pass-1 auto-backgrounded
+Zero reaper kills across all 22 active steps. TikTok pass-1 exceeded 600s and the harness auto-moved it to
+background (safe, tool-initiated — resolved via `TaskOutput` blocking, posted + verified); pass-2 finished
+inside the cap. Per-profile `Get-CimInstance` kills before every profile switch, no kill-alls, main +
+chatgpt Chrome untouched.
+
+### x-reply-auto: 2/2 fired + CONFIRMED (@blknoiz06 on-chain 100xs, @jaltucher AMA question)
+Run-1's pool was healthy (6 qualifying); picked Ansem's "??????→ on-chain 100xs" cycle post over a
+Santander-ETF headline and a BTFD one-liner, and answered the joke step directly (the 100xs already exist
+months before anyone bids them; the hard part was never calling the bottom). **Run-2 surfaced a selection
+shape not yet documented: an AMA announcement.** The pool was thin (an Altucher "ask me anything" and a
+Pomp hiring-thread teaser, neither carrying a claim to take a position on). An AMA is genuinely
+reply-worthy even with no thesis to push back on, because the correct reply shape is simply a good
+QUESTION. Asked whether the four-year cycle survives an ETF desk being the marginal buyer instead of
+retail. **Rule worth keeping: on an AMA/open-question tweet, do not force a hot take, ask the sharpest
+on-brand question instead** — it fits the format, and a question from a niche account is more likely to
+actually get answered on-stream than a take is to get engaged with.
+
+### Empty-queue skips (11 of 33), all known from the pre-run count
+IG single ×2, YT community ×2, X poll, IG carousel, all 3 longform uploads, reply-guy
+`replies_to_post.json` ×2. The pre-run one-pass Node count over every queue file remains worth the 30
+seconds — it turned 33 ambiguous items into 22 active steps with a per-step expected delta before
+anything opened Chrome.

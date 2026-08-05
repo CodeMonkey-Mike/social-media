@@ -1,0 +1,174 @@
+<!doctype html>
+<html data-state="left">
+<head>
+<meta charset="utf-8">
+<title>C4 GHOSTDAG vs DAGKNIGHT</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.ey{font-family:'DM Sans';font-size:26px;font-weight:600;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted)}
+
+header{position:absolute;left:90px;top:64px;z-index:2}
+.h1row{display:flex;align-items:center;gap:34px;margin-top:20px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:80px;line-height:1;letter-spacing:-.02em}
+.chip{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.06em;
+  padding:10px 22px;border-radius:100px;text-transform:uppercase}
+.chip.red{background:rgba(255,64,96,.12);color:var(--accent-red);border:1px solid rgba(255,64,96,.4)}
+.chip.teal{background:rgba(73,224,200,.12);color:var(--accent-teal);border:1px solid rgba(73,224,200,.4)}
+
+svg.mesh{position:absolute;inset:0;z-index:1}
+.link{stroke:var(--border);stroke-width:2.5}
+.node{fill:var(--bg-card);stroke:var(--accent-cyan);stroke-width:2.5}
+.nodeglow{fill:rgba(0,194,255,.10)}
+.pulse{fill:var(--accent-teal)}
+.pulsering{fill:none;stroke:rgba(73,224,200,.45);stroke-width:2}
+.meshlabel{font-family:'DM Sans';font-size:22px;font-weight:600;fill:var(--text-muted);letter-spacing:.14em}
+
+/* THE INPUT MODULE — identical geometry both states, content swaps */
+.module{position:absolute;left:90px;top:400px;width:470px;height:230px;z-index:2;border-radius:16px;
+  display:flex;flex-direction:column;justify-content:center;padding:28px 34px}
+.module .mtitle{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:27px;letter-spacing:.04em;line-height:1.3}
+.module .msub{font-family:'DM Sans';font-size:21px;color:var(--text-secondary);margin-top:12px;line-height:1.45}
+html[data-state="left"] .module{background:rgba(255,64,96,.06);border:3px dashed rgba(255,64,96,.65)}
+html[data-state="left"] .module .mtitle{color:var(--accent-red)}
+html[data-state="right"] .module{background:rgba(73,224,200,.06);border:3px solid rgba(73,224,200,.65);
+  box-shadow:0 0 46px rgba(73,224,200,.22)}
+html[data-state="right"] .module .mtitle{color:var(--accent-teal)}
+.gaugerow{display:flex;align-items:center;gap:26px;margin-top:6px}
+html[data-state="left"] .only-right{display:none!important}
+html[data-state="right"] .only-left{display:none!important}
+
+/* feed arrow label */
+.feedlabel{position:absolute;left:576px;top:452px;width:170px;text-align:center;z-index:2;
+  font-family:'DM Sans';font-size:19px;font-weight:600;letter-spacing:.05em}
+html[data-state="left"] .feedlabel{color:rgba(255,64,96,.85)}
+html[data-state="right"] .feedlabel{color:rgba(73,224,200,.9)}
+
+/* THE SPEED READOUT — identical track both states, fill swaps */
+.readout{position:absolute;left:90px;right:90px;bottom:64px;z-index:2}
+.rhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+.rcap{font-family:'DM Sans';font-size:22px;color:var(--text-secondary)}
+.track{height:30px;border-radius:15px;background:var(--bg-card);border:1px solid var(--border);position:relative;overflow:hidden}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:15px;display:flex;align-items:center;justify-content:flex-end;padding-right:16px}
+.fill .ftag{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:17px;letter-spacing:.12em;color:#04060d}
+html[data-state="left"] .fill{width:16%;background:linear-gradient(90deg,#5c1626,var(--accent-red))}
+html[data-state="right"] .fill{width:84%;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan))}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="orb only-left"  style="width:560px;height:560px;left:-160px;top:260px;background:var(--accent-red);opacity:.16"></div>
+  <div class="orb only-right" style="width:560px;height:560px;left:-160px;top:260px;background:var(--accent-teal);opacity:.18"></div>
+  <div class="orb" style="width:520px;height:520px;right:-140px;top:-160px;background:var(--accent-cyan);opacity:.14"></div>
+
+  <header>
+    <div class="ey only-left">Consensus protocol · running today</div>
+    <div class="ey only-right">Consensus protocol · the replacement</div>
+    <div class="h1row only-left"><h1>GHOSTDAG</h1><span class="chip red">runs on an assumption</span></div>
+    <div class="h1row only-right"><h1>DAGKNIGHT</h1><span class="chip teal">measures reality</span></div>
+  </header>
+
+  <svg class="mesh" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker>
+      <marker id="arr-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+        <path d="M0,0 L10,5 L0,10 z" fill="#49e0c8"/></marker>
+    </defs>
+    <!-- links (shared, identical both states) -->
+    <g class="links">
+      <line class="link" x1="790" y1="515" x2="930" y2="360"/><line class="link" x1="790" y1="515" x2="950" y2="650"/>
+      <line class="link" x1="790" y1="515" x2="1090" y2="490"/><line class="link" x1="930" y1="360" x2="1150" y2="290"/>
+      <line class="link" x1="930" y1="360" x2="1090" y2="490"/><line class="link" x1="950" y1="650" x2="1090" y2="490"/>
+      <line class="link" x1="950" y1="650" x2="1200" y2="720"/><line class="link" x1="1090" y1="490" x2="1290" y2="545"/>
+      <line class="link" x1="1150" y1="290" x2="1370" y2="380"/><line class="link" x1="1200" y1="720" x2="1430" y2="690"/>
+      <line class="link" x1="1290" y1="545" x2="1370" y2="380"/><line class="link" x1="1290" y1="545" x2="1430" y2="690"/>
+      <line class="link" x1="1290" y1="545" x2="1530" y2="510"/><line class="link" x1="1370" y1="380" x2="1590" y2="300"/>
+      <line class="link" x1="1430" y1="690" x2="1650" y2="670"/><line class="link" x1="1530" y1="510" x2="1590" y2="300"/>
+      <line class="link" x1="1530" y1="510" x2="1650" y2="670"/><line class="link" x1="1530" y1="510" x2="1750" y2="455"/>
+      <line class="link" x1="1590" y1="300" x2="1750" y2="455"/><line class="link" x1="1650" y1="670" x2="1750" y2="455"/>
+    </g>
+    <!-- feed arrow: module -> mesh (color swaps with state) -->
+    <g class="only-left"><line x1="574" y1="515" x2="752" y2="515" stroke="#ff4060" stroke-width="4" marker-end="url(#arr-red)"/></g>
+    <g class="only-right"><line x1="574" y1="515" x2="752" y2="515" stroke="#49e0c8" stroke-width="4" marker-end="url(#arr-teal)"/></g>
+    <!-- sampling pulses on real links (RIGHT state only) -->
+    <g class="only-right">
+      <circle class="pulsering" cx="940" cy="502" r="13"/><circle class="pulse" cx="940" cy="502" r="5.5"/>
+      <circle class="pulsering" cx="1190" cy="517" r="13"/><circle class="pulse" cx="1190" cy="517" r="5.5"/>
+      <circle class="pulsering" cx="1410" cy="527" r="13"/><circle class="pulse" cx="1410" cy="527" r="5.5"/>
+      <circle class="pulsering" cx="1040" cy="325" r="13"/><circle class="pulse" cx="1040" cy="325" r="5.5"/>
+      <circle class="pulsering" cx="1075" cy="685" r="13"/><circle class="pulse" cx="1075" cy="685" r="5.5"/>
+      <circle class="pulsering" cx="1640" cy="482" r="13"/><circle class="pulse" cx="1640" cy="482" r="5.5"/>
+      <text class="meshlabel" x="1210" y="180" text-anchor="middle" style="fill:rgba(73,224,200,.8);letter-spacing:.22em">SAMPLING THE LIVE NETWORK</text>
+    </g>
+    <g class="only-left">
+      <text class="meshlabel" x="1210" y="180" text-anchor="middle" style="letter-spacing:.22em">THE KASPA NODE NETWORK</text>
+    </g>
+    <!-- nodes (shared, identical both states) -->
+    <g class="nodes">
+      <g><circle class="nodeglow" cx="790" cy="515" r="26"/><circle class="node" cx="790" cy="515" r="15"/></g>
+      <g><circle class="nodeglow" cx="930" cy="360" r="26"/><circle class="node" cx="930" cy="360" r="15"/></g>
+      <g><circle class="nodeglow" cx="950" cy="650" r="26"/><circle class="node" cx="950" cy="650" r="15"/></g>
+      <g><circle class="nodeglow" cx="1090" cy="490" r="26"/><circle class="node" cx="1090" cy="490" r="15"/></g>
+      <g><circle class="nodeglow" cx="1150" cy="290" r="26"/><circle class="node" cx="1150" cy="290" r="15"/></g>
+      <g><circle class="nodeglow" cx="1200" cy="720" r="26"/><circle class="node" cx="1200" cy="720" r="15"/></g>
+      <g><circle class="nodeglow" cx="1290" cy="545" r="26"/><circle class="node" cx="1290" cy="545" r="15"/></g>
+      <g><circle class="nodeglow" cx="1370" cy="380" r="26"/><circle class="node" cx="1370" cy="380" r="15"/></g>
+      <g><circle class="nodeglow" cx="1430" cy="690" r="26"/><circle class="node" cx="1430" cy="690" r="15"/></g>
+      <g><circle class="nodeglow" cx="1530" cy="510" r="26"/><circle class="node" cx="1530" cy="510" r="15"/></g>
+      <g><circle class="nodeglow" cx="1590" cy="300" r="26"/><circle class="node" cx="1590" cy="300" r="15"/></g>
+      <g><circle class="nodeglow" cx="1650" cy="670" r="26"/><circle class="node" cx="1650" cy="670" r="15"/></g>
+      <g><circle class="nodeglow" cx="1750" cy="455" r="26"/><circle class="node" cx="1750" cy="455" r="15"/></g>
+    </g>
+  </svg>
+
+  <div class="module">
+    <div class="only-left">
+      <div class="mtitle">ASSUMED<br>WORST-CASE LATENCY</div>
+      <div class="msub">a number <b style="color:var(--text-primary)">hardcoded</b> into the protocol: a pessimistic guess, set once, never updated</div>
+    </div>
+    <div class="only-right">
+      <div class="mtitle">MEASURED<br>NETWORK LATENCY</div>
+      <div class="gaugerow">
+        <svg width="150" height="86" viewBox="0 0 150 86">
+          <path d="M15,80 A60,60 0 0 1 135,80" fill="none" stroke="#1e2330" stroke-width="10" stroke-linecap="round"/>
+          <path d="M15,80 A60,60 0 0 1 118,36" fill="none" stroke="#49e0c8" stroke-width="10" stroke-linecap="round"/>
+          <line x1="75" y1="80" x2="116" y2="41" stroke="#e8eaf0" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="75" cy="80" r="7" fill="#e8eaf0"/>
+        </svg>
+        <div class="msub" style="margin-top:0">sampled from the <b style="color:var(--text-primary)">live network</b>, in real time</div>
+      </div>
+    </div>
+  </div>
+  <div class="feedlabel only-left">sets the speed limit</div>
+  <div class="feedlabel only-right">adapts, block by block</div>
+
+  <div class="readout">
+    <div class="rhead">
+      <div class="ey">Network speed</div>
+      <div class="rcap only-left">the whole network runs as slow as the guess</div>
+      <div class="rcap only-right">scales with the real internet: fast net, fast chain</div>
+    </div>
+    <div class="track">
+      <div class="fill"><span class="ftag only-left">HELD&nbsp;DOWN</span><span class="ftag only-right">CLIMBING</span></div>
+    </div>
+  </div>
+</div>
+<script>
+const s=(location.hash||'').slice(1); if(s) document.documentElement.dataset.state=s;
+</script>
+</body>
+</html>

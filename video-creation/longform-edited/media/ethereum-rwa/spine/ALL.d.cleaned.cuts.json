@@ -1,0 +1,122 @@
+{
+  "skill": "burst-removal",
+  "date": "2026-07-31",
+  "revision": 2,
+  "revision_note": "Re-rendered from scratch off ALL.c.desilenced.mp4 with FOUR cuts in ONE sync-safe pass (rev 1 had 3 cuts and flagged the 4th). No extra encode generation was stacked.",
+  "source": "ALL.c.desilenced.mp4",
+  "output": "ALL.d.cleaned.mp4",
+  "backup": "ALL.d.cleaned.bak-burst.mp4",
+  "source_duration": 437.02,
+  "output_duration": 436.236,
+  "total_removed_planned": 0.8155,
+  "total_removed_measured": 0.7869,
+  "removed_measured_note": "concat filter pads audio segments up to the frame-quantized video segment length, so the on-file shift is ~29 ms less than the analytic sum. Use the measured region shifts below for downstream cue mapping.",
+  "fps": "30000/1001",
+  "encode": "libx264 crf 18 preset medium yuv420p, aac 192k, +faststart",
+  "method": "single sync-safe filter_complex, 5 keep-segments (trim/atrim + concat n=5), both tracks together",
+  "cuts": [
+    {
+      "n": 1,
+      "kind": "LinkedIn desktop notification chime",
+      "word_a": "yet",
+      "word_b": "Robinhood",
+      "cut_start": 262.575,
+      "cut_end": 262.7795,
+      "removed": 0.2045,
+      "trough_start_db": -112.7,
+      "trough_end_db": -59.1,
+      "burst_peak_db": -30.5,
+      "in_face_window": false,
+      "note": "both join edges in pure-black COVER region; no head jump possible",
+      "join_on_output": 262.575
+    },
+    {
+      "n": 2,
+      "kind": "cough",
+      "word_a": "finished",
+      "word_b": "So",
+      "cut_start": 296.712,
+      "cut_end": 296.952,
+      "removed": 0.24,
+      "trough_start_db": -57.5,
+      "trough_end_db": -57.5,
+      "burst_peak_db": -14.8,
+      "in_face_window": false,
+      "note": "FACE window 5 ends 296.26; both edges in COVER black; jump hidden",
+      "join_on_output": 296.5075
+    },
+    {
+      "n": 3,
+      "kind": "cough (first beat of a double cough)",
+      "word_a": "motion",
+      "word_b": "(pause, then cut 4)",
+      "cut_start": 317.699,
+      "cut_end": 317.88,
+      "removed": 0.181,
+      "trough_start_db": -81.9,
+      "trough_end_db": -83.4,
+      "burst_peak_db": -17.6,
+      "in_face_window": false,
+      "note": "both edges in COVER black; the deliberate ~0.56 s CH5 pause after this cut is PRESERVED",
+      "join_on_output": 317.2545
+    },
+    {
+      "n": 4,
+      "kind": "second beat of the double cough / loud lip-smack-breath",
+      "word_a": "(pause after 'motion')",
+      "word_b": "And",
+      "cut_start": 318.444,
+      "cut_end": 318.634,
+      "removed": 0.19,
+      "trough_start_db": -88.7,
+      "trough_end_db": -100.6,
+      "burst_peak_db": -13.2,
+      "in_face_window": true,
+      "brief_span_rejected": [318.4705, 318.6605],
+      "brief_span_rejection_reason": "The briefed edges are NOT in silence. 318.4705 sits on the burst attack (318.450 = -51 dB rising to -24 dB by 318.470), which would leave an audible stub; 318.6605 sits INSIDE the word 'And' (onset measured at 318.642), which would clip it. Re-derived off the 2 ms RMS profile per the skill's hard rule: edges moved to 318.4440 / 318.6340, same 190 ms duration.",
+      "note": "FACE-BEAT CHECK: frame strip shows the COVER blackout actually runs to 318.584 (not 318.16); first non-black frame is 318.601. So cut_start 318.444 is on a BLACK frame and cut_end 318.634 is a face frame => the join is BLACK -> FACE, not face-to-face. No head-position jump is possible. Cost: the face reveal loses ~2 frames of lead-in (face now lands at the 'And' onset instead of ~40 ms before it).",
+      "join_on_output": 317.8185
+    }
+  ],
+  "verified_on_output": true,
+  "verification": {
+    "join_1": {
+      "output_time": 262.575,
+      "rms_valley_db": -110.1,
+      "whisper": "...almost none of those fees reach aetherium yet. Robin Hood Chain generated about 800 grand...",
+      "words_whole": true
+    },
+    "join_2": {
+      "output_time": 296.5075,
+      "rms_valley_db": -69.4,
+      "whisper": "...before the toll booth is even finished so that gap is not the floor...",
+      "words_whole": true
+    },
+    "join_3": {
+      "output_time": 317.2545,
+      "rms_valley_db": -171.5,
+      "whisper": "...the value capture upgrade already in motion and you guys want to know what my call is really",
+      "words_whole": true
+    },
+    "join_4": {
+      "output_time": 317.8185,
+      "rms_valley_db": -109.3,
+      "whisper": "...already in motion and you guys want to know what my call is really",
+      "words_whole": true,
+      "video_check": "output black runs to 317.850, first face frame 317.867; no face-to-face cut at the join"
+    },
+    "pause_preserved": {
+      "span_on_output": [317.2545, 317.8185],
+      "duration": 0.564,
+      "note": "continuous <SIL (-88 to -109 dB) across the whole span on the rendered file"
+    }
+  },
+  "downstream_shift_measured": [
+    { "src_range": [0.0, 262.575], "shift": 0.0 },
+    { "src_range": [262.7795, 296.712], "shift": 0.1794 },
+    { "src_range": [296.952, 317.699], "shift": 0.4185 },
+    { "src_range": [317.88, 318.444], "shift": 0.599 },
+    { "src_range": [318.634, 437.02], "shift": 0.7869 }
+  ],
+  "flags": []
+}

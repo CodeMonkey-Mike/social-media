@@ -1,0 +1,170 @@
+{
+  "$meta": {
+    "project": "ethereum-rwa",
+    "spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\ethereum-rwa\\spine\\ALL.e.desilenced.mp4",
+    "spine_duration_sec": 417.41,
+    "timebase": "FINAL-spine seconds. Card pauses at CH2/CH3/CH4 (p2/p3/p4, ~1.0-1.4s each) are inserted at comp build and EXTEND comp time: route every value here through the comp's shift mapping, and recompute the two formula fields (BED D source_in, BED C source_in) against real pause lengths.",
+    "vo_lufs_integrated": -18.1,
+    "level_rule": "bed sits 16-18 dB under VO (persona memory). Per-bed gain = (VO_I - under_target) - bed_I, measured this run with ffmpeg ebur128. Remotion volume = 10**(dB/20). Re-verify on a mixed 10s chunk per video-qa (listen, short-term/peak vs VO, never integrated-only).",
+    "screenplay_reconciliation": "All four MUSIC-MOOD-PLAN primaries confirmed against library.json + disk: files exist, Soundstripe codes match, and every primary IS the instrumental cut. No alternate needed. Victory / Emerald City / Slow Rise instrumental flags apply to alternates only."
+  },
+  "track": {
+    "title": "Searching For Signs Of Life",
+    "artist": "Hill",
+    "duration_sec": 251.43,
+    "bpm": 100,
+    "key": null,
+    "license_code": "CM0H6NCUNQIUSA0E",
+    "note": "flagship/closer bed (BED D, end-aligned epic_hit). Full four-bed set in beds_tracks."
+  },
+  "beds_tracks": [
+    {"bed": "A", "title": "Down To The Wire", "artist": "Rhythm Scott", "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Down To The Wire\\Rhythm_Scott_Down_To_The_Wire_instrumental_1_46.mp3", "duration_sec": 106.41, "bpm": 128, "lufs_i": -11.0, "aggression": 93, "license_code": "XYZW1UVUQWIPXVXF"},
+    {"bed": "B", "title": "Fortitude", "artist": "ltebloomr", "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Fortitude\\ltebloomr_Fortitude_instrumental_2_01.mp3", "duration_sec": 121.03, "bpm": 117, "lufs_i": -7.7, "aggression": 58, "license_code": "X0AVOCNCPEKOUPW8"},
+    {"bed": "C", "title": "Edgerunner", "artist": "Mikey Geiger", "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Edgerunner\\Mikey_Geiger_Edgerunner_instrumental_2_02.mp3", "duration_sec": 122.51, "bpm": 112, "lufs_i": -7.4, "aggression": 94, "license_code": "D8CUMAJ1HW1GZXXB"},
+    {"bed": "D", "title": "Searching For Signs Of Life", "artist": "Hill", "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Searching For Signs Of Life\\Hill_Searching_For_Signs_Of_Life_instrumental_4_11.mp3", "duration_sec": 251.43, "bpm": 100, "lufs_i": -9.4, "aggression": 43, "license_code": "CM0H6NCUNQIUSA0E"}
+  ],
+  "energy_profile": {
+    "$semantics": "regions in SOURCE seconds from library.json machine env (2s/char, absolute 0-9 scale). low = env<=6 (soft-relative pockets in these hot masters), high = env>=8 (swells/drops); env 7 = the groove floor between them. peak9 = env==9 noted in notes.",
+    "Rhythm_Scott_Down_To_The_Wire_instrumental_1_46.mp3": {
+      "low_energy_regions": [[46, 62], [102, 106]],
+      "high_energy_regions": [[26, 28], [30, 32], [62, 100]],
+      "notes": "cold_hot 7-plateau 0-46 (transient-punchy, aggr 93); 8-bumps at 26-28 + 30-32 bracket CH1's reveal; measured step-down to env-6 at 46 = the built-in recede under the chapter's outro lines; big 8-block 62-100 UNUSED (post-CH1); ending epic_hit at ~100-104 unused."
+    },
+    "ltebloomr_Fortitude_instrumental_2_01.mp3": {
+      "low_energy_regions": [[16, 20], [118, 122]],
+      "high_energy_regions": [[0, 14], [20, 118]],
+      "notes": "steady stately 7-8 open 0-16; ONE soft dip 16-20 (the only true pocket); peak9 24-32, 54-56, 58-60; the biggest sustained peak9 68-96 = the crescendo we spend on the $17B/$2T forecast run. Mastered hottest of the set (-7.7 LUFS, LRA 3.7) hence the deepest gain cut. Smooth orchestral: loud env but few transients (aggr 58) = safe under teaching at -18 under VO."
+    },
+    "Mikey_Geiger_Edgerunner_instrumental_2_02.mp3": {
+      "low_energy_regions": [[2, 14], [120, 124]],
+      "high_energy_regions": [[16, 54], [68, 70], [82, 120]],
+      "notes": "synth groove intro 0-14 (env 6-7); build->peak seam at 14; FIRST DROP at 18 (peak9 18-32 + 34-52); mid 7-groove 54-82 with one 8-bump 68-70; second peak 82-120 (peak9 84-100, 102-118); ends in a hit then hard cut ~118-122. We use src 14.2-84.6 only."
+    },
+    "Hill_Searching_For_Signs_Of_Life_instrumental_4_11.mp3": {
+      "low_energy_regions": [[0, 48], [130, 144], [158, 160], [246, 251.43]],
+      "high_energy_regions": [[88, 128], [146, 158], [160, 200], [202, 246]],
+      "notes": "machine segments: [0,58] mid build / [58,130] peak-1 / [130,144] breakdown / [144,252] peak-2 -> epic_hit. Fine detail used for the carve: near-silent 0-4, gentle 4-48 build, groove 48-88, peak9 pockets 88-90, 106-110, 126-128, 164-168, 204-206, 222-226 and the FINAL peak9 240-244; hit decay 246-248, reverb tail to 251.43 (env 0). LRA 7.8 = the one continuous rise is real in the waveform, not implied."
+    }
+  },
+  "beds": [
+    {
+      "chapter": "CH1",
+      "span": [0.0, 48.92],
+      "register": "gear-3-epic",
+      "source_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Down To The Wire\\Rhythm_Scott_Down_To_The_Wire_instrumental_1_46.mp3",
+      "source_in": 0.0,
+      "cover": "oneshot",
+      "intensity": "aggressive",
+      "level_db_under_vo": -16.4,
+      "music_db_gain": -23.5,
+      "volume_linear": 0.0668,
+      "breath_before_sec": 0.0,
+      "fade_in_sec": 0.0,
+      "fade_out_sec": 0.8,
+      "loop_point_sec": null,
+      "ducks": [
+        {"t": [29.7, 31.2], "db": -5, "why": "vibe-cut dip under the 'Ethereum.' one-word reveal impact (FACE 2, 29.96-30.73) so the word + hit cut through; recover by ~31.5 into DTW's own 30-32 8-bump. Tune depth by ear per SFX-QA."}
+      ],
+      "why": "cold_hot 7-plateau (aggr 93, measured hot from char 0) under the locked hook from frame one, card OFF. The 8-bumps at src 26-28/30-32 land under '400%...60% on one chain' (26.22-29.94) and 'Ethereum. Not the fastest chain' (29.94-32.84) - the waveform pushes exactly where the reveal lands. Src 46-48.92 = the measured env-6 step-down: the bed recedes on its own under 'why almost everybody is mispricing what it means' (44.5-48.7), into the A->B breath. 48.92s of a 106.41s file: no loop."
+    },
+    {
+      "chapter": "CH2",
+      "span": [48.92, 129.92],
+      "register": "gear-2-explainer",
+      "source_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Fortitude\\ltebloomr_Fortitude_instrumental_2_01.mp3",
+      "source_in": 0.0,
+      "cover": "oneshot",
+      "intensity": "subtle",
+      "level_db_under_vo": -18.1,
+      "music_db_gain": -28.5,
+      "volume_linear": 0.0376,
+      "breath_before_sec": 0.6,
+      "fade_in_sec": 0.8,
+      "fade_out_sec": 0.8,
+      "loop_point_sec": null,
+      "ducks": [
+        {"t": [74.5, 81.0], "db": -2, "why": "peak9 src 24-32 sits under the BUIDL acronym gloss (75.32-80.60), the densest teaching sentence in the video; trim if the swell pokes out on the chunk listen."}
+      ],
+      "why": "Subtle by LEVEL (-18 under VO, deepest cut: hottest master at -7.7 LUFS) and TEXTURE (aggr 58 sustained orchestral, no punchy transients to fight teaching VO), stately by mood. Enters with the THE PROOF card. Measured alignment gifts: the file's ONLY soft dip (src 16-20) lands on the 'BlackRock' name entrance (~65.8-69.6, robust to the ~1.2s card-pause shift); peak9 src 54-60 crests under FACE 3 'most conservative money on earth' (107.58-111.84); the biggest peak9 run (src 68-96) rides the chapter crescendo '$17 billion -> Standard Chartered $2T -> look at the direction' (116.6-129.8) and is cut mid-flight at the card - a deliberate cliff the CH3 act change answers. 81s of 121.03s: no loop."
+    },
+    {
+      "chapter": "CH3",
+      "span": [129.92, 200.34],
+      "register": "gear-2-explainer-lifting-to-3",
+      "source_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Edgerunner\\Mikey_Geiger_Edgerunner_instrumental_2_02.mp3",
+      "source_in": 14.2,
+      "source_in_formula": "14.16 - p3 (align first drop src 18.0 to the 'July 1st' onset, spine 133.76; recompute when the CH3 card-pause p3 is fixed)",
+      "cover": "oneshot",
+      "intensity": "aggressive",
+      "level_db_under_vo": -16.3,
+      "music_db_gain": -27.0,
+      "volume_linear": 0.0447,
+      "breath_before_sec": 0.6,
+      "fade_in_sec": 0.5,
+      "fade_out_sec": 0.8,
+      "loop_point_sec": null,
+      "ducks": [
+        {"t": [146.3, 161.3], "db": -2, "why": "sustained peak9 (src 34-52) under the L2 explainer gloss (146.26-161.26); trim if the drop's top-end fights the teaching on the chunk listen."}
+      ],
+      "why": "Neon-synthwave act change (timbre flip from orchestral B reads instantly). Enter at src 14.2 = Edgerunner's measured build->peak seam: the card gets a RISING 7->8 entrance and the FIRST FULL DROP (src 18.0) lands on 'July 1st, one month ago, Robinhood' (133.76-137.18) - the name punch gets the drop, not the card graphic. Peak9 then carries FACE 4 'built it on Ethereum' (142.74-144.78). The subdued 7-groove (src 54-82) sits under the wallet/momentum block, its one 8-bump (src 68-70) punctuating '4.5 billion in a single week' (~184.5), and keeps the honest Solana beat (185.1-195.44) deliberately restrained. The second peak's onset (src 82-84) arrives under 'they anchored to Ethereum.' (198.72-200.34): swell into the cut, then the D breath. Uses src 14.2-84.6 of 122.51s: no loop, well clear of the track's own ending."
+    },
+    {
+      "chapter": "CH4",
+      "span": [200.34, 289.54],
+      "register": "gear-2-building-to-3",
+      "source_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Searching For Signs Of Life\\Hill_Searching_For_Signs_Of_Life_instrumental_4_11.mp3",
+      "source_in": 34.36,
+      "source_in_formula": "251.43 - (comp_end - bedD_comp_in). END-ALIGN: the file's last sample lands on the final frame. Nominal spine-only value 34.36; shrinks by ~the CH4 card-pause length (and by 0.6 breath) at comp build.",
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -16.9,
+      "music_db_gain": -25.5,
+      "volume_linear": 0.0531,
+      "breath_before_sec": 0.6,
+      "fade_in_sec": 1.0,
+      "fade_out_sec": 0.0,
+      "loop_point_sec": null,
+      "ducks": [],
+      "why": "BED D part 1 of the single continuous end-aligned pass (251.43s file vs 217.07s span = carve, not loop). Enters in the measured soft build (src 34.4, env 5-6 strings) under the THE BULL CASE card: controlled under the supply-squeeze subnotes (200.34-232, src 34-66 all soft/groove). First big region arrives src 88 -> timeline 253.98, exactly at 'Robinhood Chain generated about 800 grand in fees' - the swell backs the honest-gap beat as OPPORTUNITY, per the asymmetry framing. Peak9 src 106-110 -> 271.98-275.98 crests under the Fusaka fee-floors fix, and the sustained 8s carry FACE 5's asymmetry payoff (279.18-286.12) into CH5. Intensity 'subtle' at entry by design; the rise is the arc."
+    },
+    {
+      "chapter": "CH5",
+      "span": [289.54, 417.41],
+      "register": "gear-3-epic",
+      "continuation_of": "CH4",
+      "source_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Searching For Signs Of Life\\Hill_Searching_For_Signs_Of_Life_instrumental_4_11.mp3",
+      "source_in": 123.56,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -16.9,
+      "music_db_gain": -25.5,
+      "volume_linear": 0.0531,
+      "breath_before_sec": 0.0,
+      "fade_in_sec": 0.0,
+      "fade_out_sec": 0.0,
+      "loop_point_sec": null,
+      "ducks": [
+        {"t": [384.7, 391.7], "db": -2, "why": "OPTIONAL: peak9 src 222-226 crests under the mid-block community CTA (384.74-391.66); as a hype CTA it can ride, trim only if it fights on the chunk listen."},
+        {"t": [409.0, 412.0], "db": -2, "why": "OPTIONAL: the end hit's crest overlaps the closing CTA onset (409.10); trim only if the hit masks 'So if you liked this video' on the listen."}
+      ],
+      "why": "Same continuous pass, cardless per the bed-change map (source_in listed only to audit continuity: 289.54 maps to src 123.56 nominal). Measured choreography, verified word-by-word: peak-1 crest carries the whole-board recap (289.54-296); the BREAKDOWN (src 130-144 -> 295.98-309.98) recedes under the lean-in 'you guys want to know what my call is really?' (306.28-309.24); the swell RETURNS at 309.98 exactly as the flippening call lands ('I say that Ethereum flips Bitcoin', 309.28-314.06); the src 158-160 dip falls on the disclaimer 'I could be wrong, not financial advice' (322.62-326.36) - the track breathes where he does; peak9 src 164-168 crests on 'hundred plus Xers' (326.4-333.1); sustained peak carries the track-record/mark-my-words run; the FINAL peak9 (src 240-244 -> 405.98-409.98) lands 'not priced for it. Not even close.' (405.34-408.98) = THE VERDICT ON THE LAST CREST; hit decays 246-248, reverb ring-out under the like/subscribe sign-off, resolving to zero ON the final frame (the bittensor right-aligned closer pattern, this track's proven use)."
+    }
+  ],
+  "hard_hits": [
+    {"t": 29.96, "beat": "the one-word 'Ethereum.' reveal (FACE 2 + [C2] dominance donut)", "music_move": "bed dips -5 dB across 29.7-31.2 under the impact, then DTW's own measured 8-bump (src 30-32) pushes back in"},
+    {"t": 48.92, "beat": "A->B bed change + THE PROOF card", "music_move": "DTW self-recedes (measured env-6 from src 46), 0.8s fade out AT the card-in, 0.6s breath inside the card pause, Fortitude fades in under the card"},
+    {"t": 129.92, "beat": "B->C bed change + ROBINHOOD CHAIN card", "music_move": "Fortitude cut off its 9-run crest (deliberate cliff), breath, Edgerunner rising 7->8 entrance with the card"},
+    {"t": 133.76, "beat": "'July 1st, one month ago, Robinhood' - the name punch", "music_move": "Edgerunner's first full drop (src 18.0) lands here; alignment formula on the bed, recompute vs card pause"},
+    {"t": 198.72, "beat": "'they anchored to Ethereum.' - the CH3 payoff", "music_move": "second-peak onset (src 82-84) swells into the line, then cuts to the C->D breath"},
+    {"t": 200.34, "beat": "C->D bed change + THE BULL CASE card", "music_move": "SFSOL enters soft (src 34.4, env 5-6) - the two-chapter rise begins low on purpose"},
+    {"t": 309.98, "beat": "the flippening call ('I say that Ethereum flips Bitcoin', 309.28)", "music_move": "swell returns from the measured breakdown exactly here - the call rides the rise; no added move needed"},
+    {"t": 405.98, "beat": "THE VERDICT: 'not priced for it. Not even close.' (405.34-408.98) -> closing CTA", "music_move": "end-aligned final peak9 (src 240-244) carries the verdict; the epic hit lands ~409.98-411.98 as the CTA begins; ring-out resolves on the final frame 417.41"}
+  ],
+  "open_questions": [
+    "Card-pause lengths p2/p3/p4 (CH2/CH3/CH4) are set at comp build: recompute BED D source_in (formula on the bed) and BED C source_in (14.16 - p3) once fixed, and route every time here through the comp's shift mapping. Beds A/B absorb the pauses with no formula change (files exceed span+pause with margin).",
+    "RESOLVED (Mike, 2026-07-31): CH5 IS NOT TRIMMED. 'There's nothing that I want to cut out.' The spine is final at 417.41s with CH5 in full, so every alignment in this plan stands as authored and NOTHING needs re-deriving. The end-aligned BED D carve, the breakdown-under-the-lean-in, the dip-under-the-disclaimer and the verdict-on-the-final-peak9 are all locked. (Superseded contingency, kept only for reference: had CH5 been shortened, source_in = 251.43 - new_D_span and every mid-track alignment would have needed re-mapping.)",
+    "Screenplay open Q5 (BED A: Down To The Wire vs Common High Speeds; BED C synthwave vs statelier) is still Mike's call: this plan carves the primaries. Swapping A to Common High Speeds needs no re-carve of the map (oneshot from 0 covers 48.92s) but loses DTW's built-in env-6 recede and needs gain ~-29 dB (it is a wall of 8-9s at -10.9 mean).",
+    "Duck depths (-2/-5 dB) are starting values: tune by EAR on 10s chunk renders per video-qa/SFX-QA (never integrated-LUFS-only). Mechanical clip-insert ducks, if any R-TALK clips get added, come from skills/bed-duck-expr.py, not from this plan.",
+    "Soundstripe codes (XYZW1UVUQWIPXVXF, X0AVOCNCPEKOUPW8, D8CUMAJ1HW1GZXXB, CM0H6NCUNQIUSA0E) go in the YOUTUBE description only, per the codes rule."
+  ]
+}

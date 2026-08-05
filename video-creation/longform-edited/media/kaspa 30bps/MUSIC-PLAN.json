@@ -1,0 +1,152 @@
+{
+  "$meta": {
+    "project": "kaspa 30bps",
+    "authored": "music-placement-strategist proposal 2026-07-24 — Beds A/D LOCKED (Mike), Beds B/C RECOMMENDED-pending-Mike",
+    "spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kaspa 30bps\\spine\\ALL.e.desilenced.mp4",
+    "duration_sec": 455.22,
+    "duration_note": "Current e-spine EOF. A CTA pickup (Divergence 1) will EXTEND ~20-25s; the bags-line cut (Divergence 3, 442.96-447.12) would SHORTEN CH5 by 4.16s. Bed D placement is a formula, not a timecode, so it survives both.",
+    "timebase": "All timecodes = FINAL e-spine, PRE-card-pause. Comp build must route every value through sh() + the card-pause shifts. The B and C breaths deliberately coincide with the CH2/CH3 title-card silences.",
+    "chapter_openers": {"CH1": 0.0, "CH2": 52.84, "CH3": 134.52, "CH4": 326.32, "CH5": 413.46, "end": 455.22},
+    "method_note": "All energy calls grounded in the machine analysis blocks in video-creation/assets/music/library.json (env = 2s/char, 0-9 absolute; aggression = loudness+transient density). No audio re-scanned; no file lacked analysis."
+  },
+  "tracks": [
+    {"bed": "A", "id": "hold-the-line", "title": "Hold The Line", "artist": "Wicked Cinema", "duration_sec": 190, "bpm": 176, "key": "Db/C# minor", "license_code": "2RSEUREJAJSKKSNX", "status": "LOCKED (Mike 2026-07-24)"},
+    {"bed": "B", "id": "accomplishments-subtle", "title": "Accomplishments", "artist": null, "duration_sec": 305, "bpm": null, "key": null, "license_code": null, "license_warning": "FREE LOCAL (Storyblocks-origin). NO yt_license_code exists: put NO music code for this track in any description; if a Content-ID claim lands, flag Mike (library license_note), never clear via a code.", "status": "RECOMMENDED-pending-Mike"},
+    {"bed": "C", "id": "going-dark", "title": "Going Dark", "artist": "Wicked Cinema", "duration_sec": 283, "bpm": 153, "key": "Eb/D# minor", "license_code": "CVTNZ6EL3KWH2UXK", "status": "RECOMMENDED-pending-Mike"},
+    {"bed": "D", "id": "a-champion-from-the-ashes", "title": "A Champion From The Ashes", "artist": "Third Age", "duration_sec": 154, "bpm": 155, "key": "G minor", "license_code": "PKQHFEVP2E3FN7GW", "status": "LOCKED (Mike 2026-07-24)"}
+  ],
+  "energy_profile": {
+    "hold-the-line": {
+      "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Hold The Line\\Wicked_Cinema_Hold_The_Line_instrumental_3_09.mp3",
+      "low_energy_regions": [[176, 190]],
+      "high_energy_regions": [[0, 20], [42, 64], [98, 122], [136, 176]],
+      "notes": "agg 89, mean -14.9 dB, opening cold_hot (env 7 from sample 0), ending resolve. Mid builds [20,42]/[64,98]/[122,136] are env-6 (still full, never sags). The 0-52.84 window used for CH1 is peak(0-20) -> build(20-42) -> peak(42-53): the file's own arc IS the chapter arc. Micro-detail: a one-bar dip at 28-30s then pop at 30-32s sits right where the H1 counter slams 10->40 (~27-30s) — the EDIT-PLAN riser/impact owns that beat, no bed move needed."
+    },
+    "accomplishments-subtle": {
+      "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\accomplishment-subtle music\\accomplishments-SBA-346786802.mp3",
+      "low_energy_regions": [[0, 16], [298, 305]],
+      "high_energy_regions": [[28, 240], [274, 298]],
+      "notes": "305s, opening build, ending fade; mids [16,28]/[240,274]. roles_pinned = explainer_bed (Mike's manual designation = ground truth for feel). CAVEAT the machine adds: agg 92 / mean -13.1 — the master is HOT with dense soft transients, so the 'subtle' character comes from the -18 dB gain seat, not from the file. The 0-16 near-silent intro (env 0-3) is the only true low opening among the Bed B candidates and lands exactly under the CH2 title card."
+    },
+    "going-dark": {
+      "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Going Dark\\Wicked_Cinema_Going_Dark_instrumental_4_43.mp3",
+      "low_energy_regions": [],
+      "high_energy_regions": [[10, 188], [208, 283]],
+      "notes": "283s, agg 69, mean -12.8, opening steady (env 6 mid, no slam), ending epic_hit (final hit ~279-281 then stop). Mid regions [0,10] and the ONLY real dip [188,208] (env 6s). Structure: a homogeneous env-7/8 wall 10-188 (the quiet floor is OUR gain automation, and the homogeneity makes a mid-wall re-splice after an F5 trim near-inaudible at the 153bpm bar grid ~1.569s), then dip 188-208, then a rising final peak 208-283. Instrumental section WAVs also on disk: verse cut = agg 38 ambient (fallback texture if Mike wants an even softer teach floor), intro agg 58, bridge agg 92."
+    },
+    "a-champion-from-the-ashes": {
+      "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\A Champion From The Ashes\\Third_Age_A_Champion_From_The_Ashes_instrumental_2_34.mp3",
+      "low_energy_regions": [[8, 28], [150, 154]],
+      "high_energy_regions": [[58, 154]],
+      "notes": "154s, agg 46, mean -14.5, opening build, ending epic_hit. Mids [0,8]/[28,58]. The 58-154 peak is homogeneous env-7 with 8-spikes at 92-94 and 134-136 and the FINAL HIT at 146-148, decay 148-151, SILENCE 151-154. Homogeneity of 58-130 means any end-aligned source_in in that range enters consistently — the alignment formula is stable under every pending edit."
+    },
+    "focuser (runner-up Bed B)": {
+      "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Focuser\\Neon_Beach_Focuser_instrumental_2_45.mp3",
+      "low_energy_regions": [[158, 166]],
+      "high_energy_regions": [[0, 140]],
+      "notes": "166s, license 5WH8X4RII7CDAU05, ending fade. The waveform contradicts its Underscore/Reflective tags: agg 92, cold_hot open, env 7-8 wall from 0:00 (chorus cut agg 95). By measurement this is a hype track, not an underscore — never guess from tags. If Mike picks it for CH2 it must enter pre-faded across the breath and sit at -19 to -20 dB."
+    },
+    "the-invaders (runner-up Bed C)": {
+      "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\The Invaders\\Lunareh_The_Invaders_background_vocals_3_37.mp3",
+      "low_energy_regions": [[0, 14], [76, 90], [212, 217]],
+      "high_energy_regions": [[26, 76], [98, 146], [162, 212]],
+      "notes": "217s, agg 52, license DTHJQV7NPWCXOUYB, ending epic_hit, roles include explainer_bed. Two strikes vs going-dark: (1) master mix is bg_VOCALS — vocals under a teach chapter violate the instrumental preference (instrumental mixes exist only as ~40s section WAVs = many joins); (2) 217s < 278.94s span = needs a loop (loop point = the 76-90 valley). Real internal dips are its advantage, but they hard-couple track landmarks to beat times, which the pending F5 trim would break."
+    }
+  },
+  "level_method": {
+    "rule": "Measure, never guess (house rule; beds mastered hot, catalog mean_db -9.5 to -14.9).",
+    "steps": [
+      "1. ffmpeg -i spine\\ALL.e.desilenced.mp4 -af ebur128 -f null - -> VO integrated LUFS (expect ~-19 to -24).",
+      "2. Same ebur128 on each of the 4 bed files -> bed integrated LUFS.",
+      "3. Per bed: gain_db = (VO_LUFS - bed_LUFS) - target_under_vo; Remotion volume = 10**(gain_db/20), declared as an explicit per-bed MUSIC_DB constant (never a raw decimal).",
+      "4. QA: check the music floor in a no-VO breath of EACH bed; render a 10s chunk per bed and LISTEN (video-qa.md) — never integrated-LUFS-only."
+    ],
+    "targets_under_vo_db": {"bed_A": -16, "bed_B": -18, "bed_C_base": -18, "bed_C_teach_and_plug_floor": -20, "bed_C_ch4": -17, "bed_C_swells": -15, "bed_D": -16},
+    "range_note": "Targets sit at the house ~16-18 window (aggressive beds hottest at -16, teach floor deepest at -20). skills/music.md records Mike's standing call on the earlier kaspa video at ~22 dB under: ear-check the first QA chunk and, if he wants that deeper kaspa feel, shift ALL targets -4 dB preserving the relative shape.",
+    "duck_rule": "Any clip insert / receipt with its own audio gets the bed-duck expression derived mechanically (skills/bed-duck-expr.py), never hand-typed windows. No such inserts planned in this cut yet."
+  },
+  "beds": [
+    {
+      "chapter": "CH1", "bed": "A", "span": [0.0, 52.84], "register": "gear-3-epic",
+      "source_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Hold The Line\\Wicked_Cinema_Hold_The_Line_instrumental_3_09.mp3",
+      "source_in": 0.0, "cover": "oneshot", "intensity": "aggressive", "level_db_under_vo": -16,
+      "breath_before_sec": 0.0, "loop_point_sec": null,
+      "fades": {"in": "NONE by design — cold_hot opening lands at full bed gain on frame 0 with the locked hook (screenplay intent 'hits COLD' overrides the hot-entry ramp)", "out": [52.24, 52.84]},
+      "status": "LOCKED (Mike 2026-07-24)",
+      "why": "Measured arc = chapter arc: peak 0-20 slams with F1 '40 blocks every single second' and carries the fastest-PoW claims; build 20-42 (env 6, still full) steps back under the H1 counter + F2 face; peak 2 returns at exactly 42s under 'you don't just quadruple the speed...' and drives the open-loop tail to the fade. 190s > 52.84s so one pass, cut mid-peak with a 0.6s fade into the A->B breath. Rejected alt: the 32s chorus section (agg 93) is hotter but would force a join inside the hottest material."
+    },
+    {
+      "chapter": "CH2", "bed": "B", "span": [52.84, 134.52], "register": "gear-2-explainer",
+      "source_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\accomplishment-subtle music\\accomplishments-SBA-346786802.mp3",
+      "source_in": 0.0, "cover": "oneshot", "intensity": "subtle", "level_db_under_vo": -18,
+      "breath_before_sec": 0.5, "loop_point_sec": null,
+      "fades": {"in": "audio object mounts at 52.84 (source math stays clean); gain 0 through the 0.5s breath, ramp up 53.34-54.14 — the file's own 0-16s env-0-3 intro makes the entry near-silent anyway", "out": [133.92, 134.52]},
+      "status": "RECOMMENDED-pending-Mike",
+      "runner_up": "focuser (instrumental, 166s oneshot, fade ending, license 5WH8X4RII7CDAU05) — but its MEASURED profile (agg 92, cold_hot, env 7-8 wall from 0:00) contradicts its underscore tags; if picked, enter pre-faded and seat at -19 to -20. Third: the-invaders, rejected for a bg_vocals master under the teach VO.",
+      "why": "The only candidate whose waveform actually opens LOW: env 0-3 for 0-16s maps to 52.84-68.84 = the CH2 title card + first ladder beat, build 16-28 lands under rung-1 'live running right now', then the steady wall carries the rungs/receipt teach without dynamics that fight VO. Mike's roles_pinned explainer_bed designation is the ground-truth feel call; the agg-92/mean -13.1 caveat just means the subtlety must come from the -18 dB seat. 305s > 81.68s span: one pass, out-fade at 81.68s into the file (mid-wall, clean)."
+    },
+    {
+      "chapter": "CH3", "bed": "C", "span": [134.52, 326.32], "register": "gear-2-teach, gear-3 landing",
+      "source_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Going Dark\\Wicked_Cinema_Going_Dark_instrumental_4_43.mp3",
+      "source_in": 0.0, "cover": "oneshot", "intensity": "subtle (gain-automated floor)", "level_db_under_vo": -18,
+      "breath_before_sec": 0.5, "loop_point_sec": null,
+      "fades": {"in": "audio object mounts at 134.52; gain 0 through the 0.5s breath, ramp 135.02-135.82 — opening is 'steady' env-6 (no slam under the DAGKNIGHT card)", "out": "none here — bed continues into CH4"},
+      "status": "RECOMMENDED-pending-Mike",
+      "runner_up": "the-invaders (217s, agg 52, epic_hit, real internal dips, license DTHJQV7NPWCXOUYB) — costs: bg_vocals master under the teach, a +62s loop, and landmark-coupled dynamics the pending F5 trim would dislocate. Third: tesseract (187s, mean -9.5 env-9 wall = loud with no dynamics, double coverage gap).",
+      "gain_automation": [
+        {"span": [134.52, 148.98], "db": -18, "note": "card + 'So what actually is DAGKnight?' intro"},
+        {"span": [148.98, 212.6], "db": -20, "note": "C4 diagram teach = QUIETEST FLOOR OF THE VIDEO. Track material here is the homogeneous wall; the floor is entirely this gain seat."},
+        {"span": [212.6, 227.74], "db": -19, "note": "security + finality lines, half-step back up"},
+        {"span": [227.77, 305.07], "db": -20, "note": "F5 community plug: hold the quiet floor under the ad-lib. Window shrinks automatically if the plug is trimmed — gain is keyed to BEATS, not track time."},
+        {"span": [305.14, 321.5], "db": "-20 -> -17 ramp", "note": "ladder callback rising intent"},
+        {"span": [321.5, 326.8], "db": -15, "note": "F6 swell (see hard_hits)"}
+      ],
+      "why": "The only candidate that covers the full 278.94s CH3+CH4 span in ONE pass (283s) — zero loops, zero joins. Mood is the exact brief (dark suspenseful modern-orchestral, Eb minor, roles: explainer_bed + epic_outro). Its measured shape is load-bearing three ways: (1) the homogeneous 10-188s wall takes the -20 dB teach/plug floor cleanly AND makes the bed robust to the pending F5 trim (re-splice the source forward by the trim amount at the ~1.569s bar grid inside the wall — near-inaudible; worst-case ~65s trim still fits one pass); (2) the single dip 188-208 lands at video 322.5-342.5, receding exactly under the F6 landing + CH4 open so the F6 gain swell reads as presence, not blare; (3) the final build+peak 208-283 lands at 342.5-413.46 and does CH4's 'rising through the numbers' natively."
+    },
+    {
+      "chapter": "CH4", "bed": "C (continuation — same audio object, NO restart, NO breath)", "span": [326.32, 413.46], "register": "gear-2.5-rising",
+      "source_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Going Dark\\Wicked_Cinema_Going_Dark_instrumental_4_43.mp3",
+      "source_in": 191.8, "cover": "section", "intensity": "rising", "level_db_under_vo": -17,
+      "breath_before_sec": 0.0, "loop_point_sec": null,
+      "fades": {"out": [412.86, 413.46], "out_note": "DELIBERATE: at 413.46 the track sits at 278.94s, ~2s BEFORE its own epic_hit (~279-281). Fade out through the C->D breath so going-dark's ending never fires — Bed D owns the close; two competing climaxes 3s apart is the failure this prevents."},
+      "gain_automation": [
+        {"span": [326.32, 392.3], "db": -17, "note": "C2 cadence race rides the tail of the dip, then the track's own final build (from video 342.5) rises under the C3 TPS bars + Solana irony — the material does the work, the seat stays put"},
+        {"span": [392.3, 395.4], "db": -15, "note": "F7 momentary lift (see hard_hits)"},
+        {"span": [395.4, 413.46], "db": -18, "note": "settle back for the sober honest-target beat before the close turn"}
+      ],
+      "why": "House rule #10 coverage entry for CH4: Bed C continues through it ('same bed riding its natural build'). source_in 191.8 = the track position at the CH4 boundary given the single pass from 134.52 — listed for the comp's math only; the audio is one continuous object across CH3+CH4."
+    },
+    {
+      "chapter": "CH5", "bed": "D", "span": [413.46, 455.22],
+      "span_note": "OUT point = current EOF; will extend with the CTA pickup. Use the end_align_rule, not this number.",
+      "register": "gear-3-epic",
+      "source_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\A Champion From The Ashes\\Third_Age_A_Champion_From_The_Ashes_instrumental_2_34.mp3",
+      "source_in": 106.24,
+      "source_in_note": "CURRENT-CUT VALUE ONLY. Recompute via end_align_rule when the CTA pickup and/or bags-line cut land.",
+      "end_align_rule": "source_in = 148.0 - (T_end - 413.46), where 148.0 = the measured END of the track's final-hit window (env 8 at 146-148s, decay to 151, silence 151-154) and T_end = the END of the final spoken sign-off in the final cut (currently 455.22; CTA pickup moves it +20-25s; bags cut moves it -4.16s). Any resulting source_in in 58-130 enters inside the homogeneous inspiring-strings peak, so the entry sounds identical under every pending edit. End-align anchored to the HIT, with the 148-151 decay ringing across the final frames.",
+      "cover": "oneshot", "intensity": "aggressive-epic", "level_db_under_vo": -16,
+      "breath_before_sec": 0.4, "loop_point_sec": null,
+      "fades": {"in": "audio object mounts at 413.46 (keeps the alignment formula anchored); gain 0 through the 0.4s breath, ramp 413.86-414.36; enters mid-peak so the close turn gets an immediate register lift", "out": "none — the track's own hit + decay IS the ending; after the last spoken word there is no VO to sit under, so the hit may bloom ~+2-4 dB above the bed seat in the final ~1.5s"},
+      "status": "LOCKED (Mike 2026-07-24)",
+      "why": "Inspiring/hopeful epic strings (G minor, agg 46 — big but not abrasive) under the gear-3 grand-callback ladder recap, with the catalog-measured final hit (146-148s) end-aligned to the sign-off. Bonus: the mid 8-spike at track 134-136 lands ~441-443 (current cut) as free punctuation near '95% of the supply is already mined'; the formula re-seats it harmlessly after any edit."
+    }
+  ],
+  "hard_hits": [
+    {"t": 0.0, "beat": "CH1 locked hook '40 blocks every single second on proof of work'", "music_move": "Bed A cold_hot slam from sample 0 at full -16 dB seat — no fade-in, the file's opening IS the hit"},
+    {"t": 194.8, "beat": "C4 marquee reveal — the assumption box SHATTERS into the MEASURED gauge", "music_move": "NO bed move. Hold the -20 dB teach floor and let the EDIT-PLAN riser->impact own the reveal; a bed swell here would muddy the teach and cheapen the SFX hit. Stated explicitly so nobody 'helps'."},
+    {"t": 321.5, "beat": "F6 landing 'DAGKnight is the reason everything above 10 becomes possible'", "music_move": "Bed C swells to -15 dB across 321.5-326.8 WHILE the track's own dip recedes — gain up over receding material = presence and clarity, not blare"},
+    {"t": 392.3, "beat": "F7 'Sub-second finality on proof of work'", "music_move": "momentary +3 dB lift to -15 (material = the final peak's env-8 wall), release to -18 at 395.4 for the honest-target beat"},
+    {"t": 413.46, "beat": "CH5 close turn (grand ladder callback begins)", "music_move": "C fades 412.86-413.46 suppressing going-dark's native end-hit; 0.4s breath; D enters mid-peak — the bed handoff IS the gear shift"},
+    {"t": "T_end (currently 455.22)", "beat": "final sign-off 'This is why Kaspa is my number one'", "music_move": "Bed D's measured epic_hit (track 146-148) lands ON the sign-off's final words via the end_align_rule, decay rings across the last frames. The single biggest music moment of the video."}
+  ],
+  "open_questions": [
+    "GATE (Mike): Bed B = accomplishments-subtle (RECOMMENDED) vs focuser (runner-up, with the measured not-actually-subtle caveat)?",
+    "GATE (Mike): Bed C = going-dark (RECOMMENDED) vs the-invaders (runner-up, bg_vocals + loop caveats)?",
+    "Level depth: targets anchored at the house 16-18 dB window; skills/music.md records Mike's earlier-kaspa standing call at ~22 dB under. Ear-check the first QA chunk and shift all targets -4 dB if he wants the deeper kaspa floor — the relative shape stays.",
+    "Bed D re-alignment BLOCKED on two pending rulings: CTA pickup (+20-25s) and bags-line cut (-4.16s). Recompute source_in via end_align_rule the moment either lands. Also: the tail past the hit is 148-151 decay + 151-154 SILENCE — if an end card runs >~2s past the last spoken word, this track cannot carry it (decide: natural ring-out over the card, or a silent card).",
+    "F5 plug trim: Bed C is trim-robust — advance the going-dark source by the trim amount at the cut, splicing on the 153bpm bar grid (~1.569s) inside the homogeneous wall; gain moves follow beats through sh(). If the trim is large (~65s), alternative: keep source_in 0.0 and fade earlier (283s still one-pass covers the shortened span).",
+    "Bed C single-pass margin is only 4.06s (283 vs 278.94). Any spine EXTENSION inside CH3/CH4 forces a loop — contingency loop: jump track 186.0 -> 10.0 (matched wall energy both sides, snapped to the bar grid).",
+    "License hygiene: Soundstripe codes (2RSEUREJAJSKKSNX, CVTNZ6EL3KWH2UXK, PKQHFEVP2E3FN7GW) go in the YOUTUBE description ONLY. accomplishments-subtle has NO code — nothing to paste; flag Mike if Content-ID ever claims it.",
+    "Staging: copy the chosen bed files into media\\kaspa 30bps\\render-assets\\ at comp-build time (the shared library is the source, not the render input)."
+  ]
+}

@@ -98,6 +98,23 @@ cheap signal checks (ffmpeg `volumedetect` / `signalstats` at specific timecodes
    don't just trust the spans.
 12. **Title-card A-roll pause present (house rule #11).** Confirm each chapter card holds ~1000ms with the A-roll
    paused (silence + frozen frame), card readable; FAIL if narration plays under/through the card.
+13. **⛔ EVERY TRANSITION: open a frame INSIDE its window and LOOK (ethereum-rwa, 2026-08-01).** A transition
+   layer fails SILENTLY — nothing errors, the render log is clean, the file is the right length. v7 shipped
+   with Mike's face rendered **pure BLACK at all 6 face-outs** and every automated signal said it was fine.
+   **A pixel-diff/"measure the difference" check is NOT a substitute and has actively lied here** (a filter
+   chain reported "0 difference" at all 8 checkpoints on a visibly broken render). For each planned transition
+   extract ~3 frames spanning its window plus one just before it, and confirm: the effect is actually visible
+   (not a plain cut = its plate/tile assets are missing), the OUTGOING side shows the real outgoing content
+   (not black, not the wrong source, not a different zoom level), and the INCOMING side settles clean.
+   Cross-check the count against `TRANSITIONS.md` — a planned transition that was never wired looks like
+   nothing at all. Gate this with `lint-transition-assets.js` (CLAUDE.md §6c) BEFORE the render.
+14. **⛔ DOUBLED / ECHOED VO at transitions (ethereum-rwa, 2026-08-01).** Any node an engine mounts is mounted
+   **twice** (outgoing + incoming), so one unmuted video node replays the VO 2 more times ~0.1s late. Mike
+   caught it by ear as a word said twice a few ms apart; it is invisible in every frame check. **Test
+   numerically:** measure `volumedetect` mean over ~0.7s at a few transition timecodes on the render AND on
+   `assets/spine.mp4` at the same timestamp (the spine is the single-copy ground truth). They must match
+   within ~0.1 dB; the broken render read 0.4-0.6 dB HOT at exactly the transition anchors while a
+   no-transition control matched. Do this on every render that has a transition layer.
 
 ## Output
 List every issue found WITH its timecode and the fix (audio-mix vs re-render), fix them, re-verify the fixed

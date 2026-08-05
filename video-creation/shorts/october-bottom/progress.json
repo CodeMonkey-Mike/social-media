@@ -1,0 +1,79 @@
+{
+  "batch": "october-bottom",
+  "track": "livestream-repurpose",
+  "source_livestream": "october-bottom",
+  "livestream_date": "2026-08-04",
+  "last_updated": "2026-08-05T00:19:56",
+  "dashboard": "video-creation/shorts/october-bottom/dashboard.html",
+  "dashboard_status": "4b verdicts applied (clip 6 deleted, 4+7 retitled); tighten+desilence in flight; numbering frozen",
+  "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
+  "clips": [
+    {
+      "n": 1,
+      "slug": "october-mandela-myth",
+      "title": "The October Bottom Is a Mandela Effect",
+      "variant": "long",
+      "duration_seconds": 114.2,
+      "phase": "5B-desilenced",
+      "gate": "build-authorized-2026-08-04",
+      "output_mp4": "october-mandela-myth/october-mandela-myth-tightened-desilenced.mp4",
+      "note": "burst-removal 2026-08-04: 0.52s cough excised at 47.68 clip-time, verified; builder must cover 47.6-48.9 (new timeline) with b-roll to hide the join jump"
+    },
+    {
+      "n": 2,
+      "slug": "kaspa-dip-bought-more",
+      "title": "Kaspa Under 2.6 Cents: That Is When I Bought More",
+      "variant": "long",
+      "duration_seconds": 55,
+      "phase": "7-built",
+      "gate": "PASS",
+      "output_mp4": "kaspa-dip-bought-more/kaspa-dip-bought-more-tightened-desilenced.mp4",
+      "render_mp4": "video-creation/remotion/out/october-bottom/2-kaspa-dip-bought-more.mp4"
+    },
+    {
+      "n": 3,
+      "slug": "whatif-organic-dogecoin",
+      "title": "What If Grew Organically Like Dogecoin, Pepe Was Insider",
+      "variant": "long",
+      "duration_seconds": 86,
+      "phase": "5B-desilenced",
+      "gate": "build-authorized-2026-08-04",
+      "output_mp4": "whatif-organic-dogecoin/whatif-organic-dogecoin-tightened-desilenced.mp4"
+    },
+    {
+      "n": 4,
+      "slug": "ring-of-fire-meme-judgment",
+      "title": "Meme Coin: Unc Goes Down Down Down...",
+      "variant": "long",
+      "duration_seconds": 48.8,
+      "phase": "5B-desilenced",
+      "gate": "build-authorized-2026-08-04",
+      "output_mp4": "ring-of-fire-meme-judgment/ring-of-fire-meme-judgment-tightened-desilenced.mp4"
+    },
+    {
+      "n": 5,
+      "slug": "cooper-robinhood-real-dog",
+      "title": "Cooper: The Real Robinhood Office Dog at 237k",
+      "variant": "long",
+      "duration_seconds": 66.2,
+      "phase": "5B-desilenced",
+      "gate": "build-authorized-2026-08-04",
+      "output_mp4": "cooper-robinhood-real-dog/cooper-robinhood-real-dog-tightened-desilenced.mp4"
+    },
+    {
+      "n": 7,
+      "slug": "kaspa-dip-impact",
+      "title": "OMG: Kaspa Dipped Under 2.6 Cents 😱",
+      "variant": "impact",
+      "duration_seconds": 13.4,
+      "phase": "5B-desilenced",
+      "gate": "build-authorized-2026-08-04",
+      "output_mp4": "kaspa-dip-impact/kaspa-dip-impact-tightened-desilenced.mp4"
+    }
+  ],
+  "resume_protocol": "SESSION WRAP 2026-08-04: Lanes 1+3 DONE, all 6 clips tightened+desilenced, clip 2 BUILT gate-PASS, builders for 1/3/4/5/7 were IN FLIGHT at wrap. Resume per the canonical protocol in video-creation/livestream-repurpose/PROJECT-LOG.md entry 2026-08-04 (later): verify per-clip on-disk build state, SWEEP STALE stage locks (chatgpt+render) before relaunching any builder, relaunch dead builders with RESUME framing (never regenerate existing images), then publish-shorts + persona metadata + md5 sweep + lint per Mike standing approval. Posting stays Mike-gated.",
+  "phase": "5B-desilenced-build-authorized",
+  "status": "wrapped_builders_in_flight",
+  "tighten_log": "video-creation/shorts/october-bottom/tighten_log.json",
+  "tighten_plan": "video-creation/shorts/october-bottom/tighten-plan.json"
+}

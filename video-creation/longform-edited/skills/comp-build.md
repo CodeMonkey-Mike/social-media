@@ -58,7 +58,7 @@ the card-pause form above.)
 ```tsx
 <OffthreadVideo src={staticFile('spine.mp4')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
 ```
-- The paused spine (face baked, COVER beats black, card pauses inserted) lives at the render-assets root.
+- The paused spine (face baked, COVER beats black, card pauses inserted) lives at the assets/ root (§10).
 - A **punch-in** zoom is a `scale` interpolation on the spine during `PUNCH` windows (face holds > ~2s): ~15-20%.
 
 ## 4. COVER layer — one sequenced track (house rule #13: a container IS b-roll, never an underlay)
@@ -124,10 +124,22 @@ scale-in on each container/sub-point swap (hand-rolled `interpolate`, NOT `Trans
 
 ## 6. Transitions — THREE buckets (canonical: `../../assets/transitions/README.md`)
 - **Chapter title cards → pick ONE per video** (this track's set: cube · slide · flip · book-flip · swap). The
-  card is a self-contained scene via `@remotion/transitions` — **NEVER wrap the sync-locked spine in
-  `TransitionSeries`.** Cube needs no special render flag (book-flip/swap do).
+  card is a self-contained scene — **NEVER wrap the sync-locked spine in `TransitionSeries`.**
+  ⛔ **A chapter title must be FULLY READABLE for at least 1 SECOND** (Mike, 2026-07-25: the card was
+  "shown so fast, in under a second, that some people will hardly notice it"). The baked spine pause is
+  only 1s and the turn-in eats ~0.4s of it, so the card scene must START BEFORE the pause, over the
+  outgoing cover, and hold through it — `readable = lead + PAUSE - turn >= 1.0s`. Assert it in the comp
+  so it cannot regress. Leading the card into the line that sets it up is better still: on kaspa 30bps
+  the CH3 card comes up as he asks "so what actually is DAGKnight" and the title answers the question.
+  Pair the card with a SHORT-tailed impact (see §9) — measure the audible tail, do not eyeball the
+  filename.
+  ⛔ **`@remotion/transitions` ships NO `cube` presentation** (only slide · flip · wipe · iris · clock-wipe ·
+  zoom-blur · zoom-in-out), so a video that picks cube builds the hand-rolled rotateY turn below and tags it
+  **`hand:cube-3d`, not `rmn:cube`** (verified 2026-07-25, kaspa 30bps — the plan said `rmn:cube` and there was
+  nothing to import). Rotate the card IN over ~11 frames and HOLD it to the end of the pause; do not cube back
+  OUT, or the card turns away to reveal the OUTGOING shot for a beat before the new chapter's visual cuts in.
   ```tsx
-  const CubeCard: React.FC<{title:string; frame:number}> = ({title, frame}) => { /* rotateY 90→0→-90 over ~42f */ };
+  const CubeCard: React.FC<{title:string; frame:number}> = ({title, frame}) => { /* rotateY 90→0 over ~11f, then hold */ };
   ```
 - **Glitchy-fast hits → the glitch library** (`../../assets/transitions/library.json`): AI/atmosphere stills get
   a **random Cinematic Bad Signal** on ingress: `<TransitionClip id="badsignal-short-1" cutFrame={9} />`.
@@ -150,6 +162,61 @@ scale-in on each container/sub-point swap (hand-rolled `interpolate`, NOT `Trans
   card). Reserve them — a small deliberate count, never sprayed. Placed via `TransitionClip` (cover→cover,
   full-frame so the spine never peeks); both carry SFX that **must duck under the continuing VO**. The
   `transition-strategist` agent (`.claude/agents/longform-edited/`) authors the whole plan incl. this layer.
+
+### 6a. Placing a LIBRARY transition over the spine — the traps (kaspa 30bps 2026-07-25; ethereum-rwa 2026-08-01)
+- **Give `TransitionClip` a Sequence of EXACTLY the engine window** (`from = F(cut) - win/2`,
+  `durationInFrames = win`, `cutFrame = win/2`). It also renders a "clean head" and "clean tail" copy of the
+  outgoing/incoming scenes outside that window; if the Sequence is longer, that tail copy paints a STALE
+  frame over the live cover layer underneath (it showed up as a black frame right after a spin). Outside the
+  window the normal cover track is the single source of truth.
+- **Every node handed to an engine must read ONE ABSOLUTE clock, not `useCurrentFrame()`.** The engine
+  re-mounts the same node inside several nested Sequences, so a node that times itself off the local frame
+  freezes on whatever moment its innermost Sequence started at. Publish the composition frame through a React
+  context at the comp root and read it in the cover/spine nodes; for the spine, `startFrom = absFrame -
+  useCurrentFrame()` keeps it in sync in ANY nesting.
+- **⛔ THE FACE-SIDE NODE: a "still" of the spine must be a FAITHFUL FREEZE of what actually AIRS.**
+  Four separate bugs shipped into ethereum-rwa v6/v7/v8 from ONE sloppy `SpineStill`, and each was invisible
+  until the previous one was fixed. Whatever you hand an engine for the face side of a cut must satisfy ALL
+  four, so write it once and check the list:
+  1. **A real `<Freeze frame={n}>` — NEVER `<OffthreadVideo startFrom={n}>`.** `startFrom` sets only the ENTRY
+     point; the video then ADVANCES with the frame. On a **face-OUT** it walks straight off the end of the FACE
+     window into the cover-blackout region and the outgoing face turns **BLACK one frame into the transition**.
+     v7 shipped with Mike's face black at all 6 face-outs and every automated check passed.
+  2. **`muted`.** Every `TransitionClip` mounts the node **TWICE** (outgoing + incoming, ~0.1s apart) on top of
+     the live spine, so an unmuted copy replays the VO 2 more times slightly late. Mike heard it as a doubled
+     word ("right" twice a few ms apart). It is inaudible on a still frame and only shows up on a listen or as
+     ~0.5 dB of extra level vs the spine at that timestamp.
+  3. **The same TRANSFORM as the live layer** (re-frame zoom / punch-in scale). A still that freezes the frame
+     but not the scale snaps the picture back to 1.0 the instant the transition takes over (a visible 15%
+     zoom-out), AND it flattens every re-frame snap: both sides of the glitch show the same scale, so the
+     glitch fires over a zoom that never happens.
+  4. **The same SOURCE as the live layer.** If the face beat airs from a background-swap / v2v clip rather than
+     `spine.mp4`, the still must pull that clip (with its head-handle offset) or the backdrop pops to raw green
+     screen for the length of the transition.
+  Mechanically: the node is correct when a frame just BEFORE the engine window and a frame just INSIDE it are
+  identical except for the effect. Extract both and compare — that one check catches all four.
+- **⛔ A transition PLANNED in `TRANSITIONS.md` is not a transition WIRED in the comp**, and a wired one whose
+  plates/tiles/SFX were never copied into the lean project `assets/transitions/` renders as a plain cut. Neither
+  errors: the effect is just silently missing (ethereum-rwa shipped v6+v7 with `STILL_FX` declared but never
+  referenced, and both badsignal TILE sets absent). **Gate: `node skills/lint-transition-assets.js <comp.tsx>
+  <public-dir> [TRANSITIONS.md]`.** The trap it closes: engines read `plateDir`/`tileDir`/`maskDir` out of
+  **`row.params`**, not off the row, so a hand-check of top-level keys passes while the render is broken.
+  Deliberately superseding a planned id is fine — declare `// TRANSITIONS_WAIVED: <id> — reason` in the comp.
+- **⛔ Cost trap — a library transition whose OUTGOING/INCOMING scene is a VIDEO can kill the render.**
+  The footage engines wrap-tile every displaced copy, so a multi-offset move over a live clip fires
+  dozens of simultaneous frame fetches for the same video; Remotion's proxy saturates and the render
+  dies with `A delayRender() "Fetching …mp4" was called but not cleared after 28000ms`. It killed
+  kaspa 30bps twice at the same beat (a SPIN out of an Envato clip). Mitigations, in order: `WrapLayer`
+  now renders only the ≤2x2 tiles that can actually intersect the frame (was always 3x3 — pixel
+  identical, less than half the requests); pass `--timeout=120000`; and prefer placing the reserved
+  MELT/SPIN marquees between a video and a CODE chart/still rather than between two video clips.
+  **⛔ The reliable fix, once a beat has failed twice, is to stop feeding the engine a video at all:**
+  pre-extract the exact cut frame (`ffmpeg -ss <t_into_clip> -i clip.mp4 -frames:v 1 cut.jpg`) and hand
+  the engine that STILL for the transition. Over a 0.44-0.88s turn a frozen source is invisible, and it
+  collapses dozens of proxy requests into one. Keep a `CUTFRAME` map (ref -> still) in the comp and swap
+  it in inside the transition node only — the cover layer still plays the live clip either side.
+  Reduce `--concurrency` as well if it persists (3 was enough here). Add the still to the manifest.
+  Lower-grade symptom of the same pressure: `EncodingError: The source image cannot be decoded` warnings.
 
 ## 7. Animated data charts (`charts.md` — NEVER a PNG with a wipe)
 Charts are **code-built React components that draw/grow/count via `useCurrentFrame`** (bars interpolate up,
@@ -190,39 +257,69 @@ const Captions: React.FC = () => {
 - A hook (0-31s over covers) or other over-cover caption window is a DELIBERATE per-video choice; the default is
   captions ONLY over the face spine (never over a cover). **The `captions-builder` agent runs this end to end.**
 
+### 7a. A Type 2 (system-design) still must NEVER sit dead still
+It bakes no animation, so if the comp gives it no move it is a frozen frame for as long as it holds —
+Mike caught a 17.8s one on kaspa 30bps ("was there meant to be any motion in that?"). Every such cover
+gets either a gentle push or a spotlight that travels, and a long hold gets SPLIT into rows that move
+between named regions (full view → push into the readout). **Watch the crop:** a FULL-diagram view can
+only push ~4% before edge titles clip; deep pushes (1.2x+) belong only to rows that are deliberately
+spotlighting one region, where losing the rest of the frame is the point.
+
 ## 9. Music + SFX = ffmpeg POST-mix, NOT in the comp
 The comp renders VIDEO + the spine's VO audio only. Beds, risers, impacts, ducks, fades are mixed onto the
 finished render with ffmpeg (`-c:v copy`, ~1 min, no re-render). Land each impact on its REAL reveal frame; a
 riser ENDS on the hit (`assets/sfx/.../WHEN-TO-USE-IMPACTS.md`). Beds ~16-18 dB under VO (measure LUFS first).
+- **⛔ The bed-gain formula is `gain_db = (VO_LUFS + target) - bed_LUFS`, where `target` is the NEGATIVE
+  dB-under-VO** (-16, -18…). Writing it as `(VO - bed) - target` flips the sign and returns a POSITIVE
+  gain — on kaspa 30bps that would have put the music ~32 dB too hot, over the voice. Always sanity-check:
+  a mastered bed under a VO always needs a NEGATIVE gain. Verify after mixing by subtracting the un-mixed
+  render from the mixed one to isolate the bed, then measure it against the VO.
+- **Title-card / reveal impacts: pick by MEASURED audible tail, not by filename** (Mike, 2026-07-25: "make
+  sure that we don't choose an impact with a long waveform"). File length is mostly trailing silence —
+  measure where the envelope falls ~40 dB below peak. In this kit that is `Impacts/DSGNImpt-single_impact
+  _sound_-Elevenlabs.mp3` at 1.15s, vs 2.3-3.8s for the rest.
 
-## 10. render-assets layout + asset loading
-All comp assets load via `staticFile('<subdir>/<file>')`; the public dir is set PER-RENDER. Project render assets
-live in `media/<project>/render-assets/` (NOT `video-creation/assets/`, which is shared/reused only):
+## 10. assets layout + asset loading (MERGED — Mike, 2026-07-24: no separate render-assets/)
+All comp assets load via `staticFile('<subdir>/<file>')`; the public dir is set PER-RENDER. Everything
+project-local — comp INPUTS **and** the sources that generate them — lives in ONE folder,
+`media/<project>/assets/` (NOT `video-creation/assets/`, which is shared/reused only). **The old split
+(`render-assets/` inputs vs `assets/` sources) is RETIRED** (Mike: "they all get rendered; separating them
+doesn't make much sense") — projects started before 2026-07-24 (zebec, tao, carry-trade, …) still carry the
+old layout; do not migrate them retroactively.
 ```
-render-assets/
+assets/
   spine.mp4            the paused gated-face VO spine (face baked, COVER black, card pauses inserted)
   img/                 stills + photos        (still kind)
   vid/                 Envato/AI b-roll mp4s  (vid kind; AI clips silent — strip audio)
-  deck/                container source / slide pngs if any
+  title-slides/        TITLE SLIDE pngs (no-box type + state variants)
+  card-slides/         CARD SLIDE pngs (boxed type + state variants)   (Mike 2026-07-24: slides split
+                       by their two official type names, mirroring charts/ vs diagrams/)
   receipts/            web caps / receipts    (receipt + showcase kinds)
-  charts/              (chart data is code in src/; this holds any chart bitmaps if used)
+  charts/              Type 1 ANIMATED charts: their design-spec state PNGs + .html sources side by side
+                       (the real animation is CODE in src/; the stills here are the spec + any used bitmaps)
+  diagrams/            Type 2 SYSTEM-DESIGN charts (static stills, CHART(sysdesign)): state PNGs + .html
+                       sources (Mike 2026-07-24: the two chart types live in separate folders)
+  slide-sources/       containers.html + the screenshot driver (makes title-slides/ + card-slides/)
   transitions/         glitch library assets for TransitionClip
 ```
-- **INPUTS only.** `render-assets/` holds what the comp LOADS via `staticFile()` — it is copied to a temp bundle
-  on EVERY render, so keep it small. **Animated charts are CODE** (`src/*.tsx`), not files: `charts/` stays empty
-  unless a real bitmap is genuinely used. **Outputs/previews (draft renders, chart tests) go in
-  `media/<project>/_previews/`, NEVER in `render-assets/`** (putting outputs there bloats every render's copy).
+- The whole folder is the render's `--public-dir` and is copied to a temp bundle on EVERY render, so keep it
+  lean: sources (.html/.css/.py drivers) are small and allowed to ride along; **outputs/previews (draft
+  renders, chart tests) still go in `media/<project>/_previews/`, NEVER in `assets/`** (outputs are the real
+  bundle bloat).
+- **Zero-orphans reconcile scope:** the placed-or-REJECTED rule applies to RENDERABLE files
+  (png/jpg/mp4/wav) in `assets/`; source files (.html/.css/.py/.json) are exempt — they generate the
+  renderables, they don't appear in the comp.
 
 ## 11. Render command (bitrate is the ONLY draft knob — `longform-edited.md`)
 ```bash
 cd video-creation/remotion
 # Outputs go INTO the project's own media folder, NEVER the shared remotion/out/ scratch (§10).
-# OUT is a sibling of render-assets/; mkdir -p it first. <track> = longform-edited | ai-engineering | ...
+# OUT is a sibling of assets/; mkdir -p it first. <track> = longform-edited | ai-engineering | ...
 OUT="../<track>/media/<project>/_previews"; mkdir -p "$OUT"
 # DRAFT (fast, light proxy — FULL feature set, low bitrate):
 npx remotion render src/index.ts <CompId> "$OUT/<project>-draft-vN.mp4" \
   --video-bitrate=200k \
-  --public-dir "../<track>/media/<project>/render-assets" \
+  --public-dir "../<track>/media/<project>/assets" \
   --log=verbose 2>&1 | tee "$OUT/<project>-draft-render.log"
 # FINAL (quality):  swap --video-bitrate=200k for  --crf=18   (the two are mutually exclusive)
 # ⛔ BEFORE any FINAL render: REMOVE the comp's build/WIP watermark (the corner tag naming batch+pass).
@@ -230,6 +327,13 @@ npx remotion render src/index.ts <CompId> "$OUT/<project>-draft-vN.mp4" \
 #    (Mike caught it, 2026-07-19) and cost a first-chunk re-render + splice.
 # Slice for QA chunks:  add  --frames=A-B   (the chunk mp4 + its extracted QA frames also land under $OUT — see video-qa.md STEP 0)
 ```
+- **⛔ DISK: a render needs GIGABYTES free, and Windows gives no warning before it fails** (kaspa 30bps,
+  2026-07-25: three renders died at `ENOSPC`). Every invocation copies the whole `--public-dir` to a fresh
+  temp bundle (~370 MB there) AND Remotion's offthread video cache grows to whatever RAM allows (3.2 GB
+  observed), which drags the pagefile with it. Before a long render: check free space, delete stale
+  `%TEMP%/remotion-*` bundles (they are never cleaned up — 2.8 GB of them had accumulated), and cap the cache:
+  `--concurrency=4 --offthreadvideo-cache-size-in-bytes=419430400`. Rendering in two `--frames=` halves also
+  bounds the damage and gives a checkpoint (and is the same workaround as the ~frame-14436 stitch ceiling).
 - **⛔ OUTPUT LOCATION IS MECHANICAL: the render mp4, any preflight still, AND the render log ALL go to
   `media/<project>/_previews/` (§10) — NEVER the bare `remotion/out/`.** `remotion/out/` is shared, cleanup-swept
   scratch: anything left there is an orphan with no project home (this is exactly how `_nlg_preflight.png` /
@@ -256,7 +360,7 @@ npx remotion render src/index.ts <CompId> "$OUT/<project>-draft-vN.mp4" \
    comp work.** It enforces the §13 doc set + the spine/ naming (§13a) + ordering in CODE, so a required doc can't
    be silently skipped (the pre-BUILD sibling of the §6b `lint-covers.js` pre-RENDER gate). Review every WARN.
 3. Build the comp: `COVERS`, `CARDS`/`CARD_T`, `PUNCH_SRC`, `CAPTION_SRC`, `CAPTIONS`, wired through `sh()`/`F()`.
-   Populate `render-assets/`. Build REAL animated charts + code containers.
+   Populate `assets/` (§10 merged layout). Build REAL animated charts + code containers.
 4. Reconcile the comp to EDIT-PLAN/CUE-SHEET (zero orphans, every documented element present — the PRE-RENDER GATE).
    **Then run the MECHANICAL gate: `node skills/lint-covers.js <comp.tsx>` — it MUST exit 0** (enforces #12 no
    reused b-roll, #2 no clip >4s, captions-never-over-cover, in CODE). Do not render a comp that fails it. To allow
@@ -267,6 +371,28 @@ npx remotion render src/index.ts <CompId> "$OUT/<project>-draft-vN.mp4" \
    blueprint the comp is built TO — see `edit-plan-and-cue-sheet.md` §0 ORDER note — NOT generated from the
    comp. Any `_gen_editplan` run is only an optional as-built reconciliation, never how the plan is authored.)
 
+### 12a. ⛔ DEFINITION OF DONE — "complete" is a CLEANUP STEP, not just a thumbs-up (Mike, 2026-08-01)
+The moment Mike says a video is complete/approved, the working folders **stop being allowed to exist**. He had
+to ask for this on ethereum-rwa (*"Are you going to get rid of the previews folder and put the finalized video in
+the root of the project directory?"*) — so run it unprompted, as the last action of the build:
+1. **Promote the approved render to the project ROOT as `<slug>-FINAL.mp4`** (sibling convention:
+   `kaspa-40bps-FINAL.mp4`; also `-VERTICAL.mp4` / `-SHORT-40s.mp4` for the derived cuts). The root carries the
+   FINAL; `_previews/` only ever carries *attempts*. Drop the `-vN` / `-music` suffixes — versioning was for the
+   review loop and is dead once one render wins.
+2. **Rescue every working file the FINAL still DEPENDS ON, out of `_previews/` and `_tmp/` first.** The trap:
+   the music bed lives as `_tmp/mix/*.flac` and is what `mix-music.sh` re-applies on any later re-cut — recycling
+   `_tmp` with the bed inside destroys it permanently once the un-mixed + mixed renders it was subtracted from
+   are gone too. Bed → `media/<project>/music/bed-final.flac` (NOT `assets/`, which is the per-render
+   `--public-dir` and would bundle it into every future render).
+3. **Recycle `_previews/` and `_tmp/` in full** (every `-vN`, `-music`, smoke test, chunk, `patch/` splice
+   segment, render log, QA frame). Use `recyclePaths()` from `cleanup/lib.js` — Recycle Bin, never a hard delete.
+   On ethereum-rwa that was 2.0 GB + 66 MB for a 208 MB deliverable.
+4. **Confirm the queue copy is intact BEFORE recycling** (`schedule-tweets/longform/<slug>/`), so the deliverable
+   always exists in two places at the moment of deletion.
+Note `cleanup/cleanup.js` will NOT do this for you: its `video-creation` policy is whole-project-folder and
+keyed to `batches.json`, so a project with no batch (a longform-edited build is not a shorts batch) is
+"left alone" forever. The completion sweep is a manual step by design.
+
 ## 13. The per-video document set (every longform-edited video carries ALL of these)
 A new `media/<project>/` folder should contain this full set — if one is missing, that's a gap to fill, not a
 choice to skip. (Mike, 2026-06-30: "so future projects know to have these files." The smartmoney project carried
@@ -275,13 +401,13 @@ project.
 | File | What it is | Format owner |
 |---|---|---|
 | `SCREENPLAY.md` | the pre-production script (tagged FACE/COVER/SHOW lines) | `../screenplay.md` |
-| `AS-RECORDED.md` | the as-BUILT, timecoded script derived from the FINAL-spine transcript. **Build the edit to THIS, not the screenplay, where they differ.** Carries the FACE windows + the script divergences (ad-libs / dropped / changed lines). Produced once the spine is transcribed. | `../screenplay.md` (as-built variant); exemplar `media/zebec/AS-RECORDED.md` |
+| `AS-RECORDED.md` | the as-BUILT, timecoded script derived from the FINAL-spine transcript. **Build the edit to THIS, not the screenplay, where they differ.** Carries the FACE windows + the script divergences (ad-libs / dropped / changed lines). Produced once the spine is transcribed. | `../screenplay.md` § "AS-RECORDED.md — the as-BUILT variant" (self-contained skeleton) |
 | `DATA.md` | the **research dump** (every number carries a source) + do-not-air numbers + CHART-SOURCE INDEX + market snapshot for every `[VERIFY]` number. This IS the fact source the screenplay is written from. **Put verified research HERE — never in a separate `DOSSIER.md`** (that is an undocumented file; the research dump belongs in DATA.md per `charts.md` §1). | `skills/charts.md` |
 | `BROLL-PLAN.md` | b-roll acquisition worklist (prompts / Envato terms / status) | `edit-plan-and-cue-sheet.md` §0 |
 | `EDIT-PLAN-prep.md` | pre-record beat-indexed plan (Layer model, every asset placed/REJECTED) | `edit-plan-and-cue-sheet.md` §0 |
 | `CUE-SHEET.md` | layer-grouped watch-along, sub-point timing off the transcript | `edit-plan-and-cue-sheet.md` §2 |
 | **`TRANSITIONS.md`** | **the per-video transition plan — how EVERY cut is bridged** | **§14 below** |
-| `EDIT-PLAN.md` | post-comp time-ordered EVENT LOG (generated) | `edit-plan-and-cue-sheet.md` §1 |
+| `EDIT-PLAN.md` | **PRE-BUILD** time-ordered EVENT LOG, authored off the word-level transcript AS SOON AS the spine is transcribed, BEFORE any comp work (§12/2 + the ⛔ ORDER note in `edit-plan-and-cue-sheet.md` §0; a `_gen_editplan` run is an optional as-built reconciliation only, never how it's authored — this row previously said "post-comp generated" and caused the same wrong-order call two videos running, Mike 2026-07-24) | `edit-plan-and-cue-sheet.md` §1 |
 | `PROJECT-LOG.md` | decision trail + resume pointer | (free-form) |
 
 ### 13a. The per-video FOLDER layout — where masters, spine-prep, and outputs live (FIXED location + naming)
@@ -303,10 +429,12 @@ media/<project>/
                     (burst-removal / a re-desilence insert their own next letter, e.g. d.cleaned -> e.desilenced -> f.final.)
                   - MULTI-TAKE recordings: name each take by its range, process each through the chain, then JOIN to
                     ALL (sync-safe `filter_complex`, NEVER the concat-demuxer) -> ALL.c.desilenced.mp4.
-  render-assets/  comp INPUTS only (§10). The final paused spine is copied here as render-assets/spine.mp4.
-  _previews/      draft / QA render outputs + logs (§11). NEVER in render-assets/ or the shared remotion/out/.
+  assets/         comp INPUTS + their sources, MERGED (§10; Mike 2026-07-24, replaces the old render-assets/
+                  split). The final paused spine is copied here as assets/spine.mp4.
+  _previews/      draft / QA render outputs + logs (§11). NEVER in assets/ or the shared remotion/out/.
 ```
-Exemplar folders to copy the naming from: `media/carry-trade/spine/` and `media/Kaspa founder genius or over-rated/spine/`.
+The naming scheme above IS the spec — it is self-contained, and a sibling project must never be consulted as
+the reference (project folders are routinely deleted right after their video publishes, Mike 2026-07-31).
 
 ## 14. TRANSITIONS.md — the per-video transition plan (self-contained skeleton)
 A short doc that PINS this video's transition choices so the build (and a picky review) has one place to check.

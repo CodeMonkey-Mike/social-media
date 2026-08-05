@@ -126,5 +126,133 @@
       "flags": []
     },
     "error": null
+  },
+  {
+    "run_id": "cut-stub-20260804-130218@2026-08-04T13:02:18",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-stub-20260804-130218",
+    "started_at": "2026-08-04T13:02:18",
+    "ended_at": "2026-08-04T13:02:19",
+    "duration_s": 0.2,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": {
+      "batch": "stub-batch",
+      "stub": true,
+      "clips": 2
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-stub-20260804-130222@2026-08-04T13:02:22",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-stub-20260804-130222",
+    "started_at": "2026-08-04T13:02:22",
+    "ended_at": "2026-08-04T13:02:22",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": null,
+    "error": "cut_topics.py --stage cut exit code 3; output tail:\nstub: pretending to cut\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "cut-sandbox-cut-20260804@2026-08-04T13:03:15",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-sandbox-cut-20260804",
+    "started_at": "2026-08-04T13:03:15",
+    "ended_at": "2026-08-04T13:03:22",
+    "duration_s": 6.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "sandbox-cut",
+    "summary": {
+      "batch": "sandbox-cut",
+      "sandbox": true,
+      "clips": 2,
+      "total_s": 40.6,
+      "dashboard": "C:\\Users\\mnede\\AppData\\Local\\Temp\\claude\\C--Users-mnede-Documents-Claude-social-media\\7d61f7e1-6db7-473f-8c37-430cfd42d75c\\scratchpad\\cut-sandbox\\shorts\\sandbox-cut\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "sb-two-seg": 25.047,
+        "sb-one-seg": 15.543
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-october-bottom-20260804@2026-08-04T12:54:11",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-october-bottom-20260804",
+    "started_at": "2026-08-04T12:54:11",
+    "ended_at": "2026-08-04T13:19:44",
+    "duration_s": 1532.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "october-bottom",
+    "summary": {
+      "slug": "october-bottom",
+      "sandbox": false,
+      "master_duration_s": 3320.7,
+      "master_mbps": 0.64,
+      "longform": {
+        "duration_s": 2144.8,
+        "removed_s": 1175.94,
+        "mbps": 0.82,
+        "thumb_staged": false,
+        "queued_id": "lf-20260804-october-bottom",
+        "already_present": false,
+        "queue_total": 39
+      },
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 3320.7
+      },
+      "words": 7360,
+      "segments": 485,
+      "glossary": "Kaspa:3 TAO:7",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-october-bottom-20260804@2026-08-04T13:35:53",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-october-bottom-20260804",
+    "started_at": "2026-08-04T13:35:53",
+    "ended_at": "2026-08-04T13:38:46",
+    "duration_s": 173.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "october-bottom",
+    "summary": {
+      "batch": "october-bottom",
+      "sandbox": false,
+      "clips": 7,
+      "total_s": 684.5,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\october-bottom\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "october-mandela-myth": 171.983,
+        "kaspa-dip-bought-more": 95.591,
+        "whatif-organic-dogecoin": 149.335,
+        "ring-of-fire-meme-judgment": 98.295,
+        "cooper-robinhood-real-dog": 124.679,
+        "october-myth-impact": 24.871,
+        "kaspa-dip-impact": 19.767
+      }
+    },
+    "error": null
   }
 ]

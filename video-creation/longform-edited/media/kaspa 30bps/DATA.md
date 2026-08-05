@@ -49,6 +49,7 @@ Mike's original question: he heard "25 to 40" as an upgrade FROM 25 TO 40 bps. *
 
 ## 5. ⛔ DO-NOT-AIR / phrasing guards
 
+- **The video airs 40 bps, not 30, and NEVER references the stream (Mike, 2026-07-24).** No Krux, no Crypto Archie, no "I was watching a live stream": §0 is research provenance only, the video is standalone informative. 40 = the TOP of the sourced 25-40 range; the locked CH1 hook says "Forty blocks," every other spoken mention is "up to 40," never a flat "it runs at 40." TPS aired at 40 bps = "around 20,000 transactions a second of capacity" (§4 row). "Call it 30" is banned phrasing.
 - **"25-40 bps end of 2026" is a core-dev TARGET, not a locked schedule.** DAGKnight prototype was still pre-testnet as of the kasmedia sneak peek. Say "targeted for the end of this year," never "scheduled" / "confirmed." (Also: sources say end of Q3 2026; Krux says end of year. "Before the end of the year" is the safe envelope.)
 - **Do NOT say Toccata raised the block rate.** Toccata = programmability only; block rate is still 10 bps today.
 - **15,000 TPS = theoretical capacity** (see §4). Demonstrated = 5,584 TPS.
@@ -58,7 +59,7 @@ Mike's original question: he heard "25 to 40" as an upgrade FROM 25 TO 40 bps. *
 ## 6. Context / color (optional beats)
 
 - ~95% of KAS supply mined by 2026-07-10 (~27.2B of 28.7B). [ourcryptotalk roadmap](https://ourcryptotalk.com/blog/kaspa-roadmap-2026-2027)
-- Irony hook from the SAME stream (50:00): Krux praises Solana's Alpenglow pushing finality "down to sub 1 second" from ~13 s. Kaspa with DAGKnight targets sub-second finality **on proof of work**. Great contrast beat.
+- Irony hook from the SAME stream (50:00): Krux praises Solana's Alpenglow pushing finality "down to sub 1 second" from ~13 s. Kaspa with DAGKnight targets sub-second finality **on proof of work**. Great contrast beat. **(2026-07-24: the beat now airs UNATTRIBUTED, no stream reference; re-verify Alpenglow sub-second finality against a public source before recording.)**
 - Comparative block cadence for a chart: Bitcoin 1 block / ~600 s, Ethereum ~12 s, Kaspa today 10/s (100 ms), DAGKnight era ~30/s (~33 ms). (BTC/ETH figures are common knowledge; re-verify on screen text at build time.)
 - vProgs (further future, mention only if needed): "verification-oriented programmability layer enshrined in L1," per Yonatan "not an L2"; Sutton: live "within the next year" (statement date = that article's publish date, re-verify before airing). [kasmedia](https://kasmedia.com/article/sneakpeaks-and-developments)
 
@@ -66,8 +67,8 @@ Mike's original question: he heard "25 to 40" as an upgrade FROM 25 TO 40 bps. *
 
 | ID | Chart / graphic | Seen in / source | Build mode |
 |---|---|---|---|
-| C1 | The bps ladder timeline: 1 → 10 (Crescendo, May 2025) → ~30 (DAGKnight, target EOY 2026) → 100 (2027) | §1 table | **code** (animated) |
-| C2 | Block-cadence race: BTC 600s vs ETH 12s vs SOL ~0.4s slot vs Kaspa 0.1s → 0.033s | §6 | **code** (animated) |
+| C1 | The bps ladder timeline: 1 → 10 (Crescendo, May 2025) → up to 40 (DAGKnight, target EOY 2026) → 100 (2027) | §1 table | **code** (animated) |
+| C2 | Block-cadence race: BTC 600s vs ETH 12s vs SOL ~0.4s slot vs Kaspa 0.1s → 0.025s | §6 | **code** (animated) |
 | C3 | TPS capacity bars: 5k → 12.5k → 20k → 50k (label THEORETICAL) + demonstrated 5,584 marker | §4 | **code** |
 | C4 | GHOSTDAG fixed-k vs DAGKnight adaptive: system-design diagram (assumed worst-case latency vs measured latency) | §2 | **code** (system-design container, not AI image) |
 | C5 | Toccata activation receipt: rusty-kaspa v2.0.0 release page / DAA score 474,165,565 | GitHub release page | **screencap** |

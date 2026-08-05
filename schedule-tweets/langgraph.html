@@ -442,22 +442,32 @@ const AUTOMATIONS = [
   {
     id: 'livestream',
     label: 'Livestream',
-    sub: 'repurpose intake — wave 1 (Phases 1-2 + Lane 1 longform)',
+    sub: 'repurpose — wave 1 intake (Ph 1-2 + Lane 1) · wave 2 cut (Ph 4 exec)',
     feed: { progress: '/livestream/lane_progress.json', runs: '/livestream/lane_runs.json' },
     staleNote: 'Check whether ffmpeg/whisper is still alive (Task Manager) before relaunching; a killed run resumes with --resume, skipping completed nodes.',
-    // ONE graph = ONE mechanical segment of the pipeline (six work+verify pairs in
-    // sequence — `nodes` lists the work nodes; each has a verify_<name> after it).
-    // Wave 2+ segments (cut, tighten, finish, render, publish, lane3) get their own
-    // lane entries here as they are built and blessed.
+    // ONE graph = ONE mechanical segment of the pipeline (`nodes` lists the work
+    // nodes; each has a verify_<name> after it). Wave 3+ segments (tighten,
+    // finish, render, publish, lane3) get their own lane entries here as they
+    // are built and blessed. Each segment ends at a judgment seam (a strategist
+    // plan landing on disk, or a Mike gate) — the graphs never bridge a seam.
     lanes: [
       { n: 1, name: 'intake', work: 'intake', verify: 'verify',
         nodes: ['encode', 'longform', 'queue', 'vertical', 'transcribe', 'derive'],
         haltNote: 'halt edge: every node → END on a non-zero exit or a failed from-disk verify.',
         retired: false, views: false },
+      { n: 2, name: 'cut', work: 'cut', verify: 'verify',
+        nodes: ['cut', 'finalize'],
+        haltNote: 'runs after clip-plan.json lands (clip-strategist seam); ends at Mike\'s Phase 4b dashboard review. Halt edge on every node.',
+        retired: false, views: false },
     ],
     headline(run) {
       const s = run && run.summary;
       if (!s) return run && run.error ? clip(run.error, 90) : '';
+      if (run.lane === 2) {
+        return `${s.clips ?? 0} clips cut · ${Math.round(s.total_s || 0)}s total · `
+             + `${s.registered ? 'registered' : 'UNREGISTERED'} · at 4b gate`
+             + (s.sandbox ? ' · SANDBOX' : '');
+      }
       const lf = s.longform;
       const lfTxt = lf === 'skipped' ? 'longform skipped'
         : (lf && lf.queued_id ? `longform queued (${Math.round(lf.duration_s || 0)}s)` : 'longform ?');

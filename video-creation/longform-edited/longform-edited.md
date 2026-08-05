@@ -284,6 +284,24 @@ already in the repo to draw from — don't reinvent:
 - **Partial replacement** (keep original head/tail, replace a middle window): render ONLY the
   replaced window, then `ffmpeg filter_complex concat` the 3 pieces — never re-render pristine
   footage through Remotion (see `feedback_partial_replace_ffmpeg_concat`).
+  **This is the DEFAULT for every fix round, not an optimisation** (Mike said so twice on ethereum-rwa,
+  2026-08-01, after a full 37-min re-render was launched for what was 2.8% changed footage). Scaling up
+  from "3 pieces" to a real fix round:
+  - **An AUDIO-only change needs ZERO video re-render.** `npx remotion render <entry> <Comp> out.wav
+    --codec=wav` renders the audio with no frame rendering (minutes, not tens of minutes), then
+    `ffmpeg -i video.mp4 -i out.wav -map 0:v -map 1:a -c:v copy`. Muting one node, changing an SFX or a
+    bed touches ~20 scattered points and not one pixel.
+  - **A fix to a SHARED component is still splice-able.** Systemic ≠ unsplice-able: enumerate every window
+    the component appears in (compute it, don't eyeball it — for a face/transition node that is the face
+    edges + re-frames + marquees) and re-render exactly those. The rule is that the scope must be PROVEN.
+  - **Merge windows whose gap is < ~250 frames.** A Remotion invocation costs ~25s of bundling ≈ 150 frames
+    of rendering, so a few larger ranges beat many tiny ones.
+  - **Verify the frame TOTAL before you spend the encode**, then PSNR every seam afterwards: copied regions
+    should come back ~44-62 dB (identical modulo re-encode), patched regions ~15-20 dB (genuinely changed).
+    A copied region reading LOW means a mis-numbered range; a patched region reading HIGH means the fix
+    did not take. Concat VIDEO-only and mux the audio separately so no A/V drift is possible.
+  - Encode the concat a notch above the source bitrate (e.g. 3.5M over a 2M master) so the one extra
+    generation is invisible.
 
 ### House-style rules (grow per video)
 

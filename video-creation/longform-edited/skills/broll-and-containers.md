@@ -19,6 +19,8 @@ partnership, or a date**, assign a **real receipt** to that beat before anything
 - **Know where everything goes before capturing:** reconcile the whole cover list against the transcript and
   lock receipt positions first (zero-orphans), then fill. This is exactly what the `coverage-strategist`
   advisor does; this rule makes it canonical so it holds on every video whether or not it is restated.
+- **Type every receipt R(article) or R(other)** — see "Cover STYLE devices" §1 below; article receipts carry
+  the mandatory reading/motion treatment.
 
 
 ## ⛔ CSS CONTAINERS — build them like the reference, do NOT crop a deck (Mike, 2026-06-30)
@@ -56,6 +58,51 @@ and **both are wrong**:
    violation. Aim for the mix in every rich section. (Dwell floors: see "Minimum dwell time" below. Rich
    diagram slides are declared `// DIAGRAM_REFS:` so they're exempt from the whole-slide lint — they are
    allowed BECAUSE they appear once as the overview, not repeated.)
+
+## Cover STYLE devices (Mike, 2026-07-24 — from the "Amazon Imploding" style study, youtu.be/7HbOBpsE4n0)
+
+### 1. Receipts come in TWO named types (parallel to TITLE/CARD slides — use these names in BROLL-PLAN/CUE-SHEET)
+- **R(article) — ARTICLE RECEIPT:** a prose page read on air (news article, blog post, research-paper page).
+  Gets the READING treatment: an article is **never a static full-page hold** — give each ONE single-image
+  motion move (device 2 below): a slow push-in toward the exact paragraph being read, or a library camera-move;
+  a two-stage zoom (wide establish → tighter crop on the key paragraph) is sanctioned for long reads
+  (exemplar: the Insider leaked-memo article @3:17→3:26).
+- **R(other) — OTHER RECEIPT:** platform/UI captures with no common shape (block explorer, GitHub
+  release/commits, aggregator panels, dashboards, screen recordings). No standard treatment — recordings
+  already move; a static panel may take a subtle push, or none.
+
+### 2. Single-image MOTION moves — a "transition" run on ONE image (A=B), for articles + stills
+The library's camera-move families double as ON-image effects when the SAME asset sits on both sides of the
+TransitionClip: nothing is revealed, the frame itself moves. Sanctioned single-image families (per
+`assets/transitions/library.json`; browse galleries at `assets/transitions/browse/<CATEGORY>/<family>/gallery.html`):
+- **MOTION** — 3D Pan (the one Mike used historically) · 3D Orbit · 3D Offset · Shake 3D / Optics / Simple
+- **ZOOM** — Ease / Simple (+Short) = subtle reading moves · Hit / Shake / Optics / Spin / Swinging (+Short) = punch variants
+- **PERSPECTIVE** — Ease In / Ease Out (+Short) · Pan 3D (+Short)
+- **EXPAND** — Expand Pan
+- **DEVIATION** — the 5 shader optics/shift bursts = a single-frame distortion hit
+(The reveal-geometry families stay two-image transitions and are NOT for this: OFFSET, SPLIT, GLASS, SPIN,
+MELT, TRANSFORM — the last two are the reserved §4 marquee families.)
+Usage rules: mix-and-match zoom + pan across a video's articles so they don't all move the same way; **ONE
+move per article**; subtle families (Ease / Simple / 3D Pan / hand Ken-Burns push) on reading beats; Hit /
+Shake / Deviation variants only on punch moments. These are effects on a cover asset, not cuts — they do NOT
+consume the marquee budget and do not appear in TRANSITIONS.md's buckets.
+
+### 3. LINE-CAPTION overlay on video b-roll — 10-20% of the time, MAX (Mike's frequency rule)
+A kinetic spoken-line caption burned onto a VIDEO b-roll cover: bold condensed UPPERCASE, high-contrast
+(white with a hard black outline/shadow), bottom-left, 1-2 lines, quoting the spoken line INCLUDING its
+number when there is one (exemplar: "ITS BRICK AND MORTAR SALES FELL BY 16%"). Hard rules:
+- **ONLY over VIDEO b-roll.** Never over stills, containers, charts, receipts, or FACE.
+- **Frequency-capped at ~10-20% of the video's video-b-roll covers** — a seasoning, never wall-to-wall.
+- MAY persist across consecutive b-roll cuts (text and picture cut on independent rhythms — exemplar: the
+  four-states caption holding while three skylines flip behind it @4:14-4:18).
+- This overlay is PART OF THE COVER ASSET, not the house word-caption track: the captions-skill captions stay
+  FACE-only and lint-covers' "captions never over a cover" is UNCHANGED by this device. No em dashes ever.
+
+### 4. Literal-noun b-roll (soft rule — land it here and there, not everywhere)
+When picking b-roll, prefer a shot that literally depicts the just-spoken noun or action even when nothing in
+the frame carries text: a gauge needle for "no dial to turn", a shutter pulled down for "closing locations",
+a construction aerial for "postponed its headquarters". Not mandatory per beat — deliberately land it here
+and there so covers feel authored; also tone-match (moody/desaturated shots under grim beats).
 
 ## The manifest is the contract — file-level, ZERO ORPHANS (hard gate)
 (The manifest lives inside `EDIT-PLAN.md` — the per-beat layer table that editing can't start without; see the

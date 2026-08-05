@@ -135,11 +135,76 @@ async function deleteChat(page, url) {
   return { ok: false, note: `delete failed (ui selectors missed; api status ${res && res.status}${res && res.note ? ' ' + res.note : ''})` };
 }
 
+// PATCH a conversation's title inside the authed page and verify it stuck. Internal.
+async function apiRename(page, chatId, wantTitle) {
+  return page.evaluate(async ({ cid, title }) => {
+    const s = await fetch('/api/auth/session', { credentials: 'include' })
+      .then(r => (r.ok ? r.json() : null)).catch(() => null);
+    const tok = s && s.accessToken;
+    if (!tok) return { ok: false, note: 'no access token' };
+    const H = { Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json' };
+    const p = await fetch('/backend-api/conversation/' + cid, {
+      method: 'PATCH', credentials: 'include', headers: H, body: JSON.stringify({ title }),
+    });
+    if (!p.ok) return { ok: false, note: 'PATCH HTTP ' + p.status };
+    const back = await fetch('/backend-api/conversation/' + cid, { credentials: 'include', headers: H })
+      .then(r => (r.ok ? r.json() : null)).catch(() => null);
+    return back && back.title === title ? { ok: true } : { ok: false, note: 'rename did not stick' };
+  }, { cid: chatId, title: wantTitle });
+}
+
+// TITLE SELF-REPAIR (added 2026-07-30). ChatGPT auto-titles a new conversation asynchronously;
+// when that landed AFTER confirmAndRegister's gated rename it overwrote the "b-roll:/social:"
+// title, and the drifted chat later hit the deletion gate (live: "Cinematic Trading Hall" while
+// the registry recorded "b-roll: broll", peach-minute 2026-07-29). confirmAndRegister now waits
+// out the auto-title before renaming; this is the backstop for anything that still slips through.
+//
+// Scope is deliberately narrow: only registry entries with VERIFIED-RENAME PROVENANCE — a recorded
+// `title` that itself passes the gate, which confirmAndRegister only writes after a read-back-
+// verified rename — are ever re-renamed. That proves the chat was ours at registration, so healing
+// it never touches a human's chat. Healed `title_gate_skipped` entries go back on the retired
+// queue for deletion. Entries without that provenance are left strictly alone.
+async function healTitles(page) {
+  const reg = pool.status();
+  const groups = [
+    { list: reg.chats || [], requeue: false, tag: 'active' },
+    { list: reg.retired || [], requeue: false, tag: 'retired' },
+    { list: reg.title_gate_skipped || [], requeue: true, tag: 'gate-skipped' },
+  ];
+  let healed = 0, failed = 0;
+  for (const { list, requeue, tag } of groups) {
+    for (const c of list) {
+      if (!c.title || !pool.TITLE_GATE_RE.test(c.title)) continue; // no provenance — never touch
+      const m = String(c.url || '').match(CHAT_ID_RE);
+      if (!m) continue;
+      let live = null;
+      try { live = await apiGetChat(page, m[1]); } catch (e) { continue; }
+      if (!live || live.status !== 200) continue; // gone or unreachable — the sweep handles it
+      if (pool.TITLE_GATE_RE.test(live.title || '')) continue; // compliant, nothing to heal
+      const r = await apiRename(page, m[1], c.title).catch(e => ({ ok: false, note: e.message }));
+      if (r && r.ok) {
+        healed++;
+        console.log(`  [heal] ${tag} ${c.purpose || '?'}: live title ${JSON.stringify(live.title || '')} → ${JSON.stringify(c.title)}`);
+        if (requeue && pool.requeueGateSkipped(c.url)) {
+          console.log(`         requeued for deletion (was title_gate_skipped)`);
+        }
+      } else {
+        failed++;
+        console.log(`  [heal] FAILED ${tag} ${c.purpose || '?'}: ${c.url} — ${r && r.note}`);
+      }
+    }
+  }
+  return { healed, failed };
+}
+
 // Delete everything on the registry's `retired` list using an already-open, logged-in page.
 // Successes are removed from the list; transient failures stay queued for the next sweep.
 // TITLE-GATE refusals will never succeed on retry, so they leave the queue and are recorded
 // on the registry's `title_gate_skipped` list for a human to handle. Never throws.
+// Heals drifted titles FIRST (healTitles) so a chat we verifiably renamed at registration is
+// never gate-refused just because ChatGPT's auto-title overwrote it.
 async function sweepRetired(page) {
+  try { await healTitles(page); } catch (e) { console.warn('  [heal] skipped: ' + e.message.split('\n')[0]); }
   const retired = pool.getRetired();
   if (!retired.length) return { deleted: 0, failed: 0, gated: 0 };
   console.log(`\n[chat-delete] sweeping ${retired.length} retired chat(s)...`);
@@ -165,4 +230,4 @@ async function sweepRetired(page) {
   return { deleted, failed, gated };
 }
 
-module.exports = { deleteChat, sweepRetired };
+module.exports = { deleteChat, sweepRetired, healTitles };

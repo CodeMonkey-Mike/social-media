@@ -140,8 +140,13 @@ function main() {
   if (opts.dryRun) console.log('[DRY RUN] No files will be moved.');
   const names = opts.target === 'all' ? Object.keys(TARGETS) : [opts.target];
 
-  // The video-creation target's eligibility depends on batches.json status — sync it first.
-  if (names.includes('video-creation')) syncBatchStatus(opts.dryRun);
+  // Eligibility depends on batches.json status, so sync it first — ALWAYS, for every target.
+  // This used to be gated on `names.includes('video-creation')`, which meant a
+  // `--target schedule-tweets` run silently skipped the sync and left batches stale-`active`.
+  // Stale-active is the dangerous direction: it shields a finished batch's source artifacts
+  // forever (1.4 GB of livestream media hid behind it), and the drift is invisible because the
+  // reconcile table only prints on a run that happens to include video-creation. (Mike 2026-07-28)
+  syncBatchStatus(opts.dryRun);
 
   let totalMoved = 0, totalBytes = 0;
   for (const name of names) {
