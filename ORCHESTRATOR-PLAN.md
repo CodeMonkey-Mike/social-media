@@ -279,8 +279,25 @@ Decisions locked with Mike 2026-08-02; do not re-litigate:_
      Sandbox e2e green (scratch 2-clip batch incl. non-chronological assembly, prod-isolation
      + halt + clobber-guard cases). **LIVE-BLESSED 2026-08-04 on october-bottom** (7 clips /
      684.5s, one green invocation; same stream also completed Wave 1's full all-nodes bless).
-  3. **tighten** (Ph 5 exec) — de-fork the 12 `tighten_clips_<batch>.py`; contract change:
-     strategist spans persist to `tighten-plan.json` instead of pasted Python literals.
+  3. **tighten** (Ph 5 exec + 5B desilence) — **BUILT + SANDBOX-BLESSED 2026-08-05**: canonical
+     `livestream-repurpose/scripts/tighten_clips.py` (de-forks the 15 `tighten_clips_<batch>.py`,
+     frozen as rollback; the unsuffixed original renamed to `tighten_clips_best350x.py`; blueprint
+     was `tighten_clips_october_bottom.py`) reads `tighten-plan.json` + `clip-plan.json` (4b
+     retitles included), applies boundary relocks (uncapped) + removals under the voiced-content
+     ceiling MEASURED vs Whisper words (15% hard, computed never trusted), renders keep spans off
+     the vertical master with 8 ms declicks, then 5B via the canonical desilencer at the CALLER'S
+     `--min-sil` (Mike's per-batch knob, never baked — the delete_silences.py 250 ms wrapper stays
+     for hand runs). Graph `graph/shorts_graph.py` tighten segment = tighten → verify_tighten
+     (durations vs plan-computed keeps ±1s, geometry == master, structural swallow guard: whisper
+     spans are a RATIO tool, never an absolute floor — sandbox proved a healthy 23% silence removal
+     trips a word-span floor) → finalize (dashboard IN PLACE + progress to the 2nd-review gate,
+     past-5B clobber guard + `--force`) → verify_finalize. Invoked
+     `run.py tighten --batch <batch> --min-sil N`. Segment starts AFTER Mike's 4b verdicts land in
+     clip-plan.json AND the tighten-strategists' plan lands (judgment seam); ends at his 2nd
+     review. Stub ok/fail green; sandbox e2e green on real audio (scratch 2-clip batch off a real
+     tightened spine incl. non-chronological assembly + relock; over-ceiling halt at a measured
+     64.5%, outside-segment halt, clobber-guard + --force cases). **Live bless pending the next
+     real tighten run.** Dashboard: lane 3 on LangGraph → Livestream.
   4. **finish** (5B desilence + 5C filler + 6 captions) — wraps only (tools already canonical
      Python); per-clip loop with the consecutive-failure kill-switch; 5C's discourse-like review
      stays a seam.
