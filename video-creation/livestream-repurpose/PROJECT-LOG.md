@@ -51,9 +51,24 @@ Session wrapped ahead of the API limit. **This entry is tomorrow's resume contra
   "this guy's an opportunity" is actually "this gives an opportunity" (5 isolated passes) and
   persisted the phrase rule in `skills/captions/build_captions.py`. progress.json → `7-built PASS`.
 
-### IN FLIGHT AT WRAP — resume protocol for tomorrow (in order)
+### STOPPED CLEANLY AT WRAP (not limit-killed) — per-clip build state
 
-1. **Builders for clips 1, 3, 4, 5, 7 were RUNNING at wrap** (two waves, lock-serialized). First:
+The five in-flight builders were STOPPED deliberately at wrap; both stale stage locks
+(`chatgpt` held by clip 3, `render` held by clip 4) were released and verified free; no orphan
+generator processes remain. Last-known positions + disk truth (`remotion/out/october-bottom/`):
+
+| n | clip | state at stop |
+|---|---|---|
+| 1 | october-mandela-myth | **FULL RENDER ON DISK (98.2 MB)** — was in the final whisper-verify, sweeping 3 SFX cues that masked VO; tomorrow: finish the cue sweep (re-render likely), then gate |
+| 2 | kaspa-dip-bought-more | **DONE + gate PASS** (52.1 MB) — nothing to do |
+| 3 | whatif-organic-dogecoin | comp/plan authored, SFX staging done, was HOLDING the chatgpt lock (b-roll generation in progress or imminent) — verify render-assets image inventory before regenerating anything |
+| 4 | ring-of-fire-meme-judgment | b-roll complete + persona-inspected (zero dups); `_draft-4-ring-of-fire.mp4` (3.6 MB draft proxy) on disk; was HOLDING the render lock — draft/full render was in flight; verify and re-render |
+| 5 | cooper-robinhood-real-dog | comp authored, was registering in Root.tsx — check Root.tsx registration + render-assets inventory |
+| 7 | kaspa-dip-impact | barely started (reading the contract) — full fresh build |
+
+### Resume protocol for tomorrow (in order)
+
+1. **Relaunch the five builders with RESUME framing per the table above.** First:
    check what landed on disk per clip — `out/october-bottom/<n>-<slug>.mp4`, `constants-*.ts` +
    `captions*.ts` in `remotion/src` + Root.tsx registration, `<clip>/BROLL-PLAN.md`, images in
    `shorts/october-bottom/render-assets/`, gate output. **If a builder died: SWEEP STALE LOCKS
