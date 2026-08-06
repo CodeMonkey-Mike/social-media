@@ -6,6 +6,174 @@ linkedin-automation/PROJECT-LOG.md.)_
 
 ---
 
+## 2026-08-05 (later) — `if-yacht`: Wave 3 BUILT + SANDBOX-BLESSED (live bless CARRIES OVER), frontier green, Mike deleted BOTH clips at 4b, Lane 3 complete
+
+### ⚠️ THE CARRYOVER — Wave 3 live bless MUST run on the NEXT livestream
+
+**Wave 3 (tighten de-fork) is built, stub-tested and sandbox-blessed, but NOT live-blessed:
+Mike reviewed the two cut clips at 4b and deleted BOTH (no shorts for this batch), so if-yacht
+has no tighten step to bless on.** Next stream: run the blessed intake + cut frontier as usual,
+and when 4b survivors exist, the FIRST real tighten runs through the NEW graph —
+`python video-creation/livestream-repurpose/graph/run.py tighten --batch <batch> --min-sil N`
+(min-sil = Mike's per-batch 5B call; recent: 0.25 / 0.45) — and THAT run is the Wave 3 live
+bless. Wave 4 (finish: 5C + captions wraps; 5B now lives inside canonical tighten) builds only
+after it. The frozen forks (`tighten_clips_<batch>.py`, 15 of them) remain rollback.
+
+### Wave 3 — what was built (commit `214dad7`)
+
+- **Canonical `scripts/tighten_clips.py`** de-forks the tighten hand-forks (blueprint:
+  `tighten_clips_october_bottom.py`; the ancient unsuffixed fork squatting the canonical name
+  was renamed `tighten_clips_best350x.py`). Reads tighten-plan.json + clip-plan.json (4b
+  retitles ride along), master-absolute cuts in assembly order, uncapped boundary relocks,
+  removals under the voiced ceiling MEASURED vs Whisper words (15% hard, plan's own estimate
+  never trusted), 8 ms declicks, then 5B via the canonical desilencer at the CALLER'S
+  `--min-sil` — **required arg, never baked** (delete_silences.py's 250 ms wrapper stays for
+  hand runs). Stages tighten/finalize/all, `--only <slug>` single-clip re-render, finalize
+  clobber guard for batches past 5B (`--force` to override).
+- **Graph segment** in `graph/shorts_graph.py`: tighten → verify_tighten → finalize →
+  verify_finalize, same halt topology / verify-from-disk / stub / sandbox contract as cut;
+  runner fail-fast uses the script's own validator (one source of truth). Registered as
+  `run.py tighten`; lane 3 "tighten" added to the LangGraph → Livestream dashboard tab.
+- **Blessed:** stub ok/fail green (halt + exit codes) · sandbox e2e on REAL audio green
+  (scratch 2-clip batch off an october-bottom tightened spine: non-chronological assembly,
+  relock, 0.25 5B) · deliberate halts all fired: over-ceiling plan (measured 64.5% vs 15%),
+  removal outside every segment, clobber guard + --force.
+- **Finding worth keeping:** Whisper word-spans OVERCOUNT voiced time (boundaries bleed into
+  pauses) — legit 23% silence removal tripped a word-span absolute floor in verify_tighten.
+  Word spans are a RATIO tool (the ceiling gate) only; the swallow guard is now structural
+  (desilenced ≥ 35% of tightened). Fine-grained speech QA stays with the desilencer's own
+  guard + Mike's 2nd review.
+- No JS existed in this wave (Mike asked): the tighten path was already all-Python. The lane's
+  ONE JS file (`setup-batch-render-assets.js`) is Wave 5's port.
+
+### Batch `if-yacht` (2026-08-05 stream, 47.7 min)
+
+| Lane | State |
+|---|---|
+| Lane 1 longform | **QUEUED** `lf-20260805-if-yacht` "The What If Yacht: $IF Is a Steal Right Now" (2014.0s staged, -845.1s silence at min-sil 0.5, 0.81 Mbps; **thumb NULL — Mike to drop a PNG, then patch**) |
+| Lane 2 shorts | **SKIPPED at 4b (Mike):** clip-strategist authored a 2-clip plan (Mike's per-run cap), cut graph ran green (129.9s + 124.1s), **Mike deleted both** → folders removed, `pipelines.shorts: "skip"`, progress closed (`4b-all-deleted`); clip-plan.json / dashboard / _cut_results kept as records |
+| Lane 3 text/image | **DONE** (`pipelines.repurpose: done`): 14 lint-clean entries — 6 X tweets (4 long + 2 one-liners), 2 threads (Robinhood/$IF thesis · copies-vs-originals), 2 YT posts + two 5-slide carousels (v1 news-flash / v2 editorial), 2 YT polls, 2 IG 4:5 companions. **No X poll** (topic filter: $IF/Robinhood + macro; only decorative Kaspa content). ElizaOS excluded everywhere (unresolved founder-lawsuit/delisting claim surfaced ON stream) |
+
+- **Intake frontier: second consecutive unattended full-graph run** (encode 0.65 Mbps →
+  longform → verticalize → whisper 7276 words / 452 segs / 32 chunks; glossary Kaspa:1, zero
+  KRC20 flags).
+- **Stale-value sweep (Mike, at review):** every decaying dollar claim stripped from the queue
+  — the $12M mcap, the $8M support, "100x from today" — across the YT post, thread A (3
+  tweets), tweet 1, IG-2, poll 1, and carousel slide A3 (REGENERATED with durable text).
+  Historical receipts stay ($BRETT $1.97B peak, $PNUT $1.7B ATH). **Rule for future batches:
+  current-price/mcap claims do not go into queue entries; they are stale by post time.**
+- **Images: 18 generated, 3 adversarial QA rounds.** Round 1 caught 8 defects incl. the exact
+  recurring modes (Kaspa logo standing in for $IF, real exchange marks on a slide, non-mirrored
+  K, 5:8-instead-of-4:5, comma/glyph collision, chartreuse type drift). Regens fixed all
+  content defects; the two remaining hue-only fails were fixed by **numeric hue measurement +
+  targeted hue rotation of the type band (PIL), NOT another regen roll** — regen re-rolls
+  everything and risks re-introducing content defects; measure (house accent ≈ RGB 58,244,66 /
+  hue 122) and recolor in place. Institutionalize that pattern.
+- **Incident:** a 10-min tool timeout killed a gen run mid-flight → orphaned chatgpt-profile
+  Chrome blocked every later launch ("Opening in existing browser session", crash at
+  gen-images.js:176). Fix: kill ONLY chrome.exe whose CommandLine matches `chatgpt-profile`
+  (never the main browser), then rerun; pool rotation to fresh chats behaved. One retired
+  yt-posts chat delete keeps 429ing — known, stays queued for future sweeps.
+
+### Open for Mike / follow-ups
+
+- Longform thumbnail PNG (`lf-20260805-if-yacht`) → patch `thumbnail_path`.
+- Review the 14 queued Lane 3 entries (all `pending`; posting stays Mike-gated).
+- Still missing: $IF + $COOPER X handles (`persona.json → project_handles`), Cooper + CashCat
+  reference PNGs.
+- C: at ~13 GB free at session start; media/IF-yacht still holds the 2.19 GB raw mkv +
+  LOW BPS + vertical (normal until publish/cleanup).
+
+---
+
+## 2026-08-05 — `october-bottom` BATCH COMPLETE: all 6 shorts built, gated and queued (resume run)
+
+The 2026-08-04 wrap's resume contract executed clean. **All 6 shorts built through Phase 7 and
+published** (`ob-20260804-*`, staged to `schedule-tweets/shorts/october-bottom-2026-08-04/`, all 7
+platforms `pending`, every staged md5 matching its FINAL render, new entries persona-lint clean).
+`batches.json` → `pipelines.shorts: done`. Posting stays Mike-gated.
+
+| n | short | final | b-roll | LUFS |
+|---|---|---|---|---|
+| 1 | october-mandela-myth | 114.2s | 32.0% | -17.8 |
+| 2 | kaspa-dip-bought-more | 54.9s | 33.4% | -17.9 |
+| 3 | whatif-organic-dogecoin | 86.1s | 29.9% | -17.9 |
+| 4 | ring-of-fire-meme-judgment | 48.8s | 31.7% | -17.1 |
+| 5 | cooper-robinhood-real-dog | 66.3s | 32.9% | -17.4 |
+| 7 | kaspa-dip-impact | 13.4s | 32.9% | -17.6 |
+
+### Resume mechanics (what the wrap protocol got right/wrong)
+
+- Both stage locks came back FREE (the wrap's sweep held) — no stale-lock recovery needed.
+- Disk truth beat the wrap table on THREE clips: 3 had 3/9 b-roll images already on disk, 5 and 7
+  both had comps + captions + Root.tsx registrations the wrap recorded as barely started. RESUME
+  framing with a verified inventory prevented every regeneration (clip 3's builder probed the
+  predecessor's pool chat read-only and confirmed the 4th image never landed server-side).
+- Waves of 3 again: 1/3/4 first, then 7 on clip 4's completion, then 5. Lock contention behaved
+  (7 queued ~15 min behind 3's render, never stole it).
+- ENOSPC guard mid-run: 15 stale remotion temp dirs (~730 MB, idle 50+ min) swept while renders
+  were live by filtering on newest-file age; C: went 6.0 → 6.7 GB free.
+
+### Findings worth keeping (all institutionalized where noted)
+
+- **Clip 1's pre-sweep render WAS masking VO**: the 44.80 riser fully deleted "prior to this."
+  Fixes: one sting RETIMED off the punchline (volume could not fix it, 0.26→0.10 all failed; moving
+  the hit 0.45s later did), two risers shortened. Re-rendered; publish used the NEW md5 (e8287a24).
+- **Leftover composer draft failure mode** (clip 3): the predecessor's killed run left a half-typed
+  prompt in the ChatGPT composer; the next prompt typed into its middle silently produced a WRONG
+  image that reported OK. Fixed with clearComposer() in both generators + documented in the
+  remotion-shorts-build SKILL. The bad "organic" image was quarantined and that one beat re-run.
+- **Gate false negative** (clip 3): an `sfx()` template-literal helper hid all 19 cues from the
+  gate's `staticFile('literal')` parser. Spelled out per house convention rather than loosening the gate.
+- **Masking triage matured**: clips 4 and 7 both PROVED suspect diffs were Whisper/Remotion-audio-path
+  variance (simulated-mix + zero-SFX controls, energy measurement) instead of reflexively sweeping
+  cues; clip 5 proved the 18.10 TING's DECAY TAIL was the masker (dur 1.4→0.8) with volume unchanged.
+- **Platform-safety regen exception** (clip 5): the $IF figure's take 1 was unshippable (bare
+  full-body render) and no clean remap existed without dropping a MANDATORY reference beat — one
+  re-prompt with waist-up framing. Take 1 never entered render-assets.
+- `_draft-*.mp4` in `remotion/out/<batch>/` is a publish hazard (publish-shorts globs `*.mp4`) —
+  swept before publishing. Consider teaching publish-shorts.py to skip `_*` prefixes.
+
+### Open for Mike
+
+- ~~Longform thumbnail~~ RESOLVED: `lf-20260804-october-bottom` thumb was already staged 2026-08-04
+  and the longform is POSTED on rumble/bitchute/facebook (URLs in longs.json).
+- **Batch-wide loudness ~-17.5 LUFS** (inherited from the spines, consistent across all 6): one
+  normalization decision if he wants the -14 social norm.
+- Clip 4 (NON-BLOCKING): the base screen-share shows the mocked coin's real DexScreener name/mcap —
+  strategy call, shipped as recorded.
+- Still missing: Cooper + CashCat reference PNGs; $IF + $COOPER X handles.
+- Clip 3's builder flagged an untracked pool chat (the predecessor's b-roll chat never registered in
+  chatgpt-image-chats.json) — next gen run's sweep won't see it; harmless but unrotated.
+- C: drive at 100% (6.7 GB free) — a `cleanup.js --dry-run` sweep is due once this batch posts.
+
+### LangGraph carryover — NEXT STREAM = WAVE 3 (Mike confirmed 2026-08-05)
+
+**Migration status: Waves 1+2 fully blessed (intake + cut graphs). Mike's call at batch close:
+after his next livestream, run the next wave.** The Wave 3 contract, so the next session can start
+cold:
+
+- **Wave 3 = tighten de-fork**: replace the per-batch `tighten_clips_<batch>.py` hand-forks with a
+  canonical `scripts/tighten_clips.py` + graph segment (mirroring how Wave 2's `cut_topics.py`
+  de-forked the 17 cut forks: validate hard, execute, verify-from-disk, halt topology, frozen forks
+  kept as rollback).
+- **Reference implementation**: `tighten_clips_october_bottom.py` (2026-08-04, modeled verbatim on
+  the whatif1000x fork) is the LAST manual fork and the de-fork blueprint: master-absolute cuts,
+  8 ms declick, voiced-content ceiling gate vs Whisper words (~10% target / 15% ceiling), canonical
+  `delete_silences.py` on a copy for 5B.
+- **Halfway done already**: tighten-strategists persist their spans to `tighten-plan.json`
+  (per-clip JSON contract), so the graph segment reads the same input the fork did.
+- **Stays manual/Mike**: 4b delete verdicts by clip number, the 2nd review placement, and the 5B
+  min-sil knob (recent batches: 250 ms and 450 ms — always his per-batch call).
+- **Cadence rule stands**: one wave per real stream; run the already-blessed intake + cut graphs
+  end-to-end on the new stream first, then build+bless Wave 3 on that batch's tighten step.
+- Other carryovers for that session: teach `publish-shorts.py` to skip `_*.mp4` drafts; the
+  unregistered pool chat from clip 3's predecessor (untracked by rotation/cleanup); C: disk sweep
+  (`cleanup.js --dry-run`) once october-bottom posts out; Cooper/CashCat reference PNGs + $IF/$COOPER
+  X handles still wanted.
+
+---
+
 ## 2026-08-04 (later) — `october-bottom` END-OF-SESSION WRAP: Lanes 1+3 DONE, Lane 2 tightened+desilenced with clip 2 BUILT, 5 builders in flight
 
 Session wrapped ahead of the API limit. **This entry is tomorrow's resume contract.**

@@ -1,0 +1,33 @@
+{
+  "batch": "if-yacht",
+  "track": "livestream-repurpose",
+  "source_livestream": "if-yacht",
+  "livestream_date": "2026-08-05",
+  "last_updated": "2026-08-06T01:21:17",
+  "dashboard": "video-creation/shorts/if-yacht/dashboard.html",
+  "dashboard_status": "Mike 4b verdict: both clips deleted, shorts lane CLOSED for this batch. Clip folders removed; clip-plan.json + dashboard kept as records.",
+  "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
+  "clips": [
+    {
+      "n": 1,
+      "slug": "if-robinhood-2b",
+      "title": "$IF on Robinhood: This Goes Beyond $2 Billion",
+      "variant": "full",
+      "duration_seconds": 129.871,
+      "phase": "deleted-at-4b",
+      "gate": "mike-4b-delete"
+    },
+    {
+      "n": 2,
+      "slug": "dead-coins-disagree",
+      "title": "These Coins Are Dead? I Totally Disagree",
+      "variant": "full",
+      "duration_seconds": 124.119,
+      "phase": "deleted-at-4b",
+      "gate": "mike-4b-delete"
+    }
+  ],
+  "resume_protocol": "NOTHING TO RESUME: shorts lane closed at 4b (all clips deleted). Lane 3 and longform continue elsewhere.",
+  "phase": "4b-all-deleted",
+  "status": "closed-no-shorts"
+}

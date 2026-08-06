@@ -26,11 +26,31 @@
   },
   "batches": [
     {
+      "batch": "if-yacht",
+      "status": "active",
+      "date": "2026-08-05",
+      "livestream_title": "IF-yacht LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/IF-yacht/IF-yacht LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/IF-yacht LOW BPS VERTICAL/IF-yacht LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/IF-yacht LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/if-yacht/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/if-yacht",
+        "video-creation/shorts/if-yacht"
+      ],
+      "pipelines": {
+        "shorts": "skip",
+        "repurpose": "done"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-08-05. Mike 4b verdict 2026-08-05: BOTH clips deleted, no shorts for this batch (folders removed); Lane 3 + longform proceed."
+    },
+    {
       "batch": "october-bottom",
       "status": "active",
       "date": "2026-08-04",
       "livestream_title": "october-bottom LOW BPS VERTICAL",
-      "shorts_source": null,
+      "shorts_source": "schedule-tweets/shorts/october-bottom-2026-08-04",
       "source_media": "video-creation/livestream-repurpose/media/october-bottom/october-bottom LOW BPS VERTICAL.mp4",
       "transcript_plain": "video-creation/livestream-repurpose/transcripts/october-bottom LOW BPS VERTICAL/october-bottom LOW BPS VERTICAL_plain.txt",
       "transcripts_dir": "video-creation/livestream-repurpose/transcripts/october-bottom LOW BPS VERTICAL",
@@ -40,10 +60,10 @@
         "video-creation/shorts/october-bottom"
       ],
       "pipelines": {
-        "shorts": "active",
+        "shorts": "done",
         "repurpose": "done"
       },
-      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-08-04."
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-08-04. Lane 2 COMPLETE 2026-08-05: all 6 shorts built (5 on resume after the 2026-08-04 wrap), every gate PASS, published via publish-shorts.py as ob-20260804-* (staged october-bottom-2026-08-04, all md5-verified vs final renders incl. clip 1's post-sweep re-render), persona metadata filled, lint clean on new entries. All 7 platforms pending; posting Mike-gated. Longform lf-20260804-october-bottom still needs Mike's thumbnail PNG."
     },
     {
       "batch": "what-if-1000x",
