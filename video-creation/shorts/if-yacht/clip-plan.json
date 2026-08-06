@@ -1,0 +1,87 @@
+{
+  "batch": "if-yacht",
+  "authored": "2026-08-05, clip-strategist (fable/max), Mike's per-run constraint: EXACTLY 2 clips, full variants only, no impact sub-clips",
+  "source_vertical": "video-creation/livestream-repurpose/media/IF-yacht/IF-yacht LOW BPS VERTICAL.mp4",
+  "transcript_json": "video-creation/livestream-repurpose/transcripts/IF-yacht LOW BPS VERTICAL/IF-yacht LOW BPS VERTICAL.json",
+  "topics": [
+    {
+      "topic_id": "if-robinhood-2b",
+      "hook_summary": "$IF gets a Robinhood spot listing: beyond $2 billion. $BRETT did $1.97B on Base with NO major listing; Robinhood is better (more eyes, they pump their own chain). Yacht reveal opens, 'what if we can get a yacht like this' button closes."
+    },
+    {
+      "topic_id": "dead-coins-disagree",
+      "hook_summary": "Influencers say last year's coins are dead. 'I just totally disagree': Housecoin revival bet, the 10 coins x $1,000 asymmetric math, Peanut receipts (52x off a pump; $1.7B ATH, half-way back = rich)."
+    }
+  ],
+  "clips": [
+    {
+      "clip_id": 1,
+      "slug": "if-robinhood-2b",
+      "title": "$IF on Robinhood: This Goes Beyond $2 Billion",
+      "topic_id": "if-robinhood-2b",
+      "variant": "full",
+      "segments": [
+        { "start": 59.70, "end": 116.74, "why": "Yacht reveal hype into the buy call ('$IF is on a steal, good day to buy no matter what happens') ending on the honest red-month risk admission" },
+        { "start": 191.25, "end": 257.66, "why": "Thesis payoff: Robinhood spot listing, Brett 1.97B on Base comp, 'Robinhood is even better', beyond $2B, 100x math; cut before the 'you never know' hedge spiral" },
+        { "start": 2769.30, "end": 2775.50, "why": "Scatter-gathered closing button from 46:09: 'what if... what if we... what if we can get a yacht like this'" }
+      ],
+      "assembly_order": [0, 1, 2],
+      "peak_beats": [
+        { "start": 207.20, "end": 219.10, "note": "Hardest data line: Brett 1.9/1.97B, 'essentially 2 billion... it wasn't even Robinhood, so Robinhood is even better'" },
+        { "start": 222.20, "end": 229.45, "note": "Conviction number: 'they're going to want to pump their coins as well... beyond two billion'" }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Emotional cores for review: yacht-reveal delight (59.7-80) and the 207-229 conviction run. VISUAL CHECK at 4b: yacht render on screen during seg 0; live chart during 244-253 ('that candle right there'). Optional Phase-5 trims inside seg 0: 92.4-97.3 hedge run, 77.3-79.2 render-replay line. Tight seams: seg0 out 116.74 (fallback 117.55 to include the 'but whatever' shrug), seg1 out 257.66 (next word 'you')."
+    },
+    {
+      "clip_id": 2,
+      "slug": "dead-coins-disagree",
+      "title": "These Coins Are Dead? I Totally Disagree",
+      "topic_id": "dead-coins-disagree",
+      "variant": "full",
+      "segments": [
+        { "start": 1345.40, "end": 1357.38, "why": "Cold-open hook: enemy claim + stance in 12s ('influencers say these coins are dead... I just totally disagree')" },
+        { "start": 1406.20, "end": 1454.10, "why": "Counter-thesis + math: Housecoin revival, 10 coins x $1,000, five rug and you still win" },
+        { "start": 1583.75, "end": 1618.28, "why": "Named opponent: Crypto Archie says Peanut is dead; content + exchanges + half-ATH counter; ends on 'I disagree'" },
+        { "start": 1646.10, "end": 1663.98, "why": "Personal receipt: bought Peanut off a pump, still made a 52x, 'just like What If'" },
+        { "start": 1702.70, "end": 1714.26, "why": "Peak close: '1.7 billion market cap, Jesus Christ bro... half of that all-time high, you're rich if you buy it right now'" }
+      ],
+      "assembly_order": [0, 1, 2, 3, 4],
+      "peak_beats": [
+        { "start": 1702.70, "end": 1714.26, "note": "Hardest beat: the 1.7B disbelief close" },
+        { "start": 1345.40, "end": 1357.38, "note": "Hook beat: 'I just totally disagree'" }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Emotional cores: defiance on 'I just totally disagree' (1356-1357), disbelief spike on 'Jesus Christ bro' (1705-1707). ElizaOS revival examples DELIBERATELY excluded (on-stream lawsuit/delisting report at ~2610-2650s, Mike says he'll look into it). Alt seg-1 in-point if Mike wants the named-bet phrasing: 1403.55 'another one I'm making a nice bet on is Housecoin'. Optional Phase-5 trim in seg 1: 1425.16-1427.00 'like I was explaining in my previous stream'. Tight seams: seg4 out 1714.26 ('now' ends exactly at next word 'if')."
+    }
+  ],
+  "stt_garble_flags": [
+    "65.70-66.22 'what if yeah' -> 'What If yacht'",
+    "102.40 'in whole support' -> 'and hold support'",
+    "202.82+ 'Robin Hood' -> 'Robinhood' (one word, recurring)",
+    "207.62 'Brett' -> '$BRETT' styling in captions where the ticker is meant",
+    "1350.42 'lost launched' -> 'launched' (stutter)",
+    "1405.74/1407.18 'house coin' -> 'Housecoin'",
+    "1405.08 'nice bed' -> 'nice bet' (only if alt in-point used)",
+    "1420.02 'is doing a thousand x' -> \"it's doing a 1000x\"",
+    "1584.86 'our crypto archie' -> \"Crypto Archie's\" (verify name spelling at caption stage)",
+    "1613.92-1616.22 'binance cone coinbase okay x' -> 'Binance, Coinbase, OKX'",
+    "1648.28+1661.86 'out of pump' -> 'off a pump'",
+    "TICKER DISCIPLINE: $IF, NEVER $WHATIF, in titles/captions/thumbs (persona ticker_corrections)"
+  ],
+  "dropped": [
+    { "topic": "Cooper, Robinhood's office dog (Toshi-vibe second play)", "reason": "Duplicates cooper-robinhood-real-dog shipped in october-bottom two days ago." },
+    { "topic": "Everybody buys back in October and turns October green", "reason": "Same territory as october-mandela-myth (october-bottom); market-timing content de-prioritized vs hype." },
+    { "topic": "$IF is community-driven, neither scam nor insider (vs Pepe)", "reason": "Overlaps whatif-organic-dogecoin (october-bottom); core contrast leans negative on Pepe. STRONGEST RUNNER-UP if Mike wants a swap." },
+    { "topic": "LAB 20x became 350x + receipts run", "reason": "Receipt flexes without a fresh arc; 353x already carried its own batch." },
+    { "topic": "Stablecoin outflows + ISM 55 expansion theory", "reason": "Recycled from yesterday's video, flat delivery, goes stale in days. (Lane 3 tweet took it instead.)" },
+    { "topic": "Bear-news roundup (hack, CEX closures, Clarity Act, Japan, employment)", "reason": "News recap with heavy hedging, no side to pick." },
+    { "topic": "Copies vs originals masterclass (Troll/Brett/Neiro/Turbo)", "reason": "Rambling + screen-share-dependent; Mike calls it 'this whole tangent'. (Lane 3 thread took it instead.)" },
+    { "topic": "Tendies / weird-meme riff", "reason": "Mild energy; knocks the project as corny short-term plays (no-disparage)." },
+    { "topic": "How to buy Robinhood-chain coins tutorial", "reason": "Flat tutorial, fully screen-dependent." },
+    { "topic": "Did CG dump 9hood rumor", "reason": "Unverified chat rumor Mike walks back on-stream; heavily garbled STT ('knighthood' = 9hood)." },
+    { "topic": "ElizaOS revival case (2.7B ATH, 27x receipt)", "reason": "Undercut in the SAME stream by the founder-lawsuit/delisting chat report; Mike says he'll look into it. Excluded everywhere this batch." },
+    { "topic": "Peach Minute Maid Achilles-heel bit", "reason": "Personal color, zero crypto substance; surfaced in case Mike wants it elsewhere." },
+    { "topic": "Opening layout test + closing sign-off", "reason": "Stream housekeeping; never a clip." }
+  ]
+}
