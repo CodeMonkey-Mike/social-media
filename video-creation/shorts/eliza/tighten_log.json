@@ -1,0 +1,125 @@
+[
+  {
+    "n": 2,
+    "slug": "phantom-hack",
+    "variant": "full",
+    "raw_s": 126.0,
+    "relocked_s": 126.0,
+    "tightened_s": 111.8,
+    "desilenced_s": 85.2,
+    "span_removed_pct": 11.3,
+    "voiced_content_removed_pct": 11.1,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 32.4,
+    "boundary_relock": [],
+    "removals": [
+      {
+        "start": 2290.85,
+        "end": 2297.91,
+        "why": "Stall cluster: 'um, I mean like yeah, I was... I was... I was... uh' (12 words incl. 1.72s um + 2.96s stretched 'I'). Join: 'you know things like that' -> 'I had a privacy and VPN company'."
+      },
+      {
+        "start": 2301.57,
+        "end": 2303.11,
+        "why": "Filler 'um' after 'company' + trailing 0.86s stall; join lands on onset of 'back'."
+      },
+      {
+        "start": 2306.93,
+        "end": 2311.49,
+        "why": "Stall + doubled quoted-thought intro 'uh, so... yeah I mean I was like'; keeps exactly one 'I'm like' (signature device)."
+      },
+      {
+        "start": 2378.75,
+        "end": 2379.11,
+        "why": "Stuttered preposition 'in in' (not emphasis doubling)."
+      },
+      {
+        "start": 2381.49,
+        "end": 2382.45,
+        "why": "False start 'and have a' -> restart 'you have a browser add-on'."
+      }
+    ],
+    "notes": "MEASURES: 14.48s wall = 11.5% of 126.04s; 13.62s = 11.1% of 122.61s Whisper word-time. All 5 edges word-snapped, zero overlap with peaks (2252.99-2267.37, 2320.61-2322.29), hook (2234.27-2236.01), or the 2243.8-2258.3 unintelligible zone (no cuts authored there). No relock: seg 0 edges phrase-locked; seg 1 exits in the verified pause before the repeated 'I would stay away'. KEPT persona doublings (do not re-cut): 'I don't... I don't fool around with' (2237.41-2239.57), 'use, use an app, an app' (2334.05-2335.55), 'don't, don't use a Chrome extension' (2336.69-2338.55); kept the Chrome-vulnerabilities attribution (2322.29-2326.19, fairness beat). CAPTION GATE (builder verifies vs the clip's OWN whisper pass): 2243.8-2258.3 theft scene captions from AUDIO ONLY (master JSON is word salad; 'ship' at 2253.45 may be 'SHIB', ear-verify); 2269.09 'then it was like' likely 'then I was like'; 2328.17-2330.11 'you got a number for number one' suspected mishear ('you gotta remember, for number one'?), ear-verify; 'one key'->'OneKey' (2378.01, 2384.29); 'phantom'->'Phantom' (2234.71, 2262.11); 'chrome'->'Chrome' (2325.89, 2338.09, 2387.13). STRETCH OPTIONS (not included, push past ~13%): 2272.83-2281.15 restatement; 2315.11-2318.73 stretched 'and... yeah' (mostly pause, 5B gets it free)."
+  },
+  {
+    "n": 3,
+    "slug": "trading-against-ourselves",
+    "variant": "full",
+    "raw_s": 143.3,
+    "relocked_s": 144.6,
+    "tightened_s": 131.4,
+    "desilenced_s": 95.3,
+    "span_removed_pct": 9.1,
+    "voiced_content_removed_pct": 9.4,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 33.5,
+    "boundary_relock": [
+      {
+        "segment_index": 0,
+        "new_start": 598.08,
+        "why": "598.00 starts inside the tail of the previous sentence's 'concern' (continuous voice 597.2-598.7); open exactly on 'My' (Whisper onset 598.08)."
+      },
+      {
+        "segment_index": 2,
+        "new_start": 720.5,
+        "new_end": 745.86,
+        "why": "IN: capture the restarted 'we' (voiced 720.56-720.96) so the join reads '...and we... have a lot of outflows'; 5B compresses the 1.6s pause. OUT: old 746.30 kept an orphan 'there's' (745.82-746.13); end on 'weakness' +40ms sibilant tail, declick, masked by seg 3's silence lead-in."
+      },
+      {
+        "segment_index": 3,
+        "new_start": 790.0,
+        "why": "Whisper drift: 'these' attacks at 790.17 (not 790.36), so 790.30 clips the word; 790.00 sits in the verified trough 789.92-790.16. Out-edge 800.60 verified clean (no dangling 'Now'); do not extend."
+      }
+    ],
+    "removals": [
+      {
+        "start": 608.1,
+        "end": 609.08,
+        "why": "Filler tic + stall: 'you know' between 'all of us' and 'they're in crypto that haven't checked out'; keeps the anacoluthon for register."
+      },
+      {
+        "start": 613.62,
+        "end": 614.88,
+        "why": "Self-correction false start 'it seems excited' -> keeps corrected 'it seems exciting'."
+      },
+      {
+        "start": 620.52,
+        "end": 621.82,
+        "why": "Clipped false start 'to like the next me-' (abandoned 'meme'). Voiced-to-voiced splice, audition at 2nd review."
+      },
+      {
+        "start": 632.38,
+        "end": 636.44,
+        "why": "Restatement + abandoned clause: repeats 'dwindle out', never completes; keeps 'I could assure you that' conviction stamp."
+      },
+      {
+        "start": 640.3,
+        "end": 642.48,
+        "why": "Chart-nav stall: 2.0s dead pause + first 'this' of the 'this-this pump' stutter (a stutter, not anaphora)."
+      },
+      {
+        "start": 657.2,
+        "end": 657.5,
+        "why": "Stutter: first 'there's' of 'there's... there's probably been' right after the hook join."
+      },
+      {
+        "start": 692.18,
+        "end": 694.1,
+        "why": "False start 'this is the-' abandoned -> 'So over time, all the hype is just going to phase away'. Voiced edge, audition at 2nd review."
+      },
+      {
+        "start": 702.52,
+        "end": 703.4,
+        "why": "Restatement collapse: 'over the weeks to come, the next few weeks' -> 'over the next few weeks'."
+      },
+      {
+        "start": 743.64,
+        "end": 744.3,
+        "why": "False-start restart 'and that goes-' -> 'and that's going to create a lot of weakness'. No trough exists, stressed onsets align, audition at 2nd review."
+      }
+    ],
+    "notes": "MEASURED: post-relock timeline 144.56s, removals 13.54s = 9.37% (word-time == timeline here). PROTECTED verified untouched: hook 598.08-603.62; peak 682.72-691.40 (incl. its internal 'they they' stutter, left verbatim); peak 728.06-739.56 doubled 'which happens every bear market'. KEPT deliberate doublings (do NOT dedupe in captions): 'which happens every bear market' x2, 'there's more people checking out' x2, 'the whole thing' x2, 'these guys' x2, 'up here / up at the top'. KEPT the drawled connector runs (browsing register; their dead air is 5B's job). AUDITION at 2nd review: the three voiced-to-voiced splices (620.52, 692.18, 743.64) + relock joins 720.50 and 745.86 (8ms declick). Seg 3 payoff intentionally zero cuts. CAPTION GATE (vs the clip's OWN whisper pass): 'Robin Hood'->'Robinhood' at ~612.5, ~646.0, ~679.0, ~708.8; caption 608-610 from post-cut audio (master JSON garbles the run); no 'the next me' fragment may appear; 'fiddle away' is real speech, caption as heard; both bear-market lines and both 'checking out' lines must appear."
+  }
+]

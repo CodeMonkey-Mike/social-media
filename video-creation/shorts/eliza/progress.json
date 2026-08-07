@@ -1,0 +1,47 @@
+{
+  "batch": "eliza",
+  "track": "livestream-repurpose",
+  "source_livestream": "eliza",
+  "livestream_date": "2026-08-06",
+  "last_updated": "2026-08-07T09:30:00",
+  "dashboard": "video-creation/shorts/eliza/dashboard.html",
+  "dashboard_status": "Clip 2 phantom-hack BUILT + GATED (PASS) 2026-08-07, awaiting Mike review. Clip 3 built in parallel. Publish NOT authorized for this batch.",
+  "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
+  "clips": [
+    {
+      "n": 2,
+      "slug": "phantom-hack",
+      "title": "I Raced the Hacker Draining My Own Wallet",
+      "variant": "full",
+      "duration_seconds": 85.2,
+      "phase": "7-built",
+      "gate": "FINALIZED-SHORT GATE: PASS (2026-08-07). Awaiting Mike review; publish NOT authorized for this batch.",
+      "output_mp4": "phantom-hack/phantom-hack-tightened-desilenced.mp4",
+      "render_mp4": "video-creation/remotion/out/eliza/2-phantom-hack.mp4",
+      "composition": "ElizaPhantomHack",
+      "broll_plan": "video-creation/shorts/eliza/phantom-hack/BROLL-PLAN.md",
+      "build_summary": "11 b-roll images (32.9% coverage / 67.1% base), 3 full-screens (hook 1.00, race climax 25.35, payoff 79.75), 16 SFX events / 8 files, 3 code-drawn badges, frame-0 designed cover, 107 caption chunks. Duration 85.23s, -17.5 LUFS, true peak -4.7 dBFS, zero black frames."
+    },
+    {
+      "n": 3,
+      "slug": "trading-against-ourselves",
+      "title": "We're Trading Against Ourselves",
+      "variant": "full",
+      "duration_seconds": 95.3,
+      "phase": "7-built",
+      "gate": "finalized_short_gate PASS (2026-08-07); Mike gates the render, publish NOT authorized",
+      "output_mp4": "trading-against-ourselves/trading-against-ourselves-tightened-desilenced.mp4",
+      "composition": "ElizaTradingAgainstOurselves",
+      "render_mp4": "video-creation/remotion/out/eliza/3-trading-against-ourselves.mp4",
+      "render_duration_s": 95.32,
+      "build_notes": "Comp ElizaTradingAgainstOurselves.tsx + constants-eliza-tao.ts + captionsEtao.ts, registered in Root.tsx (id ElizaTradingAgainstOurselves, 2857 frames @30, 1080x1920). 11 b-roll images (1 recovered from the stopped run, 10 newly generated incl. the what-if.jpg REFERENCE beat) + thumb-etao.png, all in shorts/eliza/render-assets/, zero md5 dups, all persona-inspected. Coverage 30.52s = 32.0%, 3 full-screens, beats 2.36-3.46s. 9 SFX events (plan had 10: the TING was cut and the Boom tail truncated by the mandatory final-mix whisper sweep; riser substituted for envelope reasons - all documented in constants-eliza-tao.ts + BROLL-PLAN.md). Spine copy in render-assets re-encoded to a 1s GOP (seek-safe, audio -c:a copy)."
+    }
+  ],
+  "resume_protocol": "Phase 4b: Mike reviews dashboard.html and names clips to delete by number. Then per surviving clip: tighten-strategist -> tighten -> 2nd review -> desilence (5B) -> filler pass (5C, optional) -> captions (6) -> remotion-builder (7) -> publish-shorts (8). STT garble fixes for captions are listed in clip-plan.json stt_garble_flags (verify each against the clip's OWN whisper-words.json before applying).",
+  "phase": "8-staged",
+  "status": "awaiting-mike-review-on-dashboard",
+  "staged": "2026-08-07 via publish-shorts: schedule-tweets/shorts/eliza-2026-08-07/ + 2 shorts.json entries (e-20260807-phantom-hack, e-20260807-trading-against-ourselves), all 7 platforms pending. Both staged copies md5-VERIFIED against their FINAL renders (clip 2 was re-rendered post-QA at 09:14; the MATCH was taken after that). persona-lint clean on both new entries. Review at the main dashboard http://localhost:8766.",
+  "posting_authorization": "POSTING remains Mike-gated and sequential, one poster at a time. Staging into the queue is the REVIEW handoff, not posting: nothing goes live until Mike runs a poster script.",
+  "tighten_log": "video-creation/shorts/eliza/tighten_log.json",
+  "tighten_plan": "video-creation/shorts/eliza/tighten-plan.json"
+}

@@ -133,6 +133,17 @@ import { D_ROF, ROF_FPS, ROF_FRAMES } from './constants-rof';
 import { D_CRD, CRD_FPS, CRD_FRAMES } from './constants-crd';
 // batch: october-bottom, clip #7 "OMG: Kaspa Dipped Under 2.6 Cents" (impact cut)
 import { D_KDI, KDI_FPS, KDI_FRAMES } from './constants-kdi';
+import { PythonEp01, DUR as PY01_DUR, FPS as PY01_FPS } from './PythonEp01';
+import { PythonEp01Vertical, DUR as PY01V_DUR, FPS as PY01V_FPS } from './PythonEp01Vertical';
+// batch: eliza, clip #3 "We're Trading Against Ourselves" (variant: full).
+// ⚠ NOT `TradingAgainstOurselves` above — that is the clarity-act clip #2 from July 20 (published).
+// Pure slug collision on two different livestreams; this one is the ETAO-prefixed eliza clip.
+import { ElizaTradingAgainstOurselves } from './ElizaTradingAgainstOurselves';
+import { ETAO_FPS, ETAO_DURATION } from './constants-eliza-tao';
+// batch: eliza, clip #2 "I Raced the Hacker Draining My Own Wallet" (variant: full).
+// Eliza-prefixed for the same reason as clip #3: this batch's slugs collide with earlier batches'.
+import { ElizaPhantomHack } from './ElizaPhantomHack';
+import { EPH_FPS, EPH_DURATION } from './constants-eliza-phantom';
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -712,6 +723,29 @@ export const RemotionRoot: React.FC = () => {
 
       {/* batch october-bottom / clip #7 — kaspa-dip-impact (13.36 s @25, spine is native 25 fps, IMPACT cut) */}
       <Composition id="KaspaDipImpact" component={LivestreamShort} durationInFrames={KDI_FRAMES} fps={KDI_FPS} width={1080} height={1920} defaultProps={{ data: D_KDI }} />
+      <Composition id="PythonEp01" component={PythonEp01} durationInFrames={PY01_DUR} fps={PY01_FPS} width={1920} height={1080} />
+      {/* the 9:16 cut of the same video — render with --public-dir media/python/assets-v */}
+      <Composition id="PythonEp01Vertical" component={PythonEp01Vertical} durationInFrames={PY01V_DUR} fps={PY01V_FPS} width={1080} height={1920} />
+
+      {/* batch eliza / clip #2 — phantom-hack (85.16 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="ElizaPhantomHack"
+        component={ElizaPhantomHack}
+        durationInFrames={EPH_DURATION}
+        fps={EPH_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch eliza / clip #3 — trading-against-ourselves (95.26 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="ElizaTradingAgainstOurselves"
+        component={ElizaTradingAgainstOurselves}
+        durationInFrames={ETAO_DURATION}
+        fps={ETAO_FPS}
+        width={1080}
+        height={1920}
+      />
     </>
   );
 };

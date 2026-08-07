@@ -46,17 +46,42 @@ python video-creation/shorts/_tooling/stage_lock.py release chatgpt --owner <slu
 > instinct is correct about the Chrome profile and wrong about everything else — `stage_lock.py`
 > already existed for exactly this. Do not reintroduce a serial rule.
 
+## ⛔ `remotion/src/` is a FLAT, CROSS-BATCH namespace — prefix every file you create
+
+`remotion/src/` holds the comps of **every batch ever built**, in one directory, forever. Batches
+reuse clip slugs, so an unprefixed `<Slug>.tsx` WILL eventually collide with a shipped composition
+from another batch.
+
+- **Name every per-batch file with a batch prefix**: `<Batch><Slug>.tsx`, `constants-<batch>-<slug>.ts`,
+  `captions<Slug>.ts` — and register the composition under that prefixed id in `Root.tsx`.
+- **`ls` every target filename and grep `Root.tsx` for the composition id BEFORE creating either.**
+  If the name is taken, prefix harder. Never modify, overwrite, or re-register a composition that is
+  not yours — read its header comment, which names its batch and clip.
+
+> Logged 2026-08-07 (batch `eliza`): a session wrap recorded `TradingAgainstOurselves.tsx` as clip 3's
+> half-finished comp. It was actually the **July 20 `clarity-act` clip #2** comp, published and
+> registered since Jul 20 — the two batches simply had a clip with the same slug, and eliza's builder
+> had died before authoring anything. Building to the wrap note verbatim would have overwritten a
+> shipped composition and rendered the wrong clip. Caught only because the file's mtime and header
+> were checked against the claim.
+
+**The general rule that catches this class: a resume/wrap contract's inventory is HEARSAY. Verify
+every claimed artifact against disk (existence, mtime, and header/content) before you build on it —
+and prefer a verified on-disk inventory over the contract when they disagree.** Disk truth has now
+beaten a wrap table in two separate batches.
+
 ## The FINALIZED-SHORT checklist (every item MANDATORY unless marked optional)
 
 | # | Item | Standard |
 |---|---|---|
 | 1 | **Layout** | Per `style-guide/shorts-style-guide.md`: face-cam zone + **dynamic b-roll zone**; captions in the middle band, never over eyes or over b-roll text. Prefer the shared `LivestreamShort` composition / an existing `BrollLayer`-bearing composition as the model — do NOT hand-roll a bare full-frame layout when a b-roll-capable component exists (Glob `remotion/src/` and check). |
 | 2 | **Frame-0 thumbnail** | Designed hook cover, ONE frame only (never a held card), base video from frame 1. |
-| 3 | **Captions** | Word-by-word 2-4 word groups (~0.4-0.8s), brand-color accents, built from the clip's Whisper words via the canonical captions skill. No em dashes on screen. |
+| 3 | **Captions** | Word-by-word 2-4 word groups (~0.4-0.8s), brand-color accents, built from the clip's Whisper words via the canonical captions skill. No em dashes on screen. **The word JSON can silently OMIT speech** — 2026-08-07 clip 2's `whisper-words.json` dropped 1.34s ("i was hacked, man.", the JSON jumping straight from one word to the next), which a builder reading only that file would caption as a hole. Scan the word stream for unexplained gaps against the audio, and note that a missing phrase **cannot be fixed with a `PHRASE_CORRECTION`** (a correction may never be longer than the run it matches) — patch the words into a `whisper-words-verified.json` and build from that. Also: **protected persona doublings must be keyed into `PROTECTED_DOUBLES`**, because the canonical stutter-collapse will otherwise eat them. And note the montserrat preset renders **all-lowercase via CSS**, so brand *casing* fixes are invisible on screen; only a TOKEN MERGE ("one key" → "onekey") changes anything. |
 | 4 | **B-ROLL COVERAGE BUDGET** (canonical rule: `video-creation/SKILL.md` → "B-roll coverage budget (HALVED 2026-07-14 — was REVISED 2026-05-24)" — this per-track skill MUST NOT contradict it) | ⛔ **Do NOT blanket the base video with b-roll.** The Content Zone (upper-50% screen-share — the chart / tweet / CoinMarketCap / project page Mike is presenting) is valuable footage and **MUST be visible in real stretches.** **HALVED BY MIKE 2026-07-14 (applies to ALL shorts going forward): Target ~30% generated b-roll (band ~25-35%), ~70% base-video showing (band ~65-75%)** - halved from the old ~55-65%/~35-45% after he reviewed `millionaires-are-made-full` (16 images / 17 beats / 66.8%, which MET the old target) and said *"I think it's too much... cut it by half of what we're doing."* Base-showing is now the DEFAULT state of the clip; b-roll is the exception that earns its place on a beat. A ~75s short lands around **6-8 distinct images, not ~16** — leave DELIBERATE gaps with NO b-roll image so the content zone shows, especially when Mike points at something on screen. Covering it ~85-100% is the documented WRONG failure (it recurred 2026-07-09: several shorts ran 0% content-zone-visible, a 1-2 image loop blanketing the whole zone — do not repeat). **Full-screen b-roll ONLY at the hook, major transitions, and the climax (1-3x total; this cap is FIRM - the 74.8s millionaires build ran 5 contiguous full-screens, which is over).** **Content-zone b-roll is SPARING, tied to a specific talking point** — a distinct cutaway for that beat, NOT a continuous loop of 1-2 images filling every second. When a beat has no b-roll, SHOW THE SCREEN-SHARE (that IS the visual — a deliberate base beat, not a "static hold" to be avoided). An off-message / low-value screen-share is NOT a license to blanket — leave base gaps or drop in a brief full-screen; the content zone still shows in real stretches. Density reference: `BROLL_RUG` in `remotion/src/constants-rug.ts` is ~50% base showing, which is now **too b-roll-heavy** - treat it as an upper bound to cut back from, not a target. Author a **BROLL-PLAN** first WITH explicit BASE-SHOWING beats (mode `base`, no image); zero orphans. **Image count is an OUTPUT of this budget** (a handful of purposeful cutaways), not a target — do NOT over-produce, and do NOT reuse 1-2 images on a loop to fill the zone. |
 | 5 | **SFX** | From `video-creation/assets/sfx/` (see its `library.json`): whoosh/transition on the thumbnail cut and major b-roll transitions, impacts/dings on reveals, receipts, and punchlines; a riser builds INTO an impact where a payoff lands. A finalized short has **≥2 SFX events**; most have more. Strip baked audio from any AI b-roll video (`ffmpeg -c copy -an`). |
 | 6 | Music bed *(optional)* | Only when the batch/Mike directs; measure LUFS, bed 16-18 dB under VO. |
-| 7 | **QA** | Draft render ~0.3 Mbps + chunk-QA first; overlay-collision frame checks at every overlay `tIn`/handoff; blackdetect; audio levels; whisper-verify captions on the FINAL render. **An SFX cue that MASKS the VO is a build defect, not a mixing taste call** (2026-07-23): whisper-verify the final MIX, and when a line transcribes worse off the render than off the spine alone, the sting on top of it is too loud. Sweep that ONE cue's volume against Whisper until the line comes back and re-render; do not lower the payoff hit. Real case: a closing punchline read as 'even you are here, my' at sting vol 0.38 and only recovered at 0.10. |
+| 7 | **QA** | Draft render ~0.3 Mbps + chunk-QA first; overlay-collision frame checks at every overlay `tIn`/handoff; blackdetect; audio levels; whisper-verify captions on the FINAL render. **An SFX cue that MASKS the VO is a build defect, not a mixing taste call** (2026-07-23): whisper-verify the final MIX, and when a line transcribes worse off the render than off the spine alone, the sting on top of it is too loud. Sweep that ONE cue's volume against Whisper until the line comes back and re-render; do not lower the payoff hit. Real case: a closing punchline read as 'even you are here, my' at sting vol 0.38 and only recovered at 0.10. **Volume is only one of three knobs, and often the wrong one — the masker is frequently the DECAY TAIL or the crest PLACEMENT, so try TIMING first: truncate the tail, or move the hit off the word.** A payoff hit then keeps its full gain (2026-08-05: a TING's 1.4→0.8s tail was the masker at unchanged volume; 2026-08-07 clip 2: an impact read 0/3 at dur 2.40 and 1/3 at volume 0.26→0.14, but **3/3 = control at dur 0.55 with the full 0.26 gain** — shipped as a trimmed `-short.wav` library variant). If a cue cannot be saved by timing or gain and it is decoration rather than a payoff hit, DELETE it (2026-08-07 clip 3). |
+| 7a | **How to whisper-verify a mix (method, not taste)** | Two confounds produce phantom regressions. (1) **Long windows**: 12-second windows flagged four regressions on one clip and three were window-boundary artifacts — in one case the *spine* transcribed worse. Use **short, STAGGERED windows** (multiple offsets per cue) and require agreement. (2) **Encode mismatch**: scoring the render's 48 kHz AAC against the raw 44.1 kHz spine measures the codec, not the cue. Always compare against an **encode-matched control** — the bare spine pushed through the same 48 kHz/AAC chain as the render. Sweep candidates by mixing them onto the bare spine **offline** and scoring; that costs **zero renders**, and only the winner gets rendered. Use the same control to prove a residual diff is decoder variance (measure the SFX energy in the span: a real masker is not <-40 dB). |
 | 7b | **Frame checks land INSIDE a beat** | `BrollLayer` renders opacity 0 exactly at a beat's `tIn`, so a QA frame pulled at the literal `tIn` legitimately shows base video and reads as a missing b-roll beat. Pull the frame one or more frames INSIDE the window. (Logged 2026-07-23.) |
 | 8 | **GATE** | Run `python video-creation/livestream-repurpose/skills/remotion-shorts-build/scripts/finalized_short_gate.py --constants <constants-file> --comp <composition.tsx> --public-dir <render-assets dir> --duration <seconds>` → must print `PASS`. |
 
@@ -90,6 +115,19 @@ cinematic), meme images, animated coin/logo graphics, abstract motion, real arti
        - **WRONG-IMAGE grab:** "take the last `<img>`" mis-grabs a pre-existing image when the page
          lazy-loads. Fix: key on the STABLE estuary `file_id` (`id=file_...`, survives reloads) and
          track downloaded ids — the new image is the one whose `file_id` is unseen.
+       - **LEFTOVER COMPOSER DRAFT (2026-08-05):** ChatGPT persists an UNSENT composer draft. A run
+         killed mid-typing (e.g. a session wrap) leaves that half-typed prompt in the composer, and
+         the next run types its prompt straight INTO it at the caret (mid-word) — one concatenated
+         message, so the model renders the OLD prompt's scene and that beat's image is silently
+         wrong while the generator reports OK. Real case: a killed builder left 521 chars of a
+         "billboard skyline" prompt; the resumed builder's 715-char "organic tree" prompt landed
+         inside it (1236 chars) and produced a second billboard image. Both `generate-broll-reload.js`
+         and `gen-batch-freshchat.js` now `clearComposer()` (select-all + delete, verified empty)
+         before typing, and BEFORE any reference upload so the attachment chip is never what Delete
+         removes. **On any RESUMED build, still eyeball the first image of the run** — and when an
+         image is off-brief, recover the truth READ-ONLY from the conversation
+         (`/backend-api/conversation/<id>` + `/backend-api/files/<id>/download`) before assuming a
+         capture bug: it shows the exact prompt that was actually sent.
      Typing uses the canonical human-like **~45-70ms/char** delay (matches `gen-images.js`; anti-detection).
      Best run against a FRESH chat (retire the active broll chat first) so the seen-set starts clean.
      **After a run, ALWAYS `md5sum` the beat pngs to confirm zero duplicates** (a dup = a mis-capture to
