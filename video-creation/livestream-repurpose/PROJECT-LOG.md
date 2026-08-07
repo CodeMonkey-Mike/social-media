@@ -164,7 +164,22 @@ and numbers are frozen). Always disambiguate by `id` before editing a queue entr
   october-bottom is now overdue. Harmless leftovers: `remotion/out/eliza/_qa-eph/` (7.8 MB of QA
   frames + two chunk mp4s — NOT a publish hazard, `publish-shorts.py` globs `*.mp4` non-recursively
   and already skips `_*`).
-- Nothing committed to git this session (branch `transitions-library`); Mike calls the commit.
+- **COMMITTED + PUSHED this session** (Mike's call at close): `6e37027` on `transitions-library`,
+  26 files. Contains only this batch's work + the two repo fixes; `.mp4` and `.png` stay ignored by
+  policy, so the renders/b-roll are not in git.
+- **⚠️ FOLLOW-UP CREATED BY THE `.gitignore` FIX — ~104 untracked `.ts` files are now visible.**
+  The bare `*.ts` rule (added for MPEG transport streams) had been silently excluding EVERY
+  TypeScript file in the repo: only `.tsx` was tracked, so all the `constants-*.ts` / `captions*.ts`
+  that every comp imports were untracked and **a fresh checkout could not build a single Remotion
+  composition**. Three `transitions/` engine files had been force-added past the rule, which is how
+  it stayed hidden for so long. The rule is removed (no `.ts` video exists here; recordings are
+  `.mkv`/`.mp4`). This commit added only eliza's four; **the remaining ~104 from every prior batch
+  need one sweep commit** — worth doing before the next checkout or machine move.
+- Left UNCOMMITTED on purpose (not this session's work, no visibility into its state): the
+  `longform-edited/media/python/` episode track + `PythonEp01*.tsx` + `envato-broll/results-py-*.json`,
+  the `linkedin-automation` / `x-reply-guy` / longform-uploader changes, and the other queue data
+  files. The `repurpose/_genlist-*.json` run records were also left out deliberately — the standing
+  note says sweep them with cleanup, not commit them.
 
 ---
 
