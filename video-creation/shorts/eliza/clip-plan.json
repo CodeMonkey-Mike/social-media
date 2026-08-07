@@ -1,0 +1,197 @@
+{
+  "batch": "eliza",
+  "authored": "2026-08-06, clip-strategist (fable/max). Mike's per-run cap: at most 6 clips total, variants count. Delivered 4 full + 2 impact. Full 39-window chunk-and-group pass; every in/out verified against word-level timestamps (cuts sit in verified inter-word gaps).",
+  "source_vertical": "video-creation/livestream-repurpose/media/Eliza/Eliza LOW BPS VERTICAL.mp4",
+  "transcript_json": "video-creation/livestream-repurpose/transcripts/Eliza LOW BPS VERTICAL/Eliza LOW BPS VERTICAL.json",
+  "topics": [
+    {
+      "topic_id": "eliza-collapse",
+      "hook_summary": "ElizaOS collapsed ten minutes before the stream: lawsuit charges, banked 27x history, bear-market kill mechanism (3M vs 100M cap), tab-close disbelief, eulogy hard-out. Became clips 1+5."
+    },
+    {
+      "topic_id": "phantom-hack",
+      "hook_summary": "Even me, I get hacked: live Phantom wallet drain, racing the hacker, VPN-company credibility, hot-wallet PSA + OneKey exception. Became clips 2+6."
+    },
+    {
+      "topic_id": "trading-against-ourselves",
+      "hook_summary": "The Robinhood meme casino is crypto natives rotating into each other's exits; no new retail = hype dies in weeks; stablecoin outflows May->December payoff. Became clip 3."
+    },
+    {
+      "topic_id": "trump-coin-investigation",
+      "hook_summary": "Warren/Blumenthal SEC call on the Trump coin; all meme coins lose 95 percent, weak case, probably recovers. Became clip 4."
+    },
+    {
+      "topic_id": "quantum-fud-vs-futurist",
+      "hook_summary": "FIRST ALTERNATE (dropped by the cap): Tom Lee two-year quantum break claim vs the 60-year futurist who says quantum hacks are not close. Build from 1522.6-1531.4 + 2793.0-2960.1 if Mike swaps a clip out."
+    }
+  ],
+  "clips": [
+    {
+      "clip_id": 2,
+      "slug": "phantom-hack",
+      "title": "I Raced the Hacker Draining My Own Wallet",
+      "topic_id": "phantom-hack",
+      "variant": "full",
+      "hook_type": "personal-story",
+      "segments": [
+        {
+          "start": 2234.25,
+          "end": 2339.1,
+          "why": "Contiguous run: cold hook 'I was hacked', live theft scene, VPN-company credibility twist, PSA rules 1+2"
+        },
+        {
+          "start": 2376.71,
+          "end": 2397.9,
+          "why": "PSA cap: OneKey + hardware wallet exception, out in the 1.7s pause before repeated 'I would stay away'"
+        }
+      ],
+      "assembly_order": [
+        0,
+        1
+      ],
+      "peak_beats": [
+        {
+          "start": 2252.99,
+          "end": 2267.37,
+          "note": "'Somebody's sending my tokens away... I sent them away to try to beat them to it'"
+        },
+        {
+          "start": 2320.61,
+          "end": 2322.29,
+          "note": "'Even me, I get hacked. It's crazy.'"
+        }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Emotional core: theft scene 2243-2268. CRITICAL for captions: 2243.8-2258.3 must be captioned from AUDIO, not the Whisper JSON (text there is word salad). Seg 1 (OneKey cap) is first drop candidate. Tighten prunes the 'I was I was' stutters around 2290-2303."
+    },
+    {
+      "clip_id": 3,
+      "slug": "trading-against-ourselves",
+      "title": "We're Trading Against Ourselves",
+      "topic_id": "trading-against-ourselves",
+      "variant": "full",
+      "hook_type": "contrarian",
+      "segments": [
+        {
+          "start": 598.0,
+          "end": 646.88,
+          "why": "Thesis hook: trading against ourselves, dwindles without new retail, out after 'retail'"
+        },
+        {
+          "start": 656.2,
+          "end": 716.0,
+          "why": "Chart-walk evidence: new retail bought the top, lost, checked out; hype phases away"
+        },
+        {
+          "start": 722.0,
+          "end": 746.3,
+          "why": "Macro mechanism with doubling device: stablecoin outflows, happens every bear market x2"
+        },
+        {
+          "start": 790.3,
+          "end": 800.6,
+          "why": "Dated prediction payoff: outflows started May, end December, bull run starts again"
+        }
+      ],
+      "assembly_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "peak_beats": [
+        {
+          "start": 682.72,
+          "end": 691.4,
+          "note": "'Bought in for the first time, losing their money, got pissed off, checked out'"
+        },
+        {
+          "start": 728.06,
+          "end": 739.56,
+          "note": "Doubled 'which happens every bear market'"
+        }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Emotional core: chart-walk 658-691 (pointing at the What If chart; vertical content zone carries it). No impact variant (cap). Excluded the Saylor aside + Iran drift 746-790."
+    }
+  ],
+  "stt_garble_flags": [
+    "113.8 'Eliza snow' -> 'Eliza news' (verify by ear)",
+    "135/168-174/284/1429-1499/3280-3301 'Eliza OS / Elizo s' -> 'ElizaOS' (one word, throughout)",
+    "174 'AI 16z' -> 'ai16z' (also 304, outside cuts)",
+    "128 'Eliza could just collapsed' -> 'Eliza just collapsed' (Whisper insert; caption from audio)",
+    "1450 'crack and gage' -> 'Kraken, Gate' (high confidence)",
+    "1453 'crypto.com five' -> verify by ear (possibly 'Crypto.com, Bybit' or counting)",
+    "2243-2258 UNINTELLIGIBLE in Whisper (wallet-drain scene): clips 2+6 MUST caption from audio, never the JSON",
+    "2377 'one key' -> 'OneKey' (brand)",
+    "612/646/678/708+ 'Robin Hood' -> 'Robinhood' (one word)",
+    "2979 'lost only 3.8 billion' -> verify 'only' vs 'nearly' by ear",
+    "2984 'it's kind of nice it's okay 95 from his peak' -> verify; likely 'it's down 95 from his peak'",
+    "3235 'the bull star running' -> 'the bull starts running' (high confidence)",
+    "Lane 3 only: 'priority act'->'Clarity Act' (1806), 'straight of what moves'->'Strait of Hormuz' (1745), 'Tom Lisa'->'Tom Lee' (1523, verify), 'mad fury'->'Matt Furie' (2085-2105, verify), 'maxi listing'->'MEXC listing' (2115, verify), 'ship'->'SHIB' (token context), 'wolf'->'Woof' (verify), 'bread on on base'->'Brett on Base' (1352), 'knighthood'->'9Hood' (428/450, verify), 'shulso media'->'social media' (347), 'cash cat'->'Cash Cat' (styling), 'Arvin Krishna'->'Arvind Krishna' (2790), 'salana/kanton'->'Solana/Canton' (2815), 'essentialized'->'centralized' (3319), 'Sunchast/minute made'->'Sunkist/Minute Maid' (soda tangent)"
+  ],
+  "dropped": [
+    {
+      "topic": "October bottom odds 50/40/10 + zombie-inflows leg",
+      "reason": "Cross-batch dedup: October-bottom territory heavily covered by shipped shorts; numeric restatement, not a new angle."
+    },
+    {
+      "topic": "Quantum FUD vs the 60-year futurist",
+      "reason": "FIRST ALTERNATE, cut only by the 6-cap: weakest live energy, front half leans on third-party CNBC clip audio (rights + dead visual), futurist unnamed on-mic."
+    },
+    {
+      "topic": "What If flips Cash Cat / Robinhood listing irony",
+      "reason": "Cross-batch saturation (5+ What If shorts shipped; both if-yacht clips deleted at 4b); listing-timing irony alone does not clear the bar; rotation-flavored chart talk."
+    },
+    {
+      "topic": "Shiba utility mockery + Inu copycats (Woof, Pipe Dog)",
+      "reason": "Shorts rule: no clip whose core is negative about named projects; safe residue has no spine. Lane 3 material."
+    },
+    {
+      "topic": "Clarity Act daily watch",
+      "reason": "Hard time-bound: deadline resolves before ship; evergreen fragment is a flat explainer."
+    },
+    {
+      "topic": "July layoffs / ADP / ISM readout",
+      "reason": "Flat hedged macro readout, de-prioritized category."
+    },
+    {
+      "topic": "LAB 350x flex",
+      "reason": "Dedup: lab-called-20x-did-353x shipped; 12s restatement. Lane 3 pull-quote."
+    },
+    {
+      "topic": "Stablecoin outflows standalone",
+      "reason": "Merged into trading-against-ourselves segs 2-3."
+    },
+    {
+      "topic": "Housecoin vs ElizaOS which-would-die (1470-1483)",
+      "reason": "Excluded on purpose: self-undermining + disparages a stacking-lineup coin."
+    },
+    {
+      "topic": "Soda tangents, Ye/Wolf/Pools chart reviews, Shib-website mystery, greeting/sign-off",
+      "reason": "Housekeeping / screen-dependent musings / unresolved mystery."
+    }
+  ],
+  "phase4b": {
+    "reviewed": "2026-08-06T18:53:42",
+    "verdict": "Mike kept clips 2 (phantom-hack) and 3 (trading-against-ourselves); deleted 1, 4, 5, 6 by clip number. Folders removed, numbers frozen. Proceed to tighten + 5B via the LangGraph tighten segment (Wave 3 live bless).",
+    "deleted": [
+      {
+        "n": 1,
+        "slug": "eliza-collapse"
+      },
+      {
+        "n": 4,
+        "slug": "trump-coin-investigation"
+      },
+      {
+        "n": 5,
+        "slug": "eliza-collapse-impact"
+      },
+      {
+        "n": 6,
+        "slug": "phantom-hack-impact"
+      }
+    ]
+  }
+}

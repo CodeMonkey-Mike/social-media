@@ -6,6 +6,253 @@ linkedin-automation/PROJECT-LOG.md.)_
 
 ---
 
+## 2026-08-07 — `eliza`: Phase 7 RESUMED and COMPLETE, both shorts built + gated PASS (awaiting Mike's render review)
+
+The 2026-08-06 wrap's resume contract executed. Both `remotion-builder` agents ran in parallel;
+both clips gate PASS, and **both are STAGED to the queue for Mike's review**
+(`schedule-tweets/shorts/eliza-2026-08-07/`, entries `e-20260807-phantom-hack` +
+`e-20260807-trading-against-ourselves`, all 7 platforms `pending`, both staged copies md5-verified
+against their FINAL renders, persona-lint clean). **POSTING remains Mike-gated and sequential.**
+
+> **Process correction (Mike, 2026-08-07).** I first read the wrap's "publish is NOT pre-authorized"
+> as "do not stage", and handed off raw render paths. Wrong: **staging IS the review handoff.**
+> `publish-shorts` only copies the mp4s and appends entries at `pending` — nothing goes live until a
+> poster script runs, and the main :8766 dashboard fed by `shorts.json` is *where Mike reviews a
+> finished short*. The authorization gate lives on POSTING, not on staging. A gated batch still gets
+> published to the queue the moment its builders report PASS. (This is exactly what
+> `feedback_shorts_build_agent_and_handoff` already said; I over-applied the wrap's wording against
+> it.)
+
+| n | clip | final | b-roll | full-screen | SFX | LUFS |
+|---|---|---|---|---|---|---|
+| 2 | phantom-hack | 85.23s | 32.9% | 3 | 16 ev / 8 files | -17.5 |
+| 3 | trading-against-ourselves | 95.32s | 32.0% | 3 | 9 ev | -17.4 |
+
+Both locks free at exit, zero orphan `chatgpt-profile` Chrome, both renders ffprobe-verified
+1080x1920 @30. **Clip 2 was RE-RENDERED post-QA (09:14) after an SFX timing fix — md5-verify the
+staged copy against THAT render at publish time (the 2026-07-23 hazard).**
+
+### ⚠️ THE FINDING — a comp SLUG COLLISION nearly overwrote a published composition
+
+The wrap contract recorded clip 3's comp as "`remotion/src/TradingAgainstOurselves.tsx` authored but
+NOT registered in Root.tsx". **That was wrong.** That file is dated **Jul 20** and its header reads
+*"batch clarity-act / clip #2"* — a published comp from an earlier batch (with `constants-tao.ts` +
+`captionsTao.ts`), registered in `Root.tsx` since Jul 20. clarity-act simply had a clip with the same
+slug; eliza's builder died before authoring any comp. Dispatching the resume verbatim would have
+overwritten a shipped composition and rendered the wrong clip.
+
+**Rule going forward: `remotion/src/` is a FLAT, cross-batch namespace, so a per-batch comp/constants/
+captions filename must carry a batch prefix, and the builder must `ls` every target name as free
+before creating it.** This batch is `Eliza*` / `constants-eliza-*` / `captions{Eph,Etao}.ts`. The
+clarity-act trio was verified untouched at exit (still Jul 20 timestamps). Corollary: **a wrap
+contract's inventory claims are hearsay — verify every one against disk before dispatch** (disk truth
+already beat the wrap table on three clips in the october-bottom resume).
+
+### Clip 3 `trading-against-ourselves` — the resume hazards, all three clean
+
+- **Read-only pool probe found nothing to recover** (and that is the useful result): the probe read
+  the predecessor's chat via `/backend-api/conversation/<id>` before typing anything and proved the
+  mirror prompt sent complete at 689 chars, its image completed and was captured, and **no second
+  prompt was ever sent** — the run died before prompt 2, so no orphaned server-side image existed.
+  `broll-etao-mirror.png` never touched; 10 new images + cover generated on top of it.
+- **No leftover composer draft**; `clearComposer()` clean on every send.
+- **Chat registration:** the predecessor's chat WAS registered (nothing lost) but sat 20/25 full of
+  unrelated october-bottom images → retired per the rotation rule, fresh chat opened + registered.
+- Beat 6→7 hard cut verified frame-accurate at f1629 (faceZoneMean 62.5 → 10.1, zero intermediate
+  base frames); both narrated chart-walks confirmed image-free; hard-out lands with no fade.
+- **SFX ships 9, not the plan's 10** (deviation written back into BROLL-PLAN.md so plan and build
+  agree): the Boom's 3.4s ring-out smeared the payoff ("the bull run" → "the boron"), fixed by
+  truncating the tail to 2.3s with **crest and gain untouched**; the TING on the MAY TO DECEMBER
+  badge corrupted a line at every audible gain with no pause in 89.02-91.98 to retime into, so it was
+  **deleted** as badge decoration rather than a payoff hit; the planned `Edgy_Riser.wav` doesn't reach
+  20% level until 2.90s (silence in a 1.20s window) so a faster-enveloped riser was substituted.
+
+### Clip 2 `phantom-hack` — the verify-your-own-flags rule paid off three times
+
+**3 of the 4 caption flags were REJECTED against the clip's own audio**, which is exactly the
+institutionalized rule (flags derive from the MASTER transcript and keep being wrong):
+
+- **`ship` → SHIB: REJECTED.** Six passes return "shipped out"; even a SHIB-primed `initial_prompt`
+  could not make either model produce it. Worth keeping: the suspicion was reasonable *because the
+  screen-share behind the clip is a CoinMarketCap Shiba Inu page* — but that page is **leftover from
+  the previous topic** and **no token is named anywhere in this clip**.
+- "then it was like" → "then I was like": **REJECTED** (4 passes, nobody hears an "I").
+- "you got a number for number one" → "…remember…": **half-rejected** — the base IS a mishear, but not
+  one of five passes hears "remember"; captioned "you gotta, for number one."
+
+- **NEW DEFECT — the shipped `whisper-words.json` DROPPED 1.34 s of speech**: "i was hacked, man."
+  at 3.46-4.98 (the JSON jumps from " with." straight to " That"). Confirmed by large-v3 AND medium.en
+  on isolated windows AND present in the master transcript. **An insertion cannot be expressed as a
+  PHRASE_CORRECTION** (a correction may never be longer than the run it matches), so it was restored
+  via `_patch_words.py` → `whisper-words-verified.json`. Word-level JSON can silently omit speech;
+  a builder that only ever reads it will caption a hole.
+- **Casing note worth keeping:** the montserrat caption preset renders all-lowercase via CSS, so
+  "Phantom"/"Chrome" casing fixes are **invisible on screen**. The only casing fix that changes
+  anything is a TOKEN MERGE ("one key" → "onekey").
+- **SFX defect found and fixed by TIMING, not gain** (contract item 7): the 55.65 impact's 2.40s tail
+  lay across the PEAK-2 line and large-v3 read "even me, I GET hacked" off the render vs "got" off the
+  spine (0/3 vs 3/3). Sweep: dur 1.10 = 0/3 · volume 0.26→0.14 = 1/3 · **dur 0.55 at FULL 0.26 = 3/3**.
+  Resolution: the payoff keeps its full gain and uses a trimmed variant
+  `Impacts/Soundjay_Impact_Main_01-short.wav` (following the `card-impact-hit01-3-short.wav`
+  precedent). Candidates were mixed onto the bare spine OFFLINE and scored, so **the sweep cost zero
+  renders** — adopt that.
+- **Content zone is a frozen, off-message screen-share** for all 85 s (that Shiba Inu page; rows
+  0-853 pixel-diff 1.2-2.1 mean, <1.3% of pixels changing). Per SKILL that is NOT a licence to
+  blanket, so coverage stayed in band (32.9%) and the two long base stretches are carried by
+  code-drawn badges instead of extra images.
+
+### Method note (institutionalize) — how to whisper-verify a final mix
+
+Clip 2's first QA pass used 12-second windows and flagged four "regressions"; three were
+**window-boundary artifacts** (in one case the *spine* transcribed worse) and the comparison was
+further confounded by scoring the render's 48 kHz AAC against the raw 44.1 kHz spine. **The method
+that gives a true answer: short STAGGERED windows, scored against an encode-matched control (the
+spine pushed through the same 48 kHz/AAC chain as the render).** Clip 3 independently used the same
+control trick to prove its residual whole-file diffs were decoder variance (no SFX energy at all in
+the span, residual under -40 dB).
+
+### Shared-tool changes (both additive, tightly keyed — no past output can change)
+
+- `skills/captions/build_captions.py`: a **`PROTECTED_DOUBLES`** mechanism — the canonical
+  stutter-collapse would otherwise have EATEN two of clip 2's mandated persona doublings
+  ("use, use an app, an app" / "don't, don't use a Chrome extension"). Plus clip 2's
+  `PHRASE_CORRECTIONS`. Clip 3 needed no new rule (the existing `robin`+`hood` → `robinhood` already
+  covered its 4 occurrences).
+- `video-creation/assets/sfx/Impacts/Soundjay_Impact_Main_01-short.wav` (trimmed variant, above).
+
+### Mike's retitle at review (2026-08-07)
+
+Clip 3's queue entry was retitled by Mike: **"We're Trading Against Ourselves" → "$IF needs
+replenishment"** (his exact wording, lowercase kept). Flagged before applying and **he reaffirmed**,
+so it ships that way. Two things recorded so nobody "fixes" them later as bugs:
+
+- **The title does not match the clip's content.** Neither pending short mentions `$IF`, "what if",
+  or "replenish" anywhere in its transcript (checked both caption files); clip 3 is Robinhood memes /
+  stablecoin outflows / bear-market timing, and clip 2's builder confirmed **no token is named at all**
+  in it. The $IF material is from the **if-yacht** batch, whose two clips Mike deleted at 4b, so no
+  $IF short was ever built. This is Mike's deliberate call, not a mismatch to correct.
+- **Caption + tags were NOT changed** (still Robinhood/stablecoins/bear-market, tags
+  `crypto/memecoins/robinhood/bearmarket/stablecoins`), and `progress.json` still records the
+  build/2nd-review title. Only the queue entry's `title` moved. Offered to resync both; Mike closed
+  the session without asking for it.
+
+**Numbering trap worth remembering:** "short number 2" is ambiguous in this batch because clip numbers
+and queue positions are offset (clip 2 = queue #1, clip 3 = queue #2, since clip 1 was deleted at 4b
+and numbers are frozen). Always disambiguate by `id` before editing a queue entry.
+
+### Open for Mike
+
+- **Review both shorts on the main dashboard** (http://localhost:8766, already running) — they are
+  staged and pending on all 7 platforms. **Posting is his call**, sequential, one poster at a time.
+  `batches.json` `pipelines.shorts` stays `active` until he signs off (it flips to `done` on his
+  approval, per the what-if-1000x / october-bottom precedent).
+- **Clip 3 caption colour call:** `robinhood` was retagged Kaspa teal → neon green (Robinhood brand
+  rule + the shipped `cooper-robinhood-real-dog` precedent). Vetoable.
+- **Clip 3 first caption reads "and my concern"** — the "And" is a 40 ms tail of the previous
+  sentence's last word, but the clip's own pass hears it every time so the render's self-verify
+  agrees. One word from a hand-trim.
+- **Clip 2 judgment calls:** 9.72s "everyone is like a similar individual container" (a 1→2 token
+  split is not expressible as a correction); 15.84s "shipped out" (genuinely ambiguous — large-v3 says
+  "shipped out", medium.en's whole-file pass says "shift up"); 25.14s "and sent them away" (past tense
+  for readability; 3 passes literally produce "send").
+- **Clip 2 SFX deviation** (9→ trimmed impact variant) and **clip 3's** (10 → 9 events) are both
+  documented in their constants + BROLL-PLAN; flag if either reads wrong.
+- Everything still open from the 2026-08-06 entry stands: longform thumbnail PNG for
+  `lf-20260806-eliza`, the 14 queued Lane 3 entries, Cooper/CashCat reference PNGs, $IF/$COOPER
+  handles, the V1 exemplar purge + mechanical carousel gate, the `_genlist-eliza-*.json` sweep.
+- **C: at 5.3 GB free** (two renders landed). The `cleanup.js --dry-run` sweep carried over from
+  october-bottom is now overdue. Harmless leftovers: `remotion/out/eliza/_qa-eph/` (7.8 MB of QA
+  frames + two chunk mp4s — NOT a publish hazard, `publish-shorts.py` globs `*.mp4` non-recursively
+  and already skips `_*`).
+- Nothing committed to git this session (branch `transitions-library`); Mike calls the commit.
+
+---
+
+## 2026-08-06 — `eliza`: WAVE 3 LIVE-BLESSED (tighten graph green on real 4b survivors), full graph-driven batch end to end
+
+**Migration status: Waves 1-3 all fully blessed.** The carryover from if-yacht executed exactly as
+written: intake + cut ran on the new stream, 4b survivors existed this time, and the FIRST real
+tighten went through the NEW graph green.
+
+### The Wave 3 live bless (the milestone)
+
+`python graph/run.py tighten --batch eliza --min-sil 0.25` — one invocation, exit 0:
+tighten → verify_tighten → finalize → verify_finalize, no manual driver, no halt.
+
+| n | clip | cut → tighten → 5B desil | plan |
+|---|---|---|---|
+| 2 | phantom-hack | 126.2s → 111.8s → **85.2s** | 5 removals, no relock, 11.5% voiced (meas.) |
+| 3 | trading-against-ourselves | 143.5s → 131.4s → **95.3s** | 9 removals + 3 RMS-probed relocks, 9.4% voiced (meas.) |
+
+- min-sil 0.25 was the session call (Mike said proceed without asking; matches october-bottom).
+- Runner preflight (the script's own `validate_tighten_plan`) measured both plans under the 15%
+  ceiling BEFORE any render — the one-source-of-truth contract held live.
+- Dashboard rebuilt in place with the tightened+desilenced clips; progress at the **2nd-review
+  gate**. `tighten_log.json` on disk. Frozen forks remain rollback.
+- **Wave 4 (finish: 5C + captions wraps) unblocks next stream** per the one-wave-per-stream cadence.
+
+### Batch `eliza` (2026-08-06 stream, 57.9 min, "ElizaOS collapse" stream)
+
+| Lane | State |
+|---|---|
+| Lane 1 longform | **QUEUED** `lf-20260806-eliza` "ElizaOS Just Collapsed: The Coin We 27X'd Is Gone" (2155.8s staged, -1318.8s at min-sil 0.5, 0.81 Mbps; **thumb NULL — Mike PNG wanted**) |
+| Lane 2 shorts | Intake + cut graphs green (3rd consecutive unattended intake; 6 clips cut per fable clip-plan, Mike's cap). **4b (Mike): kept 2+3, deleted 1/4/5/6.** Tighten graph = Wave 3 bless (above). **2nd review: Mike APPROVED both tightened clips** → two remotion-builders dispatched, then **STOPPED CLEANLY at session wrap** (API limit ~90%); see the wrap block below. |
+| Lane 3 text/image | **DONE** (`pipelines.repurpose: done`): 14 lint-clean entries (6 X tweets, 2 threads, 2 YT posts + two 5-slide carousels wired into `images[]` [v1 news-flash / v2 editorial], 2 YT polls, 2 IG 4:5; NO X poll — topic filter, no Kaspa/TON/TAU substance). 18 images through 2 adversarial QA rounds + a fix round: round 1 failed 11 (invented ElizaOS mark x3, exemplar-inherited chartreuse+counters x5, V2 glyph fusion/weight x3) → 2 measured hue rotations in place, 10 regens (incl. 1 flush-left re-do + 1 timeout retry), 3 luminance-mapped counter recolors. All 18 verified clean. |
+
+- Intake findings: 7482 words / 529 segs / 39 chunks; glossary Kaspa:1, zero KRC20 flags.
+  Saylor $105M sale VERIFIED before it entered a thread (Strategy sold 1,638 BTC Jul 27-Aug 2).
+- **Visual-QA root cause worth keeping (now in `repurpose/SKILL.md` V1 section):** the
+  `version1/` carousel exemplar library is itself chartreuse-contaminated (18 of 21 files at hue
+  44-97° vs house 122.6°) AND carries baked counter badges the generator lifts verbatim —
+  `yt-posts-828eee71-01-hook.png` is the ONE clean+counter-free exemplar; pin V1 to it. Hue drift
+  = measured PIL rotation in place; wrong baked counter = regen (in-place counter repaint clips
+  the fused headline — confirmed failure today). Follow-up open: mechanical pre-queue gate (hue
+  assert ±10° + counter OCR) per the gate-rules-in-code doctrine.
+- Ops: intake launch orphaned an ffmpeg child on a kill → two writers on one output file;
+  swept both + 0-byte partial and relaunched clean (detached + log watcher remains the pattern).
+
+### END-OF-SESSION WRAP — Phase 7 stopped cleanly; THIS BLOCK IS THE RESUME CONTRACT
+
+Mike approved both tightened clips at 2nd review and authorized the Remotion build; both builders
+were dispatched in parallel, then **STOPPED DELIBERATELY ~5 min in** when Mike called the wrap
+(API limit). Both stage locks verified FREE at wrap (clip 3's dead builder held `chatgpt` 2.7 min;
+released by owner). Zero orphan processes (chatgpt-profile Chrome / gen node / ffmpeg all clear).
+Per-clip whisper-words.json are CURRENT (transcribed off the final tightened-desilenced spines:
+335 + 354 words). `remotion/out/eliza/` does not exist yet. Disk truth (also in progress.json
+`state_at_stop`):
+
+| n | clip | state at stop |
+|---|---|---|
+| 2 | phantom-hack | **FRESH BUILD** — builder stopped while reading the contract; nothing on disk beyond spines + whisper-words |
+| 3 | trading-against-ourselves | **RESUME with inventory** — `BROLL-PLAN.md` authored · `captions-trading-against-ourselves.ts` in the clip folder · comp `remotion/src/TradingAgainstOurselves.tsx` authored but **NOT registered in Root.tsx** · batch `render-assets/` holds the spine copy + **1 b-roll image** (`broll-etao-mirror.png`) · died mid-b-roll-gen |
+
+Resume protocol (next session, in order):
+1. `stage_lock.py status` first; sweep anything held (dead builders leave locks held; auto-break
+   only fires on acquire).
+2. Relaunch BOTH `remotion-builder` agents in parallel with the per-clip dispatch contracts
+   (caption gates from `tighten-plan.json` notes ride along: clip 2's audio-only theft-scene zone +
+   OneKey/Phantom/Chrome casing + protected doublings; clip 3's Robinhood one-wording + anaphora
+   doublings + the five declick splices as whisper-verify watchpoints). Clip 3 gets RESUME framing:
+   verify + finish, NEVER regenerate `broll-etao-mirror.png`, **probe the b-roll pool chat
+   READ-ONLY for a finished-but-uncaptured image before re-sending** (killed mid-generation), and
+   check for a leftover half-typed composer draft (the clearComposer() hazard).
+3. Both clips end on deliberate hard-outs (clip 2 "But I would just stay away." · clip 3 "the bull
+   run starts again.") — no CTA, no padding.
+4. After both gate PASS → Mike gates the renders. **Publish is NOT pre-authorized this batch** —
+   hand off via publish-shorts → main :8766 dashboard only on Mike's word.
+
+### Open for Mike / follow-ups
+
+- Longform thumbnail PNG for `lf-20260806-eliza` → patch `thumbnail_path`.
+- Review the 14 queued Lane 3 entries (all `pending`).
+- Still missing: Cooper + CashCat reference PNGs; $IF + $COOPER X handles.
+- V1 exemplar folder purge/regen + the mechanical carousel gate (hue + counter OCR).
+- Session-scoped `_genlist-eliza-*.json` files in `repurpose/` are run records (same pattern as
+  the `_genlist-crd-*` leftovers); sweep with the next cleanup pass.
+- Nothing committed to git this session (branch `transitions-library`); Mike to call the commit.
+
+---
+
 ## 2026-08-05 (later) — `if-yacht`: Wave 3 BUILT + SANDBOX-BLESSED (live bless CARRIES OVER), frontier green, Mike deleted BOTH clips at 4b, Lane 3 complete
 
 ### ⚠️ THE CARRYOVER — Wave 3 live bless MUST run on the NEXT livestream

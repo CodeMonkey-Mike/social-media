@@ -10,8 +10,14 @@ node_modules/
 *.m4v
 *.wmv
 *.flv
-*.ts
 *.mts
+# NOTE: do NOT add a bare `*.ts` here. It was in this list for MPEG transport
+# streams until 2026-08-07, and it silently excluded EVERY TypeScript file in the
+# repo — all ~105 `constants-*.ts` / `captions*.ts` that the Remotion `.tsx` comps
+# import. Only the `.tsx` files were tracked, so a fresh checkout could not build a
+# single composition (three engine files had been force-added past the rule, which
+# is how it stayed hidden). No `.ts` video files exist in this repo; the real
+# recordings are .mkv/.mp4. If a transport stream ever shows up, ignore it by path.
 
 # ── Images ───────────────────────────────────────────────────────────────────
 # Generated content images (the image-batch output) are large (>50KB each) and

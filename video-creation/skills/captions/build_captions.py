@@ -335,6 +335,85 @@ PHRASE_CORRECTIONS = [
     # 27.2-32.6, the same span at 0.85x, and a pass with an exchange-listing initial_prompt) ALL
     # return "they're going to listen to all these centralized exchanges". Same precedent as the
     # whatif-next-dogecoin closing line below: never ship words no 1x pass produced.
+    # --- eliza batch, 2026-08-07 (trading-against-ourselves clip) ---
+    # NO NEW RULES NEEDED, verified. The batch caption gate listed exactly one correction for this
+    # clip, "Robin Hood" -> "Robinhood" at four points, and ("robin","hood") -> ["robinhood"] above
+    # already covers all four occurrences in the clip's own whisper-words.json (10.52, 29.70, 44.54,
+    # 64.44 s). The gate's PROTECTED anaphora also need no rule and must NOT be deduped: cleanup()
+    # only collapses ADJACENT duplicate tokens, and neither "which happens every bear market" x2
+    # (76.84-79.38 s) nor "there's more people checking out" x2 (79.72-83.48 s) contains an adjacent
+    # repeat, so both survive verbatim through the tool. Confirmed on the built array.
+    # NOT corrected, deliberately: the clip's first caption reads "and my concern", but the master
+    # transcript shows the preceding sentence is "...I have this this kind of a concern." and the cut
+    # opens on "My concern is that" (relock 598.08, master word onset 598.24). The 0.22 s the clip's
+    # own pass labels " And" (p 0.35) is the 40 ms tail of that previous "concern." plus the gap. A
+    # 1x pass on the CLIP's audio produces "And" on every run, so the caption matches the render's
+    # own whisper-verify; there is also no way to DELETE a token via PHRASE_CORRECTIONS (a
+    # replacement may never be longer or shorter than 1 word per matched token). Left as built and
+    # reported to Mike instead of hand-editing the tool's output.
+    # --- eliza batch, 2026-08-07 (phantom-hack clip) ---
+    # The 6.4-21.5 s WALLET-DRAIN scene is captioned FROM AUDIO by batch mandate (the clip-plan flags
+    # the master transcript there as word salad). Every rule below was resolved by re-transcribing the
+    # span IN ISOLATION off this clip's own final spine with large-v3, and with medium.en wherever
+    # large-v3 disagreed with itself. Each key is a run that occurs only in this clip.
+    # "the one would just FLIP out of the way" — the shipped word pass hears "would just flipping",
+    # which is not English, so only the VERB FORM is fixed and the auxiliary is left alone. "would"
+    # is what the shipped pass, medium.en whole-clip (mix AND spine) and medium.en on an isolated
+    # 11.3-13.7 s all hear (4 passes); only large-v3 offers "was"/"we're" (2). Do not rewrite the
+    # auxiliary on the weaker evidence - habitual "would just flip" is exactly how he tells it.
+    (("one", "would", "just", "flipping"), ["one", "would", "just", "flip"]),
+    # "and the tokens WERE shifting up" — shipped pass hears "are"; large-v3 whole-clip, large-v3 on
+    # 4.5-22.5 s AND the livestream master transcript all read "were".
+    (("tokens", "are", "shifting"), ["tokens", "were", "shifting"]),
+    # "I went into my Phantom WALLET" — the final syllable is swallowed, so three passes render the
+    # word as "wall" (not a thing anyone says). large-v3 on an isolated 20.0-30.5 s and the master
+    # transcript both read "wallet". The period is added because the sentence genuinely ends there.
+    (("phantom", "wall"), ["phantom", "wallet."]),
+    # "...and I saw this, SENT MY— all the tokens that were still there" — a 0.3 s false start that the
+    # shipped pass renders as "said my". Every pass garbles it differently (base "said my", large-v3
+    # "send my", medium.en "they sent my"), i.e. it is noise, so the three tokens MERGE into the
+    # sentence they interrupt rather than putting invented words on screen.
+    (("this", "said", "my"), ["this."]),
+    # He is narrating a past event: "...that were still there and SENT them away". The shipped pass
+    # renders the present tense; medium.en on an isolated 24.7-26.5 s hears "I sent them away".
+    (("and", "send", "them", "away"), ["and", "sent", "them", "away"]),
+    # "I HAD A privacy and VPN company back from 2010" — the shipped pass opens the sentence with the
+    # non-word "Add a". large-v3 whole-clip reads "i had a privacy and vpn company", and the clip's own
+    # tighten plan records the cut join as "...things like that" -> "I had a privacy and VPN company".
+    (("add", "a", "privacy"), ["i had", "a", "privacy"]),
+    # "That's why I tell people this. YOU GOTTA, FOR NUMBER ONE, you try to stay away from hot wallets."
+    # The shipped pass reads "you got a number for number one" (flagged by the batch as a suspected
+    # mishear of "you gotta remember, for number one"). Five passes on this clip's own audio (the
+    # shipped pass, large-v3 on 57.5-66.5, on 60.4-64.8 and on a tight 61.2-63.6, plus medium.en on the
+    # tight window) settle it: "gotta" is real, and NOT ONE pass hears "remember", so "remember" is not
+    # put on screen. 7 tokens -> 5 words (the last two timings are dropped, which is supported); the
+    # added period breaks the caption group exactly where the clause does.
+    (("you", "got", "a", "number", "for", "number", "one"),
+     ["you", "gotta,", "for", "number", "one."]),
+    # OneKey is a named hardware-wallet product; Whisper splits it on both occurrences (71.46 s and
+    # 76.52 s). Same class as ("nine","hood") -> "ninehood" and ("house","coin") -> "housecoin".
+    (("one", "key"), ["onekey"]),
+    # "you have your BROWSER ADD-ON OneKey extension" — the compound arrives as two bare tokens, so it
+    # would render as "browser add on". 3 tokens -> 2 words (the third timing is dropped).
+    (("browser", "add", "on"), ["browser", "add-on"]),
+    # The deliberate HARD-OUT: "so you're okay. BUT I would just stay away." The shipped pass hears
+    # "Like I would"; large-v3 whole-clip, the master transcript AND the whisper-verify of the final
+    # RENDER all read "but".
+    (("okay", "like", "i", "would"), ["okay.", "but", "i", "would"]),
+    # NOT corrected, deliberately (eliza/phantom-hack), two calls that were tested to exhaustion:
+    #  - "and then another one flipped out of the way and SHIPPED OUT" (15.84 s). The batch gate
+    #    flagged this word as possibly the token SHIB (the screen-share behind the clip happens to be
+    #    a CoinMarketCap Shiba Inu page, which is where that suspicion came from). It is NOT SHIB and
+    #    it is not "shift up" either. SIX passes on this clip's own audio return "shipped out": the
+    #    shipped word pass, large-v3 whole-clip, large-v3 on 4.5-22.5 s, and three isolated passes on
+    #    15.0-17.0 s - INCLUDING one primed with a SHIB-biased initial_prompt and one primed with a
+    #    "the token list shifts up" prompt, neither of which could make either model produce those
+    #    words. (medium.en's whole-file "shift up" is a context-smoothing artifact: the same model on
+    #    the isolated window returns "shipped out".) No token is named anywhere in this clip.
+    #  - "and IT was like, how does this happen?" (27.06 s). The batch gate flagged the master
+    #    transcript's "then it was like" as probably "then I was like". Nobody hears an "I": the
+    #    shipped pass, large-v3 on 20.0-30.5 s, large-v3 on 22.6-28.2 s and large-v3 on a tight
+    #    26.4-28.0 s all return "and it was like". Do not add a rule for either.
     # Closing line — NO RULE, deliberately. An earlier build added
     #   (("robinhood","lists","what","if","right"), ["robinhood","lists","it","and it","runs"])
     # off the ORIGINAL master transcript ("lists run it"). RE-VERIFIED 2026-08-03 on this clip's own
@@ -403,6 +482,35 @@ BIT_SYLLABLE = {"bit", "but", "bid", "the"}
 # single-letter "m" token is always that hum, never a word — same class as "mm"/"hmm".
 FILLER = {"uh", "um", "uhh", "umm", "mm", "hmm", "m"}
 
+# DELIBERATE persona doublings that must SURVIVE cleanup()'s stutter collapse (2026-08-07).
+#
+# ⛔ WHY THIS EXISTS: cleanup() drops a token whose core repeats the previous one ("not, not, not"),
+# which is right for a stutter and WRONG for one of Mike's emphasis doublings. An ALTERNATING
+# doubling ("I don't, I don't fool around with") already survives, because the repeat is never
+# adjacent — but an IMMEDIATE one does not, and the tighten pass explicitly PROTECTS some of those
+# ("use, use an app, an app" and "don't, don't use a Chrome extension" are listed as KEPT persona
+# doublings in eliza/tighten-plan.json, i.e. the audio was deliberately left uncut). Deduping them in
+# the captions would silently undo that editorial decision.
+#
+# Each entry is a tuple of word cores. Every token inside a matched run is exempt from the collapse;
+# everything else still collapses exactly as before, so no past output can change. Key the run tightly
+# (include the words AROUND the doubling) so an unrelated stutter is never spared.
+PROTECTED_DOUBLES = [
+    ("use", "use", "an", "app"),            # eliza/phantom-hack 66.62-67.48 s
+    ("dont", "dont", "use", "a", "chrome"),  # eliza/phantom-hack 68.64-69.64 s
+]
+
+
+def _protected_idx(norm):
+    """Indices of `norm` that sit inside a PROTECTED_DOUBLES run (exempt from stutter collapse)."""
+    prot, cores = set(), [core(w["w"]) for w in norm]
+    for key in PROTECTED_DOUBLES:
+        n = len(key)
+        for i in range(len(cores) - n + 1):
+            if tuple(cores[i:i + n]) == key:
+                prot.update(range(i, i + n))
+    return prot
+
 
 def clean_token(w):
     t = w.strip().lower()
@@ -441,6 +549,7 @@ def cleanup(raw):
     """Shared cleanup: corrections, drop fillers, merge premine / NN% / NNx, collapse stutters."""
     words, i = [], 0
     norm = [{"t": round(w["start"], 3), "end": round(w["end"], 3), "w": clean_token(w["w"])} for w in raw]
+    prot = _protected_idx(norm)
     while i < len(norm):
         cur = norm[i]; c = core(cur["w"])
         if c in FILLER:
@@ -481,7 +590,7 @@ def cleanup(raw):
             words[-1]["w"] = clean_token(words[-1]["w"].rstrip() + cur["w"].strip())
             words[-1]["end"] = cur["end"]
             i += 1; continue
-        if words and core(words[-1]["w"]) == c and c:
+        if words and core(words[-1]["w"]) == c and c and i not in prot:
             i += 1; continue
         words.append({"t": cur["t"], "end": cur["end"], "w": cur["w"]}); i += 1
     return words
