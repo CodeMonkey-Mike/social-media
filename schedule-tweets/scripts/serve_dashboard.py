@@ -112,8 +112,19 @@ class CORSHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
         self.end_headers()
 
+    # Images are REGENERATED IN PLACE (a regen reuses the same image_id, so the queue's image_path
+    # stays valid and the URL never changes). SimpleHTTPRequestHandler sends Last-Modified but no
+    # cache policy, so Brave/Chrome heuristically cache the old bytes and keep showing a stale image.
+    # Ctrl+Shift+R does NOT fix it: index.html injects the <img> tags from JS AFTER load, and a hard
+    # reload only bypasses cache for the document's own load, not for later JS-driven requests.
+    # "no-cache" (revalidate every time), NOT "no-store" (never cache): a 304 costs one round trip
+    # and no re-download, so an unchanged gallery stays cheap while a regen shows up immediately.
+    IMAGE_EXTS = ('.png', '.jpg', '.jpeg', '.gif', '.webp')
+
     def end_headers(self):
         self.send_header('Access-Control-Allow-Origin', '*')
+        if self.path.split('?')[0].lower().endswith(self.IMAGE_EXTS):
+            self.send_header('Cache-Control', 'no-cache')
         super().end_headers()
 
     def log_message(self, format, *args):

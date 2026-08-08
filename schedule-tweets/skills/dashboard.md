@@ -20,6 +20,11 @@ Start-Process python -ArgumentList "C:\Users\mnede\Documents\Claude\social-media
 Start-Process "http://localhost:8766"
 ```
 
+**Use the detached `Start-Process` form above — never launch the server as a harness background
+task.** The background-task reaper kills it within a couple of minutes and the dashboard silently
+goes dead mid-session (hit 2026-08-08). `Start-Process` spawns an independent process the reaper
+does not own. Same reason posting scripts run in the foreground.
+
 Or run in the foreground (shows request logs):
 
 ```powershell
@@ -40,6 +45,17 @@ python C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\scripts\serv
   `Cache-Control: no-store`; the page polls them while a run is writing them.
 - Handles POST `/x-reply-guy/queue` — appends an entry to `replies_to_post.json` and removes it from `reply_opportunities.json`
 - CORS headers on all responses
+- Images (`.png/.jpg/.jpeg/.gif/.webp`) are served `Cache-Control: no-cache` (added 2026-08-08).
+
+**Why images need a cache header — a regenerated image looked unchanged in the dashboard.** An image
+regen deliberately reuses the same `image_id` and filename (so the queue's `image_path` stays valid),
+so the URL never changes. Without a cache policy the browser heuristically cached the old bytes and
+kept showing them. **`Ctrl+Shift+R` does NOT fix this**: `index.html` injects the `<img>` tags from JS
+*after* the page loads (`imgUrl()` at ~:446), and a hard reload only bypasses cache for the document's
+own load, not for later JS-driven requests — which is why a private window showed the new image and the
+normal window would not. `no-cache` (revalidate every time), not `no-store` (never cache): an unchanged
+image returns 304 with no re-download, so the gallery stays cheap. If a stale image predates this fix,
+clear it once via DevTools → Network → **Disable cache** → reload, or clear cached images for the site.
 
 ## The LangGraph page
 
