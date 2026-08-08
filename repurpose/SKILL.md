@@ -127,6 +127,8 @@ The map needs to be filled in over time — most handles are currently `null`. W
 
 **Reference images for lesser-known coins.** The image model invents fake logos for lesser-known projects when left to its own. Before generating any image that mentions a lesser-known crypto project, scan the text for project names/tickers, then **list the live contents of the reference folder and match against THAT — never against any list written in this doc.**
 
+> **⚠️ A reference attached for ONE item CONTAMINATES the pool chat's SIBLING generations (measured 2026-08-07, early-crash batch).** After a $LAB reference rode along for one tweet image, 3 of the next 5 no-reference generations in the same x-tweets pool chat came back with a TRUNCATED $LAB glyph baked onto coins specced generic (visual-qa caught all three; two survived only as regens). Mitigations, all three now standing practice: (1) order a mixed batch so reference-attached items run LAST in their chat; (2) every no-reference coin prompt says explicitly "the coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind" — this phrasing defeated the leak on every regen; (3) if a leak still ships, RETIRE the contaminated chat (`node repurpose/delete-chats.js --retire <purpose>`) before regenerating. Also learned the hard way the same day: a leaked glyph ON A CHARACTER'S FACE is a REGEN, never a pixel inpaint (two blind inpaint attempts each destroyed an eyebrow; faces have structure, only flat texture regions tolerate surgery), and calendar/grid props hallucinate pseudo-text unless the prompt demands "completely BLANK ruled strip, no letters, no day abbreviations".
+
 ```
 schedule-tweets\images\reference\   ← glob / ls this folder EVERY time; it is the only source of truth
 ```
@@ -137,11 +139,25 @@ Filenames follow the project name (e.g. `LAB.png`, `toshi.png`, `DogInMe.png`, `
 
 **Brand-safety — when a project has multiple reference variants, pick the brand-safe one for monetized YT/TikTok.** Some references have a risqué and a clean variant (e.g. ElizaOS: the orange-tee `ElizaOS-ai16z.webp` is brand-safe; `ElizaOS-ai16z-2.png` is the risqué one). Default to the clean variant for any monetized short/post.
 
-**Multi-coin lineup constraint.** `generate-image.js` accepts only a single `--reference-image`. For a single-coin spotlight (just ElizaOS or just Linea), the reference flow works cleanly. For a multi-coin lineup needing reference logos for two or more lesser-known coins in the same frame, the script can't handle it — fall back to manual ChatGPT upload for that image, save it with the right filename in `images/x/` (tweets) or `images/yt/` (yt-posts), and update the queue entry. A typical favorites lineup with $KAS as hero needs one reference upload per lesser-known coin in the frame.
+**Multi-coin lineup — use `gen-images.js` with an ARRAY `ref` (fixed 2026-08-08).** `generate-image.js` still accepts only a single `--reference-image`, so for any frame needing reference logos for **two or more** lesser-known coins, use the canonical `gen-images.js` instead and pass `ref` as an array of paths in the items JSON:
+
+```json
+[{ "image_id":"8dd08cf4", "slug":"calls-miss-downside",
+   "ref":["...\\images\\reference\\LAB.png", "...\\images\\reference\\velvet.png"],
+   "prompt":"... TWO REFERENCE IMAGES ARE ATTACHED and both must be used exactly ..." }]
+```
+
+ChatGPT's composer takes several attachments in one go; the old "one logo per image" rule was our script's limit, not the model's, and the manual-upload fallback is no longer needed. In the prompt, address the refs **by ordinal** ("the GREEN FLASK LOGO shown in the FIRST attached reference image", "the PURPLE DOUBLE-CHEVRON 'V' MARK shown in the SECOND attached reference image") and state each mark's exact color, or the model blends them. Also spell out that neither coin carries any other lettering/symbol — the sibling-contamination phrasing at the top of this section still applies. Verified 2026-08-08 on the $LAB + Velvet "calls miss to the downside" tweet image (both marks rendered correctly, first try).
+
+> **Real miss this rule exists to prevent (2026-08-07 batch, caught by Mike):** the $LAB/Velvet image shipped with $LAB correctly flasked and **Velvet as a blank gold coin** — `velvet.png` was sitting in the reference folder unused. Scan the tweet text for EVERY project name and match each one against the live reference folder, not just the first.
+>
+> **Regenerating replaces, it does not add:** `gen-images.js` SKIPs when the output file already exists, so move the old file aside before the run, and reuse the same `image_id`/filename so the queue reference stays stable.
+>
+> A logo on a character's FACE is a **regen, never a pixel inpaint** (faces have structure; see the 2026-08-07 note above).
 
 **When "favorites" / "coins I'm stacking" is mentioned but not enumerated:** ask Mike whether the current lineup still applies before generating — the list may evolve.
 
-**X image → IG 4:5 companion.** When a new image is generated for an X tweet, also generate a **4:5** version of the same image (same prompt, subject, style — only the aspect ratio changes) for the Instagram single-image entry. Save the 4:5 version to `images/ig/` with prefix `ig-single-` and the same `image_id` (e.g. `ig-single-a3f7c2e9-...png`). The IG entry in `data/ig-single-image.json` references the 4:5 file; the tweet entry references the 1:1 file. Do this immediately after generating the X image and add both queue entries.
+**X image → IG 4:5 companion — KASPA IMAGES ONLY.** When a new image is generated for an X tweet **whose subject is Kaspa**, also generate a **4:5** version of the same image (same prompt, subject, style — only the aspect ratio changes) for the Instagram single-image entry. Save the 4:5 version to `images/ig/` with prefix `ig-single-` and the same `image_id` (e.g. `ig-single-a3f7c2e9-...png`). The IG entry in `data/ig-single-image.json` references the 4:5 file; the tweet entry references the 1:1 file. Do this immediately after generating the X image and add both queue entries. **For a non-Kaspa X tweet image, generate the 1:1 only and queue NO IG entry** — see the topic filter in the Instagram single-image mode section below. This condition is not optional and not a preference; it is the same shape as the X-poll topic filter.
 
 ## Workflow
 
@@ -836,6 +852,16 @@ After appending, confirm with the user: "Added N YouTube post(s) to yt-posts.jso
 
 When the user asks to draft for Instagram, port a tweet to IG, or says "make it an IG post," use this mode. This mode covers the **single-image feed post** format. Carousels have their own section below (**Instagram carousel mode**); reels will get a separate mode if the user adds it later.
 
+### Topic filter — Kaspa only (HARD RULE)
+
+**Only queue an IG single-image post when the image's subject is Kaspa.** This is Mike's standing rule from the day the livestream-repurpose command was written: *"if any of the x-tweets images are about Kaspa, repurpose them to a 4:5 image and queue them as an Instagram single-image post."* The IG feed is the Kaspa-facing surface of the account; macro, memecoins, $IF/Robinhood-chain, ElizaOS, geopolitics and general cycle takes ship as tweets, threads, YT posts and YT polls, and **do not get an IG entry at all.**
+
+Kaspa-qualifying means the post's actual subject is Kaspa/$KAS, KRC20, GhostDAG/DAGKnight, Kaspa hard forks, or Kaspa mining/tokenomics. A passing mention inside a macro take does not qualify; a Kaspa-plus-TAO conviction post does. When in doubt, ask rather than queue.
+
+**When the batch produces no Kaspa image, the correct outcome is ZERO IG entries for that batch** — not a substitute, not the next-best topic. Say so explicitly in the run report ("No IG posts this batch: no X tweet image is about Kaspa"), exactly the way a skipped X poll is reported. Do not offer non-Kaspa IG drafts as if they were optional; the filter is a hard rule, not a preference.
+
+> **Why this is called out so loudly.** The rule sat correctly in `.claude/commands/repurpose-livestream.md` (step 3) the whole time, but this skill's **X image → IG 4:5 companion** rule said to queue a companion for *every* X tweet image, with no topic condition. `CLAUDE.md` says canonical sources win on conflict, so the unconditional skill text beat the command's condition and five non-Kaspa IG posts were queued across the `if-yacht` / `eliza` / `early-crash` batches (2026-08-05 → 08-07), three of which went live before Mike caught it at review. The X-poll filter, which is written into this skill as a hard filter, was honored in every one of those same batches. A conditional rule that lives only in the command does not survive; it has to be in the skill too. Mechanically gated since 2026-08-08 by `scripts/persona-lint.py`.
+
 ### How IG single-image posts differ from tweets
 
 - **Image is required.** IG cannot post text-only. Every entry must have an `image_id` and `image_path` pointing to a generated 1:1 (or 4:5) image. If the source tweet doesn't have an image, generate one before drafting the IG post.
@@ -872,6 +898,7 @@ Avoid shadowbanned or oversaturated tags (anything with hundreds of millions of 
 
 When the user says "port this tweet to IG" or "add to IG too":
 
+0. **Apply the Kaspa topic filter FIRST** (above). If the tweet's subject is not Kaspa, stop here and say why — no IG entry, no image regeneration. Everything below assumes the filter passed.
 1. **Check the tweet has an image.** If yes, reuse the same image (same `image_id`, same `image_path`). If no, generate one first via `generate-image.js`, then proceed.
 2. **Draft the caption.** Default to `caption = tweet body`. If the tweet is short and would benefit from a context sentence or two, add them. Don't pad just to fill space.
 3. **Pick hashtags** appropriate to the topic from the layered strategy above.
@@ -1004,6 +1031,10 @@ Each version has a fixed style, subfolder, and prompt approach. Never mix versio
 **Version 1 — News-flash** (`--subdir=version1`)
 
 Near-black background, dramatic lighting, bold all-caps white + neon green typography, glowing crypto coin icons, chart/data panel elements. High-energy, aggressive feel. Modeled on viral crypto news graphics.
+
+> **⛔ V1 EXEMPLAR LIBRARY IS CONTAMINATED (measured 2026-08-06, eliza batch): pin V1 generations to `yt-posts-828eee71-01-hook.png` ONLY.** Adversarial QA hue-measured all 21 files in `images/reference/carousels/version1/`: **18 of 21 sit at chartreuse hue 44–97°** (e.g. modal RGB 164,228,1) instead of the house neon green (≈ RGB 58,244,66 / hue 122.6°), and most carry **baked "N OF 5" counter badges** that the generator lifts VERBATIM into new slides (an eliza run inherited "1 OF 5" onto slides 2–3 and "5 OF 5" onto slide 4 this way). `828eee71-01-hook` is the one clean file: on-hue (123.3°) AND counter-free. Until the folder is purged/regenerated, anchor every V1 slide on it regardless of slide role, and state the wanted counter text explicitly in the prompt ("small white all-caps counter label top-left: 'N OF 5', exactly once"). If a generated V1 slide comes back chartreuse anyway, fix by **measured hue rotation in place** (PIL, rotate the green band by the measured delta to 122.6°), never by a regen roll. Do NOT try to repaint a wrong baked counter in place — on V1 slides the "counter" is fused into the headline art; repainting clips the headline (confirmed failure 2026-08-06). Wrong counter = regen that slide.
+>
+> **Also:** the V2 exemplar `version2/yt-posts-9611992a-01-hook.png` contains an em dash in its body text ("800x —") — a latent hazard, since generators copy exemplar text patterns. When a slide anchored on it renders an em dash, regen with "no em dashes; use colons" added. V2 hues are healthy (174.5–178.9° teal, all 6 files).
 
 > **CAUTION (learned 2026-05-24) — image-capture bug in history-heavy chats:** The batch generators (`generate-yt-post-images-batch.js`, etc.) can save the WRONG image to a slide. In a persistent chat already full of prior generations, the response-capture sometimes grabs a *stale history image* instead of the freshly-generated one, so slides get cross-assigned (confirmed: a d3 slide's file contained an e1-e4 slide's image; an earlier d3 slide contained an old "retail flows back" graphic). **This affects all versions — it is NOT a V1-vs-V2 issue.** The single `generate-image.js` has robust baseline logic (block history during load → scroll to exhaust → 5s grace → baseline → only accept URLs ≥10s after prompt); the batch scripts used a thinner version that fails when history is large.
 >

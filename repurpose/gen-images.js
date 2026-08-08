@@ -28,12 +28,18 @@ async function composerLoaded(page, ms = 12000) {
   try { await page.locator(SEL.composer).first().waitFor({ timeout: ms }); return true; }
   catch { return false; }
 }
+// `ref` may be a single path OR an array of paths. The array form is what a multi-coin lineup needs
+// (two lesser-known logos in one frame, e.g. LAB + Velvet); ChatGPT's composer accepts several
+// attachments in one setInputFiles call, so the old "one reference only" limitation was ours, not its.
+const refList = (ref) => !ref ? [] : (Array.isArray(ref) ? ref : [ref]);
 async function uploadRef(page, ref) {
+  const refs = refList(ref);
+  if (!refs.length) return false;
   try {
     const fi = page.locator('input[type="file"]').first();
     await fi.waitFor({ state: 'attached', timeout: 8000 });
-    await fi.setInputFiles(ref, { timeout: 8000 });
-    await page.waitForTimeout(4000); return true;
+    await fi.setInputFiles(refs, { timeout: 8000 });
+    await page.waitForTimeout(4000 * refs.length); return true;
   } catch (e) { console.log('   ref upload failed:', e.message.split('\n')[0]); return false; }
 }
 
@@ -132,8 +138,9 @@ async function genOne(page, item) {
     // MECHANICAL GATE: never accept our own uploaded --reference as the generated output. An image
     // model cannot reproduce an input byte-for-byte, so identical bytes prove a mis-capture, not a
     // render. Rejecting here makes pickNew keep polling for the real image instead of shipping the ref.
-    if (item.ref && fs.existsSync(item.ref)) {
-      const rb = fs.readFileSync(item.ref);
+    for (const r of refList(item.ref)) {
+      if (!fs.existsSync(r)) continue;
+      const rb = fs.readFileSync(r);
       if (rb.length === buf.length && rb.equals(buf)) {
         console.log(`   REJECT: captured the uploaded reference, not a render (${item.slug}) - still waiting`);
         return false;
