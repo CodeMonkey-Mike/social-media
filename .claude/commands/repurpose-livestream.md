@@ -61,6 +61,14 @@ it returns the clip plan.
 Using the repurpose skill at `repurpose/` (canonical: `repurpose/SKILL.md`), process the plain
 transcript of this livestream (Lane 2's transcript).
 
+**Execution is graph-owned (Wave 6, 2026-08-09).** Draft everything below as judgment (fact-check,
+copy, image prompts), persist the whole set to `repurpose/output/<batch>-lane3-plan.json` (schema:
+`repurpose/queue_writer.py`), then run ONE invocation:
+`python video-creation/livestream-repurpose/graph/run.py repurpose --batch <batch>` — it generates
+the images (Python browser stack, chatgpt stage lock), verifies them, appends all queue files
+idempotently, persona-lints, and flips `batches.json pipelines.repurpose=done`. Visual-QA the
+images after the run. Do NOT hand-append queue entries or hand-run generators in a batch.
+
 **You choose the topics to write about.** ~80% of chosen topics should be crypto projects, with
 **Kaspa carrying the most weight, then TAO, Toncoin, HouseCoin, Pengu**, and others if discussed
 in the livestream. If nearly none of these were discussed, disregard this weighting rule.

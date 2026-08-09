@@ -452,7 +452,7 @@ const AUTOMATIONS = [
   {
     id: 'livestream',
     label: 'Livestream',
-    sub: 'repurpose — wave 1 intake (Ph 1-2 + Lane 1) · wave 2 cut (Ph 4) · wave 3 tighten (Ph 5+5B)',
+    sub: 'repurpose — w1 intake (Ph 1-2 + Lane 1) · w2 cut (Ph 4) · w3 tighten (Ph 5+5B) · w4 finish (5C+6+assets) · w5 publish (Ph 8) · w6 lane 3 (text/image)',
     feed: { progress: '/livestream/lane_progress.json', runs: '/livestream/lane_runs.json' },
     staleNote: 'Check whether ffmpeg/whisper is still alive (Task Manager) before relaunching; a killed run resumes with --resume, skipping completed nodes.',
     // ONE graph = ONE mechanical segment of the pipeline (`nodes` lists the work
@@ -473,10 +473,40 @@ const AUTOMATIONS = [
         nodes: ['tighten', 'finalize'],
         haltNote: 'runs after Mike\'s 4b verdicts + tighten-plan.json land (tighten-strategist seam); --min-sil = Mike\'s per-batch 5B knob; ends at his 2nd review of the tightened clips. Halt edge on every node.',
         retired: false, views: false },
+      { n: 4, name: 'finish', work: 'finish', verify: 'verify',
+        nodes: ['fillers', 'transcribe', 'assets', 'finalize'],
+        haltNote: 'runs after Mike\'s 2nd review (the invocation IS his approval record); 5C spans are judgment adjudicated into filler-plan.json BEFORE the run (no plan = passthrough). Ends at the builder frontier — Phase 7 stays with the remotion-builder agents. Halt edge on every node.',
+        retired: false, views: false },
+      { n: 5, name: 'publish', work: 'publish', verify: 'verify',
+        nodes: ['publish', 'lint'],
+        haltNote: 'runs after Mike gates the renders AND authorizes publish; hook/caption/tags land in publish-meta.json BEFORE the run. Stages the queue + md5-verifies staged copies vs CURRENT renders + persona-lints. POSTING stays Mike-gated, sequential. Halt edge on every node.',
+        retired: false, views: false },
+      { n: 6, name: 'repurpose', work: 'repurpose', verify: 'verify',
+        nodes: ['generate', 'queues', 'lint', 'finalize'],
+        haltNote: 'Lane 3 (Wave 6): runs after the drafting judgment lands in repurpose/output/<batch>-lane3-plan.json. Generates images via the ported Python browser stack (gen_images.py, pool-managed chats, chatgpt stage lock, one item per invocation), appends the 6 queue files (idempotent), persona-lints each touched file, flips batches.json pipelines.repurpose=done. Halt edge on every node.',
+        retired: false, views: false },
     ],
     headline(run) {
       const s = run && run.summary;
       if (!s) return run && run.error ? clip(run.error, 90) : '';
+      if (run.lane === 6) {
+        const im = s.images || {};
+        return `${im.generated ?? 0} images (${im.verified ?? 0} verified) · `
+             + `${s.entries_added ?? 0} entries queued · lint ${s.lint ?? '?'} · `
+             + `Mike reviews on Social`
+             + (s.fake_gen ? ' · FAKE GEN' : '')
+             + (s.sandbox ? ' · SANDBOX' : '');
+      }
+      if (run.lane === 5) {
+        return `${s.added ?? 0} queued / ${s.skipped ?? 0} present (date ${s.date ?? '?'}) · `
+             + `md5 + lint ${s.lint ?? '?'} · POSTING stays Mike-gated`
+             + (s.sandbox ? ' · SANDBOX' : '');
+      }
+      if (run.lane === 4) {
+        return `${s.clips ?? 0} clips finished (${s.filler_cuts ?? 0} with 5C cuts) · `
+             + `${Math.round(s.total_s || 0)}s total · ready for build`
+             + (s.sandbox ? ' · SANDBOX' : '');
+      }
       if (run.lane === 3) {
         return `${s.clips ?? 0} clips tightened+desilenced (min-sil ${s.min_sil ?? '?'}s) · `
              + `${Math.round(s.total_s || 0)}s total · at 2nd-review gate`

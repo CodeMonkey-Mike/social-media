@@ -1,0 +1,519 @@
+{
+  "batch": "tutorial",
+  "authored": "2026-08-09, clip-strategist. Run contract: best 5 topics, max 8 clips (variants count), long + small high-impact cut allowed from within a long clip, scatter-gather permitted. Delivered 5 full + 3 impact = 8. Full 51-window 90s chunk-and-group pass on the 76.6-min stream; every in/out verified against the word-level Whisper JSON and snapped to measured pauses (in-points lead the first word by <=0.15s, out-points trail the last word by <=0.25s and never come within 0.15s of the next onset), so no cut clips a word. Countdown card verified by frame sample: the intro timer is still on screen at 45.0s and the live face-cam plus screen-share picture is up by 58.0s, so the earliest cut-in (61.09s) is clear of it. Hype and conviction led the ranking per the standing preference: the $TUT vindication and the ranked meme opinions outrank every chart or market readout, and the BitTorrent/Napster/videocassette tangent plus the punch-you-in-the-balls bits are excluded per the run constraints.",
+  "source_vertical": "video-creation/livestream-repurpose/media/tutorial/tutorial LOW BPS VERTICAL.mp4",
+  "transcript_json": "video-creation/livestream-repurpose/transcripts/tutorial LOW BPS VERTICAL/tutorial LOW BPS VERTICAL.json",
+  "constraints": {
+    "max_topics": 5,
+    "max_clips": 8,
+    "shorts_cap_seconds": 180
+  },
+  "topics": [
+    {
+      "topic_id": "tut-94x-euphoria",
+      "hook_summary": "An old time favorite is pumping like crazy again: $TUT on BNB, the call Mike made public when the community did a 94X, now 638% for the month at a 65 million market cap (roughly 65x off the bottom), and one week after that 94X they did the 550X on NYX. Became clips 1 + 6."
+    },
+    {
+      "topic_id": "robinhood-meme-rankings",
+      "hook_summary": "Best meme on the Robinhood chain, without a doubt, unequivocally: What If ($IF), because it is a concept and a beautiful phrase nobody ever thought to put on a meme coin. Cooper is number two because it is a REAL dog, the office dog of Robinhood (that Toshi / Brian-Armstrong's-cat vibe). Tendies is number three because it is funny and stupid, which is exactly what gets a Robinhood app listing. Yolo four, Swappy five. Became clip 2."
+    },
+    {
+      "topic_id": "binance-kaspa-catch22",
+      "hook_summary": "Kaspa is a gem, the most beautiful thing ever when it comes to the tech. Binance published a blog article saying they are looking for community driven coins, and used exactly that argument on Neiro. They do not apply the same logic to Kaspa, because if they did, Kaspa would be listed on Binance by now: a strange catch-22. When the bulls start to run, Mike expects Kaspa to be skyrocketing. Became clips 3 + 7."
+    },
+    {
+      "topic_id": "freaking-early-not-degen",
+      "hook_summary": "I'm not looking at the short term, what pumps in two weeks then dies and you get out before it dies: that's the degen mindset, I don't trade like that. I want the tokens retail is going to be looking at when the bull run starts up again, so I'm the one going 'holy crap, I was so freaking early'. Became clips 4 + 8."
+    },
+    {
+      "topic_id": "doginme-100x-if-500x",
+      "hook_summary": "I got that dog in me: doginme was the first dog on the base chain to be listed on Coinbase, all time high 107 million, and 400 million in a really big bull run is a 100X from here. Then the closing what-if ladder: doginme to 800 million is a 200X, and $IF listed on the Robinhood app at 5 billion is another 500X. Good times ahead. Became clip 5."
+    }
+  ],
+  "clips": [
+    {
+      "clip_id": 1,
+      "slug": "tut-94x-euphoria",
+      "title": "94X on $TUT, and It's Pumping Again",
+      "topic_id": "tut-94x-euphoria",
+      "variant": "full",
+      "rank": 1,
+      "hook_type": "vindication",
+      "why_short_worthy": "The stream's emotional core: a publicly made 94X call pumping again live on screen, two hard community numbers (94X, then a 550X one week later) and an audible euphoria break. Hype and conviction, not a market readout.",
+      "segments": [
+        {
+          "start": 61.09,
+          "end": 90.4,
+          "why": "Cold open on the hook, skipping the 'yo yo yo yo what is going on' greeting and clear of the countdown card: 'we have an old time favorite that is pumping like crazy, this one actually makes a lot of sense, this is Tutorial on BNB', straight into the vindication 'you should have known, because I've been talking about this, I made it public when we did that 94X'; out into a 4.36s gap"
+        },
+        {
+          "start": 330.17,
+          "end": 358.25,
+          "why": "The live reveal plus the two numbers: 'now look at this man, look at, look at this, look, look, holy crap' (chart reveal, 2.12s of zoom air), then 'oh man, I hope these days come back, September and October were absolutely insane, and then one week after we did this 94X we did the 550X on NYX on BNB again, and that's why CodeMonkey Mike has the greatest crypto community on the planet'"
+        },
+        {
+          "start": 378.21,
+          "end": 385.22,
+          "why": "The hard-out: 'holy crap, it feels good to actually see this thing pumping again. Holy guacamole, dude. Oh my God.' Ends before the 'it was like' dangle into the gaming-season chat question"
+        },
+        {
+          "start": 783.41,
+          "end": 805.95,
+          "why": "The receipt, pulled forward from 7 minutes later: 'congratulations people, man look at this, 638% for the month, and it's at a 65 million market cap right now, that means we're up roughly 65x from the bottom, it was like one point something million, 65x from the bottom man, holy crap man'; in and out both sit in gaps over 2.4s"
+        }
+      ],
+      "assembly_order": [
+        0,
+        3,
+        1,
+        2
+      ],
+      "peak_beats": [
+        {
+          "start": 343.98,
+          "end": 358.25,
+          "note": "'And then one week after we did this 94X, we did the 550X on NYX on BNB again. And that's why CodeMonkey Mike has the greatest crypto community on the planet.'"
+        },
+        {
+          "start": 330.17,
+          "end": 336.0,
+          "note": "'Now look at this man. Look at, look at this. Look, look, holy crap.' (the live chart reveal)"
+        },
+        {
+          "start": 378.21,
+          "end": 385.22,
+          "note": "'Holy crap, it feels good to actually see this thing pumping again. Holy guacamole, dude. Oh my God.'"
+        }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Emotional core I believe carries this clip: 330-358 (the chart reveal into the 94X/550X pair) and the 378-385 euphoria break; reviewer should confirm both. Assembly is deliberately non-chronological: hook and vindication, then the 65x receipt, then the euphoria payoff, so the numbers land BEFORE the emotion instead of after it. Raw 86.9s across 4 segments, of which ~8.9s is measured dead air plus a 1.3s stretched 'on' at 74.0 and a 2.7s stretched '65x' at 794.1, so expect roughly 77s after tighten and 5B. If Mike wants it shorter the first trim is the 61.09-70.58 lead-in. ALTERNATE TAIL if he prefers a wistful close over the euphoria break: 4226.55-4243.89 ('That was us. That was us, man. I hope it gets to that point again. I was just reminiscing about the euphoria, man'), and 4115.87-4128.77 carries the 'it went up some more since I've been talking about this, I told you guys' beat. Same topic, end of stream."
+    },
+    {
+      "clip_id": 2,
+      "slug": "robinhood-meme-rankings",
+      "title": "My Robinhood Chain Meme Rankings: $IF, Cooper, Tendies, Yolo",
+      "topic_id": "robinhood-meme-rankings",
+      "variant": "full",
+      "rank": 2,
+      "hook_type": "ranked-opinion",
+      "why_short_worthy": "A named, ordered, zero-hedge opinion list ('without a doubt, unequivocally') gives the viewer a side to pick and something to argue with, and every pick comes with a reason instead of a price target.",
+      "segments": [
+        {
+          "start": 755.01,
+          "end": 764.5,
+          "why": "Cold open on the whole thesis: 'in my opinion, what is the best meme on the Robinhood chain? I would, without a doubt, unequivocally, I go for What If. What If is my, my favorite'; in from a 2.32s gap, out inside a 1.24s gap (carries a trailing 'Now,' the 5C filler pass can drop; cutting tighter would clip 'favorite')"
+        },
+        {
+          "start": 871.49,
+          "end": 884.8,
+          "why": "Number two with its reason: 'Cooper is a real dog. It is the office dog of Robinhood. It's a real dog. And that is why it's my second favorite meme, besides What If.' Signature doubling on 'a real dog'"
+        },
+        {
+          "start": 885.31,
+          "end": 900.43,
+          "why": "Why What If is number one: 'What If is a concept. It's a beautiful phrase. I can't believe that nobody ever thought of it before in a meme coin. What if this happens? I say it all the time. Everybody does. What if such and such happens? So that's beautiful.'"
+        },
+        {
+          "start": 907.65,
+          "end": 948.63,
+          "why": "The Cooper colour plus number three: 'it gives me that Toshi vibe being the cat of Brian Armstrong, here we have the office dog and the Robinhood headquarters, so cool', then 'I think Tendies is pretty good, it's a very funny and stupid concept, I think that'll get it a potential Robinhood app listing, just like fart coin, and that'll be number three, I want to go through a few of them that I like' (that tail bridges into the Yolo segment)"
+        },
+        {
+          "start": 2126.29,
+          "end": 2141.75,
+          "why": "Number four, pulled from 20 minutes later: 'Yolo. This is pretty good because look what it's doing right here. It went up and pumped, it pumped hard over here. And then it's really maintaining this level right down here, man. It's like, look at that.' Excludes the buy-level chart talk at 2143.58-2155.98"
+        },
+        {
+          "start": 2156.87,
+          "end": 2160.89,
+          "why": "The list-completing hard-out: 'But I think this would be my number four. Maybe Swappy would be like my number five.' Out into a 1.58s gap, before the next topic begins"
+        }
+      ],
+      "assembly_order": [
+        0,
+        2,
+        1,
+        3,
+        4,
+        5
+      ],
+      "peak_beats": [
+        {
+          "start": 871.49,
+          "end": 877.34,
+          "note": "'Cooper is a real dog. It is the office dog of Robinhood. It's a real dog.'"
+        },
+        {
+          "start": 755.01,
+          "end": 763.98,
+          "note": "'What is the best meme on the Robinhood chain? I would, without a doubt, unequivocally, I go for What If.'"
+        },
+        {
+          "start": 931.18,
+          "end": 942.56,
+          "note": "'It's a very funny and stupid concept, and I think that'll get it a potential Robinhood app listing, just like fart coin.'"
+        }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Emotional core I believe carries this clip: the 'without a doubt, unequivocally' hook and the Cooper 'it's a REAL dog' doubling. Assembly reorders the stream so the What If reason (885) lands immediately after the What If pick (755) and Cooper stays one block, then Yolo and Swappy close the list from 20 minutes later. Raw 98.4s; segment index 3 carries ~8.9s of dead air including the fumbly 923-935 stretch ('I think, I think the Tendies is, um' with 1.6s and 2.4s gaps), the single best tighten target, and segment index 4 has ~4.8s of chart-scroll air; expect roughly 82s finished. No impact variant was cut from this topic on purpose: a ranked list needs the whole list. The 'funny and stupid' line is Mike's PITCH for Tendies (positive valence), caption it that way."
+    },
+    {
+      "clip_id": 3,
+      "slug": "binance-kaspa-catch22",
+      "title": "Binance Wants Community Driven Coins. Kaspa Isn't Listed.",
+      "topic_id": "binance-kaspa-catch22",
+      "variant": "full",
+      "rank": 3,
+      "hook_type": "tribal-contrast",
+      "why_short_worthy": "Named opponent plus a self-inflicted contradiction (Binance's own published standard versus its own listing sheet), wrapped around Mike's primary asset. Highest-performing short shape he has, and it does not go stale next week.",
+      "segments": [
+        {
+          "start": 637.29,
+          "end": 645.13,
+          "why": "Conviction cold open, answering a 'Kaspa: scam or gem?' chat question: 'when it comes to the tech, Kaspa is a gem. Kaspa is the most beautiful thing ever. It is absolutely the most beautiful thing.' Deliberately stops before the 'it needs more adoption, it's still like a baby' hedge at 650-658"
+        },
+        {
+          "start": 659.51,
+          "end": 666.41,
+          "why": "The hype hard-out, used last in assembly: 'so when the bulls start to run, I would expect Kaspa to be skyrocketing'; in and out both in gaps over 1s"
+        },
+        {
+          "start": 2026.59,
+          "end": 2033.74,
+          "why": "The premise, from 23 minutes later: 'and there was a blog article on the Binance website talking about how they're looking for community driven coins'; ends exactly on 'coins', before the Neiro-insider detour"
+        },
+        {
+          "start": 2058.65,
+          "end": 2074.62,
+          "why": "The punch: 'Binance gives the argument about Neiro, there's a community driven coin, but it's a meme coin. They don't apply the same logic to Kaspa, because if they did, Kaspa would be listed on Binance by now. So it's kind of a strange catch-22.' In from a 3.24s gap, out before 'But nonetheless'"
+        }
+      ],
+      "assembly_order": [
+        0,
+        2,
+        3,
+        1
+      ],
+      "peak_beats": [
+        {
+          "start": 2066.08,
+          "end": 2074.62,
+          "note": "'They don't apply the same logic to Kaspa, because if they did, Kaspa would be listed on Binance by now. So it's kind of a strange catch-22.'"
+        },
+        {
+          "start": 637.29,
+          "end": 645.13,
+          "note": "'Kaspa is a gem. Kaspa is the most beautiful thing ever. It is absolutely the most beautiful thing.'"
+        }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Emotional core I believe carries this clip: the 2066-2075 'if they did, Kaspa would be listed by now' run, with the 637-645 gem line as the conviction hook that earns it. Pure scatter-gather: two ranges 23 minutes apart, assembled as gem-hook / Binance's own standard / the contradiction / and out on the bulls-run hype so it ends forward-looking instead of on a grievance. Raw 37.9s with almost no dead air (0.62s), so this ships close to its raw length; a 1.9s stretched 'like' at 2060.2 and a 2.1s stretched 'skyrocketing' at 664.0 are the only slack. Framing guard: this criticises an exchange's inconsistency, never Kaspa and never Neiro (Neiro is the example that PROVES the point). Segments 0 and 1 are Mike answering chat, so the picture there is the chat/Kaspa view rather than a chart."
+    },
+    {
+      "clip_id": 4,
+      "slug": "freaking-early-not-degen",
+      "title": "That's the Degen Mindset. I Don't Trade Like That.",
+      "topic_id": "freaking-early-not-degen",
+      "variant": "full",
+      "rank": 4,
+      "hook_type": "philosophical",
+      "why_short_worthy": "Evergreen conviction with a named opposing camp (degens) and a concrete picture at the end (in at 1.8 million, 700 million later), and it bookends itself on 'the ones that pump in two weeks and then die' for a clean hard-out.",
+      "segments": [
+        {
+          "start": 2164.01,
+          "end": 2177.25,
+          "why": "Tribal-contrast cold open: 'I'm not looking at the short term. Like what's going to pump in the next two weeks and what's going to pump and then die, and I'm going to get out before it dies. You know, that's the degen mindset. I don't really trade like that.' Out into a 4.04s gap"
+        },
+        {
+          "start": 2184.33,
+          "end": 2223.03,
+          "why": "The thesis and the payoff: 'listed on all these centralized exchanges, become mainstream, when retail starts coming back in, when the bull run starts up again... I want to get into all these tokens that those people are going to be looking at... I'm going to be like, holy crap, I was so freaking early, like this particular token is like 700 million and I got in like 1.8 million. That's what I'm looking for. I'm not looking for the ones that are going to pump in two weeks and then die.' Out before the 'so that's my whole thing' tail"
+        }
+      ],
+      "assembly_order": [
+        0,
+        1
+      ],
+      "peak_beats": [
+        {
+          "start": 2207.08,
+          "end": 2217.2,
+          "note": "'I'm going to be like, holy crap, I was so freaking early: this particular token is like 700 million and I got in like 1.8 million.'"
+        },
+        {
+          "start": 2172.8,
+          "end": 2177.25,
+          "note": "'That's the degen mindset. I don't really trade like that.'"
+        }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Emotional core I believe carries this clip: the 2207-2217 'holy crap, I was so freaking early' beat, which is Mike doing his quoted-thought device. One contiguous topic, split only to drop the 4s 'but one of the things that... that will get' false start at 2181-2184. Raw 51.9s, ~7.2s dead, expect roughly 45s finished. CAPTION GUARD, important: '700 million and I got in like 1.8 million' is a FUTURE HYPOTHETICAL he is imagining ('I'm going to be like, holy crap...'), not a position he holds; never caption or title it as a realised trade. The contrast is anti-degen, not anti-trading (Mike swing trades), so keep it on the two-week-flip mindset."
+    },
+    {
+      "clip_id": 5,
+      "slug": "doginme-100x-if-500x",
+      "title": "doginme at 107 Million: 400 Million Is a 100X From Here",
+      "topic_id": "doginme-100x-if-500x",
+      "variant": "full",
+      "rank": 5,
+      "hook_type": "prediction",
+      "why_short_worthy": "The stream's closing crescendo: a Coinbase-listed credential, one clean piece of math delivered with real excitement ('that's nuts, 100X from here, craziness'), and a what-if ladder that ends on the doubled 'good times ahead' hard-out.",
+      "segments": [
+        {
+          "start": 4396.59,
+          "end": 4409.73,
+          "why": "Personality-forward cold open with the credential: 'I got some doginme. I got that dog in me. Right. I got that dog in me. It was like the first dog on the base chain to be listed on Coinbase'; in from a 1.70s gap, out into a 2.64s gap"
+        },
+        {
+          "start": 4495.89,
+          "end": 4519.01,
+          "why": "The math, with his rhetorical self-Q&A and doubling: 'all time high of doginme is 107 million. I mean, isn't it reasonable to get to 400 million in a really big bull run? Isn't it reasonable? I don't know, I think so. And that means it's 100X from here. That means it's actually 100X, man. That's nuts. 100X from here. Craziness.' Deliberately excludes the 4461-4490 'they could just crap out / ElizaOS collapsed' detour"
+        },
+        {
+          "start": 4529.55,
+          "end": 4541.45,
+          "why": "MIKE 4b: the doginme escalation ONLY: 'what if doginme can survive to the next bull run and make it to like an 800 million market cap and we get a 200X?' In after the 'if, if, if, if' stutter; out 0.25s past 'X?' and 0.53s clear of the next onset"
+        },
+        {
+          "start": 4571.81,
+          "end": 4574.95,
+          "why": "MIKE 4b: the hard-out, rejoined across the removed $IF section: 'Craziness, craziness, man. Good times ahead. Good times ahead.' In 0.15s ahead of 'Craziness' inside a measured 1.26s gap; out before 'All right guys, I'm going to sign off'"
+        }
+      ],
+      "assembly_order": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "peak_beats": [
+        {
+          "start": 4507.1,
+          "end": 4519.01,
+          "note": "'And that means it's 100X from here. That means it's actually 100X, man. That's nuts. 100X from here. Craziness.'"
+        },
+        {
+          "start": 4571.81,
+          "end": 4574.95,
+          "note": "'Craziness, craziness, man. Good times ahead. Good times ahead.'"
+        }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "MIKE 4b (2026-08-09): the $IF what-if tail was REMOVED (4541.98-4570.70, 28.7s) because the clip is about doginme and the tail switched subject to the What If token. The doginme 800M/200X escalation is KEPT (it is still doginme) and the 'Craziness / Good times ahead' hard-out is rejoined onto it across the cut, both joins landing in measured silence. Raw is now 51.3s (was 81.8s). Original note: emotional core is the 4507-4519 '100X from here, that's nuts' run; chronological assembly; ~10.2s of remaining dead air plus a 2.2s stretched 'on' at 4405.0, so expect roughly 42s finished. Multiplier-currency check before ship: the 107 million ATH, the 400 million target and the 100X/200X figures are as of 2026-08-08."
+    },
+    {
+      "clip_id": 6,
+      "slug": "tut-94x-euphoria-impact",
+      "title": "Look, Look, Holy Crap: The 94X, Then a 550X One Week Later",
+      "topic_id": "tut-94x-euphoria",
+      "variant": "impact",
+      "rank": 1,
+      "hook_type": "vindication",
+      "why_short_worthy": "The single hardest-hitting run of the stream standing alone: a live chart reveal that breaks into 'look, look, holy crap' and lands two community numbers back to back.",
+      "segments": [
+        {
+          "start": 330.17,
+          "end": 358.25,
+          "why": "Pure peak, cold-opening on the reveal: 'now look at this man, look at, look at this, look, look, holy crap', then 'oh man, I hope these days come back, September and October were absolutely insane, and then one week after we did this 94X we did the 550X on NYX on BNB again, and that's why CodeMonkey Mike has the greatest crypto community on the planet'"
+        }
+      ],
+      "assembly_order": [
+        0
+      ],
+      "peak_beats": [
+        {
+          "start": 343.98,
+          "end": 358.25,
+          "note": "'One week after we did this 94X, we did the 550X on NYX on BNB again.'"
+        }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Subset of clip 1's second segment, rendered on its own per the run's long-plus-small-impact allowance. Raw 28.1s of which 3.3s is measured dead air (a 2.12s chart-zoom gap after 'holy crap' plus two 0.50s beats), so expect roughly 25s finished; that 2.12s gap is real reveal tension, so tighten it rather than deleting it. Self-contained: the tail names what happened and who did it. Keep the 'look at, look at this, look, look' stutter, it IS the energy."
+    },
+    {
+      "clip_id": 7,
+      "slug": "binance-kaspa-catch22-impact",
+      "title": "They Don't Apply the Same Logic to Kaspa",
+      "topic_id": "binance-kaspa-catch22",
+      "variant": "impact",
+      "rank": 3,
+      "hook_type": "tribal-contrast",
+      "why_short_worthy": "Premise then contradiction in under 25 seconds with a named opponent: the most reusable and most argued-with shape in the batch.",
+      "segments": [
+        {
+          "start": 2026.59,
+          "end": 2033.74,
+          "why": "The premise alone, no Neiro detour: 'and there was a blog article on the Binance website talking about how they're looking for community driven coins'"
+        },
+        {
+          "start": 2058.65,
+          "end": 2074.62,
+          "why": "The contradiction: 'Binance gives the argument about Neiro, there's a community driven coin, but it's a meme coin. They don't apply the same logic to Kaspa, because if they did, Kaspa would be listed on Binance by now. So it's kind of a strange catch-22.'"
+        }
+      ],
+      "assembly_order": [
+        0,
+        1
+      ],
+      "peak_beats": [
+        {
+          "start": 2066.08,
+          "end": 2074.62,
+          "note": "'They don't apply the same logic to Kaspa, because if they did, Kaspa would be listed on Binance by now.'"
+        }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Subset of clip 3 (its segments at index 2 and 3), dropping the Kaspa gem hook and the bulls-run tail so all 23.1s is the argument. Essentially zero dead air, so it ships close to raw. Opens on the word 'And', which the caption can drop. Register here is dry and exasperated rather than shouty, so this is the clip in the batch most at risk on the energy bar: confirm the delivery on the 2066-2075 run, and if it reads flat, keep clip 3 and drop this one."
+    },
+    {
+      "clip_id": 8,
+      "slug": "freaking-early-not-degen-impact",
+      "title": "My portfolio is filled with 100x coins.",
+      "topic_id": "freaking-early-not-degen",
+      "variant": "impact",
+      "rank": 4,
+      "hook_type": "philosophical",
+      "why_short_worthy": "One self-contained conviction beat with a vivid picture and a built-in hard-out, and it stands up without the degen-mindset setup.",
+      "segments": [
+        {
+          "start": 2201.27,
+          "end": 2223.03,
+          "why": "The peak on its own, keeping the 'I'm going to be like' frame intact so the numbers stay hypothetical: 'retail is going to be looking at all these tokens that I've just listed and they're going to be buying in. I'm going to be like, holy crap, I was so freaking early, like this particular token is like 700 million and I got in like 1.8 million. That's what I'm looking for. I'm not looking for the ones that are going to pump in two weeks and then die.'"
+        }
+      ],
+      "assembly_order": [
+        0
+      ],
+      "peak_beats": [
+        {
+          "start": 2207.08,
+          "end": 2217.2,
+          "note": "'Holy crap, I was so freaking early: this particular token is like 700 million and I got in like 1.8 million.'"
+        }
+      ],
+      "energy_confirmed": "flagged-for-review",
+      "notes": "Subset of clip 4's second segment. The in-point is deliberately 2201.27 and NOT the 2208.66 peak: cutting at the peak would strip 'I'm going to be like' and turn a future hypothetical into a claimed position. Raw 21.8s with ~2.5s of slack (a 0.88s gap plus a 1.3s stretched 'is' at 2212.4), expect roughly 19s finished. Hard-out is built in. MIKE 4b RETITLE (2026-08-09): 'My portfolio is filled with 100x coins.' Applied verbatim per the 4b retitle precedent. FLAG: this is a portfolio claim the clip's audio does not itself make (the clip is the anti-degen thesis plus a hypothetical), and it is deliberately kept as Mike worded it."
+    }
+  ],
+  "stt_garble_flags": [
+    "76.10 / 123.76 'BMB' -> 'BNB' (clip 1); the file gets it right elsewhere, so this is a local mishear",
+    "TOKEN NAME: 'tutorial' throughout is the Tutorial token, ticker $TUT (persona project_handles maps tutorial/tut -> @tutorialtoken). Style it $TUT or Tutorial in titles and captions, never as a common noun (clips 1, 6)",
+    "350.44-351.56 'on my X on BNB' and 4211.x 'a 550X on an NYX' -> NYX, the 550x call token; verify ticker styling by ear (clips 1, 6). Same garble was flagged on the early-crash batch",
+    "354.34-355.34 'Code Monkey Mike' -> 'CodeMonkey Mike', one word (clips 1, 6)",
+    "785.06 'I'll say 638%' -> verify by ear, likely 'it's like 638%' (clip 1)",
+    "792.54 'that means we're off, we're up roughly 65x' -> self-correction, caption as 'we're up roughly 65x' (clip 1)",
+    "798.38-799.38 'one point something million' -> caption as a '$1-point-something million' market cap (clip 1)",
+    "'Robin Hood' (16 hits) and 'Robberhood' (1974.34 / 1979.26) -> 'Robinhood', one word, brand (clips 2, 3, 5)",
+    "923.16 / 926.42 '10 these', 1016.98 / 1020.14 'attendees', 2112.32 '10 days' -> ALL the same token, almost certainly TENDIES. MUST be confirmed by ear along with its ticker before captioning (clip 2). The stream context listing Tendies third matches",
+    "941.58-942.56 'far far coin' -> 'fart coin' (clip 2)",
+    "2153.18 / 2159.20 'Swapy' and 2151.80 / 2153.68 'the unit' / 'unit swap' -> 'Swappy' and 'Uniswap' (clip 2)",
+    "2126.44 'Yolo' and 829.72 / 871.64 'Cooper' -> token names, verify ticker styling by ear (clip 2)",
+    "2001.60 onward 'Nero' (11 hits) -> 'Neiro', the Binance-listed meme token; verify spelling before captioning (clips 3, 7)",
+    "2073.84-2074.56 'it's kind of strange to catch 22' -> 'it's kind of a strange catch-22' (clips 3, 7)",
+    "2185.80 'centralized engines' -> 'centralized exchanges' (clips 4, 8)",
+    "4396.74-4398.14 'I got some dog.' -> almost certainly 'I got some doginme', and 4401.10-4402.68 'I got that dog with me' -> 'I got that dog in me' (the meme). Caption both from AUDIO (clip 5)",
+    "4497.06 / 4531.18 'dog and me' (6 hits) -> 'doginme', one word, lowercase brand (clip 5)",
+    "4541.98-4545.74 'the if coin, the if token' -> $IF. PERSONA HARD RULE: the What If token's ticker is $IF, NEVER $WHATIF, in any title, caption or hashtag (clips 2, 5)",
+    "2108.26 'coins that I've just been listening' and 4335.82 'that Robinhood listening' -> 'listing' (both outside the cuts)",
+    "4470.x 'Elizo X' -> 'ElizaOS' and 'AI 16 Z' -> 'ai16z' (outside the cuts, Lane 3 material)",
+    "4239.00 'this scene is like this again' -> verify by ear, likely 'just seeing it like this again' (only matters if Mike takes the alternate tail on clip 1)",
+    "2705.x 'Kaspa Kaspa, the ghost' -> 'Kasper, Kasper-the-Ghost', the KRC20 meme token, NOT the chain (dropped topic; persona kasper_vs_kaspa rule)",
+    "Checked and clean: no 'tau' -> TAO and no 'Casper' -> Kaspa hits anywhere in this transcript. Standard checks still apply at caption QA"
+  ],
+  "dropped": [
+    {
+      "topic": "Clarity Act September vote date, 'did the market get some certainty?' (128.28-179.48)",
+      "reason": "Time-bound news that resolves before ship, and Mike closes it on a triple hedge ('is that what happened? I don't know, man'). De-prioritized category with no conviction spine; Lane 3 tweet material at best."
+    },
+    {
+      "topic": "Swing-trading software and community membership plugs (230.76-314.32, 4143.58-4193.34, 4246.28-4324.28)",
+      "reason": "Product plug, not a self-contained take. The one hype-adjacent beat inside it ('imagine doing a 94X and then you double the amount of tokens in your bag') cannot be lifted clean of the software pitch."
+    },
+    {
+      "topic": "Gaming tokens: 'I've never been bullish on the gaming tokens' (386.70-450)",
+      "reason": "Hedged and low-energy ('difficult to predict', 'you never know'), and the core is negative on a whole category. Fails the energy bar."
+    },
+    {
+      "topic": "Kaspa's core team doesn't market the token, the influencers did (450-540)",
+      "reason": "Genuinely interesting parallel, but flat explainer register and the frame is a mild criticism of the Kaspa team. Strong Lane 3 thread, weak short."
+    },
+    {
+      "topic": "Ghost Wallet and KRC20 tokens disappearing (540-760, scattered)",
+      "reason": "Live audience troubleshooting with no payoff, and the substance is FUD about a Kaspa-ecosystem wallet. Skipped on both counts."
+    },
+    {
+      "topic": "Tendies and Swappy chart walks, support levels and buy zones (1016-1440)",
+      "reason": "Long chart-state readout with heavy hedging ('we'll see what happens' repeated) and stretches of near silence. De-prioritized category; only the ranking verdicts were extracted, into clip 2."
+    },
+    {
+      "topic": "Insider-alert bots, the Chinese-language coin, Moodang the hippo, the Twitter-community-versus-profile red flag (1440-1800)",
+      "reason": "Process explainer plus tooling plug. The language-centric-coin take could also read badly out of context. No hook that earns a scroll-stop."
+    },
+    {
+      "topic": "What If price targets: 38M to 100M, the 786 fib, 'that was a perfect buy right here, like 6 million' (1800-1975)",
+      "reason": "Price-prediction chart walk, and the run constraints explicitly exclude the 'punch you in the goddamn balls / no financial advice' bit sitting in the middle of it (~1915-1930). The community-driven-coin thesis that follows it WAS extracted, into clip 3."
+    },
+    {
+      "topic": "The Neiro-versus-Neiro Binance listing backstory in full (1995.60-2055.56)",
+      "reason": "Necessary setup told slowly with two hesitations over 2.4s; only the two load-bearing sentences (the blog article, and the Kaspa contradiction) were lifted into clips 3 and 7."
+    },
+    {
+      "topic": "Pepe on Robinhood: 'I don't like copies... looks shady' (2233-2350)",
+      "reason": "Shorts rule: never ship a clip whose core is negative about a specific named project."
+    },
+    {
+      "topic": "BitTorrent, IPFS, Napster, TVTorrents, videocassettes and Terminator 2 (2350-2610, 2700-3100)",
+      "reason": "Excluded by the run constraints. Also carries the second 'punched in the goddamn balls' bit at ~2395."
+    },
+    {
+      "topic": "KEKE, the copy that won on KRC20 (2610-2712)",
+      "reason": "FIRST ALTERNATE and the closest call in the batch. Real Kaspa-tribe substance ('this is a clear example of a copy that's a winner', higher than Kroak, 'which is my favorite'), but it is delivered as a live browsing readout rather than as a take, and it leans on KRC20 market-cap comparisons that go stale. Build from 2637-2700 if Mike wants to swap it in for clip 5."
+    },
+    {
+      "topic": "Ten coins, five go to zero, and the ElizaOS shutdown (3538-3620, 4461-4490)",
+      "reason": "SECOND ALTERNATE. The portfolio math is genuinely evergreen, but the delivery is subdued and the segment centres a named project's collapse; the 'we just missed out' phrasing would need careful framing to avoid reading as a miss rather than as the 27X win it followed. If Mike wants it, build the POSITIVE half only: 3538-3560 plus 3600-3615 ('there could be others and they're going to go 10X, 50X, 100X, even 1000X and they'll make up for it')."
+    },
+    {
+      "topic": "Ponzi, Purr Cat, Hello Kitty, and the butt coin / tick coin archaeology (3150-3510, 3620-4075)",
+      "reason": "Roughly 20 minutes of live coin browsing with long dead-air stretches, dead links and suspended accounts. No claim, number or argument to react to."
+    },
+    {
+      "topic": "What If yacht reveal and the follow-me-on-X plug (3100-3150)",
+      "reason": "Community plug plus a screen-share reveal that does not read without the context of the yacht bit."
+    },
+    {
+      "topic": "Cash Cat: the Robinhood listing did not take out the 227M all time high (4325-4386)",
+      "reason": "Pure market-data readout closing on 'but I don't know, we'll see, we shall see what happens, we shall see'. De-prioritized category, fails the energy bar."
+    },
+    {
+      "topic": "Opening greeting (55.70-59.98) and the sign-off (4575.38-4594.70)",
+      "reason": "Stream housekeeping, never a clip on its own. Note also that the countdown card is still on screen at 45s (verified by frame sample), so nothing may start before ~55s regardless."
+    }
+  ],
+  "four_b_verdicts": {
+    "reviewed": "2026-08-09, Mike",
+    "deleted": [],
+    "survivors": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "retitles": {
+      "8": "My portfolio is filled with 100x coins."
+    },
+    "segment_edits": {
+      "5": "removed the $IF what-if tail 4541.98-4570.70 (off-topic for a doginme clip)"
+    },
+    "build_directives": [
+      "PHASE 7 VISUAL DIRECTIVE, WHOLE BATCH (Mike, 2026-08-09, CLARIFIED). ALLOWED: captions, SFX, and overlay graphics or images WITH BACKGROUND TRANSPARENCY. BANNED: full-screen b-roll and content-zone b-roll, i.e. any asset that covers the frame or fills the content zone. The test is COVERAGE, not the asset's source: a transparent-background PNG laid over the base is fine, a full-frame or content-zone image is not. This supersedes the earlier, stricter reading of 'captions only, no ChatGPT images' recorded before the clarification.",
+      "GATE CONSEQUENCE: because transparent overlays are permitted, finalized_short_gate.py's requirement of at least one b-roll asset reference is satisfiable normally and NO gate change is needed. Every clip must therefore carry at least one transparent overlay asset. If a clip genuinely warrants none, STOP and flag it rather than bypassing the gate.",
+      "DO NOT COVER THE SCHWARZENEGGER SOUNDBOARD LINE. In clips 1 and 6 the payoff line ('And that's why CodeMonkey Mike has the greatest crypto community on the planet') is a soundboard drop, not Mike. Nothing may cover it: no b-roll (already banned) and no overlay graphic either. Captions only over that line. Its full extent after the tighten relock is master 353.36-358.62."
+    ],
+    "second_review": "APPROVED 2026-08-09, Mike: 'all clips are approved'. All 8 clips survive to Phase 7. This approval is the record that authorises the finish segment and the remotion builds."
+  }
+}

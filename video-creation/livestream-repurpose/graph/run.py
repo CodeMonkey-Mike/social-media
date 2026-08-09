@@ -20,6 +20,33 @@
 #       [--transcript PATH] [--title TEXT] [--subtitle TEXT] [--thread ID]
 #       [--resume] [--stub ok|fail] [--test-sandbox DIR] [--force]
 #
+#   FINISH (Wave 4 — Phase 5C fillers + Phase 6 caption source + render-assets,
+#   AFTER Mike's 2nd review; the invocation IS his approval record. 5C spans are
+#   judgment: adjudicated into shorts/<batch>/filler-plan.json BEFORE the run,
+#   or no plan file = all passthrough. Ends at the builder frontier — Phase 7
+#   stays with the remotion-builder agents):
+#   python video-creation/livestream-repurpose/graph/run.py finish --batch <batch>
+#       [--plan PATH] [--model medium] [--title TEXT] [--subtitle TEXT]
+#       [--thread ID] [--resume] [--stub ok|fail] [--test-sandbox DIR] [--force]
+#
+#   PUBLISH (Wave 5 — Phase 8 exec, AFTER Mike gates the renders AND authorizes
+#   publish; hook/caption/tags/title land in shorts/<batch>/publish-meta.json
+#   BEFORE the run. Stages the queue + md5-verifies + persona-lints; POSTING
+#   stays Mike-gated and sequential):
+#   python video-creation/livestream-repurpose/graph/run.py publish --batch <batch>
+#       [--date YYYY-MM-DD] [--meta PATH] [--id-prefix XX] [--thread ID]
+#       [--resume] [--stub ok|fail] [--test-sandbox DIR]
+#
+#   REPURPOSE (Wave 6 — Lane 3 text/image exec, AFTER the drafting judgment lands
+#   in repurpose/output/<batch>-lane3-plan.json: topics, fact-checked copy, image
+#   prompts. Generates the images via the ported Python browser stack
+#   (repurpose/gen_images.py + chat_pool/chat_delete; JS twins frozen rollback),
+#   appends the queue entries, persona-lints, flips batches.json
+#   pipelines.repurpose=done. Mike reviews the pending entries on :8766):
+#   python video-creation/livestream-repurpose/graph/run.py repurpose --batch <batch>
+#       [--plan PATH] [--thread ID] [--resume] [--stub ok|fail]
+#       [--test-sandbox DIR] [--fake-gen (sandbox only)]
+#
 # Wave 1 of the livestream migration (ORCHESTRATOR-PLAN.md §"Livestream migration"):
 # ONE invocation runs Phase 1 (LOW BPS) + Lane 1 (longform desilence/stage/queue) +
 # Phase 1B (verticalize) + Phase 2 (transcribe + glossary + derivatives), then ENDS.
@@ -78,7 +105,10 @@ from intake_graph import (  # noqa: E402
     CHECKPOINT_DB, DATA, LONGS_FILE, STAGED_ROOT, TRANSCRIPTS,
     _ffprobe_geometry, build_intake_graph, finish_progress, record_run,
 )
-from shorts_graph import build_cut_graph, build_tighten_graph  # noqa: E402
+from shorts_graph import (  # noqa: E402
+    build_cut_graph, build_finish_graph, build_publish_graph, build_tighten_graph,
+)
+from repurpose_graph import build_repurpose_graph  # noqa: E402
 
 from langgraph.checkpoint.sqlite import SqliteSaver  # noqa: E402
 
@@ -175,7 +205,7 @@ def report_cut(final) -> int:
     print(f"  registered: {'yes (active)' if s.get('registered') else 'SKIPPED (--no-register)'}"
           " · progress.json at the 4b gate")
     print("  next: Mike's Phase 4b review on the dashboard (delete calls by clip number); "
-          "then tighten-strategist per survivor (manual path until Wave 3).")
+          "then tighten-strategists per survivor -> `run.py tighten --batch <b> --min-sil N`.")
     return 0
 
 
@@ -506,6 +536,558 @@ def main_tighten():
     sys.exit(report_tighten(final))
 
 
+def report_finish(final) -> int:
+    status = final.get("status", "?")
+    print(f"GRAPH {status.upper()}")
+    if status != "done":
+        print(f"  {final.get('error', 'no error detail')}")
+        return 1
+    s = final["finish"]
+    if s.get("sandbox"):
+        print("  ** TEST SANDBOX RUN — nothing was written to production paths **")
+    if s.get("stub"):
+        print(f"  batch: {s.get('batch')} (stub) · {s.get('clips')} clips")
+        return 0
+    print(f"  batch: {s['batch']} · {s['clips']} clips finished "
+          f"({s.get('filler_cuts', 0)} with 5C cuts) · {s.get('total_s') or '?'}s total")
+    for slug, d in (s.get("clip_durations") or {}).items():
+        w = (s.get("words") or {}).get(slug, "?")
+        print(f"    - {slug}: {d:.1f}s · {w} words")
+    print(f"  dashboard: {s.get('dashboard')} · progress at the ready-for-build gate")
+    print("  next: remotion-builder (7) per clip — ChatGPT b-roll stays in the builder "
+          "(browser stack ports LAST); then `run.py publish` once Mike gates the renders.")
+    return 0
+
+
+def main_finish():
+    sys.path.insert(0, str(LSR_SCRIPTS))
+    from finish_batch import (  # noqa: E402  (one source of truth)
+        load_progress, resolve_spine, validate_filler_plan, dur as clip_dur,
+    )
+
+    ap = argparse.ArgumentParser(prog="run.py finish",
+                                 description="Run the Lane 2 FINISH segment (Phase 5C fillers "
+                                             "+ Phase 6 caption source + render-assets) "
+                                             "through LangGraph. Run ONLY after Mike's 2nd "
+                                             "review — the invocation IS his approval record.")
+    ap.add_argument("--batch")
+    ap.add_argument("--plan", default=None,
+                    help="filler-plan.json (default shorts/<batch>/filler-plan.json; "
+                         "absent = no approved 5C spans = all passthrough)")
+    ap.add_argument("--out-base", default=None)
+    ap.add_argument("--model", default="medium")
+    ap.add_argument("--title", default=None)
+    ap.add_argument("--subtitle", default=None)
+    ap.add_argument("--force", action="store_true",
+                    help="let finalize reset progress entries already past this stage")
+    ap.add_argument("--thread", default=None)
+    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    ap.add_argument("--test-sandbox", default="")
+    args = ap.parse_args()
+
+    if args.stub:
+        init = {
+            "batch": "stub-batch", "plan_path": "", "out_base": "stub-out",
+            "assets_root": "", "model": "medium", "title": None, "subtitle": None,
+            "force": False, "test_sandbox": "", "stub": args.stub,
+            "expected": [{"n": 1, "slug": "stub-clip", "base_s": 42.0,
+                          "removed_s": 1.2, "n_spans": 2},
+                         {"n": 2, "slug": "stub-clip-b", "base_s": 21.0,
+                          "removed_s": 0.0, "n_spans": 0}],
+            "status": "running",
+        }
+        thread = args.thread or f"finish-stub-{datetime.now():%Y%m%d-%H%M%S}"
+        banner = f"Finish graph | STUB MODE: {args.stub}"
+    else:
+        if not args.batch:
+            print("--batch is required for a real run.", file=sys.stderr)
+            sys.exit(1)
+        assets_root = ""
+        if args.test_sandbox:
+            sandbox = os.path.abspath(args.test_sandbox)
+            out_base = os.path.join(sandbox, "shorts", args.batch)
+            assets_root = os.path.join(sandbox, "assets")
+            os.makedirs(assets_root, exist_ok=True)
+            if not os.path.isdir(out_base):
+                print(f"sandbox batch folder not found: {out_base} (stage a scratch batch "
+                      "with progress.json + tightened spines first)", file=sys.stderr)
+                sys.exit(1)
+        else:
+            out_base = args.out_base or str(
+                REPO_ROOT / "video-creation" / "shorts" / args.batch)
+
+        prog = load_progress(Path(out_base))
+        prog_clips = [c for c in prog.get("clips", []) if c.get("slug")]
+        if not prog_clips:
+            print("progress.json has no clips.", file=sys.stderr)
+            sys.exit(1)
+        not_ready = [c["slug"] for c in prog_clips
+                     if c.get("phase") not in ("5B-desilenced", "5C-final", "6-transcribed")]
+        if not_ready and not args.force:
+            print(f"clips not at the post-2nd-review frontier (phase 5B-desilenced): "
+                  f"{not_ready}\nRun the tighten segment first (or --force if you mean to "
+                  "re-finish).", file=sys.stderr)
+            sys.exit(1)
+
+        plan_path = os.path.abspath(args.plan) if args.plan else os.path.join(
+            out_base, "filler-plan.json")
+        plan = None
+        if os.path.isfile(plan_path):
+            try:
+                with open(plan_path, encoding="utf-8") as f:
+                    plan = json.load(f)
+            except Exception as e:
+                print(f"filler-plan.json is not valid JSON: {e}", file=sys.stderr)
+                sys.exit(1)
+        else:
+            plan_path = ""      # optional seam artifact: absent = all passthrough
+
+        # fail fast with the script's own validator (one source of truth)
+        spine_durs = {}
+        for c in prog_clips:
+            d = clip_dur(resolve_spine(Path(out_base), c))
+            if d is None:
+                print(f"{c['slug']}: cannot probe the tightened spine", file=sys.stderr)
+                sys.exit(1)
+            spine_durs[c["slug"]] = d
+        measures = validate_filler_plan(plan, prog_clips, spine_durs)
+
+        expected = [{"n": c.get("n"), "slug": c["slug"],
+                     "base_s": round(measures[c["slug"]]["base_s"], 3),
+                     "removed_s": round(measures[c["slug"]]["removed_s"], 3),
+                     "n_spans": len(measures[c["slug"]]["spans"])}
+                    for c in prog_clips]
+        init = {
+            "batch": args.batch, "plan_path": plan_path, "out_base": out_base,
+            "assets_root": assets_root, "model": args.model,
+            "title": args.title, "subtitle": args.subtitle, "force": args.force,
+            "test_sandbox": args.test_sandbox, "stub": "",
+            "expected": expected, "status": "running",
+        }
+        thread = args.thread or f"finish-{args.batch}-{date.today():%Y%m%d}"
+        n_span = sum(1 for e in expected if e["n_spans"])
+        banner = (f"Finish graph | {args.batch} | {len(expected)} clips | "
+                  f"{n_span} with 5C spans | whisper {args.model}"
+                  + (f" | TEST SANDBOX {args.test_sandbox}" if args.test_sandbox else ""))
+
+    DATA.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(CHECKPOINT_DB), check_same_thread=False)
+    app = build_finish_graph(checkpointer=SqliteSaver(conn))
+
+    print(banner)
+    print(f"thread: {thread} | checkpoints: {CHECKPOINT_DB.name}"
+          + (" | RESUME" if args.resume else ""))
+    print("-" * 60)
+
+    started_at, t0 = datetime.now().isoformat(timespec="seconds"), time.monotonic()
+    try:
+        final = app.invoke(None if args.resume else init,
+                           config={"configurable": {"thread_id": thread}})
+    except BaseException as e:
+        finish_progress("crashed", f"{type(e).__name__}: {e}")
+        if args.resume:
+            print("\n(--resume needs a thread that already has a checkpoint; run without "
+                  "--resume for a fresh batch.)", file=sys.stderr)
+        raise
+    print("-" * 60)
+
+    record_run(lane=4, thread=thread, final=final, started_at=started_at,
+               ended_at=datetime.now().isoformat(timespec="seconds"),
+               duration_s=time.monotonic() - t0, stub=args.stub,
+               requested=init.get("batch") if not args.stub else "stub")
+    finish_progress(final.get("status", "unknown"), final.get("error"))
+
+    sys.exit(report_finish(final))
+
+
+def report_publish(final) -> int:
+    status = final.get("status", "?")
+    print(f"GRAPH {status.upper()}")
+    if status != "done":
+        print(f"  {final.get('error', 'no error detail')}")
+        return 1
+    s = final["publish"]
+    if s.get("sandbox"):
+        print("  ** TEST SANDBOX RUN — nothing was written to production paths **")
+    if s.get("stub"):
+        print(f"  batch: {s.get('batch')} (stub) · {s.get('added')} added")
+        return 0
+    print(f"  batch: {s['batch']} · date {s.get('date')} · {s.get('clips')} clips · "
+          f"{s.get('added')} added / {s.get('skipped')} already present")
+    print(f"  dest:  {s.get('dest_dir')} · queue total {s.get('queue_total')} · "
+          f"lint {s.get('lint')}")
+    print("  All staged copies md5-verified against their CURRENT renders; entries "
+          "complete; all 7 platforms pending.")
+    print("  next: Mike reviews on the :8766 dashboard. POSTING stays his — sequential, "
+          "one poster at a time, never parallel.")
+    return 0
+
+
+def main_publish():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "publish_shorts", str(REPO_ROOT / "scripts" / "publish-shorts.py"))
+    publish_shorts = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(publish_shorts)   # one source of truth: its own validators
+
+    ap = argparse.ArgumentParser(prog="run.py publish",
+                                 description="Run the Lane 2 PUBLISH segment (Phase 8 exec) "
+                                             "through LangGraph. Run ONLY after Mike gates "
+                                             "the renders AND authorizes publish; the "
+                                             "judgment fields land in publish-meta.json "
+                                             "BEFORE the run. Stages the queue only — "
+                                             "POSTING stays Mike-gated.")
+    ap.add_argument("--batch")
+    ap.add_argument("--date", default=str(date.today()),
+                    help="publish date — MUST match the batch's first publish run "
+                         "(a different date re-queues everything under new ids)")
+    ap.add_argument("--meta", default=None,
+                    help="publish-meta.json (default shorts/<batch>/publish-meta.json)")
+    ap.add_argument("--id-prefix", default=None)
+    ap.add_argument("--out-root", default=None)
+    ap.add_argument("--dest-root", default=None)
+    ap.add_argument("--shorts-json", default=None)
+    ap.add_argument("--progress-json", default=None)
+    ap.add_argument("--thread", default=None)
+    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    ap.add_argument("--test-sandbox", default="")
+    args = ap.parse_args()
+
+    if args.stub:
+        init = {
+            "batch": "stub-batch", "run_date": args.date, "meta_path": "stub-meta.json",
+            "out_root": "stub-out", "dest_root": "stub-dest",
+            "shorts_json": "stub-shorts.json", "progress_path": "stub-progress.json",
+            "id_prefix": "", "test_sandbox": "", "stub": args.stub,
+            "expected": [{"n": 1, "slug": "stub-clip", "id": "sb-20260101-stub-clip",
+                          "render": "stub-out/stub-batch/1-stub-clip.mp4",
+                          "staged_name": "1-stub-clip.mp4"}],
+            "status": "running",
+        }
+        thread = args.thread or f"publish-stub-{datetime.now():%Y%m%d-%H%M%S}"
+        banner = f"Publish graph | STUB MODE: {args.stub}"
+    else:
+        if not args.batch:
+            print("--batch is required for a real run.", file=sys.stderr)
+            sys.exit(1)
+        if args.test_sandbox:
+            sandbox = os.path.abspath(args.test_sandbox)
+            out_root = args.out_root or os.path.join(sandbox, "out")
+            dest_root = args.dest_root or os.path.join(sandbox, "shorts-dest")
+            shorts_json = args.shorts_json or os.path.join(sandbox, "shorts.json")
+            progress_path = args.progress_json or os.path.join(
+                sandbox, "shorts", args.batch, "progress.json")
+            meta_default = os.path.join(sandbox, "shorts", args.batch, "publish-meta.json")
+            os.makedirs(dest_root, exist_ok=True)
+            if not os.path.isfile(shorts_json):
+                with open(shorts_json, "w", encoding="utf-8") as f:
+                    # plain hyphen: this file goes through the persona-lint gate
+                    json.dump({"$note": "TEST SANDBOX shorts.json - not production",
+                               "shorts": []}, f, indent=2)
+        else:
+            out_root = args.out_root or str(
+                REPO_ROOT / "video-creation" / "remotion" / "out")
+            dest_root = args.dest_root or str(REPO_ROOT / "schedule-tweets" / "shorts")
+            shorts_json = args.shorts_json or str(
+                REPO_ROOT / "schedule-tweets" / "data" / "shorts.json")
+            progress_path = args.progress_json or str(
+                REPO_ROOT / "video-creation" / "shorts" / args.batch / "progress.json")
+            meta_default = str(
+                REPO_ROOT / "video-creation" / "shorts" / args.batch / "publish-meta.json")
+        meta_path = os.path.abspath(args.meta) if args.meta else meta_default
+        if not os.path.isfile(meta_path):
+            print(f"publish-meta.json not found: {meta_path}\n"
+                  "The judgment fields (hook/caption/tags/title) must land on disk BEFORE "
+                  "the publish segment runs (the seam contract).", file=sys.stderr)
+            sys.exit(1)
+        meta = publish_shorts.load_meta(Path(meta_path))   # its own hard validation
+
+        prog = None
+        if os.path.isfile(progress_path):
+            try:
+                with open(progress_path, encoding="utf-8") as f:
+                    prog = json.load(f)
+            except Exception as e:
+                print(f"progress.json unparseable: {e}", file=sys.stderr)
+                sys.exit(1)
+        if not isinstance(prog, dict) or not prog.get("clips"):
+            print(f"progress.json missing/empty: {progress_path}", file=sys.stderr)
+            sys.exit(1)
+        not_built = [c["slug"] for c in prog["clips"]
+                     if c.get("phase") != "7-built" or "PASS" not in str(c.get("gate", ""))]
+        if not_built:
+            print(f"clips not at '7-built' with a PASS gate: {not_built}\n"
+                  "Publish runs only after EVERY builder reported PASS (an mp4 on disk is "
+                  "not a completion signal).", file=sys.stderr)
+            sys.exit(1)
+
+        # the --date dedupe trap, mechanized: publishing the same batch under a second
+        # date re-queues every clip with new ids (publish-shorts globs the whole out dir)
+        import glob as _glob
+        other = [d for d in _glob.glob(os.path.join(dest_root, f"{args.batch}-*"))
+                 if os.path.isdir(d)
+                 and os.path.basename(d) != f"{args.batch}-{args.date}"]
+        if other:
+            print(f"REFUSED: this batch is already staged under a different date: {other}\n"
+                  f"Pass --date {os.path.basename(other[0])[len(args.batch) + 1:]} to "
+                  "resume that publish instead of double-queuing.", file=sys.stderr)
+            sys.exit(1)
+
+        prefix = args.id_prefix or publish_shorts.derive_prefix(args.batch)
+        date_compact = args.date.replace("-", "")
+        expected = []
+        for c in prog["clips"]:
+            slug = publish_shorts.NUM_PREFIX.sub("", c["slug"])
+            render = os.path.join(out_root, args.batch, f"{c.get('n')}-{slug}.mp4")
+            if not os.path.isfile(render):
+                print(f"render missing for clip {c.get('n')} ({slug}): {render}",
+                      file=sys.stderr)
+                sys.exit(1)
+            if slug not in meta:
+                print(f"publish-meta.json has no entry for {slug!r} — every surviving "
+                      "clip needs its judgment fields before the segment runs.",
+                      file=sys.stderr)
+                sys.exit(1)
+            expected.append({"n": c.get("n"), "slug": slug,
+                             "id": f"{prefix}-{date_compact}-{slug}",
+                             "render": render,
+                             "staged_name": os.path.basename(render)})
+
+        init = {
+            "batch": args.batch, "run_date": args.date, "meta_path": meta_path,
+            "out_root": out_root, "dest_root": dest_root, "shorts_json": shorts_json,
+            "progress_path": progress_path, "id_prefix": args.id_prefix or "",
+            "test_sandbox": args.test_sandbox, "stub": "",
+            "expected": expected, "status": "running",
+        }
+        thread = args.thread or f"publish-{args.batch}-{date_compact}"
+        banner = (f"Publish graph | {args.batch} | {len(expected)} clips | date {args.date}"
+                  + (f" | TEST SANDBOX {args.test_sandbox}" if args.test_sandbox else ""))
+
+    DATA.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(CHECKPOINT_DB), check_same_thread=False)
+    app = build_publish_graph(checkpointer=SqliteSaver(conn))
+
+    print(banner)
+    print(f"thread: {thread} | checkpoints: {CHECKPOINT_DB.name}"
+          + (" | RESUME" if args.resume else ""))
+    print("-" * 60)
+
+    started_at, t0 = datetime.now().isoformat(timespec="seconds"), time.monotonic()
+    try:
+        final = app.invoke(None if args.resume else init,
+                           config={"configurable": {"thread_id": thread}})
+    except BaseException as e:
+        finish_progress("crashed", f"{type(e).__name__}: {e}")
+        if args.resume:
+            print("\n(--resume needs a thread that already has a checkpoint; run without "
+                  "--resume for a fresh batch.)", file=sys.stderr)
+        raise
+    print("-" * 60)
+
+    record_run(lane=5, thread=thread, final=final, started_at=started_at,
+               ended_at=datetime.now().isoformat(timespec="seconds"),
+               duration_s=time.monotonic() - t0, stub=args.stub,
+               requested=init.get("batch") if not args.stub else "stub")
+    finish_progress(final.get("status", "unknown"), final.get("error"))
+
+    sys.exit(report_publish(final))
+
+
+def report_repurpose(final) -> int:
+    status = final.get("status", "?")
+    print(f"GRAPH {status.upper()}")
+    if status != "done":
+        print(f"  {final.get('error', 'no error detail')}")
+        return 1
+    s = final["repurpose"]
+    if s.get("sandbox"):
+        print("  ** TEST SANDBOX RUN — nothing was written to production paths **")
+    if s.get("fake_gen"):
+        print("  ** FAKE GEN — placeholder renders, the browser stack did not run **")
+    if s.get("stub"):
+        print(f"  batch: {s.get('batch')} (stub) · {s.get('images_ok')} images")
+        return 0
+    im = s.get("images") or {}
+    print(f"  batch: {s['batch']} · date {s.get('date')} · images "
+          f"{im.get('generated')} generated / {im.get('skipped')} skipped / "
+          f"{im.get('verified')} verified of {im.get('planned')} planned")
+    print(f"  entries: {s.get('entries_added')} added / {s.get('entries_skipped')} "
+          "already present")
+    for fname, d in (s.get("queues") or {}).items():
+        print(f"    - {fname}: {d.get('planned')} planned · queue total "
+              f"{d.get('queue_total')}")
+    print(f"  lint {s.get('lint')} · batches.json {s.get('registered')} "
+          "pipelines.repurpose=done")
+    print("  next: visual-QA the images, then Mike reviews the pending entries on the "
+          ":8766 dashboard. POSTING stays his — sequential, one poster at a time.")
+    return 0
+
+
+def main_repurpose():
+    sys.path.insert(0, str(REPO_ROOT / "repurpose"))
+    from queue_writer import (  # noqa: E402  (one source of truth)
+        QUEUE_FILES, validate_lane3_plan,
+    )
+
+    ap = argparse.ArgumentParser(prog="run.py repurpose",
+                                 description="Run the Lane 3 REPURPOSE segment (Wave 6) "
+                                             "through LangGraph. Drafting is judgment "
+                                             "and happens BEFORE this run: the batch's "
+                                             "lane3-plan.json (copy + image prompts) "
+                                             "must be on disk. This executes the plan: "
+                                             "images via the ported browser stack, "
+                                             "queue appends, lint, batches.json.")
+    ap.add_argument("--batch")
+    ap.add_argument("--plan", default=None,
+                    help="lane3-plan.json (default repurpose/output/"
+                         "<batch>-lane3-plan.json)")
+    ap.add_argument("--thread", default=None)
+    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    ap.add_argument("--test-sandbox", default="")
+    ap.add_argument("--fake-gen", action="store_true",
+                    help="placeholder renders (sandbox only; REFUSED on a real run)")
+    args = ap.parse_args()
+
+    if args.stub:
+        init = {
+            "batch": "stub-batch", "plan_path": "stub-plan.json",
+            "run_date": str(date.today()), "data_dir": "stub-data",
+            "images_base": "stub-images", "registry": "", "registry_root": "stub",
+            "fake_gen": False, "test_sandbox": "", "stub": args.stub,
+            "expected_images": [{"id": "deadbee1", "purpose": "x-tweets",
+                                 "slug": "stub", "file": "stub.png"}],
+            "expected_entries": {"x_tweets": ["deadbee1"]},
+            "status": "running",
+        }
+        thread = args.thread or f"repurpose-stub-{datetime.now():%Y%m%d-%H%M%S}"
+        banner = f"Repurpose graph | STUB MODE: {args.stub}"
+    else:
+        if not args.batch:
+            print("--batch is required for a real run.", file=sys.stderr)
+            sys.exit(1)
+        plan_path = os.path.abspath(args.plan) if args.plan else str(
+            REPO_ROOT / "repurpose" / "output" / f"{args.batch}-lane3-plan.json")
+        if not os.path.isfile(plan_path):
+            print(f"lane3-plan.json not found: {plan_path}\n"
+                  "Draft Lane 3 first (topics, fact-check, copy, image prompts) and "
+                  "save the plan — the judgment lands on disk BEFORE the segment runs "
+                  "(the clip-plan.json seam contract).", file=sys.stderr)
+            sys.exit(1)
+        try:
+            with open(plan_path, encoding="utf-8") as f:
+                plan = json.load(f)
+        except Exception as e:
+            print(f"lane3-plan.json is not valid JSON: {e}", file=sys.stderr)
+            sys.exit(1)
+        if plan.get("batch") != args.batch:
+            print(f"plan batch {plan.get('batch')!r} != --batch {args.batch!r} — "
+                  "wrong plan file?", file=sys.stderr)
+            sys.exit(1)
+
+        if args.test_sandbox:
+            sandbox = os.path.abspath(args.test_sandbox)
+            data_dir = os.path.join(sandbox, "data")
+            images_base = os.path.join(sandbox, "images")
+            registry = os.path.join(sandbox, "chatgpt-image-chats.json")
+            registry_root = sandbox
+            os.makedirs(data_dir, exist_ok=True)
+            for sub in ("x", "yt", "ig"):
+                os.makedirs(os.path.join(images_base, sub), exist_ok=True)
+            for fname, listkey in QUEUE_FILES.values():
+                p = os.path.join(data_dir, fname)
+                if not os.path.isfile(p):
+                    with open(p, "w", encoding="utf-8") as f:
+                        # plain hyphen: these files go through the persona-lint gate
+                        json.dump({"$note": f"TEST SANDBOX {fname} - not production",
+                                   listkey: []}, f, indent=2)
+            if not os.path.isfile(registry):
+                with open(registry, "w", encoding="utf-8") as f:
+                    json.dump({"cap": 25, "chats": [], "retired": []}, f, indent=2)
+            bj = os.path.join(sandbox, "batches.json")
+            if not os.path.isfile(bj):
+                with open(bj, "w", encoding="utf-8") as f:
+                    json.dump({"batches": []}, f, indent=2)
+            fake_gen = True   # the sandbox NEVER drives the real browser/registry
+            if not args.fake_gen:
+                print("(test-sandbox forces --fake-gen: placeholder renders, no "
+                      "browser, no real registry)")
+        else:
+            if args.fake_gen:
+                print("REFUSED: --fake-gen outside --test-sandbox would write "
+                      "placeholder renders into the REAL images dirs.",
+                      file=sys.stderr)
+                sys.exit(1)
+            data_dir = str(REPO_ROOT / "schedule-tweets" / "data")
+            images_base = str(REPO_ROOT / "schedule-tweets" / "images")
+            registry = ""
+            registry_root = str(REPO_ROOT)
+            fake_gen = False
+
+        # Fail fast on the seam artifact — the same validator lane3_batch.py runs.
+        validate_lane3_plan(plan, data_dir=data_dir, images_base=images_base)
+
+        sub_for = {"x-tweets": "x", "yt-posts": "yt", "ig-single": "ig",
+                   "ig-carousel": "ig"}
+        expected_images = [
+            {"id": im["image_id"], "purpose": im["purpose"], "slug": im["slug"],
+             "file": os.path.join(images_base, sub_for[im["purpose"]],
+                                  f"{im['purpose']}-{im['image_id']}-{im['slug']}.png")}
+            for im in plan.get("images") or []]
+        expected_entries = {
+            key: [e.get("id") or e.get("image_id") for e in (plan.get(key) or [])]
+            for key in QUEUE_FILES}
+
+        run_date = plan.get("date") or str(date.today())
+        init = {
+            "batch": args.batch, "plan_path": plan_path, "run_date": run_date,
+            "data_dir": data_dir, "images_base": images_base, "registry": registry,
+            "registry_root": registry_root, "fake_gen": fake_gen,
+            "test_sandbox": args.test_sandbox, "stub": "",
+            "expected_images": expected_images, "expected_entries": expected_entries,
+            "status": "running",
+        }
+        thread = args.thread or f"repurpose-{args.batch}-{run_date.replace('-', '')}"
+        n_entries = sum(len(v) for v in expected_entries.values())
+        banner = (f"Repurpose graph | {args.batch} | {len(expected_images)} images | "
+                  f"{n_entries} queue entries | date {run_date}"
+                  + (" | FAKE GEN" if fake_gen else "")
+                  + (f" | TEST SANDBOX {args.test_sandbox}" if args.test_sandbox
+                     else ""))
+
+    DATA.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(CHECKPOINT_DB), check_same_thread=False)
+    app = build_repurpose_graph(checkpointer=SqliteSaver(conn))
+
+    print(banner)
+    print(f"thread: {thread} | checkpoints: {CHECKPOINT_DB.name}"
+          + (" | RESUME" if args.resume else ""))
+    print("-" * 60)
+
+    started_at, t0 = datetime.now().isoformat(timespec="seconds"), time.monotonic()
+    try:
+        final = app.invoke(None if args.resume else init,
+                           config={"configurable": {"thread_id": thread}})
+    except BaseException as e:
+        finish_progress("crashed", f"{type(e).__name__}: {e}")
+        if args.resume:
+            print("\n(--resume needs a thread that already has a checkpoint; run "
+                  "without --resume for a fresh batch.)", file=sys.stderr)
+        raise
+    print("-" * 60)
+
+    record_run(lane=6, thread=thread, final=final, started_at=started_at,
+               ended_at=datetime.now().isoformat(timespec="seconds"),
+               duration_s=time.monotonic() - t0, stub=args.stub,
+               requested=init.get("batch") if not args.stub else "stub")
+    finish_progress(final.get("status", "unknown"), final.get("error"))
+
+    sys.exit(report_repurpose(final))
+
+
 def main():
     ap = argparse.ArgumentParser(description="Run livestream intake (Phases 1-2 + Lane 1) "
                                              "through LangGraph.")
@@ -645,7 +1227,9 @@ def main():
     sys.exit(report_intake(final))
 
 
-SEGMENTS = {"cut": main_cut, "tighten": main_tighten}   # wave 4+ segments join here as blessed
+SEGMENTS = {"cut": main_cut, "tighten": main_tighten,
+            "finish": main_finish, "publish": main_publish,
+            "repurpose": main_repurpose}
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] in SEGMENTS:

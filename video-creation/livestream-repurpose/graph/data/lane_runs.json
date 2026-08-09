@@ -254,5 +254,1041 @@
       }
     },
     "error": null
+  },
+  {
+    "run_id": "tighten-stub-20260805-193235@2026-08-05T19:32:35",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-stub-20260805-193235",
+    "started_at": "2026-08-05T19:32:35",
+    "ended_at": "2026-08-05T19:32:35",
+    "duration_s": 0.5,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": {
+      "batch": "stub-batch",
+      "stub": true,
+      "clips": 2
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-stub-20260805-193242@2026-08-05T19:32:43",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-stub-20260805-193242",
+    "started_at": "2026-08-05T19:32:43",
+    "ended_at": "2026-08-05T19:32:43",
+    "duration_s": 0.2,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": null,
+    "error": "tighten_clips.py --stage tighten exit code 3; output tail:\nstub: pretending to tighten\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "tighten-sandbox-tighten-20260805@2026-08-05T19:36:16",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-sandbox-tighten-20260805",
+    "started_at": "2026-08-05T19:36:16",
+    "ended_at": "2026-08-05T19:37:13",
+    "duration_s": 57.2,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": "sandbox-tighten",
+    "summary": null,
+    "error": "sbx-scatter: desilenced 35.57s is shorter than the clip's kept voiced content 41.90s — the desilencer ate speech (swallowed-speech guard)"
+  },
+  {
+    "run_id": "tighten-sandbox-tighten-20260805@2026-08-05T19:38:09",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-sandbox-tighten-20260805",
+    "started_at": "2026-08-05T19:38:09",
+    "ended_at": "2026-08-05T19:38:56",
+    "duration_s": 46.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "sandbox-tighten",
+    "summary": {
+      "batch": "sandbox-tighten",
+      "sandbox": true,
+      "clips": 2,
+      "total_s": 49.5,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\AppData\\Local\\Temp\\claude\\C--Users-mnede-Documents-Claude-social-media\\78d3e775-7c5c-4007-92bc-4538e84dc433\\scratchpad\\wave3-sandbox\\shorts\\sandbox-tighten\\dashboard.html",
+      "clip_durations": {
+        "sbx-scatter": 35.568,
+        "sbx-relock": 13.908
+      }
+    },
+    "error": "sbx-scatter: desilenced 35.57s is shorter than the clip's kept voiced content 41.90s — the desilencer ate speech (swallowed-speech guard)"
+  },
+  {
+    "run_id": "intake-if-yacht-20260805@2026-08-05T19:24:27",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-if-yacht-20260805",
+    "started_at": "2026-08-05T19:24:27",
+    "ended_at": "2026-08-05T19:48:46",
+    "duration_s": 1458.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "if-yacht",
+    "summary": {
+      "slug": "if-yacht",
+      "sandbox": false,
+      "master_duration_s": 2859.133008,
+      "master_mbps": 0.65,
+      "longform": {
+        "duration_s": 2014.0,
+        "removed_s": 845.11,
+        "mbps": 0.81,
+        "thumb_staged": false,
+        "queued_id": "lf-20260805-if-yacht",
+        "already_present": false,
+        "queue_total": 40
+      },
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 2859.2
+      },
+      "words": 7276,
+      "segments": 452,
+      "glossary": "Kaspa:1",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-if-yacht-20260805@2026-08-05T20:03:32",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-if-yacht-20260805",
+    "started_at": "2026-08-05T20:03:32",
+    "ended_at": "2026-08-05T20:04:36",
+    "duration_s": 64.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "if-yacht",
+    "summary": {
+      "batch": "if-yacht",
+      "sandbox": false,
+      "clips": 2,
+      "total_s": 254.0,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\if-yacht\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "if-robinhood-2b": 129.871,
+        "dead-coins-disagree": 124.119
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-eliza-20260806@2026-08-06T17:25:12",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-eliza-20260806",
+    "started_at": "2026-08-06T17:25:12",
+    "ended_at": "2026-08-06T17:52:01",
+    "duration_s": 1608.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "eliza",
+    "summary": {
+      "slug": "eliza",
+      "sandbox": false,
+      "master_duration_s": 3474.633333,
+      "master_mbps": 0.64,
+      "longform": {
+        "duration_s": 2155.8,
+        "removed_s": 1318.82,
+        "mbps": 0.81,
+        "thumb_staged": false,
+        "queued_id": "lf-20260806-eliza",
+        "already_present": false,
+        "queue_total": 41
+      },
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 3474.7
+      },
+      "words": 7482,
+      "segments": 529,
+      "glossary": "Kaspa:1",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-eliza-20260806@2026-08-06T18:14:29",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-eliza-20260806",
+    "started_at": "2026-08-06T18:14:29",
+    "ended_at": "2026-08-06T18:16:57",
+    "duration_s": 147.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "eliza",
+    "summary": {
+      "batch": "eliza",
+      "sandbox": false,
+      "clips": 6,
+      "total_s": 553.0,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\eliza\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "eliza-collapse": 157.631,
+        "phantom-hack": 126.167,
+        "trading-against-ourselves": 143.455,
+        "trump-coin-investigation": 71.447,
+        "eliza-collapse-impact": 25.727,
+        "phantom-hack-impact": 28.583
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-eliza-20260806@2026-08-06T19:17:33",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-eliza-20260806",
+    "started_at": "2026-08-06T19:17:33",
+    "ended_at": "2026-08-06T19:19:59",
+    "duration_s": 146.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "eliza",
+    "summary": {
+      "batch": "eliza",
+      "sandbox": false,
+      "clips": 2,
+      "total_s": 180.4,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\eliza\\dashboard.html",
+      "clip_durations": {
+        "phantom-hack": 85.16,
+        "trading-against-ourselves": 95.26
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-stub-20260807-185823@2026-08-07T18:58:23",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-stub-20260807-185823",
+    "started_at": "2026-08-07T18:58:23",
+    "ended_at": "2026-08-07T18:58:23",
+    "duration_s": 0.3,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": {
+      "batch": "stub-batch",
+      "stub": true,
+      "clips": 2
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-stub-20260807-185832@2026-08-07T18:58:33",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-stub-20260807-185832",
+    "started_at": "2026-08-07T18:58:33",
+    "ended_at": "2026-08-07T18:58:33",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": null,
+    "error": "finish_batch.py --stage fillers exit code 3; output tail:\nstub: pretending to finish\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "publish-stub-20260807-185835@2026-08-07T18:58:35",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-stub-20260807-185835",
+    "started_at": "2026-08-07T18:58:35",
+    "ended_at": "2026-08-07T18:58:35",
+    "duration_s": 0.2,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": {
+      "batch": "stub-batch",
+      "stub": true,
+      "added": 1
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-stub-20260807-185838@2026-08-07T18:58:38",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-stub-20260807-185838",
+    "started_at": "2026-08-07T18:58:38",
+    "ended_at": "2026-08-07T18:58:38",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": null,
+    "error": "publish-shorts.py exit code 3; output tail:\nstub: pretending to publish\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "publish-sbx-batch-20260807@2026-08-07T18:59:38",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-sbx-batch-20260807",
+    "started_at": "2026-08-07T18:59:38",
+    "ended_at": "2026-08-07T18:59:39",
+    "duration_s": 0.9,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": "sbx-batch",
+    "summary": null,
+    "error": "persona-lint.py (queue violations — fix them, then re-run) exit code 1; output tail:\n=== shorts.json ===\n  [em/en dash] shorts.json.$note\n      ...TEST SANDBOX shorts.json — not production...\n\nDone. 1 violation(s).\n(Voice/tone isn't lintable — write captions in Mike's persona; this only catches the deterministic AI-tells.)\n"
+  },
+  {
+    "run_id": "publish-sbx-rerun@2026-08-07T19:00:01",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-sbx-rerun",
+    "started_at": "2026-08-07T19:00:01",
+    "ended_at": "2026-08-07T19:00:01",
+    "duration_s": 0.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "sbx-batch",
+    "summary": {
+      "batch": "sbx-batch",
+      "sandbox": true,
+      "date": "2026-08-07",
+      "clips": 2,
+      "added": 0,
+      "skipped": 2,
+      "dest_dir": "C:\\Users\\mnede\\AppData\\Local\\Temp\\claude\\C--Users-mnede-Documents-Claude-social-media\\a6082b88-4374-465f-ac94-f88676d23768\\scratchpad\\sbx-publish\\shorts-dest\\sbx-batch-2026-08-07",
+      "queue_total": 2,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-sbx-drill1@2026-08-07T19:00:21",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-sbx-drill1",
+    "started_at": "2026-08-07T19:00:21",
+    "ended_at": "2026-08-07T19:00:21",
+    "duration_s": 0.3,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": "sbx-batch",
+    "summary": null,
+    "error": "clip-a: staged md5 f45842343f14af2225a14290b64447d6 != render md5 78fe837689174f0530d686870b8d950e — the render changed after staging (post-QA re-render?); re-copy and re-run"
+  },
+  {
+    "run_id": "intake-early-crash-20260807@2026-08-07T18:46:17",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-early-crash-20260807",
+    "started_at": "2026-08-07T18:46:17",
+    "ended_at": "2026-08-07T19:04:36",
+    "duration_s": 1098.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "early-crash",
+    "summary": {
+      "slug": "early-crash",
+      "sandbox": false,
+      "master_duration_s": 1818.566667,
+      "master_mbps": 0.67,
+      "longform": {
+        "duration_s": 1335.9,
+        "removed_s": 482.64,
+        "mbps": 0.81,
+        "thumb_staged": false,
+        "queued_id": "lf-20260807-early-crash",
+        "already_present": false,
+        "queue_total": 42
+      },
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 1818.6
+      },
+      "words": 4317,
+      "segments": 270,
+      "glossary": "none",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-sbx-batch-20260807@2026-08-07T19:06:17",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-sbx-batch-20260807",
+    "started_at": "2026-08-07T19:06:17",
+    "ended_at": "2026-08-07T19:07:45",
+    "duration_s": 87.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "sbx-batch",
+    "summary": {
+      "batch": "sbx-batch",
+      "sandbox": true,
+      "clips": 2,
+      "total_s": 49.7,
+      "filler_cuts": 1,
+      "words": {
+        "clip-a": 125,
+        "clip-b": 67
+      },
+      "dashboard": "C:\\Users\\mnede\\AppData\\Local\\Temp\\claude\\C--Users-mnede-Documents-Claude-social-media\\a6082b88-4374-465f-ac94-f88676d23768\\scratchpad\\sbx-finish\\shorts\\sbx-batch\\dashboard.html",
+      "clip_durations": {
+        "clip-a": 29.7,
+        "clip-b": 20.0
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-early-crash-20260807@2026-08-07T19:26:40",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-early-crash-20260807",
+    "started_at": "2026-08-07T19:26:40",
+    "ended_at": "2026-08-07T19:28:50",
+    "duration_s": 130.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "early-crash",
+    "summary": {
+      "batch": "early-crash",
+      "sandbox": false,
+      "clips": 7,
+      "total_s": 516.9,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\early-crash\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "akita-3b-robinhood": 187.799,
+        "jobs-shock-october-green": 125.623,
+        "way-off-moon-calls": 44.487,
+        "tendies-funny-stupid": 48.807,
+        "endure-the-pain": 47.647,
+        "akita-3b-robinhood-impact": 43.063,
+        "jobs-shock-october-green-impact": 19.503
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-early-crash-20260807@2026-08-07T21:49:50",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-early-crash-20260807",
+    "started_at": "2026-08-07T21:49:50",
+    "ended_at": "2026-08-07T21:53:48",
+    "duration_s": 237.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "early-crash",
+    "summary": {
+      "batch": "early-crash",
+      "sandbox": false,
+      "clips": 5,
+      "total_s": 257.7,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\early-crash\\dashboard.html",
+      "clip_durations": {
+        "akita-3b-robinhood": 128.137,
+        "way-off-moon-calls": 32.24,
+        "tendies-funny-stupid": 34.509,
+        "endure-the-pain": 32.032,
+        "akita-3b-robinhood-impact": 30.77
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-early-crash-20260807@2026-08-07T22:04:13",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-early-crash-20260807",
+    "started_at": "2026-08-07T22:04:13",
+    "ended_at": "2026-08-07T22:07:25",
+    "duration_s": 191.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "early-crash",
+    "summary": {
+      "batch": "early-crash",
+      "sandbox": false,
+      "clips": 5,
+      "total_s": 257.7,
+      "filler_cuts": 0,
+      "words": {
+        "akita-3b-robinhood": 402,
+        "way-off-moon-calls": 126,
+        "tendies-funny-stupid": 140,
+        "endure-the-pain": 146,
+        "akita-3b-robinhood-impact": 76
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\early-crash\\dashboard.html",
+      "clip_durations": {
+        "akita-3b-robinhood": 128.14,
+        "way-off-moon-calls": 32.24,
+        "tendies-funny-stupid": 34.51,
+        "endure-the-pain": 32.03,
+        "akita-3b-robinhood-impact": 30.77
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-early-crash-20260808@2026-08-08T14:33:50",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-early-crash-20260808",
+    "started_at": "2026-08-08T14:33:50",
+    "ended_at": "2026-08-08T14:33:51",
+    "duration_s": 0.8,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": "early-crash",
+    "summary": null,
+    "error": "ec-20260808-akita-3b-robinhood: em/en dash in the queue entry"
+  },
+  {
+    "run_id": "publish-early-crash-20260808@2026-08-08T14:34:47",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-early-crash-20260808",
+    "started_at": "2026-08-08T14:34:47",
+    "ended_at": "2026-08-08T14:34:48",
+    "duration_s": 0.8,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": "early-crash",
+    "summary": null,
+    "error": "ec-20260808-akita-3b-robinhood: platform block(s) not pending: ['yt_shorts', 'ig_reels', 'x', 'tiktok', 'facebook', 'rumble', 'bitchute']"
+  },
+  {
+    "run_id": "repurpose-stub-20260809-092251@2026-08-09T09:22:51",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-stub-20260809-092251",
+    "started_at": "2026-08-09T09:22:51",
+    "ended_at": "2026-08-09T09:22:52",
+    "duration_s": 0.4,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": {
+      "batch": "stub-batch",
+      "stub": true,
+      "images_ok": 1
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-stub-20260809-092321@2026-08-09T09:23:21",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-stub-20260809-092321",
+    "started_at": "2026-08-09T09:23:21",
+    "ended_at": "2026-08-09T09:23:22",
+    "duration_s": 0.2,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": "stub",
+    "summary": null,
+    "error": "lane3_batch.py --stage generate exit code 3; output tail:\nstub: pretending to repurpose\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "repurpose-sbx-lane3-20260809@2026-08-09T09:23:54",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-sbx-lane3-20260809",
+    "started_at": "2026-08-09T09:23:54",
+    "ended_at": "2026-08-09T09:23:56",
+    "duration_s": 2.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "sbx-lane3",
+    "summary": {
+      "batch": "sbx-lane3",
+      "sandbox": true,
+      "fake_gen": true,
+      "date": "2026-08-09",
+      "images": {
+        "planned": 3,
+        "generated": 3,
+        "skipped": 0,
+        "verified": 3
+      },
+      "entries_added": 6,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "x-threads.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "yt-posts.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "yt-text-polls.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "ig-single-image.json": {
+          "planned": 1,
+          "queue_total": 1
+        }
+      },
+      "lint": "clean",
+      "registered": "sbx-lane3"
+    },
+    "error": null
+  },
+  {
+    "run_id": "sbx-rerun@2026-08-09T09:25:21",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "sbx-rerun",
+    "started_at": "2026-08-09T09:25:21",
+    "ended_at": "2026-08-09T09:25:23",
+    "duration_s": 1.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "sbx-lane3",
+    "summary": {
+      "batch": "sbx-lane3",
+      "sandbox": true,
+      "fake_gen": true,
+      "date": "2026-08-09",
+      "images": {
+        "planned": 3,
+        "generated": 0,
+        "skipped": 3,
+        "verified": 3
+      },
+      "entries_added": 0,
+      "entries_skipped": 6,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "x-threads.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "yt-posts.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "yt-text-polls.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "ig-single-image.json": {
+          "planned": 1,
+          "queue_total": 1
+        }
+      },
+      "lint": "clean",
+      "registered": "sbx-lane3"
+    },
+    "error": null
+  },
+  {
+    "run_id": "sbx-perle@2026-08-09T09:28:18",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "sbx-perle",
+    "started_at": "2026-08-09T09:28:18",
+    "ended_at": "2026-08-09T09:28:20",
+    "duration_s": 2.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "sbx-lane3",
+    "summary": {
+      "batch": "sbx-lane3",
+      "sandbox": true,
+      "fake_gen": true,
+      "date": "2026-08-09",
+      "images": {
+        "planned": 3,
+        "generated": 3,
+        "skipped": 0,
+        "verified": 3
+      },
+      "entries_added": 6,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "x-threads.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "yt-posts.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "yt-text-polls.json": {
+          "planned": 1,
+          "queue_total": 1
+        },
+        "ig-single-image.json": {
+          "planned": 1,
+          "queue_total": 1
+        }
+      },
+      "lint": "clean",
+      "registered": "sbx-lane3"
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-tutorial-20260809@2026-08-09T09:06:31",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-tutorial-20260809",
+    "started_at": "2026-08-09T09:06:31",
+    "ended_at": "2026-08-09T09:40:53",
+    "duration_s": 2062.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "tutorial",
+    "summary": {
+      "slug": "tutorial",
+      "sandbox": false,
+      "master_duration_s": 4597.266667,
+      "master_mbps": 0.65,
+      "longform": {
+        "duration_s": 3034.8,
+        "removed_s": 1562.47,
+        "mbps": 0.83,
+        "thumb_staged": false,
+        "queued_id": "lf-20260809-tutorial",
+        "already_present": false,
+        "queue_total": 43
+      },
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 4597.3
+      },
+      "words": 10132,
+      "segments": 1214,
+      "glossary": "Kaspa:15",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-tutorial-20260809@2026-08-09T09:50:25",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-tutorial-20260809",
+    "started_at": "2026-08-09T09:50:25",
+    "ended_at": "2026-08-09T10:29:29",
+    "duration_s": 2343.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "tutorial",
+    "summary": {
+      "batch": "tutorial",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-08-09",
+      "images": {
+        "planned": 17,
+        "generated": 17,
+        "skipped": 0,
+        "verified": 17
+      },
+      "entries_added": 14,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 318
+        },
+        "x-threads.json": {
+          "planned": 2,
+          "queue_total": 81
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 67
+        },
+        "yt-posts.json": {
+          "planned": 2,
+          "queue_total": 146
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 96
+        },
+        "ig-single-image.json": {
+          "planned": 1,
+          "queue_total": 122
+        }
+      },
+      "lint": "clean",
+      "registered": "tutorial"
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-tutorial-20260809-fix1@2026-08-09T11:15:57",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-tutorial-20260809-fix1",
+    "started_at": "2026-08-09T11:15:57",
+    "ended_at": "2026-08-09T11:24:22",
+    "duration_s": 504.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "tutorial",
+    "summary": {
+      "batch": "tutorial",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-08-09",
+      "images": {
+        "planned": 17,
+        "generated": 2,
+        "skipped": 15,
+        "verified": 17
+      },
+      "entries_added": 0,
+      "entries_skipped": 14,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 318
+        },
+        "x-threads.json": {
+          "planned": 2,
+          "queue_total": 81
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 67
+        },
+        "yt-posts.json": {
+          "planned": 2,
+          "queue_total": 146
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 96
+        },
+        "ig-single-image.json": {
+          "planned": 1,
+          "queue_total": 122
+        }
+      },
+      "lint": "clean",
+      "registered": "tutorial"
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-tutorial-20260809@2026-08-09T11:39:29",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-tutorial-20260809",
+    "started_at": "2026-08-09T11:39:29",
+    "ended_at": "2026-08-09T11:41:16",
+    "duration_s": 107.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "tutorial",
+    "summary": {
+      "batch": "tutorial",
+      "sandbox": false,
+      "clips": 8,
+      "total_s": 431.2,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\tutorial\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "tut-94x-euphoria": 87.255,
+        "robinhood-meme-rankings": 98.783,
+        "binance-kaspa-catch22": 38.095,
+        "freaking-early-not-degen": 52.087,
+        "doginme-100x-if-500x": 81.791,
+        "tut-94x-euphoria-impact": 28.143,
+        "binance-kaspa-catch22-impact": 23.247,
+        "freaking-early-not-degen-impact": 21.783
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-tutorial-20260809-4b@2026-08-09T12:03:38",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-tutorial-20260809-4b",
+    "started_at": "2026-08-09T12:03:38",
+    "ended_at": "2026-08-09T12:05:17",
+    "duration_s": 98.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "tutorial",
+    "summary": {
+      "batch": "tutorial",
+      "sandbox": false,
+      "clips": 8,
+      "total_s": 400.9,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\tutorial\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "tut-94x-euphoria": 87.255,
+        "robinhood-meme-rankings": 98.783,
+        "binance-kaspa-catch22": 38.095,
+        "freaking-early-not-degen": 52.087,
+        "doginme-100x-if-500x": 51.535,
+        "tut-94x-euphoria-impact": 28.143,
+        "binance-kaspa-catch22-impact": 23.247,
+        "freaking-early-not-degen-impact": 21.783
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-tutorial-20260809@2026-08-09T14:40:59",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-tutorial-20260809",
+    "started_at": "2026-08-09T14:40:59",
+    "ended_at": "2026-08-09T14:45:32",
+    "duration_s": 273.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "tutorial",
+    "summary": {
+      "batch": "tutorial",
+      "sandbox": false,
+      "clips": 8,
+      "total_s": 340.6,
+      "min_sil": 0.95,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\tutorial\\dashboard.html",
+      "clip_durations": {
+        "tut-94x-euphoria": 78.831,
+        "robinhood-meme-rankings": 79.463,
+        "binance-kaspa-catch22": 31.96,
+        "freaking-early-not-degen": 43.328,
+        "doginme-100x-if-500x": 39.613,
+        "tut-94x-euphoria-impact": 28.223,
+        "binance-kaspa-catch22-impact": 19.018,
+        "freaking-early-not-degen-impact": 20.122
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-tutorial-20260809@2026-08-09T15:42:54",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-tutorial-20260809",
+    "started_at": "2026-08-09T15:42:54",
+    "ended_at": "2026-08-09T15:46:20",
+    "duration_s": 205.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "tutorial",
+    "summary": {
+      "batch": "tutorial",
+      "sandbox": false,
+      "clips": 8,
+      "total_s": 340.6,
+      "filler_cuts": 0,
+      "words": {
+        "tut-94x-euphoria": 198,
+        "robinhood-meme-rankings": 251,
+        "binance-kaspa-catch22": 105,
+        "freaking-early-not-degen": 165,
+        "doginme-100x-if-500x": 126,
+        "tut-94x-euphoria-impact": 63,
+        "binance-kaspa-catch22-impact": 62,
+        "freaking-early-not-degen-impact": 73
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\tutorial\\dashboard.html",
+      "clip_durations": {
+        "tut-94x-euphoria": 78.83,
+        "robinhood-meme-rankings": 79.46,
+        "binance-kaspa-catch22": 31.96,
+        "freaking-early-not-degen": 43.33,
+        "doginme-100x-if-500x": 39.61,
+        "tut-94x-euphoria-impact": 28.22,
+        "binance-kaspa-catch22-impact": 19.02,
+        "freaking-early-not-degen-impact": 20.12
+      }
+    },
+    "error": null
   }
 ]

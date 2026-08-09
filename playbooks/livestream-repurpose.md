@@ -43,11 +43,24 @@ NOT feed verticalize / clip selection. Shows on the dashboard **Longs** tab.
 vertical (Phase 2) → find topics, 90s chunk-and-group (Phase 3) → clip selection (4) → review dashboard
 (4b) → tighten (5) → silence removal (5B) → Whisper captions (6) → Remotion render (7) → publish (8).
 
-> **Canonical since 2026-08-04 (LangGraph Wave 2):** the Phase 4 cut exec is ONE graph invocation —
-> `python video-creation/livestream-repurpose/graph/run.py cut --batch <batch>` — run AFTER the
-> clip-strategist's `clip-plan.json` lands in `video-creation/shorts/<batch>/` (the judgment seam).
-> It cuts every planned clip, builds the canonical dashboard, registers the batch, and ENDS at
-> Mike's Phase 4b review. Phases 5+ continue manually until Waves 3-6 port them.
+> **Canonical (LangGraph Waves 2-5): every mechanical Lane 2 segment is ONE graph invocation**
+> (`run.py` = `video-creation/livestream-repurpose/graph/run.py`); each starts after its judgment
+> seam lands on disk and ends at the next gate:
+> - **cut** (Wave 2, blessed 2026-08-04): `python run.py cut --batch <batch>` — after the
+>   clip-strategist's `clip-plan.json` lands; ends at Mike's 4b review.
+> - **tighten + 5B** (Wave 3, blessed 2026-08-06): `python run.py tighten --batch <batch>
+>   --min-sil N` — after Mike's 4b verdicts + the tighten-strategists' `tighten-plan.json`;
+>   min-sil = Mike's per-batch knob; ends at his 2nd review.
+> - **finish = 5C + 6 + render-assets** (Wave 4, built 2026-08-07): `python run.py finish
+>   --batch <batch>` — ONLY after Mike's 2nd review (the invocation is his approval record);
+>   optional `filler-plan.json` = the adjudicated 5C spans (absent = passthrough); ends at the
+>   builder frontier with -final spines, whisper-words, and GOP-safe staged render-assets.
+> - **Phase 7 stays agent territory**: remotion-builder per clip (BROLL-PLAN, ChatGPT b-roll,
+>   comp, SFX, render, gate) — the browser image stack ports LAST.
+> - **publish** (Wave 5, built 2026-08-07): `python run.py publish --batch <batch> --date D` —
+>   ONLY after Mike gates the renders AND authorizes publish, with `publish-meta.json`
+>   (hook/caption/tags) authored first. Stages the queue + md5-verifies + persona-lints;
+>   POSTING stays Mike-gated and sequential.
 Publish hands off via **`/publish-shorts`**, which writes `schedule-tweets/data/shorts.json`. Shows on the
 **Shorts** tab.
 - **Canonical detail:** `video-creation/SKILL.md` (Phases 1B–8) + `video-creation/PUBLISH-SHORTS.md`.
@@ -57,8 +70,19 @@ Publish hands off via **`/publish-shorts`**, which writes `schedule-tweets/data/
 Runs off **lane 2's transcript** (`livestream-repurpose/transcripts/<name VERTICAL>/..._plain.txt`,
 registered in `batches.json`) → tweets / one-liners+images / threads / X polls / YT polls / YT posts /
 IG single-image → `schedule-tweets/data/*.json` (`x-tweets`, `x-threads`, `x-polls`, `yt-posts`,
-`yt-text-polls`, `ig-single-image`). Images via `repurpose/gen-batch.js` (persistent chat, every image
-unique).
+`yt-text-polls`, `ig-single-image`).
+
+> **Canonical (LangGraph Wave 6, built 2026-08-09): the mechanical half is ONE graph invocation.**
+> DRAFTING stays judgment in the Claude session (topics, fact-check, all copy, image prompts —
+> per `repurpose/SKILL.md`), and lands on disk as **`repurpose/output/<batch>-lane3-plan.json`**.
+> Then: `python run.py repurpose --batch <batch>` — generates every image via the ported Python
+> browser stack (`repurpose/gen_images.py` + `chat_pool.py`/`chat_delete.py`, pool-managed chats,
+> `chatgpt` stage lock, one item per invocation), verifies them (dims/dup/bytes), appends the six
+> queues idempotently (`queue_writer.py`), persona-lints each touched file, and flips
+> `batches.json pipelines.repurpose=done`. Visual-QA the images after the run; Mike reviews the
+> pending entries on the :8766 Social tab. Hard gates in the plan validator: em dashes, chart
+> emojis, image-id uniqueness, IG = Kaspa ONLY, X polls = Kaspa/TAO/Toncoin ONLY, threads 5-8.
+> The JS twins (`gen-images.js`/`chat-pool.js`/`chat-delete.js`) are FROZEN rollback.
 - **Canonical detail:** `repurpose/SKILL.md`.
 - **Playbooks:** `playbooks/repurpose.md` · images `playbooks/image-gen.md`.
 

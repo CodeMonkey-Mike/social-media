@@ -2,14 +2,14 @@
   "$doc": {
     "what": "Durable registry of livestream-repurpose batches for the whole social-media repo. One object per batch; persists for finished (archived) batches too. Paths are relative to this file's directory (the repo root).",
     "consumers": [
-      "cleanup/cleanup.js (video-creation target) — protects ACTIVE batches' directories; treats everything else as recyclable.",
-      "scripts/reconcile-batch-status.js — recomputes each batch's `status` (active|completed) from the queues' batch field; the authority on status, run before cleanup.",
-      "repurpose/SKILL.md — reads transcript_plain of the next batch whose pipelines.repurpose is 'pending'.",
-      "scripts/publish-shorts.py — (future) batch -> render folder + shorts.json source."
+      "cleanup/cleanup.js (video-creation target) \u2014 protects ACTIVE batches' directories; treats everything else as recyclable.",
+      "scripts/reconcile-batch-status.js \u2014 recomputes each batch's `status` (active|completed) from the queues' batch field; the authority on status, run before cleanup.",
+      "repurpose/SKILL.md \u2014 reads transcript_plain of the next batch whose pipelines.repurpose is 'pending'.",
+      "scripts/publish-shorts.py \u2014 (future) batch -> render folder + shorts.json source."
     ],
     "status_values": {
       "active": "current batch still in progress; its directories/files are protected from cleanup.",
-      "completed": "fully published (every queued short AND long posted everywhere, repurpose done); its directories/files are eligible for cleanup. This is COMPUTED, not hand-set — run `node scripts/reconcile-batch-status.js` (it derives status from schedule-tweets/data/{shorts,longs}.json via each item's batch field). Do not edit status by hand. EXCEPTION: a batch published outside the queues (e.g. a longform uploaded manually, never staged to longs.json) can't be derived — set `manual_status: \"completed\"` on it and the reconciler honors that verbatim instead of deriving.",
+      "completed": "fully published (every queued short AND long posted everywhere, repurpose done); its directories/files are eligible for cleanup. This is COMPUTED, not hand-set \u2014 run `node scripts/reconcile-batch-status.js` (it derives status from schedule-tweets/data/{shorts,longs}.json via each item's batch field). Do not edit status by hand. EXCEPTION: a batch published outside the queues (e.g. a longform uploaded manually, never staged to longs.json) can't be derived \u2014 set `manual_status: \"completed\"` on it and the reconciler honors that verbatim instead of deriving.",
       "archived": "legacy synonym for completed (pre-reconciler); still honoured by cleanup as eligible. New reconciler runs write 'completed'."
     },
     "pipelines": {
@@ -17,7 +17,7 @@
       "repurpose": "tweet/image side (repurpose/ skill): pending | done. The skill sets this to done after generating.",
       "longform": "longform-presentation side: render spotlight presentation -> stage to schedule-tweets longs.json (pending | done)."
     },
-    "note": "Older publishing batches exist in schedule-tweets/data/shorts.json (weekend-red-2026-05-24, remotion-2026-05-25) but predate this registry and have no retained video-creation source artifacts, so they are not listed here. Going forward, every new batch should keep its files under per-batch folders (remotion/out/<batch>/, shorts/<batch>-clips/, assets/<batch>/) so 'directories' can list them cleanly. Per-batch generated assets (b-roll, overlays, rendered clips) go under assets/projects/<batch>/ — see video-creation/SKILL.md 'Asset folder organization'.",
+    "note": "Older publishing batches exist in schedule-tweets/data/shorts.json (weekend-red-2026-05-24, remotion-2026-05-25) but predate this registry and have no retained video-creation source artifacts, so they are not listed here. Going forward, every new batch should keep its files under per-batch folders (remotion/out/<batch>/, shorts/<batch>-clips/, assets/<batch>/) so 'directories' can list them cleanly. Per-batch generated assets (b-roll, overlays, rendered clips) go under assets/projects/<batch>/ \u2014 see video-creation/SKILL.md 'Asset folder organization'.",
     "track_values": {
       "livestream": "default; a repurposed livestream recording",
       "longform-presentation": "a longform-presentation project (slide deck + presenter), built in video-creation/longform-presentation/",
@@ -25,6 +25,46 @@
     }
   },
   "batches": [
+    {
+      "batch": "early-crash",
+      "status": "active",
+      "date": "2026-08-07",
+      "livestream_title": "early-crash LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/early-crash/early-crash LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/early-crash LOW BPS VERTICAL/early-crash LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/early-crash LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/early-crash/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/early-crash",
+        "video-creation/shorts/early-crash"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-08-07."
+    },
+    {
+      "batch": "eliza",
+      "status": "active",
+      "date": "2026-08-06",
+      "livestream_title": "Eliza LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/Eliza/Eliza LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/Eliza LOW BPS VERTICAL/Eliza LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/Eliza LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/eliza/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/eliza",
+        "video-creation/shorts/eliza"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-08-06."
+    },
     {
       "batch": "if-yacht",
       "status": "active",
@@ -263,7 +303,7 @@
         "repurpose": "skip",
         "longform": "done"
       },
-      "note": "longform-edited project; comp video-creation/remotion/src/WhyAiPython.tsx (in Root.tsx). Published manually (not staged to longs.json), so completion cannot be derived from the queues: marked done via manual_status:\"completed\" (reconcile honors it verbatim). Renders were LOOSE in remotion/out/why-ai-python-v{1,2,3}.mp4 (v3 latest, 07:12). Now COMPLETED — cleanup may reclaim its directories.",
+      "note": "longform-edited project; comp video-creation/remotion/src/WhyAiPython.tsx (in Root.tsx). Published manually (not staged to longs.json), so completion cannot be derived from the queues: marked done via manual_status:\"completed\" (reconcile honors it verbatim). Renders were LOOSE in remotion/out/why-ai-python-v{1,2,3}.mp4 (v3 latest, 07:12). Now COMPLETED \u2014 cleanup may reclaim its directories.",
       "manual_status": "completed"
     },
     {
@@ -520,7 +560,7 @@
         "repurpose": "skip",
         "longform": "done"
       },
-      "note": "AI-narrated longform (NOT a livestream). ElevenLabs v2 clone narration for slides 1-7,9; Mike’s real recording for intro + slide 8 (Kaspa). Comp = video-creation/remotion/src/ZcashHack.tsx (registered in Root.tsx). Built per-segment to out/zc-seg/{slides1-7,slide8-v3,slide9}.mp4, then ffmpeg-concat intro + 3 segments -> FINAL at media/zcash exploit/AI Can Hack Blockchains FINAL.mp4 (11:42, ~99MB, approved 2026-06-08). Source artifacts (intro.mkv, slide8.mkv, EDIT2, narration scripts, deck, thumbnail.png) live in media/zcash exploit/ which cleanup does NOT scan. directories[] protects out/zc-seg during publish; out/zc-hack (old full render) + out/zc-test (stills) are recyclable; assets/zcash/* are age-based (30d). NEXT: stage to schedule-tweets/longform/ + queue in longs.json."
+      "note": "AI-narrated longform (NOT a livestream). ElevenLabs v2 clone narration for slides 1-7,9; Mike\u2019s real recording for intro + slide 8 (Kaspa). Comp = video-creation/remotion/src/ZcashHack.tsx (registered in Root.tsx). Built per-segment to out/zc-seg/{slides1-7,slide8-v3,slide9}.mp4, then ffmpeg-concat intro + 3 segments -> FINAL at media/zcash exploit/AI Can Hack Blockchains FINAL.mp4 (11:42, ~99MB, approved 2026-06-08). Source artifacts (intro.mkv, slide8.mkv, EDIT2, narration scripts, deck, thumbnail.png) live in media/zcash exploit/ which cleanup does NOT scan. directories[] protects out/zc-seg during publish; out/zc-hack (old full render) + out/zc-test (stills) are recyclable; assets/zcash/* are age-based (30d). NEXT: stage to schedule-tweets/longform/ + queue in longs.json."
     },
     {
       "batch": "banks-own-chain",
@@ -744,6 +784,26 @@
         "repurpose": "done"
       },
       "note": "Livestream 2026-07-27 (51:15). Lane 1 longform queued (longs.json lf-20260729-peach-minute). Lane 3 repurpose done. Lane 2: 8 clips cut, Mike deleted 1/6/7/8, remaining 4 tightened + desilenced (450ms), Remotion-built (all 4 gates PASS), and published to shorts.json as peach-minute-2026-07-29 with all 7 platforms pending. Numbering frozen at 2,3,4,5."
+    },
+    {
+      "batch": "tutorial",
+      "status": "active",
+      "date": "2026-08-09",
+      "livestream_title": "tutorial LOW BPS VERTICAL",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/tutorial/tutorial LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/tutorial LOW BPS VERTICAL/tutorial LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/tutorial LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/tutorial/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/tutorial",
+        "video-creation/shorts/tutorial"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "pending"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-08-09."
     }
   ]
 }

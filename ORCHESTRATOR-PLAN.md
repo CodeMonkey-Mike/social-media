@@ -298,20 +298,58 @@ Decisions locked with Mike 2026-08-02; do not re-litigate:_
      tightened spine incl. non-chronological assembly + relock; over-ceiling halt at a measured
      64.5%, outside-segment halt, clobber-guard + --force cases). **Live bless pending the next
      real tighten run.** Dashboard: lane 3 on LangGraph → Livestream.
-  4. **finish** (5B desilence + 5C filler + 6 captions) — wraps only (tools already canonical
-     Python); per-clip loop with the consecutive-failure kill-switch; 5C's discourse-like review
-     stays a seam.
-  5. **render slice** (Ph 7) — port `setup-batch-render-assets.js`; `render_clip` graph =
-     disk/temp/zombie preflight → supervised foreground render → `finalized_short_gate.py` →
-     teardown. remotion-builder agents keep authoring comps (TSX stays — hard rule) and invoke
-     the graph instead of raw render commands; `stage_lock.py` semaphores stay.
-  6. **publish** (Ph 8) — wrap `publish-shorts.py` + a mechanical guard for the documented
-     `--date` re-queue idempotency hole + persona-lint gate after the metadata-authoring seam.
-  7. **lane 3** — a Python queue-writer module (schemas + image-id-uniqueness + no-em-dash lint)
-     replaces the per-batch `_lane3_*.js` throwaway writers; **the ChatGPT browser stack
-     (`gen-images.js` / `chat-pool.js` / `chat-delete.js` / `generate-broll-reload.js`) ports
-     LAST** (Mike, 2026-08-02) — li_session-style lib growth, staged bless (read-only registry →
-     generation → deletion last), the title-deletion gate preserved exactly.
+  4. **finish** (5C filler + 6 caption source + render-assets; 5B moved INTO Wave 3's tighten) —
+     **BUILT + SANDBOX-BLESSED 2026-08-07** (with Wave 5, both in one stream on Mike's explicit
+     call — his "all of Lane 2 into LangGraph except ChatGPT image gen" overrode the
+     one-wave-per-stream cadence; both waves are wrap-and-verify around already-blessed tools, no
+     new render math). Canonical `livestream-repurpose/scripts/finish_batch.py`
+     (fillers→transcribe→assets→finalize): 5C spans from an OPTIONAL `filler-plan.json`
+     (adjudication stays a judgment seam; no plan = passthrough, every clip still gets
+     `-final.mp4`), canonical `cut_fillers.py` per clip (its own 8% ceiling), canonical
+     `transcribe_clips.py --force` off the -final spine (its spine resolution now prefers
+     `-final.mp4` — pre-fix it would caption a pre-5C spine), canonical NEW
+     `setup_render_assets.py` (ports `setup-batch-render-assets.js`, FROZEN as rollback: stages
+     the CURRENT final spine + bakes in the mandatory seek-friendly GOP re-encode, verified).
+     Graph = 8 nodes in `shorts_graph.py`; `run.py finish --batch <batch>`; runs AFTER Mike's
+     2nd review (the invocation IS his approval record); ends at the builder frontier.
+  5. **publish** (Ph 8) — **BUILT + SANDBOX-BLESSED 2026-08-07**: `publish-shorts.py` grew
+     `--meta publish-meta.json` (hook/caption/tags/title authored BEFORE the run — the
+     longform-meta.json seam contract; existing entries never touched, so Mike's hand-retitles
+     survive re-runs). Graph = publish → verify_publish (staged md5 vs the CURRENT render — the
+     2026-07-23 stale-stage hazard mechanized; complete entries; all 7 platforms pending;
+     durations; no em dashes; hashtag-free captions) → persona-lint gate → summary.
+     `run.py publish --batch <batch> --date D`; the `--date` re-queue hole is a mechanical
+     REFUSAL (a second date for a staged batch halts with guidance). Stages the queue ONLY —
+     POSTING stays Mike-gated and sequential.
+  6. **render slice** (Ph 7) — DELIBERATELY NOT a graph (2026-08-07): the render is inside the
+     remotion-builder's iterative QA loop (draft → chunk QA → render → whisper-verify → SFX
+     retimes → re-render); a one-shot graph would fight the loop. The mechanical pieces are
+     already gates in code (`finalized_short_gate.py`, `stage_lock.py`, and now the staged +
+     GOP-verified spine from Wave 4). ChatGPT b-roll generation stays in the builder — the
+     browser stack ports LAST (Mike, 2026-08-02; reaffirmed by his Wave 4/5 ask, 2026-08-07).
+  7. **lane 3 (Wave 6)** — **BUILT + SANDBOX-BLESSED 2026-08-09** (Mike's "get through lane
+     three, change any JavaScript to Python and put it into langgraph" overrode the browser-
+     stack-ports-LAST ordering from 2026-08-02). The ChatGPT browser stack ported to Python:
+     `repurpose/chat_pool.py` (registry lib, byte-compatible with the shared
+     `chatgpt-image-chats.json` — the still-JS builder b-roll scripts keep working against it) ·
+     `chat_delete.py` (title-deletion gate preserved EXACTLY: live title must start
+     b-roll/social; every delete API-verified 404) · `gen_images.py` (pool-managed generator:
+     reload-capture, ref-upload-before-baseline + post-send re-baseline, estuary preference,
+     ref-byte + sibling-dup rejection; in-page fetch bodies kept as literal JS). JS twins
+     (`gen-images.js`/`chat-pool.js`/`chat-delete.js`) FROZEN as rollback;
+     `generate-broll-reload.js`/`gen-batch-freshchat.js` stay JS with the Phase 7 builders.
+     NEW canonical `repurpose/queue_writer.py` (the queue-writer module: per-file schemas,
+     image-id uniqueness vs ALL queues+images dirs, em-dash/chart-emoji lint, IG-Kaspa-only +
+     X-poll-topic HARD gates, 5-8 thread rule, indent-preserving emoji-safe appends, idempotent
+     by id) + `lane3_batch.py` (stage runner; generate holds the `chatgpt` stage lock, one item
+     per invocation per the 2026-07-14 binding regression, refs last per chat). Judgment seam:
+     drafting lands in `repurpose/output/<batch>-lane3-plan.json`; graph
+     `graph/repurpose_graph.py` = generate → verify_images → queues → verify_queues → lint →
+     finalize → verify_finalize; `run.py repurpose --batch <b>`. Stub ok/fail green · sandbox
+     e2e green (fake-gen; sandbox never drives the real browser) · 7 refusal drills green ·
+     idempotent re-run green · emoji round-trip green · read-only live probe green (profile,
+     composer, session token, registry). **Live bless = the first real batch run** (staged
+     within it: registry read → generation → deletion sweep last).
 - **Lane 1 silence method = the canonical desilencer** (Mike, 2026-08-02): `desilence.py --nvenc
   --bps 700k`, dual-threshold, ONE pass, no crf-18 intermediate. The six
   `longform_desilence_<batch>.py` forks (single-threshold `silencedetect` — the banned method)

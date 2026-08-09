@@ -5,6 +5,23 @@ description: Turns long-form content (livestream transcripts, podcast episodes, 
 
 # Repurpose
 
+> **⚙️ GRAPH BANNER (Wave 6, 2026-08-09) — the MECHANICAL half of a livestream batch runs as ONE
+> LangGraph invocation.** Drafting stays exactly as this skill describes (topics, fact-check, every
+> word of copy, image prompts — all judgment, all in the session), but for a livestream batch the
+> approved drafts land in **`repurpose/output/<batch>-lane3-plan.json`** (schema:
+> `repurpose/queue_writer.py → validate_lane3_plan`) instead of being hand-appended, and then
+> **`python video-creation/livestream-repurpose/graph/run.py repurpose --batch <batch>`** executes
+> the plan: image generation via the ported **Python** browser stack (`gen_images.py` +
+> `chat_pool.py`/`chat_delete.py` — pool-managed chats, `chatgpt` stage lock, ONE item per
+> invocation, refs last per chat), image verification, idempotent queue appends
+> (`queue_writer.py`, emoji-safe), a persona-lint gate per touched file, and the batches.json
+> `pipelines.repurpose=done` flip. The validator mechanically enforces: no em dashes, no chart
+> emojis, image-id uniqueness vs ALL queues+images, **IG = Kaspa only**, **X polls =
+> Kaspa/TAO/Toncoin only**, threads 5-8 tweets. The JS stack (`gen-images.js` / `chat-pool.js` /
+> `chat-delete.js`) is **FROZEN rollback** — builder b-roll scripts still use their own JS against
+> the same shared chat registry. Ad-hoc single drafts outside a batch may still append directly per
+> the sections below.
+
 ## Scope (read this first)
 
 **This skill is for repurposing content into drafts and persisting approved drafts to the right files.** That's the whole job.
@@ -72,19 +89,23 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > **⛔ HARD RULE #1 — EVERY IMAGE IS UNIQUE. NEVER reuse an `image_id` or image file across two posts.**
 > Not for a one-liner variant of a longer tweet, not for two posts on the same topic, not from an already-posted tweet, not "to save generation time." Each tweet / IG post / slide gets its own freshly generated UUID and its own freshly generated image. If you catch yourself about to point two entries at the same file, STOP and generate a new one. (This is the single most-repeated mistake on this account — full rule + the mandatory pre-save duplicate scan are in the "every tweet gets a unique image" section below. Read it.)
 
-> **⛔ HARD RULE #2 — ALL IMAGE GENERATION RUNS THROUGH `gen-images.js` (pool-managed). NEVER loop `generate-image.js`.**
-> Generate every batch with **`repurpose/gen-images.js`**. It consults the chat registry
-> **`chatgpt-image-chats.json`** (repo root) via `repurpose/chat-pool.js`: it reuses the active ChatGPT
+> **⛔ HARD RULE #2 — ALL IMAGE GENERATION RUNS THROUGH THE POOL-MANAGED GENERATOR. NEVER loop `generate-image.js`.**
+> **Canonical since 2026-08-09: the PYTHON port `repurpose/gen_images.py`** (the JS twin
+> `gen-images.js` is FROZEN rollback with identical behavior). It consults the chat registry
+> **`chatgpt-image-chats.json`** (repo root) via `repurpose/chat_pool.py`: it reuses the active ChatGPT
 > chat for that `--prefix`/purpose while it's under the cap (~25 images), and **auto-rotates to a fresh
 > chat when full, dead, or missing** — capturing and recording the new chat URL itself. Chats are isolated
-> per purpose so styles never cross-contaminate. Just run it:
+> per purpose so styles never cross-contaminate. In a livestream batch the repurpose GRAPH invokes it
+> (see the graph banner at the top); for an ad-hoc run:
 > ```
-> node gen-images.js --list=<items.json> --prefix=x-tweets    # X tweets
-> node gen-images.js --list=<items.json> --prefix=yt-posts     # YT carousel/posts
-> node gen-images.js --list=<items.json> --prefix=ig-single    # IG 4:5 companions
+> python gen_images.py --list <items.json> --prefix x-tweets    # X tweets
+> python gen_images.py --list <items.json> --prefix yt-posts    # YT carousel/posts
+> python gen_images.py --list <items.json> --prefix ig-single   # IG 4:5 companions
 > ```
 > No hand-recorded chat URLs anymore — the pool manages them. `items.json` = `[{ "image_id":"<8hex>",
-> "slug":"<kebab>", "prompt":"...", "ref":"<optional logo path>" }]`; skips already-existing files (resumable).
+> "slug":"<kebab>", "prompt":"...", "ref":"<optional logo path or ARRAY of paths>" }]`; skips
+> already-existing files (resumable). Run ONE item per invocation when binding matters (refs,
+> carousels) — the graph's generate stage always does.
 > B-roll uses the same pool (purpose `broll`) via **`generate-broll-reload.js`** — the RELIABLE capture that supersedes the flaky DOM-poll `generate-broll-wlw.js` (outputs to `video-creation/assets/`; a `..\shorts\...\render-assets\` prefix in the `file` field lands it in a clip folder). The `file` path is joined onto `video-creation/assets/`, so it must be **RELATIVE** to that dir (e.g. `../longform-edited/media/<project>/assets/img/x.png`), NEVER an absolute `C:\...` path (that produces a broken concatenated dir).
 >
 > **⚠️ ALWAYS state the target ASPECT RATIO / orientation in EVERY b-roll prompt — GPT-Image DEFAULTS TO PORTRAIT (1024×1536) (Mike, 2026-07-10).** Omit it and you get vertical stills that don't fit the frame. For a **16:9 track** (longform-edited / longform-presentation) START the prompt with *"Wide landscape 16:9 horizontal image."* and end with *"Horizontal landscape orientation."* (yields ~1672×941 / 1536×1024 landscape). For **9:16 shorts / vertical-ai-persona** say *"vertical 9:16 portrait."* This bit the Clarity-Act longform b-roll (portrait 1024×1536 → fixed to 1672×941 by adding the landscape instruction). Same rule as the X-image aspect note below — but the b-roll generator needs it stated too, because b-roll prompts are atmosphere descriptions that easily forget it.

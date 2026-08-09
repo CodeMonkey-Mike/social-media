@@ -414,6 +414,172 @@ PHRASE_CORRECTIONS = [
     #    transcript's "then it was like" as probably "then I was like". Nobody hears an "I": the
     #    shipped pass, large-v3 on 20.0-30.5 s, large-v3 on 22.6-28.2 s and large-v3 on a tight
     #    26.4-28.0 s all return "and it was like". Do not add a rule for either.
+    # --- early-crash batch, 2026-08-07 (way-off-moon-calls clip) ---
+    # "if I give these high price PREDICTIONS" — the shipped word pass and large-v3 whole-clip both
+    # drop the plural s, which leaves the ungrammatical "these high price prediction" on screen.
+    # medium.en on an isolated 0.0-4.4 s returns "If I give these high price predictions, it might
+    # sound unrealistic", and the clip's own tighten plan quotes the master transcript the same way.
+    # 4 tokens -> 4 words, keyed on the full run so no bare "prediction" is ever touched.
+    (("these", "high", "price", "prediction"), ["these", "high", "price", "predictions"]),
+    # "we bought that END UP at the bottom in December" — a mumbled 0.20 s blip between "that" and
+    # "at" that no pass can resolve: the shipped pass and medium.en (isolated 7.4-11.0 s) hear
+    # "end up", large-v3 whole-clip hears "in the,". "we bought that end up at the bottom" is not
+    # English in any of them. Same class as ("this","said","my") -> ["this."] above: the noise MERGES
+    # into the word it interrupts (1-word replacement keeps the whole 8.50-8.96 s span) instead of
+    # putting invented words on screen. Renders "we bought that at the bottom in december."
+    (("that", "end", "up"), ["that"]),
+    # LAB is the named project of this clip and it has a real reference logo on disk (LAB.png). The
+    # montserrat preset lowercases everything via CSS, so brand CASING cannot disambiguate it from
+    # the English word "lab" — only the cashtag can. The house spelling in every queued post about
+    # this exact moment is "$LAB" (x-tweets.json: "I called a 20x on $LAB. It did a 353x."), while
+    # the same copy writes "Velvet" with NO cashtag, so velvet is left bare and only colour-tagged.
+    # Fires on all three occurrences (7.36, 12.96, 17.06 s). Idempotent: core("$lab") == "lab", so
+    # the fixpoint pass re-matches and re-emits the identical token, then converges.
+    (("lab", "token"), ["$lab", "token"]),
+    # "...I gave it like a 30x. I DID A 58x and I still think it has room to grow" — the shipped word
+    # pass renders the run as "a new to" (the "new" token has ZERO duration, i.e. a hallucination).
+    # large-v3 whole-clip AND medium.en on an isolated 28.3-31.0 s both return "like a 30x. I did a
+    # 58x"; a tighter 28.9-30.6 s window returns "do the 58x". Two independent models with context
+    # agree on "i did a", so that is what goes on screen. 4 tokens -> 4 words; the period after 30x
+    # is where both models punctuate. Keyed on the merged "30x" so nothing else can match.
+    (("30x", "a", "new", "to"), ["30x.", "i", "did", "a"]),
+    # "moon-boyish price predictions" — Whisper splits the compound; the house spelling is hyphenated
+    # (x-tweets.json: "Sometimes I get scared to give moon-boyish price predictions").
+    (("moon", "boyish"), ["moon-boyish"]),
+    # --- early-crash batch, 2026-08-07 (akita-3b-robinhood clip) ---
+    # The batch caption gate marks 38.4-40.8 s as a WORD-SALAD zone to caption FROM AUDIO ONLY. The
+    # shipped pass renders "look at that. God can the holy crap, man." — not English. medium.en on an
+    # isolated 37.4-42.6 s returns "Look at that GOD CANDLE. Holy crap, man." A "god candle" is the
+    # trader's name for exactly the candle he is pointing at, so that is what goes on screen.
+    # 3 tokens -> 2 words (the third timing is dropped, which is supported). Keyed on the three
+    # garbled tokens only, so "look at that." and "holy crap, man." keep their own timings and the
+    # three captions break exactly where he pauses.
+    (("god", "can", "the"), ["god", "candle."]),
+    # "look at that WICK" (50.26 s) — the shipped pass hears "way" (p 0.59) and "look at that way" is
+    # not English. medium.en on an isolated 49.6-52.6 s returns "look at that wick", and he is
+    # hovering the wick of the $3B candle at that exact moment. Keyed on the full run so no other
+    # "look at that" in the clip (there are six) can match.
+    (("look", "at", "that", "way"), ["look", "at", "that", "wick"]),
+    # "it JUST absolutely explode in the bull run" (8.72 s) — the shipped pass opens the sentence with
+    # "It's absolutely explode", which is ungrammatical. medium.en on an isolated 8.4-11.3 s returns
+    # "Just absolutely explode in the bull run", and the clip's own tighten plan quotes the master the
+    # same way ("just absolutely explode in the bull run"). Two independent sources vs one.
+    (("its", "absolutely", "explode"), ["just", "absolutely", "explode"]),
+    # "we're the early ONES. like we ARE the early ones" — the protected persona doubling. The shipped
+    # pass drops the plural on the FIRST half only ("the early one."); medium.en on an isolated
+    # 101.4-105.4 s returns "ones" both times. Keyed on the full run so a genuine "the early one"
+    # elsewhere is never touched.
+    (("were", "the", "early", "one"), ["we're", "the", "early", "ones."]),
+    # The chart's starting market cap. He says "120k market cap" and the batch caption gate requires
+    # it on screen as a DOLLAR figure (ear-verified against an isolated 20.4-23.6 s medium.en pass,
+    # which returns "down 120k market cap"). Idempotent: core("$120k") == "120k", so the fixpoint
+    # pass re-matches and re-emits the identical token, then converges.
+    (("120k", "market", "cap"), ["$120k", "market", "cap"]),
+    # The two Robinhood-chain tokens in the closing line. The shipped pass hears "cash gap" (p 0.28)
+    # and splits the What If ticker; medium.en on an isolated 123.3-128.14 s returns "Could Cashcat
+    # and What-If". Cash Cat is a real Robinhood-chain meme coin and the batch gate fixes the ticker
+    # spelling: What If is ALWAYS "$IF", never "$WHATIF". 5 tokens -> 4 words. CASCADING: the emitted
+    # ("cash","cat") is re-matched on the next fixpoint pass by the existing ("cash","cat") ->
+    # ["cashcat"] rule above, so it lands on the house spelling used by every earlier CashCat short.
+    (("cash", "gap", "and", "what", "if"), ["cash", "cat", "and", "$if"]),
+    # NOT corrected, deliberately (early-crash/akita-3b-robinhood), four calls tested against audio:
+    #  - "let me hover over right now" (52.54 s). The clip's tighten plan guessed "hover over IT right
+    #    now"; neither 1x pass produces an "it" (the shipped pass and medium.en on 51.9-56.4 s both
+    #    read "hover over right now"). Never ship a word no 1x pass produced.
+    #  - "hold on. hold on. hold on." (62.12 s). The tighten plan's protected-doubling list calls it
+    #    "hold up" x3 off the MASTER transcript; the shipped pass and medium.en on an isolated
+    #    61.3-68.6 s both hear "hold on". The doubling is protected either way (three separate
+    #    sentences, so cleanup()'s adjacent-token collapse never sees them).
+    #  - "just imagine how far, how far might go" (116.60 s). The plan flagged a possibly missing
+    #    "it"; neither pass produces one.
+    #  - "where is it?" (77.74 s). Low confidence (p 0.14) but medium.en's alternative is a filler
+    #    ("where is um..."), and "where is it?" is what he is doing. Left as shipped.
+    # NOT corrected, deliberately (early-crash/way-off-moon-calls): the batch caption gate flagged
+    # "and we did a 350x ON A LAB TOKEN" (16.92 s) as probably "on THE LAB token". Three 1x passes on
+    # this clip's own audio all return "on a lab token": the shipped word pass, large-v3 whole-clip,
+    # and medium.en on an isolated 16.2-18.0 s. The two EARLIER occurrences of the signature line
+    # genuinely read "on the lab token" (7.16, 12.78) and are left alone; the third is "a" and stays
+    # "a". Do not add a rule.
+    # --- early-crash batch, 2026-08-08 (akita-3b-robinhood-IMPACT clip, #6) ---
+    # This clip is the IMPACT cut of clip #1's material (master 1121.16-1164.18 sits inside clip 1's
+    # range), so clip #1's own whisper pass is a SECOND INDEPENDENT 1x pass over the same audio and is
+    # cited below as such (captionsEcAkita.ts, built from its whisper-words-verified.json).
+    # Phantom leading "And" at 0.00-0.44 s (p 0.18). The cut's in-point is the exact Whisper onset of
+    # "now" (tighten-plan: in 1121.16 = onset of "now I'm going to go over here"), so the 0.44 s token
+    # is a boundary artifact of the cut. THREE 1x passes agree there is no "and": medium.en on an
+    # isolated 0.00-3.40 s and large-v3 whole-clip both open "Now I'm gonna go over here", and clip #1
+    # captions the same sentence "now i'm going / to go over here to" (56.50 s). 6 tokens -> 5 words
+    # (the last timing is dropped, which is supported); keyed on the whole opening run so no ordinary
+    # "and now I'm going to go" in a future clip is touched.
+    (("and", "now", "im", "going", "to", "go"), ["now", "i'm", "going", "to", "go"]),
+    # "to the right. NOW WATCH THIS." (3.02 s) — the shipped pass hears "I watched this.", which is not
+    # what he does (he is about to show the chart, and Mike's own 4b title for this clip opens "Watch
+    # This:"). medium.en on an isolated 2.30-4.80 s returns "to the right. Now watch this. Oh my god.",
+    # large-v3 whole-clip returns "to the right now watch this", and clip #1 captions the identical
+    # line "now watch this." (58.82 s). Keyed on the preceding "right." so a genuine "I watched this"
+    # elsewhere can never match. 4 tokens -> 4 words, every timing preserved.
+    (("right", "i", "watched", "this"), ["right.", "now", "watch", "this."]),
+    # The hover/hunting region the tighten plan flagged as WORD SALAD to caption FROM AUDIO ONLY. The
+    # shipped pass renders "What? Where is some right here?"; "where is some" is not English. medium.en
+    # on an isolated 21.70-24.70 s returns "where's um right here right yeah" and a tighter 21.30-23.10 s
+    # returns "kind of what where's um", i.e. "candle. what? where's... um". The "um" is a FILLER and
+    # the house style drops fillers (cleanup() already ran by the time this fires, so it would survive
+    # if emitted) — so the run renders as "what? where's" with NO invented words. 4 tokens -> 2 words
+    # (the last two timings are dropped, which is supported); keyed on the leading "what" so the pair
+    # can only match this hunt.
+    (("what", "where", "is", "some"), ["what?", "where's"]),
+    # "A FREAKING INU without any centralized exchanges. ... A FREAKING INU." — the clip's punchline and
+    # Mike's exact 4b title ("Watch This: $3 Billion. A Freaking Inu."). Isolated on its own audio this
+    # cut never names Akita, so medium.en reads "I'm freaking a new" (26.62 s) and "I'm freakin' emu"
+    # (29.48 s) and the shipped pass reads "I freaking knew" with p 0.37/0.58/0.52 and 0.75/0.01/0.04 —
+    # the 0.01/0.04 is the model telling you it has nothing. Two 1x passes DO produce the words:
+    # large-v3 whole-clip on this spine returns "a freaking enu without any centralized exchanges", and
+    # clip #1's pass (same audio, full context, where he has just said "this is AKITA, AKITA INU")
+    # returns "A freaking Inu" BOTH times at p 0.88/0.95. Nothing is invented, and the audio was never
+    # altered. Both rules are keyed on their neighbouring words so a real "I freaking knew" can never
+    # match: the first on the following "without any centralized", the second on the preceding
+    # "exchanges". 6 -> 6 and 4 -> 4 words, every timing preserved.
+    (("i", "freaking", "knew", "without", "any", "centralized"),
+     ["a", "freaking", "inu", "without", "any", "centralized"]),
+    (("exchanges", "i", "freaking", "knew"), ["exchanges.", "a", "freaking", "inu."]),
+    # NOT corrected, deliberately (early-crash/akita-3b-robinhood-impact), three calls tested on this
+    # clip's own audio:
+    #  - "is this the 3 billion, 3 billion market cap?" (24.42 s). medium.en heard "This is the" on one
+    #    window and "it's the" on another, but the shipped word pass reads "Is this the" (p 0.43/0.77/
+    #    0.93) and clip #1's independent pass captions it "is this the 3 billion, 3 billion market cap?"
+    #    too. Two 1x passes agree; left as shipped.
+    #  - "hold on." x3 (6.28-7.12 s). The tighten plan's protected-doubling list calls it "hold up" x3
+    #    off the MASTER transcript; medium.en on an isolated 5.20-7.40 s hears "hold on hold on hold on"
+    #    and clip #1 captions the same three sentences "hold on." x3. Same finding as clip #1's builder.
+    #  - "3 billion" is NOT dollarised (19.62 / 25.00 / 25.58 s). Clip #1 renders this identical spoken
+    #    moment as bare "3 billion", and the two clips are cut from the same seconds of stream, so
+    #    inventing a "$" here would make the pair inconsistent on screen. Only the THUMBNAIL (code-drawn,
+    #    Mike's own title wording) carries the dollar sign.
+    # --- early-crash batch, 2026-08-07 (tendies-funny-stupid clip) ---
+    # The token is TENDIES (a Robinhood-chain meme coin). Whisper renders the name as "10 days" on
+    # the shipped word pass; an isolated medium.en pass on 4.10-5.50 s returns "and then there's
+    # TENDIES even though I haven't...", and large-v3 whole-clip returns "and then there's Tendies".
+    # Keyed on the preceding "there's" - "10 days" IS a real English phrase ("in 10 days"), so a bare
+    # ("10","days") pair would corrupt a future clip. 3 tokens -> 2 words (the 3rd timing is dropped,
+    # which is supported). Only ONE instance survives this clip's tighten (the other was cut).
+    (("theres", "10", "days"), ["there's", "tendies"]),
+    # "this reminds me of like the FARTCOIN concept" — the $1B Solana meme coin, and the exact
+    # comparison he is making ("stupid but funny, and people buy into it"). Three passes garble the
+    # same phoneme run three ways (shipped "far coin", large-v3 "Farcoin", medium.en "far corner")
+    # and a medium.en pass primed with a meme-coin initial_prompt returns "Fartcoin"; the batch
+    # tighten-plan's caption gate (read off the master transcript) also reads "fart coins". Same
+    # class as ("house","coin") -> "housecoin". 2 tokens -> 1 merged word keeps the whole span.
+    (("far", "coin"), ["fartcoin"]),
+    # "it's probably the type of MEME that Vlad will want to list" — the shipped pass drops the
+    # second syllable ("type of me"), medium.en hears "type of mean". large-v3 whole-clip returns
+    # "the type of meme", and the clip's tighten plan quotes the line the same way.
+    (("type", "of", "me"), ["type", "of", "meme"]),
+    # "imagine this goes to like 10 billion. JUST imagine." — the shipped pass renders the adverb as
+    # "is", which cannot join those two sentences (the batch gate flagged the same span, where the
+    # PRE-desilence audio had a ~1.9 s pause Whisper had hallucinated as a 2.18 s "is"). Two passes
+    # on the desilenced clip agree on "just" (large-v3 whole-clip and medium.en on an isolated
+    # 28.60-30.80 s). The added periods break the caption group on both sentence ends.
+    (("billion", "is", "imagine"), ["billion.", "just", "imagine."]),
     # Closing line — NO RULE, deliberately. An earlier build added
     #   (("robinhood","lists","what","if","right"), ["robinhood","lists","it","and it","runs"])
     # off the ORIGINAL master transcript ("lists run it"). RE-VERIFIED 2026-08-03 on this clip's own
@@ -424,6 +590,100 @@ PHRASE_CORRECTIONS = [
     # if might be"). Only TIME-STRETCHED passes (0.5x/0.65x/0.7x, an artifact-prone transform) hear
     # "run it". Shipping "lists it and it runs" would put words on screen that no 1x pass produced
     # and would fail the final-render whisper-verify. Do not re-add it.
+    # --- tutorial batch, 2026-08-09 (94x-euphoria clips 1 + 6) ---
+    # "and that's why CODEMONKEY MIKE has the greatest crypto community on the planet" — Mike's own
+    # community brand is ONE word. Whisper splits it into "code" + "monkey" every time (master
+    # 354.34-355.34 and both clips' own passes). The montserrat preset renders all-lowercase via CSS,
+    # so the CASING is invisible on screen and only this TOKEN MERGE changes anything. 2 tokens -> 1
+    # merged word, whole span kept. Same class as ("nine","hood") -> "ninehood".
+    (("code", "monkey"), ["codemonkey"]),
+    # "we did the 550X on NYX on BNB again" — NYX is the BNB-chain token of the 550x call. The
+    # phoneme run garbles differently on every pass and never into English: this clip's own small
+    # pass gives "Memoy" + "X", medium.en on an isolated 19.0-23.5 s gives "MemYX", large-v3 on a
+    # wider 16.5-23.5 s gives "Memoy X", and a 0.5x pass gives "MemYX" — all four keep the same
+    # "-yx / -nyx" tail. The master's OWN later utterance of the same call reads it plainly:
+    # "it was a 550X on an NYX, man" (4205.92), which is also where the leading "m"-ish onset comes
+    # from ("on an NYX"). The batch clip-plan flagged the same garble on the early-crash batch, so
+    # it recurs. Keyed on the non-word "memoy" so nothing real can ever match it.
+    (("memoy", "x"), ["nyx"]),
+    # --- tutorial batch, 2026-08-09 (94x-euphoria clip 1, the FULL cut; these five spans exist only
+    # in clip 1, which carries the hook segment and the 65x receipt that clip 6 does not) ---
+    # The token is TUTORIAL, ticker $TUT (persona project_handles maps tutorial/tut -> @tutorialtoken)
+    # and the batch clip-plan requires it styled "$TUT or Tutorial, never a common noun". The
+    # montserrat preset lowercases everything via CSS, so "Tutorial" renders identically to the
+    # ordinary English word and ONLY the cashtag disambiguates it (same finding as the $LAB rule
+    # above). Both occurrences are keyed on their neighbours, so an ordinary "tutorial" (a how-to
+    # video) in a future clip can never match. Idempotent: core("$tut") == "tut", so the fixpoint
+    # pass cannot re-match either key.
+    (("is", "tutorial", "on"), ["is", "$tut", "on"]),      # "this is $TUT on BNB" 9.18-11.08 s
+    (("so", "tutorial", "for"), ["so", "$tut", "for"]),    # "so $TUT, for those of you..." 12.08 s
+    # "for those of you who KNOW, YOU should have known" — the second limb of the anaphora the clip's
+    # tighten plan protects ("keep BOTH limbs ... keep 'you should have known' twice"). Whisper puts
+    # the comma one word late ("who know you, you should"), and cleanup()'s adjacent-duplicate
+    # collapse then eats the second "you" and leaves the ungrammatical "who know you, should have
+    # known" on screen. Moving the comma one token left restores the line. 4 -> 4 words, every
+    # timing preserved, keyed on the leading "who" so no ordinary "know you should" can match.
+    (("who", "know", "you", "should"), ["who", "know,", "you", "should"]),
+    # "it was like $1-point-something million" — the bottom market cap he multiplies the 65x off.
+    # The batch caption gate requires it on screen as a DOLLAR figure, and house style renders market
+    # caps as figures rather than spelled-out words (same class as ("900","k") -> "900k"). 4 tokens
+    # -> 2 words (the last two timings are dropped, which is supported).
+    (("one", "point", "something", "million"), ["$1-point-something", "million"]),
+    # THE HELD VOWEL, 49.2-51.2 s. The clip's tighten plan measured master 336.16-338.12 as
+    # continuous voiced audio at -17 to -20 dBFS whose F0 glides 245 -> 216 -> 211 -> 151 Hz and
+    # lands on the F0 of the transcribed "man" at 163 Hz: Mike sustaining "ohhhh" out of "holy crap"
+    # into "man", ONE phrase, and it records in terms "not dead air and not a sound drop ... CAPTION
+    # IT AS SPOKEN WORDS", with no caption hole allowed there. Re-measured on THIS spine at 50 ms
+    # RMS: unbroken -17 to -20 dBFS from 48.85 s through 53 s, with one 40 ms trough at 49.20 (the
+    # /p/ release of "crap"). Whisper transcribes NOTHING between 49.44 and 51.24, i.e. it silently
+    # omits 1.8 s of speech, so the word is re-onset to 49.25 in whisper-words-verified.json (see
+    # tut-94x-euphoria/_patch_words.py) and spelled with the sustain so the screen matches the ear.
+    # 5 -> 5 words, every timing preserved; keyed on the full run so no ordinary "oh man" matches.
+    (("oh", "man", "i", "hope", "these"), ["ohhh", "man.", "i", "hope", "these"]),
+    # --- tutorial batch, 2026-08-09 (binance-kaspa-catch22, clip 3, the FULL cut) ---
+    # NOTE Kaspa itself needs NO rule here: the clip's every "Casper" is already fixed by the global
+    # ("cas+per" -> kaspa) CORRECTION above. This is the CHAIN Kaspa, never Kasper-the-Ghost.
+    # "when it comes to the TECH, you know, Kaspa's a gem" — the clip's own passes all hear "tag"
+    # (small p 0.70, medium.en on an isolated 0.0-3.4 s p 0.46, medium.en on a tighter 0.0-2.6 s
+    # p 0.55) and "when it comes to the tag" is not English. The MASTER livestream pass, a fourth 1x
+    # decode of the same audio WITH full context, reads "tech," at 638.72 (p 0.42), and the clip
+    # plan's segment note quotes the line as "when it comes to the tech, Kaspa is a gem" — he is
+    # answering a live-chat question about whether Kaspa is a scam or a gem. Same precedent as the
+    # early-crash "a freaking inu" pair: the contextful 1x pass supplies the word, nothing invented.
+    # 4 -> 4 words, every timing preserved; keyed on "comes to the" so no other "tag" can match.
+    (("comes", "to", "the", "tag"), ["comes", "to", "the", "tech"]),
+    # The gem line is CONTRACTED in the audio and the clip's tighten plan requires it captioned as
+    # spoken ("Kaspa's a gem. Kaspa's the most beautiful thing ever.", "do not normalise"). Two
+    # unprompted 1x medium.en windows on this clip (0.00-3.40 and 0.00-2.60) both return "Casper's a
+    # gem. Casper's a-"; the small pass renders the copula as a separate " is" token. Both keys are
+    # 4 -> 3 (the copula token is absorbed), and both are keyed on the word BEFORE the name so an
+    # ordinary "kaspa is a gem" in a future clip cannot match.
+    (("know", "kaspa", "is", "a"), ["know,", "kaspa's", "a"]),          # 1.50-2.18 s
+    (("gem", "kaspa", "is", "the"), ["gem.", "kaspa's", "the"]),        # 2.30-3.38 s
+    # NEIRO, the Binance-listed meme token, is "Nero" on every decode in this livestream (the batch
+    # clip-plan flags all 11 master hits). Keyed on the preceding "about" so the Roman emperor and
+    # the software of the same name could never be rewritten by a bare token rule. EDITORIAL: Neiro
+    # is the example that PROVES the clip's point about the exchange, never a target.
+    (("about", "nero"), ["about", "neiro"]),
+    # THE PUNCHLINE, and the tighten plan pins its wording: 2073.52-2074.70 "captions as 'So it's
+    # kind of a strange catch-22' and NOT as any of the three decoder garbles ('strange to catch 22',
+    # 'not as strange a catch-22', 'catch one or two')". This clip's small pass and medium.en on an
+    # isolated 24.2-27.3 s both return the same garble, "kind of strange to catch 22": the article is
+    # swallowed and re-surfaces as a phantom "to" (p 0.48 / 0.29) in front of "catch". 6 tokens -> 4
+    # words, so the hyphenated number lands as ONE token and the group breaks on its period.
+    (("kind", "of", "strange", "to", "catch", "22"), ["kind", "of a", "strange", "catch-22."]),
+    # NOT corrected, deliberately (binance-kaspa-catch22):
+    #  - the false start at 26.48-27.56 that opens the closing segment. The tighten plan says to
+    #    caption it FROM AUDIO ONLY, and the two 1x passes disagree on its content (the small pass
+    #    reads "So like I said" with p 0.06 on "like"; medium.en reads "So I wouldn't have like I
+    #    said"; the MASTER reads "So when the,"). The only content all three share is "so ... like I
+    #    said", which is what the shipped tokens already produce, so nothing is invented here.
+    #  - "I would expect Kaspa to be skyrocketing" (29.9-31.74). medium.en garbles the tail as "cast
+    #    would it be"; the shipped pass reads "Casper to be", which the global correction turns into
+    #    "kaspa to be" — the reading the clip plan and the master both carry.
+    #  - the two "you know" fillers the tighten plan requires on screen are a MISSING-SPEECH problem,
+    #    not a mishear, so they are patched into whisper-words-verified.json (see
+    #    binance-kaspa-catch22/_patch_words.py) rather than being given a rule they could never match.
 ]
 
 
@@ -498,6 +758,22 @@ FILLER = {"uh", "um", "uhh", "umm", "mm", "hmm", "m"}
 PROTECTED_DOUBLES = [
     ("use", "use", "an", "app"),            # eliza/phantom-hack 66.62-67.48 s
     ("dont", "dont", "use", "a", "chrome"),  # eliza/phantom-hack 68.64-69.64 s
+    # early-crash/akita-3b-robinhood, both listed as KEPT persona doublings in the clip's tighten
+    # plan (the audio was deliberately left uncut, so the captions must not undo it):
+    ("was", "down", "down", "down", "down"),  # "it WAS DOWN, DOWN, DOWN, DOWN" 19.46-20.62 s
+    ("is", "akita", "akita", "inu"),          # "this is AKITA, AKITA INU" 11.32-12.86 s
+    # tutorial/94x-euphoria (clips 1 + 6), 2026-08-09. The cold open IS the repetition: "now look at
+    # this man. LOOK AT, LOOK AT THIS. LOOK, LOOK. holy crap." The clip took ZERO tighten removals
+    # and its plan says in terms: "do NOT dedupe 'look at, look at this, look, look' or 'holy crap',
+    # the repetition IS the clip." Only the final adjacent pair is at risk (the earlier ones
+    # alternate with "at" and survive), so the run is keyed with the words on both sides of it.
+    ("this", "look", "look", "holy"),         # "look at this. LOOK, LOOK. holy crap" 3.26-5.28 s
+    # tutorial/94x-euphoria clip 1 (the FULL cut), 2026-08-09. NOT a stutter: two different
+    # sentences butt against each other across a 0.22 s pause, "look at THIS. THIS one actually
+    # makes a lot of sense." The collapse ate the second "This" and shipped a caption reading
+    # "one actually makes", which opens the clip's second sentence on a dangling word. Keyed with
+    # the words on both sides so a genuine "this this" stutter elsewhere still collapses.
+    ("at", "this", "this", "one"),            # "look at THIS. THIS one actually" 6.28-7.50 s
 ]
 
 
@@ -596,16 +872,28 @@ def cleanup(raw):
     return words
 
 
-def build_montserrat(words, var, colorize, max_words=3, max_short=5):
+def build_montserrat(words, var, colorize, max_words=3, max_short=5, max_secs=0.0):
     # word caps: max_words normally, up to max_short if every word in the group is very small (<=4 chars).
     # Defaults 3/5 = shorts. LONGFORM-EDITED uses 2/4 (Mike, 2026-06-17) -> --max-words 2 --max-short 4.
+    #
+    # max_secs = OPTIONAL duration cap on a caption group (0 = OFF, the historical behaviour, so every
+    # past build re-renders byte-identically). The word caps + the 0.45 s gap break assume normal
+    # delivery; when Mike STRETCHES words for effect they stop bounding anything, because a stretched
+    # run has no gaps in it. Real case (tutorial/94x-euphoria-impact, 2026-08-09): "the 550X on NYX on
+    # BNB" is five <=4-char words with zero gaps and a 1.98 s "550X", so the 3/5 caps put ONE caption
+    # on screen for 4.86 s of continuous speech - roughly double the worst caption ever shipped, and
+    # far outside the style guide's ~0.4-0.8 s per group. This is the same guard the sibling
+    # arial-black preset has always had (its MAX_SECS = 1.6); montserrat just never got one.
+    # Set it ABOVE any deliberately-held vowel in the clip (that clip's protected 2.74 s "ohhh man"
+    # forced 2.80), so a genuine sustain still gets ONE caption.
     def is_short(x): return len(re.sub(r"[^a-z0-9]", "", x["w"].lower())) <= 4
     chunks, cur = [], []
     for j, w in enumerate(words):
         # decide the cap from the group INCLUDING w, then flush BEFORE adding if it would overflow
         tentative = cur + [w]
         cap = max_short if all(is_short(x) for x in tentative) else max_words
-        if cur and len(tentative) > cap:
+        too_long = bool(max_secs) and bool(cur) and (w["end"] - cur[0]["t"]) > max_secs
+        if cur and (len(tentative) > cap or too_long):
             chunks.append(cur); cur = [w]
         else:
             cur = tentative
@@ -663,6 +951,10 @@ def main():
     ap.add_argument("--colorize", default="", help="montserrat tags, e.g. 'g=kaspa,tao y=353x,58x'")
     ap.add_argument("--max-words", type=int, default=3, help="montserrat: max words/line (longform=2)")
     ap.add_argument("--max-short", type=int, default=5, help="montserrat: max if all words small (longform=4)")
+    ap.add_argument("--max-secs", type=float, default=0.0,
+                    help="montserrat: OPTIONAL max seconds per caption group (0 = off, historical default). "
+                         "Use on clips with STRETCHED words, where the word caps and the 0.45s gap break "
+                         "stop bounding anything; set it above any deliberately-held vowel.")
     ap.add_argument("--out", help="output file (default stdout)")
     args = ap.parse_args()
 
@@ -676,7 +968,7 @@ def main():
             if "=" in part:
                 tag, ws = part.split("=", 1)
                 colorize[tag] = set(w.lower() for w in ws.split(",") if w)
-        out = build_montserrat(words, args.var, colorize, args.max_words, args.max_short)
+        out = build_montserrat(words, args.var, colorize, args.max_words, args.max_short, args.max_secs)
     else:
         out = build_arial_black(words)
 
