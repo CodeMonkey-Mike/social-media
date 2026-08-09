@@ -1,0 +1,132 @@
+{
+  "batch": "tutorial",
+  "track": "livestream-repurpose",
+  "source_livestream": "tutorial",
+  "livestream_date": "2026-08-09",
+  "last_updated": "2026-08-09T15:46:20",
+  "dashboard": "video-creation/shorts/tutorial/dashboard.html",
+  "dashboard_status": "5C + captions source done; spines final, render-assets staged. Next: remotion-builder (7) per clip (ChatGPT b-roll stays in the builder), then publish (8).",
+  "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
+  "clips": [
+    {
+      "n": 1,
+      "slug": "tut-94x-euphoria",
+      "title": "94X on $TUT, and It's Pumping Again",
+      "variant": "full",
+      "duration_seconds": 78.83,
+      "phase": "6-transcribed",
+      "gate": "ready-for-build",
+      "output_mp4": "tut-94x-euphoria/tut-94x-euphoria-final.mp4",
+      "whisper_words": "tut-94x-euphoria/whisper-words.json"
+    },
+    {
+      "n": 2,
+      "slug": "robinhood-meme-rankings",
+      "title": "My Robinhood Chain Meme Rankings: $IF, Cooper, Tendies, Yolo",
+      "variant": "full",
+      "duration_seconds": 79.46,
+      "phase": "6-transcribed",
+      "gate": "ready-for-build",
+      "output_mp4": "robinhood-meme-rankings/robinhood-meme-rankings-final.mp4",
+      "whisper_words": "robinhood-meme-rankings/whisper-words.json"
+    },
+    {
+      "n": 3,
+      "slug": "binance-kaspa-catch22",
+      "title": "Binance Wants Community Driven Coins. Kaspa Isn't Listed.",
+      "variant": "full",
+      "duration_seconds": 31.96,
+      "phase": "6-transcribed",
+      "gate": "ready-for-build",
+      "output_mp4": "binance-kaspa-catch22/binance-kaspa-catch22-final.mp4",
+      "whisper_words": "binance-kaspa-catch22/whisper-words.json"
+    },
+    {
+      "n": 4,
+      "slug": "freaking-early-not-degen",
+      "title": "That's the Degen Mindset. I Don't Trade Like That.",
+      "variant": "full",
+      "duration_seconds": 43.33,
+      "phase": "6-transcribed",
+      "gate": "ready-for-build",
+      "output_mp4": "freaking-early-not-degen/freaking-early-not-degen-final.mp4",
+      "whisper_words": "freaking-early-not-degen/whisper-words.json"
+    },
+    {
+      "n": 5,
+      "slug": "doginme-100x-if-500x",
+      "title": "doginme at 107 Million: 400 Million Is a 100X From Here",
+      "variant": "full",
+      "duration_seconds": 39.61,
+      "phase": "6-transcribed",
+      "gate": "ready-for-build",
+      "output_mp4": "doginme-100x-if-500x/doginme-100x-if-500x-final.mp4",
+      "whisper_words": "doginme-100x-if-500x/whisper-words.json"
+    },
+    {
+      "n": 6,
+      "slug": "tut-94x-euphoria-impact",
+      "title": "Look, Look, Holy Crap: The 94X, Then a 550X One Week Later",
+      "variant": "impact",
+      "duration_seconds": 28.22,
+      "phase": "6-transcribed",
+      "gate": "ready-for-build",
+      "output_mp4": "tut-94x-euphoria-impact/tut-94x-euphoria-impact-final.mp4",
+      "whisper_words": "tut-94x-euphoria-impact/whisper-words.json"
+    },
+    {
+      "n": 7,
+      "slug": "binance-kaspa-catch22-impact",
+      "title": "They Don't Apply the Same Logic to Kaspa",
+      "variant": "impact",
+      "duration_seconds": 19.02,
+      "phase": "6-transcribed",
+      "gate": "ready-for-build",
+      "output_mp4": "binance-kaspa-catch22-impact/binance-kaspa-catch22-impact-final.mp4",
+      "whisper_words": "binance-kaspa-catch22-impact/whisper-words.json"
+    },
+    {
+      "n": 8,
+      "slug": "freaking-early-not-degen-impact",
+      "title": "My portfolio is filled with 100x coins.",
+      "variant": "impact",
+      "duration_seconds": 20.12,
+      "phase": "6-transcribed",
+      "gate": "ready-for-build",
+      "output_mp4": "freaking-early-not-degen-impact/freaking-early-not-degen-impact-final.mp4",
+      "whisper_words": "freaking-early-not-degen-impact/whisper-words.json"
+    }
+  ],
+  "resume_protocol": "Phase 4b: Mike reviews dashboard.html and names clips to delete by number. Then per surviving clip: tighten-strategist -> tighten -> 2nd review -> desilence (5B) -> filler pass (5C, optional) -> captions (6) -> remotion-builder (7) -> publish-shorts (8). STT garble fixes for captions are listed in clip-plan.json stt_garble_flags (verify each against the clip's OWN whisper-words.json before applying).",
+  "phase": "6-transcribed",
+  "status": "ready-for-build",
+  "tighten_log": "video-creation/shorts/tutorial/tighten_log.json",
+  "tighten_plan": "video-creation/shorts/tutorial/tighten-plan.json",
+  "filler_log": "video-creation/shorts/tutorial/filler_log.json",
+  "state_at_stop": {
+    "stopped": "2026-08-09, Mike called the wrap mid Phase 7 wave 1 (builds were loading his machine)",
+    "phase7_wave1_dispatched": [
+      "tut-94x-euphoria",
+      "binance-kaspa-catch22",
+      "tut-94x-euphoria-impact"
+    ],
+    "renders_on_disk": 0,
+    "per_clip": {
+      "tut-94x-euphoria": "RESUME: comp+constants+captions REGISTERED in Root.tsx, BROLL-PLAN.md, 6 transparent overlays broll-tut94x-*, thumb-tut94x-cover.png, whisper-words-verified.json + _patch_words.py, 4 _genlist run records. NO render. Last act: patching verified words for the held vowel.",
+      "binance-kaspa-catch22": "RESUME: comp+constants+captionsTutBkc REGISTERED, BROLL-PLAN.md, 4 overlays broll-tut-bkc-ov-*, thumb-tutbkc.png, _make_alpha_overlays.py, verified words + patch. NO render. Was about to add caption corrections to canonical build_captions.py.",
+      "tut-94x-euphoria-impact": "RESUME: comp+constants+captionsTutEuphImpact REGISTERED, BROLL-PLAN.md, 3 overlays broll-tut6-*, thumb-tut6.png, _key_alpha.py, verified words + patch, _raw/ dir. NO render. Was mid offline SFX-masking sweep.",
+      "not_dispatched": [
+        "robinhood-meme-rankings",
+        "freaking-early-not-degen",
+        "doginme-100x-if-500x",
+        "binance-kaspa-catch22-impact",
+        "freaking-early-not-degen-impact"
+      ]
+    },
+    "locks_at_wrap": "both FREE (render lock was left HELD 42min by clip 1 dead builder, released at wrap)",
+    "orphans_at_wrap": "none (zero node render, zero ffmpeg, zero chatgpt-profile chrome)",
+    "disk_at_wrap": "C: 13 GB free",
+    "min_sil_used": 0.95,
+    "resume_contract": "see PROJECT-LOG.md 2026-08-09 entry, RESUME CONTRACT section"
+  }
+}

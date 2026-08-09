@@ -6,6 +6,636 @@ linkedin-automation/PROJECT-LOG.md.)_
 
 ---
 
+## 2026-08-09 — WAVE 6 (Lane 3) BUILT + SANDBOX-BLESSED + LIVE-BLESSED in one session, batch `tutorial` through Lane 3 end to end
+
+**Migration status: Lane 3's mechanical half is now graph-owned and the ChatGPT browser stack is
+PYTHON.** Mike's ask: *"get through lane three. Change any JavaScript to Python and put it into
+langgraph"* — an explicit override of the 2026-08-02 "browser stack ports LAST" ordering. Endpoint
+moved: every Lane 3 execution path is now Python; drafting stays judgment in the session.
+
+### The Wave 6 port (all new canonical, JS twins FROZEN as rollback)
+
+- **`repurpose/chat_pool.py`** — registry lib, byte-compatible with the shared
+  `chatgpt-image-chats.json` (Z-ms timestamps, same keys) so the still-JS builder b-roll scripts
+  keep working against the same file. In-page routines kept as LITERAL JS in `page.evaluate`
+  (API-confirmed conversation id, ±age adoption safety, auto-title race wait, read-back-verified
+  rename).
+- **`repurpose/chat_delete.py`** — the deletion gate EXACT (live title must start b-roll/social;
+  every delete verified 404; healTitles backstop; gate refusals → `title_gate_skipped`).
+- **`repurpose/gen_images.py`** — pool-managed generator: reload-capture (send ONCE, 80s live
+  poll, ≤4 min reload loop), ref-upload-BEFORE-baseline + post-send re-baseline, estuary
+  preference, ref-byte + sibling-dup rejection, ≥5 KB, modal dismissal, one in-run retry.
+  Machine lines (`IMG OK/SKIP/FAIL`, `GEN DONE`) + exit 1 on any fail for the graph. `--fake`
+  is sandbox-only (run.py REFUSES it outside `--test-sandbox`).
+- **`repurpose/queue_writer.py`** — THE queue-writer module (replaces the `_lane3_*.js`
+  throwaways + ad-hoc Node edits): per-file schemas mirroring each queue's `$post_schema`,
+  indent-sniffing emoji-safe writes (x-tweets.json is 4-space; sniffed per file), idempotent
+  appends (id / image_id key; existing entries NEVER touched), and `validate_lane3_plan` — the
+  fail-fast seam validator (one source of truth, imported by run.py AND lane3_batch.py). HARD
+  gates in code: em/en dash anywhere, chart emojis, image-id uniqueness vs ALL queues + images
+  dirs (resume-safe: a plan's own artifacts are excluded), **IG = Kaspa only** (declared
+  `kaspa_subject` AND the persona-lint subject regex), **X polls = declared
+  `eligible_topic` ∈ kaspa/tao/toncoin**, threads 5-8. **The X 1:1 + IG 4:5 companion pair is
+  the ONE sanctioned image_id duplicate** (the `118377a2` precedent) — anything else dies.
+- **`repurpose/lane3_batch.py`** — stage runner (validate|generate|verify|queues|finalize|all).
+  Generate: **holds the `chatgpt` stage lock for the whole stage** (gate-rules-in-code; the JS
+  era left this to the orchestrator's memory), **ONE ITEM PER INVOCATION** (the 2026-07-14
+  cross-binding regression's standing mitigation, matching the blessed early-crash 18×-single
+  runner), no-ref items first / ref items LAST per purpose (contamination doctrine). Verify:
+  exists / ≥5 KB / PIL dims per purpose (1:1 x-yt, 4:5 ig) / byte-dup vs new set + same-size
+  existing. Finalize: batches.json upsert (creates the entry when Lane 3 runs first),
+  `pipelines.repurpose=done`.
+- **Graph `graph/repurpose_graph.py`** (Wave 6): generate → verify_images → queues →
+  verify_queues → lint (persona-lint per TOUCHED file) → finalize → verify_finalize; halt edge
+  everywhere; `run.py repurpose --batch <b>` (+ `--plan/--thread/--resume/--stub/--test-sandbox/
+  --fake-gen`); lane 6 on the dashboard (langgraph.html row added). Documented deviation:
+  verify_images is a subprocess stage so the image checks live in ONE place shared with hand
+  runs. Sandbox NEVER drives the real browser (forces fake-gen + scratch registry/queues/
+  batches.json).
+- **Blessed:** stub ok/fail green · sandbox e2e green FIRST TRY (3 fake images, 6 entries, all
+  6 queues, per-file lint, registered) · **7 refusal drills green** (em dash · 4-tweet thread ·
+  non-eligible X poll · IG kaspa_subject=false · IG declared-but-no-Kaspa-term · dup id in plan ·
+  id already used on disk) · idempotent re-run green (0 added / all skipped / totals unchanged) ·
+  emoji round-trip byte-verified (the PowerShell-mangling class) · **read-only live probe** green
+  (profile launch, composer, session token, registry) BEFORE the first real send.
+
+### Batch `tutorial` (2026-08-08 stream, 76.6 min, "TUT on BNB pumping again / altseason waking")
+
+| Lane | State |
+|---|---|
+| Lane 1 longform | **QUEUED** `lf-20260809-tutorial` "The Coin We 94X'd Is Pumping Again: Altseason Is Waking Up" (3034.8s staged, -1562.5s at min-sil 0.5, 0.83 Mbps; **thumb NULL — Mike PNG wanted**; longs total 43) |
+| Lane 2 shorts | **At the clip-strategist seam** (untouched this session per Mike's lane-3 scope). Intake green: **5th consecutive unattended intake** — 0.65 Mbps master · 10,132 words / 1214 segs / 52 chunks · glossary Kaspa:15, **zero flags**. `_chunks_90s` ready for the strategist whenever Mike says go |
+| Lane 3 text/image | **DONE — THE WAVE 6 LIVE BLESS.** One invocation: **17/17 images generated (ZERO failures, zero in-run retries), 17 verified, 14 entries added** (6 X tweets [4 long + 2 one-liners] · 2 threads [8+7] · 1 X poll · 2 YT posts + two 5-slide carousels [A=V1 pinned to `828eee71`, B=V2 role-matched] · 2 YT text polls · **1 IG entry, Kaspa-subject** [the Binance catch-22]) · per-file lint clean · `pipelines.repurpose=done`. Registry: x-tweets 3→9, yt-posts 5→15, ig-single 20→21 (rotation due in ~4), retired swept to 0 — the ported delete path's first live delete verified. Drafts: `repurpose/output/2026-08-09_tutorial*` + `tutorial-lane3-plan.json` |
+
+Content notes: fact-check pass BEFORE drafting (TUT $0.155 / +814% 7d / $130M mcap / new ATH
+Aug 9 · doginme $4.1M vs $107M ATH = the 100x math · Clarity cloture ~Sept 15-16 · Binance/Neiro
+precedent). Numbers updated from the transcript's stream-time values to posting-time reality per
+persona. The "550x" token stays UNNAMED (Whisper garble "NYX"/"my X on BNB", unverifiable), the
+private community AI token stays private, no Cooper/Tendies cashtags (tickers unverified).
+**@tutorialtoken added to persona project_handles** (verified via tutorialtoken.com — veto if
+wrong). 1-in-10 correction-bait slot: the Kaspa tweet's "What am I missing?".
+
+### Adversarial visual QA — 17/17 PASS, the first ZERO-REGEN image batch
+
+(eliza round 1 failed 11, early-crash failed 3.) All 17 opened and checked; **all 5 V1 slides
+hue-MEASURED in the house band** (modal 114-123° vs house 122.6°±10; the contaminated-exemplar
+drift band is 44-97°) · counters correct everywhere, zero inherited badges · calendar slide's
+day strip rendered BLANK (the pseudo-text demand) · V2 zero em-dash leak · Kaspa backwards-K
+mirrored correctly + Binance diamond correct, both first try · doginme ref carried faithfully
+(a render, not a captured upload) · every image matches its own slug's brief = no cross-binding.
+What held: pinned exemplar + explicit RGB + "completely plain face, no logo" phrasing + one item
+per invocation.
+
+### Findings worth keeping
+
+- **The companion-pair schema rule:** the X 1:1 + IG 4:5 pair SHARES its image_id by design —
+  a naive every-id-unique gate breaks the convention; the validator now allows exactly that pair
+  and nothing else.
+- **Resume-safe uniqueness:** the already-used check must exclude the plan's OWN artifacts or an
+  idempotent re-run reads its own output as a collision.
+- **Queue files are indent-heterogeneous** (x-tweets.json is 4-space, others 2) — the writer
+  sniffs per file instead of assuming.
+- **The bg-task reaper killed the :8766 dashboard server mid-session** (~4 h in) — restarted
+  DETACHED (Start-Process), which the reaper can't touch; the graph run itself was always
+  detached and unaffected.
+- Registry timestamps must stay JS-shaped (`...Z` ms) — chat_pool writes them identically so
+  either stack can read the other's writes.
+
+### Lane 3 image REVISION v2 (Mike supplied real project references mid-session)
+
+Mike gave three X-profile references; all saved to `schedule-tweets/images/reference/` and visually
+verified: **`TUT-tutorial.jpg`** (amber square, black italic T with a lightning slash) ·
+**`cooper.jpg`** (black lab, lime bandana carrying the Robinhood mark) · **`tendies.jpg`** (the X
+banner: hooded Pepe holding a platter of chicken tenders). `what-if.jpg` was already on disk and is
+exactly the $IF art (green figure from behind gazing at a spiral galaxy).
+
+TWO images were REGENERATED IN PLACE (same `image_id`, slug and filename, so the queue entries never
+moved; the v1 renders were moved aside to the scratchpad and passed back in as the BASE reference so
+the scenes survived):
+
+- **`3013e2fd` tut-94x-pumping-again** — refs `[v1 render, TUT-tutorial.jpg]`. Scene held identical;
+  the coin's blank face now carries the real $TUT glyph.
+- **`cd7c52e0` rh-meme-podium** — refs `[v1 render, what-if.jpg, cooper.jpg, tendies.jpg]`, each
+  addressed BY ORDINAL. 1st = the $IF coin with the galaxy artwork inset in its face · 2nd = Cooper
+  as a genuine BLACK lab (v1 rendered a golden retriever) · 3rd = Tendies as the hooded frog holding
+  the tender platter, because a coin cannot carry "chicken tenders" (Mike: "maybe we need to change
+  it a little bit differently"). The prompt explicitly excluded the banner's lettering, suit figure,
+  candlestick chart and rocket, and all four exclusions held.
+
+Both v2 renders visual-QA PASS first try. The re-run graph reported **2 generated / 15 skipped / 17
+verified, 0 entries added** (idempotency held). **METHOD NOTE WORTH KEEPING: a 4-reference generation
+works when every reference is addressed BY ORDINAL with its role AND given an explicit do-not-copy
+list for the parts of a busy reference you do not want** (the tendies banner is mostly furniture).
+
+### Lane 2 — clip plan → cut → 4b → tighten+5B all GREEN; Phase 7 STOPPED mid-wave-1 on Mike's call
+
+- **clip-strategist** (dispatched with an explicit **Opus override**, see the Fable note below):
+  5 topics / **8 clips** (5 full + 3 impact), full 51-window pass, every in/out verified against
+  word timings. Plan at `shorts/tutorial/clip-plan.json`.
+- **Cut graph green** (8 clips / 431.2s). **Mike's 4b verdicts: ALL 8 SURVIVE**, plus two edits ⇒
+  a re-cut: clip 5 lost the **$IF what-if tail** (4541.98-4570.70, 28.7s) because the clip is about
+  doginme and the tail switched subject, keeping the doginme 800M/200X escalation and the doubled
+  "Good times ahead" hard-out rejoined across it (81.8s → 51.5s); clip 8 retitled to his exact
+  wording **"My portfolio is filled with 100x coins."** (flagged: the clip's audio does not itself
+  make that claim; kept verbatim per the 4b retitle precedent).
+- **8 tighten-strategists** (Opus override), then **tighten+5B green at min-sil 0.95** (Mike's call,
+  see below): 400.9s → **340.6s**. Then **`run.py finish` green**: 5C all-passthrough, fresh
+  whisper-words off the -final spines, GOP-verified render-assets staged, progress at
+  **ready-for-build**.
+- **Phase 7 wave 1 (clips 1, 3, 6) dispatched, then STOPPED DELIBERATELY** when Mike called the wrap
+  (the builds were loading his machine and he needed it back). **NO renders exist.**
+
+### min-sil 0.95 — Mike's call, and the measured reason it is not 0.25
+
+FIVE clips independently reported that a low min-sil deletes DELIBERATE rhetorical beats inside
+protected peaks, and they all cluster in one narrow band: the **0.86s drum-roll between "94X" and
+"we did the 550X"** (clips 1+6), the 0.82s beat between "Holy guacamole, dude." and "Oh my God."
+(clip 1), the **0.634s suspense pause inside "because if they did, [beat] Kaspa would be listed"**
+(clips 3+7), the 0.923s beat before the third limb of the gem triple (clip 3), and the 0.745s and
+0.920s delivery beats in clip 8. The desilencer deletes a qualifying silence ENTIRELY (pad 0), so at
+0.45 **all seven** go to zero; at 0.95 all seven survive while every pause of 1s or longer is still
+cleared, which is the bulk of the real dead air. Decisive because this batch is captions-only:
+**cadence is the only performance element left on screen.** Validation on the run: clip 6 came out
+28.22s → 28.22s, i.e. **5B removed literally nothing** — exactly what its strategist predicted at
+0.90+ ("this clip contains no dead air"). At 0.45 it would have lost the drum-roll for nothing.
+
+### ⚠️ THE FINDING — the 4b cut was MUTILATING WORDS, and only the waveform showed it
+
+The tighten pass's value this batch was NOT its removals (four clips came in under 2%). It was the
+**boundary relocks**, which caught FOUR places where the cut was damaging audio that the transcript
+could not reveal:
+
+| Defect | Where | Fix |
+|---|---|---|
+| **Schwarzenegger soundboard line severed 0.31s mid-plateau** (sample runs to 358.58, cut sat at 358.25) | clips 1 + 6 | relock out → 358.62 |
+| **"catch-22" cut mid-vowel; a decode ladder reads the result as "catch on it"** | clips 3 + 7 | relock out → 2074.70 |
+| Block opening on an **untranscribed "They, uh" orphan stammer** | clips 3 + 7 | relock in → 2059.02 |
+| "Congratulations" faded into ON its /k/ plosive; "God." clipped on its release | clip 1 | relocks → 783.31 / 385.34 |
+
+Mike named the Schwarzenegger line himself ("make sure we don't cover that up with b-roll") — the
+actual defect was worse than cover: **the cut was clipping it.**
+
+**Root cause, and it generalises: the master word JSON is unreliable for edge placement in this
+batch.** Measured across clips: onsets off by up to **1.07s**, zero-duration tokens, a phantom word
+split ("for from" is one word after a real pause), phantom onsets for words that are not in the clip
+at all, long pauses glued INSIDE word tokens (hiding both dead air AND fumbles), and **at least
+three loud sounds Whisper never transcribed at all** (0.6s, 0.64s, 1.25s). Every edge in every plan
+is anchored on 5-10 ms RMS instead. Clip 5's strategist also found a **filler tic + abandoned start
+that the transcript had actively concealed** by smearing it into a stretched token.
+
+### ⚠️ THE SECOND FINDING — two strategists returned OPPOSITE reads of the same audio
+
+Clips 3 and 7 share audio, and both examined 2057.73-2058.99. Clip 7 called it an untranscribed
+"they uh" orphan (drop it); clip 3 called it the word "Binance" clipped mid-vowel (rescue it).
+Opposite fixes, and either error ships a broken clip. **Settled empirically by the orchestrator**: a
+Whisper decode of the ISOLATED 2057.30-2059.20 window returns "They, uh...", and a 10 ms RMS scan of
+2055.3-2060.6 finds THREE distinct voiced runs (2055.32 = the abandoned "they"; 2057.73 = the orphan;
+**2059.08 = the real "Binance"**). Clip 3 was re-run, independently reproduced this with a four-rung
+decode ladder, **retracted its own reading and adopted all five of clip 7's edits**. Taking clip 3's
+value would have cold-opened both shorts on a stammer.
+
+**Why clip 3 went wrong, and it is a batch-wide caution:** it leaned on a spectral fricative test,
+but this LOW BPS master is band-limited enough that a known "Binance" /s/ elsewhere in the file
+measures only **706-861 Hz** centroid. The /s/ test is not usable anywhere in this file.
+**Institutional lesson: overlapping clips must be cross-checked. A single strategist would have
+shipped one of the two readings unchallenged.**
+
+### RESUME CONTRACT — Phase 7, wave 1 stopped mid-build. THIS BLOCK IS THE HANDOFF
+
+Sweep verified at wrap: **both stage locks FREE** (the `render` lock was left HELD by clip 1's dead
+builder for 42 min — the documented dead-builder pattern — and was released) · zero orphan node ·
+zero ffmpeg · zero orphan chatgpt-profile Chrome · **C: recovered to 13 GB free** (353 MB of
+orphaned `remotion-*` temp swept before the builds; the killed builders' scratch freed the rest).
+
+**NOTE THE LOCK GOTCHA FOR NEXT TIME:** `stage_lock.py acquire` writes the lock file and EXITS, so
+the PID it records is dead almost immediately by design. **PID-absence is NOT evidence of a dead
+builder** — do not use it as the liveness test (I briefly did, and corrected it).
+
+| n | clip | state at stop (DISK TRUTH — re-verify at resume, a wrap table is hearsay) |
+|---|---|---|
+| 1 | tut-94x-euphoria | **RESUME, heavy inventory:** comp `TutTut94xEuphoria.tsx` + `constants-tut-94x-euphoria.ts` + `captionsTut94x.ts`, **REGISTERED in Root.tsx** · BROLL-PLAN.md · 6 transparent overlays (`broll-tut94x-*`) + `thumb-tut94x-cover.png` · `whisper-words-verified.json` + `_patch_words.py` · 4 `_genlist-tut94x-*.json` run records. **NO render.** Its last act was patching the verified words for the held vowel |
+| 3 | binance-kaspa-catch22 | **RESUME:** comp + constants + `captionsTutBkc.ts`, REGISTERED · BROLL-PLAN.md · 4 overlays (`broll-tut-bkc-ov-*`) + `thumb-tutbkc.png` · `_make_alpha_overlays.py` · verified words + patch. **NO render.** Was about to add its caption corrections to the canonical `build_captions.py` |
+| 6 | tut-94x-euphoria-impact | **RESUME:** comp + constants + `captionsTutEuphImpact.ts`, REGISTERED · BROLL-PLAN.md · 3 overlays (`broll-tut6-*`) + `thumb-tut6.png` · `_key_alpha.py` · verified words + patch · a `_raw/` dir. **NO render.** Was mid offline SFX-masking sweep (zero renders) |
+| 2, 4, 5, 7, 8 | — | **NEVER DISPATCHED.** Only the -final spine, whisper-words and the staged GOP-verified render-asset exist |
+
+**All three wave-1 builders independently hit the word-level-JSON-drops-speech defect** and each
+wrote its own `_patch_words.py` → `whisper-words-verified.json`. That defect is now confirmed across
+eliza, early-crash and tutorial; it is routine, and the checklist catches it every time.
+
+**`video-creation/skills/captions/build_captions.py` was edited mid-session and is UNCOMMITTED**
+(+295 lines). It **parses clean** (verified), so nothing is half-written, but the diff mixes
+early-crash rules with this batch's, so review it at commit time.
+
+#### Resume protocol (next session, in order)
+
+1. `python video-creation/shorts/_tooling/stage_lock.py status` FIRST; sweep anything held.
+2. Re-verify the table above against disk (mtimes; confirm no render slipped in).
+3. Relaunch the three wave-1 builders with **RESUME framing + verified inventory** (never regenerate
+   an existing overlay or thumbnail), then waves 2 and 3. **Waves of 3 max** — the `render` lock
+   serializes CPU renders and dispatching all 8 just makes them queue.
+4. **Mike's Phase 7 visual directive rides VERBATIM in every builder contract** (it is also recorded
+   in `clip-plan.json → four_b_verdicts.build_directives` and the tighten plan's `mike_4b`):
+   *"i only do not want full screen broll, nor content zone broll. you can do captions, sfx, and any
+   overlaying graphics or images with background transparency."* The test is COVERAGE, not the
+   asset's source. Plus: **nothing may cover the Schwarzenegger line in clips 1 and 6, overlays
+   included.**
+5. After ALL EIGHT gate PASS → author `shorts/tutorial/publish-meta.json` → `run.py publish --batch
+   tutorial --date <date>`. **That run is the WAVE 5 LIVE BLESS**, which has carried since
+   early-crash: run it right after the builders PASS and BEFORE any posting.
+6. progress.json + this log get the batch-complete entry when staging lands.
+
+**GATE NOTE, RESOLVED:** the earlier collision (`finalized_short_gate.py` fails a short with zero
+b-roll assets vs "captions only") **dissolved** when Mike clarified that transparent overlays are
+allowed. The gate is satisfiable honestly and **needs no code change**; every clip must carry at
+least one transparent overlay asset, and a clip that genuinely warrants none should STOP and flag
+rather than bypass.
+
+### Open for Mike (carried + new)
+
+- **Review the 14 pending Lane 3 entries** on :8766 (Social tab; dashboard restarted DETACHED after
+  the bg-task reaper killed it mid-session). POSTING stays his, sequential.
+- **Phase 7 is the outstanding work**: 3 clips part-built, 5 not started, 0 rendered. Renders are
+  CPU-only h264 and lock-serialized, so eight shorts is a multi-hour phase; consider publishing in
+  waves so finished clips reach the queue sooner.
+- **Longform thumbnail PNG** for `lf-20260809-tutorial` → patch `thumbnail_path`.
+- **@tutorialtoken** added to `persona.json → project_handles` (verified via tutorialtoken.com):
+  veto if wrong. Still missing: CashCat PNG · $IF/$COOPER/Tendies handles · V4 hook-photo set.
+- **Clip 5 audition item at 2nd review:** its only flagged splice was a /k/ release burst surviving
+  the cut; a decode of the finished audio reads *"make it **got** 800 million"* where it should read
+  *"make it **an** 800 million"*, which is that burst becoming audible. If it ticks, the fix is to
+  drop that single removal and re-run clip 5 alone (`--only`), ~1 min, landing ~0.5s longer.
+- **Clip 7 keep/drop is now a different question.** The version flagged as possibly flat was damaged
+  at BOTH ends (orphan stammer in, punchline truncated out); both are fixed. Measured, its peak is
+  as loud as clip 3's hook and it is the third-fastest beat in the batch: dry-and-fast, not
+  flat-and-slow. Re-judge the fixed version before dropping it.
+- **Clip 5's slug is vestigial**: `doginme-100x-if-500x` promises a 500X payoff the clip no longer
+  delivers after the 4b trim. Slugs are frozen at 4b, so no title/caption/description may promise
+  $IF or 500X.
+- **C: at 13 GB free** (recovered this session). The `cleanup.js --dry-run` sweep is still overdue.
+- **Nothing committed; Mike calls the commit.** Branch `transitions-library`. This session added the
+  Wave 6 port (8 new Python files), the graph/docs edits, the tutorial batch artifacts, 3 new
+  reference images, the uncommitted `build_captions.py` (+295 lines, parses clean), and the ~104-file
+  `.ts` sweep backlog still outstanding.
+- **Fable weekly allowance ran out mid-session.** Per Mike's instruction every subsequent advisor and
+  builder was dispatched with an **explicit Opus override**; the agent frontmatter has no fallback,
+  so a `model: fable` agent simply fails to spawn. Two strategists were also killed by a separate
+  session limit and were successfully **resumed with context intact via SendMessage** (3rd
+  confirmation of that resume path).
+
+---
+
+## 2026-08-08 — `early-crash` Phase 7 RESUMED (in progress) + a Lane 3 RULE BREACH found and gated
+
+### ⚠️ THE LANE 3 FINDING — non-Kaspa IG posts were queued for 3 batches; the rule existed the whole time
+
+Mike spotted two non-Kaspa entries pending in the IG single-image queue at review and asked what
+happened. **His rule is real and predates all of this**, from the day the repurpose-livestream
+command was written: *"if any of the x-tweets images are about Kaspa, repurpose them to a 4:5 image
+and queue them as an Instagram single-image post."*
+
+**Root cause is a command-vs-skill conflict, not a lost rule.** The condition sat correctly in
+`.claude/commands/repurpose-livestream.md` **step 3** the entire time. But `repurpose/SKILL.md`
+carried the same instruction UNCONDITIONALLY ("**X image → IG 4:5 companion.** When a new image is
+generated for an X tweet, also generate a 4:5 version ... add both queue entries"). `CLAUDE.md` says
+canonical sources win on conflict, so the skill's unconditional text beat the command's condition.
+**The tell: the X-poll topic filter in that same command (step 4, "only if Kaspa/TAO/Toncoin") was
+honored in every one of these batches** — because it is ALSO written into the skill as a hard
+"Topic filter" section. Same command, two conditional rules, only the skill-backed one survived.
+
+**Blast radius: 5 entries across 3 batches** (if-yacht → eliza → early-crash, 2026-08-05 → 08-07).
+Three already POSTED and unrecoverable (`ig-2026-08-05-robinhood-if-2b`, `ig-2026-08-06-eliza-collapse`,
+`ig-2026-08-06-vpn-founder-hacked`); two were still `pending` and were REMOVED from the queue
+(`ig-2026-08-07-endure-the-pain`, `ig-2026-08-07-akita-receipt`) — full entries preserved for
+one-step restore at `repurpose/output/2026-08-07_early-crash_ig-removed-non-kaspa.json`, images left
+on disk. Queue now has **0 pending**. Historical context for why it hid so long: the IG queue ran
+**39 consecutive Kaspa entries from 2026-06-05 to 08-05** (Kaspa-heavy streams), so the coupling bug
+was invisible until three straight non-Kaspa streams ($IF/Robinhood, ElizaOS, jobs-report macro).
+
+**Fixes landed (3 places, per the gate-rules-in-code doctrine):**
+- `repurpose/SKILL.md` — the companion rule now reads **KASPA IMAGES ONLY**; new hard
+  **"Topic filter — Kaspa only (HARD RULE)"** section under Instagram single-image mode, shaped like
+  the X-poll filter that demonstrably works, incl. "no Kaspa image → ZERO IG entries, say so in the
+  run report"; the cross-post workflow gained a step 0 filter check.
+- `scripts/persona-lint.py` — new structural gate `lint_ig_kaspa_only`: any **pending**
+  `ig-single-image.json` entry whose subject is not Kaspa is a violation (hashtags deliberately do
+  NOT count as subject — a `#kaspa` tag stapled to a macro post is how this quietly re-breaks).
+  Verified: flagged exactly the two, zero false positives across the 121 posted entries.
+  Does not affect the Wave 5 publish gate, which lints `--file shorts.json` only.
+- memory `feedback_persist_decisions_in_skill` — new corollary: a condition living only in a slash
+  command loses to an unconditional statement in the canonical skill; put it in both.
+
+### Phase 7 resume (running)
+
+Protocol steps 1-3 executed. **Both stage locks FREE** at start. Disk re-verification beat the wrap
+table in two places (again — the standing "a wrap contract is hearsay" rule earned its keep):
+
+| n | clip | wrap said | DISK TRUTH |
+|---|---|---|---|
+| 1 | akita-3b-robinhood | render SUSPECT, may be truncated | **NOT truncated** (ffprobe 128.235s / 3844 frames vs 128.1s target) but **STALE**: render 23:32 predates the caption patch 23:37-23:38. `_patch_words.py` inserts "ooh" (43.14), "look at that" (65.64) and relabels the 0.04-probability token at 106.48 to "right?" + restores the swallowed "if" — none are in that render. **Re-render required** |
+| 3 | way-off-moon-calls | verify caption rules landed | **Reconciliation CLEAN**: `build_captions.py` carries the early-crash block (`$lab token`, `moon-boyish`) and `captionsEcMoon.ts` already contains them (7x `$lab`). Its later mtime is a docs-only comment recording a REJECTED correction. Gate + QA only |
+| 5 | endure-the-pain | "claimed to be reading the contract" | `BROLL-PLAN.md` fully authored (23:41). Still no comp/captions/b-roll. Chatgpt-lock hazards ride in its contract |
+| 6 | akita-3b-robinhood-impact | fresh | confirmed fresh; spine + whisper-words + staged render-asset only |
+
+Wave 1 dispatched (clips 3, 1, 5) with verified inventory + resume framing; Mike's extreme-minimum
+b-roll directive rides verbatim in clip 1's contract. Clip 6 = wave 2.
+
+### BATCH COMPLETE: all 5 clips built, gated PASS and STAGED
+
+| n | clip | final | b-roll | full-scr | SFX | LUFS |
+|---|---|---|---|---|---|---|
+| 1 | akita-3b-robinhood | 128.23s | 11.3%* | 3 | 14 / 7 | -17.0 |
+| 3 | way-off-moon-calls | 32.23s | 30.2% | 2 | 9 / 5 | -17.1 |
+| 4 | tendies-funny-stupid | 34.51s | 29.6% | 2 | 7 | -17.5 |
+| 5 | endure-the-pain | 32.06s | 29.9% | 3 | 6 / 4 | -17.1 |
+| 6 | akita-3b-robinhood-impact | 30.83s | 17.1%* | 3 | 8 / 5 | -16.8 |
+
+\* Mike's extreme-minimum chart-walk directive, reported not "fixed". All five staged to
+`schedule-tweets/shorts/early-crash-2026-08-08/` (`publish-meta.json` authored for all 5), every
+staged md5 matching its render. **Mike POSTED clips 1 and 3 across all 7 platforms mid-session.**
+
+Cross-clip findings: **word-level JSON silently dropped speech on 3 of the 5 clips** (clip 1's
+"right?"+"if", clip 5's "it" in "not feeling it yet", clip 6's two "look at that" runs) — all
+restored via per-clip `_patch_words.py`; that defect is now confirmed 5x across eliza+early-crash
+and the checklist catches it every time · **volume is the wrong knob for SFX masking, proven twice
+more** (clip 1's riser: halving gain 0/4, retiming at FULL gain 2/4 = control; clip 3's boom fixed
+by trimming the decay tail) · 3 caption-gate flags REJECTED against the clips' own audio · clip 6
+retired a contaminated pool chat registry-only after 2 off-brief generations.
+
+### The Wave 5 graph: TWO em-dash gates found, both were reading our own logs
+
+`run.py publish` was run to bless Wave 5 and **halted twice, both times on machine-written text,
+never on Mike's copy.** Root cause is the same in both places: a gate serialized fields the POSTING
+SCRIPTS write (`platforms.<name>.error` / `.note`) and read them as persona copy.
+
+- **The source:** 5 hardcoded em dashes in 4 posting scripts (`post-rumble-short.js` x2,
+  `post-bitchute-short.js`, `post-x-poll.js`, `recapture-rumble-url.js`) — retry-window
+  diagnostics. Every Rumble/BitChute URL race wrote one into the queue. **All 5 fixed at source.**
+- **Gate 1, `scripts/persona-lint.py`:** was at **131 violations on shorts.json, 124 of them our own
+  diagnostics, and ZERO on an entry with anything still pending.** Now scoped: skips entries with
+  nothing pending (already live = a record, not editable copy), skips `MACHINE_FIELDS`
+  (`error`/`note`) at any depth, skips `$`-prefixed file metadata. Every skip is COUNTED and
+  PRINTED, never silent. **`--fix` was also rescoped** — it now replaces only the exact values the
+  checks flagged (matched as their JSON-encoded form), so it can no longer rewrite the historical
+  record of what actually shipped, which the old whole-file regex sub did.
+- **Gate 2, `verify_publish` in `graph/shorts_graph.py`:** did `json.dumps(entry)` over the WHOLE
+  entry. Fired live on clip 1 because it had posted and both its URL races wrote the (then
+  em-dashed) diagnostics in. Now scoped to the persona copy only (`title`/`hook`/`caption`/`tags`).
+- **Verified:** negative test on a scratch copy — em dash in a PENDING caption CAUGHT, chart emoji
+  in a PENDING hook CAUGHT, em dash in a pending entry's machine log IGNORED, em dash in an
+  already-posted caption IGNORED, exit 1. `--fix` repaired only the pending copy and left both the
+  machine log and the posted history untouched. IG Kaspa gate re-verified (catches non-Kaspa,
+  passes Kaspa). All queue files now lint exit 0.
+
+### ⚠ WAVE 5 LIVE BLESS CARRIES TO THE NEXT BATCH (not a defect)
+
+After both fixes the graph halts a third time, correctly: `verify_publish` asserts all 7 platform
+blocks are `pending`, and clips 1+3 are POSTED. **That gate is a double-post guard and was NOT
+weakened.** It is built to run in the window between staging and posting; on this batch posting
+overtook staging, so the window closed. The batch is fine (staged via `publish-shorts.py`, the
+canonical tool the graph wraps; all md5s verified, entries complete, lint clean) — only the *bless*
+moves. Next batch: run `run.py publish` immediately after the builders PASS and BEFORE any posting.
+Open refinement for Mike: scope that platform assertion to entries the publish node actually ADDED
+this run, since the pre-post state of a row it merely SKIPPED is not its work to verify.
+
+### END-OF-SESSION WRAP (Mike closed the session). Batch is COMPLETE, nothing is in flight
+
+**Sweep verified at wrap:** both stage locks FREE · **zero** orphan `chatgpt-profile` Chrome · zero
+orphan ffmpeg · the one live node.exe is Adobe Creative Cloud, not ours · no builders running (all
+five reported and exited). **There is no resume contract this time** — Lane 2 is finished.
+
+**State of `early-crash`:** Lanes 1 and 3 `done`; Lane 2 all 5 clips built, gated PASS and staged.
+`batches.json` `pipelines.shorts` deliberately left **`active`** (it flips to `done` on Mike's
+sign-off once the batch has posted out, per the what-if-1000x / october-bottom precedent).
+
+**Posted this session by Mike:** clips 1 + 3 across all 7 platforms. **Pending on the dashboard:**
+3 shorts (clips 4, 5, 6) · 3 X tweets · 1 X thread (`thread-2026-08-07-akita-receipt`) · 2 YT text
+polls · **18 YT quizzes** (an older backlog dated 2026-07-07, unrelated to this batch). IG is at
+0 pending and that is CORRECT for this batch, not a gap: no X tweet image was about Kaspa.
+
+**⚠ Two bad URLs on clips 1+3, both known races, both need a SWEEP and never a re-post:**
+- **Facebook wrote the SAME url to BOTH clips** (`.../videos/2063712684239496`) — the documented
+  pinned-URL race. Both posts are live, the saved URLs are wrong. Fix via the FB sweep matching by
+  DURATION, which is unambiguous here (128.23s vs 32.23s).
+- **BitChute saved the bare `https://www.bitchute.com/content`** for both (not a post URL), and
+  **Rumble marked both `posted_unverified`** (shorts URL race; recapture via
+  `_scrape-rumble-channel.js`). These two join the standing 74-short `posted_unverified` backlog.
+
+**Closed by fact:** clips 1+3 are live, so three items raised for Mike are now moot — clip 3's teal
+accent, clip 1's 11.3% coverage, and the clip 1 reaction-meme full-screen. The teal point survives
+only as a convention: clips 1/4/5/6 all set an explicit non-teal accent, clip 3 was the lone
+default-teal clip and it shipped.
+
+**Open for Mike (carried + new):**
+- **The Wave 5 bless carryover above** — next batch, publish BEFORE posting. Plus the optional
+  `verify_publish` platform-assertion refinement (a posting-safety gate; NOT changed unilaterally).
+- **Longform thumbnails:** `lf-20260805-if-yacht`, `lf-20260806-eliza`, `lf-20260807-early-crash`
+  all have `thumbnail_path: NULL` — but note all three are ALREADY POSTED to rumble/bitchute/
+  facebook, so the standing "Mike PNG wanted" ask is moot for them unless he wants them backfilled.
+- **The 3 already-live non-Kaspa IG posts** (`ig-2026-08-05-robinhood-if-2b`,
+  `ig-2026-08-06-eliza-collapse`, `ig-2026-08-06-vpn-founder-hacked`) — deleting them off the
+  account is a manual call; the queue side is fixed and gated.
+- Clip 5's builder DELETED two SFX that masked speech at every gain (the turn into the payoff could
+  take more lift if he wants it) · clip 6 captions a garbled span "what? where's" where clip 1
+  captions the same seconds "where is it?" (both defensible, trivially matched either way).
+- Still missing: Cooper + CashCat reference PNGs · $IF/$COOPER/Tendies X handles · a topical
+  hook-photo reference set for carousel V4.
+- **C: at 9.6 GB free.** The `cleanup.js --dry-run` sweep is now badly overdue (carried since
+  october-bottom); this session added ~190 MB of renders. The `_genlist-ec-*` run records in
+  `repurpose/` sweep with it per the standing convention.
+- **Nothing committed to git this session; Mike calls the commit.** Branch `transitions-library`,
+  69 modified / 247 untracked. This session's own work is: `repurpose/SKILL.md` (IG Kaspa filter),
+  `scripts/persona-lint.py` (scoping + IG gate + `--fix` rescope), `graph/shorts_graph.py`
+  (verify_publish scoping), the 4 posting scripts (em dashes at source),
+  `skills/captions/build_captions.py` (clip 5/6 rules), `Root.tsx` + the clip 1/5/6 comp trios,
+  `shorts/early-crash/publish-meta.json`, and the two queue data files. **The ~104 untracked `.ts`
+  files from the 2026-08-07 `.gitignore` fix still need their one sweep commit** — that backlog
+  grew again this session (clips 5 and 6 added new `constants-*.ts` / `captions*.ts`).
+
+---
+
+## 2026-08-07 (wrap) — `early-crash` END-OF-SESSION WRAP: Phase 7 paused mid-fleet on Mike's call. THIS BLOCK IS THE RESUME CONTRACT
+
+Mike called the pause with clip 4 DONE and three builders in flight. **Builders STOPPED
+DELIBERATELY (not limit-killed).** Sweep verified at wrap: both stage locks were left HELD by the
+dead builders (`chatgpt` by endure-the-pain, `render` by akita-3b-robinhood — the documented
+dead-builder pattern) and were RELEASED, both verified free · 2 orphan node processes (remotion
+render + gen) and 1 ffmpeg KILLED · **zero orphan chatgpt-profile Chrome** · Lane 3 fully closed
+before the wrap (nothing in flight there).
+
+### Per-clip state at stop (DISK TRUTH — verified; and remember: re-verify at resume, a wrap
+### table is hearsay by doctrine)
+
+| n | clip | state at stop |
+|---|---|---|
+| 1 | akita-3b-robinhood | **RESUME with heavy inventory:** comp `EcAkita3bRobinhood.tsx` + `constants-ec-akita-3b-robinhood.ts` + `captionsEcAkita.ts`, Root.tsx REGISTERED · BROLL-PLAN.md · 6 b-roll (`broll-ec-aka-*`) + `thumb-eca.png` in render-assets · `whisper-words-verified.json` + `_patch_words.py` · **`out/early-crash/1-akita-3b-robinhood.mp4` (97.1 MB) EXISTS but is SUSPECT — the builder held the render lock and its ffmpeg was killed at wrap; ffprobe it (must be ~128.1s, playable to the end) and re-render if truncated.** Gate NOT run, final-mix whisper-verify NOT run. Mike's extreme-minimum b-roll directive applies (thumb + first ~5s + last ~15s, middle barren, transparent overlays only) |
+| 3 | way-off-moon-calls | **RESUME near the finish line:** comp + constants + `captionsEcMoon.ts`, REGISTERED · BROLL-PLAN.md · 5 b-roll (`broll-ec-wom-*`) + `thumb-ecwom.png` · render `out/early-crash/3-way-off-moon-calls.mp4` (26.7 MB) + `_qa-3-{head,mid,pay}.mp4` chunk-QA files — it was mid final QA. ⚠ Its LAST act was announcing it was about to persist ear-verified phrase rules into `skills/captions/build_captions.py` — **verify whether those rules landed; if not, the captions file may predate them. Reconcile build_captions.py vs `captionsEcMoon.ts` before gating.** Gate NOT run |
+| 4 | tendies-funny-stupid | **DONE — 7-built, gate PASS** (34.51s, 29.6% b-roll / 4 beats / 2 full-screens, 7 SFX, -17.5 LUFS, final-mix whisper-verified, render 36.2 MB). Its judgment items ride to Mike's render review (below) |
+| 5 | endure-the-pain | **Barely started BUT disk beats the last message:** `BROLL-PLAN.md` EXISTS (the builder claimed to be reading the contract — disk wins) · NO comp, NO captions, NO b-roll images · it HELD the `chatgpt` lock at stop → **a b-roll generation may have completed server-side: probe the broll pool chat READ-ONLY before re-sending anything, and check for a leftover half-typed composer draft (clearComposer hazard)** |
+| 6 | akita-3b-robinhood-impact | **FRESH BUILD — never dispatched** (wave 2). Only the -final spine + whisper-words on disk. Mike's directive: thumb + first ~1s + last ~5s only, middle barren |
+
+Housekeeping facts for the resume: `out/early-crash/` also holds `_qa-3-*.mp4` drafts (safe:
+publish-shorts skips `_*`) · progress.json: clip 4 at `7-built PASS`, the rest at
+`6-transcribed / ready-for-build` · both stage locks free · the x-tweets ChatGPT pool chat was
+RETIRED this session (contamination) and a fresh one auto-registered; 3 retired chats have
+429-queued deletes that the next sweep clears · one UNREGISTERED one-off reference chat exists
+(clip 4's `broll-ref-ect`, rename didn't stick — harmless, unswept).
+
+### Resume protocol (next session, in order)
+
+1. `python video-creation/shorts/_tooling/stage_lock.py status` FIRST; sweep anything held.
+2. Re-verify the table above against disk (mtimes + ffprobe the clip-1 render).
+3. Relaunch builders with RESUME framing + verified inventory: clips 1+3 as verify-and-finish
+   (NEVER regenerate an existing image; clip 1's render is suspect until probed; clip 3's
+   caption-rule reconciliation first), clip 5 as near-fresh (read-only pool probe + composer
+   check before generating), clip 6 as fresh. Waves of 3 max. **Mike's b-roll directive rides in
+   clips 1+6's contracts verbatim** (it is already written in their dispatch prompts in this
+   log's 2nd-review paragraph).
+4. After ALL FIVE gate PASS → author `shorts/early-crash/publish-meta.json` (hook/caption/tags
+   per clip, persona voice, titles = Mike's 4b titles) → `python
+   video-creation/livestream-repurpose/graph/run.py publish --batch early-crash --date
+   2026-08-08` (or the actual resume date; it becomes the batch's ONE publish date) — **that run
+   is the Wave 5 LIVE BLESS.** Staging IS the review handoff (2026-08-07 process correction);
+   **POSTING stays Mike-gated, sequential.**
+5. progress.json + this log get the batch-complete entry when staging lands.
+
+### Open for Mike (carried + new)
+
+- **Longform thumbnail PNG** for `lf-20260807-early-crash` → patch `thumbnail_path`.
+- **Review the 14 queued Lane 3 entries** (all `pending` on the :8766 dashboard). One flagged
+  decision: the october-turns-green tweet image carries cartoon "Zzz" snooze letterforms
+  (pictographic, left in deliberately — veto = cheap stamp-out or regen).
+- **Clip 4 judgment items at render review:** tail caption ships as "are you out of your mind?"
+  (5 independent passes on the clip's own audio; the plan's "now you're" appears in none — a
+  re-cut, not a re-caption, if he wants the plan wording) · the hook image faithfully reproduces
+  `what-if.jpg`'s stylised unclothed-from-behind figure (platform/taste call) · BrollLayer gained
+  an optional `accent` color prop (additive, teal default — clip 4 uses Robinhood lime).
+- Still missing: Cooper + CashCat reference PNGs · $IF/$COOPER/Tendies X handles · a topical
+  hook-photo reference set for carousel V4 (this batch fell back to V1+V2 for lack of one).
+- C: disk sweep (`cleanup.js --dry-run`) remains overdue; this session added ~160 MB of renders
+  + 18 images; the `_genlist-ec-*` / `_fix*-ec*` / `_make-genlists-ec.js` run records in
+  `repurpose/` sweep with the next cleanup pass per the standing convention.
+- Nothing committed to git this session; Mike calls the commit.
+
+---
+
+## 2026-08-07 (later) — WAVES 4+5 BUILT + SANDBOX-BLESSED in one session (Mike's call), batch `early-crash` at the 4b gate
+
+**Migration status: Lane 2's mechanical pipeline is now FULLY graph-owned** — intake · cut ·
+tighten+5B · **finish (NEW, Wave 4)** · **publish (NEW, Wave 5)**. Mike's ask this session:
+*"get all of lane 2 into LangGraph except the ChatGPT image generation"* — an explicit override
+of his own one-wave-per-stream cadence, taken because both new waves are wrap-and-verify around
+already-canonical Python (no new render math; frozen fallbacks remain). **Phase 7 stays agent
+territory by design** (see the ORCHESTRATOR-PLAN §wave-6 note): the render lives inside the
+remotion-builder's iterative QA loop, and ChatGPT b-roll is excluded per Mike (browser stack
+ports LAST, reaffirmed). Live bless of both new segments rides THIS batch as Mike's gates clear.
+
+### Wave 4 — FINISH segment (5C fillers + Phase 6 caption source + render-assets)
+
+- **Canonical `scripts/finish_batch.py`** (`--stage fillers|transcribe|assets|finalize|all`):
+  5C via the canonical `cut_fillers.py` per clip off an OPTIONAL `shorts/<batch>/filler-plan.json`
+  (span adjudication stays judgment per the filler-removal skill; no plan = passthrough) — every
+  clip ends at `<slug>-final.mp4` so downstream never special-cases; then canonical
+  `transcribe_clips.py --force` (fresh whisper-words off the -final spine); then the **NEW
+  canonical `scripts/setup_render_assets.py`** (ports `scripts/setup-batch-render-assets.js`,
+  now FROZEN as rollback — the JS predates 5B/5C and staged `tightened.mp4`): stages the FINAL
+  spine to `render-assets/<slug>.mp4` with the mandatory seek-friendly GOP re-encode baked in
+  (`-g 25 -keyint_min 25 -bf 0 -sc_threshold 0`, the "No frame found at position N" prevention,
+  previously a copy-pasted recipe) and GOP-verifies the result; then dashboard rebuild in place
+  (`filler-cut (final)` chips) + progress to the **ready-for-build** gate.
+- **Graph segment** (8 nodes) in `graph/shorts_graph.py`; `run.py finish --batch <batch>`;
+  runs ONLY after Mike's 2nd review — **the invocation IS his approval record** (the
+  human-decision-travels-in-the-invocation contract). Verify nodes: -final durations vs
+  base-minus-spans (snap tolerance) + the 8% ceiling, whisper-words NEWER than the -final spine
+  (stale caption source = drift) + word counts + tail sanity, staged spine sourced from
+  `-final.mp4` + duration match + GOP check, dashboard/progress gate state.
+- **Fix that fell out of the port:** `transcribe_clips.py` spine resolution now prefers
+  `<slug>-final.mp4` OVER progress.json's `output_mp4` — pre-fix, a post-5C batch would have
+  captioned the pre-5C spine (progress records the older path until finalize flips it).
+- **Blessed:** stub ok/fail green (halt topology) · sandbox e2e on REAL audio green FIRST TRY
+  (scratch 2-clip batch off eliza spine COPIES: one clip with a real 5C span — RMS-snapped
+  10.00-10.50 → 10.10-10.42, cut, verified; one passthrough; whisper medium on cuda off the
+  -final spines; GOP verify green) · deliberate halts: over-ceiling plan (13.3% vs 8%),
+  span outside the clip, unknown slug — all REFUSED at the runner's fail-fast validator
+  (`validate_filler_plan`, one source of truth imported by run.py).
+
+### Wave 5 — PUBLISH segment (Phase 8 exec; stages the queue, POSTING stays Mike's)
+
+- **`scripts/publish-shorts.py` grew `--meta`**: judgment fields (hook / caption / tags /
+  optional title override / related_longform_url) authored BEFORE the run in
+  `shorts/<batch>/publish-meta.json` (the longform-meta.json seam contract), validated HARD up
+  front (em/en dash anywhere = die; hashtag in caption = die; incomplete entry = die).
+  **Existing shorts.json entries are NEVER touched by meta** — idempotent re-runs cannot clobber
+  Mike's hand-retitles (the eliza "$IF needs replenishment" precedent).
+- **Graph segment**: publish → verify_publish → lint → verify_lint.
+  `run.py publish --batch <batch> --date D`. Preflight REFUSALS: any clip not `7-built` with a
+  PASS gate ("an mp4 on disk is not a completion signal") · missing/incomplete meta ·
+  **the --date re-queue trap is now mechanical** (a second date for an already-staged batch
+  halts with "pass --date <original>"). verify_publish mechanizes the standing manual sweeps:
+  **staged md5 vs the CURRENT render** (the 2026-07-23 stale-stage hazard — a post-QA re-render
+  after staging now FAILS the verify instead of shipping stale), entry completeness, duration vs
+  ffprobe, all 7 platform blocks pending, no em dashes, hashtag-free caption. Then the
+  `persona-lint.py` gate (exit 1 = halt).
+- **Blessed:** stub ok/fail green · sandbox e2e green (fake renders + draft `_*.mp4` hazard file
+  correctly excluded; complete entries from meta; md5 + lint clean; idempotent re-run = 0 added /
+  2 skipped) · drills: post-staging re-render → **md5 halt**; em-dash meta → die; date trap →
+  REFUSED; unbuilt clip → REFUSED. **The lint gate caught a real em dash on its first-ever run**
+  (my own sandbox `$note` string) — fixed in run.py's sandbox scaffold; the gate works.
+
+### Batch `early-crash` (2026-08-07 stream, 30.3 min, "the crash comes early" bearish jobs-report stream)
+
+| Lane | State |
+|---|---|
+| Lane 1 longform | **QUEUED** `lf-20260807-early-crash` "The Crash Comes Early: This Jobs Report Changes Everything" (1335.9s staged, -482.6s at min-sil 0.5; longs total 42; **thumb NULL — Mike PNG wanted**) |
+| Lane 2 shorts | Intake + cut graphs green (**4th consecutive unattended intake**: 0.67 Mbps master · 4317 words / 270 segs / 21 chunks · zero glossary fixes AND zero flags — first fully clean stream). Clip-strategist plan: 5 topics / 7 clips. Cut graph: 7 clips / 516.9s green. **4b (Mike, mid-session): DELETED 2+7 (both jobs-shock clips), retitled 1/3/4/5** (clip 1 "Here's why Robinhood chain tokens will pass 6 billion." [Robin Hood→Robinhood normalized]; clip 3 "What $IF to a 10 billion market cap" — Mike's exact wording incl. the $IF spelling he confirmed, DELIBERATELY not matched to the clip's LAB/Velvet content, do not fix; 4 "Robinhood Alert: " prepend; 5 "Meme Coin Truth: " prepend). **Tighten+5B graph green (2nd consecutive live run), min-sil 0.25 session call**: 1: 187.8→128.1s · 3: 44.5→32.2s · 4: 48.8→34.5s · 5: 47.6→32.0s · 6: 43.1→30.8s (zero-removal plan, justified). Clip 4's strategist was session-limit-killed mid-analysis and **SendMessage-resumed with context intact** (2nd confirmation of the resume path). **Mike's 2nd review PASSED with a b-roll directive: clips 1+6 are chart-walks — EXTREME-minimum b-roll (clip 1: thumb + first ~5s + last ~15s; clip 6: thumb + first ~1s + last ~5s; middles BARREN, transparent-bg overlays only), clips 3/4/5 normal band.** **FINISH graph LIVE-BLESSED** (Wave 4: 5C all-passthrough → -final spines, fresh whisper-words off them [402/126/140/146/76 words], GOP-verified render-assets). **remotion-builders dispatched** (wave: 1, 3, 4; then 5, 6), Mike's directive verbatim in the clip 1+6 contracts. Publish graph (Wave 5 live bless) runs on builders' PASS; POSTING stays Mike's |
+| Lane 3 text/image | **DONE** (`pipelines.repurpose: done`; run mid-session on Mike's ask after he found no new posts — Lane 3 had been scoped out of the migration session): 14 lint-clean entries — 4 long X tweets + 2 one-liners (all imaged), 2 YT posts ~1.8k chars with 5-slide carousels wired into `images[]` (post A = V1 pinned to the clean `828eee71` exemplar; post B = V2 role-matched; **V4 skipped: no topical hook photo reference exists** — flagged), 2 threads (7+6 tweets), 2 YT polls, 2 IG 4:5 companions. **NO X polls** (topic filter: jobs/macro + Robinhood-chain, nothing Kaspa/TON/TAU). Fact-check pass: July NFP -23K vs +83K expected + May/June -103K revisions verified (CNBC/BLS); Akita ATH $0.00002886 × ~100T ≈ $2.9B verified ("nearly $3B" framing). **18 images through 3 adversarial visual-qa rounds + fixes** (see finding below): round 1 failed 3 (all one root cause) + flagged mechanical fixes; final state = all 18 clean (V1 greens 116.9-124.2°, all outside the chartreuse band; the endure/akita/tendies/calls coins regen-verified plain-faced; slide 4 regenerated with a BLANK weekday strip). Drafts: `repurpose/output/2026-08-07_early-crash*` |
+
+Longform meta was authored pre-run off a local base-model probe (title above — Mike can retitle
+in longs.json). Standing flags that ride into the builds: the clip 4 token name is a Whisper
+garble ("10 days" ≈ Tendies, ear-verify before captions); the Tendies X handle is unknown (no
+Follow line queued; add to `persona.json → project_handles` when known).
+
+### Findings worth keeping (institutionalized where noted)
+
+- **A reference image attached for ONE pool-chat item CONTAMINATES sibling generations** — after
+  the $LAB ref rode along for one tweet image, 3 of the next 5 no-ref generations in the same
+  x-tweets chat grew a TRUNCATED $LAB glyph on coins specced generic. Mitigations now in
+  `repurpose/SKILL.md` (refs LAST in a mixed batch; explicit "completely plain, no logo" phrasing
+  on every no-ref coin — defeated the leak on every regen; retire a contaminated chat before
+  regenerating). Corollaries, same doc: **a glyph on a character's FACE is a REGEN, never an
+  inpaint** (two blind inpaint passes each destroyed an eyebrow — faces have structure, only flat
+  texture tolerates surgery), and **calendar/grid props hallucinate pseudo-text** unless the
+  prompt demands a blank ruled strip (worked first try).
+- **The gen-images fresh-chat composer click can time out intermittently** (locator resolved,
+  click never stable — the overlay family generate-broll-reload already handles). A plain retry
+  succeeded; image-gen retries are side-effect-safe (unlike posters).
+- The stage_lock arbitration held a THREE-WAY interleave cleanly: two builders + the Lane 3 fix
+  runs queued on `chatgpt` (one wait measured 14.3 min) with zero browser collisions.
+- 4b retitle precedent reaffirmed: apply Mike's exact wording (incl. a content-mismatched title),
+  normalize only hard persona terminology (Robin Hood→Robinhood), flag everything.
+
+### Docs / pointers updated this session
+
+`run.py` + `shorts_graph.py` headers · `ORCHESTRATOR-PLAN.md` §migration waves 4-6 ·
+`playbooks/livestream-repurpose.md` (all five invocations) · `video-creation/SKILL.md`
+render-assets section (Python port canonical, JS frozen) · `PUBLISH-SHORTS.md` + the
+filler-removal skill got GRAPH BANNERS · langgraph.html Livestream tab (lanes 4+5 + headlines) ·
+memory `project_langgraph_livestream_migration` rewritten.
+
+### The path from here for `early-crash` (each step live-blesses its wave)
+
+1. **Mike's 4b verdicts** by clip number on the dashboard.
+2. Tighten-strategists per survivor → `run.py tighten --batch early-crash --min-sil <Mike's call>`
+   (Wave 3, already blessed).
+3. **Mike's 2nd review** → (optionally `filler_map.py` + adjudication → filler-plan.json) →
+   `run.py finish --batch early-crash` — **Wave 4 live bless.**
+4. remotion-builder agents per surviving clip (Phase 7, agent territory; render-assets + fresh
+   whisper-words already staged for them).
+5. Mike gates the renders + authorizes publish → author publish-meta.json →
+   `run.py publish --batch early-crash --date <first-clip date>` — **Wave 5 live bless.**
+   POSTING stays Mike-gated, sequential, one poster at a time.
+
+---
+
 ## 2026-08-07 — `eliza`: Phase 7 RESUMED and COMPLETE, both shorts built + gated PASS (awaiting Mike's render review)
 
 The 2026-08-06 wrap's resume contract executed. Both `remotion-builder` agents ran in parallel;

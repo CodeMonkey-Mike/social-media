@@ -144,6 +144,51 @@ import { ETAO_FPS, ETAO_DURATION } from './constants-eliza-tao';
 // Eliza-prefixed for the same reason as clip #3: this batch's slugs collide with earlier batches'.
 import { ElizaPhantomHack } from './ElizaPhantomHack';
 import { EPH_FPS, EPH_DURATION } from './constants-eliza-phantom';
+// batch: early-crash, clip #1 "Here's why Robinhood chain tokens will pass 6 billion." (variant: full).
+// `Ec`-prefixed because remotion/src is a FLAT cross-batch namespace and slugs recur between batches.
+import { EcAkita3bRobinhood } from './EcAkita3bRobinhood';
+import { EC_AKA_FPS, EC_AKA_DURATION } from './constants-ec-akita-3b-robinhood';
+// batch: early-crash, clip #4 "Robinhood Alert: Tendies Is Exactly What Vlad Wants to List" (full).
+// Same `Ec` prefix reason as clip #1; every asset of this clip is `*-ec-tfs-*` so the five parallel
+// builders of this batch cannot collide in the shared render-assets/ public dir.
+import { EcTendiesFunnyStupid } from './EcTendiesFunnyStupid';
+import { EC_TFS_FPS, EC_TFS_DURATION } from './constants-ec-tendies-funny-stupid';
+// batch: early-crash, clip #3 "What $IF to a 10 billion market cap" (variant: full). Mike's exact 4b
+// title, $IF spelling deliberate. Same `Ec` prefix reason as clips #1/#4; every asset of this clip is
+// `*-ec-wom-*` / `thumb-ecwom` so the parallel builders cannot collide in the shared render-assets/.
+import { EcWayOffMoonCalls } from './EcWayOffMoonCalls';
+import { WOM_FPS, WOM_DURATION } from './constants-ec-way-off-moon-calls';
+// batch: early-crash, clip #5 "Meme Coin Truth: You'll Be Lucky You Endured the Pain" (variant: full).
+// Mike's exact 4b title, the "Meme Coin Truth: " prepend is his. Same `Ec` prefix reason as clips
+// #1/#3/#4; every asset of this clip is `*-ec-etp-*` so the parallel builders cannot collide in the
+// shared render-assets/ public dir.
+import { EcEndureThePain } from './EcEndureThePain';
+import { EC_ETP_FPS, EC_ETP_DURATION } from './constants-ec-endure-the-pain';
+// batch: early-crash, clip #6 "Watch This: $3 Billion. A Freaking Inu." (variant: IMPACT). Mike's
+// exact 4b title. This is the IMPACT cut of clip #1 above and shares the batch public dir with it, so
+// it is deliberately named `EcAkitaImpact` (never `EcAkita3bRobinhood*`) and every asset it owns is
+// `*-ec-aki-*` / `thumb-ecaki` prefixed - clip #1's `*-ec-aka-*` / `thumb-eca` are never referenced.
+import { EcAkitaImpact } from './EcAkitaImpact';
+import { EC_AKI_FPS, EC_AKI_DURATION } from './constants-ec-akita-impact';
+// batch: tutorial, clip #6 "Look, Look, Holy Crap: The 94X, Then a 550X One Week Later" (variant:
+// IMPACT). This is the IMPACT cut of clip #1 (`tut-94x-euphoria`, built concurrently) and shares the
+// batch public dir with it, so every asset it owns is `*-tut6*` / `thumb-tut6` prefixed and clip #1's
+// assets are never referenced here.
+import { TutEuphoriaImpact } from './TutEuphoriaImpact';
+import { TUT6_FPS, TUT6_DURATION } from './constants-tut-euphoria-impact';
+
+// batch: tutorial, clip #3 "Binance Wants Community Driven Coins. Kaspa Isn't Listed." (variant:
+// FULL). Clip #7 (`binance-kaspa-catch22-impact`, built concurrently) is the IMPACT cut of the same
+// material and shares the batch public dir, so every asset clip #3 owns is `broll-tut-bkc-*` /
+// `thumb-tutbkc` prefixed and clip #7's assets are never referenced here.
+import { TutBinanceKaspaCatch22 } from './TutBinanceKaspaCatch22';
+import { TUT_BKC_FPS, TUT_BKC_DURATION } from './constants-tut-binance-kaspa-catch22';
+// batch: tutorial, clip #1 "94X on $TUT, and It's Pumping Again" (variant: FULL). Clip #6
+// (`tut-94x-euphoria-impact`, built concurrently) is the IMPACT cut of the same material and shares
+// the batch public dir, so every asset clip #1 owns is `broll-tut94x-*` / `thumb-tut94x-*` keyed and
+// clip #6's assets are never referenced here.
+import { TutTut94xEuphoria } from './TutTut94xEuphoria';
+import { TUT94X_FPS, TUT94X_DURATION } from './constants-tut-94x-euphoria';
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -743,6 +788,86 @@ export const RemotionRoot: React.FC = () => {
         component={ElizaTradingAgainstOurselves}
         durationInFrames={ETAO_DURATION}
         fps={ETAO_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch early-crash / clip #1 — akita-3b-robinhood (128.14 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="EcAkita3bRobinhood"
+        component={EcAkita3bRobinhood}
+        durationInFrames={EC_AKA_DURATION}
+        fps={EC_AKA_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch early-crash / clip #4 — tendies-funny-stupid (34.509 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="EcTendiesFunnyStupid"
+        component={EcTendiesFunnyStupid}
+        durationInFrames={EC_TFS_DURATION}
+        fps={EC_TFS_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch early-crash / clip #3 — way-off-moon-calls (32.24 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="EcWayOffMoonCalls"
+        component={EcWayOffMoonCalls}
+        durationInFrames={WOM_DURATION}
+        fps={WOM_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch early-crash / clip #5 — endure-the-pain (32.032 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="EcEndureThePain"
+        component={EcEndureThePain}
+        durationInFrames={EC_ETP_DURATION}
+        fps={EC_ETP_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch early-crash / clip #6 — akita-3b-robinhood-impact (30.77 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="EcAkitaImpact"
+        component={EcAkitaImpact}
+        durationInFrames={EC_AKI_DURATION}
+        fps={EC_AKI_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch tutorial / clip #6 — tut-94x-euphoria-impact (28.22 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="TutEuphoriaImpact"
+        component={TutEuphoriaImpact}
+        durationInFrames={TUT6_DURATION}
+        fps={TUT6_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch tutorial / clip #3 — binance-kaspa-catch22 (31.96 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="TutBinanceKaspaCatch22"
+        component={TutBinanceKaspaCatch22}
+        durationInFrames={TUT_BKC_DURATION}
+        fps={TUT_BKC_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch tutorial / clip #1 — tut-94x-euphoria (78.83 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="TutTut94xEuphoria"
+        component={TutTut94xEuphoria}
+        durationInFrames={TUT94X_DURATION}
+        fps={TUT94X_FPS}
         width={1080}
         height={1920}
       />

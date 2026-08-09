@@ -37,6 +37,14 @@ Used by: **shorts**, **Yuli y Ana**. The "caption1" base style (was `style-guide
 - **Fill:** #fff. **Stroke:** #000 ~13-14px, `paintOrder: stroke fill`. **Align:** center. **Tracking:** ~0.01em.
 - **Grouping:** max 3 words on screen, but up to 5 if EVERY word in the group is very small (<=4 chars,
   e.g. "for no reason at all"); also break on a gap > 0.45s or sentence-ending punctuation. (Mike, 2026-06-17.)
+  - **`--max-secs <s>` (optional, default 0 = OFF)** — a duration cap on a group, the same guard
+    `arial-black` has always had (its `MAX_SECS` = 1.6). Reach for it ONLY on a clip with **stretched
+    words**, where the word caps and the 0.45s gap break stop bounding anything because a stretched run
+    has no gaps in it (tutorial/94x-euphoria-impact 2026-08-09: "the 550X on NYX on BNB" is five
+    <=4-char words with a 1.98s "550X" and zero gaps, so the 3/5 caps put ONE caption on screen for
+    4.86s of continuous speech). Set it **above any deliberately-held vowel in the clip** so a genuine
+    sustain still gets ONE caption (that clip's protected 2.74s "ohhh man" forced 2.80). Leaving it off
+    reproduces every past build byte-identically.
 - **Animation:** bounce pop-in per chunk, Transform scale `70 -> 110 -> 100` over ~12 frames (~0.4s @30fps),
   ease-out on the settle. (NOT word karaoke.)
 - **Color tags (optional):** `<g>` teal/Kaspa, `<y>` yellow/numbers, `<gr>` green/win, `<r>` red/warning.

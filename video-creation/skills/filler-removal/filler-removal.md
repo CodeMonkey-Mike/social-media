@@ -4,6 +4,14 @@ _Created 2026-07-23 after Mike listened to the October-pumps tightened clips and
 ums and uhs were still there. They were still there because the documented step that was supposed
 to remove them **silently no-opped**. This skill is the mechanical replacement._
 
+> **GRAPH BANNER (LangGraph Wave 4, 2026-08-07) — livestream shorts batches:** the EXECUTION of
+> this skill is a node of the finish segment (`graph/run.py finish --batch <batch>`), which runs
+> the canonical `cut_fillers.py` per clip off `shorts/<batch>/filler-plan.json` and
+> passthrough-copies clips with no spans (every clip ends at `<slug>-final.mp4`). The JUDGMENT
+> stays here: run `filler_map.py`, adjudicate the spans per the classes below (tics auto-cut;
+> stall-phrase / discourse-like need review), and land the approved spans in filler-plan.json
+> BEFORE invoking the graph. No plan file = a passthrough-only 5C, which is a valid outcome.
+
 ## Why the old step failed (read this before "improving" anything)
 
 The Phase 5 tighten skill says:
