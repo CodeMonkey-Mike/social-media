@@ -71,7 +71,10 @@ export const CaptionLayer: React.FC<{ captions: Caption[]; fps: number }> = ({ c
 // `seam` = the measured screen-share/webcam divider of THIS clip's base video (content-mode b-roll
 // covers 0..seam). Defaults to CONTENT_BOTTOM so every existing caller is unchanged; measure the seam
 // per clip (row-gradient scan) and pass it, because it varies between livestream layouts.
-export const BrollLayer: React.FC<{ broll: BrollEv[]; t: number; seam?: number }> = ({ broll, t, seam = CONTENT_BOTTOM }) => {
+// `accent` = the colour of the 5 px divider drawn under a CONTENT-mode image. Defaults to TEAL so
+// every existing caller is byte-identical; pass a brand colour when teal would misread (e.g. a
+// Robinhood clip, where teal reads as Kaspa — early-crash/tendies-funny-stupid, 2026-08-07).
+export const BrollLayer: React.FC<{ broll: BrollEv[]; t: number; seam?: number; accent?: string }> = ({ broll, t, seam = CONTENT_BOTTOM, accent = TEAL }) => {
   const idx = broll.findIndex(e => t >= e.tIn && t < e.tOut);
   if (idx < 0) return null;
   const ev = broll[idx];
@@ -101,7 +104,7 @@ export const BrollLayer: React.FC<{ broll: BrollEv[]; t: number; seam?: number }
     <AbsoluteFill style={{ opacity: op }}>
       <div style={{ position: 'absolute', top: 0, left: 0, width: 1080, height: seam, overflow: 'hidden' }}>
         <Img src={ev.src} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${kb})` }} />
-        <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: 5, background: TEAL, boxShadow: `0 0 18px ${TEAL}` }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: 5, background: accent, boxShadow: `0 0 18px ${accent}` }} />
       </div>
     </AbsoluteFill>
   );

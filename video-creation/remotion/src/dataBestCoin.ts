@@ -1,0 +1,172 @@
+import { staticFile } from 'remotion';
+import type { ShortData } from './LivestreamShort';
+
+const FPS = 30;
+const A = (f: string) => staticFile(f);
+const WHOOSH = A('sfx/Cinematic Whoosh 02.wav');
+const BOOM = A('sfx/Boom - Big Reveal.wav');
+
+// ── Clip 1: TAO / decentralized AI (30.13s) ──────────────────────────────────
+export const D_BC_TAO: ShortData = {
+  clip: A('projects/best-coin-to-buy/tao-decentralized-ai.mp4'), fps: FPS, durationS: 30.13, capY: 560,
+  thumb: { title: "THE AI THEY\nCAN'T SWITCH OFF", chip: "$TAO", chipColor: "#00e5ff", titleSize: 96 },
+  captions: [
+    { t: 0.00, h: "<g>bittensor</g>" },
+    { t: 0.70, h: "for the last" },
+    { t: 1.24, h: "couple weeks" },
+    { t: 1.98, h: "went on a" },
+    { t: 2.46, h: "nice pump" },
+    { t: 3.54, h: "when we dipped" },
+    { t: 4.30, h: "below <y>$200</y>" },
+    { t: 5.34, h: "then pumped again" },
+    { t: 6.60, h: "with the government" },
+    { t: 9.60, h: "<r>shutdown</r> of the" },
+    { t: 11.10, h: "anthropic <y>fable</y> model" },
+    { t: 13.24, h: "a derivation" },
+    { t: 14.06, h: "of <y>mythos</y>" },
+    { t: 15.10, h: "made everybody" },
+    { t: 15.58, h: "think, wow" },
+    { t: 16.92, h: "the government can" },
+    { t: 17.58, h: "just step in" },
+    { t: 18.48, h: "and <r>shut things</r>" },
+    { t: 19.68, h: "<r>down</r>" },
+    { t: 20.22, h: "so now we" },
+    { t: 21.20, h: "want to" },
+    { t: 21.76, h: "switch towards" },
+    { t: 22.60, h: "<g>decentralized ai</g>" },
+    { t: 26.26, h: "decentralized" },
+    { t: 26.92, h: "everything" },
+    { t: 27.60, h: "bypass the gov" },
+    { t: 28.70, h: "get the government" },
+    { t: 29.26, h: "<r>out</r>" },
+  ],
+  broll: [
+    { src: A('broll-a1c0f7d2-bc-tao-pump.png'), tIn: 2.5, tOut: 9.0, mode: 'full' },
+    { src: A('broll-b2d1e8c3-bc-tao-switchoff.png'), tIn: 9.6, tOut: 19.6, mode: 'full' },
+    { src: A('broll-c3e2f9b4-bc-tao-network.png'), tIn: 22.0, tOut: 30.13, mode: 'full' },
+  ],
+  sounds: [{ t: 2.5, src: WHOOSH }, { t: 9.6, src: WHOOSH }, { t: 22.0, src: BOOM }],
+};
+
+// ── Clip 2: LAB 353x (22.96s) ────────────────────────────────────────────────
+export const D_BC_LAB: ShortData = {
+  clip: A('projects/best-coin-to-buy/lab-353x-bear-call.mp4'), fps: FPS, durationS: 22.96, capY: 560,
+  thumb: { title: "I CALLED A 20x\nIT DID 353x", chip: "IN A BEAR MARKET", chipColor: "#39ff14", titleSize: 96 },
+  logo: { src: A('logo-lab.png'), glow: '#aef34a', watermark: { width: 168 } },
+  captions: [
+    { t: 0.00, h: "i thought" },
+    { t: 0.58, h: "we were gonna" },
+    { t: 1.00, h: "do a <gr>20x</gr>" },
+    { t: 1.70, h: "off <g>$lab</g>" },
+    { t: 2.84, h: "we ended up" },
+    { t: 3.22, h: "doing a <gr>353x</gr>" },
+    { t: 4.38, h: "in a <r>bear market</r>" },
+    { t: 5.00, h: "holy crap" },
+    { t: 6.04, h: "imagine getting in" },
+    { t: 6.66, h: "at <y>7.7 cents</y>" },
+    { t: 8.98, h: "you watch it" },
+    { t: 9.40, h: "go all the way" },
+    { t: 10.24, h: "up to <y>$27</y>" },
+    { t: 12.22, h: "i estimate we" },
+    { t: 13.04, h: "did a <gr>353x</gr>" },
+    { t: 14.34, h: "on this one" },
+    { t: 15.14, h: "i was giving" },
+    { t: 16.30, h: "a target of <gr>20x</gr>" },
+    { t: 17.48, h: "you see my" },
+    { t: 17.90, h: "live streams" },
+    { t: 18.66, h: "in the past" },
+    { t: 19.42, h: "i had it listed" },
+    { t: 20.22, h: "as a <y>private gem</y>" },
+    { t: 21.18, h: "for my" },
+    { t: 22.10, h: "community" },
+  ],
+  broll: [
+    { src: A('broll-d4f3a0c5-bc-lab-353x.png'), tIn: 1.0, tOut: 6.0, mode: 'full' },
+    { src: A('broll-e5a4b1d6-bc-lab-gem.png'), tIn: 19.0, tOut: 22.96, mode: 'full' },
+  ],
+  sounds: [{ t: 1.0, src: WHOOSH }, { t: 3.22, src: BOOM }, { t: 19.0, src: WHOOSH }],
+};
+
+// ── Clip 3: AI super-cycle (21.21s) ──────────────────────────────────────────
+export const D_BC_AI: ShortData = {
+  clip: A('projects/best-coin-to-buy/ai-supercycle-bigger-than-dotcom.mp4'), fps: FPS, durationS: 21.21, capY: 560,
+  thumb: { title: "BIGGER THAN\nTHE DOT-COM BOOM", chip: "STARTING NOW", chipColor: "#00e5ff", titleSize: 86 },
+  captions: [
+    { t: 0.00, h: "we're starting" },
+    { t: 0.60, h: "right now" },
+    { t: 1.12, h: "a major" },
+    { t: 2.38, h: "<y>gigantic</y> expansion" },
+    { t: 4.86, h: "unlike anything" },
+    { t: 6.26, h: "we've ever seen" },
+    { t: 7.38, h: "it's gonna be" },
+    { t: 7.66, h: "bigger than" },
+    { t: 8.46, h: "the <y>dot com</y>" },
+    { t: 9.02, h: "explosion" },
+    { t: 9.74, h: "fueled by <g>ai</g>" },
+    { t: 11.66, h: "then we go" },
+    { t: 12.32, h: "into <y>robotics</y>" },
+    { t: 14.40, h: "then on into" },
+    { t: 15.38, h: "<y>biotech</y>" },
+    { t: 16.28, h: "the <g>ai</g> innovation" },
+    { t: 17.82, h: "helps advancements" },
+    { t: 19.06, h: "in diseases" },
+    { t: 19.60, h: "and <gr>cures</gr>" },
+  ],
+  broll: [
+    { src: A('broll-f6b5c2e7-bc-ai-expansion.png'), tIn: 1.5, tOut: 9.0, mode: 'full' },
+    { src: A('broll-a7c6d3f8-bc-ai-cures.png'), tIn: 16.0, tOut: 21.21, mode: 'full' },
+  ],
+  sounds: [{ t: 1.5, src: WHOOSH }, { t: 16.0, src: BOOM }],
+};
+
+// ── Clip 4: Linea chosen by Swift (34.89s) ───────────────────────────────────
+export const D_BC_LINEA: ShortData = {
+  clip: A('projects/best-coin-to-buy/linea-chosen-by-swift.mp4'), fps: FPS, durationS: 34.89, capY: 560,
+  thumb: { title: "SWIFT PICKED\nLINEA", chip: "LOW CAP, 100x SETUP", chipColor: "#00e5ff", titleSize: 100 },
+  logo: { src: A('logo-linea.png'), glow: '#61dfff', watermark: { width: 168 } },
+  captions: [
+    { t: 0.00, h: "low market cap" },
+    { t: 1.30, h: "and it was" },
+    { t: 1.92, h: "chosen by <b>swift</b>" },
+    { t: 2.78, h: "it sort of" },
+    { t: 3.40, h: "renders <r>xrp</r> moot" },
+    { t: 4.50, h: "<r>xrp</r> was supposed" },
+    { t: 5.52, h: "to replace <b>swift</b>" },
+    { t: 7.70, h: "now <b>swift</b> has" },
+    { t: 8.24, h: "a partnership" },
+    { t: 9.52, h: "with a blockchain" },
+    { t: 10.60, h: "called <g>linea</g>" },
+    { t: 11.42, h: "stands to reason" },
+    { t: 12.78, h: "this is a" },
+    { t: 13.12, h: "good play" },
+    { t: 14.28, h: "in the bull run" },
+    { t: 15.76, h: "you see this" },
+    { t: 16.14, h: "at <y>40 million</y>" },
+    { t: 18.40, h: "easy <gr>10x</gr>" },
+    { t: 19.72, h: "at <y>400 million</y>" },
+    { t: 20.78, h: "probably in" },
+    { t: 21.50, h: "the <gr>billions</gr>" },
+    { t: 22.04, h: "even if it" },
+    { t: 22.78, h: "underperforms" },
+    { t: 24.44, h: "target <y>4 billion</y>" },
+    { t: 26.18, h: "i don't even" },
+    { t: 26.92, h: "think that high" },
+    { t: 27.38, h: "but again my" },
+    { t: 28.04, h: "expectations get" },
+    { t: 29.58, h: "<gr>shattered</gr>" },
+    { t: 30.32, h: "it goes way" },
+    { t: 30.84, h: "beyond sometimes" },
+    { t: 32.28, h: "let's just say" },
+    { t: 32.86, h: "it goes to" },
+    { t: 33.46, h: "<y>4 billion</y>" },
+    { t: 34.22, h: "<gr>100x</gr>" },
+  ],
+  broll: [
+    { src: A('broll-b8d7e4a9-bc-linea-swift.png'), tIn: 1.5, tOut: 7.0, mode: 'full' },
+    { src: A('broll-c9e8f5ba-bc-linea-100x.png'), tIn: 15.0, tOut: 24.0, mode: 'full' },
+    { src: A('broll-daf9a6cb-bc-linea-moon.png'), tIn: 26.5, tOut: 34.89, mode: 'full' },
+  ],
+  sounds: [{ t: 1.5, src: WHOOSH }, { t: 15.0, src: WHOOSH }, { t: 26.5, src: BOOM }],
+};
+
+export const FRAMES_BC = { tao: 906, lab: 691, ai: 639, linea: 1049 };

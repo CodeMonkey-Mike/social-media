@@ -34,6 +34,9 @@ export type ShortData = {
   capY?: number;
   /** measured screen-share/webcam seam of THIS clip; content-mode b-roll covers 0..seam */
   seam?: number;
+  /** colour of the divider under a content-mode b-roll image (default TEAL; pass a brand colour
+   *  when teal would misread, e.g. a Robinhood clip where teal reads as Kaspa) */
+  accent?: string;
   captions: Caption[];
   broll?: BrollEv[];
   badges?: BadgeEv[];
@@ -150,7 +153,7 @@ export const LivestreamShort: React.FC<{ data: ShortData }> = ({ data }) => {
         <OffthreadVideo src={data.clip} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </AbsoluteFill>
 
-      {data.broll && <BrollLayer broll={data.broll} t={t} seam={data.seam} />}
+      {data.broll && <BrollLayer broll={data.broll} t={t} seam={data.seam} accent={data.accent} />}
 
       {/* readability scrim across the caption band */}
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 36%, rgba(0,0,0,0.5) 43%, rgba(0,0,0,0) 52%)' }} />
