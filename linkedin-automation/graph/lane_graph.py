@@ -486,6 +486,17 @@ def _wrap_cmd(script: Path, *args) -> list:
     return [sys.executable, "-u", str(script), *args]
 
 
+# Run-context string for the live heartbeat (parity with the livestream graphs'
+# `batch` stamp, 2026-08-11): run.py sets it to the run banner before invoking, so
+# the dashboard's "Now running" strip can say WHAT was asked, not just which node.
+CURRENT_CONTEXT = None
+
+
+def set_current_context(ctx):
+    global CURRENT_CONTEXT
+    CURRENT_CONTEXT = ctx
+
+
 def _run_streaming(cmd, kill_after_consecutive_errors: bool = False,
                    success_res=LANE2_SUCCESS_RES, lane=None, node=None, stub=""):
     """Run a wrapped script, tee its output live, and return (returncode, output,
@@ -504,6 +515,7 @@ def _run_streaming(cmd, kill_after_consecutive_errors: bool = False,
     started = _now_iso()
     prog = {
         "lane": lane, "lane_name": LANE_NAMES.get(lane), "node": node,
+        "context": CURRENT_CONTEXT,
         "status": "running", "stub": bool(stub),
         "started_at": started, "updated_at": started,
         "pid": None, "index": None, "total": None,

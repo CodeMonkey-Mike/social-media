@@ -64,6 +64,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from lane_graph import (  # noqa: E402
     CHECKPOINT_DB, LANE5_AUTO_MAX, build_graph, build_lane2_graph, build_lane3_graph,
     build_lane4_graph, build_lane5_graph, finish_progress, lane5_plan, record_run,
+    set_current_context,
 )
 
 from langgraph.checkpoint.sqlite import SqliteSaver  # noqa: E402
@@ -359,6 +360,10 @@ def main():
 
     conn = sqlite3.connect(str(CHECKPOINT_DB), check_same_thread=False)
     app = build(checkpointer=SqliteSaver(conn))
+
+    # Heartbeat context parity with the livestream graphs (2026-08-11): the banner
+    # already says what this run was asked to do — surface it live.
+    set_current_context(banner)
 
     print(banner)
     print(f"thread: {thread} | checkpoints: {CHECKPOINT_DB.name}"
