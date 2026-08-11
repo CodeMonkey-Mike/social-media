@@ -104,6 +104,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from intake_graph import (  # noqa: E402
     CHECKPOINT_DB, DATA, LONGS_FILE, STAGED_ROOT, TRANSCRIPTS,
     _ffprobe_geometry, build_intake_graph, finish_progress, record_run,
+    set_current_batch,
 )
 from shorts_graph import (  # noqa: E402
     build_cut_graph, build_finish_graph, build_publish_graph, build_tighten_graph,
@@ -314,6 +315,7 @@ def main_cut():
             "status": "running",
         }
         thread = args.thread or f"cut-{args.batch}-{date.today():%Y%m%d}"
+        set_current_batch(args.batch)
         banner = (f"Cut graph | {args.batch} | {len(expected)} clips | master {master_geometry}"
                   + (f" | TEST SANDBOX {args.test_sandbox}" if args.test_sandbox else ""))
 
@@ -380,8 +382,10 @@ def main_tighten():
                                              "+ 5B desilence) through LangGraph.")
     ap.add_argument("--batch")
     ap.add_argument("--min-sil", type=float, default=None,
-                    help="5B min-silence seconds — Mike's per-batch knob, REQUIRED for a "
-                         "real run (recent batches: 0.25 and 0.45)")
+                    help="5B min-silence seconds. Omit for the CANONICAL shorts default "
+                         "0.25 (the 250 ms in video-creation/SKILL.md §5B). Any other "
+                         "value is a per-batch DEVIATION that must be Mike's call "
+                         "(tutorial ran 0.95 once, for a captions-only batch)")
     ap.add_argument("--plan", default=None, help="tighten-plan.json")
     ap.add_argument("--clip-plan", default=None)
     ap.add_argument("--master", default=None)
@@ -416,10 +420,21 @@ def main_tighten():
         if not args.batch:
             print("--batch is required for a real run.", file=sys.stderr)
             sys.exit(1)
+        # The canonical shorts 5B default is IN CODE, not prose (Mike, 2026-08-11,
+        # after a session anchored on the tutorial batch's one-off 0.95 instead of
+        # the documented 250 ms and shipped under-cut clips): video-creation/
+        # SKILL.md §Phase 5B — "min-silence 250 ms (default; it's the one knob)".
+        # Omitting --min-sil uses it; passing any other value is a per-batch
+        # DEVIATION that must be Mike's call, and the banner below is its record.
         if args.min_sil is None:
-            print("--min-sil is required (the 5B knob is Mike's per-batch call every "
-                  "run; recent batches used 0.25 and 0.45).", file=sys.stderr)
-            sys.exit(1)
+            args.min_sil = 0.25
+            print("min-sil not given -> canonical shorts 5B default 0.25s (250 ms, "
+                  "video-creation/SKILL.md §Phase 5B). Pass --min-sil to deviate.")
+        elif abs(args.min_sil - 0.25) > 1e-9:
+            print(f"min-sil DEVIATION: {args.min_sil}s (canonical shorts default is "
+                  "0.25s). A deviation is Mike's explicit per-batch call; this "
+                  "banner is its record (e.g. tutorial ran 0.95 for a captions-only "
+                  "batch, 2026-08-09).")
         if not (0.15 <= args.min_sil <= 2.0):
             print(f"--min-sil {args.min_sil}s is outside the sane 0.15-2.0s range.",
                   file=sys.stderr)
@@ -502,6 +517,7 @@ def main_tighten():
             "status": "running",
         }
         thread = args.thread or f"tighten-{args.batch}-{date.today():%Y%m%d}"
+        set_current_batch(args.batch)
         banner = (f"Tighten graph | {args.batch} | {len(expected)} clips | "
                   f"min-sil {args.min_sil}s | master {master_geometry}"
                   + (f" | TEST SANDBOX {args.test_sandbox}" if args.test_sandbox else ""))
@@ -554,8 +570,9 @@ def report_finish(final) -> int:
         w = (s.get("words") or {}).get(slug, "?")
         print(f"    - {slug}: {d:.1f}s · {w} words")
     print(f"  dashboard: {s.get('dashboard')} · progress at the ready-for-build gate")
-    print("  next: remotion-builder (7) per clip — ChatGPT b-roll stays in the builder "
-          "(browser stack ports LAST); then `run.py publish` once Mike gates the renders.")
+    print("  next: remotion-builder (7) per clip — builder b-roll runs the canonical "
+          "python repurpose/gen_batch.py (ported 2026-08-11; JS twins frozen rollback); "
+          "then `run.py publish` once Mike gates the renders.")
     return 0
 
 
@@ -643,6 +660,23 @@ def main_finish():
         else:
             plan_path = ""      # optional seam artifact: absent = all passthrough
 
+        # fail fast on unscoped build directives (clip_directives is the one
+        # source of truth; finish is the last machine-owned step before Phase 7
+        # dispatch, so an unscoped directive REFUSES the handoff here instead of
+        # surviving to staged shorts like the 2026-08-10 tutorial scoping bug)
+        sys.path.insert(0, str(REPO_ROOT / "video-creation" / "shorts" / "_tooling"))
+        from clip_directives import validate_directives  # noqa: E402
+        cplan_path = os.path.join(out_base, "clip-plan.json")
+        if os.path.isfile(cplan_path):
+            unscoped = validate_directives(cplan_path)
+            if unscoped:
+                for d in unscoped:
+                    print(f"build_directives {d['id']!r} has no applies_to; scope it "
+                          "or the Phase 7 handoff cannot be composed. (Do NOT widen "
+                          "an existing directive's applies_to to silence this.)",
+                          file=sys.stderr)
+                sys.exit(1)
+
         # fail fast with the script's own validator (one source of truth)
         spine_durs = {}
         for c in prog_clips:
@@ -666,6 +700,7 @@ def main_finish():
             "expected": expected, "status": "running",
         }
         thread = args.thread or f"finish-{args.batch}-{date.today():%Y%m%d}"
+        set_current_batch(args.batch)
         n_span = sum(1 for e in expected if e["n_spans"])
         banner = (f"Finish graph | {args.batch} | {len(expected)} clips | "
                   f"{n_span} with 5C spans | whisper {args.model}"
@@ -863,6 +898,7 @@ def main_publish():
             "expected": expected, "status": "running",
         }
         thread = args.thread or f"publish-{args.batch}-{date_compact}"
+        set_current_batch(args.batch)
         banner = (f"Publish graph | {args.batch} | {len(expected)} clips | date {args.date}"
                   + (f" | TEST SANDBOX {args.test_sandbox}" if args.test_sandbox else ""))
 
@@ -1051,6 +1087,7 @@ def main_repurpose():
             "status": "running",
         }
         thread = args.thread or f"repurpose-{args.batch}-{run_date.replace('-', '')}"
+        set_current_batch(args.batch)
         n_entries = sum(len(v) for v in expected_entries.values())
         banner = (f"Repurpose graph | {args.batch} | {len(expected_images)} images | "
                   f"{n_entries} queue entries | date {run_date}"
@@ -1192,6 +1229,7 @@ def main():
             "status": "running",
         }
         thread = args.thread or f"intake-{slug}-{date.today():%Y%m%d}"
+        set_current_batch(slug)
         banner = (f"Intake graph | {stem} | slug {slug}"
                   + (f" | min-sil {args.min_sil}s" if not args.skip_longform else " | NO LONGFORM")
                   + (" | CPU verticalize" if args.cpu_verticalize else "")

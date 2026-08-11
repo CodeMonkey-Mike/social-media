@@ -8,6 +8,12 @@ A mandatory polish between the raw preview clips and silence removal. It does wh
 does NOT: it removes *spoken* content (run-off, fillers, asides), where silence removal only removes
 gaps. Order: **raw cut (4b) → tighten (5) → 2nd review → delete_silences (5B) → captions (6)**.
 
+> **5B min-silence = 0.25s (250 ms), the canonical default — now encoded in `graph/run.py tighten`
+> (omit `--min-sil` to get it).** Any other value is a per-batch DEVIATION that must be Mike's
+> explicit call, and the runner banners it as the record. Never treat a recent batch's deviation as
+> the new default: `tutorial` ran 0.95 ONCE (captions-only rationale, 2026-08-09), and anchoring on
+> it shipped visibly under-cut clips on `last-year` until Mike caught the pacing by eye (2026-08-11).
+
 For each kept clip:
 1. **Re-lock the outer boundaries to phrase anchors** — start on the real hook, end on the topic's
    final word. This is the fix for trailing run-off (the #1 review miss) and dead lead-in (the opening
