@@ -23,8 +23,8 @@ const RUMBLE_V_RE = /https:\/\/rumble\.com\/v[a-zA-Z0-9]+-[a-zA-Z0-9][^\s"'<>]*\
 // Human-like delays
 const CHAR_DELAY_MIN = 40;
 const CHAR_DELAY_MAX = 120;
-const ACTION_MIN     = 2000;
-const ACTION_MAX     = 5000;
+const ACTION_MIN     = +(process.env.RM_ACTION_MIN || 2000);
+const ACTION_MAX     = +(process.env.RM_ACTION_MAX || 5000);
 
 function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
@@ -408,12 +408,12 @@ async function typeHuman(page, locator, text) {
     } else if (shortUrl) {
       short.platforms[PLATFORM].status = 'posted_unverified';
       short.platforms[PLATFORM].url    = shortUrl;
-      short.platforms[PLATFORM].error  = 'Short URL found on /account/content but public page did not resolve within the retry window — verify manually. Do NOT re-run (would duplicate).';
+      short.platforms[PLATFORM].error  = 'Short URL found on /account/content but public page did not resolve within the retry window: verify manually. Do NOT re-run (would duplicate).';
       console.log(`\n⚠ posted_unverified: ${shortUrl} (URL captured, liveness not confirmed in window)`);
     } else {
       short.platforms[PLATFORM].status = 'posted_unverified';
       short.platforms[PLATFORM].url    = null;
-      short.platforms[PLATFORM].error  = 'Upload submitted but short not found on /account/content within retry window — recapture by title later (it lives at /shorts/v<id>, not the channel grid). Do NOT re-run (would duplicate).';
+      short.platforms[PLATFORM].error  = 'Upload submitted but short not found on /account/content within retry window: recapture by title later (it lives at /shorts/v<id>, not the channel grid). Do NOT re-run (would duplicate).';
       console.log('\n⚠ posted_unverified: short URL not captured — recapture later from /account/content by title.');
     }
     fs.writeFileSync(SHORTS_JSON, JSON.stringify(data, null, 2));

@@ -21,12 +21,48 @@
       "5": "removed the $IF what-if tail 4541.98-4570.70 (off-topic for a doginme clip)"
     },
     "build_directives": [
+      {
+        "id": "phase7-visual",
+        "applies_to": [
+          1
+        ],
+        "authority": "Mike, spoken 2026-08-09; SCOPE CORRECTED BY MIKE 2026-08-10",
+        "coverage_exempt": true,
+        "directive": "PHASE 7 VISUAL DIRECTIVE — CLIP 1 ONLY. Mike's verbatim words: \"i only do not want full screen broll, nor content zone broll. you can do captions, sfx, and any overlaying graphics or images with background transparency.\" ALLOWED on clip 1: captions, SFX, and overlay graphics/images WITH BACKGROUND TRANSPARENCY. BANNED on clip 1: full-screen b-roll and content-zone b-roll, i.e. any asset that covers the frame or fills the content zone. The test is COVERAGE, not the asset's source.",
+        "scope_correction": {
+          "corrected": "2026-08-10",
+          "was_recorded_as": "WHOLE BATCH",
+          "true_scope": "clip 1 only",
+          "how_it_went_wrong": "Mike gave this for clip 1. The 2026-08-09 session wrote it into this file as free prose headed \"PHASE 7 VISUAL DIRECTIVE, WHOLE BATCH\", and the verbatim sentence carries no scope marker of its own, so nothing downstream could tell. The PROJECT-LOG resume contract then hardened it (\"rides VERBATIM in every builder contract\") and the 2026-08-10 orchestrator dispatched it to all 8 builders without reconciling it against the early-crash precedent in the same log, where the same class of directive was correctly scoped to clips 1 and 6.",
+          "build_deviation": "ALL 8 SHIPPED CLIPS were built under this directive, not just clip 1, so clips 2-8 carry 0% full-screen and 0% content-zone b-roll that Mike did not ask for. He reviewed them on 2026-08-10, said he LIKES the transparent-background overlays and wants to keep them, and decided NOT to redo the batch. The shorts as staged therefore do NOT match this scope, deliberately. Do not read the shipped clips as evidence of what the directive covered.",
+          "prevention": "Directives are now scoped records read ONLY via shorts/_tooling/clip_directives.py, which treats a missing applies_to as a hard error instead of defaulting to the batch. finalized_short_gate.py additionally FAILS a clip that ships zero zone/full-screen b-roll unless a directive with coverage_exempt applies to that clip."
+        }
+      },
+      {
+        "id": "phase7-gate-consequence",
+        "applies_to": [
+          1
+        ],
+        "authority": "derived from phase7-visual (same scope)",
+        "directive": "GATE CONSEQUENCE for the clip(s) phase7-visual covers: because transparent overlays are permitted, finalized_short_gate.py's requirement of at least one b-roll asset reference is satisfiable normally and NO gate change is needed. Such a clip must therefore carry at least one transparent overlay asset. If it genuinely warrants none, STOP and flag it rather than bypassing the gate."
+      },
+      {
+        "id": "schwarzenegger-no-cover",
+        "applies_to": [
+          1,
+          6
+        ],
+        "authority": "Mike, 2026-08-09 (he named this line himself)",
+        "directive": "DO NOT COVER THE SCHWARZENEGGER SOUNDBOARD LINE. In clips 1 and 6 the payoff line (\"And that's why CodeMonkey Mike has the greatest crypto community on the planet\") is a soundboard drop, not Mike. Nothing may cover it: no b-roll and no overlay graphic, and no SFX sting (a sting covers it in the audio domain). Captions only over that line. Its full extent after the tighten relock is master 353.36-358.62."
+      }
+    ],
+    "min_sil_call": "0.95 for the batch, MIKE DECIDED 2026-08-09 after the strategists reported. Five clips independently measured that a lower value deletes deliberate rhetorical beats inside protected peaks, and they all cluster in a 0.63-0.92s band: the 0.86s drum-roll between 94X and the 550X (clips 1+6), the 0.82s beat between Holy guacamole dude and Oh my God (clip 1), the 0.634s suspense pause inside because if they did ... Kaspa would be listed (clips 3+7), the 0.923s beat before the third limb of the gem triple (clip 3), and the 0.745s and 0.920s delivery beats in clip 8. The desilencer deletes a qualifying silence ENTIRELY (pad 0), so at 0.45 all seven go to zero; at 0.95 all seven survive while every pause of 1s or longer is still cleared, which is the bulk of the real dead air. Rationale for the higher value: this batch is CAPTIONS ONLY with no b-roll, so cadence is the only performance element left on screen. Note the strategists sized their join relocks to sit UNDER 0.45, so those joins are safe at 0.95 too (a higher threshold only preserves more).",
+    "second_review": "APPROVED 2026-08-09, Mike: 'all clips are approved'. All 8 clips survive to Phase 7. This approval is the record that authorises the finish segment and the remotion builds.",
+    "build_directives_prose_ARCHIVED": [
       "PHASE 7 VISUAL DIRECTIVE, WHOLE BATCH (Mike, 2026-08-09, CLARIFIED). ALLOWED: captions, SFX, and overlay graphics or images WITH BACKGROUND TRANSPARENCY. BANNED: full-screen b-roll and content-zone b-roll, i.e. any asset that covers the frame or fills the content zone. The test is COVERAGE, not the asset's source: a transparent-background PNG laid over the base is fine, a full-frame or content-zone image is not. This supersedes the earlier, stricter reading of 'captions only, no ChatGPT images' recorded before the clarification.",
       "GATE CONSEQUENCE: because transparent overlays are permitted, finalized_short_gate.py's requirement of at least one b-roll asset reference is satisfiable normally and NO gate change is needed. Every clip must therefore carry at least one transparent overlay asset. If a clip genuinely warrants none, STOP and flag it rather than bypassing the gate.",
       "DO NOT COVER THE SCHWARZENEGGER SOUNDBOARD LINE. In clips 1 and 6 the payoff line ('And that's why CodeMonkey Mike has the greatest crypto community on the planet') is a soundboard drop, not Mike. Nothing may cover it: no b-roll (already banned) and no overlay graphic either. Captions only over that line. Its full extent after the tighten relock is master 353.36-358.62."
-    ],
-    "min_sil_call": "0.95 for the batch, MIKE DECIDED 2026-08-09 after the strategists reported. Five clips independently measured that a lower value deletes deliberate rhetorical beats inside protected peaks, and they all cluster in a 0.63-0.92s band: the 0.86s drum-roll between 94X and the 550X (clips 1+6), the 0.82s beat between Holy guacamole dude and Oh my God (clip 1), the 0.634s suspense pause inside because if they did ... Kaspa would be listed (clips 3+7), the 0.923s beat before the third limb of the gem triple (clip 3), and the 0.745s and 0.920s delivery beats in clip 8. The desilencer deletes a qualifying silence ENTIRELY (pad 0), so at 0.45 all seven go to zero; at 0.95 all seven survive while every pause of 1s or longer is still cleared, which is the bulk of the real dead air. Rationale for the higher value: this batch is CAPTIONS ONLY with no b-roll, so cadence is the only performance element left on screen. Note the strategists sized their join relocks to sit UNDER 0.45, so those joins are safe at 0.95 too (a higher threshold only preserves more).",
-    "second_review": "APPROVED 2026-08-09, Mike: 'all clips are approved'. All 8 clips survive to Phase 7. This approval is the record that authorises the finish segment and the remotion builds."
+    ]
   },
   "clips": [
     {
@@ -97,7 +133,7 @@
         },
         {
           "segment_index": 3,
-          "new_start": 908.0,
+          "new_start": 908,
           "reason": "IN: kill the dead lead-in. Seg 3 plays 4th (straight after the Cooper block) and 907.65-908.00 is hesitation murmur, not a word. Whisper calls it 'Um,' 907.80-908.32, but RMS shows 907.30-908.02 at -48..-53dB (30dB under his speech; the floor elsewhere is -82..-120dB) with troughs at 907.19-907.26 and 907.77-907.85, and a windowed base.en decode of 906-917s hears NOTHING between 'is.' (906.60) and the next word at 908.02. Measured onset of 'It gives me' = 908.045. new_start 908.00 opens 45ms ahead of it on a -50dB floor, so the 8ms declick is inaudible and no word is touched. Join: seg 1 '...besides What If.' -> 'It gives me that Toshi vibe, being the cat of Brian Armstrong.' -0.35s, uncapped. Fallback if the head reads clipped: 907.79 (deepest trough), but it re-admits 0.2s of murmur."
         }
       ],
@@ -124,7 +160,7 @@
         },
         {
           "start": 942.75,
-          "end": 945.0,
+          "end": 945,
           "reason": "Drawled stall 'And... um...' between the peak beat and the verdict. RMS shows one continuous full-level voiced blob 943.75-944.60 (-19..-25dB) wrapped in breath. Start 942.75 is 90ms after 'fart coin' has fully decayed (-53dB@942.66, trough 942.68-942.92 min -64dB), so the PEAK BEAT 931.18-942.56 is untouched. End 945.00 sits in the trough 945.00-945.01 and PRESERVES the crisp quiet restart 'And' that base.en hears at 945.03-945.24 plus the real 'that'll' onset at 945.495 (Whisper's 945.22 is 0.28s early). Join: '...just like fart coin.' -> 'And that'll be number three.' Rank three and its reason survive whole."
         }
       ],
@@ -253,7 +289,7 @@
         }
       ],
       "removals": [],
-      "est_removed_pct": 0.0,
+      "est_removed_pct": 0,
       "notes": "ZERO-REMOVAL PLAN, measured not assumed (precedent: akita-3b-robinhood-impact, kaspa-dip-impact). Post-relock timeline 28.20s: 25.36s voiced (>-52dB) across 14 audio regions, 2.84s total silence across 13 gaps, largest gap 0.86s. || MEASUREMENT THAT CHANGES THE BRIEF: the '2.12s chart-zoom gap after holy crap' DOES NOT EXIST. 336.00-338.12 is CONTINUOUS AUDIO at -17 to -20 dBFS, flat to within ~2dB for 2.2s with zero syllabic dips: a held vowel, Mike sustaining 'ohhhhhhh man'. A windowed medium decode of 333.50-346.00 resolves it as a single 2.36s 'oh' token (336.36-338.72) glued to 'man' at 338.72; the whole-file JSON's 336.00->338.12 word gap is an alignment lie and the clip-plan's '3.3s of measured dead air' inherited it. The RMS detector finds NO sub-57dB window anywhere in 335.74-344.42 (8.68s unbroken). There is nothing there to tighten, only a held vowel that a cut would chop mid-phone, gutting the euphoria break that is this clip's emotional core. It is also above the audio threshold, so 5B cannot touch it either: the reveal tension survives exactly as recorded, at full length, with no action. || WHERE THE SILENCE ACTUALLY IS (master-absolute): 330.42-330.56 (0.14 head, relocked), 332.48-332.80 (0.32), 333.12-333.18 (0.06), 334.08-334.28 (0.20), 334.70-334.80 (0.10), 335.70-335.74 (0.04), 344.42-344.46 (0.04), 345.58-345.60 (0.02), 346.12-346.98 (0.86), 349.24-349.28 (0.04), 349.86-350.04 (0.18), 350.58-350.80 (0.22), 351.76-352.14 (0.38), 353.16-353.36 (0.20). Every one is a rhythm beat inside protected material; none is tighten's business. || 5B FORECAST AND RECOMMENDATION (orchestrator's call): at min-sil 0.25, 5B removes ~1.56s and all three of its cuts land on deliberate beats: 0.32 inside the protected 'man. / Look' stutter, 0.86 = the drum-roll between '94X' and 'we did the 550X' (inside the peak beat), 0.38 inside 'on NYX ... on BNB'. At 0.50 it removes only the 0.86 drum-roll. At 0.90 it removes nothing, which is the honest read: this clip contains no dead air. Recommend 0.50 at the tightest for clip 6 and consider leaving it at 0.90; expect ~27.3s (0.50) or 28.2s (0.90). BATCH DECISION WAS 0.45, so the drum-roll goes; flagged to Mike for a targeted re-run if he wants it back. || CANDIDATE CONSIDERED AND REJECTED: 'because that's' (340.34-341.22, the abandoned connective), the clip's only genuine disfluency. Rejected on the hard rule, not on taste: 339.90-341.60 measures -14 to -23 dBFS with no window below -30, let alone -57, so no silence-anchored edge exists on either side; it is a 0.80s voiced-to-voiced splice inside one high-energy breath group. Do not author it later without an audition. Aside from that one connective the clip has zero um/uh, zero 'you know', zero 'I mean', zero false starts, zero restatements, zero tangents, so tighten's normal 10% simply is not present. || PROTECTED (removals list is empty, so this is a build-side guard): hook/cold open 330.56-336.00 'Now look at this man. Look at, look at this. Look, look, holy crap.' kept verbatim including every repetition; peak beat 343.98-358.25 untouched and its tail EXTENDED, not trimmed; Schwarzenegger drop 353.36-358.58 untouched head and tail, and the 0.20s lead-in silence 353.16-353.36 before it is left in so the drop lands with its beat instead of jamming against 'again'. Per the Phase 7 directive nothing may cover it: no b-roll, no overlay graphic, captions only. || CAPTION GATE (build from the clip's OWN post-cut whisper pass, from audio where flagged): the 2.2-2.4s held vowel at ~336.1-338.6 is 'Ohhh man', keep ONE caption alive across it, never emit a caption hole and never split it into 'oh' plus gap; 'on my X on BNB' at 350.44-352.70 -> 'on NYX on BNB' (ear-verify ticker styling); 'Code Monkey Mike' 354.34-355.34 -> 'CodeMonkey Mike', one word; '94 X' -> '94X' and '550 X' -> '550X'; ear-verify 'September and October' at 341.02-341.82 (the master reading matches the clip plan and is almost certainly right); no token is named in this clip so no $TUT styling is needed inside it; do NOT dedupe 'look at, look at this, look, look' or 'holy crap' in captions, the repetition IS the clip; spoken 94X and 550X stay exactly as spoken, any number refresh happens in publish copy only."
     },
     {

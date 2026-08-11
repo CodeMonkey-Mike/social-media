@@ -84,9 +84,31 @@ async function tryDownload(page, src, outPath) {
 }
 
 // Send ONE prompt, then find the image whose file_id is not in `seen`, download it, mark it seen.
+// Empty the composer (select-all + delete) and VERIFY. ChatGPT PERSISTS an unsent draft, so a run
+// killed mid-typing leaves a half-typed prompt that the NEXT prompt gets typed INTO (at the caret,
+// mid-word) -> one concatenated message -> the model renders the OLD prompt's scene and that beat's
+// image is silently wrong (real case 2026-08-05: a 521-char leftover swallowed a 715-char prompt).
+async function clearComposer(page) {
+  try {
+    const el = page.locator(SEL.composer).first();
+    await el.click();
+    const text = async () => (await el.innerText().catch(() => '')).trim();
+    if (!(await text())) return true;
+    for (let i = 0; i < 3 && (await text()); i++) {
+      await page.keyboard.press('Control+A');
+      await page.keyboard.press('Delete');
+      await page.waitForTimeout(400);
+    }
+    const left = await text();
+    console.log(left ? `  WARN composer still holds a ${left.length}-char draft` : '  composer draft cleared');
+    return !left;
+  } catch (e) { console.log('  clearComposer error:', e.message.split('\n')[0]); return false; }
+}
+
 async function generateOne(page, prompt, outPath, seen) {
   const composer = page.locator(SEL.composer).first();
   await composer.click();
+  await clearComposer(page);
   for (const ch of prompt) { await page.keyboard.type(ch); await page.waitForTimeout(Math.floor(Math.random() * 25) + 45); }
   await page.waitForTimeout(600);
   await page.keyboard.press('Enter');

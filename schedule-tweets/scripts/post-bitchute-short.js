@@ -22,10 +22,10 @@ const MIN_FILE_SIZE  = 1_000_000; // 1 MB — BitChute hard minimum
 // Human-like delays matching X/IG/Rumble pattern
 const CHAR_DELAY_MIN  = 40;
 const CHAR_DELAY_MAX  = 120;
-const ACTION_MIN      = 3000;
-const ACTION_MAX      = 6000;
-const PRE_COMPOSE_MIN = 10000;
-const PRE_COMPOSE_MAX = 25000;
+const ACTION_MIN      = +(process.env.BC_ACTION_MIN || 3000);
+const ACTION_MAX      = +(process.env.BC_ACTION_MAX || 6000);
+const PRE_COMPOSE_MIN = +(process.env.BC_PRE_COMPOSE_MIN || 10000);
+const PRE_COMPOSE_MAX = +(process.env.BC_PRE_COMPOSE_MAX || 25000);
 
 function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
@@ -561,7 +561,7 @@ async function closeDrawer(page) {
     short.platforms[PLATFORM].posted_at = new Date().toISOString();
     short.platforms[PLATFORM].url       = postedUrl;
     if (live) delete short.platforms[PLATFORM].error;
-    else short.platforms[PLATFORM].error = 'Publish confirmed via /content but public URL did not resolve within retry window — verify on the channel manually.';
+    else short.platforms[PLATFORM].error = 'Publish confirmed via /content but public URL did not resolve within retry window: verify on the channel manually.';
     fs.writeFileSync(SHORTS_JSON, JSON.stringify(data, null, 2));
     console.log(live
       ? 'shorts.json updated (posted, liveness confirmed). Done ✓'

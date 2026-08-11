@@ -64,6 +64,26 @@ if (/^broll/i.test(PREFIX)) {
   }
 }
 
+// Empty the composer (select-all + delete) and VERIFY it is empty. Call it with the composer
+// focused and BEFORE any attachment is added. Returns true when the composer reads empty.
+async function clearComposer(page) {
+  try {
+    const el = page.locator(SEL.composer).first();
+    await el.click();
+    const text = async () => (await el.innerText().catch(() => '')).trim();
+    if (!(await text())) return true;
+    for (let i = 0; i < 3 && (await text()); i++) {
+      await page.keyboard.press('Control+A');
+      await page.keyboard.press('Delete');
+      await page.waitForTimeout(400);
+    }
+    const left = await text();
+    if (left) console.log(`   WARN composer still holds a ${left.length}-char draft after clearing`);
+    else console.log('   composer draft cleared');
+    return !left;
+  } catch (e) { console.log('   clearComposer error:', e.message.split('\n')[0]); return false; }
+}
+
 async function uploadRef(page, ref) {
   try {
     const fi = page.locator('input[type="file"]').first();
@@ -80,6 +100,14 @@ async function genOne(page, allSeen, urlTs, bufs, item) {
   const composer = page.locator(SEL.composer).first();
   await composer.click();
   await page.waitForTimeout(800);
+  // DRAFT GUARD (2026-08-05): ChatGPT PERSISTS an unsent composer draft. When a run is killed
+  // mid-typing, that half-typed prompt is still in the composer on the NEXT run, and the next
+  // prompt gets typed INTO it (at the caret, mid-word) -> one concatenated message -> the model
+  // renders the OLD prompt's scene and the beat's image is silently wrong. Real case: a killed
+  // builder left 521 chars of a "billboard skyline" prompt; the next run's 715-char "organic tree"
+  // prompt landed inside it (1236 chars) and produced a second billboard image. Clear it BEFORE
+  // the ref upload so the attachment chip can never be the thing Delete removes.
+  await clearComposer(page);
   const baseline = new Set(allSeen);
   if (item.ref) await uploadRef(page, item.ref);
   await composer.click();

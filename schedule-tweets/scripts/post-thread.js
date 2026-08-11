@@ -8,12 +8,12 @@ const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\xbot-p
 // Timing constants — mirrored from reply-guy post_replies.py
 const CHAR_DELAY_MIN   = 60;    // ms per keystroke
 const CHAR_DELAY_MAX   = 150;
-const ACTION_MIN       = 4000;  // ms between UI actions
-const ACTION_MAX       = 7000;
-const PRE_COMPOSE_MIN  = 60000; // ms before opening composer (60–180s)
-const PRE_COMPOSE_MAX  = 180000;
-const PRE_POST_MIN     = 60000; // ms before clicking Post all
-const PRE_POST_MAX     = 180000;
+const ACTION_MIN       = +(process.env.XTH_ACTION_MIN || 4000);  // ms between UI actions
+const ACTION_MAX       = +(process.env.XTH_ACTION_MAX || 7000);
+const PRE_COMPOSE_MIN  = +(process.env.XTH_PRE_COMPOSE_MIN || 60000); // ms before opening composer (60–180s)
+const PRE_COMPOSE_MAX  = +(process.env.XTH_PRE_COMPOSE_MAX || 180000);
+const PRE_POST_MIN     = +(process.env.XTH_PRE_POST_MIN || 60000); // ms before clicking Post all
+const PRE_POST_MAX     = +(process.env.XTH_PRE_POST_MAX || 180000);
 
 function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;

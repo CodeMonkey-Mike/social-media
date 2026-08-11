@@ -76,7 +76,7 @@
         },
         {
           "start": 330.17,
-          "end": 336.0,
+          "end": 336,
           "note": "'Now look at this man. Look at, look at this. Look, look, holy crap.' (the live chart reveal)"
         },
         {
@@ -510,10 +510,46 @@
       "5": "removed the $IF what-if tail 4541.98-4570.70 (off-topic for a doginme clip)"
     },
     "build_directives": [
+      {
+        "id": "phase7-visual",
+        "applies_to": [
+          1
+        ],
+        "authority": "Mike, spoken 2026-08-09; SCOPE CORRECTED BY MIKE 2026-08-10",
+        "coverage_exempt": true,
+        "directive": "PHASE 7 VISUAL DIRECTIVE — CLIP 1 ONLY. Mike's verbatim words: \"i only do not want full screen broll, nor content zone broll. you can do captions, sfx, and any overlaying graphics or images with background transparency.\" ALLOWED on clip 1: captions, SFX, and overlay graphics/images WITH BACKGROUND TRANSPARENCY. BANNED on clip 1: full-screen b-roll and content-zone b-roll, i.e. any asset that covers the frame or fills the content zone. The test is COVERAGE, not the asset's source.",
+        "scope_correction": {
+          "corrected": "2026-08-10",
+          "was_recorded_as": "WHOLE BATCH",
+          "true_scope": "clip 1 only",
+          "how_it_went_wrong": "Mike gave this for clip 1. The 2026-08-09 session wrote it into this file as free prose headed \"PHASE 7 VISUAL DIRECTIVE, WHOLE BATCH\", and the verbatim sentence carries no scope marker of its own, so nothing downstream could tell. The PROJECT-LOG resume contract then hardened it (\"rides VERBATIM in every builder contract\") and the 2026-08-10 orchestrator dispatched it to all 8 builders without reconciling it against the early-crash precedent in the same log, where the same class of directive was correctly scoped to clips 1 and 6.",
+          "build_deviation": "ALL 8 SHIPPED CLIPS were built under this directive, not just clip 1, so clips 2-8 carry 0% full-screen and 0% content-zone b-roll that Mike did not ask for. He reviewed them on 2026-08-10, said he LIKES the transparent-background overlays and wants to keep them, and decided NOT to redo the batch. The shorts as staged therefore do NOT match this scope, deliberately. Do not read the shipped clips as evidence of what the directive covered.",
+          "prevention": "Directives are now scoped records read ONLY via shorts/_tooling/clip_directives.py, which treats a missing applies_to as a hard error instead of defaulting to the batch. finalized_short_gate.py additionally FAILS a clip that ships zero zone/full-screen b-roll unless a directive with coverage_exempt applies to that clip."
+        }
+      },
+      {
+        "id": "phase7-gate-consequence",
+        "applies_to": [
+          1
+        ],
+        "authority": "derived from phase7-visual (same scope)",
+        "directive": "GATE CONSEQUENCE for the clip(s) phase7-visual covers: because transparent overlays are permitted, finalized_short_gate.py's requirement of at least one b-roll asset reference is satisfiable normally and NO gate change is needed. Such a clip must therefore carry at least one transparent overlay asset. If it genuinely warrants none, STOP and flag it rather than bypassing the gate."
+      },
+      {
+        "id": "schwarzenegger-no-cover",
+        "applies_to": [
+          1,
+          6
+        ],
+        "authority": "Mike, 2026-08-09 (he named this line himself)",
+        "directive": "DO NOT COVER THE SCHWARZENEGGER SOUNDBOARD LINE. In clips 1 and 6 the payoff line (\"And that's why CodeMonkey Mike has the greatest crypto community on the planet\") is a soundboard drop, not Mike. Nothing may cover it: no b-roll and no overlay graphic, and no SFX sting (a sting covers it in the audio domain). Captions only over that line. Its full extent after the tighten relock is master 353.36-358.62."
+      }
+    ],
+    "second_review": "APPROVED 2026-08-09, Mike: 'all clips are approved'. All 8 clips survive to Phase 7. This approval is the record that authorises the finish segment and the remotion builds.",
+    "build_directives_prose_ARCHIVED": [
       "PHASE 7 VISUAL DIRECTIVE, WHOLE BATCH (Mike, 2026-08-09, CLARIFIED). ALLOWED: captions, SFX, and overlay graphics or images WITH BACKGROUND TRANSPARENCY. BANNED: full-screen b-roll and content-zone b-roll, i.e. any asset that covers the frame or fills the content zone. The test is COVERAGE, not the asset's source: a transparent-background PNG laid over the base is fine, a full-frame or content-zone image is not. This supersedes the earlier, stricter reading of 'captions only, no ChatGPT images' recorded before the clarification.",
       "GATE CONSEQUENCE: because transparent overlays are permitted, finalized_short_gate.py's requirement of at least one b-roll asset reference is satisfiable normally and NO gate change is needed. Every clip must therefore carry at least one transparent overlay asset. If a clip genuinely warrants none, STOP and flag it rather than bypassing the gate.",
       "DO NOT COVER THE SCHWARZENEGGER SOUNDBOARD LINE. In clips 1 and 6 the payoff line ('And that's why CodeMonkey Mike has the greatest crypto community on the planet') is a soundboard drop, not Mike. Nothing may cover it: no b-roll (already banned) and no overlay graphic either. Captions only over that line. Its full extent after the tighten relock is master 353.36-358.62."
-    ],
-    "second_review": "APPROVED 2026-08-09, Mike: 'all clips are approved'. All 8 clips survive to Phase 7. This approval is the record that authorises the finish segment and the remotion builds."
+    ]
   }
 }

@@ -81,11 +81,21 @@ export const TUT_BKC_CAP_Y = 905; // caption centre: 52 px under the seam, on hi
 // PERSONA INSPECTION (all four PNGs viewed before rendering): no real crypto logo, no real-person
 // face, no text baked into any generated image. The gem is a round-brilliant JEWEL (the spoken line
 // is "Kaspa's a gem"), deliberately not an octahedral ETH-style diamond.
+// ⛔ THE TWO PROTECTED PERFORMANCE PAUSES (Mike desilenced this batch at min-sil 0.95 expressly to
+// KEEP them; they are the performance, not dead air, and NOTHING - no SFX and no graphic - may paper
+// over them). Re-measured on THIS staged spine at 5 ms hop / 10 ms window, -50 dB:
+//     4.755-5.705 s (0.950 s) the beat before the THIRD limb of the gem triple
+//    21.430-22.085 s (0.655 s) the suspense pause in "because if they did, [beat] Kaspa would be
+//                              listed" (the /k/ burst of "kaspa" re-onsets at 22.085)
+// Both overlay tOuts below are pulled BACK behind those boundaries (gem 4.80 -> 4.74, kaspa
+// 21.50 -> 21.42) so each 0.18 s fade-out COMPLETES before the silence starts and both pauses run
+// 100 % graphic-free. The SFX table at the bottom of this file is likewise measured DRY (-240 dB
+// added energy) across both spans.
 export const OVERLAYS_TUT_BKC: OverlayEv[] = [
-  // "kaspa's a gem. kaspa's the most beautiful thing ever." (1.90-4.90) - right of the CMC chart.
-  { src: staticFile('broll-tut-bkc-ov-gem.png'),   tIn:  2.00, tOut:  4.80, top: 130, left: 630, width: 390, blend: 'normal' },
-  // "they don't apply the same logic to KASPA" (18.00-20.36) - the real Kaspa mark, left of frame.
-  { src: staticFile('broll-tut-bkc-ov-kaspa.png'), tIn: 19.60, tOut: 21.50, top: 130, left:  70, width: 440, blend: 'normal' },
+  // "kaspa's a gem. kaspa's the most beautiful thing ever." (1.90-4.755) - right of the CMC chart.
+  { src: staticFile('broll-tut-bkc-ov-gem.png'),   tIn:  2.00, tOut:  4.74, top: 130, left: 630, width: 390, blend: 'normal' },
+  // "they don't apply the same logic to KASPA" (18.00-21.43) - the real Kaspa mark, left of frame.
+  { src: staticFile('broll-tut-bkc-ov-kaspa.png'), tIn: 19.60, tOut: 21.42, top: 130, left:  70, width: 440, blend: 'normal' },
   // "so it's kind of a strange catch-22" (24.42-26.48) - a padlock on a gate bar: the listing gate,
   // shut. No exchange is depicted or named in the art.
   { src: staticFile('broll-tut-bkc-ov-lock.png'),  tIn: 24.55, tOut: 26.70, top: 180, left: 540, width: 460, blend: 'normal' },
@@ -110,12 +120,13 @@ export const BADGES_TUT_BKC: BadgeEv[] = [
 ];
 
 // COLLISION MATRIX (Phase 7 rule #3), every timed graphic in order:
-//   thumb 0.000-0.033 | gem 2.00-4.80 | badge1 8.60-11.40 | badge2 15.00-17.80 | kaspa 19.60-21.50 |
+//   thumb 0.000-0.033 | gem 2.00-4.74 | badge1 8.60-11.40 | badge2 15.00-17.80 | kaspa 19.60-21.42 |
 //   badge3 22.30-24.20 | lock 24.55-26.70 | bull 29.30-32.10
 // NO two windows overlap; the smallest gap is 0.35 s (badge3 -> lock) and they also sit in different
-// vertical bands (badge3 rows ~545-795, lock rows 180-509). Nothing starts before the thumb frame
+// vertical bands (badge3 rows ~541-799, lock rows 180-509). Nothing starts before the thumb frame
 // ends, and LivestreamShort suppresses badges/overlays while the thumb is up anyway. No watermark or
 // logo-reveal plate is used, so the thumb frame carries no other graphic at all.
+// Both PROTECTED pauses (4.755-5.705 and 21.430-22.085) fall in graphic-free gaps of this matrix.
 
 // ─── Frame-0 thumbnail (IG/TikTok cover) ────────────────────────────────────────────────────────
 // ONE frame only (LivestreamShort defaults thumb.durS to 1/fps) - generated background art with the
@@ -136,29 +147,52 @@ export const THUMB_DEF_TUT_BKC: ThumbDef = {
 };
 
 // ─── SFX (shared library, COPIED into render-assets/sfx/ by setup_render_assets.py --data) ──────
-// 7 events, 5 distinct files. Whoosh on the frame-0 cover cut and on BOTH measured picture cuts
-// (7.64 / 26.64 s), a DING on the gem overlay, a riser that runs INTO an impact on the clip's
-// highest-value beat, and a TING on the padlock reveal.
+// 6 events, 4 distinct files. Whoosh on the frame-0 cover cut and on BOTH measured picture cuts, a
+// DING on the gem overlay, and a riser that is CUT ON an impact at the payoff.
 //
-// ⚠ Cue points are each file's own measured CREST, not its file start. Envelopes measured on THIS
-//   machine at 0.1 s RMS / 0.01 s hop for this build:
-//     transition_rapid_whoosh crest 0.15 (peak -14.4 dB, dur 0.97) - DING crest 0.17 (-12.7) -
-//     TING crest 0.79 (-11.2) - Soundjay_Impact_Main_01-short crest 0.27 (-2.7, dur 0.68) -
-//     Tension_Rise_Logo_Reveal_3 crest 2.55 (-8.4).
-//   Each cue starts EARLY by exactly that offset so the crest lands on the frame it punctuates, and
-//   `dur` truncates the tail before the next spoken line.
+// ⚠ Cue points are each file's own measured CREST, not its file start. Envelopes re-measured on THIS
+//   machine at 0.1 s RMS / 0.01 s hop (16 kHz mono) for this build:
+//     transition_rapid_whoosh crest 0.15 (dur 0.97) - DING crest 0.17 (dur 2.11) -
+//     Soundjay_Impact_Main_01-short crest 0.27 (dur 0.68, body 0.12-0.52) -
+//     Tension_Rise_Logo_Reveal_3 crest 2.55 (dur 5.76).
+//   Each cue starts EARLY by exactly that offset so the crest lands on the frame it punctuates.
 //
-// ⚠ THE PUNCHLINE IS DELIBERATELY DRY. Nothing is placed on "strange catch-22." (25.54-26.48): the
-//   contract's own cautionary tale is a sting that masked a closing punchline, so the payoff hit is
-//   1.45 s earlier, with its crest INSIDE the measured 0.56 s suspense pause (21.54-22.10) that the
-//   tighten plan calls "the single highest-value beat in the clip" - it rings under "kaspa would be
-//   listed on binance by now" without a transient on any word.
+// ⚠ PICTURE CUTS VERIFIED, not assumed: an 8 fps mean|delta| scan of the content-zone crop finds
+//   exactly TWO cuts, at 7.625 s and 26.625 s (111.9 each; the next-largest delta in the clip is
+//   1.46, i.e. 76x smaller). Both whoosh crests (7.64 / 26.64) sit inside the MEASURED silences
+//   7.370-7.715 and 26.550-26.870, so neither transient ever touches a word. The seg2 -> seg3 audio
+//   join at 13.08 deliberately gets NO whoosh: both segments are the same DEXScreener screen-share,
+//   so there is no picture cut there, and 13.08 is mid-speech (voiced 12.850-14.140).
+//
+// ⛔ THE RISER + IMPACT WERE RELOCATED (2026-08-10) - do not move them back. The previous table put
+//   the riser's peak AND the impact's crest inside the 21.430-22.085 s suspense pause. That is one of
+//   the two PROTECTED performance pauses Mike preserved by desilencing at min-sil 0.95, so filling it
+//   was wrong on its own terms - and it also MASKED the payoff line. Offline whisper A/B against an
+//   encode-matched control (bare spine through the same 48 kHz/AAC chain), short staggered windows:
+//     old table, window 20.60+2.6 s: control "Casper would be listed."   -> mix "Asper would be list of"
+//     old table, window 21.40+2.6 s: control "Casper would be listed on Binance." -> mix "ASPR would
+//                                    be listed on buying ASPR."
+//   The impact also measured +1.7 dB OVER the voice in its window (every other cue sits 8-18 dB
+//   under). Three candidate placements were scored offline (zero renders):
+//     A riser 18.88 peaking at the pause onset  -> REGRESSED "kaspa" at 19.68 ("the cast book")
+//     B riser 22.15 starting after the pause, CUT on the impact crest -> matched control on all 6 windows
+//     C no riser at all -> also matched, but loses the riser -> impact build the contract asks for
+//   B SHIPS. Volume was never touched: the impact keeps its full 0.26 gain (the contract's rule that
+//   TIMING, not volume, is the knob). Both protected pauses now measure -240 dB added energy, i.e.
+//   exactly zero, and windows 21.90+2.5 / 22.40+2.2 / 24.30+2.3 all read control-identical
+//   ("Casper would be listed on Binance by now." / "So it's kind of strange catch-22").
+//
+// ⚠ THE TING WAS DELETED, not retimed. It rang 23.76-25.21 for the padlock reveal, which is exactly
+//   the slot the relocated payoff impact now occupies; two transients 0.3 s apart on adjacent
+//   low-content words is mud, and per the contract a cue that is DECORATION rather than a payoff hit
+//   gets deleted rather than saved. The padlock (tIn 24.55) now rides in on the impact's decay.
+//
+// ⚠ THE PUNCHLINE IS STILL DELIBERATELY DRY. Nothing is placed on "strange catch-22." (25.54-26.48).
 export const SFX_TUT_BKC: Sfx[] = [
   { t:  0.00, src: staticFile('sfx/transition_rapid_whoosh.mp3'),           vol: 0.22, dur: 0.97 }, // frame-0 cover cut (crest 0.15)
   { t:  1.83, src: staticFile('sfx/DING.mp3'),                              vol: 0.20, dur: 1.00 }, // GEM overlay pop (crest 2.00), tail ends before "kaspa's the most" (2.84)
-  { t:  7.49, src: staticFile('sfx/transition_rapid_whoosh.mp3'),           vol: 0.22, dur: 0.97 }, // MEASURED picture cut CMC -> DEXScreener (crest 7.64), lands in the 7.38-7.80 gap
-  { t: 19.40, src: staticFile('sfx/risers/Tension_Rise_Logo_Reveal_3.wav'), vol: 0.09, dur: 2.55 }, // riser across "because if they did", ENDS exactly on the impact
-  { t: 21.68, src: staticFile('sfx/Impacts/Soundjay_Impact_Main_01-short.wav'), vol: 0.26, dur: 0.68 }, // IMPACT, crest 21.95 INSIDE the silent suspense pause; 0.68 s file, so no long tail
-  { t: 23.76, src: staticFile('sfx/TING SOUND EFFECT.mp3'),                 vol: 0.18, dur: 1.45 }, // PADLOCK overlay reveal (crest 24.55); truncated so nothing rings over the punchline
-  { t: 26.49, src: staticFile('sfx/transition_rapid_whoosh.mp3'),           vol: 0.20, dur: 0.97 }, // MEASURED picture cut DEXScreener -> CMC (crest 26.64) = the seg3 -> seg1 join
+  { t:  7.49, src: staticFile('sfx/transition_rapid_whoosh.mp3'),           vol: 0.22, dur: 0.97 }, // MEASURED picture cut #1, CMC -> DEXScreener (crest 7.64) inside the 7.370-7.715 silence
+  { t: 22.15, src: staticFile('sfx/risers/Tension_Rise_Logo_Reveal_3.wav'), vol: 0.09, dur: 2.25 }, // riser STARTS after the protected pause (22.085) and swells under "kaspa would be listed on binance by now"
+  { t: 24.13, src: staticFile('sfx/Impacts/Soundjay_Impact_Main_01-short.wav'), vol: 0.26, dur: 0.68 }, // PAYOFF IMPACT, crest 24.40 dead centre of the measured 0.345 s silence 24.130-24.475; cuts the riser; its natural decay ends 24.810 = the start of the NEXT measured silence, so no truncation click
+  { t: 26.49, src: staticFile('sfx/transition_rapid_whoosh.mp3'),           vol: 0.20, dur: 0.97 }, // MEASURED picture cut #2, DEXScreener -> CMC (crest 26.64) = the seg3 -> seg1 join, inside the 26.550-26.870 silence
 ];

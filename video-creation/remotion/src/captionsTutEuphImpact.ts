@@ -21,9 +21,13 @@
 //
 // Every STT fix lives in build_captions.py (tutorial 2026-08-09 block), so nothing here is
 // hand-authored. Caption gates from tighten-plan.json, each verified against this clip's OWN pass:
-//   * "on my X on BNB" -> "on NYX on BNB"  -> PHRASE ("memoy","x") -> ["nyx"]. Ear-verified four ways
-//     on this clip's own spine (small "Memoy X", medium.en "MemYX", large-v3 "Memoy X", 0.5x "MemYX");
-//     the master's own later utterance of the same call reads "a 550X on an NYX, man" (4205.92).
+//   * "on my X on BNB" -> "on MYX on BNB"  -> PHRASE ("memoy","x") -> ["myx"]. ⛔ MIKE CORRECTED THIS
+//     2026-08-10: the token is MYX, not NYX. It shipped as "nyx" and he caught it on review; his call
+//     is final and outranks the ASR evidence (his own call, his own token). Clip re-rendered on the fix.
+//     For the record, the machine's readings on this clip's own spine were small "Memoy X", medium.en
+//     "MemYX", large-v3 "Memoy X", 0.5x "MemYX" - three of the four keep an "m" ONSET, which is MYX;
+//     the "-nyx" reading came from the master's later "a 550X on an NYX, man" (4205.92), where the
+//     article "an" supplies a phantom leading "n".
 //   * "Code Monkey Mike" -> "CodeMonkey Mike"  -> PHRASE ("code","monkey") -> ["codemonkey"]. The
 //     montserrat preset renders all-lowercase via CSS, so only the TOKEN MERGE is visible on screen.
 //   * "94 X" -> "94X" and "550 X" -> "550X"  -> already single tokens in the word pass; cleanup()'s
@@ -53,7 +57,7 @@ export const CAPTIONS_TUT_EUPHORIA_IMPACT: { t: number; h: string }[] = [
   { t:  13.74, h: 'after we did' },
   { t:  14.56, h: 'this <y>94x</y> we did' },
   { t:  17.02, h: 'the <y>550x</y>' },
-  { t:  19.52, h: 'on nyx on' },
+  { t:  19.52, h: 'on myx on' },
   { t:  22.04, h: 'bnb again.' },
   { t:  23.34, h: 'and that\'s why' },
   { t:  24.06, h: 'codemonkey mike has' },

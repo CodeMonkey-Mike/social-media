@@ -18,9 +18,13 @@ Usage:  python auto_reply_post.py
 Chrome (xbot-profile) must be fully closed before running.
 """
 
-import io, json, sys, random, time
+import io, json, os, sys, random, time
 from datetime import datetime
 from pathlib import Path
+
+AR_JITTER_MIN = int(os.environ.get("AR_JITTER_MIN", 5))
+AR_JITTER_MAX = int(os.environ.get("AR_JITTER_MAX", 20))
+AR_CLOSE_WAIT = int(os.environ.get("AR_CLOSE_WAIT", 20))
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
@@ -81,7 +85,7 @@ def main():
     entry = dict(pending)
     entry["auto_reply"] = True
 
-    jitter = random.randint(5, 20)
+    jitter = random.randint(AR_JITTER_MIN, AR_JITTER_MAX)
     print(f"Starting in {jitter}s...")
     time.sleep(jitter)
 
@@ -126,8 +130,8 @@ def main():
                           "a retry would duplicate. Check the tweet on X manually.")
             archive(entry)
 
-            print("\nBrowser closing in 20s so you can verify...")
-            time.sleep(20)
+            print(f"\nBrowser closing in {AR_CLOSE_WAIT}s so you can verify...")
+            time.sleep(AR_CLOSE_WAIT)
         finally:
             ctx.close()
 

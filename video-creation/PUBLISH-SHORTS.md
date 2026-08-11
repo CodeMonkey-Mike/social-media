@@ -6,6 +6,18 @@ batch of shorts and queuing them in the `schedule-tweets` pipeline.** Invoked by
 asking Mike for the granular mechanics — only ask if something is genuinely ambiguous (which
 platforms to skip, which clips if the batch is partially approved).
 
+> **GRAPH BANNER (LangGraph Wave 5, 2026-08-07) — livestream shorts batches:** the canonical
+> execution is ONE graph invocation, `python video-creation/livestream-repurpose/graph/run.py
+> publish --batch <batch> --date <SAME-DATE-AS-FIRST-CLIP>`, run AFTER authoring the judgment
+> fields into `video-creation/shorts/<batch>/publish-meta.json` (per-clip hook / caption / tags
+> [+ optional title override], persona rules apply — the script hard-fails on em dashes and
+> hashtagged captions). The graph wraps this script, then md5-verifies every staged copy against
+> the CURRENT render (the stale-stage hazard below), checks entry completeness + all 7 platforms
+> pending, and runs the persona-lint gate. Both invocation traps below are mechanized: a second
+> date for an already-staged batch is REFUSED, and existing entries are never touched (Mike's
+> hand-retitles survive re-runs). Hand runs of the bare script remain valid for legacy batches.
+> POSTING stays Mike-gated and sequential either way.
+
 ---
 
 ## When to run (approval gate)

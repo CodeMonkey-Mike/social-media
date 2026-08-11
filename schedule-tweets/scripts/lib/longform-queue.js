@@ -81,4 +81,42 @@ function stripMusicCredits(desc) {
   return kept.join('\n\n').trim();
 }
 
-module.exports = { pickNextLongform, LONGS_JSON, stripMusicCredits, ALLOWED_PLATFORMS, assertAllowedPlatforms };
+// Record a completed longform upload back into longs.json.
+//
+// Added 2026-08-07. Until then NONE of the upload-longform-* scripts wrote back at
+// all — a successful upload only printed its URL and left the row `pending`, so the
+// next run picked the SAME entry and re-uploaded it. Every historical `posted` row
+// was filled in by hand, and two duplicate-upload near-misses came out of that gap.
+//
+// Re-reads the file immediately before writing so a long-running upload cannot clobber
+// edits another script made to a different row while it was in flight.
+// `status` is 'posted' when the upload was verified live, 'posted_unverified' otherwise.
+function recordLongformPost(platform, title, url, status = 'posted') {
+  if (!ALLOWED_PLATFORMS.has(platform)) {
+    console.log(`WARNING: refusing to record unknown platform "${platform}".`);
+    return false;
+  }
+  if (!url) {
+    console.log('WARNING: no URL to record — longs.json left pending.');
+    return false;
+  }
+  try {
+    const data = JSON.parse(fs.readFileSync(LONGS_JSON, 'utf8'));
+    const row = (data.longs || []).find(l => l.title === title);
+    if (!row || !row.platforms || !row.platforms[platform]) {
+      console.log(`WARNING: no "${title}" row for ${platform} in longs.json — record the URL manually.`);
+      return false;
+    }
+    row.platforms[platform].status = status;
+    row.platforms[platform].url = url;
+    row.platforms[platform].posted_at = new Date().toISOString();
+    fs.writeFileSync(LONGS_JSON, JSON.stringify(data, null, 2) + '\n', 'utf8');
+    console.log(`longs.json updated ✓ (${platform} → ${status})`);
+    return true;
+  } catch (e) {
+    console.log(`WARNING: longs.json write failed (${e.message}) — record the URL manually.`);
+    return false;
+  }
+}
+
+module.exports = { pickNextLongform, LONGS_JSON, stripMusicCredits, ALLOWED_PLATFORMS, assertAllowedPlatforms, recordLongformPost };

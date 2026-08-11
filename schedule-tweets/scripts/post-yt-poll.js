@@ -28,12 +28,12 @@ const HOST_SEL       = 'tp-yt-paper-input.poll-option-input';
 // Timing constants — mirrored from scripts/post-thread.js
 const CHAR_DELAY_MIN  = 60;     // ms per keystroke
 const CHAR_DELAY_MAX  = 150;
-const ACTION_MIN      = 2000;   // ms between UI actions (halved 2026-06-14)
-const ACTION_MAX      = 3500;
-const PRE_COMPOSE_MIN = 30000;  // ms before opening composer (30–90s, halved 2026-06-14)
-const PRE_COMPOSE_MAX = 90000;
-const PRE_POST_MIN    = 30000;  // ms before clicking Post (30–90s, halved 2026-06-14)
-const PRE_POST_MAX    = 90000;
+const ACTION_MIN      = +(process.env.YTP_ACTION_MIN || 2000);   // ms between UI actions (halved 2026-06-14)
+const ACTION_MAX      = +(process.env.YTP_ACTION_MAX || 3500);
+const PRE_COMPOSE_MIN = +(process.env.YTP_PRE_COMPOSE_MIN || 30000);  // ms before opening composer (30–90s, halved 2026-06-14)
+const PRE_COMPOSE_MAX = +(process.env.YTP_PRE_COMPOSE_MAX || 90000);
+const PRE_POST_MIN    = +(process.env.YTP_PRE_POST_MIN || 30000);  // ms before clicking Post (30–90s, halved 2026-06-14)
+const PRE_POST_MAX    = +(process.env.YTP_PRE_POST_MAX || 90000);
 
 function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;

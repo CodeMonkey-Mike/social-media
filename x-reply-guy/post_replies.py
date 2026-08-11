@@ -13,6 +13,7 @@ Usage:
 """
 
 import json
+import os
 import random
 import sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -38,10 +39,13 @@ except ImportError:
 CHROME_PROFILE  = r"C:\Users\mnede\AppData\Local\Google\Chrome\xbot-profile"
 CHAR_DELAY_MIN  = 60    # ms per keystroke
 CHAR_DELAY_MAX  = 150
-ACTION_MIN      = 4     # seconds between UI actions
-ACTION_MAX      = 7
-POST_DELAY_MIN  = 2     # minutes between replies
-POST_DELAY_MAX  = 6
+ACTION_MIN      = float(os.environ.get("RP_ACTION_MIN", 4))     # seconds between UI actions
+ACTION_MAX      = float(os.environ.get("RP_ACTION_MAX", 7))
+POST_DELAY_MIN  = float(os.environ.get("RP_POST_DELAY_MIN", 2))     # minutes between replies
+POST_DELAY_MAX  = float(os.environ.get("RP_POST_DELAY_MAX", 6))
+START_JITTER_MIN = int(os.environ.get("RP_START_JITTER_MIN", 10))   # seconds before the first reply
+START_JITTER_MAX = int(os.environ.get("RP_START_JITTER_MAX", 45))
+CLOSE_WAIT       = int(os.environ.get("RP_CLOSE_WAIT", 30))         # seconds to hold browser open at the end
 
 HERE               = Path(__file__).parent
 REPLIES_FILE       = HERE / "data" / "replies_to_post.json"
@@ -50,8 +54,8 @@ OPPORTUNITIES_FILE = HERE / "data" / "reply_opportunities.json"
 
 
 def human_pause(label=""):
-    delay = random.randint(ACTION_MIN, ACTION_MAX)
-    print(f"  ~ {delay}s pause {f'({label})' if label else ''}")
+    delay = random.uniform(ACTION_MIN, ACTION_MAX)
+    print(f"  ~ {delay:.2g}s pause {f'({label})' if label else ''}")
     time.sleep(delay)
 
 
@@ -263,13 +267,13 @@ def main():
             for r in image_entries:
                 print(f"\n--- DRY RUN IMAGE: {r.get('author','?')} [{r.get('image_style','?')}] ---")
                 _post_image(page, r, dry_run=True)
-            print("\nBrowser closing in 20s — review tmp-gif-debug/ + tmp-image-debug/ screenshots.")
-            time.sleep(20)
+            print(f"\nBrowser closing in {CLOSE_WAIT}s — review tmp-gif-debug/ + tmp-image-debug/ screenshots.")
+            time.sleep(CLOSE_WAIT)
             ctx.close()
         return
 
     # Start jitter
-    jitter = random.randint(10, 45)
+    jitter = random.randint(START_JITTER_MIN, START_JITTER_MAX)
     print(f"\nStarting in {jitter}s...")
     time.sleep(jitter)
 
@@ -360,13 +364,13 @@ def main():
             remove_from_queue(tweet_url)
 
             if i < len(replies) - 1:
-                delay_s = random.randint(POST_DELAY_MIN * 60, POST_DELAY_MAX * 60)
+                delay_s = random.randint(round(POST_DELAY_MIN * 60), round(POST_DELAY_MAX * 60))
                 resume = datetime.fromtimestamp(time.time() + delay_s).strftime("%H:%M:%S")
                 print(f"\n  Next reply at ~{resume} ({delay_s//60}m {delay_s%60}s)")
                 time.sleep(delay_s)
 
-        print("\nBrowser closing in 30 seconds so you can verify...")
-        time.sleep(30)
+        print(f"\nBrowser closing in {CLOSE_WAIT}s so you can verify...")
+        time.sleep(CLOSE_WAIT)
         ctx.close()
 
     posted_count    = sum(1 for r in replies if r.get("result") in ("posted", "posted_gif", "posted_image", "already_posted"))

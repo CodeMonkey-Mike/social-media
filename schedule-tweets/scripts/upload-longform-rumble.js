@@ -5,7 +5,7 @@
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
-const { pickNextLongform, stripMusicCredits } = require('./lib/longform-queue');
+const { pickNextLongform, stripMusicCredits, recordLongformPost } = require('./lib/longform-queue');
 
 const CHROME_PROFILE    = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\rumblebot-profile';
 const RUMBLE_UPLOAD_URL = 'https://rumble.com/upload.php';
@@ -15,8 +15,8 @@ const RUMBLE_V_RE = /https:\/\/rumble\.com\/v[a-zA-Z0-9]+-[a-zA-Z0-9][^\s"'<>]*\
 
 const CHAR_DELAY_MIN = 40;
 const CHAR_DELAY_MAX = 120;
-const ACTION_MIN     = 2000;
-const ACTION_MAX     = 5000;
+const ACTION_MIN     = +(process.env.LFR_ACTION_MIN || 2000);
+const ACTION_MAX     = +(process.env.LFR_ACTION_MAX || 5000);
 
 function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
@@ -350,11 +350,19 @@ async function typeHuman(page, locator, text) {
       }
     }
 
+    // Write back to longs.json. Without this a successful upload leaves the row
+    // `pending` and the next run re-uploads the same video (added 2026-08-07 after
+    // ElizaOS published here but stayed `pending`, one run away from a duplicate).
+    // Only a REAL /v<id> permalink is recorded — never the dashboard fallback below,
+    // which would mark the row posted while losing the actual video URL.
     if (url) {
       console.log(`\nPosted: ${url}`);
+      recordLongformPost('rumble', metadata.title, url);
     } else {
       url = 'https://rumble.com/account/videos';
       console.log('\nPosted — URL not captured (check Rumble dashboard).');
+      console.log('WARNING: longs.json still says pending. Confirm with scripts/check-rumble-longform.js');
+      console.log('and record the URL, otherwise the next run will re-upload this same video.');
     }
     console.log('Done ✓');
     console.log('\nLeaving browser open 5 min for inspection. Ctrl+C to close sooner.');

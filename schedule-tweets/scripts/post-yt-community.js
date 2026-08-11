@@ -13,10 +13,10 @@ const CHANNEL_HANDLE = 'CodeMonkeyMike';
 const POSTS_URL      = `https://www.youtube.com/@${CHANNEL_HANDLE}/posts`;
 
 const CHAR_DELAY       = 5;
-const ACTION_MIN       = 5000;
-const ACTION_MAX       = 8000;
-const PRE_COMPOSE_MIN  = 30000;
-const PRE_COMPOSE_MAX  = 90000;
+const ACTION_MIN       = +(process.env.YTC_ACTION_MIN      || 5000);
+const ACTION_MAX       = +(process.env.YTC_ACTION_MAX      || 8000);
+const PRE_COMPOSE_MIN  = +(process.env.YTC_PRE_COMPOSE_MIN || 30000);
+const PRE_COMPOSE_MAX  = +(process.env.YTC_PRE_COMPOSE_MAX || 90000);
 
 function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;

@@ -13,12 +13,12 @@ const WORKSPACE_ROOT = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\sched
 const IG_USERNAME    = 'realcodemonkeymike';
 const PLATFORM       = 'ig_reels';
 
-const ACTION_MIN      = 3000;
-const ACTION_MAX      = 6000;
+const ACTION_MIN      = +(process.env.IG_ACTION_MIN || 3000);
+const ACTION_MAX      = +(process.env.IG_ACTION_MAX || 6000);
 const CHAR_DELAY_MIN  = 40;
 const CHAR_DELAY_MAX  = 120;
-const PRE_COMPOSE_MIN = 15000;
-const PRE_COMPOSE_MAX = 45000;
+const PRE_COMPOSE_MIN = +(process.env.IG_PRE_COMPOSE_MIN || 15000);
+const PRE_COMPOSE_MAX = +(process.env.IG_PRE_COMPOSE_MAX || 45000);
 
 function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 

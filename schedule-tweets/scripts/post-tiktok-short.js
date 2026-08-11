@@ -31,8 +31,8 @@ const PLATFORM          = 'tiktok';
 // Timing constants mirrored from post-fb-short.js / post-x-short.js
 const CHAR_DELAY_MIN  = 60;
 const CHAR_DELAY_MAX  = 150;
-const ACTION_MIN      = 4000;
-const ACTION_MAX      = 7000;
+const ACTION_MIN      = +(process.env.TT_ACTION_MIN || 4000);
+const ACTION_MAX      = +(process.env.TT_ACTION_MAX || 7000);
 const PRE_COMPOSE_MIN = +(process.env.TT_PRE_COMPOSE_MIN || 60000);
 const PRE_COMPOSE_MAX = +(process.env.TT_PRE_COMPOSE_MAX || 180000);
 const PRE_POST_MIN    = +(process.env.TT_PRE_POST_MIN    || 60000);

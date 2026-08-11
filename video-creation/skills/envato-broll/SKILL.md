@@ -76,6 +76,14 @@ Validated 2026-06-11 on the new app:
   (extract frames with ffmpeg) before licensing. The grid lazy-loads: scroll to mount cards.
 - Filter buttons exist on the search page (Filters / Category / Orientation / Resolution /
   People / Sort) — UI-clickable, no URL params mapped yet.
+- **⚠ `search-envato.js --portrait` IS NOT A GUARANTEE (2026-08-06).** It clicks the Orientation →
+  Portrait filter, but the button is only mounted on some page loads; on a miss the script prints
+  `Orientation filter button NOT FOUND` **and returns landscape results anyway, exit 0**. So for any
+  vertical sourcing: (a) put the word **"vertical"** in the query text — most portrait items carry it
+  in the title, which alone got 8/10 portrait results here; and (b) **VERIFY every candidate** by
+  `curl`-ing its `previewVideo` and `ffprobe`-ing the dimensions (portrait previews come back 304x540,
+  landscape 960x540) before you license anything. Never pick off the title or the `previewImage` —
+  the preview image is served `cf_fit=cover` at a requested width, so its aspect tells you nothing.
 - Item overlay (same URL, renders over the grid): button text `"Download <size>"` (e.g.
   "Download 162MB") plus a Details block (Length / Resolution / Frame rate). Clicking
   Download licenses the item to the account and starts a real browser download — scripts use

@@ -39,8 +39,8 @@ const EXPL_TEXTAREA = `${QUIZ_ROOT} .quiz-explanation-input-input textarea`;
 // Timing constants — mirrored from scripts/post-yt-poll.js
 const CHAR_DELAY_MIN  = 60;
 const CHAR_DELAY_MAX  = 150;
-const ACTION_MIN      = 2000;
-const ACTION_MAX      = 3500;
+const ACTION_MIN      = +(process.env.YTQ_ACTION_MIN || 2000);
+const ACTION_MAX      = +(process.env.YTQ_ACTION_MAX || 3500);
 const PRE_COMPOSE_MIN = +(process.env.YTQ_PRE_COMPOSE_MIN || 30000);
 const PRE_COMPOSE_MAX = +(process.env.YTQ_PRE_COMPOSE_MAX || 90000);
 const PRE_POST_MIN    = +(process.env.YTQ_PRE_POST_MIN    || 30000);
