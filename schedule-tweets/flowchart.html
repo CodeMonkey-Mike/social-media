@@ -35,7 +35,8 @@
 <body>
   <h1>Livestream pipeline — full decision flowchart</h1>
   <div class="sub">
-    The whole system with the six StateGraphs OPENED UP: every box inside a blue cluster is a real
+    The whole system with the seven StateGraphs OPENED UP (intake · cut · tighten · finish ·
+    publish · repurpose · post): every box inside a blue cluster is a real
     LangGraph node (work nodes blue, <code>verify_*</code> nodes grey), every diamond is a real gate
     in the code or a human decision, and every loop-back is a path that has actually been taken.
     Split into four connected charts; the circled connectors ①②③ join them, classic-flowchart style.
@@ -83,13 +84,34 @@ flowchart TD
     </pre>
   </div>
 
-  <h2>① Lane 1 — longform</h2>
+  <h2>① Lane 1 — longform → POST graph (segment 7, one platform per invocation)</h2>
   <div class="chart">
     <pre class="mermaid">
-flowchart LR
+flowchart TD
   C1((("1"))) --> Q1[/"longs.json entry pending"/]
-  Q1 --> P1{"Mike posts?"}
-  P1 -- "when ready" --> POST1(["LANE 1 done: posted to Rumble ·<br/>BitChute · Facebook, sequential"]):::done
+  Q1 --> P1{"Mike authorizes posting?<br/>(the invocation IS the decision)"}
+  P1 -- "run.py post --platform p<br/>SEQUENTIAL, x3 platforms" --> PFD{"front door: platform in<br/>rumble/bitchute/facebook?<br/>pending entry? mp4 on disk?"}
+  P1 -- "not yet" --> WAIT(["stays pending"]):::halt
+  PFD -- "no" --> PREF(["refused before Chrome opens"]):::halt
+  PFD -- "yes" --> p_post
+
+  subgraph GP["POST StateGraph — run.py post · segment 7"]
+    direction TB
+    p_post["post — shells upload_longform_&lt;p&gt;.py<br/>(uploader does its own title-keyed<br/>longs.json write-back)"]:::wnode --> p_vpost["verify_post — re-reads longs.json<br/>FROM DISK: status flipped + url?"]:::vnode
+  end
+  p_post -. "exit != 0: halt (READ THE LOG —<br/>the post may have landed; never relaunch on reflex)" .-> hp(["failed run"]):::halt
+  p_vpost -. "no flip: halt" .-> hp
+
+  p_vpost --> PLIVE{"liveness verified<br/>by the uploader?"}
+  PLIVE -- "yes" --> POK(["posted + url"]):::done
+  PLIVE -- "no" --> PUV(["posted_unverified — Mike checks<br/>the channel; NEVER re-run"]):::done
+
+  POK --> NEXTP{"more platforms<br/>pending?"}
+  NEXTP -- "yes: next invocation" --> P1
+  NEXTP -- "no" --> DONE1(["LANE 1 done: Rumble ·<br/>BitChute · Facebook live"]):::done
+  classDef wnode fill:#e7f0fd,stroke:#1877f2,stroke-width:1.5px,color:#0b57c2;
+  classDef vnode fill:#f0f1f3,stroke:#8a8d91,color:#5a5d61;
+  classDef halt fill:#fbe9e9,stroke:#d03b3b,color:#8f2525;
   classDef done fill:#e8f6e8,stroke:#0ca30c,color:#067806;
     </pre>
   </div>

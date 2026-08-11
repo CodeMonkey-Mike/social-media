@@ -764,7 +764,9 @@ const AUTOMATIONS = [
         branches: [
           { title: 'Lane 1 · longform', chain: [
             { art: 'desilenced longform staged + longs.json entry' },
-            { seam: 'POSTING · Mike (sequential)' },
+            { seam: 'posting authorization · Mike (sequential, one platform per invocation)' },
+            { g: 'POST ×3', sub: 'run.py post --platform · segment 7' },
+            { art: 'longs.json posted + url, verified from disk' },
           ]},
           { title: 'Lane 2 · vertical shorts', chain: [
             { art: 'VERTICAL master + word-level JSON + 90s chunks' },
@@ -797,9 +799,9 @@ const AUTOMATIONS = [
           ]},
         ],
       },
-      intro: 'Six INDEPENDENT LangGraph StateGraphs, not one big graph. One invocation of run.py runs exactly one of them; every human decision rides IN the invocation (a flag, or an on-disk plan validated at the front door) — no interrupts. Each graph deliberately ENDS at a judgment seam: the next graph refuses to start until the seam artifact exists and validates. After every work node a verify_* node re-checks the result FROM DISK; every node routes to END on any failure. Zero retries by topology: one attempt per run, diagnose, re-invoke (--resume skips completed nodes via checkpoints).',
+      intro: 'Seven INDEPENDENT LangGraph StateGraphs, not one big graph. One invocation of run.py runs exactly one of them; every human decision rides IN the invocation (a flag, or an on-disk plan validated at the front door) — no interrupts. Each graph deliberately ENDS at a judgment seam: the next graph refuses to start until the seam artifact exists and validates. After every work node a verify_* node re-checks the result FROM DISK; every node routes to END on any failure. Zero retries by topology: one attempt per run, diagnose, re-invoke (--resume skips completed nodes via checkpoints).',
       infra: [
-        { t: 'Entry point', d: 'python video-creation/livestream-repurpose/graph/run.py <segment> — segments: (default)=intake, cut, tighten, finish, publish, repurpose. Per-run flags: --batch, --resume, --thread, --stub ok|fail (structural test, no side effects), --test-sandbox DIR (real run against scratch).' },
+        { t: 'Entry point', d: 'python video-creation/livestream-repurpose/graph/run.py <segment> — segments: (default)=intake, cut, tighten, finish, publish, repurpose, post. Per-run flags: --batch, --resume, --thread, --stub ok|fail (structural test, no side effects), --test-sandbox DIR (real run against scratch).' },
         { t: 'State + resume', d: 'SqliteSaver checkpoints in graph/data/graph_checkpoints.sqlite, one thread per run (e.g. intake-<slug>-<yyyymmdd>). A killed run re-invoked with --resume continues its thread: completed nodes skip, the interrupted node re-runs WHOLE (every node is redo-safe).' },
         { t: 'Node execution', d: 'Work nodes shell the CANONICAL scripts as subprocesses via _run_streaming (intake_graph.py): stdout is teed live, PROGRESS n% lines map onto the heartbeat, exit codes decide the route. The graph owns control flow; the scripts own the work; no LLM anywhere in a graph.' },
         { t: 'Dashboard feeds', d: 'lane_progress.json = transient ~1 Hz heartbeat (lane, node, batch, pid, last_event) written during every node. lane_runs.json = append-only run history written once at END (status, duration, per-segment summary). This page polls both; nothing here can affect a run.' },
@@ -844,11 +846,22 @@ const AUTOMATIONS = [
           produces: 'images via the pooled ChatGPT browser stack (gen_images.py; chatgpt stage lock held for the stage; ONE item per invocation; refs last) · idempotent appends to the 6 data/*.json queues · per-file persona-lint · batches.json pipelines.repurpose=done',
           ends: 'visual-qa gates the images; Mike reviews the pending entries on the Social tab',
           note: 'Asymmetry is deliberate: verify_images is a subprocess stage (shared with hand runs) and lint has no verify twin (lint IS the verification).' },
+        { cmd: 'run.py post --platform <p>', name: 'POST (segment 7) — the posting tail, one entry × one platform per invocation',
+          front_door: 'platform allow-list (longform = rumble/bitchute/facebook ONLY; YouTube longform is Mike\'s manual upload) · a pending entry must exist in longs.json · its video verified on disk · the invocation IS Mike\'s decision to post',
+          chain: ['post', 'verify_post'],
+          consumes: 'the next pending longs.json entry for that platform + the staged mp4',
+          produces: 'one live platform post via the CANONICAL ported Python uploader (upload_longform_<p>.py; JS twins frozen rollback) · the uploader\'s own title-keyed longs.json write-back (posted / posted_unverified + url) — the duplicate-post guard',
+          ends: 'verify_post re-reads longs.json FROM DISK and requires the flip + a URL. One attempt by topology: on failure READ THE LOG — never relaunch on reflex, a "failed" post may already be live. SEQUENTIAL ONLY across platforms. Shorts/social posters join as their ports are blessed.',
+          note: 'Live-blessed 2026-08-11 on lf-20260811-last-year: rumble + bitchute clean first-pass; facebook needed one diagnosed pre-action re-run (cold-profile nav timeout, nothing had posted).' },
       ],
     },
     headline(run) {
       const s = run && run.summary;
       if (!s) return run && run.error ? clip(run.error, 90) : '';
+      if (run.lane === 7) {
+        return `${esc(s.platform || '?')}: ${esc(s.status || '?')} · `
+             + `${clip(s.title || '', 48)} · ${clip(s.url || '', 60)}`;
+      }
       if (run.lane === 6) {
         const im = s.images || {};
         return `${im.generated ?? 0} images (${im.verified ?? 0} verified) · `
@@ -1020,9 +1033,9 @@ function renderLive(prog, runs) {
   el.innerHTML = `<div class="live">
     <div class="who">
       ${pill(prog.status, stale)}${prog.stub ? '<span class="stub-tag">STUB</span>' : ''}
-      <div class="lane-title">Lane ${prog.lane} · ${esc(prog.lane_name || '')}</div>
+      <div class="lane-title">Lane ${prog.lane} · ${esc(prog.lane_name || '')}${prog.batch ? ` · <span style="opacity:.75">${esc(prog.batch)}</span>` : ''}</div>
       <div class="meta">
-        node <b>${esc(prog.node || '')}</b>${prog.total ? ` · member ${prog.index || 0} of ${prog.total}` : ''}<br>
+        ${prog.context ? `${esc(prog.context)}<br>` : ''}node <b>${esc(prog.node || '')}</b>${prog.total ? ` · member ${prog.index || 0} of ${prog.total}` : ''}<br>
         started ${clockText(prog.started_at)} · updated ${agoText(age)}<br>
         ${prog.ok || 0} ok · ${prog.errors || 0} error(s)${prog.pid ? ` · pid ${prog.pid}` : ''}
       </div>
