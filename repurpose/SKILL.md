@@ -130,8 +130,12 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > refuses to delete ANY chat whose title does not START with `b-roll` or `social`** — so a human's
 > personal chat can never be swept even if the registry is wrong. Gate refusals land on the registry's
 > `title_gate_skipped` list for Mike to handle; deletes are verified (API 404) or reported as failed.
-> Reconcile tools: `list-chats-api.js` (inventory all conversations vs the registry, read-only),
-> `test-chat-lifecycle.js` (end-to-end smoke test with throwaway chats).
+> Reconcile tool (canonical, 2026-08-11): `python repurpose/reconcile_chats.py` — compares the
+> registry against the LIVE conversation list and reports DEAD / DRIFTED / ORPHAN chats;
+> `--fix` applies the safe repairs (adopt gate-titled orphans, clear dead slots, heal
+> provenance-backed titles). It never deletes; deletion stays with the sweep + title gate.
+> Run it periodically and after any gen-run that reported registration trouble. JS-era tools
+> (`list-chats-api.js` inventory, `test-chat-lifecycle.js` smoke test) remain as frozen fallback.
 >
 > **Spent chats are DELETED, not abandoned** (Mike, 2026-07-08 — the sidebar was drowning in dead image
 > chats; safe because every image downloads to the project folder at generation time). Two mechanisms,
