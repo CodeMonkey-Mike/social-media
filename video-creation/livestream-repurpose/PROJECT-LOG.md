@@ -6,6 +6,77 @@ linkedin-automation/PROJECT-LOG.md.)_
 
 ---
 
+## 2026-08-11 (evening) — THE POSTING TAIL IS PORTED AND LIVE · segment 7 POST graph · longform trio + 1 short blessed through Python · migration endpoint reached (all-Python except Remotion)
+
+Mike's authorization: "make all the final repairs and port it over... anything that has to do with
+all this LangGraph work... wrap it up today. First, post the long-form video to Rumble, BitChute,
+Facebook... if you want to post something else... see how it works out and report back."
+
+**Everything JS that executes in the pipeline is now ported.** 21 files, all `py_compile`-clean:
+`upload_longform_{rumble,bitchute,facebook}.py` + `post_{tweet,thread,x_poll,x_short,ig_single,
+ig_carousel,ig_reel,tiktok_short,fb_short,rumble_short,bitchute_short,yt_community,yt_poll,
+yt_quiz,yt_short_api}.py` + `recapture_rumble_url.py` + libs `longform_queue.py` /
+`strip_hashtags.py`. Longform trio + libs + bitchute-short + yt-short-api by the orchestrator;
+the other 12 by 4 parallel sonnet port agents (X / IG / YT-community / shorts-video families),
+each 1:1 with line-by-line self-review — reports caught real translation traps (JS `[] || `
+truthiness vs Python falsy-empty-list; `Math.round` vs banker's rounding; `Promise.race` →
+poll loop; en-dash console strings preserved even where the JS text is stale). JS twins FROZEN
+rollback. `post-yt-short-api.py` talks to Google's REST endpoints directly via `requests`
+(no SDK dependency); the YT API-only hard rule rides in its header.
+
+**Suite-wide documented divergences (the only ones):** (1) terminal machine lines
+`POST OK/FAIL platform=...` for the graph to parse; (2) the port header; (3) Chrome now closes
+on ALL paths — Node's `process.exit(1)`-in-catch skipped `finally` and left Chrome open on
+failure, which is the exact orphaned-profile collision class that breaks the next run; the JS
+behavior was a latent defect, deliberately not reproduced.
+
+**The POST graph (posting_graph.py, segment 7 in run.py, lane 7 in the feeds):**
+`post → verify_post`, one pending entry × one platform per invocation, the invocation IS
+Mike's decision, zero retries by topology. Front door: platform allow-list (longform =
+rumble/bitchute/facebook ONLY), pending entry exists, mp4 on disk, shorts stuck-'posting'
+refusal. verify_post re-reads the queue file FROM DISK and requires status flip + URL
+(`--kind longform` = longs.json; `--kind short` = shorts.json, wired for blessed shorts
+posters only — bitchute so far). Dashboard: lane-7 headline + POST graph in the Architecture
+sub-tab + a full decision-diamond chart in flowchart.html (now "seven StateGraphs").
+
+**Live bless, all posts real (`lf-20260811-last-year`, 266 MB):**
+- Rumble: first pass clean → `rumble.com/v7e1gw8-...` · posted, write-back verified from disk.
+- BitChute: first pass clean, grab-frame thumbnail fallback exercised (entry has no PNG yet)
+  → `bitchute.com/video/1QMRxnsPCxyu/` · posted.
+- Facebook: attempt 1 died PRE-ACTION (`page.goto` 30s timeout on cold fbbot-profile — read
+  the log, confirmed zero posting activity + longs.json untouched, hardened first-nav to 60s,
+  ONE diagnosed re-run) → attempt 2 clean: upload complete in 133s, wizard Post on step 4,
+  baseline-diff found `facebook.com/reel/1061963633187163/` (the documented /reel/ form),
+  VERIFIED LIVE · posted.
+- BitChute SHORT (`t-20260810-freaking-early-not-degen`, under the "post something else"
+  license, via `post --kind short`): published on the single-Proceed happy path BUT landed
+  `posted_unverified` + `/content` placeholder — the sync-API popup URL is empty at
+  domcontentloaded (Node saw it populated; a real runtime-timing parity break). Fixed in the
+  port (late `upload_code` re-read before Proceed) and repaired that run's row to
+  posted + real URL `bitchute.com/video/9TSHAtCKCbE8/` via the **public beta API**
+  `POST api.bitchute.com/api/beta/channel/videos {channel_id}` (no auth; the SPA channel page
+  has no server-side listing) — now the URL-recovery path of record, noted in the skills index.
+
+**Hardening shipped:** intake longform min-sil 0.5 now a CODE default with DEVIATION banner
+(same class as tighten's 0.25) · LinkedIn heartbeat now carries `context` (= the run banner)
+for dashboard parity, livestream heartbeat `batch` rendered in the live strip ·
+`repurpose/reconcile_chats.py` (registry vs live conversations: DEAD/DRIFTED/ORPHAN report,
+`--fix` = safe repairs only, never deletes) · `repurpose/archive/` sweep: 220 dead one-offs/
+logs/gen-lists moved (repo-root repurpose folder now 35 files, all load-bearing; every
+doc-referenced generator kept in place) · yt-post-vertical index row corrected to API-ONLY.
+
+**Posting doctrine additions (earned today):** a pre-action failure (nothing attached, queue
+untouched, log proves it) is the ONE case where a diagnosed re-run is safe — the one-attempt
+rule guards in-flight posts, and the graph's FAILED verdict + untouched queue row is exactly
+that proof. Blessed posters post through the graph from now on; bless-pending posters stay
+on their JS twin (ledger in `schedule-tweets/skills/SKILL.md`).
+
+**Remaining (small):** each bless-pending poster gets flipped canonical on its next real post
+(one at a time, sequential) · Mike: longform thumbnail PNG still wanted, 4 shorts + 12 Lane 3
+entries to post · Phase 7 SKILL.md narrowing (deferred item 2) stands.
+
+---
+
 ## 2026-08-11 — Batch `last-year` through ALL 3 LANES in one session · the last lane-scoped JS ported (`gen_batch.py`) · dashboard = pipeline DAG · ⚠️ the min-sil 250 ms default is now IN CODE after a knob-anchoring failure
 
 Mike's asks, all delivered this session: run the new stream (2026-08-09, 66.8 min, batch named by
