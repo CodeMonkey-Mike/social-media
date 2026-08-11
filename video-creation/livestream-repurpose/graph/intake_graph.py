@@ -66,9 +66,10 @@ LANE_PROGRESS = DATA / "lane_progress.json"               # transient heartbeat,
 LANE_RUNS_KEEP = 500
 LANE_NAMES = {1: "intake", 2: "cut", 3: "tighten", 4: "finish",
               5: "publish",   # 2-5 = Lane 2 shorts segments (shorts_graph.py)
-              6: "repurpose"}  # 6 = Lane 3 text/image (repurpose_graph.py, Wave 6)
+              6: "repurpose",  # 6 = Lane 3 text/image (repurpose_graph.py, Wave 6)
+              7: "post"}       # 7 = posting tail (posting_graph.py, 2026-08-11)
 LANE_SUMMARY_KEY = {1: "intake", 2: "cut", 3: "tighten", 4: "finish", 5: "publish",
-                    6: "repurpose"}
+                    6: "repurpose", 7: "post"}
 
 PROGRESS_RE = re.compile(r"^PROGRESS (\d+)%")
 WHISPER_TS_RE = re.compile(r"^\[(\d+):(\d+)(?:\.\d+)? -->")

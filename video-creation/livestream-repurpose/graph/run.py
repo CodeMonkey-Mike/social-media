@@ -47,6 +47,16 @@
 #       [--plan PATH] [--thread ID] [--resume] [--stub ok|fail]
 #       [--test-sandbox DIR] [--fake-gen (sandbox only)]
 #
+#   POST (posting tail, 2026-08-11 — ONE pending entry to ONE platform per
+#   invocation; the invocation IS Mike's decision to post. SEQUENTIAL ONLY, one
+#   attempt: on failure READ THE LOG, never relaunch — the post may have landed.
+#   --kind longform = rumble | bitchute | facebook off longs.json; --kind short =
+#   blessed shorts posters off shorts.json (bitchute so far). Ported Python
+#   uploaders; the JS twins are frozen rollback):
+#   python video-creation/livestream-repurpose/graph/run.py post
+#       --platform rumble|bitchute|facebook [--kind longform|short] [--thread ID]
+#       [--resume] [--stub ok|fail]
+#
 # Wave 1 of the livestream migration (ORCHESTRATOR-PLAN.md §"Livestream migration"):
 # ONE invocation runs Phase 1 (LOW BPS) + Lane 1 (longform desilence/stage/queue) +
 # Phase 1B (verticalize) + Phase 2 (transcribe + glossary + derivatives), then ENDS.
@@ -56,9 +66,9 @@
 # The human decisions travel IN the invocation (no interrupts, same contract as the
 # LinkedIn lanes):
 #   --min-sil N       the desilencer's one knob for the Lane 1 longform cut.
-#                     REQUIRED (the desilencer doctrine: the caller specifies the
-#                     silence definition every time; nothing here defaults it).
-#                     0.5 matched the pacing of the accepted longforms.
+#                     Omit for the CANONICAL longform default 0.5s (announced
+#                     loudly; any other value prints a DEVIATION banner — a
+#                     per-batch call is never the new default, 2026-08-11).
 #   longform-meta.json  {title, description, tags[], batch?, source?} — the
 #                     judgment fields for the longs.json entry, authored BEFORE the
 #                     run (default location: next to the recording; --meta to point
@@ -68,7 +78,8 @@
 # Flags:
 #   --source PATH        the raw recording inside its named media folder (required
 #                        for real runs; the folder name becomes the artifact name)
-#   --min-sil N          Lane 1 min-silence seconds (required unless --skip-longform)
+#   --min-sil N          Lane 1 min-silence seconds (omit = canonical 0.5 default,
+#                        printed loudly; any other value prints a DEVIATION banner)
 #   --meta PATH          longform-meta.json (default: <media folder>/longform-meta.json)
 #   --skip-longform      run everything except Lane 1 (a per-run Mike override)
 #   --cpu-verticalize    use the documented CPU-filter fallback for Step 1B
@@ -1186,11 +1197,18 @@ def main():
         meta_path = os.path.abspath(args.meta) if args.meta else os.path.join(
             media_dir, "longform-meta.json")
         if not args.skip_longform:
+            # The longform-intake convention IS 0.5s — every accepted longform used
+            # it. Encode it as the code default (same hardening class as the shorts
+            # 5B 0.25 default, after the 2026-08-11 min-sil incident): prose-held
+            # knob values are invisible to validators, so the default lives HERE.
             if args.min_sil is None:
-                print("--min-sil is required (the desilencer's one knob is the caller's "
-                      "call every run; 0.5 matched the accepted longform pacing). Or pass "
-                      "--skip-longform.", file=sys.stderr)
-                sys.exit(1)
+                args.min_sil = 0.5
+                print("min-sil not given -> canonical longform intake default 0.5s "
+                      "(matched the accepted longform pacing). Pass --min-sil to "
+                      "deviate.")
+            elif abs(args.min_sil - 0.5) > 1e-9:
+                print(f"min-sil DEVIATION: {args.min_sil}s (canonical longform intake "
+                      "default is 0.5s). A per-batch call, never the new default.")
             if not (0.15 <= args.min_sil <= 2.0):
                 print(f"--min-sil {args.min_sil}s is outside the sane 0.15-2.0s range.",
                       file=sys.stderr)
@@ -1265,9 +1283,142 @@ def main():
     sys.exit(report_intake(final))
 
 
+def report_post(final) -> int:
+    status = final.get("status", "?")
+    print(f"GRAPH {status.upper()}")
+    if status != "done":
+        print(f"  {final.get('error', 'no error detail')}")
+        print("  POSTING RULE: do NOT re-run on reflex. Read the uploader output above; "
+              "check longs.json and the platform page first — a 'failed' post may "
+              "already be live, and a re-run would duplicate it.")
+        return 1
+    s = final["post"]
+    if s.get("status") == "posted_unverified":
+        print(f"  {s['platform']}: POSTED (unverified) · {s.get('url')}")
+        print("  Verify manually before counting it done; recapture tooling exists "
+              "for rumble shorts, longform is a browser check.")
+    else:
+        print(f"  {s['platform']}: POSTED ✓ · {s.get('url')}")
+    print(f"  \"{(s.get('title') or '')[:70]}\" · longs.json write-back verified from disk")
+    return 0
+
+
+def main_post():
+    sys.path.insert(0, str(REPO_ROOT / "schedule-tweets" / "scripts" / "lib"))
+    from longform_queue import pick_next_longform   # noqa: E402  (one source of truth)
+    from posting_graph import (  # noqa: E402
+        build_post_graph, LONGFORM_SCRIPTS, SHORT_SCRIPTS,
+    )
+
+    ap = argparse.ArgumentParser(prog="run.py post",
+                                 description="Post ONE pending entry to ONE platform "
+                                             "through LangGraph. SEQUENTIAL ONLY; one "
+                                             "attempt; the invocation is Mike's "
+                                             "authorization to post.")
+    ap.add_argument("--kind", choices=["longform", "short"], default="longform")
+    ap.add_argument("--platform",
+                    choices=sorted(set(LONGFORM_SCRIPTS) | set(SHORT_SCRIPTS)))
+    ap.add_argument("--thread", default=None)
+    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    args = ap.parse_args()
+
+    if args.stub:
+        init = {"kind": args.kind, "platform": args.platform or "rumble",
+                "entry_id": "stub-entry", "entry_title": "stub", "stub": args.stub,
+                "status": "running"}
+        thread = args.thread or f"post-stub-{datetime.now():%Y%m%d-%H%M%S}"
+        banner = f"Post graph | STUB MODE: {args.stub}"
+    else:
+        if not args.platform:
+            print("--platform is required for a real run.", file=sys.stderr)
+            sys.exit(1)
+        if args.kind == "short":
+            # Ported shorts posters only — anything else still posts via its JS twin.
+            if args.platform not in SHORT_SCRIPTS:
+                print(f"--kind short is wired for {sorted(SHORT_SCRIPTS)} only so far "
+                      "(bless-pending doctrine: the JS twin posts until the port is "
+                      "blessed).", file=sys.stderr)
+                sys.exit(1)
+            # Mirror the poster's own pick: first entry whose platform block is
+            # 'pending' (a missing block is schema-added as pending by the script).
+            sdata = json.loads((REPO_ROOT / "schedule-tweets" / "data" /
+                                "shorts.json").read_text(encoding="utf-8"))
+            entry = next(
+                (s for s in sdata.get("shorts") or []
+                 if (s.get("platforms", {}).get(args.platform) or
+                     {"status": "pending"}).get("status") == "pending"),
+                None)
+            if not entry:
+                print(f"Nothing pending for {args.platform} in shorts.json.",
+                      file=sys.stderr)
+                sys.exit(1)
+            stuck = [s for s in sdata.get("shorts") or []
+                     if (s.get("platforms", {}).get(args.platform) or {})
+                     .get("status") == "posting"]
+            if stuck:
+                print(f"Front door: {len(stuck)} entry(ies) stuck in 'posting' — the "
+                      "poster will refuse (manual review; a prior run may have posted "
+                      "without flipping the JSON).", file=sys.stderr)
+                sys.exit(2)
+            video_path = REPO_ROOT / "schedule-tweets" / entry["video_path"]
+            thumb_ok = True
+        else:
+            job = pick_next_longform(args.platform)   # also runs the platform allow-list gate
+            if not job:
+                print(f"Nothing pending for {args.platform} in longs.json.",
+                      file=sys.stderr)
+                sys.exit(1)
+            entry, video_path = job["entry"], job["video_path"]
+            thumb_ok = bool(job.get("thumb_path"))
+        if not entry.get("id"):
+            print("Front door: queue entry has no id — verify_post needs it. Fix "
+                  "the queue file first.", file=sys.stderr)
+            sys.exit(1)
+        if not video_path or not video_path.exists():
+            print(f"Front door: video missing on disk: {video_path}", file=sys.stderr)
+            sys.exit(1)
+        size_mb = video_path.stat().st_size / 1048576
+        init = {"kind": args.kind, "platform": args.platform,
+                "entry_id": entry["id"], "entry_title": entry.get("title", ""),
+                "stub": "", "status": "running"}
+        thread = args.thread or f"post-{entry['id']}-{args.platform}"
+        set_current_batch(entry.get("batch") or entry["id"])
+        banner = (f"Post graph | {args.kind} → {args.platform} | {entry['id']} | "
+                  f"{size_mb:.0f} MB"
+                  + ("" if thumb_ok else " | no thumbnail"))
+
+    DATA.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(CHECKPOINT_DB), check_same_thread=False)
+    app = build_post_graph(checkpointer=SqliteSaver(conn))
+
+    print(banner)
+    print(f"thread: {thread} | checkpoints: {CHECKPOINT_DB.name}"
+          + (" | RESUME" if args.resume else ""))
+    print("-" * 60)
+
+    started_at, t0 = datetime.now().isoformat(timespec="seconds"), time.monotonic()
+    try:
+        final = app.invoke(None if args.resume else init,
+                           config={"configurable": {"thread_id": thread}})
+    except BaseException as e:
+        finish_progress("crashed", f"{type(e).__name__}: {e}")
+        raise
+    print("-" * 60)
+
+    record_run(lane=7, thread=thread, final=final, started_at=started_at,
+               ended_at=datetime.now().isoformat(timespec="seconds"),
+               duration_s=time.monotonic() - t0, stub=args.stub,
+               requested=(f"{init.get('entry_id')}:{init.get('platform')}"
+                          if not args.stub else "stub"))
+    finish_progress(final.get("status", "unknown"), final.get("error"))
+
+    sys.exit(report_post(final))
+
+
 SEGMENTS = {"cut": main_cut, "tighten": main_tighten,
             "finish": main_finish, "publish": main_publish,
-            "repurpose": main_repurpose}
+            "repurpose": main_repurpose, "post": main_post}
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] in SEGMENTS:

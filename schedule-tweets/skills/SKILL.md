@@ -14,6 +14,47 @@ Most of these Node/Playwright scripts run 3-8 minutes (built-in 60-180s human-pa
 
 ---
 
+## Posting tail → Python + the POST graph (migration wave, 2026-08-11)
+
+**Every posting/upload script now has a CANONICAL Python port** (`scripts/post_*.py`,
+`scripts/upload_longform_*.py`, `scripts/recapture_rumble_url.py`, libs
+`scripts/lib/longform_queue.py` + `scripts/lib/strip_hashtags.py`). The JS twins are
+**FROZEN rollback** — do not edit them; fixes land in the Python file.
+
+**Blessed posters run through the POST graph (segment 7), one entry × one platform per
+invocation** — the invocation IS Mike's decision to post; verify-from-disk against the
+queue file is built in:
+
+```
+python video-creation/livestream-repurpose/graph/run.py post --platform <p> [--kind longform|short]
+```
+
+**Bless ledger** (a port becomes the production poster only after ONE real post ran clean
+through it; until then invoke the JS twin):
+
+| Port | Status |
+|---|---|
+| `upload_longform_rumble.py` | ✅ LIVE-BLESSED 2026-08-11 (`lf-20260811-last-year`, first pass) |
+| `upload_longform_bitchute.py` | ✅ LIVE-BLESSED 2026-08-11 (first pass; grab-frame thumbnail fallback exercised) |
+| `upload_longform_facebook.py` | ✅ LIVE-BLESSED 2026-08-11 (one diagnosed pre-action re-run: cold-profile nav timeout before any action — hardened to a 60s first-nav timeout) |
+| `post_bitchute_short.py` | ✅ LIVE-BLESSED 2026-08-11 (`t-20260810-freaking-early-not-degen` via `post --kind short`; one found-and-fixed sync-API timing gap: the popup URL is empty at domcontentloaded so `upload_code` missed → placeholder URL + posted_unverified. Port now re-reads the URL before Proceed; that run's real URL was recovered via the public beta API `POST api.bitchute.com/api/beta/channel/videos {channel_id}` — the SPA channel page has no server-side listing, but this API needs no auth and is the URL-recovery path of record) |
+| every other `post_*.py` | PORTED, BLESS-PENDING — JS twin posts until blessed |
+
+**Suite-wide documented divergences from the JS twins (the ONLY two + one deliberate fix):**
+1. A final machine line `POST OK platform=<p> ...` / `POST FAIL platform=<p> reason=...`
+   at the same terminal points where the JS wrote a terminal queue status (parsed by the
+   POST graph).
+2. The port header block (`CANONICAL Python port … BLESS-PENDING`).
+3. **Chrome closes on ALL paths, including failure.** Node's `process.exit(1)` inside
+   `catch` skips `finally`, so the JS twins left Chrome open after a failure — an orphaned
+   bot-profile Chrome is exactly what collides with and kills the NEXT run on that profile,
+   so this JS behavior was a latent defect and is deliberately not reproduced.
+
+All standing rules are unchanged: **sequential only, one attempt, read the log — never
+relaunch** (a "failed" post may already be live), YT Shorts via API only.
+
+---
+
 ## Skill files
 
 | File | What it does |
@@ -32,7 +73,7 @@ Most of these Node/Playwright scripts run 3-8 minutes (built-in 60-180s human-pa
 | `x-post-vertical.md` | Post one pending X vertical video |
 | `yt-post-community.md` | Post one pending YouTube community post (with images) |
 | `yt-post-poll.md` | Post one pending YouTube text poll |
-| `yt-post-vertical.md` | Post one pending YouTube vertical video (Short) — API-preferred, Playwright fallback |
+| `yt-post-vertical.md` | Post one pending YouTube vertical video (Short) — **API ONLY, no browser fallback** (on failure: mark failed + report) |
 | `rumble-upload-longform.md` | Upload a full-length video to Rumble |
 | `bitchute-upload-longform.md` | Upload a full-length video to BitChute |
 | `collect-engagement.md` | Collect views and poll results for mature posted content |
