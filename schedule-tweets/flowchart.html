@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Livestream pipeline — full decision flowchart</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f0f2f5; color: #1a1a1a; padding: 22px 26px 60px;
+    }
+    h1 { font-size: 17px; font-weight: 600; }
+    h2 { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #65676b; margin: 26px 0 8px; }
+    .sub { font-size: 12.5px; color: #8a8d91; margin-top: 3px; line-height: 1.5; }
+    .sub a { color: #1877f2; text-decoration: none; }
+    .sub code { font-family: 'Cascadia Code', Consolas, monospace; font-size: 11px; background: #e9ebee; border-radius: 4px; padding: 0 4px; }
+    .legend { display: flex; gap: 14px; flex-wrap: wrap; margin: 14px 0 2px; font-size: 11.5px; color: #65676b; }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .sw { width: 14px; height: 14px; border-radius: 3px; border: 1.5px solid; display: inline-block; }
+    .sw.w { background: #e7f0fd; border-color: #1877f2; }
+    .sw.v { background: #f0f1f3; border-color: #8a8d91; }
+    .sw.a { background: #fdf6e7; border-color: #d9a521; }
+    .sw.d { background: #fff; border-color: #65676b; transform: rotate(45deg); width: 11px; height: 11px; }
+    .sw.h { background: #fbe9e9; border-color: #d03b3b; }
+    .sw.k { background: #e8f6e8; border-color: #0ca30c; }
+    .sw.c { background: #fff; border-color: #65676b; border-radius: 50%; }
+    .chart {
+      background: #fff; border: 1px solid #e4e6ea; border-radius: 10px;
+      padding: 14px; overflow: auto;
+    }
+    .err { color: #8f2525; font-size: 13px; padding: 20px; display: none; }
+  </style>
+</head>
+<body>
+  <h1>Livestream pipeline — full decision flowchart</h1>
+  <div class="sub">
+    The whole system with the six StateGraphs OPENED UP: every box inside a blue cluster is a real
+    LangGraph node (work nodes blue, <code>verify_*</code> nodes grey), every diamond is a real gate
+    in the code or a human decision, and every loop-back is a path that has actually been taken.
+    Split into four connected charts; the circled connectors ①②③ join them, classic-flowchart style.
+    Back to the <a href="langgraph.html#livestream">LangGraph dashboard</a>.
+  </div>
+  <div class="legend">
+    <span><span class="sw w"></span> graph work node</span>
+    <span><span class="sw v"></span> verify_* node (re-checks from disk)</span>
+    <span><span class="sw a"></span> judgment (agent / orchestrator)</span>
+    <span><span class="sw d"></span> decision</span>
+    <span><span class="sw h"></span> halt / dropped</span>
+    <span><span class="sw k"></span> done</span>
+    <span><span class="sw c"></span> connector to another chart</span>
+  </div>
+
+  <h2>Trunk — intake (opened), fanning into the three lanes</h2>
+  <div class="chart">
+    <pre class="mermaid">
+flowchart TD
+  REC(["Mike records the livestream"]) --> MKV[/"raw .mkv lands in its named media folder<br/>(the folder names the batch)"/]
+  MKV --> META["orchestrator authors longform-meta.json"]:::agent
+  META --> IFD{"front door: meta valid?<br/>disk >= 5 GB free?"}
+  IFD -- "no: dies in seconds" --> META
+  IFD -- "yes" --> i_enc
+
+  subgraph GI["INTAKE StateGraph — run.py · segment 1"]
+    direction TB
+    i_enc["encode"]:::wnode --> i_venc["verify_encode"]:::vnode
+    i_venc --> i_skip{"--skip-longform?"}
+    i_skip -- "no" --> i_lf["longform"]:::wnode --> i_vlf["verify_longform"]:::vnode --> i_q["queue"]:::wnode --> i_vq["verify_queue"]:::vnode --> i_vert
+    i_skip -- "yes" --> i_vert["vertical"]:::wnode
+    i_vert --> i_vvert["verify_vertical"]:::vnode --> i_tr["transcribe"]:::wnode --> i_vtr["verify_transcribe"]:::vnode --> i_dr["derive"]:::wnode --> i_vdr["verify_derive"]:::vnode
+  end
+  i_vdr -. "any node or verify fails: halt to END,<br/>zero retries; diagnose + re-invoke --resume" .-> hi(["failed run"]):::halt
+
+  i_vdr --> ART[/"on disk: LOW BPS master · longform staged + queued ·<br/>VERTICAL master · word-level JSON · plain + 90s chunks"/]
+  ART --> C1((("1"))) & C2((("2"))) & C3((("3")))
+  C1 ~~~ C2 ~~~ C3
+
+  classDef wnode fill:#e7f0fd,stroke:#1877f2,stroke-width:1.5px,color:#0b57c2;
+  classDef vnode fill:#f0f1f3,stroke:#8a8d91,color:#5a5d61;
+  classDef agent fill:#fdf6e7,stroke:#d9a521,color:#7a5600;
+  classDef halt fill:#fbe9e9,stroke:#d03b3b,color:#8f2525;
+  style GI fill:#fbfcff,stroke:#1877f2,stroke-width:1.5px
+    </pre>
+  </div>
+
+  <h2>① Lane 1 — longform</h2>
+  <div class="chart">
+    <pre class="mermaid">
+flowchart LR
+  C1((("1"))) --> Q1[/"longs.json entry pending"/]
+  Q1 --> P1{"Mike posts?"}
+  P1 -- "when ready" --> POST1(["LANE 1 done: posted to Rumble ·<br/>BitChute · Facebook, sequential"]):::done
+  classDef done fill:#e8f6e8,stroke:#0ca30c,color:#067806;
+    </pre>
+  </div>
+
+  <h2>② Lane 2 — vertical shorts (CUT → TIGHTEN → FINISH → builders → PUBLISH, all opened)</h2>
+  <div class="chart">
+    <pre class="mermaid">
+flowchart TD
+  C2((("2"))) --> CS["clip-strategist (Fable)<br/>authors clip-plan.json"]:::agent
+  CS --> CFD{"front door: clip-plan parses<br/>into clips? master 1080x1920?"}
+  CFD -- "no: fix the plan" --> CS
+  CFD -- "yes" --> c_cut
+
+  subgraph GC["CUT StateGraph — run.py cut · segment 2"]
+    direction TB
+    c_cut["cut"]:::wnode --> c_vcut["verify_cut"]:::vnode --> c_fin["finalize"]:::wnode --> c_vfin["verify_finalize"]:::vnode
+  end
+  c_vfin -. "any failure: halt" .-> hc(["failed run"]):::halt
+
+  c_vfin --> R4B{"Mike 4b review,<br/>per clip: keep it?"}
+  R4B -- "kill" --> DROP(["clip dropped"]):::halt
+  R4B -- "retitle" --> RT[/"verbatim retitle recorded"/] --> TS
+  R4B -- "keep" --> TS["tighten-strategists (Fable, one per clip)<br/>author tighten-plan.json"]:::agent
+  TS --> TFD{"front door: voiced removal<br/><= 15% hard ceiling?<br/>relock schema valid?"}
+  TFD -- "no: strategist re-authors" --> TS
+  TFD -- "yes" --> t_ti
+
+  subgraph GT["TIGHTEN StateGraph — run.py tighten · segment 3 (min-sil defaults 0.25)"]
+    direction TB
+    t_ti["tighten"]:::wnode --> t_vti["verify_tighten"]:::vnode --> t_fin["finalize"]:::wnode --> t_vfin["verify_finalize"]:::vnode
+  end
+  t_vfin -. "any failure: halt" .-> ht(["failed run"]):::halt
+
+  t_vfin --> R2{"Mike 2nd review:<br/>approve the tightened clips?"}
+  R2 -- "no: adjust + re-run<br/>(a new min-sil is one re-invocation)" --> TS
+  R2 -- "yes" --> FFD{"front door: every build directive<br/>explicitly scoped? filler plan valid?"}
+  FFD -- "no: REFUSES the handoff" --> FIXD[/"scope it in clip-plan"/] --> FFD
+  FFD -- "yes" --> f_fill
+
+  subgraph GF["FINISH StateGraph — run.py finish · segment 4"]
+    direction TB
+    f_fill["fillers"]:::wnode --> f_vfill["verify_fillers"]:::vnode --> f_tr["transcribe"]:::wnode --> f_vtr["verify_transcribe"]:::vnode --> f_as["assets"]:::wnode --> f_vas["verify_assets"]:::vnode --> f_fin["finalize"]:::wnode --> f_vfin["verify_finalize"]:::vnode
+  end
+  f_vfin -. "any failure: halt" .-> hf(["failed run"]):::halt
+
+  f_vfin --> P7["Phase 7: one remotion-builder agent per clip<br/>captions · b-roll via gen_batch.py · SFX · render<br/>(stage locks serialize chatgpt + render)"]:::agent
+  P7 --> GATE{"finalized-short gate:<br/>PASS for this clip?"}
+  GATE -- "no: builder iterates" --> P7
+  GATE -- "yes, all clips" --> PFD{"publish front door: EVERY clip 7-built<br/>with PASS? date not already staged?"}
+  PFD -- "no" --> PFX(["REFUSES: 'an mp4 on disk is not a<br/>completion signal' — back to builders ↺"]):::halt
+  PFD -- "yes" --> p_pub
+
+  subgraph GP["PUBLISH StateGraph — run.py publish · segment 5"]
+    direction TB
+    p_pub["publish"]:::wnode --> p_vpub["verify_publish"]:::vnode --> p_lint["lint"]:::wnode --> p_vlint["verify_lint"]:::vnode
+  end
+  p_vlint -. "any failure: halt" .-> hp(["failed run"]):::halt
+
+  p_vlint --> STG[/"shorts.json entries pending ·<br/>staged mp4s md5-verified"/]
+  STG --> WATCH{"Mike watches from the queue:<br/>all clips good?"}
+  WATCH -- "fix a clip" --> WFX(["rebuild the clip, re-publish re-stages it —<br/>back to builders ↺"]):::halt
+  WATCH -- "yes" --> POST2(["LANE 2 done: Mike posts, sequential,<br/>YT Shorts via API only"]):::done
+
+  classDef wnode fill:#e7f0fd,stroke:#1877f2,stroke-width:1.5px,color:#0b57c2;
+  classDef vnode fill:#f0f1f3,stroke:#8a8d91,color:#5a5d61;
+  classDef agent fill:#fdf6e7,stroke:#d9a521,color:#7a5600;
+  classDef halt fill:#fbe9e9,stroke:#d03b3b,color:#8f2525;
+  classDef done fill:#e8f6e8,stroke:#0ca30c,color:#067806;
+  style GC fill:#fbfcff,stroke:#1877f2,stroke-width:1.5px
+  style GT fill:#fbfcff,stroke:#1877f2,stroke-width:1.5px
+  style GF fill:#fbfcff,stroke:#1877f2,stroke-width:1.5px
+  style GP fill:#fbfcff,stroke:#1877f2,stroke-width:1.5px
+    </pre>
+  </div>
+
+  <h2>③ Lane 3 — text + image (REPURPOSE opened)</h2>
+  <div class="chart">
+    <pre class="mermaid">
+flowchart TD
+  C3((("3"))) --> DR["orchestrator fact-checks + drafts<br/>lane3-plan.json"]:::agent
+  DR --> LFD{"validate_lane3_plan: no em dashes?<br/>image ids unique? IG = Kaspa only?<br/>X-poll topics eligible? threads 5-8?"}
+  LFD -- "no: fix the plan" --> DR
+  LFD -- "yes" --> r_gen
+
+  subgraph GR["REPURPOSE StateGraph — run.py repurpose · segment 6"]
+    direction TB
+    r_gen["generate"]:::wnode --> r_vimg["verify_images"]:::vnode --> r_q["queues"]:::wnode --> r_vq["verify_queues"]:::vnode --> r_lint["lint"]:::wnode --> r_fin["finalize"]:::wnode --> r_vfin["verify_finalize"]:::vnode
+  end
+  r_vfin -. "any failure: halt" .-> hr(["failed run"]):::halt
+
+  r_vfin --> VQA{"adversarial visual-QA:<br/>every image passes?"}
+  VQA -- "no: revise prompts in the plan,<br/>move failed renders aside,<br/>idempotent re-run (0 entries re-added)" --> DR
+  VQA -- "yes" --> QOK[/"entries pending across the 6 queues"/]
+  QOK --> POST3(["LANE 3 done: Mike reviews + posts"]):::done
+
+  classDef wnode fill:#e7f0fd,stroke:#1877f2,stroke-width:1.5px,color:#0b57c2;
+  classDef vnode fill:#f0f1f3,stroke:#8a8d91,color:#5a5d61;
+  classDef agent fill:#fdf6e7,stroke:#d9a521,color:#7a5600;
+  classDef halt fill:#fbe9e9,stroke:#d03b3b,color:#8f2525;
+  classDef done fill:#e8f6e8,stroke:#0ca30c,color:#067806;
+  style GR fill:#fbfcff,stroke:#1877f2,stroke-width:1.5px
+    </pre>
+  </div>
+
+  <div class="err" id="err">Mermaid failed to load or parse — open the browser console for details.</div>
+
+  <script src="vendor/mermaid.min.js"></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'neutral',
+        securityLevel: 'loose',
+        flowchart: { curve: 'linear', useMaxWidth: false, nodeSpacing: 34, rankSpacing: 38 },
+      });
+    } else {
+      document.getElementById('err').style.display = 'block';
+    }
+    window.addEventListener('error', () => {
+      document.getElementById('err').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
