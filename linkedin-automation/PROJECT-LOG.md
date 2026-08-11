@@ -12,14 +12,29 @@ location, and capture the ones in **Europe / North America / South America / the
 Caribbean** into `members.json` as `{ profile_url, location }`. A later (separate)
 script will message the captured members using only their `profile_url`.
 
-## Current state (as of 2026-08-04, after the full 5-lane run — see entry below)
+## Current state (as of 2026-08-11, after the full 4-lane run — see entry below)
 
-- **Queue:** **6525** members (unchanged, no Lane 1 seed run), **1208 processed**
-  (+60 today, Lane 2), **5317 remaining**. **Captured: 613** members (+42 today).
-  **430 contacted** (+26 today, Lane 3 — stopped early on LinkedIn's own weekly
-  invite limit, not our choice); **120 connected** (+9 today); **41 DM'd** (+2 today);
-  **183 still to contact**; **310 contacted and still awaiting acceptance**;
-  **76 eligible for endorse+DM (0 past 14 days, 29 in the 7-14 day band).**
+- **Queue:** **6525** members (unchanged, no Lane 1 seed run), **1467 processed**
+  (+50 today, Lane 2), **5058 remaining**. **Captured: 775** members (+25 today).
+  **577 contacted** (+29 today, Lane 3, 1 error auto-queued for retry); **179
+  connected** (+9 today, Lane 4); **65 DM'd** (+5 today, Lane 5 — hit the
+  mechanical `>14d` gate cleanly, no `--max` override needed); **~84 profile
+  views today** (50 scrape + 29 invite + 5 endorse), well under the ~120/24h
+  threshold; **110 still eligible for endorse+DM (0 past 14 days now, 60 in the
+  7-14 day band, 50 under 7 days).**
+- **2026-08-11 run — full 4-lane run starting from Lane 2 (Mike's ask: Lane 2=50,
+  Lane 3=30, Lane 4, Lane 5).** Lane 3 hit repeated background-task-reaper kills
+  at `--max 30` and `--max 5` (each terminal window capped at ~10min, well short
+  of the ~35-40min a 30-invite run needs at the documented pacing); resumed in
+  five clean `--max 5` foreground chunks per the documented small-chunk pattern
+  ([[reference_linkedin_bg_task_kills]]), diagnosing after every kill (log +
+  `lane_progress.json` + orphan-Chrome check before relaunching, never blind
+  retry). One kill left a genuine orphaned `li-bot-profile` Chrome GPU-process
+  child (main process already dead) that would have blocked the next launch —
+  force-closed it, confirmed clean, continued. Zero data lost across every kill:
+  each chunk's completed sends were already persisted to `members.json` before
+  the kill landed. Total 29/30 invites sent (1 profile 404'd, auto-retries next
+  run). Lane 2, Lane 4, Lane 5 each ran clean in one shot.
 - **Lane commands are the graph for all five lanes** (see `CLAUDE.md`): `--lane 1`
   seed · `--lane 2 --max N` scrape · `--lane 3 --max N` invite · `--lane 4` check ·
   `--lane 5` endorse+DM (blessed 2026-08-01) — **Lane 5 takes NO number**, the
@@ -2077,3 +2092,137 @@ relaunch; killed chunks were confirmed safely persisted to disk, no data lost, j
   ~120/24h restriction threshold.
 
 No restriction pages hit at any point. Lane 3 not retried today per its own limit warning.
+
+## 2026-08-05 — full 4-lane run (Lane 2=60, Lane 3=30, Lane 4, Lane 5)
+
+Ran the four active lanes via `graph/run.py`. Lane 2 needed heavy chunking this time —
+the reaper was noticeably more aggressive than usual, including two zero-progress
+instant-kills of freshly-launched `run_in_background: true` calls in a row. Diagnosed
+before each retry (no orphaned `li-bot-profile` Chrome, no lock files, `members-urls.json`
+processed count unchanged — nothing lost, nothing duplicated). Switching from
+explicit-background launches back to plain foreground calls (auto-backgrounds after the
+tool's 10-min cap) survived noticeably longer per chunk and finished the lane; kept that
+pattern for the rest of the run.
+
+- **Lane 2 (scrape 60): 60/60 profile views, 0 errors across 9 chunks** (60→50→38→30→
+  36→30→25→22→18, several reaper-killed mid-chunk with partial or zero progress, all
+  confirmed safely persisted before resuming). 613→654 captured (+41).
+- **Lane 3 (invite, asked 30): sent 21** — after a false-limit misdiagnosis was
+  root-caused and fixed mid-morning. The 10:02 run stopped at member 2 reporting the
+  weekly invite/note limit; the modal on the page was actually the PER-MEMBER
+  "you can resend an invitation 3 weeks after withdrawing it" cooldown (one blocked
+  person, not a capped account — Mike caught it on-screen). Root cause: the broad
+  `reached the limit` alternative in the weekly-limit regex matched the cooldown modal
+  because the weekly-limit check ran FIRST. **Fix (10:48, `request_connections.py`):**
+  per-member resend-cooldown check moved AHEAD of the weekly-limit check, cooldown
+  members parked via `resend_cooldown_at` (~21d) so later runs don't burn views on
+  guaranteed refusals. Post-fix chunked reruns 10:50→11:50 sent 1+3+5+4+4+4 = **21**;
+  the last chunk was reaper-killed after invite 4/5 (`browser has been closed` — infra
+  kill, NOT a restriction; run recorded `failed`, sent invites safely marked in
+  members.json, no duplicates). **Afternoon session sent the remaining 9 → 30/30 for
+  the day** (chunks 5+3+1+1, 0 errors on the closers). One member,
+  `david-loor-data-analyst-product-manager`, failed the identical wrong-page landing
+  twice in a row (search resolves to `duma-loor-cto`) — moved to the END of
+  members.json per the standing repeat-failer mitigation (order only), left for a
+  later day. Also moved the first profile to retired on a 2nd `no_connect_button`
+  strike. Day's real view total ≈ 106 of ~120 (60 scrape + ~43 invite + 3 endorse).
+  Note the run log undercounts today's views (killed chunks never write
+  `lane_runs.json`, which is written at END) — dashboard meter read 49 mid-day while
+  the real total was ~95; heartbeat-based counting is the structural fix, not done.
+- **Lane 4 (check): 13 new acceptances** — `christopher-bartsch-12a09a201`,
+  `davidamadormoreno`, `abalberchak`, `cristian-david-dominguez-93653a41`,
+  `amelie-caroline-mbende-a61007207`, `sounatancarlos`, `anna-carolina-costa-andrade`,
+  `juradocarlos`, `juan-carlos-reyes-cruz`, `dianacarolinaarias`, `shinji-furuya`,
+  `david-mora-roca-14bb45`, `davidturksma` → 120→133 connected.
+- **Lane 5 (endorse+DM, no number — mechanical 14/7-day gate): 3 members** cleared the
+  strict >14-day bar (`benjamin-walden-479979253`, `charliehunger`,
+  `christopher-p-453bb33`, all connected 2026-07-21, 15 days) — 29 skills endorsed + DM
+  sent to each, 0 errors. Gate read 20/120 profile views used before this lane ran.
+
+No restriction pages hit at any point. The morning "limit" was the misclassified
+per-member resend cooldown (fixed 10:48, see Lane 3 above); after the fix Lane 3 resumed
+in chunks and sent 21 of the asked 30; the afternoon session sent the remaining 9,
+closing the batch at 30/30.
+
+## 2026-08-07 — full 4-lane run (Lane 2=50, Lane 3=30, Lane 4, Lane 5)
+
+Ran all four active lanes via `graph/run.py`, chunked foreground calls per the
+reaper-mitigation pattern (orphan-checked `li-bot-profile` Chrome before every relaunch;
+every killed chunk confirmed safely persisted to disk before resuming, zero data lost).
+The reaper was unusually aggressive mid-Lane-2 — three back-to-back zero-progress instant
+kills on `run_in_background: true` launches — same failure class as 08-05; switching back
+to plain foreground calls (auto-backgrounds after the tool's 10-min cap) survived
+noticeably longer per chunk, same fix as last time.
+
+- **Lane 2 (scrape, asked 50): landed 51 profile views across 13 chunks** (39 profiles
+  advanced the queue + `sr-dev-dani` 404ing 11 times in a row on the same stale queue
+  entry — every single chunk hit it first since it never gets marked processed). 693→725
+  captured (+32). **Flag for Mike:** `sr-dev-dani` is now a confirmed permanent 404, not a
+  transient stale-URL blip (11 consecutive hits) — worth a manual removal from
+  `members-urls.json` next time it's touched, same class as the `no_connect_button`
+  2nd-strike retirement Lane 3 already has, but Lane 2's queue has no such mechanism yet.
+- **Lane 3 (invite, asked 30): 30/30 sent, 0 restriction.** Two repeat-failer pairs hit
+  the identical Send-button timeout twice in a row and were moved to the end of
+  `members.json` (order only, same standing mitigation as 07-31/08-05): `davidcrighton3`
+  (sent clean once moved), then `amandacrawfordcodes` + `amanda-warrell-977b8760`
+  (also sent clean once moved). 488→518 contacted, 207 still to contact.
+- **Lane 4 (check): 9 new acceptances** — `david-dobai-033902121`, `david-moge`,
+  `jinxin-hu`, `igor-david-880209171`, `carl-hubacher-a00462123`,
+  `david-aquino-osorio-943977115`, `david-pearson-2b271168` (no date shown, recorded as
+  observed today), `david-white-wolf-59b791101`, `david-barker-product` → 145→154
+  connected. Ran clean in one shot, no reaper kill.
+- **Lane 5 (endorse+DM, no number — mechanical 14/7-day gate): 6 members** cleared the
+  strict >14-day bar (all connected 2026-07-23, 15 days) — `andrew-bermingham`,
+  `anthony-ngangmi-6421b4193`, `ancrz`, `anthony-simon-al`, `anthony-withrow-bbb203b7`,
+  `amanda-balkcom-a44255203` — 58 skills endorsed + 6 DMs sent, 0 errors. Ran clean in one
+  shot. 45→51 DM'd, 102 eligible remain (0 now >14d).
+
+No restriction pages hit at any point across all four lanes.
+
+## 2026-08-10 — full 4-lane run (Lane 2=50, Lane 3=30, Lane 4, Lane 5) + DM template update
+
+Ran all four active lanes via `graph/run.py`, chunked foreground calls per the standing
+reaper-mitigation pattern (orphan-checked `li-bot-profile` Chrome before every relaunch;
+every killed chunk confirmed safely persisted to disk before resuming, zero data lost).
+The reaper was unusually aggressive again during Lane 2 — a run of consecutive
+zero-progress instant kills on freshly-launched `run_in_background: true` calls, same
+failure class as 08-05/08-07.
+
+- **Lane 2 (scrape, asked 50): 50/50 profile views landed across ~15 chunks**
+  (`--max` 10/10/5×.../2, several chunks reaper-killed with partial or zero progress, all
+  confirmed safe on disk before resuming). `sr-dev-dani` (flagged 08-07 as a confirmed
+  permanent 404, still no queue-removal mechanism) kept surfacing first-in-queue and
+  absorbing the reaper's early-kill window; moved to the end of `members-urls.json`
+  (order only) same as the standing repeat-failer mitigation. 725→750 captured (+25).
+- **Lane 3 (invite, asked 30): 30/30 sent across 6 clean chunks of 5, 0 errors, no
+  restriction, no repeat-failers.** 518→548 contacted, 202 still to contact.
+- **Lane 4 (check): 16 new acceptances** — `lcdotorresquinones`, `david-mogrovejo`,
+  `daveabbondanzio`, `jeancjunior`, `andreea-david-9252843a`, `itszakiyadavidson`,
+  `daviddetoma`, `david-prince-kwakye-8ab557359`, `bettyedewey`, `rémi-david-b88858a1`,
+  `anthonydossantos`, `david-iyileh-a16655255`, `davide-medina-324637bb`,
+  `davide-bruner-5390a1a8`, `juanisazaco`, `david-cardoso-it-guy` → 154→170 connected.
+  Ran clean in one shot, no reaper kill.
+- **Lane 5 (endorse+DM, mechanical 14/7-day gate): rule selected 13 members >14 days
+  connected, above the 10/run self-derived ceiling — gate refused and kicked the volume
+  call to Mike** (per the documented rule: >10 goes back to Mike with an explicit
+  `--max`). Also caught a real discrepancy in the gate's own volume count: it reads
+  `lane_runs.json`, which only gets a completed entry at end-of-chunk, so today's several
+  reaper-killed Lane 2 chunks (real, disk-confirmed progress) were invisible to it — gate
+  showed 57/120 views used when the real total (from `members-urls.json`'s processed
+  delta) was 80/120. Flagged this to Mike alongside the --max choice; **Mike chose
+  `--max 10`.** Ran 10: 9 endorsed (87 skills) + DM'd, 1 (`andrewphillips38`) had no
+  endorsable skills, abandoned per the zero-skills rule. 51→60 DM'd. **3 members remain in
+  the >14-day bucket** (rule says all of them should clear) — Mike declined a follow-up
+  batch today given cumulative volume (~90/120 real). Leave for the next Lane 5 run.
+- **DM template change (Mike, 2026-08-10, going forward for all DMs):** added a sentence
+  right before the "Sincerely yours," close — *"Btw, you actually have some impressive
+  experience on your profile. I'm happy to be a connection. 😀"* — updated in
+  `endorse_and_message.py` (canonical), `endorse-and-message.js` (frozen rollback), and
+  `endorse-and-message.md` (skill doc) so all three stay in sync. The Lane 5 run above had
+  already loaded the old template into its running process before the edit landed, so its
+  9 DMs went out with the old wording; every DM from here on uses the new one.
+
+No restriction pages hit at any point across all four lanes. Structural gap still open
+(noted 08-05, recurred today): the run log undercounts same-day volume when chunks get
+reaper-killed before writing their `lane_runs.json` entry; heartbeat-based counting would
+fix it but hasn't been built.

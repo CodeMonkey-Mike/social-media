@@ -5,7 +5,7 @@
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
-const { pickNextLongform, stripMusicCredits } = require('./lib/longform-queue');
+const { pickNextLongform, stripMusicCredits, recordLongformPost } = require('./lib/longform-queue');
 
 // BitChute silently rejects .webp thumbnails (PNG/JPG only). It accepts the upload but the
 // Proceed click becomes a no-op → the script falls into a 15-min retry loop that never lands.
@@ -17,8 +17,8 @@ const MIN_FILE_SIZE  = 1_000_000;
 
 const CHAR_DELAY_MIN  = 40;
 const CHAR_DELAY_MAX  = 120;
-const ACTION_MIN      = 3000;
-const ACTION_MAX      = 6000;
+const ACTION_MIN      = +(process.env.LFBC_ACTION_MIN || 3000);
+const ACTION_MAX      = +(process.env.LFBC_ACTION_MAX || 6000);
 
 function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
 
@@ -34,6 +34,28 @@ async function typeHuman(page, locator, text) {
   for (const char of text) {
     await page.keyboard.type(char);
     await page.waitForTimeout(rnd(CHAR_DELAY_MIN, CHAR_DELAY_MAX));
+  }
+}
+
+// BitChute REQUIRES a thumbnail. With none set, Proceed still renders "enabled"
+// but every click is a permanent silent no-op, so the retry loop below spins for
+// its full 15 min and the upload never lands. Verified 2026-08-07: all 6 posted
+// longforms had a thumbnail, both failures had none; clicking Grab Thumbnail
+// mid-run made the very next Proceed click submit immediately.
+async function grabThumbnail(page) {
+  try {
+    const videoEl = page.locator('video').first();
+    await videoEl.waitFor({ state: 'attached', timeout: 30000 });
+    await videoEl.evaluate(el => { el.currentTime = 1; });
+    await page.waitForTimeout(1000);
+    await page.getByRole('button', { name: 'Grab Thumbnail' }).click({ timeout: 10000 });
+    console.log('  Grab Thumbnail clicked ✓');
+    await page.waitForTimeout(1500);
+    return true;
+  } catch (e) {
+    console.log(`  WARNING: Grab Thumbnail failed (${e.message.split('\n')[0]})`);
+    console.log('  Proceed will no-op without a thumbnail — expect the 15-min retry loop to time out.');
+    return false;
   }
 }
 
@@ -179,7 +201,9 @@ async function closeDrawer(page) {
     console.log('  Search terms typed ✓');
     await actionPause(uploadPage, 'after tags');
 
-    // Custom thumbnail (second file input on the page)
+    // Thumbnail — MANDATORY on BitChute (see grabThumbnail() above). Either attach
+    // the supplied PNG/JPG, or grab a frame off the uploaded video. Never skip:
+    // skipping is what sends the Proceed click into a permanent no-op.
     if (hasThumb) {
       console.log(`Attaching custom thumbnail: ${thumbPath}`);
       try {
@@ -189,15 +213,13 @@ async function closeDrawer(page) {
         console.log('  Thumbnail attached ✓');
       } catch (e) {
         console.log(`  Warning: thumbnail attach failed (${e.message.split('\n')[0]}) — falling back to Grab Thumbnail`);
-        try {
-          const videoEl = uploadPage.locator('video').first();
-          await videoEl.evaluate(el => { el.currentTime = 1; });
-          await uploadPage.waitForTimeout(500);
-          await uploadPage.getByRole('button', { name: 'Grab Thumbnail' }).click({ timeout: 5000 });
-        } catch {}
+        await grabThumbnail(uploadPage);
       }
-      await actionPause(uploadPage, 'after thumbnail');
+    } else {
+      console.log('No thumbnail supplied — grabbing a frame off the video (BitChute requires one)...');
+      await grabThumbnail(uploadPage);
     }
+    await actionPause(uploadPage, 'after thumbnail');
 
     // Wait for upload + Proceed enabled (longform 389MB may take a while)
     console.log('Waiting for upload to finish (Proceed enabled)...');
@@ -343,7 +365,46 @@ async function closeDrawer(page) {
     console.log('Waiting 30s for any final page transition...');
     await uploadPage.waitForTimeout(30000);
 
-    console.log(`\nPosted (processing): https://www.bitchute.com/content`);
+    // Capture the REAL video URL off /content (the newest card whose title matches)
+    // and write it back to longs.json. Without this the entry stays `pending` after a
+    // successful upload, and the next run re-uploads the same video (duplicate).
+    // The `upload_code` in the upload-page URL IS the final video ID — verified 2/2
+    // on 2026-08-07 (KFu60KRd9vyS and lnjEM6HCEhzU both matched their live URL).
+    // Deterministic and available before Proceed, so it beats scraping /content,
+    // which can miss a video that is still processing.
+    let videoUrl = null;
+    const codeMatch = urlBefore.match(/[?&]upload_code=([A-Za-z0-9]+)/);
+    if (codeMatch) {
+      videoUrl = `https://www.bitchute.com/video/${codeMatch[1]}/`;
+    } else {
+      console.log('  URL capture: no upload_code in the upload URL — falling back to /content scrape.');
+      try {
+        await uploadPage.goto('https://www.bitchute.com/content', { waitUntil: 'domcontentloaded' });
+        await uploadPage.waitForTimeout(8000);
+        videoUrl = await uploadPage.evaluate((wantTitle) => {
+          const norm = s => (s || '').replace(/\s+/g, ' ').trim().toLowerCase();
+          const want = norm(wantTitle).slice(0, 40);
+          for (const a of document.querySelectorAll('a[href*="/video/"]')) {
+            const card = a.closest('div, li, article') || a;
+            if (norm(card.innerText).includes(want)) {
+              return new URL(a.getAttribute('href'), location.origin).href;
+            }
+          }
+          return null;
+        }, title);
+      } catch (e) {
+        console.log(`  URL capture failed: ${e.message.split('\n')[0]}`);
+      }
+    }
+
+    if (videoUrl) {
+      console.log(`\nPosted: ${videoUrl}`);
+      recordLongformPost('bitchute', metadata.title, videoUrl);
+    } else {
+      console.log('\nPosted (processing) — video URL not captured.');
+      console.log('WARNING: longs.json still says pending. Run scripts/_list-bitchute-content.js and record the URL,');
+      console.log('otherwise the next run will re-upload this same video.');
+    }
     console.log('Done ✓');
     console.log('\nLeaving browser open 5 min for inspection. Ctrl+C to close sooner.');
     await uploadPage.waitForTimeout(5 * 60 * 1000);

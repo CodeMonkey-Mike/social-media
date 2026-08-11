@@ -1,0 +1,55 @@
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */

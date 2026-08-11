@@ -11,8 +11,21 @@ width/height, duration, the platform blocks). `batch` is the registered batches.
 <batch> arg) and is the join key used to compute when a batch is fully posted. `title` is pulled
 from the batch progress JSON when available. `hook`, `caption`, and `tags` are left blank for you to fill in before posting.
 
+--meta (Wave 5, 2026-08-07): the judgment fields can instead be AUTHORED BEFORE the run in
+shorts/<batch>/publish-meta.json (auto-discovered; --meta to point elsewhere) — the same
+seam contract as longform-meta.json for the intake graph:
+
+    {"batch": "<batch>", "clips": [{"slug": "...", "title": "optional override",
+      "hook": "...", "caption": "...", "tags": [...], "related_longform_url": "optional"}]}
+
+Meta fields are validated up front (no em/en dashes anywhere; captions stored HASHTAG-FREE;
+hook/caption/tags non-empty per covered clip) and fail the run BEFORE anything is written.
+Entries already present in shorts.json are NEVER touched by meta (idempotent re-runs must not
+clobber Mike's hand-retitles — the 2026-08-07 eliza retitle precedent).
+
 Usage:
-    python scripts/publish-shorts.py <batch> [--date YYYY-MM-DD] [--id-prefix mc] [--dry-run]
+    python scripts/publish-shorts.py <batch> [--date YYYY-MM-DD] [--id-prefix mc]
+        [--meta publish-meta.json] [--dry-run]
 
 Example:
     python scripts/publish-shorts.py meme-coins
@@ -83,8 +96,10 @@ def platform_block():
     ])
 
 
-def build_entry(*, id_, batch, slug, source_livestream, video_path, duration, width, height, title):
-    return OrderedDict([
+def build_entry(*, id_, batch, slug, source_livestream, video_path, duration, width, height,
+                title, meta=None):
+    meta = meta or {}
+    entry = OrderedDict([
         ("id", id_),
         ("batch", batch),
         ("slug", slug),
@@ -95,13 +110,45 @@ def build_entry(*, id_, batch, slug, source_livestream, video_path, duration, wi
         ("duration_seconds", duration),
         ("width", width if width is not None else 1080),
         ("height", height if height is not None else 1920),
-        ("title", title),
-        ("hook", ""),
-        ("caption", ""),
-        ("tags", []),
+        ("title", meta.get("title") or title),
+        ("hook", meta.get("hook", "")),
+        ("caption", meta.get("caption", "")),
+        ("tags", list(meta.get("tags", []))),
         ("platforms", OrderedDict([(p, platform_block()) for p in PLATFORMS])),
         ("created_at", dt.datetime.now().replace(microsecond=0).isoformat()),
     ])
+    if meta.get("related_longform_url"):
+        entry["related_longform_url"] = meta["related_longform_url"]
+    return entry
+
+
+def load_meta(meta_path: Path):
+    """slug -> judgment fields from publish-meta.json, validated HARD up front.
+    Keyed on both raw and number-stripped slugs (same trap as load_titles)."""
+    if not meta_path.is_file():
+        return {}
+    try:
+        data = json.loads(meta_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise SystemExit(f"ERROR: publish-meta.json is not valid JSON: {e}")
+    out = {}
+    for c in data.get("clips", []):
+        slug = c.get("slug")
+        if not slug:
+            raise SystemExit("ERROR: publish-meta.json clip without a slug")
+        blob = json.dumps(c, ensure_ascii=False)
+        if "—" in blob or "–" in blob:
+            raise SystemExit(f"ERROR: em/en dash in publish-meta.json entry {slug!r} "
+                             "(persona hard rule) — fix the meta before publishing")
+        if "#" in c.get("caption", ""):
+            raise SystemExit(f"ERROR: hashtag in publish-meta.json caption for {slug!r} — "
+                             "captions are stored HASHTAG-FREE; tags[] is the source of truth")
+        if not c.get("hook") or not c.get("caption") or not c.get("tags"):
+            raise SystemExit(f"ERROR: publish-meta.json entry {slug!r} missing "
+                             "hook/caption/tags (meta entries must be complete)")
+        out[slug] = c
+        out.setdefault(NUM_PREFIX.sub("", slug), c)
+    return out
 
 
 def load_titles(progress_json: Path):
@@ -142,6 +189,9 @@ def main():
     ap.add_argument("--shorts-json", default=str(REPO_ROOT / "schedule-tweets" / "data" / "shorts.json"))
     ap.add_argument("--progress-json", default=None,
                     help="default: video-creation/shorts/<batch>-progress.json")
+    ap.add_argument("--meta", default=None,
+                    help="publish-meta.json with hook/caption/tags per clip "
+                         "(default: video-creation/shorts/<batch>/publish-meta.json if present)")
     ap.add_argument("--dry-run", action="store_true", help="print what would happen; write nothing")
     args = ap.parse_args()
 
@@ -175,6 +225,9 @@ def main():
         raise SystemExit(f"ERROR: no .mp4 files in {src_dir}")
 
     titles = load_titles(progress_json)
+    meta_path = Path(args.meta) if args.meta else (
+        REPO_ROOT / "video-creation" / "shorts" / batch / "publish-meta.json")
+    meta = load_meta(meta_path)
 
     data = json.loads(shorts_json.read_text(encoding="utf-8"), object_pairs_hook=OrderedDict)
     existing_ids = {s["id"] for s in data["shorts"]}
@@ -184,6 +237,7 @@ def main():
     print(f"  dest   : {dest_dir}")
     print(f"  queue  : {shorts_json}")
     print(f"  titles : {'progress JSON' if titles else 'none found — title will be blank'}")
+    print(f"  meta   : {meta_path.name if meta else 'none — hook/caption/tags left blank'}")
     print(f"  found  : {len(mp4s)} mp4(s)\n")
 
     if not args.dry_run:
@@ -217,7 +271,7 @@ def main():
         entry = build_entry(
             id_=id_, batch=batch, slug=slug, source_livestream=source_livestream,
             video_path=video_path, duration=dur, width=w, height=h,
-            title=titles.get(slug, ""),
+            title=titles.get(slug, ""), meta=meta.get(slug),
         )
         if args.dry_run:
             print(f"  entry [dry-run]   : {id_}  (title={entry['title']!r}, dur={dur})\n")
@@ -234,10 +288,14 @@ def main():
     print(f"Done. {verb} {added}, skipped {skipped} existing, copied {copied} file(s). "
           f"shorts.json has {len(data['shorts'])} entries.")
     if added and not args.dry_run:
-        print("\nNEXT: fill in hook / caption / tags for the new stub entries in shorts.json")
-        print("  -> Write them in Mike's PERSONA VOICE: read persona/persona.json first")
-        print("     (no em dashes, cashtags, hashtags on their own line, etc.).")
-        print("  -> Then run `python scripts/persona-lint.py` to catch any AI-tells before posting.")
+        if meta:
+            print("\nNEXT: entries were filled from publish-meta.json; run "
+                  "`python scripts/persona-lint.py` before posting.")
+        else:
+            print("\nNEXT: fill in hook / caption / tags for the new stub entries in shorts.json")
+            print("  -> Write them in Mike's PERSONA VOICE: read persona/persona.json first")
+            print("     (no em dashes, cashtags, hashtags on their own line, etc.).")
+            print("  -> Then run `python scripts/persona-lint.py` to catch any AI-tells before posting.")
 
 
 if __name__ == "__main__":

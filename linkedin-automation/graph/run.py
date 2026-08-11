@@ -122,6 +122,7 @@ def report_lane3(final) -> int:
     print(f"  requested {s['requested']}{mode} | visited {s['visited']} | sent {s['sent']} | "
           f"already pending {s['already_pending']} | already connected {s['already_connected']}")
     print(f"  no-connect strike 1: {s['nocb_strike1']} | retired (2nd strike): {s['nocb_retired']} | "
+          f"resend cooldown (skipped): {s.get('resend_cooldown', 0)} | "
           f"errors (retry next run): {s['errors']}"
           + (f" | dry-found {s['dry_found']}" if s["dry_run"] else ""))
     delta = ", ".join(f"{k} {v:+d}" for k, v in sorted(s["contacted_delta"].items())) or "none"

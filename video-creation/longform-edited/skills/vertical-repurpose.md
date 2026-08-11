@@ -76,7 +76,21 @@ most visible way a vertical cut fails.
 Build `remotion/src/<Project>Vertical.tsx` at **1080×1920, same fps + duration as the 16:9** (same
 `OffthreadVideo` spine, same `CUTS`/`sh()`). Reframe per beat: faces center-crop tall, containers/charts
 restack to fill width, b-roll fills the portrait frame. Same three transition buckets and per-asset glitch
-families as the 16:9 (`TRANSITIONS.md`). Smoke-test one frame per beat before the full render.
+families as the 16:9 (`TRANSITIONS.md`). Keep the COVERS/CARDS arrays byte-identical to the 16:9 and put
+the 16:9-ref → vertical-asset mapping in explicit lookup tables, so the two comps diff clean and a
+missing vertical asset throws at build time instead of rendering a hole.
+
+Give the vertical render its OWN LEAN `--public-dir` (spine + the vertical container/still/b-roll folders
+only). Remotion copies the whole public dir into every bundle, so pointing it at the 16:9 `assets/` drags
+along the landscape PNGs and the full-res portrait masters the comp never reads — 4× per split render.
+
+**Smoke-test one frame per beat before the full render — bundle ONCE:**
+```
+npx remotion bundle src/index.ts --public-dir <lean-dir> --out-dir build-<slug>
+npx remotion still build-<slug> <Comp> out.png --frame=N     # repeat per beat, reuses the bundle
+```
+`remotion still src/index.ts` re-bundles on every invocation; against a prebuilt bundle a still is seconds.
+Cover every content type AND every face window here, so §5's mandatory checks confirm rather than discover.
 
 ## 3. Render — MIND THE STITCH CEILING (this is the load-bearing gotcha)
 

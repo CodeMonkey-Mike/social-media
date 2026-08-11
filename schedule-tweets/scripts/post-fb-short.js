@@ -36,14 +36,14 @@ const PLATFORM       = 'facebook';
 // Timing constants — mirrored from scripts/post-x-short.js
 const CHAR_DELAY_MIN  = 60;     // ms per caption keystroke
 const CHAR_DELAY_MAX  = 150;
-const ACTION_MIN      = 4000;   // ms between major UI actions
-const ACTION_MAX      = 7000;
-const PRE_COMPOSE_MIN = 60000;  // ms before opening composer (60–180s)
-const PRE_COMPOSE_MAX = 180000;
-const PRE_POST_MIN    = 60000;  // ms before entering wizard / clicking final Post
-const PRE_POST_MAX    = 180000;
-const VIDEOS_TAB_WAIT_MIN = 5000;   // ms between page load and link scrape
-const VIDEOS_TAB_WAIT_MAX = 9000;
+const ACTION_MIN      = +(process.env.FB_ACTION_MIN || 4000);   // ms between major UI actions
+const ACTION_MAX      = +(process.env.FB_ACTION_MAX || 7000);
+const PRE_COMPOSE_MIN = +(process.env.FB_PRE_COMPOSE_MIN || 60000);  // ms before opening composer (60–180s)
+const PRE_COMPOSE_MAX = +(process.env.FB_PRE_COMPOSE_MAX || 180000);
+const PRE_POST_MIN    = +(process.env.FB_PRE_POST_MIN || 60000);  // ms before entering wizard / clicking final Post
+const PRE_POST_MAX    = +(process.env.FB_PRE_POST_MAX || 180000);
+const VIDEOS_TAB_WAIT_MIN = +(process.env.FB_VIDEOS_TAB_WAIT_MIN || 5000);   // ms between page load and link scrape
+const VIDEOS_TAB_WAIT_MAX = +(process.env.FB_VIDEOS_TAB_WAIT_MAX || 9000);
 
 if (!fs.existsSync(DEBUG_DIR)) fs.mkdirSync(DEBUG_DIR, { recursive: true });
 

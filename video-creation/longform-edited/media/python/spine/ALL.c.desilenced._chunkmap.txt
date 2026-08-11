@@ -1,0 +1,37 @@
+[000]    0.00-  50.16 (50.2s) gap 0.0  You can open Claude code right now, type, build me a rag app and have working Python in about an hour. So why would you want to spend three months learning Python? Because here's the part that nobody tells you AI tools amplify the skill you already have. If you're already really good, they make you absolutely wicked. Like a Terminator, you just become unstoppable. And if you're not already really good, they just produce bad code faster than you could have before. And the real cost isn't the bad code. It's that you skip the part where you get good. So you never do. So I'm going to be making these videos, starting right here and putting them into a playlist. And it's going to be like an overall Python course, as you've seen in some of my other videos, I'm sort of like coming from the JavaScript world and I'm coming over to Python. So this is going to be a course for
+[001]   50.65-  51.46 ( 0.8s) gap 0.5  Beginners.
+[002]   51.81-  53.11 ( 1.3s) gap 0.3  and as well as...
+[003]   53.53-  75.94 (22.4s) gap 0.4  skilled season programmers who just are switching over from another program in language. And it's going to be a little bit different. There's going to be weekly or bi-weekly episodes depending on how often I publish them. And it's going to start out as like very, very beginner level and then move on into the more complex stuff over time. But I want to make this different because if you open any standard
+[004]   76.25-  97.06 (20.8s) gap 0.3  learn Python course, you'll spend weeks learning things that you'll never use for that job. So I went through what AI engineering actually asked for and cut everything else out. This is going to be specific to what you need to know in the AI engineering world. Not going to be about gaming. It's not going to be about web development and so on. So let me show you the shape of it. Starting with what Python even is.
+[005]   97.53-  98.94 ( 1.4s) gap 0.5  And if you know that already.
+[006]   99.34- 102.63 ( 3.3s) gap 0.4  skip ahead to what you actually need and so on. Say...
+[007]  103.03- 106.19 ( 3.2s) gap 0.4  Hey computer, calculate 5 plus 5. Out loud.
+[008]  106.63- 119.05 (12.4s) gap 0.4  Nothing happens. Computers don't speak human. Down at the bottom, your machine actually understands this. Zeroes and ones. Ones and zeros. Above that, languages get steadily easier for people and harder for machines.
+[009]  119.56- 120.34 ( 0.8s) gap 0.5  assembly.
+[010]  120.85- 125.07 ( 4.2s) gap 0.5  C and at the top closest to how you already think is Python print.
+[011]  125.43- 126.50 ( 1.1s) gap 0.4  Five plus five.
+[012]  126.86- 128.41 ( 1.5s) gap 0.4  That's the whole idea.
+[013]  128.83- 135.57 ( 6.7s) gap 0.4  You write something close to English and a translator handles the rest. So that's it. That's it. From a very high level perspective.
+[014]  135.88- 142.15 ( 6.3s) gap 0.3  That's what Python is. There's a whole lot of stuff going on underneath and you don't really need any of it today. What you do need.
+[015]  142.57- 147.59 ( 5.0s) gap 0.4  The entire AI industry runs on this one language, whether it be chat GPT, Claude.
+[016]  147.90- 148.70 ( 0.8s) gap 0.3  image models.
+[017]  149.02- 155.89 ( 6.9s) gap 0.3  self-driving systems, Python is at the front door of all of it. So what do you actually need to get started? First you can start with what you don't need.
+[018]  156.37- 158.50 ( 2.1s) gap 0.5  most people hear AI engineering.
+[019]  158.99- 165.33 ( 6.3s) gap 0.5  and think TensorFlow or PyTorch. Those are for training models from scratch, which as an AI engineer.
+[020]  165.85- 174.74 ( 8.9s) gap 0.5  You almost never do. You'll build systems on top of models other people already trained. There are four things you need. One, the fundamentals. Variables, lists.
+[021]  175.16- 176.96 ( 1.8s) gap 0.4  Dictionaries, Conditionals,
+[022]  177.33- 182.62 ( 5.3s) gap 0.4  loops, functions, and just enough object-oriented programming to read somebody else's code. Two.
+[023]  182.97- 195.93 (13.0s) gap 0.3  APIs because most of the time calling APIs is most of what this job actually is. HTTP requests, JSON handling linear keys without leaking them and dealing with it properly when the call fails at three in the morning. Three.
+[024]  196.36- 202.43 ( 6.1s) gap 0.4  files, loading documents, saving outputs, reading logs. Four, and this is the one everybody skips.
+[025]  202.85- 204.84 ( 2.0s) gap 0.4  environments, virtual environments.
+[026]  205.19- 209.53 ( 4.3s) gap 0.3  PIP, UV, two projects need two different versions of the same library.
+[027]  209.92- 213.34 ( 3.4s) gap 0.4  and without isolation, installing one quietly breaks the other.
+[028]  213.68- 214.18 ( 0.5s) gap 0.3  That's it.
+[029]  214.54- 234.51 (20.0s) gap 0.4  That's the whole list. And then you build. And what you build matters more than more people think. Standard portfolio advice is to go train a simple model. That's not AI engineering. Instead, build one project four times. Start by calling an LLM, a script that takes some text, sends it to a model, gets a response back, does something useful with it. Done properly.
+[030]  234.94- 241.74 ( 6.8s) gap 0.4  that one project teaches you JSON requests, error handling, and environment management all at once, then give it memory.
+[031]  242.07- 253.57 (11.5s) gap 0.3  so it remembers the conversation instead of forgetting you every single message. Then point it at your own documents. Now you're doing retrieval, chunking, similarity. Then give it tools and let it decide which ones to use.
+[032]  253.92- 256.76 ( 2.8s) gap 0.3  That's an agent. You don't end up with four toy projects.
+[033]  257.16- 269.37 (12.2s) gap 0.4  you end up with one system that got progressively more serious, which is exactly what the job looks like. One rule, and it decides whether any of this works. Most people learn Python by watching. You can sit through 40 hours of somebody else typing.
+[034]  269.81- 276.94 ( 7.1s) gap 0.4  retain absolutely nothing. Watching is why people don't learn. So while you're building the foundations, AI is allowed to explain things to you.
+[035]  277.28- 281.41 ( 4.1s) gap 0.3  and quiz you. It's not allowed to write your code. I mean, yeah, that's slower, but.
+[036]  281.83- 305.20 (23.4s) gap 0.4  Again, that's really the point. The struggle is the part where learning happens. You'll know you're through this phase when three things are true. You can read unfamiliar code and say what it does. You can debug a failing test on your own. You can look at a system and guess where it's gonna break. Hit those three and you've earned the right to let the AI drive. So if you wanna learn Python for AI engineering, subscribe and follow this playlist. I'll see you in the next one.

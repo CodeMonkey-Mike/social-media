@@ -22,6 +22,7 @@ A GIF queue entry is just a normal reply object with a gif_search field:
 """
 
 import json
+import os
 import random
 import sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -35,15 +36,16 @@ except ImportError:
     print("ERROR: playwright not installed.")
     sys.exit(1)
 
-ACTION_MIN, ACTION_MAX = 4, 7          # seconds between UI actions
+ACTION_MIN = float(os.environ.get("GIF_ACTION_MIN", 4))          # seconds between UI actions
+ACTION_MAX = float(os.environ.get("GIF_ACTION_MAX", 7))
 
 HERE      = Path(__file__).parent
 DEBUG_DIR = HERE / "tmp-gif-debug"     # dry-run composer screenshots
 
 
 def human_pause(label=""):
-    delay = random.randint(ACTION_MIN, ACTION_MAX)
-    print(f"  ~ {delay}s pause {f'({label})' if label else ''}")
+    delay = random.uniform(ACTION_MIN, ACTION_MAX)
+    print(f"  ~ {delay:.2g}s pause {f'({label})' if label else ''}")
     time.sleep(delay)
 
 

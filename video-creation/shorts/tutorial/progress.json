@@ -3,9 +3,9 @@
   "track": "livestream-repurpose",
   "source_livestream": "tutorial",
   "livestream_date": "2026-08-09",
-  "last_updated": "2026-08-09T15:46:20",
+  "last_updated": "2026-08-10T11:40:32",
   "dashboard": "video-creation/shorts/tutorial/dashboard.html",
-  "dashboard_status": "5C + captions source done; spines final, render-assets staged. Next: remotion-builder (7) per clip (ChatGPT b-roll stays in the builder), then publish (8).",
+  "dashboard_status": "Phase 8 COMPLETE 2026-08-10: all 8 clips built, gate PASS, orchestrator-verified and STAGED to the shorts queue (163 total entries, 8 pending review on :8766). Lane 2 is finished for this batch. Posting remains Mike-gated. Two content items need his call before posting, both documented in the clip build_notes: clip 5 base-picture $IF exposure, and clip 8 whose 4b retitle makes a portfolio claim its own audio does not.",
   "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
   "clips": [
     {
@@ -14,10 +14,18 @@
       "title": "94X on $TUT, and It's Pumping Again",
       "variant": "full",
       "duration_seconds": 78.83,
-      "phase": "6-transcribed",
-      "gate": "ready-for-build",
+      "phase": "7-built",
+      "gate": "PASS",
       "output_mp4": "tut-94x-euphoria/tut-94x-euphoria-final.mp4",
-      "whisper_words": "tut-94x-euphoria/whisper-words.json"
+      "whisper_words": "tut-94x-euphoria/whisper-words-verified.json",
+      "composition": "TutTut94xEuphoria",
+      "constants": "remotion/src/constants-tut-94x-euphoria.ts",
+      "captions": "remotion/src/captionsTut94x.ts",
+      "broll_plan": "tut-94x-euphoria/BROLL-PLAN.md",
+      "render_mp4": "video-creation/remotion/out/tutorial/1-tut-94x-euphoria.mp4",
+      "finalized_short_gate": "PASS",
+      "built_at": "2026-08-10T07:57:09",
+      "build_notes": "RESUMED + BUILT 2026-08-10. 78.93s / 2364f, 51.3 MB, -17.8 LUFS (identical to the bare spine: the 12 SFX cues add no loudness and no clipping). 6 transparent-alpha overlays + 3 code badges, 9 graphic beats, 29.0% graphic-on-screen time, painted-pixel occlusion only 1.1-2.4% of frame. ZERO full-screen and ZERO content-zone b-roll per Mike's Phase 7 directive: checklist item 4 (25-35% coverage + a full-screen at the hook) DECLARED NOT MET and reported as a deviation, never softened. It is the right call on this clip anyway, because the content zone IS the receipt (the live CoinMarketCap $TUT page he points at, measured unchanged vs the spine at all 37 sampled frames). ARNOLD GUARD TRIPLE-VERIFIED: the bundle-time assertions ran, an independent re-parse found 0 of 9 graphics and 0 of 12 SFX overlapping 66.00-71.42, and render frames at 66.5/68.0/70.0/71.2/71.6s show full-frame Arnold with CAPTIONS ONLY. THE REAL DEFECT FOUND: a dur window TRUNCATES an SFX rather than fading it. Impact_Hit_01-2 is flat at -8 dB from 0.2-1.6s, so dur:0.90 cut it off at FULL level 0.19s before 'Look,' and an offline A/B against an encode-matched control proved it MASKED the protected 'look, look' stutter. Fixed with trimmed+faded library variants at UNCHANGED gain, never a volume cut. Also moved the post-drop whoosh 71.42 -> 71.72: the drop's audio decays ~0.2s past its picture, so the cue was covering the drop in the audio domain while still passing the assertion. Fix the cue, never the guard. Captions rebuilt at --max-secs 2.95 (the predecessor had it OFF and one line held 3.72s); 2.95 is the smallest value above this clip's own protected 2.93s held vowel, so 'ohhh man.' still gets one caption."
     },
     {
       "n": 2,
@@ -25,10 +33,19 @@
       "title": "My Robinhood Chain Meme Rankings: $IF, Cooper, Tendies, Yolo",
       "variant": "full",
       "duration_seconds": 79.46,
-      "phase": "6-transcribed",
-      "gate": "ready-for-build",
+      "phase": "7-built",
+      "gate": "PASS",
       "output_mp4": "robinhood-meme-rankings/robinhood-meme-rankings-final.mp4",
-      "whisper_words": "robinhood-meme-rankings/whisper-words.json"
+      "whisper_words": "robinhood-meme-rankings/whisper-words-verified.json",
+      "composition": "TutRobinhoodMemeRankings",
+      "constants": "remotion/src/constants-tut-robinhood-meme-rankings.ts",
+      "captions": "remotion/src/captionsTutRhm.ts",
+      "broll_plan": "robinhood-meme-rankings/BROLL-PLAN.md",
+      "render_mp4": "video-creation/remotion/out/tutorial/2-robinhood-meme-rankings.mp4",
+      "render_duration_measured": 79.488,
+      "finalized_short_gate": "PASS",
+      "built_at": "2026-08-10T09:35:48",
+      "build_notes": "BUILT 2026-08-10. 79.43s / 2383f, 52.5 MB, -18.9 LUFS / -6.8 dBTP / LRA 4.0, no clipping. 4 true-alpha overlays + 10 code-drawn badges + frame-0 cover; graphic-on-screen 30.31s = 38.2% of runtime, max instantaneous painted-pixel occlusion 7.46% of frame, max 1 graphic at any instant, base video visible in 100% of frames. ZERO full-screen and ZERO content-zone b-roll per Mike's Phase 7 directive: checklist item 4 DECLARED NOT MET and reported as a deviation. REFERENCE ART USED DIRECTLY RATHER THAN GENERATED, which is why no breed/art can drift: what-if.jpg -> ov-if.png (alpha-from-luminance), cooper.jpg -> ov-cooper.png (edge-flood key, the real BLACK LAB with lime bandana + Robinhood mark), toshi.png -> ov-toshi.png (edge-connected flood so his blue head/ears survive), tendies.jpg -> ov-tendies.png CROPPED to frog+platter with the do-not-copy list enforced MECHANICALLY (wordmark, blond suit figure, candlestick chart and rocket fall outside the crop; the wordmark's neon brush stroke that physically overlaps the platter bbox is alpha-zeroed by a measured colour test, 7652 px). Yolo, Swappy, Robinhood, Fartcoin and Brian Armstrong have no reference on disk so they are typographic only, nothing invented. Exactly ONE image was generated: thumb-tutrhm.png (frame-0 cover background, five-step neon-green podium with five BLANK featureless coin discs, no text/logos/faces), persona-inspected before use. _patch_words.py: the dominant defect here was NOT omission but TIMING. 251 -> 242 tokens: 112 onsets/offsets retimed (worst by 0.675s: 'concept' shipped 52.00 vs measured 51.325), 1 omitted word restored ('my' in 'would be like MY number five'), 6 phantoms dropped, 4 phantom splits merged ('10.'+'These'->Tendies, 'swap'+'it'->Swappy, 'fart'+'fart'->fart, 'We'+'said'->besides), plus a zero-duration token, a 0.880s pause glued INSIDE the 'and' token at 70.40, and a clip head starting at 0.00 when the first word onsets at 0.425. Evidence base was FOUR independent decoders (clip pass, windowed medium.en, windowed small.en, and the MASTER livestream pass with full context), every timing 5-10ms RMS measured. ALL FOUR PROTECTED BEATS SURVIVE ON SCREEN and were measured at pause INTERIORS on the final render vs an encode-matched spine: the drawled 'of' inside the Cooper triple reads -37.3 dB on both (0.0 delta) and nothing is scheduled in 27.845-28.485, the after-third-'real dog' beat 0.5 dB, the anaphora beat 0.6 dB, both Yolo beats at true digital silence. NOTE the measurement trap it documented: whole-span averages first read +5 to +28 dB, traced to the preceding WORD's decay-tail shape differing between encode paths, not added SFX, hence interior-only measurement. The canonical stutter collapse HAD eaten the 'is my my favorite' doubling until PROTECTED_DOUBLES gained ('is','my','my','favorite'); all three Cooper limbs and the full 'what if this / everybody does / what if such and such' anaphora chain are intact. Final-mix whisper verify: 232/240 word runs identical (96.7%) with ZERO words present in the spine and absent from the render. HARD-OUT DEFECT CAUGHT IN CHUNK-QA: the NUMBER 5 / SWAPPY card was fading to zero across the last 5 frames at tOut 79.40; tOut moved to 80.20 (past the comp end) so it now renders at FULL opacity on the last frame. RISER DELETED from the 'just like fartcoin' payoff: it masked the payoff token at two placements (0/3 and 3/6 windows) and a gain cut 0.09->0.06 changed NOTHING, the fourth independent confirmation that volume is the wrong knob; deleted per the decoration rule, impact keeps full 0.26 gain. Spine luma-scanned CLEAN: 2383/2383 frames, zero with YAVG<12, verified explicitly at the tail AND at all FIVE internal scatter-gather joins because clips 1 and 6 had the picture-dies-before-audio defect. Separately noted, NOT a render defect: the BASE content zone is a dead black browser page 31.875-34.375s, which is exactly the window the Cooper overlay covers. TWO CAPTION JUDGMENT CALLS, both resolved by 4-decoder triangulation and reported: the hook reads 'I WOULD, without a doubt' (2 clip-level decoders read 'I was', overruled by the contextful master pass plus grammar, since 'I was without a doubt unequivocally I go for What If' is not English), and the 33.5-36.5s bridge resolved to 'besides, you know, besides what if' (the clip pass rendered words never spoken; syllable-counted on the RMS envelope, and the second 'besides' is the real restart after the 0.98s stall the tighten pass removed). TOOLING BUG WORTH KEEPING: a shell-escaping bug in its own invocation of generate-broll-reload.js mangled the output path, so tryDownload hit ENOENT 21 times and printed FAILED while the image HAD been generated server-side. It did NOT re-send. Recovery exposed a second trap: the naive 'last img in the DOM' grab returned a SIBLING'S image (a golden sunburst), caught only by looking at it; /backend-api/conversation/<id> 404s on that profile, and what worked was walking the rendered turns and taking the first estuary image AFTER its own prompt text. Its own drafts (draft-tutrhm-head/payoff.mp4) were DELETED because they lacked the leading underscore publish-shorts.py needs to skip them."
     },
     {
       "n": 3,
@@ -36,10 +53,18 @@
       "title": "Binance Wants Community Driven Coins. Kaspa Isn't Listed.",
       "variant": "full",
       "duration_seconds": 31.96,
-      "phase": "6-transcribed",
-      "gate": "ready-for-build",
+      "phase": "7-built",
+      "gate": "PASS",
       "output_mp4": "binance-kaspa-catch22/binance-kaspa-catch22-final.mp4",
-      "whisper_words": "binance-kaspa-catch22/whisper-words.json"
+      "whisper_words": "binance-kaspa-catch22/whisper-words-verified.json",
+      "composition": "TutBinanceKaspaCatch22",
+      "constants": "remotion/src/constants-tut-binance-kaspa-catch22.ts",
+      "captions": "remotion/src/captionsTutBkc.ts",
+      "broll_plan": "binance-kaspa-catch22/BROLL-PLAN.md",
+      "render_mp4": "video-creation/remotion/out/tutorial/3-binance-kaspa-catch22.mp4",
+      "finalized_short_gate": "PASS",
+      "built_at": "2026-08-10T07:58:43",
+      "build_notes": "BUILT 2026-08-10. 31.98s / 958f, 22.7 MB, -19.6 LUFS (preserves the spine level to +0.1 LU; SFX consume 1.4 dB of headroom, no clipping, no normalization). 4 true-alpha overlays + 3 code badges, 7 graphic beats, 29.3% PNG-on-screen time, alpha-weighted content-zone coverage 5.1-9.0% each. ZERO full-screen and ZERO content-zone b-roll per Mike's directive: checklist item 4 DECLARED NOT MET and reported as a deviation. CAPTION-RULE RECONCILIATION CLOSED: build_captions.py lines 643-686 already carry this clip's full rule block, captions regenerate BYTE-IDENTICAL from it, and the clip-dir copy matches both. Casper->Kaspa fires 5x, Nero->Neiro, tag->tech. NOTE: the log's claim that build_captions.py was UNCOMMITTED with +295 lines was STALE. It was committed in 743aff4; git diff HEAD on that path is empty. OVERRODE THE PREDECESSOR'S SFX DESIGN: it had placed a riser peak AND the payoff impact crest INSIDE the 0.655s suspense pause that min-sil 0.95 exists to preserve. Offline whisper A/B proved that MASKED the payoff line (control 'Kaspa would be listed on Binance.' -> mix 'ASPR would be listed on buying ASPR.'), with that impact measuring +1.7 dB OVER the voice while every other cue sat 8-18 dB under. Fixed by RETIMING at unchanged 0.26 gain; both protected pauses now measure exactly zero added energy and the payoff reads control-identical. Deleted the TING, because the relocated impact owns that second and two transients 0.3s apart on adjacent low-content words is mud. 'catch-22' VERIFIED INTACT on the final render (the out-relock at master 2074.70 holds; nothing reads as 'catch on it'), and the open carries no stammer (the retracted clip-3 'rescue the clipped Binance' reading is not in this build)."
     },
     {
       "n": 4,
@@ -47,10 +72,19 @@
       "title": "That's the Degen Mindset. I Don't Trade Like That.",
       "variant": "full",
       "duration_seconds": 43.33,
-      "phase": "6-transcribed",
-      "gate": "ready-for-build",
+      "phase": "7-built",
+      "gate": "PASS",
       "output_mp4": "freaking-early-not-degen/freaking-early-not-degen-final.mp4",
-      "whisper_words": "freaking-early-not-degen/whisper-words.json"
+      "whisper_words": "freaking-early-not-degen/whisper-words-verified.json",
+      "composition": "TutFreakingEarlyNotDegen",
+      "constants": "remotion/src/constants-tut-freaking-early-not-degen.ts",
+      "captions": "remotion/src/captionsTutFed.ts",
+      "broll_plan": "freaking-early-not-degen/BROLL-PLAN.md",
+      "render_mp4": "video-creation/remotion/out/tutorial/4-freaking-early-not-degen.mp4",
+      "render_duration_measured": 43.349,
+      "finalized_short_gate": "PASS",
+      "built_at": "2026-08-10T09:25:36",
+      "build_notes": "BUILT 2026-08-10. 43.35s / 1299f, 30.5 MB, -18.7 LUFS integrated / -4.1 dBTP / LRA 2.8, IDENTICAL to the bare spine, so the 6 SFX add texture without moving loudness. 3 true-alpha overlays + 6 code badges = 9 timed graphics; graphic-on-screen 18.17s = 42.0% of runtime but painted-pixel occlusion only 0.87-6.44% of frame (1.95-14.47% of the content zone); max graphic-free gap 6.60s, min separation between windows 0.55s, no frame carries two graphics. ZERO full-screen and ZERO content-zone b-roll per Mike's Phase 7 directive: checklist item 4 DECLARED NOT MET and reported as a deviation. THE HYPOTHETICAL GUARD WAS HONOURED PROPERLY, and this was the clip's main risk: the 700M/1.8M figures appear ONLY inside Mike's own sentence in the captions, and the beat carrying them (34.90-38.55) is the single deliberately GRAPHIC-FREE beat of the clip, verified by frame probes at 35.5/36.8/38.2s all measuring the exact encode baseline (12.35-12.37 mean delta vs the spine, where every graphic beat reads 17.1-34.6). No badge, no arrow, no multiplier, and colorize deliberately highlights 'degen/die/dies/early' rather than the figures, so nothing draws the eye to them as a receipt. The conditional frame survives on screen ('i'm going to be like' at 28.04/28.56 before the figures). Token stays unnamed: the reference-image gate was run live and returns EMPTY because the transcript names nothing. Clip 8's retitle claim was NOT imported. _patch_words.py audit came back CLEAN, 0 words restored (unlike clips 1/2/3), but 20 EDGES were re-anchored on RMS, one load-bearing: 'listed' end 26.800->26.760 and 'and' start 26.800->27.225, because a shipped gap of 0.000s hid a measured 0.465s silence and the caption break only fires once the edge is RMS-anchored. --max-secs 2.00 set as a pure GUARD, verified byte-identical to leaving it off (longest held word is only 0.57s). Protected peak 28.320-38.575 and the 0.795s performance beat both measure BIT-IDENTICAL (-240 dB) added energy pre-codec and are 100% graphic-free. SFX A/B over 22 staggered windows vs an encode-matched control: the shipped table matches or BEATS control on 22/22 on the final render, nothing retimed, no gain lowered. Spine luma-scanned clean (min mean-luma 97.9/255 across all 1082 frames), so this clip did NOT have the picture-dies-before-audio defect that clips 1 and 6 had. DELIBERATELY NO RISER, with a measured reason: the only payoff worth building into IS the 10.26s protected peak, so any riser long enough to build would add energy inside it and one ending at the boundary would truncate at -12 dB and click on the peak's first word. Timing is the knob and no timing existed, so the riser was dropped rather than the guard. THE HARD-OUT IS DRY: no word-boundary silence exists anywhere in 38.6-43.15 (one gapless voiced run; the only sub -30 dB dips are stop closures INSIDE words, the /p/ of 'pump' and the /k/ of 'weeks', exactly the trap the tighten plan flagged), so no closing transient was placed. Added the clip-4 PHRASE_CORRECTIONS block plus one PROTECTED_DOUBLES entry to the canonical build_captions.py so the two protected stammers ('that's that's the degen', 'that that's what') survive the canonical collapse. OPEN FOR MIKE, and it is NOT a build defect: the base screen-share for the ENTIRE clip is a DEXScreener page for a real named token (YOLO/WETH on the Robinhood chain) plus a third-party ad panel reading 'IT'S TIME TO GO ALL-IN'. The audio says 'this particular token' and nothing on screen attaches an identity, but a viewer can read a ticker off Mike's own footage while he describes an imagined 700M/1.8M, and the ad panel reads ironically against an anti-degen thesis. Covering the content zone is banned by his directive, so both were left untouched. Decoupling that needs either a different base segment or a licence to cover the content zone on that beat."
     },
     {
       "n": 5,
@@ -58,10 +92,19 @@
       "title": "doginme at 107 Million: 400 Million Is a 100X From Here",
       "variant": "full",
       "duration_seconds": 39.61,
-      "phase": "6-transcribed",
-      "gate": "ready-for-build",
+      "phase": "7-built",
+      "gate": "PASS",
       "output_mp4": "doginme-100x-if-500x/doginme-100x-if-500x-final.mp4",
-      "whisper_words": "doginme-100x-if-500x/whisper-words.json"
+      "whisper_words": "doginme-100x-if-500x/whisper-words-verified.json",
+      "composition": "TutDoginme100x",
+      "constants": "remotion/src/constants-tut-doginme-100x.ts",
+      "captions": "remotion/src/captionsTutDgn.ts",
+      "broll_plan": "doginme-100x-if-500x/BROLL-PLAN.md",
+      "render_mp4": "video-creation/remotion/out/tutorial/5-doginme-100x-if-500x.mp4",
+      "render_duration_measured": 39.659,
+      "finalized_short_gate": "PASS",
+      "built_at": "2026-08-10T10:20:48",
+      "build_notes": "BUILT 2026-08-10 (resumed after the account weekly limit killed the first builder; its transcript was lost, so the second builder inherited through DISK ONLY and regenerated NOTHING). 39.60s / 1188f, 25.3 MB, -19.3 LUFS / -7.2 dBTP / LRA 5.0, zero clipped samples. 2 true-alpha stickers + 4 code badges + frame-0 cover = 7 timed graphics, 11.867s = 29.97% graphic-on-screen, 70.03% graphic-free, painted-pixel occlusion 5.47% and 5.78% of frame. ZERO full-screen and ZERO content-zone b-roll per Mike's Phase 7 directive: checklist item 4 DECLARED NOT MET with real numbers, no coverage invented. Zero graphic collisions, verified frame-by-frame on the render. THE NO-$IF/NO-500X GUARD WAS AUDITED, NOT ASSUMED, and PASSES in everything the build controls: the four badges carry only 107 / 400 / 100X / 800M / 200X (exactly the allowed list); the thumbnail reads 'DOGINME ATH / $107 MILLION / 400M IS A / 100X FROM HERE' + chip 'FIRST DOG ON BASE'; the only 'what if' on screen is at 28.29 rendered lowercase WHITE as two ordinary words with the Base-blue accent on 'doginme' ONLY, never styled as a ticker; what-if.jpg is never opened by either asset script (grepped) and never referenced by the comp; palette is Base blue #3aa0ff, never Robinhood neon-green; zero em dashes. THE DOGINME-vs-'DOG IN ME' SPELLING SPLIT IS SOLVED IN CODE and verified on the render: the canonical merge keys on the word BEFORE the name (('of','dog','in','me')->'of doginme'), and both protected limbs are preceded by 'that', so they can never collide; on screen the token is one blue word at 11.56/28.29 while the English phrase stays three white words at 2.36/5.38. ALL FIVE PROTECTED BEATS measure BIT-IDENTICAL (-240 dB) added energy on the PRE-CODEC bed, so the AAC noise-floor confound cannot reach the result; the hard-out is bit-identical from 36.517 to the end against speech at -21.8 dB. SFX truncation 0.0 ms on all six cues. Hard-out sticker verified at FULL opacity on the final frame (zero fade), though its tOut clears the flat region by only 0.1 frame, so do not lower tOut on any future edit. Spine luma-scanned clean: zero black spans, tail flat at 103-106, internal joins clean. THE /k/-BURST AUDITION WAS MEASURED AND DELIBERATELY NOT FIXED, per instruction (a fix means a Phase 5 re-cut that would invalidate the staged render-asset): the residual is a 20ms plateau at -39.3 dB RMS, 19-21 dB UNDER the speech on both sides, contiguous with the following vowel onset, so it reads as a slightly hard attack on 'an' rather than an edit tick in silence. It is FULLY EXPOSED (nearest cue 2s away, bed bit-identical). Adjudicated over 8 passes that the audible word is 'an', not 'got': three fresh isolated medium.en windows, the final render's whole-clip decode, and the master at p=0.95 all read 'an', and critically the BARE-SPINE control (zero SFX, provably bit-identical audio) is what produced 'got', which proves 'got' is a decoder artifact and not the mix. Rule persisted in build_captions.py PHRASE_CORRECTIONS with the measurement in its comment. BROLL-PLAN RECONCILIATION: zero executable values changed. All 7 windows, all 6 SFX cues, both sticker boxes, all 4 badge strings, seam 854 and CAP_Y 905 already matched the plan; what had drifted were 8 claims ABOUT THE WORLD, and measurement won 6 of them (graphic time 31.7% -> 29.97%, hard-out occlusion under-sized because the plan measured the 432px SOURCE png instead of its 460px rendered box, and three picture-cut timings off by 24-112 in delta terms). No decision changed and no re-render was spent on a 40ms documentation error. A GENUINE CROSS-LANGUAGE GOTCHA WAS FOUND AND LOGGED: its first pass appeared to show a 16.7ms SFX truncation plus a -51.6 dBFS click, which was its own bug, because JS Math.round is half-UP (0.55*30 = 16.5 -> 17 frames) while Python's round() is half-to-even (-> 16); the plan was right and the measurement script was wrong. Inherited derived artifacts both REPRODUCE BYTE-IDENTICALLY from their canonical tooling (captions from build_captions.py, with --max-secs 1.75 proven a no-op; whisper-words-verified.json from _patch_words.py, 126->127 tokens with 2 restored words), and the spine's dual-threshold span table was independently re-derived and matches on all 16 gaps >=0.10s. ** OPEN FOR MIKE, THE ONE ITEM THAT NEEDS HIS CALL: $IF EXPOSURE IN THE BASE PICTURE, AND THE INHERITED PLAN OVERSTATED THE MITIGATION. ** The staged spine's own screen-share carries $IF material across its final third: a burned-in live-chat banner '@MichealBlanson $if $if $if $if $if' (x 6-298, rows 672-789) from the seg1->seg2 cut at 27.640 to the end (11.96s = 30.2% of runtime), and from the seg2->seg3 cut at 36.400 a DEXScreener 'IF / WETH (Market Cap) on Uniswap' chart plus the 'WHAT IF' galaxy WORDMARK (x 864-1080, rows 56-124) legible on the last 96 frames. The predecessor's plan claimed the hard-out sticker was positioned to cover that wordmark; MEASURED, its alpha there is mean 0.2/255, max 10, 0.0% at alpha>=128, i.e. ZERO coverage. The claim was corrected rather than papered over. No blocker plate was added, correctly: an opaque bar over the content zone is exactly the class Mike's directive bans, and repositioning the mascot to cover a 216x68 px corner band pushes its ears off frame. This does NOT violate Mike's written rule, which binds the COPY ('no title/caption/description may promise $IF or 500X') and which the queue entry fully honours; it is a coherence question about his own footage. The only real fixes are upstream (a different seg2/seg3 in-point, or a picture substitution), both outside Phase 7. HIS CALL: ship as-is, or send the clip back to 4b/5 for new in-points."
     },
     {
       "n": 6,
@@ -69,10 +112,18 @@
       "title": "Look, Look, Holy Crap: The 94X, Then a 550X One Week Later",
       "variant": "impact",
       "duration_seconds": 28.22,
-      "phase": "6-transcribed",
-      "gate": "ready-for-build",
+      "phase": "7-built",
+      "gate": "PASS",
       "output_mp4": "tut-94x-euphoria-impact/tut-94x-euphoria-impact-final.mp4",
-      "whisper_words": "tut-94x-euphoria-impact/whisper-words.json"
+      "whisper_words": "tut-94x-euphoria-impact/whisper-words-verified.json",
+      "composition": "TutEuphoriaImpact",
+      "constants": "remotion/src/constants-tut-euphoria-impact.ts",
+      "captions": "remotion/src/captionsTutEuphImpact.ts",
+      "broll_plan": "tut-94x-euphoria-impact/BROLL-PLAN.md",
+      "render_mp4": "video-creation/remotion/out/tutorial/6-tut-94x-euphoria-impact.mp4",
+      "finalized_short_gate": "PASS",
+      "built_at": "2026-08-10T08:16:34",
+      "build_notes": "BUILT 2026-08-10. 28.20s / 846f, 19.9 MB, -17.2 LUFS, no black frames anywhere, 61/61 caption words verified on the final mix (similarity 0.967). 3 alpha stickers + 3 code badges; 23.8% overlay + 20.4% badge on-screen time, 53.7% of runtime carries no graphic at all, graphic ink 2.4% of frame-seconds. ZERO full-screen and ZERO content-zone b-roll per Mike's directive: checklist item 4 DECLARED NOT MET and reported as a deviation. ARNOLD GUARD (the drop ENDS this clip, 22.94-28.20): the SFX bed is BIT-EXACT SILENT from 22.30, the last cue ends at 21.00, and the render vs a no-SFX encode-matched control over 23.00-28.10 is identical to 0.1 dB (RMS -22.5 vs -22.5, peak -8.8 vs -8.8), i.e. nothing but the spine crosses the drop. 0 graphics in frames 669-828. The audible tail through 28.18 SURVIVES (20ms RMS -32.8 at 28.18, -56.6 at 28.22). Guard constants unchanged. NAKED BEAT: the 0.86s drum-roll at 15.73-16.59 is measured DIGITAL silence, so the inherited riser at 15.10 would have been the ONLY sound in the frame. Retimed to 16.60, still ending exactly on the 550X hit at 17.60. 0.81s of the 0.86s beat is digital silence on the render. Independently CONFIRMED the dur-truncates-not-fades defect, at margin -2.3 dB on the climax impact (the truncation click LOUDER than the speech 0.25s later) and -0.4 dB on the ding; both fixed with faded variants at unchanged gain. TAIL PICTURE REPAIR, FLAGGED FOR MIKE: the staged spine's PICTURE dies before its AUDIO (frames 691-699 = 27.640-28.000 are PURE BLACK) while the soundboard drop talks to 28.18. The last good Arnold frame of THIS clip's own spine is held 27.633-end under the captions. Judged a defect repair rather than b-roll; the only alternatives were shipping 0.36s of black under the punchline or truncating 'planet.' BROLL-PLAN reconciled to as-built (6 disagreements: the plan won 3, measurement won 3)."
     },
     {
       "n": 7,
@@ -80,10 +131,19 @@
       "title": "They Don't Apply the Same Logic to Kaspa",
       "variant": "impact",
       "duration_seconds": 19.02,
-      "phase": "6-transcribed",
-      "gate": "ready-for-build",
+      "phase": "7-built",
+      "gate": "PASS",
       "output_mp4": "binance-kaspa-catch22-impact/binance-kaspa-catch22-impact-final.mp4",
-      "whisper_words": "binance-kaspa-catch22-impact/whisper-words.json"
+      "whisper_words": "binance-kaspa-catch22-impact/whisper-words-verified.json",
+      "composition": "TutBinanceKaspaCatch22Impact",
+      "constants": "remotion/src/constants-tut-bkc-impact.ts",
+      "captions": "remotion/src/captionsTutBki.ts",
+      "broll_plan": "binance-kaspa-catch22-impact/BROLL-PLAN.md",
+      "render_mp4": "video-creation/remotion/out/tutorial/7-binance-kaspa-catch22-impact.mp4",
+      "render_duration_measured": 19.051,
+      "finalized_short_gate": "PASS",
+      "built_at": "2026-08-10T11:26:30",
+      "build_notes": "BUILT 2026-08-10 (resumed with transcript intact after the account weekly limit killed the first attempt early). 19.000s / 570f, 12.4 MB, -19.2 LUFS / -6.6 dBTP / LRA 2.5, no clipping (SFX add +0.2 LU and 1.3 dB of peak over the bare spine). 1 reference-derived true-alpha overlay (the REAL Kaspa mark, 52.8% fully transparent) + 3 code badges + 1 code-drawn SVG catch-22 loop = 5 timed graphics + the frame-0 cover. ZERO full-screen and ZERO content-zone b-roll per Mike's Phase 7 directive: checklist item 4 DECLARED NOT MET, not papered over. Zero collisions, min gap 0.60s, and that adjacent pair sits in different vertical bands. ** THE DEFECT THIS CLIP CAUGHT, AND IT IS A METHOD FINDING FOR THE SKILL: ** the riser geometry inherited VERBATIM from its full-cut twin clip 3 (t 14.59, dur 2.25) MASKED THE PAYOFF'S LAST TWO WORDS on this shorter cut. Whole-file decode, control vs render: control '...Kaspa would be listed on Binance by now.' vs render '...Kaspa would be listed on Binance.' Critically, the offline SHORT-WINDOW A/B had PASSED it 13/13 clean, because the two windows that hinted at the problem were dismissed on the grounds that the CONTROL was itself garbled there. A WHOLE-FILE decode of the offline mix made it unambiguous, and isolating riser-only vs impact-only pinned the culprit in two runs. Fixed by RETIMING at unchanged 0.09 gain (t 15.34 / dur 1.50), still cutting on the impact crest at 16.84, and the clip was RE-RENDERED on the fix. LESSON: short staggered windows guard against phantom regressions but can produce a phantom PASS; one whole-file decode per candidate costs nothing and caught a real defect here. That makes FIVE independent confirmations this batch that timing, not volume, is the knob. PROTECTED PAUSE re-measured at 0.655s (13.870-14.525), NOT the 0.634s the dispatch quoted, and the correction is corroborated by the sibling's independent 0.655s on the same audio at a 7.560s offset. It is GRAPHIC-FREE (Kaspa overlay fade completes 13.86, next graphic 14.80) and carries ZERO added energy proven PRE-CODEC by differencing the summed mix against the bare spine: -240.00 dB across the whole span AND the interior, peak absolute sample 0. It survives in the shipped mix (silencedetect finds 0.649s). 'CATCH-22' VERIFIED TWICE, on the spine over three staggered isolated windows and again on the final render's whole-file decode plus two windows; never 'catch on it', so the out-relock at master 2074.70 holds. CLEAN OPEN VERIFIED: measured silence 0.000-0.145 with first voiced onset at 0.145, and two independent isolated decodes both return 'There was a blog article' with no leading 'And' and no 'uh'. Note the dispatch expected a leading 'And' the caption might drop; measured truth is the word is not in the cut at all, so nothing is dropped. _patch_words.py audit CLEAN on missing speech (0 words restored; the 3 apparently uncovered voiced spans are all late/early TOKEN BOUNDARIES inside continuous voiced runs, each corroborated by the sibling's independent decode), but it RE-ANCHORED 2 onsets onto measured RMS and one is MATERIAL rather than cosmetic: ' Kaspa' 14.72 -> 14.525, the payoff word straight after the protected pause, because left alone the payoff caption fired 5.9 frames AFTER the /k/ burst the viewer had already heard. ' There' was deliberately LEFT at 0.000 against an RMS onset of 0.145 so the first caption is continuous with the frame-0 hand-off. --max-secs 2.00 verified byte-identical to off, a pure rail above both the longest caption group (1.57s, which carries a genuinely stretched 0.80s 'the') and the longest single token. Caption rules REUSED from clip 3 on the shared audio rather than duplicated (('about','nero')->neiro and the global Casper->Kaspa, firing 2x here); the 2 clip-7-only rules are keyed so they CANNOT match clip 3, verified TWICE by re-rendering clip 3 byte-identical. Spine luma-scanned CLEAN at the tail (mean 108.4-110.0 through the last frame) and at its one structural join, which steps 101.76->106.89 entirely in the WEBCAM half; content-zone mean|delta| peaks at only 0.864 across the whole clip, i.e. there is NO picture cut in the content zone at all (a real cut measures 111.9 on the sibling). No picture-dies-before-audio defect. Hard-out verified: the loop's tOut 19.30 sits past the comp end so its fade never starts, frame 569 confirmed visually at FULL opacity with the picture alive. Final-render whole-file whisper is IDENTICAL to the encode-matched control, word for word. ** MIKE'S OPEN KEEP/DROP CALL, ANSWERED WITH NUMBERS BUT LEFT TO HIM: ** the verdict is DRY AND FAST, NOT FLAT. Clip 7 whole-clip peak -7.92 / rms -21.73 dBFS vs clip 3's -8.06 / -22.08 and clip 3's HOOK -8.42 / -22.43, so clip 7 is 0.50 dB louder at peak and 0.70 dB hotter in rms than the hook it was feared to be flatter than. Voiced density 88.3% (almost no dead air; the only long silence is the deliberate 0.655s pause). HONEST CAVEATS IT VOLUNTEERED: the delivery run itself is 0.28 dB BELOW clip 3's hook peak, so the clip does not escalate on LEVEL into its punchline, it lands the punchline at conversational level and carries the escalation on cadence plus the riser->impact; and it could NOT confirm the earlier 'third-fastest beat in the batch' claim, since on runtime words/s clip 7 is 3.26 vs clip 3's 3.44, i.e. slightly BELOW, with the gap being the protected pause plus four sentence-boundary silences. GATE COUNTER CAVEAT, reported not fixed: the gate prints 'sfx refs: 4' but the true count is 3 distinct files / 3 events, because its regex matches 'impact' and this clip's own base-video filename is binance-kaspa-catch22-impact.mp4. Still >= 2, so the gate passes honestly and was NOT modified. TWO ChatGPT generations came back OFF-BRIEF (a duplicate of the cover's scale, then coins on podiums) including one carrying an explicit 'new image, do not edit the previous' preamble; verified NOT a wrong-image grab (no md5 matches any sibling asset), the beat was CODE-DRAWN instead per clip 6's precedent, and both bad files were deleted so there are no orphans. The shared broll pool chat is at 12/25 with 11 sibling images. RECOMMENDATION: start the next batch on a fresh broll chat. FLAGGED, NOT TRIMMED: graphic-on-screen time is 46.1%, above the batch band of 23.8-42.0%, because at 19s five beats cannot be spread thinner without each dropping under the ~1s readability floor."
     },
     {
       "n": 8,
@@ -91,15 +151,24 @@
       "title": "My portfolio is filled with 100x coins.",
       "variant": "impact",
       "duration_seconds": 20.12,
-      "phase": "6-transcribed",
-      "gate": "ready-for-build",
+      "phase": "7-built",
+      "gate": "PASS",
       "output_mp4": "freaking-early-not-degen-impact/freaking-early-not-degen-impact-final.mp4",
-      "whisper_words": "freaking-early-not-degen-impact/whisper-words.json"
+      "whisper_words": "freaking-early-not-degen-impact/whisper-words-verified.json",
+      "composition": "TutFreakingEarlyNotDegenImpact",
+      "constants": "remotion/src/constants-tut-fed-impact.ts",
+      "captions": "remotion/src/captionsTutFei.ts",
+      "broll_plan": "freaking-early-not-degen-impact/BROLL-PLAN.md",
+      "render_mp4": "video-creation/remotion/out/tutorial/8-freaking-early-not-degen-impact.mp4",
+      "render_duration_measured": 20.16,
+      "finalized_short_gate": "PASS",
+      "built_at": "2026-08-10T10:50:47",
+      "build_notes": "BUILT 2026-08-10 (resumed after the account weekly limit killed the first attempt before it started; began from a VERIFIED-EMPTY disk state, nothing regenerated over an existing asset). 20.100s / 603f, -18.4 LUFS / -7.7 dBTP / LRA 3.1. 2 true-alpha overlays + 3 code badges = 5 graphic beats, 8.25s = 41.0% graphic-on-screen, painted occlusion ~3-5% of frame, inside the finished-clip band (clip 6 23.8%, clip 4 42.0%). ZERO full-screen and ZERO content-zone b-roll: checklist item 4 DECLARED NOT MET, no coverage invented. 603 frames is the CEILING (604 would exceed the 20.122s audio stream). THE HYPOTHETICAL FRAME WAS SOLVED IN FOUR LAYERS, which was this clip's whole reason for existing as a risk: (1) the in-point stays at master 2201.27 and is never trimmed to the 2208.66 peak, so 'I'm gonna be like' survives intact and unsplit at 5.36-5.98s; (2) the imagined sentence renders as QUOTED SPEECH via a NEW default-off --quote flag on the canonical build_captions.py, with an opening mark on 'holy', a close on '1.8 million.', and a RE-OPENING mark after every pause >0.45s, so the caption on screen at the exact moment the market cap is spoken CARRIES A QUOTE MARK and a viewer joining mid-clip never sees a bare figure (visually confirmed on the render at t=12.10); (3) the frame-0 cover is his words in future tense with quote marks and NO NUMBER ('I'M GONNA / BE LIKE, \"I WAS / SO FREAKING / EARLY\"', chip 'THAT'S WHAT I'M LOOKING FOR'); (4) a lead-in badge at 5.25-6.45s reading 'WHAT I'LL / SAY / WHEN IT HAPPENS', ending before the 0.743s protected beat. THE FIGURES GET NOTHING: no badge, arrow, multiplier, no 700M-vs-1.8M juxtaposition and NO COLOUR HIGHLIGHT (colorize is r=die gr=early, so colour lands on the win and the thing he rejects, never the numbers), and the 6.55s window 9.20-15.75 containing both figures is the clip's ONE deliberately graphic-free stretch, proven by 6 frame probes at 1.554-1.581 against a measured graphic floor of 1.49-1.58 and a weakest-real-graphic of 4.33. No ticker, logo, wordmark or digit in any generated asset: the reference gate was run LIVE against the 24 real marks on disk and returns EMPTY because the clip names nothing; overlay panels are deliberately blank and all human forms are featureless back-view silhouettes. Mike's retitle was imported into NO on-screen element. WHY A PER-INVOCATION FLAG AND NOT A PHRASE RULE: clip 4 SHARES this audio, so any token-keyed rule would have silently rewritten its already-shipped captions; verified that rebuilding clip 4's captions with the flag present is BYTE-IDENTICAL. _patch_words.py audit CLEAN, 0 words restored (the shipped pass is the SUPERSET at 73 tokens vs an independent medium.en 72, aligning 1:1), but 11 edges re-anchored and 1 phantom split merged, three of which change the screen: ' and' 3.820->4.295 (shipped gap 0.000s across a MEASURED 0.464s digital-zero pause that welded two sentences and painted a caption over the pause), ' is' 10.920->11.838 (shipped placed it INSIDE the 0.918s digital-zero beat where there is no audio, stranding a lone 'is' on screen for 1.12s across Mike's biggest pause; clip 4 independently measured the same token AFTER the beat), and a phantom split ' and'+' I' -> ' at' fixing the ungrammatical 'and i got in and i'. --max-secs 2.00 verified byte-identical to off, a pure guard above both the 0.860s longest held word and the 1.760s longest group word-span. BOTH protected delivery beats plus the third measure BIT-IDENTICAL (-240 dB) added energy PRE-CODEC across the whole protected peak 5.394-15.634, whole span AND 60ms-stripped interior; post-codec the render matches the offline mix to +/-0.01 dB and the bare spine to +0.01/+0.15 dB on every cue-free span, so there is no global gain offset, and the beat interiors reading -76 to -83 dBFS are the documented AAC noise floor (56-63 dB below speech, nearest cue 1.66-3.83s away), NOT leakage. An earlier +3.04 dB reading was its own 128k/mono control's bitrate mismatch and was chased down rather than accepted. SFX A/B offline over 18 staggered windows, ZERO renders spent: 13/18 identical to control, not one window loses a word, and 3 of the 5 diffs start INSIDE the peak where mix and control are bit-identical so masking is physically impossible. Volume was never used as a fix; four further candidate cues were measured and REJECTED rather than forced (only 3 SFX events, which at 0.149/s matches clip 4's 0.139/s on the same audio). HARD-OUT: badge3 tOut 20.50 sits past the comp end so its fade never starts, last frame at FULL opacity, the exact defect clip 2 caught. Tail luma CLEAN on both spine (min 104.61/255 across all 502 frames) and render (last 6 frames 98.5-98.8), no picture-dies-before-audio defect. Final-mix whisper transcribes WORD-FOR-WORD IDENTICALLY to the bare spine. tsc --noEmit clean. ** A LATENT BUG IN THE SHARED CAPTIONS TOOL, FOUND AND DOCUMENTED, NOT YET FIXED: ** `_apply_phrases_once` pairs span to replacement with `for w, r in zip(span, rep)`, so a PHRASE_CORRECTIONS key with MORE tokens than its replacement SILENTLY DROPS the surplus matched tokens. Concretely, ('in','and','i','like')->['in','at','like'] would have deleted the real following ' like' (14.440-14.820) and left a 0.38s hole. This is why the fix lives in this clip's own _patch_words.py as a 2->1 merge instead. Every existing rule in the file happens to be safe, but the footgun is live for the next author. ** OPEN FOR MIKE: ** (1) the new default-off --quote flag on the canonical captions tool needs his review; (2) the base picture still says what it says, independently confirmed at t=14s (DEXScreener YOLO/WETH on Robinhood/Uniswap v3, MKT CAP $3.1M / FDV $3.0M / LIQUIDITY $227K / $0.003171, a live YOLO buy-sell table, plus an 'IT'S TIME TO GO ALL-IN' third-party ad banner for the entire clip) and it cannot be covered under his directive, so the four caption layers make it materially better than a flat caption but a determined viewer can still read the picture as a position; (3) HIS RETITLE CONFLICTS WITH THE AUDIO, since 'My portfolio is filled with 100x coins.' is not said in this clip, and it was kept verbatim per the 4b retitle precedent and imported into nothing on screen, but it remains the queue title and is the single element most likely to turn the picture into a false claim. (4) GENERATION CAPTURE INCIDENT, disclosed: all three images generated correctly but the captures came back SHIFTED BY ONE (run 1 saved a pre-existing golden firework) because it ran generate-broll-reload.js against a chat already at 12/25 images instead of retiring it first as the skill advises. NOTHING was re-sent: it renamed the two correct files to their true identities and recovered the third READ-ONLY from the conversation, which also proved the off-by-one (asset pointers 14 and 15 are byte-identical to the two files on disk; 16, the newest and never captured, is the sprout). md5 across the batch public dir shows zero duplicates and all three passed persona inspection after the remap."
     }
   ],
   "resume_protocol": "Phase 4b: Mike reviews dashboard.html and names clips to delete by number. Then per surviving clip: tighten-strategist -> tighten -> 2nd review -> desilence (5B) -> filler pass (5C, optional) -> captions (6) -> remotion-builder (7) -> publish-shorts (8). STT garble fixes for captions are listed in clip-plan.json stt_garble_flags (verify each against the clip's OWN whisper-words.json before applying).",
-  "phase": "6-transcribed",
-  "status": "ready-for-build",
+  "phase": "8-published",
+  "status": "staged-awaiting-mike-review",
   "tighten_log": "video-creation/shorts/tutorial/tighten_log.json",
   "tighten_plan": "video-creation/shorts/tutorial/tighten-plan.json",
   "filler_log": "video-creation/shorts/tutorial/filler_log.json",
@@ -127,6 +196,33 @@
     "orphans_at_wrap": "none (zero node render, zero ffmpeg, zero chatgpt-profile chrome)",
     "disk_at_wrap": "C: 13 GB free",
     "min_sil_used": 0.95,
-    "resume_contract": "see PROJECT-LOG.md 2026-08-09 entry, RESUME CONTRACT section"
+    "resume_contract": "see PROJECT-LOG.md 2026-08-09 entry, RESUME CONTRACT section",
+    "disk_truth_corrections_2026_08_09_evening": {
+      "note": "Re-verified against disk in the 2026-08-09 evening session (a no-op session, see PROJECT-LOG). The wrap table UNDERSTATED two clips. Each builder should OPEN its own drafts first; treat any draft OLDER than its constants file as stale.",
+      "tut-94x-euphoria": "constants-tut-94x-euphoria.ts edited 17:14 (AFTER the comp at 16:45). 3 chunk-QA drafts exist in remotion/out/: draft-tut94x-head.mp4 17:10, draft-tut94x-mid.mp4 17:17, draft-tut94x-arnold.mp4 17:18 (the Schwarzenegger guard window was already QA'd). Head+mid predate the constants edit and may be stale. Still NO final render.",
+      "binance-kaspa-catch22": "2 chunk-QA drafts (draft-tutbkc-head.mp4 16:39, draft-tutbkc-mid.mp4 16:42) + 2 QA stills (still-tutbkc-f0.png, still-tutbkc-gem.png, 16:41) in remotion/out/. constants edited 16:44, AFTER all four, so all four may be stale. Still NO final render.",
+      "tut-94x-euphoria-impact": "Confirmed as recorded. BROLL-PLAN.md touched 17:30 = newest artifact in the batch. _raw/ holds the 3 pre-key source PNGs. No drafts, NO final render."
+    },
+    "evening_session_2026_08_09": {
+      "outcome": "NO WORK COMPLETED. Orchestrator stalled on a blocking question instead of executing the resume protocol; ~2h lost. See PROJECT-LOG.",
+      "builders_dispatched_then_killed": [
+        "tut-94x-euphoria",
+        "binance-kaspa-catch22"
+      ],
+      "bytes_written_by_them": 0,
+      "verified_after_kill": "zero files newer than the 17:45 wrap in shorts/tutorial/ or remotion/src/; no out/tutorial/; both locks FREE; zero orphan node/ffmpeg/chrome; zero remotion-* temp",
+      "disk_now": "C: 11 GB free (99% used), down ~2 GB from the wrap and NOT from our work (nothing rendered). cleanup.js --dry-run is the highest-value pre-render task."
+    }
+  },
+  "published": {
+    "date": "2026-08-10",
+    "id_prefix": "t",
+    "staged_dir": "schedule-tweets/shorts/tutorial-2026-08-10",
+    "queue": "schedule-tweets/data/shorts.json",
+    "entries_added": 8,
+    "queue_total": 163,
+    "graph": "run.py publish --batch tutorial --date 2026-08-10",
+    "wave5_live_bless": "GREEN. This run is the Wave 5 LIVE BLESS that had carried since early-crash, where posting overtook staging and closed the window. It ran right after all eight builders PASSED and BEFORE any posting, exactly as the carry-over required: 8 added / 0 skipped, all staged copies md5-verified against their CURRENT renders, entries complete, all 7 platform blocks pending, per-file persona-lint clean.",
+    "posting": "NOT started. Mike-gated, sequential, one poster at a time, never parallel."
   }
 }

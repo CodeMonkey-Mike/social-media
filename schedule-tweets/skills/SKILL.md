@@ -98,6 +98,31 @@ Most of these Node/Playwright scripts run 3-8 minutes (built-in 60-180s human-pa
 
 `reused` = script applies `PRE_COMPOSE` range a second time instead of a separate `PRE_POST` constant.
 
+**Every `ACTION` / `PRE_COMPOSE` / `PRE_POST` value above is env-overridable** (the table shows the
+defaults, which apply when the var is unset). Per-script prefix: `XT_` post-tweet · `XTH_` post-thread ·
+`XS_` post-x-short · `FB_` post-fb-short · `TT_` post-tiktok-short · `BC_` post-bitchute-short ·
+`IG_` post-ig-reel · `RM_` post-rumble-short · `YTP_` post-yt-poll · `YTQ_` post-yt-quiz ·
+`XP_` post-x-poll · `IGS_` post-ig-single · `IGC_` post-ig-carousel · `YTC_` post-yt-community ·
+`LFB_` upload-longform-facebook · `LFR_` upload-longform-rumble · `LFBC_` upload-longform-bitchute
+(the last seven added 2026-08-10, closing the gap where those scripts were hardcoded). Suffix is
+`_MIN` / `_MAX`, values in ms — e.g. `XT_PRE_COMPOSE_MIN=6000 XT_PRE_COMPOSE_MAX=18000 node scripts/post-tweet.js`.
+Used 2026-08-09 to run a full sweep with the three human-pacing layers cut to 1/10 for speed.
+**Finding from that run: 1/10 is too fast for `post-fb-short.js`.** X, TikTok, IG, Rumble, BitChute, YT
+poll/quiz all posted fine, but FB pass 1 silently failed: the final step-4 "Post" click landed while the
+dialog was still re-rendering, so it never submitted (the log's tell is `[step4_after_final]` still showing
+a `Create post` dialog with `Post` + a new `Edit` button, instead of dismissing an upsell then `Submitted ✓`).
+Re-running at **half** default (`FB_ACTION 2000/3500`, `FB_PRE_COMPOSE`/`FB_PRE_POST` 30000/60000) submitted
+first try. If pacing FB down for speed, do not go below half default.
+**`post-fb-short.js` URL capture is not baseline-diffed (2026-08-10).** Posting two FB shorts in one
+session recorded the SAME reel URL for both: the second run submitted fine (`Submitted ✓`) but FB had not
+yet surfaced the new reel on the /videos tab, so the script latched onto the most recent OLD reel and
+"verified" it live. `upload-longform-facebook.js` does poll a baseline diff; the short poster does not.
+Symptom: two `shorts.json` rows with an identical `facebook.url`. **Fix the record, never re-post** — set
+that row to `posted_unverified` with `url: null` and recapture from the Videos tab.
+**`CHAR_DELAY` is deliberately NOT env-exposed** — per-keystroke cadence is the strongest bot signal, so
+it stays fixed. The functional waits (IG's 5-min processing hold, FB's reel poll, upload-to-100%) are also
+untouched by these vars; they exist because the platform needs the time, and cutting them loses the post.
+
 ---
 
 ## General mechanics rules

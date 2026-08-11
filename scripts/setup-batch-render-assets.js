@@ -1,5 +1,11 @@
 'use strict';
 
+// ⛔ FROZEN 2026-08-07 (Wave 4/5 of the livestream LangGraph migration) — rollback only.
+// The CANONICAL tool is video-creation/livestream-repurpose/scripts/setup_render_assets.py:
+// it stages the CURRENT final spine (-final.mp4 / -tightened-desilenced.mp4; this script
+// predates 5B/5C and only knows tightened.mp4) and bakes in the mandatory seek-friendly
+// GOP re-encode. Do not extend this file.
+//
 // setup-batch-render-assets.js — stage a SHORTS batch's render-ready assets into its OWN
 // self-contained public dir: video-creation/shorts/<batch>/render-assets/.
 //

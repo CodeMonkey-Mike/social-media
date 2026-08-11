@@ -14,8 +14,8 @@ const PLATFORM       = 'x';
 
 const CHAR_DELAY_MIN  = 60;
 const CHAR_DELAY_MAX  = 150;
-const ACTION_MIN      = 4000;
-const ACTION_MAX      = 7000;
+const ACTION_MIN      = +(process.env.XS_ACTION_MIN || 4000);
+const ACTION_MAX      = +(process.env.XS_ACTION_MAX || 7000);
 const PRE_COMPOSE_MIN = +(process.env.XS_PRE_COMPOSE_MIN || 60000);
 const PRE_COMPOSE_MAX = +(process.env.XS_PRE_COMPOSE_MAX || 180000);
 

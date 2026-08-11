@@ -22,6 +22,7 @@ Post. Verification mirrors the GIF path: composer-closed is the success
 signal; "uncertain" almost always means it posted (do not blind-retry).
 """
 
+import os
 import random
 import sys
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -34,7 +35,8 @@ except ImportError:
     print("ERROR: playwright not installed.")
     sys.exit(1)
 
-ACTION_MIN, ACTION_MAX = 4, 7          # seconds between UI actions
+ACTION_MIN = float(os.environ.get("IMGR_ACTION_MIN", 4))          # seconds between UI actions
+ACTION_MAX = float(os.environ.get("IMGR_ACTION_MAX", 7))
 CHAR_DELAY_MIN, CHAR_DELAY_MAX = 60, 150
 
 HERE      = Path(__file__).parent
@@ -42,8 +44,8 @@ DEBUG_DIR = HERE / "tmp-image-debug"   # dry-run composer screenshots
 
 
 def human_pause(label=""):
-    delay = random.randint(ACTION_MIN, ACTION_MAX)
-    print(f"  ~ {delay}s pause {f'({label})' if label else ''}")
+    delay = random.uniform(ACTION_MIN, ACTION_MAX)
+    print(f"  ~ {delay:.2g}s pause {f'({label})' if label else ''}")
     time.sleep(delay)
 
 

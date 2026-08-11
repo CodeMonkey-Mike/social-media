@@ -8,8 +8,8 @@ const WORKSPACE_ROOT = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\sched
 
 const CHAR_DELAY_MIN   = 60;
 const CHAR_DELAY_MAX   = 150;
-const ACTION_MIN       = 4000;
-const ACTION_MAX       = 7000;
+const ACTION_MIN       = +(process.env.XT_ACTION_MIN || 4000);
+const ACTION_MAX       = +(process.env.XT_ACTION_MAX || 7000);
 const PRE_COMPOSE_MIN  = +(process.env.XT_PRE_COMPOSE_MIN || 60000);
 const PRE_COMPOSE_MAX  = +(process.env.XT_PRE_COMPOSE_MAX || 180000);
 const PRE_POST_MIN     = +(process.env.XT_PRE_POST_MIN    || 5000);

@@ -154,26 +154,51 @@ export const THUMB_DEF_TUT94X: ThumbDef = {
 //   6.28 s) - Boom - Big Reveal-short peaks 0.04 - Tension_Rise_Logo_Reveal_3 attacks 1.09 and
 //   peaks 3.48. Each cue starts EARLY by exactly that offset so the crest lands on the frame it
 //   punctuates, each riser's `dur` is 2.50 so it ENDS exactly on its impact instead of smearing over
-//   the line after it, and the two long-tailed impacts are truncated by `dur` (the contract's
+//   the line after it, and the two long-tailed impacts are SHORTENED (the contract's
 //   "try TIMING first" knob) rather than turned down.
 //
+// ⚠ THE TWO IMPACTS SHIP AS FADED `-short` LIBRARY VARIANTS, not as a `dur` truncation (2026-08-10).
+//   Re-measured at 10 ms RMS: NEITHER impact decays inside a `dur` window. Impact_Hit_01-2 holds
+//   -8 dB flat from 0.2 s to 1.6 s and Kick_Impact_01 holds -2 to -7 dB from 0.2 s to 1.0 s, so the
+//   old `dur: 0.90` / `dur: 1.10` cut them off at FULL LEVEL - an audible click, landing 0.19 s
+//   before "Look," (47.56) and inside "that" (21.72). The offline whisper sweep caught it: the mix
+//   lost "look, look" (the PROTECTED stutter) against an encode-matched control. Fixed the way the
+//   contract's 2026-08-07 precedent fixes it, a trimmed variant at FULL gain:
+//     ffmpeg -i <impact>.wav -af "atrim=0:0.55,asetpts=N/SR/TB,afade=t=out:st=0.42:d=0.13" \
+//            <impact>-short.wav
+//   (written to video-creation/assets/sfx/Impacts/, copied into render-assets/sfx/Impacts/). Crest
+//   intact (-4.0 dB @0.13 s / -0.6 dB @0.18 s), tail down to -37 / -31 dB by 0.55 s, so there is no
+//   click and no sustained bed over the words. `dur: 0.60` is now only a guard, not the trim.
+//
 // ⛔ NOTHING is scheduled between 66.00 and 71.42 s: that is the Schwarzenegger drop, and a sting on
-//   top of it would cover it. The next cue is the 71.42 whoosh, which starts 0.02 s AFTER the drop
-//   ends. Nothing is placed on the deliberate hard-out ("oh my god." 77.82-78.72) either.
+//   top of it would cover it. The next cue is the 71.72 whoosh, which starts AFTER the drop's own
+//   audio tail has decayed into silence (see the measurement under the array). Nothing is placed on
+//   the deliberate hard-out ("oh my god." 77.82-78.72) either.
 export const SFX_TUT94X: Sfx[] = [
   { t:  0.00, src: staticFile('sfx/transition_rapid_whoosh.mp3'),           vol: 0.26, dur: 1.00 }, // frame-0 thumbnail cut (crest 0.18)
   { t:  0.83, src: staticFile('sfx/Cinematic Whoosh 02.wav'),               vol: 0.18, dur: 1.60 }, // sweeps into the O1 pump arrow (crest 1.70)
   { t:  9.32, src: staticFile('sfx/transition_rapid_whoosh.mp3'),           vol: 0.24, dur: 1.00 }, // the $TUT coin lands as he names it (crest 9.50)
   { t: 18.40, src: staticFile('sfx/risers/Tension_Rise_Logo_Reveal_3.wav'), vol: 0.10, dur: 2.50 }, // riser BUILDS INTO the 94X and ENDS exactly on it (20.90)
-  { t: 20.72, src: staticFile('sfx/Impacts/Kick_Impact_01.wav'),            vol: 0.26, dur: 1.10 }, // IMPACT on the 94X badge (crest 20.90), tail trimmed off "did that 94x"
+  { t: 20.72, src: staticFile('sfx/Impacts/Kick_Impact_01-short.wav'),      vol: 0.26, dur: 0.60 }, // IMPACT on the 94X badge (crest 20.90), FADED variant, silent by "that 94x" (21.72)
   { t: 22.98, src: staticFile('sfx/Cash Register Kaching  Sound Effect HD.mp3'), vol: 0.16, dur: 1.60 }, // money hit on "congratulations, people" (attack 23.50 = the confetti pop)
   { t: 27.39, src: staticFile('sfx/DING.mp3'),                              vol: 0.20, dur: 1.30 }, // 638% badge (crest 27.60, inside the 0.74 s gap after "month.")
   { t: 38.02, src: staticFile('sfx/transition_rapid_whoosh.mp3'),           vol: 0.22, dur: 1.00 }, // the rocket pops on the second "65x from the bottom" (crest 38.20)
-  { t: 46.47, src: staticFile('sfx/Impacts/Impact_Hit_01-2.wav'),           vol: 0.26, dur: 0.90 }, // IMPACT on the live chart reveal / firework (crest 46.60), tail trimmed
+  { t: 46.47, src: staticFile('sfx/Impacts/Impact_Hit_01-2-short.wav'),     vol: 0.26, dur: 0.60 }, // IMPACT on the live chart reveal / firework (crest 46.60), FADED variant, gone before "look, look" (47.56)
   { t: 58.86, src: staticFile('sfx/risers/Tension_Rise_Logo_Reveal_3.wav'), vol: 0.09, dur: 2.50 }, // riser BUILDS INTO the 550X and ENDS exactly on it (61.36)
   { t: 61.36, src: staticFile('sfx/Boom - Big Reveal-short.wav'),           vol: 0.28, dur: 1.05 }, // IMPACT on the 550X badge (crest 61.40)
-  { t: 71.42, src: staticFile('sfx/transition_rapid_whoosh.mp3'),           vol: 0.24, dur: 1.00 }, // out of the Arnold drop, in the 1.00 s of silence before "holy crap." (crest 71.60)
+  { t: 71.72, src: staticFile('sfx/transition_rapid_whoosh.mp3'),           vol: 0.24, dur: 0.62 }, // out of the Arnold drop (see MEASUREMENT below), crest 71.90 inside the true silence
 ];
+
+// ⚠ WHY THE LAST WHOOSH IS AT 71.72 AND NOT AT 71.42 (re-measured 2026-08-10, 10 ms RMS on this
+// spine). ARNOLD_GUARD_OUT stays 71.42 — the cue moved, the guard did NOT (the guard is Mike's, and
+// the rule is "fix the cue, never the guard"). The drop's AUDIO outlasts its PICTURE:
+//   picture: black 71.08 -> 71.44 (ffmpeg blackdetect d=0.05 pix_th=0.10), base video back at 71.44
+//   audio:  -22 to -26 dB straight through 71.28 (Whisper's end of "planet.") to 71.65, then TRUE
+//           silence -91 to -120 dB from 71.70 to ~72.05, and "Holy" starts 72.40
+// i.e. 0.40 s of the soundboard's own decay/room tail sits past the last word. A whoosh at 71.42
+// (crest 71.60, peak -11.7 dB x 0.24 = -24 dB) would have landed exactly on that tail, which is
+// covering the drop in the audio domain. At 71.72 the crest (71.90) is inside the measured silence
+// and `dur` 0.62 truncates the decay at 72.34, before "Holy" at 72.40.
 
 // ─── Bundle-time guards ─────────────────────────────────────────────────────────────────────────
 // Mechanical, because the two rules they enforce are exactly the ones this repo keeps re-breaking by

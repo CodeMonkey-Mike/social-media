@@ -7,12 +7,12 @@ const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\igbot-
 const WORKSPACE_ROOT = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
 const IG_USERNAME    = 'realcodemonkeymike';
 
-const ACTION_MIN      = 1000;
-const ACTION_MAX      = 5000;
+const ACTION_MIN      = +(process.env.IGC_ACTION_MIN      || 1000);
+const ACTION_MAX      = +(process.env.IGC_ACTION_MAX      || 5000);
 const CHAR_DELAY_MIN  = 5;
 const CHAR_DELAY_MAX  = 40;
-const PRE_COMPOSE_MIN = 1000;
-const PRE_COMPOSE_MAX = 15000;
+const PRE_COMPOSE_MIN = +(process.env.IGC_PRE_COMPOSE_MIN || 1000);
+const PRE_COMPOSE_MAX = +(process.env.IGC_PRE_COMPOSE_MAX || 15000);
 
 function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;

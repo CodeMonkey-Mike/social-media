@@ -10,12 +10,12 @@ const PROFILE_URL    = 'https://x.com/mikeneder';
 
 const CHAR_DELAY_MIN   = 60;
 const CHAR_DELAY_MAX   = 150;
-const ACTION_MIN       = 4000;
-const ACTION_MAX       = 7000;
-const PRE_COMPOSE_MIN  = 60000;
-const PRE_COMPOSE_MAX  = 180000;
-const PRE_POST_MIN     = 5000;
-const PRE_POST_MAX     = 180000;
+const ACTION_MIN       = +(process.env.XP_ACTION_MIN      || 4000);
+const ACTION_MAX       = +(process.env.XP_ACTION_MAX      || 7000);
+const PRE_COMPOSE_MIN  = +(process.env.XP_PRE_COMPOSE_MIN || 60000);
+const PRE_COMPOSE_MAX  = +(process.env.XP_PRE_COMPOSE_MAX || 180000);
+const PRE_POST_MIN     = +(process.env.XP_PRE_POST_MIN    || 5000);
+const PRE_POST_MAX     = +(process.env.XP_PRE_POST_MAX    || 180000);
 
 // [days, hours, minutes]
 const DURATION_MAP = {
@@ -227,7 +227,7 @@ async function main() {
     if (duplicate) {
       poll.status    = 'posted';
       poll.posted_at = new Date().toISOString();
-      poll.note      = 'Already posted — detected in pre-check';
+      poll.note      = 'Already posted: detected in pre-check';
       fs.writeFileSync(POLLS_JSON, JSON.stringify(data, null, 2));
       console.log('Marked as posted (duplicate). Done.');
       return;

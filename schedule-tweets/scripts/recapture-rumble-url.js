@@ -73,7 +73,7 @@ const norm = s => (s || '').toLowerCase().replace(/&#0?39;|&apos;/g, "'").replac
     s2.platforms[PLATFORM].url = shortUrl;
     s2.platforms[PLATFORM].status = live ? 'posted' : 'posted_unverified';
     if (live) delete s2.platforms[PLATFORM].error;
-    else s2.platforms[PLATFORM].error = 'URL captured from /account/content but public page not confirmed live in window — re-check the URL manually.';
+    else s2.platforms[PLATFORM].error = 'URL captured from /account/content but public page not confirmed live in window: re-check the URL manually.';
     fs.writeFileSync(SHORTS_JSON, JSON.stringify(data2, null, 2));
     console.log(`Updated shorts.json: ${shortId} -> ${shortUrl} (${s2.platforms[PLATFORM].status})`);
   } finally {

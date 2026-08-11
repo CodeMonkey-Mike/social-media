@@ -45,6 +45,10 @@ MEMBERS = Path(__file__).resolve().parents[2] / "data" / "members.json"
 # well under LinkedIn's 300-char note limit.
 MESSAGE = "Hello there, I noticed we are in the same AI automation group. I am trying to build my connections list, and just wanted to see if I can connect with some like-minded people."
 
+# LinkedIn refuses a re-invite for 3 weeks after we withdraw one. Members hit by that
+# are parked for this long instead of being retried (and refused) every run.
+RESEND_COOLDOWN_DAYS = 21
+
 # CLI flags.
 ARGV = sys.argv[1:]
 
@@ -211,6 +215,22 @@ def send_connection_request(page):
     connect.click(timeout=6000)
     S.pause(page, 1200, 2500, "connect modal")
 
+    # A PER-MEMBER refusal, NOT the account-wide weekly cap. LinkedIn blocks a
+    # re-invite for ~3 weeks after we withdrew one, worded "Invitation not sent to X.
+    # You can resend an invitation 3 weeks after withdrawing it." That is ONE person
+    # being unavailable and must skip only that person.
+    # This MUST stay ahead of the weekly-limit branch below: that branch's broad
+    # "reached the limit" alternative swallowed this modal on 2026-08-05 and halted
+    # the whole run at member 2, reporting "LIMIT reached" and sending zero invites
+    # while the account in fact had no limit on it at all. Order is the fix.
+    if re.search(r"resend an invitation|invitation not sent", body_text(page), re.I):
+        try:
+            page.keyboard.press("Escape")
+        except Exception:
+            pass
+        S.pause(page, 500, 1000, "closed resend-cooldown modal")
+        return "resend_cooldown"
+
     # A weekly-limit or restriction modal can appear right here.
     if re.search(
         r"weekly invitation limit|reached the limit|no invitations left|temporarily restricted",
@@ -283,6 +303,11 @@ def send_connection_request(page):
     send.click(timeout=6000)
     S.pause(page, 1500, 3000, "after send")
 
+    # Same per-member-vs-account distinction as at the modal, in case LinkedIn only
+    # refuses once Send is clicked. Checked first so a single blocked person is never
+    # mistaken for a capped account (and never recorded as a successful send).
+    if re.search(r"resend an invitation|invitation not sent", body_text(page), re.I):
+        return "resend_cooldown"
     if re.search(r"weekly invitation limit|no invitations left", body_text(page), re.I):
         return "limit_reached"
     return "sent"
@@ -291,13 +316,31 @@ def send_connection_request(page):
 # ----------------------------------------------------------------------------
 # Main
 # ----------------------------------------------------------------------------
+def _in_resend_cooldown(m):
+    """True while a withdrawn-invite cooldown is still running. LinkedIn refuses a
+    re-invite for ~3 weeks after a withdrawal, so retrying before then burns a profile
+    view against the ~120/24h budget for a guaranteed refusal."""
+    stamp = m.get("resend_cooldown_at")
+    if not stamp:
+        return False
+    try:
+        started = date.fromisoformat(stamp)
+    except (TypeError, ValueError):
+        return False  # unparseable stamp -> don't silently strand the member
+    return (date.today() - started).days < RESEND_COOLDOWN_DAYS
+
+
 def main():
     members = S.read_json(MEMBERS, [])
     # Skip anyone who already took a no_connect_button strike TODAY. The two-strike
     # retirement rule assumes one run/day; on a multi-batch day (60-invite backlog
     # run, 2026-07-23) the next batch would re-hit a strike-1 member minutes later,
     # burning a second profile view and retiring them without a real retry gap.
-    todo = [m for m in members if m.get("contacted") is not True and m.get("nocb_last") != today()]
+    # Also skip anyone inside LinkedIn's withdrawn-invite cooldown (2026-08-05).
+    todo = [m for m in members
+            if m.get("contacted") is not True
+            and m.get("nocb_last") != today()
+            and not _in_resend_cooldown(m)]
     print(f"members.json: {len(members)} total, {len(members) - len(todo)} already contacted, {len(todo)} to contact.")
     if DRY_RUN:
         print("** DRY RUN ** — will locate the Connect button but NOT send anything.\n")
@@ -350,6 +393,13 @@ def main():
                     print(f"   {'INVITE SENT' if status == 'sent' else status}")
                 elif status == "dry-found":
                     print("   [dry] Connect available — would send the note.")
+                elif status == "resend_cooldown":
+                    # ONE person blocked by the withdrawn-invite cooldown, not a capped
+                    # account: keep going through the batch, but park them so the next
+                    # runs don't spend a profile view on a guaranteed refusal.
+                    m["resend_cooldown_at"] = today()
+                    S.write_json(MEMBERS, members)
+                    print(f"   resend_cooldown (withdrawn invite, blocked ~{RESEND_COOLDOWN_DAYS}d — skipped, batch continues)")
                 elif status == "no_connect_button":
                     # Retire after 2 strikes so follow-only profiles don't clog the front
                     # of the queue on every run (matters with the 137-member re-invite

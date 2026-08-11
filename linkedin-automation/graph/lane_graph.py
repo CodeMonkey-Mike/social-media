@@ -108,6 +108,9 @@ VISIT_RE = re.compile(r"^\[(?P<i>\d+)/(?P<n>\d+)\] ")
 SENT_LINE_RE = re.compile(r"^\s+INVITE SENT$")
 ALREADY_STATUS_RE = re.compile(r"^\s+(?P<status>already_pending|already_connected)$")
 NOCB_LINE_RE = re.compile(r"^\s+no_connect_button \(")
+# Per-member withdrawn-invite cooldown. Deliberately NOT a limit line: it skips one
+# person and the batch continues (see request_connections.py, 2026-08-05).
+RESEND_COOLDOWN_RE = re.compile(r"^\s+resend_cooldown \(")
 LIMIT_LINE_RE = re.compile(r"^\s+LIMIT reached")
 DRY_LINE_RE = re.compile(r"^\s+\[dry\] Connect available")
 # The exact line the inviter prints when is_restricted() fires and it stops itself.
@@ -812,6 +815,7 @@ def invite(state: Lane3State) -> Lane3State:
                                  and "connected" in l),
         "nocb_strike1": sum(1 for l in lines if NOCB_LINE_RE.match(l) and "strike 1" in l),
         "nocb_retired": sum(1 for l in lines if NOCB_LINE_RE.match(l) and "2nd strike" in l),
+        "resend_cooldown": sum(1 for l in lines if RESEND_COOLDOWN_RE.match(l)),
         "dry_found": sum(1 for l in lines if DRY_LINE_RE.match(l)),
         "errors": sum(1 for l in lines if PROFILE_ERR_RE.match(l)),
     }
@@ -865,6 +869,7 @@ def verify_invite(state: Lane3State) -> Lane3State:
             "already_connected": counts.get("already_connected", 0),
             "nocb_strike1": counts.get("nocb_strike1", 0),
             "nocb_retired": counts.get("nocb_retired", 0),
+            "resend_cooldown": counts.get("resend_cooldown", 0),
             "dry_found": counts.get("dry_found", 0),
             "errors": counts.get("errors", 0),
             "limit_hit": bool(state.get("limit_hit")),

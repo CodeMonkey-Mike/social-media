@@ -2417,5 +2417,2344 @@
       "mismatch": null
     },
     "error": null
+  },
+  {
+    "run_id": "scrape-20260805@2026-08-05T06:39:10",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260805",
+    "started_at": "2026-08-05T06:39:10",
+    "ended_at": "2026-08-05T06:39:30",
+    "duration_s": 20.4,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": 60,
+    "profile_views": 0,
+    "summary": null,
+    "error": "scraper exit code 1; output tail:\nlt-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --disable-blink-features=AutomationControlled --user-data-dir=C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\li-bot-profile --remote-debugging-pipe about:blank\n  - <launched> pid=8116\n  - [pid=8116] <gracefully close start>\n  - [pid=8116] <kill>\n  - [pid=8116] <will force kill>\n  - [pid=8116] taskkill stderr: ERROR: The process \"8116\" not found.\n  - [pid=8116] <process did exit: exitCode=0, signal=null>\n  - [pid=8116] starting temporary directories cleanup\n  - [pid=8116] finished temporary directories cleanup\n  - [pid=8116] <gracefully close end>\n\n"
+  },
+  {
+    "run_id": "scrape-20260805@2026-08-05T08:59:25",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260805",
+    "started_at": "2026-08-05T08:59:25",
+    "ended_at": "2026-08-05T10:01:50",
+    "duration_s": 3744.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 18,
+    "profile_views": 18,
+    "summary": {
+      "requested": 18,
+      "visited": 18,
+      "processed_delta": 18,
+      "captured_delta": 12,
+      "captured_total": 654,
+      "queue_remaining": 5257,
+      "already": 0,
+      "skipped_out_of_zone": 6,
+      "errors": 0,
+      "regions": {
+        "south_america": [
+          "Santiago, Santiago Metropolitan Region, Chile",
+          "Rio de Janeiro, Brazil",
+          "Bogota, D.C., Capital District, Colombia"
+        ],
+        "europe": [
+          "Bytom, Śląskie, Poland",
+          "Italy",
+          "Seville, Andalusia, Spain",
+          "Ormskirk, England, United Kingdom",
+          "Budapest, Hungary",
+          "Poland"
+        ],
+        "north_america": [
+          "Carbondale, Pennsylvania, United States",
+          "Albuquerque, New Mexico, United States",
+          "Silver Spring, Maryland, United States"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": "scraper exit code 1; output tail:\nlt-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --no-sandbox --disable-blink-features=AutomationControlled --user-data-dir=C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\li-bot-profile --remote-debugging-pipe about:blank\n  - <launched> pid=8116\n  - [pid=8116] <gracefully close start>\n  - [pid=8116] <kill>\n  - [pid=8116] <will force kill>\n  - [pid=8116] taskkill stderr: ERROR: The process \"8116\" not found.\n  - [pid=8116] <process did exit: exitCode=0, signal=null>\n  - [pid=8116] starting temporary directories cleanup\n  - [pid=8116] finished temporary directories cleanup\n  - [pid=8116] <gracefully close end>\n\n"
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T10:02:16",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T10:02:16",
+    "ended_at": "2026-08-05T10:04:37",
+    "duration_s": 140.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 30,
+    "profile_views": 2,
+    "summary": {
+      "requested": 30,
+      "dry_run": false,
+      "visited": 2,
+      "sent": 0,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 1,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": true,
+      "contacted_delta": {
+        "no_connect_button": 1
+      },
+      "remaining_to_contact": 223,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "check-20260805-1004@2026-08-05T10:04:51",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "check-20260805-1004",
+    "started_at": "2026-08-05T10:04:51",
+    "ended_at": "2026-08-05T10:05:23",
+    "duration_s": 31.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 311,
+      "rounds": 6,
+      "cards_seen": 20,
+      "newly_connected": [
+        {
+          "slug": "christopher-bartsch-12a09a201",
+          "date": "2026-08-05",
+          "inexact": false
+        },
+        {
+          "slug": "davidamadormoreno",
+          "date": "2026-08-05",
+          "inexact": false
+        },
+        {
+          "slug": "abalberchak",
+          "date": "2026-08-05",
+          "inexact": false
+        },
+        {
+          "slug": "cristian-david-dominguez-93653a41",
+          "date": "2026-08-05",
+          "inexact": false
+        },
+        {
+          "slug": "amelie-caroline-mbende-a61007207",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "sounatancarlos",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "anna-carolina-costa-andrade",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "juradocarlos",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "juan-carlos-reyes-cruz",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "dianacarolinaarias",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "shinji-furuya",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "david-mora-roca-14bb45",
+          "date": "2026-08-04",
+          "inexact": false
+        },
+        {
+          "slug": "davidturksma",
+          "date": "2026-08-04",
+          "inexact": false
+        }
+      ],
+      "newly_connected_count": 13,
+      "inexact_dates": 0,
+      "connected_delta": 13,
+      "connected_total": 133,
+      "still_outstanding": 298,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "endorse-20260805-1005@2026-08-05T10:05:33",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "endorse-20260805-1005",
+    "started_at": "2026-08-05T10:05:33",
+    "ended_at": "2026-08-05T10:17:58",
+    "duration_s": 744.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 3,
+    "summary": {
+      "requested": 3,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 3,
+      "endorsed": 3,
+      "skills_endorsed": 29,
+      "no_skills": 0,
+      "dm_sent": 3,
+      "dm_failed": 0,
+      "endorse_failed": 0,
+      "already_endorsed": 0,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 0,
+      "per_member": [
+        {
+          "slug": "benjamin-walden-479979253",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "charliehunger",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "christopher-p-453bb33",
+          "skills": 9,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        }
+      ],
+      "members_delta": {
+        "endorsed": 3,
+        "no_skills": 0,
+        "dm_sent": 3
+      },
+      "eligible_before": {
+        "total": 89,
+        "over_14d": 3,
+        "days_7_to_14": 30,
+        "under_7d": 56,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 86,
+        "over_14d": 0,
+        "days_7_to_14": 30,
+        "under_7d": 56,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T10:34:16",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T10:34:16",
+    "ended_at": "2026-08-05T10:35:23",
+    "duration_s": 66.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 1,
+    "profile_views": 1,
+    "summary": {
+      "requested": 1,
+      "dry_run": false,
+      "visited": 1,
+      "sent": 0,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": true,
+      "contacted_delta": {},
+      "remaining_to_contact": 223,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T10:50:26",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T10:50:26",
+    "ended_at": "2026-08-05T10:50:26",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 0,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 1,
+      "already_pending": 1,
+      "already_connected": 0,
+      "nocb_strike1": 1,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {},
+      "remaining_to_contact": 222,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T10:50:54",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T10:50:54",
+    "ended_at": "2026-08-05T11:02:20",
+    "duration_s": 686.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 3,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 2,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 3
+      },
+      "remaining_to_contact": 219,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T11:02:39",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T11:02:39",
+    "ended_at": "2026-08-05T11:15:25",
+    "duration_s": 766.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 214,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T11:15:38",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T11:15:38",
+    "ended_at": "2026-08-05T11:28:40",
+    "duration_s": 781.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 4,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 4
+      },
+      "remaining_to_contact": 210,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T11:29:04",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T11:29:04",
+    "ended_at": "2026-08-05T11:41:30",
+    "duration_s": 745.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 4,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 4
+      },
+      "remaining_to_contact": 206,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T11:41:57",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T11:41:57",
+    "ended_at": "2026-08-05T11:50:12",
+    "duration_s": 494.8,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 4,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 4
+      },
+      "remaining_to_contact": 206,
+      "mismatch": null
+    },
+    "error": "inviter exit code 0; output tail:\n search)\n  ~ 0.5s (typed query)\n  ~ 7.0s (scan search results)\n  ~ 0.7s (before click)\n   reached via clicked\n  ~ 1.8s (read profile)\n   profile owner: \"david maisuradze\"\n  ~ 9.0s (before clicking Connect)\n  ~ 2.5s (connect modal)\n  ~ 13.4s (before Add a note)\n  ~ 1.3s (add note)\n  ~ 1.1s (typed note)\n  ~ 11.9s (before Send)\n  ~ 1.5s (after send)\n   INVITE SENT\n  ~ 84.8s (between invites)\n[2/5] https://www.linkedin.com/in/marta-david-31021168/\n  ~ 1.1s (focus search)\n  ~ 0.9s (typed query)\n  ~ 5.6s (scan search results)\n  ~ 0.5s (before click)\n   reached via clicked\n  ~ 2.2s (read profile)\n   profile owner: \"marta david\"\n  ~ 15.3s (before opening More)\n  ~ 1.1s (open More menu)\n  ~ 18.3s (before clicking Connect)\n  ~ 2.4s (connect modal)\n  ~ 19.0s (before Add a note)\n  ~ 1.2s (add note)\n  ~ 1.3s (typed note)\n  ~ 12.9s (before Send)\n  ~ 2.3s (after send)\n   INVITE SENT\n  ~ 54.7s (between invites)\n[3/5] https://www.linkedin.com/in/davidrpaquette/\n  ~ 0.9s (focus search)\n  ~ 1.1s (typed query)\n  ~ 3.3s (scan search results)\n  ~ 0.8s (before click)\n   reached via clicked\n  ~ 3.2s (read profile)\n   profile owner: \"david paquette\"\n  ~ 13.3s (before opening More)\n  ~ 0.9s (open More menu)\n  ~ 5.3s (before clicking Connect)\n  ~ 2.4s (connect modal)\n  ~ 8.6s (before Add a note)\n  ~ 1.1s (add note)\n  ~ 1.1s (typed note)\n  ~ 15.9s (before Send)\n  ~ 2.3s (after send)\n   INVITE SENT\n  ~ 53.2s (between invites)\n\nFATAL: Page.wait_for_timeout: Target page, context or browser has been closed\n"
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T19:08:53",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T19:08:53",
+    "ended_at": "2026-08-05T19:22:34",
+    "duration_s": 820.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 198,
+      "mismatch": null
+    },
+    "error": "inviter exit code 0; output tail:\n search)\n  ~ 0.5s (typed query)\n  ~ 7.0s (scan search results)\n  ~ 0.7s (before click)\n   reached via clicked\n  ~ 1.8s (read profile)\n   profile owner: \"david maisuradze\"\n  ~ 9.0s (before clicking Connect)\n  ~ 2.5s (connect modal)\n  ~ 13.4s (before Add a note)\n  ~ 1.3s (add note)\n  ~ 1.1s (typed note)\n  ~ 11.9s (before Send)\n  ~ 1.5s (after send)\n   INVITE SENT\n  ~ 84.8s (between invites)\n[2/5] https://www.linkedin.com/in/marta-david-31021168/\n  ~ 1.1s (focus search)\n  ~ 0.9s (typed query)\n  ~ 5.6s (scan search results)\n  ~ 0.5s (before click)\n   reached via clicked\n  ~ 2.2s (read profile)\n   profile owner: \"marta david\"\n  ~ 15.3s (before opening More)\n  ~ 1.1s (open More menu)\n  ~ 18.3s (before clicking Connect)\n  ~ 2.4s (connect modal)\n  ~ 19.0s (before Add a note)\n  ~ 1.2s (add note)\n  ~ 1.3s (typed note)\n  ~ 12.9s (before Send)\n  ~ 2.3s (after send)\n   INVITE SENT\n  ~ 54.7s (between invites)\n[3/5] https://www.linkedin.com/in/davidrpaquette/\n  ~ 0.9s (focus search)\n  ~ 1.1s (typed query)\n  ~ 3.3s (scan search results)\n  ~ 0.8s (before click)\n   reached via clicked\n  ~ 3.2s (read profile)\n   profile owner: \"david paquette\"\n  ~ 13.3s (before opening More)\n  ~ 0.9s (open More menu)\n  ~ 5.3s (before clicking Connect)\n  ~ 2.4s (connect modal)\n  ~ 8.6s (before Add a note)\n  ~ 1.1s (add note)\n  ~ 1.1s (typed note)\n  ~ 15.9s (before Send)\n  ~ 2.3s (after send)\n   INVITE SENT\n  ~ 53.2s (between invites)\n\nFATAL: Page.wait_for_timeout: Target page, context or browser has been closed\n"
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T19:22:48",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T19:22:48",
+    "ended_at": "2026-08-05T19:31:46",
+    "duration_s": 537.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 4,
+    "profile_views": 4,
+    "summary": {
+      "requested": 4,
+      "dry_run": false,
+      "visited": 4,
+      "sent": 3,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 3
+      },
+      "remaining_to_contact": 195,
+      "mismatch": null
+    },
+    "error": "inviter exit code 0; output tail:\n search)\n  ~ 0.5s (typed query)\n  ~ 7.0s (scan search results)\n  ~ 0.7s (before click)\n   reached via clicked\n  ~ 1.8s (read profile)\n   profile owner: \"david maisuradze\"\n  ~ 9.0s (before clicking Connect)\n  ~ 2.5s (connect modal)\n  ~ 13.4s (before Add a note)\n  ~ 1.3s (add note)\n  ~ 1.1s (typed note)\n  ~ 11.9s (before Send)\n  ~ 1.5s (after send)\n   INVITE SENT\n  ~ 84.8s (between invites)\n[2/5] https://www.linkedin.com/in/marta-david-31021168/\n  ~ 1.1s (focus search)\n  ~ 0.9s (typed query)\n  ~ 5.6s (scan search results)\n  ~ 0.5s (before click)\n   reached via clicked\n  ~ 2.2s (read profile)\n   profile owner: \"marta david\"\n  ~ 15.3s (before opening More)\n  ~ 1.1s (open More menu)\n  ~ 18.3s (before clicking Connect)\n  ~ 2.4s (connect modal)\n  ~ 19.0s (before Add a note)\n  ~ 1.2s (add note)\n  ~ 1.3s (typed note)\n  ~ 12.9s (before Send)\n  ~ 2.3s (after send)\n   INVITE SENT\n  ~ 54.7s (between invites)\n[3/5] https://www.linkedin.com/in/davidrpaquette/\n  ~ 0.9s (focus search)\n  ~ 1.1s (typed query)\n  ~ 3.3s (scan search results)\n  ~ 0.8s (before click)\n   reached via clicked\n  ~ 3.2s (read profile)\n   profile owner: \"david paquette\"\n  ~ 13.3s (before opening More)\n  ~ 0.9s (open More menu)\n  ~ 5.3s (before clicking Connect)\n  ~ 2.4s (connect modal)\n  ~ 8.6s (before Add a note)\n  ~ 1.1s (add note)\n  ~ 1.1s (typed note)\n  ~ 15.9s (before Send)\n  ~ 2.3s (after send)\n   INVITE SENT\n  ~ 53.2s (between invites)\n\nFATAL: Page.wait_for_timeout: Target page, context or browser has been closed\n"
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T19:32:19",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T19:32:19",
+    "ended_at": "2026-08-05T19:33:08",
+    "duration_s": 48.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 1,
+    "profile_views": 1,
+    "summary": {
+      "requested": 1,
+      "dry_run": false,
+      "visited": 1,
+      "sent": 0,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {},
+      "remaining_to_contact": 195,
+      "mismatch": null
+    },
+    "error": "inviter exit code 0; output tail:\n search)\n  ~ 0.5s (typed query)\n  ~ 7.0s (scan search results)\n  ~ 0.7s (before click)\n   reached via clicked\n  ~ 1.8s (read profile)\n   profile owner: \"david maisuradze\"\n  ~ 9.0s (before clicking Connect)\n  ~ 2.5s (connect modal)\n  ~ 13.4s (before Add a note)\n  ~ 1.3s (add note)\n  ~ 1.1s (typed note)\n  ~ 11.9s (before Send)\n  ~ 1.5s (after send)\n   INVITE SENT\n  ~ 84.8s (between invites)\n[2/5] https://www.linkedin.com/in/marta-david-31021168/\n  ~ 1.1s (focus search)\n  ~ 0.9s (typed query)\n  ~ 5.6s (scan search results)\n  ~ 0.5s (before click)\n   reached via clicked\n  ~ 2.2s (read profile)\n   profile owner: \"marta david\"\n  ~ 15.3s (before opening More)\n  ~ 1.1s (open More menu)\n  ~ 18.3s (before clicking Connect)\n  ~ 2.4s (connect modal)\n  ~ 19.0s (before Add a note)\n  ~ 1.2s (add note)\n  ~ 1.3s (typed note)\n  ~ 12.9s (before Send)\n  ~ 2.3s (after send)\n   INVITE SENT\n  ~ 54.7s (between invites)\n[3/5] https://www.linkedin.com/in/davidrpaquette/\n  ~ 0.9s (focus search)\n  ~ 1.1s (typed query)\n  ~ 3.3s (scan search results)\n  ~ 0.8s (before click)\n   reached via clicked\n  ~ 3.2s (read profile)\n   profile owner: \"david paquette\"\n  ~ 13.3s (before opening More)\n  ~ 0.9s (open More menu)\n  ~ 5.3s (before clicking Connect)\n  ~ 2.4s (connect modal)\n  ~ 8.6s (before Add a note)\n  ~ 1.1s (add note)\n  ~ 1.1s (typed note)\n  ~ 15.9s (before Send)\n  ~ 2.3s (after send)\n   INVITE SENT\n  ~ 53.2s (between invites)\n\nFATAL: Page.wait_for_timeout: Target page, context or browser has been closed\n"
+  },
+  {
+    "run_id": "invite-20260805@2026-08-05T19:33:35",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260805",
+    "started_at": "2026-08-05T19:33:35",
+    "ended_at": "2026-08-05T19:35:38",
+    "duration_s": 122.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 1,
+    "profile_views": 1,
+    "summary": {
+      "requested": 1,
+      "dry_run": false,
+      "visited": 1,
+      "sent": 1,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 1
+      },
+      "remaining_to_contact": 194,
+      "mismatch": null
+    },
+    "error": "inviter exit code 0; output tail:\n search)\n  ~ 0.5s (typed query)\n  ~ 7.0s (scan search results)\n  ~ 0.7s (before click)\n   reached via clicked\n  ~ 1.8s (read profile)\n   profile owner: \"david maisuradze\"\n  ~ 9.0s (before clicking Connect)\n  ~ 2.5s (connect modal)\n  ~ 13.4s (before Add a note)\n  ~ 1.3s (add note)\n  ~ 1.1s (typed note)\n  ~ 11.9s (before Send)\n  ~ 1.5s (after send)\n   INVITE SENT\n  ~ 84.8s (between invites)\n[2/5] https://www.linkedin.com/in/marta-david-31021168/\n  ~ 1.1s (focus search)\n  ~ 0.9s (typed query)\n  ~ 5.6s (scan search results)\n  ~ 0.5s (before click)\n   reached via clicked\n  ~ 2.2s (read profile)\n   profile owner: \"marta david\"\n  ~ 15.3s (before opening More)\n  ~ 1.1s (open More menu)\n  ~ 18.3s (before clicking Connect)\n  ~ 2.4s (connect modal)\n  ~ 19.0s (before Add a note)\n  ~ 1.2s (add note)\n  ~ 1.3s (typed note)\n  ~ 12.9s (before Send)\n  ~ 2.3s (after send)\n   INVITE SENT\n  ~ 54.7s (between invites)\n[3/5] https://www.linkedin.com/in/davidrpaquette/\n  ~ 0.9s (focus search)\n  ~ 1.1s (typed query)\n  ~ 3.3s (scan search results)\n  ~ 0.8s (before click)\n   reached via clicked\n  ~ 3.2s (read profile)\n   profile owner: \"david paquette\"\n  ~ 13.3s (before opening More)\n  ~ 0.9s (open More menu)\n  ~ 5.3s (before clicking Connect)\n  ~ 2.4s (connect modal)\n  ~ 8.6s (before Add a note)\n  ~ 1.1s (add note)\n  ~ 1.1s (typed note)\n  ~ 15.9s (before Send)\n  ~ 2.3s (after send)\n   INVITE SENT\n  ~ 53.2s (between invites)\n\nFATAL: Page.wait_for_timeout: Target page, context or browser has been closed\n"
+  },
+  {
+    "run_id": "scrape-20260806@2026-08-06T06:39:52",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260806",
+    "started_at": "2026-08-06T06:39:52",
+    "ended_at": "2026-08-06T10:18:31",
+    "duration_s": 13119.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 60,
+    "profile_views": 60,
+    "summary": {
+      "requested": 60,
+      "visited": 60,
+      "processed_delta": 59,
+      "captured_delta": 40,
+      "captured_total": 693,
+      "queue_remaining": 5198,
+      "already": 0,
+      "skipped_out_of_zone": 19,
+      "errors": 1,
+      "regions": {
+        "europe": [
+          "Castelo Branco, Portugal",
+          "Rheden, Gelderland, Netherlands",
+          "Ireland",
+          "Porto, Portugal",
+          "Kontiolahti, North Karelia, Finland",
+          "Derby, England, United Kingdom",
+          "Ireland",
+          "Finland",
+          "Hungary",
+          "Leeds, England, United Kingdom",
+          "Dublin, County Dublin, Ireland",
+          "Vila Nova de Gaia, Porto, Portugal",
+          "Düsseldorf, North Rhine-Westphalia, Germany",
+          "Malta",
+          "Romania"
+        ],
+        "south_america": [
+          "Pereira, Risaralda, Colombia",
+          "Punta del Este, Maldonado, Uruguay",
+          "São Paulo, Brazil",
+          "São Paulo, Brazil",
+          "São Paulo, Brazil",
+          "Argentina",
+          "Quito, Pichincha, Ecuador",
+          "Bogota, D.C., Capital District, Colombia",
+          "São Paulo, Brazil"
+        ],
+        "north_america": [
+          "Atlanta Metropolitan Area",
+          "Cypress, Texas, United States",
+          "Orlando, Florida, United States",
+          "Austin, Texas, United States",
+          "United States",
+          "Leakesville, Mississippi, United States",
+          "San Pedro, San Jose, Costa Rica",
+          "El Salvador",
+          "Mexico City, Mexico",
+          "McKinney, Texas, United States",
+          "Boulder, Colorado, United States",
+          "Mesa, Arizona, United States",
+          "Irving, Texas, United States",
+          "Mexico City, Mexico",
+          "Greater Toronto Area, Canada",
+          "Hollywood, Florida, United States"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260806@2026-08-06T10:18:50",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260806",
+    "started_at": "2026-08-06T10:18:50",
+    "ended_at": "2026-08-06T11:43:28",
+    "duration_s": 5077.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 30,
+    "profile_views": 30,
+    "summary": {
+      "requested": 30,
+      "dry_run": false,
+      "visited": 30,
+      "sent": 29,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 29
+      },
+      "remaining_to_contact": 205,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "check-20260806-1143@2026-08-06T11:43:48",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "check-20260806-1143",
+    "started_at": "2026-08-06T11:43:48",
+    "ended_at": "2026-08-06T11:44:22",
+    "duration_s": 34.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 355,
+      "rounds": 6,
+      "cards_seen": 20,
+      "newly_connected": [
+        {
+          "slug": "giftsonpauldavidson",
+          "date": "2026-08-06",
+          "inexact": false
+        },
+        {
+          "slug": "chca",
+          "date": "2026-08-06",
+          "inexact": false
+        },
+        {
+          "slug": "juan-david-gómez-rojas-3574331b1",
+          "date": "2026-08-06",
+          "inexact": false
+        },
+        {
+          "slug": "david-jeannette-ph-d-01560522",
+          "date": "2026-08-06",
+          "inexact": true
+        },
+        {
+          "slug": "david-ernesto-aguilar-gamez-5045614b",
+          "date": "2026-08-05",
+          "inexact": false
+        },
+        {
+          "slug": "djsheets",
+          "date": "2026-08-05",
+          "inexact": false
+        },
+        {
+          "slug": "davidjcantillorocha",
+          "date": "2026-08-05",
+          "inexact": false
+        },
+        {
+          "slug": "carolin-schreber-94661399",
+          "date": "2026-08-05",
+          "inexact": false
+        },
+        {
+          "slug": "andrew-valitutti-60936129",
+          "date": "2026-08-05",
+          "inexact": false
+        },
+        {
+          "slug": "laurythacarlos",
+          "date": "2026-08-06",
+          "inexact": true
+        },
+        {
+          "slug": "davidkmb",
+          "date": "2026-08-05",
+          "inexact": false
+        },
+        {
+          "slug": "carlos-eduardo-game-dev",
+          "date": "2026-08-05",
+          "inexact": false
+        }
+      ],
+      "newly_connected_count": 12,
+      "inexact_dates": 2,
+      "connected_delta": 12,
+      "connected_total": 145,
+      "still_outstanding": 343,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "endorse-20260806-1144@2026-08-06T11:44:35",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "endorse-20260806-1144",
+    "started_at": "2026-08-06T11:44:35",
+    "ended_at": "2026-08-06T11:48:20",
+    "duration_s": 225.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 1,
+    "summary": {
+      "requested": 1,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 1,
+      "endorsed": 1,
+      "skills_endorsed": 10,
+      "no_skills": 0,
+      "dm_sent": 1,
+      "dm_failed": 0,
+      "endorse_failed": 0,
+      "already_endorsed": 0,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 0,
+      "per_member": [
+        {
+          "slug": "diego-alexander-huertas-zamudio-875a86207",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        }
+      ],
+      "members_delta": {
+        "endorsed": 1,
+        "no_skills": 0,
+        "dm_sent": 1
+      },
+      "eligible_before": {
+        "total": 98,
+        "over_14d": 0,
+        "days_7_to_14": 44,
+        "under_7d": 54,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 97,
+        "over_14d": 0,
+        "days_7_to_14": 43,
+        "under_7d": 54,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260807@2026-08-07T06:44:56",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260807",
+    "started_at": "2026-08-07T06:44:56",
+    "ended_at": "2026-08-07T07:04:20",
+    "duration_s": 1163.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 6,
+    "profile_views": 6,
+    "summary": {
+      "requested": 6,
+      "visited": 6,
+      "processed_delta": 5,
+      "captured_delta": 3,
+      "captured_total": 696,
+      "queue_remaining": 5193,
+      "already": 0,
+      "skipped_out_of_zone": 2,
+      "errors": 1,
+      "regions": {
+        "europe": [
+          "Berlin, Germany",
+          "Greece"
+        ],
+        "north_america": [
+          "Mexico City Metropolitan Area"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260807@2026-08-07T08:19:42",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260807",
+    "started_at": "2026-08-07T08:19:42",
+    "ended_at": "2026-08-07T08:42:53",
+    "duration_s": 1391.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 8,
+    "profile_views": 8,
+    "summary": {
+      "requested": 8,
+      "visited": 8,
+      "processed_delta": 7,
+      "captured_delta": 7,
+      "captured_total": 715,
+      "queue_remaining": 5170,
+      "already": 0,
+      "skipped_out_of_zone": 0,
+      "errors": 1,
+      "regions": {
+        "north_america": [
+          "Austin, Texas, United States",
+          "San Francisco Bay Area",
+          "Fort Worth, Texas, United States",
+          "Mexico City, Mexico",
+          "Corpus Christi, Texas, United States"
+        ],
+        "europe": [
+          "Greater Madrid Metropolitan Area",
+          "Chelmsford, England, United Kingdom"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260807@2026-08-07T09:26:50",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260807",
+    "started_at": "2026-08-07T09:26:50",
+    "ended_at": "2026-08-07T09:34:20",
+    "duration_s": 449.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 2,
+    "profile_views": 2,
+    "summary": {
+      "requested": 2,
+      "visited": 2,
+      "processed_delta": 1,
+      "captured_delta": 1,
+      "captured_total": 725,
+      "queue_remaining": 5158,
+      "already": 0,
+      "skipped_out_of_zone": 0,
+      "errors": 1,
+      "regions": {
+        "europe": [
+          "Gliwice, Śląskie, Poland"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260807@2026-08-07T09:34:40",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260807",
+    "started_at": "2026-08-07T09:34:40",
+    "ended_at": "2026-08-07T09:50:24",
+    "duration_s": 943.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 6,
+    "profile_views": 6,
+    "summary": {
+      "requested": 6,
+      "dry_run": false,
+      "visited": 6,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 232,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260807@2026-08-07T09:50:39",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260807",
+    "started_at": "2026-08-07T09:50:39",
+    "ended_at": "2026-08-07T10:06:19",
+    "duration_s": 940.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 6,
+    "profile_views": 6,
+    "summary": {
+      "requested": 6,
+      "dry_run": false,
+      "visited": 6,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 227,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260807@2026-08-07T10:06:41",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260807",
+    "started_at": "2026-08-07T10:06:41",
+    "ended_at": "2026-08-07T10:22:43",
+    "duration_s": 962.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 6,
+    "profile_views": 6,
+    "summary": {
+      "requested": 6,
+      "dry_run": false,
+      "visited": 6,
+      "sent": 6,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 6
+      },
+      "remaining_to_contact": 221,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260807@2026-08-07T10:48:01",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260807",
+    "started_at": "2026-08-07T10:48:01",
+    "ended_at": "2026-08-07T11:05:53",
+    "duration_s": 1072.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 7,
+    "profile_views": 7,
+    "summary": {
+      "requested": 7,
+      "dry_run": false,
+      "visited": 7,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 2,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 209,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260807@2026-08-07T11:06:05",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260807",
+    "started_at": "2026-08-07T11:06:05",
+    "ended_at": "2026-08-07T11:10:51",
+    "duration_s": 286.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 2,
+    "profile_views": 2,
+    "summary": {
+      "requested": 2,
+      "dry_run": false,
+      "visited": 2,
+      "sent": 0,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 2,
+      "limit_hit": false,
+      "contacted_delta": {},
+      "remaining_to_contact": 209,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260807@2026-08-07T11:11:06",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260807",
+    "started_at": "2026-08-07T11:11:06",
+    "ended_at": "2026-08-07T11:15:49",
+    "duration_s": 283.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 2,
+    "profile_views": 2,
+    "summary": {
+      "requested": 2,
+      "dry_run": false,
+      "visited": 2,
+      "sent": 2,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 2
+      },
+      "remaining_to_contact": 207,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "check-20260807-1116@2026-08-07T11:16:07",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "check-20260807-1116",
+    "started_at": "2026-08-07T11:16:07",
+    "ended_at": "2026-08-07T11:16:41",
+    "duration_s": 34.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 373,
+      "rounds": 6,
+      "cards_seen": 20,
+      "newly_connected": [
+        {
+          "slug": "david-dobai-033902121",
+          "date": "2026-08-07",
+          "inexact": false
+        },
+        {
+          "slug": "david-moge",
+          "date": "2026-08-06",
+          "inexact": false
+        },
+        {
+          "slug": "jinxin-hu",
+          "date": "2026-08-06",
+          "inexact": false
+        },
+        {
+          "slug": "igor-david-880209171",
+          "date": "2026-08-06",
+          "inexact": false
+        },
+        {
+          "slug": "carl-hubacher-a00462123",
+          "date": "2026-08-06",
+          "inexact": false
+        },
+        {
+          "slug": "david-aquino-osorio-943977115",
+          "date": "2026-08-06",
+          "inexact": false
+        },
+        {
+          "slug": "david-pearson-2b271168",
+          "date": "2026-08-07",
+          "inexact": true
+        },
+        {
+          "slug": "david-white-wolf-59b791101",
+          "date": "2026-08-06",
+          "inexact": false
+        },
+        {
+          "slug": "david-barker-product",
+          "date": "2026-08-06",
+          "inexact": false
+        }
+      ],
+      "newly_connected_count": 9,
+      "inexact_dates": 1,
+      "connected_delta": 9,
+      "connected_total": 154,
+      "still_outstanding": 364,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "endorse-20260807-1116@2026-08-07T11:16:57",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "endorse-20260807-1116",
+    "started_at": "2026-08-07T11:16:57",
+    "ended_at": "2026-08-07T11:41:30",
+    "duration_s": 1473.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 6,
+    "summary": {
+      "requested": 6,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 6,
+      "endorsed": 6,
+      "skills_endorsed": 58,
+      "no_skills": 0,
+      "dm_sent": 6,
+      "dm_failed": 0,
+      "endorse_failed": 0,
+      "already_endorsed": 0,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 0,
+      "per_member": [
+        {
+          "slug": "andrew-bermingham",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "anthony-ngangmi-6421b4193",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "ancrz",
+          "skills": 9,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "anthony-simon-al",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "anthony-withrow-bbb203b7",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "amanda-balkcom-a44255203",
+          "skills": 9,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        }
+      ],
+      "members_delta": {
+        "endorsed": 6,
+        "no_skills": 0,
+        "dm_sent": 6
+      },
+      "eligible_before": {
+        "total": 106,
+        "over_14d": 6,
+        "days_7_to_14": 49,
+        "under_7d": 51,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 100,
+        "over_14d": 0,
+        "days_7_to_14": 49,
+        "under_7d": 51,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260810@2026-08-10T09:41:21",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260810",
+    "started_at": "2026-08-10T09:41:21",
+    "ended_at": "2026-08-10T10:12:53",
+    "duration_s": 1892.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 10,
+    "profile_views": 10,
+    "summary": {
+      "requested": 10,
+      "visited": 10,
+      "processed_delta": 9,
+      "captured_delta": 6,
+      "captured_total": 731,
+      "queue_remaining": 5149,
+      "already": 0,
+      "skipped_out_of_zone": 3,
+      "errors": 1,
+      "regions": {
+        "europe": [
+          "Barcelona, Catalonia, Spain",
+          "Alcamo, Sicily, Italy",
+          "Stockholm, Stockholm County, Sweden"
+        ],
+        "south_america": [
+          "Fortaleza, Ceará, Brazil"
+        ],
+        "north_america": [
+          "Gilbert, Arizona, United States",
+          "Glendale, Arizona, United States"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260810@2026-08-10T11:26:24",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260810",
+    "started_at": "2026-08-10T11:26:24",
+    "ended_at": "2026-08-10T11:41:07",
+    "duration_s": 883.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "visited": 5,
+      "processed_delta": 5,
+      "captured_delta": 0,
+      "captured_total": 743,
+      "queue_remaining": 5124,
+      "already": 0,
+      "skipped_out_of_zone": 5,
+      "errors": 0,
+      "regions": {},
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260810@2026-08-10T11:41:18",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260810",
+    "started_at": "2026-08-10T11:41:18",
+    "ended_at": "2026-08-10T12:01:36",
+    "duration_s": 1217.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "visited": 5,
+      "processed_delta": 5,
+      "captured_delta": 2,
+      "captured_total": 745,
+      "queue_remaining": 5119,
+      "already": 0,
+      "skipped_out_of_zone": 3,
+      "errors": 0,
+      "regions": {
+        "europe": [
+          "United Kingdom"
+        ],
+        "caribbean": [
+          "Jamaica"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260810@2026-08-10T12:14:15",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260810",
+    "started_at": "2026-08-10T12:14:15",
+    "ended_at": "2026-08-10T12:33:30",
+    "duration_s": 1155.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "visited": 5,
+      "processed_delta": 5,
+      "captured_delta": 1,
+      "captured_total": 748,
+      "queue_remaining": 5110,
+      "already": 0,
+      "skipped_out_of_zone": 4,
+      "errors": 0,
+      "regions": {
+        "europe": [
+          "Vilnius, Vilniaus, Lithuania"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260810@2026-08-10T12:33:42",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260810",
+    "started_at": "2026-08-10T12:33:42",
+    "ended_at": "2026-08-10T12:38:28",
+    "duration_s": 286.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 2,
+    "profile_views": 2,
+    "summary": {
+      "requested": 2,
+      "visited": 2,
+      "processed_delta": 2,
+      "captured_delta": 2,
+      "captured_total": 750,
+      "queue_remaining": 5108,
+      "already": 0,
+      "skipped_out_of_zone": 0,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Moncton, New Brunswick, Canada",
+          "Greater Houston"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260810@2026-08-10T12:38:44",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260810",
+    "started_at": "2026-08-10T12:38:44",
+    "ended_at": "2026-08-10T12:52:58",
+    "duration_s": 853.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 227,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260810@2026-08-10T12:53:09",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260810",
+    "started_at": "2026-08-10T12:53:09",
+    "ended_at": "2026-08-10T13:05:43",
+    "duration_s": 753.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 222,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260810@2026-08-10T13:05:52",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260810",
+    "started_at": "2026-08-10T13:05:52",
+    "ended_at": "2026-08-10T13:18:31",
+    "duration_s": 758.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 217,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260810@2026-08-10T13:18:41",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260810",
+    "started_at": "2026-08-10T13:18:41",
+    "ended_at": "2026-08-10T13:31:53",
+    "duration_s": 792.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 212,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260810@2026-08-10T13:32:06",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260810",
+    "started_at": "2026-08-10T13:32:06",
+    "ended_at": "2026-08-10T13:44:30",
+    "duration_s": 744.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 207,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260810@2026-08-10T13:44:44",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260810",
+    "started_at": "2026-08-10T13:44:44",
+    "ended_at": "2026-08-10T13:57:34",
+    "duration_s": 770.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 202,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "check-20260810-1357@2026-08-10T13:57:51",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "check-20260810-1357",
+    "started_at": "2026-08-10T13:57:51",
+    "ended_at": "2026-08-10T13:58:22",
+    "duration_s": 31.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 394,
+      "rounds": 6,
+      "cards_seen": 20,
+      "newly_connected": [
+        {
+          "slug": "lcdotorresquinones",
+          "date": "2026-08-10",
+          "inexact": true
+        },
+        {
+          "slug": "david-mogrovejo",
+          "date": "2026-08-10",
+          "inexact": false
+        },
+        {
+          "slug": "daveabbondanzio",
+          "date": "2026-08-10",
+          "inexact": false
+        },
+        {
+          "slug": "jeancjunior",
+          "date": "2026-08-10",
+          "inexact": false
+        },
+        {
+          "slug": "andreea-david-9252843a",
+          "date": "2026-08-10",
+          "inexact": false
+        },
+        {
+          "slug": "itszakiyadavidson",
+          "date": "2026-08-10",
+          "inexact": true
+        },
+        {
+          "slug": "daviddetoma",
+          "date": "2026-08-09",
+          "inexact": false
+        },
+        {
+          "slug": "david-prince-kwakye-8ab557359",
+          "date": "2026-08-09",
+          "inexact": false
+        },
+        {
+          "slug": "bettyedewey",
+          "date": "2026-08-08",
+          "inexact": false
+        },
+        {
+          "slug": "rémi-david-b88858a1",
+          "date": "2026-08-08",
+          "inexact": false
+        },
+        {
+          "slug": "anthonydossantos",
+          "date": "2026-08-07",
+          "inexact": false
+        },
+        {
+          "slug": "david-iyileh-a16655255",
+          "date": "2026-08-07",
+          "inexact": false
+        },
+        {
+          "slug": "davide-medina-324637bb",
+          "date": "2026-08-07",
+          "inexact": false
+        },
+        {
+          "slug": "davide-bruner-5390a1a8",
+          "date": "2026-08-10",
+          "inexact": true
+        },
+        {
+          "slug": "juanisazaco",
+          "date": "2026-08-07",
+          "inexact": false
+        },
+        {
+          "slug": "david-cardoso-it-guy",
+          "date": "2026-08-07",
+          "inexact": false
+        }
+      ],
+      "newly_connected_count": 16,
+      "inexact_dates": 3,
+      "connected_delta": 16,
+      "connected_total": 170,
+      "still_outstanding": 378,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "endorse-20260810-1521@2026-08-10T15:21:08",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "endorse-20260810-1521",
+    "started_at": "2026-08-10T15:21:08",
+    "ended_at": "2026-08-10T15:59:28",
+    "duration_s": 2299.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 10,
+    "profile_views": 10,
+    "summary": {
+      "requested": 10,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 10,
+      "endorsed": 9,
+      "skills_endorsed": 87,
+      "no_skills": 1,
+      "dm_sent": 9,
+      "dm_failed": 0,
+      "endorse_failed": 0,
+      "already_endorsed": 0,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 0,
+      "per_member": [
+        {
+          "slug": "loyamanda",
+          "skills": 9,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "ibgarrido",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "albertbenavent",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "andrewphillips38",
+          "skills": null,
+          "skills_dry": false,
+          "dm": null,
+          "note": "no endorsable skills (abandoned, no DM)"
+        },
+        {
+          "slug": "benjamin-fortunate-adeniyi-84336021a",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "codylindsey",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "anthonygiza",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "hossein-maleki",
+          "skills": 9,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "benjamin-d-gill",
+          "skills": 9,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "chrispastena",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        }
+      ],
+      "members_delta": {
+        "endorsed": 9,
+        "no_skills": 1,
+        "dm_sent": 9
+      },
+      "eligible_before": {
+        "total": 116,
+        "over_14d": 13,
+        "days_7_to_14": 48,
+        "under_7d": 55,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 106,
+        "over_14d": 3,
+        "days_7_to_14": 48,
+        "under_7d": 55,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "scrape-20260811@2026-08-11T07:22:46",
+    "lane": 2,
+    "lane_name": "scrape",
+    "thread": "scrape-20260811",
+    "started_at": "2026-08-11T07:22:46",
+    "ended_at": "2026-08-11T10:14:48",
+    "duration_s": 10322.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 50,
+    "profile_views": 50,
+    "summary": {
+      "requested": 50,
+      "visited": 50,
+      "processed_delta": 50,
+      "captured_delta": 25,
+      "captured_total": 775,
+      "queue_remaining": 5058,
+      "already": 0,
+      "skipped_out_of_zone": 25,
+      "errors": 0,
+      "regions": {
+        "north_america": [
+          "Maple Valley, Washington, United States",
+          "Atlanta, Georgia, United States",
+          "Greater Philadelphia",
+          "United States",
+          "Canada",
+          "Canonsburg, Pennsylvania, United States",
+          "Maitland, Florida, United States",
+          "Port St Lucie, Florida, United States",
+          "El Paso, Texas, United States",
+          "Avondale, Arizona, United States",
+          "United States",
+          "Toronto, Ontario, Canada",
+          "Appleton, Wisconsin, United States",
+          "Lexington, Kentucky, United States",
+          "Toronto, Ontario, Canada"
+        ],
+        "europe": [
+          "London, England, United Kingdom",
+          "Bury St Edmunds, England, United Kingdom",
+          "United Kingdom",
+          "London, England, United Kingdom",
+          "London Area, United Kingdom",
+          "United Kingdom",
+          "Eastbourne, England, United Kingdom",
+          "Berlin, Germany",
+          "Ilford, England, United Kingdom",
+          "Le Bourget-du-Lac, Auvergne-Rhône-Alpes, France"
+        ]
+      },
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260811@2026-08-11T10:49:23",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260811",
+    "started_at": "2026-08-11T10:49:23",
+    "ended_at": "2026-08-11T11:01:15",
+    "duration_s": 711.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 211,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260811@2026-08-11T11:01:25",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260811",
+    "started_at": "2026-08-11T11:01:25",
+    "ended_at": "2026-08-11T11:14:39",
+    "duration_s": 793.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 5,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 0,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 5
+      },
+      "remaining_to_contact": 206,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260811@2026-08-11T11:14:50",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260811",
+    "started_at": "2026-08-11T11:14:50",
+    "ended_at": "2026-08-11T11:26:25",
+    "duration_s": 695.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 5,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "visited": 5,
+      "sent": 4,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 4
+      },
+      "remaining_to_contact": 202,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "invite-20260811@2026-08-11T11:38:23",
+    "lane": 3,
+    "lane_name": "invite",
+    "thread": "invite-20260811",
+    "started_at": "2026-08-11T11:38:23",
+    "ended_at": "2026-08-11T11:42:26",
+    "duration_s": 243.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": 2,
+    "profile_views": 2,
+    "summary": {
+      "requested": 2,
+      "dry_run": false,
+      "visited": 2,
+      "sent": 1,
+      "already_pending": 0,
+      "already_connected": 0,
+      "nocb_strike1": 0,
+      "nocb_retired": 0,
+      "resend_cooldown": 0,
+      "dry_found": 0,
+      "errors": 1,
+      "limit_hit": false,
+      "contacted_delta": {
+        "sent": 1
+      },
+      "remaining_to_contact": 198,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "check-20260811-1142@2026-08-11T11:42:35",
+    "lane": 4,
+    "lane_name": "check",
+    "thread": "check-20260811-1142",
+    "started_at": "2026-08-11T11:42:35",
+    "ended_at": "2026-08-11T11:43:07",
+    "duration_s": 31.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 0,
+    "summary": {
+      "dry_run": false,
+      "nothing_to_check": false,
+      "outstanding_before": 407,
+      "rounds": 6,
+      "cards_seen": 20,
+      "newly_connected": [
+        {
+          "slug": "juan-ávila-61943a176",
+          "date": "2026-08-11",
+          "inexact": true
+        },
+        {
+          "slug": "david-roberto1",
+          "date": "2026-08-11",
+          "inexact": false
+        },
+        {
+          "slug": "davide-zappacosta-2982746",
+          "date": "2026-08-11",
+          "inexact": false
+        },
+        {
+          "slug": "davide-busi",
+          "date": "2026-08-11",
+          "inexact": false
+        },
+        {
+          "slug": "wluspark",
+          "date": "2026-08-11",
+          "inexact": false
+        },
+        {
+          "slug": "cv-mx",
+          "date": "2026-08-11",
+          "inexact": false
+        },
+        {
+          "slug": "david-sans-naudó-a0111a42",
+          "date": "2026-08-11",
+          "inexact": false
+        },
+        {
+          "slug": "jdavidrivera",
+          "date": "2026-08-10",
+          "inexact": false
+        },
+        {
+          "slug": "daviddavilao",
+          "date": "2026-08-10",
+          "inexact": false
+        }
+      ],
+      "newly_connected_count": 9,
+      "inexact_dates": 1,
+      "connected_delta": 9,
+      "connected_total": 179,
+      "still_outstanding": 398,
+      "mismatch": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "endorse-20260811-1143@2026-08-11T11:43:14",
+    "lane": 5,
+    "lane_name": "endorse",
+    "thread": "endorse-20260811-1143",
+    "started_at": "2026-08-11T11:43:14",
+    "ended_at": "2026-08-11T12:05:12",
+    "duration_s": 1318.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": null,
+    "profile_views": 5,
+    "summary": {
+      "requested": 5,
+      "dry_run": false,
+      "nothing_to_do": false,
+      "visited": 5,
+      "endorsed": 5,
+      "skills_endorsed": 45,
+      "no_skills": 0,
+      "dm_sent": 5,
+      "dm_failed": 0,
+      "endorse_failed": 0,
+      "already_endorsed": 0,
+      "dry_endorse": 0,
+      "dry_skills": 0,
+      "dry_dm": 0,
+      "errors": 0,
+      "per_member": [
+        {
+          "slug": "sai-chandu-malem-a852301b3",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "andrew-ahabwe-475b4312a",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "anthonybaldwin26",
+          "skills": 10,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "coderssolutions",
+          "skills": 9,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        },
+        {
+          "slug": "lucas-reis-cea-pqo-07441a188",
+          "skills": 6,
+          "skills_dry": false,
+          "dm": "sent",
+          "note": null
+        }
+      ],
+      "members_delta": {
+        "endorsed": 5,
+        "no_skills": 0,
+        "dm_sent": 5
+      },
+      "eligible_before": {
+        "total": 115,
+        "over_14d": 5,
+        "days_7_to_14": 60,
+        "under_7d": 50,
+        "unknown_date": 0
+      },
+      "eligible_after": {
+        "total": 110,
+        "over_14d": 0,
+        "days_7_to_14": 60,
+        "under_7d": 50,
+        "unknown_date": 0
+      },
+      "mismatch": null
+    },
+    "error": null
   }
 ]

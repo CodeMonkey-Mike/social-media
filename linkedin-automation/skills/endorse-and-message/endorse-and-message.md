@@ -40,6 +40,9 @@ connection date). Shown below with the fallback greeting:
 > I just endorsed you for a bunch of your skills. I was just curious if you would be
 > kind enough to return the favor.
 >
+> Btw, you actually have some impressive experience on your profile. I'm happy to be
+> a connection. 😀
+>
 > Sincerely yours,
 > Miguel 😇
 

@@ -100,6 +100,9 @@ MESSAGE_BODY_LINES = [
     "I just endorsed you for a bunch of your skills. I was just curious if you would be "
     "kind enough to return the favor.",
     "",
+    "Btw, you actually have some impressive experience on your profile. I'm happy to be "
+    "a connection. \U0001f600",
+    "",
     "Sincerely yours,",
     "Miguel \U0001f607",
 ]

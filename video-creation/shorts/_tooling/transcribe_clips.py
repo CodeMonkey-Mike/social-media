@@ -8,7 +8,9 @@ remotion-builder consumes). Skips clips whose json already exists, so it is safe
 
     python video-creation/shorts/_tooling/transcribe_clips.py <batch> [--model medium] [--force]
 
-Which file it transcribes, in priority order: the clip's `output_mp4` from progress.json, else
+Which file it transcribes, in priority order: `<slug>-final.mp4` (the 5C filler-pass output —
+ALWAYS the newest spine when it exists, even if progress.json's `output_mp4` still points at the
+pre-5C render), else the clip's `output_mp4` from progress.json, else
 `<slug>-tightened-desilenced.mp4`, `<slug>-tightened.mp4`, `desilenced.mp4`, `tightened.mp4`,
 `<slug>-full.mp4`. ALWAYS transcribe the FINAL spine — captions cut against an earlier spine drift
 out of sync the moment a later pass removes time.
@@ -27,6 +29,11 @@ CANDIDATES = [
 
 
 def find_spine(clip_dir, slug, output_mp4):
+    # -final.mp4 (5C) outranks progress.json `output_mp4`: 5C runs AFTER the phase that
+    # recorded output_mp4, so when both exist the recorded path is the stale spine.
+    final = os.path.join(clip_dir, f"{slug}-final.mp4")
+    if os.path.exists(final):
+        return final
     # progress.json `output_mp4` is relative to the BATCH dir (e.g. "<slug>/<slug>-tightened....mp4")
     if output_mp4:
         p = os.path.join(os.path.dirname(clip_dir), output_mp4)
@@ -44,9 +51,11 @@ def main():
     ap.add_argument("batch")
     ap.add_argument("--model", default="medium", help="whisper model (default medium)")
     ap.add_argument("--force", action="store_true", help="re-transcribe even if json exists")
+    ap.add_argument("--shorts-root", default=SHORTS,
+                    help="override the shorts root (sandbox runs; default video-creation/shorts)")
     a = ap.parse_args()
 
-    outdir = os.path.join(SHORTS, a.batch)
+    outdir = os.path.join(a.shorts_root, a.batch)
     prog_path = os.path.join(outdir, "progress.json")
     with open(prog_path, encoding="utf-8") as f:
         prog = json.load(f)

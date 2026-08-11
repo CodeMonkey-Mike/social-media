@@ -61,16 +61,21 @@ Content-zone thumbnails at 2 fps, mean luminance of the chart plot box:
 | **66.30-71.40** | **FULL-FRAME ARNOLD** (protected, see above) |
 | 71.40-78.83 | CMC $TUT page |
 
-Low-value regions that are free in EVERY non-PiP frame (verified on f1/f8/f15/f22/f30/f40/f60/f78):
+Low-value regions that are free in EVERY non-PiP frame (verified on f1/f8/f15/f22/f30/f40/f60/f78).
+**These are the SHIPPED numbers** (the first pass sat ~30 px lower and clipped the livestream's own
+viewer-question plate at y 700-800, on screen 23.0-43.0 s; everything was raised so no graphic ever
+crosses y 700, and the constants file carries the same measurement):
 
-- **P-RIGHT** `left 650, top 400, w 340` -> `x 650-990, y 400-740` — the "Wallet Not Connected" /
-  "My Positions" white block. The right edge stops at 990 so the platform's 90 px action-button
-  rail stays clear.
-- **P-LEFT** `left 60, top 430, w 320` -> `x 60-380, y 430-750` — the Boost button, the ad tile and
-  the "CMC AI" prompt chips.
-- **BADGE BAND** centred, `top 650` (one-line badge, box ~ y 554-746, x ~305-775) — the CMC AI /
+- **P-RIGHT** `left 690, top 385, w 295` -> `x 690-985, y 385-680` (+/-10 px float, real bottom
+  edge 690-695) — the "Analyze Chart" / "Wallet Not Connected" white block. The right edge stops at
+  985 so the platform's 90 px action-button rail stays clear.
+- **P-LEFT** `left 60, top 390, w 290` -> `x 60-350, y 390-680` — the 48% bar, the Boost button, the
+  ad tile and the Website/X/contract links.
+- **BADGE BAND** centred, `top 590` (one-line badge, box ~ y 494-686, x ~305-775) — the CMC AI /
   "Tutorial Markets" header strip. `line2` is deliberately unused: a 2-line badge measures ~252 px
-  tall and its bottom edge came within ~20 px of a 2-line caption's top edge (810).
+  tall and its bottom edge came within ~20 px of a 2-line caption's top edge (810); dropping it puts
+  the box at ~192 px, i.e. UNDER the chart range slider (bottom ~480), ABOVE the chat plate (top
+  ~700) and ~124 px clear of the caption band.
 
 Never used: the chart plot area (x 207-830, y 60-480), the left stats column (market cap / volume /
 supply, y 140-400) and the Markets exchange table rows — those are the receipt.
@@ -106,17 +111,41 @@ by `assertNoGraphicsOverlap()` / `assertNoGraphicsOverArnold()` / `assertNoZoneB
 `constants-tut-94x-euphoria.ts`, which throw rather than ship.
 
 **Coverage arithmetic.** Zone/full b-roll = **0.00 s / 78.83 s = 0 %**; base showing = **100 %**.
-Some graphic is on screen for 22.4 s (28.4 % of runtime), but the largest sticker is 340x340 px =
-5.6 % of the 1080x1920 frame and 43-73 % of every sticker's own pixels are fully transparent, so
-mean frame occlusion is ~1 % and the content zone is never filled.
+Some graphic is on screen for **22.90 s = 29.0 %** of runtime (overlays 15.50 s + badges 7.40 s), but
+a sticker renders at 295x295 / 290x290 px = **4.2 % of the 1080x1920 frame**, and 43-73 % of each
+sticker's own pixels are fully transparent (measured per file), so painted pixels are ~1.1-2.4 % of
+the frame and the content zone is never filled.
+
+**VERIFIED ON THE FINAL RENDER** (2026-08-10, 37 sampled frames diffed against the spine at the same
+timestamps, mutually-exclusive region cores): exactly one graphic region lit inside every planned
+window, zero lit at every gap, zero lit across the whole Arnold guard (66.5 / 68.0 / 70.0 / 71.2 /
+71.6 s) and across the crowd PiP (50 / 52 / 54 s). The receipt regions - the chart plot box
+(x 207-830, y 60-375) and the left stats column (x 0-200, y 140-385) - measure a
+**0.000-0.001 changed-pixel fraction at EVERY sample**, i.e. no graphic ever touches the evidence.
 
 ## SFX (12 cues; contract item #5)
 
 Whoosh on the frame-0 cover cut and on the sticker pops, two risers that each BUILD INTO an impact,
 impacts on the two community numbers and on the live chart reveal, a money hit on
 "congratulations". Cue points are each file's own measured PEAK offset, so the crest lands on the
-frame it punctuates; the two long-tailed impacts are truncated by `dur` rather than turned down.
-**Nothing is scheduled between 66.00 and 71.42 s** (the drop) and nothing rides the hard-out.
+frame it punctuates. **Nothing is scheduled between 66.00 and 71.42 s** (the drop) and nothing rides
+the hard-out.
+
+Two cue corrections came out of the offline whisper sweep (2026-08-10, zero renders: the 12-cue mix
+summed onto the spine in numpy and scored against an ENCODE-MATCHED control, 5 staggered windows per
+cue). Both are TIMING fixes at unchanged gain, per the contract's "try TIMING first":
+
+1. **The two impacts ship as faded `-short` library variants, not as a `dur` truncation.** Neither
+   file decays inside a `dur` window (Impact_Hit_01-2 holds -8 dB from 0.2 to 1.6 s; Kick_Impact_01
+   holds -2 to -7 dB from 0.2 to 1.0 s), so `dur: 0.90` / `dur: 1.10` cut them at FULL level - an
+   audible click 0.19 s before "Look," (47.56) and inside "that" (21.72). The sweep caught it: the
+   mix LOST "look, look", the protected stutter. Trimmed to 0.55 s with a 0.13 s fade
+   (`Impact_Hit_01-2-short.wav`, `Kick_Impact_01-short.wav` in `assets/sfx/Impacts/`), crest intact
+   at full gain -> 5/5 windows agree with the control.
+2. **The post-drop whoosh moved 71.42 -> 71.72** (`dur` 0.62). The drop's AUDIO outlasts its
+   PICTURE: black 71.08-71.44, but -22 to -26 dB of soundboard decay/room runs to 71.65, with true
+   silence only 71.70-72.05 and "Holy" at 72.40. A crest at 71.60 would have covered that tail.
+   `ARNOLD_GUARD_OUT` stays 71.42 - the cue moved, the guard did not.
 
 ---
 

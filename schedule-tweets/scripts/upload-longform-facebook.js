@@ -7,7 +7,7 @@
 const { chromium } = require('playwright');
 const fs   = require('fs');
 const path = require('path');
-const { pickNextLongform, stripMusicCredits } = require('./lib/longform-queue');
+const { pickNextLongform, stripMusicCredits, recordLongformPost } = require('./lib/longform-queue');
 
 const MIN_FILE_SIZE  = 1_000_000; // 1MB
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\fbbot-profile';
@@ -18,9 +18,9 @@ const PAGE_URL       = `https://www.facebook.com/${FB_PAGE}/`;
 
 // Timing — mirrors post-fb-short.js
 const CHAR_DELAY_MIN  = 60, CHAR_DELAY_MAX  = 150;
-const ACTION_MIN      = 4000, ACTION_MAX      = 7000;
-const PRE_COMPOSE_MIN = 60000, PRE_COMPOSE_MAX = 180000;
-const PRE_POST_MIN    = 60000, PRE_POST_MAX    = 180000;
+const ACTION_MIN      = +(process.env.LFB_ACTION_MIN || 4000),      ACTION_MAX      = +(process.env.LFB_ACTION_MAX || 7000);
+const PRE_COMPOSE_MIN = +(process.env.LFB_PRE_COMPOSE_MIN || 60000), PRE_COMPOSE_MAX = +(process.env.LFB_PRE_COMPOSE_MAX || 180000);
+const PRE_POST_MIN    = +(process.env.LFB_PRE_POST_MIN || 60000),    PRE_POST_MAX    = +(process.env.LFB_PRE_POST_MAX || 180000);
 const VIDEOS_TAB_WAIT_MIN = 5000, VIDEOS_TAB_WAIT_MAX = 9000;
 
 if (!fs.existsSync(DEBUG_DIR)) fs.mkdirSync(DEBUG_DIR, { recursive: true });
@@ -28,6 +28,35 @@ function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + mi
 async function actionPause(page, label = '') { const ms = rnd(ACTION_MIN, ACTION_MAX); console.log(`  ~ ${(ms/1000).toFixed(1)}s pause${label?` (${label})`:''}`); await page.waitForTimeout(ms); }
 async function longWait(page, a, b, label = '') { const ms = rnd(a, b); console.log(`  waiting ${Math.round(ms/1000)}s${label?` (${label})`:''}...`); await page.waitForTimeout(ms); }
 async function typeHuman(page, text) { for (const c of text) { await page.keyboard.type(c); await page.waitForTimeout(rnd(CHAR_DELAY_MIN, CHAR_DELAY_MAX)); } }
+
+// Post-submit upsell modals ("Speak With People Directly", "Add WhatsApp button", ...)
+// sit on top of the composer and stop it from closing, which stalls the submit-confirm
+// wait until the run is killed. Seen 2026-08-07 with "Speak With People Directly".
+// Labels are matched CASE-INSENSITIVELY: the old list used exact:true with 'Not now',
+// but Facebook renders "Not Now", so it silently never matched. Never add a label that
+// could cancel the post itself (no "Cancel"/"Discard").
+const UPSELL_LABELS = [/^not now$/i, /^no thanks$/i, /^maybe later$/i, /^skip$/i, /^close$/i, /^dismiss$/i];
+async function dismissUpsells(page, { quiet = false } = {}) {
+  let any = false;
+  for (let pass = 0; pass < 3; pass++) {
+    let dismissed = false;
+    for (const label of UPSELL_LABELS) {
+      try {
+        const btn = page.getByRole('button', { name: label }).first();
+        if (await btn.isVisible({ timeout: 500 })) {
+          console.log(`  Dismissing upsell: ${label}`);
+          await btn.click({ timeout: 5000 });
+          await page.waitForTimeout(rnd(1200, 2200));
+          dismissed = true; any = true;
+          break;
+        }
+      } catch {}
+    }
+    if (!dismissed) break;
+  }
+  if (!any && !quiet) console.log('  (no upsell modal present)');
+  return any;
+}
 async function mouseClick(page, locator) { const b = await locator.boundingBox(); if (b && b.width > 0) await page.mouse.click(b.x + b.width/2, b.y + b.height/2); else await locator.click(); }
 
 async function snapshot(page, label) {
@@ -248,30 +277,33 @@ async function pollForNewVideo(page, baselineSet, { timeoutMs = 720_000, interva
     if (!posted) { await snapshot(page, 'FAILED_final_state'); throw new Error('Wizard did not reach final submit button'); }
 
     // Dismiss any post-publish upsell ("Add WhatsApp button", etc.) — may appear more than once.
-    for (let pass = 0; pass < 2; pass++) {
-      let dismissed = false;
-      for (const label of ['Not now', 'No thanks', 'Maybe later', 'Skip']) {
-        try { const btn = page.getByRole('button', { name: label, exact: true }).first(); if (await btn.isVisible()) { console.log(`Dismissing upsell: ${label}`); await btn.click(); await page.waitForTimeout(rnd(1500, 2500)); dismissed = true; break; } } catch {}
-      }
-      if (!dismissed) break;
-    }
+    console.log('Checking for post-submit upsell modals...');
+    await dismissUpsells(page);
 
     // Real submit signal: the "Create post" composer dialog disappears. Large videos
     // finalize slowly — keep the browser OPEN and wait up to 10 min for it to close.
+    // Re-check for upsells INSIDE the loop: a modal that appears after the first sweep
+    // pins the composer open, and a one-shot dismiss before the loop can never clear it.
     console.log('\nWaiting for composer to close (submit finalizing — up to 10 min)...');
     let submitted = false;
     for (let i = 0; i < 300; i++) {
       const open = await page.evaluate(() => [...document.querySelectorAll('[role="dialog"]')].some(d => d.getAttribute('aria-label') === 'Create post' && d.getBoundingClientRect().width > 100));
       if (!open) { submitted = true; console.log(`  Composer closed ✓ (after ~${i*2}s)`); break; }
-      if (i && i % 15 === 0) console.log(`  ...composer still open after ${i*2}s`);
+      if (i && i % 15 === 0) {
+        console.log(`  ...composer still open after ${i*2}s`);
+        await dismissUpsells(page, { quiet: true });
+      }
       await page.waitForTimeout(2000);
     }
     if (!submitted) console.log('  WARNING: composer never closed — submit may have failed.');
 
     // Find the NEW video by diffing against the baseline. A large video keeps processing
-    // after submit, so poll the /videos tab for up to 12 min (browser stays open).
-    console.log('\nPolling for the new video (baseline diff; up to 12 min)...');
-    const videoUrl = await pollForNewVideo(page, baselineIds, { timeoutMs: 720_000, intervalMs: 30_000 });
+    // after submit, so poll the /videos tab (browser stays open). Raised 12 -> 25 min
+    // on 2026-08-07: a 35:55 upload was still processing at the 12-min mark, so the run
+    // ended "Uncertain" and its row had to be recorded by hand even though the post was
+    // fine. Full-length streams are the normal case here, so 12 min was under-spec.
+    console.log('\nPolling for the new video (baseline diff; up to 25 min)...');
+    const videoUrl = await pollForNewVideo(page, baselineIds, { timeoutMs: 1_500_000, intervalMs: 30_000 });
 
     let verified = false;
     if (videoUrl) {
@@ -291,6 +323,15 @@ async function pollForNewVideo(page, baselineSet, { timeoutMs = 720_000, interva
         else console.log('  Could not verify — post may not be live');
       } catch (e) { console.log(`  Verification error: ${e.message}`); }
     } else console.log('  No NEW video appeared within the poll window — upload likely did not complete.');
+
+    // Write back to longs.json. Without this a successful upload leaves the row
+    // `pending` and the next run re-uploads the same video (added 2026-08-07).
+    if (videoUrl) {
+      recordLongformPost('facebook', meta.title, videoUrl, verified ? 'posted' : 'posted_unverified');
+    } else {
+      console.log('\nWARNING: longs.json still says pending (no URL captured).');
+      console.log('Check the page with scripts/check-fb-longform.js before re-running, or you will duplicate.');
+    }
 
     if (verified) console.log(`\nDone ✓  URL: ${videoUrl}`);
     else console.log(`\nUncertain — verify manually. URL: ${videoUrl || '(no new video detected)'}`);
