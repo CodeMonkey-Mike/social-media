@@ -189,6 +189,70 @@ import { TUT_BKC_FPS, TUT_BKC_DURATION } from './constants-tut-binance-kaspa-cat
 // clip #6's assets are never referenced here.
 import { TutTut94xEuphoria } from './TutTut94xEuphoria';
 import { TUT94X_FPS, TUT94X_DURATION } from './constants-tut-94x-euphoria';
+// batch: tutorial, clip #2 "My Robinhood Chain Meme Rankings: $IF, Cooper, Tendies, Yolo" (variant:
+// FULL, the longest clip in the batch). Seven sibling clips share the batch public dir, so every asset
+// clip #2 owns is `broll-tut-rhm-*` / `thumb-tutrhm` prefixed and clip #1's `broll-tut94x-*` /
+// `thumb-tut94x-*`, clip #3's `broll-tut-bkc-*` / `thumb-tutbkc` and clip #6's `broll-tut6-*` /
+// `thumb-tut6` are never referenced here.
+import { TutRobinhoodMemeRankings } from './TutRobinhoodMemeRankings';
+import { TUT_RHM_FPS, TUT_RHM_DURATION } from './constants-tut-robinhood-meme-rankings';
+// batch: tutorial, clip #4 "That's the Degen Mindset. I Don't Trade Like That." (variant: FULL).
+// Clip #8 (`freaking-early-not-degen-impact`) is a subset of this clip's second segment and shares the
+// batch public dir, so every asset clip #4 owns is `broll-tut-fed-*` / `thumb-tutfed` prefixed and
+// clip #1's `broll-tut94x-*` / `thumb-tut94x-*`, clip #2's `broll-tut-rhm-*` / `thumb-tutrhm`,
+// clip #3's `broll-tut-bkc-*` / `thumb-tutbkc` and clip #6's `broll-tut6-*` / `thumb-tut6` are never
+// referenced here.
+import { TutFreakingEarlyNotDegen } from './TutFreakingEarlyNotDegen';
+import { TUT_FED_FPS, TUT_FED_DURATION } from './constants-tut-freaking-early-not-degen';
+// batch: tutorial, clip #7 "They Don't Apply the Same Logic to Kaspa" (variant: IMPACT). This is the
+// IMPACT cut of clip #3 above (`binance-kaspa-catch22`) and a strict SUBSET of its audio, built
+// separately and sharing the batch public dir, so every asset it owns is `broll-tut-bki-*` /
+// `thumb-tutbki` prefixed and clip #3's `broll-tut-bkc-ov-*` / `thumb-tutbkc` are never referenced
+// here (nor are clip 1's `broll-tut94x-*`, clip 2's `broll-tut-rhm-*`, clip 4's `broll-tut-fed-*`,
+// clip 5's `broll-tut-dgn-*` or clip 6's `broll-tut6-*` / `tail-tut6-hold.png`).
+import { TutBinanceKaspaCatch22Impact } from './TutBinanceKaspaCatch22Impact';
+import { TUT_BKI_FPS, TUT_BKI_DURATION } from './constants-tut-bkc-impact';
+// batch: tutorial, clip #8 "freaking-early-not-degen-impact" (variant: IMPACT, 20.12 s). The IMPACT cut
+// of clip #4's payoff, SHARING clip #4's audio. Deliberately named `TutFreakingEarlyNotDegenImpact`
+// (never a bare `FreakingEarly*`) and every asset it owns is `broll-tut-fei-*` / `thumb-tutfei`, so
+// clip #4's `broll-tut-fed-*` / `thumb-tutfed`, clip #1's `broll-tut94x-*`, clip #2's
+// `broll-tut-rhm-*`, clip #3's `broll-tut-bkc-*`, clip #5's `broll-tut-dgn-*`, clip #6's
+// `broll-tut6-*` / `tail-tut6-hold` and clip #7's `broll-tut-bki-*` are never referenced here.
+import { TutFreakingEarlyNotDegenImpact } from './TutFreakingEarlyNotDegenImpact';
+import { TUT_FEI_FPS, TUT_FEI_DURATION } from './constants-tut-fed-impact';
+// batch: tutorial, clip #5 "doginme at 107 Million: 400 Million Is a 100X From Here" (variant: FULL,
+// the stream's closing crescendo). Seven sibling clips share the batch public dir, so every asset
+// clip #5 owns is `broll-tut-dgn-*` / `thumb-tutdgn` prefixed and clip #1's `broll-tut94x-*` /
+// `thumb-tut94x-*`, clip #2's `broll-tut-rhm-*` / `thumb-tutrhm`, clip #3's `broll-tut-bkc-*` /
+// `thumb-tutbkc`, clip #4's `broll-tut-fed-*` / `thumb-tutfed` and clip #6's `broll-tut6-*` /
+// `thumb-tut6` / `tail-tut6-hold` are never referenced here. NOTE its slug is VESTIGIAL: the `if-500x`
+// tail was deleted at 4b, so nothing this comp draws references $IF / What If / a 500X.
+import { TutDoginme100x } from './TutDoginme100x';
+import { TUT_DGN_FPS, TUT_DGN_DURATION } from './constants-tut-doginme-100x';
+// batch: last-year, clip #2 "I Estimated a 20X on LAB. We Did a 353X." (variant: FULL, 71.36 s spine
+// @25, comp runs 30 fps). Four sibling clips share the batch public dir, so every asset this clip
+// owns is `broll-ly-lab-*` / `thumb-ly-lab353` prefixed. NOT the same comp as `LabCalled20xDid353x`
+// (what-if-1000x clip #4, a different livestream shipped 2026-08-03) - do not merge or overwrite it.
+import { LastYearLab353xUnderestimate } from './LastYearLab353xUnderestimate';
+import { LY_LAB_FPS, LY_LAB_DURATION } from './constants-last-year-lab-353x';
+// batch: last-year, clip #3 "The Robinhood CEO's Dog Is Now a Coin" (variant: FULL, 87.52 s spine
+// @25, comp runs 30 fps). Four sibling clips share the batch public dir, so every asset this clip
+// owns is `broll-lyk-*` / `thumb-lyk` prefixed. New comp id, no prior `*KitsuVladsDog*` existed in
+// src/ or in this file (checked before authoring).
+import { LastYearKitsuVladsDog } from './LastYearKitsuVladsDog';
+import { LYK_FPS, LYK_DURATION } from './constants-last-year-kitsu-vlads-dog';
+// batch: last-year, clip #1 "They Called These Coins Dead. We're at a 130X." (variant: FULL,
+// 86.337 s spine @25, comp runs 30 fps). Four sibling clips share the batch public dir, so every
+// asset this clip owns is `broll-mfx-*` / `thumb-mfx` prefixed. New comp id: nothing matching
+// `*MemeFud*` or `*130x*` existed in src/ or in this file before it was authored (checked).
+import { LastYearMemeFud130x } from './LastYearMemeFud130x';
+import { MFX_FPS, MFX_DURATION } from './constants-last-year-meme-fud-130x';
+// batch: last-year, clip #4 "Kaspa's going down" (variant: FULL, 67.06 s spine @25, comp runs
+// 30 fps). Four sibling clips share the batch public dir, so every asset this clip owns is
+// `broll-lykx-*` / `thumb-lykx` prefixed. New comp id: nothing matching `*KaspaExcavator*` or
+// `*Excavator*` existed in src/ or in this file before it was authored (checked).
+import { LastYearKaspaExcavator } from './LastYearKaspaExcavator';
+import { KEX_FPS, KEX_DURATION } from './constants-last-year-kaspa-excavator';
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -868,6 +932,96 @@ export const RemotionRoot: React.FC = () => {
         component={TutTut94xEuphoria}
         durationInFrames={TUT94X_DURATION}
         fps={TUT94X_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch tutorial / clip #4 — freaking-early-not-degen (43.33 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="TutFreakingEarlyNotDegen"
+        component={TutFreakingEarlyNotDegen}
+        durationInFrames={TUT_FED_DURATION}
+        fps={TUT_FED_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch tutorial / clip #8 — freaking-early-not-degen-impact (20.12 s spine @25, comp 30 fps) */}
+      <Composition
+        id="TutFreakingEarlyNotDegenImpact"
+        component={TutFreakingEarlyNotDegenImpact}
+        durationInFrames={TUT_FEI_DURATION}
+        fps={TUT_FEI_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch tutorial / clip #2 — robinhood-meme-rankings (79.44 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="TutRobinhoodMemeRankings"
+        component={TutRobinhoodMemeRankings}
+        durationInFrames={TUT_RHM_DURATION}
+        fps={TUT_RHM_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch tutorial / clip #5 — doginme-100x-if-500x (39.60 s spine @25, comp runs 30 fps) */}
+      <Composition
+        id="TutDoginme100x"
+        component={TutDoginme100x}
+        durationInFrames={TUT_DGN_DURATION}
+        fps={TUT_DGN_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch tutorial / clip #7 — binance-kaspa-catch22-impact (19.018 s spine @25, comp 30 fps) */}
+      <Composition
+        id="TutBinanceKaspaCatch22Impact"
+        component={TutBinanceKaspaCatch22Impact}
+        durationInFrames={TUT_BKI_DURATION}
+        fps={TUT_BKI_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch last-year / clip #2 — lab-353x-underestimate (71.36 s spine @25, comp 30 fps) */}
+      <Composition
+        id="LastYearLab353xUnderestimate"
+        component={LastYearLab353xUnderestimate}
+        durationInFrames={LY_LAB_DURATION}
+        fps={LY_LAB_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch last-year / clip #3 — kitsu-vlads-dog (87.52 s spine @25, comp 30 fps) */}
+      <Composition
+        id="LastYearKitsuVladsDog"
+        component={LastYearKitsuVladsDog}
+        durationInFrames={LYK_DURATION}
+        fps={LYK_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch last-year / clip #1 — meme-fud-130x (86.337 s spine @25, comp 30 fps) */}
+      <Composition
+        id="LastYearMemeFud130x"
+        component={LastYearMemeFud130x}
+        durationInFrames={MFX_DURATION}
+        fps={MFX_FPS}
+        width={1080}
+        height={1920}
+      />
+
+      {/* batch last-year / clip #4 — kaspa-excavator (67.06 s spine @25, comp 30 fps) */}
+      <Composition
+        id="LastYearKaspaExcavator"
+        component={LastYearKaspaExcavator}
+        durationInFrames={KEX_DURATION}
+        fps={KEX_FPS}
         width={1080}
         height={1920}
       />

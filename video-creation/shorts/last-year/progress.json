@@ -1,0 +1,71 @@
+{
+  "batch": "last-year",
+  "track": "livestream-repurpose",
+  "source_livestream": "last-year",
+  "livestream_date": "2026-08-11",
+  "last_updated": "2026-08-11T14:48:40",
+  "dashboard": "video-creation/shorts/last-year/dashboard.html",
+  "dashboard_status": "ALL 4 built+gated+PUBLISHED to shorts.json (2026-08-11, md5-verified). Mike watches from the Social tab; POSTING is his, sequential.",
+  "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
+  "clips": [
+    {
+      "n": 1,
+      "slug": "meme-fud-130x",
+      "title": "They Called These Coins Dead. We're at a 130X.",
+      "variant": "full",
+      "duration_seconds": 86.34,
+      "phase": "7-built",
+      "gate": "PASS",
+      "output_mp4": "meme-fud-130x/meme-fud-130x-final.mp4",
+      "whisper_words": "meme-fud-130x/whisper-words.json",
+      "built_render": "video-creation/remotion/out/last-year/1-meme-fud-130x.mp4",
+      "built_at": "2026-08-11T12:15:00"
+    },
+    {
+      "n": 2,
+      "slug": "lab-353x-underestimate",
+      "title": "I Estimated a 20X on LAB. We Did a 353X.",
+      "variant": "full",
+      "duration_seconds": 71.36,
+      "phase": "7-built",
+      "gate": "PASS",
+      "output_mp4": "lab-353x-underestimate/lab-353x-underestimate-final.mp4",
+      "whisper_words": "lab-353x-underestimate/whisper-words.json",
+      "built_render": "video-creation/remotion/out/last-year/2-lab-353x-underestimate.mp4",
+      "built_at": "2026-08-11T12:52:00"
+    },
+    {
+      "n": 3,
+      "slug": "kitsu-vlads-dog",
+      "title": "The Robinhood CEO's Dog Is Now a Coin",
+      "variant": "full",
+      "duration_seconds": 87.52,
+      "phase": "7-built",
+      "gate": "PASS",
+      "output_mp4": "kitsu-vlads-dog/kitsu-vlads-dog-final.mp4",
+      "whisper_words": "kitsu-vlads-dog/whisper-words.json",
+      "built_render": "video-creation/remotion/out/last-year/3-kitsu-vlads-dog.mp4",
+      "built_at": "2026-08-11T12:39:00"
+    },
+    {
+      "n": 4,
+      "slug": "kaspa-excavator",
+      "title": "Kaspa's going down",
+      "variant": "full",
+      "duration_seconds": 67.06,
+      "phase": "7-built",
+      "gate": "PASS",
+      "output_mp4": "kaspa-excavator/kaspa-excavator-final.mp4",
+      "whisper_words": "kaspa-excavator/whisper-words.json",
+      "title_note": "4b retitle by Mike 2026-08-11, verbatim; publish must use THIS title",
+      "built_render": "video-creation/remotion/out/last-year/4-kaspa-excavator.mp4",
+      "built_at": "2026-08-11T14:30:00"
+    }
+  ],
+  "resume_protocol": "Phase 4b: Mike reviews dashboard.html and names clips to delete by number. Then per surviving clip: tighten-strategist -> tighten -> 2nd review -> desilence (5B) -> filler pass (5C, optional) -> captions (6) -> remotion-builder (7) -> publish-shorts (8). STT garble fixes for captions are listed in clip-plan.json stt_garble_flags (verify each against the clip's OWN whisper-words.json before applying).",
+  "phase": "8-published",
+  "status": "staged-in-queue",
+  "tighten_log": "video-creation/shorts/last-year/tighten_log.json",
+  "tighten_plan": "video-creation/shorts/last-year/tighten-plan.json",
+  "filler_log": "video-creation/shorts/last-year/filler_log.json"
+}

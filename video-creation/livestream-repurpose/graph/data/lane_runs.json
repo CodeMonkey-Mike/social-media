@@ -1290,5 +1290,434 @@
       }
     },
     "error": null
+  },
+  {
+    "run_id": "publish-tutorial-20260810@2026-08-10T11:39:40",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-tutorial-20260810",
+    "started_at": "2026-08-10T11:39:40",
+    "ended_at": "2026-08-10T11:39:43",
+    "duration_s": 3.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "tutorial",
+    "summary": {
+      "batch": "tutorial",
+      "sandbox": false,
+      "date": "2026-08-10",
+      "clips": 8,
+      "added": 8,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\tutorial-2026-08-10",
+      "queue_total": 163,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-last-year-20260811@2026-08-11T07:33:18",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-last-year-20260811",
+    "started_at": "2026-08-11T07:33:18",
+    "ended_at": "2026-08-11T08:08:50",
+    "duration_s": 2132.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "last-year",
+    "summary": {
+      "slug": "last-year",
+      "sandbox": false,
+      "master_duration_s": 4010.433008,
+      "master_mbps": 0.65,
+      "longform": {
+        "duration_s": 2734.6,
+        "removed_s": 1275.84,
+        "mbps": 0.82,
+        "thumb_staged": false,
+        "queued_id": "lf-20260811-last-year",
+        "already_present": false,
+        "queue_total": 44
+      },
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 4010.4
+      },
+      "words": 9508,
+      "segments": 572,
+      "glossary": "Kaspa:26",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-last-year-20260811@2026-08-11T08:24:25",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-last-year-20260811",
+    "started_at": "2026-08-11T08:24:25",
+    "ended_at": "2026-08-11T08:26:39",
+    "duration_s": 134.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "last-year",
+    "summary": {
+      "batch": "last-year",
+      "sandbox": false,
+      "clips": 4,
+      "total_s": 500.4,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\last-year\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "meme-fud-130x": 133.391,
+        "lab-353x-underestimate": 104.087,
+        "kitsu-vlads-dog": 159.071,
+        "kaspa-excavator": 103.895
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-last-year-20260811@2026-08-11T08:17:36",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-last-year-20260811",
+    "started_at": "2026-08-11T08:17:36",
+    "ended_at": "2026-08-11T08:53:23",
+    "duration_s": 2146.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "last-year",
+    "summary": {
+      "batch": "last-year",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-08-11",
+      "images": {
+        "planned": 12,
+        "generated": 12,
+        "skipped": 0,
+        "verified": 12
+      },
+      "entries_added": 12,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 324
+        },
+        "x-threads.json": {
+          "planned": 1,
+          "queue_total": 82
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 68
+        },
+        "yt-posts.json": {
+          "planned": 1,
+          "queue_total": 149
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 98
+        },
+        "ig-single-image.json": {
+          "planned": 1,
+          "queue_total": 123
+        }
+      },
+      "lint": "clean",
+      "registered": "last-year"
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-last-year-20260811@2026-08-11T09:23:28",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-last-year-20260811",
+    "started_at": "2026-08-11T09:23:28",
+    "ended_at": "2026-08-11T09:28:31",
+    "duration_s": 303.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "last-year",
+    "summary": {
+      "batch": "last-year",
+      "sandbox": false,
+      "clips": 4,
+      "total_s": 357.5,
+      "min_sil": 0.95,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\last-year\\dashboard.html",
+      "clip_durations": {
+        "meme-fud-130x": 96.959,
+        "lab-353x-underestimate": 78.388,
+        "kitsu-vlads-dog": 105.496,
+        "kaspa-excavator": 76.635
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-last-year-20260811-v2@2026-08-11T09:09:21",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-last-year-20260811-v2",
+    "started_at": "2026-08-11T09:09:21",
+    "ended_at": "2026-08-11T09:49:31",
+    "duration_s": 2410.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "last-year",
+    "summary": {
+      "batch": "last-year",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-08-11",
+      "images": {
+        "planned": 12,
+        "generated": 10,
+        "skipped": 2,
+        "verified": 12
+      },
+      "entries_added": 0,
+      "entries_skipped": 12,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 324
+        },
+        "x-threads.json": {
+          "planned": 1,
+          "queue_total": 82
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 68
+        },
+        "yt-posts.json": {
+          "planned": 1,
+          "queue_total": 149
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 98
+        },
+        "ig-single-image.json": {
+          "planned": 1,
+          "queue_total": 123
+        }
+      },
+      "lint": "clean",
+      "registered": "last-year"
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-last-year-20260811-ms025@2026-08-11T10:03:15",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-last-year-20260811-ms025",
+    "started_at": "2026-08-11T10:03:15",
+    "ended_at": "2026-08-11T10:08:06",
+    "duration_s": 290.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "last-year",
+    "summary": {
+      "batch": "last-year",
+      "sandbox": false,
+      "clips": 4,
+      "total_s": 312.3,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\last-year\\dashboard.html",
+      "clip_durations": {
+        "meme-fud-130x": 86.337,
+        "lab-353x-underestimate": 71.36,
+        "kitsu-vlads-dog": 87.52,
+        "kaspa-excavator": 67.06
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-last-year-20260811-v3@2026-08-11T10:11:00",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-last-year-20260811-v3",
+    "started_at": "2026-08-11T10:11:00",
+    "ended_at": "2026-08-11T10:26:54",
+    "duration_s": 953.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "last-year",
+    "summary": {
+      "batch": "last-year",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-08-11",
+      "images": {
+        "planned": 12,
+        "generated": 4,
+        "skipped": 8,
+        "verified": 12
+      },
+      "entries_added": 0,
+      "entries_skipped": 12,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 324
+        },
+        "x-threads.json": {
+          "planned": 1,
+          "queue_total": 82
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 68
+        },
+        "yt-posts.json": {
+          "planned": 1,
+          "queue_total": 149
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 98
+        },
+        "ig-single-image.json": {
+          "planned": 1,
+          "queue_total": 123
+        }
+      },
+      "lint": "clean",
+      "registered": "last-year"
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-last-year-20260811@2026-08-11T11:24:29",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-last-year-20260811",
+    "started_at": "2026-08-11T11:24:29",
+    "ended_at": "2026-08-11T11:28:49",
+    "duration_s": 259.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "last-year",
+    "summary": {
+      "batch": "last-year",
+      "sandbox": false,
+      "clips": 4,
+      "total_s": 312.3,
+      "filler_cuts": 0,
+      "words": {
+        "meme-fud-130x": 287,
+        "lab-353x-underestimate": 241,
+        "kitsu-vlads-dog": 288,
+        "kaspa-excavator": 264
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\last-year\\dashboard.html",
+      "clip_durations": {
+        "meme-fud-130x": 86.34,
+        "lab-353x-underestimate": 71.36,
+        "kitsu-vlads-dog": 87.52,
+        "kaspa-excavator": 67.06
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-last-year-20260811@2026-08-11T14:48:00",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-last-year-20260811",
+    "started_at": "2026-08-11T14:48:00",
+    "ended_at": "2026-08-11T14:48:04",
+    "duration_s": 4.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "last-year",
+    "summary": {
+      "batch": "last-year",
+      "sandbox": false,
+      "date": "2026-08-11",
+      "clips": 4,
+      "added": 4,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\last-year-2026-08-11",
+      "queue_total": 167,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-last-year-20260811-v4@2026-08-11T14:52:02",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-last-year-20260811-v4",
+    "started_at": "2026-08-11T14:52:02",
+    "ended_at": "2026-08-11T14:57:52",
+    "duration_s": 349.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "last-year",
+    "summary": {
+      "batch": "last-year",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-08-11",
+      "images": {
+        "planned": 12,
+        "generated": 1,
+        "skipped": 11,
+        "verified": 12
+      },
+      "entries_added": 0,
+      "entries_skipped": 12,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 324
+        },
+        "x-threads.json": {
+          "planned": 1,
+          "queue_total": 82
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 68
+        },
+        "yt-posts.json": {
+          "planned": 1,
+          "queue_total": 150
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 98
+        },
+        "ig-single-image.json": {
+          "planned": 1,
+          "queue_total": 123
+        }
+      },
+      "lint": "clean",
+      "registered": "last-year"
+    },
+    "error": null
   }
 ]
