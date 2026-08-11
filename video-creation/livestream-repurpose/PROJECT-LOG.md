@@ -60,6 +60,31 @@ stick-figure-unicorn Pippin, no reference on disk), the TUT-ATH cross-post to yt
 pipeline view iterated to Mike's spec (square step cards, LinkedIn-style, 3 vertical lane columns,
 drawn arrows, who-chips separated from status pills, per-actor agent names).
 
+### NEXT STEPS (Mike + session aligned at wrap, 2026-08-11 — ranked)
+
+1. **THE POSTING TAIL — the next migration slice, and the last JS executing anywhere in the flow.**
+   The ~20 `schedule-tweets` posting/upload scripts (`post-*.js`, `upload-longform-*.js`) plus their
+   session libs. Shape per the locked doctrine: ONE PLATFORM AT A TIME, port first / wrap second;
+   each "post the next pending entry on platform X" becomes its own small graph invocation (one
+   attempt, verify-from-disk against the queue entry's status/url, halt loudly, NEVER auto-retry —
+   the duplicate-post rules make this the most verification-gated slice yet). Bless on a low-stakes
+   platform first (BitChute or Rumble) before X/IG/TikTok. YT Shorts is already API-based
+   (`post-yt-short-api.js`) but still JS.
+2. **Phase 7 narrowing** (carried candidate from 2026-08-10): the graph composes builder contracts
+   from the scoped directive records and runs the finalized gate with `--clip`, leaving only the
+   creative loop to the remotion-builder agents. Today's 4 builds would have been a clean trial.
+3. **Small hardening:** encode the intake longform min-sil default (0.5) in code exactly like
+   tighten's 0.25 · stamp LinkedIn's heartbeat with the same context field for tab parity · a
+   periodic registry-vs-live-chats reconcile tool (the one-off ran today; the hardened
+   confirm_and_register should make orphans rare, the reconcile catches whatever still slips).
+4. **Hygiene (Mike's call):** the ~200 dead one-off `_genlist-*`/`_fix-*` scripts + logs in
+   `repurpose/` are committed for provenance but are clutter — sweep into an `archive/` subfolder
+   so the canonical Python stack is what a reader sees.
+
+Also open on the batch itself: Mike posts the 4 shorts + the longform (thumbnail PNG still wanted
+for `lf-20260811-last-year`) + the 12 Lane 3 entries; the NEXT batch exercises the hardened chat
+rotation live.
+
 ### FINAL ADDENDUM: the dashboard grew an engineering layer (Mike-driven, same day)
 
 The Livestream tab now has SUB-TABS: **Now running** (the live pipeline view) and **Architecture**
