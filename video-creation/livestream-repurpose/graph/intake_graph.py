@@ -136,6 +136,18 @@ def _now_iso():
     return datetime.now().isoformat(timespec="seconds")
 
 
+CURRENT_BATCH = None
+
+
+def set_current_batch(batch):
+    """Stamp the live heartbeat with the batch/slug this invocation serves. Run
+    records only land when a run ENDS, so while a segment is in flight the
+    dashboard's pipeline view has no other way to know which batch is live —
+    without this, a new batch's intake renders under the previous batch's name."""
+    global CURRENT_BATCH
+    CURRENT_BATCH = batch
+
+
 def write_progress(prog: dict):
     """Publish the live heartbeat. A dashboard feed must never fail a real run."""
     try:
@@ -230,6 +242,7 @@ def _run_streaming(cmd, lane=1, node=None, stub="", total_s=None):
     started = _now_iso()
     prog = {
         "lane": lane, "lane_name": LANE_NAMES.get(lane), "node": node,
+        "batch": CURRENT_BATCH,
         "status": "running", "stub": bool(stub),
         "started_at": started, "updated_at": started,
         "pid": None, "index": None, "total": None,

@@ -83,7 +83,26 @@ beaten a wrap table in two separate batches.
 | 7 | **QA** | Draft render ~0.3 Mbps + chunk-QA first; overlay-collision frame checks at every overlay `tIn`/handoff; blackdetect; audio levels; whisper-verify captions on the FINAL render. **An SFX cue that MASKS the VO is a build defect, not a mixing taste call** (2026-07-23): whisper-verify the final MIX, and when a line transcribes worse off the render than off the spine alone, the sting on top of it is too loud. Sweep that ONE cue's volume against Whisper until the line comes back and re-render; do not lower the payoff hit. Real case: a closing punchline read as 'even you are here, my' at sting vol 0.38 and only recovered at 0.10. **Volume is only one of three knobs, and often the wrong one — the masker is frequently the DECAY TAIL or the crest PLACEMENT, so try TIMING first: truncate the tail, or move the hit off the word.** A payoff hit then keeps its full gain (2026-08-05: a TING's 1.4→0.8s tail was the masker at unchanged volume; 2026-08-07 clip 2: an impact read 0/3 at dur 2.40 and 1/3 at volume 0.26→0.14, but **3/3 = control at dur 0.55 with the full 0.26 gain** — shipped as a trimmed `-short.wav` library variant). If a cue cannot be saved by timing or gain and it is decoration rather than a payoff hit, DELETE it (2026-08-07 clip 3). |
 | 7a | **How to whisper-verify a mix (method, not taste)** | Two confounds produce phantom regressions. (1) **Long windows**: 12-second windows flagged four regressions on one clip and three were window-boundary artifacts — in one case the *spine* transcribed worse. Use **short, STAGGERED windows** (multiple offsets per cue) and require agreement. (2) **Encode mismatch**: scoring the render's 48 kHz AAC against the raw 44.1 kHz spine measures the codec, not the cue. Always compare against an **encode-matched control** — the bare spine pushed through the same 48 kHz/AAC chain as the render. Sweep candidates by mixing them onto the bare spine **offline** and scoring; that costs **zero renders**, and only the winner gets rendered. Use the same control to prove a residual diff is decoder variance (measure the SFX energy in the span: a real masker is not <-40 dB). |
 | 7b | **Frame checks land INSIDE a beat** | `BrollLayer` renders opacity 0 exactly at a beat's `tIn`, so a QA frame pulled at the literal `tIn` legitimately shows base video and reads as a missing b-roll beat. Pull the frame one or more frames INSIDE the window. (Logged 2026-07-23.) |
-| 8 | **GATE** | Run `python video-creation/livestream-repurpose/skills/remotion-shorts-build/scripts/finalized_short_gate.py --constants <constants-file> --comp <composition.tsx> --public-dir <render-assets dir> --duration <seconds>` → must print `PASS`. |
+| 8 | **GATE** | Run `python video-creation/livestream-repurpose/skills/remotion-shorts-build/scripts/finalized_short_gate.py --constants <constants-file> --comp <composition.tsx> --public-dir <render-assets dir> --duration <seconds> --clip <n>` → must print `PASS`. **`--clip <n>` is REQUIRED** (see §Directives are per-clip): without it the ZONE-COVERAGE check is skipped and the gate only WARNs, which is how batch `tutorial` shipped 8 clips at 0% coverage. |
+
+## ⛔ Directives are PER-CLIP. Never inherit one you were not given (2026-08-10)
+
+**Batch `tutorial` shipped all 8 shorts with zero full-screen and zero content-zone b-roll under a
+directive Mike had given for CLIP 1 ONLY.** His verbatim words carried no scope marker, the session
+that took them down filed them as prose headed "WHOLE BATCH", the resume contract then said they
+"ride VERBATIM in every builder contract", and the gate passed all 8 because a transparent overlay
+satisfies its ≥1 b-roll ref. Eight builders each declared the coverage miss in prose. Prose blocks
+nothing. Mike kept the batch but the scope was wrong.
+
+- **Read directives ONLY via `python video-creation/shorts/_tooling/clip_directives.py --batch <b>
+  --clip <n>`.** It returns just the directives whose `applies_to` includes that clip. A directive
+  with no `applies_to` is reported and **NOT applied** — the tool refuses to guess a scope.
+- **Never widen an existing directive's `applies_to` to make a gate pass.** That is the bug itself.
+- If a clip legitimately ships zero zone coverage, the instruction must exist as a scoped directive
+  with `"coverage_exempt": true` and that clip in `applies_to`. Then the gate passes and PRINTS the
+  authorising directive, so the exemption is visible instead of implied.
+- Precedent for doing it right: batch `early-crash` scoped the same class of directive to clips 1
+  and 6, which shipped at 11.3% / 17.1% coverage while their siblings shipped at ~30%.
 
 ## B-roll — what it is and where it comes from
 
@@ -100,12 +119,16 @@ cinematic), meme images, animated coin/logo graphics, abstract motion, real arti
    a named-project short must carry that project's real branding, never only generic coins.
 3. **Generate straight into the clip's `render-assets/`** with `broll-<batch>-<beat>.png` names;
    reference via `staticFile()`.
-   - **Primary generator = `repurpose/generate-broll-reload.js` (ChatGPT, pool purpose `broll`).**
-     Takes a `[{file, prompt}]` list; `file` is joined onto `video-creation/assets`, so a
-     `..\shorts\<batch>\<clip>\render-assets\broll-<beat>.png` prefix lands it in the clip folder.
-     Skips existing files (safe to re-run). This is the RELIABLE capture — it beats two failure modes
-     of the automated (bot-detected) Chrome session that the older `gen-images.js`/`generate-broll-wlw.js`
-     DOM-poll scripts hit:
+   - **Primary generator = `python repurpose/gen_batch.py --list <list.json> --prefix broll --batch <id>`
+     (ChatGPT, pool purpose `broll`; canonical Python port 2026-08-11, built on the blessed
+     `gen_images.py` capture stack — `generate-broll-reload.js` / `gen-batch-freshchat.js` are its
+     FROZEN JS rollback).** Takes a `[{file, prompt}]` list (a relative `file` joins onto
+     `video-creation/assets` exactly like the JS did, so a
+     `..\shorts\<batch>\<clip>\render-assets\broll-<beat>.png` prefix lands it in the clip folder;
+     absolute paths and the `image_id`/`slug`/`prompt`/`ref` schema are also accepted — refs upload
+     with the ref-byte rejection gate). Skips existing files (safe to re-run); emits `IMG OK/SKIP/FAIL`
+     machine lines and exits 1 on any fail. This is the RELIABLE capture — it beats these failure modes
+     of the automated (bot-detected) Chrome session that the old DOM-poll scripts hit:
        - **Live-DOM HANG:** after a prompt is sent the streaming DOM often never surfaces the finished
          image (it just spins), though the image IS done server-side (visible if you open the same chat
          in a clean Edge browser). Fix: poll the live DOM up to **~80s**, and if still nothing, **RELOAD
@@ -121,22 +144,23 @@ cinematic), meme images, animated coin/logo graphics, abstract motion, real arti
          message, so the model renders the OLD prompt's scene and that beat's image is silently
          wrong while the generator reports OK. Real case: a killed builder left 521 chars of a
          "billboard skyline" prompt; the resumed builder's 715-char "organic tree" prompt landed
-         inside it (1236 chars) and produced a second billboard image. Both `generate-broll-reload.js`
-         and `gen-batch-freshchat.js` now `clearComposer()` (select-all + delete, verified empty)
-         before typing, and BEFORE any reference upload so the attachment chip is never what Delete
-         removes. **On any RESUMED build, still eyeball the first image of the run** — and when an
+         inside it (1236 chars) and produced a second billboard image. The Python stack opens each
+         run on a settled composer and uploads any ref BEFORE the baseline snapshot, so the
+         attachment chip is never what a clear removes. **On any RESUMED build, still eyeball the first image of the run** — and when an
          image is off-brief, recover the truth READ-ONLY from the conversation
          (`/backend-api/conversation/<id>` + `/backend-api/files/<id>/download`) before assuming a
          capture bug: it shows the exact prompt that was actually sent.
-     Typing uses the canonical human-like **~45-70ms/char** delay (matches `gen-images.js`; anti-detection).
-     Best run against a FRESH chat (retire the active broll chat first) so the seen-set starts clean.
+     Typing uses the canonical human-like **~45-70ms/char** delay (anti-detection).
+     Best run against a FRESH chat (retire the active broll chat first, or pass `--fresh`) so the
+     seen-set starts clean.
      **After a run, ALWAYS `md5sum` the beat pngs to confirm zero duplicates** (a dup = a mis-capture to
-     regenerate). The build agent runs this generator ITSELF as part of building its one clip (Mike:
-     a single agent builds each clip end to end, one at a time) — the reload/`file_id`/URL/modal
-     handling above makes it reliable enough to run unattended. It gets stuck ONLY if you use the old
-     DOM-poll scripts; use `generate-broll-reload.js`.
-   - `gen-images.js` / `generate-broll-batch.js` remain for other purposes but use the flaky DOM-poll
-     capture; prefer `generate-broll-reload.js` for shorts b-roll.
+     regenerate; the generator also byte-rejects sibling dups itself). The build agent runs this
+     generator ITSELF as part of building its one clip (Mike: a single agent builds each clip end to
+     end, one at a time) — the reload/`file_id`/URL/modal handling above makes it reliable enough to
+     run unattended. It gets stuck ONLY if you use the old JS DOM-poll scripts; use `gen_batch.py`.
+   - The old JS (`generate-broll-reload.js`, `gen-batch-freshchat.js`, `gen-images.js`,
+     `generate-broll-batch.js`) is frozen rollback only — do not reach for it unless the Python
+     stack is broken and the rollback is deliberate.
    - **Sanctioned fallback (Mike, 2026-07-08):** when ChatGPT is fully down, use Higgsfield
      `gpt_image_2` (`--image <ref>` for references, `--wait --json`, download the `hf_`-prefixed OUTPUT
      url, not the reference url).

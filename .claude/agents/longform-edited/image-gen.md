@@ -17,9 +17,10 @@ generated, verified b-roll stills.
 
 ## Canonical sources — read before generating
 1. **`repurpose/SKILL.md` image section** + the generation scripts it names (the pooled-chat browser
-   pipeline: `gen-batch-freshchat.js` / `gen-images.js`, which carry the reload-unstick + estuary
-   fixes). **ChatGPT images go through the BROWSER pipeline ONLY — never gpt_image via Higgsfield
-   CLI/API** (standing rule).
+   pipeline, canonical PYTHON since 2026-08-11: `repurpose/gen_batch.py --fresh` for one-off project
+   batches, `repurpose/gen_images.py` for queue images — both carry the reload-unstick + estuary
+   fixes; the JS twins are frozen rollback). **ChatGPT images go through the BROWSER pipeline ONLY —
+   never gpt_image via Higgsfield CLI/API** (standing rule).
 2. `persona/persona.json` → `image_generation` (house style; `kaspa_coin` rule: explicit backwards-K,
    greenish-cyan teal, never gold; `name_the_asset`: any specific coin is NAMED in the prompt).
 3. The video's **BROLL-PLAN.md ChatGPT table** + COVER-PLAN.json entries (concept, beat, bench),

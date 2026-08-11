@@ -643,14 +643,22 @@ assets that would LINGER/POLLUTE here.** Now uniform across tracks: **every trac
 
 **SHORTS → `video-creation/shorts/<batch>/render-assets/`** — the batch's OWN public dir (NOT `assets/projects/`,
 NOT loose in the root — both retired 2026-06-25). It is self-contained, holding everything the comp loads:
-- **spine** — each clip's `<slug>/tightened.mp4`, COPIED to `render-assets/<slug>.mp4`; reference `staticFile('<slug>.mp4')`.
-- **b-roll** — generate STRAIGHT into it: `gen-batch-freshchat.js --batch=<id>` (or `generate-broll-batch.js --batch=<id>`); reference `staticFile('foo.png')`.
-- **shared sfx/logos** — COPIED in (NOT junctioned) by `scripts/setup-batch-render-assets.js <batch> --data <dataFile>`, which copies every `staticFile('X')` the comp references from `assets/X` → `render-assets/X`. Reference unchanged (`staticFile('sfx/Foo.wav')`, `staticFile('logo-kaspa.png')`).
+- **spine** — each clip's FINAL spine (`<slug>-final.mp4`, else `-tightened-desilenced.mp4`), staged to
+  `render-assets/<slug>.mp4` **already GOP re-encoded seek-friendly** (`-g 25 -keyint_min 25 -bf 0
+  -sc_threshold 0`, audio copied) by the canonical
+  `python video-creation/livestream-repurpose/scripts/setup_render_assets.py <batch>` — the finish graph
+  segment (`run.py finish`) runs + verifies this for livestream batches, so builders normally find it done.
+  Never re-encode the clip folder's spine itself; reference `staticFile('<slug>.mp4')`. (The GOP re-encode is
+  mandatory: desilenced spines ship a 250-frame GOP with B-frames and Remotion's concurrent OffthreadVideo
+  seeks then die with "No frame found at position N", 2026-08-05.)
+- **b-roll** — generate STRAIGHT into it: `python repurpose/gen_batch.py --list <items> --prefix broll --batch <id>` (canonical Python, 2026-08-11; the JS `gen-batch-freshchat.js`/`generate-broll-batch.js` are frozen rollback); reference `staticFile('foo.png')`.
+- **shared sfx/logos** — COPIED in (NOT junctioned) by `python video-creation/livestream-repurpose/scripts/setup_render_assets.py <batch> --data <dataFile>`, which copies every `staticFile('X')` the comp references from `assets/X` → `render-assets/X`. Reference unchanged (`staticFile('sfx/Foo.wav')`, `staticFile('logo-kaspa.png')`).
 
 ⛔ **Never junction the shared library into `render-assets/`** — cleanup recycles the WHOLE `shorts/<batch>/` folder
 via recursive `DeleteDirectory`, which would FOLLOW the junction and recycle the real `assets/` library. Copies
-are transient and recycled harmlessly with the batch. Run: `node scripts/setup-batch-render-assets.js <batch> [--data <dataFile.ts>]`,
-then render with `--public-dir video-creation/shorts/<batch>/render-assets`.
+are transient and recycled harmlessly with the batch. Run: `python video-creation/livestream-repurpose/scripts/setup_render_assets.py <batch> [--data <dataFile.ts>]`
+(canonical since 2026-08-07; `scripts/setup-batch-render-assets.js` is FROZEN as rollback — it predates 5B/5C
+and stages the wrong spine), then render with `--public-dir video-creation/shorts/<batch>/render-assets`.
 
 **LONGFORM / PERSONA / livestream / repurpose → the PROJECT'S OWN folder** (the bittensor pattern):
 ```
@@ -659,8 +667,8 @@ video-creation/longform-edited/media/<project>/   (or vertical-ai-persona/<proje
   render-assets/  ← render-ready assets the comp loads (spine, music, deck/, img/, vid/)
 ```
 Render with the project's OWN public dir: `--public-dir "<project>/render-assets"`, `asset()` = `staticFile(f)`.
-Generate b-roll with `gen-batch-freshchat.js --outdir <project>/assets` (NOT `--batch`). (Worked example:
-bittensor `BittensorCh1to6`.) `gen-batch-freshchat.js` and `generate-broll-batch.js` both hard-refuse any b-roll
+Generate b-roll with `python repurpose/gen_batch.py --fresh --outdir <project>/assets` (NOT `--batch`; canonical
+Python, JS frozen rollback). (Worked example: bittensor `BittensorCh1to6`.) The generator hard-refuses any b-roll
 write under `video-creation/assets/`.
 
 (LEGACY: shorts batches created before 2026-06-25 reference `staticFile('projects/<batch>/…')` / loose root

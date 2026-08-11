@@ -106,7 +106,8 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > "slug":"<kebab>", "prompt":"...", "ref":"<optional logo path or ARRAY of paths>" }]`; skips
 > already-existing files (resumable). Run ONE item per invocation when binding matters (refs,
 > carousels) — the graph's generate stage always does.
-> B-roll uses the same pool (purpose `broll`) via **`generate-broll-reload.js`** — the RELIABLE capture that supersedes the flaky DOM-poll `generate-broll-wlw.js` (outputs to `video-creation/assets/`; a `..\shorts\...\render-assets\` prefix in the `file` field lands it in a clip folder). The `file` path is joined onto `video-creation/assets/`, so it must be **RELATIVE** to that dir (e.g. `../longform-edited/media/<project>/assets/img/x.png`), NEVER an absolute `C:\...` path (that produces a broken concatenated dir).
+> B-roll uses the same pool (purpose `broll`) via **`gen_batch.py`** — the canonical Python port (2026-08-11) of `generate-broll-reload.js` + `gen-batch-freshchat.js`, built on the same blessed `gen_images.py` capture stack (both JS twins are FROZEN rollback). It accepts both item schemas: the freshchat shape (`image_id`/`slug`/`prompt`/`ref`) and the broll shape (`{file, prompt}` — a relative `file` joins onto `video-creation/assets/` exactly like the JS, so a `..\shorts\<batch>\render-assets\` prefix lands it in the batch folder; absolute paths are also accepted now). Modes: default = pool-managed `broll` chat (reload-reliable capture); `--fresh` = one brand-new chat for the whole list (one-off project batches, registered + tied to `--chat-batch` for cleanup); `--chat-url` pins a specific chat. Routing: `--batch <id>` → `shorts/<id>/render-assets/`, `--outdir` → the project's own folder; b-roll writes under the shared `video-creation/assets/` tree are refused.
+> ✅ LIVE-BLESSED 2026-08-11 on batch `last-year`'s four Phase 7 builds: 35 real browser generations, zero capture failures, zero dupes. The one first-run defect (rotation registration reporting "rename did not stick" on read-after-write lag, orphaning the fresh chat) is FIXED in `chat_pool.confirm_and_register`: the rename verification now retries with backoff (re-PATCHing if a late auto-title overwrote it), and if verification still exhausts, the chat is registered WITH `title_unverified` instead of being orphaned — the delete-time live-title gate in `chat_delete` remains the ultimate safety either way.
 >
 > **⚠️ ALWAYS state the target ASPECT RATIO / orientation in EVERY b-roll prompt — GPT-Image DEFAULTS TO PORTRAIT (1024×1536) (Mike, 2026-07-10).** Omit it and you get vertical stills that don't fit the frame. For a **16:9 track** (longform-edited / longform-presentation) START the prompt with *"Wide landscape 16:9 horizontal image."* and end with *"Horizontal landscape orientation."* (yields ~1672×941 / 1536×1024 landscape). For **9:16 shorts / vertical-ai-persona** say *"vertical 9:16 portrait."* This bit the Clarity-Act longform b-roll (portrait 1024×1536 → fixed to 1672×941 by adding the landscape instruction). Same rule as the X-image aspect note below — but the b-roll generator needs it stated too, because b-roll prompts are atmosphere descriptions that easily forget it.
 >
@@ -114,8 +115,9 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > **Background (why the pool exists):** a ChatGPT chat degrades past ~25 images — it either stops rendering
 > OR returns off-prompt/style-contaminated images (e.g. the b-roll chat forced icy/Bitcoin motifs onto every
 > prompt, 2026-06-07). The pool caps + rotates to prevent both. Always QA a generated frame regardless.
-> `gen-batch.js` / `gen-batch-freshchat.js` are SUPERSEDED (kept for reference); their hardcoded persistent
-> chat URLs are overloaded/contaminated. **Do NOT loop `generate-image.js`** (a new chat per image = orphan-chat sprawl).
+> `gen-batch.js` / `gen-batch-freshchat.js` / `generate-broll-reload.js` are SUPERSEDED by the Python stack
+> (`gen_images.py` for queue images, `gen_batch.py` for builder b-roll / one-off `--fresh` batches) and kept
+> only as frozen rollback. **Do NOT loop `generate-image.js`** (a new chat per image = orphan-chat sprawl).
 >
 > **Every automation chat is RENAMED at birth, and that name is the deletion gate** (Mike, 2026-07-22).
 > `chat-pool.js confirmAndRegister(page, purpose)` runs right after a fresh chat's first successful
@@ -138,7 +140,7 @@ The map needs to be filled in over time — most handles are currently `null`. W
 >    sweeps that list at the end of its run (`chat-delete.js`, UI delete with backend-API fallback).
 >    A failed delete just stays queued — never let it block a generation run.
 > 2. **Batch completion:** a chat registered with a `batch` (batches.json id — pass `--chat-batch`,
->    or `--batch`, to `gen-batch-freshchat.js` for one-off project chats) is retired + deleted by
+>    or `--batch`, to `gen_batch.py --fresh` for one-off project chats) is retired + deleted by
 >    `repurpose/delete-chats.js` once that batch is completed/archived. Cleanup runs it automatically
 >    (`cleanup/cleanup.js --target video-creation|all`); dry-run prints the plan, live run opens the
 >    chatgpt-profile browser. No `batch` = evergreen purpose (rotation-only); a `batch` matching no

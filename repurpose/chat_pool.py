@@ -166,23 +166,40 @@ async (wantTitle) => {
     await new Promise(res => setTimeout(res, 5000));
   }
 
-  // Rename to the gated title, then read it back — the rename must VERIFIABLY stick,
-  // because this title is what later authorizes deletion.
-  const p = await fetch('/backend-api/conversation/' + id, {
-    method: 'PATCH', credentials: 'include', headers: H, body: JSON.stringify({ title: wantTitle }),
-  });
-  if (!p.ok) return { error: 'rename PATCH HTTP ' + p.status, id, urlId };
-  const back = await fetch('/backend-api/conversation/' + id, { credentials: 'include', headers: H })
-    .then(x => (x.ok ? x.json() : null)).catch(() => null);
-  if (!back || back.title !== wantTitle) return { error: 'rename did not stick', id, urlId, got: back && back.title };
-  return { id, urlId, mismatched: !!(urlId && urlId !== id) };
+  // Rename to the gated title, then VERIFY it stuck — with retries. The single
+  // immediate read-back shipped five false "rename did not stick" reports on
+  // 2026-08-11 whose renames HAD landed (read-after-write lag), orphaning the
+  // fresh chat. Retries tolerate the lag; a late auto-title overwrite gets
+  // re-PATCHed (our write is then the last one and wins). Worst case ~21s.
+  let got = null, verified = false, lastPatch = null;
+  for (let a = 0; a < 7; a++) {
+    if (a > 0) await new Promise(res => setTimeout(res, a * 1000));
+    if (got === null || got !== wantTitle) {
+      const p = await fetch('/backend-api/conversation/' + id, {
+        method: 'PATCH', credentials: 'include', headers: H, body: JSON.stringify({ title: wantTitle }),
+      }).catch(() => null);
+      lastPatch = p ? p.status : 'network';
+    }
+    const back = await fetch('/backend-api/conversation/' + id, { credentials: 'include', headers: H })
+      .then(x => (x.ok ? x.json() : null)).catch(() => null);
+    got = back ? (back.title || '') : null;
+    if (got === wantTitle) { verified = true; break; }
+  }
+  return { id, urlId, verified, got, lastPatch, mismatched: !!(urlId && urlId !== id) };
 }
 """
 
 
 def confirm_and_register(page, purpose: str, batch=None, reg_path=None):
     """Confirm the REAL conversation id via the backend API, rename to the gated title,
-    register the confirmed URL. Returns {url, title} or None (loud warn)."""
+    register the confirmed URL. Returns {url, title[, unverified]} or None (loud warn).
+
+    2026-08-11 hardening: if the conversation id is known but the rename could not be
+    VERIFIED after retries, the chat is registered ANYWAY with `title_unverified` —
+    an unregistered chat is invisible to counting, rotation and cleanup (the orphan
+    failure mode from gen_batch's first live run), while a registered-but-unverified
+    one is merely re-checked at delete time by chat_delete's live-title gate, which
+    is the ultimate safety either way."""
     title = title_for(purpose)
     try:
         r = page.evaluate(_CONFIRM_JS, title)
@@ -190,7 +207,7 @@ def confirm_and_register(page, purpose: str, batch=None, reg_path=None):
         print(f'  [chat-pool] confirmAndRegister failed for "{purpose}": '
               f'{str(e).splitlines()[0]}')
         return None
-    if not r or r.get("error"):
+    if not r or (r.get("error") and not r.get("id")) or not r.get("id"):
         print(f'  [chat-pool] confirmAndRegister failed for "{purpose}": '
               f'{r.get("error") if r else "no result"} — chat NOT registered')
         return None
@@ -199,7 +216,20 @@ def confirm_and_register(page, purpose: str, batch=None, reg_path=None):
               f'{r["id"]} — registered the REAL one')
     url = "https://chatgpt.com/c/" + r["id"]
     register_new_chat(purpose, url, batch, title, reg_path)
-    return {"url": url, "title": title}
+    result = {"url": url, "title": title}
+    if not r.get("verified"):
+        print(f'  [chat-pool] rename verification EXHAUSTED for "{purpose}" '
+              f'(last read: {r.get("got")!r}, last PATCH: {r.get("lastPatch")}) — '
+              f'registered WITH title_unverified so the pool still tracks it; '
+              f'the delete-time live-title gate remains the safety')
+        d = load(reg_path)
+        for c in d["chats"]:
+            if c.get("purpose") == purpose and c.get("url") == url:
+                c["title_unverified"] = True
+                c["title_last_read"] = r.get("got")
+        save(d, reg_path)
+        result["unverified"] = True
+    return result
 
 
 def record_image(purpose: str, reg_path=None):
