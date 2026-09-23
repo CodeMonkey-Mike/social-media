@@ -12,16 +12,578 @@ location, and capture the ones in **Europe / North America / South America / the
 Caribbean** into `members.json` as `{ profile_url, location }`. A later (separate)
 script will message the captured members using only their `profile_url`.
 
-## Current state (as of 2026-08-11, after the full 4-lane run — see entry below)
-
-- **Queue:** **6525** members (unchanged, no Lane 1 seed run), **1467 processed**
-  (+50 today, Lane 2), **5058 remaining**. **Captured: 775** members (+25 today).
-  **577 contacted** (+29 today, Lane 3, 1 error auto-queued for retry); **179
-  connected** (+9 today, Lane 4); **65 DM'd** (+5 today, Lane 5 — hit the
-  mechanical `>14d` gate cleanly, no `--max` override needed); **~84 profile
-  views today** (50 scrape + 29 invite + 5 endorse), well under the ~120/24h
-  threshold; **110 still eligible for endorse+DM (0 past 14 days now, 60 in the
-  7-14 day band, 50 under 7 days).**
+## Current state (as of 2026-09-23, after the Lane 2/3/4/5 run — see entry below)
+- **2026-09-23 run — Mike's ask: Lane 2=60, Lane 3=30, Lane 4, Lane 5.** All four
+  lanes clean in one shot each, no restriction. Lane 2 (scrape 60): detached, ~200s
+  pacing (~4h), 60 visited, +59 processed, 24 skipped out-of-zone, 1 404 strike-1,
+  2 retired on 2nd 404 strike, 0 errors, **+33 captured** (total 1607: 15 europe,
+  18 north_america). Lane 3 (invite 30): detached, 30 visited, **26 sent**, 2
+  no-connect strike-1, 2 errors (retry next run), no weekly limit. 383 still to
+  contact. Lane 4: foreground, 6 scroll rounds, 20 cards, **+20 connected**
+  (429→449; 3 no date, recorded as observed today). All 20 cards were new, so more
+  acceptances may lie below the top-20 window; the next Lane 4 run should catch them.
+  775 still awaiting acceptance. Lane 5: gate selected 41 (>14d), auto-capped at
+  the oldest 10; detached — **9 endorsed (79 skills), 9 DM'd**, 1 no_skills
+  (jack-gary-43185b351), 0 errors. Pool left: 31 >14d, 63 at 7-14d, 37 <7d. Day
+  volume ≈ 60 + 30 + 10 = **100**, under the ~120 threshold.
+- **2026-09-19 run — Mike's ask: Lane 2=70, Lane 3=30, Lane 4 (no Lane 5 this
+  run).** All three lanes clean in one shot each, no restriction. Lane 2 (scrape
+  70): detached, slow pacing today (~200-270s between profiles, ~4h wall-clock),
+  70 visited, +69 processed, 32 skipped out-of-zone, 1 404 strike-1, 0 retired,
+  0 errors, **+37 captured** (total 1527: 22 north_america, 15 europe). Queue:
+  6525 total, 2714 processed, 3811 remaining. Lane 3 (invite 30): detached, 30
+  visited, **26 sent**, 1 retired on the email-verification wall, 3 errors
+  (two `/404/` landings + one left for retry), no weekly limit. 329 still to
+  contact. Lane 4 (check connections): foreground, 6 scroll rounds, 20 cards,
+  **+9 connected** (420→429; 2 with no date shown, recorded as observed
+  today). Day volume ≈ 70 + 30 = **100**, under the ~120 threshold. Final:
+  queue 6525, 2714 processed (3811 remaining), 1527 captured, 1198 contacted,
+  429 connected, 769 still awaiting acceptance.
+- **2026-09-17 run — Mike's ask: Lane 2=60, Lane 3=30, Lane 4, Lane 5 (standing
+  recurring request, Lane 2 raised from the usual 50).** All four lanes clean in
+  one shot each, no restriction. Lane 2 (scrape 60): detached — 60 visited, +60
+  processed, 15 skipped out-of-zone, 0 404 strike-1, 5 retired on 2nd 404 strike,
+  0 errors, **+40 captured** (total 1477: 14 europe, 18 north_america, 8
+  south_america). Queue: 6525 total, 2629 processed, 3896 remaining. Lane 3
+  (invite 30): detached, 30 visited, **29 sent**, 1 error, no weekly limit. 306
+  still to contact. Lane 4 (check connections): foreground, 6 scroll rounds,
+  **+10 connected** (410→420). Lane 5 (endorse+DM): mechanical `>14d` gate
+  selected exactly 4 (below the 10 ceiling); detached — 20 skills endorsed
+  across 2 members (danieeis, emilyfrankish; danielquirogasanchez was already
+  endorsed on an earlier run and just got its held-over DM), 3/4 DM'd, 1
+  abandoned on `no_skills` (daniela-gaitan-0512b0177), 0 failures. 112 still
+  eligible for endorse+DM (0 >14d, 48 7-14d, 64 <7d). Day volume ≈ 60 + 30 + 0 +
+  4 = **94**, under the ~120 threshold; the script's own volume-budget warning
+  fired at 90 views before Lane 5 started (informational, did not halt) — a
+  Monitor watch script briefly mis-flagged that warning line as a live
+  restriction because it contains the word "restricted"; log inspection
+  confirmed the run was still healthy and in progress, so the watch filter was
+  tightened to match only real restriction phrasing. Final: queue 6525, 2629
+  processed (3896 remaining), 1477 captured, ~1171 contacted, 420 connected,
+  112 still eligible for endorse+DM.
+- **2026-09-16 run — Mike's ask: Lane 2=50, Lane 3=30, Lane 4, Lane 5 (standing
+  recurring request).** All four lanes clean in one shot each, no restriction.
+  Lane 2 (scrape 50): detached — 50 visited, +45 processed, 6 skipped out-of-zone,
+  5 "not on a profile page (404)" strike-1 (the 4 recurring dead profiles from
+  09-14/09-15 plus one new, larry-mcgee-911b6a380), 0 errors, **+39 captured**
+  (total 1437: 24 south_america, 8 north_america, 7 europe). Queue: 6525 total,
+  2569 processed, 3956 remaining. Lane 3 (invite 30): detached, 30 visited,
+  **27 sent**, 2 held on email-verification wall (retry next run), 1 error, no
+  weekly limit. 295 still to contact. Lane 4 (check connections): foreground,
+  6 scroll rounds, **+18 connected** (392→410) — includes 3 of the just-invited
+  Lane 3 batch already accepting same-day. Lane 5 (endorse+DM): mechanical
+  `>14d` gate selected exactly 6 (below the 10 ceiling); detached — 59 skills
+  endorsed across all 6 members, 5/6 DM'd, 1 held on `no_message_button`
+  (danielquirogasanchez — endorsements recorded, DM left for next run), 0
+  abandoned, 0 failures. 106 still eligible for endorse+DM (1 >14d, 50 7-14d,
+  55 <7d). Day volume ≈ 50 + 30 + 0 + 6 = **86**, well under the ~120
+  threshold; the script's own volume-budget warning fired at 80 views before
+  Lane 5 started (informational, did not halt). Final: queue 6525, 2569
+  processed (3956 remaining), 1437 captured, ~1167 contacted, 410 connected,
+  106 still eligible for endorse+DM.
+- **2026-09-15 run — Mike's ask: Lane 2=50, Lane 3=30, Lane 4, Lane 5 (standing
+  recurring request).** All four lanes clean in one shot each, no restriction.
+  Lane 2 (scrape 50): detached — 50 visited, +46 processed, 16 skipped
+  out-of-zone (one was "Detroit Metropolitan Area", the known region-classifier
+  gap), 4 errors, **+30 captured** (total 1398: 19 north_america, 9 europe, 2
+  south_america). **The 4 errors are the SAME 4 "not on a profile page (404)"
+  members as 2026-09-14** (john-baskin-54ab123, joseph-torres-mba-pmp-750b84259,
+  ifeoma-ozah-428092b3, jennifer-carter-77b949168): a 404 never marks the queue
+  entry `processed`, so they sit at the queue front and re-burn 4 profile views
+  every run — and they hit 4-consecutive today, one short of the 5-consecutive
+  kill-switch. Same structural shape as the 09-14 Lane 3 stale-slug blocker
+  (permanent failure retried forever at the queue front); not fixed today
+  because it did not block, but it WILL once a 5th dead profile lands ahead of
+  the first live one. **Fixed the same day (Mike: "go ahead and add it"):**
+  `scrape_group_members.py` now stamps a `/404/` landing with `notfound_count` +
+  `notfound_last`, the batch selector skips same-day strikes, and a second 404
+  on a later day retires the entry as `processed:true, status:"404"` — the
+  Lane 3 `no_connect_button` two-strike pattern, applied to the queue. The
+  graph (`lane_graph.py`) treats both `404 (…)` lines as resolved outcomes
+  (streak reset, never the kill-switch) and reports `404 strike 1` / `retired
+  404`. Verified offline (streak semantics + the day-by-day state machine);
+  first live exercise = tomorrow's Lane 2, where those 4 take strike 1 and
+  are retired the run after. Documented in `scrape-group-members.md` and the
+  folder CLAUDE.md data-files table. Lane 3 (invite 30): detached,
+  30 visited, **28 sent**, 2 retired on 2nd `no_connect_button` strike
+  (michael-luis, swapna-p-9a8734242 — the two follow-only profiles the 09-14
+  redirect fix had unblocked), 0 errors, no weekly limit; the redirect fix
+  adopted one more renamed slug (kingsley-john-cphr-candidate-milr-848a2b185 →
+  kingsley-john-848a2b185, sent). **1113 contacted** (+30). Lane 4 (check
+  connections): foreground, 6 scroll rounds, **392 connected** (+11:
+  kingsley-john-848a2b185, johnsankittsmba, ivan-haiko, ivanna-pop,
+  zlati-ivanov-253715b8, evelinaivanovaivanova, inevado, ivanvias,
+  martinrusev98, ivan-blanar-dev, iván-alejandro-camargo-márquez-096410b6) —
+  three of those (ivan-haiko, martinrusev98, kingsley-john-848a2b185) are
+  redirect-adopted members Lane 4 could only match because their slugs were
+  corrected. Lane 5 (endorse+DM): mechanical `>14d` gate selected exactly 4
+  (below the 10 ceiling); detached — 39 skills endorsed across 4 members
+  (franklin-pacheco-engineering-manager, frankline-tatuh-47307123a, fphayaxay,
+  davidson--santos), 4/4 DM'd, 0 abandoned, 0 failures. **297 endorsed/DM'd
+  total** (287 DM'd + 10 no_skills). Day volume ≈ 50 + 30 + 0 + 4 = **84**.
+  Final: queue 6525, 2524 processed (4001 remaining), 1398 captured, 1113
+  contacted, 392 connected, 297 endorsed/DM'd, 93 still eligible for
+  endorse+DM (0 >14d, 50 7-14d, 43 <7d).
+- **2026-09-14 run — Mike's ask: Lane 2=50, Lane 3=30, Lane 4, Lane 5 (standing
+  recurring request). Lane 3 needed a CODE FIX to run at all — see below.**
+  Lane 2 (scrape 50): detached launch, clean in one shot to GRAPH DONE — 50
+  visited, +46 processed, 13 skipped out-of-zone, 4 "not on a profile page
+  (404)" errors (retry next run), **+33 captured** (total 1368: 23
+  north_america, 5 south_america, 5 europe). Two of the skips were the known
+  region-classifier gap ("Knoxville Metropolitan Area", "Greater Toulouse
+  Metropolitan Area" — no country/state suffix), not fixed today.
+  Lane 3 (invite 30): **the first two detached launches both died at the
+  5-consecutive-error KILL-SWITCH on the IDENTICAL 5 members, in the identical
+  order, landing on the identical "wrong" URLs** — no restriction phrasing, no
+  DOM change. Root cause (diagnosed from the code, not relaunched a third time
+  blind): those 5 members' stored `profile_url`s were stale (accented slug
+  `gr%C3%A9gory-guinfoleau`, two opaque `ACoAA…` member-ID URLs, two renamed
+  vanity slugs `henry-bunn-94a48510a`/`ivan-gaiko`). Search finds no exact slug
+  match → `search_and_open` falls back to `goto(url)` → LinkedIn redirects to
+  the member's current canonical slug → the strict `landed != wanted` identity
+  guard in `request_connections.py` raised "landed on wrong page". The error
+  path leaves them `contacted:false`, so they were retried every run AND sat at
+  the queue front in array order: 2 of them since 09-08, 4 by 09-11/12 (logged
+  as "retry next run" errors, 4-in-a-row just under the kill-switch), 5 today =
+  a permanent blocker on every future run. **Fix (Mike: "fix anything if
+  necessary so we can proceed"):** the guard now distinguishes the nav mode. A
+  mismatch after a search CLICK still raises (that is the 2026-07-22 stranger
+  guard, unchanged); a mismatch when the page was reached via `goto(url)` (nav
+  `goto-notfound`/`goto-noquery`, provably no click involved) is LinkedIn
+  redirecting OUR OWN URL = same member, so the script adopts the canonical
+  slug (`profile_url` ← landed, old kept as `profile_url_prev`) and proceeds
+  through the unchanged name-in-Connect-aria-label guard; if members.json
+  already tracks the canonical slug as its own entry the stale one is retired
+  as `url_redirect_duplicate` (no double invite). Verified offline with 9
+  cases (clicked-mismatch / goto-error / redirect-to-feed all still raise)
+  before any relaunch; documented in `request-connections.md` identity guard
+  #2. Third launch (detached, `--max 30`) ran clean in one shot — the profile
+  owner on the first redirected page resolved as "grégory guinfoleau",
+  confirming same-person. **7 redirects adopted this run**: 5 invited
+  (gregory-guinfoleau, henry-bunn-brainwave, ivan-haiko, ivan-chobotiuk,
+  martinrusev98), 2 were follow-only (michael-luis, swapna-p-9a8734242 →
+  `no_connect_button` strike 1, normal two-strike rule). 30 visited, **27
+  sent**, 2 no_connect strike 1, 1 error (ivangarron, retry next run), no
+  weekly limit, no restriction. **1083 contacted** (+27). Side benefit: Lane 4
+  can now match those members' acceptances (it matches on slug; the stale
+  slugs would never have matched). Lane 4 (check connections): clean,
+  foreground, 6 scroll rounds, **381 connected** (+11: ivan-v-9464891b,
+  ivan-villa-vazquez, ivandariobenavidespachon-especialistabasesdedatos,
+  eric-müller-3858751a9, helen-kniukh-itrecruiter,
+  angie-emily-ramos-cabrera-a422732a7, henry-pu-75860676, ivan-berg-b4484a114,
+  ivan-e-sperandio-71344a111, gabriela-carla-bot, frank-kyei-baffour-403b60100).
+  Lane 5 (endorse+DM): mechanical `>14d` gate found 13 eligible, auto-capped
+  to the standing 10; detached, clean in one shot — 83 skills endorsed across
+  9 members (carloscerritos, david-bañados, daniel-boucher, edward-odewale,
+  eric-kumi, franklingomezmendoza7599fkgm, frankderango, frederick-ekong,
+  franktuerling), 9/9 DM'd, 1 abandoned no_skills
+  (andrisoa-erick-rakotondramasy), 0 failures. **293 endorsed/DM'd total**
+  (283 DM'd + 10 no_skills). No restriction / unusual-activity page in any
+  lane. Day volume: the gate reported 80 (50 scrape + 30 invite) but that
+  excludes the 10 views burned by the two kill-switched Lane 3 attempts
+  (GRAPH FAILED writes no lane_runs record), so the true total ≈ 50 + 40 + 0
+  + 10 = **~100**, under the ~120 threshold but the highest recent day.
+  Final: queue 6525, 2478 processed (4047 remaining), 1368 captured, 1083
+  contacted, 381 connected, 293 endorsed/DM'd, 86 still eligible for
+  endorse+DM (3 >14d, 43 7-14d, 40 <7d).
+- **2026-09-12 run — Mike's ask: Lane 2=50, Lane 3=30, Lane 4, Lane 5 (standing
+  recurring request).** Lane 2 (scrape 50): detached launch, ran clean in one
+  shot to GRAPH DONE (no kills) — 50 visited, +46 processed, 12 skipped
+  out-of-zone, 4 "not on a profile page (404)" errors (retry next run),
+  **+34 captured** (total 1335: 21 north_america, 11 europe, 2 south_america).
+  Lane 3 (invite 30): detached launch, clean in one shot — 30 visited, 24
+  sent, 5 "landed on wrong page" errors (retry next run, first 4 landed
+  consecutively before recovering — never reached the 5-consecutive
+  kill-switch), 1 retired at the email-verification wall, no restriction.
+  **1056 contacted** (+25: 24 sent + 1 email_verification). Lane 4 (check
+  connections): clean in one shot, foreground, 6 scroll rounds, **370
+  connected** (+7: ivan-a-espino-indalecio-b2518939, danielgarciareal,
+  isaac-sperry-9b880013, ivan-macias-ruiz, isaac-effah-118802195,
+  isaacjimenezp, isaac-angud-92a450251). Lane 5 (endorse+DM): mechanical
+  `>14d` gate found 15 eligible past the rule, auto-capped to the standing
+  10/run ceiling; ran clean in one shot — 78 skills endorsed across 8
+  members (ericmeek, ericwebb, eugene-perminov, eugene-kapustynskyi,
+  basters, yevhenii-presaizen, girtcius, eugeneorehov), 8/8 DM'd, 2 abandoned
+  no_skills (belkovich, eugenekalenik), 0 failures. **283 endorsed/DM'd
+  total** (+8 DM'd, +2 no_skills). No restriction/unusual-activity page at
+  any point in any lane; combined day volume (50 scrape + 30 invite + 0
+  check + 10 endorse ≈ 90) stayed under the ~120/24h threshold (the script's
+  own volume warning fired at 80 before Lane 5, informational only). Final:
+  queue 6525, 2432 processed (4093 remaining), 1335 captured, 1056
+  contacted, 370 connected, 283 endorsed/DM'd, 85 still eligible for
+  endorse+DM (5 >14d, 38 7-14d, 42 <7d).
+- **2026-09-11 run — Mike's ask: Lane 2=40, Lane 3=30, Lane 4, Lane 5 (standing
+  recurring request).** Lane 2 (scrape 40): first detached launch failed at
+  Chrome startup (`TargetClosedError: launch_persistent_context ... browser has
+  been closed`, Chrome pid exited 0 instantly, nothing written, no lock files,
+  zero chrome.exe on the machine, not a restriction); a direct probe launch of
+  `li_session.launch_session()` reached the feed logged-in, so it was a
+  transient launch failure. Relaunch ran clean in one shot to GRAPH DONE, no
+  mid-run kill this time: 40 visited, +37 processed, 18 skipped out-of-zone, 3
+  errors (retry next run), **+19 captured** (total 1301: 8 europe incl.
+  Sweden/Greece/Spain/UK, 10 north_america, 1 Bogota). Lane 3 (invite 30):
+  clean in one shot, 30 visited, 26 sent, 4 "landed on wrong page" errors
+  (retry next run), no weekly limit, no restriction. **1031 contacted** (+26).
+  Lane 4 (check connections): clean, 6 scroll rounds, **363 connected** (+17:
+  richard-isaacs-40a028207, chukwuemekaanyakwu2409, isaac-gabri-875b3b223,
+  gdeaniii1019, david-munoz23, benjamin-rey-956988248, garygilchrist,
+  gary-gw-wu, cornelius-howard-iii-80b02846, tarangrace, iann-zukowski,
+  bill-ochieng, grace-huang-241728217, david-rook-0b9bb0182, ian-labouff,
+  helenafreitas, francesc-juanpere-vives-3bb905b9). Lane 5 (endorse+DM):
+  mechanical `>14d` gate found 24 eligible past the rule, auto-capped to the
+  standing 10/run ceiling; ran clean in one shot — 91 skills endorsed across
+  10 members (erichoale, nelbarrios, eric-pastore-727139352, ericobates,
+  andreibugaescu, carlo-inzirillo-18330130, davidrpaquette, dkocjan,
+  eric-walker-rawson-talos, eric-mucha-197bb020), 10/10 DM'd, 0 abandoned, 0
+  failures. **266 endorsed/DM'd total** (+10). No restriction /
+  unusual-activity page in any lane; combined day volume (40 scrape + 30
+  invite + 0 check + 10 endorse ≈ 80) stayed comfortably under the ~120/24h
+  threshold. Final: queue 6525, 2386 processed (4139 remaining), 1301
+  captured, 1031 contacted, 363 connected, 266 endorsed/DM'd, 88 still
+  eligible for endorse+DM (14 >14d, 38 7-14d, 36 <7d).
+- **2026-09-08 run — Mike's ask: Lane 2=40, Lane 3=30, Lane 4, Lane 5 (standing
+  recurring request).** Lane 2 (scrape 40): the known intermittent `FATAL:
+  Page.wait_for_timeout: Target page, context or browser has been closed` kill
+  hit twice — leg 1 (detached, `--max 40`) died at 8/40 (3 errors retry, 5
+  processed, +1 captured); leg 2 (resume `--max 32`) died at 14/32 (3 errors
+  retry, 11 processed, +6 captured); leg 3 (resume `--max 18`) finished clean
+  to GRAPH DONE (15 processed, +3 captured, 12 skipped, 3 errors retry). Every
+  leg verified lossless on disk before relaunching with the shortfall, no
+  orphaned `li-bot-profile` Chrome/python found between legs, no restriction
+  phrasing anywhere. Day total: **40/40 attempted** (10 errored across the
+  three legs, retry next run), **+10 captured** (total 1282: mostly
+  north_america + 1 UK). Lane 3 (invite 30): clean in one shot, no resume
+  needed — 30 visited, 26 sent, 4 errors (retry next run), no restriction.
+  **1005 contacted** (+26). Lane 4 (check connections): clean in one shot, 6
+  scroll rounds, **346 connected** (+11: iann-isacksson-794451122, -opus-era,
+  carlos-llamas-puimedon-440b8b10a, henryonawole, henry-honeyfield-92857b2b1,
+  edward-bankoussou-mabiala-phd-770078ab, gregoryssklar,
+  henry-ssonko-471a9a10b, hmasalova, evanjhoward,
+  henry-ramirez-jr-a939a5216). Lane 5 (endorse+DM): mechanical `>14d` gate
+  found 14 eligible past the rule, auto-capped to the standing 10/run
+  ceiling; ran clean in one shot — 96 skills endorsed across 10 members
+  (daniel-p-32773782, daniellsouzz, daniela-acevedo,
+  donald-t-robinson-ii-0b281112b, jonah-eric-kalamula-22100425jk,
+  eric-elftmann-31968073, ericzoujujian, daniela-elena-tentis-540516b2,
+  donald-nwachukwu1116, eric-sarpong-218b5426), 10/10 DM'd, 0 abandoned, 0
+  failures. **256 endorsed/DM'd total** (+10). No restriction /
+  unusual-activity page in any lane; combined day volume (40 scrape + 30
+  invite + 0 check + 10 endorse ≈ 80) stayed comfortably under the ~120/24h
+  threshold. Final: queue 6525, 2349 processed (4176 remaining), 1282
+  captured, 1005 contacted, 346 connected, 256 endorsed/DM'd, 81 still
+  eligible for endorse+DM (4 >14d, 36 7-14d, 41 <7d).
+- **2026-09-07 run — Mike's ask: Lane 2=60, Lane 3=20, Lane 4, Lane 5 (standing
+  recurring request).** Lane 2 (scrape 60): detached launch died mid-run at
+  39/60 processed (log printed `[41/60]` but profile 41 hadn't written yet)
+  with `FATAL: Page.wait_for_timeout: Target page, context or browser has
+  been closed` — the known intermittent browser-closed kill, not a
+  restriction (no restriction phrasing anywhere in the log, no orphaned
+  `li-bot-profile` Chrome/python found after). Verified lossless on disk
+  (2260→2299 processed, +19 captured) before resuming detached with `--max
+  21` for the shortfall; resume finished clean to GRAPH DONE (+19 processed,
+  +4 captured). Day total: **58/60 processed** (2 errored, retry next run),
+  **+23 captured** (total 1272: mostly north_america + 1 UK). Lane 3 (invite
+  20): clean in one shot, no resume needed — 20 visited, 16 sent, 1 retired
+  at the email-verification wall, 3 "landed on wrong page" errors (retry
+  next run), no restriction. **979 contacted** (+17). Lane 4 (check
+  connections): clean in one shot, 6 scroll rounds, **335 connected** (+3:
+  olivier-henry-29b457111, georgeweaver2, anthony-tran-197atk). Lane 5
+  (endorse+DM): mechanical `>14d` gate found 22 eligible past the rule,
+  auto-capped to the standing 10/run ceiling; ran clean in one shot — 98
+  skills endorsed across 10 members (daniel-castañeda-cruz-63801b1a8,
+  daniel-hardge, deborah-johnson-533a25243, eleonsolar,
+  edward-hayes-278110247, jessicaedwardsatl, edward-silverman,
+  david-nsabiyera, eric-dekryger, oerickdutrasoueu), 10/10 DM'd, 0 abandoned,
+  0 failures. **246 endorsed/DM'd total** (+10). No restriction /
+  unusual-activity page in any lane; combined day volume (58 scrape + 20
+  invite + 0 check + 10 endorse ≈ 88) stayed comfortably under the ~120/24h
+  threshold. Final: queue 6525, 2318 processed (4207 remaining), 1272
+  captured, 979 contacted, 335 connected, 246 endorsed/DM'd, 80 still
+  eligible for endorse+DM (12 >14d, 32 7-14d, 36 <7d).
+- **Queue:** **6525** members, **2260 processed** (+8 today, Lane 2 `--max 10` —
+  10 visited, 5 skipped out-of-zone, 2 errored (retry next run), clean detached
+  run to GRAPH DONE), **4265 remaining**. **Captured: 1249** members (+3 today,
+  all north_america: Charlotte NC, Nenana AK, Dallas-Fort Worth). **962
+  contacted** (+3 today, Lane 3 `--max 5` — 5 visited, 3 sent, 2 "landed on
+  wrong page" errors retried next run, no limit hit, no restriction). **332
+  connected** (+9 today, Lane 4, clean in one shot, one list page, 4 of the 9
+  with no date shown recorded as observed today). **236 DM'd total (+27
+  today, Lane 5 run with Mike's explicit up-front `--max 30`** — he asked for
+  30 instead of the standing 10/run ceiling to draw the backlog down; the
+  mechanical gate accepted it because all 30 sat inside the `>14d` band (51
+  eligible past the rule at run start). 30 visited, 27 endorsed (260 skills),
+  27 DMs sent, **3 abandoned as `no_skills`** (king-david-4282aa129,
+  daniel-monteiro-7956213b0, mauricio-daniel-melgarejo-amaro-482596105), 0
+  endorse failures, 0 DM failures, 0 errors. The 3 no-skills in one run is
+  higher than the usual 0, but the log shows the skills page rendered and
+  scrolled normally on each (identical flow to the members that endorsed fine
+  either side), so it reads as genuinely thin profiles, not a DOM read
+  failure). **236 endorsed total** (+27), 7 `no_skills` all-time. **87 still
+  eligible for endorse+DM** past the gate (21 >14d, 32 7-14d, 34 <7d). No
+  restriction / unusual-activity page in any lane; combined day volume was
+  ~45 profile views (10 scrape + 5 invite + 30 endorse), comfortably under the
+  ~120/24h threshold. **Launch-path gotcha:** the first Lane 2 launch used
+  `graph\run.py` from the repo root and died instantly with `No such file`,
+  the script lives at `linkedin-automation\graph\run.py` — nothing ran, no
+  views burned, relaunched correctly.
+- **Queue:** **6525** members, **2252 processed** (+58 today, Lane 2 —
+  detached-console launch died mid-run at 55/60 processed when EVERY
+  chrome.exe/python.exe on the whole machine disappeared at once, not just
+  `li-bot-profile`'s; no restriction phrasing, no traceback, consistent with
+  a system sleep/reboot rather than the usual per-profile reaper. Disk state
+  confirmed lossless — resumed with `--max 5` for the remaining 5, GRAPH DONE
+  clean), **4273 remaining**. **Captured: 1246** members (+35 today).
+  **959 contacted** (+27 today, Lane 3 — 30 visited, 23 invites sent, 4 hit
+  the email-verification gate (retired from queue, never invitable), 3
+  errored (retried next run), clean in one shot, no restriction). **323
+  connected** (+8 today, Lane 4, clean in one shot, one list page). **209
+  DM'd total (+20 today, Lane 5 ran TWICE** — Mike noticed the 128-eligible
+  backlog and asked for a second pass to draw it down faster. Run 1:
+  mechanical gate found 60 eligible past the `>14d` rule (128 total eligible
+  pool: 60 >14d, 35 7-14d, 33 <7d), auto-capped to the oldest 10:
+  danielmartinlucero, fortunato-daniele-ambrogio-1611313b, tdaniellecox,
+  danielbishun, mateus-daniel-amaral-silva-, danielenicolaci,
+  danielroblesaller, vitordan9, andrew-best-504a08b,
+  david-plaza-ramirez-a9a64350 (94 skills). Run 2 (pool now 118: 50 >14d, 35
+  7-14d, 33 <7d), auto-capped to the next oldest 10: danielle-santiago-13b835340,
+  daniel-vasconcellos-controller-accounting-tax-fpa, jaimeabreuln,
+  danyil-cherkashyn, lizarazo, loluomoloju, danielamorganz,
+  daniel-fontana-31392b99, david-sun-a6684a132, danicooper67 (93 skills).
+  Both runs 0 abandoned, 0 failures). **209 endorsed total** (+20). **108
+  still eligible for endorse+DM** past the gate (40 >14d, 35 7-14d, 33 <7d —
+  the 08-31→09-03 gap runs between this entry and the prior 08-30 one
+  aren't individually logged here). No restriction / unusual-activity page
+  at any point in any lane; combined day volume (~58 scrape Chrome-visits +
+  30 invite views + 20 endorse ≈ 108) stayed under the ~120 threshold — the
+  closest today's mix has come to that ceiling, worth watching if a 3rd
+  Lane 5 pass is asked for the same day.
+- **2026-08-30 run — Lane 2/3/4/5.** Queue 2077 processed (+58, Lane 2, 3
+  detached-console chunks after 2 mid-run Chrome-closed crashes), 4448
+  remaining. Captured 1158 (+33). 880 contacted (+30, Lane 3 — the morning
+  run's "weekly invite limit" turned out to be a BUG in the limit detector,
+  not a LinkedIn cap; after the fix the re-run went 30 visited / 29 sent / 0
+  errors, plus a 1-invite top-up). 298 connected (+4, Lane 4, clean in one
+  shot). 179 DM'd total (+10, Lane 5 — mechanical gate found 47 eligible past
+  the `>14d` rule, auto-capped to 10 per the standing ceiling; ran clean in
+  one shot: david-sans-naudó-a0111a42, juan-ávila-61943a176, davidbouchez,
+  davide-busi, david-roberto1, davide-zappacosta-2982746, danielgmateus,
+  builescu-daniel, iamdanielsemprunmoreno, davidematteomurgia — 93 skills
+  endorsed, 0 abandoned, 0 failures). 179 endorsed total (+10). 113 still
+  eligible for endorse+DM past the gate (37 >14d, 45 7-14d, 31 <7d). No
+  restriction / unusual-activity page at any point in any lane; combined day
+  volume (~62 scrape Chrome-visits + 4 invite views + 10 endorse ≈ 76) stayed
+  well under the ~120 threshold.
+- **2026-08-27 run — Mike's ask: Lane 2=60, Lane 3=30, Lane 4, Lane 5 (same
+  request as 2026-08-26). CROSS-SESSION ROOT CAUSE FOUND for a mystery
+  "Chrome closed" failure.** Lane 2 (detached-console launch) died 4 times in
+  a row with `FATAL: Page.wait_for_timeout: Target page, context or browser
+  has been closed`; root cause was a concurrent session's kill-all
+  `Stop-Process -Name chrome -Force` taking down every Chrome window
+  including `li-bot-profile` — see `feedback_never_kill_main_chrome.md`.
+  Lane 2 reached 51/60 (1850→1901 processed, 1006→1039 captured) before Mike
+  redirected to skip Lane 3 and go straight to Lane 4/5. Lane 4: 8 newly
+  connected (280→288). Lane 5: clean, 10/10 endorsed (99 skills) + DM'd
+  (149 DM'd total). No restriction page at any point.
+- **2026-08-26 run — 4-lane run starting from Lane 2 (Mike's ask: Lane 2=60,
+  Lane 3=30, Lane 4, Lane 5). THE DAY THE DETACHED-CONSOLE FALLBACK WAS
+  PROVEN FOR THIS TOOLKIT.** The background reaper was the most aggressive
+  yet: Lane 2's first harness-tracked chunk (`--max 12`) finished, then three
+  consecutive chunks were killed at ~10-12 minutes regardless of size —
+  `--max 12` died at 5/12, `--max 10` at 4/10, and even `--max 4` at 3/4 (the
+  script's own between-profile pacing ran 60-245s today, so the memo'd "size
+  the chunk to finish inside the 10-minute window" mitigation was no longer
+  achievable at any chunk size). Every kill was verified against disk as
+  lossless (processed/captured deltas intact, 0 orphan Chrome each time) and
+  none was a restriction page. Switched to the
+  `[[feedback_detached_console_to_isolate_kills]]` fallback — `Start-Process
+  cmd.exe /c ... > logfile 2>&1` in a visible console, parented to the desktop
+  session rather than to anything the tool call holds a handle on, with a
+  `Monitor` poll armed on the log for GRAPH DONE / restriction phrasing / a
+  >480s-idle death. **The remaining 36 profiles then ran ~80 minutes straight
+  to a clean GRAPH DONE**, i.e. the detached run survived roughly 7x the
+  longest a tracked chunk lasted all day. Lanes 3 and 5 were launched the same
+  way and both completed in one shot with no kill. Per that memory's own
+  decision rule (detached survives where tracked dies ⇒ the harness
+  lifecycle was the culprit ⇒ keep using detached for that class of task),
+  **the detached console is now the standing launch pattern for the long
+  LinkedIn lanes (2/3/5)**, with harness-tracked foreground calls kept for the
+  cheap one-page Lane 4. Caveat recorded for the future: `run.py` writes its
+  `lane_runs.json` record at END, so the three reaper-killed Lane 2 chunks
+  (5+4+3 = 12 real profile views) left no run record — today's run log shows
+  88 views against an actual ~100. The Lane 5 gate's day-total merge already
+  compensates for invites/endorsements via `members.json` timestamps, but
+  **scrape views killed mid-chunk are invisible to the ledger**, so a
+  reaper-heavy scrape day always undercounts there.
+- **2026-08-25 run — Lane 1 seed request (Mike, group 6665791: 4 common male +
+  2 common female EN names starting with Z, short/nickname forms considered)
+  was flagged by Mike mid-run as a mistake and fully reverted** — searched
+  "Zion, Zander, Zeb, Zaid, Zelda, Zuri" (32 matched profiles added, queue
+  6525→6557), then per Mike's explicit ask removed all 6 names back out of
+  `groups.json`'s `searched_names` for 6665791 and spliced the 32 profiles
+  back out of the tail of `members-urls.json` (queue 6557→6525); verified safe
+  to revert concurrently with the then-running Lane 2 since the 32 were
+  unprocessed entries appended after everything Lane 2 could reach in a
+  20-profile run. Then ran the requested Lane 2=20 / Lane 3=20 / Lane 4 / Lane
+  5 sequence — see the state summary above for each lane's outcome. No
+  restriction/unusual-activity page hit at any point; Lane 3's stop was
+  LinkedIn's own weekly cap, not a restriction.
+- **2026-08-20 run — full 4-lane run starting from Lane 2 (Mike's ask: Lane
+  2=20, Lane 3=20, Lane 4, Lane 5).** Lane 2 (scrape 20): needed 2 foreground
+  chunks (16, 4) — one clean background-reaper kill landed between profiles
+  (verified via disk delta: processed +16, captured +1, no orphan Chrome)
+  before resuming for the last 4. 20/20 visited, 0 errors, 960→963 captured
+  (+3: United States, Canada, Los Angeles Metro). Lane 3 (invite 20): first
+  chunk of 14 attempted sent 10 clean then hit 4 consecutive identical
+  Send-button timeouts on the same 4 profiles; a resume chunk targeting just
+  those 4 hit the SAME 4 errors again, back-to-back — the documented
+  2026-08-14 persistent-pair signature, so stopped repeating the identical
+  failing action and instead moved all 4 to the end of `members.json`
+  (order-only, the standing fix) before resuming; the next 15 sent 100%
+  clean off the reordered queue. 25/20 sent (overshoot from chunk sizing
+  around the stuck profiles), 753→778 contacted; the 4 stuck profiles remain
+  queued (now at the end) for next run's retry. Lane 4 (check connections):
+  ran clean in one shot, 6 scroll rounds, 8 newly connected (247→255). Lane 5
+  (endorse+DM): mechanical `>14d` gate found 19 eligible, above the 10/run
+  ceiling — auto-capped to 10 per the standing rule (no question back to
+  Mike); ran clean in one shot, no reaper kill, no orphan Chrome, 10/10
+  endorsed (99 skills) + DM'd, 0 abandoned, 115→125 DM'd. No
+  restriction/unusual-activity page hit across any of the four lanes.
+- **2026-08-19 run — full 4-lane run starting from Lane 2 (Mike's ask: Lane
+  2=40, Lane 3=30, Lane 4, Lane 5).** Lane 2 (scrape 40): needed 5 foreground
+  chunks (18, 11, 1-attempt FATAL driver-close error with nothing committed,
+  11, 11) to land all 40 visits — every kill (clean or FATAL) landed between
+  profiles with no data loss and no orphan Chrome, verified via disk each
+  time; 933→960 captured (+27). Lane 3 (invite 30): ran in ONE foreground
+  chunk this time, 26/30 sent, 4 hit the familiar Send-button timeout only in
+  the first few attempts then cleared, not the persistent 08-17 failure
+  pattern — no flag needed, 727→753 contacted. Lane 4 (check connections):
+  clean in one shot, 6 scroll rounds, 12 newly connected (235→247). Lane 5
+  (endorse+DM): gate found 18 eligible (>10/run ceiling), auto-capped to 10;
+  first sub-run reaper-killed mid-endorse on member 7/10 (5 clean + 1
+  no_skills landed first, nothing lost on the killed member, no orphan
+  Chrome); resumed `--max 4` for the remainder, killed cleanly after 3 more
+  landed; resumed `--max 1` for the last member, which died twice at the same
+  early point (before any commit, no orphan Chrome) when backgrounded — the
+  third attempt, run in the foreground, finished clean. 10/10 endorsed+DM'd,
+  1 abandoned, 106→115 DM'd. No restriction/unusual-activity page hit across
+  any of the four lanes.
+- **2026-08-17 run — full 4-lane run starting from Lane 2 (Mike's ask: Lane
+  2=40, Lane 3=30, Lane 4, Lane 5).** Lane 2 (scrape 40): needed 7 foreground
+  chunks (8, 8→1 visited+FATAL reaper-kill, 7, 7, 7, 7, 4) to land all 40
+  visits, every kill landed cleanly between profiles (disk-verified), zero
+  orphan Chrome, zero data lost. 40/40 visited, 0 errors, 908→933 captured
+  (+25). Lane 3 (invite 30): first chunk of 7 sent 3 clean then hit 4
+  consecutive identical Send-button-click timeouts; a second chunk of 7 hit
+  the same failure on all remaining attempts (0 sent, 4 errors before the
+  reaper killed it mid-profile-5, landed clean, no orphan Chrome) — stopped
+  here rather than keep repeating the identical failing action across the
+  rest of the 30 target. See "Current state" above for full diagnosis; this
+  is flagged for Mike, not silently retried. 3/30 sent, 726→727 contacted.
+  Lane 4 (check connections): ran clean in one shot, no chunking needed, 6
+  scroll rounds, 9 newly connected (226→235). Lane 5 (endorse+DM): mechanical
+  gate found exactly 5 eligible (under the 10/run ceiling), first sub-run
+  reaper-killed after 2 clean (endorsed+DM'd), 3rd killed mid-flight with
+  nothing committed for that member — but left one orphaned li-bot-profile
+  Chrome running post-kill, closed it manually before resuming (`--max 3`
+  covering only the remainder, per the "never exceeds the gate's selection"
+  rule), finished the remaining 3 clean. 5/5 endorsed+DM'd, 0 abandoned,
+  101→106 DM'd. Total profile views: ~57 (40 scrape + ~12 invite + 5
+  endorse), comfortably under the ~120/24h threshold. No restriction/unusual-
+  activity page hit across any of the four lanes — Lane 3's failure was a
+  distinct, unrecognized error signature, not a detected restriction.
+- **2026-08-16 run — full 4-lane run starting from Lane 2 (Mike's ask: Lane
+  2=40, Lane 3=30, Lane 4, Lane 5).** All four lanes ran clean, no chunking
+  needed (each finished within one foreground call, no reaper kills this
+  time). Lane 2 (scrape 40): 40/40 visited, 0 errors, 885→908 captured (+23:
+  17 europe, 5 north_america, 1 south_america). Lane 3 (invite 30): 26/30
+  sent, 4 errored on the Send-button click (`Locator.click: Timeout 6000ms
+  exceeded`) and are queued for automatic retry next run, 700→726 contacted.
+  Lane 4 (check connections): ran clean in one shot, 6 scroll rounds, 11
+  newly connected (215→226). Lane 5 (endorse+DM): mechanical `>14d` gate
+  found 12 eligible, above the 10/run ceiling — auto-capped to 10 per the
+  standing rule (no question back to Mike), all 10 endorsed (89 skills) +
+  DM'd, 0 abandoned, 82→92 DM'd. Total profile views: ~80 (40 scrape + 30
+  invite + 10 endorse), comfortably under the ~120/24h threshold. No
+  restriction page hit across any of the four lanes.
+- **2026-08-14 run — full 4-lane run starting from Lane 2 (Mike's ask: Lane
+  2=40, Lane 3=30, Lane 4, Lane 5), the heaviest reaper-kill day yet across
+  Lanes 2 and 3.** Lane 2 (scrape 40): needed 5 foreground chunks (8, 10, 10,
+  3, 9) to land all 40 visits — most kills were the standard
+  `Page.wait_for_timeout: ...browser has been closed` after the 600s
+  auto-background conversion, landing cleanly between profiles every time
+  (verified via `members-urls.json`/`members.json` disk deltas before each
+  resume, zero orphan `li-bot-profile` Chrome at any point, zero data lost).
+  One profile (`frank-mehlhop`) hit a real "not on a profile page" search
+  error, queued for retry next run. 40/40 visited, 839→858 captured (+19).
+  Lane 3 (invite 30, target = 30 SENT not just visited): needed 7 chunks (4,
+  10, 12, 9, 4, 3, 3) — reaper kills landed safely between invites every time
+  (confirmed via `contacted_at`/`contact_status` timestamps, never mid-Send),
+  plus several real per-visit errors (Send-button timeout, landed-on-wrong-page)
+  sprinkled through nearly every chunk. Two profiles (`david-h-836aa410a`,
+  `david-loor-data-analyst-product-manager`) hit the identical error twice in a
+  row back-to-back chunks — applied the standing fix (moved both to the end of
+  `members.json`, order-only), which cleared the last invite immediately after.
+  31/30 sent (slight overshoot from chunk sizing), 637→668 contacted. Lane 4
+  (check connections): ran clean in one shot, no chunking needed, 12 newly
+  connected (196→208). Lane 5 (endorse+DM): mechanical `>14d` gate found 14
+  eligible members, above its own 10/run self-derived ceiling — refused
+  outright and surfaced the volume decision to Mike per the documented rule;
+  Mike chose to cap at `--max 10` rather than run all 14 or fall back. First
+  sub-run got reaper-killed after 6 full endorse+DM cycles, mid-7th member
+  (`carlosoeiras`) — endorsed but killed right before the DM composer's Send,
+  verified via `dm_status`/`dm_sent_at` (undefined) that no DM had gone out,
+  no orphan Chrome. Resumed `--max 4`: finished `carlosoeiras`'s DM, endorsed
+  a fresh 2 more (`juan-carlos-ojeda-62489525`, `robertocarlosmedina`), and
+  abandoned 1 with no endorsable skills (`davidcarlondata`, no DM sent). Total
+  10/10 of the gate's capped selection processed: 9 endorsed+DM'd, 1
+  abandoned. 73→82 DM'd (+9). Total profile views: ~96 (40 scrape + 45 invite +
+  11 endorse), well under the ~120/24h threshold. No
+  restriction page hit at any point across all four lanes despite the heavy
+  chunking.
+- **2026-08-13 run — full 4-lane run starting from Lane 2 (Mike's ask: Lane 2=40,
+  Lane 3=30, Lane 4, Lane 5).** Lane 2 (scrape 40): mostly clean chunks of 5, a few
+  reaper kills mid-chunk (all disk-verified safe before resuming); one profile
+  (`emily-hall-4b73792a9`) 404'd 3x in a row at the front of the queue, moved to the
+  end per the standing fix. Notable: after Lane 2's first clean chunk, three
+  consecutive `run_in_background: true` relaunches got killed almost instantly
+  (within seconds, before or right at the first page load, nothing written) —
+  switching to plain foreground calls (no `run_in_background` flag, letting the
+  harness auto-convert to background only if it runs past 600s) survived cleanly
+  from then on for the rest of the day, same mitigation as the 07-31 note in
+  `[[reference_linkedin_bg_task_kills]]`. 40/40 visited, 809→839 captured (+30).
+  Lane 3 (invite 30): same pattern, several reaper kills mid-invite, every kill
+  landed before the Send click (verified via `contacted_at` diff before each
+  resume) so no duplicate-send risk. 30/30 sent, 607→637 contacted. Lane 4 (check
+  connections): ran clean in one shot, no chunking needed, 9 newly connected
+  (187→196). Lane 5 (endorse+DM): mechanical `>14d` gate computed max=4
+  automatically, ran clean in one shot, 4 members endorsed (40 skills total) + DM'd
+  (69→73). Total profile views: 74 (40 scrape + 30 invite + 4 endorse), well under
+  the ~120/24h threshold. No restriction page hit at any point across all four
+  lanes.
+- **2026-08-12 run — full 4-lane run starting from Lane 2 (Mike's ask: Lane 2=50,
+  Lane 3=30, Lane 4, Lane 5), a rough day for the background-task reaper.**
+  Lane 2 (scrape 50): the initial foreground call and most resumes ran past the
+  600s tool cap and auto-converted to background, where the reaper hit ~4 of the
+  ~10 resume chunks (killed after 10, then again after 3-profile chunks a few
+  times); every kill was checked for orphan Chrome (none found) and verified
+  against `members-urls.json`/`members.json` before resuming — zero data lost,
+  every kill turned out to have already persisted its completed profiles (one
+  kill even landed all 3 profiles before dying during cleanup). Settled into
+  `--max 3` foreground chunks (~9-10 chunks) to finish the 50. One profile
+  (`munachiso-akpuoye`) 404'd twice in a row at the front of the queue; moved to
+  the end of `members-urls.json` (order-only) per the standing fix. Lane 3
+  (invite 30): same pattern, `--max 5` chunks, about half reaper-killed
+  mid-chunk; verified every kill's persisted sends before resuming (a couple died
+  before the Send click — safe to retry, no duplicates). Two profiles
+  (`aseguillon`, `ana-carolina-barbosa`) hit the same real "Send button timeout"
+  twice each (not a reaper kill); moved both to the end of `members.json` per
+  the standing fix, then closed out the last 2 invites clean. Lane 4 (check
+  connections) and Lane 5 (endorse+DM) both ran without needing chunking, except
+  Lane 5's first call got reaper-killed after 3 of the gate's 4 selected members
+  finished (all 3 already endorsed+DM'd, verified before resuming); the 4th
+  resumed cleanly on its own single-member re-run (gate recomputed `--max=1`
+  automatically). Total 50/50 scraped, 30/30 invited, 8 newly connected, 4
+  endorsed+DM'd. No LinkedIn restriction page at any point.
 - **2026-08-11 run — full 4-lane run starting from Lane 2 (Mike's ask: Lane 2=50,
   Lane 3=30, Lane 4, Lane 5).** Lane 3 hit repeated background-task-reaper kills
   at `--max 30` and `--max 5` (each terminal window capped at ~10min, well short
@@ -2226,3 +2788,239 @@ No restriction pages hit at any point across all four lanes. Structural gap stil
 (noted 08-05, recurred today): the run log undercounts same-day volume when chunks get
 reaper-killed before writing their `lane_runs.json` entry; heartbeat-based counting would
 fix it but hasn't been built.
+- **2026-08-27 run — Mike's ask: Lane 2=60, Lane 3=30, Lane 4, Lane 5 (same request as
+  2026-08-26). CROSS-SESSION ROOT CAUSE FOUND for a mystery "Chrome closed" failure.**
+  Lane 2 (detached-console launch, the standing pattern since 08-26) died 4 times in a
+  row with `FATAL: Page.wait_for_timeout: Target page, context or browser has been
+  closed`, exit code 0, no restriction phrasing, no orphan process — every time mid the
+  between-profile pacing wait. Diagnosed as NOT a restriction, NOT the harness reaper
+  (detached console rules that out), NOT a power/sleep setting (both hours, not seconds).
+  Root cause: **a concurrent Claude Code session working `schedule-tweets` posting was
+  running kill-all `Stop-Process -Name chrome -Force` instead of a per-profile kill**,
+  which kills every Chrome window on the machine, not just its own bot profile — including
+  `li-bot-profile`. The sibling session self-reported this mid-run via cross-session
+  message after the 2nd and 4th occurrences; each time Lane 2 resumed cleanly on retry
+  with zero data loss (disk deltas verified consistent every time). Memory updated:
+  `feedback_never_kill_main_chrome.md` now documents this exact symptom signature — check
+  `ListAgents` for a concurrent peer session before assuming a local/Chrome anomaly if it
+  recurs. Lane 2 reached **51/60** (1850→1901 processed, 1006→1039 captured) before Mike
+  interrupted mid-run and redirected to skip straight to Lane 4 then Lane 5 (Lane 3's 30
+  invites skipped entirely today; Lane 2's remaining ~9 stay queued for a future run).
+  **Lane 4: clean in one shot**, 8 newly connected (280→288 total).
+  **Lane 5: clean in one shot**, gate found 45 eligible >14d, auto-capped to 10 per the
+  standing ceiling, 10/10 endorsed (99 skills) + DM'd, 0 abandoned, 0 failures. No
+  restriction/unusual-activity page at any point.
+- **2026-08-28 run — Mike's ask: Lane 2=60, Lane 3=30, Lane 4, Lane 5 (same daily
+  request as 08-26/08-27). Lane 3 self-stopped on a note/limit modal; diagnosed as
+  likely NOT the account-wide weekly invitation-send cap.** All four lanes launched via
+  the standing detached-console pattern (Lanes 2/3/5) / plain foreground (Lane 4), orphan
+  `li-bot-profile` Chrome checked clean between every lane, no concurrent peer session
+  running (checked `ListAgents`).
+  **Lane 2 (scrape, asked 60): 60/60 in one detached-console shot, no reaper kill.** 1
+  stale-URL 404 (retried next run, same recurring-404 class as prior `sr-dev-dani`
+  entries), 7 skipped out-of-zone. 1901→1960 processed, 4624→4565 remaining, 1039→1091
+  captured (+52).
+  **Lane 3 (invite, asked 30): stopped itself at 10/30 sent.** Two different members hit
+  a Send-button click timeout back to back early on (`aseguillon`,
+  `ana-carolina-barbosa-...`) but both were transient — sends resumed clean right after.
+  The real stop came at member 14 (`emily-nolan`): "Add a note" opened but no textarea
+  ever appeared, and the modal's remaining text matched `request_connections.py`'s
+  no-textarea branch (`"reached the limit|upgrade to|premium"`), returning
+  `limit_reached` and halting per the script's own STOP-on-limit rule (member not marked
+  contacted). **Mike questioned whether a real weekly cap was plausible after only 10
+  sends; investigated:** `members.json` shows just 44 invites sent in the trailing 7 days
+  (34 before today + 10 today), well under LinkedIn's documented ~100-200/week cap, so
+  this is unlikely to be the account-wide weekly send-rate limit. The matched wording
+  ("upgrade to"/"premium") instead points at a **notes-specific quota** (personalized
+  notes require Premium per this toolkit's own doc; free accounts cap at ~5 notes/month)
+  — but the script doesn't screenshot or log the literal modal text, and Chrome had
+  already closed, so the exact wording couldn't be confirmed after the fact. Flagged to
+  Mike to check LinkedIn's Premium/notes status manually; **did not rerun Lane 3 today**
+  per the script's own "do not rerun today" warning. 812→822 contacted, 279→269 still to
+  contact. **Open gap for next time:** consider having the script screenshot or log the
+  matched modal text on `limit_reached` so this doesn't need a cold code-trace next time
+  it fires.
+  **Lane 4 (check): clean in one shot, foreground, no reaper kill.** 2 new acceptances —
+  `eric-kumi-5581132b9`, `david-bañados-55718b25b`. 288→290 connected.
+  **Lane 5 (endorse+DM, no number — mechanical 14/7-day gate): rule found 48 eligible
+  >14d, auto-capped to the standing 10/run ceiling, no question asked.** 10/10 endorsed
+  (100 skills) + DM'd, 0 abandoned, 0 failures — david-iyileh-a16655255, juanisazaco,
+  davide-medina-324637bb, david-cardoso-it-guy, bettyedewey, rémi-david-b88858a1,
+  daviddetoma, david-prince-kwakye-8ab557359, jeancjunior, itszakiyadavidson. 149→159
+  DM'd/endorsed. 125 eligible remain (38 >14d, 59 7-14d, 28 <7d).
+  No restriction/unusual-activity page at any point in any lane.
+- **2026-08-29 run — Mike's ask: Lane 2=60, Lane 3=30 ("make sure you do all
+  30"), Lane 4, Lane 5. All 4 lanes launched detached (the standing pattern);
+  Lane 2/3/5 each armed with a `Monitor` poll on their log.**
+  **Lane 2 (scrape, `--max 60`): clean, one shot, no restriction.** 1 non-fatal
+  404 on profile 1 (retried automatically per design), otherwise no errors.
+  1960→2019 processed, 1091→1125 captured (+34: 9 europe, 4 south_america, 21
+  north_america). Queue 4565→4506 remaining. Took ~3.5 hours wall-clock at
+  ~200-290s/profile pacing.
+  **Lane 3 (invite, `--max 30`): main run sent only 26/30** (4 scattered
+  errors — a 404, two `Locator.click` Send-button timeouts, one wrong-page
+  landing — no restriction, no note/limit modal this time, unlike 2026-08-28).
+  Per Mike's explicit "make sure you do all 30," ran a **`--max 4` top-up**
+  against the same 4 stragglers: **0/4 sent**, all 4 errored again, two of
+  them (`a-b-mojere` 404, `esthefanefélix-computerengineer` wrong-page) on the
+  *exact same URL* as the main run — a deterministic dead link, not flakiness.
+  Per `[[reference_linkedin_bg_task_kills]]`'s "same member keeps failing"
+  fix, **moved those 4 profile_urls to the end of `members.json`** (Node,
+  order-only, no field changes) so a retry would draw fresh candidates instead
+  of re-hitting the same wall. A **`--max 4` second top-up** then landed
+  **2/4** (fresh members; the 2 errors were new, isolated, non-repeating). A
+  final **`--max 3` third top-up** landed **0/3** — `david-h-836aa410a`
+  (Send-button timeout) and `david-loor-...` (wrong-page redirect) repeated
+  their exact failures from the second top-up, confirming these too are
+  broken links/UI states, not transient. **Stopped there per the pre-set cap
+  of 3 top-up attempts** rather than chasing the number indefinitely.
+  **Final: 28/30 invites sent** (822→850 contacted, 303→275 still to contact).
+  No restriction/unusual-activity page across any of the 4 sub-runs.
+  **Lane 4 (check): clean, one shot, plain foreground call, no reaper kill.**
+  4 new acceptances — frederick-ekong, frankderango,
+  franklingomezmendoza7599fkgm, andrisoa-erick-rakotondramasy-a5968b7a.
+  290→294 connected.
+  **Lane 5 (endorse+DM, no number — mechanical 14/7-day gate): rule found 48
+  eligible >14d, auto-capped to the standing 10/run ceiling.** The graph
+  printed its own volume-budget warning before starting — **101 of ~120 daily
+  views already used (60 scrape + 41 invite) — closest margin to the
+  restriction threshold on any Lane 2=60/Lane 3=30/Lane 5 day so far** — but
+  proceeded per design since 101+10=111 still clears the threshold; no actual
+  restriction ever appeared. 10/10 endorsed (97 skills) + DM'd, 0 abandoned, 0
+  failures — andreea-david-9252843a, davide-bruner-5390a1a8, daveabbondanzio,
+  daviddavilao, david-mogrovejo, lcdotorresquinones, jdavidrivera, cv-mx,
+  david-c-273b7458, wluspark. 159→169 DM'd/endorsed. 119 eligible remain (38
+  >14d, 53 7-14d, 28 <7d).
+  **Monitor-tooling note:** two of this session's own `Monitor` regex passes
+  false-positived on benign log text — `goto-error` (a navigation-method
+  label, not a failure) and, more seriously, the word "restrict"/"stopping"
+  appearing inside the graph's own informational volume-warning sentence
+  ("...the account was **restricted** at ~120... Consider **stopping**
+  here.") — both corrected mid-run to anchor on the code's actual halt
+  markers (`!! LinkedIn restriction`, `!! Restriction page`, literal `GRAPH
+  DONE`) instead of bare keyword matches. Worth remembering for future
+  detached-lane monitoring: a real halt always carries a `!!` prefix in this
+  codebase; a bare "restrict"/"stopping" match is not reliable on its own.
+  **Volume watch for future same-day Lane 2=60/Lane 3=30/Lane 5 runs:** 111
+  views is close enough to the ~120 threshold that a heavier Lane 3 top-up
+  chain (or a bigger Lane 5 `--max`) on the same day would risk crossing it —
+  worth Mike weighing in if a future day's ask pushes the combined total
+  higher.
+  No restriction/unusual-activity page at any point in any lane.
+- **2026-08-30 run — Mike's ask: Lane 2=60, Lane 3=30, Lane 4, Lane 5 (same
+  request pattern as prior days).** Lane 2 (scrape 60): needed 3
+  detached-console chunks (60→died at 15, 45→died at 19, 28→completed) — TWO
+  mid-run crashes this time, both the identical `FATAL: Page.wait_for_timeout:
+  Target page, context or browser has been closed` signature seen 2026-08-27;
+  each kill verified lossless on disk (processed/captured deltas intact) with
+  no orphan `li-bot-profile` Chrome, and the only other Chrome process running
+  on the machine both times was an unrelated `tiktokbot-profile` session (a
+  concurrent automation elsewhere on the box, not this toolkit) — consistent
+  with resource contention rather than a restriction; no restriction/unusual
+  page ever appeared. 58/60 processed (2 short: one profile URL 404'd 3x in a
+  row across all 3 chunks — reordered to the end of `members-urls.json`,
+  order-only fix per the standing persistent-failure playbook — and one other
+  profile 404'd once), 1125→1158 captured (+33). **New finding, not
+  previously documented:** the region classifier misses LinkedIn's "Greater
+  <City> Area/Region" location format when it carries no country/state
+  suffix — confirmed 4 times this run alone (Greater Nantes Metropolitan Area
+  = France, Greater Usti nad Labem Area = Czech Republic, Greater Richmond
+  Region = Virginia US, Greater Nottingham = UK), all silently skipped as
+  "not a target zone" though all 4 are genuinely in-scope regions. Worth a
+  classifier fix (match on city/region name via a lookup, not just a trailing
+  country/state string) — flagged for Mike, not fixed inline this run since
+  it's a code change outside the requested scope. Lane 3 (invite 30): hit
+  LinkedIn's own weekly invite/note limit after only 4 profile visits (0
+  invites sent, `error:3, limit_reached:1`) — the graph detected it and
+  self-stopped per design with an explicit "do NOT rerun today" warning; not
+  a restriction page, 850 contacted unchanged. Lane 4 (check connections):
+  clean in one shot, 6 scroll rounds, 4 newly connected (294→298). Lane 5
+  (endorse+DM): mechanical `>14d` gate found 47 eligible, auto-capped to 10
+  per the standing ceiling; ran clean in one shot, no reaper kill, no orphan
+  Chrome — david-sans-naudó-a0111a42, juan-ávila-61943a176, davidbouchez,
+  davide-busi, david-roberto1, davide-zappacosta-2982746, danielgmateus,
+  builescu-daniel, iamdanielsemprunmoreno, davidematteomurgia — 10/10
+  endorsed (93 skills, two members had only 9 and one only 5 endorsable
+  skills so those were endorsed in full) + DM'd, 0 abandoned, 0 failures.
+  169→179 DM'd/endorsed. 113 eligible remain (37 >14d, 45 7-14d, 31 <7d). No
+  restriction/unusual-activity page at any point across any of the four
+  lanes; combined day volume (~62 scrape Chrome-visits + 4 invite views + 10
+  endorse ≈ 76) stayed comfortably under the ~120 threshold, well clear of
+  the 2026-08-29 111/120 near-miss.
+  **CORRECTION, same day — the Lane 3 "weekly invite limit" was a BUG, not a
+  LinkedIn cap.** Mike challenged the limit report ("how many invites did we
+  send this week?"). The ledger answered it: **72 sends in the last 7 days**
+  (08-25: 7, 08-26: 27, 08-28: 10, 08-29: 28) against a documented ~100-200
+  weekly ceiling, and 418 in the last 30 days — nowhere near any cap. The
+  "limit" had also fired on 08-25, 08-28 and 08-30 with normal sending
+  resuming the very next day each time, which no real weekly cap does.
+  **Root cause:** `request_connections.py`'s no-textarea fallback matched
+  `reached the limit|upgrade to|premium` against the **whole page body**, and
+  LinkedIn's own left rail carries "Try Premium for free" on every profile —
+  so the fallback matched its own page furniture and reported an
+  account-wide cap. Any ONE member whose connect modal lacks a note textarea
+  (an **email-verification wall**: LinkedIn demands the member's email to
+  prove we know them) halted the entire run at zero invites. Mike spotted the
+  email prompt on-screen and named it. Exactly the trap already documented at
+  lines 218-225 for the resend-cooldown modal on 2026-08-05, re-appearing in
+  a second fallback nobody had scoped. **Fix (2026-08-30):**
+  `needs_email_verification()` detects the wall **structurally** (an email
+  `input` inside the connect dialog) rather than by wording — the old guard
+  looked for the literal `enter their email` and missed the personalised
+  "enter **David's** email address" form; checked at all three points it can
+  appear (modal open, no-textarea, and before Send, where it leaves Send
+  disabled and surfaced only as a meaningless `Locator.click: Timeout
+  6000ms exceeded` that got the member retried every run forever); both
+  limit tests re-scoped to the dialog via new `dialog_text()`; bare
+  `premium`/`upgrade to` alternatives deleted; new
+  `email_verification`/`send_disabled` statuses retire the member and **let
+  the batch continue**. Regex unit-tested (possessive forms match, "Try
+  Premium for free" no longer does). **Verified live on the two members that
+  broke:** `david-h-836aa410a` retired at the modal and the batch continued;
+  `felix-c-946181130` — the member that halted the morning run as "LIMIT
+  reached" — **INVITE SENT**, proving there was never a cap. Re-run then went
+  **30 visited / 29 sent / 1 email_verification / 0 errors / 0 halts**, plus a
+  1-invite top-up (`frl1995`, sent clean) for a verified **30 sent today** on
+  disk. 850→881 contacted, 277 still to contact. Day volume ended ~110 of the
+  ~120 threshold; no restriction page in any lane. Also reordered 2 members
+  with permanently broken profile links (`david-loor-data-analyst-product-manager`,
+  `felix-omomah-b26749266`) to the end of members.json after they failed the
+  identity guard identically in both runs. **Lesson recorded:** a script's
+  self-reported external limit is a claim to check against
+  `data/lane_runs.json`, not a fact — three days of invites were lost to
+  believing it. JS twin `request-connections.js:190` still carries the
+  unscoped body match, so the documented rollback reintroduces this bug.
+- **2026-09-03 run — Mike's ask: Lane 2=60, Lane 3=30, Lane 4, Lane 5 (standing
+  recurring request). Session paused mid-Lane-3 for a machine shutdown, resumed
+  cleanly.** Lane 2 (scrape 60): detached-console launch, ran slower than usual
+  (60-390s between profiles) but finished clean in one shot — 60 visited, +58
+  processed, +24 captured (total 1211), 2 errors (retry next run), no
+  restriction. Lane 3 (invite 30): detached launch got 23/30 sent, then the
+  user shut down the machine mid-run — killed the detached Chrome/python
+  process. Verified lossless on disk (23 `contacted_at` timestamps dated today
+  in members.json, matching `lane_runs.json`'s error-status record for that
+  run) before resuming in a fresh session with `--max 7` to finish the
+  remaining count; came back clean, 7/7 sent, 0 errors. **Confirms the
+  standing assumption that a killed lane is always safe to resume, this time
+  from an intentional shutdown rather than a reaper kill** — no duplicate
+  invites, no corruption. Lane 4 (check connections): clean in one shot, 6
+  scroll rounds, 17 newly connected (298→315). Lane 5 (endorse+DM): mechanical
+  `>14d` gate found 67 eligible, auto-capped to 10 per the standing ceiling;
+  ran clean in one shot — caubetdavidalexandre, pmp-daniel-mallea,
+  danzprecruiter, daniel-ferreira-data-engineer, daniele-origlia,
+  uribejuanda, david-gillard-ingenieur-data-ia, david-sander-silva,
+  davidfigueroaponce, neal-daniels-b47b8359 — 99 skills endorsed (9 for
+  uribejuanda, 10 for the rest), 10/10 DM'd, 0 abandoned, 0 failures.
+  179→189 DM'd/endorsed. No restriction/unusual-activity page at any point in
+  any lane; combined day volume (60 scrape + 30 invite + 10 endorse = 100)
+  stayed under the ~120 threshold, though the script's own volume warning
+  fired at 90 (accurate, informational, did not halt the run). **Tooling
+  note:** the `Monitor` log-watcher's regex for the "restriction/unusual
+  activity" halt marker briefly false-positived on Lane 5's own volume-budget
+  warning text ("...the account was restricted at ~120. Consider stopping
+  here.") — the word "restricted" appearing in a benign status message
+  matched a loose grep. Not a data issue (the run itself continued
+  correctly), just a monitoring artifact; the marker pattern was tightened
+  to require "page"/"detected" adjacency. Final: queue 6525, 2194 processed
+  (4331 remaining), 1211 captured, 932 contacted, 315 connected, 189
+  endorsed/DM'd.
