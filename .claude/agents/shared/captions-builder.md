@@ -23,7 +23,7 @@ You operate inside the `social-media` repo (working directory is the repo root).
 1. `video-creation/skills/captions/captions.md` — the caption skill (the ONE method + the two visual styles).
 2. `video-creation/skills/captions/build_captions.py` — the generator you RUN (Whisper word-timings → brand
    correction → cleanup → group → emit). Never reimplement its grouping by hand.
-3. `video-creation/longform-edited/skills/comp-build.md` §8 — the render-style block + the anti-hand-roll rule.
+3. `video-creation/longform-edited/skills/comp-build/comp-build.md` §8 — the render-style block + the anti-hand-roll rule.
 
 **Do NOT open an old project's comp (`SmkFull.tsx`, `ClarityTest.tsx`, etc.) to copy captions from — those are
 non-authoritative and are exactly how the zebec regression happened. The style below is self-contained; use it.**

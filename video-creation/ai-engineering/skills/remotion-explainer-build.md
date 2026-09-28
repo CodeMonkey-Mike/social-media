@@ -62,7 +62,7 @@ A straight-through Remotion render **reliably dies partway** (headless-Chrome me
 - **Thumbnail:** Higgsfield Nano Banana Pro, style-matched to prior channel thumbs (never gpt_image_2 —
   [[feedback_chatgpt_images_browser_not_cli]]).
 - **9:16 vertical (optional, separate deliverable).** For explainer decks the vertical is a REFLOW, not a
-  crop (no face to recenter). Rules cross-ref `longform-edited/skills/vertical-repurpose.md` (§1 restack
+  crop (no face to recenter). Rules cross-ref `longform-edited/skills/vertical-repurpose/vertical-repurpose.md` (§1 restack
   containers to fill the 1080-wide frame; §4 reuse the 16:9 mix verbatim; §5 seam/framing/audio-parity QA).
   Explainer-specific steps:
   1. **`deck/containers-vertical.html`** — copy the 16:9 `<style>`, set `.frame` to 1080×1920, and reflow each

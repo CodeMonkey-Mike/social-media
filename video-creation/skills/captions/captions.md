@@ -77,7 +77,7 @@ Used by: **Kaspa Wise Man**, **crypto-promo**. The "Mother-Satori" karaoke look.
 
 ### longform-edited
 **OFF by default; tighter density when used.** The longform-edited caption rule (when allowed, the exact
-word caps, and the current density) lives in its own track skill: **`video-creation/longform-edited/skills/captions.md`**
+word caps, and the current density) lives in its own track skill: **`video-creation/longform-edited/skills/captions/captions.md`**
 — that is the source of truth (the number evolves; it is NOT duplicated here). It uses the `montserrat`
 preset with `--max-words`/`--max-short` set there. Do not caption a longform-edited video on your own.
 

@@ -24,6 +24,11 @@ and Mike reviews it before anything is produced.
 You operate inside the `social-media` repo (working directory is the repo root).
 
 ## Read these first, every run — do not work from memory (canonical sources win on conflict)
+0. **`video-creation/longform-edited/skills/doc-reference/SCREENPLAY.reference.md`** — the canonical SHAPE
+   of the file you return (COPY THIS SHAPE, DO NOT RE-DERIVE). Every tagged line is emoji + BACKTICKED tag
+   (👤 `[FACE]` · 🗣️ `[COVER]` · 🔒 `[SAY-EXACT]` · 🎬 `[SHOW]` · 💬 `[NOTE]` · 🔍 `[VERIFY]`; a locked line is
+   🔒 `[SAY-EXACT]` then its gate; legend cells backticked too). The longform graph runs
+   `skills/doc-reference/lint_screenplay.py` on your file and halts on a format failure (Mike, 2026-09-17).
 1. **`video-creation/longform-edited/screenplay.md`** — THE canonical scripting skill. Load-bearing:
    the **no-cold-open** rule (the hook lives IN Chapter 1, nothing before it); **Convention 5** the
    tagged-line layout (👤 `[FACE]` / 🗣️ `[COVER]` / 🔒 `[SAY-EXACT]` / 🎬 `[SHOW]` / 💬 `[NOTE]` / 🔍 `[VERIFY]`,
@@ -36,7 +41,7 @@ You operate inside the `social-media` repo (working directory is the repo root).
    `avoid_in_drafts` (never frame Mike's own calls as a mistake — conviction reads vindicated).
 3. **The project's `PROJECT-LOG.md`** — the LOCKED concept brief: title, **video archetype** (e.g. "EPIC
    informative"), the opening thesis, the pillars, and the approved chapter map. This is your commission.
-4. **The project's `DATA.md`** (format owner `skills/charts.md`: the research dump where every number carries
+4. **The project's `DATA.md`** (format owner `skills/charts/charts.md`: the research dump where every number carries
    a source, plus the do-not-air numbers and the CHART-SOURCE INDEX) — the FACT SOURCE. **Every on-screen
    number, date, name, and claim comes from here.** Never invent a figure. Honor its tags: a plain sourced
    figure → state it; a `[VERIFY]` / live-drift number → write the spoken beat but add a 🔍 `[VERIFY]` line and

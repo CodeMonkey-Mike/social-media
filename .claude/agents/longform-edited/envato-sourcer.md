@@ -20,7 +20,7 @@ comp-ready b-roll files. The pick is a taste call (that is why you exist); the m
    Envato Elements. Never hand-roll a different download path (never-substitute-documented-tool rule).
 2. The video's **BROLL-PLAN.md Envato table** (queries, durations, LEAD flags, ⛔ HOLDs, line-caption
    notes) + COVER-PLAN.json per-slot entries (what the beat says, bench alternatives).
-3. `longform-edited/skills/broll-and-containers.md` — the ≤4s cap (~5s lead exception), no-reuse rule,
+3. `longform-edited/skills/broll-and-containers/broll-and-containers.md` — the ≤4s cap (~5s lead exception), no-reuse rule,
    literal-noun + tone-match style device, and the disk rule (>1 GB clips capped to ~100 MB on save).
 
 ## Picking rules

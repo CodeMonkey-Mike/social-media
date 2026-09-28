@@ -10,7 +10,7 @@ The recurring drift (wrong accent teal, Inter instead of Playfair/DM-Sans, color
 divider) happens because each build re-invents the CSS. **`container-canonical.css` in this folder is the
 locked stylesheet — paste it into the project's `assets/containers/containers.html`, then build one
 full-frame `<div class="frame" id="<slug>">` per beat and screenshot each.** Palette + fonts match
-`presentation.md` and the reference frames below. `container-canonical.css` + the reference frames in THIS
+`../presentation/presentation.md` and the reference frames below. `container-canonical.css` + the reference frames in THIS
 folder are the worked example — never a sibling project's build (those folders get deleted after publish).
 Never swap the tokens.
 
@@ -42,7 +42,7 @@ These are the **info-dense full-screen slides** — GOOD visuals, not the enemy.
 show one ONCE, full-screen, **held ~10s** so the viewer can digest the whole chain, then **break it up** into the
 smaller spotlight containers above (one per sub-point, ~5s each) as the narration walks through each piece. The
 overview slide and its break-up containers **coexist** — never repeat the full slide per sub-point, never delete
-it. This is THE balance rule; full text in `../broll-and-containers.md` ("⛔ THE BALANCE"). Declare these in the
+it. This is THE balance rule; full text in `../broll-and-containers/broll-and-containers.md` ("⛔ THE BALANCE"). Declare these in the
 comp as `// DIAGRAM_REFS:` so they're exempt from the whole-slide lint (they earn it by appearing once, as the
 overview).
 
@@ -63,5 +63,5 @@ overview).
   repeats. Cropping a deck is the exact regression that made this "hard." A purpose-built container has none of
   those problems and is how the early videos were easy.
 - One container per talking point; show them **contiguously per section**, do not scatter the same one across
-  the whole video (the `lint-deck-containers.py` + `lint-covers.js` gates watch for this).
+  the whole video (the `../comp-build/lint-deck-containers.py` + `../comp-build/lint-covers.js` gates watch for this).
 - System-design DIAGRAMS (topology/flow SVGs) may keep their headline and hold while explained.

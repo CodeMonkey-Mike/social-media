@@ -87,7 +87,7 @@ output is a cut that sat in silence, i.e. a natural sentence/phrase boundary. Fo
 convert the joins to final-video coords (add any baked card-pause shifts) and save them as
 `media/<project>/spine/jumpcuts-final.json` — mid-face punch-ins, zoom hits, and any mid-face transition
 must snap to these anchors instead of arbitrary times (a hit mid-sentence is the bug this prevents; see
-`longform-edited/skills/comp-build.md` §5).
+`longform-edited/skills/comp-build/comp-build.md` §5).
 
 ## QA (mandatory before delivery)
 

@@ -31,12 +31,12 @@ what-carries-over / what's-dialed-back is in `ai_channel_plan.md` § "Production
 
 | You are… | Read first (canonical, in `../longform-edited/`) |
 |---|---|
-| Building the CSS containers / slides / charts (the deck) | **`skills/deck-and-containers.md`** (this folder — thin inherit) → `../longform-edited/skills/broll-and-containers.md` + `../longform-edited/skills/container-reference/` |
+| Building the CSS containers / slides / charts (the deck) | **`skills/deck-and-containers.md`** (this folder — thin inherit) → `../longform-edited/skills/broll-and-containers/broll-and-containers.md` + `../longform-edited/skills/container-reference/` |
 | Assembling the explainer VIDEO (Remotion: containers + VO → mp4) | **`skills/remotion-explainer-build.md`** (this folder — SELF-CONTAINED; comp + timeline/stitch + segmented render + music mux; copyable templates in `skills/remotion-explainer-build/`). ⛔ Do NOT copy the method from another `media/<project>/`. |
-| Styling a data chart / graph | `../longform-edited/skills/charts.md` (+ `presentation.md` for the HTML look) |
+| Styling a data chart / graph | `../longform-edited/skills/charts/charts.md` (+ `presentation.md` for the HTML look) |
 | Writing/outlining a video's script | `../longform-edited/screenplay.md` |
 | Capturing the MIKE-CLONE voice | `../skills/higgsfield-voice/` — see the **Voice capture flow** below (batch driver already exists; don't hand-roll it) |
-| Rendering QA | `../longform-edited/skills/video-qa.md` |
+| Rendering QA | `../longform-edited/skills/video-qa/video-qa.md` |
 
 ## Voice capture flow (MIKE-CLONE, Seed Speech) — the batch driver ALREADY EXISTS
 
@@ -77,7 +77,7 @@ Canonical skill: `../skills/higgsfield-voice/SKILL.md`. Steps:
 Anything that is **identical** to longform-edited is used **by reference, not copied** (copies drift). A
 channel-local skill exists only to record the small deltas for this channel and then point at the canonical
 file. Today:
-- **`skills/deck-and-containers.md`** — inherits `longform-edited/skills/broll-and-containers.md` +
+- **`skills/deck-and-containers.md`** — inherits `longform-edited/skills/broll-and-containers/broll-and-containers.md` +
   `container-reference/` + `charts.md`; records the ai-engineering deltas (full-frame code-card containers,
   no face spine, one `#cNN` container per script chunk, render via the project `scripts/render-containers.js`).
 

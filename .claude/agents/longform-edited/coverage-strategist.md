@@ -27,10 +27,10 @@ You operate inside the `social-media` repo (working directory is the repo root).
    **#4** (scene clears before any overlay), **#12** (NO asset reused, each appears at most once),
    **#13** (COVER is ONE sequenced layer: partition the beat's time, container→b-roll→container, never a
    container held under b-roll).
-2. `video-creation/longform-edited/skills/broll-and-containers.md` — the manifest/zero-orphans contract +
+2. `video-creation/longform-edited/skills/broll-and-containers/broll-and-containers.md` — the manifest/zero-orphans contract +
    ⛔ THE BALANCE (a rich diagram slide shown ONCE, then broken into spotlight containers; never all-slides,
    never all-containers) + the ≤4s / leading-motion detail.
-3. `video-creation/longform-edited/skills/charts.md` — the ⛔ guardrail: **never let an image model be the
+3. `video-creation/longform-edited/skills/charts/charts.md` — the ⛔ guardrail: **never let an image model be the
    source of a number.** A real market/price/unlock chart = a REAL-SITE screenshot (receipt). A number WE
    control (traction totals, buyback flow) = OUR OWN code-rendered ANIMATED chart. Never a ChatGPT image of a chart.
 4. `screenplay.md` Convention 4 — explainer visuals = **system-design containers** (code-rendered HTML/SVG,

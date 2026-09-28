@@ -183,6 +183,14 @@ editors; markdown gets the same contrast from leading tags + emoji + VS Code cal
   `🔍 [VERIFY]` line, anything load-bearing moves to the `> [!IMPORTANT]`/`> [!WARNING]` box.
 - Tags are plain text, so they survive raw view + every renderer; the emoji is the color anchor. Renaming a
   tag is a clean find/replace if a project wants different words.
+- **The tag token is ALWAYS written in backticks: 👤 `[FACE]`, never a bare `[FACE]` (Mike, 2026-09-17).** The
+  backticks are what render the gray chip in the VS Code preview he reads by; a screenplay without them reads as
+  a different document. A locked line is 🔒 `[SAY-EXACT]` followed by its gate, 👤 `[FACE]` or 🗣️ `[COVER]`
+  (the exemplar order); `[FACE] HOLD` stays inside the backticks. **The canonical SHAPE is
+  `skills/doc-reference/SCREENPLAY.reference.md` (copy it, do not re-derive), and the rule is enforced in code:
+  `python video-creation/longform-edited/skills/doc-reference/lint_screenplay.py <SCREENPLAY.md> [--face-max N] [--fix]`** (the
+  longform graph runs it in its `screenplay` node on every video: tag form, one job per line, beat signposts,
+  required sections, no cold open, no em dashes, the FACE budget; `--fix` repairs the mechanical class only).
 
 ---
 

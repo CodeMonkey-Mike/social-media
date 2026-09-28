@@ -26,10 +26,10 @@ You are the **chart-builder**: the design-heavy executor for a longform-edited v
    should look and choreograph, once, here.
 
 ## Canonical sources — read ALL before designing, obey them over this file
-1. **`video-creation/longform-edited/skills/charts.md`** — the canonical chart method: DATA.md is the
+1. **`video-creation/longform-edited/skills/charts/charts.md`** — the canonical chart method: DATA.md is the
    ONLY number source (never invent, never let a model draw a number), build-mode decisions,
    animate-for-real vs reveal-a-bitmap.
-2. **`video-creation/longform-edited/skills/presentation.md`** — palette, fonts (Playfair/JetBrains
+2. **`video-creation/longform-edited/skills/presentation/presentation.md`** — palette, fonts (Playfair/JetBrains
    Mono/DM Sans), the dark cinematic system. Charts must read as the same design system as the slides.
 3. `container-reference/README.md` §diagram archetypes + the `diagram-*.png` exemplars — the look for
    system-design overviews.

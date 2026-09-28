@@ -1,0 +1,5510 @@
+{
+  "text": " Casper is building Vprogs, verifiable programs, real apps on a base layer, on a proof of work, not an L2. A Vprog is an app that runs on its own node, keeps its own state and posts zero knowledge proof of that state back to Casper. Now Casper already has smart contracts, covenants, live on mainnet since June, straight from the core devs. Vprogs are the next layer up, whole applications on a chain that already runs 10 blocks every single second. Casper is never going to run your app, Casper is going to verify it. And that one flip is how you get apps on the base layer with proof of work security and no L2 in the middle. So let's break this all down. So back in 2020 Vitalik laid out Ethereum's plan and it said in plain English, all in on rollups, your accounts, your businesses, your assets living inside a layer 2. And every rollup is its own chain, its own sequencer, the machine that orders your transaction payments, its own bridge, its own slice of liquidity. And every one of those pieces is a place for something to break and a place for your liquidity to get split up. Now Casper's founder, Janitem Sampalinski looked at all of that and back in December he said the whole point of Vprogs was to avoid the obsolete path of L2s. His words, not mine. And he hasn't softened on it. So here's how a Vprog actually works. You send a transaction and you declare upfront which account it reads and which one it writes. Casper does four jobs. It orders every transaction so Casper itself is the sequencer. It stores the data, it checks the proofs, it meters the work. What it never does is run the app. The app runs on its own nodes. Every Vprog owns its own accounts and it's the only thing allowed to write to them. And provers, for-profit operators, post a zero-knowledge proof back to Casper. That's a math receipt that says the state is correct and Casper checks the receipt instead of redoing the math. And this buys you two things. Sovereignty. If another app breaks, yours keeps running. And composability. Apps can read each other's state. And a transaction that touches two apps goes through as one unit or not at all. And this just means the rules for checking all of this live inside of Casper's consensus itself, not on some other chain. Now where does this all actually stand? Look at this ladder. May 2025, Crescendo. 10 blocks a second. September, the yellow paper. First draft. June 30th of this year, Tukada. Zero-knowledge verification and covenants. Live on mainnet. Inside Casper's consensus. And September 2026, Silverscript 1.0. The smart contract language. Official release. Next rung. The first standalone zero-knowledge app. Above that, full Vprogs. Still under construction. And casper.org says so in plain text. And in December, Sam Polinsky said the Covenant fork was three to six months out. It shipped in June. Everyone is racing to control compute and money. The more they race, the more layer nobody owns is worth. Proof of work money with apps on it and no L2 in the middle. Click that like button and comment below. Let me know what you think is going to be built on it in the near future. Gonna be some exciting times. And click the link in the description below for the greatest community ever. And I'll catch you guys later.",
+  "segments": [
+    {
+      "id": 0,
+      "seek": 0,
+      "start": 0.0,
+      "end": 6.42,
+      "text": " Casper is building Vprogs, verifiable programs, real apps on a base layer, on a proof of work,",
+      "tokens": [
+        50364,
+        16100,
+        610,
+        307,
+        2390,
+        691,
+        4318,
+        21559,
+        11,
+        1306,
+        30876,
+        4268,
+        11,
+        957,
+        7733,
+        322,
+        257,
+        3096,
+        4583,
+        11,
+        322,
+        257,
+        8177,
+        295,
+        589,
+        11,
+        50692
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17935961484909058,
+      "compression_ratio": 1.641025641025641,
+      "no_speech_prob": 0.002286743838340044,
+      "words": [
+        {
+          "word": " Casper",
+          "start": 0.0,
+          "end": 0.5,
+          "probability": 0.7420971691608429
+        },
+        {
+          "word": " is",
+          "start": 0.5,
+          "end": 0.68,
+          "probability": 0.7184252738952637
+        },
+        {
+          "word": " building",
+          "start": 0.68,
+          "end": 0.98,
+          "probability": 0.9885120391845703
+        },
+        {
+          "word": " Vprogs,",
+          "start": 0.98,
+          "end": 1.94,
+          "probability": 0.5491729279359182
+        },
+        {
+          "word": " verifiable",
+          "start": 2.18,
+          "end": 2.8,
+          "probability": 0.8645728528499603
+        },
+        {
+          "word": " programs,",
+          "start": 2.8,
+          "end": 3.56,
+          "probability": 0.9747995138168335
+        },
+        {
+          "word": " real",
+          "start": 3.78,
+          "end": 3.94,
+          "probability": 0.8986091613769531
+        },
+        {
+          "word": " apps",
+          "start": 3.94,
+          "end": 4.34,
+          "probability": 0.985260546207428
+        },
+        {
+          "word": " on",
+          "start": 4.34,
+          "end": 4.64,
+          "probability": 0.5119258165359497
+        },
+        {
+          "word": " a",
+          "start": 4.64,
+          "end": 4.84,
+          "probability": 0.8145833015441895
+        },
+        {
+          "word": " base",
+          "start": 4.84,
+          "end": 5.08,
+          "probability": 0.9419532418251038
+        },
+        {
+          "word": " layer,",
+          "start": 5.08,
+          "end": 5.38,
+          "probability": 0.9849584102630615
+        },
+        {
+          "word": " on",
+          "start": 5.5,
+          "end": 5.66,
+          "probability": 0.9890499114990234
+        },
+        {
+          "word": " a",
+          "start": 5.66,
+          "end": 5.8,
+          "probability": 0.9891183376312256
+        },
+        {
+          "word": " proof",
+          "start": 5.8,
+          "end": 5.94,
+          "probability": 0.9274117350578308
+        },
+        {
+          "word": " of",
+          "start": 5.94,
+          "end": 6.24,
+          "probability": 0.935127317905426
+        },
+        {
+          "word": " work,",
+          "start": 6.24,
+          "end": 6.42,
+          "probability": 0.9631716012954712
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 6.48,
+      "end": 7.3,
+      "text": " not an L2.",
+      "tokens": [
+        50692,
+        406,
+        364,
+        441,
+        17,
+        13,
+        50742
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17935961484909058,
+      "compression_ratio": 1.641025641025641,
+      "no_speech_prob": 0.002286743838340044,
+      "words": [
+        {
+          "word": " not",
+          "start": 6.48,
+          "end": 6.66,
+          "probability": 0.9940339922904968
+        },
+        {
+          "word": " an",
+          "start": 6.66,
+          "end": 6.9,
+          "probability": 0.7391877174377441
+        },
+        {
+          "word": " L2.",
+          "start": 6.9,
+          "end": 7.3,
+          "probability": 0.9139010608196259
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 7.4,
+      "end": 12.4,
+      "text": " A Vprog is an app that runs on its own node, keeps its own state and posts zero knowledge",
+      "tokens": [
+        50742,
+        316,
+        691,
+        4318,
+        70,
+        307,
+        364,
+        724,
+        300,
+        6676,
+        322,
+        1080,
+        1065,
+        9984,
+        11,
+        5965,
+        1080,
+        1065,
+        1785,
+        293,
+        12300,
+        4018,
+        3601,
+        50976
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17935961484909058,
+      "compression_ratio": 1.641025641025641,
+      "no_speech_prob": 0.002286743838340044,
+      "words": [
+        {
+          "word": " A",
+          "start": 7.4,
+          "end": 7.62,
+          "probability": 0.8765891790390015
+        },
+        {
+          "word": " Vprog",
+          "start": 7.62,
+          "end": 8.08,
+          "probability": 0.9745929638544718
+        },
+        {
+          "word": " is",
+          "start": 8.08,
+          "end": 8.28,
+          "probability": 0.9870518445968628
+        },
+        {
+          "word": " an",
+          "start": 8.28,
+          "end": 8.48,
+          "probability": 0.9913285374641418
+        },
+        {
+          "word": " app",
+          "start": 8.48,
+          "end": 8.62,
+          "probability": 0.9960589408874512
+        },
+        {
+          "word": " that",
+          "start": 8.62,
+          "end": 8.84,
+          "probability": 0.9917454123497009
+        },
+        {
+          "word": " runs",
+          "start": 8.84,
+          "end": 9.12,
+          "probability": 0.9968172311782837
+        },
+        {
+          "word": " on",
+          "start": 9.12,
+          "end": 9.3,
+          "probability": 0.9977056384086609
+        },
+        {
+          "word": " its",
+          "start": 9.3,
+          "end": 9.52,
+          "probability": 0.967239260673523
+        },
+        {
+          "word": " own",
+          "start": 9.52,
+          "end": 9.78,
+          "probability": 0.9987308382987976
+        },
+        {
+          "word": " node,",
+          "start": 9.78,
+          "end": 10.02,
+          "probability": 0.8958127498626709
+        },
+        {
+          "word": " keeps",
+          "start": 10.08,
+          "end": 10.3,
+          "probability": 0.9864841103553772
+        },
+        {
+          "word": " its",
+          "start": 10.3,
+          "end": 10.54,
+          "probability": 0.9502666592597961
+        },
+        {
+          "word": " own",
+          "start": 10.54,
+          "end": 10.86,
+          "probability": 0.9981125593185425
+        },
+        {
+          "word": " state",
+          "start": 10.86,
+          "end": 11.12,
+          "probability": 0.9898446798324585
+        },
+        {
+          "word": " and",
+          "start": 11.12,
+          "end": 11.4,
+          "probability": 0.7509984374046326
+        },
+        {
+          "word": " posts",
+          "start": 11.4,
+          "end": 11.68,
+          "probability": 0.8284079432487488
+        },
+        {
+          "word": " zero",
+          "start": 11.68,
+          "end": 12.02,
+          "probability": 0.9314100742340088
+        },
+        {
+          "word": " knowledge",
+          "start": 12.02,
+          "end": 12.4,
+          "probability": 0.6730745434761047
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "seek": 0,
+      "start": 12.4,
+      "end": 14.4,
+      "text": " proof of that state back to Casper.",
+      "tokens": [
+        50976,
+        8177,
+        295,
+        300,
+        1785,
+        646,
+        281,
+        16100,
+        610,
+        13,
+        51088
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17935961484909058,
+      "compression_ratio": 1.641025641025641,
+      "no_speech_prob": 0.002286743838340044,
+      "words": [
+        {
+          "word": " proof",
+          "start": 12.4,
+          "end": 12.74,
+          "probability": 0.9154052734375
+        },
+        {
+          "word": " of",
+          "start": 12.74,
+          "end": 12.92,
+          "probability": 0.9923564195632935
+        },
+        {
+          "word": " that",
+          "start": 12.92,
+          "end": 13.18,
+          "probability": 0.9960856437683105
+        },
+        {
+          "word": " state",
+          "start": 13.18,
+          "end": 13.36,
+          "probability": 0.9898495674133301
+        },
+        {
+          "word": " back",
+          "start": 13.36,
+          "end": 13.7,
+          "probability": 0.988623857498169
+        },
+        {
+          "word": " to",
+          "start": 13.7,
+          "end": 14.02,
+          "probability": 0.9977298378944397
+        },
+        {
+          "word": " Casper.",
+          "start": 14.02,
+          "end": 14.4,
+          "probability": 0.8889380097389221
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "seek": 0,
+      "start": 14.54,
+      "end": 20.08,
+      "text": " Now Casper already has smart contracts, covenants, live on mainnet since June, straight from",
+      "tokens": [
+        51088,
+        823,
+        16100,
+        610,
+        1217,
+        575,
+        4069,
+        13952,
+        11,
+        598,
+        553,
+        1719,
+        11,
+        1621,
+        322,
+        2135,
+        7129,
+        1670,
+        6928,
+        11,
+        2997,
+        490,
+        51362
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17935961484909058,
+      "compression_ratio": 1.641025641025641,
+      "no_speech_prob": 0.002286743838340044,
+      "words": [
+        {
+          "word": " Now",
+          "start": 14.54,
+          "end": 14.92,
+          "probability": 0.916447639465332
+        },
+        {
+          "word": " Casper",
+          "start": 14.92,
+          "end": 15.3,
+          "probability": 0.8721001148223877
+        },
+        {
+          "word": " already",
+          "start": 15.3,
+          "end": 15.64,
+          "probability": 0.9900146722793579
+        },
+        {
+          "word": " has",
+          "start": 15.64,
+          "end": 16.14,
+          "probability": 0.9981332421302795
+        },
+        {
+          "word": " smart",
+          "start": 16.14,
+          "end": 16.54,
+          "probability": 0.5810150504112244
+        },
+        {
+          "word": " contracts,",
+          "start": 16.54,
+          "end": 16.96,
+          "probability": 0.5985817313194275
+        },
+        {
+          "word": " covenants,",
+          "start": 17.16,
+          "end": 17.68,
+          "probability": 0.9521860678990682
+        },
+        {
+          "word": " live",
+          "start": 17.96,
+          "end": 18.16,
+          "probability": 0.97603839635849
+        },
+        {
+          "word": " on",
+          "start": 18.16,
+          "end": 18.42,
+          "probability": 0.9794292449951172
+        },
+        {
+          "word": " mainnet",
+          "start": 18.42,
+          "end": 18.8,
+          "probability": 0.5910313427448273
+        },
+        {
+          "word": " since",
+          "start": 18.8,
+          "end": 19.16,
+          "probability": 0.9358887672424316
+        },
+        {
+          "word": " June,",
+          "start": 19.16,
+          "end": 19.56,
+          "probability": 0.975538969039917
+        },
+        {
+          "word": " straight",
+          "start": 19.64,
+          "end": 19.9,
+          "probability": 0.9971874356269836
+        },
+        {
+          "word": " from",
+          "start": 19.9,
+          "end": 20.08,
+          "probability": 0.9986820816993713
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "seek": 0,
+      "start": 20.08,
+      "end": 21.06,
+      "text": " the core devs.",
+      "tokens": [
+        51362,
+        264,
+        4965,
+        1905,
+        82,
+        13,
+        51412
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17935961484909058,
+      "compression_ratio": 1.641025641025641,
+      "no_speech_prob": 0.002286743838340044,
+      "words": [
+        {
+          "word": " the",
+          "start": 20.08,
+          "end": 20.3,
+          "probability": 0.9897140264511108
+        },
+        {
+          "word": " core",
+          "start": 20.3,
+          "end": 20.48,
+          "probability": 0.9241924285888672
+        },
+        {
+          "word": " devs.",
+          "start": 20.48,
+          "end": 21.06,
+          "probability": 0.9360086619853973
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "seek": 0,
+      "start": 21.22,
+      "end": 27.32,
+      "text": " Vprogs are the next layer up, whole applications on a chain that already runs 10 blocks every",
+      "tokens": [
+        51412,
+        691,
+        4318,
+        21559,
+        366,
+        264,
+        958,
+        4583,
+        493,
+        11,
+        1379,
+        5821,
+        322,
+        257,
+        5021,
+        300,
+        1217,
+        6676,
+        1266,
+        8474,
+        633,
+        51722
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17935961484909058,
+      "compression_ratio": 1.641025641025641,
+      "no_speech_prob": 0.002286743838340044,
+      "words": [
+        {
+          "word": " Vprogs",
+          "start": 21.22,
+          "end": 21.74,
+          "probability": 0.991129199663798
+        },
+        {
+          "word": " are",
+          "start": 21.74,
+          "end": 22.0,
+          "probability": 0.9841444492340088
+        },
+        {
+          "word": " the",
+          "start": 22.0,
+          "end": 22.18,
+          "probability": 0.9973691701889038
+        },
+        {
+          "word": " next",
+          "start": 22.18,
+          "end": 22.44,
+          "probability": 0.998630702495575
+        },
+        {
+          "word": " layer",
+          "start": 22.44,
+          "end": 22.74,
+          "probability": 0.9959586262702942
+        },
+        {
+          "word": " up,",
+          "start": 22.74,
+          "end": 23.06,
+          "probability": 0.9760957360267639
+        },
+        {
+          "word": " whole",
+          "start": 23.32,
+          "end": 23.5,
+          "probability": 0.9585205912590027
+        },
+        {
+          "word": " applications",
+          "start": 23.5,
+          "end": 24.32,
+          "probability": 0.988491415977478
+        },
+        {
+          "word": " on",
+          "start": 24.32,
+          "end": 24.58,
+          "probability": 0.920055091381073
+        },
+        {
+          "word": " a",
+          "start": 24.58,
+          "end": 24.84,
+          "probability": 0.9988633394241333
+        },
+        {
+          "word": " chain",
+          "start": 24.84,
+          "end": 24.98,
+          "probability": 0.9975761771202087
+        },
+        {
+          "word": " that",
+          "start": 24.98,
+          "end": 25.26,
+          "probability": 0.9946703314781189
+        },
+        {
+          "word": " already",
+          "start": 25.26,
+          "end": 25.62,
+          "probability": 0.9957438111305237
+        },
+        {
+          "word": " runs",
+          "start": 25.62,
+          "end": 25.92,
+          "probability": 0.9947603344917297
+        },
+        {
+          "word": " 10",
+          "start": 25.92,
+          "end": 26.3,
+          "probability": 0.9185844659805298
+        },
+        {
+          "word": " blocks",
+          "start": 26.3,
+          "end": 26.84,
+          "probability": 0.9938870072364807
+        },
+        {
+          "word": " every",
+          "start": 26.84,
+          "end": 27.32,
+          "probability": 0.9482552409172058
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "seek": 0,
+      "start": 27.32,
+      "end": 28.1,
+      "text": " single second.",
+      "tokens": [
+        51722,
+        2167,
+        1150,
+        13,
+        51772
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17935961484909058,
+      "compression_ratio": 1.641025641025641,
+      "no_speech_prob": 0.002286743838340044,
+      "words": [
+        {
+          "word": " single",
+          "start": 27.32,
+          "end": 27.82,
+          "probability": 0.9909403324127197
+        },
+        {
+          "word": " second.",
+          "start": 27.82,
+          "end": 28.1,
+          "probability": 0.9976630210876465
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "seek": 2810,
+      "start": 28.1,
+      "end": 31.9,
+      "text": " Casper is never going to run your app, Casper is going to verify it.",
+      "tokens": [
+        50364,
+        16100,
+        610,
+        307,
+        1128,
+        516,
+        281,
+        1190,
+        428,
+        724,
+        11,
+        16100,
+        610,
+        307,
+        516,
+        281,
+        16888,
+        309,
+        13,
+        50556
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1711753663562593,
+      "compression_ratio": 1.675,
+      "no_speech_prob": 0.18230940401554108,
+      "words": [
+        {
+          "word": " Casper",
+          "start": 28.1,
+          "end": 28.6,
+          "probability": 0.6299008131027222
+        },
+        {
+          "word": " is",
+          "start": 28.6,
+          "end": 28.88,
+          "probability": 0.8773142695426941
+        },
+        {
+          "word": " never",
+          "start": 28.88,
+          "end": 29.14,
+          "probability": 0.996803879737854
+        },
+        {
+          "word": " going",
+          "start": 29.14,
+          "end": 29.34,
+          "probability": 0.9081424474716187
+        },
+        {
+          "word": " to",
+          "start": 29.34,
+          "end": 29.5,
+          "probability": 0.9990888833999634
+        },
+        {
+          "word": " run",
+          "start": 29.5,
+          "end": 29.64,
+          "probability": 0.9990457892417908
+        },
+        {
+          "word": " your",
+          "start": 29.64,
+          "end": 29.92,
+          "probability": 0.9953621029853821
+        },
+        {
+          "word": " app,",
+          "start": 29.92,
+          "end": 30.38,
+          "probability": 0.9953044652938843
+        },
+        {
+          "word": " Casper",
+          "start": 30.62,
+          "end": 30.82,
+          "probability": 0.9016885459423065
+        },
+        {
+          "word": " is",
+          "start": 30.82,
+          "end": 30.94,
+          "probability": 0.6944818496704102
+        },
+        {
+          "word": " going",
+          "start": 30.94,
+          "end": 31.06,
+          "probability": 0.9575275778770447
+        },
+        {
+          "word": " to",
+          "start": 31.06,
+          "end": 31.34,
+          "probability": 0.9988993406295776
+        },
+        {
+          "word": " verify",
+          "start": 31.34,
+          "end": 31.74,
+          "probability": 0.9980055689811707
+        },
+        {
+          "word": " it.",
+          "start": 31.74,
+          "end": 31.9,
+          "probability": 0.9908739328384399
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "seek": 2810,
+      "start": 31.9,
+      "end": 37.76,
+      "text": " And that one flip is how you get apps on the base layer with proof of work security and",
+      "tokens": [
+        50556,
+        400,
+        300,
+        472,
+        7929,
+        307,
+        577,
+        291,
+        483,
+        7733,
+        322,
+        264,
+        3096,
+        4583,
+        365,
+        8177,
+        295,
+        589,
+        3825,
+        293,
+        50840
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1711753663562593,
+      "compression_ratio": 1.675,
+      "no_speech_prob": 0.18230940401554108,
+      "words": [
+        {
+          "word": " And",
+          "start": 31.9,
+          "end": 32.06,
+          "probability": 0.9696642160415649
+        },
+        {
+          "word": " that",
+          "start": 32.06,
+          "end": 32.3,
+          "probability": 0.9898704886436462
+        },
+        {
+          "word": " one",
+          "start": 32.3,
+          "end": 32.58,
+          "probability": 0.9899875521659851
+        },
+        {
+          "word": " flip",
+          "start": 32.58,
+          "end": 32.94,
+          "probability": 0.9936698079109192
+        },
+        {
+          "word": " is",
+          "start": 32.94,
+          "end": 33.4,
+          "probability": 0.9521232843399048
+        },
+        {
+          "word": " how",
+          "start": 33.4,
+          "end": 33.58,
+          "probability": 0.9983637928962708
+        },
+        {
+          "word": " you",
+          "start": 33.58,
+          "end": 33.8,
+          "probability": 0.999150276184082
+        },
+        {
+          "word": " get",
+          "start": 33.8,
+          "end": 33.94,
+          "probability": 0.9991911053657532
+        },
+        {
+          "word": " apps",
+          "start": 33.94,
+          "end": 34.3,
+          "probability": 0.9931696653366089
+        },
+        {
+          "word": " on",
+          "start": 34.3,
+          "end": 34.64,
+          "probability": 0.9949725866317749
+        },
+        {
+          "word": " the",
+          "start": 34.64,
+          "end": 34.84,
+          "probability": 0.9988440275192261
+        },
+        {
+          "word": " base",
+          "start": 34.84,
+          "end": 35.1,
+          "probability": 0.9872937202453613
+        },
+        {
+          "word": " layer",
+          "start": 35.1,
+          "end": 35.36,
+          "probability": 0.9939188957214355
+        },
+        {
+          "word": " with",
+          "start": 35.36,
+          "end": 35.92,
+          "probability": 0.9491126537322998
+        },
+        {
+          "word": " proof",
+          "start": 35.92,
+          "end": 36.14,
+          "probability": 0.9477460980415344
+        },
+        {
+          "word": " of",
+          "start": 36.14,
+          "end": 36.36,
+          "probability": 0.955582320690155
+        },
+        {
+          "word": " work",
+          "start": 36.36,
+          "end": 36.5,
+          "probability": 0.9816066026687622
+        },
+        {
+          "word": " security",
+          "start": 36.5,
+          "end": 37.1,
+          "probability": 0.9348734021186829
+        },
+        {
+          "word": " and",
+          "start": 37.1,
+          "end": 37.76,
+          "probability": 0.910405158996582
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "seek": 2810,
+      "start": 37.76,
+      "end": 38.74,
+      "text": " no L2 in the middle.",
+      "tokens": [
+        50840,
+        572,
+        441,
+        17,
+        294,
+        264,
+        2808,
+        13,
+        50902
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1711753663562593,
+      "compression_ratio": 1.675,
+      "no_speech_prob": 0.18230940401554108,
+      "words": [
+        {
+          "word": " no",
+          "start": 37.76,
+          "end": 37.94,
+          "probability": 0.967832624912262
+        },
+        {
+          "word": " L2",
+          "start": 37.94,
+          "end": 38.3,
+          "probability": 0.8795542418956757
+        },
+        {
+          "word": " in",
+          "start": 38.3,
+          "end": 38.46,
+          "probability": 0.9941622614860535
+        },
+        {
+          "word": " the",
+          "start": 38.46,
+          "end": 38.58,
+          "probability": 0.9993187189102173
+        },
+        {
+          "word": " middle.",
+          "start": 38.58,
+          "end": 38.74,
+          "probability": 0.9987977743148804
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "seek": 2810,
+      "start": 38.82,
+      "end": 40.22,
+      "text": " So let's break this all down.",
+      "tokens": [
+        50902,
+        407,
+        718,
+        311,
+        1821,
+        341,
+        439,
+        760,
+        13,
+        50972
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1711753663562593,
+      "compression_ratio": 1.675,
+      "no_speech_prob": 0.18230940401554108,
+      "words": [
+        {
+          "word": " So",
+          "start": 38.82,
+          "end": 38.98,
+          "probability": 0.9973982572555542
+        },
+        {
+          "word": " let's",
+          "start": 38.98,
+          "end": 39.24,
+          "probability": 0.9936564862728119
+        },
+        {
+          "word": " break",
+          "start": 39.24,
+          "end": 39.42,
+          "probability": 0.9981939196586609
+        },
+        {
+          "word": " this",
+          "start": 39.42,
+          "end": 39.68,
+          "probability": 0.998559296131134
+        },
+        {
+          "word": " all",
+          "start": 39.68,
+          "end": 39.88,
+          "probability": 0.997512936592102
+        },
+        {
+          "word": " down.",
+          "start": 39.88,
+          "end": 40.22,
+          "probability": 0.9985268115997314
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "seek": 2810,
+      "start": 40.22,
+      "end": 46.02,
+      "text": " So back in 2020 Vitalik laid out Ethereum's plan and it said in plain English, all in",
+      "tokens": [
+        50972,
+        407,
+        646,
+        294,
+        4808,
+        48307,
+        1035,
+        9897,
+        484,
+        26894,
+        311,
+        1393,
+        293,
+        309,
+        848,
+        294,
+        11121,
+        3669,
+        11,
+        439,
+        294,
+        51258
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1711753663562593,
+      "compression_ratio": 1.675,
+      "no_speech_prob": 0.18230940401554108,
+      "words": [
+        {
+          "word": " So",
+          "start": 40.22,
+          "end": 40.4,
+          "probability": 0.989522397518158
+        },
+        {
+          "word": " back",
+          "start": 40.4,
+          "end": 40.6,
+          "probability": 0.9966008067131042
+        },
+        {
+          "word": " in",
+          "start": 40.6,
+          "end": 40.8,
+          "probability": 0.9989210367202759
+        },
+        {
+          "word": " 2020",
+          "start": 40.8,
+          "end": 41.5,
+          "probability": 0.9930324554443359
+        },
+        {
+          "word": " Vitalik",
+          "start": 41.5,
+          "end": 42.38,
+          "probability": 0.7017382681369781
+        },
+        {
+          "word": " laid",
+          "start": 42.38,
+          "end": 42.58,
+          "probability": 0.9844947457313538
+        },
+        {
+          "word": " out",
+          "start": 42.58,
+          "end": 42.84,
+          "probability": 0.9911235570907593
+        },
+        {
+          "word": " Ethereum's",
+          "start": 42.84,
+          "end": 43.58,
+          "probability": 0.8940523266792297
+        },
+        {
+          "word": " plan",
+          "start": 43.58,
+          "end": 43.84,
+          "probability": 0.9918003678321838
+        },
+        {
+          "word": " and",
+          "start": 43.84,
+          "end": 44.1,
+          "probability": 0.6863453388214111
+        },
+        {
+          "word": " it",
+          "start": 44.1,
+          "end": 44.26,
+          "probability": 0.8025688529014587
+        },
+        {
+          "word": " said",
+          "start": 44.26,
+          "end": 44.36,
+          "probability": 0.6589593887329102
+        },
+        {
+          "word": " in",
+          "start": 44.36,
+          "end": 44.64,
+          "probability": 0.969779372215271
+        },
+        {
+          "word": " plain",
+          "start": 44.64,
+          "end": 44.78,
+          "probability": 0.989784300327301
+        },
+        {
+          "word": " English,",
+          "start": 44.78,
+          "end": 45.24,
+          "probability": 0.9820699691772461
+        },
+        {
+          "word": " all",
+          "start": 45.3,
+          "end": 45.7,
+          "probability": 0.8212668299674988
+        },
+        {
+          "word": " in",
+          "start": 45.7,
+          "end": 46.02,
+          "probability": 0.9783852696418762
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "seek": 2810,
+      "start": 46.02,
+      "end": 51.96,
+      "text": " on rollups, your accounts, your businesses, your assets living inside a layer 2.",
+      "tokens": [
+        51258,
+        322,
+        3373,
+        7528,
+        11,
+        428,
+        9402,
+        11,
+        428,
+        6011,
+        11,
+        428,
+        9769,
+        2647,
+        1854,
+        257,
+        4583,
+        568,
+        13,
+        51574
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1711753663562593,
+      "compression_ratio": 1.675,
+      "no_speech_prob": 0.18230940401554108,
+      "words": [
+        {
+          "word": " on",
+          "start": 46.02,
+          "end": 46.48,
+          "probability": 0.9503428339958191
+        },
+        {
+          "word": " rollups,",
+          "start": 46.48,
+          "end": 47.04,
+          "probability": 0.6424795091152191
+        },
+        {
+          "word": " your",
+          "start": 47.36,
+          "end": 47.52,
+          "probability": 0.9960445165634155
+        },
+        {
+          "word": " accounts,",
+          "start": 47.52,
+          "end": 48.0,
+          "probability": 0.9954623579978943
+        },
+        {
+          "word": " your",
+          "start": 48.2,
+          "end": 48.34,
+          "probability": 0.998742401599884
+        },
+        {
+          "word": " businesses,",
+          "start": 48.34,
+          "end": 48.84,
+          "probability": 0.9970500469207764
+        },
+        {
+          "word": " your",
+          "start": 49.18,
+          "end": 49.4,
+          "probability": 0.997947633266449
+        },
+        {
+          "word": " assets",
+          "start": 49.4,
+          "end": 50.12,
+          "probability": 0.9994831085205078
+        },
+        {
+          "word": " living",
+          "start": 50.12,
+          "end": 50.76,
+          "probability": 0.6434579491615295
+        },
+        {
+          "word": " inside",
+          "start": 50.76,
+          "end": 51.2,
+          "probability": 0.9959321618080139
+        },
+        {
+          "word": " a",
+          "start": 51.2,
+          "end": 51.42,
+          "probability": 0.9279488921165466
+        },
+        {
+          "word": " layer",
+          "start": 51.42,
+          "end": 51.56,
+          "probability": 0.9848759770393372
+        },
+        {
+          "word": " 2.",
+          "start": 51.56,
+          "end": 51.96,
+          "probability": 0.1427965760231018
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "seek": 2810,
+      "start": 52.18,
+      "end": 58.08,
+      "text": " And every rollup is its own chain, its own sequencer, the machine that orders your transaction",
+      "tokens": [
+        51574,
+        400,
+        633,
+        3373,
+        1010,
+        307,
+        1080,
+        1065,
+        5021,
+        11,
+        1080,
+        1065,
+        5123,
+        16542,
+        11,
+        264,
+        3479,
+        300,
+        9470,
+        428,
+        14425,
+        51860
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1711753663562593,
+      "compression_ratio": 1.675,
+      "no_speech_prob": 0.18230940401554108,
+      "words": [
+        {
+          "word": " And",
+          "start": 52.18,
+          "end": 52.38,
+          "probability": 0.7231805920600891
+        },
+        {
+          "word": " every",
+          "start": 52.38,
+          "end": 52.76,
+          "probability": 0.9962865114212036
+        },
+        {
+          "word": " rollup",
+          "start": 52.76,
+          "end": 53.28,
+          "probability": 0.8302860260009766
+        },
+        {
+          "word": " is",
+          "start": 53.28,
+          "end": 53.48,
+          "probability": 0.982667863368988
+        },
+        {
+          "word": " its",
+          "start": 53.48,
+          "end": 53.74,
+          "probability": 0.9044240117073059
+        },
+        {
+          "word": " own",
+          "start": 53.74,
+          "end": 54.04,
+          "probability": 0.9990239143371582
+        },
+        {
+          "word": " chain,",
+          "start": 54.04,
+          "end": 54.42,
+          "probability": 0.9954723715782166
+        },
+        {
+          "word": " its",
+          "start": 54.84,
+          "end": 55.02,
+          "probability": 0.9437796473503113
+        },
+        {
+          "word": " own",
+          "start": 55.02,
+          "end": 55.38,
+          "probability": 0.9996649026870728
+        },
+        {
+          "word": " sequencer,",
+          "start": 55.38,
+          "end": 55.9,
+          "probability": 0.9934054017066956
+        },
+        {
+          "word": " the",
+          "start": 56.26,
+          "end": 56.4,
+          "probability": 0.9690013527870178
+        },
+        {
+          "word": " machine",
+          "start": 56.4,
+          "end": 56.68,
+          "probability": 0.9989913105964661
+        },
+        {
+          "word": " that",
+          "start": 56.68,
+          "end": 56.98,
+          "probability": 0.9970299005508423
+        },
+        {
+          "word": " orders",
+          "start": 56.98,
+          "end": 57.24,
+          "probability": 0.998489260673523
+        },
+        {
+          "word": " your",
+          "start": 57.24,
+          "end": 57.52,
+          "probability": 0.9974756836891174
+        },
+        {
+          "word": " transaction",
+          "start": 57.52,
+          "end": 58.08,
+          "probability": 0.2859320342540741
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "seek": 5808,
+      "start": 58.08,
+      "end": 61.02,
+      "text": " payments, its own bridge, its own slice of liquidity.",
+      "tokens": [
+        50364,
+        14348,
+        11,
+        1080,
+        1065,
+        7283,
+        11,
+        1080,
+        1065,
+        13153,
+        295,
+        33131,
+        13,
+        50520
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17185894387667297,
+      "compression_ratio": 1.5665399239543727,
+      "no_speech_prob": 0.07156708091497421,
+      "words": [
+        {
+          "word": " payments,",
+          "start": 58.08,
+          "end": 58.3,
+          "probability": 7.434695362462662e-06
+        },
+        {
+          "word": " its",
+          "start": 58.44,
+          "end": 58.64,
+          "probability": 0.7703272700309753
+        },
+        {
+          "word": " own",
+          "start": 58.64,
+          "end": 58.96,
+          "probability": 0.9912667870521545
+        },
+        {
+          "word": " bridge,",
+          "start": 58.96,
+          "end": 59.38,
+          "probability": 0.9807233214378357
+        },
+        {
+          "word": " its",
+          "start": 59.56,
+          "end": 59.72,
+          "probability": 0.9311695694923401
+        },
+        {
+          "word": " own",
+          "start": 59.72,
+          "end": 60.04,
+          "probability": 0.9961097836494446
+        },
+        {
+          "word": " slice",
+          "start": 60.04,
+          "end": 60.34,
+          "probability": 0.9827903509140015
+        },
+        {
+          "word": " of",
+          "start": 60.34,
+          "end": 60.6,
+          "probability": 0.9968119263648987
+        },
+        {
+          "word": " liquidity.",
+          "start": 60.6,
+          "end": 61.02,
+          "probability": 0.9731162190437317
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "seek": 5808,
+      "start": 61.22,
+      "end": 66.42,
+      "text": " And every one of those pieces is a place for something to break and a place for your liquidity",
+      "tokens": [
+        50520,
+        400,
+        633,
+        472,
+        295,
+        729,
+        3755,
+        307,
+        257,
+        1081,
+        337,
+        746,
+        281,
+        1821,
+        293,
+        257,
+        1081,
+        337,
+        428,
+        33131,
+        50772
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17185894387667297,
+      "compression_ratio": 1.5665399239543727,
+      "no_speech_prob": 0.07156708091497421,
+      "words": [
+        {
+          "word": " And",
+          "start": 61.22,
+          "end": 61.42,
+          "probability": 0.8359223008155823
+        },
+        {
+          "word": " every",
+          "start": 61.42,
+          "end": 61.6,
+          "probability": 0.9235496520996094
+        },
+        {
+          "word": " one",
+          "start": 61.6,
+          "end": 61.76,
+          "probability": 0.9897852540016174
+        },
+        {
+          "word": " of",
+          "start": 61.76,
+          "end": 61.88,
+          "probability": 0.992842435836792
+        },
+        {
+          "word": " those",
+          "start": 61.88,
+          "end": 62.12,
+          "probability": 0.9425165057182312
+        },
+        {
+          "word": " pieces",
+          "start": 62.12,
+          "end": 62.7,
+          "probability": 0.9768760800361633
+        },
+        {
+          "word": " is",
+          "start": 62.7,
+          "end": 63.04,
+          "probability": 0.9437182545661926
+        },
+        {
+          "word": " a",
+          "start": 63.04,
+          "end": 63.24,
+          "probability": 0.9739987254142761
+        },
+        {
+          "word": " place",
+          "start": 63.24,
+          "end": 63.52,
+          "probability": 0.9919671416282654
+        },
+        {
+          "word": " for",
+          "start": 63.52,
+          "end": 63.88,
+          "probability": 0.977353572845459
+        },
+        {
+          "word": " something",
+          "start": 63.88,
+          "end": 64.3,
+          "probability": 0.9659802317619324
+        },
+        {
+          "word": " to",
+          "start": 64.3,
+          "end": 64.68,
+          "probability": 0.9937921166419983
+        },
+        {
+          "word": " break",
+          "start": 64.68,
+          "end": 64.84,
+          "probability": 0.9985640645027161
+        },
+        {
+          "word": " and",
+          "start": 64.84,
+          "end": 65.02,
+          "probability": 0.519578754901886
+        },
+        {
+          "word": " a",
+          "start": 65.02,
+          "end": 65.24,
+          "probability": 0.9753574728965759
+        },
+        {
+          "word": " place",
+          "start": 65.24,
+          "end": 65.4,
+          "probability": 0.9987837672233582
+        },
+        {
+          "word": " for",
+          "start": 65.4,
+          "end": 65.68,
+          "probability": 0.9932790398597717
+        },
+        {
+          "word": " your",
+          "start": 65.68,
+          "end": 65.94,
+          "probability": 0.9927485585212708
+        },
+        {
+          "word": " liquidity",
+          "start": 65.94,
+          "end": 66.42,
+          "probability": 0.988165020942688
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "seek": 5808,
+      "start": 66.42,
+      "end": 67.64,
+      "text": " to get split up.",
+      "tokens": [
+        50772,
+        281,
+        483,
+        7472,
+        493,
+        13,
+        50844
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17185894387667297,
+      "compression_ratio": 1.5665399239543727,
+      "no_speech_prob": 0.07156708091497421,
+      "words": [
+        {
+          "word": " to",
+          "start": 66.42,
+          "end": 67.04,
+          "probability": 0.9753467440605164
+        },
+        {
+          "word": " get",
+          "start": 67.04,
+          "end": 67.2,
+          "probability": 0.9490038752555847
+        },
+        {
+          "word": " split",
+          "start": 67.2,
+          "end": 67.46,
+          "probability": 0.9929434657096863
+        },
+        {
+          "word": " up.",
+          "start": 67.46,
+          "end": 67.64,
+          "probability": 0.9889355301856995
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "seek": 5808,
+      "start": 67.8,
+      "end": 72.96,
+      "text": " Now Casper's founder, Janitem Sampalinski looked at all of that and back in December",
+      "tokens": [
+        50844,
+        823,
+        16100,
+        610,
+        311,
+        14917,
+        11,
+        4956,
+        270,
+        443,
+        318,
+        1215,
+        304,
+        38984,
+        2956,
+        412,
+        439,
+        295,
+        300,
+        293,
+        646,
+        294,
+        7687,
+        51118
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17185894387667297,
+      "compression_ratio": 1.5665399239543727,
+      "no_speech_prob": 0.07156708091497421,
+      "words": [
+        {
+          "word": " Now",
+          "start": 67.8,
+          "end": 67.98,
+          "probability": 0.8958102464675903
+        },
+        {
+          "word": " Casper's",
+          "start": 67.98,
+          "end": 68.5,
+          "probability": 0.7065842747688293
+        },
+        {
+          "word": " founder,",
+          "start": 68.5,
+          "end": 68.98,
+          "probability": 0.9175208806991577
+        },
+        {
+          "word": " Janitem",
+          "start": 69.56,
+          "end": 69.96,
+          "probability": 0.41425764560699463
+        },
+        {
+          "word": " Sampalinski",
+          "start": 69.96,
+          "end": 70.68,
+          "probability": 0.6577276438474655
+        },
+        {
+          "word": " looked",
+          "start": 70.68,
+          "end": 70.94,
+          "probability": 0.6523216366767883
+        },
+        {
+          "word": " at",
+          "start": 70.94,
+          "end": 71.16,
+          "probability": 0.9965608716011047
+        },
+        {
+          "word": " all",
+          "start": 71.16,
+          "end": 71.34,
+          "probability": 0.9877553582191467
+        },
+        {
+          "word": " of",
+          "start": 71.34,
+          "end": 71.52,
+          "probability": 0.9661934971809387
+        },
+        {
+          "word": " that",
+          "start": 71.52,
+          "end": 71.64,
+          "probability": 0.994875967502594
+        },
+        {
+          "word": " and",
+          "start": 71.64,
+          "end": 71.84,
+          "probability": 0.5719799995422363
+        },
+        {
+          "word": " back",
+          "start": 71.84,
+          "end": 72.14,
+          "probability": 0.9832809567451477
+        },
+        {
+          "word": " in",
+          "start": 72.14,
+          "end": 72.38,
+          "probability": 0.9960854053497314
+        },
+        {
+          "word": " December",
+          "start": 72.38,
+          "end": 72.96,
+          "probability": 0.9548994302749634
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "seek": 5808,
+      "start": 72.96,
+      "end": 78.7,
+      "text": " he said the whole point of Vprogs was to avoid the obsolete path of L2s.",
+      "tokens": [
+        51118,
+        415,
+        848,
+        264,
+        1379,
+        935,
+        295,
+        691,
+        4318,
+        21559,
+        390,
+        281,
+        5042,
+        264,
+        46333,
+        3100,
+        295,
+        441,
+        17,
+        82,
+        13,
+        51398
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17185894387667297,
+      "compression_ratio": 1.5665399239543727,
+      "no_speech_prob": 0.07156708091497421,
+      "words": [
+        {
+          "word": " he",
+          "start": 72.96,
+          "end": 73.42,
+          "probability": 0.41273099184036255
+        },
+        {
+          "word": " said",
+          "start": 73.42,
+          "end": 73.66,
+          "probability": 0.9977939128875732
+        },
+        {
+          "word": " the",
+          "start": 73.66,
+          "end": 73.82,
+          "probability": 0.9066964983940125
+        },
+        {
+          "word": " whole",
+          "start": 73.82,
+          "end": 74.24,
+          "probability": 0.9927484393119812
+        },
+        {
+          "word": " point",
+          "start": 74.24,
+          "end": 74.5,
+          "probability": 0.9978687763214111
+        },
+        {
+          "word": " of",
+          "start": 74.5,
+          "end": 74.72,
+          "probability": 0.9953183531761169
+        },
+        {
+          "word": " Vprogs",
+          "start": 74.72,
+          "end": 75.34,
+          "probability": 0.5649528354406357
+        },
+        {
+          "word": " was",
+          "start": 75.34,
+          "end": 75.76,
+          "probability": 0.9661921858787537
+        },
+        {
+          "word": " to",
+          "start": 75.76,
+          "end": 76.06,
+          "probability": 0.9973676800727844
+        },
+        {
+          "word": " avoid",
+          "start": 76.06,
+          "end": 76.42,
+          "probability": 0.9909561276435852
+        },
+        {
+          "word": " the",
+          "start": 76.42,
+          "end": 76.78,
+          "probability": 0.9874021410942078
+        },
+        {
+          "word": " obsolete",
+          "start": 76.78,
+          "end": 77.22,
+          "probability": 0.9308768510818481
+        },
+        {
+          "word": " path",
+          "start": 77.22,
+          "end": 77.74,
+          "probability": 0.9796885848045349
+        },
+        {
+          "word": " of",
+          "start": 77.74,
+          "end": 78.04,
+          "probability": 0.9834743142127991
+        },
+        {
+          "word": " L2s.",
+          "start": 78.04,
+          "end": 78.7,
+          "probability": 0.9108987053235372
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "seek": 5808,
+      "start": 78.72,
+      "end": 79.98,
+      "text": " His words, not mine.",
+      "tokens": [
+        51398,
+        2812,
+        2283,
+        11,
+        406,
+        3892,
+        13,
+        51466
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17185894387667297,
+      "compression_ratio": 1.5665399239543727,
+      "no_speech_prob": 0.07156708091497421,
+      "words": [
+        {
+          "word": " His",
+          "start": 78.72,
+          "end": 78.92,
+          "probability": 0.9673828482627869
+        },
+        {
+          "word": " words,",
+          "start": 78.92,
+          "end": 79.34,
+          "probability": 0.9828237295150757
+        },
+        {
+          "word": " not",
+          "start": 79.48,
+          "end": 79.66,
+          "probability": 0.9901941418647766
+        },
+        {
+          "word": " mine.",
+          "start": 79.66,
+          "end": 79.98,
+          "probability": 0.9962521195411682
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "seek": 5808,
+      "start": 80.06,
+      "end": 81.7,
+      "text": " And he hasn't softened on it.",
+      "tokens": [
+        51466,
+        400,
+        415,
+        6132,
+        380,
+        2787,
+        5320,
+        322,
+        309,
+        13,
+        51547
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17185894387667297,
+      "compression_ratio": 1.5665399239543727,
+      "no_speech_prob": 0.07156708091497421,
+      "words": [
+        {
+          "word": " And",
+          "start": 80.06,
+          "end": 80.24,
+          "probability": 0.9498789310455322
+        },
+        {
+          "word": " he",
+          "start": 80.24,
+          "end": 80.6,
+          "probability": 0.9919185042381287
+        },
+        {
+          "word": " hasn't",
+          "start": 80.6,
+          "end": 80.88,
+          "probability": 0.975945770740509
+        },
+        {
+          "word": " softened",
+          "start": 80.88,
+          "end": 81.38,
+          "probability": 0.9922362267971039
+        },
+        {
+          "word": " on",
+          "start": 81.38,
+          "end": 81.56,
+          "probability": 0.9951241612434387
+        },
+        {
+          "word": " it.",
+          "start": 81.56,
+          "end": 81.7,
+          "probability": 0.9967393279075623
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "seek": 5808,
+      "start": 81.7,
+      "end": 83.96,
+      "text": " So here's how a Vprog actually works.",
+      "tokens": [
+        51547,
+        407,
+        510,
+        311,
+        577,
+        257,
+        691,
+        4318,
+        70,
+        767,
+        1985,
+        13,
+        51666
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.17185894387667297,
+      "compression_ratio": 1.5665399239543727,
+      "no_speech_prob": 0.07156708091497421,
+      "words": [
+        {
+          "word": " So",
+          "start": 81.7,
+          "end": 81.9,
+          "probability": 0.9794071912765503
+        },
+        {
+          "word": " here's",
+          "start": 81.9,
+          "end": 82.18,
+          "probability": 0.9482561647891998
+        },
+        {
+          "word": " how",
+          "start": 82.18,
+          "end": 82.44,
+          "probability": 0.9955741167068481
+        },
+        {
+          "word": " a",
+          "start": 82.44,
+          "end": 82.64,
+          "probability": 0.9622723460197449
+        },
+        {
+          "word": " Vprog",
+          "start": 82.64,
+          "end": 83.08,
+          "probability": 0.9783004919687907
+        },
+        {
+          "word": " actually",
+          "start": 83.08,
+          "end": 83.58,
+          "probability": 0.9907834529876709
+        },
+        {
+          "word": " works.",
+          "start": 83.58,
+          "end": 83.96,
+          "probability": 0.9971906542778015
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "seek": 8396,
+      "start": 83.96,
+      "end": 89.0,
+      "text": " You send a transaction and you declare upfront which account it reads and which one it writes.",
+      "tokens": [
+        50372,
+        509,
+        2845,
+        257,
+        14425,
+        293,
+        291,
+        19710,
+        30264,
+        597,
+        2696,
+        309,
+        15700,
+        293,
+        597,
+        472,
+        309,
+        13657,
+        13,
+        50634
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1400862553322962,
+      "compression_ratio": 1.718978102189781,
+      "no_speech_prob": 0.6435985565185547,
+      "words": [
+        {
+          "word": " You",
+          "start": 83.96,
+          "end": 84.24,
+          "probability": 0.5998050570487976
+        },
+        {
+          "word": " send",
+          "start": 84.24,
+          "end": 84.5,
+          "probability": 0.9791578650474548
+        },
+        {
+          "word": " a",
+          "start": 84.5,
+          "end": 84.74,
+          "probability": 0.8867048025131226
+        },
+        {
+          "word": " transaction",
+          "start": 84.74,
+          "end": 85.32,
+          "probability": 0.9771338105201721
+        },
+        {
+          "word": " and",
+          "start": 85.32,
+          "end": 85.72,
+          "probability": 0.7473796010017395
+        },
+        {
+          "word": " you",
+          "start": 85.72,
+          "end": 86.02,
+          "probability": 0.7817404866218567
+        },
+        {
+          "word": " declare",
+          "start": 86.02,
+          "end": 86.24,
+          "probability": 0.9823421835899353
+        },
+        {
+          "word": " upfront",
+          "start": 86.24,
+          "end": 86.68,
+          "probability": 0.6443174481391907
+        },
+        {
+          "word": " which",
+          "start": 86.68,
+          "end": 87.0,
+          "probability": 0.9507908225059509
+        },
+        {
+          "word": " account",
+          "start": 87.0,
+          "end": 87.26,
+          "probability": 0.9792578816413879
+        },
+        {
+          "word": " it",
+          "start": 87.26,
+          "end": 87.44,
+          "probability": 0.9854772686958313
+        },
+        {
+          "word": " reads",
+          "start": 87.44,
+          "end": 87.8,
+          "probability": 0.989031970500946
+        },
+        {
+          "word": " and",
+          "start": 87.8,
+          "end": 88.04,
+          "probability": 0.8378604054450989
+        },
+        {
+          "word": " which",
+          "start": 88.04,
+          "end": 88.24,
+          "probability": 0.9718267321586609
+        },
+        {
+          "word": " one",
+          "start": 88.24,
+          "end": 88.38,
+          "probability": 0.9729182124137878
+        },
+        {
+          "word": " it",
+          "start": 88.38,
+          "end": 88.62,
+          "probability": 0.9767748713493347
+        },
+        {
+          "word": " writes.",
+          "start": 88.62,
+          "end": 89.0,
+          "probability": 0.9929590225219727
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "seek": 8396,
+      "start": 89.38,
+      "end": 90.72,
+      "text": " Casper does four jobs.",
+      "tokens": [
+        50634,
+        16100,
+        610,
+        775,
+        1451,
+        4782,
+        13,
+        50709
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1400862553322962,
+      "compression_ratio": 1.718978102189781,
+      "no_speech_prob": 0.6435985565185547,
+      "words": [
+        {
+          "word": " Casper",
+          "start": 89.38,
+          "end": 89.5,
+          "probability": 0.47100676596164703
+        },
+        {
+          "word": " does",
+          "start": 89.5,
+          "end": 89.8,
+          "probability": 0.9862520098686218
+        },
+        {
+          "word": " four",
+          "start": 89.8,
+          "end": 90.18,
+          "probability": 0.6156232357025146
+        },
+        {
+          "word": " jobs.",
+          "start": 90.18,
+          "end": 90.72,
+          "probability": 0.9919565916061401
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "seek": 8396,
+      "start": 90.84,
+      "end": 94.4,
+      "text": " It orders every transaction so Casper itself is the sequencer.",
+      "tokens": [
+        50709,
+        467,
+        9470,
+        633,
+        14425,
+        370,
+        16100,
+        610,
+        2564,
+        307,
+        264,
+        5123,
+        16542,
+        13,
+        50890
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1400862553322962,
+      "compression_ratio": 1.718978102189781,
+      "no_speech_prob": 0.6435985565185547,
+      "words": [
+        {
+          "word": " It",
+          "start": 90.84,
+          "end": 90.96,
+          "probability": 0.983244001865387
+        },
+        {
+          "word": " orders",
+          "start": 90.96,
+          "end": 91.26,
+          "probability": 0.994350790977478
+        },
+        {
+          "word": " every",
+          "start": 91.26,
+          "end": 91.62,
+          "probability": 0.9966608285903931
+        },
+        {
+          "word": " transaction",
+          "start": 91.62,
+          "end": 92.28,
+          "probability": 0.9948487877845764
+        },
+        {
+          "word": " so",
+          "start": 92.28,
+          "end": 92.64,
+          "probability": 0.29472970962524414
+        },
+        {
+          "word": " Casper",
+          "start": 92.64,
+          "end": 93.08,
+          "probability": 0.9528929591178894
+        },
+        {
+          "word": " itself",
+          "start": 93.08,
+          "end": 93.56,
+          "probability": 0.979804515838623
+        },
+        {
+          "word": " is",
+          "start": 93.56,
+          "end": 93.78,
+          "probability": 0.9936074018478394
+        },
+        {
+          "word": " the",
+          "start": 93.78,
+          "end": 94.06,
+          "probability": 0.3751583993434906
+        },
+        {
+          "word": " sequencer.",
+          "start": 94.06,
+          "end": 94.4,
+          "probability": 0.9939683079719543
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "seek": 8396,
+      "start": 94.5,
+      "end": 98.1,
+      "text": " It stores the data, it checks the proofs, it meters the work.",
+      "tokens": [
+        50890,
+        467,
+        9512,
+        264,
+        1412,
+        11,
+        309,
+        13834,
+        264,
+        8177,
+        82,
+        11,
+        309,
+        8146,
+        264,
+        589,
+        13,
+        51080
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1400862553322962,
+      "compression_ratio": 1.718978102189781,
+      "no_speech_prob": 0.6435985565185547,
+      "words": [
+        {
+          "word": " It",
+          "start": 94.5,
+          "end": 94.66,
+          "probability": 0.9819896221160889
+        },
+        {
+          "word": " stores",
+          "start": 94.66,
+          "end": 94.94,
+          "probability": 0.994232714176178
+        },
+        {
+          "word": " the",
+          "start": 94.94,
+          "end": 95.24,
+          "probability": 0.9943301677703857
+        },
+        {
+          "word": " data,",
+          "start": 95.24,
+          "end": 95.56,
+          "probability": 0.9992579817771912
+        },
+        {
+          "word": " it",
+          "start": 96.02,
+          "end": 96.22,
+          "probability": 0.9119265675544739
+        },
+        {
+          "word": " checks",
+          "start": 96.22,
+          "end": 96.42,
+          "probability": 0.9978996515274048
+        },
+        {
+          "word": " the",
+          "start": 96.42,
+          "end": 96.72,
+          "probability": 0.9961190223693848
+        },
+        {
+          "word": " proofs,",
+          "start": 96.72,
+          "end": 97.18,
+          "probability": 0.9850150346755981
+        },
+        {
+          "word": " it",
+          "start": 97.22,
+          "end": 97.42,
+          "probability": 0.9799128770828247
+        },
+        {
+          "word": " meters",
+          "start": 97.42,
+          "end": 97.66,
+          "probability": 0.9653529524803162
+        },
+        {
+          "word": " the",
+          "start": 97.66,
+          "end": 97.96,
+          "probability": 0.9946717619895935
+        },
+        {
+          "word": " work.",
+          "start": 97.96,
+          "end": 98.1,
+          "probability": 0.8581352233886719
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "seek": 8396,
+      "start": 98.18,
+      "end": 100.34,
+      "text": " What it never does is run the app.",
+      "tokens": [
+        51080,
+        708,
+        309,
+        1128,
+        775,
+        307,
+        1190,
+        264,
+        724,
+        13,
+        51186
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1400862553322962,
+      "compression_ratio": 1.718978102189781,
+      "no_speech_prob": 0.6435985565185547,
+      "words": [
+        {
+          "word": " What",
+          "start": 98.18,
+          "end": 98.34,
+          "probability": 0.8282005190849304
+        },
+        {
+          "word": " it",
+          "start": 98.34,
+          "end": 98.54,
+          "probability": 0.9888321161270142
+        },
+        {
+          "word": " never",
+          "start": 98.54,
+          "end": 98.78,
+          "probability": 0.9972375631332397
+        },
+        {
+          "word": " does",
+          "start": 98.78,
+          "end": 99.34,
+          "probability": 0.9974594712257385
+        },
+        {
+          "word": " is",
+          "start": 99.34,
+          "end": 99.8,
+          "probability": 0.8949293494224548
+        },
+        {
+          "word": " run",
+          "start": 99.8,
+          "end": 100.04,
+          "probability": 0.9928222298622131
+        },
+        {
+          "word": " the",
+          "start": 100.04,
+          "end": 100.26,
+          "probability": 0.997569739818573
+        },
+        {
+          "word": " app.",
+          "start": 100.26,
+          "end": 100.34,
+          "probability": 0.9840026497840881
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "seek": 8396,
+      "start": 100.42,
+      "end": 102.1,
+      "text": " The app runs on its own nodes.",
+      "tokens": [
+        51186,
+        440,
+        724,
+        6676,
+        322,
+        1080,
+        1065,
+        13891,
+        13,
+        51287
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1400862553322962,
+      "compression_ratio": 1.718978102189781,
+      "no_speech_prob": 0.6435985565185547,
+      "words": [
+        {
+          "word": " The",
+          "start": 100.42,
+          "end": 100.56,
+          "probability": 0.9709839224815369
+        },
+        {
+          "word": " app",
+          "start": 100.56,
+          "end": 100.78,
+          "probability": 0.9958323836326599
+        },
+        {
+          "word": " runs",
+          "start": 100.78,
+          "end": 101.08,
+          "probability": 0.9948016405105591
+        },
+        {
+          "word": " on",
+          "start": 101.08,
+          "end": 101.26,
+          "probability": 0.9958739876747131
+        },
+        {
+          "word": " its",
+          "start": 101.26,
+          "end": 101.48,
+          "probability": 0.9488602876663208
+        },
+        {
+          "word": " own",
+          "start": 101.48,
+          "end": 101.7,
+          "probability": 0.9974531531333923
+        },
+        {
+          "word": " nodes.",
+          "start": 101.7,
+          "end": 102.1,
+          "probability": 0.9799978137016296
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "seek": 8396,
+      "start": 102.34,
+      "end": 106.9,
+      "text": " Every Vprog owns its own accounts and it's the only thing allowed to write to them.",
+      "tokens": [
+        51287,
+        2048,
+        691,
+        4318,
+        70,
+        19143,
+        1080,
+        1065,
+        9402,
+        293,
+        309,
+        311,
+        264,
+        787,
+        551,
+        4350,
+        281,
+        2464,
+        281,
+        552,
+        13,
+        51518
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1400862553322962,
+      "compression_ratio": 1.718978102189781,
+      "no_speech_prob": 0.6435985565185547,
+      "words": [
+        {
+          "word": " Every",
+          "start": 102.34,
+          "end": 102.62,
+          "probability": 0.9925078749656677
+        },
+        {
+          "word": " Vprog",
+          "start": 102.62,
+          "end": 103.1,
+          "probability": 0.5836744010448456
+        },
+        {
+          "word": " owns",
+          "start": 103.1,
+          "end": 103.5,
+          "probability": 0.9713578820228577
+        },
+        {
+          "word": " its",
+          "start": 103.5,
+          "end": 103.82,
+          "probability": 0.9747399091720581
+        },
+        {
+          "word": " own",
+          "start": 103.82,
+          "end": 104.0,
+          "probability": 0.9927236437797546
+        },
+        {
+          "word": " accounts",
+          "start": 104.0,
+          "end": 104.48,
+          "probability": 0.9911120533943176
+        },
+        {
+          "word": " and",
+          "start": 104.48,
+          "end": 104.74,
+          "probability": 0.804082989692688
+        },
+        {
+          "word": " it's",
+          "start": 104.74,
+          "end": 104.96,
+          "probability": 0.929242342710495
+        },
+        {
+          "word": " the",
+          "start": 104.96,
+          "end": 105.14,
+          "probability": 0.9917309880256653
+        },
+        {
+          "word": " only",
+          "start": 105.14,
+          "end": 105.42,
+          "probability": 0.9994315505027771
+        },
+        {
+          "word": " thing",
+          "start": 105.42,
+          "end": 105.72,
+          "probability": 0.9968507885932922
+        },
+        {
+          "word": " allowed",
+          "start": 105.72,
+          "end": 106.12,
+          "probability": 0.8405995965003967
+        },
+        {
+          "word": " to",
+          "start": 106.12,
+          "end": 106.34,
+          "probability": 0.9981575608253479
+        },
+        {
+          "word": " write",
+          "start": 106.34,
+          "end": 106.58,
+          "probability": 0.9970724582672119
+        },
+        {
+          "word": " to",
+          "start": 106.58,
+          "end": 106.68,
+          "probability": 0.9946030974388123
+        },
+        {
+          "word": " them.",
+          "start": 106.68,
+          "end": 106.9,
+          "probability": 0.9981417655944824
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "seek": 8396,
+      "start": 107.1,
+      "end": 112.06,
+      "text": " And provers, for-profit operators, post a zero-knowledge proof back to Casper.",
+      "tokens": [
+        51518,
+        400,
+        447,
+        840,
+        11,
+        337,
+        12,
+        14583,
+        19077,
+        11,
+        2183,
+        257,
+        4018,
+        12,
+        15869,
+        3042,
+        8177,
+        646,
+        281,
+        16100,
+        610,
+        13,
+        51782
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.1400862553322962,
+      "compression_ratio": 1.718978102189781,
+      "no_speech_prob": 0.6435985565185547,
+      "words": [
+        {
+          "word": " And",
+          "start": 107.1,
+          "end": 107.34,
+          "probability": 0.8975108861923218
+        },
+        {
+          "word": " provers,",
+          "start": 107.34,
+          "end": 107.9,
+          "probability": 0.7413528263568878
+        },
+        {
+          "word": " for",
+          "start": 108.12,
+          "end": 108.3,
+          "probability": 0.9779467582702637
+        },
+        {
+          "word": "-profit",
+          "start": 108.3,
+          "end": 108.64,
+          "probability": 0.9008594155311584
+        },
+        {
+          "word": " operators,",
+          "start": 108.64,
+          "end": 109.34,
+          "probability": 0.9934747815132141
+        },
+        {
+          "word": " post",
+          "start": 109.5,
+          "end": 109.78,
+          "probability": 0.9810819625854492
+        },
+        {
+          "word": " a",
+          "start": 109.78,
+          "end": 110.02,
+          "probability": 0.9747333526611328
+        },
+        {
+          "word": " zero",
+          "start": 110.02,
+          "end": 110.32,
+          "probability": 0.8982301354408264
+        },
+        {
+          "word": "-knowledge",
+          "start": 110.32,
+          "end": 110.78,
+          "probability": 0.9029827117919922
+        },
+        {
+          "word": " proof",
+          "start": 110.78,
+          "end": 111.08,
+          "probability": 0.9457196593284607
+        },
+        {
+          "word": " back",
+          "start": 111.08,
+          "end": 111.4,
+          "probability": 0.9948328733444214
+        },
+        {
+          "word": " to",
+          "start": 111.4,
+          "end": 111.66,
+          "probability": 0.9985029697418213
+        },
+        {
+          "word": " Casper.",
+          "start": 111.66,
+          "end": 112.06,
+          "probability": 0.9805117547512054
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "seek": 11206,
+      "start": 112.06,
+      "end": 117.34,
+      "text": " That's a math receipt that says the state is correct and Casper checks the receipt instead",
+      "tokens": [
+        50366,
+        663,
+        311,
+        257,
+        5221,
+        33882,
+        300,
+        1619,
+        264,
+        1785,
+        307,
+        3006,
+        293,
+        16100,
+        610,
+        13834,
+        264,
+        33882,
+        2602,
+        50624
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " That's",
+          "start": 112.06,
+          "end": 112.48,
+          "probability": 0.8263175189495087
+        },
+        {
+          "word": " a",
+          "start": 112.48,
+          "end": 112.68,
+          "probability": 0.991756796836853
+        },
+        {
+          "word": " math",
+          "start": 112.68,
+          "end": 112.88,
+          "probability": 0.9806033968925476
+        },
+        {
+          "word": " receipt",
+          "start": 112.88,
+          "end": 113.34,
+          "probability": 0.9710500240325928
+        },
+        {
+          "word": " that",
+          "start": 113.34,
+          "end": 113.8,
+          "probability": 0.9473552107810974
+        },
+        {
+          "word": " says",
+          "start": 113.8,
+          "end": 114.04,
+          "probability": 0.9911509156227112
+        },
+        {
+          "word": " the",
+          "start": 114.04,
+          "end": 114.36,
+          "probability": 0.63981032371521
+        },
+        {
+          "word": " state",
+          "start": 114.36,
+          "end": 114.48,
+          "probability": 0.9272059202194214
+        },
+        {
+          "word": " is",
+          "start": 114.48,
+          "end": 114.76,
+          "probability": 0.9962435960769653
+        },
+        {
+          "word": " correct",
+          "start": 114.76,
+          "end": 115.04,
+          "probability": 0.9973934888839722
+        },
+        {
+          "word": " and",
+          "start": 115.04,
+          "end": 115.38,
+          "probability": 0.7444896697998047
+        },
+        {
+          "word": " Casper",
+          "start": 115.38,
+          "end": 115.8,
+          "probability": 0.7421622276306152
+        },
+        {
+          "word": " checks",
+          "start": 115.8,
+          "end": 116.1,
+          "probability": 0.9898889660835266
+        },
+        {
+          "word": " the",
+          "start": 116.1,
+          "end": 116.38,
+          "probability": 0.9404470324516296
+        },
+        {
+          "word": " receipt",
+          "start": 116.38,
+          "end": 116.72,
+          "probability": 0.994005560874939
+        },
+        {
+          "word": " instead",
+          "start": 116.72,
+          "end": 117.34,
+          "probability": 0.7509293556213379
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "seek": 11206,
+      "start": 117.34,
+      "end": 118.38,
+      "text": " of redoing the math.",
+      "tokens": [
+        50624,
+        295,
+        29956,
+        278,
+        264,
+        5221,
+        13,
+        50688
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " of",
+          "start": 117.34,
+          "end": 117.58,
+          "probability": 0.9971548318862915
+        },
+        {
+          "word": " redoing",
+          "start": 117.58,
+          "end": 118.04,
+          "probability": 0.988751620054245
+        },
+        {
+          "word": " the",
+          "start": 118.04,
+          "end": 118.18,
+          "probability": 0.9906965494155884
+        },
+        {
+          "word": " math.",
+          "start": 118.18,
+          "end": 118.38,
+          "probability": 0.9539028406143188
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "seek": 11206,
+      "start": 118.44,
+      "end": 120.08,
+      "text": " And this buys you two things.",
+      "tokens": [
+        50688,
+        400,
+        341,
+        28153,
+        291,
+        732,
+        721,
+        13,
+        50770
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " And",
+          "start": 118.44,
+          "end": 118.62,
+          "probability": 0.9471572637557983
+        },
+        {
+          "word": " this",
+          "start": 118.62,
+          "end": 118.84,
+          "probability": 0.9972676038742065
+        },
+        {
+          "word": " buys",
+          "start": 118.84,
+          "end": 119.1,
+          "probability": 0.9839574098587036
+        },
+        {
+          "word": " you",
+          "start": 119.1,
+          "end": 119.28,
+          "probability": 0.9969459176063538
+        },
+        {
+          "word": " two",
+          "start": 119.28,
+          "end": 119.52,
+          "probability": 0.9809746146202087
+        },
+        {
+          "word": " things.",
+          "start": 119.52,
+          "end": 120.08,
+          "probability": 0.9968897700309753
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "seek": 11206,
+      "start": 120.24,
+      "end": 120.72,
+      "text": " Sovereignty.",
+      "tokens": [
+        50770,
+        407,
+        5887,
+        26919,
+        13,
+        50820
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " Sovereignty.",
+          "start": 120.24,
+          "end": 120.72,
+          "probability": 0.964216430981954
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "seek": 11206,
+      "start": 120.84,
+      "end": 123.18,
+      "text": " If another app breaks, yours keeps running.",
+      "tokens": [
+        50820,
+        759,
+        1071,
+        724,
+        9857,
+        11,
+        6342,
+        5965,
+        2614,
+        13,
+        50926
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " If",
+          "start": 120.84,
+          "end": 120.94,
+          "probability": 0.9892946481704712
+        },
+        {
+          "word": " another",
+          "start": 120.94,
+          "end": 121.28,
+          "probability": 0.9969243407249451
+        },
+        {
+          "word": " app",
+          "start": 121.28,
+          "end": 121.52,
+          "probability": 0.9959948062896729
+        },
+        {
+          "word": " breaks,",
+          "start": 121.52,
+          "end": 122.06,
+          "probability": 0.9924747347831726
+        },
+        {
+          "word": " yours",
+          "start": 122.26,
+          "end": 122.5,
+          "probability": 0.9826570153236389
+        },
+        {
+          "word": " keeps",
+          "start": 122.5,
+          "end": 122.82,
+          "probability": 0.9912710189819336
+        },
+        {
+          "word": " running.",
+          "start": 122.82,
+          "end": 123.18,
+          "probability": 0.9978652596473694
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "seek": 11206,
+      "start": 123.34,
+      "end": 124.18,
+      "text": " And composability.",
+      "tokens": [
+        50926,
+        400,
+        10199,
+        2310,
+        13,
+        50982
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " And",
+          "start": 123.34,
+          "end": 123.56,
+          "probability": 0.9171314835548401
+        },
+        {
+          "word": " composability.",
+          "start": 123.56,
+          "end": 124.18,
+          "probability": 0.8736422061920166
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "seek": 11206,
+      "start": 124.26,
+      "end": 125.66,
+      "text": " Apps can read each other's state.",
+      "tokens": [
+        50982,
+        32231,
+        393,
+        1401,
+        1184,
+        661,
+        311,
+        1785,
+        13,
+        51050
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " Apps",
+          "start": 124.26,
+          "end": 124.48,
+          "probability": 0.9767459630966187
+        },
+        {
+          "word": " can",
+          "start": 124.48,
+          "end": 124.72,
+          "probability": 0.993522584438324
+        },
+        {
+          "word": " read",
+          "start": 124.72,
+          "end": 124.88,
+          "probability": 0.9972398281097412
+        },
+        {
+          "word": " each",
+          "start": 124.88,
+          "end": 125.12,
+          "probability": 0.9981886744499207
+        },
+        {
+          "word": " other's",
+          "start": 125.12,
+          "end": 125.54,
+          "probability": 0.9129655659198761
+        },
+        {
+          "word": " state.",
+          "start": 125.54,
+          "end": 125.66,
+          "probability": 0.9358217716217041
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "seek": 11206,
+      "start": 125.76,
+      "end": 130.4,
+      "text": " And a transaction that touches two apps goes through as one unit or not at all.",
+      "tokens": [
+        51050,
+        400,
+        257,
+        14425,
+        300,
+        17431,
+        732,
+        7733,
+        1709,
+        807,
+        382,
+        472,
+        4985,
+        420,
+        406,
+        412,
+        439,
+        13,
+        51286
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " And",
+          "start": 125.76,
+          "end": 125.92,
+          "probability": 0.9831060767173767
+        },
+        {
+          "word": " a",
+          "start": 125.92,
+          "end": 126.06,
+          "probability": 0.8263482451438904
+        },
+        {
+          "word": " transaction",
+          "start": 126.06,
+          "end": 126.52,
+          "probability": 0.9987366795539856
+        },
+        {
+          "word": " that",
+          "start": 126.52,
+          "end": 126.76,
+          "probability": 0.894565761089325
+        },
+        {
+          "word": " touches",
+          "start": 126.76,
+          "end": 126.98,
+          "probability": 0.9943285584449768
+        },
+        {
+          "word": " two",
+          "start": 126.98,
+          "end": 127.32,
+          "probability": 0.980977475643158
+        },
+        {
+          "word": " apps",
+          "start": 127.32,
+          "end": 127.84,
+          "probability": 0.9931471943855286
+        },
+        {
+          "word": " goes",
+          "start": 127.84,
+          "end": 128.28,
+          "probability": 0.8599173426628113
+        },
+        {
+          "word": " through",
+          "start": 128.28,
+          "end": 128.5,
+          "probability": 0.9875467419624329
+        },
+        {
+          "word": " as",
+          "start": 128.5,
+          "end": 128.7,
+          "probability": 0.9723806381225586
+        },
+        {
+          "word": " one",
+          "start": 128.7,
+          "end": 129.02,
+          "probability": 0.9927126169204712
+        },
+        {
+          "word": " unit",
+          "start": 129.02,
+          "end": 129.26,
+          "probability": 0.9976048469543457
+        },
+        {
+          "word": " or",
+          "start": 129.26,
+          "end": 129.84,
+          "probability": 0.5539954304695129
+        },
+        {
+          "word": " not",
+          "start": 129.84,
+          "end": 130.06,
+          "probability": 0.9962649941444397
+        },
+        {
+          "word": " at",
+          "start": 130.06,
+          "end": 130.26,
+          "probability": 0.9940010905265808
+        },
+        {
+          "word": " all.",
+          "start": 130.26,
+          "end": 130.4,
+          "probability": 0.9991855025291443
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "seek": 11206,
+      "start": 130.44,
+      "end": 134.92,
+      "text": " And this just means the rules for checking all of this live inside of Casper's consensus",
+      "tokens": [
+        51286,
+        400,
+        341,
+        445,
+        1355,
+        264,
+        4474,
+        337,
+        8568,
+        439,
+        295,
+        341,
+        1621,
+        1854,
+        295,
+        16100,
+        610,
+        311,
+        19115,
+        51512
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " And",
+          "start": 130.44,
+          "end": 130.62,
+          "probability": 0.9883006811141968
+        },
+        {
+          "word": " this",
+          "start": 130.62,
+          "end": 130.8,
+          "probability": 0.9984153509140015
+        },
+        {
+          "word": " just",
+          "start": 130.8,
+          "end": 131.06,
+          "probability": 0.9979002475738525
+        },
+        {
+          "word": " means",
+          "start": 131.06,
+          "end": 131.38,
+          "probability": 0.9989752769470215
+        },
+        {
+          "word": " the",
+          "start": 131.38,
+          "end": 131.62,
+          "probability": 0.9421101212501526
+        },
+        {
+          "word": " rules",
+          "start": 131.62,
+          "end": 131.84,
+          "probability": 0.9988868832588196
+        },
+        {
+          "word": " for",
+          "start": 131.84,
+          "end": 132.12,
+          "probability": 0.9984309077262878
+        },
+        {
+          "word": " checking",
+          "start": 132.12,
+          "end": 132.32,
+          "probability": 0.9765535593032837
+        },
+        {
+          "word": " all",
+          "start": 132.32,
+          "end": 132.6,
+          "probability": 0.9877781271934509
+        },
+        {
+          "word": " of",
+          "start": 132.6,
+          "end": 132.76,
+          "probability": 0.9984530210494995
+        },
+        {
+          "word": " this",
+          "start": 132.76,
+          "end": 133.18,
+          "probability": 0.9969981908798218
+        },
+        {
+          "word": " live",
+          "start": 133.18,
+          "end": 133.44,
+          "probability": 0.938334584236145
+        },
+        {
+          "word": " inside",
+          "start": 133.44,
+          "end": 133.74,
+          "probability": 0.9981046915054321
+        },
+        {
+          "word": " of",
+          "start": 133.74,
+          "end": 133.98,
+          "probability": 0.9983331561088562
+        },
+        {
+          "word": " Casper's",
+          "start": 133.98,
+          "end": 134.52,
+          "probability": 0.9244197607040405
+        },
+        {
+          "word": " consensus",
+          "start": 134.52,
+          "end": 134.92,
+          "probability": 0.9602134227752686
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "seek": 11206,
+      "start": 134.92,
+      "end": 137.38,
+      "text": " itself, not on some other chain.",
+      "tokens": [
+        51512,
+        2564,
+        11,
+        406,
+        322,
+        512,
+        661,
+        5021,
+        13,
+        51640
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " itself,",
+          "start": 134.92,
+          "end": 135.48,
+          "probability": 0.9875590205192566
+        },
+        {
+          "word": " not",
+          "start": 135.64,
+          "end": 136.02,
+          "probability": 0.9963383674621582
+        },
+        {
+          "word": " on",
+          "start": 136.02,
+          "end": 136.4,
+          "probability": 0.9969542026519775
+        },
+        {
+          "word": " some",
+          "start": 136.4,
+          "end": 136.6,
+          "probability": 0.9972438812255859
+        },
+        {
+          "word": " other",
+          "start": 136.6,
+          "end": 136.98,
+          "probability": 0.9982632994651794
+        },
+        {
+          "word": " chain.",
+          "start": 136.98,
+          "end": 137.38,
+          "probability": 0.9928107857704163
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "seek": 11206,
+      "start": 137.58,
+      "end": 139.72,
+      "text": " Now where does this all actually stand?",
+      "tokens": [
+        51640,
+        823,
+        689,
+        775,
+        341,
+        439,
+        767,
+        1463,
+        30,
+        51756
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " Now",
+          "start": 137.58,
+          "end": 137.84,
+          "probability": 0.9939243197441101
+        },
+        {
+          "word": " where",
+          "start": 137.84,
+          "end": 138.34,
+          "probability": 0.3701092004776001
+        },
+        {
+          "word": " does",
+          "start": 138.34,
+          "end": 138.48,
+          "probability": 0.9987432360649109
+        },
+        {
+          "word": " this",
+          "start": 138.48,
+          "end": 138.74,
+          "probability": 0.9921486377716064
+        },
+        {
+          "word": " all",
+          "start": 138.74,
+          "end": 138.92,
+          "probability": 0.9953827261924744
+        },
+        {
+          "word": " actually",
+          "start": 138.92,
+          "end": 139.32,
+          "probability": 0.9983183145523071
+        },
+        {
+          "word": " stand?",
+          "start": 139.32,
+          "end": 139.72,
+          "probability": 0.9954723715782166
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "seek": 11206,
+      "start": 139.84,
+      "end": 140.7,
+      "text": " Look at this ladder.",
+      "tokens": [
+        51756,
+        2053,
+        412,
+        341,
+        18325,
+        13,
+        51806
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.15512543830318729,
+      "compression_ratio": 1.7019867549668874,
+      "no_speech_prob": 0.03513658791780472,
+      "words": [
+        {
+          "word": " Look",
+          "start": 139.84,
+          "end": 139.98,
+          "probability": 0.9966013431549072
+        },
+        {
+          "word": " at",
+          "start": 139.98,
+          "end": 140.16,
+          "probability": 0.9994937181472778
+        },
+        {
+          "word": " this",
+          "start": 140.16,
+          "end": 140.42,
+          "probability": 0.9989076852798462
+        },
+        {
+          "word": " ladder.",
+          "start": 140.42,
+          "end": 140.7,
+          "probability": 0.954215407371521
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "seek": 14070,
+      "start": 140.7,
+      "end": 143.26,
+      "text": " May 2025, Crescendo.",
+      "tokens": [
+        50364,
+        1891,
+        39209,
+        11,
+        383,
+        495,
+        33199,
+        13,
+        50502
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " May",
+          "start": 140.7,
+          "end": 141.22,
+          "probability": 0.5036238431930542
+        },
+        {
+          "word": " 2025,",
+          "start": 141.22,
+          "end": 142.46,
+          "probability": 0.8499255776405334
+        },
+        {
+          "word": " Crescendo.",
+          "start": 142.74,
+          "end": 143.26,
+          "probability": 0.8930677374204
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "seek": 14070,
+      "start": 143.64,
+      "end": 144.7,
+      "text": " 10 blocks a second.",
+      "tokens": [
+        50502,
+        1266,
+        8474,
+        257,
+        1150,
+        13,
+        50562
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " 10",
+          "start": 143.64,
+          "end": 143.84,
+          "probability": 0.8084974884986877
+        },
+        {
+          "word": " blocks",
+          "start": 143.84,
+          "end": 144.2,
+          "probability": 0.846924901008606
+        },
+        {
+          "word": " a",
+          "start": 144.2,
+          "end": 144.42,
+          "probability": 0.49140408635139465
+        },
+        {
+          "word": " second.",
+          "start": 144.42,
+          "end": 144.7,
+          "probability": 0.9930835962295532
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "seek": 14070,
+      "start": 144.92,
+      "end": 146.4,
+      "text": " September, the yellow paper.",
+      "tokens": [
+        50562,
+        7216,
+        11,
+        264,
+        5566,
+        3035,
+        13,
+        50656
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " September,",
+          "start": 144.92,
+          "end": 145.32,
+          "probability": 0.8744842410087585
+        },
+        {
+          "word": " the",
+          "start": 145.62,
+          "end": 145.8,
+          "probability": 0.7969052791595459
+        },
+        {
+          "word": " yellow",
+          "start": 145.8,
+          "end": 146.0,
+          "probability": 0.6317293047904968
+        },
+        {
+          "word": " paper.",
+          "start": 146.0,
+          "end": 146.4,
+          "probability": 0.9930211901664734
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "seek": 14070,
+      "start": 146.7,
+      "end": 147.28,
+      "text": " First draft.",
+      "tokens": [
+        50656,
+        2386,
+        11206,
+        13,
+        50692
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " First",
+          "start": 146.7,
+          "end": 146.96,
+          "probability": 0.7482645511627197
+        },
+        {
+          "word": " draft.",
+          "start": 146.96,
+          "end": 147.28,
+          "probability": 0.9559677243232727
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "seek": 14070,
+      "start": 147.46,
+      "end": 150.24,
+      "text": " June 30th of this year, Tukada.",
+      "tokens": [
+        50692,
+        6928,
+        2217,
+        392,
+        295,
+        341,
+        1064,
+        11,
+        314,
+        2034,
+        1538,
+        13,
+        50842
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " June",
+          "start": 147.46,
+          "end": 147.62,
+          "probability": 0.9750295281410217
+        },
+        {
+          "word": " 30th",
+          "start": 147.62,
+          "end": 148.26,
+          "probability": 0.8998854458332062
+        },
+        {
+          "word": " of",
+          "start": 148.26,
+          "end": 148.4,
+          "probability": 0.9290931224822998
+        },
+        {
+          "word": " this",
+          "start": 148.4,
+          "end": 148.7,
+          "probability": 0.9965072274208069
+        },
+        {
+          "word": " year,",
+          "start": 148.7,
+          "end": 148.98,
+          "probability": 0.9981344938278198
+        },
+        {
+          "word": " Tukada.",
+          "start": 149.52,
+          "end": 150.24,
+          "probability": 0.3858520835638046
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "seek": 14070,
+      "start": 150.54,
+      "end": 152.84,
+      "text": " Zero-knowledge verification and covenants.",
+      "tokens": [
+        50842,
+        17182,
+        12,
+        15869,
+        3042,
+        30206,
+        293,
+        598,
+        553,
+        1719,
+        13,
+        50972
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " Zero",
+          "start": 150.54,
+          "end": 150.78,
+          "probability": 0.8877021670341492
+        },
+        {
+          "word": "-knowledge",
+          "start": 150.78,
+          "end": 151.14,
+          "probability": 0.6875793635845184
+        },
+        {
+          "word": " verification",
+          "start": 151.14,
+          "end": 151.82,
+          "probability": 0.9685312509536743
+        },
+        {
+          "word": " and",
+          "start": 151.82,
+          "end": 152.14,
+          "probability": 0.9723140001296997
+        },
+        {
+          "word": " covenants.",
+          "start": 152.14,
+          "end": 152.84,
+          "probability": 0.9769781827926636
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "seek": 14070,
+      "start": 153.02,
+      "end": 154.22,
+      "text": " Live on mainnet.",
+      "tokens": [
+        50972,
+        10385,
+        322,
+        2135,
+        7129,
+        13,
+        51040
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " Live",
+          "start": 153.02,
+          "end": 153.26,
+          "probability": 0.9905874133110046
+        },
+        {
+          "word": " on",
+          "start": 153.26,
+          "end": 153.52,
+          "probability": 0.9952344298362732
+        },
+        {
+          "word": " mainnet.",
+          "start": 153.52,
+          "end": 154.22,
+          "probability": 0.7248679399490356
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "seek": 14070,
+      "start": 154.54,
+      "end": 155.9,
+      "text": " Inside Casper's consensus.",
+      "tokens": [
+        51040,
+        15123,
+        16100,
+        610,
+        311,
+        19115,
+        13,
+        51128
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " Inside",
+          "start": 154.54,
+          "end": 154.74,
+          "probability": 0.8295288681983948
+        },
+        {
+          "word": " Casper's",
+          "start": 154.74,
+          "end": 155.36,
+          "probability": 0.5569557150204977
+        },
+        {
+          "word": " consensus.",
+          "start": 155.36,
+          "end": 155.9,
+          "probability": 0.49402493238449097
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "seek": 14070,
+      "start": 156.18,
+      "end": 160.14,
+      "text": " And September 2026, Silverscript 1.0.",
+      "tokens": [
+        51128,
+        400,
+        7216,
+        945,
+        10880,
+        11,
+        6943,
+        840,
+        5944,
+        502,
+        13,
+        15,
+        13,
+        51338
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " And",
+          "start": 156.18,
+          "end": 156.28,
+          "probability": 0.9234904050827026
+        },
+        {
+          "word": " September",
+          "start": 156.28,
+          "end": 156.82,
+          "probability": 0.9544350504875183
+        },
+        {
+          "word": " 2026,",
+          "start": 156.82,
+          "end": 158.08,
+          "probability": 0.6698916405439377
+        },
+        {
+          "word": " Silverscript",
+          "start": 158.6,
+          "end": 159.04,
+          "probability": 0.7749506930510203
+        },
+        {
+          "word": " 1",
+          "start": 159.04,
+          "end": 159.38,
+          "probability": 0.9849194288253784
+        },
+        {
+          "word": ".0.",
+          "start": 159.38,
+          "end": 160.14,
+          "probability": 0.9982593953609467
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "seek": 14070,
+      "start": 160.34,
+      "end": 161.82,
+      "text": " The smart contract language.",
+      "tokens": [
+        51338,
+        440,
+        4069,
+        4364,
+        2856,
+        13,
+        51432
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " The",
+          "start": 160.34,
+          "end": 160.5,
+          "probability": 0.7410317659378052
+        },
+        {
+          "word": " smart",
+          "start": 160.5,
+          "end": 160.74,
+          "probability": 0.8081691861152649
+        },
+        {
+          "word": " contract",
+          "start": 160.74,
+          "end": 161.22,
+          "probability": 0.8980967402458191
+        },
+        {
+          "word": " language.",
+          "start": 161.22,
+          "end": 161.82,
+          "probability": 0.9900912046432495
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "seek": 14070,
+      "start": 162.22,
+      "end": 163.14,
+      "text": " Official release.",
+      "tokens": [
+        51432,
+        38577,
+        4374,
+        13,
+        51486
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " Official",
+          "start": 162.22,
+          "end": 162.64,
+          "probability": 0.9933323264122009
+        },
+        {
+          "word": " release.",
+          "start": 162.64,
+          "end": 163.14,
+          "probability": 0.9618529081344604
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "seek": 14070,
+      "start": 163.28,
+      "end": 163.94,
+      "text": " Next rung.",
+      "tokens": [
+        51486,
+        3087,
+        367,
+        1063,
+        13,
+        51538
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " Next",
+          "start": 163.28,
+          "end": 163.62,
+          "probability": 0.9797537922859192
+        },
+        {
+          "word": " rung.",
+          "start": 163.62,
+          "end": 163.94,
+          "probability": 0.9771254360675812
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "seek": 14070,
+      "start": 164.3,
+      "end": 166.22,
+      "text": " The first standalone zero-knowledge app.",
+      "tokens": [
+        51538,
+        440,
+        700,
+        37454,
+        4018,
+        12,
+        15869,
+        3042,
+        724,
+        13,
+        51638
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " The",
+          "start": 164.3,
+          "end": 164.56,
+          "probability": 0.976872444152832
+        },
+        {
+          "word": " first",
+          "start": 164.56,
+          "end": 164.78,
+          "probability": 0.9865660071372986
+        },
+        {
+          "word": " standalone",
+          "start": 164.78,
+          "end": 165.3,
+          "probability": 0.7679595947265625
+        },
+        {
+          "word": " zero",
+          "start": 165.3,
+          "end": 165.64,
+          "probability": 0.7916067242622375
+        },
+        {
+          "word": "-knowledge",
+          "start": 165.64,
+          "end": 166.04,
+          "probability": 0.9736996094385783
+        },
+        {
+          "word": " app.",
+          "start": 166.04,
+          "end": 166.22,
+          "probability": 0.9897370934486389
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "seek": 14070,
+      "start": 166.38,
+      "end": 168.26,
+      "text": " Above that, full Vprogs.",
+      "tokens": [
+        51638,
+        32691,
+        300,
+        11,
+        1577,
+        691,
+        4318,
+        21559,
+        13,
+        51748
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " Above",
+          "start": 166.38,
+          "end": 166.66,
+          "probability": 0.9900885224342346
+        },
+        {
+          "word": " that,",
+          "start": 166.66,
+          "end": 167.08,
+          "probability": 0.9963700771331787
+        },
+        {
+          "word": " full",
+          "start": 167.2,
+          "end": 167.52,
+          "probability": 0.9513614773750305
+        },
+        {
+          "word": " Vprogs.",
+          "start": 167.52,
+          "end": 168.26,
+          "probability": 0.7493155598640442
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "seek": 14070,
+      "start": 168.56,
+      "end": 169.78,
+      "text": " Still under construction.",
+      "tokens": [
+        51748,
+        8291,
+        833,
+        6435,
+        13,
+        51818
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.23079263246976411,
+      "compression_ratio": 1.4354243542435425,
+      "no_speech_prob": 0.033080022782087326,
+      "words": [
+        {
+          "word": " Still",
+          "start": 168.56,
+          "end": 168.88,
+          "probability": 0.9962792992591858
+        },
+        {
+          "word": " under",
+          "start": 168.88,
+          "end": 169.2,
+          "probability": 0.9984849095344543
+        },
+        {
+          "word": " construction.",
+          "start": 169.2,
+          "end": 169.78,
+          "probability": 0.9934024214744568
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "seek": 16978,
+      "start": 169.78,
+      "end": 172.74,
+      "text": " And casper.org says so in plain text.",
+      "tokens": [
+        50366,
+        400,
+        3058,
+        610,
+        13,
+        4646,
+        1619,
+        370,
+        294,
+        11121,
+        2487,
+        13,
+        50510
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16444188072567895,
+      "compression_ratio": 1.5694444444444444,
+      "no_speech_prob": 0.16871626675128937,
+      "words": [
+        {
+          "word": " And",
+          "start": 169.78,
+          "end": 170.14,
+          "probability": 0.4193177819252014
+        },
+        {
+          "word": " casper",
+          "start": 170.14,
+          "end": 170.52,
+          "probability": 0.12048020958900452
+        },
+        {
+          "word": ".org",
+          "start": 170.52,
+          "end": 171.2,
+          "probability": 0.9656830132007599
+        },
+        {
+          "word": " says",
+          "start": 171.2,
+          "end": 171.62,
+          "probability": 0.9443202018737793
+        },
+        {
+          "word": " so",
+          "start": 171.62,
+          "end": 171.94,
+          "probability": 0.9758242964744568
+        },
+        {
+          "word": " in",
+          "start": 171.94,
+          "end": 172.12,
+          "probability": 0.9373519420623779
+        },
+        {
+          "word": " plain",
+          "start": 172.12,
+          "end": 172.32,
+          "probability": 0.9969912767410278
+        },
+        {
+          "word": " text.",
+          "start": 172.32,
+          "end": 172.74,
+          "probability": 0.9615796208381653
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "seek": 16978,
+      "start": 172.84,
+      "end": 177.42,
+      "text": " And in December, Sam Polinsky said the Covenant fork was three to six months out.",
+      "tokens": [
+        50510,
+        400,
+        294,
+        7687,
+        11,
+        4832,
+        3635,
+        44153,
+        848,
+        264,
+        3066,
+        20521,
+        17716,
+        390,
+        1045,
+        281,
+        2309,
+        2493,
+        484,
+        13,
+        50744
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16444188072567895,
+      "compression_ratio": 1.5694444444444444,
+      "no_speech_prob": 0.16871626675128937,
+      "words": [
+        {
+          "word": " And",
+          "start": 172.84,
+          "end": 172.92,
+          "probability": 0.7566433548927307
+        },
+        {
+          "word": " in",
+          "start": 172.92,
+          "end": 173.08,
+          "probability": 0.9506392478942871
+        },
+        {
+          "word": " December,",
+          "start": 173.08,
+          "end": 173.76,
+          "probability": 0.9235854744911194
+        },
+        {
+          "word": " Sam",
+          "start": 174.24,
+          "end": 174.34,
+          "probability": 0.45700937509536743
+        },
+        {
+          "word": " Polinsky",
+          "start": 174.34,
+          "end": 174.78,
+          "probability": 0.5669869780540466
+        },
+        {
+          "word": " said",
+          "start": 174.78,
+          "end": 175.12,
+          "probability": 0.9741696715354919
+        },
+        {
+          "word": " the",
+          "start": 175.12,
+          "end": 175.34,
+          "probability": 0.6785017251968384
+        },
+        {
+          "word": " Covenant",
+          "start": 175.34,
+          "end": 175.72,
+          "probability": 0.7578915357589722
+        },
+        {
+          "word": " fork",
+          "start": 175.72,
+          "end": 176.02,
+          "probability": 0.6710448265075684
+        },
+        {
+          "word": " was",
+          "start": 176.02,
+          "end": 176.3,
+          "probability": 0.9833711385726929
+        },
+        {
+          "word": " three",
+          "start": 176.3,
+          "end": 176.5,
+          "probability": 0.5775730609893799
+        },
+        {
+          "word": " to",
+          "start": 176.5,
+          "end": 176.66,
+          "probability": 0.9883894920349121
+        },
+        {
+          "word": " six",
+          "start": 176.66,
+          "end": 176.84,
+          "probability": 0.9949864149093628
+        },
+        {
+          "word": " months",
+          "start": 176.84,
+          "end": 177.12,
+          "probability": 0.9952770471572876
+        },
+        {
+          "word": " out.",
+          "start": 177.12,
+          "end": 177.42,
+          "probability": 0.9898287653923035
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "seek": 16978,
+      "start": 177.58,
+      "end": 178.26,
+      "text": " It shipped in June.",
+      "tokens": [
+        50744,
+        467,
+        25312,
+        294,
+        6928,
+        13,
+        50788
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16444188072567895,
+      "compression_ratio": 1.5694444444444444,
+      "no_speech_prob": 0.16871626675128937,
+      "words": [
+        {
+          "word": " It",
+          "start": 177.58,
+          "end": 177.66,
+          "probability": 0.839207112789154
+        },
+        {
+          "word": " shipped",
+          "start": 177.66,
+          "end": 177.82,
+          "probability": 0.6046795845031738
+        },
+        {
+          "word": " in",
+          "start": 177.82,
+          "end": 178.06,
+          "probability": 0.9966872334480286
+        },
+        {
+          "word": " June.",
+          "start": 178.06,
+          "end": 178.26,
+          "probability": 0.9853706359863281
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "seek": 16978,
+      "start": 178.54,
+      "end": 181.26,
+      "text": " Everyone is racing to control compute and money.",
+      "tokens": [
+        50788,
+        5198,
+        307,
+        12553,
+        281,
+        1969,
+        14722,
+        293,
+        1460,
+        13,
+        50938
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16444188072567895,
+      "compression_ratio": 1.5694444444444444,
+      "no_speech_prob": 0.16871626675128937,
+      "words": [
+        {
+          "word": " Everyone",
+          "start": 178.54,
+          "end": 178.8,
+          "probability": 0.789676308631897
+        },
+        {
+          "word": " is",
+          "start": 178.8,
+          "end": 179.12,
+          "probability": 0.9927679300308228
+        },
+        {
+          "word": " racing",
+          "start": 179.12,
+          "end": 179.5,
+          "probability": 0.9906216859817505
+        },
+        {
+          "word": " to",
+          "start": 179.5,
+          "end": 179.8,
+          "probability": 0.9956691265106201
+        },
+        {
+          "word": " control",
+          "start": 179.8,
+          "end": 180.2,
+          "probability": 0.9978575110435486
+        },
+        {
+          "word": " compute",
+          "start": 180.2,
+          "end": 180.72,
+          "probability": 0.9579609036445618
+        },
+        {
+          "word": " and",
+          "start": 180.72,
+          "end": 181.06,
+          "probability": 0.9895055890083313
+        },
+        {
+          "word": " money.",
+          "start": 181.06,
+          "end": 181.26,
+          "probability": 0.9981118440628052
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "seek": 16978,
+      "start": 181.4,
+      "end": 184.68,
+      "text": " The more they race, the more layer nobody owns is worth.",
+      "tokens": [
+        50938,
+        440,
+        544,
+        436,
+        4569,
+        11,
+        264,
+        544,
+        4583,
+        5079,
+        19143,
+        307,
+        3163,
+        13,
+        51108
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16444188072567895,
+      "compression_ratio": 1.5694444444444444,
+      "no_speech_prob": 0.16871626675128937,
+      "words": [
+        {
+          "word": " The",
+          "start": 181.4,
+          "end": 181.44,
+          "probability": 0.9880433082580566
+        },
+        {
+          "word": " more",
+          "start": 181.44,
+          "end": 181.64,
+          "probability": 0.9991082549095154
+        },
+        {
+          "word": " they",
+          "start": 181.64,
+          "end": 181.98,
+          "probability": 0.9953246116638184
+        },
+        {
+          "word": " race,",
+          "start": 181.98,
+          "end": 182.4,
+          "probability": 0.9629508852958679
+        },
+        {
+          "word": " the",
+          "start": 182.66,
+          "end": 182.82,
+          "probability": 0.9953442215919495
+        },
+        {
+          "word": " more",
+          "start": 182.82,
+          "end": 183.14,
+          "probability": 0.9983770847320557
+        },
+        {
+          "word": " layer",
+          "start": 183.14,
+          "end": 183.4,
+          "probability": 0.4596627950668335
+        },
+        {
+          "word": " nobody",
+          "start": 183.4,
+          "end": 183.78,
+          "probability": 0.980960488319397
+        },
+        {
+          "word": " owns",
+          "start": 183.78,
+          "end": 184.16,
+          "probability": 0.9956502318382263
+        },
+        {
+          "word": " is",
+          "start": 184.16,
+          "end": 184.48,
+          "probability": 0.961839497089386
+        },
+        {
+          "word": " worth.",
+          "start": 184.48,
+          "end": 184.68,
+          "probability": 0.997941792011261
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "seek": 16978,
+      "start": 184.76,
+      "end": 188.54,
+      "text": " Proof of work money with apps on it and no L2 in the middle.",
+      "tokens": [
+        51108,
+        1705,
+        2670,
+        295,
+        589,
+        1460,
+        365,
+        7733,
+        322,
+        309,
+        293,
+        572,
+        441,
+        17,
+        294,
+        264,
+        2808,
+        13,
+        51302
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16444188072567895,
+      "compression_ratio": 1.5694444444444444,
+      "no_speech_prob": 0.16871626675128937,
+      "words": [
+        {
+          "word": " Proof",
+          "start": 184.76,
+          "end": 185.04,
+          "probability": 0.9636282324790955
+        },
+        {
+          "word": " of",
+          "start": 185.04,
+          "end": 185.16,
+          "probability": 0.8345137238502502
+        },
+        {
+          "word": " work",
+          "start": 185.16,
+          "end": 185.34,
+          "probability": 0.9290294051170349
+        },
+        {
+          "word": " money",
+          "start": 185.34,
+          "end": 185.76,
+          "probability": 0.9324740171432495
+        },
+        {
+          "word": " with",
+          "start": 185.76,
+          "end": 186.3,
+          "probability": 0.687984824180603
+        },
+        {
+          "word": " apps",
+          "start": 186.3,
+          "end": 186.58,
+          "probability": 0.9886588454246521
+        },
+        {
+          "word": " on",
+          "start": 186.58,
+          "end": 186.82,
+          "probability": 0.997817873954773
+        },
+        {
+          "word": " it",
+          "start": 186.82,
+          "end": 186.94,
+          "probability": 0.9984561204910278
+        },
+        {
+          "word": " and",
+          "start": 186.94,
+          "end": 187.5,
+          "probability": 0.69886314868927
+        },
+        {
+          "word": " no",
+          "start": 187.5,
+          "end": 187.72,
+          "probability": 0.7745601534843445
+        },
+        {
+          "word": " L2",
+          "start": 187.72,
+          "end": 188.1,
+          "probability": 0.8862285912036896
+        },
+        {
+          "word": " in",
+          "start": 188.1,
+          "end": 188.3,
+          "probability": 0.9936495423316956
+        },
+        {
+          "word": " the",
+          "start": 188.3,
+          "end": 188.4,
+          "probability": 0.9981945157051086
+        },
+        {
+          "word": " middle.",
+          "start": 188.4,
+          "end": 188.54,
+          "probability": 0.9980390667915344
+        }
+      ]
+    },
+    {
+      "id": 64,
+      "seek": 16978,
+      "start": 188.64,
+      "end": 190.94,
+      "text": " Click that like button and comment below.",
+      "tokens": [
+        51302,
+        8230,
+        300,
+        411,
+        2960,
+        293,
+        2871,
+        2507,
+        13,
+        51428
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16444188072567895,
+      "compression_ratio": 1.5694444444444444,
+      "no_speech_prob": 0.16871626675128937,
+      "words": [
+        {
+          "word": " Click",
+          "start": 188.64,
+          "end": 188.8,
+          "probability": 0.9754717350006104
+        },
+        {
+          "word": " that",
+          "start": 188.8,
+          "end": 189.06,
+          "probability": 0.9803125262260437
+        },
+        {
+          "word": " like",
+          "start": 189.06,
+          "end": 189.34,
+          "probability": 0.8901926279067993
+        },
+        {
+          "word": " button",
+          "start": 189.34,
+          "end": 189.74,
+          "probability": 0.9978454113006592
+        },
+        {
+          "word": " and",
+          "start": 189.74,
+          "end": 190.04,
+          "probability": 0.9192560911178589
+        },
+        {
+          "word": " comment",
+          "start": 190.04,
+          "end": 190.34,
+          "probability": 0.9940339922904968
+        },
+        {
+          "word": " below.",
+          "start": 190.34,
+          "end": 190.94,
+          "probability": 0.9975703358650208
+        }
+      ]
+    },
+    {
+      "id": 65,
+      "seek": 16978,
+      "start": 191.22,
+      "end": 194.74,
+      "text": " Let me know what you think is going to be built on it in the near future.",
+      "tokens": [
+        51428,
+        961,
+        385,
+        458,
+        437,
+        291,
+        519,
+        307,
+        516,
+        281,
+        312,
+        3094,
+        322,
+        309,
+        294,
+        264,
+        2651,
+        2027,
+        13,
+        51624
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16444188072567895,
+      "compression_ratio": 1.5694444444444444,
+      "no_speech_prob": 0.16871626675128937,
+      "words": [
+        {
+          "word": " Let",
+          "start": 191.22,
+          "end": 191.36,
+          "probability": 0.990340530872345
+        },
+        {
+          "word": " me",
+          "start": 191.36,
+          "end": 191.5,
+          "probability": 0.9995026588439941
+        },
+        {
+          "word": " know",
+          "start": 191.5,
+          "end": 191.7,
+          "probability": 0.9996283054351807
+        },
+        {
+          "word": " what",
+          "start": 191.7,
+          "end": 191.86,
+          "probability": 0.9898133873939514
+        },
+        {
+          "word": " you",
+          "start": 191.86,
+          "end": 192.12,
+          "probability": 0.9971641898155212
+        },
+        {
+          "word": " think",
+          "start": 192.12,
+          "end": 192.3,
+          "probability": 0.9989521503448486
+        },
+        {
+          "word": " is",
+          "start": 192.3,
+          "end": 192.54,
+          "probability": 0.994526207447052
+        },
+        {
+          "word": " going",
+          "start": 192.54,
+          "end": 192.66,
+          "probability": 0.7922551035881042
+        },
+        {
+          "word": " to",
+          "start": 192.66,
+          "end": 192.76,
+          "probability": 0.999315619468689
+        },
+        {
+          "word": " be",
+          "start": 192.76,
+          "end": 192.92,
+          "probability": 0.9990717172622681
+        },
+        {
+          "word": " built",
+          "start": 192.92,
+          "end": 193.2,
+          "probability": 0.9939523339271545
+        },
+        {
+          "word": " on",
+          "start": 193.2,
+          "end": 193.5,
+          "probability": 0.9974920749664307
+        },
+        {
+          "word": " it",
+          "start": 193.5,
+          "end": 193.68,
+          "probability": 0.9948195815086365
+        },
+        {
+          "word": " in",
+          "start": 193.68,
+          "end": 193.86,
+          "probability": 0.9726171493530273
+        },
+        {
+          "word": " the",
+          "start": 193.86,
+          "end": 193.98,
+          "probability": 0.9985477328300476
+        },
+        {
+          "word": " near",
+          "start": 193.98,
+          "end": 194.16,
+          "probability": 0.9944261312484741
+        },
+        {
+          "word": " future.",
+          "start": 194.16,
+          "end": 194.74,
+          "probability": 0.9988943934440613
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "seek": 16978,
+      "start": 195.1,
+      "end": 196.48,
+      "text": " Gonna be some exciting times.",
+      "tokens": [
+        51624,
+        20341,
+        312,
+        512,
+        4670,
+        1413,
+        13,
+        51714
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16444188072567895,
+      "compression_ratio": 1.5694444444444444,
+      "no_speech_prob": 0.16871626675128937,
+      "words": [
+        {
+          "word": " Gonna",
+          "start": 195.1,
+          "end": 195.24,
+          "probability": 0.3974664807319641
+        },
+        {
+          "word": " be",
+          "start": 195.24,
+          "end": 195.36,
+          "probability": 0.7193066477775574
+        },
+        {
+          "word": " some",
+          "start": 195.36,
+          "end": 195.58,
+          "probability": 0.9903398156166077
+        },
+        {
+          "word": " exciting",
+          "start": 195.58,
+          "end": 196.02,
+          "probability": 0.9981631636619568
+        },
+        {
+          "word": " times.",
+          "start": 196.02,
+          "end": 196.48,
+          "probability": 0.9981880784034729
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "seek": 19648,
+      "start": 196.48,
+      "end": 200.52,
+      "text": " And click the link in the description below for the greatest community ever.",
+      "tokens": [
+        50376,
+        400,
+        2052,
+        264,
+        2113,
+        294,
+        264,
+        3855,
+        2507,
+        337,
+        264,
+        6636,
+        1768,
+        1562,
+        13,
+        50572
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.3021613933421947,
+      "compression_ratio": 1.1505376344086022,
+      "no_speech_prob": 0.9238172769546509,
+      "words": [
+        {
+          "word": " And",
+          "start": 196.48,
+          "end": 197.02,
+          "probability": 0.2853727638721466
+        },
+        {
+          "word": " click",
+          "start": 197.02,
+          "end": 197.32,
+          "probability": 0.9555065631866455
+        },
+        {
+          "word": " the",
+          "start": 197.32,
+          "end": 197.54,
+          "probability": 0.9917914867401123
+        },
+        {
+          "word": " link",
+          "start": 197.54,
+          "end": 197.68,
+          "probability": 0.997054934501648
+        },
+        {
+          "word": " in",
+          "start": 197.68,
+          "end": 197.86,
+          "probability": 0.9929646253585815
+        },
+        {
+          "word": " the",
+          "start": 197.86,
+          "end": 198.02,
+          "probability": 0.9948146939277649
+        },
+        {
+          "word": " description",
+          "start": 198.02,
+          "end": 198.38,
+          "probability": 0.9974765181541443
+        },
+        {
+          "word": " below",
+          "start": 198.38,
+          "end": 198.9,
+          "probability": 0.9900646805763245
+        },
+        {
+          "word": " for",
+          "start": 198.9,
+          "end": 199.34,
+          "probability": 0.8635687828063965
+        },
+        {
+          "word": " the",
+          "start": 199.34,
+          "end": 199.5,
+          "probability": 0.9666770696640015
+        },
+        {
+          "word": " greatest",
+          "start": 199.5,
+          "end": 199.8,
+          "probability": 0.9548588991165161
+        },
+        {
+          "word": " community",
+          "start": 199.8,
+          "end": 200.2,
+          "probability": 0.9891246557235718
+        },
+        {
+          "word": " ever.",
+          "start": 200.2,
+          "end": 200.52,
+          "probability": 0.9857171773910522
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "seek": 19648,
+      "start": 200.96,
+      "end": 202.56,
+      "text": " And I'll catch you guys later.",
+      "tokens": [
+        50572,
+        400,
+        286,
+        603,
+        3745,
+        291,
+        1074,
+        1780,
+        13,
+        50676
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.3021613933421947,
+      "compression_ratio": 1.1505376344086022,
+      "no_speech_prob": 0.9238172769546509,
+      "words": [
+        {
+          "word": " And",
+          "start": 200.96,
+          "end": 201.06,
+          "probability": 0.909503698348999
+        },
+        {
+          "word": " I'll",
+          "start": 201.06,
+          "end": 201.28,
+          "probability": 0.9419025778770447
+        },
+        {
+          "word": " catch",
+          "start": 201.28,
+          "end": 201.48,
+          "probability": 0.9960220456123352
+        },
+        {
+          "word": " you",
+          "start": 201.48,
+          "end": 201.66,
+          "probability": 0.9949848651885986
+        },
+        {
+          "word": " guys",
+          "start": 201.66,
+          "end": 202.1,
+          "probability": 0.985842764377594
+        },
+        {
+          "word": " later.",
+          "start": 202.1,
+          "end": 202.56,
+          "probability": 0.9702973961830139
+        }
+      ]
+    }
+  ],
+  "language": "en"
+}

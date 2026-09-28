@@ -29,7 +29,8 @@ do NOT render-then-explain-it-as-an-open-item.
    (it averages a loud transient in with the voice). Every impact/riser over speech sits UNDER the VO.
 6. **EDIT-PLAN (time-ordered event log) + CUE-SHEET exist and the comp is reconciled to them** + house rules
    #1/#5/#10, with ZERO orphans, BEFORE the render.
-6b. **MECHANICAL GATE — run `node skills/lint-covers.js <comp.tsx>` and it MUST pass (exit 0) before any render.**
+6b. **MECHANICAL GATE — run `python skills/comp-build/lint_covers.py <comp.tsx>` and it MUST pass (exit 0) before any render**
+   (Python since 2026-09-28; `lint-covers.js` is the frozen rollback twin, identical rules).
    It enforces the cover-layer rules in CODE (no memory): #12 no reused b-roll, #2 no clip >4s (>5s if `lead:true`),
    captions never over a cover. A non-compliant comp does not get rendered. (Added 2026-06-30 because these rules
    kept being violated when they lived only as prose — the linter is the prevention, not "remember to check".)
@@ -40,21 +41,21 @@ do NOT render-then-explain-it-as-an-open-item.
    whole slide; sub-spotlight or break it). An unjustified WARN is a violation — clear or justify every one.
 6c. **FOUR MORE MECHANICAL GATES (added 2026-06-30 after Mike: "the violations are really, really bad… doubles
    the production time"). The plan-linter (6b) checks the PLAN; these check the PIXELS / AUDIO it could not see:**
-   - `python skills/lint-deck-containers.py <comp.tsx> <assets/deck>` — **FAILS** if a deck PNG is a WHOLE
+   - `python skills/comp-build/lint-deck-containers.py <comp.tsx> <assets/deck>` — **FAILS** if a deck PNG is a WHOLE
      SLIDE (2+ card-boxes) instead of one container (caught the bio slide AND the s9 comparison). Declare real
      diagrams `// DIAGRAM_REFS: …`, deliberate A-vs-B contrasts `// COMPARISON_REFS: …`, and deliberate
      all-cards-at-once overviews (~ONE per chapter, comp-build §5) `// OVERVIEW_REFS: …` in the comp to exempt;
      end the declaration lines with a plain comment (e.g. `// (end declared refs)`) so the last ref parses clean.
-   - `python skills/lint-pause-silence.py <comp.tsx> <source-spine.mp4>` — **FAILS** unless every card-pause/clip
+   - `python skills/comp-build/lint-pause-silence.py <comp.tsx> <source-spine.mp4>` — **FAILS** unless every card-pause/clip
      INSERT point sits INSIDE a silence dip (containment at the cut itself, ~30ms guard — upgraded 2026-07-19
      after the tao CH2 pause split the word "Now": the old dip-within-±150ms proximity check passed a cut that
      landed ON a word onset 140ms after the real trough; on failure it prints the trough to snap to). Also
      point is MID-WORD (no silence dip within ±150ms). Run on the SOURCE spine BEFORE baking pauses/clips. (Would
      have caught the CH4 pause splitting "ago".)
-   - `DUCK=$(python skills/bed-duck-expr.py <comp.tsx>)` — derives the music-bed duck windows from the comp's clip
+   - `DUCK=$(python skills/comp-build/bed-duck-expr.py <comp.tsx>)` — derives the music-bed duck windows from the comp's clip
      inserts; the bed mix MUST use this expression so the bed always drops under the talk (never hand-type the
      windows). Prevention by construction for "the bed played over the R-TALK clip."
-   - `node skills/lint-transition-assets.js <comp.tsx> <public-dir> [TRANSITIONS.md]` — **FAILS** if a
+   - `python skills/comp-build/lint_transition_assets.py <comp.tsx> <public-dir> [TRANSITIONS.md]` (Python since 2026-09-28) — **FAILS** if a
      transition PLANNED in `TRANSITIONS.md` is never referenced by the comp, or if a referenced transition's
      plate/tile/mask/SFX assets are missing from the project's lean `assets/transitions/`. (Added 2026-08-01
      after ethereum-rwa shipped v6 AND v7 with both planned badsignal ingresses silently absent — `STILL_FX`
@@ -62,12 +63,27 @@ do NOT render-then-explain-it-as-an-open-item.
      the effect is just missing. Engines read the dirs out of `row.params`, NOT off the row, which is why
      eyeballing top-level keys passes on a broken render.) Deliberate supersessions declare
      `// TRANSITIONS_WAIVED: <id> — reason` in the comp.
-   - `node skills/lint-slide-balance.js <comp.tsx>` — **FAILS** if the slide/container BALANCE breaks: a full
+   - `python skills/comp-build/lint_slide_balance.py <comp.tsx>` (Python since 2026-09-28) — **FAILS** if the slide/container BALANCE breaks: a full
      diagram slide (`kind: 'deck'`) shown more than ONCE (the "over and over" repeat), OR a comp that is ALL
      slides / ALL containers (the swing). Enforces "⛔ THE BALANCE" (broll-and-containers.md): a rich slide once,
      then broken up into spotlight containers. (Added 2026-07-10 after the Clarity Act container swing cost a
      full day of rework.)
 7. **video-qa.md passes on 10s CHUNKS (motion + audio), not stills**, before you call it done or hand it off.
+
+## ⛔ A NEW VIDEO IS DRIVEN BY THE GRAPH (2026-09-17) — never by hand-running the phases
+`python video-creation/longform-edited/graph/run.py longform --project <name> [--brief-file <md>]
+[--constraints-file <md>] [--face-max N]` owns the whole track as ONE LangGraph StateGraph
+(`graph/longform_graph.py`): pre-production (init · research → DATA.md · screenplay-strategist →
+SCREENPLAY.md · **gate screenplay**) → recording → spine (compress · defumble · cover_blackout ·
+desilence_coarse 700 ms · **gate spine_review: Mike listens, gives --bursts** · burst_removal ·
+desilence_final two-zone · transcribe · verify · **gate spine**) → plan (as_recorded · coverage · music_plan · **gate
+plan** · assets fan-out · verify · edit_plan · transitions · reconcile · lint_docset · **gate blueprint**)
+→ build (card_pauses · captions · comp_build · verify_comp · **gate draft**) → deliver (final render ·
+verify · definition of done · stage). Exit 2 = waiting on Mike (the report prints the resume command);
+a step that is not automated yet interrupts with its how-to and passes on its own once its artifact
+exists (or `--done <node>`). Every node verifies FROM DISK against the §13 doc set / §13a layout;
+`GRAPH-PROGRESS.json` in the project root records approvals. Hand-running a single phase is for
+repairs only. Background: `claudeisnaughty.md`; ledger: `ORCHESTRATOR-PLAN.md`.
 
 ## Read FIRST, by what you're doing
 
@@ -75,42 +91,65 @@ do NOT render-then-explain-it-as-an-open-item.
 |---|---|
 | **Writing / outlining a video's script** | **`screenplay.md`** (this folder) — how to write `SCREENPLAY.md` |
 | **Editing / building the Phase-4 render** | **`longform-edited.md`** (this folder) + its **`skills/`** rules |
-| **Repurposing a finished 16:9 into a vertical (9:16) cut** | **`skills/vertical-repurpose.md`** — run it with the slash command **`/vertical-repurpose <project folder>`** (`.claude/commands/vertical-repurpose.md`) |
-| **Condensing a finished VERTICAL cut into a ~40s short** | **`skills/longform-to-short.md`** — run it with the slash command **`/longform-short <project folder> [seconds]`** (`.claude/commands/longform-short.md`) |
+| **Repurposing a finished 16:9 into a vertical (9:16) cut** | **`skills/vertical-repurpose/vertical-repurpose.md`** — run it with the slash command **`/vertical-repurpose <project folder>`** (`.claude/commands/vertical-repurpose.md`) |
+| **Condensing a finished VERTICAL cut into a ~40s short** | **`skills/longform-to-short/longform-to-short.md`** — run it with the slash command **`/longform-short <project folder> [seconds]`** (`.claude/commands/longform-short.md`) |
 | **Resuming a specific video** | that video's `media/<project>/SCREENPLAY.md` + `PROJECT-LOG.md` |
 
 `screenplay.md` governs the SCRIPT; `longform-edited.md` governs the EDIT. They are siblings.
 
 ## Local skills (`skills/`)
 
-- **`skills/comp-build.md`** — the canonical, **self-contained** Remotion COMP architecture (spine `OffthreadVideo`
+_ONE FOLDER PER SKILL (Mike, 2026-09-28): `skills/<name>/<name>.md` + that skill's scripts, lints and
+reference files inside the same folder, no orphan files at the `skills/` level (same convention as
+`video-creation/skills/`). Index: `skills/README.md`._
+
+- **`skills/comp-build/comp-build.md`** — the canonical, **self-contained** Remotion COMP architecture (spine `OffthreadVideo`
   + `CUTS`/`sh()`, COVER layer, captions gating, the 3-bucket transitions, animated charts, render-assets layout,
   render command with `--video-bitrate`). Read before building any comp. **§13 lists the full per-video document
   set** (every file a `media/<project>/` folder must carry); **§14 is the `TRANSITIONS.md` skeleton.** Survives
   any project deletion; the `src/` comps are non-authoritative examples.
-- **`skills/edit-plan-and-cue-sheet.md`** — the ONE canonical format for **`EDIT-PLAN.md`** (§1 time-ordered
+- **`skills/edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md`** — the ONE canonical format for **`EDIT-PLAN.md`** (§1 time-ordered
   event log) and **`CUE-SHEET.md`** (§2 layer-grouped watch-along). Read it BEFORE writing either; the format is
   fixed across all videos — do NOT invent a per-video shape. Both formats are embedded as self-contained skeletons
   (no project dependency). CUE-SHEET FACE spans come from `blackdetect` on the baked spine. `_gen_editplan.example.js`
   (here in `skills/`) is the preserved EDIT-PLAN event-log generator.
-- **`skills/video-qa.md`** — the mandatory render-QA gate (see PRE-RENDER GATE above).
-- **`skills/vertical-repurpose.md`** — turning an APPROVED 16:9 longform-edited video into a vertical
+- **`skills/video-qa/video-qa.md`** — the mandatory render-QA gate (see PRE-RENDER GATE above).
+- **`skills/doc-reference/`** (2026-09-17) — the canonical SHAPE of every per-video document, one lint-clean
+  reference file each (`SCREENPLAY.reference.md`, `DATA.reference.md`, `PROJECT-LOG.reference.md`, more as their
+  graph nodes land) + a README naming each document's format owner and code gate. Sibling of
+  `container-reference/`. Agents and the graph's prompts read the reference FIRST; no project folder is ever the
+  reference (project folders are deleted after publish).
+- **The mechanical gates are Python (2026-09-28, Mike's port rule):** `skills/doc-reference/lint_docset.py` (pre-build, `--stage plan|build`),
+  `lint_covers.py`, `lint_slide_balance.py`, `lint_transition_assets.py`, `lint_animated_charts.py`, `check_spine_fps.py`,
+  next to the older Python `lint-deck-containers.py` / `lint-pause-silence.py` / `bed-duck-expr.py`. Each prints one machine
+  line (`<NAME>-LINT PASS|FAIL ...`) the graph parses. The `.js` / `.sh` twins are FROZEN rollback: identical rules,
+  parity-tested on Kaspa40Bps / TaoRenderVirtuals / CarryTradeFull (same exit codes and findings).
+- **`scripts/render_cover_plan.py`** (2026-09-28) — COVER-PLAN.json -> `BROLL-PLAN.md` (Envato / ChatGPT-with-Reference /
+  RECEIPTS / CHARTS / SLIDES worklists + bench) and `EDIT-PLAN-prep.md` (per-chapter beat tables), deterministic; the graph's
+  `coverage` node runs it right after it verifies the strategist's plan. Refuses to overwrite hand-edited files without `--force`.
+- **`skills/doc-reference/lint_as_recorded.py`** (2026-09-27) — the AS-RECORDED.md format gate in code (required sections, every
+  beat row marked KEPT / CHANGED / AD-LIB / DROPPED, timecodes within the final spine, FACE budget); the graph runs
+  it in its `as_recorded` node right after the `as-recorded-author` agent writes the file.
+- **`skills/doc-reference/lint_screenplay.py`** (2026-09-17) — the SCREENPLAY.md FORMAT gate in code (Convention 5 tag form
+  with backticked tags, one job per line, beat signposts, required sections, no cold open, no em dashes,
+  `--face-max N`); the longform graph runs it in its `screenplay` node, `--fix` repairs the mechanical class.
+- **`skills/vertical-repurpose/vertical-repurpose.md`** — turning an APPROVED 16:9 longform-edited video into a vertical
   (1080×1920) cut: native-vertical assets (article/receipt screenshots captured in MOBILE VIEW, not
   landscape-cropped), the vertical comp, the split-and-concat render (works around the ~frame-14436 FFmpeg
   stitch handle-ceiling — memory `reference_remotion_stitch_handle_ceiling`), reuse of the 16:9 mix, and
   vertical-specific QA (concat seam + framing + audio parity). The content is locked; the vertical is a
   reframe, not a re-edit.
-- **`skills/longform-to-short.md`** — condensing an APPROVED vertical cut into a **~40s short** with a
+- **`skills/longform-to-short/longform-to-short.md`** — condensing an APPROVED vertical cut into a **~40s short** with a
   spoken CTA outro: the two sources and their one clock (master VIDEO + spine VO, which also sheds the
   master's ~42.7 ms AAC priming lag), the hook/body/kicker/CTA shape, the span rules and their mechanical
-  gate (`skills/lint-short-spans.py`), the burned-caption trap (the longform captions FACE beats only, so
+  gate (`skills/longform-to-short/lint-short-spans.py`), the burned-caption trap (the longform captions FACE beats only, so
   COVER-sourced spans need a caption track added), and the Higgsfield MIKE-CLONE outro line. The cut plan
   is authored by the **`short-cut-strategist`** agent (fable/max), NOT inline.
-- **`skills/charts.md`** — the canonical method for **data charts / animated data-graphics** (DATA.md
+- **`skills/charts/charts.md`** — the canonical method for **data charts / animated data-graphics** (DATA.md
   chart-source index · the code/screencap/restyle build-mode decision · the never-AI-as-the-source-of-a-number
   guardrail · animate-for-real vs reveal-a-bitmap). Durable so it survives a project folder being deleted;
   smartmoney-backing-kaspa is the worked exemplar, not the source of truth.
-- **`skills/presentation.md`** (yt-presentation, added 2026-06-23) — a tested design system for building
+- **`skills/presentation/presentation.md`** (yt-presentation, added 2026-06-23) — a tested design system for building
   **dark cinematic, scroll-based HTML** slide decks / explainer visuals (one self-contained `.html`,
   scroll-snap slides, JetBrains-Mono numbers, on-brand accent palette). Use it when building HTML
   deck/explainer graphics or as a **styling reference for code-rendered explainer containers + data
@@ -132,7 +171,7 @@ do NOT render-then-explain-it-as-an-open-item.
   zero orphans. The render CONFIRMS the plan; it never DISCOVERS what's missing.
 - **Build to the TRANSCRIPT, not the screenplay (#6):** the recorded take diverges; cue every beat
   off the Phase-2 word-timings and omit beats he didn't say.
-- **`skills/video-qa.md` is the MANDATORY gate** before calling any render done (QA 10s chunks first).
+- **`skills/video-qa/video-qa.md` is the MANDATORY gate** before calling any render done (QA 10s chunks first).
 - **Transitions = THREE separate buckets (canonical list: `../assets/transitions/README.md`):**
   (1) **chapter / title cards** → pick ONE per video from the handful (slide · flip · cube · book-flip · swap)
   and use it for EVERY title card (a `@remotion/transitions` presentation on the self-contained title-card
@@ -155,7 +194,7 @@ do NOT render-then-explain-it-as-an-open-item.
 ## Per-video folder
 
 Each video is `media/<project>/` and carries the **FULL document set** (if one is missing, that's a gap to fill,
-not a choice to skip — the complete list + format owners is in **`skills/comp-build.md` §13**):
+not a choice to skip — the complete list + format owners is in **`skills/comp-build/comp-build.md` §13**):
 `SCREENPLAY.md` · `DATA.md` · `BROLL-PLAN.md` · `EDIT-PLAN-prep.md` · `CUE-SHEET.md` · **`TRANSITIONS.md`**
 (the per-video transition plan — skeleton in `comp-build.md` §14) · `EDIT-PLAN.md` (generated event-log) ·
 `PROJECT-LOG.md` · plus the master `.mkv` / `LOW BPS` / `EDIT` / `FINAL` mp4s and these folders

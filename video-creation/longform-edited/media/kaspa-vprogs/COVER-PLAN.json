@@ -1,0 +1,758 @@
+{
+  "spine": "video-creation/longform-edited/media/kaspa-vprogs/spine/ALL.f.cut.mp4",
+  "transcript_json": "video-creation/longform-edited/media/kaspa-vprogs/spine/ALL.f.cut.medium-words.json",
+  "face_windows": [
+    [
+      0.0,
+      7.333
+    ],
+    [
+      28.167,
+      31.933
+    ]
+  ],
+  "budget": {
+    "envato_video_max": 10,
+    "chatgpt_image_max": 5,
+    "envato_used": 4,
+    "chatgpt_used": 3
+  },
+  "cover_beats": [
+    {
+      "chapter": "CH1",
+      "tIn": 7.333,
+      "tOut": 9.5,
+      "spoken": "A vProg is an app",
+      "cover_type": "receipt",
+      "what": "R1 (C4): yellow paper title page, 'Kaspa Verifiable Programs (vProg) Protocol Specification, DRAFT v0.0.1', authors line visible. Quick scale-back pop, ~2.2s flash, no reading move.",
+      "source": "https://github.com/kaspanet/research/blob/main/vProgs/vProgs_yellow_paper.pdf (GitHub PDF viewer, page 1) or the mirror https://kaspa.co.il/wp-content/uploads/2025/09/vProgs_yellow_paper.pdf page 1 rendered to PNG",
+      "priority": "high",
+      "verify": true,
+      "bench": "Skip the flash and start vprog-loop-mini at 7.333 (7.2s hold).",
+      "notes": "Receipts-first: the definition he speaks is the yellow paper's. Screenplay-sanctioned 2s flash. Pops in over black, obeys #4 (nothing else on screen)."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 9.5,
+      "tOut": 14.54,
+      "spoken": "that runs on its own node, keeps its own state and posts zero knowledge proof of that state back to Kaspa.",
+      "cover_type": "diagram",
+      "what": "vprog-loop-mini: 3-node system-design mini diagram. vPROG'S OWN NODES [state] -> ZK PROOF -> KASPA L1 [verifies]. 'own nodes' lights 9.78, 'own state' 10.86, the ZK PROOF token launches on 'posts' 11.40, lands in Kaspa on 14.02.",
+      "source": "DATA.md section 2 Pillar 2 (yellow paper 2.2, 2.2.1, 3.1). Labels only from there.",
+      "priority": "med",
+      "verify": false,
+      "bench": "Envato 'abstract network nodes data flow dark teal' 4s + hold the ZK PROOF label as a lower third.",
+      "notes": "Convention 4 system-design container, one point. 5.04s meets the single-card floor. The full C1 is NOT shown here (it is CH2's overview, shown once; THE BALANCE)."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 14.54,
+      "tOut": 21.22,
+      "spoken": "Now Kaspa already has smart contracts, covenants, live on mainnet since June, straight from the core devs.",
+      "cover_type": "receipt",
+      "what": "R2 (C11): GitHub kaspanet/rusty-kaspa release 'v2.0.0 Mainnet Toccata Release' header (repo name, release title, published date 2026-06-05) with a slow push-in toward the KIP list (KIP-16 ZK precompile, KIP-17 Covenants, KIP-20, KIP-21) landing on 'covenants' 17.16; the activation line (DAA 474,165,565, June 30) is in frame by 'mainnet' 18.42.",
+      "source": "https://github.com/kaspanet/rusty-kaspa/releases/tag/v2.0.0 (crop: release header + notes top; not the full page)",
+      "priority": "high",
+      "verify": false,
+      "bench": "C6 docs.kaspa.org/toccata activation crop (then the CH2 130.44 beat takes the ZK Precompiles crop of the same page as a distinct asset).",
+      "notes": "Receipts-first on a dated live-on-mainnet claim. The core-dev GitHub release page IS the 'straight from the core devs' proof, which is why C11 (dropped in the screenplay) is revived here and C6 stays for CH2. R(other), single push-in."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 21.22,
+      "tOut": 25.22,
+      "spoken": "vProgs are the next layer up, whole applications on a chain",
+      "cover_type": "envato-video",
+      "what": "E1: abstract translucent glass/light planes stacking upward out of darkness, greenish-cyan/teal tint, slow rise (the 'next layer up' literal). Muted, first 4.0s only. Dissolve in/out.",
+      "source": "Envato search: 'abstract glowing layers stacking upward dark 3d' / 'translucent glass planes rising dark background'",
+      "priority": "med",
+      "verify": false,
+      "bench": "ChatGPT image: stacked glowing greenish-cyan planes rising in a dark void (would make chatgpt_used 4/5) or a 'next-layer-up' stack container (PoW L1 -> covenants LIVE -> vProgs NEXT).",
+      "notes": "House rule #2 punctuation (4.0s cap honored). Literal-noun b-roll (broll-and-containers section 4). CH1 is gear 3, so it gets the video's first punch."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 25.22,
+      "tOut": 28.167,
+      "spoken": "that already runs 10 blocks every single second.",
+      "cover_type": "container",
+      "what": "ten-bps-card: H0-family motion-type card. Eyebrow 'A CHAIN THAT ALREADY RUNS' enters 25.22; giant '10 BLOCKS / SEC' slams in on '10' 25.92; sub-line 'since Crescendo, 2025-05-05 (KIP-14)'. No TPS figure anywhere.",
+      "source": "DATA.md Pillar 3: KIP-14, rusty-kaspa v1.0.0 (10 BPS since 2025-05-05). Number is ours, code-rendered.",
+      "priority": "med",
+      "verify": false,
+      "bench": "Extend E1 to 25.22 only and let the flip card at 31.933 carry the number as a sub-line.",
+      "notes": "2.95s is under the 5s single-card floor, but this is a one-line type hit (screenplay H0 family), readable in one glance. Flagged in open_questions. Ends exactly at the FACE #2 picture edge 28.167 (face-leak rule)."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 31.933,
+      "tOut": 38.82,
+      "spoken": "And that one flip is how you get apps on the base layer with proof of work security and no L2 in the middle.",
+      "cover_type": "container",
+      "what": "execute-verify-flip: full-frame motion-type card. Enters at 31.933 with 'EXECUTE' struck-through in red flipping to 'VERIFY' in greenish cyan on 'flip' 32.58; then three sub-lines land on their words: 'APPS ON THE BASE LAYER' 33.94, 'PROOF OF WORK SECURITY' 35.92, 'NO L2 IN THE MIDDLE' 37.94.",
+      "source": "SCREENPLAY CH1 Beat 3 [SHOW] (H0 family, text only, no numbers).",
+      "priority": "med",
+      "verify": false,
+      "bench": "vprog-loop-mini state 2 (Kaspa node pulsing 'VERIFIES', not 'EXECUTES').",
+      "notes": "The thesis payoff in words right after FACE #2. Cover tIn = face-span end (31.933), zero gap (face-leak rule #6). 6.9s, floor met. Film-burn out of the face at 31.933 per #5."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 38.82,
+      "tOut": 40.22,
+      "spoken": "So let's break this all down.",
+      "cover_type": "envato-video",
+      "what": "E2: glass or a dark block shattering in slow motion on black, 1.4s punch (literal 'break this all down'). Muted, dissolve in, hard out into the CH2 title card.",
+      "source": "Envato search: 'glass shattering slow motion black background' / 'cube exploding into fragments dark'",
+      "priority": "low",
+      "verify": false,
+      "bench": "Hold execute-verify-flip to 40.22 (8.3s).",
+      "notes": "1.4s sits inside the 1-4s window (#2) and gives the chapter hand-off a visual pivot before the card pause."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 40.22,
+      "tOut": 40.22,
+      "spoken": "(title card, no speech)",
+      "cover_type": "title",
+      "what": "title-card-ch2: 'NOT AN L2'. Zero spine time: the >=1s readable card pause is INSERTED at the edit in the breath before the first CH2 word (house rule #11); every cue below shifts by the accumulated pause via sh().",
+      "source": "SCREENPLAY title-card table (Bed B starts here).",
+      "priority": "med",
+      "verify": false,
+      "bench": "n/a",
+      "notes": "AS-RECORDED: <0.1s of silence before 40.22, so the card lead-in must be built at comp time (card pause + the video's one chapter transition)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 40.22,
+      "tOut": 52.18,
+      "spoken": "So back in 2020 Vitalik laid out Ethereum's plan and it said in plain English, all in on rollups, your accounts, your businesses, your assets living inside a layer 2.",
+      "cover_type": "receipt",
+      "what": "R3 (C9): ethereum-magicians post 'A rollup-centric ethereum roadmap' by vbuterin, Oct 2020. R(article) two-stage read: wide establish (title, author, date) 40.22-44.64; push-in to the 'all-in on rollups' sentence on 'plain' 44.64 (highlight on 'rollups' 46.48); second stage drifts to 'users have their primary accounts, balances, assets, etc entirely inside an L2' on 'accounts' 47.52 and holds.",
+      "source": "https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698 (first post, desktop capture)",
+      "priority": "high",
+      "verify": false,
+      "bench": "ethereum.org/en/roadmap 'layer 2 rollups have developed much faster than expected' crop.",
+      "notes": "Receipts-first on a dated quote. AS-RECORDED flag: he says 'your businesses'; the highlighted receipt text must show Vitalik's real 'primary accounts, balances, assets' and never 'businesses'. 12s is a sanctioned two-stage long read (broll-and-containers section 1)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 52.18,
+      "tOut": 64.6,
+      "spoken": "And every rollup is its own chain, its own sequencer, the machine that orders your transaction payments, its own bridge, its own slice of liquidity. And every one of those pieces is a place for something to",
+      "cover_type": "diagram",
+      "what": "c2-l2-stack: the C2 LEFT column 'THE L2 STACK' as a full-frame system-design stack, rows revealing on the words: OWN CHAIN 54.04 -> OWN SEQUENCER ('orders your transactions') 55.38 -> OWN BRIDGE to L1 58.96 -> OWN SLICE OF LIQUIDITY 60.60. On 'pieces' 62.12 a thin red attack-surface outline pulses around the sequencer and bridge rows.",
+      "source": "DATA.md Pillar 1 (Vitalik 2020-10-02; yellow paper 1.1; Sompolinsky 2025-12-17). Text only, no numbers.",
+      "priority": "med",
+      "verify": false,
+      "bench": "Four single-row spotlight cards (chain / sequencer / bridge / liquidity) ~2.5s each.",
+      "notes": "This is C2's ONE full-diagram appearance (THE BALANCE). 12.4s meets the >=10s diagram floor. Its right column is never re-shown as a slide; CH2 Beat 3 breaks the answer into spotlight cards. The row text stays 'own sequencer' regardless of the 'transaction payments' mishear."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 64.6,
+      "tOut": 67.8,
+      "spoken": "break and a place for your liquidity to get split up.",
+      "cover_type": "envato-video",
+      "what": "E3: aerial of an ice sheet / frozen lake cracking and splitting apart, cold desaturated tone, 3.2s (literal 'break' 64.68 + 'split up' 67.20). Muted, dissolve in/out.",
+      "source": "Envato search: 'ice cracking aerial drone frozen lake fracture' / 'cracked ice breaking apart top view'",
+      "priority": "med",
+      "verify": false,
+      "bench": "Keep c2-l2-stack to 67.8 with the liquidity row fragmenting on 'split' 67.20.",
+      "notes": "Cut lands ON 'break' so the b-roll is the break. Tone-matched (grim beat). #13: this is a sequenced slot, not laid over the diagram."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 67.8,
+      "tOut": 72.96,
+      "spoken": "Now Kaspa's founder, Yonatan Sompolinsky looked at all of that and back in December",
+      "cover_type": "container",
+      "what": "sompolinsky-name-card: eyebrow 'KASPA'S FOUNDER', headline 'Yonatan Sompolinsky', body '@hashdag · co-author GhostDAG · DAGKnight (KIP-2) · vProgs yellow paper (Hashdag)'. Sub-stamp 'December 2025' lands on 'December' 72.38.",
+      "source": "DATA.md section 3 People (yellow paper author list, KIP-2, kasmagazine 2025-12-17). Persona spelling.",
+      "priority": "med",
+      "verify": false,
+      "bench": "Start R4 at 67.8 with its wide masthead stage (article header, 'The Weekly Knight', 2025-12-17) and push in at 72.96.",
+      "notes": "A named real person gets a text-accurate name card, never an AI likeness. 5.16s meets the floor. No photo is proposed because his X page could not be opened (DATA.md source notes)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 72.96,
+      "tOut": 81.7,
+      "spoken": "he said the whole point of vProgs was to avoid the obsolete path of L2s. His words, not mine. And he hasn't softened on it.",
+      "cover_type": "receipt",
+      "what": "R4 (C5): Kaspa Magazine 'A DAGKNIGHT Sneak Peak and vProg Development' (2025-12-17), cropped to the paragraph quoting Sompolinsky; slow push-in landing on 'Kaspa vProgs' primary motivation was to avoid the obsolete path of L2's' with the highlight completing on 'obsolete' 76.78. Hold through 'His words, not mine' (the receipt IS the point) and 'hasn't softened on it'.",
+      "source": "https://kasmagazine.com/article/sneakpeaks-and-developments (crop to the quote paragraph; capture the kasmagazine page, not the X post)",
+      "priority": "high",
+      "verify": false,
+      "bench": "Same article's 'vProgs is not L2, a term which connotes a modular stack... (which failed)' paragraph.",
+      "notes": "Receipts-first on a quote. R(article), one move. 8.7s; the hold across 'his words, not mine' is deliberate (pointing at the quote). Ends exactly at the 81.655 cut junction; C1 enters on 81.70 per AS-RECORDED."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 81.7,
+      "tOut": 94.5,
+      "spoken": "So here's how a vProg actually works. You send a transaction and you declare upfront which account it reads and which one it writes. Kaspa does four jobs. It orders every transaction so Kaspa itself is the sequencer.",
+      "cover_type": "diagram",
+      "what": "c1-overview: THE C1 system-design diagram, full frame, shown ONCE. Nodes USERS -> KASPA L1 [ORDERS (sequencer) · STORES (data availability + state index) · CHECKS PROOFS (ZK verify) · METERS (resource metering)] <-> vPROG A NODES / vPROG B NODES <-> PROVERS. All dim at 81.70; USERS lights on 'transaction' 84.74 with 'reads' 87.44 / 'writes' 88.62 tags on the tx; KASPA L1 glows on 'four jobs' 89.80; its ORDERS (sequencer) label lights on 'orders' 90.96 and pulses on 'sequencer' 94.06. Role colors: Kaspa L1 greenish cyan, vProg nodes indigo, provers amber.",
+      "source": "DATA.md CHART-SOURCE INDEX C1; labels from section 2 Pillar 2 (yellow paper 1.2, 2.2, 2.3, 3, 6).",
+      "priority": "high",
+      "verify": false,
+      "bench": "Hold the overview to 100.42 (18.7s) if the four-jobs break-up reads as too many swaps.",
+      "notes": "THE BALANCE: the rich diagram once (12.8s, >=10s diagram floor), then broken into spotlight containers below. Declare // DIAGRAM_REFS in the comp. The 81.655 junction is a 0.08s breath; entrance on 81.70 exactly."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 94.5,
+      "tOut": 100.42,
+      "spoken": "It stores the data, it checks the proofs, it meters the work. What it never does is run the app.",
+      "cover_type": "diagram",
+      "what": "c1-kaspa-four-jobs: break-up container, the KASPA L1 node enlarged with its four job rows. ORDERS already lit; STORES lights 94.66, CHECKS PROOFS 96.22, METERS 97.42; on 'never' 98.54 a fifth row 'EXECUTE' appears struck-through red and drops out of the box by 'app.' 100.26.",
+      "source": "DATA.md Pillar 2 (yellow paper 1.2 'does not execute vProg logic itself'; 3.1, 3.2, 3.3).",
+      "priority": "high",
+      "verify": false,
+      "bench": "Stay on c1-overview with the same per-label lighting.",
+      "notes": "Spotlight rule #3: one node at a time. 5.9s. The spoken glosses (orders/stores/checks/meters) sit beside the yellow-paper terms, never replacing them (screenplay CH2 verify list)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 100.42,
+      "tOut": 106.9,
+      "spoken": "The app runs on its own nodes. Every vProg owns its own accounts and it's the only thing allowed to write to them.",
+      "cover_type": "diagram",
+      "what": "c1-vprog-nodes: break-up container, vPROG A NODES enlarged (indigo). 'runs on its own nodes' badge 101.70; its account set A_p appears on 'accounts' 104.00; lock icon 'WRITE: vProg A only · READ: anyone' lands on 'write' 106.34.",
+      "source": "DATA.md Pillar 2 (yellow paper 2.2 'Only the executable exec_p of the owning vProg p has write-access... may be read by any vProg').",
+      "priority": "high",
+      "verify": false,
+      "bench": "BENCH Envato 'server rack nodes blinking close-up' 100.42-102.34 (1.9s) then this container 102.34-106.9 (4.56s, under the floor, which is why it is benched).",
+      "notes": "6.5s, floor met. Deliberately b-roll-free: the machine beat is the teaching centerpiece; punches sit before (64.6) and after (CH3)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 106.9,
+      "tOut": 112.06,
+      "spoken": "And provers, for-profit operators, post a zero-knowledge proof back to Kaspa.",
+      "cover_type": "diagram",
+      "what": "c1-provers: break-up container, PROVERS node enlarged (amber) with sub-label 'for-profit operators' on 108.30; a 'ZK PROOF' token launches on 'zero' 110.02 along an arrow into a small KASPA L1 node at right and arrives on 'Kaspa' 111.66.",
+      "source": "DATA.md Pillar 2 (yellow paper section 6 'Provers are for-profit entities').",
+      "priority": "high",
+      "verify": false,
+      "bench": "Merge with zk-math-receipt as one 11.5s container (proof token becomes the receipt).",
+      "notes": "5.16s, floor met (tIn at the 106.90 word end, not the 107.10 segment start, to keep the floor)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 112.06,
+      "tOut": 118.38,
+      "spoken": "That's a math receipt that says the state is correct and Kaspa checks the receipt instead of redoing the math.",
+      "cover_type": "container",
+      "what": "zk-math-receipt: a code-rendered 'receipt' card (paper-slip styling, deck palette): header 'ZK PROOF', line 'STATE ROOT ... CORRECT' on 'state' 114.36, a green 'CHECKED BY KASPA CONSENSUS' stamp slams on 'checks' 115.80, and a struck-through 'RE-EXECUTE THE MATH' line greys out on 'math.' 118.18. No numbers.",
+      "source": "DATA.md Pillar 2 (yellow paper abstract + 3.1: proofs verified by the L1). Text only.",
+      "priority": "med",
+      "verify": false,
+      "bench": "Envato 'receipt printer printing close-up' 112.06-115.38 (3.3s) then a 3s stamp card (sub-floor, so benched).",
+      "notes": "Literal-noun container for 'math receipt'. 6.3s. Closes the C1 sequence without re-showing the full diagram (the screenplay's 'all nodes lit for 3s' would be a second full-slide appearance; lint_slide_balance)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 118.38,
+      "tOut": 123.34,
+      "spoken": "And this buys you two things. Sovereignty. If another app breaks, yours keeps running.",
+      "cover_type": "container",
+      "what": "sovereignty-card: eyebrow 'WHAT THE DESIGN BUYS YOU · 1 of 2', headline 'SOVEREIGNTY' lands on 120.24; two vProg nodes side by side, vPROG B cracks red on 'breaks' 121.52 while vPROG A keeps a green 'RUNNING' pulse on 'keeps running' 122.6.",
+      "source": "DATA.md Pillar 2 (yellow paper 1.2 'the liveness of a vProg is never compromised by the fault of others').",
+      "priority": "med",
+      "verify": false,
+      "bench": "C2 full contrast with the RIGHT column revealing row by row 118.38-130.44 (declared // COMPARISON_REFS; Mike's call, see open_questions).",
+      "notes": "4.96s, a hair under the 5s floor (tIn taken at the 118.38 word end). This and composability-card are the break-up of C2's right column (BALANCE) instead of a second C2 slide."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 123.34,
+      "tOut": 130.44,
+      "spoken": "And composability. Apps can read each other's state. And a transaction that touches two apps goes through as one unit or not at all.",
+      "cover_type": "diagram",
+      "what": "composability-card: eyebrow '2 of 2', headline 'COMPOSABILITY' 123.56; vPROG A and vPROG B with read arrows crossing on 'read' 124.72; a single transaction bar spanning both apps on 'transaction' 126.06, snapping to 'ONE UNIT' green on 129.02 then a dimmed 'OR NOT AT ALL' alternative.",
+      "source": "DATA.md Pillar 2 (yellow paper 2.2 read-by-any, 5.3 opt-in reads; kasmagazine 2025-09-17 'succeed or fail as atomic units').",
+      "priority": "med",
+      "verify": false,
+      "bench": "See sovereignty-card bench (C2 right column).",
+      "notes": "7.1s. Wording stays 'apps can read each other's state' (composability honesty guard), never 'already works'."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 130.44,
+      "tOut": 137.58,
+      "spoken": "And this just means the rules for checking all of this live inside of Kaspa's consensus itself, not on some other chain.",
+      "cover_type": "receipt",
+      "what": "R5 (C6): docs.kaspa.org/toccata, crop to 'It is active on mainnet as of June 30, 2026, at DAA score 474_165_565' plus the 'ZK Precompiles: Direct verification of Groth16 and RISC Zero Succinct proofs inside script' line; subtle push-in landing on 'inside script' on 'inside' 133.44, highlight completes on 'consensus' 134.52.",
+      "source": "https://docs.kaspa.org/toccata (Toccata Dev Guide; the activation + ZK Precompiles section)",
+      "priority": "high",
+      "verify": true,
+      "bench": "kaspa.org/build Toccata card 'Live on mainnet since June 30, 2026' (leaves C7 to CH3 as planned).",
+      "notes": "Receipts-first: 'inside Kaspa's consensus' is proven by the docs' own 'inside script' line. 'ENSHRINED' is NOT spoken, so no such label goes on this beat's receipt highlight (AS-RECORDED flag). Verify the activation wording is unchanged before capture."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 137.58,
+      "tOut": 137.58,
+      "spoken": "(title card, no speech)",
+      "cover_type": "title",
+      "what": "title-card-ch3: 'WHERE IT STANDS'. Zero spine time; >=1s card pause inserted at the edit in the breath before 137.58 (house rule #11), same chapter transition as CH2's card.",
+      "source": "SCREENPLAY title-card table (Bed C starts here).",
+      "priority": "med",
+      "verify": false,
+      "bench": "n/a",
+      "notes": "Bed B -> Bed C breath shares this window."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 137.58,
+      "tOut": 139.84,
+      "spoken": "Now where does this all actually stand?",
+      "cover_type": "chatgpt-image",
+      "what": "G1: a tall glowing greenish-cyan ladder rising out of dark fog into a near-black sky studded with faint interconnected node-lights (BlockDAG mesh), low camera angle, film-quality 3D render, no text. 2.3s, cross-warp in/out.",
+      "source": "ChatGPT image concept (persona house style: deep navy near-black, rim lighting, no text), 16:9 1920x1080",
+      "priority": "med",
+      "verify": false,
+      "bench": "Envato 'low angle dolly up a staircase dark' 2.3s.",
+      "notes": "Literal-noun for the 'ladder' he says next; sets up C3. Text-free atmosphere only (charts.md guardrail: no number from an image model)."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 139.84,
+      "tOut": 160.34,
+      "spoken": "Look at this ladder. May 2025, Crescendo. 10 blocks a second. September, the yellow paper. First draft. June 30th of this year, Toccata. Zero-knowledge verification and covenants. Live on mainnet. Inside Kaspa's consensus. And September 2026, Silverscript 1.0.",
+      "cover_type": "animated-chart",
+      "what": "c3-ladder: the animated ladder timeline (useCurrentFrame), full frame, shown ONCE. Empty ladder at 139.84; rungs land as spoken: CRESCENDO · 2025-05-05 on 140.70, its '10 BPS' tag on 143.64; YELLOW PAPER · 2025-09-11 on 144.92, 'DRAFT v0.0.1' on 146.96; TOCCATA · 2026-06-30 on 147.46, 'ZK verify + covenants' 150.54, 'LIVE ON MAINNET' 153.02, 'inside consensus' 154.54; SILVERSCRIPT 1.0 · 2026-09-09 on 156.28. Dashed future rungs sit dim and unlabeled-lit above (standalone based ZK apps · FULL vPROGS: in construction · DAGKNIGHT: proposed (KIP-2)). Full dates on rungs, no day-relative words.",
+      "source": "DATA.md Pillar 4 table + CHART-SOURCE INDEX C3 (code, animate for real).",
+      "priority": "high",
+      "verify": true,
+      "bench": "Reveal-a-bitmap of the approved PNG if the animation jitters (charts.md section 3).",
+      "notes": "Numbers WE control -> our own code-rendered animated chart, never an image model. 20.5s active-explanation hold (a diagram may hold while explained; under the 35s lint). Verify at render: Silverscript latest tag still v1.0.0 so the spoken '1.0' matches the rung."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 160.34,
+      "tOut": 163.28,
+      "spoken": "The smart contract language. Official release.",
+      "cover_type": "receipt",
+      "what": "R6 (C13): GitHub kaspanet/silverscript release v1.0.0 header (title, tag, published 2026-09-09) with the notes' 'official release' / 'high-level smart contract language for Kaspa' wording highlighted on 'Official' 162.22. Subtle push, R(other).",
+      "source": "https://github.com/kaspanet/silverscript/releases/tag/v1.0.0 (crop: release header + first paragraph)",
+      "priority": "high",
+      "verify": true,
+      "bench": "Hold c3-ladder through 163.28 with the Silverscript rung's 'OFFICIAL RELEASE' sub-tag lighting on 162.22.",
+      "notes": "Receipts-first on a dated release claim. 2.9s flash-length receipt (one highlighted line). Verify no newer tag exists at capture."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 163.28,
+      "tOut": 169.78,
+      "spoken": "Next rung. The first standalone zero-knowledge app. Above that, full vProgs. Still under construction.",
+      "cover_type": "diagram",
+      "what": "c3-next-rungs: break-up container of the ladder's top: only the dashed rungs, enlarged. 'NEXT: standalone based ZK apps' lights on 'standalone' 164.78 (Sutton's own term, lowercase 'based', never a copy of the VO); 'FULL vPROGS: in construction' on 'full' 167.20 with a hazard-stripe 'UNDER CONSTRUCTION' tag on 169.20; 'DAGKNIGHT: proposed (KIP-2)' stays dim, never spoken.",
+      "source": "DATA.md Pillar 4 (Sutton 2026-04-11 via kasmagazine; kaspa.org/build 'In construction'; KIP-2 Proposed).",
+      "priority": "high",
+      "verify": true,
+      "bench": "C14 receipt (kasmagazine 'I'm careful not to call it vProgs but rather standalone based zk apps') 163.28-166.38 then this container 166.38-169.78.",
+      "notes": "The ladder's ONE break-up spotlight (BALANCE) instead of a second full-ladder appearance. 6.5s. Guards 1 and 2 held: no date, not called live."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 169.78,
+      "tOut": 172.84,
+      "spoken": "And kaspa.org says so in plain text.",
+      "cover_type": "receipt",
+      "what": "R7 (C7): kaspa.org/build developments section, the vProgs card with 'In construction' and 'Full vProgs remain a future direction' highlighted; push-in to the phrase landing on 'plain' 172.12. R(other).",
+      "source": "https://kaspa.org/build (the developments / status cards)",
+      "priority": "high",
+      "verify": true,
+      "bench": "GitHub kaspanet/vprogs README 'APIs and architecture may change significantly' crop (C8 revived).",
+      "notes": "Receipts-first; he literally cites the site. 3.06s. [VERIFY] the status is still 'In construction' at capture; if it moved, the 168.56 line and c3-next-rungs need Mike before capture."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 172.84,
+      "tOut": 178.54,
+      "spoken": "And in December, Sompolinsky said the covenant fork was three to six months out. It shipped in June.",
+      "cover_type": "receipt",
+      "what": "R8: Kaspa Magazine 2025-12-17 article, a DIFFERENT crop from R4: the paragraph where Sompolinsky expects the covenant hard fork in '3 to 6 months'. Two-stage: wide with the 2025-12-17 date on 172.84, push-in to '3 to 6 months' completing on 'three' 176.30. On 'shipped' 177.66 a code-rendered stamp 'DELIVERED 2026-06-30' slams onto the receipt corner (proposed on-receipt device, see open_questions).",
+      "source": "https://kasmagazine.com/article/sneakpeaks-and-developments (the hard-fork timing paragraph; must be a distinct crop from R4 so no asset repeats)",
+      "priority": "high",
+      "verify": true,
+      "bench": "Container 'toccata-rung-called': the Toccata rung enlarged with stamp 'called Dec 2025 · delivered 2026-06-30' (the screenplay's stamp), 5.7s.",
+      "notes": "Receipts-first on a quoted forecast; stays a delivered call, never a live forecast (DATA.md section 4). Verify the exact '3 to 6 months' wording is on the page (DATA.md cites it from this article). Two crops of one page = two receipt files, each used once (#12)."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 178.54,
+      "tOut": 181.4,
+      "spoken": "Everyone is racing to control compute and money.",
+      "cover_type": "envato-video",
+      "what": "E4: dark data-center corridor dolly, camera pushing continuously down the aisle (leading motion), cold blue rack lights. 2.86s. Muted, dissolve in/out.",
+      "source": "Envato search: 'data center server corridor dolly dark blue lights' (lead:true is allowed but the slot is under 4s anyway)",
+      "priority": "med",
+      "verify": false,
+      "bench": "Envato 'gold bars vault slow dolly' (the 'money' half) 2.86s.",
+      "notes": "Atmospheric conviction beat where no receipt fits. Leading-motion pattern interrupt (broll-and-containers exception) opening the close. Optional LINE-CAPTION 'EVERYONE IS RACING TO CONTROL COMPUTE AND MONEY' would be 1 of 4 video covers (25%), above the 10-20% cap, so it is NOT proposed."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 181.4,
+      "tOut": 184.76,
+      "spoken": "The more they race, the more layer nobody owns is worth.",
+      "cover_type": "chatgpt-image",
+      "what": "G2: a single translucent greenish-cyan plane (a 'layer') hovering untouched in a dark void, faint BlockDAG node-lights inside it, while giant dark monolithic towers and reaching hands strain up toward it from below and fall short; rim-lit, film-quality 3D, no text. 3.36s, cross-warp in/out.",
+      "source": "ChatGPT image concept, persona house style, 16:9",
+      "priority": "med",
+      "verify": false,
+      "bench": "Envato 'hands reaching up toward light silhouette' 3.4s.",
+      "notes": "Persona core thesis (neutral layer nobody owns) as an atmosphere still; text-free. Ear-check the 'a layer' mishear for captions, not for this cover."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 184.76,
+      "tOut": 188.64,
+      "spoken": "Proof of work money with apps on it and no L2 in the middle.",
+      "cover_type": "container",
+      "what": "pow-money-hammer: H0-family three-line motion-type stack, each line slamming on its word: 'PROOF OF WORK MONEY' 184.76, 'WITH APPS ON IT' 186.30, 'NO L2 IN THE MIDDLE' 187.72 (the last in greenish cyan). Kaspa K logo bug (screen-blend) fades in bottom-right.",
+      "source": "SCREENPLAY CH3 Beat 3 (text only).",
+      "priority": "med",
+      "verify": false,
+      "bench": "The screenplay's C1 full-diagram callback (all nodes lit, slow push-in): only if Mike waives the slide-balance lint for it (open_questions).",
+      "notes": "3.9s, under the card floor but it is a hammer type stack (one glance per line). Replaces the C1 callback: a full diagram shown twice fails lint_slide_balance and 3.9s is under the 10s diagram floor."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 188.64,
+      "tOut": 195.1,
+      "spoken": "Click that like button and comment below. Let me know what you think is going to be built on it in the near future.",
+      "cover_type": "container",
+      "what": "cta-engage: deck-styled card. Eyebrow 'BEFORE YOU GO', a like-button glyph lighting on 'Click' 188.64, a comment bubble on 'comment' 190.04 with the prompt 'COMMENT: what gets built on vProgs?' on 'built' 192.92. No dates, no timeline, no 'near future' text (guard 1).",
+      "source": "Persona cta_style; AS-RECORDED flag on the 'in the near future' ad-lib.",
+      "priority": "low",
+      "verify": false,
+      "bench": "Envato 'crowd cheering concert lights' 188.64-191.22 then this card 191.22-195.1.",
+      "notes": "6.5s. The comment ask is the engagement driver; the card mirrors his words without turning the ad-lib into a vProgs date."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 195.1,
+      "tOut": 196.98,
+      "spoken": "Gonna be some exciting times.",
+      "cover_type": "chatgpt-image",
+      "what": "G3: a Kaspa coin showing the backwards-K (mirrored-K) Kaspa logo, glowing greenish-cyan, rising like a sun over a dark glass-tower skyline at first light, epic rays, film-quality 3D, no text. 1.9s, cross-warp in/out.",
+      "source": "ChatGPT image concept (persona image_generation.kaspa_coin: name the asset, backwards-K, greenish-cyan, never gold), 16:9",
+      "priority": "low",
+      "verify": false,
+      "bench": "Envato 'rocket launch night sky' 1.9s.",
+      "notes": "The video's one Kaspa-coin hero image, spent on the hype beat. 1.9s is inside the 1-4s window."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 196.98,
+      "tOut": 202.822,
+      "spoken": "And click the link in the description below for the greatest community ever. And I'll catch you guys later.",
+      "cover_type": "container",
+      "what": "end-card-community: end card. Kaspa K logo (screen-blend) centered, lower-third 'LINK IN THE DESCRIPTION' lighting on 'link' 197.54, 'the greatest community ever' on 'community' 199.80; holds to the last frame. Bed C epic_hit right-aligned to 'later.' 202.56.",
+      "source": "SCREENPLAY end card + persona cta_style ('link in the description', community plug).",
+      "priority": "low",
+      "verify": false,
+      "bench": "Hold G3 to 202.822 with the lower-third over it (would break the 4s image cap, so bench only if the card fails).",
+      "notes": "5.84s, floor met. Covers through 202.822 (audio end; video ends 202.800), so the last frame is never black."
+    }
+  ],
+  "receipts": [
+    {
+      "id": "R1",
+      "claim": "A vProg is defined by the yellow paper (DRAFT v0.0.1, Sutton / FreshAir08 / Hashdag)",
+      "capture": "https://github.com/kaspanet/research/blob/main/vProgs/vProgs_yellow_paper.pdf page 1 in the GitHub PDF viewer, or page 1 of the mirror PDF rendered to PNG; title page only",
+      "beats": [
+        "CH1@7.3-9.5"
+      ],
+      "verify": true
+    },
+    {
+      "id": "R2",
+      "claim": "Covenants + ZK verification live on mainnet since June, from the core devs (rusty-kaspa v2.0.0 Mainnet Toccata Release, KIP-16/17/20/21, activation 2026-06-30)",
+      "capture": "https://github.com/kaspanet/rusty-kaspa/releases/tag/v2.0.0, release header + notes top with the KIP list and DAA 474,165,565 in frame",
+      "beats": [
+        "CH1@14.5-21.2"
+      ],
+      "verify": false
+    },
+    {
+      "id": "R3",
+      "claim": "Vitalik, Oct 2020: Ethereum 'all-in on rollups'; users' 'primary accounts, balances, assets' inside an L2",
+      "capture": "https://ethereum-magicians.org/t/a-rollup-centric-ethereum-roadmap/4698, first post; wide + the two highlighted sentences",
+      "beats": [
+        "CH2@40.2-52.2"
+      ],
+      "verify": false
+    },
+    {
+      "id": "R4",
+      "claim": "Sompolinsky, Dec 2025: 'Kaspa vProgs' primary motivation was to avoid the obsolete path of L2's'",
+      "capture": "https://kasmagazine.com/article/sneakpeaks-and-developments, crop to the quote paragraph (kasmagazine page, not the X post)",
+      "beats": [
+        "CH2@73.0-81.7"
+      ],
+      "verify": false
+    },
+    {
+      "id": "R5",
+      "claim": "Verification lives inside Kaspa consensus: Toccata 'active on mainnet as of June 30, 2026' + 'Direct verification of Groth16 and RISC Zero Succinct proofs inside script'",
+      "capture": "https://docs.kaspa.org/toccata, crop to the activation line + ZK Precompiles section",
+      "beats": [
+        "CH2@130.4-137.6"
+      ],
+      "verify": true
+    },
+    {
+      "id": "R6",
+      "claim": "Silverscript 1.0 official release, 2026-09-09",
+      "capture": "https://github.com/kaspanet/silverscript/releases/tag/v1.0.0, release header + first paragraph ('official release')",
+      "beats": [
+        "CH3@160.3-163.3"
+      ],
+      "verify": true
+    },
+    {
+      "id": "R7",
+      "claim": "kaspa.org: vProgs 'In construction', 'Full vProgs remain a future direction'",
+      "capture": "https://kaspa.org/build, the developments status cards, vProgs card highlighted",
+      "beats": [
+        "CH3@169.8-172.8"
+      ],
+      "verify": true
+    },
+    {
+      "id": "R8",
+      "claim": "Sompolinsky, Dec 2025: covenant hard fork expected in '3 to 6 months' (delivered 2026-06-30)",
+      "capture": "https://kasmagazine.com/article/sneakpeaks-and-developments, the hard-fork timing paragraph (a DISTINCT crop from R4)",
+      "beats": [
+        "CH3@172.8-178.5"
+      ],
+      "verify": true
+    }
+  ],
+  "envato_list": [
+    {
+      "n": 1,
+      "query": "abstract glowing layers stacking upward dark 3d / translucent glass planes rising dark background teal",
+      "beat": "CH1@21.2-25.2",
+      "seconds": 4.0,
+      "why": "'the next layer up' literal; CH1's first gear-3 punch"
+    },
+    {
+      "n": 2,
+      "query": "glass shattering slow motion black background / cube exploding fragments dark",
+      "beat": "CH1@38.8-40.2",
+      "seconds": 1.4,
+      "why": "'break this all down' literal, pivot into the CH2 card"
+    },
+    {
+      "n": 3,
+      "query": "ice cracking aerial drone frozen lake fracture / cracked ice breaking apart top view",
+      "beat": "CH2@64.6-67.8",
+      "seconds": 3.2,
+      "why": "'a place for something to break... split up' literal, grim tone"
+    },
+    {
+      "n": 4,
+      "query": "data center server corridor dolly dark blue lights (leading motion)",
+      "beat": "CH3@178.5-181.4",
+      "seconds": 2.86,
+      "why": "'racing to control compute' atmosphere; leading-motion pattern interrupt opening the close"
+    }
+  ],
+  "chatgpt_list": [
+    {
+      "n": 1,
+      "prompt_concept": "Tall glowing greenish-cyan ladder rising out of dark fog into a near-black sky of faint interconnected node-lights (BlockDAG mesh), low angle, Pixar-style film-quality 3D, deep navy near-black background, dramatic rim lighting, no text, 16:9",
+      "beat": "CH3@137.6-139.8",
+      "why": "'Look at this ladder' literal-noun set-up for C3",
+      "reference": "none exists (generic approved)"
+    },
+    {
+      "n": 2,
+      "prompt_concept": "One translucent greenish-cyan plane (a layer) hovering untouched in a dark void with faint node-lights inside it, giant dark monolithic towers and reaching hands straining up from below and falling short, rim-lit, film-quality 3D, no text, 16:9",
+      "beat": "CH3@181.4-184.8",
+      "why": "'the layer nobody owns' (persona neutral-layer thesis) as text-free atmosphere",
+      "reference": "none exists (generic approved)"
+    },
+    {
+      "n": 3,
+      "prompt_concept": "A Kaspa coin showing the backwards-K (mirrored-K) Kaspa logo, glowing greenish-cyan (never gold), rising like a sun over a dark glass-tower skyline at first light, epic rays, film-quality 3D, no text, 16:9",
+      "beat": "CH3@195.1-197.0",
+      "why": "the one Kaspa-coin hero image, on 'exciting times'",
+      "reference": "schedule-tweets/images/reference/kaspa-logo.png"
+    }
+  ],
+  "containers": [
+    {
+      "id": "vprog-loop-mini",
+      "kind": "diagram",
+      "shows": "3 nodes: vPROG'S OWN NODES [state] -> ZK PROOF -> KASPA L1 [verifies]; token launches on 'posts' 11.40. DATA.md Pillar 2.",
+      "beats": [
+        "CH1@9.5-14.5"
+      ]
+    },
+    {
+      "id": "ten-bps-card",
+      "kind": "card",
+      "shows": "Motion type: 'A CHAIN THAT ALREADY RUNS' / '10 BLOCKS / SEC' / 'since Crescendo, 2025-05-05 (KIP-14)'. No TPS.",
+      "beats": [
+        "CH1@25.2-28.2"
+      ]
+    },
+    {
+      "id": "execute-verify-flip",
+      "kind": "card",
+      "shows": "EXECUTE (struck, red) flips to VERIFY (greenish cyan) on 32.58; sub-lines APPS ON THE BASE LAYER / PROOF OF WORK SECURITY / NO L2 IN THE MIDDLE on 33.94 / 35.92 / 37.94.",
+      "beats": [
+        "CH1@31.9-38.8"
+      ]
+    },
+    {
+      "id": "title-card-ch2",
+      "kind": "card",
+      "shows": "Title card 'NOT AN L2' (edit-inserted >=1s pause before 40.22; the video's one chapter transition).",
+      "beats": [
+        "CH2@40.22"
+      ]
+    },
+    {
+      "id": "c2-l2-stack",
+      "kind": "diagram",
+      "shows": "C2 LEFT column THE L2 STACK: OWN CHAIN 54.04 / OWN SEQUENCER (orders your transactions) 55.38 / OWN BRIDGE to L1 58.96 / OWN SLICE OF LIQUIDITY 60.60; red attack-surface pulse on 'pieces' 62.12. DATA.md Pillar 1. Shown once.",
+      "beats": [
+        "CH2@52.2-64.6"
+      ]
+    },
+    {
+      "id": "sompolinsky-name-card",
+      "kind": "card",
+      "shows": "KASPA'S FOUNDER / Yonatan Sompolinsky / @hashdag · co-author GhostDAG · DAGKnight (KIP-2) · vProgs yellow paper (Hashdag); 'December 2025' stamp on 72.38. DATA.md section 3.",
+      "beats": [
+        "CH2@67.8-73.0"
+      ]
+    },
+    {
+      "id": "c1-overview",
+      "kind": "diagram",
+      "shows": "THE C1 diagram, once: USERS -> KASPA L1 [ORDERS (sequencer) · STORES (DA + state index) · CHECKS PROOFS (ZK verify) · METERS (resource metering)] <-> vPROG A / vPROG B NODES <-> PROVERS; USERS lights 84.74 with reads/writes tags 87.44/88.62; KASPA glows 89.80; ORDERS lights 90.96. DATA.md C1 / Pillar 2. Declare // DIAGRAM_REFS.",
+      "beats": [
+        "CH2@81.7-94.5"
+      ]
+    },
+    {
+      "id": "c1-kaspa-four-jobs",
+      "kind": "diagram",
+      "shows": "KASPA L1 node enlarged: ORDERS lit, STORES 94.66, CHECKS PROOFS 96.22, METERS 97.42, struck EXECUTE drops on 98.54.",
+      "beats": [
+        "CH2@94.5-100.4"
+      ]
+    },
+    {
+      "id": "c1-vprog-nodes",
+      "kind": "diagram",
+      "shows": "vPROG A NODES enlarged: 'runs on its own nodes' 101.70, account set A_p 104.00, lock 'WRITE: vProg A only · READ: anyone' 106.34.",
+      "beats": [
+        "CH2@100.4-106.9"
+      ]
+    },
+    {
+      "id": "c1-provers",
+      "kind": "diagram",
+      "shows": "PROVERS enlarged (amber), 'for-profit operators' 108.30, ZK PROOF token launches 110.02 and lands in KASPA L1 111.66.",
+      "beats": [
+        "CH2@106.9-112.1"
+      ]
+    },
+    {
+      "id": "zk-math-receipt",
+      "kind": "card",
+      "shows": "Receipt-styled card: ZK PROOF / STATE ROOT ... CORRECT 114.36 / stamp CHECKED BY KASPA CONSENSUS 115.80 / struck RE-EXECUTE THE MATH 118.18. Text only.",
+      "beats": [
+        "CH2@112.1-118.4"
+      ]
+    },
+    {
+      "id": "sovereignty-card",
+      "kind": "card",
+      "shows": "1 of 2 SOVEREIGNTY 120.24: vPROG B cracks red on 121.52, vPROG A stays RUNNING green. Yellow paper 1.2.",
+      "beats": [
+        "CH2@118.4-123.3"
+      ]
+    },
+    {
+      "id": "composability-card",
+      "kind": "diagram",
+      "shows": "2 of 2 COMPOSABILITY 123.56: read arrows cross 124.72; one transaction bar spans both apps 126.06 -> ONE UNIT 129.02 / OR NOT AT ALL. Yellow paper 2.2, 5.3.",
+      "beats": [
+        "CH2@123.3-130.4"
+      ]
+    },
+    {
+      "id": "title-card-ch3",
+      "kind": "card",
+      "shows": "Title card 'WHERE IT STANDS' (edit-inserted >=1s pause before 137.58).",
+      "beats": [
+        "CH3@137.58"
+      ]
+    },
+    {
+      "id": "c3-ladder",
+      "kind": "animated-chart",
+      "shows": "Animated ladder (useCurrentFrame): CRESCENDO 2025-05-05 (10 BPS) 140.70/143.64 · YELLOW PAPER 2025-09-11 (DRAFT v0.0.1) 144.92/146.96 · TOCCATA 2026-06-30 (ZK verify + covenants, LIVE ON MAINNET, inside consensus) 147.46/150.54/153.02/154.54 · SILVERSCRIPT 1.0 2026-09-09 156.28; dashed future rungs dim above. DATA.md Pillar 4 table. Shown once.",
+      "beats": [
+        "CH3@139.8-160.3"
+      ]
+    },
+    {
+      "id": "c3-next-rungs",
+      "kind": "diagram",
+      "shows": "Dashed rungs enlarged: NEXT: standalone based ZK apps 164.78 · FULL vPROGS: in construction 167.20 (UNDER CONSTRUCTION tag 169.20) · DAGKNIGHT: proposed (KIP-2) dim, never spoken.",
+      "beats": [
+        "CH3@163.3-169.8"
+      ]
+    },
+    {
+      "id": "pow-money-hammer",
+      "kind": "card",
+      "shows": "Three-line type stack: PROOF OF WORK MONEY 184.76 / WITH APPS ON IT 186.30 / NO L2 IN THE MIDDLE 187.72; Kaspa K bug fades in.",
+      "beats": [
+        "CH3@184.8-188.6"
+      ]
+    },
+    {
+      "id": "cta-engage",
+      "kind": "card",
+      "shows": "BEFORE YOU GO: like glyph 188.64, comment bubble 190.04, 'COMMENT: what gets built on vProgs?' 192.92. No dates.",
+      "beats": [
+        "CH3@188.6-195.1"
+      ]
+    },
+    {
+      "id": "end-card-community",
+      "kind": "card",
+      "shows": "End card: Kaspa K logo (screen-blend), lower-third LINK IN THE DESCRIPTION 197.54 / the greatest community ever 199.80; holds to 202.822.",
+      "beats": [
+        "CH3@197.0-202.8"
+      ]
+    }
+  ],
+  "budget_check": "Envato 4/10 (E1 4.0s, E2 1.4s, E3 3.2s, E4 2.86s; none over 4s, none reused). ChatGPT 3/5 (G1 2.3s, G2 3.36s, G3 1.9s; text-free, none a source of a number). Deliberately under the caller's cap: house rule #2 budgets ~5 video + 5 image for an ELEVEN-minute video, so 7 punches on a 3:23 spine is already dense; the machine + benefits beats (81.70-137.58) are b-roll-free by design and 3 bench slots are named if Mike wants more. Receipts 8 (R1-R8, separate device, each a distinct file used once; R4/R8 are two different crops of one page). Containers 19 incl. 2 title cards, no container appears twice, C1 / C2 / C3 full diagrams each appear exactly ONCE then break into spotlight containers (THE BALANCE; lint_slide_balance clean). Zero orphans: FACE 0.000-7.333 and 28.167-31.933; cover slots run consecutively 7.333-9.5-14.54-21.22-25.22-28.167 | 31.933-38.82-40.22 | 40.22-52.18-64.6-67.8-72.96-81.7-94.5-100.42-106.9-112.06-118.38-123.34-130.44-137.58 | 137.58-139.84-160.34-163.28-169.78-172.84-178.54-181.4-184.76-188.64-195.1-196.98-202.822, so every non-FACE second of the 202.822s spine is assigned, no gap, no black, every cover tIn snapped to a transcript word boundary (rule zero). Title-card pauses (>=1s each at 40.22 and 137.58) are edit-time inserts; all downstream cues shift via sh().",
+  "open_questions": [
+    "Under-budget by design (4/10 Envato, 3/5 ChatGPT). Say the word and these bench slots go in as sequenced items: Envato 'server rack nodes blinking' at 100.42-102.34 (then c1-vprog-nodes runs 102.34-106.9, 4.56s, just under the 5s card floor), Envato 'receipt printer' at 112.06-115.38, Envato 'crowd cheering' at 188.64-191.22.",
+    "The screenplay's C1 full-diagram callback on the conviction beat (184.76-188.64) is DROPPED: a full diagram slide shown twice fails lint_slide_balance and 3.9s is under the 10s diagram floor. Replaced by the pow-money-hammer type card. Overrule = a declared waiver in the comp.",
+    "C2's RIGHT column is never shown as a column; sovereignty-card + composability-card are its break-up. Alternative if you want the A-vs-B payoff on screen: the full C2 contrast (left dimmed, right revealing row by row) at 118.38-130.44, declared // COMPARISON_REFS (the one sanctioned two-cards-at-once case).",
+    "Three sub-floor type cards: ten-bps-card 2.95s, pow-money-hammer 3.9s, sovereignty-card 4.96s (one-glance hammer type / H0 family). Confirm, or the benches lengthen them.",
+    "R8 (kasmagazine '3 to 6 months' paragraph) rides on DATA.md's citation of that article; receipt-capturer must confirm the exact wording is on the page. The 'DELIVERED 2026-06-30' stamp landing on the receipt at 177.66 is a proposed on-receipt motion device (not a house-standard treatment); yes/no.",
+    "R1 capture method: GitHub's PDF viewer may not render page 1 at full width; fallback is page 1 of the mirror PDF rendered to PNG (same document, same title page).",
+    "Live [VERIFY] at capture (AS-RECORDED): kaspa.org/build still 'In construction' (R7 + c3-next-rungs + the 168.56 line), Silverscript latest tag still v1.0.0 (R6 + c3-ladder rung must match the spoken '1.0'), docs.kaspa.org/toccata activation wording (R5), KIP-2 still Proposed (DAGKnight rung).",
+    "R2 uses the rusty-kaspa v2.0.0 GitHub release (dropped as C11 in the screenplay) for CH1's 'straight from the core devs' beat, leaving C6 (docs) for CH2 Beat 3. If you prefer the screenplay's C6 flash in CH1, R5 becomes a second, distinct crop of the docs page (ZK Precompiles only).",
+    "Sompolinsky gets a text-accurate name card, no photo (his X page could not be opened; DATA.md). If you want his face on screen, receipt-capturer needs a logged-in capture of the X profile header.",
+    "No LINE-CAPTION overlay is proposed (1 of 4 video covers would be 25%, above the 10-20% cap). If Envato goes to 6+, one caption on E4 ('EVERYONE IS RACING TO CONTROL COMPUTE AND MONEY') fits the cap."
+  ]
+}
