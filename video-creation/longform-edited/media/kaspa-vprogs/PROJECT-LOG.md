@@ -69,3 +69,11 @@ Title cards fall out of the music bed map (screenplay.md Convention 2: a card on
 - Re-sourced: BR-3 (flat overcast grade, luma 2-3x every other cover; the crack never happens on screen).
 - Regenerated: IMG-2 (hands overlapping the plane contradicted "untouched").
 - Rebuilt diagrams: vprog-loop-mini and c1-kaspa-four-jobs (teal headline accent is brand-only, video accent is green; EXECUTE row overflowed the L1 box).
+- Round 2 visual-qa: 74/85 PASS. Rebuilt again: IMG-2 (hands still touched the plane), vprog-loop-mini + c1-kaspa-four-jobs (palette and overflow fixed; an 8 px top-accent-bar nub past the rounded corner remained). Highlights are baked into the recaptured receipts; clean plates on request.
+
+## 2026-09-28 chart-builder round 3: accent-bar corner nub fixed across the chart family
+- Round-2 must_fix (vprog-loop-mini x4, c1-kaspa-four-jobs x6) was the `.node .top` accent bar sticking out as a straight nub past the card's rounded top-left corner. Fix: the bar now lives in a clip box at the card's OUTER shape (`inset:-2px; border-radius:22px; overflow:hidden`) with the 4 px gradient as `::before`, so it follows the corner. The node stays `overflow:visible` (the EXECUTE drop needs it).
+- The SAME latent nub was on the round-2 PASSES c1-overview, c1-provers, c1-vprog-nodes, composability-card (same base CSS; visual-qa did not flag it there). Fixed and re-shot too, so the c1-overview -> four-jobs push-in match does not jump between a nub and a clean corner. These 18 PNGs need re-QA; only the top-left accent corner changed.
+- The CSS fix is also in c2-l2-stack, c3-next-rungs and charts/c3-ladder (keeps the base CSS byte-identical), but those have no accent-bar element, so their pixels cannot change and they were not re-shot.
+- IMG-2 concept revised (orchestrator, 2026-09-28): the reaching-hands composition failed visual-qa twice (fingers drawn over the plane, horror tone). New concept: the lone layer high above towers whose searchlight beams stop short, no hands. Same beat, same thesis.
+- Round 4: IMG-2 (revised concept) PASS. visual-qa re-checked the whole folder unasked and flagged pow-money-hammer (word gap 'Proof ofwork', missing divider, coin over the card corner); rebuilt by slide-builder with the feedback. Node merge now keeps one verdict per file, newest wins.
