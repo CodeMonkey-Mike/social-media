@@ -897,7 +897,21 @@ def _asset_files(proj: Path, e: dict):
     return out
 
 
-def _builder_prompt(builder: str, proj: Path, fs: Path, todo: list, done: list) -> str:
+def _qa_feedback(prev: dict, todo: list) -> str:
+    """The prior visual-qa FAIL entries for the ids being rebuilt, as a fix list for the builder."""
+    lines = []
+    for e in todo:
+        for name, a in prev.items():
+            stem = name.replace(".mid.png", "")
+            if (stem == e["id"] or stem.startswith(e["id"] + "-")) and str(a.get("verdict", "")).upper() != "PASS":
+                lines.append(f"- {stem}: " + "; ".join(a.get("defects") or [])[:500] + f" -> FIX: {str(a.get('fix', ''))[:400]}")
+    if not lines:
+        return ""
+    return ("\nYour EARLIER build of these ids FAILED visual-qa. The failing files were deleted; rebuild them with these defects "
+            "fixed (this is the whole point of the rebuild):\n" + "\n".join(lines))
+
+
+def _builder_prompt(builder: str, proj: Path, fs: Path, todo: list, done: list, prev: Optional[dict] = None) -> str:
     plan_p, broll_p = C.doc(proj, "cover_plan"), C.doc(proj, "broll_plan")
     common = (f"Project `{proj.name}`, folder `{proj}`. Worklists: `{broll_p}` (your table) and the source of truth "
               f"`{plan_p}` (per-slot notes, spoken lines, bench). Numbers + phrasing guards: `{C.doc(proj, 'data')}`. "
@@ -927,7 +941,7 @@ def _builder_prompt(builder: str, proj: Path, fs: Path, todo: list, done: list) 
                      "(the real mark, e.g. the Kaspa backwards-K in greenish cyan, never gold); a row with 'none exists (generic "
                      "approved)' is generic. Every image unique.",
     }
-    return common + extra.get(builder, "")
+    return common + extra.get(builder, "") + _qa_feedback(prev or {}, todo)
 
 
 def _mid_frame(video: Path, dest: Path) -> Optional[Path]:
@@ -954,6 +968,13 @@ def assets(state: LongformState) -> LongformState:
     for sub in set(ASSET_FOLDERS.values()) | {"slide-sources"}:
         (proj / "assets" / sub).mkdir(parents=True, exist_ok=True)
     redo = _redo(state, node)
+    qa_dest = proj / "assets" / "VISUAL-QA.json"
+    prev = {}
+    if qa_dest.is_file() and not redo:
+        try:
+            prev = {Path(a.get("path", "")).name: a for a in json.loads(qa_dest.read_text(encoding="utf-8")).get("assets", [])}
+        except Exception:
+            prev = {}
     jobs = {}
     for e in exp:
         have = _asset_files(proj, e)
@@ -962,7 +983,7 @@ def assets(state: LongformState) -> LongformState:
         (jobs[b]["todo"] if (redo or not have) else jobs[b]["done"]).append(e if (redo or not have) else e["id"])
     dispatch = {b: j for b, j in jobs.items() if j["todo"]}
     if dispatch:
-        specs = [(b, _builder_prompt(b, proj, fs, j["todo"], j["done"]), f"agent-assets-{b}-{proj.name}.log")
+        specs = [(b, _builder_prompt(b, proj, fs, j["todo"], j["done"], prev), f"agent-assets-{b}-{proj.name}.log")
                  for b, j in dispatch.items()]
         print(f"[longform] {node}: dispatching {len(specs)} builder(s) in parallel: "
               + ", ".join(f"{b} ({len(dispatch[b]['todo'])} id(s))" for b in dispatch), flush=True)
@@ -979,33 +1000,50 @@ def assets(state: LongformState) -> LongformState:
         return C._fail(state, node, "assets still missing after the builders ran: "
                        + "; ".join(f"{b}: {', '.join(ids)}" for b, ids in by_b.items())
                        + " (read graph/data/agent-assets-<builder>-<project>.log; a re-drive dispatches only the missing ids)")
-    # ── visual-qa over every asset (video slots contribute a mid frame) ─────────────────────
-    qa_dest = proj / "assets" / "VISUAL-QA.json"
-    if redo or not qa_dest.is_file():
-        lines = []
-        for e in exp:
-            for f in _asset_files(proj, e):
-                shown = f
-                if f.suffix.lower() in VIDEO_EXT:
-                    shown = _mid_frame(f, proj / "_previews" / "qa" / "assets" / f"{f.stem}.mid.png") or f
+    # ── visual-qa: every file without a prior PASS (video slots contribute a mid frame); PASSes carry over ──
+    lines, carried = [], []
+    for e in exp:
+        for f in _asset_files(proj, e):
+            shown = f
+            if f.suffix.lower() in VIDEO_EXT:
+                shown = _mid_frame(f, proj / "_previews" / "qa" / "assets" / f"{f.stem}.mid.png") or f
+            pa = prev.get(shown.name)
+            if pa and str(pa.get("verdict", "")).upper() == "PASS":
+                carried.append(pa)
+            else:
                 lines.append(f"- `{shown}`  [{e['kind']} {e['id']}] spec: {e['spec']}")
+    if lines:
+        print(f"[longform] {node}: visual-qa on {len(lines)} file(s) ({len(carried)} prior PASS carried over)", flush=True)
+        new_dest = proj / "assets" / "VISUAL-QA.new.json"
+        new_dest.unlink(missing_ok=True)
         prompt = (f"Visual QA for the longform-edited project `{proj.name}` (folder `{proj}`): open EVERY asset below and judge it "
                   "against its spec and the house style per your checklist (containers/diagrams -> container-reference + "
                   "container-canonical.css; charts -> charts.md; receipts -> the intended content, no blank/bot-wall/cookie banner; "
                   "b-roll frames -> no watermark/text, dark grade; ChatGPT images -> the named asset with the real mark and colors, "
                   "house style, no text). A `.mid.png` is the middle frame of the video slot it is named after.\n"
                   + "\n".join(lines)
-                  + f"\nReturn your JSON verdict AND save it to EXACTLY `{qa_dest}` with Bash (a quoted heredoc). "
+                  + f"\nReturn your JSON verdict AND save it to EXACTLY `{new_dest}` with Bash (a quoted heredoc). "
                     "Every asset listed must appear in `assets` with PASS or FAIL.")
         rc, out = C.spawn_agent(state, node, "visual-qa", prompt, f"agent-assets-visual-qa-{proj.name}.log")
-        if not C.persist_agent_json(out, qa_dest, want_key="assets"):
+        if not C.persist_agent_json(out, new_dest, want_key="assets"):
             return C._fail(state, node, f"visual-qa returned no usable verdict JSON (rc {rc})", out)
+        fresh = json.loads(new_dest.read_text(encoding="utf-8")).get("assets", [])
+        merged = carried + fresh
+        qa = {"assets": merged,
+              "summary": {"checked": len(merged), "passed": sum(1 for a in merged if str(a.get("verdict", "")).upper() == "PASS"),
+                          "failed": sum(1 for a in merged if str(a.get("verdict", "")).upper() != "PASS"),
+                          "carried_over": len(carried), "fresh": len(fresh)},
+              "must_fix": [a.get("path") for a in merged if str(a.get("verdict", "")).upper() != "PASS"]}
+        C._write_json_atomic(qa_dest, qa)
+        new_dest.unlink(missing_ok=True)
+    else:
+        print(f"[longform] {node}: every file already carries a visual-qa PASS", flush=True)
     qa = json.loads(qa_dest.read_text(encoding="utf-8"))
     fails = [a for a in qa.get("assets", []) if str(a.get("verdict", "")).upper() != "PASS"]
     if fails:
         return C._fail(state, node, f"visual-qa FAILED {len(fails)} asset(s): "
                        + "; ".join(f"{Path(a.get('path', '?')).name}: {', '.join(a.get('defects') or [])[:140]}" for a in fails[:8])
-                       + " (delete the failing files, then re-drive: only the missing ids are rebuilt; delete assets/VISUAL-QA.json to re-QA)")
+                       + " (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)")
     return {"steps": C._step(state, node, "ran", f"{len(exp)} asset id(s) built ({len(dispatch)} builder(s) dispatched), visual-qa PASS on {len(qa.get('assets', []))} file(s)")}
 
 

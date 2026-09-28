@@ -19,10 +19,20 @@ _Rendered 2026-09-28 from `COVER-PLAN.json` (the coverage-strategist's proposal,
 
 | id | Beat (final spine) | Search query | Dur target | Motion | Status |
 |---|---|---|---|---|---|
-| BR-1 | CH1@21.2-25.2 | abstract glowing layers stacking upward dark 3d / translucent glass planes rising dark background teal | 4.00s | any | ☐ pending |
-| BR-2 | CH1@38.8-40.2 | glass shattering slow motion black background / cube exploding fragments dark | 1.40s | any | ☐ pending |
-| BR-3 | CH2@64.6-67.8 | ice cracking aerial drone frozen lake fracture / cracked ice breaking apart top view | 3.20s | any | ☐ pending |
-| BR-4 | CH3@178.5-181.4 | data center server corridor dolly dark blue lights (leading motion) | 2.86s | any | ☐ pending |
+| BR-1 | CH1@21.2-25.2 | abstract glowing layers stacking upward dark 3d / translucent glass planes rising dark background teal | 4.00s | any | ☑ sourced, awaiting visual-qa |
+| BR-2 | CH1@38.8-40.2 | glass shattering slow motion black background / cube exploding fragments dark | 1.40s | any | ☑ sourced, awaiting visual-qa |
+| BR-3 | CH2@64.6-67.8 | ice cracking aerial drone frozen lake fracture / cracked ice breaking apart top view | 3.20s | any | ☑ sourced, awaiting visual-qa |
+| BR-4 | CH3@178.5-181.4 | data center server corridor dolly dark blue lights (leading motion) | 2.86s | any | ☑ sourced, awaiting visual-qa |
+
+### Envato license trail (envato-sourcer, 2026-09-28)
+Files are 1080p H.264 with audio stripped, cut as slot + ~1s handle each side. **Slot in-point = 1.00s into each file.** Sources are in `assets/vid/_src/`.
+
+| id | File | Envato item (license record) | Clip | Source window | Slot window in file |
+|---|---|---|---|---|---|
+| BR-1 | assets/vid/BR-1-glass-planes-rising.mp4 (6.00s) | https://app.envato.com/search/stock-video/5ebd3a8e-edad-4386-a90f-f05a9b37bb55 | "Futuristic Blue Glowing Glass Plates Floating in Dark Space", SVMD | 0.00-6.00 | 1.00-5.00 |
+| BR-2 | assets/vid/BR-2-glass-shatter.mp4 (3.40s) | https://app.envato.com/search/stock-video/a1e37067-5c91-4158-a702-7ce82074bf66 | "Cinematic Glass Shatter Reveal Transition", AlexArty | 0.00-3.40 | 1.00-2.40 (burst starts ~1.07) |
+| BR-3 | assets/vid/BR-3-ice-floes-split.mp4 (5.20s) | https://app.envato.com/search/stock-video/54a21f2d-66eb-4198-9281-84b7044c993c | "Aerial View of Cracked Ice Floating on Water", Vovchan079 | 0.00-5.20 | 1.00-4.20 |
+| BR-4 | assets/vid/BR-4-datacenter-corridor-dolly.mp4 (4.84s) | https://app.envato.com/search/stock-video/adad4e78-3c4c-4617-917b-1c1ae414b3d2 | "Flying Through Digital Server Room Data Center Corridor", FlashMovie | 4.50-9.34 | 1.00-3.86 (LEAD: continuous forward travel) |
 
 ## ChatGPT images (3) - house style: Pixar 3D CGI, deep navy near-black bg, rim light, no text (agent: image-gen)
 
@@ -65,16 +75,16 @@ _Every row whose beat names a REAL thing (token, project, company, person, produ
 
 | id | Slide type | Eyebrow / headline / content | Placement (beats) | Status |
 |---|---|---|---|---|
-| ten-bps-card | CARD SLIDE | Motion type: 'A CHAIN THAT ALREADY RUNS' / '10 BLOCKS / SEC' / 'since Crescendo, 2025-05-05 (KIP-14)'. No TPS. | CH1@25.2-28.2 | ☐ pending |
-| execute-verify-flip | CARD SLIDE | EXECUTE (struck, red) flips to VERIFY (greenish cyan) on 32.58; sub-lines APPS ON THE BASE LAYER / PROOF OF WORK SECURITY / NO L2 IN THE MIDDLE on 33.94 / 35.92 / 37.94. | CH1@31.9-38.8 | ☐ pending |
-| title-card-ch2 | CARD SLIDE | Title card 'NOT AN L2' (edit-inserted >=1s pause before 40.22; the video's one chapter transition). | CH2@40.22 | ☐ pending |
-| sompolinsky-name-card | CARD SLIDE | KASPA'S FOUNDER / Yonatan Sompolinsky / @hashdag · co-author GhostDAG · DAGKnight (KIP-2) · vProgs yellow paper (Hashdag); 'December 2025' stamp on 72.38. DATA.md section 3. | CH2@67.8-73.0 | ☐ pending |
-| zk-math-receipt | CARD SLIDE | Receipt-styled card: ZK PROOF / STATE ROOT ... CORRECT 114.36 / stamp CHECKED BY KASPA CONSENSUS 115.80 / struck RE-EXECUTE THE MATH 118.18. Text only. | CH2@112.1-118.4 | ☐ pending |
-| sovereignty-card | CARD SLIDE | 1 of 2 SOVEREIGNTY 120.24: vPROG B cracks red on 121.52, vPROG A stays RUNNING green. Yellow paper 1.2. | CH2@118.4-123.3 | ☐ pending |
-| title-card-ch3 | CARD SLIDE | Title card 'WHERE IT STANDS' (edit-inserted >=1s pause before 137.58). | CH3@137.58 | ☐ pending |
-| pow-money-hammer | CARD SLIDE | Three-line type stack: PROOF OF WORK MONEY 184.76 / WITH APPS ON IT 186.30 / NO L2 IN THE MIDDLE 187.72; Kaspa K bug fades in. | CH3@184.8-188.6 | ☐ pending |
-| cta-engage | CARD SLIDE | BEFORE YOU GO: like glyph 188.64, comment bubble 190.04, 'COMMENT: what gets built on vProgs?' 192.92. No dates. | CH3@188.6-195.1 | ☐ pending |
-| end-card-community | CARD SLIDE | End card: Kaspa K logo (screen-blend), lower-third LINK IN THE DESCRIPTION 197.54 / the greatest community ever 199.80; holds to 202.822. | CH3@197.0-202.8 | ☐ pending |
+| ten-bps-card | CARD SLIDE | Motion type: 'A CHAIN THAT ALREADY RUNS' / '10 BLOCKS / SEC' / 'since Crescendo, 2025-05-05 (KIP-14)'. No TPS. | CH1@25.2-28.2 | ☑ built (1 png), pending visual-qa |
+| execute-verify-flip | CARD SLIDE | EXECUTE (struck, red) flips to VERIFY (greenish cyan) on 32.58; sub-lines APPS ON THE BASE LAYER / PROOF OF WORK SECURITY / NO L2 IN THE MIDDLE on 33.94 / 35.92 / 37.94. | CH1@31.9-38.8 | ☑ built s1-s5, pending visual-qa |
+| title-card-ch2 | CARD SLIDE | Title card 'NOT AN L2' (edit-inserted >=1s pause before 40.22; the video's one chapter transition). | CH2@40.22 | ☑ built as TITLE SLIDE, pending visual-qa |
+| sompolinsky-name-card | CARD SLIDE | KASPA'S FOUNDER / Yonatan Sompolinsky / @hashdag · co-author GhostDAG · DAGKnight (KIP-2) · vProgs yellow paper (Hashdag); 'December 2025' stamp on 72.38. DATA.md section 3. | CH2@67.8-73.0 | ☑ built s1-s2, pending visual-qa |
+| zk-math-receipt | CARD SLIDE | Receipt-styled card: ZK PROOF / STATE ROOT ... CORRECT 114.36 / stamp CHECKED BY KASPA CONSENSUS 115.80 / struck RE-EXECUTE THE MATH 118.18. Text only. | CH2@112.1-118.4 | ☑ built s1-s4, pending visual-qa |
+| sovereignty-card | CARD SLIDE | 1 of 2 SOVEREIGNTY 120.24: vPROG B cracks red on 121.52, vPROG A stays RUNNING green. Yellow paper 1.2. | CH2@118.4-123.3 | ☑ built s1-s3, pending visual-qa |
+| title-card-ch3 | CARD SLIDE | Title card 'WHERE IT STANDS' (edit-inserted >=1s pause before 137.58). | CH3@137.58 | ☑ built as TITLE SLIDE, pending visual-qa |
+| pow-money-hammer | CARD SLIDE | Three-line type stack: PROOF OF WORK MONEY 184.76 / WITH APPS ON IT 186.30 / NO L2 IN THE MIDDLE 187.72; Kaspa K bug fades in. | CH3@184.8-188.6 | ☑ built s1-s3, pending visual-qa |
+| cta-engage | CARD SLIDE | BEFORE YOU GO: like glyph 188.64, comment bubble 190.04, 'COMMENT: what gets built on vProgs?' 192.92. No dates. | CH3@188.6-195.1 | ☑ built s1-s3, pending visual-qa |
+| end-card-community | CARD SLIDE | End card: Kaspa K logo (screen-blend), lower-third LINK IN THE DESCRIPTION 197.54 / the greatest community ever 199.80; holds to 202.822. | CH3@197.0-202.8 | ☑ built s1-s2, pending visual-qa |
 
 ## Bench (swap-ins if a primary fails)
 
