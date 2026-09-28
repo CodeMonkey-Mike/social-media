@@ -96,6 +96,14 @@ Validated 2026-06-11 on the new app:
   the context cookies + UA, fallback to `context.request.get`) — never `download.saveAs`. The button is
   `button[data-cy="idp-download-button"]`. Default resolution is 4K (~1.3GB); download-envato.js then applies the
   disk rule (transcode >800MB → ~100MB 1080p, keep only the `.cap.mp4`). Validated end-to-end 2026-07-10.
+- **⚠ CHROME-153 CRASH RACE (fixed 2026-09-28, kaspa-vprogs):** since the Chrome 153 update (2026-09-21), the
+  envato-profile **browser process CRASHES ~1-3s after the Download click on large items** (a Crashpad dump
+  lands in `envato-profile\Crashpad\reports\`, tagged `LEGACY_DOWNLOAD`). The old script then died in a
+  post-click `page.waitForTimeout` with `Target page, context or browser has been closed` whenever the crash beat
+  the wait (reproducible on some items; others won the race and streamed fine). Fix: cookies + UA are read
+  BEFORE the click, post-click waits are Node-side sleeps, and `browser.close()` tolerates a dead browser — the
+  signed URL from the download event + the Node stream never needed Chrome alive. If you see that error again,
+  check `Crashpad\reports` timestamps against the attempt before anything else; never relaunch blind.
 - **Downloads arrive as `.zip`**, often with multiple variants inside (`Main files/RGB_0N.mp4`
   + `Alpha_0N.mp4` mattes on 3D/motion items). Extract with `Expand-Archive`, keep the
   variants in a per-clip subfolder of the project's `assets/video/`, and keep alpha mattes
