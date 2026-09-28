@@ -1,0 +1,368 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>kaspa-vprogs slides - canonical build (slide-builder)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   Pasted verbatim from skills/container-reference/container-canonical.css
+   (tokens + anatomy are LOCKED). Components below the marked line only ADD
+   layout classes that consume these tokens; no token is redefined.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — consistent meaning for THIS video (kaspa-vprogs):
+   .g green  = Kaspa side / VERIFY / positive / running
+   .re red   = the L2 path / struck / broken
+   .c cyan   = neutral supporting (handles, chapter structure)
+   .go gold  = date stamp (special)
+   .tl teal  = BRAND mark only (the Kaspa logo image carries it; no teal text used) */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* ======================= components (layout only, locked tokens) ======================= */
+/* Playfair defaults to old-style figures (the '2' in L2 drops below the baseline): force lining numerals */
+h1,.hero,.hl{font-variant-numeric:lining-nums}
+/* ey is muted and never colored; a mono span inside it inherits the muted color */
+.ey .mono{font-weight:600;letter-spacing:.12em}
+
+/* rounded card box with top-accent line (CARD SLIDE, per banks-card-* references), sized to FILL the frame */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:28px;
+  padding:70px 84px;position:relative;overflow:hidden;width:100%}
+.card .top{position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan) 40%,transparent 85%)}
+.card.gold .top{background:linear-gradient(90deg,var(--accent-gold),transparent 70%)}
+.card.red .top{background:linear-gradient(90deg,var(--accent-red),transparent 70%)}
+.card .divider{margin:30px 0}
+
+/* big type */
+.hero{font-family:'Playfair Display',serif;font-weight:900;line-height:1.02;letter-spacing:-.02em;color:var(--text-primary)}
+
+/* spotlight rows: resting = muted but READABLE (Mike 2026-07-24), .on adds emphasis, never toggles visibility */
+.frows{display:flex;flex-direction:column;gap:18px}
+.frow{display:flex;align-items:center;gap:30px;background:rgba(255,255,255,.035);
+  border:1px solid var(--border);border-left:5px solid var(--border);border-radius:16px;padding:24px 34px}
+.frow .idx{font-family:'JetBrains Mono';font-weight:600;font-size:30px;color:var(--text-muted);opacity:.9;flex:none}
+.frow .ttl{font-family:'DM Sans';font-weight:700;font-size:44px;color:var(--text-secondary);line-height:1.2}
+.frow.on{background:linear-gradient(135deg,rgba(0,230,138,.11),rgba(0,230,138,.02) 70%);
+  border-color:rgba(0,230,138,.35);border-left-color:var(--accent-green)}
+.frow.on .idx{color:var(--accent-green)}
+.frow.on .ttl{color:var(--text-primary)}
+
+/* hammer type lines (resting text-secondary, lit text-primary) */
+.hl{font-family:'Playfair Display',serif;font-weight:900;letter-spacing:-.02em;line-height:1.12;color:var(--text-secondary)}
+.hl.on{color:var(--text-primary)}
+.hl.on .k{color:var(--accent-green)}
+
+/* rubber stamp */
+.stamp{position:absolute;font-family:'JetBrains Mono',monospace;font-weight:700;text-transform:uppercase;
+  letter-spacing:.14em;border:5px solid currentColor;border-radius:14px;padding:18px 30px;
+  box-shadow:inset 0 0 0 3px var(--bg-card),inset 0 0 0 6px currentColor;line-height:1.15;text-align:center}
+.stamp.gold{color:var(--accent-gold)} .stamp.green{color:var(--accent-green)}
+.hide{display:none!important}
+
+/* ---- ten-bps-card ---- */
+#ten-bps-card .bps{display:flex;align-items:baseline;gap:44px}
+#ten-bps-card .num{font-family:'JetBrains Mono';font-weight:700;font-size:300px;line-height:.9;letter-spacing:-.04em}
+#ten-bps-card .unit{font-size:132px}
+#ten-bps-card p{font-size:38px}
+
+/* ---- execute-verify-flip ---- */
+#execute-verify-flip .flip{font-size:176px;margin-bottom:6px}
+#execute-verify-flip .strike{position:relative;display:inline-block}
+#execute-verify-flip .strike::after{content:"";position:absolute;left:-14px;right:-14px;top:58%;height:14px;border-radius:7px;
+  background:var(--text-primary);transform:rotate(-4deg);box-shadow:0 0 0 5px var(--bg-card)}
+
+/* ---- title cards (TITLE SLIDE, no box) ---- */
+.titlecard .hero{font-size:176px}
+.titlecard .ey{font-size:32px}
+
+/* ---- sompolinsky-name-card ---- */
+#sompolinsky-name-card h1{font-size:104px}
+#sompolinsky-name-card .handle{font-family:'JetBrains Mono';font-weight:600;font-size:40px;margin-top:22px}
+#sompolinsky-name-card .facts{display:flex;flex-direction:column;gap:14px}
+#sompolinsky-name-card .fact{font-family:'DM Sans';font-size:38px;color:var(--text-secondary);display:flex;align-items:center;gap:22px}
+#sompolinsky-name-card .fact::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--accent-cyan);flex:none}
+#sompolinsky-name-card .stamp{right:96px;top:300px;font-size:46px;transform:rotate(-7deg)}
+
+/* ---- zk-math-receipt ---- */
+#zk-math-receipt h1{font-size:112px}
+#zk-math-receipt .rule{border-top:3px dashed var(--border);margin:30px 0;width:100%}
+#zk-math-receipt .rline{display:flex;align-items:baseline;gap:22px;font-family:'JetBrains Mono';font-weight:600;
+  font-size:48px;letter-spacing:.06em;color:var(--text-secondary);padding:14px 0}
+#zk-math-receipt .rline .dots{flex:1;border-bottom:4px dotted var(--text-muted);transform:translateY(-12px);min-width:80px}
+#zk-math-receipt .rline .val{color:var(--text-secondary)}
+#zk-math-receipt .rline.on .lbl{color:var(--text-primary)}
+#zk-math-receipt .rline.on .val{color:var(--accent-green)}
+#zk-math-receipt .rline .lbl{position:relative}
+#zk-math-receipt .rline.struck .lbl{color:var(--text-muted)}
+#zk-math-receipt .rline.struck .lbl::after{content:"";position:absolute;left:-8px;right:-8px;top:50%;height:7px;
+  border-radius:4px;background:var(--accent-red);transform:rotate(-2.5deg)}
+#zk-math-receipt .stamp{right:96px;top:74px;font-size:40px;transform:rotate(-8deg);background:rgba(18,21,28,.55)}
+
+/* ---- sovereignty-card ---- */
+#sovereignty-card h1{font-size:120px}
+#sovereignty-card p{font-size:38px;margin-bottom:40px}
+#sovereignty-card .nodes{display:flex;gap:44px}
+.vnode{flex:1;position:relative;overflow:hidden;border:2px solid var(--border);border-radius:22px;
+  background:rgba(255,255,255,.03);padding:34px 40px;display:flex;align-items:center;justify-content:space-between}
+.vnode .nm{font-family:'DM Sans';font-weight:700;font-size:50px;color:var(--text-secondary);line-height:1.1}
+.vnode .sub{font-family:'DM Sans';font-size:30px;color:var(--text-muted);margin-top:6px}
+.vnode .pill{font-family:'JetBrains Mono';font-weight:700;font-size:28px;letter-spacing:.12em;
+  padding:12px 22px;border-radius:999px;border:2px solid var(--text-muted);color:var(--text-secondary)}
+.vnode .crack{position:absolute;inset:0;width:100%;height:100%;display:none}
+.vnode.broke{border-color:var(--accent-red);background:rgba(255,64,96,.07)}
+.vnode.broke .nm{color:var(--accent-red)}
+.vnode.broke .pill{border-color:var(--accent-red);color:var(--accent-red)}
+.vnode.broke .crack{display:block}
+.vnode.live{border-color:var(--accent-green);background:linear-gradient(135deg,rgba(0,230,138,.12),rgba(0,230,138,.02) 70%);
+  box-shadow:0 0 60px rgba(0,230,138,.18)}
+.vnode.live .nm{color:var(--text-primary)}
+.vnode.live .pill{border-color:var(--accent-green);color:var(--accent-green)}
+
+/* ---- pow-money-hammer ---- */
+#pow-money-hammer .hl{font-size:124px;word-spacing:.12em}
+#pow-money-hammer .card .divider{margin:34px 0 0}
+.frame>.kbug{position:absolute;mix-blend-mode:screen;pointer-events:none;z-index:1}
+#pow-money-hammer .kbug{width:210px;right:40px;bottom:40px}
+
+/* ---- cta-engage ---- */
+#cta-engage h1{font-size:104px}
+#cta-engage .tiles{display:flex;gap:30px;margin-bottom:30px}
+.tile{display:flex;align-items:center;gap:26px;border:2px solid var(--border);border-radius:20px;
+  background:rgba(255,255,255,.03);padding:24px 40px 24px 30px}
+.tile svg{width:74px;height:74px;fill:var(--text-secondary);opacity:.75}
+.tile .tl2{font-family:'DM Sans';font-weight:700;font-size:44px;color:var(--text-secondary)}
+.tile.on{border-color:var(--accent-green);background:linear-gradient(135deg,rgba(0,230,138,.12),rgba(0,230,138,.02) 70%)}
+.tile.on svg{fill:var(--accent-green);opacity:1}
+.tile.on .tl2{color:var(--text-primary)}
+.prompt{display:flex;align-items:baseline;gap:22px;border:2px solid var(--border);border-left:6px solid var(--border);
+  border-radius:18px;background:rgba(255,255,255,.03);padding:28px 38px}
+.prompt .plbl{font-family:'DM Sans';font-weight:700;font-size:34px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)}
+.prompt .ptx{font-family:'DM Sans';font-weight:700;font-size:48px;color:var(--text-secondary)}
+.prompt.on{border-color:rgba(0,230,138,.4);border-left-color:var(--accent-green);
+  background:linear-gradient(135deg,rgba(0,230,138,.12),rgba(0,230,138,.02) 70%)}
+.prompt.on .plbl{color:var(--accent-green)}
+.prompt.on .ptx{color:var(--text-primary)}
+
+/* ---- end-card-community ---- */
+#end-card-community .card{width:1220px;padding:70px 76px}
+#end-card-community .kbug{width:600px;right:10px;top:50%;transform:translateY(-50%)}
+#end-card-community .hl{font-size:68px;white-space:nowrap}
+#end-card-community .ln1{display:flex;align-items:center;gap:26px}
+#end-card-community .ln1 svg{width:62px;height:62px;fill:var(--text-secondary);opacity:.75;flex:none}
+#end-card-community .ln1.on svg{fill:var(--accent-green);opacity:1}
+</style></head>
+<body>
+
+<!-- =========================================================================
+     CARD SLIDES (rounded card box, top-accent line) -> assets/card-slides/
+     ========================================================================= -->
+
+<!-- ten-bps-card :: CH1@25.22-28.167 :: single state (slam on 25.92 = comp punch-in on the whole card). No TPS. -->
+<div class="frame" id="ten-bps-card">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);top:-200px;right:-160px"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-220px;left:-160px;opacity:.16"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="ey">A chain that already runs</div>
+    <div class="bps"><span class="num g">10</span><span class="hero unit">blocks / sec</span></div>
+    <div class="divider"></div>
+    <p>since Crescendo, <span class="mono">2025-05-05</span> (<span class="mono">KIP-14</span>)</p>
+  </div>
+</div>
+
+<!-- execute-verify-flip :: CH1@31.933-38.82 :: s1 EXECUTE struck red · s2 flips to VERIFY on 32.58 ·
+     s3/s4/s5 rows light cumulatively on 33.94 / 35.92 / 37.94 -->
+<div class="frame" id="execute-verify-flip">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);top:-200px;right:-160px"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-red);bottom:-220px;left:-160px;opacity:.14"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="ey">The one flip</div>
+    <div class="hero flip"><span class="w-exec re strike">Execute</span><span class="w-verify g hide">Verify</span></div>
+    <div class="divider"></div>
+    <div class="frows">
+      <div class="frow" id="evf-r1"><span class="idx">01</span><span class="ttl">Apps on the base layer</span></div>
+      <div class="frow" id="evf-r2"><span class="idx">02</span><span class="ttl">Proof of work security</span></div>
+      <div class="frow" id="evf-r3"><span class="idx">03</span><span class="ttl">No L2 in the middle</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- sompolinsky-name-card :: CH2@67.8-72.96 :: s1 name card · s2 + 'December 2025' stamp on 72.38.
+     Text-accurate name card, no likeness (DATA.md section 3). -->
+<div class="frame" id="sompolinsky-name-card">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-cyan);top:-200px;right:-160px;opacity:.26"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-green);bottom:-220px;left:-160px;opacity:.14"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="ey">Kaspa's founder</div>
+    <h1>Yonatan <span class="g">Sompolinsky</span></h1>
+    <div class="handle c">@hashdag</div>
+    <div class="divider"></div>
+    <div class="facts">
+      <div class="fact"><span>Co-author of GhostDAG</span></div>
+      <div class="fact"><span>Co-author of DAGKnight (<span class="mono">KIP-2</span>)</span></div>
+      <div class="fact"><span>Co-author of the vProgs yellow paper (as Hashdag)</span></div>
+    </div>
+    <div class="stamp gold hide" id="som-stamp">December <span>2025</span></div>
+  </div>
+</div>
+
+<!-- zk-math-receipt :: CH2@112.06-118.38 :: s1 receipt resting · s2 STATE ROOT ... CORRECT lit on 114.36 ·
+     s3 + CHECKED BY KASPA CONSENSUS stamp on 115.80 · s4 + RE-EXECUTE THE MATH struck on 118.18. Text only. -->
+<div class="frame" id="zk-math-receipt">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);top:-200px;right:-160px"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-220px;left:-160px;opacity:.14"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="ey">A math receipt</div>
+    <h1><span class="g">ZK</span> proof</h1>
+    <div class="rule"></div>
+    <div class="rline" id="zk-r1"><span class="lbl">STATE ROOT</span><span class="dots"></span><span class="val">CORRECT</span></div>
+    <div class="rline" id="zk-r2"><span class="lbl">RE-EXECUTE THE MATH</span></div>
+    <div class="rule" style="margin-bottom:0"></div>
+    <div class="stamp green hide" id="zk-stamp">Checked by<br>Kaspa consensus</div>
+  </div>
+</div>
+
+<!-- sovereignty-card :: CH2@118.38-123.34 :: s1 both vProgs resting · s2 vProg B cracks red on 121.52 ·
+     s3 + vProg A RUNNING green on 122.6. Yellow paper 1.2. -->
+<div class="frame" id="sovereignty-card">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);top:-200px;right:-160px"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-red);bottom:-220px;left:-160px;opacity:.14"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="ey">What the design buys you &middot; <span class="mono">1</span> of <span class="mono">2</span></div>
+    <h1><span class="g">Sovereignty</span></h1>
+    <div class="divider"></div>
+    <p>If another app breaks, yours keeps running.</p>
+    <div class="nodes">
+      <div class="vnode" id="sov-a">
+        <div><div class="nm">vProg A</div><div class="sub">your app</div></div>
+        <span class="pill">RUNNING</span>
+      </div>
+      <div class="vnode" id="sov-b">
+        <svg class="crack" viewBox="0 0 700 170" preserveAspectRatio="none">
+          <polyline points="250,0 290,40 262,70 318,102 286,130 330,170" fill="none" stroke="#ff4060" stroke-width="6" stroke-linejoin="miter"/>
+          <polyline points="262,70 222,92" fill="none" stroke="#ff4060" stroke-width="4"/>
+          <polyline points="318,102 362,118" fill="none" stroke="#ff4060" stroke-width="4"/>
+        </svg>
+        <div><div class="nm">vProg B</div><div class="sub">another app</div></div>
+        <span class="pill">RUNNING</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- pow-money-hammer :: CH3@184.76-188.64 :: lines light cumulatively: s1 184.76 · s2 186.30 · s3 187.72 (green).
+     Kaspa K bug (screen-blend) bottom-right in every state. -->
+<div class="frame" id="pow-money-hammer">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);top:-200px;right:-160px"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-220px;left:-160px;opacity:.14"></div>
+  <div class="card" style="width:1460px">
+    <div class="top"></div>
+    <div class="ey">What Kaspa is building</div>
+    <div class="hl" id="pm-1">Proof of work money</div>
+    <div class="hl" id="pm-2">with apps on it</div>
+    <div class="hl" id="pm-3"><span class="k">no L2 in the middle</span></div>
+    <div class="divider"></div>
+  </div>
+  <img class="kbug" src="../../../../../../schedule-tweets/images/reference/kaspa-logo.png" alt="">
+</div>
+
+<!-- cta-engage :: CH3@188.64-195.1 :: s1 like lit 188.64 · s2 + comment lit 190.04 · s3 + prompt lit 192.92.
+     No dates, no timeline, no 'near future' text (guard 1). -->
+<div class="frame" id="cta-engage">
+  <div class="orb" style="width:620px;height:620px;background:var(--accent-green);top:-200px;right:-160px"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-220px;left:-160px;opacity:.14"></div>
+  <div class="card">
+    <div class="top"></div>
+    <div class="ey">Before you go</div>
+    <h1>Like and <span class="g">comment</span> below</h1>
+    <div class="divider"></div>
+    <div class="tiles">
+      <div class="tile" id="cta-like">
+        <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+        <span class="tl2">Like</span>
+      </div>
+      <div class="tile" id="cta-comment">
+        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+        <span class="tl2">Comment</span>
+      </div>
+    </div>
+    <div class="prompt" id="cta-prompt"><span class="plbl">Comment:</span><span class="ptx">what gets built on vProgs?</span></div>
+  </div>
+</div>
+
+<!-- end-card-community :: CH3@196.98-202.822 :: s1 LINK IN THE DESCRIPTION lit 197.54 ·
+     s2 + the greatest community ever lit 199.80; holds to the last frame. Kaspa K logo (screen-blend) right. -->
+<div class="frame" id="end-card-community">
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-green);bottom:-220px;left:-160px;opacity:.16"></div>
+  <img class="kbug" src="../../../../../../schedule-tweets/images/reference/kaspa-logo.png" alt="">
+  <div class="card">
+    <div class="top"></div>
+    <div class="ey">Join the community</div>
+    <div class="hl ln1" id="end-1">
+      <svg viewBox="0 0 24 24"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"/></svg>
+      <span>Link in the <span class="k">description</span></span>
+    </div>
+    <div class="divider"></div>
+    <div class="hl" id="end-2">The greatest <span class="k">community</span> ever</div>
+  </div>
+</div>
+
+<!-- =========================================================================
+     TITLE SLIDES (no box) -> assets/title-slides/  (chapter title cards; the
+     graph routes every title-card-* id here)
+     ========================================================================= -->
+
+<!-- title-card-ch2 :: CH2@40.22 (edit-inserted >=1s pause) :: 'NOT AN L2' -->
+<div class="frame titlecard" id="title-card-ch2">
+  <div class="orb" style="width:760px;height:760px;background:var(--accent-red);top:-240px;right:-200px;opacity:.26"></div>
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-green);bottom:-260px;left:-200px;opacity:.18"></div>
+  <div class="ey">Chapter <span class="mono">02</span></div>
+  <div class="hero">Not an <span class="re">L2</span></div>
+  <div class="divider"></div>
+</div>
+
+<!-- title-card-ch3 :: CH3@137.58 (edit-inserted >=1s pause) :: 'WHERE IT STANDS' -->
+<div class="frame titlecard" id="title-card-ch3">
+  <div class="orb" style="width:760px;height:760px;background:var(--accent-cyan);top:-240px;right:-200px;opacity:.26"></div>
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-green);bottom:-260px;left:-200px;opacity:.18"></div>
+  <div class="ey">Chapter <span class="mono">03</span></div>
+  <div class="hero">Where it <span class="c">stands</span></div>
+  <div class="divider"></div>
+</div>
+
+</body></html>

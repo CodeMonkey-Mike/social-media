@@ -1,0 +1,155 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>c3-ladder · kaspa-vprogs · Type 1 ANIMATED (design-spec states)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ==== BASE: tokens + anatomy from skills/container-reference/container-canonical.css (do not re-derive) ==== */
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--bg-card-hover:#181c26;--accent-green:#00e68a;--accent-cyan:#00c2ff;
+  --accent-gold:#ffd700;--accent-red:#ff4060;--accent-purple:#a855f7;--accent-teal:#49e0c8;
+  --text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;
+  /* role colors for THIS video (rgb triplets): Kaspa L1 = teal (brand greenish cyan) · vProg = purple ·
+     provers / ZK proof = gold · users / tx = cyan · live / ok = green · risk / struck = red */
+  --r-kas:73,224,200;--r-vp:168,85,247;--r-pr:255,215,0;--r-us:0,194,255;--r-ok:0,230,138;--r-bad:255,64,96}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary);margin-bottom:40px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.hdr{position:absolute;left:120px;top:76px;z-index:2}
+.ey{font-size:27px;font-weight:600;letter-spacing:.18em;color:var(--text-muted);margin-bottom:22px} /* caps typed literally: keeps "vPROG" */
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:70px;line-height:1.07;letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin-top:28px}
+.src{position:absolute;left:120px;bottom:38px;font-family:'JetBrains Mono',monospace;font-size:19px;color:var(--text-muted);z-index:2}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)}.c{color:var(--accent-cyan)}.go{color:var(--accent-gold)}.re{color:var(--accent-red)}.pu{color:var(--accent-purple)}.tl{color:var(--accent-teal)}
+svg.wires{position:absolute;inset:0;width:1920px;height:1080px;z-index:1;overflow:visible}
+/* NODE: resting = readable (titles text-secondary, subs muted); .on = lit in its role color */
+.node{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:22px;padding:30px 34px}
+.node .top{position:absolute;inset:-2px;border-radius:22px;overflow:hidden;pointer-events:none;opacity:0} /* clip box = the card's OUTER shape, so the accent bar follows the rounded corner (visual-qa r2 nub fix) */
+.node .top::before{content:"";position:absolute;left:0;right:0;top:0;height:4px}
+.node .nt{font-weight:700;font-size:32px;letter-spacing:.08em;color:var(--text-secondary)}
+.node .ns{font-weight:500;font-size:24px;color:var(--text-muted);margin-top:8px}
+.node.on{border-color:rgba(var(--r),.85);background:linear-gradient(160deg,rgba(var(--r),.13),rgba(18,21,28,.97) 62%);
+  box-shadow:0 0 0 1px rgba(var(--r),.25),0 0 70px rgba(var(--r),.26)}
+.node.on .top{opacity:1}.node.on .top::before{background:linear-gradient(90deg,rgb(var(--r)),transparent)}
+.node.on .nt{color:rgb(var(--r))}.node.on .ns{color:var(--text-primary)}
+/* EDGE: resting muted wire; .on = role color + glow */
+.edge path,.edge line{stroke:#283042;stroke-width:4;fill:none;stroke-linecap:round}
+.edge polygon{fill:#283042}
+.edge.on{filter:drop-shadow(0 0 8px rgba(var(--r),.75))}
+.edge.on path,.edge.on line{stroke:rgb(var(--r))}.edge.on polygon{fill:rgb(var(--r))}
+.rv{opacity:0}.rv.on{opacity:1}
+/* ==== CHART-SPECIFIC ====
+   GEOMETRY (the Remotion build reuses these numbers exactly):
+   rails x=890 / x=1030, y 70..985 · rung centers y: CRESCENDO 925 · YELLOW PAPER 795 · TOCCATA 650 ·
+   SILVERSCRIPT 500 · NEXT 365 · FULL vPROGS 245 · DAGKNIGHT 125 · labels x=1080 · dates right-aligned to x=850 */
+h1{font-size:84px}
+.legend{position:absolute;left:120px;top:404px;z-index:2;display:flex;flex-direction:column;gap:18px}
+.legend div{display:flex;align-items:center;gap:18px;font-weight:600;font-size:22px;letter-spacing:.14em;color:var(--text-secondary)}
+.legend i{display:block;width:64px;height:10px;border-radius:5px}
+.lg-s{background:var(--accent-green);box-shadow:0 0 14px rgba(0,230,138,.6)}
+.lg-f{border:2px dashed #4a5366;height:12px!important}
+.date{position:absolute;z-index:2;left:560px;width:290px;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:30px;color:var(--accent-green);opacity:0}
+.lab{position:absolute;z-index:2;left:1080px;width:760px;opacity:0}
+.lab .l1{display:flex;align-items:center;gap:18px}
+.lab .nm{font-weight:700;font-size:38px;letter-spacing:.07em;color:var(--text-primary);white-space:nowrap}
+.lab .l2{display:flex;gap:14px;margin-top:10px;font-weight:500;font-size:24px;color:var(--text-secondary)}
+.tg{padding:7px 16px;border-radius:100px;font-weight:700;font-size:20px;letter-spacing:.12em;white-space:nowrap;border:2px solid;opacity:0}
+.tg-g{color:var(--accent-green);border-color:rgba(0,230,138,.8);background:rgba(0,230,138,.12)}
+.tg-live{color:#0a0c10;background:var(--accent-green);border-color:var(--accent-green);box-shadow:0 0 26px rgba(0,230,138,.6)}
+.tg-m{color:var(--text-secondary);border-color:#3a4254;background:rgba(255,255,255,.02)}
+.tg-gold{color:var(--accent-gold);border-color:rgba(255,215,0,.6);background:rgba(255,215,0,.08)}
+.sub{opacity:0}
+.on,.tg.on,.sub.on{opacity:1}
+/* rungs */
+.rung{position:absolute;z-index:2;left:890px;width:140px;height:12px;border-radius:6px;margin-top:-6px;opacity:0}
+.rung.ship{background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));box-shadow:0 0 22px rgba(0,230,138,.55)}
+.rung.ship.on{opacity:1}
+.rung.fut{opacity:1;background:none;border:2px dashed #3d4557;height:14px;margin-top:-7px}
+.fut-lab{opacity:1}
+.fut-lab .nm{color:var(--text-secondary);font-size:32px}
+.fut-lab .l2{color:var(--text-muted)}
+.fut-lab .tg{opacity:1}
+.dk .nm{color:var(--text-muted)}.dk .tg{color:var(--text-muted);border-color:#2c3342}
+</style></head>
+<body>
+<template id="tpl">
+  <div class="orb" style="width:620px;height:620px;left:640px;bottom:-260px;background:var(--accent-green);opacity:.14"></div>
+  <div class="orb" style="width:520px;height:520px;right:-200px;top:-200px;background:var(--accent-purple);opacity:.14"></div>
+  <div class="hdr">
+    <div class="ey">WHERE IT STANDS</div>
+    <h1>The <span class="g">ladder</span></h1>
+    <div class="divider"></div>
+  </div>
+  <div class="legend">
+    <div><i class="lg-s"></i>SHIPPED</div>
+    <div><i class="lg-f"></i>NOT YET</div>
+  </div>
+
+  <svg class="wires" viewBox="0 0 1920 1080">
+    <!-- rails: dashed (future) full height, solid muted under the shipped zone -->
+    <line x1="890" y1="70" x2="890" y2="440" stroke="#3a4254" stroke-width="5" stroke-dasharray="14 12"/>
+    <line x1="1030" y1="70" x2="1030" y2="440" stroke="#3a4254" stroke-width="5" stroke-dasharray="14 12"/>
+    <line x1="890" y1="440" x2="890" y2="985" stroke="#2a3142" stroke-width="6"/>
+    <line x1="1030" y1="440" x2="1030" y2="985" stroke="#2a3142" stroke-width="6"/>
+    <!-- progress rails (green), one per stage: grows bottom -> latest rung -->
+    <g class="rv p1" style="filter:drop-shadow(0 0 8px rgba(0,230,138,.7))"><line x1="890" y1="925" x2="890" y2="985" stroke="#00e68a" stroke-width="6"/><line x1="1030" y1="925" x2="1030" y2="985" stroke="#00e68a" stroke-width="6"/></g>
+    <g class="rv p2" style="filter:drop-shadow(0 0 8px rgba(0,230,138,.7))"><line x1="890" y1="795" x2="890" y2="985" stroke="#00e68a" stroke-width="6"/><line x1="1030" y1="795" x2="1030" y2="985" stroke="#00e68a" stroke-width="6"/></g>
+    <g class="rv p3" style="filter:drop-shadow(0 0 8px rgba(0,230,138,.7))"><line x1="890" y1="650" x2="890" y2="985" stroke="#00e68a" stroke-width="6"/><line x1="1030" y1="650" x2="1030" y2="985" stroke="#00e68a" stroke-width="6"/></g>
+    <g class="rv p4" style="filter:drop-shadow(0 0 8px rgba(0,230,138,.7))"><line x1="890" y1="500" x2="890" y2="985" stroke="#00e68a" stroke-width="6"/><line x1="1030" y1="500" x2="1030" y2="985" stroke="#00e68a" stroke-width="6"/></g>
+  </svg>
+
+  <!-- future rungs (always visible, dim, dashed) -->
+  <div class="rung fut" style="top:125px"></div>
+  <div class="lab fut-lab dk" style="top:100px"><div class="l1"><span class="nm">DAGKNIGHT</span><span class="tg tg-m">PROPOSED · KIP-2</span></div></div>
+  <div class="rung fut" style="top:245px"></div>
+  <div class="lab fut-lab" style="top:220px"><div class="l1"><span class="nm">FULL vPROGS</span><span class="tg tg-m">IN CONSTRUCTION</span></div></div>
+  <div class="rung fut" style="top:365px"></div>
+  <div class="lab fut-lab" style="top:340px"><div class="l1"><span class="tg tg-m">NEXT</span><span class="nm">standalone based ZK apps</span></div></div>
+
+  <!-- shipped rungs (land as spoken) -->
+  <div class="rung ship r-cr" style="top:925px"></div>
+  <div class="date d-cr" style="top:905px">2025-05-05</div>
+  <div class="lab l-cr" style="top:900px"><div class="l1"><span class="nm">CRESCENDO</span><span class="tg tg-g t-bps">10 BLOCKS / SEC</span></div></div>
+
+  <div class="rung ship r-yp" style="top:795px"></div>
+  <div class="date d-yp" style="top:775px">2025-09-11</div>
+  <div class="lab l-yp" style="top:770px"><div class="l1"><span class="nm">vPROGS YELLOW PAPER</span><span class="tg tg-gold t-dr">DRAFT v0.0.1</span></div></div>
+
+  <div class="rung ship r-to" style="top:650px"></div>
+  <div class="date d-to" style="top:630px">2026-06-30</div>
+  <div class="lab l-to" style="top:606px">
+    <div class="l1"><span class="nm">TOCCATA</span><span class="tg tg-live t-live">LIVE ON MAINNET</span></div>
+    <div class="l2"><span class="sub s-zk">ZK verify + covenants</span><span class="sub s-in">·&nbsp; inside Kaspa consensus</span></div>
+  </div>
+
+  <div class="rung ship r-ss" style="top:500px"></div>
+  <div class="date d-ss" style="top:480px">2026-09-09</div>
+  <div class="lab l-ss" style="top:456px">
+    <div class="l1"><span class="nm">SILVERSCRIPT 1.0</span></div>
+    <div class="l2"><span class="sub s-ss">smart contract language</span></div>
+  </div>
+
+  <div class="src">Sources: KIP-14 · kaspanet/research (yellow paper) · docs.kaspa.org/toccata · silverscript v1.0.0 · kaspa.org/build · KIP-2</div>
+</template>
+<script>
+const CHART='c3-ladder';
+const CR=['.r-cr','.d-cr','.l-cr','.t-bps'];
+const YP=[...CR,'.r-yp','.d-yp','.l-yp','.t-dr'];
+const TO=[...YP,'.r-to','.d-to','.l-to','.s-zk','.t-live','.s-in'];
+const SS=[...TO,'.r-ss','.d-ss','.l-ss','.s-ss'];
+const STATES=[
+  {id:'empty',        on:[]},               // 139.84 'Look at this ladder': rails + dim future rungs
+  {id:'crescendo',    on:[...CR,'.p1']},    // rung 140.70 · name 142.74 · '10 BLOCKS / SEC' 143.64
+  {id:'yellow-paper', on:[...YP,'.p2']},    // rung 144.92 · 'DRAFT v0.0.1' 146.96
+  {id:'toccata',      on:[...TO,'.p3']},    // rung 147.46 · name 149.52 · ZK 150.54 · LIVE 153.02 · inside 154.54
+  {id:'silverscript', on:[...SS,'.p4']},    // rung 156.28 · name 158.60 (PAYOFF, holds to 160.34)
+];
+const tpl=document.getElementById('tpl');
+for(const s of STATES){const f=document.createElement('div');f.className='frame';f.id=CHART+'-'+s.id;
+  f.appendChild(tpl.content.cloneNode(true));
+  s.on.forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('on')));
+  (s.hot||[]).forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('hot')));document.body.appendChild(f);}
+
+</script>
+</body></html>

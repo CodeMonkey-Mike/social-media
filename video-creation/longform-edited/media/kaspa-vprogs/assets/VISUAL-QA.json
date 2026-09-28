@@ -1,0 +1,554 @@
+{
+  "assets": [
+    {
+      "path": "_previews/qa/assets/BR-1-glass-planes-rising.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "No watermark or text, dark blue"
+    },
+    {
+      "path": "_previews/qa/assets/BR-2-glass-shatter.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "No watermark or text; the chromatic fringing is part of the stock clip's look"
+    },
+    {
+      "path": "_previews/qa/assets/BR-3-ice-glow-cracks-split.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Crack is visible; top third is brighter hazy ice but the frame reads dark overall. No watermark"
+    },
+    {
+      "path": "_previews/qa/assets/BR-4-datacenter-corridor-dolly.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "No watermark or text; bright end-door is normal for this kind of shot"
+    },
+    {
+      "path": "assets/img/IMG-1-ladder-into-dag-sky.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Green-cyan ladder into a node mesh, no text, dark"
+    },
+    {
+      "path": "assets/img/IMG-2-lone-layer-above-towers.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "New version replaces last round's failed reaching-hands image. It now matches the revised concept: one glowing plane with node-lights, searchlight beams fading well below it, a wide empty band, no hands or figures, no text. The plane's right tip sits at about 97% of the width, so don't use a push-in (scale above about 1.03) or it clips"
+    },
+    {
+      "path": "assets/img/IMG-3-kaspa-coin-sunrise.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Glyph matches schedule-tweets/images/reference/kaspa-logo.png, coin is teal not gold, no text"
+    },
+    {
+      "path": "assets/receipts/R1-yellow-paper-title-page.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Real title page: Msutton / FreshAir08 / Hashdag, DRAFT v0.0.1. Portrait cream page, so it needs a pan or crop in the comp"
+    },
+    {
+      "path": "assets/receipts/R2-rusty-kaspa-v2-toccata-release.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Header, KIP16/17/20/21, DAA 474,165,565 and June 30, 2026 all in frame. The box border continues past the bottom after 'Full Changelog'; no text cut. No login wall or cookie banner"
+    },
+    {
+      "path": "assets/receipts/R3-vitalik-rollup-centric-roadmap.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Both highlighted sentences present. The last line ('from this:') is fully inside the frame"
+    },
+    {
+      "path": "assets/receipts/R4-kasmagazine-obsolete-path-quote.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "'avoid the obsolete path of L2's' highlighted"
+    },
+    {
+      "path": "assets/receipts/R5-a-docs-kaspa-toccata-activation.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "'active on mainnet as of June 30, 2026, at DAA score 474_165_565'. The highlight ends about 5px from the bottom edge; text intact"
+    },
+    {
+      "path": "assets/receipts/R5-b-docs-kaspa-toccata-zk-precompiles.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Groth16 / RISC Zero Succinct row highlighted"
+    },
+    {
+      "path": "assets/receipts/R6-silverscript-v1-0-0-release.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "'official release of Silverscript' and the Latest badge are in frame. The page shows 'released 3 weeks ago', not the 2026-09-09 date, so the date only appears on the ladder"
+    },
+    {
+      "path": "assets/receipts/R7-kaspa-org-build-vprogs-in-construction.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "'In construction' plus 'Full vProgs remain a future direction' highlighted. The timeline dot at the left edge is fully inside the frame"
+    },
+    {
+      "path": "assets/receipts/R8-kasmagazine-covenant-fork-3-6-months.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "The page says 'three to six months' (words, not digits), which settles the wording hold. A different paragraph from R4. No masthead or date in this crop, so the Dec 2025 context has to come from the comp. The old R8-masthead-date-supplement.png (failed last round) is no longer on disk"
+    },
+    {
+      "path": "assets/diagrams/vprog-loop-mini-landed.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/vprog-loop-mini-nodes.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/vprog-loop-mini-proof.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/vprog-loop-mini-state.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Accent-bar corner fix confirmed at 4K (_previews/vqa/nub-vprog.png)"
+    },
+    {
+      "path": "assets/card-slides/ten-bps-card.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "10 in mono green, 'blocks / sec' in serif, 2025-05-05 (KIP-14) in mono, no TPS, divider present"
+    },
+    {
+      "path": "assets/card-slides/execute-verify-flip-s1.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "'Execute' in red with a strike line"
+    },
+    {
+      "path": "assets/card-slides/execute-verify-flip-s2.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/execute-verify-flip-s3.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/execute-verify-flip-s4.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/execute-verify-flip-s5.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "'Verify' uses the house green #00e68a (the spec says 'greenish cyan', which isn't a palette token), acceptable"
+    },
+    {
+      "path": "assets/title-slides/title-card-ch2.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "CHAPTER 02 / Not an L2, with L2 in red"
+    },
+    {
+      "path": "assets/diagrams/c2-l2-stack-bridge.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c2-l2-stack-chain.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c2-l2-stack-empty.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c2-l2-stack-liquidity.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c2-l2-stack-pieces.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "ATTACK SURFACE shown in red"
+    },
+    {
+      "path": "assets/diagrams/c2-l2-stack-sequencer.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/sompolinsky-name-card-s1.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Name, @hashdag, GhostDAG / DAGKnight (KIP-2) / yellow paper (as Hashdag), all match DATA.md"
+    },
+    {
+      "path": "assets/card-slides/sompolinsky-name-card-s2.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "'DECEMBER 2025' stamp in gold, clear of the text"
+    },
+    {
+      "path": "assets/diagrams/c1-overview-dim.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-overview-kaspa.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-overview-orders.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "The vertical STATE label sits about 80px (at 1080p) from the right edge: inside the frame but the tightest margin in the set"
+    },
+    {
+      "path": "assets/diagrams/c1-overview-reads.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-overview-users.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-overview-writes.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-kaspa-four-jobs-checks.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-kaspa-four-jobs-dropped.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-kaspa-four-jobs-execute.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Quote 'It does not execute vProg logic itself.' checked at full size (crop in _previews/vqa/), clear of the right edge"
+    },
+    {
+      "path": "assets/diagrams/c1-kaspa-four-jobs-meters.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-kaspa-four-jobs-orders.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-kaspa-four-jobs-stores.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-vprog-nodes-accounts.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-vprog-nodes-entry.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-vprog-nodes-lock.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-vprog-nodes-nodes.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-provers-entry.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-provers-landed.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-provers-launch.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c1-provers-operators.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/zk-math-receipt-s1.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "Uses dotted receipt rules instead of the gradient divider. I'm accepting that because the spec asks for a receipt-styled card; flag it if you want the strict anatomy"
+    },
+    {
+      "path": "assets/card-slides/zk-math-receipt-s2.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/zk-math-receipt-s3.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/zk-math-receipt-s4.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "'RE-EXECUTE THE MATH' struck through in red"
+    },
+    {
+      "path": "assets/card-slides/sovereignty-card-s1.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/sovereignty-card-s2.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "vProg B cracks red and reads BROKEN"
+    },
+    {
+      "path": "assets/card-slides/sovereignty-card-s3.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "vProg A lights green RUNNING"
+    },
+    {
+      "path": "assets/diagrams/composability-card-entry.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/composability-card-one-unit.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/composability-card-read.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/composability-card-tx.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/title-slides/title-card-ch3.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "CHAPTER 03 / Where it stands, with 'stands' in cyan"
+    },
+    {
+      "path": "assets/charts/c3-ladder-crescendo.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "2025-05-05 / 10 BLOCKS / SEC"
+    },
+    {
+      "path": "assets/charts/c3-ladder-empty.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/charts/c3-ladder-silverscript.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "2026-09-09 / SILVERSCRIPT 1.0, matches the spoken '1.0'"
+    },
+    {
+      "path": "assets/charts/c3-ladder-toccata.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "2026-06-30 / LIVE ON MAINNET"
+    },
+    {
+      "path": "assets/charts/c3-ladder-yellow-paper.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "2025-09-11 / DRAFT v0.0.1"
+    },
+    {
+      "path": "assets/diagrams/c3-next-rungs-construction.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c3-next-rungs-entry.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "The Silverscript rung's green rails run off the bottom edge on purpose ('the ladder continues below'); graphic only, no text clipped. Quotes match DATA.md"
+    },
+    {
+      "path": "assets/diagrams/c3-next-rungs-full.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/diagrams/c3-next-rungs-next.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/cta-engage-s1.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "No dates, no em dashes"
+    },
+    {
+      "path": "assets/card-slides/cta-engage-s2.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/cta-engage-s3.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/end-card-community-s1.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "",
+      "notes": "The coin's glow crowds the card's right edge slightly; not clipped. The coin matches kaspa-logo.png"
+    },
+    {
+      "path": "assets/card-slides/end-card-community-s2.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": ""
+    },
+    {
+      "path": "assets/card-slides/pow-money-hammer-s1.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "Round-4 defects fixed. (1) Word gaps on line 1 measured at 1080p: Proof|of 30px, of|work 22px, work|money 40px. 'of work' reads as two words (crop _previews/vqa/r5-pow-line1.png). (2) Divider present: 66x4 px, green to cyan, under the stack (r5-pow-divider.png). (3) Kaspa coin sits clear of the card: glow starts about x1680/y840, card ends at x1600/y868 (r5-pow-coin.png). The mark is the reference mirrored-K logo from schedule-tweets/images/reference/kaspa-logo.png. Nothing bright within 30px of any frame edge. Eyebrow muted, Playfair 900 headline. Top-left accent bar ends at the start of the corner curve with no nub (r5-pow-corner-s1.png). State: line 1 lit (#e8eaf0-ish), lines 2 and 3 dim #8892a4. Advisory: the dim upcoming lines are readable, so the stack is pre-revealed. This is the project-wide .hl convention; the comp may choose to hide them."
+    },
+    {
+      "path": "assets/card-slides/pow-money-hammer-s2.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "Same pixels as s1 except lines 2 and 3 (diff bbox x223-1349, y505-742). Lines 1 and 2 lit, line 3 dim. Gap, divider, coin and edges as in s1."
+    },
+    {
+      "path": "assets/card-slides/pow-money-hammer-s3.png",
+      "verdict": "PASS",
+      "defects": [],
+      "fix": "All three lines lit. 'no L2 in the middle' in accent green #00e68a (the video's accent per the round-1 ruling; the spec's 'greenish cyan' is covered by that ruling). Divider, coin, corner and edges clean."
+    }
+  ],
+  "summary": {
+    "checked": 84,
+    "passed": 84,
+    "failed": 0,
+    "carried_over": 81,
+    "fresh": 3
+  },
+  "must_fix": []
+}

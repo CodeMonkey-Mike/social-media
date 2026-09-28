@@ -1,0 +1,177 @@
+Home
+Kaspa Theory
+News and Updates
+Interviews
+Data and Analytics
+About us
+News
+THE WEEKLY KNIGHT: A DAGKNIGHT SNEAK PEAK AND VPROG DEVELOPMENT
+December 17, 2025
+Jennifer Ghelardini
+Nicholas Sismil
+13 min read
+TL;DR: 
+
+First Look at a DAGKnight Early Prototype: Following Michael Sutton’s reminder that Kaspa R&D momentum is compounding, @CoderOfStuff_ shared an early Rust DAGKnight prototype, showing core consensus mechanics already working.
+
+Yonatan Clarifies vProgs’ direction: Dr. Yonatan Sompolinsky emphasized that vProgs are not an L2, but a verification-oriented programmability layer enshrined in L1, designed to avoid modular stack fragmentation while improving UX and safety.
+
+Road to programmability: Yonatan expects a covenant hard fork in ~3–6 months, laying groundwork for vProgs, DAGKnight, and 100 BPS, positioning Kaspa as both sound money and a programmable base layer.
+
+New Kaspa Apps Emerging: Community discussions highlighted early work on new Kaspa-based applications, including Kodex, a decentralized, censorship-resistant media platform built on Kaspa’s BlockDAG.
+
+CoderofStuff Gets Everyone Excited with a First-look at DAGKnight. 
+
+Kaspa core developer Michael Sutton addressed community sentiment this week, noting a growing disconnect between external perception and internal progress. He emphasized that Kaspa’s research and development efforts continue to compound, with increasing contributors, parallel research tracks, and KIPs converging toward a coherent vision.
+
+“Talent and expertise are compounding in R&D, and real work is being done. More concrete updates soon.”
+
+Shortly after, @CoderOfStuff_ offered a tangible example of that progress by sharing an early Rust implementation of DAGKnight. While still far from testnet or mainnet readiness, the prototype already includes core components such as hierarchical conflict resolution, incremental coloring, and parent selection logic that correctly attaches new blocks to the honest cluster along the Virtual Selected Parent Chain (VSPC).
+
+Although cascade voting has not yet been implemented, the code demonstrates that DAGKnight’s foundational ideas are being actively built and tested. This early prototype turns abstract research into visible, working code, reinforcing that meaningful technical progress is underway even if it is not yet apparent at the user level.
+
+This is exciting because it turns abstract promises of “future DAGKnight greatness” into visible, working code that already behaves as a secure, next‑generation consensus should. The prototype shows that Kaspa’s research is not just theoretical: core components like honest‑cluster detection and VSPC‑aligned parent selection are running today, offering a tangible preview of how the network could gain stronger security and scalability without sacrificing its Nakamoto roots.​​ Thanks to CoderofStuff for sharing and uplifting our spirits. 
+
+Yonatan on vProgs
+
+In a brief exchange this week, Kaspa co-founder Yonatan Sompolinsky expanded on the design motivations behind vProgs and how they differ from conventional Layer-2 approaches.
+
+“Kaspa vProgs’ primary motivation was to avoid the obsolete path of L2’s…Vprogs is native expressiveness while keeping L1 verification-oriented and keeping attack surface minimal.”
+
+Yonatan also clarified that vProgs should not be viewed through a modular stack or Layer-2 lens:
+
+“vProgs is not L2, a term which connotes a modular stack and ecosystem architecture (which failed)...I’d say vProgs is a verification-oriented programmability layer enshrined in L1.”
+
+While acknowledging added complexity on the development side, he emphasized the intended payoff in usability and coherence:
+
+“Re complexity, agree on the development side… but the gain is ux and devex resembling the simple and coherent interface of Solana-like monolithic systems…No more ‘where should I deploy my liquidity, where should I deploy my contract’ — brain fry.”
+
+Kaspa’s Next Era: Covenants, vProgs, and the Road to 100 BPS
+
+Your Crypto Crew released a video this week breaking down the latest Kaspa developments and the roadmap toward an upcoming hard fork. He noted that vProgs are expected to arrive in roughly six to eight months, with Kaspa core developer Michael Sutton stating they should be live within the next year. vProgs represent a major turning point for Kaspa, preserving its role as a sound-money Layer-1 while introducing native programmability.
+
+Yonatan Sompolinsky also commented that he expects a mainnet covenant hard fork in the next three to six months. Covenants introduce conditions on how coins can be spent or moved, marking the first concrete step toward Kaspa’s programmable future, including support for zero-knowledge verifiers. This hard fork is expected to lay the groundwork not only for vProgs but also for DAGKnight and 100 blocks per second (BPS).
+
+Together, these upgrades move Kaspa beyond being a hard-money-only protocol, positioning it as a high-performance, programmable base layer capable of supporting a broad range of applications.
+
+XXIM Podcast: First Demo of the Kaskad Oracle 
+
+This week on the XXIM Podcast, Ankit hosted the Kaskad team—Julien, Jack, Elliott, and Paul. Kaskad is building a new DeFi application for Kaspa that will allow users to lend, deposit, and earn yield in crypto, using a fork of Aave 3.3. Aave is one of the most respected DeFi protocols and the largest dApp on Ethereum. Kaskad is being developed on IGRA, Kaspa’s upcoming L2, and plans to support a curated set of assets, including Kaspa, IGRA, wBTC, and wETH, while intentionally avoiding low-liquidity tokens. The team is also in discussions with two groups—IGRAWay to support USDC, and M0 regarding a stablecoin framework.
+
+XXIM previously interviewed Elliott, who is researching oracle architecture and writing an academic paper on the subject. In this episode, Elliott and the Kaskad team showcased a demo of the new Kaspa oracle currently in research and development.
+
+The demo first walked through the Kaskad borrowing and lending platform, showing how users can deposit USDC and borrow against it. The team explained the Health Score, which represents how close a user is to liquidation based on the ratio of collateral supplied to assets borrowed. A user is liquidated when their Health Score reaches 1, so the higher the score, the healthier the position.
+
+A key point the team emphasized is that Kaskad does not profit from liquidations. Any liquidated funds go to the protocol treasury, where the community will ultimately decide how they are used.
+
+Next came the moment everyone had been waiting for—the first public demo of the Kaskad oracle solution. Elliott has been working closely with the Kaspa team to research and design what he hopes will become the most decentralized, secure oracle architecture in the industry, while the Kaskad team provides the engineering needed to bring that research to life.
+
+In crypto, oracles allow blockchains to access off-chain data. Because blockchains are the most secure component of the system, moving data on or off chain introduces risk. DeFi applications rely heavily on accurate, real-time pricing data for liquidations and collateral calculations, which makes oracle design one of the most sensitive and important systems in the entire crypto stack.
+
+Today, the dominant oracle solution is Chainlink and its LINK token. While Chainlink uses multiple nodes, there is no enforced threshold ensuring price feeds come from sufficiently diverse venues. As a result, it is unclear, for example, how heavily certain feeds rely on Binance or other single exchanges. Chainlink also returns the median of all values it collects.
+
+Kaskad’s solution takes a different approach. The oracle pulls prices from multiple exchanges and computes a fair value as if all those prices existed on a single unified order book with no arbitrage opportunities. For the first time, the team showed a live demo of this system, displaying best bids and asks, average latency, and the source of each data feed. Crypto oracles, including Kaskad’s, rely on spot prices only—not perpetual futures—because perps are derivatives rather than actual tradable assets.
+
+A recent example illustrates why this matters: during the October 10th liquidation cascade, the algorithm that triggered the liquidations relied solely on Binance’s data and ignored other exchanges. As a result, the liquidity required to trigger massive liquidations was far lower than if the system had considered the entire market.
+
+Elliott explained that there are two pillars of decentralization for oracles:
+
+The data must be honest and verifiable.
+
+Multiple servers must aggregate the data to avoid single points of failure.
+
+Their long-term goal is to create an oracle architecture that any blockchain can adopt—bringing other DeFi ecosystems to rely on Kaspa’s oracle layer.
+
+The episode concluded with the Kaskad team discussing their ongoing community fundraising round, aiming to raise between 750,000 and 1.6 million USD. They emphasized that they avoided the traditional VC route because many venture groups still do not fully understand Kaspa or its roadmap, and the team wants the community to be meaningfully involved.
+
+From Sparkle to vProgs
+
+Anton (@cryptoaspect), the developer behind the Sparkle L1.5 initiative, shared that he has decided to sunset Sparkle and consolidate his efforts under Kaspa’s vProgs roadmap, citing strong architectural alignment between the two designs: “In essence, vProgs' design is very similar to Sparkle L2 design. Not the same, but very similar.”
+
+Anton explained that he has been gradually transferring Sparkle’s lessons learned into the vProgs research process via the Kaspa Core R&D Telegram, and that, given the overlap in goals, the most effective path forward is consolidation rather than parallel efforts.
+
+“Given similar goals, I’ve decided that in the interest of ecosystem harmonization, the best strategic approach will be to consolidate everything under the vProgs umbrella in an effort to help accelerate vProgs design and development.”
+
+He added that this decision effectively brings Sparkle’s prior R&D directly into vProgs, noting that “vProgs will have a significant boost thanks to the efforts made on the Sparkle L2 project.”
+
+Anton has also been vocal about vProgs’ technical ambition, describing it as a unifying solution rather than a niche layer:
+
+“There is a ‘one size fits all’ solution, and that’s vProgs… a ZK composability layer that turns Kaspa from a global sequencer into a global ZK sequencer — without imposing any limitations or obstructing anything.”
+
+At the same time, he was candid about the challenges ahead, emphasizing that feasibility is not the concern. Instead, he pointed to coordination and execution as the real bottlenecks, highlighting the need for clear architecture, structured project management, and aligned development efforts. Through ongoing collaboration with Kaspa core contributors and documents such as vProgs JAM SESSIONS and the EPA paper, Anton is now working to help the ecosystem converge on a cohesive architecture and an executable plan toward an MVP.
+
+An End of of a Block Explorer: Kas.FYI
+
+On December 11, 2025, the Kaspa explorer Kas.fyi announced it would shut down and discontinue its API services within 30 days, citing a lack of funding. Kas.fyi was built and maintained by community member @CryptoK, who spent more than 2 years developing the platform and personally covering infrastructure costs totaling thousands of dollars per month.
+
+Kas.fyi has served as a comprehensive Kaspa explorer and analytics hub, providing real-time network data, including current supply, blocks per second (BPS), transactions per second (TPS), hashrate, percent mined, maximum TPS, next reduction timing, DAA score, market cap, price, and volume. The platform also offers visibility into live transactions, active addresses, public nodes, and additional network statistics.
+
+Beyond its explorer functionality, Kas.fyi includes a Kaspa Developer Platform with production-ready APIs designed for exchanges, wallets, and other high-scale applications, offering fair pricing and ease of integration.
+
+Following the shutdown announcement, Yonatan Sompolinsky offered support to meritorious Kaspa projects facing funding challenges, encouraging builders to reach out to him directly on Telegram for assistance.
+
+Kas.fyi has been a valuable community resource, and the work behind it reflects a significant contribution to the Kaspa ecosystem. Thank you to @CryptoK for building and maintaining this infrastructure for the community.
+
+However, KASmedia will be working with @asaefstroem to develop and fund a new Kaspa explorer compatible with vProgs and L2 sync composability real-time decentralization while offering APIs and Opcodes.
+
+New Kaspa Update Makes Life Easier for Exchanges and App Builders
+
+A recent pull request (PR740), based on earlier work by DS, was just merged into the rusty-kaspa repo and brings a big quality-of-life upgrade for anyone building on Kaspa. The update lets nodes return richer transaction data through the RPC interface, so services can easily see who sent a transaction and how much fee it paid without doing extra heavy lifting. This is especially helpful for exchanges, apps like Kasia, and indexers such as KRC-20 trackers, which all depend on this kind of information.
+
+Kaspa core developer Michael Sutton also noted that the change makes the API simpler and more familiar to new integrators. Instead of juggling two separate data streams, they can now use a single flow that feels more like working with classic blockchains, while the complexity of Kaspa’s DAG and VSPC structure is handled behind the scenes.
+
+The KAT Bridge Has Been Audited 
+
+The Kaspa Alliance for Transparency (KAT) published the results of a security audit conducted by RD Auditors covering the OSKT Coordinator application, a key component of the KRC20 ↔ ERC20 bridge. The coordinator is responsible for PSKT creation, signature collection, and transaction broadcasting for the L2 → L1 withdrawal flow.
+
+The audit identified one critical, one high, and two medium severity vulnerabilities. According to the report, all identified issues have since been resolved.
+
+Publishing the audit reflects KAT’s ongoing focus on security and transparency as bridge infrastructure continues to mature.
+
+Kodex: Decentralized Media Platform
+
+Community members shared in the Nacho the Kat Discord that the KAT/Nacho team is working on a new project called Kodex, a decentralized, censorship-resistant media platform for video and podcast content built on Kaspa’s BlockDAG.
+
+According to the discussion, Crumpet Media is expected to launch the first implementation of Kodex, providing an early look at how decentralized media distribution could be built on top of Kaspa’s high-throughput base layer.
+
+Kasia + Kasanova Wallet Integration
+
+The latest Kasanova Wallet update (v0.2.8) introduces native support for Kasia’s encrypted messaging, allowing users to send messages directly from within the wallet interface.
+
+With this integration, Kasia messages are transmitted as low-cost transactions on Kaspa, enabling encrypted communication that is anchored to the network rather than relying on centralized messaging servers. The update brings together asset management and secure messaging under the same decentralized infrastructure.
+
+This integration highlights ongoing experimentation around how Kaspa’s high-throughput base layer can support use cases beyond payments, including communication primitives built directly on the network.
+
+IzioDev New Code
+
+Developer IzioDev released beta starter kits designed to simplify building Kaspa-integrated applications. The kits allow developers to bootstrap a project with a single command, providing a ready-made skeleton wired to Kaspa using either a React front end or a Node.js backend.
+
+These templates reduce low-level setup by including standard scaffolding for wallet integration, RPC calls, and application logic, making it easier for front-end and full-stack developers to experiment with Kaspa-based dApps.
+
+Finance Freeman : Blockchain vs BlockDAG
+
+This week, we’re highlighting a new video from Finance Freeman that breaks down the differences between traditional blockchains and BlockDAG architectures, using Bitcoin and Kaspa as case studies. The video serves as a clear educational resource for newcomers looking to understand Kaspa’s design choices.
+
+Finance Freeman begins by noting that both Bitcoin and Kaspa are proof-of-work (PoW) networks. Unlike proof-of-stake systems that rely on validator committees, PoW secures consensus through energy expenditure, a model he summarizes as “tying money to physics,” echoing Elon Musk’s comment that “energy is the true currency.” He then contrasts how the two networks evolve: Bitcoin follows a four-year halving cycle, while Kaspa implements a monthly emission reduction, resulting in a smoother supply curve. The video also highlights that Bitcoin was not designed for high-speed payments, whereas Kaspa’s BlockDAG architecture enables high throughput while retaining Bitcoin’s UTXO model.
+
+Taken together, the video frames Kaspa as an evolution of Bitcoin’s core principles rather than a departure from them, showing how a BlockDAG can preserve PoW security and the familiar UTXO model while pushing throughput and usability into a new league for everyday payments.
+
+Enjoyed reading this article?
+
+More articles like this
+Comments
+
+No comments yet!
+
+Post a comment
+Comment
+Name
+Email
+Post Comment
+
+© 2026
+
+Branding Guidelines
+KASmedia Media Kit
+Terms of Service
+Privacy Policy
