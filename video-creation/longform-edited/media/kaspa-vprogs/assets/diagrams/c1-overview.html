@@ -1,0 +1,153 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>c1-overview · kaspa-vprogs · Type 2 SYSTEM-DESIGN (THE C1 diagram)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ==== BASE: tokens + anatomy from skills/container-reference/container-canonical.css (do not re-derive) ==== */
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--bg-card-hover:#181c26;--accent-green:#00e68a;--accent-cyan:#00c2ff;
+  --accent-gold:#ffd700;--accent-red:#ff4060;--accent-purple:#a855f7;--accent-teal:#49e0c8;
+  --text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;
+  /* role colors for THIS video (rgb triplets): Kaspa L1 = teal (brand greenish cyan) · vProg = purple ·
+     provers / ZK proof = gold · users / tx = cyan · live / ok = green · risk / struck = red */
+  --r-kas:73,224,200;--r-vp:168,85,247;--r-pr:255,215,0;--r-us:0,194,255;--r-ok:0,230,138;--r-bad:255,64,96}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary);margin-bottom:40px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.hdr{position:absolute;left:120px;top:76px;z-index:2}
+.ey{font-size:27px;font-weight:600;letter-spacing:.18em;color:var(--text-muted);margin-bottom:22px} /* caps typed literally: keeps "vPROG" */
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:70px;line-height:1.07;letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin-top:28px}
+.src{position:absolute;left:120px;bottom:38px;font-family:'JetBrains Mono',monospace;font-size:19px;color:var(--text-muted);z-index:2}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)}.c{color:var(--accent-cyan)}.go{color:var(--accent-gold)}.re{color:var(--accent-red)}.pu{color:var(--accent-purple)}.tl{color:var(--accent-teal)}
+svg.wires{position:absolute;inset:0;width:1920px;height:1080px;z-index:1;overflow:visible}
+/* NODE: resting = readable (titles text-secondary, subs muted); .on = lit in its role color */
+.node{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:22px;padding:30px 34px}
+.node .top{position:absolute;inset:-2px;border-radius:22px;overflow:hidden;pointer-events:none;opacity:0} /* clip box = the card's OUTER shape, so the accent bar follows the rounded corner (visual-qa r2 nub fix) */
+.node .top::before{content:"";position:absolute;left:0;right:0;top:0;height:4px}
+.node .nt{font-weight:700;font-size:32px;letter-spacing:.08em;color:var(--text-secondary)}
+.node .ns{font-weight:500;font-size:24px;color:var(--text-muted);margin-top:8px}
+.node.on{border-color:rgba(var(--r),.85);background:linear-gradient(160deg,rgba(var(--r),.13),rgba(18,21,28,.97) 62%);
+  box-shadow:0 0 0 1px rgba(var(--r),.25),0 0 70px rgba(var(--r),.26)}
+.node.on .top{opacity:1}.node.on .top::before{background:linear-gradient(90deg,rgb(var(--r)),transparent)}
+.node.on .nt{color:rgb(var(--r))}.node.on .ns{color:var(--text-primary)}
+/* EDGE: resting muted wire; .on = role color + glow */
+.edge path,.edge line{stroke:#283042;stroke-width:4;fill:none;stroke-linecap:round}
+.edge polygon{fill:#283042}
+.edge.on{filter:drop-shadow(0 0 8px rgba(var(--r),.75))}
+.edge.on path,.edge.on line{stroke:rgb(var(--r))}.edge.on polygon{fill:rgb(var(--r))}
+.rv{opacity:0}.rv.on{opacity:1}
+/* ==== CHART-SPECIFIC ==== */
+.node{padding:26px 30px}
+.node .nt{font-size:30px}
+.node .ns{font-size:23px}
+.ico{position:absolute;right:28px;top:26px;color:#3a4254}
+.node.on .ico{color:rgb(var(--r))}
+/* Kaspa L1's four job rows (plain verb + the yellow paper's term beside it) */
+.job{position:absolute;left:26px;right:26px;height:84px;border-radius:14px;border:2px solid #20263300;background:rgba(255,255,255,.025);
+  display:flex;align-items:center;gap:20px;padding:0 22px}
+.job .n{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:20px;color:var(--text-muted);width:30px}
+.job .v{font-weight:700;font-size:27px;letter-spacing:.08em;color:var(--text-secondary);line-height:1.15}
+.job .t{font-weight:500;font-size:21px;color:var(--text-muted);line-height:1.2;margin-top:3px}
+.n-kas.on .job .v{color:var(--text-primary)}.n-kas.on .job .t{color:var(--text-secondary)}
+.job.hot{border-color:rgba(73,224,200,.85);background:linear-gradient(90deg,rgba(73,224,200,.2),rgba(73,224,200,.05));box-shadow:0 0 34px rgba(73,224,200,.3)}
+.job.hot .v{color:var(--accent-teal)!important}.job.hot .t{color:var(--text-primary)!important}.job.hot .n{color:var(--accent-teal)}
+.elabel{position:absolute;z-index:2;font-weight:600;font-size:19px;letter-spacing:.12em;color:var(--text-muted)}
+.elabel.on{color:rgb(var(--r))}
+.txchip{position:absolute;z-index:3;left:452px;top:452px;padding:8px 18px;border-radius:10px;border:2px solid var(--accent-cyan);
+  background:linear-gradient(rgba(0,194,255,.16),rgba(0,194,255,.16)),#12151c;color:var(--accent-cyan);font-weight:700;font-size:22px;letter-spacing:.14em}
+.tag{position:absolute;z-index:3;left:120px;padding:7px 16px;border-radius:100px;border:2px solid rgba(0,194,255,.75);
+  background:linear-gradient(rgba(0,194,255,.12),rgba(0,194,255,.12)),#12151c;color:var(--text-primary);font-weight:600;font-size:20px;letter-spacing:.08em}
+.tag b{color:var(--accent-cyan);font-weight:700}
+</style></head>
+<body>
+<template id="tpl">
+  <div class="orb" style="width:620px;height:620px;left:400px;top:260px;background:var(--accent-teal);opacity:.13"></div>
+  <div class="orb" style="width:460px;height:460px;right:-160px;bottom:-180px;background:var(--accent-purple);opacity:.18"></div>
+  <div class="hdr">
+    <div class="ey">NOT AN L2 · THE MACHINE</div>
+    <h1>How a <span class="pu">vProg</span> actually works</h1>
+    <div class="divider"></div>
+  </div>
+
+  <svg class="wires" viewBox="0 0 1920 1080">
+    <!-- users -> kaspa (tx) -->
+    <g class="edge e-tx" style="--r:var(--r-us)"><line x1="422" y1="508" x2="560" y2="508"/><polygon points="580,508 558,496 558,520"/></g>
+    <!-- kaspa -> vProg A / B (ordered txs + data) -->
+    <g class="edge e-ka" style="--r:var(--r-vp)"><line x1="1202" y1="392" x2="1318" y2="392"/><polygon points="1338,392 1316,380 1316,404"/></g>
+    <g class="edge e-kb" style="--r:var(--r-vp)"><line x1="1202" y1="582" x2="1318" y2="582"/><polygon points="1338,582 1316,570 1316,594"/></g>
+    <!-- vProg state -> provers (dashed bus on the right) -->
+    <g class="edge e-st" style="--r:var(--r-pr)"><path d="M1770 392 H1816 V790 H1792" stroke-dasharray="10 10"/><path d="M1770 582 H1816" stroke-dasharray="10 10"/><polygon points="1772,790 1794,778 1794,802"/></g>
+    <!-- provers -> kaspa (ZK proof into CHECKS PROOFS) -->
+    <g class="edge e-zk" style="--r:var(--r-pr)"><path d="M1338 790 C1270 790 1282 660 1222 660"/><polygon points="1202,660 1224,648 1224,672"/></g>
+  </svg>
+  <div class="elabel l-ord" style="--r:var(--r-vp);left:1214px;top:322px;line-height:1.25">ORDERED<br>TXS</div>
+  <div class="elabel l-st" style="--r:var(--r-pr);left:1830px;top:560px;writing-mode:vertical-rl">STATE</div>
+  <div class="elabel l-zk" style="--r:var(--r-pr);left:1222px;top:812px">ZK PROOF</div>
+
+  <!-- USERS -->
+  <div class="node n-us" style="--r:var(--r-us);left:120px;top:432px;width:300px;height:152px">
+    <div class="top"></div>
+    <svg class="ico" width="40" height="36" viewBox="0 0 40 36" fill="none" stroke="currentColor" stroke-width="3"><circle cx="14" cy="10" r="6"/><path d="M3 32c0-7 5-11 11-11s11 4 11 11"/><circle cx="29" cy="12" r="5"/><path d="M28 21c5 0 9 4 9 10"/></svg>
+    <div class="nt">USERS</div>
+    <div class="ns">send transactions</div>
+  </div>
+  <div class="txchip rv x-tx">TX</div>
+  <div class="tag rv x-rd" style="top:610px"><b>READS</b> declared</div>
+  <div class="tag rv x-wr" style="top:664px"><b>WRITES</b> declared</div>
+
+  <!-- KASPA L1 -->
+  <div class="node n-kas" style="--r:var(--r-kas);left:580px;top:296px;width:620px;height:524px">
+    <div class="top"></div>
+    <div class="nt">KASPA L1</div>
+    <div class="ns">proof of work base layer</div>
+    <div class="job j-ord" style="top:122px"><span class="n">01</span><span><div class="v">ORDERS</div><div class="t">sequencer</div></span></div>
+    <div class="job j-sto" style="top:220px"><span class="n">02</span><span><div class="v">STORES</div><div class="t">data availability + state index</div></span></div>
+    <div class="job j-chk" style="top:318px"><span class="n">03</span><span><div class="v">CHECKS PROOFS</div><div class="t">ZK verify</div></span></div>
+    <div class="job j-met" style="top:416px"><span class="n">04</span><span><div class="v">METERS</div><div class="t">resource metering</div></span></div>
+  </div>
+
+  <!-- vPROG A / B NODES -->
+  <div class="node n-va" style="--r:var(--r-vp);left:1340px;top:318px;width:430px;height:148px">
+    <div class="top"></div>
+    <svg class="ico" width="38" height="36" viewBox="0 0 38 36" fill="none" stroke="currentColor" stroke-width="3"><rect x="2" y="3" width="34" height="12" rx="3"/><rect x="2" y="21" width="34" height="12" rx="3"/><path d="M8 9h8M8 27h8"/></svg>
+    <div class="nt">vPROG A NODES</div>
+    <div class="ns">run the app · own state</div>
+  </div>
+  <div class="node n-vb" style="--r:var(--r-vp);left:1340px;top:508px;width:430px;height:148px">
+    <div class="top"></div>
+    <svg class="ico" width="38" height="36" viewBox="0 0 38 36" fill="none" stroke="currentColor" stroke-width="3"><rect x="2" y="3" width="34" height="12" rx="3"/><rect x="2" y="21" width="34" height="12" rx="3"/><path d="M8 9h8M8 27h8"/></svg>
+    <div class="nt">vPROG B NODES</div>
+    <div class="ns">run the app · own state</div>
+  </div>
+
+  <!-- PROVERS -->
+  <div class="node n-pr" style="--r:var(--r-pr);left:1340px;top:716px;width:430px;height:148px">
+    <div class="top"></div>
+    <svg class="ico" width="32" height="36" viewBox="0 0 32 36" fill="none" stroke="currentColor" stroke-width="3"><path d="M16 2l13 5v10c0 8-6 14-13 17C9 31 3 25 3 17V7z"/><path d="M10 18l4.5 4.5L23 13" stroke-linecap="round"/></svg>
+    <div class="nt">PROVERS</div>
+    <div class="ns">post ZK proofs</div>
+  </div>
+
+  <div class="src">Source: Kaspa vProgs yellow paper, first draft (v0.0.1), sec 1.2 · 2.2 · 2.3 · 3 · 6</div>
+</template>
+<script>
+const CHART='c1-overview';
+const STATES=[
+  {id:'dim',    on:[]},                                              // 81.70 entry: whole machine, resting
+  {id:'users',  on:['.n-us','.e-tx','.x-tx']},                       // 'transaction' 84.74
+  {id:'reads',  on:['.n-us','.e-tx','.x-tx','.x-rd']},               // 'reads' 87.44
+  {id:'writes', on:['.n-us','.e-tx','.x-tx','.x-rd','.x-wr']},       // 'writes' 88.62
+  {id:'kaspa',  on:['.n-kas']},                                      // 'four' 89.80 (spotlight moves to Kaspa)
+  {id:'orders', on:['.n-kas'], hot:['.j-ord']},                      // 'orders' 90.96 (comp pulses it on 'sequencer' 94.06)
+];
+const tpl=document.getElementById('tpl');
+for(const s of STATES){const f=document.createElement('div');f.className='frame';f.id=CHART+'-'+s.id;
+  f.appendChild(tpl.content.cloneNode(true));
+  s.on.forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('on')));
+  (s.hot||[]).forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('hot')));document.body.appendChild(f);}
+
+</script>
+</body></html>

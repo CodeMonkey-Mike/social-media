@@ -1,0 +1,154 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>c2-l2-stack · kaspa-vprogs · Type 2 SYSTEM-DESIGN</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ==== BASE: tokens + anatomy from skills/container-reference/container-canonical.css (do not re-derive) ==== */
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--bg-card-hover:#181c26;--accent-green:#00e68a;--accent-cyan:#00c2ff;
+  --accent-gold:#ffd700;--accent-red:#ff4060;--accent-purple:#a855f7;--accent-teal:#49e0c8;
+  --text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;
+  /* role colors for THIS video (rgb triplets): Kaspa L1 = teal (brand greenish cyan) · vProg = purple ·
+     provers / ZK proof = gold · users / tx = cyan · live / ok = green · risk / struck = red */
+  --r-kas:73,224,200;--r-vp:168,85,247;--r-pr:255,215,0;--r-us:0,194,255;--r-ok:0,230,138;--r-bad:255,64,96}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary);margin-bottom:40px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.hdr{position:absolute;left:120px;top:76px;z-index:2}
+.ey{font-size:27px;font-weight:600;letter-spacing:.18em;color:var(--text-muted);margin-bottom:22px} /* caps typed literally: keeps "vPROG" */
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:70px;line-height:1.07;letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin-top:28px}
+.src{position:absolute;left:120px;bottom:38px;font-family:'JetBrains Mono',monospace;font-size:19px;color:var(--text-muted);z-index:2}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)}.c{color:var(--accent-cyan)}.go{color:var(--accent-gold)}.re{color:var(--accent-red)}.pu{color:var(--accent-purple)}.tl{color:var(--accent-teal)}
+svg.wires{position:absolute;inset:0;width:1920px;height:1080px;z-index:1;overflow:visible}
+/* NODE: resting = readable (titles text-secondary, subs muted); .on = lit in its role color */
+.node{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:22px;padding:30px 34px}
+.node .top{position:absolute;inset:-2px;border-radius:22px;overflow:hidden;pointer-events:none;opacity:0} /* clip box = the card's OUTER shape, so the accent bar follows the rounded corner (visual-qa r2 nub fix) */
+.node .top::before{content:"";position:absolute;left:0;right:0;top:0;height:4px}
+.node .nt{font-weight:700;font-size:32px;letter-spacing:.08em;color:var(--text-secondary)}
+.node .ns{font-weight:500;font-size:24px;color:var(--text-muted);margin-top:8px}
+.node.on{border-color:rgba(var(--r),.85);background:linear-gradient(160deg,rgba(var(--r),.13),rgba(18,21,28,.97) 62%);
+  box-shadow:0 0 0 1px rgba(var(--r),.25),0 0 70px rgba(var(--r),.26)}
+.node.on .top{opacity:1}.node.on .top::before{background:linear-gradient(90deg,rgb(var(--r)),transparent)}
+.node.on .nt{color:rgb(var(--r))}.node.on .ns{color:var(--text-primary)}
+/* EDGE: resting muted wire; .on = role color + glow */
+.edge path,.edge line{stroke:#283042;stroke-width:4;fill:none;stroke-linecap:round}
+.edge polygon{fill:#283042}
+.edge.on{filter:drop-shadow(0 0 8px rgba(var(--r),.75))}
+.edge.on path,.edge.on line{stroke:rgb(var(--r))}.edge.on polygon{fill:rgb(var(--r))}
+.rv{opacity:0}.rv.on{opacity:1}
+/* ==== CHART-SPECIFIC ==== */
+.box{position:absolute;z-index:2;border:2px solid var(--border);border-radius:22px;background:rgba(18,21,28,.9)}
+.box .bh{position:absolute;left:30px;top:24px;font-weight:700;font-size:26px;letter-spacing:.14em;color:var(--text-secondary)}
+.box.ghost{border-style:dashed;border-color:#252b39;background:rgba(18,21,28,.55)}
+.box.ghost .bh{font-size:22px;color:var(--text-muted)}
+.row{position:absolute;left:30px;right:30px;height:96px;border:2px dashed #262c3a;border-radius:16px;display:flex;align-items:center;gap:22px;padding:0 26px}
+.row>*{opacity:0}
+.row.on{border:2px solid rgba(0,194,255,.6);background:linear-gradient(90deg,rgba(0,194,255,.12),rgba(0,194,255,.02));box-shadow:0 0 28px rgba(0,194,255,.14)}
+.row.on>*{opacity:1}
+.row .ic{width:44px;height:44px;flex:none;color:var(--accent-cyan)}
+.row .rt{font-weight:700;font-size:30px;letter-spacing:.08em;color:var(--text-primary)}
+.row .rs{font-weight:500;font-size:23px;color:var(--text-secondary);margin-top:2px}
+.ghost .row{left:22px;right:22px;padding:0 18px}
+.ghost .row.on{border-color:rgba(136,146,164,.45);background:rgba(136,146,164,.07);box-shadow:none}
+.ghost .row .rt{font-size:21px;color:var(--text-secondary);font-weight:600;letter-spacing:.1em}
+.ghost .row .ic{width:30px;height:30px;color:var(--text-secondary)}
+/* 'pieces': attack-surface outline on sequencer + bridge rows */
+.row.risk.hot{border-color:var(--accent-red);background:linear-gradient(90deg,rgba(255,64,96,.16),rgba(255,64,96,.03));box-shadow:0 0 0 4px rgba(255,64,96,.18),0 0 40px rgba(255,64,96,.35)}
+.row.risk.hot .ic{color:var(--accent-red)}
+.ghost .row.risk.hot{border-color:rgba(255,64,96,.7);background:rgba(255,64,96,.08);box-shadow:0 0 24px rgba(255,64,96,.22)}
+.ghost .row.risk.hot .ic,.ghost .row.risk.hot .rt{color:#ff8098}
+.atk{position:absolute;right:22px;top:50%;transform:translateY(-50%);padding:8px 16px;border-radius:100px;background:rgba(255,64,96,.16);
+  border:2px solid rgba(255,64,96,.8);color:var(--accent-red);font-weight:700;font-size:19px;letter-spacing:.12em;opacity:0!important}
+.row.risk.hot .atk{opacity:1!important}
+.l1{position:absolute;z-index:2;left:120px;top:900px;width:1680px;height:72px;border-radius:18px;border:2px solid #2a3142;
+  background:linear-gradient(90deg,#141824,#10131a);display:flex;align-items:center;gap:26px;padding:0 34px}
+.l1 .t{font-weight:700;font-size:28px;letter-spacing:.12em;color:var(--text-secondary)}
+.l1 .s{font-weight:500;font-size:24px;color:var(--text-muted)}
+.blabel{position:absolute;z-index:2;left:546px;top:838px;font-weight:600;font-size:22px;letter-spacing:.12em;color:var(--text-muted)}
+.blabel.on{color:var(--accent-cyan)}
+.blabel.hot{color:var(--accent-red)}
+.edge.hot path,.edge.hot line{stroke:var(--accent-red)}.edge.hot polygon{fill:var(--accent-red)}
+.edge.hot{filter:drop-shadow(0 0 8px rgba(255,64,96,.75))}
+</style></head>
+<body>
+<template id="tpl">
+  <div class="orb" style="width:600px;height:600px;right:-180px;top:-220px;background:var(--accent-red);opacity:.16"></div>
+  <div class="orb" style="width:520px;height:520px;left:-200px;bottom:-240px;background:var(--accent-cyan);opacity:.18"></div>
+  <div class="hdr">
+    <div class="ey">THE ROAD ETHEREUM TOOK</div>
+    <h1>Every rollup is <span class="re">its own stack</span></h1>
+    <div class="divider"></div>
+  </div>
+
+  <!-- bridge connectors, rollup -> L1 (two-way) -->
+  <svg class="wires" viewBox="0 0 1920 1080">
+    <g class="edge e-brA" style="--r:var(--r-us)"><line x1="520" y1="836" x2="520" y2="880"/><polygon points="520,896 508,876 532,876"/><polygon points="520,820 508,840 532,840"/></g>
+    <g class="edge e-brB" style="--r:136,146,164"><line x1="1190" y1="836" x2="1190" y2="880"/><polygon points="1190,896 1178,876 1202,876"/><polygon points="1190,820 1178,840 1202,840"/></g>
+    <g class="edge e-brC" style="--r:136,146,164"><line x1="1610" y1="836" x2="1610" y2="880"/><polygon points="1610,896 1598,876 1622,876"/><polygon points="1610,820 1598,840 1622,840"/></g>
+  </svg>
+  <div class="blabel b-lab">BRIDGE</div>
+
+  <!-- ROLLUP A (featured) -->
+  <div class="box" style="left:120px;top:272px;width:800px;height:546px">
+    <div class="bh">ROLLUP A</div>
+    <div class="row r-chain" style="top:84px">
+      <svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><rect x="4" y="14" width="16" height="16" rx="4"/><rect x="24" y="14" width="16" height="16" rx="4"/><path d="M20 22h4"/></svg>
+      <div><div class="rt">OWN CHAIN</div><div class="rs">a separate chain</div></div>
+    </div>
+    <div class="row r-seq risk" style="top:192px">
+      <svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M6 10h24M6 22h24M6 34h24"/><path d="M36 8v28M36 36l-4-5M36 36l4-5"/></svg>
+      <div><div class="rt">OWN SEQUENCER</div><div class="rs">orders your transactions</div></div>
+      <div class="atk">ATTACK SURFACE</div>
+    </div>
+    <div class="row r-bridge risk" style="top:300px">
+      <svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M3 30h38M7 30c3-12 27-12 30 0M13 30v8M31 30v8"/></svg>
+      <div><div class="rt">OWN BRIDGE</div><div class="rs">to reach the L1</div></div>
+      <div class="atk">ATTACK SURFACE</div>
+    </div>
+    <div class="row r-liq" style="top:408px">
+      <svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"><path d="M22 5c6 9 12 15 12 22a12 12 0 0 1-24 0c0-7 6-13 12-22z"/></svg>
+      <div><div class="rt">OWN SLICE OF LIQUIDITY</div><div class="rs">liquidity split per rollup</div></div>
+    </div>
+  </div>
+
+  <!-- ROLLUP B / C (the same stack, again) -->
+  <div class="box ghost" style="left:1000px;top:272px;width:380px;height:546px">
+    <div class="bh">ROLLUP B</div>
+    <div class="row r-chain" style="top:84px"><svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><rect x="4" y="14" width="16" height="16" rx="4"/><rect x="24" y="14" width="16" height="16" rx="4"/><path d="M20 22h4"/></svg><div class="rt">CHAIN</div></div>
+    <div class="row r-seq risk" style="top:192px"><svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M6 10h24M6 22h24M6 34h24"/><path d="M36 8v28M36 36l-4-5M36 36l4-5"/></svg><div class="rt">SEQUENCER</div></div>
+    <div class="row r-bridge risk" style="top:300px"><svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M3 30h38M7 30c3-12 27-12 30 0M13 30v8M31 30v8"/></svg><div class="rt">BRIDGE</div></div>
+    <div class="row r-liq" style="top:408px"><svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"><path d="M22 5c6 9 12 15 12 22a12 12 0 0 1-24 0c0-7 6-13 12-22z"/></svg><div class="rt">LIQUIDITY</div></div>
+  </div>
+  <div class="box ghost" style="left:1420px;top:272px;width:380px;height:546px">
+    <div class="bh">ROLLUP C</div>
+    <div class="row r-chain" style="top:84px"><svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><rect x="4" y="14" width="16" height="16" rx="4"/><rect x="24" y="14" width="16" height="16" rx="4"/><path d="M20 22h4"/></svg><div class="rt">CHAIN</div></div>
+    <div class="row r-seq risk" style="top:192px"><svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M6 10h24M6 22h24M6 34h24"/><path d="M36 8v28M36 36l-4-5M36 36l4-5"/></svg><div class="rt">SEQUENCER</div></div>
+    <div class="row r-bridge risk" style="top:300px"><svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M3 30h38M7 30c3-12 27-12 30 0M13 30v8M31 30v8"/></svg><div class="rt">BRIDGE</div></div>
+    <div class="row r-liq" style="top:408px"><svg class="ic" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"><path d="M22 5c6 9 12 15 12 22a12 12 0 0 1-24 0c0-7 6-13 12-22z"/></svg><div class="rt">LIQUIDITY</div></div>
+  </div>
+
+  <div class="l1"><span class="t">ETHEREUM L1</span><span class="s">consensus + data availability</span></div>
+  <div class="src">Source: V. Buterin, "A rollup-centric ethereum roadmap", 2020-10-02 · vProgs yellow paper sec 1.1</div>
+</template>
+<script>
+const CHART='c2-l2-stack';
+const C=['.r-chain'], S=[...C,'.r-seq'], B=[...S,'.r-bridge','.e-brA','.e-brB','.e-brC','.b-lab'], L=[...B,'.r-liq'];
+const STATES=[
+  {id:'empty',     on:[]},          // 52.18 entry: three empty rollup frames on the L1
+  {id:'chain',     on:C},           // 'chain' 54.04
+  {id:'sequencer', on:S},           // 'sequencer' 55.38
+  {id:'bridge',    on:B},           // 'bridge' 58.96
+  {id:'liquidity', on:L},           // 'liquidity' 60.60
+  {id:'pieces',    on:L, hot:['.row.risk','.e-brA','.e-brB','.e-brC','.b-lab']}, // 'pieces' 62.12
+];
+const tpl=document.getElementById('tpl');
+for(const s of STATES){const f=document.createElement('div');f.className='frame';f.id=CHART+'-'+s.id;
+  f.appendChild(tpl.content.cloneNode(true));
+  s.on.forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('on')));
+  (s.hot||[]).forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('hot')));document.body.appendChild(f);}
+
+</script>
+</body></html>

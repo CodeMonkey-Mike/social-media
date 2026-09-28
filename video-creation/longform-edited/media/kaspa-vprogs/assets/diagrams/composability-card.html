@@ -1,0 +1,134 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>composability-card · kaspa-vprogs · Type 2 SYSTEM-DESIGN (C2 right-column break-up, 2 of 2)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ==== BASE: tokens + anatomy from skills/container-reference/container-canonical.css (do not re-derive) ==== */
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--bg-card-hover:#181c26;--accent-green:#00e68a;--accent-cyan:#00c2ff;
+  --accent-gold:#ffd700;--accent-red:#ff4060;--accent-purple:#a855f7;--accent-teal:#49e0c8;
+  --text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;
+  /* role colors for THIS video (rgb triplets): Kaspa L1 = teal (brand greenish cyan) · vProg = purple ·
+     provers / ZK proof = gold · users / tx = cyan · live / ok = green · risk / struck = red */
+  --r-kas:73,224,200;--r-vp:168,85,247;--r-pr:255,215,0;--r-us:0,194,255;--r-ok:0,230,138;--r-bad:255,64,96}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary);margin-bottom:40px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.hdr{position:absolute;left:120px;top:76px;z-index:2}
+.ey{font-size:27px;font-weight:600;letter-spacing:.18em;color:var(--text-muted);margin-bottom:22px} /* caps typed literally: keeps "vPROG" */
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:70px;line-height:1.07;letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin-top:28px}
+.src{position:absolute;left:120px;bottom:38px;font-family:'JetBrains Mono',monospace;font-size:19px;color:var(--text-muted);z-index:2}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)}.c{color:var(--accent-cyan)}.go{color:var(--accent-gold)}.re{color:var(--accent-red)}.pu{color:var(--accent-purple)}.tl{color:var(--accent-teal)}
+svg.wires{position:absolute;inset:0;width:1920px;height:1080px;z-index:1;overflow:visible}
+/* NODE: resting = readable (titles text-secondary, subs muted); .on = lit in its role color */
+.node{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:22px;padding:30px 34px}
+.node .top{position:absolute;inset:-2px;border-radius:22px;overflow:hidden;pointer-events:none;opacity:0} /* clip box = the card's OUTER shape, so the accent bar follows the rounded corner (visual-qa r2 nub fix) */
+.node .top::before{content:"";position:absolute;left:0;right:0;top:0;height:4px}
+.node .nt{font-weight:700;font-size:32px;letter-spacing:.08em;color:var(--text-secondary)}
+.node .ns{font-weight:500;font-size:24px;color:var(--text-muted);margin-top:8px}
+.node.on{border-color:rgba(var(--r),.85);background:linear-gradient(160deg,rgba(var(--r),.13),rgba(18,21,28,.97) 62%);
+  box-shadow:0 0 0 1px rgba(var(--r),.25),0 0 70px rgba(var(--r),.26)}
+.node.on .top{opacity:1}.node.on .top::before{background:linear-gradient(90deg,rgb(var(--r)),transparent)}
+.node.on .nt{color:rgb(var(--r))}.node.on .ns{color:var(--text-primary)}
+/* EDGE: resting muted wire; .on = role color + glow */
+.edge path,.edge line{stroke:#283042;stroke-width:4;fill:none;stroke-linecap:round}
+.edge polygon{fill:#283042}
+.edge.on{filter:drop-shadow(0 0 8px rgba(var(--r),.75))}
+.edge.on path,.edge.on line{stroke:rgb(var(--r))}.edge.on polygon{fill:rgb(var(--r))}
+.rv{opacity:0}.rv.on{opacity:1}
+/* ==== CHART-SPECIFIC ==== */
+h1{font-size:84px}
+.node{padding:30px 36px}
+.node .nt{font-size:34px}
+.st{display:inline-flex;align-items:center;gap:12px;margin-top:22px;padding:12px 20px;border-radius:12px;border:2px solid #2a3140;
+  color:var(--text-secondary);font-weight:700;font-size:22px;letter-spacing:.12em;background:#10131a}
+.node.on .st{border-color:rgba(168,85,247,.7);color:#c89bff;background:rgba(168,85,247,.1)}
+.rl{position:absolute;z-index:3;padding:8px 16px;border-radius:100px;background:#12151c;border:2px solid rgba(0,230,138,.8);
+  color:var(--accent-green);font-weight:700;font-size:21px;letter-spacing:.1em;opacity:0}
+.rl.on{opacity:1}
+.edge.rv{opacity:0}.edge.rv.on{opacity:1}
+.tx{position:absolute;z-index:2;left:200px;width:1520px;top:676px;height:96px;border-radius:18px;border:2px dashed #262c3a;
+  display:flex;align-items:center;justify-content:center;gap:22px}
+.tx>*{opacity:0}
+.tx.on{border:2px solid rgba(0,194,255,.85);background:linear-gradient(90deg,rgba(0,194,255,.14),rgba(0,194,255,.05),rgba(0,194,255,.14));box-shadow:0 0 36px rgba(0,194,255,.25)}
+.tx.on>*{opacity:1}
+.tx .tt{font-weight:700;font-size:30px;letter-spacing:.12em;color:var(--accent-cyan)}
+.tx .ts{font-weight:500;font-size:25px;color:var(--text-primary)}
+.tx.hot{border-color:rgba(0,230,138,.9);background:linear-gradient(90deg,rgba(0,230,138,.16),rgba(0,230,138,.05),rgba(0,230,138,.16));box-shadow:0 0 44px rgba(0,230,138,.3)}
+.tx.hot .tt{color:var(--accent-green)}
+.brk{position:absolute;z-index:1;width:4px;top:596px;height:80px;background:#262c3a}
+.brk.on{background:rgba(0,194,255,.8)}.brk.hot{background:rgba(0,230,138,.85)}
+.out{position:absolute;z-index:2;top:820px;display:flex;align-items:center;gap:16px;padding:16px 28px;border-radius:100px;opacity:0}
+.out.on{opacity:1}
+.o-yes{left:200px;border:2px solid var(--accent-green);background:rgba(0,230,138,.14);box-shadow:0 0 36px rgba(0,230,138,.3)}
+.o-yes .k{font-weight:700;font-size:30px;letter-spacing:.12em;color:var(--accent-green)}
+.o-no{left:760px;border:2px dashed #3a4254;background:rgba(255,255,255,.02)}
+.o-no .k{font-weight:700;font-size:26px;letter-spacing:.12em;color:var(--text-secondary)}
+.out .d{font-weight:500;font-size:24px;color:var(--text-primary)}
+.o-no .d{color:var(--text-muted)}
+</style></head>
+<body>
+<template id="tpl">
+  <div class="orb" style="width:560px;height:560px;left:-160px;top:200px;background:var(--accent-purple);opacity:.16"></div>
+  <div class="orb" style="width:520px;height:520px;right:-160px;bottom:-200px;background:var(--accent-green);opacity:.14"></div>
+  <div class="hdr">
+    <div class="ey">WHAT THE DESIGN BUYS YOU · 2 OF 2</div>
+    <h1><span class="g">Composability</span></h1>
+    <div class="divider"></div>
+  </div>
+
+  <svg class="wires" viewBox="0 0 1920 1080">
+    <g class="edge rv e-ab" style="--r:var(--r-ok)"><path d="M700 420 C880 420 1040 540 1198 540"/><polygon points="1218,540 1196,528 1196,552"/></g>
+    <g class="edge rv e-ba" style="--r:var(--r-ok)"><path d="M1220 420 C1040 420 880 540 722 540"/><polygon points="702,540 724,528 724,552"/></g>
+  </svg>
+  <div class="rl l-rd" style="left:772px;top:580px">READS EACH OTHER'S STATE</div>
+
+  <div class="node n-a" style="--r:var(--r-vp);left:200px;top:340px;width:500px;height:256px">
+    <div class="top"></div>
+    <div class="nt">vPROG A</div>
+    <div class="ns">an app</div>
+    <div class="st">
+      <svg width="24" height="28" viewBox="0 0 26 30"><ellipse cx="13" cy="6" rx="11" ry="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M2 6v18c0 2.5 5 4.5 11 4.5s11-2 11-4.5V6M2 15c0 2.5 5 4.5 11 4.5S24 17.5 24 15" fill="none" stroke="currentColor" stroke-width="2.6"/></svg>
+      STATE</div>
+  </div>
+  <div class="node n-b" style="--r:var(--r-vp);left:1220px;top:340px;width:500px;height:256px">
+    <div class="top"></div>
+    <div class="nt">vPROG B</div>
+    <div class="ns">another app</div>
+    <div class="st">
+      <svg width="24" height="28" viewBox="0 0 26 30"><ellipse cx="13" cy="6" rx="11" ry="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M2 6v18c0 2.5 5 4.5 11 4.5s11-2 11-4.5V6M2 15c0 2.5 5 4.5 11 4.5S24 17.5 24 15" fill="none" stroke="currentColor" stroke-width="2.6"/></svg>
+      STATE</div>
+  </div>
+
+  <div class="brk k-a" style="left:448px"></div>
+  <div class="brk k-b" style="left:1468px"></div>
+  <div class="tx x-tx"><span class="tt">ONE TRANSACTION</span><span class="ts">touches vProg A and vProg B</span></div>
+
+  <div class="out o-yes y-out">
+    <svg width="30" height="30" viewBox="0 0 26 26"><path d="M4 13.5l6 6L22 7" fill="none" stroke="#00e68a" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="k">ONE UNIT</span><span class="d">both apps update</span></div>
+  <div class="out o-no n-out">
+    <span class="k">OR NOT AT ALL</span><span class="d">neither app changes</span></div>
+
+  <div class="src">Source: Kaspa vProgs yellow paper, first draft (v0.0.1), sec 1.2 · 2.2 · 5.3</div>
+</template>
+<script>
+const CHART='composability-card';
+const RD=['.n-a','.n-b','.e-ab','.e-ba','.l-rd'];
+const STATES=[
+  {id:'entry',    on:[]},                                                        // 123.34 entry (headline on 'composability' 123.56)
+  {id:'read',     on:RD},                                                        // 'read' 124.72
+  {id:'tx',       on:[...RD,'.x-tx','.k-a','.k-b']},                             // 'transaction' 126.06
+  {id:'one-unit', on:[...RD,'.x-tx','.k-a','.k-b','.y-out','.n-out'], hot:['.x-tx','.k-a','.k-b']}, // 'unit' 129.02 (+ 'not at all' 129.84)
+];
+const tpl=document.getElementById('tpl');
+for(const s of STATES){const f=document.createElement('div');f.className='frame';f.id=CHART+'-'+s.id;
+  f.appendChild(tpl.content.cloneNode(true));
+  s.on.forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('on')));
+  (s.hot||[]).forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('hot')));document.body.appendChild(f);}
+
+</script>
+</body></html>

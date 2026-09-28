@@ -1,0 +1,121 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>c3-next-rungs · kaspa-vprogs · Type 2 SYSTEM-DESIGN (C3 break-up)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ==== BASE: tokens + anatomy from skills/container-reference/container-canonical.css (do not re-derive) ==== */
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--bg-card-hover:#181c26;--accent-green:#00e68a;--accent-cyan:#00c2ff;
+  --accent-gold:#ffd700;--accent-red:#ff4060;--accent-purple:#a855f7;--accent-teal:#49e0c8;
+  --text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;
+  /* role colors for THIS video (rgb triplets): Kaspa L1 = teal (brand greenish cyan) · vProg = purple ·
+     provers / ZK proof = gold · users / tx = cyan · live / ok = green · risk / struck = red */
+  --r-kas:73,224,200;--r-vp:168,85,247;--r-pr:255,215,0;--r-us:0,194,255;--r-ok:0,230,138;--r-bad:255,64,96}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary);margin-bottom:40px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.hdr{position:absolute;left:120px;top:76px;z-index:2}
+.ey{font-size:27px;font-weight:600;letter-spacing:.18em;color:var(--text-muted);margin-bottom:22px} /* caps typed literally: keeps "vPROG" */
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:70px;line-height:1.07;letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:66px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin-top:28px}
+.src{position:absolute;left:120px;bottom:38px;font-family:'JetBrains Mono',monospace;font-size:19px;color:var(--text-muted);z-index:2}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)}.c{color:var(--accent-cyan)}.go{color:var(--accent-gold)}.re{color:var(--accent-red)}.pu{color:var(--accent-purple)}.tl{color:var(--accent-teal)}
+svg.wires{position:absolute;inset:0;width:1920px;height:1080px;z-index:1;overflow:visible}
+/* NODE: resting = readable (titles text-secondary, subs muted); .on = lit in its role color */
+.node{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:22px;padding:30px 34px}
+.node .top{position:absolute;inset:-2px;border-radius:22px;overflow:hidden;pointer-events:none;opacity:0} /* clip box = the card's OUTER shape, so the accent bar follows the rounded corner (visual-qa r2 nub fix) */
+.node .top::before{content:"";position:absolute;left:0;right:0;top:0;height:4px}
+.node .nt{font-weight:700;font-size:32px;letter-spacing:.08em;color:var(--text-secondary)}
+.node .ns{font-weight:500;font-size:24px;color:var(--text-muted);margin-top:8px}
+.node.on{border-color:rgba(var(--r),.85);background:linear-gradient(160deg,rgba(var(--r),.13),rgba(18,21,28,.97) 62%);
+  box-shadow:0 0 0 1px rgba(var(--r),.25),0 0 70px rgba(var(--r),.26)}
+.node.on .top{opacity:1}.node.on .top::before{background:linear-gradient(90deg,rgb(var(--r)),transparent)}
+.node.on .nt{color:rgb(var(--r))}.node.on .ns{color:var(--text-primary)}
+/* EDGE: resting muted wire; .on = role color + glow */
+.edge path,.edge line{stroke:#283042;stroke-width:4;fill:none;stroke-linecap:round}
+.edge polygon{fill:#283042}
+.edge.on{filter:drop-shadow(0 0 8px rgba(var(--r),.75))}
+.edge.on path,.edge.on line{stroke:rgb(var(--r))}.edge.on polygon{fill:rgb(var(--r))}
+.rv{opacity:0}.rv.on{opacity:1}
+/* ==== CHART-SPECIFIC ==== (same ladder language as charts/c3-ladder.html, zoomed on the dashed top) */
+h1{font-size:84px}
+.rung{position:absolute;z-index:2;left:640px;width:260px;height:20px;margin-top:-10px;border-radius:10px;border:3px dashed #3d4557}
+.rung.on{border-color:rgb(var(--r));box-shadow:0 0 26px rgba(var(--r),.45)}
+.rung.hz{border:3px solid var(--accent-gold);background:repeating-linear-gradient(-45deg,var(--accent-gold) 0 16px,#0a0c10 16px 32px);box-shadow:0 0 30px rgba(255,215,0,.45);opacity:0}
+.rung.hz.on{opacity:1}
+.rung.ship{border:none;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));box-shadow:0 0 22px rgba(0,230,138,.55);height:14px;margin-top:-7px}
+.lab{position:absolute;z-index:2;left:960px;width:860px}
+.lab .l1{display:flex;align-items:center;gap:20px}
+.lab .nm{font-weight:700;font-size:46px;letter-spacing:.06em;color:var(--text-secondary);white-space:nowrap}
+.lab .l2{margin-top:10px;font-weight:500;font-size:25px;color:var(--text-muted)}
+.lab .l2 .mono{font-weight:400;font-size:21px}
+.tg{padding:8px 18px;border-radius:100px;font-weight:700;font-size:22px;letter-spacing:.12em;white-space:nowrap;border:2px solid #3a4254;color:var(--text-secondary)}
+.lab.on .nm{color:rgb(var(--r))}.lab.on .l2{color:var(--text-primary)}
+.lab.on .tg{color:rgb(var(--r));border-color:rgba(var(--r),.8);background:rgba(var(--r),.12)}
+.lab.dk .nm{font-size:38px;color:var(--text-muted)}.lab.dk .tg{color:var(--text-muted);border-color:#2c3342}
+.ss .nm{font-size:30px;color:var(--text-primary)}.ss .tg{color:var(--accent-green);border-color:rgba(0,230,138,.7);background:rgba(0,230,138,.1)}
+.ss .date{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:26px;color:var(--accent-green)}
+.hazard{position:absolute;z-index:3;left:640px;top:430px;padding:10px 20px;border-radius:10px;background:var(--accent-gold);color:#0a0c10;
+  font-weight:700;font-size:24px;letter-spacing:.14em;box-shadow:0 0 30px rgba(255,215,0,.5);opacity:0;white-space:nowrap}
+.hazard.on{opacity:1}
+</style></head>
+<body>
+<template id="tpl">
+  <div class="orb" style="width:620px;height:620px;left:480px;top:260px;background:var(--accent-cyan);opacity:.12"></div>
+  <div class="orb" style="width:520px;height:520px;right:-200px;top:-180px;background:var(--accent-purple);opacity:.14"></div>
+  <div class="hdr">
+    <div class="ey">WHERE IT STANDS · NOT YET</div>
+    <h1>The <span class="c">next</span><br>rungs</h1>
+    <div class="divider"></div>
+  </div>
+
+  <svg class="wires" viewBox="0 0 1920 1080">
+    <line x1="640" y1="120" x2="640" y2="880" stroke="#3a4254" stroke-width="6" stroke-dasharray="16 14"/>
+    <line x1="900" y1="120" x2="900" y2="880" stroke="#3a4254" stroke-width="6" stroke-dasharray="16 14"/>
+    <g style="filter:drop-shadow(0 0 8px rgba(0,230,138,.7))"><line x1="640" y1="930" x2="640" y2="1080" stroke="#00e68a" stroke-width="7"/><line x1="900" y1="930" x2="900" y2="1080" stroke="#00e68a" stroke-width="7"/></g>
+  </svg>
+
+  <!-- DAGKNIGHT: dim, never spoken -->
+  <div class="rung" style="top:190px"></div>
+  <div class="lab dk" style="top:162px"><div class="l1"><span class="nm">DAGKNIGHT</span><span class="tg">PROPOSED · KIP-2</span></div></div>
+
+  <!-- FULL vPROGS -->
+  <div class="rung r-full" style="--r:var(--r-pr);top:430px"></div>
+  <div class="rung hz h-full" style="top:430px"></div>
+  <div class="hazard z-full" style="left:auto;right:1310px;top:404px">UNDER CONSTRUCTION</div>
+  <div class="lab l-full" style="--r:var(--r-pr);top:380px">
+    <div class="l1"><span class="nm">FULL vPROGS</span><span class="tg">IN CONSTRUCTION</span></div>
+    <div class="l2">"Full vProgs remain a future direction" <span class="mono">· kaspa.org/build</span></div>
+  </div>
+
+  <!-- NEXT: standalone based ZK apps (Sutton's own term, lowercase "based") -->
+  <div class="rung r-next" style="--r:var(--r-us);top:680px"></div>
+  <div class="lab l-next" style="--r:var(--r-us);top:630px">
+    <div class="l1"><span class="tg">NEXT</span><span class="nm">standalone based ZK apps</span></div>
+    <div class="l2">"not the complete vProgs" <span class="mono">· M. Sutton, 2026-04-11</span></div>
+  </div>
+
+  <!-- top shipped rung, anchoring the zoom -->
+  <div class="rung ship" style="top:930px"></div>
+  <div class="lab ss" style="top:906px"><div class="l1"><span class="date">2026-09-09</span><span class="nm">SILVERSCRIPT 1.0</span><span class="tg">LATEST SHIPPED</span></div></div>
+
+  <div class="src" style="left:960px">Sources: kasmagazine · kaspa.org/build · KIP-2</div>
+</template>
+<script>
+const CHART='c3-next-rungs';
+const STATES=[
+  {id:'entry',        on:[]},                                                  // 163.28 'Next rung.'
+  {id:'next',         on:['.r-next','.l-next']},                               // 'standalone' 164.78
+  {id:'full',         on:['.r-next','.l-next','.r-full','.l-full']},           // 'full' 167.20
+  {id:'construction', on:['.r-next','.l-next','.l-full','.h-full','.z-full']}, // 'construction' 169.20
+];
+const tpl=document.getElementById('tpl');
+for(const s of STATES){const f=document.createElement('div');f.className='frame';f.id=CHART+'-'+s.id;
+  f.appendChild(tpl.content.cloneNode(true));
+  s.on.forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('on')));
+  (s.hot||[]).forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('hot')));document.body.appendChild(f);}
+
+</script>
+</body></html>
