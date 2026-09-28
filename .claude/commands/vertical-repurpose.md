@@ -14,7 +14,7 @@ mp4, optionally followed by **per-run overrides** (e.g. "skip the receipts, they
 "use 4M bitrate"). Honor every override; with none, run the full list below.
 If you cannot identify the project, STOP and ask.
 
-**⛔ Read `video-creation/longform-edited/skills/vertical-repurpose.md` FIRST — it is canonical and
+**⛔ Read `video-creation/longform-edited/skills/vertical-repurpose/vertical-repurpose.md` FIRST — it is canonical and
 self-contained.** This command is the runner; that skill owns the rules. Also observe the global rules
 in `CLAUDE.md` and `persona/persona.json`.
 

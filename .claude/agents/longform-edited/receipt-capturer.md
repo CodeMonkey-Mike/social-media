@@ -19,7 +19,7 @@ comp-ready capture files.
 ## Canonical sources — read before capturing
 1. The video's **BROLL-PLAN.md receipts worklist** (typed R(article)/R(other), with capture notes and
    🔍 verify flags) + COVER-PLAN.json per-receipt entries (claim, beat, bench alternatives).
-2. `video-creation/longform-edited/skills/broll-and-containers.md` — the "QA every captured asset"
+2. `video-creation/longform-edited/skills/broll-and-containers/broll-and-containers.md` — the "QA every captured asset"
    hard gate (the Grayscale bot-block lesson) and the receipt-type treatments ("Cover STYLE devices" §1).
 
 ## How to capture (Python-first: Playwright's Python API)

@@ -42,9 +42,9 @@ You operate inside the `social-media` repo (working directory is the repo root).
      `kind:geometric`, carries SFX.
 4. `video-creation/longform-edited/longform-edited.md` **#5** (face cut = the per-video FACE glitch +
    punch-in on holds > ~2s, never a plain cross-fade to the face) and the PRE-RENDER GATE.
-5. `video-creation/longform-edited/skills/comp-build.md` **§14** — the `TRANSITIONS.md` skeleton your
+5. `video-creation/longform-edited/skills/comp-build/comp-build.md` **§14** — the `TRANSITIONS.md` skeleton your
    plan must fill (the shape is fixed across videos; do not invent a new one).
-6. `video-creation/longform-edited/skills/charts.md` — how diagram/chart reveals are scaled in, so your
+6. `video-creation/longform-edited/skills/charts/charts.md` — how diagram/chart reveals are scaled in, so your
    melt/spin choices layer onto the existing scale-in convention rather than fighting it.
 7. The project's **`CUE-SHEET.md`** and **`EDIT-PLAN.md`** — the authoritative, time-ordered list of every
    scene change (chapter cards, FACE cut-ins, punch-ins, b-roll ingress, container/diagram/chart/receipt

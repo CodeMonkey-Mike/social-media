@@ -253,7 +253,7 @@ Decisions locked with Mike 2026-08-02; do not re-litigate:_
   verify from disk · zero retries, halt topology · SQLite checkpoints · stub modes · replaced
   script frozen as rollback · bless on a live run. Two documented extensions for this pipeline:
   **verify nodes can halt** (every downstream node consumes the verified artifact), and
-  **judgment seams** — one graph per MECHANICAL SEGMENT; a segment ends where an advisor
+  **HITL gates + agent handoffs (formerly "judgment seams")** — one graph per MECHANICAL SEGMENT; a segment ends where an advisor
   (clip-strategist, tighten-strategist, Lane 3 drafting, publish metadata) or a Mike gate begins,
   the plan lands on disk (`clip-plan.json`, `tighten-plan.json`, `longform-meta.json`), and the
   next invocation consumes it. No interrupts; the ask is the decision.
@@ -360,3 +360,222 @@ Decisions locked with Mike 2026-08-02; do not re-litigate:_
 
 _Source: session `6dc1c3b9` (2026-05-24). Related but distinct: the old `social-video-upload`
 orchestrator is recoverable from git at `86709d6~1` (`uploading/` subtree, removed in the refactor)._
+
+
+## Lane 2 endgame shape — FINISH + builds + PUBLISH as ONE segment (decided 2026-08-12)
+
+**Mike adopted the merged shape as the committed Phase 2 target for lane 2** (johnny-batch
+session, after the build->publish handoff sat unrun for an hour because the trigger lived in
+prose):
+
+- ONE StateGraph: fillers -> transcribe -> assets -> per-clip BUILD branches (LangGraph Send
+  fan-out; each branch = b-roll gen -> comp -> render under the existing chatgpt/render stage
+  locks, preserving the measured clip-N+1-generates-while-clip-N-renders pipelining) ->
+  finalized-short gate per branch -> frontier -> verify_frontier -> publish -> lint.
+- The ONLY HITL gates inside lane 2: **4b review and 2nd review**. The pipeline TERMINATES at
+  the queue (everything staged, pending). Posting is a separate queue-driven, batch-agnostic
+  process (segment 7 + the schedule-tweets posters) and is deliberately NOT drawn inside the
+  lanes (Mike, 2026-08-12 — matches the playbook: posting is out of scope for the repurpose
+  lanes). No human gate exists between finish, the builds, and publish — established and
+  doc-fixed 2026-08-12.
+- Prereq: a graph node must spawn a headless remotion-builder (`claude -p` with the agent def)
+  the way nodes spawn ffmpeg — the deferred Phase 2 capability — plus long-run node hardening
+  (~90 min per build, per-branch resume) and the browser image stack (ports last).
+- Bridge shipped 2026-08-12 (live-blessed on `johnny`): the finalized-short gate's BATCH
+  FRONTIER footer (the completing builder's report hands the orchestrator the publish command)
+  + `frontier`/`verify_frontier` entry nodes in the publish graph (renamed from built/verify_built same day at Mike's call: 'built' read like a build step on the flowchart; the progress.json phase string `7-built` is unchanged).
+- **Vocabulary (same decision):** the repo-coined "judgment seam" is retired from live docs in
+  favor of standard terms — **HITL / approval gate** (human) and **agent handoff**
+  (advisor/builder artifacts); "interrupt" / "breakpoint" stays reserved for literal LangGraph
+  pause-and-resume, which this pipeline deliberately does not use (decisions ride IN the next
+  invocation). Dated ledger entries above keep the old word as historical record.
+
+## Batch orchestrator BUILT (2026-09-10) — the Phase 2 supervisor over all three lanes
+
+_Trigger: batch `kaspa`, 2026-09-09/10. The intake graph printed its LANE FRONTIER banner (the
+2026-08-15 guardrail) and the session orchestrator still never invoked Lane 3; Mike found an empty
+Social tab hours later. Advisory text cannot keep a lane from being forgotten; only a graph that
+OWNS the DAG can. Mike: "we should not be in a situation where you forget to trigger a lane to
+start" / "I don't want any problems like this happening again." Built the same day._
+
+- **What:** `video-creation/livestream-repurpose/graph/batch_graph.py` + `run.py batch|lane3|status`.
+  Segment 9 (`batch`) is the supervisor; segment 8 (`lane3`) is the Lane 3 wrapper it launches
+  concurrently. Topology: `intake -> register -> launch_lane3 (detached process) -> lane2_select ->
+  lane2_cut -> gate_4b -> lane2_tighten_plan -> lane2_tighten -> gate_2nd -> lane2_finish ->
+  lane2_build -> lane2_publish -> join_lane3 -> verify_batch`. Lane 3 wrapper: `draft ->
+  repurpose -> visual_qa`.
+- **Rules kept:** wrap the blessed segments as subprocesses (each keeps its own checkpoint/resume),
+  verify from disk (the segments' own phase strings: `cut`/`5B-desilenced`/`6-transcribed`/`7-built
+  PASS`/shorts.json; `pipelines.repurpose=done`), halt topology, zero retries inside a lane (join
+  relaunches a dead Lane 3 process ONCE per invocation), SQLite checkpoints (thread `batch-<b>`,
+  stable per batch), `--stub ok|fail`, artifacts on disk are the contract, redo-safe nodes.
+- **The deferred capability, now built:** judgment steps spawn HEADLESS CLAUDE AGENTS
+  (`claude -p --agent <name> --dangerously-skip-permissions`, `CLAUDECODE` env stripped so a session
+  can nest one) exactly like ffmpeg, then verify the agent's ARTIFACT from disk: clip-strategist
+  -> clip-plan.json · tighten-strategist (groups of <=4 clips, part files merged + validated with
+  `tighten_clips.validate_tighten_plan`) -> tighten-plan.json · NEW `lane3-drafter` (Fable/max) ->
+  `<batch>-lane3-plan.json` validated by `queue_writer.validate_lane3_plan` · remotion-builder per
+  clip (ThreadPool, `--max-builders`, stage locks inside) -> 7-built PASS · NEW `publish-meta-author`
+  -> publish-meta.json · visual-qa -> report (non-fatal).
+- **HITL = literal LangGraph interrupts, exactly two:** Mike's 4b review and 2nd review. The run
+  ends with exit code 2 and prints the resume command; `--resume --approve 4b|2nd [--delete N,N]`
+  applies deletes to clip-plan.json (numbers frozen) and records the approval in progress.json
+  `gates` (so a fresh thread honours it). `--approve` on the first invocation pre-approves.
+  Posting stays outside (batch-agnostic segment 7), per the 2026-08-12 decision.
+- **Never-forget mechanics:** Lane 3 is fire-and-VERIFY (concurrent process, joined + relaunched,
+  `verify_batch` refuses DONE without `pipelines.repurpose=done`); `--until <stage>` scopes Lane 2
+  but Lane 3 is still awaited; EVERY segment report and `run.py status --batch <b>` print the BATCH
+  LANES footer with "STILL PENDING: ..."; per-run briefs (`--lane3-brief`/`--clip-brief`) persist on
+  the batches.json entry (`briefs`) so agents and resumes read the same words.
+- **Known limitation:** one heartbeat file (`lane_progress.json`); concurrent Lane 3 segments and
+  the supervisor overwrite each other's heartbeat. The run logs (`graph/data/batch-<b>.log`,
+  `lane3-<b>.log`, `agent-*.log`) are authoritative.
+- **Status:** stub ok/fail green for `batch` and `lane3`; `status` green on the live `kaspa` batch.
+  **Live bless = batch `kaspa`** (2026-09-10): Lane 3 via the headless drafter + repurpose graph,
+  Lane 2 tighten via the supervisor, stopping at the 2nd-review interrupt. Docs: root `CLAUDE.md`
+  (Orchestrator status + quick command + hard rule), `playbooks/livestream-repurpose.md` banner,
+  `.claude/commands/repurpose-livestream.md` rewritten around the graph.
+
+### Same-day hardening from the kaspa live bless (2026-09-10)
+
+- **Partial-append is now Lane 3's default** (`repurpose/lane3_batch.py` verify/queues/finalize +
+  `graph/repurpose_graph.py`): a missing/invalid image holds back ONLY the entries that need it
+  (recorded in `repurpose/output/<batch>-lane3-held.json`), everything else is appended, and
+  `pipelines.repurpose` lands as `partial` (never `done`) until a re-run fills the gap. Trigger: two
+  V4 carousel slides failed `no-capture` twice and 23 finished entries sat unqueued for hours
+  (Mike: "this should have been done since the clips were being created").
+- **Fresh-chat rotation on a failed capture**: `stage_generate` retires the purpose chat
+  (`chat_pool.mark_dead`) and retries that ONE item in a fresh chat before counting a failure.
+- **Incremental publish in the supervisor** (`batch_graph.lane2_publish`): stages every 7-built PASS
+  clip not yet in shorts.json (never skips because "something is queued"), reuses the batch's
+  first `--date`, and has publish-meta-author EXTEND `publish-meta.json` for uncovered clips. Status
+  reads "n/N staged" until all are staged. Clip 4 shipped to review alone this way.
+- **Build markers + runtime concurrency**: `lane2_build` writes `shorts/<b>/<slug>/.building.pid`
+  per spawned builder, waits for (never re-spawns) clips with a live marker, verifies ALL surviving
+  clips, and reads `--max-builders` / env `BATCH_MAX_BUILDERS` per run. Used live to raise kaspa
+  to 3-wide under two already-running builders.
+- **Open follow-ups**: (1) the repurpose generate stage opens/closes the ChatGPT Chrome once per
+  SKIPPED item on a re-run (~40 s each; reads as flapping): pre-filter the list to missing images
+  before launching the browser. (2) Lane 3 monitors must key on process liveness + the pipeline
+  flag, not log text (fixed in-session, not yet codified). (3) One heartbeat file for concurrent
+  lanes (known limitation, unchanged).
+
+### kaspa live bless, part 2 (2026-09-10 afternoon): the ChatGPT capture chain, four real bugs
+
+Six identical "no-capture" failures on two V4 carousel slides turned out to be four separate defects,
+each found by a probe rather than a retry (retries burned ~3 hours; the probes took minutes):
+1. **Enter no longer submits in a FRESH chat with an attachment** (send probe: composer still full,
+   0 messages, no dialog, URL unchanged after 60 s). Fix in `gen_images.py`: verify the send
+   (composer emptied) and click the send button if Enter did nothing; fail loudly if neither works.
+2. **The reload-to-capture could leave the conversation**: `reload_url` fell back to
+   `https://chatgpt.com/` when the fresh chat had not published its `/c/<id>` within 20 s, so the
+   "reload" opened a NEW chat and orphaned the render. Fix: resolve the conversation id via the
+   backend API (newest just-created conversation) and never navigate without a `/c/` URL.
+3. **A restored draft + mid-text click spliced prompts**: ChatGPT restores an unsent draft; the click
+   landed mid-text; keystrokes could be swallowed by the attachment re-render. Fix: clear the
+   composer (Ctrl+A/Delete), settle 5 s after the upload, and VERIFY the composer holds the whole
+   prompt before sending (3 attempts).
+4. **The reference-byte check only compared against the item's OWN refs**, so a sibling item's
+   exemplar (`version4/slide.png`, 1147x1303) was captured as a "render". Fix: reject a capture that
+   matches ANY file under `images/reference/`.
+Plus the capture path itself: **phase 2a reads the render through the backend API**
+(`/backend-api/conversation/<id>` -> `image_asset_pointer` -> `/backend-api/files/<id>/download`)
+before any reload; the probe proved renders exist server-side even when the DOM never shows them.
+And a rule confirmed the hard way: **ChatGPT overrides authored figures on chart/data slides** (+68%,
++320% on four attempts, fresh chat or not). Per the SKILL's own V4 caveat, figure-bearing data slides
+are now CODE-RENDERED (`repurpose/output/kaspa-lane3-fix/render_v4_slide.py`, HTML -> 1254x1254
+PNG via Playwright, exact text); ChatGPT keeps the hook slide and the narrative/known-fact slides.
+Also: `run.py batch --resume` on a thread killed mid-node hit `InvalidUpdateError` from the
+checkpoint's own pending writes; a plain resume now passes no update, and a corrupted thread is
+sidestepped with `--thread <new>` (every node re-derives its state from disk, both approved gates
+included). Generate no longer halts the lane on partial image failures (verify/HELD decide).
+
+## Longform-edited graph BUILT — Wave A (2026-09-17): the third automation
+
+_Trigger: Mike, 2026-09-17: "I would like to work on getting this process into lang graph now that we
+have implemented lang graph for the linkedin automation and for the live stream", with
+`claudeisnaughty.md` as the backstory. First video through it: **kaspa-vprogs** (3:00, two FACE beats
+in the opening). Python-first reaffirmed the same day: every JS lint the track still carries
+(`lint-docset/covers/transition-assets/slide-balance/animated-charts.js`, `check-spine-fps.sh`) is
+ported to Python at the moment its node is built, JS frozen as rollback; Remotion stays TS._
+
+- **What:** `video-creation/longform-edited/graph/` — `longform_graph.py` (ONE 32-node StateGraph per
+  video: pre-production → spine → plan → build → deliver), `run.py longform|status`, `common.py`
+  (this automation's copy of the streaming / heartbeat / headless-agent / gate helpers, feed dir
+  `graph/data/`), `scripts/init_project.py` (the §13a skeleton + PROJECT-LOG brief), NEW agent
+  `.claude/agents/longform-edited/data-researcher.md` (DATA.md with sources). Dashboard: `longform`
+  tab (five stage cards) + feed route in `serve_dashboard.py`.
+- **Doctrine kept:** subprocess nodes verified from disk, halt topology, zero retries, SQLite
+  checkpoints (thread `longform-<project>`), `--stub ok|fail`, headless agents (`claude -p --agent`,
+  Fable-allowance fallback to Opus) with the ARTIFACT verified from disk, HITL gates = literal
+  interrupts (exit 2, `--resume --approve <gate>`), approvals recorded in the project's
+  `GRAPH-PROGRESS.json` so a fresh thread honours them.
+- **Full-span from day one:** every step of the track is a node in the skills' order; un-automated
+  steps are artifact-aware PLACEHOLDERS (interrupt with the how-to; pass silently once the §13/§13a
+  artifact exists, or `--done <node>`). The frontier advances node by node, blessed on the live video.
+- **Wave A built + tested:** init_project · research (data-researcher) · screenplay
+  (screenplay-strategist, mechanical FACE-budget gate `--face-max`) · gate_screenplay ·
+  await_recording · compress (`to_low_bps.py`) · verify_spine (fps 30/1 + A/V drift + words JSON).
+  Stub ok/fail green (32 nodes traverse in order; a failure halts); real-mode mechanics green on a
+  scratch project (skip-on-artifact, gate interrupt, approve-on-resume, `--done`, halt at compress
+  with no raw take, fresh-thread approval honoured).
+- **Next waves, in order of the video:** B = spine agents (defumbler / cover-blackout / desilencer /
+  transcriber as headless nodes with the skills' parameters); C = plan (as-recorded + edit-plan
+  authors, coverage / music / transition strategists, the asset fan-out with visual-qa, the
+  BROLL-PLAN reconcile, `lint_docset.py` port); D = build (card-pause baking script, captions-builder,
+  `comp-builder` agent with the six lints ported to Python inside `verify_comp`, render preflight +
+  teardown); E = deliver (§12a definition of done, `longform_stage.py` / `longs_append.py` reuse).
+- **First live GATE-1 finding (2026-09-17, kaspa-vprogs):** the strategist returned bare `[FACE]` tags
+  instead of the backticked Convention-5 form (the gray chips Mike reads by); the node only COUNTED tags.
+  Mike: "this is part of why we need to put this into LangGraph, so that we don't have deviations in every
+  video we make" / "we need to make sure that there are standard rules and styles for how we do
+  everything." Built the same hour: (1) `skills/doc-reference/lint_screenplay.py`, the format gate in code (tag form,
+  one job per line, signposts, sections, no cold open, no em dashes, `--face-max`), run inside the
+  `screenplay` node (`--fix` for the mechanical class, halt otherwise; validated against the kaspa 30bps +
+  ethereum-rwa exemplars, only their genuine em dashes fail); (2) **`skills/doc-reference/`**, the durable
+  canonical SHAPE of every per-video document (sibling of `container-reference/`; SCREENPLAY, DATA,
+  PROJECT-LOG now, the rest as their nodes land) so no project folder is ever the reference; (3) the rule
+  persisted in `screenplay.md` Convention 5 and both agent definitions. **The pattern for every later doc
+  node: a reference SHAPE + a format OWNER (skill) + a code GATE at the node.**
+- **Wave B BUILT + LIVE-BLESSED on kaspa-vprogs (2026-09-27):** the spine chain as headless agent
+  nodes, each verified from disk (13a path + sidecar, duration direction, fps 30/1, A/V drift):
+  `compress` (to_low_bps.py) · `defumble` (defumbler: 766 s → 532.8 s, 55/161 chunks dropped, 0 clipped)
+  · `cover_blackout` (94% black, exactly the 2 FACE windows) · `desilence_coarse` (one zone 700 ms →
+  219.6 s) · **`gate_spine_review`** (Mike listens; burst timestamps ride in as `--bursts a-b`) ·
+  `burst_removal` (the hum after "softened on it." cut inside its troughs, join verified by Whisper) ·
+  `desilence_final` (two-zone 250/500 ms → 211.1 s) · `transcribe` (transcriber, 79 segments) ·
+  `verify_spine` · **`gate_spine`**. The two-pass practice (coarse review pass, then the tight pass) is
+  now written into `longform-edited.md` Phase 3b. A content cut at the spine review (the podcast quote was
+  recorded as "bullish") landed as `f.cut` per the letter chain; `final_spine()` takes the highest letter
+  of any stage. No JS was ported here: the whole spine chain was already Python.
+- **Wave C node 1 (2026-09-27): `as_recorded`** = NEW agent `.claude/agents/longform-edited/
+  as-recorded-author.md` (opus/high; blackdetect FACE windows, timecode chain, beats quoted as spoken with
+  KEPT / CHANGED / AD-LIB / DROPPED verdicts, mishears, divergences, flags) + NEW
+  `skills/doc-reference/lint_as_recorded.py` + `skills/doc-reference/AS-RECORDED.reference.md`. Same shape as every doc
+  node: reference SHAPE + format OWNER + code GATE.
+- **Wave C node 2 + THE JS PORT (2026-09-28, Mike: "if there's any JavaScript to port over to Python, do
+  that now"):** every remaining JS/shell gate in the track is now Python, parity-tested against the originals on
+  three real comps (same exit codes, same findings), JS frozen as rollback: `lint_docset.py` (+ `--stage plan`),
+  `lint_covers.py`, `lint_slide_balance.py`, `lint_transition_assets.py`, `lint_animated_charts.py`,
+  `check_spine_fps.py`. The track's routing (`longform-edited/CLAUDE.md` 6b/6c) now names the Python gates.
+  `coverage` is a real node: the `coverage-strategist` (Fable/max, Opus fallback) proposes; the node persists
+  `COVER-PLAN.json` (agent-returned JSON contract), verifies it FROM DISK (schema · consecutive beats · every
+  non-FACE second covered, no gap over 0.5 s · budget) and renders the canonical `BROLL-PLAN.md` worklists
+  (Envato / ChatGPT with the mandatory Reference column / RECEIPTS / CHARTS / SLIDES / bench) + `EDIT-PLAN-prep.md`
+  with NEW `scripts/render_cover_plan.py`. `lint_docset` is a real node (build stage). Budget knobs
+  `--envato-max` / `--chatgpt-max` ride in the invocation.
+  Live-blessed on kaspa-vprogs the same day: the strategist (Fable, 9.7 min) returned 34 beats / 8 receipts /
+  4 Envato / 3 ChatGPT / 19 containers; the first verify caught two things the contract now states
+  explicitly (a chapter title card is a ZERO-LENGTH beat, cover_type `title`; every ChatGPT row carries a
+  `reference` key). A failed run is re-driven on a fresh thread (`--resume` only replays the failed checkpoint).
+- **Skills folder restructure + reference harvest (2026-09-28, Mike):** `longform-edited/skills/` is now ONE
+  FOLDER PER SKILL (`<name>/<name>.md` + its scripts/lints/references; index `skills/README.md`), matching
+  `video-creation/skills/`; every path in the graph, the track router, the agents, the commands, the dashboard
+  and memory was rewritten and the moved lints re-run from their new homes. `doc-reference/` now carries a
+  reference for EVERY §13 document, the seven plan/build ones harvested from the completed `kaspa 30bps`
+  (COVER-PLAN, BROLL-PLAN, EDIT-PLAN-prep, MUSIC-PLAN, EDIT-PLAN, CUE-SHEET, TRANSITIONS), so purging old
+  project folders can no longer erase the shape of any document.
+- **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
+  `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
+  disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;
+  "claimed work" (#6) = a node shows `running → artifact` on the dashboard or halts.

@@ -26,7 +26,7 @@ You operate inside the `social-media` repo (working directory is the repo root).
 
 Canonical sources win on conflict:
 
-1. **`video-creation/longform-edited/skills/longform-to-short.md`** — the canonical lane. §2 (the shape
+1. **`video-creation/longform-edited/skills/longform-to-short/longform-to-short.md`** — the canonical lane. §2 (the shape
    of the short) and §3 (the span rules) are your specification. Everything below is a summary of it.
 2. **`persona/persona.json`** — voice, register, terminology, what Mike will and will not say.
 3. The project's own documents, all of them, because they tell you what is ON SCREEN at every second:

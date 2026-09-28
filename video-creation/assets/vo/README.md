@@ -21,7 +21,7 @@ Sibling of `assets/music/`, `assets/sfx/`, `assets/transitions/` — same idea, 
 - **Regenerate only when the LINE changes**, or when Mike rejects the reading. Then update `CTA-SCRIPT.md`
   first and let `verify-tts.js` prove `tts-chunks.json` still matches before spending a credit.
 - **Consumers reference this path, never a project-local copy.** Canonical consumer:
-  `longform-edited/skills/longform-to-short.md` §4.
+  `longform-edited/skills/longform-to-short/longform-to-short.md` §4.
 
 ## Regenerating
 

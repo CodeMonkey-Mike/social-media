@@ -28,7 +28,7 @@ You operate inside the `social-media` repo (working directory is the repo root).
 1. `video-creation/longform-edited/longform-edited.md` — house rule **#10 (MUSIC)**: music covers EVERY
    chapter; loop any bed shorter than its span (no silent stretch); an inter-bed BREATH at each bed change;
    every impact/riser over speech sits UNDER the VO.
-2. `video-creation/longform-edited/skills/music-sourcing.md` (if present) and the project `PROJECT-LOG.md` +
+2. `video-creation/longform-edited/skills/music/music.md` and the project `PROJECT-LOG.md` +
    `SCREENPLAY.md` "Register" decision — the gear map (which chapters are gear-3 epic vs gear-2 explainer).
 3. `video-creation/assets/music/library.json` — the track metadata (bpm, key, mood, sections, license)
    AND the machine-written per-file `analysis` blocks (env sparkline / aggression / segments /

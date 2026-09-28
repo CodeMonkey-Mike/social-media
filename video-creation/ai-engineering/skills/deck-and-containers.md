@@ -6,7 +6,7 @@ ai-engineering deltas. Canonical parents win on conflict._
 
 ## Inherit these, verbatim (the source of truth)
 
-1. **`../../longform-edited/skills/broll-and-containers.md`** — the container rules: ONE self-contained
+1. **`../../longform-edited/skills/broll-and-containers/broll-and-containers.md`** — the container rules: ONE self-contained
    full-frame container per beat, LEFT-aligned eyebrow + Playfair headline (accent keyword) + body, title
    INSIDE the container, never crop a multi-card deck, the BALANCE rule (a rich diagram slide once, then
    break it into spotlight containers).
@@ -15,10 +15,10 @@ ai-engineering deltas. Canonical parents win on conflict._
    · gold `#ffd700` = special/warning · red `#ff4060` = risk/cost · on `#0a0c10`), Playfair Display headlines,
    JetBrains Mono numbers/eyebrows, DM Sans body, gradient divider. Assign each accent a consistent meaning
    per video and don't drift.
-3. **`../../longform-edited/skills/charts.md`** — data charts / animated data-graphics: never an AI image as
+3. **`../../longform-edited/skills/charts/charts.md`** — data charts / animated data-graphics: never an AI image as
    the source of a number; a real screenshot beats a redraw for a MARKET figure; our own charts are for
    numbers WE control (tables, comparisons, ladders we author).
-4. **`../../longform-edited/skills/presentation.md`** — the HTML styling system the containers/charts match.
+4. **`../../longform-edited/skills/presentation/presentation.md`** — the HTML styling system the containers/charts match.
 
 ## The ai-engineering deltas (this is all that's channel-specific)
 
@@ -49,5 +49,5 @@ ai-engineering deltas. Canonical parents win on conflict._
 4. Run `visual-qa` on the PNGs; fix + re-render the failures (`node scripts/render-containers.js NN`).
 5. Log status in the video's `PROJECT-LOG.md`.
 
-The 16:9→9:16 vertical repurpose (if wanted) follows `../../longform-edited/skills/vertical-repurpose.md`
+The 16:9→9:16 vertical repurpose (if wanted) follows `../../longform-edited/skills/vertical-repurpose/vertical-repurpose.md`
 (reflow to `containers-vertical.html` → `render-assets/vertical/`).

@@ -1,0 +1,2278 @@
+[
+  {
+    "run_id": "longform-stub-20260917-182051@2026-09-17T18:20:51",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-stub-20260917-182051",
+    "started_at": "2026-09-17T18:20:51",
+    "ended_at": "2026-09-17T18:20:51",
+    "duration_s": 0.2,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": {
+      "project": "stub-project",
+      "until": "",
+      "approve": [
+        "screenplay",
+        "spine",
+        "plan",
+        "blueprint",
+        "draft"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "project": "stub-project",
+      "final": [],
+      "stub": true,
+      "batch": "stub-project"
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-stub-20260917-182053@2026-09-17T18:20:53",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "longform-stub-20260917-182053",
+    "started_at": "2026-09-17T18:20:53",
+    "ended_at": "2026-09-17T18:20:53",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "fail",
+    "dry_run": false,
+    "requested": {
+      "project": "stub-project",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "last_node": "init_project",
+      "steps": {
+        "init_project": {
+          "status": "failed",
+          "detail": "init_project.py failed",
+          "at": "2026-09-17T18:20:53"
+        }
+      },
+      "batch": "stub-project"
+    },
+    "error": "init_project: init_project.py failed\nstub: pretending to run init_project\nFATAL: stub failure\n"
+  },
+  {
+    "run_id": "graphtest-1789683681@2026-09-17T18:21:23",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "graphtest-1789683681",
+    "started_at": "2026-09-17T18:21:23",
+    "ended_at": "2026-09-17T18:21:23",
+    "duration_s": 0.2,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "_graphtest",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "last_node": "screenplay",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "_graphtest: folder + PROJECT-LOG ready",
+          "at": "2026-09-17T18:21:23"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-17T18:21:23"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present",
+          "at": "2026-09-17T18:21:23"
+        }
+      },
+      "batch": "_graphtest"
+    },
+    "error": null
+  },
+  {
+    "run_id": "graphtest-1789683681@2026-09-17T18:21:56",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "graphtest-1789683681",
+    "started_at": "2026-09-17T18:21:56",
+    "ended_at": "2026-09-17T18:21:56",
+    "duration_s": 0.0,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "_graphtest",
+      "until": "",
+      "approve": [
+        "screenplay"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "last_node": "gate_screenplay",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "_graphtest: folder + PROJECT-LOG ready",
+          "at": "2026-09-17T18:21:23"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-17T18:21:23"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present",
+          "at": "2026-09-17T18:21:23"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-09-17T18:21:56"
+        }
+      },
+      "batch": "_graphtest"
+    },
+    "error": null
+  },
+  {
+    "run_id": "graphtest-1789683681@2026-09-17T18:21:58",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "graphtest-1789683681",
+    "started_at": "2026-09-17T18:21:58",
+    "ended_at": "2026-09-17T18:21:58",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "_graphtest",
+      "until": "",
+      "approve": [],
+      "done": [
+        "await_recording"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "last_node": "compress",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "_graphtest: folder + PROJECT-LOG ready",
+          "at": "2026-09-17T18:21:23"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-17T18:21:23"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present",
+          "at": "2026-09-17T18:21:23"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-09-17T18:21:56"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "marked done via flag",
+          "at": "2026-09-17T18:21:58"
+        },
+        "compress": {
+          "status": "failed",
+          "detail": "could not pick the raw take in raw/ (name it ALL.mkv per comp-build.md 13a)",
+          "at": "2026-09-17T18:21:58"
+        }
+      },
+      "batch": "_graphtest"
+    },
+    "error": "compress: could not pick the raw take in raw/ (name it ALL.mkv per comp-build.md 13a)"
+  },
+  {
+    "run_id": "graphtest2-1789683718@2026-09-17T18:22:00",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "graphtest2-1789683718",
+    "started_at": "2026-09-17T18:22:00",
+    "ended_at": "2026-09-17T18:22:00",
+    "duration_s": 0.2,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "_graphtest",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "last_node": "compress",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "_graphtest: folder + PROJECT-LOG ready",
+          "at": "2026-09-17T18:22:00"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-17T18:22:00"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present",
+          "at": "2026-09-17T18:22:00"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-09-17T18:21:56",
+          "at": "2026-09-17T18:22:00"
+        },
+        "await_recording": {
+          "status": "skipped",
+          "detail": "marked done earlier",
+          "at": "2026-09-17T18:22:00"
+        },
+        "compress": {
+          "status": "failed",
+          "detail": "could not pick the raw take in raw/ (name it ALL.mkv per comp-build.md 13a)",
+          "at": "2026-09-17T18:22:00"
+        }
+      },
+      "batch": "_graphtest"
+    },
+    "error": "compress: could not pick the raw take in raw/ (name it ALL.mkv per comp-build.md 13a)"
+  },
+  {
+    "run_id": "longform-kaspa-vprogs@2026-09-17T18:24:17",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "longform-kaspa-vprogs",
+    "started_at": "2026-09-17T18:24:17",
+    "ended_at": "2026-09-17T18:42:24",
+    "duration_s": 1087.5,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "kaspa-vprogs",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "last_node": "screenplay",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "kaspa-vprogs: folder + PROJECT-LOG ready",
+          "at": "2026-09-17T18:24:17"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (43 source links)",
+          "at": "2026-09-17T18:34:01"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written (2 FACE beat(s))",
+          "at": "2026-09-17T18:42:24"
+        }
+      },
+      "batch": "kaspa-vprogs"
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-stub-20260917-194659@2026-09-17T19:46:59",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-stub-20260917-194659",
+    "started_at": "2026-09-17T19:46:59",
+    "ended_at": "2026-09-17T19:47:00",
+    "duration_s": 0.3,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": {
+      "project": "stub-project",
+      "until": "",
+      "approve": [
+        "screenplay",
+        "spine",
+        "plan",
+        "blueprint",
+        "draft"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "stub-project",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:46:59"
+        },
+        "research": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:46:59"
+        },
+        "screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:46:59"
+        },
+        "gate_screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:46:59"
+        },
+        "await_recording": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "compress": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:46:59"
+        },
+        "defumble": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "cover_blackout": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "desilence": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "transcribe": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "verify_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:46:59"
+        },
+        "gate_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:46:59"
+        },
+        "as_recorded": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "coverage": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "music_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "gate_plan": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:46:59"
+        },
+        "assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "verify_assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "edit_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "transitions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "reconcile_docs": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "lint_docset": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "gate_blueprint": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:46:59"
+        },
+        "card_pauses": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "captions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "comp_build": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "verify_comp": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "gate_draft": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:46:59"
+        },
+        "final_render": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "verify_final": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "definition_of_done": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        },
+        "stage_longform": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:46:59"
+        }
+      },
+      "project": "stub-project",
+      "final": [],
+      "stub": true
+    },
+    "error": null
+  },
+  {
+    "run_id": "lintcheck-1789688820@2026-09-17T19:47:02",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "lintcheck-1789688820",
+    "started_at": "2026-09-17T19:47:02",
+    "ended_at": "2026-09-17T19:47:02",
+    "duration_s": 0.3,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "kaspa-vprogs",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kaspa-vprogs",
+      "last_node": "screenplay",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "kaspa-vprogs: folder + PROJECT-LOG ready",
+          "at": "2026-09-17T19:47:02"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-17T19:47:02"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (2 FACE beat(s))",
+          "at": "2026-09-17T19:47:02"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-stub-20260917-195018@2026-09-17T19:50:18",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-stub-20260917-195018",
+    "started_at": "2026-09-17T19:50:18",
+    "ended_at": "2026-09-17T19:50:18",
+    "duration_s": 0.2,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": {
+      "project": "stub-project",
+      "until": "",
+      "approve": [
+        "screenplay",
+        "spine",
+        "plan",
+        "blueprint",
+        "draft"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "stub-project",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:50:18"
+        },
+        "research": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:50:18"
+        },
+        "screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:50:18"
+        },
+        "gate_screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:50:18"
+        },
+        "await_recording": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "compress": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:50:18"
+        },
+        "defumble": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "cover_blackout": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "desilence": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "transcribe": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "verify_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:50:18"
+        },
+        "gate_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:50:18"
+        },
+        "as_recorded": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "coverage": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "music_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "gate_plan": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:50:18"
+        },
+        "assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "verify_assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "edit_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "transitions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "reconcile_docs": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "lint_docset": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "gate_blueprint": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:50:18"
+        },
+        "card_pauses": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "captions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "comp_build": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "verify_comp": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "gate_draft": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-17T19:50:18"
+        },
+        "final_render": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "verify_final": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "definition_of_done": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        },
+        "stage_longform": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-17T19:50:18"
+        }
+      },
+      "project": "stub-project",
+      "final": [],
+      "stub": true
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-stub-20260927-183004@2026-09-27T18:30:04",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-stub-20260927-183004",
+    "started_at": "2026-09-27T18:30:04",
+    "ended_at": "2026-09-27T18:30:04",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": {
+      "project": "stub-project",
+      "until": "",
+      "approve": [
+        "screenplay",
+        "spine_review",
+        "spine",
+        "plan",
+        "blueprint",
+        "draft"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "stub-project",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "research": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "gate_screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "await_recording": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "compress": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "defumble": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "cover_blackout": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "desilence_coarse": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "gate_spine_review": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "burst_removal": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "desilence_final": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "transcribe": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "verify_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "gate_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "as_recorded": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "coverage": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "music_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "gate_plan": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "verify_assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "edit_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "transitions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "reconcile_docs": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "lint_docset": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "gate_blueprint": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "card_pauses": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "captions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "comp_build": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "verify_comp": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "gate_draft": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T18:30:04"
+        },
+        "final_render": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "verify_final": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "definition_of_done": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        },
+        "stage_longform": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T18:30:04"
+        }
+      },
+      "project": "stub-project",
+      "final": [],
+      "stub": true
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-kaspa-vprogs-b@2026-09-27T18:30:22",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-kaspa-vprogs-b",
+    "started_at": "2026-09-27T18:30:22",
+    "ended_at": "2026-09-27T18:53:13",
+    "duration_s": 1370.6,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "kaspa-vprogs",
+      "until": "",
+      "approve": [
+        "screenplay"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kaspa-vprogs",
+      "last_node": "desilence_coarse",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "kaspa-vprogs: folder + PROJECT-LOG ready",
+          "at": "2026-09-27T18:30:22"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-27T18:30:22"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (2 FACE beat(s))",
+          "at": "2026-09-27T18:30:22"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-09-27T18:30:22"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-09-27T18:30:22"
+        },
+        "compress": {
+          "status": "ran",
+          "detail": "ALL.lowbps.mp4 (766.0s)",
+          "at": "2026-09-27T18:31:25"
+        },
+        "defumble": {
+          "status": "ran",
+          "detail": "ALL.a.defumbled.mp4 (532.8s)",
+          "at": "2026-09-27T18:42:40"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (532.8s)",
+          "at": "2026-09-27T18:49:13"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (219.6s)",
+          "at": "2026-09-27T18:53:13"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-kaspa-vprogs-b@2026-09-27T19:08:56",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-kaspa-vprogs-b",
+    "started_at": "2026-09-27T19:08:56",
+    "ended_at": "2026-09-27T19:23:46",
+    "duration_s": 890.5,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "kaspa-vprogs",
+      "until": "",
+      "approve": [
+        "spine_review"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "kaspa-vprogs",
+      "last_node": "verify_spine",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "kaspa-vprogs: folder + PROJECT-LOG ready",
+          "at": "2026-09-27T18:30:22"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-27T18:30:22"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (2 FACE beat(s))",
+          "at": "2026-09-27T18:30:22"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-09-27T18:30:22"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-09-27T18:30:22"
+        },
+        "compress": {
+          "status": "ran",
+          "detail": "ALL.lowbps.mp4 (766.0s)",
+          "at": "2026-09-27T18:31:25"
+        },
+        "defumble": {
+          "status": "ran",
+          "detail": "ALL.a.defumbled.mp4 (532.8s)",
+          "at": "2026-09-27T18:42:40"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (532.8s)",
+          "at": "2026-09-27T18:49:13"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (219.6s)",
+          "at": "2026-09-27T18:53:13"
+        },
+        "gate_spine_review": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-09-27T19:08:56"
+        },
+        "burst_removal": {
+          "status": "ran",
+          "detail": "ALL.d.cleaned.mp4 (219.4s)",
+          "at": "2026-09-27T19:15:25"
+        },
+        "desilence_final": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 (211.1s)",
+          "at": "2026-09-27T19:19:34"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.medium-words.json (0.0s)",
+          "at": "2026-09-27T19:23:46"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (211.1s), 3 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-09-27T19:23:46"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-kaspa-vprogs-c@2026-09-27T20:50:55",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-kaspa-vprogs-c",
+    "started_at": "2026-09-27T20:50:55",
+    "ended_at": "2026-09-27T20:55:37",
+    "duration_s": 281.9,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "kaspa-vprogs",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kaspa-vprogs",
+      "last_node": "verify_spine",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "kaspa-vprogs: folder + PROJECT-LOG ready",
+          "at": "2026-09-27T20:50:55"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-27T20:50:55"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (2 FACE beat(s))",
+          "at": "2026-09-27T20:50:55"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T18:30:22",
+          "at": "2026-09-27T20:50:55"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-09-27T20:50:55"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-09-27T20:50:55"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-09-27T20:50:56"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-09-27T20:50:56"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T19:08:56",
+          "at": "2026-09-27T20:50:57"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.f.cut.medium-words.json (0.0s)",
+          "at": "2026-09-27T20:55:36"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.f.cut.mp4 ok (202.8s), 593 words, fps 30, chain lowbps+a+b+c+f",
+          "at": "2026-09-27T20:55:37"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-stub-20260927-211610@2026-09-27T21:16:10",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-stub-20260927-211610",
+    "started_at": "2026-09-27T21:16:10",
+    "ended_at": "2026-09-27T21:16:10",
+    "duration_s": 0.3,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": {
+      "project": "stub-project",
+      "until": "",
+      "approve": [
+        "screenplay",
+        "spine_review",
+        "spine",
+        "plan",
+        "blueprint",
+        "draft"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "stub-project",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "research": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "gate_screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "await_recording": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "compress": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "defumble": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "cover_blackout": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "desilence_coarse": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "gate_spine_review": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "burst_removal": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "desilence_final": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "transcribe": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "verify_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "gate_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "as_recorded": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "coverage": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "music_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "gate_plan": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "verify_assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "edit_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "transitions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "reconcile_docs": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "lint_docset": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "gate_blueprint": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "card_pauses": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "captions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "comp_build": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "verify_comp": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "gate_draft": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-27T21:16:10"
+        },
+        "final_render": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "verify_final": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "definition_of_done": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        },
+        "stage_longform": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-27T21:16:10"
+        }
+      },
+      "project": "stub-project",
+      "final": [],
+      "stub": true
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-kaspa-vprogs-c@2026-09-27T21:16:28",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-kaspa-vprogs-c",
+    "started_at": "2026-09-27T21:16:28",
+    "ended_at": "2026-09-27T21:20:32",
+    "duration_s": 244.0,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "kaspa-vprogs",
+      "until": "",
+      "approve": [
+        "spine"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "kaspa-vprogs",
+      "last_node": "as_recorded",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "kaspa-vprogs: folder + PROJECT-LOG ready",
+          "at": "2026-09-27T20:50:55"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-27T20:50:55"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (2 FACE beat(s))",
+          "at": "2026-09-27T20:50:55"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T18:30:22",
+          "at": "2026-09-27T20:50:55"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-09-27T20:50:55"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-09-27T20:50:55"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-09-27T20:50:56"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-09-27T20:50:56"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T19:08:56",
+          "at": "2026-09-27T20:50:57"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.f.cut.medium-words.json (0.0s)",
+          "at": "2026-09-27T20:55:36"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.f.cut.mp4 ok (202.8s), 593 words, fps 30, chain lowbps+a+b+c+f",
+          "at": "2026-09-27T20:55:37"
+        },
+        "gate_spine": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-09-27T21:16:28"
+        },
+        "as_recorded": {
+          "status": "ran",
+          "detail": "AS-RECORDED.md written, lint PASS (2 FACE windows)",
+          "at": "2026-09-27T21:20:32"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "stub-cov-1@2026-09-28T16:09:44",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "stub-cov-1",
+    "started_at": "2026-09-28T16:09:44",
+    "ended_at": "2026-09-28T16:09:44",
+    "duration_s": 0.3,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": {
+      "project": "stub-project",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "stub-project",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "research": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "gate_screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "await_recording": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "compress": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "defumble": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "cover_blackout": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "desilence_coarse": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "gate_spine_review": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "burst_removal": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "desilence_final": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "transcribe": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "verify_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "gate_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "as_recorded": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "coverage": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "music_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "gate_plan": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "verify_assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "edit_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "transitions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "reconcile_docs": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "lint_docset": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "gate_blueprint": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "card_pauses": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "captions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "comp_build": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "verify_comp": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "gate_draft": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T16:09:44"
+        },
+        "final_render": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "verify_final": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "definition_of_done": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        },
+        "stage_longform": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T16:09:44"
+        }
+      },
+      "project": "stub-project",
+      "final": [],
+      "stub": true
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-kaspa-vprogs-c@2026-09-28T16:09:51",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-kaspa-vprogs-c",
+    "started_at": "2026-09-28T16:09:51",
+    "ended_at": "2026-09-28T16:19:32",
+    "duration_s": 580.4,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "kaspa-vprogs",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "kaspa-vprogs",
+      "last_node": "coverage",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "kaspa-vprogs: folder + PROJECT-LOG ready",
+          "at": "2026-09-27T20:50:55"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-27T20:50:55"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (2 FACE beat(s))",
+          "at": "2026-09-27T20:50:55"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T18:30:22",
+          "at": "2026-09-27T20:50:55"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-09-27T20:50:55"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-09-27T20:50:55"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-09-27T20:50:56"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-09-27T20:50:56"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T19:08:56",
+          "at": "2026-09-27T20:50:57"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.f.cut.medium-words.json (0.0s)",
+          "at": "2026-09-27T20:55:36"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.f.cut.mp4 ok (202.8s), 593 words, fps 30, chain lowbps+a+b+c+f",
+          "at": "2026-09-27T20:55:37"
+        },
+        "gate_spine": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-09-27T21:16:28"
+        },
+        "as_recorded": {
+          "status": "ran",
+          "detail": "AS-RECORDED.md written, lint PASS (2 FACE windows)",
+          "at": "2026-09-27T21:20:32"
+        },
+        "coverage": {
+          "status": "failed",
+          "detail": "COVER-PLAN.json failed verification: beat 40.22-40.22 has no length (fix the plan, then --redo coverage)",
+          "at": "2026-09-28T16:19:31"
+        }
+      }
+    },
+    "error": "coverage: COVER-PLAN.json failed verification: beat 40.22-40.22 has no length (fix the plan, then --redo coverage)"
+  },
+  {
+    "run_id": "longform-kaspa-vprogs-c@2026-09-28T16:20:22",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-kaspa-vprogs-c",
+    "started_at": "2026-09-28T16:20:22",
+    "ended_at": "2026-09-28T16:20:22",
+    "duration_s": 0.0,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "kaspa-vprogs",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "kaspa-vprogs",
+      "last_node": "coverage",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "kaspa-vprogs: folder + PROJECT-LOG ready",
+          "at": "2026-09-27T20:50:55"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-27T20:50:55"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (2 FACE beat(s))",
+          "at": "2026-09-27T20:50:55"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T18:30:22",
+          "at": "2026-09-27T20:50:55"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-09-27T20:50:55"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-09-27T20:50:55"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-09-27T20:50:56"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-09-27T20:50:56"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T19:08:56",
+          "at": "2026-09-27T20:50:57"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-09-27T20:50:57"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.f.cut.medium-words.json (0.0s)",
+          "at": "2026-09-27T20:55:36"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.f.cut.mp4 ok (202.8s), 593 words, fps 30, chain lowbps+a+b+c+f",
+          "at": "2026-09-27T20:55:37"
+        },
+        "gate_spine": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-09-27T21:16:28"
+        },
+        "as_recorded": {
+          "status": "ran",
+          "detail": "AS-RECORDED.md written, lint PASS (2 FACE windows)",
+          "at": "2026-09-27T21:20:32"
+        },
+        "coverage": {
+          "status": "failed",
+          "detail": "COVER-PLAN.json failed verification: beat 40.22-40.22 has no length (fix the plan, then --redo coverage)",
+          "at": "2026-09-28T16:19:31"
+        }
+      }
+    },
+    "error": "coverage: COVER-PLAN.json failed verification: beat 40.22-40.22 has no length (fix the plan, then --redo coverage)"
+  },
+  {
+    "run_id": "longform-kaspa-vprogs-d@2026-09-28T16:20:32",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-kaspa-vprogs-d",
+    "started_at": "2026-09-28T16:20:32",
+    "ended_at": "2026-09-28T16:20:35",
+    "duration_s": 3.0,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "kaspa-vprogs",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kaspa-vprogs",
+      "last_node": "coverage",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "kaspa-vprogs: folder + PROJECT-LOG ready",
+          "at": "2026-09-28T16:20:33"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-09-28T16:20:33"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (2 FACE beat(s))",
+          "at": "2026-09-28T16:20:33"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T18:30:22",
+          "at": "2026-09-28T16:20:33"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-09-28T16:20:33"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-09-28T16:20:33"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-09-28T16:20:33"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-09-28T16:20:33"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-09-28T16:20:34"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T19:08:56",
+          "at": "2026-09-28T16:20:34"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-09-28T16:20:34"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-09-28T16:20:34"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.f.cut.medium-words.json present",
+          "at": "2026-09-28T16:20:34"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.f.cut.mp4 ok (202.8s), 593 words, fps 30, chain lowbps+a+b+c+f",
+          "at": "2026-09-28T16:20:35"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-09-27T21:16:28",
+          "at": "2026-09-28T16:20:35"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (2 FACE windows)",
+          "at": "2026-09-28T16:20:35"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (34 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-09-28T16:20:35"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "stub-x2@2026-09-28T17:20:16",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "stub-x2",
+    "started_at": "2026-09-28T17:20:16",
+    "ended_at": "2026-09-28T17:20:16",
+    "duration_s": 0.3,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": {
+      "project": "stub-project",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "stub-project",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "research": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "gate_screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "await_recording": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "compress": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "defumble": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "cover_blackout": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "desilence_coarse": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "gate_spine_review": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "burst_removal": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "desilence_final": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "transcribe": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "verify_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "gate_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "as_recorded": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "coverage": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "music_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "gate_plan": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "verify_assets": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "edit_plan": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "transitions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "reconcile_docs": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "lint_docset": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "gate_blueprint": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "card_pauses": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "captions": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "comp_build": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "verify_comp": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "gate_draft": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-09-28T17:20:16"
+        },
+        "final_render": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "verify_final": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "definition_of_done": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        },
+        "stage_longform": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-09-28T17:20:16"
+        }
+      },
+      "project": "stub-project",
+      "final": [],
+      "stub": true
+    },
+    "error": null
+  }
+]

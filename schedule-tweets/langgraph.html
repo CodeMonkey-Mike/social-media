@@ -294,8 +294,8 @@
        CARDS (status pill + description + processed counts + last-run line),
        arranged as THREE VERTICAL LANE COLUMNS you scroll down through, with
        the shared trunk fanning in at the top. Solid cards are graph-owned
-       steps; dashed cards are judgment seams (a strategist plan on disk or a
-       Mike gate) — the graphs never bridge a seam. */
+       steps; dashed cards are HITL gates / agent handoffs (a strategist plan on disk or a
+       Mike approval) — the graphs never bridge one. */
     .pipe-trunkrow { display: flex; gap: 0; justify-content: center; flex-wrap: wrap; margin-bottom: 2px; }
     .pipe-trunkrow .pstep { flex: 0 1 252px; margin: 0; }
     /* Drawn flow arrows (Mike, 2026-08-11: the text glyphs were invisible —
@@ -338,6 +338,15 @@
       .pipe-cols, .pipe-fanarrows { grid-template-columns: 1fr; }
       .fan-rail, .fan-stub { display: none; }
     }
+    /* Vertical CHAIN layout (longform, 2026-09-17): one graph, ~32 nodes, one real
+       fan-out (the asset factory) that JOINS back into a linear tail. Cards stack
+       down the middle with drawn arrows; section labels mark the stages. */
+    .pipe-chain { display: flex; flex-direction: column; align-items: center; }
+    .pipe-chain .pstep { width: 100%; max-width: 620px; aspect-ratio: auto; }
+    .pipe-section { width: 100%; max-width: 620px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--ink-muted); padding: 16px 2px 8px; border-top: 1px dashed var(--line, #dfe3e8); margin-top: 8px; }
+    .pipe-section:first-child { border-top: 0; margin-top: 0; padding-top: 4px; }
+    .pipe-join { margin-top: 10px; }
     .pcol-h {
       font-size: 10.5px;
       font-weight: 700;
@@ -387,6 +396,7 @@
       white-space: nowrap;
     }
     .seam-tag.graph { color: #0b57c2; background: var(--accent-wash); border-color: #c5dcfa; }
+    .st-code { font-family: 'Cascadia Code', Consolas, monospace; font-size: 10.5px; line-height: 1.5; color: #4a4d52; background: #f6f7f9; border: 1px solid #e7e9ee; border-radius: 5px; padding: 4px 7px; margin-top: 8px; word-break: break-all; }
     .st-statusrow { display: flex; align-items: center; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
     .st-statusrow .st-when { margin-top: 0; }
     .parrow { text-align: center; color: #c9ccd1; font-size: 14px; line-height: 1; padding: 5px 0; }
@@ -647,72 +657,272 @@ const AUTOMATIONS = [
     },
   },
   {
-    id: 'livestream',
-    label: 'Livestream',
-    sub: 'one stream → 3 lanes · solid = graph-owned · dashed = judgment seam (strategist / Mike)',
-    feed: { progress: '/livestream/lane_progress.json', runs: '/livestream/lane_runs.json' },
-    // THE PIPELINE MAP (Mike's mental model, 2026-08-11): one starting point that
-    // fans into the 3 content lanes, each lane a chain of step nodes. This is the
-    // canonical CLAUDE.md pipeline drawn as a graph. `seg` + `node` key each solid
-    // box to a graph segment (the `lane` field in the run log) and its work node,
-    // so live state lights the exact node; dashed seams are agent/Mike territory
-    // the graphs deliberately never bridge. The 6 graph SEGMENTS still exist
-    // (history table below) — they are invocations, not lanes.
+    id: 'longform',
+    label: 'Longform',
+    sub: 'one video → one StateGraph · solid = graph-owned · dashed = HITL gate (Mike) or agent handoff · the asset factory is the one real fan-out, then the graph JOINS back into a linear tail',
+    feed: { progress: '/longform/lane_progress.json', runs: '/longform/lane_runs.json',
+            gates: '/longform/gates.json?batch=' },
+    // longform-edited graph (video-creation/longform-edited/graph/longform_graph.py,
+    // 2026-09-17): ONE 32-node StateGraph per video. Status per card comes from the
+    // graph's own step ledger (`statusFrom: 'steps'`: the run record's summary.steps +
+    // the heartbeat's live / waiting / failed node), and a seam's `gate` key is the
+    // handoff ARTIFACT (or Mike's recorded approval) served by /longform/gates.json.
+    // `seg` = the stage number the heartbeat reports as `lane` (1 pre-production ·
+    // 2 spine · 3 plan · 4 build · 5 deliver); `node` = the graph node.
+    statusFrom: 'steps',
+    lanes: [
+      { n: 1, name: 'pre-production', nodes: ['init_project', 'research', 'screenplay', 'gate_screenplay', 'await_recording'] },
+      { n: 2, name: 'spine',          nodes: ['compress', 'defumble', 'cover_blackout', 'desilence_coarse', 'gate_spine_review', 'burst_removal', 'desilence_final', 'transcribe', 'verify_spine', 'gate_spine'] },
+      { n: 3, name: 'plan',           nodes: ['as_recorded', 'coverage', 'music_plan', 'gate_plan', 'assets', 'verify_assets', 'edit_plan', 'transitions', 'reconcile_docs', 'lint_docset', 'gate_blueprint'] },
+      { n: 4, name: 'build',          nodes: ['card_pauses', 'captions', 'comp_build', 'verify_comp', 'gate_draft'] },
+      { n: 5, name: 'deliver',        nodes: ['final_render', 'verify_final', 'definition_of_done', 'stage_longform'] },
+    ],
     pipeline: {
+      subject: 'video',
+      trunkLayout: 'vertical',
       trunk: [
-        { seam: true, who: 'Mike', label: 'Livestream recording', after: 1,
-          desc: 'the raw OBS .mkv in its named media folder (the folder names the batch)' },
-        { seg: 1, node: 'encode', label: 'Encode the working master',
-          desc: 're-encode to the ~0.65 Mbps "LOW BPS" 16:9 master every lane cuts from' },
+        { header: 'Pre-production' },
+        { seg: 1, node: 'init_project', label: 'Init the project folder',
+          desc: 'raw/ · spine/ · assets/ · _previews/ to the fixed layout (comp-build.md 13a) + PROJECT-LOG seeded with the concept brief and Mike\'s constraints',
+          code: 'video-creation/longform-edited/scripts/init_project.py · via graph/longform_graph.py' },
+        { seam: true, who: 'data-researcher', node: 'research', gate: 'data', label: 'Research → DATA.md',
+          desc: 'every number, date, name and quote with a primary source + read date; do-not-air list; CHART-SOURCE INDEX; market snapshot',
+          code: '.claude/agents/longform-edited/data-researcher.md → media/<project>/DATA.md' },
+        { seam: true, who: 'screenplay-strategist', node: 'screenplay', gate: 'screenplay_doc', label: 'Screenplay → SCREENPLAY.md',
+          desc: 'Convention-5 tagged beats, gear arc, music mood plan, marquee visuals; the graph counts the [FACE] beats against --face-max',
+          code: '.claude/agents/longform-edited/screenplay-strategist.md → media/<project>/SCREENPLAY.md' },
+        { seam: true, who: 'Mike', node: 'gate_screenplay', gate: 'approve_screenplay', label: 'GATE 1 · screenplay',
+          desc: 'review the brief (PROJECT-LOG), DATA.md and SCREENPLAY.md; edit the files if needed, then approve',
+          code: 'run.py longform --project <p> --resume --approve screenplay' },
+        { seam: true, who: 'Mike', node: 'await_recording', gate: 'recording', label: 'Record the take',
+          desc: 'the OBS master into media/<project>/raw/<scope>.mkv (never edited, never deleted); the graph moves on once the file exists',
+          code: 'raw/ALL.mkv' },
+        { header: 'Spine' },
+        { seg: 2, node: 'compress', label: 'Compress to the working proxy',
+          desc: '2 Mbps NVENC proxy, no cutting; duration verified against the master',
+          code: 'video-creation/longform-edited/scripts/to_low_bps.py → spine/<scope>.lowbps.mp4' },
+        { seam: true, who: 'defumbler', node: 'defumble', gate: 'defumbled', label: 'Defumble',
+          desc: 'chunk-map the takes, cut ONLY inside silence, the last clean take wins, no clipped words',
+          code: '.claude/agents/shared/defumbler.md → spine/<scope>.a.defumbled.mp4' },
+        { seam: true, who: 'cover-blackout', node: 'cover_blackout', gate: 'blackout', label: 'Cover blackout',
+          desc: 'black under every [COVER] beat so the reading face never leaks; audio untouched',
+          code: '.claude/agents/shared/cover-blackout.md → spine/<scope>.b.blackout.mp4 (+ .cover.json)' },
+        { seam: true, who: 'desilencer', node: 'desilence_coarse', gate: 'coarse', label: 'Desilence, coarse pass',
+          desc: 'ONE zone at ~700 ms: the reviewable spine Mike listens to (bursts by ear, content flags)',
+          code: 'video-creation/skills/desilencer/scripts/desilence.py → spine/<scope>.c.desilenced.mp4' },
+        { seam: true, who: 'Mike', node: 'gate_spine_review', gate: 'approve_spine_review', label: 'GATE 2a · listen',
+          desc: 'burst timestamps + content flags ride into the resume (--bursts a-b,c-d)',
+          code: 'run.py longform --project <p> --resume --approve spine_review [--bursts ...]' },
+        { seam: true, who: 'burst-removal', node: 'burst_removal', gate: 'cleaned', label: 'Burst removal',
+          desc: 'each burst cut inside its silence troughs off the COARSE spine (never the blackout); skipped when none',
+          code: '.claude/agents/shared/burst-removal.md → spine/<scope>.d.cleaned.mp4' },
+        { seam: true, who: 'desilencer', node: 'desilence_final', gate: 'desilenced', label: 'Desilence, final pass',
+          desc: 'two-zone tight pass (intro / body min-silence, split at the hook end), sync-safe',
+          code: 'video-creation/skills/desilencer/scripts/desilence.py → spine/<scope>.e.desilenced.mp4' },
+        { seam: true, who: 'transcriber', node: 'transcribe', gate: 'words', label: 'Transcribe the final spine',
+          desc: 'Whisper medium word-level JSON + human breakdown, persona mishears corrected (text only)',
+          code: '.claude/agents/shared/transcriber.md → <final spine>.medium-words.json' },
+        { seg: 2, node: 'verify_spine', label: 'Verify the spine',
+          desc: 'final spine + word JSON present, fps 30/1 (the 29.97 trap), A/V drift under 60 ms',
+          code: 'graph/longform_graph.py verify_spine' },
+        { seam: true, who: 'Mike', node: 'gate_spine', gate: 'approve_spine', label: 'GATE 2b · spine + transcript',
+          desc: 'the final spine, its transcript and the review flags in PROJECT-LOG',
+          code: 'run.py longform --project <p> --resume --approve spine' },
+        { header: 'Plan' },
+        { seam: true, who: 'orchestrator', node: 'as_recorded', gate: 'as_recorded', label: 'AS-RECORDED.md',
+          desc: 'the as-built script off the FINAL-spine transcript: FACE windows, mishears, divergences, flags',
+          code: 'screenplay.md § AS-RECORDED skeleton → media/<project>/AS-RECORDED.md' },
+        { seam: true, who: 'coverage-strategist', node: 'coverage', gate: 'cover_plan', label: 'Cover plan',
+          desc: 'what is on screen for every cover beat, one holistic pass under the b-roll budget (COVER-PLAN.json → BROLL-PLAN worklists)',
+          code: '.claude/agents/longform-edited/coverage-strategist.md' },
+        { seam: true, who: 'music-placement-strategist', node: 'music_plan', gate: 'music_plan', label: 'Music plan',
+          desc: 'which bed scores which chapter, carved off the analyzed catalog (MUSIC-PLAN.json)',
+          code: '.claude/agents/longform-edited/music-placement-strategist.md' },
+        { seam: true, who: 'Mike', node: 'gate_plan', gate: 'approve_plan', label: 'GATE 3 · plan',
+          desc: 'cover plan + music plan + the worklists, BEFORE any asset is captured or generated',
+          code: 'run.py longform --project <p> --resume --approve plan' },
       ],
       lanes: [
-        { title: 'Lane 1 · longform', nodes: [
+        { title: 'Assets · slides + charts', dep: 'fan-out after GATE 3 · code-rendered, text-accurate', nodes: [
+          { seam: true, who: 'slide-builder', node: 'assets', label: 'Title + card slides',
+            desc: 'the locked stylesheet, one standalone full-frame slide per beat',
+            code: '.claude/agents/longform-edited/slide-builder.md → assets/title-slides · card-slides' },
+          { seam: true, who: 'chart-builder', node: 'assets', label: 'Diagrams + chart states',
+            desc: 'system-design stills + the design states the animated charts are built to',
+            code: '.claude/agents/longform-edited/chart-builder.md → assets/diagrams · charts' },
+          { seam: true, who: 'visual-qa', node: 'assets', label: 'Visual QA',
+            desc: 'opens every PNG: cut-off text, wrong font, palette drift, overflow',
+            code: '.claude/agents/shared/visual-qa.md' },
+        ]},
+        { title: 'Assets · receipts + video', dep: 'own Chrome profiles · runs beside the other columns', nodes: [
+          { seam: true, who: 'receipt-capturer', node: 'assets', label: 'Receipts',
+            desc: 'verified real-site captures (never a blank page, never a redraw)',
+            code: '.claude/agents/longform-edited/receipt-capturer.md → assets/receipts' },
+          { seam: true, who: 'envato-sourcer', node: 'assets', label: 'Envato b-roll',
+            desc: 'stock clips per the worklist, proxied, audio stripped',
+            code: '.claude/agents/longform-edited/envato-sourcer.md → assets/vid' },
+          { seam: true, who: 'visual-qa', node: 'assets', label: 'Visual QA',
+            desc: 'every capture and clip opened and checked',
+            code: '.claude/agents/shared/visual-qa.md' },
+        ]},
+        { title: 'Assets · ChatGPT images', dep: 'the chatgpt profile (pool-managed chats) · runs beside the other columns', nodes: [
+          { seam: true, who: 'image-gen', node: 'assets', label: 'ChatGPT stills',
+            desc: 'house-style prompts through the pooled-chat browser pipeline; every image unique',
+            code: '.claude/agents/longform-edited/image-gen.md → assets/img' },
+          { seam: true, who: 'visual-qa', node: 'assets', label: 'Visual QA',
+            desc: 'every image opened and checked against the prompt',
+            code: '.claude/agents/shared/visual-qa.md' },
+        ]},
+      ],
+      tail: [
+        { seg: 3, node: 'verify_assets', label: 'Verify the assets',
+          desc: 'every worklist row has its file, zero orphans, no byte-duplicate b-roll, visual-qa PASS on all',
+          code: 'graph/longform_graph.py verify_assets' },
+        { seam: true, who: 'orchestrator', node: 'edit_plan', gate: 'edit_plan', label: 'EDIT-PLAN + CUE-SHEET',
+          desc: 'the time-ordered event log + the layer-grouped watch-along, timecoded off the word-level transcript, zero orphans',
+          code: 'skills/edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md → EDIT-PLAN.md · CUE-SHEET.md · EDIT-PLAN-prep.md' },
+        { seam: true, who: 'transition-strategist', node: 'transitions', gate: 'transitions', label: 'Transitions plan',
+          desc: 'every cut assigned across the three buckets; MELT / SPIN reserved for the marquee diagrams (TRANSITIONS.md)',
+          code: '.claude/agents/longform-edited/transition-strategist.md' },
+        { seg: 3, node: 'reconcile_docs', label: 'Reconcile the doc set',
+          desc: 'the transition picks fanned into every EDIT-PLAN / CUE-SHEET row: the doc set is ONE blueprint',
+          code: 'graph/longform_graph.py reconcile_docs' },
+        { seg: 3, node: 'lint_docset', label: 'Lint the doc set',
+          desc: 'pre-build gate: the 13 document set, the 13a naming, the transcript-first order (lint_docset.py, ported from JS)',
+          code: 'video-creation/longform-edited/skills/doc-reference/lint_docset.py' },
+        { seam: true, who: 'Mike', node: 'gate_blueprint', gate: 'approve_blueprint', label: 'GATE 4 · blueprint',
+          desc: 'EDIT-PLAN, CUE-SHEET and TRANSITIONS before any comp work',
+          code: 'run.py longform --project <p> --resume --approve blueprint' },
+        { header: 'Build' },
+        { seg: 4, node: 'card_pauses', label: 'Bake the card pauses',
+          desc: '+1 s freeze + silence before each carded chapter\'s first word, containment-checked → assets/spine.mp4',
+          code: 'graph/longform_graph.py card_pauses' },
+        { seam: true, who: 'captions-builder', node: 'captions', label: 'Captions',
+          desc: 'build_captions.py on the final spine\'s word JSON, montserrat 2/4 grouping, the video\'s windows',
+          code: '.claude/agents/shared/captions-builder.md' },
+        { seam: true, who: 'comp-builder', node: 'comp_build', gate: 'draft', label: 'Build the comp + draft',
+          desc: 'the Remotion comp to the blueprint, chunk QA, 200k draft render, ffmpeg music + SFX mix, video-qa reconcile',
+          code: '(agent to build) → _previews/<project>-draft-vN.mp4' },
+        { seg: 4, node: 'verify_comp', label: 'Verify the comp',
+          desc: 'every lint exits 0 (covers, deck containers, pause silence, transition assets, slide balance, animated charts, spine fps), duration, audio',
+          code: 'graph/longform_graph.py verify_comp' },
+        { seam: true, who: 'Mike', node: 'gate_draft', gate: 'approve_draft', label: 'GATE 5 · draft',
+          desc: 'your review; notes drive fix rounds (partial re-render + concat)',
+          code: 'run.py longform --project <p> --resume --approve draft' },
+        { header: 'Deliver' },
+        { seg: 5, node: 'final_render', label: 'Final render + mix', desc: 'full bitrate, the same mix → renders/', code: 'graph/longform_graph.py final_render' },
+        { seg: 5, node: 'verify_final', label: 'Verify the final', desc: 'duration, fps, audio parity with the approved draft, splice PSNR', code: 'graph/longform_graph.py verify_final' },
+        { seg: 5, node: 'definition_of_done', label: 'Definition of done', desc: 'comp-build.md 12a: FINAL to the project root, bed rescued, _previews recycled', code: 'graph/longform_graph.py definition_of_done' },
+        { seg: 5, node: 'stage_longform', label: 'Stage + queue', desc: 'schedule-tweets/longform/<project>/ + the longs.json entry (rumble · bitchute · facebook)', code: 'graph/longform_graph.py stage_longform' },
+      ],
+    },
+    headline(run) {
+      const s = run && run.summary;
+      if (!s) return run && run.error ? clip(run.error, 90) : '';
+      if (s.final && s.final.length) return `FINAL: ${clip(String(s.final[0]).split(/[\\\/]/).pop(), 60)}`;
+      const steps = s.steps || {};
+      const last = s.last_node || Object.keys(steps).pop();
+      const st = last && steps[last] ? steps[last] : null;
+      return last ? `${last}${st ? ' · ' + st.status + (st.detail ? ' · ' + clip(st.detail, 60) : '') : ''}` : '';
+    },
+    dayline() { return null; },
+  },
+  {
+    id: 'livestream',
+    label: 'Livestream',
+    sub: 'one stream → 3 lanes · solid = graph-owned · dashed = HITL gate (Mike) or agent handoff (strategist / builder) · mono chip = the code that executes the step (via = its graph wrapper in video-creation/livestream-repurpose/)',
+    feed: { progress: '/livestream/lane_progress.json', runs: '/livestream/lane_runs.json',
+            gates: '/livestream/gates.json?batch=' },
+    // THE PIPELINE MAP (Mike's mental model, 2026-08-11; TRUNK CORRECTED 2026-08-15):
+    // one starting point that fans into the 3 content lanes, each lane a chain of step
+    // nodes. This is the canonical CLAUDE.md pipeline drawn as a graph. `seg` + `node`
+    // key each solid box to a graph segment (the `lane` field in the run log) and its
+    // work node, so live state lights the exact node; dashed seams are agent/Mike
+    // territory the graphs deliberately never bridge. The 6 graph SEGMENTS still exist
+    // (history table below) — they are invocations, not lanes.
+    //
+    // WHY THE TRUNK RUNS THROUGH `derive` (Mike, 2026-08-15): verticalize/transcribe/
+    // derive used to be drawn INSIDE Lane 2, with Lane 3 labelled "off Lane 2's
+    // transcript". That is false and it cost real wall-clock: it reads as though Lane 3
+    // must wait for Lane 2, so the orchestrator serialized Lane 3 behind it. Those three
+    // nodes are all SEGMENT 1 (intake) and the transcript is a SHARED artifact — Lane 2
+    // and Lane 3 both consume it. Lane 2's own work starts at the clip-strategist seam
+    // (segments 2-5); Lane 3's own work is segment 6. They are SIBLINGS off intake and
+    // can run CONCURRENTLY. Keep them drawn that way.
+    pipeline: {
+      trunk: [
+        { seam: true, who: 'Mike', label: 'Livestream recording', after: 1, gate: 'longform_meta',
+          desc: 'the raw OBS .mkv in its named media folder (the folder names the batch)' },
+        { seg: 1, node: 'encode', label: 'Encode the working master',
+          desc: 're-encode to the ~0.65 Mbps "LOW BPS" 16:9 master every lane cuts from',
+          code: 'video-creation/livestream-repurpose/scripts/encode_low_bps.py · via graph/intake_graph.py' },
+        { seg: 1, node: 'vertical', label: 'Verticalize',
+          desc: 'build the 1080x1920 9:16 master the shorts are cut from and the transcript is taken off',
+          code: 'video-creation/livestream-repurpose/scripts/verticalize.py · via graph/intake_graph.py' },
+        { seg: 1, node: 'transcribe', label: 'Transcribe',
+          desc: 'Whisper word-level JSON + the Kaspa/KRC20 STT glossary fixes',
+          code: 'python -m whisper (small, word_timestamps) · via graph/intake_graph.py' },
+        { seg: 1, node: 'derive', label: 'Derive transcripts',
+          desc: 'plain-text transcript + the 90-second chunk windows — the SHARED artifact Lanes 2 and 3 both read',
+          code: 'video-creation/livestream-repurpose/scripts/fix_transcript_glossary.py → parse_transcript.py → chunk_transcript.py · via graph/intake_graph.py' },
+      ],
+      lanes: [
+        { title: 'Lane 1 · longform', dep: 'forks off the LOW BPS master, before verticalize', nodes: [
           { seg: 1, node: 'longform', label: 'Desilence the full stream',
-            desc: 'cut every pause over 0.5s from the whole master (canonical desilencer)' },
+            desc: 'cut every pause over 0.5s from the whole master (canonical desilencer)',
+            code: 'video-creation/livestream-repurpose/scripts/longform_stage.py → video-creation/skills/desilencer/scripts/desilence.py · via graph/intake_graph.py' },
           { seg: 1, node: 'queue', label: 'Stage + queue the longform',
-            desc: 'copy to schedule-tweets/longform and append the longs.json entry' },
-          { seam: true, who: 'Mike', label: 'Posting',
-            desc: 'Rumble, BitChute, Facebook uploads; sequential, one at a time' },
+            desc: 'copy to schedule-tweets/longform and append the longs.json entry',
+            code: 'video-creation/livestream-repurpose/scripts/longs_append.py · via graph/intake_graph.py' },
         ]},
-        { title: 'Lane 2 · vertical shorts', nodes: [
-          { seg: 1, node: 'vertical', label: 'Verticalize',
-            desc: 'build the 1080x1920 9:16 master the shorts are cut from' },
-          { seg: 1, node: 'transcribe', label: 'Transcribe',
-            desc: 'Whisper word-level JSON + the Kaspa/KRC20 STT glossary fixes' },
-          { seg: 1, node: 'derive', label: 'Derive transcripts',
-            desc: 'plain-text transcript + the 90-second chunk windows' },
-          { seam: true, who: 'clip-strategist', label: 'Clip plan', after: 2,
-            desc: 'the Fable strategist picks the shorts: topics, scatter-gather segments, peak beats (clip-plan.json)' },
+        { title: 'Lane 2 · vertical shorts', dep: 'off the intake transcript · runs parallel to Lane 3', nodes: [
+          { seam: true, who: 'clip-strategist', label: 'Clip plan', after: 2, gate: 'clip_plan', needs: 1,
+            desc: 'the Fable strategist picks the shorts: topics, scatter-gather segments, peak beats (clip-plan.json)',
+            code: '.claude/agents/clip-strategist.md → video-creation/shorts/<batch>/clip-plan.json' },
           { seg: 2, node: 'cut', label: 'Cut the clips',
-            desc: 'cut each clip’s segments from the vertical master and concat them' },
-          { seam: true, who: 'Mike', label: '4b review', after: 3,
-            desc: 'keep / kill / retitle each raw clip on the batch dashboard' },
-          { seam: true, who: 'tighten-strategists', label: 'Tighten plan', after: 3,
-            desc: 'one Fable strategist per clip authors the spoken-content removal spans + boundary relocks (tighten-plan.json)' },
+            desc: 'cut each clip’s segments from the vertical master and concat them',
+            code: 'video-creation/livestream-repurpose/scripts/cut_topics.py · via graph/shorts_graph.py' },
+          { seam: true, who: 'Mike', label: '4b review', after: 3, needs: 2,
+            desc: 'keep / kill / retitle each raw clip on the batch dashboard',
+            code: 'video-creation/shorts/<batch>/dashboard.html (canonical builder: shorts/_tooling/build_clip_dashboard.py) → verdicts land in clip-plan.json' },
+          { seam: true, who: 'tighten-strategists', label: 'Tighten plan', after: 3, gate: 'tighten_plan', needs: 2,
+            desc: 'one Fable strategist per clip authors the spoken-content removal spans + boundary relocks (tighten-plan.json)',
+            code: '.claude/agents/tighten-strategist.md → video-creation/shorts/<batch>/tighten-plan.json' },
           { seg: 3, node: 'tighten', label: 'Tighten + desilence (5B)',
-            desc: 'apply the strategists’ cuts from the plan, then cut 0.25s+ pauses' },
-          { seam: true, who: 'Mike', label: '2nd review', after: 4,
-            desc: 'approve the tightened clips before anything renders' },
+            desc: 'apply the strategists’ cuts from the plan, then cut 0.25s+ pauses',
+            code: 'video-creation/livestream-repurpose/scripts/tighten_clips.py → 5B: video-creation/skills/desilencer/scripts/desilence.py · via graph/shorts_graph.py' },
+          { seam: true, who: 'Mike', label: '2nd review', after: 4, needs: 3,
+            desc: 'approve the tightened clips before anything renders',
+            code: 'video-creation/shorts/<batch>/dashboard.html → the finish invocation IS the approval record' },
           { seg: 4, node: 'finish', label: 'Finish: 5C + render assets',
-            desc: 'filler pass, fresh per-clip word JSON, GOP-safe spines staged for build' },
-          { seam: true, who: 'remotion-builders', label: 'Phase 7 build', after: 5,
-            desc: 'one remotion-builder agent per clip: captions, b-roll, SFX, render + gate' },
+            desc: 'filler pass, fresh per-clip word JSON, GOP-safe spines staged for build',
+            code: 'video-creation/livestream-repurpose/scripts/finish_batch.py · via graph/shorts_graph.py' },
+          { seam: true, who: 'remotion-builders', label: 'Phase 7 build (agents — NOT graph-owned)', after: 5, needs: 4,
+            desc: 'one remotion-builder agent per clip: captions, b-roll, SFX, render + gate. This step runs OUTSIDE LangGraph (agent territory by design; the browser image stack ports last) — the gate\'s BATCH FRONTIER footer hands publish straight to the orchestrator when the last clip passes',
+            code: '.claude/agents/remotion-builder.md · gate: video-creation/livestream-repurpose/skills/remotion-shorts-build/scripts/finalized_short_gate.py' },
+          { seg: 5, node: 'frontier', label: 'Builder-frontier check (in-graph)',
+            desc: 'graph-owned frontier check: every clip 7-built with a PASS gate, every render on disk',
+            code: 'graph/shorts_graph.py — frontier + verify_frontier (in-graph check only, no wrapped script)' },
           { seg: 5, node: 'publish', label: 'Publish to the queue',
-            desc: 'stage mp4s into shorts.json, md5-verify vs renders, persona-lint' },
-          { seam: true, who: 'Mike', label: 'Posting',
-            desc: 'X, IG, TikTok, YT (API), Rumble, BitChute, FB; sequential' },
+            desc: 'stage mp4s into shorts.json, md5-verify vs renders, persona-lint',
+            code: 'scripts/publish-shorts.py + scripts/persona-lint.py · via graph/shorts_graph.py' },
         ]},
-        { title: 'Lane 3 · text + image', dep: 'off Lane 2’s transcript', nodes: [
-          { seam: true, who: 'orchestrator', label: 'Fact-check + drafting', after: 6,
-            desc: 'the Claude session fact-checks topics and drafts copy + image prompts into the lane3 plan JSON' },
+        { title: 'Lane 3 · text + image', dep: 'off the intake transcript · runs parallel to Lane 2', nodes: [
+          { seam: true, who: 'orchestrator', label: 'Fact-check + drafting', after: 6, gate: 'lane3_plan', needs: 1,
+            desc: 'the Claude session fact-checks topics and drafts copy + image prompts into the lane3 plan JSON. Its ONLY input is the intake transcript: it does NOT wait on any Lane 2 step',
+            code: 'repurpose/SKILL.md (session judgment) → repurpose/output/<batch>-lane3-plan.json' },
           { seg: 6, node: 'generate', label: 'Generate the images',
-            desc: 'pooled ChatGPT browser, one item per invocation, refs last' },
+            desc: 'pooled ChatGPT browser, one item per invocation, refs last',
+            code: 'repurpose/gen_images.py · via repurpose/lane3_batch.py --stage generate (graph/repurpose_graph.py)' },
           { seg: 6, node: 'queues', label: 'Append the queues',
-            desc: 'idempotent writes to the 6 data/*.json queue files' },
+            desc: 'idempotent writes to the 6 data/*.json queue files',
+            code: 'repurpose/queue_writer.py · via repurpose/lane3_batch.py' },
           { seg: 6, node: 'lint', label: 'Persona-lint',
-            desc: 'per-file persona/format gates on every touched queue' },
+            desc: 'per-file persona/format gates on every touched queue',
+            code: 'scripts/persona-lint.py' },
           { seg: 6, node: 'finalize', label: 'Finalize the batch',
-            desc: 'batches.json flips pipelines.repurpose = done; visual-qa gates the images, then Mike reviews on Social' },
+            desc: 'batches.json flips pipelines.repurpose = done; visual-qa gates the images, then Mike reviews on Social',
+            code: 'repurpose/lane3_batch.py --stage finalize · via graph/repurpose_graph.py' },
         ]},
       ],
     },
@@ -720,8 +930,8 @@ const AUTOMATIONS = [
     // ONE graph = ONE mechanical segment of the pipeline (`nodes` lists the work
     // nodes; each has a verify_<name> after it). Wave 3+ segments (tighten,
     // finish, render, publish, lane3) get their own lane entries here as they
-    // are built and blessed. Each segment ends at a judgment seam (a strategist
-    // plan landing on disk, or a Mike gate) — the graphs never bridge a seam.
+    // are built and blessed. Each segment ends at a HITL gate or agent handoff (a strategist
+    // plan landing on disk, or a Mike approval) — the graphs never bridge one.
     lanes: [
       { n: 1, name: 'intake', work: 'intake', verify: 'verify',
         nodes: ['encode', 'longform', 'queue', 'vertical', 'transcribe', 'derive'],
@@ -740,8 +950,8 @@ const AUTOMATIONS = [
         haltNote: 'runs after Mike\'s 2nd review (the invocation IS his approval record); 5C spans are judgment adjudicated into filler-plan.json BEFORE the run (no plan = passthrough). Ends at the builder frontier — Phase 7 stays with the remotion-builder agents. Halt edge on every node.',
         retired: false, views: false },
       { n: 5, name: 'publish', work: 'publish', verify: 'verify',
-        nodes: ['publish', 'lint'],
-        haltNote: 'runs after Mike gates the renders AND authorizes publish; hook/caption/tags land in publish-meta.json BEFORE the run. Stages the queue + md5-verifies staged copies vs CURRENT renders + persona-lints. POSTING stays Mike-gated, sequential. Halt edge on every node.',
+        nodes: ['frontier', 'publish', 'lint'],
+        haltNote: 'runs AS SOON AS every clip is 7-built with a PASS gate — staging IS Mike\'s review handoff (2026-08-07, batch eliza: "if you completed the shorts, they should be in the queue, ready for my review"); an authorization note gates POSTING only, never staging. hook/caption/tags land in publish-meta.json BEFORE the run. Stages the queue + md5-verifies staged copies vs CURRENT renders + persona-lints. POSTING stays Mike-gated, sequential. Halt edge on every node.',
         retired: false, views: false },
       { n: 6, name: 'repurpose', work: 'repurpose', verify: 'verify',
         nodes: ['generate', 'queues', 'lint', 'finalize'],
@@ -753,23 +963,20 @@ const AUTOMATIONS = [
     // "verify_" render as verify nodes; {e:"..."} items render as edge labels.
     architecture: {
       // The OUTER graph (Mike, 2026-08-11): the six graphs + seams as ONE flow
-      // chart. Box = a whole StateGraph; dashed = a judgment seam; italic edge
+      // chart. Box = a whole StateGraph; dashed = a HITL gate / agent handoff; italic edge
       // labels = the on-disk artifact that carries the dependency.
       flow: {
         trunk: [
           { seam: 'Mike records the stream' },
           { art: 'the raw .mkv in its media folder' },
           { g: 'INTAKE', sub: 'run.py · segment 1' },
+          { art: 'LOW BPS + VERTICAL master · word-level JSON · plain transcript + 90s chunks — SHARED: lanes 2 and 3 BOTH read this, and run in PARALLEL off it' },
         ],
         branches: [
           { title: 'Lane 1 · longform', chain: [
-            { art: 'desilenced longform staged + longs.json entry' },
-            { seam: 'posting authorization · Mike (sequential, one platform per invocation)' },
-            { g: 'POST ×3', sub: 'run.py post --platform · segment 7' },
-            { art: 'longs.json posted + url, verified from disk' },
+            { art: 'desilenced longform staged + longs.json entry — TERMINAL: pending in the queue' },
           ]},
           { title: 'Lane 2 · vertical shorts', chain: [
-            { art: 'VERTICAL master + word-level JSON + 90s chunks' },
             { seam: 'clip plan · clip-strategist' },
             { art: 'clip-plan.json' },
             { g: 'CUT', sub: 'run.py cut · segment 2' },
@@ -783,30 +990,29 @@ const AUTOMATIONS = [
             { seam: '2nd review · Mike' },
             { g: 'FINISH', sub: 'run.py finish · segment 4' },
             { art: 'render-assets: GOP spines + fresh word JSON' },
-            { seam: 'Phase 7 · one remotion-builder per clip' },
-            { art: 'gated renders · progress 7-built PASS' },
+            { seam: 'Phase 7 · one remotion-builder per clip · AGENTS, not a StateGraph' },
+            { art: 'gated renders · progress 7-built PASS → publish runs IMMEDIATELY (no render-review gate)' },
             { g: 'PUBLISH', sub: 'run.py publish · segment 5' },
-            { art: 'shorts.json entries + staged, md5-verified mp4s' },
-            { seam: 'POSTING · Mike (sequential)' },
+            { art: 'shorts.json entries + staged, md5-verified mp4s — TERMINAL: pending in the queue' },
           ]},
           { title: 'Lane 3 · text + image', chain: [
-            { art: 'plain transcript' },
-            { seam: 'fact-check + drafting · orchestrator' },
+            { seam: 'fact-check + drafting · orchestrator — needs ONLY the intake transcript, never a Lane 2 step' },
             { art: '<batch>-lane3-plan.json' },
             { g: 'REPURPOSE', sub: 'run.py repurpose · segment 6' },
             { art: 'images + 6 queue appends + lint + batches.json' },
-            { seam: 'visual-qa gate, then review + posting · Mike' },
+            { seam: 'visual-qa gate, then Mike reviews on the Social tab (the queue is the terminal state)' },
           ]},
         ],
       },
-      intro: 'Seven INDEPENDENT LangGraph StateGraphs, not one big graph. One invocation of run.py runs exactly one of them; every human decision rides IN the invocation (a flag, or an on-disk plan validated at the front door) — no interrupts. Each graph deliberately ENDS at a judgment seam: the next graph refuses to start until the seam artifact exists and validates. After every work node a verify_* node re-checks the result FROM DISK; every node routes to END on any failure. Zero retries by topology: one attempt per run, diagnose, re-invoke (--resume skips completed nodes via checkpoints).',
+      intro: 'Seven INDEPENDENT LangGraph StateGraphs, not one big graph. One invocation of run.py runs exactly one of them; every human decision rides IN the invocation (a flag, or an on-disk plan validated at the front door) — no interrupts. Each graph deliberately ENDS at a HITL gate or agent handoff: the next graph refuses to start until the handoff artifact exists and validates. After every work node a verify_* node re-checks the result FROM DISK; every node routes to END on any failure. Zero retries by topology: one attempt per run, diagnose, re-invoke (--resume skips completed nodes via checkpoints).',
       infra: [
         { t: 'Entry point', d: 'python video-creation/livestream-repurpose/graph/run.py <segment> — segments: (default)=intake, cut, tighten, finish, publish, repurpose, post. Per-run flags: --batch, --resume, --thread, --stub ok|fail (structural test, no side effects), --test-sandbox DIR (real run against scratch).' },
         { t: 'State + resume', d: 'SqliteSaver checkpoints in graph/data/graph_checkpoints.sqlite, one thread per run (e.g. intake-<slug>-<yyyymmdd>). A killed run re-invoked with --resume continues its thread: completed nodes skip, the interrupted node re-runs WHOLE (every node is redo-safe).' },
         { t: 'Node execution', d: 'Work nodes shell the CANONICAL scripts as subprocesses via _run_streaming (intake_graph.py): stdout is teed live, PROGRESS n% lines map onto the heartbeat, exit codes decide the route. The graph owns control flow; the scripts own the work; no LLM anywhere in a graph.' },
         { t: 'Dashboard feeds', d: 'lane_progress.json = transient ~1 Hz heartbeat (lane, node, batch, pid, last_event) written during every node. lane_runs.json = append-only run history written once at END (status, duration, per-segment summary). This page polls both; nothing here can affect a run.' },
         { t: 'Front doors', d: 'Fail-fast validators live in the canonical scripts and are imported by run.py, checked BEFORE the graph starts: a bad plan dies in seconds, not after a 20-minute encode. The invocation banner is the approval record for any deviation (e.g. a non-default min-sil).' },
-        { t: 'Judgment seams', d: 'clip-plan.json (clip-strategist) · 4b verdicts + retitles (Mike, in clip-plan) · tighten-plan.json (tighten-strategists) · 2nd review (Mike) · filler-plan.json (optional 5C) · Phase 7 builds (remotion-builder agents, agent territory by design) · publish-meta.json (orchestrator) · POSTING (Mike, sequential). The graphs never bridge one.' },
+        { t: 'HITL gates + agent handoffs', d: 'clip-plan.json (clip-strategist) · 4b verdicts + retitles (Mike, in clip-plan) · tighten-plan.json (tighten-strategists) · 2nd review (Mike) · filler-plan.json (optional 5C) · Phase 7 builds (remotion-builder agents, agent territory by design) · publish-meta.json (orchestrator) . The graphs never bridge one. POSTING is deliberately NOT a pipeline step: the queue is the terminal state, and posting is a separate queue-driven, batch-agnostic process (segment 7 + the schedule-tweets posters, tracked on the Social tab).' },
+        { t: 'Phase 2 target - lane 2 (decided 2026-08-12)', d: 'FINISH + Phase 7 builds + PUBLISH merge into ONE StateGraph: per-clip build branches (Send fan-out; each branch gen -> comp -> render under the chatgpt/render stage locks, preserving clip-N+1-generates-while-clip-N-renders), the finalized-short gate per branch, then frontier -> verify_frontier -> publish -> lint. 4b review and 2nd review remain the only HITL gates inside the pipeline; the queue is the terminal state (posting is a separate queue-driven process). Prereq: headless remotion-builder spawning from a graph node (the deferred Phase 2 capability). Bridge until then: the gate BATCH FRONTIER footer + the publish graph frontier/verify_frontier nodes (shipped + live-blessed 2026-08-12).' },
       ],
       graphs: [
         { cmd: 'run.py --source <recording> --min-sil N', name: 'INTAKE (segment 1) — Phase 1 + Lane 1 + Phase 1B + Phase 2',
@@ -834,8 +1040,8 @@ const AUTOMATIONS = [
           produces: 'final spines · fresh per-clip word-level Whisper JSON · GOP-safe (1 s keyframe) copies staged into the batch render-assets/',
           ends: 'at the BUILDER FRONTIER — Phase 7 stays with the remotion-builder agents by design' },
         { cmd: 'run.py publish --batch <b> [--date d]', name: 'PUBLISH (segment 5) — Phase 8',
-          front_door: 'COMPLETENESS GATE: every clip must read phase 7-built with a PASS gate ("an mp4 on disk is not a completion signal") · --date dedupe (a batch already staged under another date refuses) · publish-meta.json + progress.json titles hard-validated (a wrong path would stage blank titles)',
-          chain: ['publish', 'verify_publish', 'lint', 'verify_lint'],
+          front_door: 'COMPLETENESS GATE, now graph-owned AND CLI-checked (2026-08-12): the frontier/verify_frontier entry nodes re-check from disk that every clip reads phase 7-built with a PASS gate and every render exists ("an mp4 on disk is not a completion signal") · --date dedupe (a batch already staged under another date refuses) · publish-meta.json + progress.json titles hard-validated (a wrong path would stage blank titles). TRIGGER: the finalized-short gate prints a BATCH FRONTIER footer when the last clip passes — run this segment IMMEDIATELY on it; staging is Mike\'s review handoff, never held for a render-review gate',
+          chain: ['frontier', 'verify_frontier', 'publish', 'verify_publish', 'lint', 'verify_lint'],
           consumes: 'publish-meta.json (hooks/captions/tags) + progress.json (titles incl. 4b retitles) + the gated renders',
           produces: 'mp4s staged to schedule-tweets/shorts/<batch>-<date>/ (md5-verified against CURRENT renders) · shorts.json entries with all 7 platform blocks pending · per-file persona-lint',
           ends: 'POSTING stays Mike-gated and sequential, one poster at a time' },
@@ -846,7 +1052,7 @@ const AUTOMATIONS = [
           produces: 'images via the pooled ChatGPT browser stack (gen_images.py; chatgpt stage lock held for the stage; ONE item per invocation; refs last) · idempotent appends to the 6 data/*.json queues · per-file persona-lint · batches.json pipelines.repurpose=done',
           ends: 'visual-qa gates the images; Mike reviews the pending entries on the Social tab',
           note: 'Asymmetry is deliberate: verify_images is a subprocess stage (shared with hand runs) and lint has no verify twin (lint IS the verification).' },
-        { cmd: 'run.py post --platform <p>', name: 'POST (segment 7) — the posting tail, one entry × one platform per invocation',
+        { cmd: 'run.py post --platform <p>', name: 'POST (segment 7) — the posting tail · queue-driven and batch-agnostic, DOWNSTREAM of this pipeline (the pipeline ends at the queue)',
           front_door: 'platform allow-list (longform = rumble/bitchute/facebook ONLY; YouTube longform is Mike\'s manual upload) · a pending entry must exist in longs.json · its video verified on disk · the invocation IS Mike\'s decision to post',
           chain: ['post', 'verify_post'],
           consumes: 'the next pending longs.json entry for that platform + the staged mp4',
@@ -920,7 +1126,9 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g,
 
 async function getJSON(url, fallback) {
   try {
-    const r = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
+    // separator matters: the gates feed already carries a ?batch= query.
+    const r = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(),
+                          { cache: 'no-store' });
     if (!r.ok) return fallback;
     return await r.json();
   } catch { return fallback; }
@@ -967,6 +1175,11 @@ function statusChip(status, stale) {
     case 'killed':            return { cls: 'halted',  icon: '⛔', label: 'killed' };
     case 'crashed':           return { cls: 'failed',  icon: '▲', label: 'crashed' };
     case 'awaiting_input':    return { cls: 'running', icon: '⏸', label: 'needs you' };
+    // 'next_up' = this step is the frontier but MIKE IS NOT THE ACTOR (a strategist,
+    // a builder agent, or the orchestrator owns it). Deliberately NOT 'needs you':
+    // that label sent Mike hunting for a task that did not exist while the
+    // clip-strategist was mid-flight (2026-08-15). Reserve "needs you" for HIS steps.
+    case 'next_up':           return { cls: 'idle',    icon: '→', label: 'next up' };
     default:                  return { cls: 'idle',    icon: '○', label: status || 'idle' };
   }
 }
@@ -974,7 +1187,7 @@ function statusChip(status, stale) {
 // actually running — or one whose last run left an unresolved problem — earns a
 // status colour; a past success renders neutral ("past"). Without this, a lane
 // that finished this morning reads as present-tense next to a live one.
-const RESOLVED_OK = new Set(['done', 'node_done']);
+const RESOLVED_OK = new Set(['done', 'node_done', 'waiting']);   // waiting = parked at a HITL gate
 const pill = (s, stale, past) => {
   const c = statusChip(s, stale);
   const cls = (past && RESOLVED_OK.has(s)) ? 'past' : c.cls;
@@ -1057,8 +1270,12 @@ function renderPipeline(prog, runs) {
   const P = A().pipeline;
   const running = prog && prog.status === 'running' ? prog : null;
   const lastReal = runs.find(r => !r.stub);
-  const curBatch = (running && (running.batch || running.requested))
-                || (lastReal && ((lastReal.summary || {}).batch || lastReal.requested))
+  // The heartbeat names the batch/project in ANY state (running, waiting at a gate,
+  // failed); a run record's summary carries it; `requested` may be a dict (longform).
+  const reqName = r => { const q = r && r.requested; return q && typeof q === 'object' ? (q.project || q.batch || null) : (q || null); };
+  const curBatch = (prog && prog.batch)
+                || (running && (running.batch || reqName(running)))
+                || (lastReal && ((lastReal.summary || {}).batch || reqName(lastReal)))
                 || null;
 
   // Node order within a segment (for "already passed" vs "not yet" while live).
@@ -1086,34 +1303,92 @@ function renderPipeline(prog, runs) {
   // Every card separates WHO owns the step (chip, top right: GRAPH for
   // machine-owned; MIKE / STRATEGIST / AGENTS / SESSION / SOURCE for judgment)
   // from the step's STATUS (pill in the footer, next to the timestamp).
-  // A seam's status is INFERRED: the graph refuses to run without the seam's
-  // artifact, so a current-batch run of the segment AFTER the seam proves the
-  // seam is complete (`after` in the config names that downstream segment).
-  const card = (cls, title, ownerTag, desc, res, pillHtml, when) => `<div class="${cls}">
+  // A seam's status, best evidence first (REWRITTEN 2026-08-15 — the old rule was
+  // ONLY the third bullet, and it lied twice in the same run: the drafting seam read
+  // "pending" while segment 6 was busy generating images off the very plan that seam
+  // produces, and the clip-plan seam read "pending" while the clip-strategist was
+  // actively working):
+  //   1. `gate` — the handoff ARTIFACT exists on disk (/livestream/gates.json). This is
+  //      the actual contract; the graphs refuse to start without it. Strongest evidence.
+  //   2. the segment AFTER the seam is RUNNING — run.py validates the handoff artifact at
+  //      the front door BEFORE the graph starts, so a live downstream run proves the seam.
+  //   3. the segment AFTER the seam COMPLETED for this batch (`after`). The old rule.
+  //   4. otherwise, if the segment the seam WAITS ON (`needs`) is done and the gate is
+  //      still missing, this seam IS the frontier — show "needs you", not "pending".
+  // `needs` is deliberately explicit rather than `after - 1`: Lane 3's drafting seam
+  // needs SEGMENT 1 (intake), not segment 5. That single number is what encodes
+  // "Lane 3 is a sibling of Lane 2, not downstream of it".
+  const card = (cls, title, ownerTag, desc, code, res, pillHtml, when) => `<div class="${cls}">
       <div class="top"><span class="st-t">${esc(title)}</span><span class="seam-tag${ownerTag === 'GRAPH' ? ' graph' : ''}">${esc(ownerTag)}</span></div>
       ${desc ? `<div class="st-d">${esc(desc)}</div>` : ''}
+      ${code ? `<div class="st-code">${esc(code)}</div>` : ''}
       <div class="st-foot">
         ${res ? `<div class="st-res">${esc(res)}</div>` : ''}
         <div class="st-statusrow">${pillHtml}<span class="st-when">${esc(when)}</span></div>
       </div>
     </div>`;
 
+  // ── status from the graph's own step ledger (longform: ONE graph per video, ONE run per
+  // invocation that spans stages; a run record's summary.steps is the cumulative per-node
+  // ledger of the thread, and lane_progress.json names the live / waiting / failed node).
+  // Livestream keeps its per-segment run logic below; this branch is selected by
+  // `statusFrom: 'steps'` on the automation entry.
+  function stepCardSteps(item) {
+    const batchOf = r => ((r.summary || {}).batch || (r.requested && r.requested.project) || null);
+    const lastRun = runs.find(r => !r.stub && (!curBatch || batchOf(r) === curBatch));
+    const steps = (lastRun && (lastRun.summary || {}).steps) || {};
+    const st = steps[item.node];
+    const gates = (FEEDS[A().id] || {}).gates || {};
+    const liveNode = running ? String(running.node || '') : null;
+    const parked = prog && prog.status === 'waiting' ? String(prog.node || '') : null;
+    const failedNode = prog && prog.status === 'failed' ? String(prog.node || '') : null;
+    const doneSt = s => s && (s.status === 'ran' || s.status === 'skipped');
+    const who = (item.who || 'GRAPH').toUpperCase();
+    const mikeOwns = (item.who || '') === 'Mike';
+    let cls = 'pstep' + (item.seam ? ' seam' : ''), pillHtml = pill('pending'), when = curBatch ? `not reached for ${curBatch} yet` : 'no run yet';
+    if (liveNode === item.node) { cls += ' is-live'; pillHtml = pill('running'); when = item.seam ? (mikeOwns ? 'waiting on you' : `${item.who} working now`) : 'running now'; }
+    else if (failedNode === item.node && !doneSt(st)) { cls += ' is-halt'; pillHtml = pill('failed'); when = clip((prog && prog.error) || 'halted', 80); }
+    else if (item.gate && gates[item.gate] === true) { pillHtml = pill('done'); when = mikeOwns ? 'approved' : 'artifact on disk'; }
+    else if (doneSt(st)) { pillHtml = pill('done'); when = `${st.status}${st.detail ? ' · ' + clip(st.detail, 60) : ''}${st.at ? ' · ' + relText(st.at) : ''}`; }
+    else if (st && st.status === 'failed') { cls += ' is-halt'; pillHtml = pill('failed'); when = clip(st.detail || 'halted', 80); }
+    else if (parked === item.node) { pillHtml = pill(mikeOwns ? 'awaiting_input' : 'next_up'); when = mikeOwns ? 'waiting on you' : `waiting on the ${item.who || 'orchestrator'}`; }
+    else if (!item.seam && !curBatch) { cls += ' dim'; }
+    else if (item.seam) { cls += ' dim'; }
+    return card(cls, item.label, who, item.desc, item.code || '', '', pillHtml, when);
+  }
+
   function stepCard(item) {
+    if (item.header) return `<div class="pipe-section">${esc(item.header)}</div>`;
+    if (A().statusFrom === 'steps') return stepCardSteps(item);
     const batchOf = r => ((r.summary || {}).batch || r.requested || null);
     if (item.seam) {
       const tag = (item.who || 'judgment').toUpperCase();
       const name = item.label;
       let pillHtml, when;
       if (item.after != null) {
-        const dRun = runs.find(r => r.lane === item.after && !r.stub && curBatch
+        const gates    = (FEEDS[A().id] || {}).gates || {};
+        const gateOn   = item.gate ? gates[item.gate] === true : false;
+        const dRunDone = runs.find(r => r.lane === item.after && !r.stub && curBatch
           && batchOf(r) === curBatch && RESOLVED_OK.has(r.status));
-        if (dRun) { pillHtml = pill('done'); when = 'complete for this batch'; }
-        else { pillHtml = pill('pending'); when = curBatch ? `not reached for ${curBatch} yet` : ''; }
+        const dRunLive = running && running.lane === item.after;
+        const needsOk  = item.needs == null || !!runs.find(r => r.lane === item.needs
+          && !r.stub && curBatch && batchOf(r) === curBatch && RESOLVED_OK.has(r.status));
+        if (gateOn)         { pillHtml = pill('done');   when = 'artifact on disk'; }
+        else if (dRunLive)  { pillHtml = pill('done');   when = 'validated at the front door'; }
+        else if (dRunDone)  { pillHtml = pill('done');   when = 'complete for this batch'; }
+        else if (needsOk && curBatch) {
+          // Frontier. WHO owns it decides the wording: only Mike's own steps may say
+          // "needs you" — an agent-owned seam saying that sends him looking for a task
+          // that does not exist.
+          const mikeOwns = (item.who || '') === 'Mike';
+          pillHtml = pill(mikeOwns ? 'awaiting_input' : 'next_up');
+          when = mikeOwns ? 'waiting on you' : `waiting on the ${item.who}`;
+        } else { pillHtml = pill('pending'); when = curBatch ? `not reached for ${curBatch} yet` : ''; }
       } else {
         pillHtml = pill('pending');
         when = 'runs after the pipeline finishes · tracked on the Social tab';
       }
-      return card('pstep seam dim', name, tag, item.desc, '', pillHtml, when);
+      return card('pstep seam dim', name, tag, item.desc, item.code || '', '', pillHtml, when);
     }
     const last = runs.find(r => r.lane === item.seg && !r.stub);
     const isCur = last && curBatch && batchOf(last) === curBatch;
@@ -1146,7 +1421,7 @@ function renderPipeline(prog, runs) {
       cardCls += ' dim';
       when = curBatch ? `not run for ${curBatch} yet` : 'no recorded run';
     }
-    return card(cardCls, item.label, 'GRAPH', item.desc, res, pillHtml, when);
+    return card(cardCls, item.label, 'GRAPH', item.desc, item.code || '', res, pillHtml, when);
   }
 
   const col = L => {
@@ -1157,18 +1432,40 @@ function renderPipeline(prog, runs) {
     </div>`;
   };
 
-  $('lanesTitle').textContent = 'Pipeline' + (curBatch ? ` — batch ${curBatch}` : '');
-  $('lanes').style.display = 'block';
-  $('lanes').innerHTML = `
-    <div class="pipe-trunkrow">${P.trunk.map(n => stepCard(n, true)).join('<div class="trunk-join"><span class="arrow-h"></span></div>')}</div>
-    <div class="fan-stub"></div>
+  // A vertical chain: cards stacked with drawn arrows; `{ header }` items are stage labels
+  // (no arrow into or out of a label).
+  const chain = items => `<div class="pipe-chain">${items.map((n, i) => {
+    const html = stepCard(n);
+    if (n.header || i === items.length - 1 || items[i + 1].header) return html;
+    return html + '<div class="flow"><span class="arrow-v"></span></div>';
+  }).join('')}</div>`;
+  const fanDown = `<div class="fan-stub"></div>
     <div class="fan-rail"></div>
     <div class="pipe-fanarrows">
       <div class="flow"><span class="arrow-v"></span></div>
       <div class="flow"><span class="arrow-v"></span></div>
       <div class="flow"><span class="arrow-v"></span></div>
+    </div>`;
+  // The JOIN: the parallel columns feed back into one line (the inverse of the fan-out).
+  const joinUp = `<div class="pipe-fanarrows pipe-join">
+      <div class="flow"><span class="arrow-v"></span></div>
+      <div class="flow"><span class="arrow-v"></span></div>
+      <div class="flow"><span class="arrow-v"></span></div>
     </div>
+    <div class="fan-rail"></div>
+    <div class="fan-stub"></div>
+    <div class="flow"><span class="arrow-v"></span></div>`;
+  const trunkHtml = P.trunkLayout === 'vertical'
+    ? chain(P.trunk) + '<div class="flow"><span class="arrow-v"></span></div>'
+    : `<div class="pipe-trunkrow">${P.trunk.map(n => stepCard(n, true)).join('<div class="trunk-join"><span class="arrow-h"></span></div>')}</div>`;
+
+  $('lanesTitle').textContent = 'Pipeline' + (curBatch ? ` — ${A().pipeline.subject || 'batch'} ${curBatch}` : '');
+  $('lanes').style.display = 'block';
+  $('lanes').innerHTML = `
+    ${trunkHtml}
+    ${fanDown}
     <div class="pipe-cols">${P.lanes.map(col).join('')}</div>
+    ${P.tail ? joinUp + chain(P.tail) : ''}
     <div class="pipe-legend">
       Top-right chip = WHO does the step: <span class="k dash">MIKE</span> you ·
       <span class="k dash">ORCHESTRATOR</span> the Claude session ·
@@ -1176,9 +1473,11 @@ function renderPipeline(prog, runs) {
       <span class="k dash">REMOTION-BUILDERS</span>) ·
       <span class="k solid" style="color:#0b57c2">GRAPH</span> = the LangGraph segment executes the step itself as code
       (the orchestrator only launches the run; your decisions ride in the invocation).
-      Dashed cards are the judgment seams the graphs never bridge.
-      Footer pill = that step's STATUS for the CURRENT batch (a seam reads done once the graph segment after it has run,
-      since the graph refuses to start without the seam's artifact). A dimmed card names the older batch it last ran on.
+      Dashed cards are the HITL gates and agent handoffs the graphs never bridge.
+      Footer pill = that step's STATUS for the CURRENT batch. A seam reads <b>done</b> once its handoff artifact is on disk
+      (or the segment after it is running/finished, since the graph refuses to start without that artifact);
+      <b>needs you</b> ONLY when the step is yours; <b>next up</b> when it is the frontier but a strategist, builder agent
+      or the orchestrator owns it, so there is nothing for you to do. A dimmed card names the older batch it last ran on.
       One attempt per run, halt edge on every node — never relaunch automatically.
     </div>`;
 
@@ -1480,7 +1779,7 @@ function renderArchitecture() {
   const flowHtml = AR.flow ? `<div class="card agraph">
       <div class="sub2"><b>THE OUTER GRAPH — one flow chart of all six graphs.</b>
         Blue boxes are whole StateGraphs (each opens up in its own card below); dashed boxes are the
-        judgment seams; the small italic labels are the on-disk artifacts that carry each dependency —
+        HITL gates / agent handoffs; the small italic labels are the on-disk handoff artifacts that carry each dependency —
         every graph's front door validates the artifact to its left before its first node runs.</div>
       <div class="achain" style="margin-top:12px">${AR.flow.trunk.map(fnode).join('<span class="garrow">→</span>')}</div>
       <div class="aflow-fan">
@@ -1535,10 +1834,21 @@ async function tick() {
       getJSON(a.feed.progress, null),
       getJSON(a.feed.runs, []),
     ]);
-    FEEDS[a.id] = {
-      prog,
-      runs: (Array.isArray(runsRaw) ? runsRaw : []).slice().reverse(),  // newest first
-    };
+    const runs = (Array.isArray(runsRaw) ? runsRaw : []).slice().reverse();  // newest first
+    FEEDS[a.id] = { prog, runs, gates: (FEEDS[a.id] || {}).gates || {} };
+    // Gate-artifact feed: which HITL/agent handoff artifacts actually exist for the
+    // current batch, so a seam reads its status off DISK instead of inferring it from
+    // whether the next graph segment happens to have finished (see stepCard).
+    if (a.feed.gates) {
+      const lastReal = runs.find(r => !r.stub);
+      const batch = (prog && (prog.batch || prog.requested))
+        || (lastReal && ((lastReal.summary || {}).batch || lastReal.requested))
+        || null;
+      if (batch) {
+        const g = await getJSON(a.feed.gates + encodeURIComponent(batch), null);
+        FEEDS[a.id].gates = (g && g.gates) || {};
+      }
+    }
   }));
   paint();
   $('refresh').textContent = 'updated ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });

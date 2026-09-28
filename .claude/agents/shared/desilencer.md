@@ -54,7 +54,7 @@ pass before Remotion.)
 For any **longform-edited** project (input under `longform-edited/media/<project>/`), your output goes in
 the **`spine/` SUBFOLDER** of the project, named **`<segment>.c.desilenced.mp4`** with the cut/keep map
 (when requested) named **`<segment>.c.desilenced.map.json`**, matching the input's `<segment>` (`CH1-CH3`,
-... or `ALL`). Canonical layout: **`longform-edited/skills/comp-build.md` §13a** (read it; it wins on
+... or `ALL`). Canonical layout: **`longform-edited/skills/comp-build/comp-build.md` §13a** (read it; it wins on
 conflict). Exemplar: `media/carry-trade/spine/`. An EXPLICIT output path from the caller overrides this; a
 vague one ("the project folder", "the skill's naming convention") does NOT — vague means §13a. Inventing a
 name in the project root is the exact recurring violation this section exists to stop (Mike, 2026-07-24).

@@ -26,13 +26,13 @@ You operate inside the `social-media` repo (working directory is the repo root).
 - A list of asset paths (PNGs / captured images / extracted video frames) to QA.
 - The SPEC each should meet: what it is, the intended text/content, and which house-style rules apply
   (containers → `longform-edited/skills/container-reference/` + `container-canonical.css`; captions →
-  `longform-edited/skills/captions.md`; charts → `charts.md`; receipts → the source URL + intended content).
+  `longform-edited/skills/captions/captions.md`; charts → `charts.md`; receipts → the source URL + intended content).
 - If frames from a render, the timecodes + what should be on screen at each.
 
 ## Read first (the canonical looks to check against — do not work from memory)
 1. `video-creation/longform-edited/skills/container-reference/README.md` + the reference frames + `container-canonical.css`.
-2. `video-creation/longform-edited/skills/captions.md` (font = Montserrat, lowercase, 2/4 grouping, stroke).
-3. `video-creation/longform-edited/skills/charts.md` + `broll-and-containers.md`.
+2. `video-creation/longform-edited/skills/captions/captions.md` (font = Montserrat, lowercase, 2/4 grouping, stroke).
+3. `video-creation/longform-edited/skills/charts/charts.md` + `broll-and-containers.md`.
 
 ## The checklist — run EVERY item on EVERY image (Read the image, then judge)
 1. **CUT-OFF / OVERFLOW (the #1 recurring defect).** Is any text or element clipped by the frame edge (left,

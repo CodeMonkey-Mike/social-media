@@ -14,7 +14,7 @@ followed by a **target length in seconds** (default **40**) and any **per-run ov
 with the DAGKnight explanation", "no music", "make two variants"). Honor every override.
 If you cannot identify the project, STOP and ask.
 
-**⛔ Read `video-creation/longform-edited/skills/longform-to-short.md` FIRST — it is canonical and
+**⛔ Read `video-creation/longform-edited/skills/longform-to-short/longform-to-short.md` FIRST — it is canonical and
 self-contained.** This command is the runner; that skill owns the rules. Also observe the global rules
 in `CLAUDE.md` and `persona/persona.json`.
 

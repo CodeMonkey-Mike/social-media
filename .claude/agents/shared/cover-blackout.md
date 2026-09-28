@@ -59,7 +59,7 @@ mandatory frame-QA (below) catch any error before you call it done.
 For any **longform-edited** project (input under `longform-edited/media/<project>/`), your output goes in
 the **`spine/` SUBFOLDER** of the project, named **`<segment>.b.blackout.mp4`** (+ sidecar
 `<segment>.b.blackout.mp4.cover.json`), matching the input's `<segment>` (`CH1-CH3`, ... or `ALL`).
-Canonical layout: **`longform-edited/skills/comp-build.md` §13a** (read it; it wins on conflict). Exemplar:
+Canonical layout: **`longform-edited/skills/comp-build/comp-build.md` §13a** (read it; it wins on conflict). Exemplar:
 `media/carry-trade/spine/`. An EXPLICIT output path from the caller overrides this; a vague one ("the
 project folder", "the skill's naming convention") does NOT — vague means §13a. Inventing a name in the
 project root is the exact recurring violation this section exists to stop (Mike, 2026-07-24). On other

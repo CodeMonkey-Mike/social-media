@@ -1,0 +1,130 @@
+kaspa-vprogs - FINAL SPINE TRANSCRIPT BREAKDOWN
+source : ALL.e.desilenced.mp4 (the file the comp loads) · 211.13 s (3:31.1) · 30/1 fps
+words  : ALL.e.desilenced.medium-words.json (Whisper medium, CUDA, word-level; UNEDITED, cue source)
+counts : 79 segments · 616 words
+Chapters mapped to SCREENPLAY.md. Text below has persona/project mishears corrected (TEXT ONLY; times untouched).
+FACE windows (measured with blackdetect on this file, i.e. the picture that is not blacked out):
+  FACE #1  0.000 - 7.333   "Kaspa is building vProgs ... not an L2."
+  FACE #2 28.167 - 31.933  "Kaspa is never going to run your app, Kaspa is going to verify it."
+Tag column: FACE when more than half the segment is inside a measured FACE window, otherwise COVER.
+
+CORRECTIONS APPLIED (from -> to, count):
+  Casper -> Kaspa  x9
+  Vprogs -> vProgs  x4
+  Vprog -> vProg  x3
+  Janitem Sampalinski -> Yonatan Sompolinsky  x1
+  Casper's -> Kaspa's  x3
+  Tocata -> Toccata  x1
+  Silver script -> Silverscript  x1
+  Casper.org -> kaspa.org  x1
+  Sam Polinsky -> Sompolinsky  x1
+  (not present in this audio: tau, 50WMA/200WMA, Caspie/Cassie/Cappy, Kasper-the-Ghost context, ghost/GhostDAG, scion)
+
+FLAGS (NOT changed, what Whisper heard is kept):
+  !! [ 87.36- 89.94] "I'm very BULLISH on rollups" (p=1.00). The SCREENPLAY/DATA.md quote is "very BEARISH on rollups".
+     The meaning is inverted and it airs as a sourced Sompolinsky quote. Check by ear; if Mike said "bullish", the line was misspoken.
+  !  [ 52.18- 61.02] "orders your transaction payments" ("payments" p=0.00, "transaction" p=0.31). Probably "transactions," plus noise;
+     check by ear before captions.
+  !  [ 40.22- 51.96] "your accounts, your businesses, your assets" (p=1.00). The screenplay has "balances". Probably said as heard.
+  !  [138.74-143.24] "And this just means the rules..." (p=1.00). The screenplay has "And enshrined just means". "Enshrined" is never
+     spoken anywhere in the spine, so the line reads fine as-is.
+  i  [ 40.22] no measurable pause before the CH2 opener (<0.1 s under -50 dB). [145.92] ~0.18 s before the CH3 opener.
+     Title cards need a 1 s readable lead-in, so this has to be planned at the edit.
+  i  Runtime 3:31 vs the screenplay window of 2:50-3:10 (616 words vs a ~500 budget). Reported only, not a cut proposal.
+  i  CH1 locked line was spoken as "on a base layer, on a proof of work, not an L2" (the screenplay has "on the base layer, on proof of work,
+     and not on an L2"). This is Mike's delivery wording, not a mishear.
+
+==== CH1 - STRAIGHT INTO IT  (card OFF)  opens 0.00s ====
+  -- CH1 B1 the name (LOCKED, FACE #1)
+[   0.00-   6.42] FACE  Kaspa is building vProgs, verifiable programs, real apps on a base layer, on a proof of work,
+[   6.48-   7.32] FACE  not an L2.
+  -- CH1 B2 what a vProg is
+[   7.40-  12.40] COVER A vProg is an app that runs on its own node, keeps its own state and posts zero knowledge
+[  12.40-  14.40] COVER proof of that state back to Kaspa.
+[  14.54-  20.08] COVER Now Kaspa already has smart contracts, covenants, live on mainnet since June, straight from
+[  20.08-  21.06] COVER the core devs.
+[  21.22-  27.32] COVER vProgs are the next layer up, whole applications on a chain that already runs 10 blocks every
+[  27.32-  28.10] COVER single second.
+  -- CH1 B3 the thesis (LOCKED, FACE #2 then COVER)
+[  28.10-  31.90] FACE  Kaspa is never going to run your app, Kaspa is going to verify it.
+[  31.90-  37.76] COVER And that one flip is how you get apps on the base layer with proof of work security and
+[  37.76-  38.74] COVER no L2 in the middle.
+[  38.82-  40.22] COVER So let's break this all down.
+
+==== CH2 - NOT AN L2  (card ON: "NOT AN L2")  opens 40.22s ====
+  -- CH2 B1 the road Ethereum took
+[  40.22-  46.02] COVER So back in 2020 Vitalik laid out Ethereum's plan and it said in plain English, all in
+[  46.02-  51.96] COVER on rollups, your accounts, your businesses, your assets living inside a layer 2.
+[  52.18-  58.08] COVER And every rollup is its own chain, its own sequencer, the machine that orders your transaction
+[  58.08-  61.02] COVER payments, its own bridge, its own slice of liquidity.
+[  61.20-  66.42] COVER And every one of those pieces is a place for something to break and a place for your liquidity
+[  66.42-  67.66] COVER to get split up.
+[  67.82-  72.96] COVER Now Kaspa's founder, Yonatan Sompolinsky looked at all of that and back in December
+[  72.96-  78.70] COVER he said the whole point of vProgs was to avoid the obsolete path of L2s.
+[  78.72-  79.98] COVER His words, not mine.
+[  80.06-  81.68] COVER And he hasn't softened on it.
+[  81.70-  87.36] COVER This August on the Bitcoin Takeover podcast, he said as plainly as you can, for the record,
+[  87.36-  89.94] COVER I'm very bullish on rollups.
+  -- CH2 B2 the machine (C1 diagram)
+[  90.02-  92.28] COVER So here's how a vProg actually works.
+[  92.52-  97.28] COVER You send a transaction and you declare upfront which account it reads and which one it writes.
+[  97.68-  99.02] COVER Kaspa does four jobs.
+[  99.12- 100.60] COVER It orders every transaction.
+[ 100.78- 102.70] COVER So Kaspa itself is a sequencer.
+[ 102.76- 103.86] COVER It stores the data.
+[ 104.20- 105.48] COVER It checks the proofs.
+[ 105.48- 106.40] COVER It meters the work.
+[ 106.48- 108.68] COVER And what it never does is run the app.
+[ 108.72- 110.42] COVER The app runs on its own nodes.
+[ 110.60- 115.22] COVER Every vProg owns its own accounts and it's the only thing allowed to write to them.
+[ 115.22- 120.38] COVER And Provers, for-profit operators, post a zero-knowledge proof back to Kaspa.
+[ 120.50- 125.68] COVER That's a math receipt that says the state is correct and Kaspa checks the receipt instead
+[ 125.68- 126.70] COVER of redoing the math.
+  -- CH2 B3 what the design buys you
+[ 126.76- 128.36] COVER And this buys you two things.
+[ 128.52- 129.04] COVER Sovereignty.
+[ 129.22- 131.48] COVER If another app breaks, yours keeps running.
+[ 131.64- 132.46] COVER And Composability.
+[ 132.58- 137.60] COVER Apps can read each other's state and a transaction that touches two apps goes through as one unit
+[ 137.60- 138.72] COVER or not at all.
+[ 138.74- 143.24] COVER And this just means the rules for checking all of this live inside of Kaspa's consensus
+[ 143.88- 145.74] COVER Not on some other chain.
+
+==== CH3 - WHERE IT STANDS  (card ON: "WHERE IT STANDS")  opens 145.92s ====
+  -- CH3 B1 the ladder (C3)
+[ 145.92- 148.04] COVER Now where does this all actually stand?
+[ 148.20- 149.02] COVER Look at this ladder.
+[ 149.24- 151.76] COVER May 2025 Crescendo.
+[ 152.04- 153.02] COVER Ten blocks a second.
+[ 153.22- 154.74] COVER September the yellow paper.
+[ 155.10- 155.60] COVER First draft.
+[ 155.78- 157.66] COVER June 30th of this year.
+[ 157.88- 158.52] COVER Toccata.
+[ 158.90- 161.14] COVER Zero-knowledge verification and covenants.
+[ 161.28- 162.54] COVER Live on mainnet.
+[ 162.86- 164.20] COVER Inside Kaspa's consensus.
+[ 164.50- 166.56] COVER And September 2026.
+[ 166.78- 168.48] COVER Silverscript 1.0.
+[ 168.64- 170.10] COVER The smart contract language.
+[ 170.58- 171.42] COVER Official release.
+[ 171.58- 172.28] COVER Next rung.
+[ 172.28- 174.56] COVER The first standalone zero-knowledge app.
+[ 174.72- 175.42] COVER Above that.
+[ 175.50- 176.62] COVER Full vProgs.
+[ 176.94- 178.10] COVER Still under construction.
+[ 178.32- 181.02] COVER And kaspa.org says so in plain text.
+  -- CH3 B2 he called it
+[ 181.12- 185.72] COVER And in December, Sompolinsky said the covenant fork was 3-6 months out.
+[ 185.86- 186.58] COVER It's shipped in June.
+  -- CH3 B3 conviction
+[ 186.80- 189.56] COVER Everyone is racing to control compute and money.
+[ 189.66- 192.96] COVER The more they race, the more a layer nobody owns is worth.
+[ 193.08- 194.06] COVER Proof of work money.
+[ 194.42- 195.28] COVER With apps on it.
+[ 195.72- 196.86] COVER And no L2 in the middle.
+  -- CH3 B3 close / CTA
+[ 196.92- 199.28] COVER Click that like button and comment below.
+[ 199.28- 203.06] COVER Let me know what you think is going to be built on it in the near future.
+[ 203.54- 204.74] COVER Gonna be some exciting times.
+[ 205.28- 208.86] COVER And click the link in the description below for the greatest community ever.
+[ 209.18- 210.86] COVER And I'll catch you guys later.

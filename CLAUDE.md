@@ -10,13 +10,20 @@ _For the human-facing overview see `README.md`; for why this file exists + the b
 A livestream re-encodes to a `LOW BPS` master, then fans out into **3 lanes** (full map: `playbooks/livestream-repurpose.md`).
 
 ```
-livestream → Phase 1: re-encode → "LOW BPS" master  (video-creation/SKILL.md)
-   ├─►(1) long-form   : desilence LOW BPS → schedule-tweets/longform/ → data/longs.json   (off LOW BPS)
-   ├─►(2) vertical shorts: verticalize → transcribe → clip/caption/render → data/shorts.json
-   └─►(3) repurpose   : (lane 2's) transcript → tweets / threads / IG & YT posts (+ images) → data/*.json
+INTAKE (ONE invocation): livestream → re-encode "LOW BPS" master → verticalize → transcribe
+   ├─►(1) long-form   : desilence LOW BPS → schedule-tweets/longform/ → data/longs.json   (off LOW BPS, before verticalize)
+   ├─►(2) vertical shorts: clip select → cut / tighten / caption / render → data/shorts.json
+   └─►(3) repurpose   : tweets / threads / IG & YT posts (+ images) → data/*.json
                  all three feed ↓
    schedule-tweets/  (queues: data/*.json) → post-*.js → X · IG · FB · TikTok · Rumble · BitChute · YT
 ```
+
+**Lanes 2 and 3 are SIBLINGS off the intake transcript, never parent and child — run them in
+PARALLEL.** The transcript is produced by INTAKE (segment 1) and is a shared artifact; lane 2's own
+work is segments 2-5 and lane 3's is segment 6. Lane 3's only precondition is its own
+`repurpose/output/<batch>-lane3-plan.json`. Wording like "lane 3 runs off lane 2's transcript"
+describes *which artifact*, NOT an ordering, and must never be read as one. (Mike, 2026-08-15, after
+lane 3 was needlessly serialized behind lane 2 and burned wall-clock.)
 
 ## Capabilities → where to go
 
@@ -29,7 +36,7 @@ livestream → Phase 1: re-encode → "LOW BPS" master  (video-creation/SKILL.md
 | Make/render a vertical short or AI-persona video | `video-creation/SKILL.md` · `video-creation/vertical-ai-persona/SKILL.md` | `playbooks/video.md` |
 | Source stock video b-roll (Envato Elements) | `video-creation/skills/envato-broll/SKILL.md` | `playbooks/video.md` |
 | Find/pick music for a video (or source new tracks) | `video-creation/skills/music-sourcing/SKILL.md` (§2c: PICK from the analyzed catalog `assets/music/library.json`, no listening; longform bed plans → `music-placement-strategist` agent) | `playbooks/video.md` |
-| Make the VERTICAL (9:16) cut of a finished longform video | run **`/vertical-repurpose <project folder>`** · canonical `video-creation/longform-edited/skills/vertical-repurpose.md` | `playbooks/video.md` |
+| Make the VERTICAL (9:16) cut of a finished longform video | run **`/vertical-repurpose <project folder>`** · canonical `video-creation/longform-edited/skills/vertical-repurpose/vertical-repurpose.md` | `playbooks/video.md` |
 | Make a longform 16:9 video (slide presentation OR heavily-edited) | `video-creation/longform-presentation/longform-presentation.md` (frozen, slide-deck) · `video-creation/longform-edited/longform-edited.md` (evolving, edit-driven) | `playbooks/video.md` |
 | Defumble a recording (remove false starts/retakes, no clipped words) | `video-creation/skills/defumbler/defumbler.md` (canonical, track-agnostic) | `playbooks/video.md` |
 | Desilence / tighten pacing (remove silence, rapid-fire) | `video-creation/skills/desilencer/desilencer.md` (canonical, track-agnostic; ALL tracks use it) | `playbooks/video.md` |
@@ -41,9 +48,11 @@ Prefix every command with `cd C:\Users\mnede\Documents\Claude\social-media &&` (
 
 | Task | Command / pointer |
 |---|---|
+| **Repurpose a livestream (ALL 3 lanes, one command)** | `python video-creation/livestream-repurpose/graph/run.py batch --source "<recording>" [--lane3-brief "..."] [--clip-brief "..."]` · author `longform-meta.json` next to the recording first · exit 2 = Mike's gate, resume `run.py batch --batch <b> --resume --approve 4b\|2nd [--delete N,N]` · `run.py status --batch <b>` any time · slash command **`/repurpose-livestream`** wraps this |
+| **Make a longform-edited video (the LangGraph, 2026-09-17)** | `python video-creation/longform-edited/graph/run.py longform --project <name> [--brief-file <md>] [--constraints-file <md>] [--face-max N]` · ONE StateGraph per video: pre-production -> spine -> plan -> build -> deliver, 5 HITL gates (screenplay · spine · plan · blueprint · draft); exit 2 = waiting on Mike, resume `--resume --approve <gate>`; steps not automated yet are artifact-aware placeholders (`--done <node>`), so the ORDER is the graph's, never prose · `run.py status --project <name>` any time · first video through it: `kaspa-vprogs` |
 | Start dashboard (port 8766) | `python schedule-tweets/scripts/serve_dashboard.py` → http://localhost:8766 · left nav: **Social** (pending posts) · **LangGraph** (live LinkedIn lane state, node-by-node, + profile-view budget) · detail `schedule-tweets/skills/dashboard.md` |
 | Count pending across all queues | see `schedule-tweets/skills/pending-social-posts.md` |
-| Post next YT Quiz ("post next YT Quiz" = post the single next `pending` entry, no preview, one attempt, then report) | `cd schedule-tweets && node scripts/post-yt-quiz.js` (queue `schedule-tweets/data/yt-quizzes.json`) · full procedure `schedule-tweets/skills/yt-post-quiz.md` |
+| Post next YT Quiz ("post next YT Quiz" = post the single next `pending` entry, no preview, one attempt, then report) | `cd schedule-tweets && python scripts/post_yt_quiz.py` (queue `schedule-tweets/data/yt-quizzes.json`) · **not the JS twin — it cannot post since YouTube's 2026-08-30 composer migration** · full procedure `schedule-tweets/skills/yt-post-quiz.md` |
 | Move a finalized render batch into the queue | `python scripts/publish-shorts.py <batch> [--date YYYY-MM-DD] [--dry-run]` · detail `video-creation/PUBLISH-SHORTS.md` |
 | Lint queue data (persona/format) | `python scripts/persona-lint.py [--file <path>] [--fix]` |
 | **Find new topics** / refresh the Topic Radar dashboard | `node video-creation/topic-radar/build-dashboard.js` → open `video-creation/topic-radar/dashboard.html` · full procedure `video-creation/topic-radar/CLAUDE.md` (topic-finding doctrine: `video-creation/topic-radar/PLAYBOOK.md`) |
@@ -70,9 +79,21 @@ Prefix every command with `cd C:\Users\mnede\Documents\Claude\social-media &&` (
 All voice / terminology / brand rules: **`persona/persona.json`** (single source of truth). Read before drafting any content.
 
 ## Orchestrator status
-**Phase 1** — this routing table + `playbooks/`, human-driven (Mike says which skill runs next).
-**Automatic** spawnable-DAG orchestration (a fleet that self-dispatches lanes) is **deferred to Phase 2**;
-do not build that yet. See `ORCHESTRATOR-PLAN.md`.
+**Phase 2 BATCH ORCHESTRATOR IS BUILT (2026-09-10)** — `video-creation/livestream-repurpose/graph/batch_graph.py`,
+invoked as **`python video-creation/livestream-repurpose/graph/run.py batch --source "<recording>"`**.
+ONE invocation owns all three lanes: intake → Lane 3 launched CONCURRENTLY (its own process:
+lane3-drafter agent → repurpose graph → visual-qa) → Lane 2 (clip-strategist → cut → **4b HITL
+interrupt** → tighten-strategists → tighten → **2nd-review HITL interrupt** → finish → remotion-builders →
+publish) → join Lane 3 → verify. Judgment steps spawn HEADLESS agents (`claude -p --agent`) and are
+verified from disk. It **refuses DONE while any lane is pending**, and every segment report + `run.py
+status --batch <b>` prints the BATCH LANES footer. Exit 2 = waiting on Mike; resume with
+`run.py batch --batch <b> --resume --approve 4b|2nd [--delete N,N]`. Per-run overrides ride in as
+`--lane3-brief` / `--clip-brief` (persisted on the batches.json entry). `--until 4b|2nd|finish|build|publish`
+scopes Lane 2 (Lane 3 still runs to done).
+**HARD RULE (Mike, 2026-09-10, after Lane 3 of batch `kaspa` was never started by hand):** a livestream
+batch is driven by `run.py batch`, never by hand-invoking segments one at a time. Hand-running a
+single segment is for repairs only, and the footer it prints tells you what is still pending.
+History + design: `ORCHESTRATOR-PLAN.md` (Phase 2 ledger).
 
 ### Advisor/executor model routing (authoritative — self-contained, no memory needed)
 The pipeline runs on an **advisor/executor split**, so any fresh checkout behaves the same:
@@ -105,5 +126,9 @@ The pipeline runs on an **advisor/executor split**, so any fresh checkout behave
   defumbler, cover-blackout, desilencer, burst-removal, transcriber, captions-builder, visual-qa;
   `longform-edited/` = the strategists + asset factory). When planning any phase, check the registry
   before doing the work inline — these agents exist so slices are NOT hand-rolled in the main loop.
+- **Fable allowance fallback is AUTOMATIC (Mike, 2026-09-14):** `batch_graph.spawn_agent` respawns any
+  agent that dies on "reached your Fable limit" with `--model opus`; the main loop does the same for
+  Agent-tool dispatches (`model: opus`) without asking. Never stall a batch on the Fable quota. A failed
+  batch run is re-driven with a fresh `run.py batch --batch <b>` (nodes are redo-safe); `--resume` is for gates.
 - These ARE allowed and versioned on purpose; they are NOT the deferred DAG automation (no auto-spawning
   fleet). Rule of thumb: judgment slice -> Fable/max advisor; intricate execution slice -> Opus/high executor.

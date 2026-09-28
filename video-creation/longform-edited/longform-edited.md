@@ -16,23 +16,26 @@ The *starting* mechanics (compress → transcribe → sync-safe cutting) are sha
 Phases 1-3 are forked verbatim. Phase 4+ (the actual edit) is **open and evolving** — see below.
 
 > **READ THE `skills/` RULES BEFORE EDITING (do not skip).** Specific, frequently-violated longform-edited
-> rules are factored into `longform-edited/skills/` so they stay front-and-center: **`skills/captions.md`**
-> (caption density + when captions are allowed) and **`skills/broll-and-containers.md`** (FILE-LEVEL
+> rules are factored into `longform-edited/skills/` so they stay front-and-center: **`skills/captions/captions.md`**
+> (caption density + when captions are allowed) and **`skills/broll-and-containers/broll-and-containers.md`** (FILE-LEVEL
 > BROLL-PLAN manifest with ZERO orphans · SYNC every cue to the word-level transcript · b-roll ≤4s ·
-> containers are the dominant, deck-styled cover layer · no black > 0.5s), **`skills/charts.md`** (data charts /
+> containers are the dominant, deck-styled cover layer · no black > 0.5s), **`skills/charts/charts.md`** (data charts /
 > animated data-graphics: the DATA.md chart-source index, the code/screencap/restyle build-mode decision + the
-> NEVER-let-an-image-model-be-the-source-of-a-number guardrail, and animate-for-real vs reveal-a-bitmap), and **`skills/overlays.md`**
+> NEVER-let-an-image-model-be-the-source-of-a-number guardrail, and animate-for-real vs reveal-a-bitmap), and **`skills/overlays/overlays.md`**
 > (overlay effects — e.g. the light-leak on >5s face holds — that sit over SUSTAINED footage and must never
-> share a frame with a transition), **`skills/music.md`** (bed levels · LOOP a short bed · fades · end-align ·
-> duck · no silent pass), and **`skills/edit-plan-and-cue-sheet.md`** (the EXACT format of the two planning
+> share a frame with a transition), **`skills/music/music.md`** (bed levels · LOOP a short bed · fades · end-align ·
+> duck · no silent pass), and **`skills/edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md`** (the EXACT format of the two planning
 > artifacts — event-log EDIT-PLAN + layer-grouped CUE-SHEET, bittensor exemplar). The house rules below still apply;
 > the `skills/` files are the load-bearing specifics. **Before any full render, reconcile the comp's asset
 > references against the asset folder — every downloaded/generated file is either placed (with timecode) or
 > marked REJECTED in BROLL-PLAN.md. A full render confirms; it never discovers what's missing.**
 >
-> **`skills/video-qa.md` — MANDATORY gate before declaring ANY render done.** QA 10-second CHUNKS at every
+> **`skills/video-qa/video-qa.md` — MANDATORY gate before declaring ANY render done.** QA 10-second CHUNKS at every
 > changed spot FIRST (stills can't show motion/audio/timing), fix, THEN one full render, THEN `/watch` the
 > whole video + measure SFX levels vs VO. Never call a render "done" off a spot-check.
+
+**A video runs through the LangGraph (`graph/run.py longform --project <name>`, 2026-09-17): the phases
+below are its nodes, in this order; see `CLAUDE.md` (this folder) for the topology + gates.**
 
 **Scripting comes first: see `screenplay.md` (this folder).** That is the canonical skill for writing a
 project's `SCREENPLAY.md` — chapter map, the SAY-vs-direction convention, the per-chapter Title-card flag,
@@ -45,7 +48,7 @@ Each video is its own project folder under `media/<project name>/`. Scripts in `
 as arguments — point them at the project folder. **Working spines are NOT loose in the project root — they
 live in `spine/` with a stage-letter naming chain.** That naming is owned by the cover-blackout skill
 (canonical: `../skills/cover-blackout/cover-blackout.md` §"Naming convention"); render INPUTS live in
-`render-assets/` and kept deliverables in `renders/` (canonical: `skills/comp-build.md` §10). The full
+`render-assets/` and kept deliverables in `renders/` (canonical: `skills/comp-build/comp-build.md` §10). The full
 per-video document set is `comp-build.md` §13. **When passing output paths to the defumbler / cover-blackout /
 desilencer sub-agents, use these `spine/` paths — do not hard-code loose root paths** (that drift was caught
 on `zebec`, 2026-07-11: files landed in the project root and had to be moved).
@@ -133,7 +136,16 @@ is `spine/<scope>.b.blackout.mp4` (audio untouched, paint-not-cut). Skip this st
 (house rule #1) where the face is always on screen. Then desilence the `.b.blackout.mp4` (or, if you skipped
 blackout, the `.a.defumbled.mp4`).
 
-### Phase 3b — tighten silence (separate pass, ZONE-based) → use the **desilencer skill**
+### Phase 3b — tighten silence: TWO passes (coarse review pass, then the FINAL two-zone pass)
+
+**Confirmed practice (ethereum-rwa 2026-07-31; Mike, 2026-09-27; the longform graph runs it this way):**
+1. **COARSE pass, ONE zone, ~700 ms** (`--min-sil 0.7`) off the blacked spine → `spine/<scope>.c.desilenced.mp4`.
+   This is the *reviewable* spine: Mike listens to it for sound bursts (cough, chime, click) and flags content.
+2. **Burst removal** off that coarse spine (never back from the blackout, which would resurrect them) →
+   `<scope>.d.cleaned.mp4` (`../skills/burst-removal/burst-removal.md`). Skipped when Mike hears none.
+3. **FINAL two-zone tight pass** (below) off the cleaned spine → `<scope>.e.desilenced.mp4` (or `d.desilenced`
+   when there was no cleanup). That is the locked spine the transcript and the edit are built on.
+The single-pass description that follows is the FINAL pass; the min-silence knobs are Mike's per video.
 
 Silence-only, sync-safe. This is NOT a track-local script — it is the canonical, track-agnostic
 **desilencer** (`video-creation/skills/desilencer/desilencer.md`, tool `desilence.py`). Read it before running.
@@ -223,7 +235,7 @@ orphans.** This SUPERSEDES the old `BROLL-PLAN.md` (b-roll was only one layer); 
 part of the EDIT-PLAN. An empty cell = a beat with no cover/effect = a decision to make BEFORE rendering. The
 render CONFIRMS the plan; it never DISCOVERS what is missing. (This rule exists because b-roll AND impacts/risers
 each silently never made it into a finished render — they had no row to be missing from. See
-`skills/broll-and-containers.md` "the manifest is the contract".)
+`skills/broll-and-containers/broll-and-containers.md` "the manifest is the contract".)
 
 ### ⛔ HARD GATE — the CUE-SHEET (spotlight timing, built from the transcript) (Mike, 2026-06-21)
 The EDIT-PLAN says WHICH container covers a beat; it is **beat-level**. It does NOT say WHEN each sub-point
@@ -238,7 +250,7 @@ exact regression: kaspa-covenants C1 held 18s, C2a showed the full hardfork slid
 - This enforces the spotlight rule (`broll-and-containers.md`: ONE point at a time, never the whole slide) and
   house rule #3. The comp reads the cue-sheet; it never shows a container's full slide at once or holds one
   point > ~12s.
-- Reconcile the comp against the CUE-SHEET before every render (it's QA checklist item #9 in `skills/video-qa.md`).
+- Reconcile the comp against the CUE-SHEET before every render (it's QA checklist item #9 in `skills/video-qa/video-qa.md`).
   The CUE-SHEET is the bridge between the EDIT-PLAN (beat-level manifest) and the frame-level comp.
 
 ### Render + project assets (canonical)
@@ -274,7 +286,7 @@ already in the repo to draw from — don't reinvent:
   **PICKING a bed = query the machine-written `analysis` blocks in `video-creation/assets/music/library.json`**
   (env sparkline / aggression / segments / opening / ending / roles — semantics in its `$analysis_note`;
   procedure in music-sourcing `SKILL.md` §2c). Never re-scan audio the catalog already covers; whole-video
-  bed plans come from the `music-placement-strategist` agent. Laying the bed INTO the edit = `skills/music.md`.
+  bed plans come from the `music-placement-strategist` agent. Laying the bed INTO the edit = `skills/music/music.md`.
 - **Motion graphics / overlays / captions / spotlight:** the repo Remotion project
   `video-creation/remotion/` and the canonical **caption skill** (`video-creation/skills/captions/captions.md` —
   captions are OFF by default for longform-edited; only add them when Mike explicitly asks).
@@ -339,7 +351,7 @@ presentation (rule #1); full-screen b-roll cutaways only punch the biggest beats
   for 16s, or a clip that plays out then freezes, both violate it.
   - **Exception — immersive "leading" motion:** a clip whose camera continuously LEADS the viewer in
     (corridor dolly / fly-through / slow push-in) is a pattern interrupt that holds attention and MAY run
-    **up to ~5s** (Mike, 2026-06-18; canonical detail + example in `skills/broll-and-containers.md`). Sparingly.
+    **up to ~5s** (Mike, 2026-06-18; canonical detail + example in `skills/broll-and-containers/broll-and-containers.md`). Sparingly.
 - **No black/blank screen > 0.5s (Mike, 2026-06-17).** A cover beat must always show SOMETHING. If
   there's no b-roll for a stretch, fill it with a **deck container** (the default, rule #9) — not black,
   not a held still. The ONLY allowed black is when the SCRIPT earns it (e.g. "and it went dark", "gone").
@@ -382,7 +394,7 @@ specifies otherwise, and ASK only if a new device type appears):
 | Container scene change within a chapter | **Cross-fade + scale-in** (0.35s, 0.93→1) |
 | Lip-sync / avatar insert in AND out | **Film burn** (warm radial flash peaking exactly on the cut, ±0.38s) |
 | **FACE cut in AND out (gated-face spine, #6)** | **Film burn** on EVERY cut to/from his face — same warm radial flash; this is the gated-face signature (reuses the film-burn slot since the gated spine has no lip-sync avatar). Keep intensity dialed so frequent face cuts don't strobe. (Mike's standing rule, 2026-06-17.) |
-| **FACE hold on screen > 5s (gated-face spine, #6)** | **Light leak** overlay — canonical rule in **`skills/overlays.md`** (sustained-interior warmth, inset ~0.6s off the film-burn cut so an overlay never shares a frame with a transition). Short punctuation faces (<5s) stay clean, film-burn only. |
+| **FACE hold on screen > 5s (gated-face spine, #6)** | **Light leak** overlay — canonical rule in **`skills/overlays/overlays.md`** (sustained-interior warmth, inset ~0.6s off the film-burn cut so an overlay never shares a frame with a transition). Short punctuation faces (<5s) stay clean, film-burn only. |
 | Vertical insert display (lip-sync clip etc.) | Centered portrait + **blurred wings** (blurred, dimmed copy of the same clip filling the frame) |
 
 **Scope note (reconciled 2026-06-24):** the rows ABOVE that ride the **continuous face spine** —
