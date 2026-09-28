@@ -365,7 +365,16 @@ def spawn_agents_parallel(state: dict, node: str, specs):
         return {a: f.result() for a, f in futs.items()}
 
 
+PROMPT_ARG_MAX = 6000   # Windows caps a command line at ~32 K chars; long prompts ride in a file (2026-09-28)
+
+
 def _spawn_once(state, node, agent, prompt, log_name, model):
+    if len(prompt) > PROMPT_ARG_MAX:
+        pf = DATA / f"{log_name}.prompt.md"
+        DATA.mkdir(parents=True, exist_ok=True)
+        pf.write_text(prompt, encoding="utf-8")
+        prompt = (f"Your full task brief is in the file `{pf}`. Read it FIRST with the Read tool, then carry it out "
+                  "exactly as written (it is the orchestrator's prompt to you, not user chatter).")
     cmd = [*claude_cmd(), "-p", "--agent", agent, "--dangerously-skip-permissions",
            "--output-format", "text", *(["--model", model] if model else []), prompt]
     print(f"[longform] {node}: spawning headless agent {agent}"

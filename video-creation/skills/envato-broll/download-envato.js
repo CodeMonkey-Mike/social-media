@@ -68,25 +68,35 @@ function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + mi
   // (download.saveAs -> "canceled"). FIX (2026-07-10): capture the signed file URL from the download
   // EVENT, then FETCH it via the authenticated session and STREAM it to disk (never the canceled
   // browser download). Verified: the same signed URL returns HTTP 200 with the full file.
-  let dlUrl = null, dlName = null;
+  // ⚠ CHROME-153 CRASH RACE (2026-09-28): on LARGE items Chrome's browser process CRASHES ~1-3s after the
+  // Download click (Crashpad dump tagged LEGACY_DOWNLOAD, while the re-render-canceled download unwinds).
+  // Any page.* call after the click then throws "Target page, context or browser has been closed". So:
+  // read cookies + UA BEFORE the click, and after it use NODE-side sleeps (never page.waitForTimeout);
+  // the signed URL from the download event + the Node stream do not need Chrome alive.
+  const cookies = await browser.cookies();
+  const cookieHeader = cookies.map(c => `${c.name}=${c.value}`).join('; ');
+  const ua = await page.evaluate(() => navigator.userAgent).catch(() => '');
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+  let dlUrl = null, dlName = null, browserGone = false;
+  browser.on('close', () => { browserGone = true; });
   page.on('download', d => { if (!dlUrl) { dlUrl = d.url(); dlName = d.suggestedFilename(); } });
   await dlButton.click();
-  await page.waitForTimeout(rnd(1200, 2200));
-  if (DEBUG) await page.screenshot({ path: 'envato-license-debug.png' });
-  // if a license/confirm dialog appears, confirm it (older flow / some item types)
-  const confirm = page.locator(
-    '[role="dialog"] button:has-text("Add & Download"), [role="dialog"] button:has-text("License & download"), [role="dialog"] button:has-text("Download")'
-  ).first();
-  if (await confirm.isVisible().catch(() => false)) await confirm.click().catch(() => {});
-  for (let i = 0; i < 60 && !dlUrl; i++) await page.waitForTimeout(500);
-  if (!dlUrl) throw new Error('no download URL captured after clicking Download (Envato DOM may have changed — re-probe)');
+  await sleep(rnd(1200, 2200));
+  if (!dlUrl && !browserGone) {
+    if (DEBUG) await page.screenshot({ path: 'envato-license-debug.png' }).catch(() => {});
+    // if a license/confirm dialog appears, confirm it (older flow / some item types)
+    const confirm = page.locator(
+      '[role="dialog"] button:has-text("Add & Download"), [role="dialog"] button:has-text("License & download"), [role="dialog"] button:has-text("Download")'
+    ).first();
+    if (await confirm.isVisible().catch(() => false)) await confirm.click().catch(() => {});
+  }
+  for (let i = 0; i < 60 && !dlUrl && !browserGone; i++) await sleep(500);
+  if (!dlUrl) throw new Error('no download URL captured after clicking Download' + (browserGone ? ' (Chrome closed/crashed before the download event)' : ' (Envato DOM may have changed — re-probe)'));
+  if (browserGone) console.error('note: Chrome crashed after the download event (known Chrome-153 race) — streaming via Node with pre-click cookies');
 
   const ext = path.extname(dlName) || '.mov';
   const target = path.join(DIR, (NAME ? NAME + ext : dlName));
   console.error('fetching -> ' + target + ' (streaming; 4K originals are large)...');
-  const cookies = await browser.cookies();
-  const cookieHeader = cookies.map(c => `${c.name}=${c.value}`).join('; ');
-  const ua = await page.evaluate(() => navigator.userAgent).catch(() => '');
   let streamed = false;
   try {
     const { pipeline } = require('stream/promises');
@@ -96,11 +106,12 @@ function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + mi
     else console.error('node fetch HTTP ' + res.status + ' — falling back to context.request');
   } catch (e) { console.error('node fetch stream failed (' + e.message + ') — falling back to context.request'); }
   if (!streamed) {
+    if (browserGone) throw new Error('Node fetch failed and Chrome is gone (no context.request fallback) — read the log, do not relaunch blind');
     const resp = await browser.request.get(dlUrl, { timeout: 900000 });
     if (!resp.ok()) throw new Error('download fetch HTTP ' + resp.status());
     fs.writeFileSync(target, await resp.body());
   }
-  await browser.close();
+  await browser.close().catch(() => {});
 
   // Disk rule (SKILL.md): >800MB original -> transcode to ~100MB 1080p (H.264, audio stripped), keep ONLY that.
   const { execSync } = require('child_process');
