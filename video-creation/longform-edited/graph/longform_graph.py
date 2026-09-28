@@ -828,17 +828,242 @@ def gate_plan(state):
                   [C.doc(proj, "cover_plan"), C.doc(proj, "music_plan"), C.doc(proj, "broll_plan")])
 
 
-def assets(state):
-    return C.placeholder(state, "assets",
-        how="Dispatch the asset factory per BROLL-PLAN.md worklists, IN PARALLEL where the Chrome "
-            "profiles differ: slide-builder, chart-builder, receipt-capturer, envato-sourcer, image-gen; "
-            "`visual-qa` clears every output. Outputs land in assets/<subdir>/ (comp-build.md section 10).")
+# ── Wave D node 1+2 (2026-09-28): the ASSET FACTORY fan-out + the reconcile gate ─────────────
+# The five builder agents (slide-builder · chart-builder · receipt-capturer · envato-sourcer ·
+# image-gen) run IN PARALLEL: each owns a different browser (headless Chromium ×3, the dedicated
+# envato-profile, the dedicated chatgpt-profile), so nothing collides. Every builder gets ONLY the
+# ids that are still missing on disk (idempotent re-drives; `--redo assets` rebuilds everything),
+# writes to the FIXED comp-build §10 folders, and the node verifies FROM DISK. Then `visual-qa`
+# opens every asset once and its JSON verdict is persisted; `verify_assets` is the pure-code
+# reconcile (zero orphans, no byte-duplicate b-roll, audio stripped, visual-qa clean).
+
+ASSET_FOLDERS = {
+    "envato": "vid", "chatgpt": "img", "receipt": "receipts",
+    "chart": "charts", "diagram": "diagrams", "title": "title-slides", "card": "card-slides",
+}
+BUILDER_OF = {
+    "envato": "envato-sourcer", "chatgpt": "image-gen", "receipt": "receipt-capturer",
+    "chart": "chart-builder", "diagram": "chart-builder", "title": "slide-builder", "card": "slide-builder",
+}
+VIDEO_EXT = (".mp4", ".mov", ".webm")
+IMAGE_EXT = (".png", ".jpg", ".jpeg", ".webp")
 
 
-def verify_assets(state):
-    return C.placeholder(state, "verify_assets",
-        how="Reconcile BROLL-PLAN.md against assets/: every worklist row has its file, zero orphans "
-            "(renderables only), no byte-duplicate b-roll (house rule #12), visual-qa PASS on all.")
+def _container_kind(c: dict) -> str:
+    kind = str(c.get("kind", "")).lower()
+    cid = str(c.get("id", ""))
+    if kind in ("animated-chart", "chart"):
+        return "chart"
+    if kind in ("diagram", "timeline"):
+        return "diagram"
+    if kind == "title" or cid.startswith("title-card"):
+        return "title"
+    return "card"
+
+
+def _asset_expectations(plan: dict):
+    """Every renderable the cover plan commits to: [{id, kind, folder, spec}]."""
+    exp = []
+    for e in plan.get("envato_list") or []:
+        exp.append({"id": f"BR-{e.get('n')}", "kind": "envato", "folder": ASSET_FOLDERS["envato"],
+                    "spec": f"Envato video, query: {e.get('query')}; beat {e.get('beat')}; target {e.get('seconds')}s"
+                            f"{'; LEADING continuous camera' if e.get('lead') else ''}"})
+    for g in plan.get("chatgpt_list") or []:
+        exp.append({"id": f"IMG-{g.get('n')}", "kind": "chatgpt", "folder": ASSET_FOLDERS["chatgpt"],
+                    "spec": f"ChatGPT image: {g.get('prompt_concept')}; reference: {g.get('reference')}; beat {g.get('beat')}"})
+    for r in plan.get("receipts") or []:
+        exp.append({"id": str(r.get("id")), "kind": "receipt", "folder": ASSET_FOLDERS["receipt"],
+                    "spec": f"Receipt proving: {r.get('claim')}; capture: {r.get('capture')}"
+                            f"{'; VERIFY the claim at capture' if r.get('verify') else ''}"})
+    for c in plan.get("containers") or []:
+        k = _container_kind(c)
+        exp.append({"id": str(c.get("id")), "kind": k, "folder": ASSET_FOLDERS[k],
+                    "spec": f"{c.get('kind')} container: {c.get('shows')}; beats {', '.join(c.get('beats') or [])}"})
+    return exp
+
+
+def _asset_files(proj: Path, e: dict):
+    """Files on disk for one expectation: <folder>/<id>.<ext> or <folder>/<id>-*.<ext> (states, slugs)."""
+    d = proj / "assets" / e["folder"]
+    if not d.is_dir():
+        return []
+    exts = VIDEO_EXT if e["kind"] == "envato" else (VIDEO_EXT + IMAGE_EXT if e["kind"] == "receipt" else IMAGE_EXT)
+    out = []
+    for f in sorted(d.iterdir()):
+        if not f.is_file() or f.suffix.lower() not in exts:
+            continue
+        if f.stem == e["id"] or f.stem.startswith(e["id"] + "-") or f.stem.startswith(e["id"] + "_"):
+            out.append(f)
+    return out
+
+
+def _builder_prompt(builder: str, proj: Path, fs: Path, todo: list, done: list) -> str:
+    plan_p, broll_p = C.doc(proj, "cover_plan"), C.doc(proj, "broll_plan")
+    common = (f"Project `{proj.name}`, folder `{proj}`. Worklists: `{broll_p}` (your table) and the source of truth "
+              f"`{plan_p}` (per-slot notes, spoken lines, bench). Numbers + phrasing guards: `{C.doc(proj, 'data')}`. "
+              f"As-built script with timecodes: `{C.doc(proj, 'as_recorded')}`. FINAL spine: `{fs}`.\n"
+              f"Build ONLY these ids (everything else on disk is done, leave it alone): "
+              + ", ".join(f"{e['id']} -> assets/{e['folder']}/" for e in todo)
+              + (f".\nAlready present, do NOT rebuild: {', '.join(done)}." if done else ".")
+              + "\nName every output `<id>.<ext>` or `<id>-<slug>.<ext>` (state variants `<id>-<state>.png`) INSIDE the folder "
+                "named for it; never another folder, never a separate render-assets/. No em dashes on screen. QA-open every "
+                "file before returning, then return the per-id report your agent definition specifies. The graph verifies the "
+                "files from disk and `visual-qa` opens every one.")
+    extra = {
+        "slide-builder": "\nTITLE SLIDES (`title-card-*` ids) -> assets/title-slides/, CARD SLIDES -> assets/card-slides/; HTML source "
+                         "for all frames in assets/slide-sources/containers.html; 1920x1080; the locked container-canonical.css.",
+        "chart-builder": "\nType 1 ANIMATED charts -> assets/charts/<id>.html + <id>-<state>.png (start/mid/payoff states = the design "
+                         "spec for the comp's real useCurrentFrame animation, plus the what-moves-when note); Type 2 SYSTEM-DESIGN "
+                         "diagrams -> assets/diagrams/<id>.html + <id>-<state>.png (one PNG per state, shared elements pixel-identical). "
+                         "Every number from DATA.md only.",
+        "receipt-capturer": "\nPlaywright Python, 1920 wide, device-scale 2, whole readable region (the comp does the push-in); "
+                            "open and LOOK at every capture; a bot wall / blank / paywall is a FLAG, never shipped. State the capture "
+                            "timestamp and every VERIFY answer.",
+        "envato-sourcer": "\nOne clip per slot via the canonical envato-broll tooling on the envato-profile only (one download at a time); "
+                          "trim to slot + ~1s handles, 1080p H.264, STRIP AUDIO (-an), no two slots alike, no watermark/text. A slot "
+                          "with no clean match is FLAGGED, not filled off-tone.",
+        "image-gen": "\nBrowser pipeline only (repurpose/gen_batch.py --fresh on the chatgpt-profile, sequential, one attempt). House "
+                     "style from persona.json image_generation. A row with a Reference path is generated FROM that reference image "
+                     "(the real mark, e.g. the Kaspa backwards-K in greenish cyan, never gold); a row with 'none exists (generic "
+                     "approved)' is generic. Every image unique.",
+    }
+    return common + extra.get(builder, "")
+
+
+def _mid_frame(video: Path, dest: Path) -> Optional[Path]:
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    d = _duration(video) or 0.0
+    r = subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{d / 2:.3f}", "-i", str(video), "-frames:v", "1", str(dest)],
+                       capture_output=True, text=True)
+    return dest if r.returncode == 0 and dest.is_file() else None
+
+
+def assets(state: LongformState) -> LongformState:
+    node = "assets"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    plan_p = C.doc(proj, "cover_plan")
+    if not plan_p.is_file():
+        return C._fail(state, node, "COVER-PLAN.json missing")
+    plan = json.loads(plan_p.read_text(encoding="utf-8"))
+    fs = C.final_spine(proj, scope)
+    exp = _asset_expectations(plan)
+    if not exp:
+        return C._fail(state, node, "the cover plan commits to no renderable assets")
+    for sub in set(ASSET_FOLDERS.values()) | {"slide-sources"}:
+        (proj / "assets" / sub).mkdir(parents=True, exist_ok=True)
+    redo = _redo(state, node)
+    jobs = {}
+    for e in exp:
+        have = _asset_files(proj, e)
+        b = BUILDER_OF[e["kind"]]
+        jobs.setdefault(b, {"todo": [], "done": []})
+        (jobs[b]["todo"] if (redo or not have) else jobs[b]["done"]).append(e if (redo or not have) else e["id"])
+    dispatch = {b: j for b, j in jobs.items() if j["todo"]}
+    if dispatch:
+        specs = [(b, _builder_prompt(b, proj, fs, j["todo"], j["done"]), f"agent-assets-{b}-{proj.name}.log")
+                 for b, j in dispatch.items()]
+        print(f"[longform] {node}: dispatching {len(specs)} builder(s) in parallel: "
+              + ", ".join(f"{b} ({len(dispatch[b]['todo'])} id(s))" for b in dispatch), flush=True)
+        results = C.spawn_agents_parallel(state, node, specs)
+        for b, (rc, out) in results.items():
+            print(f"[longform] {node}: {b} exit {rc}", flush=True)
+    else:
+        print(f"[longform] {node}: every asset already on disk; skipping the builders", flush=True)
+    missing = [e for e in exp if not _asset_files(proj, e)]
+    if missing:
+        by_b = {}
+        for e in missing:
+            by_b.setdefault(BUILDER_OF[e["kind"]], []).append(e["id"])
+        return C._fail(state, node, "assets still missing after the builders ran: "
+                       + "; ".join(f"{b}: {', '.join(ids)}" for b, ids in by_b.items())
+                       + " (read graph/data/agent-assets-<builder>-<project>.log; a re-drive dispatches only the missing ids)")
+    # ── visual-qa over every asset (video slots contribute a mid frame) ─────────────────────
+    qa_dest = proj / "assets" / "VISUAL-QA.json"
+    if redo or not qa_dest.is_file():
+        lines = []
+        for e in exp:
+            for f in _asset_files(proj, e):
+                shown = f
+                if f.suffix.lower() in VIDEO_EXT:
+                    shown = _mid_frame(f, proj / "_previews" / "qa" / "assets" / f"{f.stem}.mid.png") or f
+                lines.append(f"- `{shown}`  [{e['kind']} {e['id']}] spec: {e['spec']}")
+        prompt = (f"Visual QA for the longform-edited project `{proj.name}` (folder `{proj}`): open EVERY asset below and judge it "
+                  "against its spec and the house style per your checklist (containers/diagrams -> container-reference + "
+                  "container-canonical.css; charts -> charts.md; receipts -> the intended content, no blank/bot-wall/cookie banner; "
+                  "b-roll frames -> no watermark/text, dark grade; ChatGPT images -> the named asset with the real mark and colors, "
+                  "house style, no text). A `.mid.png` is the middle frame of the video slot it is named after.\n"
+                  + "\n".join(lines)
+                  + f"\nReturn your JSON verdict AND save it to EXACTLY `{qa_dest}` with Bash (a quoted heredoc). "
+                    "Every asset listed must appear in `assets` with PASS or FAIL.")
+        rc, out = C.spawn_agent(state, node, "visual-qa", prompt, f"agent-assets-visual-qa-{proj.name}.log")
+        if not C.persist_agent_json(out, qa_dest, want_key="assets"):
+            return C._fail(state, node, f"visual-qa returned no usable verdict JSON (rc {rc})", out)
+    qa = json.loads(qa_dest.read_text(encoding="utf-8"))
+    fails = [a for a in qa.get("assets", []) if str(a.get("verdict", "")).upper() != "PASS"]
+    if fails:
+        return C._fail(state, node, f"visual-qa FAILED {len(fails)} asset(s): "
+                       + "; ".join(f"{Path(a.get('path', '?')).name}: {', '.join(a.get('defects') or [])[:140]}" for a in fails[:8])
+                       + " (delete the failing files, then re-drive: only the missing ids are rebuilt; delete assets/VISUAL-QA.json to re-QA)")
+    return {"steps": C._step(state, node, "ran", f"{len(exp)} asset id(s) built ({len(dispatch)} builder(s) dispatched), visual-qa PASS on {len(qa.get('assets', []))} file(s)")}
+
+
+def _has_audio(video: Path) -> bool:
+    r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=codec_type",
+                        "-of", "csv=p=0", str(video)], capture_output=True, text=True)
+    return "audio" in (r.stdout or "")
+
+
+def verify_assets(state: LongformState) -> LongformState:
+    """Pure-code reconcile of BROLL-PLAN/COVER-PLAN against assets/: every id has its file, zero orphan
+    renderables in the asset folders, no byte-duplicate b-roll (house rule #12), b-roll audio stripped,
+    every file cleared by visual-qa."""
+    node = "verify_assets"
+    proj = _proj(state)
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    plan = json.loads(C.doc(proj, "cover_plan").read_text(encoding="utf-8"))
+    exp = _asset_expectations(plan)
+    problems = []
+    claimed = set()
+    for e in exp:
+        files = _asset_files(proj, e)
+        if not files:
+            problems.append(f"{e['id']} has no file in assets/{e['folder']}/")
+        claimed.update(files)
+    for sub in sorted(set(ASSET_FOLDERS.values())):
+        d = proj / "assets" / sub
+        for f in sorted(d.iterdir()) if d.is_dir() else []:
+            if f.is_file() and f.suffix.lower() in VIDEO_EXT + IMAGE_EXT and f not in claimed:
+                problems.append(f"orphan renderable not in the plan: assets/{sub}/{f.name}")
+    import hashlib
+    seen = {}
+    for e in exp:
+        if e["kind"] not in ("envato", "chatgpt"):
+            continue
+        for f in _asset_files(proj, e):
+            h = hashlib.sha256(f.read_bytes()).hexdigest()
+            if h in seen:
+                problems.append(f"byte-duplicate b-roll: {f.name} == {seen[h]} (house rule #12)")
+            seen[h] = f.name
+            if f.suffix.lower() in VIDEO_EXT and _has_audio(f):
+                problems.append(f"{f.name} still carries an audio stream (strip it: ffmpeg -c copy -an)")
+    qa_p = proj / "assets" / "VISUAL-QA.json"
+    if not qa_p.is_file():
+        problems.append("assets/VISUAL-QA.json missing (visual-qa never ran)")
+    else:
+        qa = json.loads(qa_p.read_text(encoding="utf-8"))
+        verdict = {Path(a.get("path", "")).name.replace(".mid.png", ""): str(a.get("verdict", "")).upper() for a in qa.get("assets", [])}
+        for f in sorted(claimed):
+            v = verdict.get(f.name) or verdict.get(f.stem)
+            if v is None:
+                problems.append(f"{f.name} was never opened by visual-qa")
+            elif v != "PASS":
+                problems.append(f"{f.name} visual-qa {v}")
+    if problems:
+        return C._fail(state, node, f"{len(problems)} reconcile problem(s): " + " | ".join(problems[:12]))
+    return {"steps": C._step(state, node, "ran", f"{len(exp)} ids / {len(claimed)} files reconciled, zero orphans, visual-qa clean")}
 
 
 def edit_plan(state):

@@ -581,6 +581,15 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   1 s breath (house rule #10), every source file exists, a bed shorter than its span MUST loop (the kaspa bed-A
   violation, now a code gate), level -24..-12 dB under VO, no em dashes; then `lint_docset.py --stage plan`
   proves the whole plan stage before GATE 3.
+- **Wave D nodes 1+2, `assets` + `verify_assets` (2026-09-28):** the asset factory is a real fan-out. The node
+  derives every renderable id from COVER-PLAN.json (BR-n / IMG-n / R-ids / container ids split into charts,
+  diagrams, title-slides, card-slides per comp-build §10), dispatches the five builders IN PARALLEL
+  (`common.spawn_agents_parallel`; they own different browsers: headless Chromium x3, envato-profile,
+  chatgpt-profile) with ONLY the ids still missing on disk (idempotent re-drives; `--redo assets` rebuilds
+  all), verifies the files from disk, then `visual-qa` opens every file (videos via a mid frame) and its
+  verdict is persisted to `assets/VISUAL-QA.json`. `verify_assets` is pure code: every id has its file,
+  zero orphan renderables, no byte-duplicate b-roll (#12), b-roll audio stripped, every file PASS in
+  visual-qa. A failing asset is deleted and the graph re-driven; only the gap is rebuilt.
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;

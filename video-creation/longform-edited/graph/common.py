@@ -22,7 +22,9 @@ import re
 import shutil
 import subprocess
 import sys
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, List, Optional
@@ -85,10 +87,14 @@ def _read_json(path, fallback):
         return fallback
 
 
+_WRITE_LOCK = threading.Lock()   # parallel builders heartbeat from threads (assets node, 2026-09-28)
+
+
 def _write_json_atomic(path: Path, data):
-    tmp = Path(str(path) + ".tmp")
-    tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
-    os.replace(tmp, path)
+    with _WRITE_LOCK:
+        tmp = Path(f"{path}.{threading.get_ident()}.tmp")
+        tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+        os.replace(tmp, path)
 
 
 def _now_iso():
@@ -346,6 +352,17 @@ def spawn_agent(state: dict, node: str, agent: str, prompt: str, log_name: str):
               f"--model {FABLE_FALLBACK_MODEL}", flush=True)
         rc, out = _spawn_once(state, node, agent, prompt, log_name, FABLE_FALLBACK_MODEL)
     return rc, out
+
+
+def spawn_agents_parallel(state: dict, node: str, specs):
+    """Run several headless agents at once: specs = [(agent, prompt, log_name)]. Each gets its own
+    log; the heartbeat interleaves (last writer wins, harmless). Returns {agent: (rc, out)}. Only for
+    agents that own DIFFERENT browsers/profiles (the asset factory); never for the shared-Chrome posters."""
+    if state.get("stub"):
+        return {a: ((0 if state["stub"] == "ok" else 1), f"STUB agent {a}") for a, _, _ in specs}
+    with ThreadPoolExecutor(max_workers=max(1, len(specs))) as ex:
+        futs = {a: ex.submit(spawn_agent, state, node, a, p, l) for a, p, l in specs}
+        return {a: f.result() for a, f in futs.items()}
 
 
 def _spawn_once(state, node, agent, prompt, log_name, model):
