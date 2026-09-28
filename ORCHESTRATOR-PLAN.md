@@ -575,6 +575,12 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   reference for EVERY §13 document, the seven plan/build ones harvested from the completed `kaspa 30bps`
   (COVER-PLAN, BROLL-PLAN, EDIT-PLAN-prep, MUSIC-PLAN, EDIT-PLAN, CUE-SHEET, TRANSITIONS), so purging old
   project folders can no longer erase the shape of any document.
+- **Wave C node 3, `music_plan` (2026-09-28):** the `music-placement-strategist` (Fable/max, Opus fallback)
+  carves the beds off AS-RECORDED's chapter headers + the catalog's waveform analysis; the node persists
+  `MUSIC-PLAN.json` and verifies it FROM DISK: every chapter has a bed, the beds cover the spine with at most a
+  1 s breath (house rule #10), every source file exists, a bed shorter than its span MUST loop (the kaspa bed-A
+  violation, now a code gate), level -24..-12 dB under VO, no em dashes; then `lint_docset.py --stage plan`
+  proves the whole plan stage before GATE 3.
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;
