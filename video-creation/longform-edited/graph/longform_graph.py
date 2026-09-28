@@ -681,9 +681,145 @@ def coverage(state: LongformState) -> LongformState:
     return {"steps": C._step(state, node, "ran", f"COVER-PLAN.json ok ({n} cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered")}
 
 
-def music_plan(state):
-    return _doc_placeholder(state, "music_plan", "music_plan",
-        "Run the `music-placement-strategist` agent (chapter map + register + assets/music/library.json) -> MUSIC-PLAN.json.")
+LINT_DOCSET = C.SKILLS / "doc-reference" / "lint_docset.py"
+DOCSET_RE = re.compile(r"^DOCSET-LINT (PASS|FAIL) stage=(\w+) fails=(\d+) warns=(\d+)", re.M)
+
+
+def run_lint_docset(state, node, stage):
+    proj = _proj(state)
+    rc, out = C.run_streaming([sys.executable, "-u", str(LINT_DOCSET), str(proj), "--stage", stage], state, node)
+    m = DOCSET_RE.search(out or "")
+    return (rc == 0 and bool(m) and m.group(1) == "PASS"), (int(m.group(4)) if m else 0), out
+
+
+
+MUSIC_LIB = C.REPO_ROOT / "video-creation" / "assets" / "music" / "library.json"
+CH_HEADER_RE = re.compile(r"^###\s+(CH\s*\d+)\s*[-:]\s*([^(\n]+?)\s*\((\d+(?:\.\d+)?)-(\d+(?:\.\d+)?)\)([^\n]*)", re.M)
+MAX_BREATH_S = 1.0     # house rule #10: a breath between beds, never a silent stretch
+LEVEL_RANGE = (-24.0, -12.0)   # music.md: ~16-22 dB under the VO; anything outside is a typo, not a call
+
+
+def _chapters(proj: Path):
+    """[(id, title, tIn, tOut, header_tail)] from AS-RECORDED's `### CHn - TITLE (tIn-tOut) ...` headers."""
+    ar = C.doc(proj, "as_recorded")
+    if not ar.is_file():
+        return []
+    return [(m.group(1).replace(" ", ""), m.group(2).strip(), float(m.group(3)), float(m.group(4)), m.group(5).strip())
+            for m in CH_HEADER_RE.finditer(ar.read_text(encoding="utf-8"))]
+
+
+def _resolve_music(path_str: str) -> Optional[Path]:
+    p = Path(str(path_str))
+    for cand in ([p] if p.is_absolute() else [C.REPO_ROOT / p, C.REPO_ROOT / "video-creation" / "assets" / "music" / p]):
+        if cand.is_file():
+            return cand
+    return None
+
+
+def _music_plan_check(plan: dict, chapters, duration: float):
+    """MUSIC-PLAN.json verified from disk: schema, every chapter has a bed, beds cover the whole spine with
+    at most a breath between them, every source file exists, a bed shorter than its span loops (the bed-A
+    rule), levels sane, no em dashes. Returns a reason or None."""
+    for k in ("beds", "hard_hits", "energy_profile"):
+        if k not in plan:
+            return f"missing key {k}"
+    if "track" not in plan and "tracks" not in plan:
+        return "missing key track/tracks"
+    beds = plan["beds"]
+    if not isinstance(beds, list) or not beds:
+        return "beds is empty"
+    if "\u2014" in json.dumps(plan, ensure_ascii=False):
+        return "em dash in the plan text (persona rule)"
+    try:
+        rows = sorted(((str(b["chapter"]).replace(" ", ""), float(b["span"][0]), float(b["span"][1]), b) for b in beds), key=lambda r: r[1])
+    except Exception as e:
+        return f"bed rows malformed: {e}"
+    have = {r[0] for r in rows}
+    for cid, title, a, z, _ in chapters:
+        if cid not in have:
+            return f"{cid} ({title}) has no bed (house rule #10: music covers EVERY chapter)"
+    cursor = 0.0
+    for cid, a, z, b in rows:
+        if z <= a:
+            return f"{cid} bed span {a}-{z} has no length"
+        if a - cursor > MAX_BREATH_S:
+            return f"{a - cursor:.2f}s of silence before the {cid} bed at {a:.2f}s (max breath {MAX_BREATH_S}s)"
+        cursor = max(cursor, z)
+        src = _resolve_music(b.get("source_file", ""))
+        if src is None:
+            return f"{cid} bed source_file not found: {b.get('source_file')}"
+        cover = str(b.get("cover", "")).lower()
+        if cover not in ("loop", "oneshot", "section"):
+            return f"{cid} bed cover must be loop|oneshot|section, got {b.get('cover')!r}"
+        file_len = _duration(src) or 0.0
+        avail = file_len - float(b.get("source_in") or 0.0)
+        if cover != "loop" and avail + 0.25 < (z - a):
+            return (f"{cid} bed: {src.name} has {avail:.1f}s from its in-point but the span is {z - a:.1f}s and cover is "
+                    f"'{cover}' (a bed shorter than its span MUST loop, music.md)")
+        try:
+            lvl = float(b.get("level_db_under_vo"))
+        except Exception:
+            return f"{cid} bed level_db_under_vo missing"
+        if not (LEVEL_RANGE[0] <= lvl <= LEVEL_RANGE[1]):
+            return f"{cid} bed level_db_under_vo {lvl} outside {LEVEL_RANGE} (music.md: ~16-22 dB under the VO)"
+    if duration - cursor > MAX_BREATH_S:
+        return f"the last {duration - cursor:.2f}s of the spine have no bed"
+    return None
+
+
+def music_plan(state: LongformState) -> LongformState:
+    """Wave C node 3 (2026-09-28): the music-placement-strategist (Fable/max, read-only) carves the beds
+    against the FINAL spine's chapter map + the catalog's waveform analysis; the node persists MUSIC-PLAN.json
+    and verifies it from disk (every chapter has a bed, beds cover the spine with at most a breath between,
+    every file exists, short beds loop, levels sane), then runs the plan-stage docset lint so the whole plan
+    stage is complete before GATE 3."""
+    node = "music_plan"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    dest = C.doc(proj, "music_plan")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    fs = C.final_spine(proj, scope)
+    if not fs:
+        return C._fail(state, node, "final spine missing")
+    duration = _duration(fs) or 0.0
+    chapters = _chapters(proj)
+    if not chapters:
+        return C._fail(state, node, "no `### CHn - TITLE (tIn-tOut)` chapter headers in AS-RECORDED.md")
+    if not MUSIC_LIB.is_file():
+        return C._fail(state, node, f"music catalog missing: {MUSIC_LIB}")
+    if not (dest.is_file() and not _redo(state, node)):
+        ch_lines = "\n".join(f"  - {cid} {title}: {a:.2f}-{z:.2f}s {tail}" for cid, title, a, z, tail in chapters)
+        prompt = (f"Author the MUSIC bed plan for the longform-edited project `{proj.name}` (folder `{proj}`).\n"
+                  f"FINAL spine: `{fs}` ({duration:.2f}s, 30 fps; every timecode in your plan is a FINAL-spine second, "
+                  "pre-card-pause; the comp routes them through sh()).\n"
+                  f"Chapter map (from AS-RECORDED.md `{C.doc(proj, 'as_recorded')}`, its FACE windows section tells you the face beats):\n{ch_lines}\n"
+                  f"Register / gear map + the MUSIC-MOOD-PLAN with the track shortlist: `{C.doc(proj, 'screenplay')}` "
+                  f"(section MUSIC-MOOD-PLAN); rulings: `{C.doc(proj, 'project_log')}`. Cover plan (the hard beats and marquee "
+                  f"reveals the music must respect): `{C.doc(proj, 'cover_plan')}`.\n"
+                  f"Catalog with the precomputed waveform analysis: `{MUSIC_LIB}` (files under video-creation/assets/music/<folder>/).\n"
+                  "Hard rules the graph verifies from disk: EVERY chapter above appears in `beds`; the beds cover the whole spine "
+                  f"0-{duration:.2f}s with at most a {MAX_BREATH_S}s breath between them (no silent stretch); every `source_file` "
+                  "is an existing file path (absolute, or relative to the repo root); a bed whose file is shorter than its span "
+                  "MUST have cover 'loop' with a loop_point_sec; `level_db_under_vo` between -24 and -12; no em dashes anywhere. "
+                  "Prefer the instrumental variant under VO. Right-align the final bed so its ending lands on the last spoken word "
+                  "when the screenplay asks for it, and state the exact source_in that achieves it.\n"
+                  f"Return the JSON per your definition AND also save it to EXACTLY `{dest}` with Bash (a quoted heredoc).")
+        rc, out = C.spawn_agent(state, node, "music-placement-strategist", prompt, f"agent-music-{proj.name}.log")
+        if not C.persist_agent_json(out, dest, want_key="beds"):
+            return C._fail(state, node, f"music-placement-strategist returned no usable MUSIC-PLAN.json (rc {rc})", out)
+    try:
+        plan = json.loads(dest.read_text(encoding="utf-8"))
+    except Exception as e:
+        return C._fail(state, node, f"MUSIC-PLAN.json invalid JSON: {e}")
+    why = _music_plan_check(plan, chapters, duration)
+    if why:
+        return C._fail(state, node, f"MUSIC-PLAN.json failed verification: {why} (fix MUSIC-PLAN.json and re-drive; "
+                                    "--redo music_plan re-runs the strategist instead)")
+    ok, warns, out = run_lint_docset(state, node, "plan")
+    if not ok:
+        return C._fail(state, node, "plan-stage document set incomplete (see FAIL lines above)", out)
+    n = len(plan["beds"])
+    return {"steps": C._step(state, node, "ran", f"MUSIC-PLAN.json ok ({n} beds over {len(chapters)} chapters), plan-stage docset PASS")}
 
 
 def gate_plan(state):
@@ -725,17 +861,6 @@ def reconcile_docs(state):
     return C.placeholder(state, "reconcile_docs",
         how="Fan every TRANSITIONS.md pick into the matching EDIT-PLAN.md / CUE-SHEET.md / EDIT-PLAN-prep.md rows "
             "(the doc set is ONE blueprint; claudeisnaughty #12). A cross-check lint is the target for this node.")
-
-
-LINT_DOCSET = C.SKILLS / "doc-reference" / "lint_docset.py"
-DOCSET_RE = re.compile(r"^DOCSET-LINT (PASS|FAIL) stage=(\w+) fails=(\d+) warns=(\d+)", re.M)
-
-
-def run_lint_docset(state, node, stage):
-    proj = _proj(state)
-    rc, out = C.run_streaming([sys.executable, "-u", str(LINT_DOCSET), str(proj), "--stage", stage], state, node)
-    m = DOCSET_RE.search(out or "")
-    return (rc == 0 and bool(m) and m.group(1) == "PASS"), (int(m.group(4)) if m else 0), out
 
 
 def lint_docset(state: LongformState) -> LongformState:
