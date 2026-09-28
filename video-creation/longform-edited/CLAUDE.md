@@ -77,7 +77,7 @@ do NOT render-then-explain-it-as-an-open-item.
 SCREENPLAY.md · **gate screenplay**) → recording → spine (compress · defumble · cover_blackout ·
 desilence_coarse 700 ms · **gate spine_review: Mike listens, gives --bursts** · burst_removal ·
 desilence_final two-zone · transcribe · verify · **gate spine**) → plan (as_recorded · coverage · music_plan · **gate
-plan** · assets fan-out · verify · edit_plan · transitions · reconcile · lint_docset · **gate blueprint**)
+plan** · assets = the five builders IN PARALLEL + visual-qa · verify_assets reconcile · edit_plan · transitions · reconcile · lint_docset · **gate blueprint**)
 → build (card_pauses · captions · comp_build · verify_comp · **gate draft**) → deliver (final render ·
 verify · definition of done · stage). Exit 2 = waiting on Mike (the report prints the resume command);
 a step that is not automated yet interrupts with its how-to and passes on its own once its artifact
