@@ -63,3 +63,9 @@ Title cards fall out of the music bed map (screenplay.md Convention 2: a card on
 - Levels: 5 dB deeper than proposed across all three beds (A -22 / B -23 / C -22 dB under the VO), ratios kept. Remotion gains in MUSIC-PLAN.json updated to match.
 - Bed B (Accomplishments) kept as the pinned explainer bed, placed deep; revisit only if it pokes through in chunk QA.
 - License codes: Bed A XYZW1UVUQWIPXVXF, Bed C X0AVOCNCPEKOUPW8, Bed B free_local (none). YouTube descriptions only, if a YT cut is ever made.
+
+## 2026-09-28 assets round 1: visual-qa 67/84 PASS, 17 FAIL, rebuilt with the defects as feedback
+- Recaptured: R3, R4, R5, R7, R8 (crops sliced glyphs at the edges, missing highlights, unrelated content in frame). R8 wording: the page says "three to six months" in words; any stamp/quote must match.
+- Re-sourced: BR-3 (flat overcast grade, luma 2-3x every other cover; the crack never happens on screen).
+- Regenerated: IMG-2 (hands overlapping the plane contradicted "untouched").
+- Rebuilt diagrams: vprog-loop-mini and c1-kaspa-four-jobs (teal headline accent is brand-only, video accent is green; EXECUTE row overflowed the L1 box).
