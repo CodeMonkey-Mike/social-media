@@ -111,8 +111,8 @@ reference files inside the same folder, no orphan files at the `skills/` level (
 - **`skills/edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md`** — the ONE canonical format for **`EDIT-PLAN.md`** (§1 time-ordered
   event log) and **`CUE-SHEET.md`** (§2 layer-grouped watch-along). Read it BEFORE writing either; the format is
   fixed across all videos — do NOT invent a per-video shape. Both formats are embedded as self-contained skeletons
-  (no project dependency). CUE-SHEET FACE spans come from `blackdetect` on the baked spine. `_gen_editplan.example.js`
-  (here in `skills/`) is the preserved EDIT-PLAN event-log generator.
+  (no project dependency). CUE-SHEET FACE spans come from `blackdetect` on the baked spine. `gen_editplan.py` SEEDS
+  the event log pre-build (Python port of the retired JS generator, 2026-09-28); `lint_edit_plan.py` gates both files.
 - **`skills/video-qa/video-qa.md`** — the mandatory render-QA gate (see PRE-RENDER GATE above).
 - **`skills/doc-reference/`** (2026-09-17) — the canonical SHAPE of every per-video document, one lint-clean
   reference file each (`SCREENPLAY.reference.md`, `DATA.reference.md`, `PROJECT-LOG.reference.md`, more as their

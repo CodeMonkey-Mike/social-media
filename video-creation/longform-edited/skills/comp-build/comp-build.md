@@ -369,7 +369,7 @@ npx remotion render src/index.ts <CompId> "$OUT/<project>-draft-vN.mp4" \
 5. Draft render (`--video-bitrate=200k`) → QA 10s chunks (motion+audio) per `../video-qa/video-qa.md` → fix → final render.
 6. ffmpeg-mix music+SFX. (⛔ The `EDIT-PLAN.md` event log + `CUE-SHEET.md` are authored PRE-build as the
    blueprint the comp is built TO — see `../edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md` §0 ORDER note — NOT generated from the
-   comp. Any `_gen_editplan` run is only an optional as-built reconciliation, never how the plan is authored.)
+   comp. The reconciliation is `lint_edit_plan.py` (2026-09-28); the old JS generator is retired.)
 
 ### 12a. ⛔ DEFINITION OF DONE — "complete" is a CLEANUP STEP, not just a thumbs-up (Mike, 2026-08-01)
 The moment Mike says a video is complete/approved, the working folders **stop being allowed to exist**. He had
@@ -407,7 +407,7 @@ project.
 | `EDIT-PLAN-prep.md` | pre-record beat-indexed plan (Layer model, every asset placed/REJECTED) | `../edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md` §0 |
 | `CUE-SHEET.md` | layer-grouped watch-along, sub-point timing off the transcript | `../edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md` §2 |
 | **`TRANSITIONS.md`** | **the per-video transition plan — how EVERY cut is bridged** | **§14 below** |
-| `EDIT-PLAN.md` | **PRE-BUILD** time-ordered EVENT LOG, authored off the word-level transcript AS SOON AS the spine is transcribed, BEFORE any comp work (§12/2 + the ⛔ ORDER note in `../edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md` §0; a `_gen_editplan` run is an optional as-built reconciliation only, never how it's authored — this row previously said "post-comp generated" and caused the same wrong-order call two videos running, Mike 2026-07-24) | `../edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md` §1 |
+| `EDIT-PLAN.md` | **PRE-BUILD** time-ordered EVENT LOG, authored off the word-level transcript AS SOON AS the spine is transcribed, BEFORE any comp work (§12/2 + the ⛔ ORDER note in `../edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md` §0; `lint_edit_plan.py` is its code gate (the old JS as-built generator is retired, 2026-09-28) — this row previously said "post-comp generated" and caused the same wrong-order call two videos running, Mike 2026-07-24) | `../edit-plan-and-cue-sheet/edit-plan-and-cue-sheet.md` §1 |
 | `PROJECT-LOG.md` | decision trail + resume pointer | (free-form) |
 
 ### 13a. The per-video FOLDER layout — where masters, spine-prep, and outputs live (FIXED location + naming)

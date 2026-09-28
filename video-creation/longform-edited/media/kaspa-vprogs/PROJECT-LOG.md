@@ -77,3 +77,6 @@ Title cards fall out of the music bed map (screenplay.md Convention 2: a card on
 - The CSS fix is also in c2-l2-stack, c3-next-rungs and charts/c3-ladder (keeps the base CSS byte-identical), but those have no accent-bar element, so their pixels cannot change and they were not re-shot.
 - IMG-2 concept revised (orchestrator, 2026-09-28): the reaching-hands composition failed visual-qa twice (fingers drawn over the plane, horror tone). New concept: the lone layer high above towers whose searchlight beams stop short, no hands. Same beat, same thesis.
 - Round 4: IMG-2 (revised concept) PASS. visual-qa re-checked the whole folder unasked and flagged pow-money-hammer (word gap 'Proof ofwork', missing divider, coin over the card corner); rebuilt by slide-builder with the feedback. Node merge now keeps one verdict per file, newest wins.
+
+## 2026-09-28 cover ruling (Mike)
+- DELIVERED stamp on the R8 receipt at 177.66: APPROVED. Quote wording on screen matches the page ('three to six months').

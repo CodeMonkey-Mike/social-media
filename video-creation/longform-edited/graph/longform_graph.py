@@ -1108,15 +1108,61 @@ def verify_assets(state: LongformState) -> LongformState:
     return {"steps": C._step(state, node, "ran", f"{len(exp)} ids / {len(claimed)} files reconciled, zero orphans, visual-qa clean")}
 
 
-def edit_plan(state):
-    proj = _proj(state)
-    docs = [C.doc(proj, k) for k in ("edit_plan", "cue_sheet", "edit_plan_prep")]
-    return C.placeholder(state, "edit_plan",
-        how="Author EDIT-PLAN.md (time-ordered event log) + CUE-SHEET.md (layer-grouped, sub-point "
-            "timing) off the word-level transcript + COVER-PLAN + MUSIC-PLAN (edit-plan-and-cue-sheet.md); "
-            "keep EDIT-PLAN-prep.md as the prep record.",
-        artifact=lambda: all(d.is_file() and d.stat().st_size > 300 for d in docs),
-        artifact_desc="EDIT-PLAN.md + CUE-SHEET.md + EDIT-PLAN-prep.md")
+EP_SKILL = C.SKILLS / "edit-plan-and-cue-sheet"
+GEN_EDITPLAN = EP_SKILL / "gen_editplan.py"
+LINT_EDIT_PLAN = EP_SKILL / "lint_edit_plan.py"
+EP_LINT_RE = re.compile(r"^EDIT-PLAN-LINT (PASS|FAIL) events=(\d+) say=(\d+) fails=(\d+) warns=(\d+)", re.M)
+
+
+def _lint_edit_plan(state, node, proj: Path, duration: float):
+    args = [sys.executable, "-u", str(LINT_EDIT_PLAN), str(proj)] + (["--duration", f"{duration:.3f}"] if duration else [])
+    rc, out = C.run_streaming(args, state, node)
+    m = EP_LINT_RE.search(out or "")
+    return (rc == 0 and bool(m) and m.group(1) == "PASS"), (m.group(2) if m else "?"), (m.group(5) if m else "?"), out
+
+
+def edit_plan(state: LongformState) -> LongformState:
+    """Wave D node 3 (2026-09-28): the pre-build BLUEPRINT pair. gen_editplan.py (the Python port of the
+    retired _gen_editplan.example.js, now PRE-build from the verified plans) seeds the event log; the
+    edit-plan-author agent (opus/high) refines it into EDIT-PLAN.md + authors CUE-SHEET.md (sub-point
+    spotlight rows, the SFX layer by measured tail, face treatment, zero orphans); lint_edit_plan.py is
+    the code gate (format, monotonic timecodes, SAY coverage, zero orphans, every hard hit has its SFX
+    event, every card has its impact, cue-sheet sections, no em dashes)."""
+    node = "edit_plan"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    ep, cs = C.doc(proj, "edit_plan"), C.doc(proj, "cue_sheet")
+    fs = C.final_spine(proj, scope)
+    duration = (_duration(fs) or 0.0) if fs else 0.0
+    if not (ep.is_file() and cs.is_file() and not _redo(state, node)):
+        rc, out = C.run_streaming([sys.executable, "-u", str(GEN_EDITPLAN), str(proj), "--scope", scope], state, node)
+        if rc != 0:
+            return C._fail(state, node, "gen_editplan.py failed to seed the event log", out)
+        seed = proj / "_previews" / "EDIT-PLAN.seed.md"
+        prompt = (f"Author the pre-build blueprint pair for the longform-edited project `{proj.name}` (folder `{proj}`): "
+                  f"`{ep}` and `{cs}`.\nSeed event log (every SAY line, cover beat, bed, duck, hard hit, FACE window and chapter "
+                  f"card, already on FINAL-spine seconds): `{seed}`. FINAL spine: `{fs}` ({duration:.2f}s, 30 fps).\n"
+                  f"Plans: `{C.doc(proj, 'as_recorded')}` (chapter map + FACE windows + flags), `{C.doc(proj, 'cover_plan')}`, "
+                  f"`{C.doc(proj, 'music_plan')}` (beds, automation, hard hits, the ONE vibe-cut duck), `{C.doc(proj, 'project_log')}` "
+                  f"(rulings: title-card pauses 1.5 s; the DELIVERED stamp on R8 is approved).\n"
+                  f"Built assets + their word-cued states: `{proj / 'assets'}` (read assets/diagrams/_state-cues.md and "
+                  "assets/charts/*.spec.md; card states are the -sN files).\n"
+                  "SFX kit: video-creation/assets/sfx/ (Impacts/library.json + WHEN-TO-USE-IMPACTS.md, risers/). Pick every impact by "
+                  "MEASURED tail and name the file in the log.\n"
+                  "Follow your agent definition: refine the seed (never re-derive timecodes), remove the SEED marker and every "
+                  "placeholder, zero orphans, no em dashes, write ONLY the two files, then run "
+                  f"`python {LINT_EDIT_PLAN} \"{proj}\" --duration {duration:.3f}` until it prints EDIT-PLAN-LINT PASS and "
+                  "report its last line plus every open decision that would move a cue.")
+        rc, out = C.spawn_agent(state, node, "edit-plan-author", prompt, f"agent-edit-plan-{proj.name}.log")
+        for p in (ep, cs):
+            if not p.is_file() or p.stat().st_size < 1500:
+                return C._fail(state, node, f"edit-plan-author did not write {p.name} (rc {rc})", out)
+    ok, events, warns, out = _lint_edit_plan(state, node, proj, duration)
+    if not ok:
+        return C._fail(state, node, "EDIT-PLAN.md / CUE-SHEET.md fail lint_edit_plan.py (see FAIL lines above; fix and re-drive, "
+                                    "--redo edit_plan re-runs the author)", out)
+    return {"steps": C._step(state, node, "ran", f"EDIT-PLAN.md ({events} events) + CUE-SHEET.md written, lint PASS ({warns} warning(s))")}
 
 
 def transitions(state):
