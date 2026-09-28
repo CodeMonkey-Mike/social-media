@@ -216,9 +216,9 @@
       "source_in": 0.91,
       "cover": "section",
       "intensity": "aggressive",
-      "level_db_under_vo": -17,
-      "remotion_gain_db": -26.1,
-      "remotion_volume": 0.0495,
+      "level_db_under_vo": -22.0,
+      "remotion_gain_db": -31.1,
+      "remotion_volume": 0.0279,
       "breath_before_sec": 0.0,
       "loop_point_sec": null,
       "file_time_at_span": [
@@ -233,8 +233,8 @@
             28.167,
             31.933
           ],
-          "gain_db": -29.1,
-          "volume": 0.035,
+          "gain_db": -34.1,
+          "volume": 0.0197,
           "ramp_sec": 0.2,
           "why": "-3 dB dip under FACE #2 'Kaspa is never going to run your app, Kaspa is going to verify it' so the locked thesis line cuts through; back to nominal on the EXECUTE->VERIFY flip card at 31.933"
         }
@@ -252,9 +252,9 @@
       "source_in": 36.0,
       "cover": "oneshot",
       "intensity": "subtle",
-      "level_db_under_vo": -18,
-      "remotion_gain_db": -24.1,
-      "remotion_volume": 0.0624,
+      "level_db_under_vo": -23.0,
+      "remotion_gain_db": -29.1,
+      "remotion_volume": 0.0351,
       "breath_before_sec": 0.6,
       "loop_point_sec": null,
       "file_time_at_span": [
@@ -270,8 +270,8 @@
             81.7,
             118.38
           ],
-          "gain_db": -26.1,
-          "volume": 0.0495,
+          "gain_db": -31.1,
+          "volume": 0.0279,
           "ramp_sec": 1.0,
           "why": "-2 dB extra under the C1 machine beat (the densest teaching narration, four jobs -> provers -> math receipt) and because this file's transient density (aggression 92) is the one thing that could poke through under a diagram walkthrough; ramp back to -18 on 'And this buys you two things' 118.44"
         }
@@ -289,9 +289,9 @@
       "source_in": 52.08,
       "cover": "section",
       "intensity": "aggressive",
-      "level_db_under_vo": -17,
-      "remotion_gain_db": -27.5,
-      "remotion_volume": 0.0422,
+      "level_db_under_vo": -22.0,
+      "remotion_gain_db": -32.5,
+      "remotion_volume": 0.0237,
       "breath_before_sec": 0.6,
       "loop_point_sec": null,
       "file_time_at_span": [
@@ -308,8 +308,8 @@
             137.58,
             153.0
           ],
-          "gain_db": "ramp -29.5 -> -27.5",
-          "volume": "0.0335 -> 0.0422",
+          "gain_db": -34.5,
+          "volume": 0.0188,
           "why": "the screenplay's 'starts under the ladder at mid energy' done with level, because the file has no long mid region: -19 dB under at the card, reaching -17 at 153.0, the exact spine time the file's 9-plateau (file 68-96) begins, so the musical swell and the level ramp stack under 'Live on mainnet. Inside Kaspa's consensus.'"
         },
         {
@@ -317,8 +317,9 @@
             177.4,
             178.3
           ],
-          "gain_db": "vibe-cut duck x0.82 (about -1.7 dB) across the impact",
-          "why": "longform-edited.md vibe cut: the bigger impact + momentary bed duck on 'It shipped in June' (DELIVERED stamp slam 177.66), the video's delivered-call conviction beat; do it in the per-frame volume function, not as a separate edit"
+          "gain_db": -4.2,
+          "why": "longform-edited.md vibe cut: the bigger impact + momentary bed duck on 'It shipped in June' (DELIVERED stamp slam 177.66), the video's delivered-call conviction beat; do it in the per-frame volume function, not as a separate edit",
+          "volume": 0.6166
         }
       ],
       "why": "Gear-3 close needs the 'rising then epic_hit' contour and this file has it once the end is pinned: with file_t = spine_t - 85.0 the 8/9 alternation (54-62) sits under the first rungs 139-147, the 8s (62-68) under Toccata 147-153, the 9-PLATEAU (68-96) under 'Inside Kaspa's consensus' -> Silverscript -> next rungs -> kaspa.org -> 'he called it' -> 'Everyone is racing' (153.0-181.0), then it eases to 8 under the layer-nobody-owns line, the PoW-money hammer and the CTA (181-202), and the final hit lands on 'later.' 202.10 with the ring-out under the last 0.7 s. Aggression 58 means loud-but-smooth: it lifts the conviction without fighting the ladder narration. 65.7 s used of 121: no loop."
@@ -348,17 +349,17 @@
     {
       "t": 81.7,
       "beat": "C1 diagram entrance 'So here's how a vProg actually works'",
-      "music_move": "Bed B ramps 2 dB further down (-20 under) for the machine beat, back up on 118.44"
+      "music_move": "Bed B ramps 2 dB further down (-25 under) for the machine beat, back up on 118.44"
     },
     {
       "t": 137.58,
       "beat": "CH3 title card WHERE IT STANDS (bed change B -> C)",
-      "music_move": "B fades card+0.0 -> +0.4; breath; C fades in +1.0 -> +1.5 at -19 under, already climbing"
+      "music_move": "B fades card+0.0 -> +0.4; breath; C fades in +1.0 -> +1.5 at -24 under, already climbing"
     },
     {
       "t": 153.0,
       "beat": "'Live on mainnet. Inside Kaspa's consensus.' (153.02 / 154.54)",
-      "music_move": "Bed C's 9-plateau (file 68) starts and the level ramp reaches nominal -17: the swell lands on the shipped-and-enshrined rung"
+      "music_move": "Bed C's 9-plateau (file 68) starts and the level ramp reaches nominal -22: the swell lands on the shipped-and-enshrined rung"
     },
     {
       "t": 177.66,
@@ -378,12 +379,16 @@
   ],
   "open_questions": [
     "Bed B honors Mike's roles_pinned explainer_bed on accomplishments-subtle even though the catalog measures it at aggression 92 (high transient density, contradicting the 'subtle' tag). It is placed 18 dB under (20 under the C1 beat). If it pokes through on the 10 s chunk QA, the measured-subtle swaps are theta-rest (aggression 28, flattest window at file 90-188, G major, calm/reflective) or mighty-hand (aggression 31, window 124-222, D minor, hopeful/suspenseful, closer to the dark-epic key world of Beds A and C). Same span, same level, no loop for either.",
-    "Title-card pauses assumed 1.5 s each (>= the 1 s readable minimum): A's ring-out fade 0.4 s + 0.6 s breath + 0.5 s incoming fade fits exactly. If Mike wants a 1.0 s card, cut the breath to 0.3 s (incoming bed starts at card+0.5); the 'fully up on the chapter's first word' anchor must not move.",
-    "Bed A in-point 0.91 lands the hit on the 'NO L2 IN THE MIDDLE' visual slam (37.94) at the cost of a 0.5 s swell on frame 0. Alternative: source_in 0.03 puts the hit on the pivot word 'So' (38.82) with a 1.4 s swell at the open; source_in 0.27 lands it on the spoken 'middle' (38.58) with a 1.1 s swell. Default is the 37.94 landing (music hit == picture slam). Nudge +-0.05 s by ear on the 10 s chunk.",
-    "Vibe-cut duck proposed on 'It shipped in June' 177.66 (the delivered-call stamp). The other candidate is the PoW-money hammer 'no L2 in the middle' 187.72; the rule is 1-2 per video, so pick one or take both (they are 10 s apart, which may read as two dips in a row).",
     "Bed C is right-aligned by HIT ONSET (file 117.1 -> 202.10), not by file end; the ring-out under the last 0.7 s and the 0.25 s end fade are deliberate. Mike's AS-RECORDED target says 'later.' ends 202.56: if he wants the hit on the word END rather than its onset, source_in becomes 52.54 (shift +0.46) and the ring-out gets 0.26 s before black.",
-    "Gains are computed from measured integrated LUFS against the -18.2 LUFS spine VO (A -26.1 dB / B -24.1 / C -27.5). Mike's standing kaspa call went as deep as 22 dB under; if he asks for that, subtract 4-5 dB across all three, keep the ratios. QA per music.md: check the music floor in a no-VO breath of EACH bed (e.g. 39.5-40.2 ring-out, 81.66 junction, 137.4-137.58, 202.6-202.8) and LISTEN to the 10 s chunks at 0, 36-46, 132-142, 174-184, 196-202.8.",
     "No clip-insert duck windows exist (all covers are muted b-roll/images/containers), so bed-duck-expr.py returning nothing is expected; the only ducks are the ones listed under automation.",
     "License codes: Bed A XYZW1UVUQWIPXVXF, Bed C X0AVOCNCPEKOUPW8, Bed B none (free_local). Record them in PROJECT-LOG per the screenplay note; they go in a description only if a YouTube cut is ever made."
-  ]
+  ],
+  "rulings": {
+    "gate": "GATE 3 music rulings (Mike, 2026-09-28)",
+    "title_card_pause_sec": 1.5,
+    "bed_a_source_in": "0.91 kept: the hit lands on the NO L2 IN THE MIDDLE picture slam at 37.94; the 0.5 s swell on frame 0 is accepted (orchestrator's call, delegated by Mike)",
+    "vibe_cut_duck": "ONE duck only, on 'It shipped in June' 177.66 (x0.82 across 177.4-178.3); the 187.72 hammer line gets no duck (orchestrator's call, delegated by Mike)",
+    "level": "all three beds 5 dB deeper than proposed (Mike): A -22 / B -23 / C -22 dB under the -18.2 LUFS VO, ratios kept; the FACE #2 dip and the C1 diagram ramp move with them",
+    "bed_b": "kept as proposed (pinned explainer bed placed deep); swap only if it pokes through in the chunk QA"
+  }
 }

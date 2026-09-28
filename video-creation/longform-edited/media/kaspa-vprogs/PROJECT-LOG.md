@@ -55,3 +55,11 @@ Title cards fall out of the music bed map (screenplay.md Convention 2: a card on
   silence troughs), so CH2 Beat 1 now ends on "And he hasn't softened on it." and moves to the machine beat.
   Output `spine/ALL.f.cut.mp4` (13a letter chain), re-transcribed by the graph. SCREENPLAY CH2 Beat 1's podcast
   line + quote card are struck accordingly.
+
+## 2026-09-28 GATE 3 music rulings (Mike)
+- Title-card pauses: 1.5 s each (>= the 1 s readable minimum), as the music plan assumed.
+- Bed A in-point: 0.91 kept (hit on the NO L2 IN THE MIDDLE picture slam at 37.94; 0.5 s swell on frame 0 accepted). Delegated to the orchestrator.
+- Vibe-cut duck: ONE only, on "It shipped in June" 177.66. No duck on the 187.72 hammer line. Delegated to the orchestrator.
+- Levels: 5 dB deeper than proposed across all three beds (A -22 / B -23 / C -22 dB under the VO), ratios kept. Remotion gains in MUSIC-PLAN.json updated to match.
+- Bed B (Accomplishments) kept as the pinned explainer bed, placed deep; revisit only if it pokes through in chunk QA.
+- License codes: Bed A XYZW1UVUQWIPXVXF, Bed C X0AVOCNCPEKOUPW8, Bed B free_local (none). YouTube descriptions only, if a YT cut is ever made.
