@@ -590,6 +590,15 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   verdict is persisted to `assets/VISUAL-QA.json`. `verify_assets` is pure code: every id has its file,
   zero orphan renderables, no byte-duplicate b-roll (#12), b-roll audio stripped, every file PASS in
   visual-qa. A failing asset is deleted and the graph re-driven; only the gap is rebuilt.
+- **Wave D node 3, `edit_plan` (2026-09-28):** the blueprint pair is a real node. `gen_editplan.py` (the Python
+  port of the retired `_gen_editplan.example.js`, now PRE-build from the verified plans instead of as-built from a
+  comp) seeds the time-ordered event log (SAY lines, cover beats, beds/ducks/hits, FACE windows, cards, all on
+  final-spine seconds); the new `edit-plan-author` agent (opus/high) refines it into EDIT-PLAN.md and authors
+  CUE-SHEET.md (sub-point spotlight rows off the builders' word-cued state files, the SFX layer picked by
+  measured tail, face treatment, zero orphans); `lint_edit_plan.py` is the code gate for both (format, monotonic
+  timecodes, SAY coverage, zero orphans vs assets/, every MUSIC-PLAN hard hit has its SFX event, every card ON
+  has its impact, the §2 sections, no em dashes). Mike's rulings applied on kaspa-vprogs before it ran: DELIVERED
+  stamp on R8 approved.
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;
