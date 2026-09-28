@@ -1020,7 +1020,8 @@ def assets(state: LongformState) -> LongformState:
                   "against its spec and the house style per your checklist (containers/diagrams -> container-reference + "
                   "container-canonical.css; charts -> charts.md; receipts -> the intended content, no blank/bot-wall/cookie banner; "
                   "b-roll frames -> no watermark/text, dark grade; ChatGPT images -> the named asset with the real mark and colors, "
-                  "house style, no text). A `.mid.png` is the middle frame of the video slot it is named after.\n"
+                  "house style, no text). A `.mid.png` is the middle frame of the video slot it is named after. Check ONLY the "
+                  "files listed here (the others already carry a verdict); do not re-open the rest of the folder.\n"
                   + "\n".join(lines)
                   + f"\nReturn your JSON verdict AND save it to EXACTLY `{new_dest}` with Bash (a quoted heredoc). "
                     "Every asset listed must appear in `assets` with PASS or FAIL.")
@@ -1028,7 +1029,10 @@ def assets(state: LongformState) -> LongformState:
         if not C.persist_agent_json(out, new_dest, want_key="assets"):
             return C._fail(state, node, f"visual-qa returned no usable verdict JSON (rc {rc})", out)
         fresh = json.loads(new_dest.read_text(encoding="utf-8")).get("assets", [])
-        merged = carried + fresh
+        # one entry per file; a fresh verdict (the newest look, even on a file QA re-checked unasked) wins over a carried one
+        by_name = {Path(a.get("path", "")).name: a for a in carried}
+        by_name.update({Path(a.get("path", "")).name: a for a in fresh})
+        merged = list(by_name.values())
         qa = {"assets": merged,
               "summary": {"checked": len(merged), "passed": sum(1 for a in merged if str(a.get("verdict", "")).upper() == "PASS"),
                           "failed": sum(1 for a in merged if str(a.get("verdict", "")).upper() != "PASS"),
