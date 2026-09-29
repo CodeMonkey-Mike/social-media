@@ -129,7 +129,7 @@ MARQUEE candidates (§4 reserved family, strategist's call, one MELT look + one 
   FB, so the codes go nowhere unless a YouTube cut is made.
 
 ## CAPTIONS  (ON over FACE windows ONLY, never over a cover)
-- 0:00.0 → 0:07.3 F1 and 0:28.2 → 0:31.9 F2, `build_captions.py --style montserrat --max-words 2 --max-short 4`
+- 0:00.0 → 0:07.3 F1 ONLY (F2 is 3.77 s, under the 5 s trigger: no captions), `build_captions.py --style montserrat --max-words 2 --max-short 4`
   (captions-builder at comp time), AS-RECORDED mishear list applied (Casper → Kaspa x2 in F2, Vprogs → vProgs).
 - The two ear-check lines (0:52.2 "transaction payments", 3:01.4 "the more (a) layer") sit under covers, so they
   never caption.

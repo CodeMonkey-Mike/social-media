@@ -114,6 +114,7 @@ def main_longform():
     ap.add_argument("--split", type=float, default=None, help="spine: hook-end second for the two-zone pass")
     ap.add_argument("--bursts", default=None, help="spine: burst spans on the coarse spine, e.g. 262.6-262.8,296.7-296.95")
     ap.add_argument("--card-pause", type=float, default=None, help="build: title-card pause seconds baked per carded chapter (default 1.5)")
+    ap.add_argument("--caption-windows", default=None, help="build: extra caption windows a-b,a-b in source seconds (the cold-open exception)")
     ap.add_argument("--envato-max", type=int, default=None, help="plan: Envato video budget (default 10)")
     ap.add_argument("--chatgpt-max", type=int, default=None, help="plan: ChatGPT image budget (default 5)")
     ap.add_argument("--until", choices=["", *C.GATES], default="", help="stop after this gate is approved")
@@ -154,7 +155,7 @@ def main_longform():
                 "constraints": args.constraints, "title": args.title, "scope": args.scope,
                 "face_max": args.face_max, "coarse_sil": args.coarse_sil, "sil_pre": args.sil_pre,
                 "sil_post": args.sil_post, "split": args.split, "bursts": args.bursts,
-                "envato_max": args.envato_max, "chatgpt_max": args.chatgpt_max, "card_pause": args.card_pause,
+                "envato_max": args.envato_max, "chatgpt_max": args.chatgpt_max, "card_pause": args.card_pause, "caption_windows": args.caption_windows,
                 "until": args.until, "approve": approve,
                 "done": done, "redo": redo, "stub": "", "steps": {}, "status": "running"}
         thread = args.thread or f"longform-{project}"
@@ -178,7 +179,7 @@ def main_longform():
             update = {k: v for k, v in init.items()
                       if k in ("approve", "done", "redo", "until", "face_max", "constraints",
                                "coarse_sil", "sil_pre", "sil_post", "split", "bursts",
-                               "envato_max", "chatgpt_max", "card_pause") and v}
+                               "envato_max", "chatgpt_max", "card_pause", "caption_windows") and v}
             # A plain resume (no decision) must carry NO state update: the checkpoint's own
             # pending writes + an update to the same key = InvalidUpdateError (batch, 2026-09-10).
             final = app.invoke(Command(resume=payload, update=update) if payload else None, config)

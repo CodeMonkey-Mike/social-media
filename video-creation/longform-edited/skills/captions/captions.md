@@ -30,5 +30,9 @@ canonical caption skill `video-creation/skills/captions/captions.md`; THIS file 
   - **Captions render ON TOP of the light-leak overlay (topmost layer).** When a caption and a light leak
     share a > 5s face hold, the leak must sit UNDER the text or its screen-blend warmth distorts the glyphs —
     in the comp, `<Captions />` comes AFTER the overlay in the tree. See `../overlays/overlays.md` "Layer order".
+- **Graph (2026-09-28):** the `captions` node runs `scripts/build_project_captions.py`, which wraps `build_captions.py`
+  with these rules (windows = FACE holds > 5 s from AS-RECORDED, montserrat 2/4, the project's mishear list applied)
+  and writes `remotion/src/<Project>Captions.ts` + `assets/captions.json`. `--caption-windows a-b` on the invocation
+  adds the cold-open exception. The comp gates rendering by `CAPTION_WINDOWS` and routes every `t` through `sh()`.
 - **History of this number** (so we don't churn blindly): 3/5 (shorts default) -> 2/4 -> 1/3 -> **1/2**.
   Update the number HERE and re-run the builder; do not hard-code it in the comp.

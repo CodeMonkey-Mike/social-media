@@ -51,6 +51,7 @@ class LongformState(TypedDict, total=False):
     scope: str              # the recorded take's scope: ALL (single take) or CH1-CH3 ...
     face_max: Optional[int]  # mechanical gate: max [FACE] beats the screenplay may carry
     card_pause: Optional[float]  # build: title-card pause seconds (default 1.5)
+    caption_windows: Optional[str]  # build: extra caption windows a-b,a-b (cold-open exception)
     envato_max: Optional[int]   # plan: Envato video budget (default 10)
     chatgpt_max: Optional[int]  # plan: ChatGPT image budget (default 5)
     coarse_sil: Optional[float]  # spine: the COARSE one-zone min-silence (default 0.7)
@@ -1397,10 +1398,44 @@ def card_pauses(state: LongformState) -> LongformState:
     return {"steps": C._step(state, node, "ran", f"{len(cards)} card pause(s) x {pause_s}s baked -> {paused.name} ({got:.2f}s), gate PASS, copied to assets/spine.mp4")}
 
 
-def captions(state):
-    return C.placeholder(state, "captions",
-        how="Run the `captions-builder` agent on the FINAL spine's word JSON (montserrat, 2/4 grouping, "
-            "the video's caption windows) -> the ZCAPTIONS TS file for the comp.")
+BUILD_CAPTIONS = C.SCRIPTS / "build_project_captions.py"
+CAPTIONS_RE = re.compile(r"^CAPTIONS-BUILT groups=(\d+) windows=(\d+) file=(.+)$", re.M)
+
+
+def captions(state: LongformState) -> LongformState:
+    """Wave E node 2 (2026-09-28): pure code. build_project_captions.py runs the ONE caption tool
+    (skills/captions/build_captions.py, montserrat 2/4) on the FINAL word JSON, filters to the FACE holds
+    over 5 s (captions.md: never over a cover, never over short face punctuation), applies the project's
+    AS-RECORDED mishears, writes remotion/src/<Project>Captions.ts (SOURCE seconds + CAPTION_WINDOWS) and the
+    assets/captions.json sidecar. Verified from disk: sidecar, groups > 0, every t inside a window, no leftover
+    brand mishear, no em dash."""
+    node = "captions"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    side = proj / "assets" / "captions.json"
+    if not (side.is_file() and not _redo(state, node)):
+        args = [sys.executable, "-u", str(BUILD_CAPTIONS), str(proj), "--scope", scope]
+        if state.get("caption_windows"):
+            for w in str(state["caption_windows"]).split(","):
+                args += ["--window", w.strip()]
+        rc, out = C.run_streaming(args, state, node)
+        if rc != 0:
+            return C._fail(state, node, "build_project_captions.py failed (no FACE hold over 5 s? pass --caption-windows a-b for a cold-open exception)", out)
+    meta = json.loads(side.read_text(encoding="utf-8"))
+    ts = Path(meta.get("file", ""))
+    if not ts.is_file():
+        return C._fail(state, node, f"captions file missing: {ts}")
+    rows = re.findall(r"\{\s*t:\s*([\d.]+)\s*,\s*h:\s*'((?:[^'\\]|\\.)*)'", ts.read_text(encoding="utf-8"))
+    if not rows or int(meta.get("groups", 0)) != len(rows):
+        return C._fail(state, node, f"captions file carries {len(rows)} groups, sidecar says {meta.get('groups')}")
+    wins = [(float(a), float(b)) for a, b in meta.get("windows") or []]
+    for t, h in rows:
+        if not any(a - 0.05 <= float(t) <= b for a, b in wins):
+            return C._fail(state, node, f"caption group at {t}s lies outside every caption window")
+        if re.search(r"\bcasper\b|\u2014", h, re.I):
+            return C._fail(state, node, f"caption text still carries a brand mishear / em dash: {h!r}")
+    return {"steps": C._step(state, node, "ran", f"{len(rows)} caption groups over {len(wins)} FACE window(s) -> {ts.name}")}
 
 
 def comp_build(state):
