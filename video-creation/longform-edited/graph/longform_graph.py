@@ -1165,9 +1165,109 @@ def edit_plan(state: LongformState) -> LongformState:
     return {"steps": C._step(state, node, "ran", f"EDIT-PLAN.md ({events} events) + CUE-SHEET.md written, lint PASS ({warns} warning(s))")}
 
 
-def transitions(state):
-    return _doc_placeholder(state, "transitions", "transitions",
-        "Run the `transition-strategist` agent on the CUE-SHEET / EDIT-PLAN placement -> TRANSITIONS.md (three buckets + reserved MELT/SPIN marquees).")
+TRANSITION_LIB = C.REPO_ROOT / "video-creation" / "assets" / "transitions" / "library.json"
+RENDER_TRANSITIONS = C.SKILLS / "comp-build" / "render_transitions.py"
+LINT_TRANSITIONS = C.SKILLS / "comp-build" / "lint_transitions.py"
+TR_LINT_RE = re.compile(r"^TRANSITIONS-LINT (PASS|FAIL) rows=(\d+) fails=(\d+) warns=(\d+)", re.M)
+
+
+def _lib_ids():
+    raw = json.loads(TRANSITION_LIB.read_text(encoding="utf-8"))
+    rows = raw if isinstance(raw, list) else (raw.get("rows") or raw.get("transitions") or next(iter(raw.values())))
+    return {r["id"] for r in rows if isinstance(r, dict) and r.get("id")}
+
+
+def _transition_plan_check(plan: dict, duration: float):
+    """TRANSITION-PLAN.json verified from disk: schema, one card pick (rmn:), one face pick, every lib: id
+    resolves in the library, every row source-tagged with a numeric tc on the spine, melt/spin rows duck
+    the SFX and justify TRANSFORM vs NEW FACET, the budget matches the rows, no em dashes."""
+    for k in ("card_pick", "face_glitch_pick", "transitions", "melt_spin_budget", "consistency_check"):
+        if k not in plan:
+            return f"missing key {k}"
+    if "\u2014" in json.dumps(plan, ensure_ascii=False):
+        return "em dash in the plan text (persona rule)"
+    ids = _lib_ids()
+    card = str((plan.get("card_pick") or {}).get("id", ""))
+    if not card.startswith("rmn:"):
+        return f"card_pick.id must be an rmn: presentation, got {card!r}"
+    face = str((plan.get("face_glitch_pick") or {}).get("id", ""))
+    if not (face.startswith("hand:") or (face.startswith("lib:") and face[4:] in ids)):
+        return f"face_glitch_pick.id must be hand:<name> or a library id, got {face!r}"
+    rows = plan.get("transitions") or []
+    if not rows:
+        return "transitions is empty"
+    melt = spin = 0
+    for r in rows:
+        try:
+            tc = float(r.get("tc"))
+        except (TypeError, ValueError):
+            return f"row without a numeric tc: {str(r)[:70]}"
+        if tc < 0 or tc > duration + 0.6:
+            return f"row at {tc}s is outside the spine ({duration:.2f}s)"
+        tid = str(r.get("id", ""))
+        if not re.match(r"^(rmn|lib|hand):", tid):
+            return f"row at {tc:.2f}s has no source prefix on its id: {tid!r}"
+        if tid.startswith("lib:") and tid[4:] not in ids:
+            return f"row at {tc:.2f}s: {tid} does not resolve in the transition library"
+        role = str(r.get("role", ""))
+        if role in ("MELT-transform", "SPIN-newfacet"):
+            melt += role == "MELT-transform"
+            spin += role == "SPIN-newfacet"
+            if not r.get("sfx_duck"):
+                return f"{role} at {tc:.2f}s must set sfx_duck true"
+            if not re.search(r"TRANSFORM|NEW.?FACET", str(r.get("why", "")), re.I):
+                return f"{role} at {tc:.2f}s: why must justify TRANSFORM vs NEW FACET"
+    bud = plan.get("melt_spin_budget") or {}
+    if int(bud.get("melt_used", -1)) != melt or int(bud.get("spin_used", -1)) != spin:
+        return f"melt_spin_budget says melt {bud.get('melt_used')} / spin {bud.get('spin_used')} but the rows carry {melt} / {spin}"
+    return None
+
+
+def transitions(state: LongformState) -> LongformState:
+    """Wave D node 4 (2026-09-28): the transition-strategist (Fable/max, read-only) assigns every scene change
+    in the cue sheet across the three buckets and reserves MELT/SPIN for the marquees; the node persists
+    TRANSITION-PLAN.json, verifies it from disk, renders TRANSITIONS.md (comp-build §14 skeleton) with
+    render_transitions.py and gates it with lint_transitions.py (sections, prefixes, library ids, one card
+    and one face pick, every card ON and FACE edge covered)."""
+    node = "transitions"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    dest, doc = C.doc(proj, "transition_plan"), C.doc(proj, "transitions")
+    fs = C.final_spine(proj, scope)
+    duration = (_duration(fs) or 0.0) if fs else 0.0
+    if not (dest.is_file() and not _redo(state, node)):
+        prompt = (f"Author the TRANSITION plan for the longform-edited project `{proj.name}` (folder `{proj}`).\n"
+                  f"FINAL spine: `{fs}` ({duration:.2f}s, 30 fps; every tc is a final-spine second, pre-card-pause).\n"
+                  f"Placement (every scene change to assign): `{C.doc(proj, 'cue_sheet')}` (layer-grouped; its TRANSITIONS section "
+                  f"lists the candidates) and `{C.doc(proj, 'edit_plan')}` (time-ordered event log; rows marked `→TRANSITIONS.md` are "
+                  f"yours to resolve). FACE windows + chapter cards: `{C.doc(proj, 'as_recorded')}`. Cover beats + marquee notes: "
+                  f"`{C.doc(proj, 'cover_plan')}`. Music hits: `{C.doc(proj, 'music_plan')}`. Rulings: `{C.doc(proj, 'project_log')}`.\n"
+                  f"Library meta: `{TRANSITION_LIB}` (ids must resolve exactly).\n"
+                  "Hard rules the graph verifies from disk: ONE rmn: card pick (fires at every chapter `card ON`); ONE face pick "
+                  "(hand:film-burn or a lib:blocks-max-* id) with a `face-cut` row at EVERY FACE cut-in and cut-out edge; a `card` row at "
+                  "every title card; every row source-tagged (rmn:/lib:/hand:) with a numeric tc on the spine; melt/spin rows set "
+                  "sfx_duck true and justify TRANSFORM vs NEW FACET; melt_spin_budget equals the rows; no em dashes anywhere.\n"
+                  f"Return the JSON per your definition AND also save it to EXACTLY `{dest}` with Bash (a quoted heredoc).")
+        rc, out = C.spawn_agent(state, node, "transition-strategist", prompt, f"agent-transitions-{proj.name}.log")
+        if not C.persist_agent_json(out, dest, want_key="transitions"):
+            return C._fail(state, node, f"transition-strategist returned no usable TRANSITION-PLAN.json (rc {rc})", out)
+    try:
+        plan = json.loads(dest.read_text(encoding="utf-8"))
+    except Exception as e:
+        return C._fail(state, node, f"TRANSITION-PLAN.json invalid JSON: {e}")
+    why = _transition_plan_check(plan, duration)
+    if why:
+        return C._fail(state, node, f"TRANSITION-PLAN.json failed verification: {why} (fix the plan and re-drive; --redo transitions re-runs the strategist)")
+    args = [sys.executable, "-u", str(RENDER_TRANSITIONS), str(proj)] + (["--force"] if _redo(state, node) else [])
+    rc, out = C.run_streaming(args, state, node)
+    if rc != 0:
+        return C._fail(state, node, "render_transitions.py failed", out)
+    rc, out = C.run_streaming([sys.executable, "-u", str(LINT_TRANSITIONS), str(proj)], state, node)
+    m = TR_LINT_RE.search(out or "")
+    if rc != 0 or not m or m.group(1) != "PASS":
+        return C._fail(state, node, "TRANSITIONS.md fails lint_transitions.py (see FAIL lines above)", out)
+    return {"steps": C._step(state, node, "ran", f"TRANSITION-PLAN.json ok ({m.group(2)} scene changes), TRANSITIONS.md rendered, lint PASS")}
 
 
 def reconcile_docs(state):

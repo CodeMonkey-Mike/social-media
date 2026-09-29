@@ -2,7 +2,7 @@
 
 Find and download **full-screen video b-roll** from Envato Elements (Mike has a subscription)
 for any video project in this repo: longform-edited, longform-presentation, shorts, AI-persona.
-Driven by Playwright Chrome scripts in this folder, same persistent-profile pattern as the
+Driven by Playwright PYTHON scripts in this folder (`search_envato.py` · `download_envato.py` · `setup_envato.py`, ported 2026-09-28 and verified live: a search and a re-download through the Chrome-153 crash path; the `.js` twins are FROZEN rollback), same persistent-profile pattern as the
 social uploaders and the ChatGPT image automation.
 
 **Status: validated 2026-06-11** against the NEW Envato app (`app.envato.com`, dark UI).
@@ -12,7 +12,7 @@ goes through `app.envato.com`.
 ## One-time login
 
 ```
-node video-creation/skills/envato-broll/setup-envato.js
+python video-creation/skills/envato-broll/setup_envato.py
 ```
 Opens Chrome with the dedicated `envato-profile`
 (`C:\Users\mnede\AppData\Local\Google\Chrome\envato-profile`). Mike logs in once; the session
@@ -25,7 +25,7 @@ persists in the profile. Never use the main Chrome profile, never kill all Chrom
    `media/<project>/BROLL-PLAN.md`): timestamp, the spoken line, and a concrete search query.
 2. **Search:**
    ```
-   node search-envato.js "bank vault door closing" --max 12 --out results.json
+   python video-creation/skills/envato-broll/search_envato.py "bank vault door closing" --max 12 --out results.json
    ```
    Dumps candidate clips as JSON: `{ title, url, duration, resolution, previewImage }`.
    Claude evaluates candidates by title/duration/resolution and by READING the preview images
@@ -34,7 +34,7 @@ persists in the profile. Never use the main Chrome profile, never kill all Chrom
    no burned-in text/logos.
 3. **Download (licenses the item):**
    ```
-   node download-envato.js "<item url>" --dir "<project>\assets\video" --name <slot-slug> --project <project>
+   python video-creation/skills/envato-broll/download_envato.py "<item url>" --dir "<project>/assets/vid" --name <slot-slug>
    ```
    Handles the Elements license dialog (project name keeps the license record tied to the
    video, default = assets folder's project). Saves into the project's own `assets/video/`.
@@ -76,7 +76,7 @@ Validated 2026-06-11 on the new app:
   (extract frames with ffmpeg) before licensing. The grid lazy-loads: scroll to mount cards.
 - Filter buttons exist on the search page (Filters / Category / Orientation / Resolution /
   People / Sort) — UI-clickable, no URL params mapped yet.
-- **⚠ `search-envato.js --portrait` IS NOT A GUARANTEE (2026-08-06).** It clicks the Orientation →
+- **⚠ `search_envato.py --portrait` IS NOT A GUARANTEE (2026-08-06).** It clicks the Orientation →
   Portrait filter, but the button is only mounted on some page loads; on a miss the script prints
   `Orientation filter button NOT FOUND` **and returns landscape results anyway, exit 0**. So for any
   vertical sourcing: (a) put the word **"vertical"** in the query text — most portrait items carry it
