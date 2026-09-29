@@ -1517,6 +1517,7 @@ def comp_build(state: LongformState) -> LongformState:
 
 
 GATE_LINES = {
+    "lint_comp_imports.py": r"^COMP-IMPORTS-LINT (PASS|FAIL)",
     "lint_covers.py": r"^COVERS-LINT (PASS|FAIL)", "lint-deck-containers.py": None, "lint_slide_balance.py": r"^SLIDE-BALANCE-LINT (PASS|FAIL)",
     "lint_animated_charts.py": r"^ANIMATED-CHARTS-LINT (PASS|FAIL)", "lint_transition_assets.py": r"^TRANSITION-ASSETS-LINT (PASS|FAIL)",
     "check_spine_fps.py": r"^SPINE-FPS (PASS|FAIL)",
@@ -1539,6 +1540,7 @@ def verify_comp(state: LongformState) -> LongformState:
         return C._fail(state, node, f"composition missing: {comp}")
     results, fails = {}, []
     runs = [
+        ("lint_comp_imports.py", [str(comp)]),   # no React file from another project (Mike, 2026-09-28)
         ("lint_covers.py", [str(comp)]),
         ("lint-deck-containers.py", [str(comp)] + [str(assets / d) for d in ("card-slides", "title-slides", "diagrams") if (assets / d).is_dir()]),
         ("lint_slide_balance.py", [str(comp)]),

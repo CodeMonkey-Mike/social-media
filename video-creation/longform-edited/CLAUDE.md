@@ -63,6 +63,9 @@ do NOT render-then-explain-it-as-an-open-item.
      the effect is just missing. Engines read the dirs out of `row.params`, NOT off the row, which is why
      eyeballing top-level keys passes on a broken render.) Deliberate supersessions declare
      `// TRANSITIONS_WAIVED: <id> — reason` in the comp.
+   - `python skills/comp-build/lint_comp_imports.py <comp.tsx>` (2026-09-28, Mike) — **FAILS** if the comp imports ANY React file
+     from another project: only packages, the shared `./transitions/*` + `./captions/*` infra and its own `<Project>*.tsx`
+     files are allowed (old comps are recycled after publish; a cross-project import is a time bomb + copy drift).
    - `python skills/comp-build/lint_slide_balance.py <comp.tsx>` (Python since 2026-09-28) — **FAILS** if the slide/container BALANCE breaks: a full
      diagram slide (`kind: 'deck'`) shown more than ONCE (the "over and over" repeat), OR a comp that is ALL
      slides / ALL containers (the swing). Enforces "⛔ THE BALANCE" (broll-and-containers.md): a rich slide once,
