@@ -1576,6 +1576,44 @@ def verify_comp(state: LongformState) -> LongformState:
     return {"steps": C._step(state, node, "ran", f"{len(runs)} gate(s) PASS on {comp.name}, draft {draft.name} matches the spine")}
 
 
+MIX_MUSIC = C.SCRIPTS / "mix_music.py"
+MIX_RE = re.compile(r"^MIX-DONE out=(.+?) dur=([\d.]+) lufs_in=(\S+) lufs_out=(\S+) peak_out=(\S+)", re.M)
+
+
+def mix_audio(state: LongformState) -> LongformState:
+    """Wave E node 5 (2026-09-28, Mike: "there is no music, can you add it to the draft?"): pure code. mix_music.py
+    lays the MUSIC-PLAN beds (sh()-mapped, breath at each card, the plan's seats and automation dips), the event
+    log's impacts/risers and the library transitions' SFX onto the latest draft with ONE sync-safe filter_complex
+    (video copied) -> <draft>-mix.mp4 + the re-runnable mix-audio.json. Verified: output exists, duration ==
+    draft, peak under 0 dBFS. Mike reviews the MIXED draft at GATE 5 (video-qa: never a silent render)."""
+    node = "mix_audio"
+    proj = _proj(state)
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    prev = proj / "_previews"
+    drafts = sorted([p for p in prev.glob(f"{proj.name}-draft-v*.mp4") if not p.stem.endswith("-mix")],
+                    key=lambda p: int(re.search(r"-v(\d+)\.mp4$", p.name).group(1))) if prev.is_dir() else []
+    if not drafts:
+        return C._fail(state, node, "no draft render to mix")
+    draft = drafts[-1]
+    out = draft.with_name(draft.stem + "-mix.mp4")
+    if not (out.is_file() and out.stat().st_mtime >= draft.stat().st_mtime and not _redo(state, node)):
+        rc, res = C.run_streaming([sys.executable, "-u", str(MIX_MUSIC), str(proj), "--video", str(draft), "--out", str(out)], state, node)
+        m = MIX_RE.search(res or "")
+        if rc != 0 or not m:
+            return C._fail(state, node, "mix_music.py failed (see above)", res)
+    if not out.is_file():
+        return C._fail(state, node, f"mixed draft missing: {out}")
+    d_in, d_out = _duration(draft) or 0.0, _duration(out) or 0.0
+    if abs(d_in - d_out) > 0.1:
+        return C._fail(state, node, f"mixed draft is {d_out:.2f}s, the draft is {d_in:.2f}s")
+    side = proj / "mix-audio.json"
+    peak = json.loads(side.read_text(encoding="utf-8")).get("peak_out_dbfs") if side.is_file() else None
+    if peak is not None and peak > -0.1:
+        return C._fail(state, node, f"mixed draft clips (peak {peak} dBFS); lower --sfx-db / bed seats and re-drive")
+    return {"steps": C._step(state, node, "ran", f"{out.name} ({d_out:.2f}s, peak {peak} dBFS) from MUSIC-PLAN + event-log SFX")}
+
+
 def gate_draft(state):
     proj = _proj(state)
     drafts = sorted((proj / "_previews").glob("*draft*.mp4")) if (proj / "_previews").is_dir() else []
@@ -1633,7 +1671,7 @@ ORDER = [
     "burst_removal", "desilence_final", "transcribe", "verify_spine", "gate_spine",
     "as_recorded", "coverage", "music_plan", "gate_plan", "assets", "verify_assets", "edit_plan",
     "transitions", "reconcile_docs", "lint_docset", "gate_blueprint",
-    "card_pauses", "captions", "comp_build", "verify_comp", "gate_draft",
+    "card_pauses", "captions", "comp_build", "verify_comp", "mix_audio", "gate_draft",
     "final_render", "verify_final", "definition_of_done", "stage_longform",
 ]
 NODES = {n: globals()[n] for n in ORDER}

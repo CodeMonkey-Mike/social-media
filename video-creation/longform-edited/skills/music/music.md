@@ -35,6 +35,14 @@ catalog `../../assets/music/library.json` (music-sourcing `SKILL.md` §2c; whole
 - When Mike asks the bed to "come down when it gets loud, up when subtle," bake it into the track:
   `ffmpeg -i bed -af dynaudnorm=f=200:g=15:p=0.6:m=8 out.wav`, then play that at one constant low gain.
 
+## The mix is CODE now (2026-09-28): `scripts/mix_music.py` = the graph's `mix_audio` node
+`python video-creation/longform-edited/scripts/mix_music.py <media/<project>> --video <draft.mp4>` lays the MUSIC-PLAN beds
+(sh()-mapped through the card pauses, fade-in so the bed is full on the chapter's first word, 0.4 s fade at each card,
+the plan's seats + automation dips, `relative: true` rows = dips), the EDIT-PLAN `[IMPACT]`/`[RISER]` rows (their
+`file start` times; card impacts on the card landing) and the library transitions' SFX (engine-window start) onto
+the render with ONE sync-safe filter_complex, video copied, and writes `mix-audio.json` (every resolved time and
+gain + the rerun command). Re-mix = re-run it. The section below stays as the WHY.
+
 ## ⛔ PERSIST THE MIX — the command is a project artifact, not shell history (ethereum-rwa, 2026-08-01)
 The bed mix gets re-run every time the picture changes, so **write the ffmpeg mix into a script in the project
 folder** (e.g. `media/<project>/mix-music.sh`) the first time you run it, and reference THAT on every re-mix.
