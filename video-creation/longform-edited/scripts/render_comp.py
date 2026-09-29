@@ -70,7 +70,7 @@ def main():
     comp_id = a.comp or pascal(proj.name)
     comp = REMOTION / "src" / f"{comp_id}.tsx"
     assets = Path(a.public_dir).resolve() if a.public_dir else proj / "assets"
-    if not comp.is_file() or not (assets / "spine.mp4").is_file():
+    if not comp.is_file() or (not a.video_only and not (assets / "spine.mp4").is_file()):
         print(f"FATAL: {comp} or {assets / 'spine.mp4'} missing", file=sys.stderr)
         sys.exit(2)
     prev = proj / "_previews"
@@ -114,7 +114,7 @@ def main():
     if p.returncode != 0 or not out.is_file():
         print(f"FATAL: render exit {p.returncode}; log: {log}", file=sys.stderr)
         sys.exit(1)
-    d_out, d_spine = duration(out), duration(assets / "spine.mp4")
+    d_out, d_spine = duration(out), (duration(assets / "spine.mp4") if (assets / "spine.mp4").is_file() else 0.0)
     fps_raw = probe(out, "stream=r_frame_rate", "v:0").splitlines()[0].strip().strip(",").split(",")[0]  # ffprobe csv can trail a comma
     num, den = fps_raw.split("/")
     fps = float(num) / float(den)
