@@ -132,6 +132,14 @@ def v_face_crop(state: VerticalState) -> VerticalState:
     return {"steps": C._step(state, node, "ran", f"face at {m.get('mean_pct')}% (spread {m.get('spread')}), objectPosition '{m.get('objectPosition')}'")}
 
 
+def _qa_path_exists(proj: Path, raw: str) -> bool:
+    """visual-qa writes paths absolute OR relative to the project folder OR to the repo root; test all three."""
+    p = Path(str(raw))
+    if p.is_absolute():
+        return p.is_file()
+    return (proj / p).is_file() or (C.REPO_ROOT / p).is_file() or p.is_file()
+
+
 def _vexpectations(proj: Path):
     plan = json.loads(C.doc(proj, "cover_plan").read_text(encoding="utf-8"))
     return G._asset_expectations(plan)
@@ -193,7 +201,7 @@ def v_assets(state: VerticalState) -> VerticalState:
     jobs = {}
     for e in exp:
         have = _vfiles(proj, e)
-        gone = any(not Path(a.get("path", "")).is_file() and str(a.get("verdict", "")).upper() != "PASS"
+        gone = any(not _qa_path_exists(proj, a.get("path", "")) and str(a.get("verdict", "")).upper() != "PASS"
                    and (Path(a.get("path", "")).stem == e["id"] or Path(a.get("path", "")).stem.startswith(e["id"] + "-"))
                    for a in prev.values())
         need = redo or not have or gone

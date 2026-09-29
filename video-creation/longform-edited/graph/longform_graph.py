@@ -885,6 +885,14 @@ def _asset_expectations(plan: dict):
     return exp
 
 
+def _qa_path_exists(proj: Path, raw: str) -> bool:
+    """visual-qa writes paths absolute OR relative to the project folder OR to the repo root; test all three."""
+    p = Path(str(raw))
+    if p.is_absolute():
+        return p.is_file()
+    return (proj / p).is_file() or (C.REPO_ROOT / p).is_file() or p.is_file()
+
+
 def _asset_files(proj: Path, e: dict, base: Optional[Path] = None):
     """Files on disk for one expectation: <folder>/<id>.<ext> or <folder>/<id>-*.<ext> (states, slugs).
     `base` overrides the asset root (the vertical lane reads assets/vertical/)."""
@@ -983,7 +991,7 @@ def assets(state: LongformState) -> LongformState:
     for e in exp:
         have = _asset_files(proj, e)
         # a partially deleted id (a FAILED state/crop file removed for rebuild while a sibling file remains) rebuilds too
-        gone = any(not Path(a.get("path", "")).is_file() and str(a.get("verdict", "")).upper() != "PASS"
+        gone = any(not _qa_path_exists(proj, a.get("path", "")) and str(a.get("verdict", "")).upper() != "PASS"
                    and (Path(a.get("path", "")).stem == e["id"] or Path(a.get("path", "")).stem.startswith(e["id"] + "-"))
                    for a in prev.values())
         need = redo or not have or gone
