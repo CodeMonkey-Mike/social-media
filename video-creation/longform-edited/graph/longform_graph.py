@@ -1756,7 +1756,7 @@ def stage_longform(state: LongformState) -> LongformState:
     node = "stage_longform"
     proj = _proj(state)
     if state.get("stub"):
-        return {"steps": C._step(state, node, "stub")}
+        return {"steps": C._step(state, node, "stub"), "status": "done"}
     final = proj / f"{proj.name}-FINAL.mp4"
     if not final.is_file():
         return C._fail(state, node, f"{final.name} missing (definition_of_done first)")
@@ -1810,7 +1810,8 @@ def stage_longform(state: LongformState) -> LongformState:
     ok, msg = _recycle([proj / "_previews", proj / "_tmp"])
     if not ok:
         return C._fail(state, node, f"staged, but the _previews/_tmp recycle failed: {msg}")
-    return {"steps": C._step(state, node, "ran", f"staged {dest_mp4.relative_to(st)} + longs.json entry '{meta['title'][:50]}', _previews recycled")}
+    return {"steps": C._step(state, node, "ran", f"staged {dest_mp4.relative_to(st)} + longs.json entry '{meta['title'][:50]}', _previews recycled"),
+            "status": "done"}
 
 
 
