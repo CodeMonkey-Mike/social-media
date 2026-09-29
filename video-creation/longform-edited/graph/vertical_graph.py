@@ -168,7 +168,11 @@ VERTICAL_BRIEFS = {
                          "video-creation/skills/receipt-capture/capture.py or Playwright Python, so the page reflows to one readable column; "
                          "same pages, same highlighted lines and the same cropping intent as the 16:9 captures in assets/receipts/ (open them "
                          "to match), never a centre-crop of the desktop capture. Output assets/vertical/receipts/<R-id>-<slug>.png (the R5 "
-                         "split stays two files). Open and verify every capture."),
+                         "split stays two files). CROP DISCIPLINE (every round-1 miss on kaspa-vprogs was an edge): a capture ENDS on a blank row with "
+                         "at least 30 px of page margin (never a line sliced by the bottom edge; never a side border running off), no element "
+                         "overflowing the right edge (hide or exclude wide code blocks / diagrams), the page header or dateline IN FRAME at the top "
+                         "when the plan's beat is an 'establish' shot, and a PDF with no mobile reflow becomes a code CONTAINER quoting its title "
+                         "block (vertical-repurpose.md §1), never a whole-page raster. Open and verify every capture."),
     "slide-builder": ("RE-SHOOT the existing HTML sources at 1080x1920 so the layout REFLOWS (headline wraps, card rows stack, the same locked "
                       "stylesheet, the same state variants -s1..-sN): the source is assets/slide-sources/containers.html + its driver _shot.py; "
                       "add a portrait frame size/media rules rather than redesigning, and write the PNGs to assets/vertical/title-slides/ and "
