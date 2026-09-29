@@ -505,6 +505,26 @@ def s_verify_final(state: ShortState) -> ShortState:
         probs.append(f"dims {V._dims(mixed)}")
     if not G._has_audio_stream(mixed):
         probs.append("no audio")
+    # the audio stream must run the full picture (a mix that ends with the last spoken span drops the CTA silently)
+    ra = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a:0", "-show_entries", "stream=duration", "-of", "default=nw=1:nk=1", str(mixed)],
+                        capture_output=True, text=True)
+    try:
+        a_dur = float(ra.stdout.strip().splitlines()[0])
+        if d - a_dur > 0.15:
+            probs.append(f"audio stream ends at {a_dur:.2f}s, the picture runs {d:.2f}s (the CTA/bed tail is missing)")
+    except Exception:
+        probs.append("audio stream duration unreadable")
+    # the CTA words must actually be in the outro (local whisper on the tail; energy alone can be the bed)
+    try:
+        import whisper as _wh
+        tail = qa_tail = _sdir(proj) / "qa" / "cta-tail.wav"
+        tail.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{max(0, d - OUTRO_S - 0.3):.2f}", "-t", f"{OUTRO_S + 0.3:.2f}", "-i", str(mixed), "-vn", "-ac", "1", "-ar", "16000", str(tail)], capture_output=True)
+        heard = _wh.load_model("small.en").transcribe(str(tail)).get("text", "").strip().lower()
+        if "full video" not in heard:
+            probs.append(f"CTA not heard in the outro (whisper: {heard[:60]!r})")
+    except ImportError:
+        pass
     lu, pk = G._lufs(mixed)
     if pk is not None and pk > -0.1:
         probs.append(f"peak {pk} dBFS")
