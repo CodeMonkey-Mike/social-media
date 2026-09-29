@@ -885,9 +885,10 @@ def _asset_expectations(plan: dict):
     return exp
 
 
-def _asset_files(proj: Path, e: dict):
-    """Files on disk for one expectation: <folder>/<id>.<ext> or <folder>/<id>-*.<ext> (states, slugs)."""
-    d = proj / "assets" / e["folder"]
+def _asset_files(proj: Path, e: dict, base: Optional[Path] = None):
+    """Files on disk for one expectation: <folder>/<id>.<ext> or <folder>/<id>-*.<ext> (states, slugs).
+    `base` overrides the asset root (the vertical lane reads assets/vertical/)."""
+    d = (base or (proj / "assets")) / e["folder"]
     if not d.is_dir():
         return []
     exts = VIDEO_EXT if e["kind"] == "envato" else (VIDEO_EXT + IMAGE_EXT if e["kind"] == "receipt" else IMAGE_EXT)

@@ -78,6 +78,18 @@ You operate inside the `social-media` repo (working directory is the repo root).
    --offthreadvideo-cache-size-in-bytes=419430400 --timeout=120000 --log=verbose`, log teed to
    `_previews/<project>-draft-render.log`. Then verify: duration == paused spine (±0.3 s), fps 30, audio present.
 
+## VERTICAL mode (the optional 9:16 lane, `run.py vertical`; rules: `skills/vertical-repurpose/vertical-repurpose.md`)
+When the brief names `<Project>Vertical`, you build the 1080x1920 twin of your own 16:9 comp: same spine, same `DUR`,
+`CARD_T`, `PAUSE`, `SPINE_SECS`, byte-identical `COVERS` beat times and transition ids, same caption windows. Importing
+from your own `<Project>.tsx` is allowed (same project prefix); the asset refs resolve through an explicit 16:9-ref ->
+vertical-asset lookup so a missing vertical file throws at build time. The spine is cropped tall with the MEASURED
+`objectPosition` from `assets/vertical/face-crop.json` (never centre by assumption); containers, diagrams and
+receipts fill the 1080 width one spotlight at a time; the animated chart re-laid for portrait per its
+`*.vertical.spec.md`; b-roll fills the portrait frame. The render's public dir is `assets/vertical/` ONLY (lean).
+Smoke-test stills from ONE prebuilt bundle (`npx remotion bundle ... --public-dir assets/vertical --out-dir build-<slug>`
+then `npx remotion still build-<slug> <Comp> out.png --frame=N`): every content type AND every FACE window, and LOOK
+at them. The graph renders the full vertical itself (in frame-range parts over the stitch ceiling).
+
 ## Never end your turn to wait
 The graph runs you headless (`claude -p`): replying without a tool call EXITS the process with the build
 half-done. A render is a blocking foreground command (give it up to 600000 ms and re-issue on timeout, tailing

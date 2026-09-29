@@ -117,6 +117,8 @@ reference files inside the same folder, no orphan files at the `skills/` level (
   (no project dependency). CUE-SHEET FACE spans come from `blackdetect` on the baked spine. `gen_editplan.py` SEEDS
   the event log pre-build (Python port of the retired JS generator, 2026-09-28); `lint_edit_plan.py` gates both files.
 - **`skills/video-qa/video-qa.md`** — the mandatory render-QA gate (see PRE-RENDER GATE above).
+- **`skills/doc-reference/PROJECT-FOLDER.reference.md`** (2026-09-29) — the FULL per-video folder layout with the node that
+  makes each file (documents, spine chain, assets, previews, deliverables, the vertical lane). Read it instead of any old project.
 - **`skills/doc-reference/`** (2026-09-17) — the canonical SHAPE of every per-video document, one lint-clean
   reference file each (`SCREENPLAY.reference.md`, `DATA.reference.md`, `PROJECT-LOG.reference.md`, more as their
   graph nodes land) + a README naming each document's format owner and code gate. Sibling of

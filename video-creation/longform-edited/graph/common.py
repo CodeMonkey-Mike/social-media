@@ -45,7 +45,7 @@ GATE_EXIT_CODE = 2
 PROGRESS_FILE = "GRAPH-PROGRESS.json"
 
 # The five STAGES the dashboard cards show; every node belongs to one (heartbeat `lane`).
-STAGES = {1: "pre-production", 2: "spine", 3: "plan", 4: "build", 5: "deliver"}
+STAGES = {1: "pre-production", 2: "spine", 3: "plan", 4: "build", 5: "deliver", 6: "vertical"}
 STAGE_OF = {
     "init_project": 1, "research": 1, "screenplay": 1, "gate_screenplay": 1, "await_recording": 1,
     "compress": 2, "defumble": 2, "cover_blackout": 2, "desilence_coarse": 2,
@@ -56,8 +56,11 @@ STAGE_OF = {
     "lint_docset": 3, "gate_blueprint": 3,
     "card_pauses": 4, "captions": 4, "comp_build": 4, "verify_comp": 4, "gate_draft": 4,
     "final_render": 5, "verify_final": 5, "definition_of_done": 5, "stage_longform": 5,
+    "v_preflight": 6, "v_face_crop": 6, "v_assets": 6, "v_verify_assets": 6, "v_comp": 6, "v_verify_comp": 6,
+    "v_render": 6, "v_mix": 6, "v_verify_final": 6, "gate_vertical": 6, "v_deliver": 6,
 }
 GATES = ("screenplay", "spine_review", "spine", "plan", "blueprint", "draft")
+VERTICAL_GATES = ("vertical",)   # the optional 9:16 lane (vertical_graph.py)
 
 # comp-build.md §13 — the per-video document set (the graph's state contract on disk)
 DOCS = {
@@ -479,8 +482,9 @@ def doc_check(path: Path, min_bytes: int, patterns: List[str]) -> (bool, List[st
 
 def resume_cmd(state: dict, extra: str) -> str:
     thread = state.get("thread") or ""
-    t = f" --thread {thread}" if thread and thread != f"longform-{state.get('project')}" else ""
-    return (f"python video-creation/longform-edited/graph/run.py longform --project "
+    t = f" --thread {thread}" if thread and thread != f"{state.get('lane') or 'longform'}-{state.get('project')}" else ""
+    lane = state.get("lane") or "longform"
+    return (f"python video-creation/longform-edited/graph/run.py {lane} --project "
             f"\"{state.get('project')}\"{t} --resume {extra}")
 
 

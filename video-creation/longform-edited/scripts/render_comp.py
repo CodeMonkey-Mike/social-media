@@ -62,11 +62,13 @@ def main():
     ap.add_argument("--out", default=None)
     ap.add_argument("--frames", default=None)
     ap.add_argument("--concurrency", type=int, default=4)
+    ap.add_argument("--comp", default=None, help="composition id override (default <Project>; the vertical lane passes <Project>Vertical)")
+    ap.add_argument("--public-dir", default=None, help="public dir override (default <project>/assets; the vertical lane passes assets/vertical)")
     a = ap.parse_args()
     proj = Path(a.project_dir).resolve()
-    comp_id = pascal(proj.name)
+    comp_id = a.comp or pascal(proj.name)
     comp = REMOTION / "src" / f"{comp_id}.tsx"
-    assets = proj / "assets"
+    assets = Path(a.public_dir).resolve() if a.public_dir else proj / "assets"
     if not comp.is_file() or not (assets / "spine.mp4").is_file():
         print(f"FATAL: {comp} or {assets / 'spine.mp4'} missing", file=sys.stderr)
         sys.exit(2)

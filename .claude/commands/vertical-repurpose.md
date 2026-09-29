@@ -18,6 +18,18 @@ If you cannot identify the project, STOP and ask.
 self-contained.** This command is the runner; that skill owns the rules. Also observe the global rules
 in `CLAUDE.md` and `persona/persona.json`.
 
+## HOW TO RUN IT (2026-09-29): the LangGraph lane, never by hand
+
+```
+python video-creation/longform-edited/graph/run.py vertical --project <name>
+```
+ONE StateGraph (`graph/vertical_graph.py`): preflight -> measured face crop -> the five builders rebuild every
+asset native-vertical (parallel) + visual-qa -> reconcile -> comp-builder builds `<Project>Vertical.tsx` ->
+comp gates -> render (parts over the stitch ceiling) -> the SAME mix -> verify (duration/audio parity + a
+face-centring check on EVERY face window) -> GATE `vertical` (Mike) -> `<project>-VERTICAL.mp4` at the project
+root. Exit 2 = waiting on Mike: `run.py vertical --project <name> --resume --approve vertical`. Hand-running a
+phase is for repairs only. The phases below describe what the graph does.
+
 ## The one-line contract
 
 **The vertical is a REFRAMING, not a re-edit.** Same spine, same duration, same fps, same beat times,
