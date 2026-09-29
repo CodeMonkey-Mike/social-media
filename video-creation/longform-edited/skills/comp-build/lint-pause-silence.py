@@ -11,16 +11,23 @@ It reads the comp's INSERTS [{at, dur}] and, for each `at` (a source-time insert
 RMS in a +-50ms window on the SOURCE spine. Silence trough is < -50 dB; a spoken word is louder -> FAIL.
 
   python lint-pause-silence.py <comp.tsx> <source-spine.mp4>
+  python lint-pause-silence.py --inserts "40.215:1.5,137.465:1.5" <source-spine.mp4>   (graph `card_pauses` node, 2026-09-28)
 
 Run on the SOURCE spine (e.g. *.f.final.mp4) BEFORE baking the pauses/clips in.
 """
 import sys, re, subprocess
 if len(sys.argv) < 3:
-    print('usage: lint-pause-silence.py <comp.tsx> <source-spine.mp4>'); sys.exit(2)
-comp, spine = sys.argv[1], sys.argv[2]
-src = open(comp, encoding='utf-8').read()
-blk = (re.search(r'INSERTS\s*=\s*\[(.*?)\];', src, re.S) or [None, ''])[1]
-inserts = [(float(a), float(d)) for a, d in re.findall(r'at:\s*([\d.]+)\s*,\s*dur:\s*([\d.]+)', blk)]
+    print('usage: lint-pause-silence.py <comp.tsx> <source-spine.mp4>  |  --inserts "at:dur,..." <source-spine.mp4>'); sys.exit(2)
+if sys.argv[1] == '--inserts':
+    if len(sys.argv) < 4:
+        print('usage: lint-pause-silence.py --inserts "at:dur,..." <source-spine.mp4>'); sys.exit(2)
+    comp, spine = '--inserts', sys.argv[3]
+    inserts = [(float(a), float(d)) for a, d in (x.split(':') for x in sys.argv[2].split(',') if x.strip())]
+else:
+    comp, spine = sys.argv[1], sys.argv[2]
+    src = open(comp, encoding='utf-8').read()
+    blk = (re.search(r'INSERTS\s*=\s*\[(.*?)\];', src, re.S) or [None, ''])[1]
+    inserts = [(float(a), float(d)) for a, d in re.findall(r'at:\s*([\d.]+)\s*,\s*dur:\s*([\d.]+)', blk)]
 if not inserts:
     print('lint-pause-silence: no INSERTS found in ' + comp); sys.exit(2)
 
@@ -62,5 +69,7 @@ for o in oks: print('  ok  ' + o)
 if fails:
     print(f'\nlint-pause-silence: {len(fails)} VIOLATION(S):')
     for f in fails: print('  FAIL  ' + f)
+    print(f'PAUSE-SILENCE FAIL inserts={len(inserts)} fails={len(fails)}')
     sys.exit(1)
 print(f'lint-pause-silence: OK — all {len(inserts)} insert points in silence.')
+print(f'PAUSE-SILENCE PASS inserts={len(inserts)}')

@@ -615,6 +615,13 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   CHOSEN, then cross-checks the blueprint set (zero placeholders, every plan row / cover beat / bed start has its
   event, every [TRANSITION] prefixed, §5 complete, no em dashes) and re-runs both document lints. Blueprint stage
   is now fully automated up to GATE 4.
+- **Wave E node 1, `card_pauses` (2026-09-28):** NEW `scripts/bake_card_pauses.py` snaps each title-card insert to
+  the silence trough at the chapter boundary (RMS 10 ms bins, the lint's own method; on kaspa-vprogs both
+  boundaries are the desilencer's 30 ms declick joins at -65 / -64 dB) and bakes freeze + silence per card with
+  ONE sync-safe filter_complex; `lint-pause-silence.py --inserts` (new explicit form, no comp needed yet) gates the
+  snapped points on the SOURCE spine; fps + duration verified; output = the next §13a letter (`ALL.g.paused.mp4`
+  + .json carrying CARD_T/PAUSE for the comp) copied to `assets/spine.mp4`. `--card-pause` rides in the invocation
+  (default 1.5 s, Mike's ruling).
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;
