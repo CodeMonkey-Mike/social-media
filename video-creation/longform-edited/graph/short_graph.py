@@ -153,6 +153,8 @@ def _plan_check(plan: dict, target: float, total: float, faces):
             return f"span {a}-{b} outside the video ({total:.2f}s)"
         if not s.get("says"):
             return f"span {a}-{b} has no verbatim `says`"
+        if str(s.get("sourced", "")).upper() not in ("FACE", "COVER"):
+            return f"span {a}-{b} lacks `sourced: FACE|COVER` (the hook-face check and the caption windows depend on it)"
         sum_s += b - a
     budget = target - OUTRO_S
     if not (budget - 3.0 <= sum_s <= budget + 1.0):

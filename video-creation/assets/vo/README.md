@@ -14,6 +14,9 @@ Sibling of `assets/music/`, `assets/sfx/`, `assets/transitions/` — same idea, 
 | `tts-chunks.json` | The TTS-ready text, derived from `CTA-SCRIPT.md` and gated against it. |
 | `_manifest.json` | Generation exhaust: the cloudfront URL of the take that shipped. |
 
+**Standard confirmed by Mike, 2026-09-29 (kaspa-vprogs short):** this MIKE-CLONE take IS the outro voice for every short; no real-mic
+recording exists or is needed. The short lane's `scripts/mix_short.py` reads it by this path.
+
 ## Rules
 
 - **Reuse the take. Do not regenerate per project** — it costs credits and, more importantly, a re-roll
