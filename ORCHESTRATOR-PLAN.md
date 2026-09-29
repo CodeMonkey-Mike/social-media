@@ -664,6 +664,12 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   render_comp.py with `--comp/--public-dir` (parts over the stitch ceiling), the same mix, verify (parity + a face
   check on every face window), GATE `vertical`, `<project>-VERTICAL.mp4`. `PROJECT-FOLDER.reference.md` records the
   full per-video folder layout so no old project is ever the reference.
+- **The OPTIONAL SHORT lane (2026-09-29, Mike):** `graph/short_graph.py` + `run.py short --seconds N`: FINAL-TIME transcript,
+  short-cut-strategist + the lint-short-spans SNAP gate, GATE short_plan, variant assets (one different Envato clip /
+  ChatGPT image per carried cover, Mike's variety rule), Stage A extraction (`short_extract_spans.py`), captions over the
+  COVER-sourced frames only, comp-builder SHORT mode, render (`render_comp.py --video-only`), NEW `scripts/mix_short.py`
+  (12 ms crossfades, the SHARED CTA take from assets/vo/, one bed at its seat, seam whooshes), verify (runtime, CTA energy,
+  hook face), GATE short, `<project>-SHORT-<N>s.mp4`. The CTA take is a shared asset and a standard: never re-voiced per short.
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;

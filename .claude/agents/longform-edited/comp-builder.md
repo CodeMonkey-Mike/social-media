@@ -90,6 +90,16 @@ Smoke-test stills from ONE prebuilt bundle (`npx remotion bundle ... --public-di
 then `npx remotion still build-<slug> <Comp> out.png --frame=N`): every content type AND every FACE window, and LOOK
 at them. The graph renders the full vertical itself (in frame-range parts over the stitch ceiling).
 
+## SHORT mode (the optional short lane, `run.py short`; rules: `skills/longform-to-short/longform-to-short.md` §5 Stage B)
+When the brief names `<Project>Short`, you assemble a 1080x1920 short from the lane's span INTERMEDIATES (the brief's work
+folder = the public dir): one muted `OffthreadVideo` per `span-NN.mp4` laid end to end per `spans.json` (`out_start`,
+`frames`), NEVER seeking into the master; a fast ~0.3 s hand-rolled seam hit between spans; captions from the lane's
+`<Project>ShortCaptions.ts` rendered ONLY inside its `CAPTION_WINDOWS` (the COVER-sourced frames; FACE frames already carry
+burned captions); the variant overlays from `assets/short/variants.json` full-frame over their `overlay_short` windows; and
+the outro: the last frame held under a full-frame TITLE-SLIDE card "WATCH THE FULL VIDEO" (house stylesheet, arrow glyph)
+for the outro seconds. The comp has NO audio (the lane's mix_short.py adds the crossfaded VO, the shared CTA take and a bed).
+Gates: lint_comp_imports.py + lint_covers.py. Smoke stills per span + the outro from one bundle; the graph renders.
+
 ## Never end your turn to wait
 The graph runs you headless (`claude -p`): replying without a tool call EXITS the process with the build
 half-done. A render is a blocking foreground command (give it up to 600000 ms and re-issue on timeout, tailing

@@ -25,6 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import common as C  # noqa: E402
 from longform_graph import ORDER, build_longform_graph  # noqa: E402
 from vertical_graph import build_vertical_graph  # noqa: E402
+from short_graph import build_short_graph  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -256,7 +257,57 @@ def main_vertical():
     sys.exit(rc)
 
 
-COMMANDS = {"longform": main_longform, "vertical": main_vertical, "status": main_status}
+def main_short():
+    """The OPTIONAL short lane (short_graph.py): a ~30 s condensation of the delivered vertical."""
+    ap = argparse.ArgumentParser(prog="run.py short", description="Cut the best moments of a delivered vertical into a short with the CTA outro.")
+    ap.add_argument("--project", required=True)
+    ap.add_argument("--scope", default="ALL")
+    ap.add_argument("--seconds", type=float, default=30.0, help="delivered length incl. the 3 s outro (default 30)")
+    ap.add_argument("--brief", default=None, help="per-run overrides for the cut strategist")
+    ap.add_argument("--approve", default="", help="gate approvals: short_plan, short")
+    ap.add_argument("--redo", default="")
+    ap.add_argument("--thread", default=None)
+    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    args = ap.parse_args()
+    approve, redo = _parse_list(args.approve), _parse_list(args.redo)
+    if args.stub:
+        proj, project = Path(C.DATA) / "stub-project", "stub-project"
+    else:
+        p = Path(args.project)
+        proj = p.resolve() if p.is_dir() else (C.MEDIA / args.project).resolve()
+        project = proj.name
+    thread = args.thread or (f"short-stub-{datetime.now():%Y%m%d-%H%M%S}" if args.stub else f"short-{project}")
+    init = {"project": project, "project_dir": str(proj), "scope": args.scope, "thread": thread, "lane": "short", "seconds": args.seconds,
+            "brief": args.brief, "stub": args.stub, "approve": approve, "done": [], "redo": redo, "steps": {}, "status": "running"}
+    print(f"Short graph | {project} | {args.seconds:.0f}s | thread {thread}" + (" | STUB " + args.stub if args.stub else "")
+          + (f" | approve {approve}" if approve else "") + (f" | redo {redo}" if redo else ""))
+    from langgraph.checkpoint.sqlite import SqliteSaver
+    from langgraph.types import Command
+    conn = sqlite3.connect(str(C.CHECKPOINT_DB), check_same_thread=False)
+    app = build_short_graph(checkpointer=SqliteSaver(conn))
+    config = {"configurable": {"thread_id": thread}, "recursion_limit": 60}
+    started_at, t0 = _now_run(), time.monotonic()
+    try:
+        if args.resume:
+            payload = {"approve": approve} if approve else None
+            update = {k: v for k, v in init.items() if k in ("approve", "redo", "brief") and v}
+            final = app.invoke(Command(resume=payload, update=update) if payload else None, config)
+        else:
+            final = app.invoke(init, config)
+    except Exception as e:  # noqa: BLE001
+        final = {"status": "failed", "error": f"graph crashed: {e!r}", "steps": {}}
+    rc = report(final, proj, args.scope)
+    status = "waiting" if rc == C.GATE_EXIT_CODE else final.get("status", "failed")
+    C.record_run(thread, {**final, "status": status}, started_at, _now_run(), time.monotonic() - t0, stub=args.stub,
+                 args={"lane": "short", "project": project, "seconds": args.seconds, "approve": approve, "redo": redo, "resume": args.resume})
+    shorts = sorted(proj.glob(f"{project}-SHORT-*s.mp4"))
+    if shorts:
+        print(f"  SHORT: {shorts[-1]}")
+    sys.exit(rc)
+
+
+COMMANDS = {"longform": main_longform, "vertical": main_vertical, "short": main_short, "status": main_status}
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] in COMMANDS:
