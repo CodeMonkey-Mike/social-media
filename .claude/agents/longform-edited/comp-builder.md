@@ -27,8 +27,11 @@ You operate inside the `social-media` repo (working directory is the repo root).
    three transition buckets + §6a the engine traps (SpineStill = a real `<Freeze>`, muted, same transform, same
    source; engine window = exactly `win`; absolute-clock context; the video cost trap and the CUTFRAME still) ·
    §7 animated charts · §8 captions · §9 no music/SFX in the comp · §10 assets layout · §11 render command.
-   **⛔ NEVER open another project's comp (`Kaspa40Bps.tsx`, `EthereumRwa.tsx`, ...) to copy from**: the
-   skeletons in the skill are the only authority (that copying is how the zebec caption regression shipped).
+   **⛔ NEVER open another project's comp (`Kaspa40Bps.tsx`, `EthereumRwa.tsx`, ...) to copy from, and NEVER
+   IMPORT from one** (Mike, 2026-09-28): the comp may import packages, the shared `./transitions/*` and
+   `./captions/*` infrastructure, and its OWN `<Project>*.tsx` files, nothing else. Old project comps are
+   recycled after publish, so a cross-project import breaks the render later; the skeletons in the skill are the
+   only authority (that copying is how the zebec caption regression shipped). `lint_comp_imports.py` enforces it.
 2. `video-creation/longform-edited/CLAUDE.md` ⛔ PRE-RENDER GATE (items 1-7) and `longform-edited.md`'s
    "a DRAFT is the FULL build at low bitrate" hard rule: every documented element is IN the draft.
 3. The blueprint, which the comp is built TO, row for row: `EDIT-PLAN.md` (time-ordered event log; every
@@ -62,7 +65,7 @@ You operate inside the `social-media` repo (working directory is the repo root).
 
 ## Gate, chunk-QA, then the ONE full draft render
 1. Run every Python gate and fix until each prints PASS (paste the machine lines into your report):
-   `skills/comp-build/lint_covers.py <comp>` · `lint-deck-containers.py <comp> assets/card-slides assets/title-slides assets/diagrams`
+   `skills/comp-build/lint_comp_imports.py <comp>` · `lint_covers.py <comp>` · `lint-deck-containers.py <comp> assets/card-slides assets/title-slides assets/diagrams`
    · `lint_slide_balance.py <comp>` · `lint_animated_charts.py <comp>` · `lint_transition_assets.py <comp> assets TRANSITIONS.md`
    · `check_spine_fps.py assets/spine.mp4 30` (all under `video-creation/longform-edited/skills/comp-build/`).
 2. Chunk QA per `skills/video-qa/video-qa.md` STEP 0: render ~10 s slices (`--frames=A-B`) at the risky spots
@@ -85,7 +88,7 @@ the log). Keep calling tools until the draft exists and is verified.
 { "project": "...", "comp_id": "...", "comp_file": "video-creation/remotion/src/<Project>.tsx", "extra_files": [...],
   "card_t": [...], "pause_s": 1.5, "spine_secs": N, "dur_frames": N,
   "covers": N, "transitions_wired": [{"tc":..,"id":"lib:..."}], "captions_groups": N,
-  "gates": {"COVERS-LINT": "PASS ...", "DECK-CONTAINERS": "...", "SLIDE-BALANCE-LINT": "...", "ANIMATED-CHARTS-LINT": "...",
+  "gates": {"COMP-IMPORTS-LINT": "PASS ...", "COVERS-LINT": "PASS ...", "DECK-CONTAINERS": "...", "SLIDE-BALANCE-LINT": "...", "ANIMATED-CHARTS-LINT": "...",
             "TRANSITION-ASSETS-LINT": "...", "SPINE-FPS": "..."},
   "chunks_qa": [{"frames":"A-B","what":"...","verdict":"ok|fixed: ..."}],
   "draft": {"file": "<abs path>", "duration_s": N, "fps": 30, "audio": true, "log": "<abs path>"},

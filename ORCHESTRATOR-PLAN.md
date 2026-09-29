@@ -636,6 +636,9 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   verifies from disk (file, Root registration, draft duration == paused spine, audio) and persists the report;
   `verify_comp` re-runs every gate in code (covers, deck containers, slide balance, animated charts, transition
   assets, spine fps, pause-silence when INSERTS exist) + the draft checks, then GATE 5 (draft) is Mike's.
+- **Comp import isolation (Mike, 2026-09-28, during the first comp build):** `lint_comp_imports.py` walks the
+  comp's relative imports and FAILS on anything outside packages, `remotion/src/transitions/*`, `captions/*`
+  and the comp's own `<Project>*` files. It runs in `verify_comp` and in the comp-builder's own gate list.
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;
