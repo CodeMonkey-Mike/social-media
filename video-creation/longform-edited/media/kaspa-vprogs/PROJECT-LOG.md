@@ -86,3 +86,7 @@ Title cards fall out of the music bed map (screenplay.md Convention 2: a card on
 - Vibe-cut duck depth: -4.2 dB per the automation row; MUSIC-PLAN prose aligned.
 - Bed C closing hit on the ONSET of 'later.' (202.10), as planned.
 - Ending: the recorded call to action, as built.
+
+## 2026-09-28 build stage
+- Card pauses: 1.5 s baked at the desilencer joins 40.22 and 137.46 (snapped from 137.58; CH3 trough is 137.45-137.48) -> spine/ALL.g.paused.mp4 (205.85 s) = assets/spine.mp4.
+- Captions: F1 only (7.33 s hold). F2 (3.77 s) is under the 5 s trigger (captions.md), so the blueprint's F2 caption rows were corrected to OFF.

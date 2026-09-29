@@ -622,6 +622,12 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   snapped points on the SOURCE spine; fps + duration verified; output = the next §13a letter (`ALL.g.paused.mp4`
   + .json carrying CARD_T/PAUSE for the comp) copied to `assets/spine.mp4`. `--card-pause` rides in the invocation
   (default 1.5 s, Mike's ruling).
+- **Wave E node 2, `captions` (2026-09-28, pure Python):** `scripts/build_project_captions.py` wraps the ONE caption
+  tool (`skills/captions/build_captions.py`, montserrat 2/4) and applies the track rules in code: windows = FACE holds
+  over 5 s from AS-RECORDED (never a cover, never short face punctuation), the AS-RECORDED mishear list applied,
+  `remotion/src/<Project>Captions.ts` with `CAPTION_WINDOWS` for the comp to gate by + `assets/captions.json`.
+  Verified from disk (groups, windows, no leftover mishear). On kaspa-vprogs the blueprint had captioned F2 (3.8 s);
+  the rule wins, F2 is uncaptioned and the two blueprint rows were corrected.
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;

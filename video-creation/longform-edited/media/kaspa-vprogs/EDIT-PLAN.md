@@ -60,7 +60,7 @@
 0:27.3  SAY:  "single second."
 0:28.1  SAY:  "Kaspa is never going to run your app, Kaspa is going to verify it."
 0:28.2  [TRANSITION] cover→face cut-in F2 on the picture edge 28.167 (NOT the 28.10 word) → lib:blocks-max-2 (face-cut, 0.96s) ·
-        [FACE] F2 → 0:31.9 · [CAPTION] ON → 0:31.9. No light leak (3.77 s hold, under 5 s)
+        [FACE] F2 → 0:31.9 · [CAPTION] OFF (3.77 s hold, under the 5 s caption trigger, captions.md). No light leak (same rule)
 0:28.2  [DUCK] Bed A -3 dB (gain -34.1) 28.167 → 31.933, 0.2 s ramps, so the locked thesis line cuts through
 0:30.6  [PUNCH-IN] F2 ~15-20% zoom on the second "Kaspa is going to verify it" (30.62), holds to the face-out → hand:punch (punch-in, 0.00s)
 0:31.9  [TRANSITION] face→cover F2 out → lib:blocks-max-3 (face-cut, 0.96s) · [CONTAINER] execute-verify-flip-s1 IN → 0:38.8
