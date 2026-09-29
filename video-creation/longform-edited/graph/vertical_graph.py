@@ -182,13 +182,6 @@ def v_assets(state: VerticalState) -> VerticalState:
         return {"steps": C._step(state, node, "stub")}
     exp = _vexpectations(proj)
     redo = _redo(state, node)
-    jobs = {}
-    for e in exp:
-        have = _vfiles(proj, e)
-        b = G.BUILDER_OF[e["kind"]]
-        jobs.setdefault(b, {"todo": [], "done": []})
-        (jobs[b]["todo"] if (redo or not have) else jobs[b]["done"]).append(e if (redo or not have) else e["id"])
-    dispatch = {b: j for b, j in jobs.items() if j["todo"]}
     vd = _vdir(proj)
     qa_dest = vd / "VISUAL-QA.json"
     prev = {}
@@ -197,6 +190,17 @@ def v_assets(state: VerticalState) -> VerticalState:
             prev = {Path(a.get("path", "")).name: a for a in json.loads(qa_dest.read_text(encoding="utf-8")).get("assets", [])}
         except Exception:
             prev = {}
+    jobs = {}
+    for e in exp:
+        have = _vfiles(proj, e)
+        gone = any(not Path(a.get("path", "")).is_file() and str(a.get("verdict", "")).upper() != "PASS"
+                   and (Path(a.get("path", "")).stem == e["id"] or Path(a.get("path", "")).stem.startswith(e["id"] + "-"))
+                   for a in prev.values())
+        need = redo or not have or gone
+        b = G.BUILDER_OF[e["kind"]]
+        jobs.setdefault(b, {"todo": [], "done": []})
+        (jobs[b]["todo"] if need else jobs[b]["done"]).append(e if need else e["id"])
+    dispatch = {b: j for b, j in jobs.items() if j["todo"]}
     if dispatch:
         specs = []
         for b, j in dispatch.items():

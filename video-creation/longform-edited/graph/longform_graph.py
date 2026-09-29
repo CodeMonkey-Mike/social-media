@@ -982,9 +982,14 @@ def assets(state: LongformState) -> LongformState:
     jobs = {}
     for e in exp:
         have = _asset_files(proj, e)
+        # a partially deleted id (a FAILED state/crop file removed for rebuild while a sibling file remains) rebuilds too
+        gone = any(not Path(a.get("path", "")).is_file() and str(a.get("verdict", "")).upper() != "PASS"
+                   and (Path(a.get("path", "")).stem == e["id"] or Path(a.get("path", "")).stem.startswith(e["id"] + "-"))
+                   for a in prev.values())
+        need = redo or not have or gone
         b = BUILDER_OF[e["kind"]]
         jobs.setdefault(b, {"todo": [], "done": []})
-        (jobs[b]["todo"] if (redo or not have) else jobs[b]["done"]).append(e if (redo or not have) else e["id"])
+        (jobs[b]["todo"] if need else jobs[b]["done"]).append(e if need else e["id"])
     dispatch = {b: j for b, j in jobs.items() if j["todo"]}
     if dispatch:
         specs = [(b, _builder_prompt(b, proj, fs, j["todo"], j["done"], prev), f"agent-assets-{b}-{proj.name}.log")
