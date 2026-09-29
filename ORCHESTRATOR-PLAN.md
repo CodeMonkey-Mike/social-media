@@ -628,6 +628,14 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   `remotion/src/<Project>Captions.ts` with `CAPTION_WINDOWS` for the comp to gate by + `assets/captions.json`.
   Verified from disk (groups, windows, no leftover mishear). On kaspa-vprogs the blueprint had captioned F2 (3.8 s);
   the rule wins, F2 is uncaptioned and the two blueprint rows were corrected.
+- **Wave E nodes 3+4, `comp_build` + `verify_comp` (2026-09-28):** NEW executor `comp-builder` (opus/xhigh, the
+  longform sibling of remotion-builder) builds `remotion/src/<Project>.tsx` TO the approved blueprint per the
+  self-contained comp-build skill (CARD_T/PAUSE from the paused sidecar, COVERS from the event log, the plan's
+  exact transition ids, real animated charts, captions gated to CAPTION_WINDOWS), runs the Python gates, chunk-QAs
+  per video-qa STEP 0 and renders the FULL draft at 200k into `_previews/<project>-draft-vN.mp4`. The node
+  verifies from disk (file, Root registration, draft duration == paused spine, audio) and persists the report;
+  `verify_comp` re-runs every gate in code (covers, deck containers, slide balance, animated charts, transition
+  assets, spine fps, pause-silence when INSERTS exist) + the draft checks, then GATE 5 (draft) is Mike's.
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;
