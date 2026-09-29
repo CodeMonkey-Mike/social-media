@@ -639,6 +639,11 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
 - **Comp import isolation (Mike, 2026-09-28, during the first comp build):** `lint_comp_imports.py` walks the
   comp's relative imports and FAILS on anything outside packages, `remotion/src/transitions/*`, `captions/*`
   and the comp's own `<Project>*` files. It runs in `verify_comp` and in the comp-builder's own gate list.
+- **Wave E node 5, `mix_audio` (2026-09-28, Mike: "there is no music, can you add it to the draft?"):** NEW
+  `scripts/mix_music.py` (Python, one sync-safe filter_complex, video copied) resolves MUSIC-PLAN beds through sh(),
+  fades at the cards, the seats + automation (a `relative: true` row = a dip), the event log's impacts/risers and the
+  library transitions' SFX, writes `<draft>-mix.mp4` + `mix-audio.json` (the re-runnable mix record). The node sits
+  between verify_comp and GATE 5 so Mike reviews a mixed draft, never a silent one (video-qa rule #1).
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;

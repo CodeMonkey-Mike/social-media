@@ -51,7 +51,7 @@ STAGE_OF = {
     "compress": 2, "defumble": 2, "cover_blackout": 2, "desilence_coarse": 2,
     "gate_spine_review": 2, "burst_removal": 2, "desilence_final": 2, "transcribe": 2,
     "verify_spine": 2, "gate_spine": 2,
-    "as_recorded": 3, "coverage": 3, "music_plan": 3, "gate_plan": 3, "assets": 3,
+    "as_recorded": 3, "coverage": 3, "music_plan": 3, "gate_plan": 3, "assets": 3, "mix_audio": 4,
     "verify_assets": 3, "edit_plan": 3, "transitions": 3, "reconcile_docs": 3,
     "lint_docset": 3, "gate_blueprint": 3,
     "card_pauses": 4, "captions": 4, "comp_build": 4, "verify_comp": 4, "gate_draft": 4,
