@@ -504,21 +504,45 @@ def v_verify_final(state: VerticalState) -> VerticalState:
     ar = C.doc(proj, "as_recorded").read_text(encoding="utf-8")
     sec = re.search(r"^##\s+FACE windows.*?(?=^##\s|\Z)", ar, re.M | re.S)
     faces = [(float(m.group(1)), float(m.group(2))) for m in MF.FACE_RE.finditer(sec.group(0) if sec else "")]
-    face_report = []
+    face_report, undetected = [], []
     for i, (fa, fz) in enumerate(faces, 1):
-        t = sh((fa + fz) / 2)
-        png = MF.grab(mixed, t, qa / f"face-F{i}.png")
-        pct = MF.face_centre_pct(png) if png else None
-        face_report.append({"window": [fa, fz], "t_render": round(t, 2), "face_pct": pct})
-        if pct is None:
-            probs.append(f"F{i}: no face detected in the vertical render at {t:.2f}s")
-        elif not 35 <= pct <= 65:
-            probs.append(f"F{i}: face at {pct:.1f}% of width (not centred / clipped)")
+        # three frames per window (a mic over the mouth or a light-leak tint can defeat the detector on one frame)
+        pcts, frames = [], []
+        for k, frac in enumerate((0.25, 0.5, 0.75)):
+            t = sh(fa + (fz - fa) * frac)
+            png = MF.grab(mixed, t, qa / f"face-F{i}-{k}.png")
+            frames.append(str(png) if png else None)
+            pct = MF.face_centre_pct(png) if png else None
+            if pct is not None:
+                pcts.append(round(pct, 1))
+        mean = round(sum(pcts) / len(pcts), 1) if pcts else None
+        face_report.append({"window": [fa, fz], "samples_pct": pcts, "mean_pct": mean, "frames": frames})
+        if mean is None:
+            undetected.append((i, frames))
+        elif not 35 <= mean <= 65:
+            probs.append(f"F{i}: face at {mean:.1f}% of width (not centred / clipped)")
+    if undetected:
+        # the mechanical detector found nothing: a real LOOK decides (visual-qa), never a silent pass
+        lines = "\n".join(f"- `{f}`  [FACE window F{i} of the vertical render]" for i, fr in undetected for f in fr if f)
+        prompt = (f"Vertical render face check for `{proj.name}`: open EVERY frame below (1080x1920 frames from the rendered vertical "
+                  "at face-window times). Verdict PASS only if Mike's face is visible, horizontally centred (not jammed against either "
+                  "edge) and nothing of the head is clipped by the left/right edge; FAIL otherwise with the defect. Return your JSON "
+                  f"verdict and save it to EXACTLY `{qa / 'face-visual-qa.json'}` with Bash.\n" + lines)
+        rc, out = C.spawn_agent(state, node, "visual-qa", prompt, f"agent-vface-visual-qa-{proj.name}.log")
+        dest = qa / "face-visual-qa.json"
+        if not C.persist_agent_json(out, dest, want_key="assets"):
+            probs.append("face windows " + ", ".join(f"F{i}" for i, _ in undetected) + ": detector found no face and visual-qa returned no verdict")
+        else:
+            v = json.loads(dest.read_text(encoding="utf-8"))
+            bad = [a for a in v.get("assets", []) if str(a.get("verdict", "")).upper() != "PASS"]
+            if bad:
+                probs.append("visual-qa on the face frames: " + "; ".join(f"{Path(a.get('path', '?')).name}: {', '.join(a.get('defects') or [])[:100]}" for a in bad[:4]))
     C._write_json_atomic(_vprev(proj) / "verify-final.json", {"vertical": str(mixed), "duration_s": d, "final_16x9_s": d169, "dims": dims,
                                                             "lufs": lv, "lufs_16x9": l169, "peak": pv, "faces": face_report, "problems": probs})
     if probs:
         return C._fail(state, node, "vertical does not verify: " + "; ".join(probs))
-    return {"steps": C._step(state, node, "ran", f"{mixed.name}: {d:.2f}s, 1080x1920, {lv} LUFS, faces " + ", ".join(f"{f['face_pct']:.0f}%" for f in face_report))}
+    return {"steps": C._step(state, node, "ran", f"{mixed.name}: {d:.2f}s, 1080x1920, {lv} LUFS, faces "
+                              + ", ".join((f"{f['mean_pct']:.0f}%" if f["mean_pct"] is not None else "visual-qa PASS") for f in face_report))}
 
 
 def gate_vertical(state: VerticalState) -> VerticalState:
