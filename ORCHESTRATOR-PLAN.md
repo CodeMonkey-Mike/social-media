@@ -652,6 +652,10 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   agent (title / description / tags in Mike's voice), copies FINAL + thumbnail to `schedule-tweets/longform/<slug>/`,
   appends the longs.json entry (rumble / bitchute / facebook, never YouTube), and only THEN recycles _previews/_tmp
   (§12a step 4). GATE 5 now lists the MIXED draft. Production quality = crf 18 (constant quality), not a bitrate.
+- **LONGFORM-EDITED ENDPOINT REACHED (2026-09-29):** the first video through the graph, `kaspa-vprogs`, went from
+  brief to a queued FINAL with every node real and every gate in code: 34 nodes, 5 HITL gates, 9 advisor/executor
+  agents, zero JavaScript outside Remotion. Deliverable `media/kaspa-vprogs/kaspa-vprogs-FINAL.mp4` (3:25.9, crf 18
+  + music/SFX mix), queued as `lf-20260929-kaspa-vprogs` (rumble / bitchute / facebook pending).
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;
