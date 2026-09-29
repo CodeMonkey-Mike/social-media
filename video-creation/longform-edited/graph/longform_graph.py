@@ -1285,10 +1285,33 @@ def transitions(state: LongformState) -> LongformState:
     return {"steps": C._step(state, node, "ran", f"TRANSITION-PLAN.json ok ({m.group(2)} scene changes), TRANSITIONS.md rendered, lint PASS")}
 
 
-def reconcile_docs(state):
-    return C.placeholder(state, "reconcile_docs",
-        how="Fan every TRANSITIONS.md pick into the matching EDIT-PLAN.md / CUE-SHEET.md / EDIT-PLAN-prep.md rows "
-            "(the doc set is ONE blueprint; claudeisnaughty #12). A cross-check lint is the target for this node.")
+RECONCILE_DOCS = EP_SKILL / "reconcile_docs.py"
+RECONCILE_RE = re.compile(r"^RECONCILE (PASS|FAIL) resolved=(\d+) placeholders_left=(\d+) fails=(\d+)", re.M)
+
+
+def reconcile_docs(state: LongformState) -> LongformState:
+    """Wave D node 5 (2026-09-28): pure code. reconcile_docs.py fans the TRANSITION-PLAN.json picks back into
+    the EDIT-PLAN.md / CUE-SHEET.md rows still marked `→TRANSITIONS.md` (matched by timecode + role), then
+    CROSS-CHECKS the blueprint set (zero placeholders, every plan row / cover beat / bed start has its event,
+    every [TRANSITION] carries a prefixed id, TRANSITIONS.md §5 complete, no em dashes). The two document
+    lints re-run afterwards so the fan-in cannot break a format the earlier nodes proved."""
+    node = "reconcile_docs"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    fs = C.final_spine(proj, scope)
+    duration = (_duration(fs) or 0.0) if fs else 0.0
+    rc, out = C.run_streaming([sys.executable, "-u", str(RECONCILE_DOCS), str(proj), "--apply"], state, node)
+    m = RECONCILE_RE.search(out or "")
+    if rc != 0 or not m or m.group(1) != "PASS":
+        return C._fail(state, node, "blueprint set does not reconcile (see FAIL lines above; fix the named rows by hand, then re-drive)", out)
+    ok, events, warns, out2 = _lint_edit_plan(state, node, proj, duration)
+    if not ok:
+        return C._fail(state, node, "EDIT-PLAN.md / CUE-SHEET.md fail lint_edit_plan.py after the fan-in", out2)
+    rc, out3 = C.run_streaming([sys.executable, "-u", str(LINT_TRANSITIONS), str(proj)], state, node)
+    if rc != 0:
+        return C._fail(state, node, "TRANSITIONS.md fails lint_transitions.py after the fan-in", out3)
+    return {"steps": C._step(state, node, "ran", f"{m.group(2)} transition pick(s) fanned into the event log, cross-check PASS, both lints PASS")}
 
 
 def lint_docset(state: LongformState) -> LongformState:

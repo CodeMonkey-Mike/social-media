@@ -609,6 +609,12 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   and verified LIVE (a search; a 272 MB re-download that rode the Chrome-153 crash path; a 3200x4000 capture).
   Remaining JS in the tree is out of this lane: the transition-library one-time extractors, music-sourcing,
   elevenlabs/higgsfield (other tracks), the frozen twins, and per-project scripts inside old media/ folders.
+- **Wave D node 5, `reconcile_docs` (2026-09-28, pure Python, no agent):** `reconcile_docs.py --apply` fans the
+  38 transition picks back into the event-log and cue-sheet rows that still said `→TRANSITIONS.md` (timecode +
+  role matching, a second pass tags rows the seed wrote without an id, idempotent), marks the marquee candidates
+  CHOSEN, then cross-checks the blueprint set (zero placeholders, every plan row / cover beat / bed start has its
+  event, every [TRANSITION] prefixed, §5 complete, no em dashes) and re-runs both document lints. Blueprint stage
+  is now fully automated up to GATE 4.
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;

@@ -113,6 +113,11 @@ Format (one event per line, time-sorted):
   (format, monotonic timecodes, SAY coverage, zero orphans vs assets/, every MUSIC-PLAN hard hit has its SFX
   event, every card ON has its impact, the §2 sections, no em dashes). The old `_gen_editplan.example.js`
   (as-built from a comp) is retired: its one good idea, the time-sorted interleaved log, lives in the seed.
+- **`reconcile_docs.py`** (2026-09-28, graph node `reconcile_docs`): after TRANSITIONS.md exists, `--apply` fans every
+  pick into the EDIT-PLAN / CUE-SHEET rows still marked `→TRANSITIONS.md` (matched by timecode + role), marks the
+  cue sheet's marquee candidates CHOSEN / NOT taken, then CROSS-CHECKS the three files (zero placeholders, every plan
+  row / cover beat / bed start has its event, every [TRANSITION] carries a prefixed id, §5 complete). The doc set is
+  ONE blueprint (claudeisnaughty #12); this is the code that proves it before GATE 4.
 
 ## 2. CUE-SHEET.md — LAYER-GROUPED watch-along
 The same data grouped by LAYER, each a list of cue in-points ("begins"). One section per layer; each line is a
