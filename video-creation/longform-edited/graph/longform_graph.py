@@ -1354,15 +1354,17 @@ def card_pauses(state: LongformState) -> LongformState:
     proj, scope = _proj(state), state.get("scope", "ALL")
     if state.get("stub"):
         return {"steps": C._step(state, node, "stub")}
-    fs = C.final_spine(proj, scope)
+    fs = C.final_spine(proj, scope)   # the SOURCE spine (never the paused one)
     if not fs:
         return C._fail(state, node, "final spine missing")
-    if ".paused." in fs.name:
-        paused, source = fs, None   # already baked (re-drive)
+    source = fs
+    existing = C.paused_spine(proj, scope)
+    if existing and existing.with_suffix(".json").is_file() and not _redo(state, node):
+        paused = existing   # already baked (re-drive)
     else:
         letter = re.search(rf"^{re.escape(scope)}\.([a-z])\.", fs.name)
         nxt = chr(ord(letter.group(1)) + 1) if letter else "g"
-        paused, source = fs.with_name(f"{scope}.{nxt}.paused.mp4"), fs
+        paused = fs.with_name(f"{scope}.{nxt}.paused.mp4")
     side = paused.with_suffix(".json")
     pause_s = float(state.get("card_pause") or DEFAULT_CARD_PAUSE)
     cards = [(ta, re.search(r'card\s+ON\s*"([^"]+)"', tail).group(1))
@@ -1370,8 +1372,6 @@ def card_pauses(state: LongformState) -> LongformState:
     if not cards:
         return C._fail(state, node, "AS-RECORDED.md names no chapter with `card ON` (nothing to bake; if that is intended, --done card_pauses)")
     if not (paused.is_file() and side.is_file() and not _redo(state, node)):
-        if source is None:
-            return C._fail(state, node, f"{paused.name} exists without its sidecar; delete it and re-drive")
         args = [sys.executable, "-u", str(BAKE_CARD_PAUSES), str(source), "--cards", ",".join(f"{t}:{lbl}" for t, lbl in cards),
                 "--pause", f"{pause_s}", "--out", str(paused), "--json", str(side)]
         rc, out = C.run_streaming(args, state, node)
@@ -1454,13 +1454,15 @@ def _has_audio_stream(video: Path) -> bool:
 
 def _latest_draft(proj: Path):
     prev = proj / "_previews"
-    drafts = sorted(prev.glob(f"{proj.name}-draft-v*.mp4"), key=lambda p: int(re.search(r"-v(\d+)\.mp4$", p.name).group(1))) if prev.is_dir() else []
-    return drafts[-1] if drafts else None
+    # the UNMIXED draft: <project>-draft-vN.mp4 (the -mix sibling is the mix_audio node's output)
+    cands = [(int(m.group(1)), p) for p in (prev.glob(f"{proj.name}-draft-v*.mp4") if prev.is_dir() else [])
+             for m in [re.search(r"-draft-v(\d+)\.mp4$", p.name)] if m]
+    return max(cands)[1] if cands else None
 
 
 def _paused_meta(proj: Path, scope: str):
-    fs = C.final_spine(proj, scope)
-    side = fs.with_suffix(".json") if fs and ".paused." in fs.name else None
+    fs = C.paused_spine(proj, scope)
+    side = fs.with_suffix(".json") if fs else None
     return (json.loads(side.read_text(encoding="utf-8")) if side and side.is_file() else {}), fs
 
 
@@ -1563,7 +1565,7 @@ def verify_comp(state: LongformState) -> LongformState:
         if not ok:
             fails.append(script)
     draft = _latest_draft(proj)
-    paused = C.final_spine(proj, scope)
+    paused = C.paused_spine(proj, scope)
     d_ok = bool(draft and paused and abs((_duration(draft) or 0) - (_duration(paused) or 0)) <= 0.3 and _has_audio_stream(draft))
     results["draft"] = {"ok": d_ok, "file": str(draft) if draft else None,
                         "duration_s": _duration(draft) if draft else None, "spine_s": _duration(paused) if paused else None}
@@ -1614,56 +1616,203 @@ def mix_audio(state: LongformState) -> LongformState:
     return {"steps": C._step(state, node, "ran", f"{out.name} ({d_out:.2f}s, peak {peak} dBFS) from MUSIC-PLAN + event-log SFX")}
 
 
+def _mixed_or_plain(draft: Path):
+    mixed = draft.with_name(draft.stem + "-mix.mp4")
+    return mixed if mixed.is_file() else draft
+
+
 def gate_draft(state):
     proj = _proj(state)
-    drafts = sorted((proj / "_previews").glob("*draft*.mp4")) if (proj / "_previews").is_dir() else []
-    return C.gate(state, "draft", "the draft render (Mike's review; notes drive fix rounds)",
-                  [drafts[-1] if drafts else proj / "_previews"])
+    draft = _latest_draft(proj)
+    return C.gate(state, "draft", "the MIXED draft render (music + SFX on; Mike's review, notes drive fix rounds)",
+                  [_mixed_or_plain(draft) if draft else proj / "_previews"])
 
 
-# ── DELIVER ──────────────────────────────────────────────────────────────────
+RENDER_COMP = C.SCRIPTS / "render_comp.py"
+RENDER_RE = re.compile(r"^RENDER-DONE mode=final out=(.+?) dur=([\d.]+) spine=([\d.]+) fps=(\S+) audio=(\S+)", re.M)
 
-def final_render(state):
+
+def _latest_final(proj: Path):
+    prev = proj / "_previews"
+    cands = [(int(m.group(1)), p) for p in (prev.glob(f"{proj.name}-final-v*.mp4") if prev.is_dir() else [])
+             for m in [re.search(r"-final-v(\d+)\.mp4$", p.name)] if m]
+    return max(cands)[1] if cands else None
+
+
+def final_render(state: LongformState) -> LongformState:
+    """Wave F node 1 (2026-09-28): the production render, as code. render_comp.py --mode final (crf 18, the §11
+    flags, disk sweep, log beside the file) -> _previews/<project>-final-vN.mp4, then mix_music.py lays the
+    same beds + SFX onto it -> -mix.mp4. Verified: duration == paused spine, fps 30, audio, peak under 0."""
+    node = "final_render"
     proj = _proj(state)
-    def have():
-        return bool(list(proj.glob("*FINAL*.mp4")) or list((proj / "renders").glob("*.mp4")))
-    return C.placeholder(state, "final_render",
-        how="Full-bitrate render + the same ffmpeg mix -> renders/ (partial re-render + concat for fix rounds).",
-        artifact=have, artifact_desc="renders/*.mp4 or <project>-FINAL.mp4")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    final = _latest_final(proj)
+    if not (final and not _redo(state, node)):
+        rc, out = C.run_streaming([sys.executable, "-u", str(RENDER_COMP), str(proj), "--mode", "final"], state, node)
+        m = RENDER_RE.search(out or "")
+        if rc != 0 or not m:
+            return C._fail(state, node, "render_comp.py --mode final failed (read the render log in _previews/)", out)
+        final = Path(m.group(1))
+    mixed = final.with_name(final.stem + "-mix.mp4")
+    if not (mixed.is_file() and mixed.stat().st_mtime >= final.stat().st_mtime):
+        rc, out = C.run_streaming([sys.executable, "-u", str(MIX_MUSIC), str(proj), "--video", str(final), "--out", str(mixed)], state, node)
+        if rc != 0 or not mixed.is_file():
+            return C._fail(state, node, "mix_music.py failed on the final render", out)
+    d = _duration(mixed) or 0.0
+    return {"steps": C._step(state, node, "ran", f"{final.name} (crf 18) + music/SFX -> {mixed.name} ({d:.2f}s)")}
 
 
-def verify_final(state):
-    return C.placeholder(state, "verify_final",
-        how="Duration == spine, fps 30, audio parity with the approved draft, PSNR on any splice seams.")
+def _lufs(path: Path):
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(path), "-af", "ebur128=peak=true", "-f", "null", "-"], capture_output=True, text=True)
+    m = re.findall(r"I:\s+(-?[\d.]+) LUFS", r.stderr)
+    p = re.findall(r"Peak:\s+(-?[\d.]+) dBFS", r.stderr)
+    return (float(m[-1]) if m else None), (float(p[-1]) if p else None)
 
 
-def definition_of_done(state):
+def verify_final(state: LongformState) -> LongformState:
+    """Wave F node 2: pure code. The mixed final == the paused spine (duration +-0.3 s), fps 30, audio present,
+    loudness within 1 dB of the approved mixed draft (audio parity), peak under 0 dBFS, no WIP watermark marker
+    in the comp (comp-build §11). Persisted to _previews/verify-final.json."""
+    node = "verify_final"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    final = _latest_final(proj)
+    mixed = final.with_name(final.stem + "-mix.mp4") if final else None
+    paused = C.paused_spine(proj, scope)
+    if not (mixed and mixed.is_file() and paused):
+        return C._fail(state, node, "mixed final render or paused spine missing")
+    probs = []
+    d, ds = _duration(mixed) or 0.0, _duration(paused) or 0.0
+    if abs(d - ds) > 0.3:
+        probs.append(f"duration {d:.2f}s vs spine {ds:.2f}s")
+    r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=r_frame_rate", "-of", "csv=p=0", str(mixed)], capture_output=True, text=True)
+    num, den = (r.stdout.strip().splitlines()[0] if r.stdout.strip() else "0/1").split("/")
+    if abs(float(num) / float(den) - 30) > 0.01:
+        probs.append(f"fps {num}/{den}")
+    if not _has_audio_stream(mixed):
+        probs.append("no audio stream")
+    lf, pk = _lufs(mixed)
+    draft = _latest_draft(proj)
+    dm = _mixed_or_plain(draft) if draft else None
+    ld = _lufs(dm)[0] if dm and dm.is_file() else None
+    if lf is not None and ld is not None and abs(lf - ld) > 1.0:
+        probs.append(f"loudness {lf} LUFS vs approved draft {ld} LUFS")
+    if pk is not None and pk > -0.1:
+        probs.append(f"peak {pk} dBFS (clipping)")
+    comp = REMOTION / "src" / f"{_pascal(proj.name)}.tsx"
+    if comp.is_file() and re.search(r"WIP|WATERMARK", comp.read_text(encoding="utf-8", errors="replace")):
+        probs.append("comp still carries a WIP/WATERMARK marker (remove before a final)")
+    C._write_json_atomic(proj / "_previews" / "verify-final.json", {"final": str(mixed), "duration_s": d, "spine_s": ds, "lufs": lf, "peak_dbfs": pk,
+                                                                   "draft_lufs": ld, "problems": probs})
+    if probs:
+        return C._fail(state, node, "final does not verify: " + "; ".join(probs))
+    return {"steps": C._step(state, node, "ran", f"{mixed.name} verified ({d:.2f}s, {lf} LUFS, peak {pk} dBFS)")}
+
+
+def definition_of_done(state: LongformState) -> LongformState:
+    """Wave F node 3 (comp-build §12a): promote the verified mixed final to the project ROOT as <project>-FINAL.mp4.
+    The music bed needs no rescue (the mix is code + mix-audio.json). The _previews/_tmp recycle happens in
+    stage_longform AFTER the queue copy exists (§12a step 4: the deliverable exists in two places first)."""
+    node = "definition_of_done"
     proj = _proj(state)
-    return C.placeholder(state, "definition_of_done",
-        how="comp-build.md section 12a: promote the render to the project ROOT as <project>-FINAL.mp4, rescue the "
-            "music bed to music/, recycle _previews/ and _tmp/ (Recycle Bin), confirm the queue copy first.",
-        artifact=lambda: bool(list(proj.glob("*-FINAL.mp4"))) and not (proj / "_previews").exists(),
-        artifact_desc="<project>-FINAL.mp4 at the root and no _previews/")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    final = _latest_final(proj)
+    mixed = final.with_name(final.stem + "-mix.mp4") if final else None
+    if not (mixed and mixed.is_file()):
+        return C._fail(state, node, "no mixed final to promote")
+    dest = proj / f"{proj.name}-FINAL.mp4"
+    if not dest.is_file() or dest.stat().st_size != mixed.stat().st_size:
+        shutil.copyfile(mixed, dest)
+    if (_duration(dest) or 0) < 1:
+        return C._fail(state, node, f"{dest.name} did not copy cleanly")
+    return {"steps": C._step(state, node, "ran", f"promoted {mixed.name} -> {dest.name} ({dest.stat().st_size / 1e6:.0f} MB)")}
 
 
-def stage_longform(state):
+def _recycle(paths):
+    """Recycle Bin, never a hard delete (repo rule). PowerShell's VisualBasic FileSystem does the OS move."""
+    import subprocess as sp
+    cmds = ["Add-Type -AssemblyName Microsoft.VisualBasic"]
+    for p in paths:
+        p = Path(p)
+        if not p.exists():
+            continue
+        esc = str(p).replace("'", "''")
+        if p.is_dir():
+            cmds.append(f"[Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirectory('{esc}','OnlyErrorDialogs','SendToRecycleBin')")
+        else:
+            cmds.append(f"[Microsoft.VisualBasic.FileIO.FileSystem]::DeleteFile('{esc}','OnlyErrorDialogs','SendToRecycleBin')")
+    r = sp.run(["powershell", "-NoProfile", "-NonInteractive", "-Command", "; ".join(cmds)], capture_output=True, text=True)
+    return r.returncode == 0, (r.stderr or r.stdout)[-400:]
+
+
+def stage_longform(state: LongformState) -> LongformState:
+    """Wave F node 4: the longform-meta-author writes publish-meta.json (title / description / tags in Mike's voice);
+    the node copies <project>-FINAL.mp4 + the thumbnail into schedule-tweets/longform/<slug>/, appends the
+    longs.json entry (rumble / bitchute / facebook pending; never YouTube; batch null = longform-edited original),
+    confirms the queue copy, THEN recycles _previews/ and _tmp/ (comp-build §12a, Recycle Bin)."""
+    node = "stage_longform"
     proj = _proj(state)
-    staged = C.REPO_ROOT / "schedule-tweets" / "longform" / proj.name
-    r = C.placeholder(state, "stage_longform",
-        how="Stage the FINAL into schedule-tweets/longform/<project>/ and append the longs.json entry "
-            "(rumble / bitchute / facebook; never YouTube for longform).",
-        artifact=lambda: staged.is_dir() and bool(list(staged.glob("*.mp4"))), artifact_desc=f"{staged}")
-    if r.get("status") == "failed":
-        return r
-    st = r["steps"].get("stage_longform", {}).get("status")
-    if st in ("ran", "skipped", "stub"):
-        return {**r, "status": "done",
-                "summary": {"project": proj.name, "final": [str(p) for p in proj.glob("*-FINAL.mp4")],
-                            "stub": bool(state.get("stub"))}}
-    return r
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    final = proj / f"{proj.name}-FINAL.mp4"
+    if not final.is_file():
+        return C._fail(state, node, f"{final.name} missing (definition_of_done first)")
+    meta_p = proj / "publish-meta.json"
+    if not (meta_p.is_file() and not _redo(state, node)):
+        prompt = (f"Author `{meta_p}` for the longform-edited project `{proj.name}` (folder `{proj}`): title, description, tags per "
+                  f"your agent definition. Sources: `{C.doc(proj, 'as_recorded')}`, `{C.doc(proj, 'data')}`, `{C.doc(proj, 'project_log')}`, "
+                  "`persona/persona.json`, and the last entry of `schedule-tweets/data/longs.json` for the shape. No em dashes, no "
+                  "sources or third-party links, no music codes. Write the file and return its path.")
+        rc, out = C.spawn_agent(state, node, "longform-meta-author", prompt, f"agent-longform-meta-{proj.name}.log")
+        if not meta_p.is_file():
+            C.persist_agent_json(out, meta_p, want_key="title")
+        if not meta_p.is_file():
+            return C._fail(state, node, f"longform-meta-author wrote no publish-meta.json (rc {rc})", out)
+    meta = json.loads(meta_p.read_text(encoding="utf-8"))
+    if "\u2014" in json.dumps(meta, ensure_ascii=False) or not meta.get("title") or not meta.get("description"):
+        return C._fail(state, node, "publish-meta.json incomplete or carries an em dash")
+    slug = proj.name
+    st = C.REPO_ROOT / "schedule-tweets"
+    dest_dir = st / "longform" / slug
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    dest_mp4 = dest_dir / f"{slug}.mp4"
+    if not dest_mp4.is_file() or dest_mp4.stat().st_size != final.stat().st_size:
+        shutil.copyfile(final, dest_mp4)
+    thumbs = sorted((proj / "thumbnail").glob("*thumb*.png")) if (proj / "thumbnail").is_dir() else []
+    thumb_rel = None
+    if thumbs:
+        dest_png = dest_dir / f"{slug}.png"
+        shutil.copyfile(thumbs[-1], dest_png)
+        thumb_rel = f"longform/{slug}/{slug}.png"
+    longs_p = st / "data" / "longs.json"
+    data = json.loads(longs_p.read_text(encoding="utf-8"))
+    longs = data.setdefault("longs", [])
+    d = _duration(dest_mp4) or 0.0
+    if not any(e.get("slug") == slug for e in longs):
+        from datetime import datetime, timezone
+        now = datetime.now(timezone.utc)
+        longs.append({
+            "id": f"lf-{now.strftime('%Y%m%d')}-{slug}", "batch": None, "slug": slug,
+            "source": f"{slug} longform-edited original (LangGraph build, {now.strftime('%Y-%m-%d')})",
+            "video_path": f"longform/{slug}/{slug}.mp4", "thumbnail_path": thumb_rel, "duration_seconds": round(d, 3),
+            "width": 1920, "height": 1080, "title": meta["title"], "description": meta["description"], "tags": meta.get("tags") or [],
+            "categories": {"rumble": {"primary": "Finance & Crypto"}}, "visibility": "public",
+            "platforms": {p: {"status": "pending", "posted_at": None, "url": None, "views": None, "views_captured_at": None}
+                          for p in ("rumble", "bitchute", "facebook")},
+            "created_at": now.isoformat().replace("+00:00", "Z"),
+        })
+        C._write_json_atomic(longs_p, data)
+    if not (dest_mp4.is_file() and (_duration(dest_mp4) or 0) > 1):
+        return C._fail(state, node, "queue copy did not verify; nothing recycled")
+    ok, msg = _recycle([proj / "_previews", proj / "_tmp"])
+    if not ok:
+        return C._fail(state, node, f"staged, but the _previews/_tmp recycle failed: {msg}")
+    return {"steps": C._step(state, node, "ran", f"staged {dest_mp4.relative_to(st)} + longs.json entry '{meta['title'][:50]}', _previews recycled")}
 
 
-# ── topology ─────────────────────────────────────────────────────────────────
 
 ORDER = [
     "init_project", "research", "screenplay", "gate_screenplay", "await_recording",

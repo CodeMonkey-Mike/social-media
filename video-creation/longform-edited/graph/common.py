@@ -130,8 +130,16 @@ def final_spine(proj: Path, scope: str) -> Optional[Path]:
     burst-removal / re-desilence insert letters: c.desilenced -> d.cleaned -> e.desilenced)."""
     # Any stage letter from c upward counts (c.desilenced, d.cleaned, e.desilenced, f.cut ...):
     # the highest letter IS the latest stage by construction of the chain.
+    # The SOURCE timeline: the paused spine (a BUILD artifact, +PAUSE per card) is excluded so every
+    # plan-stage check keeps the timeline the plans were authored on (regression caught 2026-09-28).
     hits = sorted(h for h in (proj / "spine").glob(f"{scope}.?.*.mp4")
-                  if h.name[len(scope) + 1] >= "c" and ".lowbps." not in h.name)
+                  if h.name[len(scope) + 1] >= "c" and ".lowbps." not in h.name and ".paused." not in h.name)
+    return hits[-1] if hits else None
+
+
+def paused_spine(proj: Path, scope: str) -> Optional[Path]:
+    """The BUILD spine: the highest-letter `<scope>.<x>.paused.mp4` (card pauses baked), or None."""
+    hits = sorted((proj / "spine").glob(f"{scope}.?.paused.mp4"))
     return hits[-1] if hits else None
 
 

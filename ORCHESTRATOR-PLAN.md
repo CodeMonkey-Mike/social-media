@@ -644,6 +644,14 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   fades at the cards, the seats + automation (a `relative: true` row = a dip), the event log's impacts/risers and the
   library transitions' SFX, writes `<draft>-mix.mp4` + `mix-audio.json` (the re-runnable mix record). The node sits
   between verify_comp and GATE 5 so Mike reviews a mixed draft, never a silent one (video-qa rule #1).
+- **Wave F, the DELIVER stage (2026-09-28, Mike: "do the production render now"):** `final_render` = NEW
+  `scripts/render_comp.py --mode final` (crf 18, the §11 flags, temp-bundle sweep, log beside the file, the
+  render verified against the paused spine) + `mix_music.py` on the final; `verify_final` (duration, fps, audio,
+  loudness parity with the approved mixed draft, no clipping, no WIP marker); `definition_of_done` promotes the
+  mixed final to `<project>-FINAL.mp4` at the project root; `stage_longform` runs the NEW `longform-meta-author`
+  agent (title / description / tags in Mike's voice), copies FINAL + thumbnail to `schedule-tweets/longform/<slug>/`,
+  appends the longs.json entry (rumble / bitchute / facebook, never YouTube), and only THEN recycles _previews/_tmp
+  (§12a step 4). GATE 5 now lists the MIXED draft. Production quality = crf 18 (constant quality), not a bitrate.
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;
