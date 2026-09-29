@@ -1,0 +1,131 @@
+{
+  "source_video": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kaspa-vprogs\\kaspa-vprogs-VERTICAL.mp4",
+  "source_audio": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kaspa-vprogs\\spine\\ALL.g.paused.mp4",
+  "clock": "final-video seconds",
+  "target_seconds": 30.0,
+  "outro_seconds": 3.0,
+  "claim": "Kaspa never runs your app, it only verifies it: that is how you get real apps on proof-of-work money with no L2 in the middle.",
+  "why_this_claim": "It is the screenplay's stated ONE idea (THE HOOK / THESIS: 'Kaspa does not run the app, Kaspa verifies it') and it survives cold because every word it needs is in three self-contained lines: the hook names the thing (vProgs, real apps on the base layer, not an L2), the 'four jobs' block proves the mechanism and lands the exact claim ('What it never does is run the app. The app runs on its own nodes.'), and the CH3 hammer line is the payoff in the same words as the hook. Nothing depends on the Ethereum-rollup contrast, the ladder dates, or the Sompolinsky quotes, so all of CH2 Beat 1 and CH3 Beats 1-2 can be left on the floor without a dangling referent.",
+  "spans": [
+    {
+      "role": "hook",
+      "order": 1,
+      "start": 0.0,
+      "end": 7.3,
+      "seconds": 7.3,
+      "says": "Casper is building Vprogs, verifiable programs, real apps on a base layer, on a proof of work, not an L2.",
+      "on_screen": "FACE F1, the video opens ON Mike's face (no cut-in), burned Montserrat captions ON for the whole span (Casper->Kaspa, Vprogs->vProgs already applied in the caption track), F1 light leak 1.7-5.7, ~17% punch-in on 'real apps' at 3.78 holding to the end. From 6.85 the baked lib:blocks-max-1 face-out glitch begins (window 6.85-7.81, centered on the 7.333 picture edge).",
+      "why": "The longform's engineered hook: names vProgs, says what they are, and plants 'not an L2' in one breath. It is the only face-with-captions material in the video, so it is also the only span that arrives captioned.",
+      "self_contained": "First sentence of the video, zero prior context by construction. Every noun is introduced inside the line.",
+      "in_gap": 0.0,
+      "out_gap": 0.1,
+      "clear_of_transitions": false
+    },
+    {
+      "role": "body",
+      "order": 2,
+      "start": 90.88,
+      "end": 103.6,
+      "seconds": 12.72,
+      "says": "Casper does four jobs. It orders every transaction so Casper itself is the sequencer. It stores the data, it checks the proofs, it meters the work. What it never does is run the app. The app runs on its own nodes.",
+      "on_screen": "COVER, no burned captions. 90.88-95.6 c1-overview system-design diagram (state 'writes' at entry, KASPA L1 glows on 'four' 91.30, ORDERS row lights on 'orders' 92.46, ORDERS pulse 95.56). 95.62-96.38 the video's one MELT marquee (lib:melt-rgb-3) reforms it into c1-kaspa-four-jobs, Kaspa node enlarged: STORES on 'stores' 96.16, CHECKS PROOFS on 'checks' 97.72, METERS on 'meters' 98.92, struck red EXECUTE row appears on 'never' 100.04 and drops out, dashed empty slot lands on 'app.' 101.76. 101.9-102.25 hand:xfade-scale into c1-vprog-nodes ('The app runs on its own nodes' headline, vPROG A NODES purple, RUNS ON ITS OWN NODES badge on 'nodes.' 103.2). Verified frames: 90.70 = clean c1-overview, 103.70 = clean c1-vprog-nodes.",
+      "why": "The mechanism and the claim in one block: four verbs Kaspa does, then the one it never does. 'What it never does is run the app' is the thesis line in its cover form; 'The app runs on its own nodes' answers the obvious 'then who does?' before the viewer asks it. The MELT plays whole inside the span, so the short carries the marquee move for free.",
+      "self_contained": "Opens on the proper noun 'Kaspa does four jobs' (no pronoun, no 'so'). Every 'it' after that refers to Kaspa inside the span. Both boundaries are clear of every transition window: melt 95.62-96.38 sits fully inside; the c1-vprog-nodes xfade 101.9-102.25 sits fully inside; next transition (c1-provers xfade) opens at 108.4.",
+      "in_gap": 0.38,
+      "out_gap": 0.24,
+      "clear_of_transitions": true
+    },
+    {
+      "role": "body",
+      "order": 3,
+      "start": 121.74,
+      "end": 124.68,
+      "seconds": 2.94,
+      "says": "Sovereignty. If another app breaks, yours keeps running.",
+      "on_screen": "COVER, no burned captions. sovereignty-card slide ('WHAT THE DESIGN BUYS YOU 1 of 2 / Sovereignty', vProg A + vProg B both RUNNING at entry), vProg B cracks red BROKEN on 'breaks' 123.02, vProg A RUNNING goes green on 'keeps' 124.0. Card entered at 119.9 (its xfade finished 120.25), so the span opens on a settled card. Verified frames: 121.66 = clean s1, 124.74 = clean s3 (composability xfade has not begun).",
+      "why": "The consequence of 'the app runs on its own nodes' stated as a payoff: because Kaspa only verifies, one app failing cannot take yours down. Adds a third visual family (type card) between the diagram and the hammer card.",
+      "self_contained": "A label plus a plain if/then; no referent outside the sentence. Follows span 2's 'runs on its own nodes' as cause -> effect.",
+      "in_gap": 0.16,
+      "out_gap": 0.16,
+      "clear_of_transitions": true
+    },
+    {
+      "role": "kicker",
+      "order": 4,
+      "start": 187.76,
+      "end": 191.54,
+      "seconds": 3.78,
+      "says": "Proof of work money with apps on it and no L2 in the middle.",
+      "on_screen": "COVER, no burned captions. pow-money-hammer slide, three hammer lines: 'PROOF OF WORK MONEY' on 'Proof' 187.76 (the slide's 0.35 s hand:xfade-scale ingress from IMG-2 fires on that same entry frame), 'WITH APPS ON IT' on 'apps' 189.30, 'NO L2 IN THE MIDDLE' in green on 'L2' 190.72, Kaspa K bug bottom-right; holds through 191.54 (cta-engage card enters at 191.64). Verified frames: 187.72 = clean IMG-2 still (xfade not yet begun), 191.58 = clean hammer s3. The three kick/impact SFX live in the MASTER audio only; the spine VO carries none of them.",
+      "why": "The payoff in the hook's own words ('not an L2' -> 'no L2 in the middle'), and the persona's neutral-layer thesis compressed to one hammer sentence. Ends the short on the green NO L2 IN THE MIDDLE frame, which is also what holds behind the CTA card.",
+      "self_contained": "A complete declarative with no pronoun; reads cold as a slogan.",
+      "in_gap": 0.08,
+      "out_gap": 0.1,
+      "clear_of_transitions": false
+    }
+  ],
+  "assembled_read": "Kaspa is building vProgs, verifiable programs, real apps on a base layer, on a proof of work, not an L2. Kaspa does four jobs. It orders every transaction so Kaspa itself is the sequencer. It stores the data, it checks the proofs, it meters the work. What it never does is run the app. The app runs on its own nodes. Sovereignty. If another app breaks, yours keeps running. Proof of work money with apps on it and no L2 in the middle. (Click below to watch the full video.)",
+  "spans_total_seconds": 26.74,
+  "outro": {
+    "line": "Click below to WATCH the full video.",
+    "card_text": "WATCH THE FULL VIDEO",
+    "note": "Hold the last frame of span 4 (pow-money-hammer s3, green 'NO L2 IN THE MIDDLE' with the Kaspa K bug) behind the card; shared take video-creation/assets/vo/cta-watch-full.mp3, never re-voiced. Spans total 26.74 s, 0.26 s under the 27.0 budget: recommend holding the card 3.26 s so the delivered runtime is 30.0 (the CTA take itself is unchanged), or accept 29.74. Bed per §6: Bed A 'down-to-the-wire' (the hook's chapter, MUSIC-PLAN.json, -22 dB under the VO, measure LUFS)."
+  },
+  "rejected": [
+    {
+      "span": "28.10-31.90 (F2 thesis 'Kaspa is never going to run your app, Kaspa is going to verify it')",
+      "reason": "The strongest single claim line, but its in-point sits INSIDE the lib:blocks-max-2 face cut-in window (27.69-28.65, centered on the 28.167 picture edge) and there is a 0.00 s gap between 'second.' and 'Kaspa' (both at 28.10), so a trough snap lands on a half-shattered ten-bps-card. Starting earlier means mid-sentence ('...10 blocks every single second'). The claim is carried instead by 'What it never does is run the app' (99.68-101.84) inside span 2. Mike can overrule: if he accepts the last ~0.5 s of the baked glitch as the seam, swap this in for span 3 (3.80 s vs 2.94 s, total 27.60)."
+    },
+    {
+      "span": "31.90-38.74 ('And that one flip is how you get apps on the base layer...')",
+      "reason": "Starts inside lib:blocks-max-3 (31.45-32.41) and 'that one flip' has no referent without the thesis line; also its out-point is 0.08 s before the BR-2 fade at 38.82. Its content is delivered by span 4 in the same words."
+    },
+    {
+      "span": "0.00-14.40 (hook extended through 'A vProg is an app that runs on its own node... back to Kaspa.')",
+      "reason": "Would clear the face-out glitch cleanly (it plays whole inside) and add the vProg definition, but the out-point is only 0.05 s ahead of the R2 receipt xfade at 14.5 and the only assembly that fits the budget with it (0-14.40 + 90.88-103.60 = 27.12) ends the short flat on 'The app runs on its own nodes' with no kicker. Kept as the fallback if Mike wants a 2-span cut."
+    },
+    {
+      "span": "90.88-101.84 (four jobs ending on 'run the app.')",
+      "reason": "Out-point 0.06 s before the c1-vprog-nodes xfade opens at 101.9 with an 0.08 s word gap; too tight for the trough snap. Extended to 103.60 (0.24 s gap, next transition at 108.4) instead."
+    },
+    {
+      "span": "83.20-85.46 ('So here's how a vProg actually works.')",
+      "reason": "In-point is the c1-overview ingress xfade (83.2-83.55); out-point has a 0.00 s gap into 'You send'."
+    },
+    {
+      "span": "108.60-119.88 (provers + 'math receipt')",
+      "reason": "On-claim (Kaspa checks the receipt instead of redoing the math) but the in-point is inside the c1-provers xfade (108.40-108.75, tIn on the 108.40 word end) and the only mid-break, 113.56, is a 0.00 s gap sitting on the zk-math-receipt xfade at 113.6. No clean cut exists."
+    },
+    {
+      "span": "131.94-138.88 ('And this just means the rules for checking all of this live inside of Kaspa's consensus itself')",
+      "reason": "In-point on the R5-a receipt xfade at 131.9 and 'all of this' points at four minutes of prior context."
+    },
+    {
+      "span": "140.58-166.14 (the ladder)",
+      "reason": "c3-ladder is a Type 1 animated chart running 142.84-163.3 with the SPIN marquee at 142.84 and the CH3 card glitch at 140.58; any start inside it is mid-animation, and it is a different idea (dates shipped) from the claim."
+    },
+    {
+      "span": "175.84-181.26 ('he called it': three to six months out, shipped in June)",
+      "reason": "In-point on the R8 xfade at 175.8; the vibe-cut riser/impact that sells it lives in the master audio, not the spine VO; and it is a credibility beat, not the verify-vs-run claim."
+    },
+    {
+      "span": "181.54-187.68 ('Everyone is racing... the more a layer nobody owns is worth')",
+      "reason": "In-point on the BR-4 fade at 181.5, the 184.40 sentence start is inside the lib:badsignal-max-1 window (184.02-184.78), and it is the macro neutral-layer thesis rather than the mechanism. Its payoff is kept as span 4."
+    },
+    {
+      "span": "191.64-205.56 (longform CTA)",
+      "reason": "Replaced by the shared 'Click below to watch the full video' outro."
+    }
+  ],
+  "risks": [
+    "Span 1 out-point (7.30) is INSIDE the baked lib:blocks-max-1 face-out glitch (6.85-7.81): the master frame at 7.30 is already shattered tiles of the R1 receipt with the caption 'work, not an l2.' still burned. Unavoidable for the hook ('L2.' runs 6.90-7.30). Recommendation: let the baked glitch BE seam 1 and add no stacked seam hit there; Mike may overrule and take the 0-14.40 fallback instead.",
+    "Span 4 in-point (187.76) is the leading edge of the pow-money-hammer 0.35 s xfade-scale ingress (fires on entry at 187.76). The trough snap will land at or just before 187.76, so the span's first 1-2 frames are the IMG-2 still and the cross-fade plays inside the span under the seam hit. Verified: 187.72 is a clean IMG-2 frame. If the builder sees a visible dissolve after the seam, snap the in-point to exactly 187.76.",
+    "Span 3 out-point (124.68) is 0.12 s ahead of the composability-card xfade at 124.80; verified 124.74 is a clean sovereignty s3 frame. The lint must snap backward, not forward, at this boundary.",
+    "Spans total 26.74 s vs the 27.0 s budget (0.26 s under). Card hold of 3.26 s recovers 30.0 exactly; otherwise the delivered short is 29.74 s.",
+    "Captions: only span 1 arrives captioned (FACE F1). Spans 2-4 are COVER-sourced and need the house caption track over 7.30-26.74 of output time; never overlay span 1 (would double). Apply the mishear list to the transcript text before captioning: Casper->Kaspa, Vprogs->vProgs.",
+    "Delivery not heard: I cannot confirm that 'Sovereignty.' as a one-word sentence lands with enough weight cold, or that 'The app runs on its own nodes' does not read as a repeat of the hook's 'verifiable programs'. Inferred from text only.",
+    "Audio comes from spine/ALL.g.paused.mp4 (205.854 s) against the master (205.909 s): durations match within 0.06 s, so the letter is right, but the skill text names ALL.f.paused; this project's chain gained a letter at the 2b cut. All three CH3 hammer impacts and the MELT whoosh exist only in the master mix, so the short's spans 2 and 4 play without their SFX unless the builder re-lays them.",
+    "Variety rule (runner note): no span is carried by an Envato clip or a ChatGPT image (span 4 only touches 1-2 frames of IMG-2 at its head), so no alternative asset overlay is required; flagging in case the builder's check counts those frames.",
+    "Assembly is non-chronological only in that span 4 (CH3) follows spans 2-3 (CH2); no conclusion precedes its premise."
+  ]
+}

@@ -1004,6 +1004,7 @@ import { BeerKaspaFirstVprogLive, VP3_FPS, VP3_DURATION } from './BeerKaspaFirst
 import { BeerKaspa114xEightDays, BK4_FPS, BK4_DURATION } from './BeerKaspa114xEightDays';
 import { KaspaVprogs, DUR as KVP_DUR, FPS as KVP_FPS } from './KaspaVprogs';
 import { KaspaVprogsVertical, DUR as KVPV_DUR, FPS as KVPV_FPS } from './KaspaVprogsVertical';
+import { KaspaVprogsShort, DUR as KVPS_DUR, FPS as KVPS_FPS } from './KaspaVprogsShort';
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -2625,6 +2626,15 @@ export const RemotionRoot: React.FC = () => {
         component={KaspaVprogsVertical}
         durationInFrames={KVPV_DUR}
         fps={KVPV_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* longform-edited SHORT: kaspa-vprogs ~30 s short (1080x1920 @30, DUR 898 = 808 span frames + 90 outro; --public-dir _previews/short/work) */}
+      <Composition
+        id="KaspaVprogsShort"
+        component={KaspaVprogsShort}
+        durationInFrames={KVPS_DUR}
+        fps={KVPS_FPS}
         width={1080}
         height={1920}
       />
