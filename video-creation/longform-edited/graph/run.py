@@ -24,6 +24,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import common as C  # noqa: E402
 from longform_graph import ORDER, build_longform_graph  # noqa: E402
+from vertical_graph import build_vertical_graph  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -206,7 +207,56 @@ def main_status():
     print_project_footer(C.project_dir(args.project), args.scope)
 
 
-COMMANDS = {"longform": main_longform, "status": main_status}
+def main_vertical():
+    """The OPTIONAL 9:16 lane (vertical_graph.py): runs after the 16:9 FINAL is delivered."""
+    ap = argparse.ArgumentParser(prog="run.py vertical", description="Build the vertical (1080x1920) cut of a delivered longform-edited video.")
+    ap.add_argument("--project", required=True)
+    ap.add_argument("--scope", default="ALL")
+    ap.add_argument("--approve", default="", help="gate approvals, e.g. vertical")
+    ap.add_argument("--redo", default="", help="nodes to re-run even if their artifact exists")
+    ap.add_argument("--thread", default=None)
+    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    args = ap.parse_args()
+    approve, redo = _parse_list(args.approve), _parse_list(args.redo)
+    if args.stub:
+        proj = Path(C.DATA) / "stub-project"
+        project = "stub-project"
+    else:
+        p = Path(args.project)
+        proj = p.resolve() if p.is_dir() else (C.MEDIA / args.project).resolve()
+        project = proj.name
+    thread = args.thread or (f"vertical-stub-{datetime.now():%Y%m%d-%H%M%S}" if args.stub else f"vertical-{project}")
+    init = {"project": project, "project_dir": str(proj), "scope": args.scope, "thread": thread, "lane": "vertical",
+            "stub": args.stub, "approve": approve, "done": [], "redo": redo, "steps": {}, "status": "running"}
+    print(f"Vertical graph | {project} | thread {thread}" + (" | STUB " + args.stub if args.stub else "")
+          + (f" | approve {approve}" if approve else "") + (f" | redo {redo}" if redo else ""))
+    from langgraph.checkpoint.sqlite import SqliteSaver
+    from langgraph.types import Command
+    conn = sqlite3.connect(str(C.CHECKPOINT_DB), check_same_thread=False)
+    app = build_vertical_graph(checkpointer=SqliteSaver(conn))
+    config = {"configurable": {"thread_id": thread}, "recursion_limit": 60}
+    started_at, t0 = _now_run(), time.monotonic()
+    try:
+        if args.resume:
+            payload = {"approve": approve} if approve else None
+            update = {k: v for k, v in init.items() if k in ("approve", "redo") and v}
+            final = app.invoke(Command(resume=payload, update=update) if payload else None, config)
+        else:
+            final = app.invoke(init, config)
+    except Exception as e:  # noqa: BLE001
+        final = {"status": "failed", "error": f"graph crashed: {e!r}", "steps": {}}
+    rc = report(final, proj, args.scope)
+    status = "waiting" if rc == C.GATE_EXIT_CODE else final.get("status", "failed")
+    C.record_run(thread, {**final, "status": status}, started_at, _now_run(), time.monotonic() - t0, stub=args.stub,
+                 args={"lane": "vertical", "project": project, "approve": approve, "redo": redo, "resume": args.resume})
+    vert = proj / f"{project}-VERTICAL.mp4"
+    if vert.is_file():
+        print(f"  VERTICAL: {vert}")
+    sys.exit(rc)
+
+
+COMMANDS = {"longform": main_longform, "vertical": main_vertical, "status": main_status}
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] in COMMANDS:

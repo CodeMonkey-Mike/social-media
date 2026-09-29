@@ -5,6 +5,13 @@ deliverable. Self-contained so it survives a project folder being deleted; carry
 exemplar, not the source of truth. Read this BEFORE building any vertical cut. Sibling to
 `../comp-build/comp-build.md` (comp architecture) and `../video-qa/video-qa.md` (QA gate) — those own their rules; this points._
 
+## Runner (2026-09-29): `python video-creation/longform-edited/graph/run.py vertical --project <name>`
+The lane is a LangGraph (`graph/vertical_graph.py`): `measure_face_crop.py` (§1b, face detection first, green-mask
+second, never a whole-frame centroid), the five builders with vertical briefs + visual-qa (§1), `comp-builder` in
+VERTICAL mode (§2), `render_comp.py --comp <Project>Vertical --public-dir assets/vertical` in parts over the stitch
+ceiling (§3), `mix_music.py` (§4), the code checks + the mandatory face-centring frames (§5), GATE `vertical`, then
+`<project>-VERTICAL.mp4` at the project root, not queued (§6). Vertical assets live in `assets/vertical/<same subfolders>`.
+
 ## When this runs
 
 After the 16:9 FINAL is built + approved. The content/edit/thesis/audio are ALREADY locked — the vertical
