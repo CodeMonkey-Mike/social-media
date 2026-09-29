@@ -186,6 +186,8 @@ reference files inside the same folder, no orphan files at the `skills/` level (
 - **Advisors (read-only plans, Mike gates):** `screenplay-strategist` · `coverage-strategist` ·
   `music-placement-strategist` · `transition-strategist` · `short-cut-strategist` (the ~40s short's cut
   plan off a finished vertical) (+ repo-root `tighten-strategist`).
+- **Build stage (longform-edited/, 2026-09-28):** `comp-builder` (opus/xhigh) builds the Remotion comp TO the
+  blueprint and renders the draft; `edit-plan-author` (opus/high) authors the blueprint pair before it.
 - **Asset factory (longform-edited/, added 2026-07-24 — build the plan's assets, `visual-qa` gates
   every output):** `slide-builder` (title/card slides) · `chart-builder` (system-design stills +
   animated-chart design states) · `receipt-capturer` (verified captures/recordings) · `envato-sourcer`

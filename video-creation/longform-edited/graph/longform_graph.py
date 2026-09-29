@@ -1438,20 +1438,140 @@ def captions(state: LongformState) -> LongformState:
     return {"steps": C._step(state, node, "ran", f"{len(rows)} caption groups over {len(wins)} FACE window(s) -> {ts.name}")}
 
 
-def comp_build(state):
-    proj = _proj(state)
-    return C.placeholder(state, "comp_build",
-        how="Build the Remotion comp to comp-build.md + the blueprint (spine, COVERS, cards, charts, "
-            "captions, transitions), run the mechanical gates, chunk-QA, draft render at 200k, ffmpeg "
-            "music+SFX mix, video-qa reconcile -> _previews/<project>-draft-vN(-sfx).mp4.",
-        artifact=lambda: bool(list((proj / "_previews").glob("*draft*.mp4"))), artifact_desc="_previews/*draft*.mp4")
+REMOTION = C.REPO_ROOT / "video-creation" / "remotion"
+COMP_GATES = C.SKILLS / "comp-build"
 
 
-def verify_comp(state):
-    return C.placeholder(state, "verify_comp",
-        how="Every mechanical gate on the comp must exit 0 (all Python since 2026-09-28, all in skills/comp-build/): "
-            "lint_covers.py, lint-deck-containers.py, lint-pause-silence.py, lint_transition_assets.py, "
-            "lint_slide_balance.py, lint_animated_charts.py, check_spine_fps.py; render duration == spine duration; audio present.")
+def _pascal(slug: str) -> str:
+    return "".join(p[:1].upper() + p[1:] for p in re.split(r"[^A-Za-z0-9]+", slug) if p)
+
+
+def _has_audio_stream(video: Path) -> bool:
+    r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=codec_type",
+                        "-of", "csv=p=0", str(video)], capture_output=True, text=True)
+    return "audio" in (r.stdout or "")
+
+
+def _latest_draft(proj: Path):
+    prev = proj / "_previews"
+    drafts = sorted(prev.glob(f"{proj.name}-draft-v*.mp4"), key=lambda p: int(re.search(r"-v(\d+)\.mp4$", p.name).group(1))) if prev.is_dir() else []
+    return drafts[-1] if drafts else None
+
+
+def _paused_meta(proj: Path, scope: str):
+    fs = C.final_spine(proj, scope)
+    side = fs.with_suffix(".json") if fs and ".paused." in fs.name else None
+    return (json.loads(side.read_text(encoding="utf-8")) if side and side.is_file() else {}), fs
+
+
+def comp_build(state: LongformState) -> LongformState:
+    """Wave E node 3 (2026-09-28): the comp-builder executor (opus/xhigh) builds the Remotion composition TO the
+    approved blueprint per comp-build.md, runs the Python gates, chunk-QAs, and renders the FULL draft at low
+    bitrate into _previews/. The node verifies from disk: comp file + Root registration, the draft mp4 (duration
+    == paused spine, fps 30, audio), and persists the builder's JSON report."""
+    node = "comp_build"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    comp_id = _pascal(proj.name)
+    comp = REMOTION / "src" / f"{comp_id}.tsx"
+    report = proj / "_previews" / "comp-build-report.json"
+    meta, paused = _paused_meta(proj, scope)
+    if not paused or not meta:
+        return C._fail(state, node, "paused spine + sidecar missing (card_pauses must run first)")
+    src_secs = _duration(Path(meta.get("source", ""))) if meta.get("source") else None
+    draft = _latest_draft(proj)
+    if not (comp.is_file() and draft and report.is_file() and not _redo(state, node)):
+        prompt = (f"Build the Remotion composition for the longform-edited project `{proj.name}` (folder `{proj}`) TO its approved "
+                  f"blueprint, and render the full draft.\nComposition id + file: `{comp_id}` -> `{comp}` (register in `{REMOTION / 'src' / 'Root.tsx'}`).\n"
+                  f"Paused spine: `{proj / 'assets' / 'spine.mp4'}` (= `{paused}`); its sidecar `{paused.with_suffix('.json')}` gives "
+                  f"CARD_T = pauses[].at = {[p['at'] for p in meta.get('pauses', [])]} and PAUSE = {meta.get('pause_s')} s; SPINE_SECS = the "
+                  f"SOURCE spine `{meta.get('source')}` = {src_secs or 0:.3f} s.\n"
+                  f"Blueprint: `{C.doc(proj, 'edit_plan')}` · `{C.doc(proj, 'cue_sheet')}` · `{C.doc(proj, 'transitions')}` + "
+                  f"`{C.doc(proj, 'transition_plan')}` · `{C.doc(proj, 'cover_plan')}` · `{C.doc(proj, 'as_recorded')}`.\n"
+                  f"Assets (the render's --public-dir): `{proj / 'assets'}` (state cues in assets/diagrams/_state-cues.md, chart spec in "
+                  f"assets/charts/*.spec.md). Captions: `{proj / 'assets' / 'captions.json'}` -> import ZCAPTIONS + CAPTION_WINDOWS from "
+                  f"`{REMOTION / 'src' / (comp_id + 'Captions.ts')}`.\n"
+                  f"Draft output: `{proj / '_previews' / (proj.name + '-draft-v1.mp4')}` (bump the N if it exists) with the render log beside it; "
+                  f"chunk QA into `{proj / '_previews' / 'qa'}`. Save your JSON report to EXACTLY `{report}`.\n"
+                  "Follow your agent definition and comp-build.md exactly; no music, no SFX, no watermark in the comp; never end your "
+                  "turn while a render runs.")
+        rc, out = C.spawn_agent(state, node, "comp-builder", prompt, f"agent-comp-build-{proj.name}.log")
+        if not report.is_file():
+            C.persist_agent_json(out, report, want_key="comp_file")
+        draft = _latest_draft(proj)
+    if not comp.is_file():
+        return C._fail(state, node, f"composition file not written: {comp}")
+    root = (REMOTION / "src" / "Root.tsx").read_text(encoding="utf-8", errors="replace")
+    if f'id="{comp_id}"' not in root and f"id={{'{comp_id}'}}" not in root and f"id='{comp_id}'" not in root:
+        return C._fail(state, node, f"{comp_id} is not registered in remotion/src/Root.tsx")
+    if not draft:
+        return C._fail(state, node, f"no draft render in {proj / '_previews'} ({proj.name}-draft-vN.mp4)")
+    got = _duration(draft) or 0.0
+    want = _duration(paused) or 0.0
+    if abs(got - want) > 0.3:
+        return C._fail(state, node, f"draft {draft.name} is {got:.2f}s, the paused spine is {want:.2f}s (every cue must route through sh())")
+    if not _has_audio_stream(draft):
+        return C._fail(state, node, f"draft {draft.name} has no audio stream")
+    return {"steps": C._step(state, node, "ran", f"{comp.name} registered, draft {draft.name} ({got:.2f}s, audio ok)")}
+
+
+GATE_LINES = {
+    "lint_covers.py": r"^COVERS-LINT (PASS|FAIL)", "lint-deck-containers.py": None, "lint_slide_balance.py": r"^SLIDE-BALANCE-LINT (PASS|FAIL)",
+    "lint_animated_charts.py": r"^ANIMATED-CHARTS-LINT (PASS|FAIL)", "lint_transition_assets.py": r"^TRANSITION-ASSETS-LINT (PASS|FAIL)",
+    "check_spine_fps.py": r"^SPINE-FPS (PASS|FAIL)",
+}
+
+
+def verify_comp(state: LongformState) -> LongformState:
+    """Wave E node 4 (2026-09-28): pure code. Every Python comp gate must PASS on the built composition
+    (covers, deck containers, slide balance, animated charts, transition assets, spine fps; pause-silence when
+    the comp declares INSERTS), and the draft must match the paused spine (duration, fps, audio). Results are
+    persisted to _previews/verify-comp.json for the draft gate."""
+    node = "verify_comp"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    comp_id = _pascal(proj.name)
+    comp = REMOTION / "src" / f"{comp_id}.tsx"
+    assets = proj / "assets"
+    if not comp.is_file():
+        return C._fail(state, node, f"composition missing: {comp}")
+    results, fails = {}, []
+    runs = [
+        ("lint_covers.py", [str(comp)]),
+        ("lint-deck-containers.py", [str(comp)] + [str(assets / d) for d in ("card-slides", "title-slides", "diagrams") if (assets / d).is_dir()]),
+        ("lint_slide_balance.py", [str(comp)]),
+        ("lint_animated_charts.py", [str(comp)]),
+        ("lint_transition_assets.py", [str(comp), str(assets), str(C.doc(proj, "transitions"))]),
+        ("check_spine_fps.py", [str(assets / "spine.mp4"), "30"]),
+    ]
+    src_text = comp.read_text(encoding="utf-8", errors="replace")
+    if re.search(r"INSERTS\s*=\s*\[", src_text):
+        _, paused = _paused_meta(proj, scope)
+        meta = json.loads(paused.with_suffix(".json").read_text(encoding="utf-8")) if paused else {}
+        runs.append(("lint-pause-silence.py", [str(comp), str(meta.get("source") or paused)]))
+    for script, args in runs:
+        rc, out = C.run_streaming([sys.executable, "-u", str(COMP_GATES / script), *args], state, node)
+        pat = GATE_LINES.get(script)
+        m = re.search(pat, out or "", re.M) if pat else None
+        ok = rc == 0 and (m.group(1) == "PASS" if m else True)
+        line = (m.group(0) if m else (out or "").strip().splitlines()[-1:] or ["(no output)"])
+        results[script] = {"ok": ok, "line": line if isinstance(line, str) else line[0]}
+        if not ok:
+            fails.append(script)
+    draft = _latest_draft(proj)
+    paused = C.final_spine(proj, scope)
+    d_ok = bool(draft and paused and abs((_duration(draft) or 0) - (_duration(paused) or 0)) <= 0.3 and _has_audio_stream(draft))
+    results["draft"] = {"ok": d_ok, "file": str(draft) if draft else None,
+                        "duration_s": _duration(draft) if draft else None, "spine_s": _duration(paused) if paused else None}
+    if not d_ok:
+        fails.append("draft")
+    (proj / "_previews").mkdir(parents=True, exist_ok=True)
+    C._write_json_atomic(proj / "_previews" / "verify-comp.json", {"results": results, "fails": fails, "comp": str(comp)})
+    if fails:
+        return C._fail(state, node, "comp gates failed: " + ", ".join(fails) + " (see the gate output above; fix the comp, re-render the draft, re-drive)")
+    return {"steps": C._step(state, node, "ran", f"{len(runs)} gate(s) PASS on {comp.name}, draft {draft.name} matches the spine")}
 
 
 def gate_draft(state):
