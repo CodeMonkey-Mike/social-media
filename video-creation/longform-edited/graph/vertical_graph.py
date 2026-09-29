@@ -412,13 +412,13 @@ def v_render(state: VerticalState) -> VerticalState:
         return {"steps": C._step(state, node, "stub")}
     comp_id = _comp_id(proj)
     vp = _vprev(proj)
-    out = vp / f"{proj.name}-VERTICAL-v1-video.mp4"
+    latest = _latest_vertical_video(proj)
+    if latest and not _redo(state, node):
+        return {"steps": C._step(state, node, "skipped", f"{latest.name} present")}
     n = 1
-    while out.is_file() and not _redo(state, node) and (vp / f"{proj.name}-VERTICAL-v{n}.mp4").is_file():
-        n += 1
-        out = vp / f"{proj.name}-VERTICAL-v{n}-video.mp4"
-    if out.is_file() and not _redo(state, node):
-        return {"steps": C._step(state, node, "skipped", f"{out.name} present")}
+    if latest:   # --redo: a NEW -vN so a file Mike is reviewing is never overwritten
+        n = int(re.search(r"-v(\d+)-video", latest.name).group(1)) + 1
+    out = vp / f"{proj.name}-VERTICAL-v{n}-video.mp4"
     paused = C.paused_spine(proj, scope)
     frames = int(round((G._duration(paused) or 0.0) * 30))
     base = [sys.executable, "-u", str(G.RENDER_COMP), str(proj), "--mode", "final", "--comp", comp_id, "--public-dir", str(_vdir(proj))]
