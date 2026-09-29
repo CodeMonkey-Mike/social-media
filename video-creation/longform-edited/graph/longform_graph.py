@@ -1688,7 +1688,7 @@ def verify_final(state: LongformState) -> LongformState:
     if abs(d - ds) > 0.3:
         probs.append(f"duration {d:.2f}s vs spine {ds:.2f}s")
     r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=r_frame_rate", "-of", "csv=p=0", str(mixed)], capture_output=True, text=True)
-    num, den = (r.stdout.strip().splitlines()[0] if r.stdout.strip() else "0/1").split("/")
+    num, den = (r.stdout.strip().splitlines()[0].strip().strip(",").split(",")[0] if r.stdout.strip() else "0/1").split("/")  # ffprobe csv may trail a comma
     if abs(float(num) / float(den) - 30) > 0.01:
         probs.append(f"fps {num}/{den}")
     if not _has_audio_stream(mixed):
