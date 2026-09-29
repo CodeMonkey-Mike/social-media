@@ -16,11 +16,7 @@
   (28.167-31.933; the cut follows the picture edge, not the 28.10 word start)
 
 ## TRANSITIONS (chapters + face + b-roll, MANDATORY; full per-cut list = TRANSITIONS.md)
-TRANSITIONS.md is NOT authored yet: the transition-strategist writes it next off EDIT-PLAN.md. The cut points
-below are fixed; the ids are its picks. House buckets: chapter cards = ONE pick for both (cube = `hand:cube-3d`,
-rotate in ~11f, hold, never cube back out) · FACE cuts = ONE per-video pick, film burn OR blocks-max glitch,
-on every face cut in AND out · AI stills = badsignal glitch (or cross-warp) · Envato video = dissolve/fade 0.5 s ·
-container / diagram swaps = cross-fade + 0.93 → 1 scale-in 0.35 s · diagram state swaps = 6-8f cross-fade only.
+RESOLVED 2026-09-28 from TRANSITION-PLAN.json (38 scene changes, every one in TRANSITIONS.md §5): card = `hand:cube-3d` on both chapter cards · face cut in/out = `lib:blocks-max` (lib:blocks-max-1, lib:blocks-max-2, lib:blocks-max-3) · AI stills = lib:badsignal-short-1 @2:17.6, lib:badsignal-max-1 @3:01.4, lib:badsignal-short-2 @3:15.1 · marquees = lib:melt-rgb-3 @1:34.5 (MELT-transform), lib:spin-3d-side-ease-up @2:19.8 (SPIN-newfacet) · Envato video = hand:fade · container / diagram swaps = hand:xfade-scale · punch-ins = hand:punch.
 CHAPTER cards (ON only at a bed change):
 - 0:40.2  CH2 "NOT AN L2" (+ Bed A → B change + 1.5 s card pause)
 - 2:17.6  CH3 "WHERE IT STANDS" (+ Bed B → C change + 1.5 s card pause)
@@ -36,8 +32,8 @@ AI clip / IMAGE b-roll transitions (badsignal glitch or cross-warp): 2:17.6 IMG-
 CONTAINER / CHART scene changes = cross-fade + 0.93 → 1 scale-in (see the CONTAINER section). Push-in MATCH
 cuts (same node language): 1:34.5 c1-overview → c1-kaspa-four-jobs (Kaspa node) · 2:43.3 c3-ladder → c3-next-rungs.
 MARQUEE candidates (§4 reserved family, strategist's call, one MELT look + one SPIN look max):
-- MELT candidate 1:34.5 (C1 overview reforms into the Kaspa-node break-up, a TRANSFORM)
-- SPIN candidate 2:19.8 (IMG-1 → c3-ladder, the new facet; image → code chart, clear of the video cost trap)
+- MELT candidate 1:34.5 (C1 overview reforms into the Kaspa-node break-up, a TRANSFORM) → CHOSEN `lib:melt-rgb-3`
+- SPIN candidate 2:19.8 (IMG-1 → c3-ladder, the new facet; image → code chart, clear of the video cost trap) → CHOSEN `lib:spin-3d-side-ease-up`
 
 ## CHAPTER cards begin  (ON only at a bed change)
 - 0:00.0  CH1 "STRAIGHT INTO IT", NO card (first chapter) ; 0:40.2 CH2 title-card-ch2 "NOT AN L2" ;
