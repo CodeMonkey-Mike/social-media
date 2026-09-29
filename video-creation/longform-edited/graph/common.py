@@ -45,7 +45,7 @@ GATE_EXIT_CODE = 2
 PROGRESS_FILE = "GRAPH-PROGRESS.json"
 
 # The five STAGES the dashboard cards show; every node belongs to one (heartbeat `lane`).
-STAGES = {1: "pre-production", 2: "spine", 3: "plan", 4: "build", 5: "deliver", 6: "vertical"}
+STAGES = {1: "pre-production", 2: "spine", 3: "plan", 4: "build", 5: "deliver", 6: "vertical", 7: "short"}
 STAGE_OF = {
     "init_project": 1, "research": 1, "screenplay": 1, "gate_screenplay": 1, "await_recording": 1,
     "compress": 2, "defumble": 2, "cover_blackout": 2, "desilence_coarse": 2,
@@ -58,9 +58,12 @@ STAGE_OF = {
     "final_render": 5, "verify_final": 5, "definition_of_done": 5, "stage_longform": 5,
     "v_preflight": 6, "v_face_crop": 6, "v_assets": 6, "v_verify_assets": 6, "v_comp": 6, "v_verify_comp": 6,
     "v_render": 6, "v_mix": 6, "v_verify_final": 6, "gate_vertical": 6, "v_deliver": 6,
+    "s_preflight": 7, "s_cut_plan": 7, "gate_short_plan": 7, "s_variants": 7, "s_extract": 7, "s_captions": 7, "s_comp": 7,
+    "s_verify_comp": 7, "s_render": 7, "s_mix": 7, "s_verify_final": 7, "gate_short": 7, "s_deliver": 7,
 }
 GATES = ("screenplay", "spine_review", "spine", "plan", "blueprint", "draft")
 VERTICAL_GATES = ("vertical",)   # the optional 9:16 lane (vertical_graph.py)
+SHORT_GATES = ("short_plan", "short")   # the optional short lane (short_graph.py)
 
 # comp-build.md §13 — the per-video document set (the graph's state contract on disk)
 DOCS = {

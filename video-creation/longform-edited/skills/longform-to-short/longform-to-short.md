@@ -5,6 +5,12 @@ vertical video with a spoken CTA outro. Self-contained so it survives a project 
 Sibling to `../vertical-repurpose/vertical-repurpose.md` (which produced the source) — that skill owns the reframe, this one
 owns the condensation. Read this BEFORE building any longform-derived short._
 
+## Runner (2026-09-29): `python video-creation/longform-edited/graph/run.py short --project <name> [--seconds 30]`
+The lane is a LangGraph (`graph/short_graph.py`, 13 nodes, 2 gates). Standing rules added by Mike: the target length is an
+argument (30 s default, outro inside), the opening FACE hook is the natural hook, and for VARIETY any span that carries an
+Envato clip or a ChatGPT image gets ONE alternative asset (`assets/short/`) overlaid in the short. The CTA line is the SHARED
+take `assets/vo/cta-watch-full.mp3` ("Click below to watch the full video"), mixed by `scripts/mix_short.py`; never re-voiced.
+
 ## When this runs
 
 After the vertical longform exists and Mike has approved it. **The short is a CONDENSATION, not a new

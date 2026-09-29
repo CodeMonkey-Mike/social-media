@@ -64,6 +64,7 @@ def main():
     ap.add_argument("--concurrency", type=int, default=4)
     ap.add_argument("--comp", default=None, help="composition id override (default <Project>; the vertical lane passes <Project>Vertical)")
     ap.add_argument("--public-dir", default=None, help="public dir override (default <project>/assets; the vertical lane passes assets/vertical)")
+    ap.add_argument("--video-only", action="store_true", help="the comp carries no audio and its own duration (the short lane); skip the spine/audio checks")
     a = ap.parse_args()
     proj = Path(a.project_dir).resolve()
     comp_id = a.comp or pascal(proj.name)
@@ -118,7 +119,7 @@ def main():
     num, den = fps_raw.split("/")
     fps = float(num) / float(den)
     has_audio = "audio" in probe(out, "stream=codec_type", "a")
-    ok = (a.frames is not None or abs(d_out - d_spine) <= 0.3) and abs(fps - 30) < 0.01 and has_audio
+    ok = (abs(fps - 30) < 0.01) if a.video_only else ((a.frames is not None or abs(d_out - d_spine) <= 0.3) and abs(fps - 30) < 0.01 and has_audio)
     print(f"RENDER-DONE mode={a.mode} out={out} dur={d_out:.3f} spine={d_spine:.3f} fps={fps:g} audio={'yes' if has_audio else 'no'} log={log}")
     if not ok:
         print("FATAL: render does not match the spine (duration / fps / audio)", file=sys.stderr)
