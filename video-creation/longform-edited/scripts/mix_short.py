@@ -120,7 +120,9 @@ def main():
                           f"adelay={int(max(0, t) * 1000)}|{int(max(0, t) * 1000)}[w{k}]")
             mix.append(f"[w{k}]")
             k += 1
-    fc = ";".join(chains) + ";" + "".join(mix) + f"amix=inputs={len(mix)}:normalize=0:duration=first[ao]"
+    # duration=longest, then trim to the picture: `duration=first` ended the audio with the LAST SPOKEN SPAN and
+    # silently dropped the CTA + the bed tail (kaspa-vprogs short, caught by Mike on first watch 2026-09-29)
+    fc = ";".join(chains) + ";" + "".join(mix) + f"amix=inputs={len(mix)}:normalize=0:duration=longest,atrim=end={total:.3f}[ao]"
     cmd = ["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", fc, "-map", "0:v", "-c:v", "copy", "-map", "[ao]",
            "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)]
     r = subprocess.run(cmd, capture_output=True, text=True)
