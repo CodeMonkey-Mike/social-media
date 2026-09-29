@@ -100,7 +100,10 @@ def main():
         last = ""
         for line in p.stdout:
             lf.write(line)
-            m = re.search(r"(\d+)%", line)
+            m = re.search(r"Rendered\s+(\d+)/(\d+)|Rendering frames.*?(\d{1,3})%", line)  # frame progress only, never bundling %
+            if m:
+                pct = m.group(3) or str(int(100 * int(m.group(1)) / max(1, int(m.group(2)))))
+                m = re.match(r"(\d+)", pct)
             if m and m.group(1) != last:
                 last = m.group(1)
                 print(f"PROGRESS {last}%", flush=True)
@@ -109,7 +112,7 @@ def main():
         print(f"FATAL: render exit {p.returncode}; log: {log}", file=sys.stderr)
         sys.exit(1)
     d_out, d_spine = duration(out), duration(assets / "spine.mp4")
-    fps_raw = probe(out, "stream=r_frame_rate", "v:0").splitlines()[0]
+    fps_raw = probe(out, "stream=r_frame_rate", "v:0").splitlines()[0].strip().strip(",").split(",")[0]  # ffprobe csv can trail a comma
     num, den = fps_raw.split("/")
     fps = float(num) / float(den)
     has_audio = "audio" in probe(out, "stream=codec_type", "a")
