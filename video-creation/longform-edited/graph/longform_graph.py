@@ -29,6 +29,7 @@
 
 import json
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -49,6 +50,7 @@ class LongformState(TypedDict, total=False):
     title: Optional[str]
     scope: str              # the recorded take's scope: ALL (single take) or CH1-CH3 ...
     face_max: Optional[int]  # mechanical gate: max [FACE] beats the screenplay may carry
+    card_pause: Optional[float]  # build: title-card pause seconds (default 1.5)
     envato_max: Optional[int]   # plan: Envato video budget (default 10)
     chatgpt_max: Optional[int]  # plan: ChatGPT image budget (default 5)
     coarse_sil: Optional[float]  # spine: the COARSE one-zone min-silence (default 0.7)
@@ -1334,13 +1336,65 @@ def gate_blueprint(state):
 
 # ── BUILD ────────────────────────────────────────────────────────────────────
 
-def card_pauses(state):
-    proj = _proj(state)
-    p = proj / "assets" / "spine.mp4"
-    return C.placeholder(state, "card_pauses",
-        how="Bake the card-pause spine (+1s freeze+silence before each carded chapter's first word, "
-            "lint-pause-silence.py containment check) -> spine/<scope>.d.paused.mp4, copied to assets/spine.mp4.",
-        artifact=lambda: p.is_file(), artifact_desc="assets/spine.mp4")
+BAKE_CARD_PAUSES = C.SCRIPTS / "bake_card_pauses.py"
+LINT_PAUSE_SILENCE = C.SKILLS / "comp-build" / "lint-pause-silence.py"
+CHECK_SPINE_FPS = C.SKILLS / "comp-build" / "check_spine_fps.py"
+DEFAULT_CARD_PAUSE = 1.5   # Mike's ruling on kaspa-vprogs (>= the 1 s readable minimum)
+
+
+def card_pauses(state: LongformState) -> LongformState:
+    """Wave E node 1 (2026-09-28): bake the title-card pauses into the FINAL spine. Cards ON come from
+    AS-RECORDED's chapter headers; bake_card_pauses.py SNAPS each insert to the silence trough at the
+    chapter boundary (RMS scan, the lint's method) and inserts freeze + silence (sync-safe filter_complex);
+    lint-pause-silence.py then gates the SNAPPED points on the SOURCE spine; check_spine_fps + duration are
+    verified on the output, which becomes spine/<scope>.<next letter>.paused.mp4 (+ .json with CARD_T and
+    PAUSE for the comp) and is copied to assets/spine.mp4 (comp-build §10/§13a)."""
+    node = "card_pauses"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    fs = C.final_spine(proj, scope)
+    if not fs:
+        return C._fail(state, node, "final spine missing")
+    if ".paused." in fs.name:
+        paused, source = fs, None   # already baked (re-drive)
+    else:
+        letter = re.search(rf"^{re.escape(scope)}\.([a-z])\.", fs.name)
+        nxt = chr(ord(letter.group(1)) + 1) if letter else "g"
+        paused, source = fs.with_name(f"{scope}.{nxt}.paused.mp4"), fs
+    side = paused.with_suffix(".json")
+    pause_s = float(state.get("card_pause") or DEFAULT_CARD_PAUSE)
+    cards = [(ta, re.search(r'card\s+ON\s*"([^"]+)"', tail).group(1))
+             for cid, title, ta, tz, tail in _chapters(proj) if re.search(r'card\s+ON\s*"', tail)]
+    if not cards:
+        return C._fail(state, node, "AS-RECORDED.md names no chapter with `card ON` (nothing to bake; if that is intended, --done card_pauses)")
+    if not (paused.is_file() and side.is_file() and not _redo(state, node)):
+        if source is None:
+            return C._fail(state, node, f"{paused.name} exists without its sidecar; delete it and re-drive")
+        args = [sys.executable, "-u", str(BAKE_CARD_PAUSES), str(source), "--cards", ",".join(f"{t}:{lbl}" for t, lbl in cards),
+                "--pause", f"{pause_s}", "--out", str(paused), "--json", str(side)]
+        rc, out = C.run_streaming(args, state, node)
+        if rc != 0:
+            return C._fail(state, node, "bake_card_pauses.py failed (a boundary with no silence trough: move that card per comp-build §5, as kaspa 30bps did)", out)
+    meta = json.loads(side.read_text(encoding="utf-8"))
+    inserts = ",".join(f"{p['at']}:{p['dur']}" for p in meta.get("pauses") or [])
+    src_for_gate = Path(meta.get("source") or (source or fs))
+    rc, out = C.run_streaming([sys.executable, "-u", str(LINT_PAUSE_SILENCE), "--inserts", inserts, str(src_for_gate)], state, node)
+    if rc != 0:
+        return C._fail(state, node, "lint-pause-silence.py FAILED on the snapped insert points (see above)", out)
+    rc, out = C.run_streaming([sys.executable, "-u", str(CHECK_SPINE_FPS), str(paused), "30"], state, node)
+    if rc != 0:
+        return C._fail(state, node, "paused spine fps != 30 (check_spine_fps.py)", out)
+    expect = (_duration(src_for_gate) or 0.0) + len(meta.get("pauses") or []) * float(meta.get("pause_s") or pause_s)
+    got = _duration(paused) or 0.0
+    if abs(got - expect) > 0.15:
+        return C._fail(state, node, f"paused spine is {got:.3f}s, expected {expect:.3f}s")
+    dest = proj / "assets" / "spine.mp4"
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    if not dest.is_file() or dest.stat().st_size != paused.stat().st_size:
+        shutil.copyfile(paused, dest)
+    C.mark_manual(proj, node)  # the spine letter advanced; downstream nodes read assets/spine.mp4
+    return {"steps": C._step(state, node, "ran", f"{len(cards)} card pause(s) x {pause_s}s baked -> {paused.name} ({got:.2f}s), gate PASS, copied to assets/spine.mp4")}
 
 
 def captions(state):

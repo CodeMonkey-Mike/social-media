@@ -1,0 +1,24 @@
+{
+  "pauses": [
+    {
+      "at": 40.22,
+      "planned": 40.22,
+      "dur": 1.5,
+      "card": "NOT AN L2",
+      "sits_in": "trough 40.200-40.230, gate guard -49.0 dB"
+    },
+    {
+      "at": 137.46,
+      "planned": 137.58,
+      "dur": 1.5,
+      "card": "WHERE IT STANDS",
+      "sits_in": "trough 137.450-137.480, gate guard -50.2 dB"
+    }
+  ],
+  "pause_s": 1.5,
+  "source": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kaspa-vprogs\\spine\\ALL.f.cut.mp4",
+  "output": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kaspa-vprogs\\spine\\ALL.g.paused.mp4",
+  "output_duration_s": 205.854,
+  "fps": 30.0,
+  "note": "every comp cue is a SOURCE time; sh() adds pause_s per pause whose `at` <= t"
+}
