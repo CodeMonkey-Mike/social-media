@@ -1,0 +1,136 @@
+kaspa-vprogs - FINAL SPINE TRANSCRIPT BREAKDOWN
+source : ALL.g.paused.mp4 (= assets/spine.mp4, byte-identical; the file the comp loads) · 205.854 s (3:25.9) · 30/1 fps (video 205.833 / audio 205.854)
+         = ALL.f.cut.mp4 + two 1.5 s title-card pauses baked at source 40.22 and 137.46 (spine/ALL.g.paused.json)
+words  : ALL.g.paused.medium-words.json (Whisper medium, CUDA, word-level; UNEDITED, cue source)
+counts : 67 segments · 592 words
+time map (f.cut -> g.paused): t < 40.22 -> +0.00 · 40.22 <= t < 137.46 -> +1.50 · t >= 137.46 -> +3.00
+         (every g.paused time below is a PLAYBACK time on the comp's spine. Note: ALL.g.paused.json says the comp's cues are
+          SOURCE times with sh() adding the pauses, so to cue the comp, subtract the offset, or keep cueing off ALL.f.cut.medium-words.json.)
+supersedes: ALL.f.cut.segments.txt for the post-pause picture. Text is unchanged from f.cut apart from Whisper's re-hearing (see FLAGS).
+Chapters mapped to SCREENPLAY.md / AS-RECORDED.md. Text below has persona/project mishears corrected (TEXT ONLY; times untouched).
+FACE windows (blackdetect d=0.1 pix_th=0.10 on THIS file; non-black = FACE; both land before card pause #1, so they are unshifted):
+  FACE #1  0.000 - 7.333   "Kaspa is building vProgs ... not an L2."
+  FACE #2 28.167 - 31.933  "Kaspa is never going to run your app, Kaspa is going to verify it."
+  Black runs 7.333-28.167 and 31.933-205.800 (205.800-205.833 is the end-of-stream frame, not a face window).
+Tag column: FACE when more than half the segment is inside a measured FACE window, otherwise COVER.
+
+CORRECTIONS APPLIED (from -> to, count):
+  Janitem Sampalinski -> Yonatan Sompolinsky  x1
+  Sam Palinski -> Sompolinsky  x1
+  Casper .org -> kaspa.org  x1
+  Casper's -> Kaspa's  x3
+  Casper -> Kaspa  x9
+  Vprogs -> vProgs  x4
+  Vprog -> vProg  x3
+  Takata -> Toccata  x1
+  Covenant fork -> covenant fork (casing)  x1
+  Provers -> provers (casing)  x1
+  Composability -> composability (casing)  x1
+  4 jobs -> four jobs (number style)  x1
+  3-6 months -> three to six months (as spoken; matches the R8 receipt)  x1
+  (word-token display joins, as in AS-RECORDED: "for -profit" -> "for-profit", "zero -knowledge" -> "zero-knowledge", "1 .0" -> "1.0";
+   the segment text already carries them joined)
+  (not present in this audio (checked): tau, 50WMA/200WMA, Caspie/Cassie/Cappy, Kasper-the-Ghost context, ghost/GhostDAG, scion)
+
+FLAGS (NOT changed; what Whisper heard is kept unless listed above):
+  !  [131.94-139.00] "itself" is MISSING from this pass: Whisper hears "...inside of Kaspa's consensus | Not on some other chain."
+     It IS in the audio: f.cut has "itself," 134.92-135.48 (p=0.99) -> g.paused ~136.42-136.98. The "Not" token here (137.02-137.32)
+     has p=0.01, and "on" 137.32 sits ~0.2 s early against the f.cut-derived 137.52. For captions/cues on this line, use f.cut word
+     times +1.50 s. The breakdown text restores nothing (text-only rule), so read the line as "...consensus itself, not on some other chain."
+  i  [ 53.48- 59.64] RESOLVED vs the f.cut pass: now heard as "orders your transactions," (the f.cut pass had "transaction payments", p=0.00).
+     Matches the screenplay.
+  i  [184.34-187.66] RESOLVED vs the f.cut pass: now heard as "the more A layer nobody owns is worth" (the f.cut pass dropped "a"). Matches the screenplay.
+  i  [157.56-158.90] "Inside of Kaspa's consensus" ("of" p=0.07). The f.cut pass heard "Inside Kaspa's consensus", which is AS-RECORDED's wording.
+     "of" is low-confidence; probably not said. Check by ear before captions.
+  i  [ 47.54- 53.48] "a layer 2." ("2." p=0.20): right word, low confidence only. Caption "layer 2", never "L2".
+  i  [ 92.36- 95.88] "so Kaspa itself is the sequencer" ("the" p=0.51), which matches the screenplay.
+  i  [146.66-147.70] "Ten blocks a second" (p=0.22 on "Ten"), which matches f.cut's "10 blocks a second". Number style only.
+  i  Card pauses are clean: no words fall in 40.22-41.72 or 138.96-140.46. "So let's break this all down." ends 40.36 on Whisper
+     (0.14 s past the pause start; that is Whisper's end-padding, since the pause was cut in the -49 dB trough at 40.20-40.23) and
+     "chain." ends 139.00 (same, pause trough 137.45-137.48 source).
+  i  Runtime 3:25.9 (3:22.8 of speech + 3.0 s of card pauses). Reported only, not a cut proposal.
+
+==== CH1 - STRAIGHT INTO IT  (card OFF)  opens 0.00s ====
+  -- CH1 B1 the name (LOCKED, FACE #1)
+[   0.00-   6.42] FACE  Kaspa is building vProgs, verifiable programs, real apps on a base layer, on a proof of work,
+[   6.48-   7.30] FACE  not an L2.
+  -- CH1 B2 what a vProg is, in one breath
+[   7.40-  12.40] COVER A vProg is an app that runs on its own node, keeps its own state and posts zero knowledge
+[  12.40-  14.40] COVER proof of that state back to Kaspa.
+[  14.54-  20.08] COVER Now Kaspa already has smart contracts, covenants, live on mainnet since June, straight from
+[  20.08-  21.04] COVER the core devs.
+[  21.22-  27.32] COVER vProgs are the next layer up, whole applications on a chain that already runs 10 blocks every
+[  27.32-  28.10] COVER single second.
+  -- CH1 B3 the thesis (LOCKED, FACE #2 then COVER)
+[  28.10-  31.90] FACE  Kaspa is never going to run your app, Kaspa is going to verify it.
+[  31.90-  37.74] COVER And that one flip is how you get apps on the base layer with proof of work security and
+[  37.74-  38.74] COVER no L2 in the middle.
+[  38.92-  40.36] COVER So let's break this all down.
+
+  >> CARD PAUSE #1  40.22-41.72 (1.5 s baked, no speech) = "NOT AN L2" card
+==== CH2 - NOT AN L2  (card ON: "NOT AN L2")  card 40.22, first word 41.80s ====
+  -- CH2 B1 the road Ethereum took  (podcast line cut at GATE 2b; beat ends "And he hasn't softened on it.")
+[  41.80-  47.54] COVER So back in 2020 Vitalik laid out Ethereum's plan and it said in plain English, all in
+[  47.54-  53.48] COVER on rollups, your accounts, your businesses, your assets living inside a layer 2.
+[  53.48-  59.64] COVER And every rollup is its own chain, its own sequencer, the machine that orders your transactions,
+[  60.00-  62.52] COVER its own bridge, its own slice of liquidity.
+[  62.70-  67.92] COVER And every one of those pieces is a place for something to break and a place for your liquidity
+[  67.92-  69.16] COVER to get split up.
+[  69.32-  74.40] COVER Now Kaspa's founder, Yonatan Sompolinsky looked at all of that and back in December
+[  74.40-  80.20] COVER he said the whole point of vProgs was to avoid the obsolete path of L2s.
+[  80.22-  81.48] COVER His words, not mine.
+[  81.58-  83.20] COVER And he hasn't softened on it.
+  -- CH2 B2 the machine (C1 diagram)
+[  83.20-  85.50] COVER So here's how a vProg actually works.
+[  85.72-  90.46] COVER You send a transaction and you declare upfront which account it reads and which one it writes.
+[  90.86-  92.20] COVER Kaspa does four jobs.
+[  92.36-  95.88] COVER It orders every transaction, so Kaspa itself is the sequencer.
+[  96.00-  99.60] COVER It stores the data, it checks the proofs, it meters the work.
+[  99.68- 101.88] COVER What it never does is run the app.
+[ 101.92- 103.60] COVER The app runs on its own nodes.
+[ 103.82- 108.40] COVER Every vProg owns its own accounts and it's the only thing allowed to write to them.
+[ 108.40- 113.60] COVER And provers, for-profit operators, post a zero-knowledge proof back to Kaspa.
+[ 113.70- 118.88] COVER That's a math receipt that says the state is correct and Kaspa checks the receipt instead
+[ 118.88- 119.90] COVER of redoing the math.
+  -- CH2 B3 what the design buys you
+[ 120.02- 121.56] COVER And this buys you two things.
+[ 121.72- 122.24] COVER Sovereignty.
+[ 122.42- 124.70] COVER If another app breaks, yours keeps running.
+[ 124.86- 125.66] COVER And composability.
+[ 125.78- 130.78] COVER Apps can read each other's state and a transaction that touches two apps goes through as one unit
+[ 130.78- 131.90] COVER or not at all.
+[ 131.94- 136.44] COVER And this just means the rules for checking all of this live inside of Kaspa's consensus
+[ 137.08- 139.00] COVER Not on some other chain.
+
+  >> CARD PAUSE #2  138.96-140.46 (1.5 s baked, no speech) = "WHERE IT STANDS" card
+==== CH3 - WHERE IT STANDS  (card ON: "WHERE IT STANDS")  card 138.96, first word 140.56s ====
+  -- CH3 B1 the ladder (C3)
+[ 140.56- 142.74] COVER Now where does this all actually stand?
+[ 142.86- 143.72] COVER Look at this ladder.
+[ 144.00- 146.22] COVER May 2025, Crescendo.
+[ 146.66- 147.70] COVER Ten blocks a second.
+[ 147.90- 149.46] COVER September, the yellow paper.
+[ 149.70- 150.28] COVER First draft.
+[ 150.42- 153.20] COVER June 30th of this year, Toccata.
+[ 153.50- 155.82] COVER Zero-knowledge verification and covenants.
+[ 156.00- 157.24] COVER Live on mainnet.
+[ 157.56- 158.90] COVER Inside of Kaspa's consensus.
+[ 159.18- 166.12] COVER And September 2026, Silverscript 1.0, the smart contract language, official release.
+[ 166.12- 167.16] COVER Next rung.
+[ 167.46- 169.24] COVER The first standalone zero-knowledge app.
+[ 169.40- 171.30] COVER Above that, full vProgs.
+[ 171.60- 172.80] COVER Still under construction.
+[ 173.00- 175.74] COVER And kaspa.org says so in plain text.
+  -- CH3 B2 he called it
+[ 175.80- 180.42] COVER And in December, Sompolinsky said the covenant fork was three to six months out.
+[ 180.54- 181.28] COVER It shipped in June.
+  -- CH3 B3 conviction
+[ 181.42- 184.26] COVER Everyone is racing to control compute and money.
+[ 184.34- 187.66] COVER The more they race, the more a layer nobody owns is worth.
+[ 187.76- 191.56] COVER Proof of work money with apps on it and no L2 in the middle.
+  -- CH3 B3 close / CTA
+[ 191.64- 194.02] COVER Click that like button and comment below.
+[ 194.02- 197.74] COVER Let me know what you think is going to be built on it in the near future.
+[ 198.10- 199.44] COVER Gonna be some exciting times.
+[ 200.00- 203.54] COVER And click the link in the description below for the greatest community ever.
+[ 203.88- 205.58] COVER And I'll catch you guys later.
