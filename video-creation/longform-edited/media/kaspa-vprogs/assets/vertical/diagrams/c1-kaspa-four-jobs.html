@@ -1,0 +1,126 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>c1-kaspa-four-jobs · kaspa-vprogs · Type 2 SYSTEM-DESIGN · VERTICAL 1080x1920</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<!-- PORTRAIT RE-SHOOT of assets/diagrams/c1-kaspa-four-jobs.html. Same copy, roles, states and DROP device.
+     Reflow: the yellow-paper quote moves from the top-right corner to under the headline; each job row
+     stacks its verb over its term (two lines) so the rows stay large at 1080 wide. The Kaspa box sits in the
+     same screen region as c1-overview's Kaspa node, so the MELT at 94.5 reforms node -> box in place. -->
+<style>
+/* ==== BASE (PORTRAIT): tokens + anatomy from skills/container-reference/container-canonical.css, sized for a 1080-wide phone frame ==== */
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--bg-card-hover:#181c26;--accent-green:#00e68a;--accent-cyan:#00c2ff;
+  --accent-gold:#ffd700;--accent-red:#ff4060;--accent-purple:#a855f7;--accent-teal:#49e0c8;
+  --text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;
+  /* role colors for THIS video (rgb triplets): Kaspa L1 = teal (brand greenish cyan) · vProg = purple ·
+     provers / ZK proof = gold · users / tx = cyan · live / ok = green · risk / struck = red */
+  --r-kas:73,224,200;--r-vp:168,85,247;--r-pr:255,215,0;--r-us:0,194,255;--r-ok:0,230,138;--r-bad:255,64,96}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1080px;height:1920px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary);margin-bottom:40px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.hdr{position:absolute;left:72px;right:72px;top:130px;z-index:2}
+.ey{font-size:28px;font-weight:600;letter-spacing:.18em;color:var(--text-muted);margin-bottom:22px;line-height:1.3} /* caps typed literally: keeps "vPROG" */
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:90px;line-height:1.05;letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:76px;height:5px;border-radius:3px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin-top:32px}
+.src{position:absolute;left:72px;right:72px;bottom:196px;font-family:'JetBrains Mono',monospace;font-size:21px;line-height:1.5;color:var(--text-muted);z-index:2}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)}.c{color:var(--accent-cyan)}.go{color:var(--accent-gold)}.re{color:var(--accent-red)}.pu{color:var(--accent-purple)}.tl{color:var(--accent-teal)}
+svg.wires{position:absolute;inset:0;width:1080px;height:1920px;z-index:1;overflow:visible}
+/* NODE: resting = readable (titles text-secondary, subs muted); .on = lit in its role color */
+.node{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:24px;padding:32px 38px}
+.node .top{position:absolute;inset:-2px;border-radius:24px;overflow:hidden;pointer-events:none;opacity:0} /* clip box = the card's OUTER shape */
+.node .top::before{content:"";position:absolute;left:0;right:0;top:0;height:5px}
+.node .nt{font-weight:700;font-size:38px;letter-spacing:.08em;color:var(--text-secondary)}
+.node .ns{font-weight:500;font-size:29px;color:var(--text-muted);margin-top:8px}
+.node.on{border-color:rgba(var(--r),.85);background:linear-gradient(160deg,rgba(var(--r),.13),rgba(18,21,28,.97) 62%);
+  box-shadow:0 0 0 1px rgba(var(--r),.25),0 0 70px rgba(var(--r),.26)}
+.node.on .top{opacity:1}.node.on .top::before{background:linear-gradient(90deg,rgb(var(--r)),transparent)}
+.node.on .nt{color:rgb(var(--r))}.node.on .ns{color:var(--text-primary)}
+/* EDGE: resting muted wire; .on = role color + glow */
+.edge path,.edge line{stroke:#283042;stroke-width:5;fill:none;stroke-linecap:round}
+.edge polygon{fill:#283042}
+.edge.on{filter:drop-shadow(0 0 8px rgba(var(--r),.75))}
+.edge.on path,.edge.on line{stroke:rgb(var(--r))}.edge.on polygon{fill:rgb(var(--r))}
+.rv{opacity:0}.rv.on{opacity:1}
+/* ==== CHART-SPECIFIC ==== */
+h1{font-size:92px}
+.node{padding:30px 36px;overflow:visible}
+.node .nt{font-size:38px}
+.node .ns{font-size:28px}
+.nh{display:flex;align-items:baseline;gap:24px}.nh .ns{margin-top:0}
+.job{position:absolute;left:30px;right:30px;height:104px;border-radius:16px;border:2px solid transparent;background:rgba(255,255,255,.028);
+  display:flex;align-items:center;gap:26px;padding:0 28px}
+.job .n{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:26px;color:var(--text-muted);width:40px;flex:none}
+.job .b{flex:1}
+.job .v{font-weight:700;font-size:37px;letter-spacing:.08em;color:var(--text-secondary);line-height:1.1}
+.job .t{font-weight:500;font-size:27px;color:var(--text-muted);margin-top:4px}
+.job .ck{width:44px;height:44px;color:#2a3140;flex:none}
+.job.on{border-color:rgba(73,224,200,.35);background:rgba(73,224,200,.07)}
+.job.on .v{color:var(--accent-teal)}.job.on .t{color:var(--text-primary)}.job.on .n,.job.on .ck{color:var(--accent-teal)}
+.job.hot{border-color:rgba(73,224,200,.9);background:linear-gradient(90deg,rgba(73,224,200,.22),rgba(73,224,200,.06));box-shadow:0 0 40px rgba(73,224,200,.32)}
+/* the struck fifth row */
+.xrow{right:auto!important;width:800px;opacity:0;border-color:rgba(255,64,96,.85)!important;background:linear-gradient(90deg,rgba(255,64,96,.18),rgba(255,64,96,.05))!important;box-shadow:0 0 40px rgba(255,64,96,.3)}
+.xrow.on{opacity:1}
+.xrow .v{color:var(--accent-red)!important;text-decoration:line-through;text-decoration-thickness:4px}
+.xrow .t{color:#ff8a9e!important}.xrow .n{color:var(--accent-red)!important;font-family:"DM Sans",sans-serif;font-weight:700;font-size:40px}
+.never{padding:9px 20px;border-radius:100px;border:2px solid var(--accent-red);color:var(--accent-red);font-weight:700;font-size:25px;letter-spacing:.14em;background:rgba(255,64,96,.12);flex:none}
+/* dropped: the SAME row element, translated fully out below the box (clear of the box and of the source line) */
+.xrow.hot{transform:translate(28px,176px) rotate(1.5deg);opacity:.45;box-shadow:none}
+.slot{position:absolute;left:30px;right:30px;height:104px;border-radius:16px;border:2px dashed rgba(255,64,96,.35);opacity:0}
+.slot.on{opacity:1}
+.q{position:absolute;z-index:2;left:72px;top:448px;width:936px;opacity:0}
+.q.on{opacity:1}
+.q .qt{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:46px;line-height:1.18;color:var(--text-primary)}
+.q .qt .re{font-style:italic}
+.q .qs{font-family:'JetBrains Mono',monospace;font-size:22px;color:var(--text-muted);margin-top:14px}
+</style></head>
+<body>
+<template id="tpl">
+  <div class="orb" style="width:760px;height:760px;left:160px;top:700px;background:var(--accent-teal);opacity:.14"></div>
+  <div class="hdr">
+    <div class="ey">KASPA L1 · UP CLOSE</div>
+    <h1>Kaspa does<br><span class="g">four jobs</span></h1>
+    <div class="divider"></div>
+  </div>
+  <div class="q x-q">
+    <div class="qt">&ldquo;It does not <span class="re">execute</span><br>vProg logic itself.&rdquo;</div>
+    <div class="qs">vProgs yellow paper, first draft, sec 1.2</div>
+  </div>
+
+  <div class="node on n-kas" style="--r:var(--r-kas);left:72px;top:648px;width:936px;height:702px">
+    <div class="top"></div>
+    <div class="nh"><div class="nt">KASPA L1</div><div class="ns">proof of work base layer</div></div>
+    <div class="job j-ord" style="top:104px"><span class="n">01</span><span class="b"><div class="v">ORDERS</div><div class="t">sequencer</div></span>
+      <svg class="ck" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="3"/><path d="M12 20.5l5.5 5.5L28.5 15" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="job j-sto" style="top:220px"><span class="n">02</span><span class="b"><div class="v">STORES</div><div class="t">data availability + state index</div></span>
+      <svg class="ck" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="3"/><path d="M12 20.5l5.5 5.5L28.5 15" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="job j-chk" style="top:336px"><span class="n">03</span><span class="b"><div class="v">CHECKS PROOFS</div><div class="t">ZK verify</div></span>
+      <svg class="ck" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="3"/><path d="M12 20.5l5.5 5.5L28.5 15" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="job j-met" style="top:452px"><span class="n">04</span><span class="b"><div class="v">METERS</div><div class="t">resource metering</div></span>
+      <svg class="ck" viewBox="0 0 40 40"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="3"/><path d="M12 20.5l5.5 5.5L28.5 15" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="slot x-slot" style="top:568px"></div>
+    <div class="job xrow x-row" style="top:568px"><span class="n">&times;</span><span class="b"><div class="v">EXECUTE</div><div class="t">run the app</div></span><span class="never">NEVER</span></div>
+  </div>
+
+  <div class="src">Source: Kaspa vProgs yellow paper, first draft (v0.0.1), sec 1.2 · 2.4 · 3.1 · 3.2 · 3.3</div>
+</template>
+<script>
+const CHART='c1-kaspa-four-jobs';
+const A=['.j-ord'], B=[...A,'.j-sto'], C=[...B,'.j-chk'], D=[...C,'.j-met'];
+const STATES=[
+  {id:'orders',  on:A, hot:['.j-ord']},                                  // 94.50 entry (continues the overview's lit ORDERS)
+  {id:'stores',  on:B, hot:['.j-sto']},                                  // 'stores' 94.66
+  {id:'checks',  on:C, hot:['.j-chk']},                                  // 'checks' 96.22
+  {id:'meters',  on:D, hot:['.j-met']},                                  // 'meters' 97.42
+  {id:'execute', on:[...D,'.x-row','.x-q']},                             // 'never' 98.54
+  {id:'dropped', on:[...D,'.x-row','.x-q','.x-slot'], hot:['.x-row']},   // out of the box by 'app.' 100.26
+];
+const tpl=document.getElementById('tpl');
+for(const s of STATES){const f=document.createElement('div');f.className='frame';f.id=CHART+'-'+s.id;
+  f.appendChild(tpl.content.cloneNode(true));
+  s.on.forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('on')));
+  (s.hot||[]).forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('hot')));document.body.appendChild(f);}
+
+</script>
+</body></html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>c1-vprog-nodes · kaspa-vprogs · Type 2 SYSTEM-DESIGN · VERTICAL 1080x1920</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<!-- PORTRAIT RE-SHOOT of assets/diagrams/c1-vprog-nodes.html. Same copy, roles, states. vPROG A NODES fills the
+     width on top (servers row, then the badge; the four account chips go 2x2); vPROG B moves BELOW it and its
+     READ (green, lands) and WRITE (red dashed, blocked at the X) wires now reach UP into A. -->
+<style>
+/* ==== BASE (PORTRAIT): tokens + anatomy from skills/container-reference/container-canonical.css, sized for a 1080-wide phone frame ==== */
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--bg-card-hover:#181c26;--accent-green:#00e68a;--accent-cyan:#00c2ff;
+  --accent-gold:#ffd700;--accent-red:#ff4060;--accent-purple:#a855f7;--accent-teal:#49e0c8;
+  --text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;
+  /* role colors for THIS video (rgb triplets): Kaspa L1 = teal (brand greenish cyan) · vProg = purple ·
+     provers / ZK proof = gold · users / tx = cyan · live / ok = green · risk / struck = red */
+  --r-kas:73,224,200;--r-vp:168,85,247;--r-pr:255,215,0;--r-us:0,194,255;--r-ok:0,230,138;--r-bad:255,64,96}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1080px;height:1920px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary);margin-bottom:40px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.hdr{position:absolute;left:72px;right:72px;top:130px;z-index:2}
+.ey{font-size:28px;font-weight:600;letter-spacing:.18em;color:var(--text-muted);margin-bottom:22px;line-height:1.3} /* caps typed literally: keeps "vPROG" */
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:90px;line-height:1.05;letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:76px;height:5px;border-radius:3px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin-top:32px}
+.src{position:absolute;left:72px;right:72px;bottom:196px;font-family:'JetBrains Mono',monospace;font-size:21px;line-height:1.5;color:var(--text-muted);z-index:2}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)}.c{color:var(--accent-cyan)}.go{color:var(--accent-gold)}.re{color:var(--accent-red)}.pu{color:var(--accent-purple)}.tl{color:var(--accent-teal)}
+svg.wires{position:absolute;inset:0;width:1080px;height:1920px;z-index:1;overflow:visible}
+/* NODE: resting = readable (titles text-secondary, subs muted); .on = lit in its role color */
+.node{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:24px;padding:32px 38px}
+.node .top{position:absolute;inset:-2px;border-radius:24px;overflow:hidden;pointer-events:none;opacity:0} /* clip box = the card's OUTER shape */
+.node .top::before{content:"";position:absolute;left:0;right:0;top:0;height:5px}
+.node .nt{font-weight:700;font-size:38px;letter-spacing:.08em;color:var(--text-secondary)}
+.node .ns{font-weight:500;font-size:29px;color:var(--text-muted);margin-top:8px}
+.node.on{border-color:rgba(var(--r),.85);background:linear-gradient(160deg,rgba(var(--r),.13),rgba(18,21,28,.97) 62%);
+  box-shadow:0 0 0 1px rgba(var(--r),.25),0 0 70px rgba(var(--r),.26)}
+.node.on .top{opacity:1}.node.on .top::before{background:linear-gradient(90deg,rgb(var(--r)),transparent)}
+.node.on .nt{color:rgb(var(--r))}.node.on .ns{color:var(--text-primary)}
+/* EDGE: resting muted wire; .on = role color + glow */
+.edge path,.edge line{stroke:#283042;stroke-width:5;fill:none;stroke-linecap:round}
+.edge polygon{fill:#283042}
+.edge.on{filter:drop-shadow(0 0 8px rgba(var(--r),.75))}
+.edge.on path,.edge.on line{stroke:rgb(var(--r))}.edge.on polygon{fill:rgb(var(--r))}
+.rv{opacity:0}.rv.on{opacity:1}
+/* ==== CHART-SPECIFIC ==== */
+h1{font-size:92px}
+.node{padding:30px 38px}
+.node .nt{font-size:38px}
+.srv{display:flex;flex-wrap:wrap;gap:20px 20px;margin-top:26px;align-items:center}
+.srv i{width:92px;height:70px;border-radius:14px;border:2px solid #2a3140;background:#0e1117;position:relative}
+.srv i::before,.srv i::after{content:"";position:absolute;left:14px;right:14px;height:7px;border-radius:4px;background:#2a3140}
+.srv i::before{top:18px}.srv i::after{top:38px}
+.node.on .srv i{border-color:rgba(168,85,247,.65)}.node.on .srv i::before,.node.on .srv i::after{background:rgba(168,85,247,.75)}
+.badge{padding:12px 24px;border-radius:100px;border:2px solid rgba(168,85,247,.85);background:rgba(168,85,247,.14);
+  color:#c89bff;font-weight:700;font-size:27px;letter-spacing:.12em}
+.acc{position:absolute;left:38px;right:38px;top:292px;height:462px;border-radius:18px;border:2px solid #262c3a;background:rgba(255,255,255,.02);padding:26px 30px}
+.acc .ah{font-weight:700;font-size:31px;letter-spacing:.12em;color:var(--text-secondary)}
+.acc .ah .ap{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;letter-spacing:0;font-size:40px;margin-left:10px}
+.acc .ah .ap sub{font-size:26px}
+.acc .as{font-size:27px;color:var(--text-muted);margin-top:4px;font-weight:500}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px;margin-top:22px}
+.ac{height:78px;border-radius:14px;border:2px solid #262c3a;background:#10131a;display:flex;align-items:center;gap:16px;padding:0 22px;color:#3a4254}
+.ac span{display:block;height:9px;border-radius:5px;background:#232937}
+.acc.on{border-color:rgba(168,85,247,.7);background:linear-gradient(160deg,rgba(168,85,247,.12),rgba(168,85,247,.02));box-shadow:0 0 40px rgba(168,85,247,.2)}
+.acc.on .ah{color:#c89bff}.acc.on .as{color:var(--text-primary)}
+.acc.on .ac{border-color:rgba(168,85,247,.5);color:#c89bff}.acc.on .ac span{background:rgba(168,85,247,.45)}
+.lock{position:absolute;display:flex;align-items:center;gap:16px;padding:14px 22px;border-radius:14px;
+  border:2px solid rgba(168,85,247,.9);background:linear-gradient(rgba(168,85,247,.2),rgba(168,85,247,.2)),#12151c;box-shadow:0 0 30px rgba(168,85,247,.35)}
+.lock .lk{color:#c89bff;flex:none}
+.lock .lt{font-weight:700;font-size:26px;letter-spacing:.07em;line-height:1.35;color:var(--text-primary);white-space:nowrap}
+.lock .lt .w{color:#c89bff}.lock .lt .r{color:var(--accent-green)}
+.elabel{position:absolute;z-index:3;display:flex;align-items:center;gap:10px;padding:9px 18px;border-radius:100px;font-weight:700;font-size:25px;letter-spacing:.12em;
+  background:#12151c;border:2px solid;opacity:0}
+.elabel.on{opacity:1}
+.el-r{color:var(--accent-green);border-color:rgba(0,230,138,.8)}
+.el-w{color:var(--accent-red);border-color:rgba(255,64,96,.8)}
+.bx{position:absolute;z-index:3;width:50px;height:50px;border-radius:50%;background:#12151c;border:3px solid var(--accent-red);opacity:0;display:flex;align-items:center;justify-content:center}
+.bx.on{opacity:1}
+.edge.rv{opacity:0}.edge.rv.on{opacity:1}
+</style></head>
+<body>
+<template id="tpl">
+  <div class="orb" style="width:760px;height:760px;left:40px;top:560px;background:var(--accent-purple);opacity:.16"></div>
+  <div class="hdr">
+    <div class="ey">vPROG A · UP CLOSE</div>
+    <h1>The app runs on<br><span class="pu">its own nodes</span></h1>
+    <div class="divider"></div>
+  </div>
+
+  <!-- B (below) -> A (above): READ lands on A, WRITE is stopped at the X under A's edge -->
+  <svg class="wires" viewBox="0 0 1080 1920" style="z-index:3">
+    <g class="edge rv e-rd" style="--r:var(--r-ok)"><path d="M660 1412 C660 1350 610 1336 610 1272"/><polygon points="610,1250 597,1274 623,1274"/></g>
+    <g class="edge rv e-wr" style="--r:var(--r-bad)"><path d="M900 1412 C900 1372 912 1350 912 1322" stroke-dasharray="12 10"/></g>
+  </svg>
+  <div class="elabel rv el-r l-rd" style="left:432px;top:1318px">READ
+    <svg width="24" height="24" viewBox="0 0 26 26"><path d="M4 13.5l6 6L22 7" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="elabel rv el-w l-wr" style="left:704px;top:1300px">WRITE
+    <svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"/></svg></div>
+  <div class="bx rv x-bx" style="left:887px;top:1266px"><svg width="40" height="40" viewBox="0 0 40 40"><path d="M13 13l14 14M27 13L13 27" stroke="#ff4060" stroke-width="4" stroke-linecap="round"/></svg></div>
+
+  <div class="node on n-va" style="--r:var(--r-vp);left:72px;top:446px;width:936px;height:792px">
+    <div class="top"></div>
+    <div class="nt">vPROG A NODES</div>
+    <div class="srv"><i></i><i></i><i></i><i></i><span class="badge rv b-own">RUNS ON ITS OWN NODES</span></div>
+    <div class="acc a-acc">
+      <div class="ah">ACCOUNTS <span class="ap">A<sub>p</sub></span></div>
+      <div class="as">owned by vProg A</div>
+      <div class="chips">
+        <div class="ac"><svg width="34" height="34" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="3"><circle cx="10" cy="15" r="6"/><path d="M16 15h12M24 15v5M28 15v4"/></svg><div style="flex:1"><span style="width:90%"></span><span style="width:60%;margin-top:9px"></span></div></div>
+        <div class="ac"><svg width="34" height="34" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="3"><circle cx="10" cy="15" r="6"/><path d="M16 15h12M24 15v5M28 15v4"/></svg><div style="flex:1"><span style="width:80%"></span><span style="width:70%;margin-top:9px"></span></div></div>
+        <div class="ac"><svg width="34" height="34" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="3"><circle cx="10" cy="15" r="6"/><path d="M16 15h12M24 15v5M28 15v4"/></svg><div style="flex:1"><span style="width:95%"></span><span style="width:50%;margin-top:9px"></span></div></div>
+        <div class="ac"><svg width="34" height="34" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="3"><circle cx="10" cy="15" r="6"/><path d="M16 15h12M24 15v5M28 15v4"/></svg><div style="flex:1"><span style="width:70%"></span><span style="width:85%;margin-top:9px"></span></div></div>
+      </div>
+      <div class="lock rv k-lock" style="bottom:26px;left:30px">
+        <svg class="lk" width="32" height="38" viewBox="0 0 30 36" fill="none" stroke="currentColor" stroke-width="3.2"><rect x="3" y="15" width="24" height="18" rx="4"/><path d="M8 15V10a7 7 0 0 1 14 0v5"/></svg>
+        <div class="lt"><span class="w">WRITE:</span> vProg A only&nbsp;&nbsp;·&nbsp;&nbsp;<span class="r">READ:</span> anyone</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="node n-vb" style="--r:var(--r-vp);left:560px;top:1412px;width:448px;height:170px">
+    <div class="top"></div>
+    <div class="nt">vPROG B</div>
+    <div class="ns">another app</div>
+  </div>
+
+  <div class="src">Source: Kaspa vProgs yellow paper, first draft (v0.0.1), sec 2.2</div>
+</template>
+<script>
+const CHART='c1-vprog-nodes';
+const STATES=[
+  {id:'entry',    on:[]},                                                         // 100.42 entry
+  {id:'nodes',    on:['.b-own']},                                                 // 'nodes' 101.70
+  {id:'accounts', on:['.b-own','.a-acc']},                                        // 'accounts' 104.00
+  {id:'lock',     on:['.b-own','.a-acc','.k-lock','.e-rd','.e-wr','.l-rd','.l-wr','.x-bx']}, // 'write' 106.34
+];
+const tpl=document.getElementById('tpl');
+for(const s of STATES){const f=document.createElement('div');f.className='frame';f.id=CHART+'-'+s.id;
+  f.appendChild(tpl.content.cloneNode(true));
+  s.on.forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('on')));
+  (s.hot||[]).forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('hot')));document.body.appendChild(f);}
+
+</script>
+</body></html>

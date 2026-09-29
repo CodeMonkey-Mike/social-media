@@ -1,0 +1,131 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>vprog-loop-mini · kaspa-vprogs · Type 2 SYSTEM-DESIGN · VERTICAL 1080x1920</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<!-- PORTRAIT RE-SHOOT of assets/diagrams/vprog-loop-mini.html. Same copy, roles, colours and states;
+     the left-to-right loop (vProg nodes -> proof -> Kaspa) now runs TOP to BOTTOM, full frame width. -->
+<style>
+/* ==== BASE (PORTRAIT): tokens + anatomy from skills/container-reference/container-canonical.css, sized for a 1080-wide phone frame ==== */
+:root{--bg-deep:#0a0c10;--bg-card:#12151c;--bg-card-hover:#181c26;--accent-green:#00e68a;--accent-cyan:#00c2ff;
+  --accent-gold:#ffd700;--accent-red:#ff4060;--accent-purple:#a855f7;--accent-teal:#49e0c8;
+  --text-primary:#e8eaf0;--text-secondary:#8892a4;--text-muted:#505a6e;--border:#1e2330;
+  /* role colors for THIS video (rgb triplets): Kaspa L1 = teal (brand greenish cyan) · vProg = purple ·
+     provers / ZK proof = gold · users / tx = cyan · live / ok = green · risk / struck = red */
+  --r-kas:73,224,200;--r-vp:168,85,247;--r-pr:255,215,0;--r-us:0,194,255;--r-ok:0,230,138;--r-bad:255,64,96}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1080px;height:1920px;background:var(--bg-deep);position:relative;overflow:hidden;color:var(--text-primary);margin-bottom:40px}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:9;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.hdr{position:absolute;left:72px;right:72px;top:130px;z-index:2}
+.ey{font-size:28px;font-weight:600;letter-spacing:.18em;color:var(--text-muted);margin-bottom:22px;line-height:1.3} /* caps typed literally: keeps "vPROG" */
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:90px;line-height:1.05;letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:76px;height:5px;border-radius:3px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin-top:32px}
+.src{position:absolute;left:72px;right:72px;bottom:196px;font-family:'JetBrains Mono',monospace;font-size:21px;line-height:1.5;color:var(--text-muted);z-index:2}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.g{color:var(--accent-green)}.c{color:var(--accent-cyan)}.go{color:var(--accent-gold)}.re{color:var(--accent-red)}.pu{color:var(--accent-purple)}.tl{color:var(--accent-teal)}
+svg.wires{position:absolute;inset:0;width:1080px;height:1920px;z-index:1;overflow:visible}
+/* NODE: resting = readable (titles text-secondary, subs muted); .on = lit in its role color */
+.node{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:24px;padding:32px 38px}
+.node .top{position:absolute;inset:-2px;border-radius:24px;overflow:hidden;pointer-events:none;opacity:0} /* clip box = the card's OUTER shape */
+.node .top::before{content:"";position:absolute;left:0;right:0;top:0;height:5px}
+.node .nt{font-weight:700;font-size:38px;letter-spacing:.08em;color:var(--text-secondary)}
+.node .ns{font-weight:500;font-size:29px;color:var(--text-muted);margin-top:8px}
+.node.on{border-color:rgba(var(--r),.85);background:linear-gradient(160deg,rgba(var(--r),.13),rgba(18,21,28,.97) 62%);
+  box-shadow:0 0 0 1px rgba(var(--r),.25),0 0 70px rgba(var(--r),.26)}
+.node.on .top{opacity:1}.node.on .top::before{background:linear-gradient(90deg,rgb(var(--r)),transparent)}
+.node.on .nt{color:rgb(var(--r))}.node.on .ns{color:var(--text-primary)}
+/* EDGE: resting muted wire; .on = role color + glow */
+.edge path,.edge line{stroke:#283042;stroke-width:5;fill:none;stroke-linecap:round}
+.edge polygon{fill:#283042}
+.edge.on{filter:drop-shadow(0 0 8px rgba(var(--r),.75))}
+.edge.on path,.edge.on line{stroke:rgb(var(--r))}.edge.on polygon{fill:rgb(var(--r))}
+.rv{opacity:0}.rv.on{opacity:1}
+/* ==== CHART-SPECIFIC ==== */
+.chip{display:inline-flex;align-items:center;gap:14px;padding:16px 24px;border-radius:14px;border:2px solid var(--border);
+  background:rgba(255,255,255,.02);font-weight:700;font-size:28px;letter-spacing:.1em;color:var(--text-secondary)}
+.chip.on{border-color:rgba(var(--r),.8);background:rgba(var(--r),.12);color:rgb(var(--r));box-shadow:0 0 30px rgba(var(--r),.25)}
+.vrow{display:flex;align-items:center;gap:34px;margin-top:30px}
+.srv{display:flex;gap:18px}
+.srv i{width:86px;height:66px;border-radius:13px;border:2px solid #2a3140;background:#0e1117;position:relative}
+.srv i::before,.srv i::after{content:"";position:absolute;left:14px;right:14px;height:7px;border-radius:4px;background:#2a3140}
+.srv i::before{top:17px}.srv i::after{top:36px}
+.node.on .srv i{border-color:rgba(var(--r),.6)}.node.on .srv i::before,.node.on .srv i::after{background:rgba(var(--r),.7)}
+.token{position:absolute;z-index:3;left:390px;width:300px;justify-content:center;display:flex;align-items:center;gap:14px;padding:16px 26px;border-radius:100px;
+  background:linear-gradient(rgba(255,215,0,.16),rgba(255,215,0,.16)),#12151c;border:2px solid var(--accent-gold);color:var(--accent-gold);font-weight:700;font-size:30px;letter-spacing:.12em;
+  box-shadow:0 0 40px rgba(255,215,0,.35)}
+.wlabel{position:absolute;z-index:2;font-weight:500;font-size:30px;line-height:1.3;color:var(--text-muted)}
+.wlabel.on{color:var(--accent-gold)}
+.badge{display:inline-flex;align-items:center;gap:14px;margin-top:28px;padding:14px 26px;border-radius:100px;
+  background:rgba(0,230,138,.13);border:2px solid rgba(0,230,138,.7);color:var(--accent-green);font-weight:700;font-size:28px;letter-spacing:.12em}
+</style></head>
+<body>
+<template id="tpl">
+  <div class="orb" style="width:620px;height:620px;left:-220px;top:640px;background:var(--accent-purple)"></div>
+  <div class="orb" style="width:600px;height:600px;right:-220px;top:1260px;background:var(--accent-teal);opacity:.22"></div>
+  <div class="hdr">
+    <div class="ey">WHAT A vPROG IS</div>
+    <h1>An app on<br>its own nodes.<br><span class="g">Kaspa checks<br>its proof.</span></h1>
+    <div class="divider"></div>
+  </div>
+
+  <!-- proof wire: vProg nodes (bottom edge y 938) DOWN to Kaspa L1 (top edge y 1310) -->
+  <svg class="wires" viewBox="0 0 1080 1920">
+    <g class="edge e-proof" style="--r:var(--r-pr)">
+      <line x1="540" y1="938" x2="540" y2="1282"/>
+      <polygon points="540,1304 525,1278 555,1278"/>
+    </g>
+  </svg>
+  <div class="wlabel l-proof" style="left:582px;width:420px;top:1080px">posts a<br>zero-knowledge proof</div>
+
+  <div class="node n-vp" style="--r:var(--r-vp);left:72px;top:690px;width:936px;height:248px">
+    <div class="top"></div>
+    <div class="nt">vPROG'S OWN NODES</div>
+    <div class="vrow">
+      <div class="srv"><i></i><i></i><i></i></div>
+      <div class="chip c-state" style="--r:var(--r-vp)">
+        <svg width="30" height="34" viewBox="0 0 26 30"><ellipse cx="13" cy="6" rx="11" ry="4.5" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M2 6v18c0 2.5 5 4.5 11 4.5s11-2 11-4.5V6M2 15c0 2.5 5 4.5 11 4.5S24 17.5 24 15" fill="none" stroke="currentColor" stroke-width="2.6"/></svg>
+        OWN STATE
+      </div>
+    </div>
+  </div>
+
+  <div class="node n-kas" style="--r:var(--r-kas);left:72px;top:1310px;width:936px;height:252px">
+    <div class="top"></div>
+    <div class="nt">KASPA L1</div>
+    <div class="ns">checks the proof</div>
+    <div class="badge rv b-ok">
+      <svg width="30" height="30" viewBox="0 0 26 26"><path d="M4 13.5l6 6L22 7" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      VERIFIED
+    </div>
+  </div>
+
+  <!-- token device: launches just under the vProg node, lands just above Kaspa (vertical travel, x fixed) -->
+  <div class="token rv t-launch" style="top:968px">
+    <svg width="28" height="32" viewBox="0 0 24 28"><path d="M12 2l9 3.5v7.5c0 6-4 10.5-9 13-5-2.5-9-7-9-13V5.5z" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M7.5 14l3.2 3.2L17 10.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+    ZK PROOF
+  </div>
+  <div class="token rv t-land" style="top:1196px">
+    <svg width="28" height="32" viewBox="0 0 24 28"><path d="M12 2l9 3.5v7.5c0 6-4 10.5-9 13-5-2.5-9-7-9-13V5.5z" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M7.5 14l3.2 3.2L17 10.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+    ZK PROOF
+  </div>
+
+  <div class="src">Source: Kaspa vProgs yellow paper, first draft (v0.0.1), sec 2.2 · 2.2.1 · 3.1</div>
+</template>
+<script>
+const CHART='vprog-loop-mini';
+/* each state = selectors that get .on (cumulative by design; shared geometry never moves) */
+const STATES=[
+  {id:'nodes',  on:['.n-vp']},                                                       // 9.50 entry, 'node' 9.78
+  {id:'state',  on:['.n-vp','.c-state']},                                            // 'state' 10.86
+  {id:'proof',  on:['.n-vp','.c-state','.e-proof','.l-proof','.t-launch']},          // 'posts' 11.40
+  {id:'landed', on:['.n-vp','.c-state','.e-proof','.l-proof','.t-land','.n-kas','.b-ok']}, // 'Kaspa' 14.02
+];
+const tpl=document.getElementById('tpl');
+for(const s of STATES){const f=document.createElement('div');f.className='frame';f.id=CHART+'-'+s.id;
+  f.appendChild(tpl.content.cloneNode(true));
+  s.on.forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('on')));
+  (s.hot||[]).forEach(q=>f.querySelectorAll(q).forEach(e=>e.classList.add('hot')));document.body.appendChild(f);}
+
+</script>
+</body></html>

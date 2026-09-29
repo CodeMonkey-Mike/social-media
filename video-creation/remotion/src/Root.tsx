@@ -1003,6 +1003,7 @@ import { BeerKaspaFirstVprogLive, VP3_FPS, VP3_DURATION } from './BeerKaspaFirst
 // BeerKaspa114xEightDays / BK4_ / captionsBeerKaspa114xEightDays / broll-bk4 / thumb-bk4 / ovl-bk4).
 import { BeerKaspa114xEightDays, BK4_FPS, BK4_DURATION } from './BeerKaspa114xEightDays';
 import { KaspaVprogs, DUR as KVP_DUR, FPS as KVP_FPS } from './KaspaVprogs';
+import { KaspaVprogsVertical, DUR as KVPV_DUR, FPS as KVPV_FPS } from './KaspaVprogsVertical';
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -2617,6 +2618,15 @@ export const RemotionRoot: React.FC = () => {
         fps={KVP_FPS}
         width={1920}
         height={1080}
+      />
+      {/* longform-edited VERTICAL: kaspa-vprogs 9:16 twin (1080x1920 @30, same DUR; --public-dir assets/vertical) */}
+      <Composition
+        id="KaspaVprogsVertical"
+        component={KaspaVprogsVertical}
+        durationInFrames={KVPV_DUR}
+        fps={KVPV_FPS}
+        width={1080}
+        height={1920}
       />
     </>
   );
