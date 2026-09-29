@@ -33,7 +33,7 @@ comp-ready b-roll files. The pick is a taste call (that is why you exist); the m
   for an off-tone clip.
 
 ## Mechanics (per the skill) + hard rules
-- Downloads via the skill's tool with the existing Envato login/session. **Browser flows are
+- Downloads via the skill's PYTHON tools (`search_envato.py`, `download_envato.py`) with the existing Envato login/session. **Browser flows are
   ONE-ATTEMPT: if a download seems stuck, READ THE LOG — never relaunch blind, never kill main Chrome**
   (per-profile kills only).
 - Post-process every clip: transcode to 1080p H.264 if oversized (~100 MB cap), **strip audio**

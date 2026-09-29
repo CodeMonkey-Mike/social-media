@@ -80,3 +80,9 @@ Title cards fall out of the music bed map (screenplay.md Convention 2: a card on
 
 ## 2026-09-28 cover ruling (Mike)
 - DELIVERED stamp on the R8 receipt at 177.66: APPROVED. Quote wording on screen matches the page ('three to six months').
+
+## 2026-09-28 blueprint rulings (Mike)
+- Hook kick under 'Kaspa' at 0:00.0: keep, drop only if chunk QA shows it masks the word.
+- Vibe-cut duck depth: -4.2 dB per the automation row; MUSIC-PLAN prose aligned.
+- Bed C closing hit on the ONSET of 'later.' (202.10), as planned.
+- Ending: the recorded call to action, as built.

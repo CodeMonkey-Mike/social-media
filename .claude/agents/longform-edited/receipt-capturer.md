@@ -22,7 +22,7 @@ comp-ready capture files.
 2. `video-creation/longform-edited/skills/broll-and-containers/broll-and-containers.md` — the "QA every captured asset"
    hard gate (the Grayscale bot-block lesson) and the receipt-type treatments ("Cover STYLE devices" §1).
 
-## How to capture (Python-first: Playwright's Python API)
+## How to capture (Python-first: `video-creation/skills/receipt-capture/capture.py` for batch jobs, or Playwright's Python API)
 - **Screenshots:** full viewport 1920px wide, device-scale 2 for crisp text; capture the WHOLE relevant
   region (for R(article), the full readable page or the section containing the read paragraphs — the
   comp does the push-in/motion, so deliver more resolution than the frame, never a pre-cropped tight

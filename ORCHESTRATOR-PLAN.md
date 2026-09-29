@@ -599,6 +599,16 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   timecodes, SAY coverage, zero orphans vs assets/, every MUSIC-PLAN hard hit has its SFX event, every card ON
   has its impact, the §2 sections, no em dashes). Mike's rulings applied on kaspa-vprogs before it ran: DELIVERED
   stamp on R8 approved.
+- **Wave D node 4, `transitions` + the last two browser ports (2026-09-28):** the `transition-strategist`
+  (Fable/max) assigns every scene change; the node persists `TRANSITION-PLAN.json`, verifies it from disk (one
+  rmn: card pick, one face pick, every lib: id resolves, source prefix + numeric tc on every row, melt/spin duck
+  + justify, budget == rows), renders `TRANSITIONS.md` in the §14 skeleton (`render_transitions.py`) and gates it
+  (`lint_transitions.py`: sections, prefixes, ids, one look per family, every card ON + FACE edge covered). Mike's
+  "port anything you forgot" audit found the two browser tools the lane still called in JS: `envato-broll`
+  (`search_envato.py` / `download_envato.py` / `setup_envato.py`) and `receipt-capture/capture.py`, both ported
+  and verified LIVE (a search; a 272 MB re-download that rode the Chrome-153 crash path; a 3200x4000 capture).
+  Remaining JS in the tree is out of this lane: the transition-library one-time extractors, music-sourcing,
+  elevenlabs/higgsfield (other tracks), the frozen twins, and per-project scripts inside old media/ folders.
 - **claudeisnaughty mapping:** order / skipped docs (#3, #4) = edges; paths + naming (#1) =
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;

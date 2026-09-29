@@ -64,7 +64,7 @@ DOCS = {
     "screenplay": "SCREENPLAY.md", "as_recorded": "AS-RECORDED.md", "data": "DATA.md",
     "broll_plan": "BROLL-PLAN.md", "edit_plan_prep": "EDIT-PLAN-prep.md",
     "cue_sheet": "CUE-SHEET.md", "transitions": "TRANSITIONS.md", "edit_plan": "EDIT-PLAN.md",
-    "project_log": "PROJECT-LOG.md", "cover_plan": "COVER-PLAN.json",
+    "project_log": "PROJECT-LOG.md", "cover_plan": "COVER-PLAN.json", "transition_plan": "TRANSITION-PLAN.json",
     "music_plan": "MUSIC-PLAN.json",
 }
 # comp-build.md §10 — the merged assets/ layout
