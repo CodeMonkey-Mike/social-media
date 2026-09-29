@@ -1177,6 +1177,16 @@ def _lib_ids():
     return {r["id"] for r in rows if isinstance(r, dict) and r.get("id")}
 
 
+def _normalize_transition_ids(plan: dict) -> dict:
+    """The strategist's schema carries `source` (lib|rmn|hand) beside a bare `id`; the doc convention is the
+    prefixed form (`lib:melt-rgb-3`). Prefix in place so every downstream reader sees one form."""
+    for r in plan.get("transitions") or []:
+        tid, src = str(r.get("id", "")), str(r.get("source", "")).strip().lower()
+        if tid and not re.match(r"^(rmn|lib|hand):", tid) and src in ("lib", "rmn", "hand"):
+            r["id"] = f"{src}:{tid}"
+    return plan
+
+
 def _transition_plan_check(plan: dict, duration: float):
     """TRANSITION-PLAN.json verified from disk: schema, one card pick (rmn:), one face pick, every lib: id
     resolves in the library, every row source-tagged with a numeric tc on the spine, melt/spin rows duck
@@ -1188,11 +1198,12 @@ def _transition_plan_check(plan: dict, duration: float):
         return "em dash in the plan text (persona rule)"
     ids = _lib_ids()
     card = str((plan.get("card_pick") or {}).get("id", ""))
-    if not card.startswith("rmn:"):
-        return f"card_pick.id must be an rmn: presentation, got {card!r}"
+    if not re.match(r"^(rmn|hand):[a-z0-9-]+$", card):
+        return f"card_pick.id must be rmn:<presentation> or hand:<name> (e.g. hand:cube-3d), got {card!r}"
     face = str((plan.get("face_glitch_pick") or {}).get("id", ""))
-    if not (face.startswith("hand:") or (face.startswith("lib:") and face[4:] in ids)):
-        return f"face_glitch_pick.id must be hand:<name> or a library id, got {face!r}"
+    fam_ok = face.startswith("lib:") and (face[4:] in ids or any(i.startswith(face[4:] + "-") for i in ids))
+    if not (face.startswith("hand:") or fam_ok):
+        return f"face_glitch_pick.id must be hand:<name>, a library id or a library family (lib:blocks-max), got {face!r}"
     rows = plan.get("transitions") or []
     if not rows:
         return "transitions is empty"
@@ -1256,6 +1267,10 @@ def transitions(state: LongformState) -> LongformState:
         plan = json.loads(dest.read_text(encoding="utf-8"))
     except Exception as e:
         return C._fail(state, node, f"TRANSITION-PLAN.json invalid JSON: {e}")
+    before = json.dumps(plan, sort_keys=True)
+    plan = _normalize_transition_ids(plan)
+    if json.dumps(plan, sort_keys=True) != before:
+        C._write_json_atomic(dest, plan)
     why = _transition_plan_check(plan, duration)
     if why:
         return C._fail(state, node, f"TRANSITION-PLAN.json failed verification: {why} (fix the plan and re-drive; --redo transitions re-runs the strategist)")

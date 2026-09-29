@@ -60,9 +60,9 @@ def main():
                 warns.append(f"lib:{tid} is a FAMILY shorthand in prose (fine); the per-cut rows must carry exact ids")
             else:
                 fails.append(f"lib:{tid} does not resolve in assets/transitions/library.json")
-    card_picks = set(re.findall(r"This video = \*\*(rmn:[a-z0-9-]+)\*\*", doc))
+    card_picks = set(re.findall(r"This video = \*\*((?:rmn|hand):[a-z0-9-]+)\*\*", doc))
     if len(card_picks) != 1:
-        fails.append(f"§1 must name exactly ONE rmn: card pick (found {sorted(card_picks)})")
+        fails.append(f"§1 must name exactly ONE rmn:/hand: card pick (found {sorted(card_picks)})")
     face_picks = set(re.findall(r"FACE cut in/out → \*\*((?:lib|hand):[a-z0-9-]+)\*\*", doc))
     if len(face_picks) != 1:
         fails.append(f"§3 must name exactly ONE face pick (found {sorted(face_picks)})")

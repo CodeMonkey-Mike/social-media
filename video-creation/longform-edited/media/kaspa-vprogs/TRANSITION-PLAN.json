@@ -1,0 +1,467 @@
+{
+  "video": "kaspa-vprogs",
+  "spine": "video-creation/longform-edited/media/kaspa-vprogs/spine/ALL.f.cut.mp4",
+  "aspect": "16:9",
+  "card_pick": {
+    "id": "hand:cube-3d",
+    "why": "ONE card move for both cards: cube, from-right, the hand-rolled rotateY turn (~11f in, hold through the 1.5 s pause, never cube back out). Tagged hand:cube-3d, NOT rmn:cube, because @remotion/transitions ships no cube presentation (comp-build §6, verified on kaspa 30bps). Safe CSS-3D, no canvas render-flag risk. Blocky 3D geometry is on-brand for a BlockDAG video and shares one 3D language with the spin-3d marquee. Each card = self-contained pause scene over the outgoing cover; the locked spine is never wrapped in TransitionSeries. Card impact (DSGNImpt, 1.16 s tail) is the EDIT-PLAN's, not a transition SFX. Timecodes below are FINAL-spine, PRE-card-pause seconds, exactly as the CUE-SHEET; the comp routes them through sh().",
+    "fires_at": [
+      {
+        "tc": 40.22,
+        "card": "NOT AN L2"
+      },
+      {
+        "tc": 137.58,
+        "card": "WHERE IT STANDS"
+      }
+    ]
+  },
+  "face_glitch_pick": {
+    "id": "lib:blocks-max",
+    "why": "Blocks Max over film burn: a digital block-shatter is the register of a vProgs / BlockDAG explainer (gear-3 hook, cold tech palette), and it stays cold so it never stacks warm-on-warm with the F1 light leak (leak 1.7-5.7, glitch window opens 6.85). Only 3 face cuts exist, so rotate 1/2/3 with no repeat. Both face-side nodes must be a faithful SpineStill (Freeze, muted, same punch-in scale, same source) per comp-build §6a; the face-out at 7.333 carries the F1 ~17% punch scale from 3.78."
+  },
+  "melt_pick": {
+    "family": "melt-rgb",
+    "why": "Chromatic channel reform reads as one structure reflowing into its successor, the exact TRANSFORM move for C1's lineage. Variant melt-rgb-3 (R-50 / G+50 / B+75) ghosts cyan-blue, so the spectral burst sits inside Kaspa's greenish-cyan palette instead of flashing red over a teal diagram. Full 0.76 s, energy medium, fits the gear-2 machine beat. kind:shader, full-frame warp, spine never peeks."
+  },
+  "spin_pick": {
+    "family": "spin-3d-side-ease",
+    "why": "The 3D side-ease turn over mirrored padding echoes the cube card, keeping one 3D language across cards and marquee. Full 0.88 s, energy high, reserved for the gear-3 'Look at this ladder' reveal. kind:geometric, mirrored padding fills the frame mid-turn, occlusion safe. Known engine trait (kaspa 30bps 2c): a mirrored wrap-copy of the incoming chart can show for 1-2 of 26 frames mid-turn; benign on a rising ladder image."
+  },
+  "transitions": [
+    {
+      "tc": 3.78,
+      "bucket": "face",
+      "change": "F1 intra-face punch-in on 'real apps' (hold 7.33 s > 2 s), holds to the face-out",
+      "source": "hand",
+      "id": "hand:punch",
+      "role": "punch-in",
+      "duration_s": 0.0,
+      "sfx_duck": false,
+      "why": "Hard ~15-20% re-engagement snap on the word onset, no glitch; the F1 light leak (1.7-5.7) is an overlay, not a transition, and never shares a frame with the 7.333 glitch."
+    },
+    {
+      "tc": 7.333,
+      "bucket": "face",
+      "change": "F1 face OUT (picture edge 7.333) -> R1 yellow paper title page",
+      "source": "lib",
+      "id": "lib:blocks-max-1",
+      "role": "face-cut",
+      "duration_s": 0.96,
+      "sfx_duck": true,
+      "why": "The per-video face pick; 'not an L2.' lands, the frame block-shatters into the receipt. The glitch owns the cut; R1's scale-back pop is the incoming node's own motion, not a second transition. Outgoing node = SpineStill Freeze at the punched scale, muted. SFX rings from the wrapper under 'A vProg is an app' (7.4)."
+    },
+    {
+      "tc": 9.5,
+      "bucket": "container",
+      "change": "R1 receipt -> vprog-loop-mini (nodes state)",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Quiet default: cross-fade + 0.93->1 scale-in. The mini loop is a teaching container, not a marquee; its state swaps (10.9 / 11.4 / 14.0) are internal 6-8f cross-fades."
+    },
+    {
+      "tc": 14.54,
+      "bucket": "container",
+      "change": "vprog-loop-mini (landed) -> R2 rusty-kaspa v2.0.0 Toccata release",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Diagram to receipt, quiet; the receipt's slow push-in to the KIP list is its own reading move."
+    },
+    {
+      "tc": 21.22,
+      "bucket": "broll",
+      "change": "R2 receipt -> BR-1 glass planes rising (Envato, muted)",
+      "source": "hand",
+      "id": "hand:fade",
+      "role": "broll-fade",
+      "duration_s": 0.5,
+      "sfx_duck": false,
+      "why": "Envato video never glitches; 0.5 s dissolve in on 'the next layer up'."
+    },
+    {
+      "tc": 25.22,
+      "bucket": "broll",
+      "change": "BR-1 out -> ten-bps-card (single state; '10 BLOCKS / SEC' comp slam at 25.92 is internal)",
+      "source": "hand",
+      "id": "hand:fade",
+      "role": "broll-fade",
+      "duration_s": 0.5,
+      "sfx_duck": false,
+      "why": "BR-1 dissolves out 0.5 s while the type card rides in with its 0.93->1 scale-in; the 25.92 slam is component animation, no SFX."
+    },
+    {
+      "tc": 28.167,
+      "bucket": "face",
+      "change": "ten-bps-card -> F2 face IN (picture edge 28.167, not the 28.10 word start)",
+      "source": "lib",
+      "id": "lib:blocks-max-2",
+      "role": "face-cut",
+      "duration_s": 0.96,
+      "sfx_duck": true,
+      "why": "Per-video face pick, second variant so no adjacent repeat. Never a cross-fade to the face. The glitch peak lands on 'Kaspa is never going to run your app'; Bed A already dips -3 dB here, so the wrapper SFX must sit under the locked thesis line. Incoming node = live spine at scale 1.0."
+    },
+    {
+      "tc": 30.62,
+      "bucket": "face",
+      "change": "F2 intra-face punch-in on the second 'Kaspa is going to verify it' (hold 3.77 s > 2 s)",
+      "source": "hand",
+      "id": "hand:punch",
+      "role": "punch-in",
+      "duration_s": 0.0,
+      "sfx_duck": false,
+      "why": "Hard ~15-20% snap 2.45 s into the hold, 0.83 s clear of the 31.45 glitch head; no light leak (hold < 5 s)."
+    },
+    {
+      "tc": 31.933,
+      "bucket": "face",
+      "change": "F2 face OUT -> execute-verify-flip s1 ('EXECUTE' struck)",
+      "source": "lib",
+      "id": "lib:blocks-max-3",
+      "role": "face-cut",
+      "duration_s": 0.96,
+      "sfx_duck": true,
+      "why": "Third variant closes the rotation; the face shatters into the thesis-payoff type card. Outgoing SpineStill carries the 30.62 punch scale. SFX under 'And that one flip'; Bed A returns to nominal on this cut."
+    },
+    {
+      "tc": 38.82,
+      "bucket": "broll",
+      "change": "execute-verify-flip s5 -> BR-2 glass shatter (Envato, muted)",
+      "source": "hand",
+      "id": "hand:fade",
+      "role": "broll-fade",
+      "duration_s": 0.5,
+      "sfx_duck": false,
+      "why": "Dissolve in on 'So let's break this all down'; the 37.94 slam impact tail (gone by 39.6) and Bed A's ring-out carry it. No glitch on Envato video."
+    },
+    {
+      "tc": 40.22,
+      "bucket": "card",
+      "change": "BR-2 hard OUT -> CH2 title card 'NOT AN L2' (1.5 s pause, Bed A -> B inside it)",
+      "source": "hand",
+      "id": "hand:cube-3d",
+      "role": "card",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "The one card move: cube from-right rotates in ~11f over the shatter's last frame and HOLDS to pause end (readable 1.13 s >= 1.0 s, comp asserts). Never cube back out. The DSGNImpt impact is the EDIT-PLAN's card punctuation."
+    },
+    {
+      "tc": 40.22,
+      "bucket": "container",
+      "change": "CH2 card (pause end) -> R3 ethereum-magicians roadmap, wide establish",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "The incoming chapter visual takes over at pause end with its own quiet ingress; Bed B is fading up, so nothing else fires here. R3's two-stage read is internal motion."
+    },
+    {
+      "tc": 52.18,
+      "bucket": "container",
+      "change": "R3 receipt -> c2-l2-stack (empty state)",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "C2 enters QUIET on purpose (gear 2, receipt -> diagram, not flagged by the CUE-SHEET); protecting the spin reserve for the CH3 ladder. Row reveals 54.0-62.1 are internal."
+    },
+    {
+      "tc": 64.6,
+      "bucket": "broll",
+      "change": "c2-l2-stack (pieces pulse) -> BR-3 ice glow cracks (Envato, muted)",
+      "source": "hand",
+      "id": "hand:fade",
+      "role": "broll-fade",
+      "duration_s": 0.5,
+      "sfx_duck": false,
+      "why": "Cut lands on 'break' (64.68); dissolve so the crack IS the break. Envato video fades, never glitches."
+    },
+    {
+      "tc": 67.8,
+      "bucket": "broll",
+      "change": "BR-3 out -> sompolinsky-name-card s1",
+      "source": "hand",
+      "id": "hand:fade",
+      "role": "broll-fade",
+      "duration_s": 0.5,
+      "sfx_duck": false,
+      "why": "0.5 s dissolve out under the name card's 0.93->1 scale-in; the 'December 2025' stamp at 72.38 is internal."
+    },
+    {
+      "tc": 72.96,
+      "bucket": "container",
+      "change": "sompolinsky-name-card s2 -> R4 Kaspa Magazine 'obsolete path of L2s' quote",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Text card to receipt, quiet; the push-in landing on 'obsolete' (76.78) is the receipt's own move."
+    },
+    {
+      "tc": 81.7,
+      "bucket": "container",
+      "change": "R4 receipt -> c1-overview (dim), THE C1 diagram entrance",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Considered for SPIN and rejected: C1's marquee is the 94.5 MELT 12.8 s later, Bed B ducks -2 dB here for the densest narration, and two shader moves inside 13 s under the machine beat would burn the move's specialness (same ruling as kaspa 30bps 217.36). Entrance on 81.70 exactly, the 0.08 s breath after the cut junction."
+    },
+    {
+      "tc": 94.5,
+      "bucket": "diagram-marquee",
+      "change": "c1-overview (orders state, ORDERS pulsed 94.06) -> c1-kaspa-four-jobs (orders state, Kaspa node enlarged)",
+      "source": "lib",
+      "id": "lib:melt-rgb-3",
+      "role": "MELT-transform",
+      "duration_s": 0.76,
+      "sfx_duck": true,
+      "why": "TRANSFORM: same lineage, the whole vProg machine liquefies and reforms as its own Kaspa node blown up with the four job rows; the CUE-SHEET's flagged MELT candidate. The melt REPLACES the 5-frame push-in match (one move, not two): c1-kaspa-four-jobs opens on its -orders state the frame after the melt settles, ORDERS already lit, STORES lands 94.66. Cover -> cover, both nodes are stills, full-frame warp so the blacked spine never peeks. Cyan-blue ghosting stays in the Kaspa palette. SFX must duck under 'It stores the data' (94.5-94.66) with Bed B already at -25 under."
+    },
+    {
+      "tc": 100.42,
+      "bucket": "container",
+      "change": "c1-kaspa-four-jobs (dropped) -> c1-vprog-nodes (entry)",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Sibling break-up of C1, spotlight swap; a second melt here would spray the move. Quiet so the 94.5 melt stays the one reform in the machine beat."
+    },
+    {
+      "tc": 106.9,
+      "bucket": "container",
+      "change": "c1-vprog-nodes (lock) -> c1-provers (entry)",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Sibling break-up, quiet; the ZK PROOF token flight (110.02-111.66) is internal animation."
+    },
+    {
+      "tc": 112.06,
+      "bucket": "container",
+      "change": "c1-provers (landed) -> zk-math-receipt s1",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Diagram to text card; the teaching floor stays quiet (no SFX, per EDIT-PLAN)."
+    },
+    {
+      "tc": 118.38,
+      "bucket": "container",
+      "change": "zk-math-receipt s4 -> sovereignty-card s1",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Text card swap, quiet; Bed B ramps back to nominal on this word."
+    },
+    {
+      "tc": 123.34,
+      "bucket": "container",
+      "change": "sovereignty-card s3 -> composability-card (entry)",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "'1 of 2' to '2 of 2', a paired spotlight; quiet cross-fade keeps the pair reading as one idea."
+    },
+    {
+      "tc": 130.44,
+      "bucket": "container",
+      "change": "composability-card (one-unit) -> R5-a docs.kaspa.org/toccata activation line",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Diagram to receipt, quiet; subtle push is the receipt's own."
+    },
+    {
+      "tc": 133.44,
+      "bucket": "container",
+      "change": "R5-a -> R5-b (same page, ZK precompiles row)",
+      "source": "hand",
+      "id": "hand:xfade",
+      "role": "container-xfade",
+      "duration_s": 0.27,
+      "sfx_duck": false,
+      "why": "Receipt-to-receipt on the same page: 8f cross-fade with NO scale reset, so it reads as the page continuing, not a new document."
+    },
+    {
+      "tc": 137.58,
+      "bucket": "card",
+      "change": "R5-b -> CH3 title card 'WHERE IT STANDS' (1.5 s pause, Bed B -> C inside it)",
+      "source": "hand",
+      "id": "hand:cube-3d",
+      "role": "card",
+      "duration_s": 0.37,
+      "sfx_duck": false,
+      "why": "Same cube from-right as CH2 (one card move for the whole video); rotates in ~11f, holds to pause end, no cube-out. Same DSGNImpt impact on purpose."
+    },
+    {
+      "tc": 137.58,
+      "bucket": "ai-still",
+      "change": "CH3 card (pause end) -> IMG-1 ladder into the DAG sky (ChatGPT still, 2.26 s)",
+      "source": "lib",
+      "id": "lib:badsignal-short-1",
+      "role": "glitch-still",
+      "duration_s": 0.48,
+      "sfx_duck": true,
+      "why": "Bucket 2: AI still ingress gets a Bad Signal glitch. SHORT variant chosen because the spin marquee fires 2.26 s later: short keeps ~1.5 s of clean still and avoids three SFX events (card impact, glitch, spin) piling into 4 s. SFX under 'Now where does this all actually stand?' while Bed C is fading up."
+    },
+    {
+      "tc": 139.84,
+      "bucket": "chart-marquee",
+      "change": "IMG-1 ladder still -> c3-ladder (Type 1 animated chart, empty state)",
+      "source": "lib",
+      "id": "lib:spin-3d-side-ease-up",
+      "role": "SPIN-newfacet",
+      "duration_s": 0.88,
+      "sfx_duck": true,
+      "why": "NEW FACET: the atmosphere still does not reflow into anything, you TURN to the new instrument, the code-built ladder, exactly on 'Look at this ladder'; the CUE-SHEET's flagged SPIN candidate. Full-length, UP swing matches the rungs landing bottom to top and the rail climbing 985 -> 500. Image -> code chart keeps the engine clear of the video cost trap (§6a); the c3-ladder node must read the comp's absolute frame context, not local useCurrentFrame, so it does not freeze inside the engine's nested Sequences. Mirrored padding fills the frame mid-turn, spine never peeks. Whoosh ducks under 'Look at this ladder' (Bed C on its -19 under entry ramp); no EDIT-PLAN impact here, so no stack. The chart's 0.93->1 scale-in is superseded by the spin at this one entry."
+    },
+    {
+      "tc": 160.34,
+      "bucket": "container",
+      "change": "c3-ladder (silverscript payoff, drifted to 1.03) -> R6 silverscript v1.0.0 release",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Chart to receipt cross-fade (EDIT-PLAN); the ladder's whole-card drift ends at 160.34 so the outgoing frame is settled."
+    },
+    {
+      "tc": 163.28,
+      "bucket": "container",
+      "change": "R6 receipt -> c3-next-rungs (entry, dashed rungs enlarged)",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Considered for MELT and rejected: the CUE-SHEET's 'push-in match from c3-ladder's top' has R6 between the two, so the on-screen predecessor is a GitHub receipt, not the ladder; melting a receipt into a diagram is not a transform of one structure. The 0.93->1 scale-in reads as the push-in on its own."
+    },
+    {
+      "tc": 169.78,
+      "bucket": "container",
+      "change": "c3-next-rungs (construction) -> R7 kaspa.org/build 'In construction'",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Diagram to receipt, quiet."
+    },
+    {
+      "tc": 172.84,
+      "bucket": "container",
+      "change": "R7 -> R8 Kaspa Magazine hard-fork timing paragraph (wide stage)",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Receipt to receipt, different pages, so the scale-in applies; the riser (175.66) and DELIVERED stamp crash zoom (177.66) are internal to R8."
+    },
+    {
+      "tc": 178.54,
+      "bucket": "broll",
+      "change": "R8 (DELIVERED stamp) -> BR-4 datacenter corridor dolly (Envato, muted, LEAD)",
+      "source": "hand",
+      "id": "hand:fade",
+      "role": "broll-fade",
+      "duration_s": 0.5,
+      "sfx_duck": false,
+      "why": "Dissolve in on 'Everyone is racing' while the 177.66 impact tail fades 178.54-179.3; the stamp crash zoom has settled by the cut. No glitch on Envato video."
+    },
+    {
+      "tc": 181.4,
+      "bucket": "ai-still",
+      "change": "BR-4 out -> IMG-2 lone layer above towers (ChatGPT still, 3.36 s)",
+      "source": "lib",
+      "id": "lib:badsignal-max-1",
+      "role": "glitch-still",
+      "duration_s": 0.76,
+      "sfx_duck": true,
+      "why": "Bucket 2 ingress, MAX variant: the persona's neutral-layer thesis gets the full 0.76 s hit on a 3.36 s still, gear 3. COST TRAP: the outgoing scene is a VIDEO, so hand the engine a pre-extracted still of BR-4's cut frame (file 3.86 s) via the CUTFRAME map, never the live clip (§6a). SFX under 'The more they race'; Bed C is on its 9 -> 8 step, no impact here."
+    },
+    {
+      "tc": 184.76,
+      "bucket": "container",
+      "change": "IMG-2 -> pow-money-hammer s1 'PROOF OF WORK MONEY'",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "Text hammer stack stays on the quiet default; the Kick_Impact on each line is the EDIT-PLAN's punctuation, and the three slams are internal. No spin on a text card."
+    },
+    {
+      "tc": 188.64,
+      "bucket": "container",
+      "change": "pow-money-hammer s3 -> cta-engage s1",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "CTA card, conversational, quiet."
+    },
+    {
+      "tc": 195.1,
+      "bucket": "ai-still",
+      "change": "cta-engage s3 -> IMG-3 Kaspa coin sunrise (ChatGPT still, 1.9 s)",
+      "source": "lib",
+      "id": "lib:badsignal-short-2",
+      "role": "glitch-still",
+      "duration_s": 0.48,
+      "sfx_duck": true,
+      "why": "Bucket 2 ingress, SHORT variant (a 0.76 s glitch would eat 40% of a 1.9 s still); second short id, so the three stills run short-1 / max-1 / short-2 with no adjacent repeat. SFX under 'Gonna be some exciting times'."
+    },
+    {
+      "tc": 196.98,
+      "bucket": "container",
+      "change": "IMG-3 -> end-card-community s1, holds to the last frame 202.8",
+      "source": "hand",
+      "id": "hand:xfade-scale",
+      "role": "container-xfade",
+      "duration_s": 0.35,
+      "sfx_duck": false,
+      "why": "End card enters quiet under Bed C's climb; Bed C's epic hit on 'later.' (202.10) and the sub impact are the close. No transition at 202.8: the card covers through the last frame, never black."
+    }
+  ],
+  "melt_spin_budget": {
+    "melt_used": 1,
+    "spin_used": 1,
+    "note": "Reserved to the two marquee diagram/chart beats the CUE-SHEET flagged: MELT 94.5 (C1 overview reforms into its Kaspa-node break-up, TRANSFORM) and SPIN 139.84 (image turns into the animated C3 ladder, NEW FACET). On a 3:23 spine, 1+1 is the deliberate count. Considered and rejected to protect the reserve: 52.18 C2 entrance (gear 2, receipt -> diagram, not flagged), 81.7 C1 entrance (a second shader move 13 s before the melt under the ducked machine beat), 100.42 / 106.9 C1 siblings (melt spray), 163.28 c3-next-rungs (R6 sits between it and the ladder, not a direct transform partner), 184.76 pow-money-hammer (text card). 0.0 opens ON face (no cut) and 202.8 ends on the held end card (no cut)."
+  },
+  "consistency_check": "One card move (hand:cube-3d, from-right, both cards, rotate in and hold, never cube out). One face pick (lib:blocks-max, rotating 1/2/3 across the only 3 face cuts, plus hand:punch on both face holds > 2 s; no cross-fade to the face anywhere). One melt look (melt-rgb-3, used once). One spin look (spin-3d-side-ease-up, used once). Every ChatGPT still ingresses on Cinematic Bad Signal (short-1 / max-1 / short-2, no adjacent repeat); no glitch on any Envato clip, container, diagram, chart or receipt. Every Envato clip fades 0.5 s. Every text container, receipt and non-marquee diagram swap is hand:xfade-scale 0.35 s (0.93 -> 1), the one same-page receipt pair is an 8f cross-fade with no scale reset, and every in-container state swap (74 state rows) is component animation (6-8f cross-fade), never a transition. Every transition is expressible on the continuous OffthreadVideo spine: face cuts run TransitionClip over the blacked spine with a faithful SpineStill on the face side, covers animate their own in/out, and the melt/spin are cover -> cover full-frame (melt warps full-frame, spin rides mirrored padding), so the spine never peeks and no TransitionSeries touches the locked audio. Every lib: row carries baked SFX and is flagged sfx_duck for the mix so no whoosh sits on a word; hand: rows carry no SFX. Timecodes are FINAL-spine, PRE-card-pause seconds (CUE-SHEET base); the comp routes them through sh() (+1.5 s after 40.22, +3.0 s after 137.58).",
+  "open_questions": [
+    "Face pick: lib:blocks-max (chosen, cold digital register, continuity with kaspa 30bps) vs film burn (the warm standing default). With only 3 face cuts and a warm F1 light leak, film burn is a legitimate alternative; overrule and every face-cut row becomes hand:filmburn with nothing else changing.",
+    "94.5 MELT replaces the 5-frame push-in match (one move, not two). Consequences for the builder: c1-kaspa-four-jobs opens on its -orders state the frame after the melt settles, and the c1-overview ORDERS pulse (94.06, 16f, ends 94.59) overlaps the melt window head (94.12), so either trim the pulse to ~12f or accept the outgoing still frozen mid-pulse at 1.03 (comp-build §6a rule 3: the outgoing node must carry the live scale). Recommendation: trim the pulse to end by 94.10. Prefer the plain push-in match instead? Then the melt budget drops to 0 and C1 has no marquee move.",
+    "Card pick is cube (hand:cube-3d, from-right). Alternatives from the safe set: flip or slide. book-flip / swap need the canvas-draw-element render flag and are NOT proposed.",
+    "Optional second SPIN at 81.7 (THE C1 entrance, 'So here's how a vProg actually works'). Default NO: it would put two shader moves 13 s apart under the ducked machine beat. Say the word and it becomes lib:spin-3d-side-ease-right (0.88 s) with the melt kept at 94.5.",
+    "IMG-1 (137.58) takes the SHORT badsignal because the spin lands 2.26 s later. If Mike wants the max hit out of the CH3 card, swap to badsignal-max-2 and accept the denser SFX cluster (card impact, glitch, spin whoosh inside 4 s).",
+    "181.4 badsignal fires out of a VIDEO (BR-4). The builder must feed the engine the pre-extracted BR-4 cut-frame still (CUTFRAME map, §6a cost trap); if the render still fights, the fallback is the house image ingress hand:cross-warp for IMG-2 only, declared with // TRANSITIONS_WAIVED.",
+    "Melt variant melt-rgb-3 (cyan-blue ghosting) was chosen over melt-rgb-1 (red ghosting, the kaspa 30bps pick) to stay inside the Kaspa palette. If Mike wants cross-video continuity instead, melt-rgb-1 is a drop-in, same duration.",
+    "Known spin engine trait: a mirrored wrap-copy of the incoming ladder may show for 1-2 frames mid-turn at 139.84 (kaspa 30bps 2c). Flagged, not re-planned; if it bothers on the draft, the swap is a melt-rgb-3 at that beat (which would make it 2 melts, 0 spins and lose the 3D echo of the cube)."
+  ]
+}
