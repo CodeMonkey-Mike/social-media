@@ -1,0 +1,447 @@
+{
+  "batch": "beer-and-kaspa",
+  "date": "2026-09-27",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/beer and kaspa LOW BPS VERTICAL/beer and kaspa LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-09-27",
+  "brief": "Limit YT posts to exactly ONE (one YT post + its carousel). Other Lane 3 formats at defaults. (Mike is adding 3 YT quizzes from this stream separately; the operator authors those, not the drafter.)",
+  "fact_check": [
+    {
+      "claim": "Kaspa went on a really nice ride, 5 cents is the resistance level where the sell orders sit, if it breaks it goes to 5.5 cents; Mike would like to wake up and see it broke through 5 cents (transcript, stream of Sept 26)",
+      "verdict": "verified and UPDATED to 2026-09-27: $KAS $0.0485, market cap about $1.345B, rank 71, +7.8% 24h, +25.2% 7d, +66.2% 30d (CoinGecko); DiarioBitcoin logged a +17% day on Sept 26 at $0.0468. It has NOT closed above 5 cents at drafting time, so all copy says 'knocking on 5 cents' / 'just under 5 cents', never 'broke 5 cents'; the 5-cent resistance and 5.5-cent next stop are Mike's own levels in first person.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=kaspa (2026-09-27); diariobitcoin.com Kaspa analisis del 26 de septiembre de 2026"
+    },
+    {
+      "claim": "Kaspa flipped Polygon on market cap (a chat comment Mike confirmed: 'well deserved')",
+      "verdict": "verified on 2026-09-27: Kaspa $1.345B (rank 71) vs POL (Polygon Ecosystem Token) $1.280B (rank 73) on CoinGecko. Copy: 'flipped Polygon ($POL) on market cap this week, about $1.35B vs $1.28B'. 'One of the most VC-backed chains of the last cycle' is general wording (Polygon's 2022 Sequoia-led $450M raise is public record but the number is not used).",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=kaspa,polygon-ecosystem-token (2026-09-27)"
+    },
+    {
+      "claim": "The first vProg is live on Kaspa testnet ('Big tech toe' = tic-tac-toe), a verifiable program with real execution and real settlement, still a stack of PRs to review and merge, already a working proof of concept, the front end can be enhanced and built separately (transcript)",
+      "verdict": "verified: KuCoin news (2026-09-27, citing @Kaspionkas) 'The first vProg is live on testnet: a fully verifiable tic-tac-toe game with real off-chain execution + on-chain ZK settlement'; the guest program is biryukovmaxim/vprog-tictactoe (stakes locked in a pot, the vProg settles the pot to the winner); public TN10 desk notes record a stress test with vprogs/tic-tac-toe from 25 Sep 20:12 to 26 Sep 13:16 CEST (about 17 hours). Copy: 'tic-tac-toe game with real off-chain execution and zero-knowledge settlement on the Kaspa L1', 'proof of concept, a stack of PRs still to merge', '17-hour stress test on testnet this week'. Testnet only, never described as mainnet.",
+      "source": "kucoin.com/news/trends/KAS/6ab8dffe74fd460007c5a9fe; github.com/biryukovmaxim/vprog-tictactoe; github.com/STP-KAS/tn10-vprogs-stress-findings; github.com/kaspanet/vprogs/pull/149"
+    },
+    {
+      "claim": "Kaspa does 10 blocks per second (used in copy as context for vProgs)",
+      "verdict": "verified public fact: Kaspa mainnet has run at 10 blocks per second since the Crescendo hard fork (May 2025).",
+      "source": "kaspa.org / Crescendo hard fork coverage, May 2025 (well-established)"
+    },
+    {
+      "claim": "TAO was pumping too, Mike swing-traded a small bag at about $319 to $327 (transcript)",
+      "verdict": "verified and UPDATED: $TAO $334.81, +32.5% 7d, +34.9% 30d, market cap about $3.8B (CoinGecko, 2026-09-27). Copy: 'up about 32% on the week to around $335'. The swing trade / profit-taking is trader-portfolio framing (persona no_rotation_framing) and is NOT used; the tweet is the persona core thesis (TAO = neutral AI inference layer, KAS = PoW money layer). The humanoid-robot-shot-by-a-cannon video and the Shenzhen 'robot valley' clip could not be verified and are written only as the general 'robots are going to be everywhere in a couple of years'. persona project_handles tao = null, so no Follow line.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=bittensor (2026-09-27); persona.json core_theses"
+    },
+    {
+      "claim": "'Graham coin, Graham, or just Graham, ton coin' is pumping (transcript)",
+      "verdict": "verified: Toncoin was renamed Gram, ticker TON to GRAM, on 2026-06-15 after an 81% community vote (name and ticker change only, network still The Open Network). CoinGecko lists it as Gram: $1.61, +10.2% 24h, +18.2% 7d. Whisper's 'Graham' is Gram. Copy uses '$GRAM' (persona still lists $TON; current reality wins per verified_claims_only). Poll eligibility key stays 'toncoin' (no TON poll drafted this batch).",
+      "source": "kucoin.com/news/flash/ton-native-token-to-be-renamed-gram-on-june-15-2026; coinmarketcap.com/academy/article/toncoin-rebrands-to-gram; api.coingecko.com (the-open-network, 2026-09-27)"
+    },
+    {
+      "claim": "Quant is ripping, Litecoin was about $40 in the bear market and is $71 now, big caps pumping while micro caps have not moved (transcript)",
+      "verdict": "verified and UPDATED: $QNT $162.92, +54.9% 24h, +157% 7d; $LTC $71.70, +25.9% 7d, +46% 30d (CoinGecko 2026-09-27). Copy uses the weekly percentages only; the '$40 in the bear market' Litecoin number is not used. 'Micro caps have barely moved yet' is Mike's own market read in the thread.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=quant-network,litecoin (2026-09-27)"
+    },
+    {
+      "claim": "Bitcoin dominance is falling off a cliff since June, total market cap excluding the top 10 keeps going up, others dominance just broke through its downtrend resistance, so alt season has started even though Bitcoin only just got above the 50-week moving average (transcript)",
+      "verdict": "verified in general form and UPDATED: Bitcoin dominance fell below 60% in the week ending Sept 26 (58.5% on Sept 26) while $BTC gained; the last break below 60% was September 2025, when the altcoin season index hit 78 on Sept 20 and fell to 14 by Dec 19; seven large alts outran Bitcoin on the week (LTC +23.7% in that count); $2.4B flowed into spot Bitcoin ETFs Sept 21-25. The 'others dominance broke its downtrend' and 'total ex-top-10 keeps climbing' lines are Mike's own chart reads, written as his read. $BTC $84,984, +5.7% 7d (CoinGecko). Copy: 'dropped below 60% this week', '$BTC did about 6%', 'alt season started the same week Bitcoin reclaimed its 50-week SMA'.",
+      "source": "finance.yahoo.com/markets/crypto/articles/bitcoin-share-crypto-market-drops-170914034.html (2026-09-26); tradingview.com cryptobriefing 'Bitcoin dominance falls below 60%'; api.coingecko.com (bitcoin, 2026-09-27)"
+    },
+    {
+      "claim": "Bitcoin at about $84,400 needs to hold the May high (about $82,700) into the weekly close, the 50-week moving average is about $77K, and we cannot officially call a bull market until two weekly closes above the 50-week SMA; Benjamin Cowan's 'I am already wrong' video (transcript)",
+      "verdict": "verified and UPDATED: the Sept 20 weekly close was $81,159, the first close above the 50-week SMA (about $78,788) since Nov 9, 2025; the May 2026 peak was near $82,000; $BTC trades near $85K on 2026-09-27. Because the Sept 27 weekly close is unknown at drafting time and the batch posts days later, no copy predicts or reports that close: the thread states Mike's two-close rule, that the first close printed Sept 20 at $81,159, and that Bitcoin has traded around $85K since. The May-high level is not quoted as a number. Benjamin Cowan's video is not drafted (commentary on another creator's mea culpa).",
+      "source": "thecryptobasic.com/2026/09/21/bitcoin-records-first-weekly-close-above-50-week-average-since-november-2025; coindesk.com/markets/2026/09/21/bitcoin-s-price-has-cleared-a-key-hurdle...; stealthex.io/blog/bitcoin-price-forecast-support-recovery (May peak near $82,000); api.coingecko.com (bitcoin, 2026-09-27)"
+    },
+    {
+      "claim": "Long-term holders sold the whole way down and now, with price going up, only a small amount are selling; the Bitcoin god candles are buyers offsetting sellers (transcript, on-chain chart shown on stream)",
+      "verdict": "Mike's own on-chain chart read, written in first person as his read, no specific figure claimed; the four-year cycle zombie framing follows persona core_theses (their October demand turns October green; never written as the zombies causing an October bottom).",
+      "source": "transcript; persona.json core_theses"
+    },
+    {
+      "claim": "Golden Kitty is at $5.3M and Mike thinks it is $8M in a couple of weeks (transcript)",
+      "verdict": "verified and UPDATED: $GOLDEN $0.00556, market cap about $5.56M, +10.7% 24h, +88% 7d, new ATH $0.00592 on 2026-09-27 (CoinGecko). Copy: 'printed another all-time high this week, up about 88% on the week to a $5.5M cap'; the $8M target is Mike's own call ('my $8M call'). Official X handle is not in persona project_handles, so no Follow line.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=golden-kitty (2026-09-27)"
+    },
+    {
+      "claim": "Kaspa to 50 cents: 'over the next few years, yeah definitely, I think we're going to have 50 cents' (transcript, answering chat)",
+      "verdict": "Mike's own forward-looking prediction, written in first person; used as the deliberate engagement-bait one-liner and in the YT post / poll setup.",
+      "source": "transcript"
+    },
+    {
+      "claim": "KRC20 days are coming back because Kaspa is getting more popular and vProgs are coming; long road, 2027 or even 2028 (transcript)",
+      "verdict": "Mike's own thesis, kept as his read with his own years; no KRC20 token is named (the dead 'Knight' token aside is dropped).",
+      "source": "transcript"
+    },
+    {
+      "claim": "Dropped from the batch: promo code ARCHIE / 50% off (membership pitch, already shipped in archie-promo); the 110x PerpsPad, 17x and 13x STONK calls (already shipped in perpspad / ready-for-pumps); the What If yacht and Archie bashing (already covered, and a $IF mention would force the Follow line); the October / Pumpkin Halloween memes, Bike Tyson, Swole, Clanker, Bio, Polly, Near, Zeke (unverified small tokens, or a Kaspa fork Mike himself is unsure about; persona verified_claims_only); the Florida property accepting Kaspa (chat comment, unverified); 'the crypto market added $650B in six months' (chat comment, unverified); the US-China tariff and AI hotline headline, Trump rejecting an Iran deal, the 'crypto's biggest mistake' politics thread (political tangents); the YouTube subscriber-count comparison and 'am I being throttled' talk (self-focused); 'maybe I should have gotten into Quant' (self-deprecating framing); the Archetype / Crypto John sold-Kaspa gossip (unverified third parties); Benjamin Cowan commentary; the robotics-stock ad clip (Tesla, Intuitive Surgical, Oklo: not Mike's content).",
+      "verdict": "not drafted per persona avoid_in_drafts and the agent instructions (no membership pitches, no re-announcements, no unverified claims, no political tangents, no self-deprecating framing).",
+      "source": "persona.json avoid_in_drafts; repurpose/output/archie-promo-lane3-plan.json; repurpose/output/perpspad-lane3-plan.json"
+    },
+    {
+      "claim": "Housecoin and Pengu on this stream",
+      "verdict": "NOT discussed (Pengu only as 'Polly pays rewards in Pengu', an unverified pairing token), so they carry no weight this batch; the weighting applied is Kaspa first (3 of 6 tweets, the YT post, thread 1, the X poll), then TAO (1 tweet), Gram / Toncoin (inside the alt-season tweet and thread), then Golden Kitty (1 one-liner).",
+      "source": "transcript"
+    },
+    {
+      "claim": "Whisper corrections applied: 'Tao' / 'towel' -> TAO; 'Graham' -> Gram ($GRAM); 'Big tech toe' -> tic-tac-toe; 'B-PROG' / 'vprogs' -> vProg / vProgs; 'cell orders' -> sell orders; 'Robert her chain' / 'Robahood' -> Robinhood Chain; 'golden kid' -> Golden Kitty; 'Cass' -> Kaspa (chat shorthand); 'Irish diversions' -> bearish divergences (not used); '50 week moving average' -> 50-week SMA; 'tangent' -> Tangem wallet (not used)",
+      "verdict": "applied throughout; none of the persona-listed mishears (Casper, scion, $WHATIF, 50WMA, the lowercase Greek-letter mishear of TAO) appear in the copy.",
+      "source": "persona.json terminology_rules, ticker_corrections"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-09-27-kaspa-week-flipped-polygon-first-vprog": "version1 (high-energy news-flash: the post is three pieces of Kaspa NEWS in one week (the Polygon flip, the +66% month knocking on 5 cents, the first vProg live on testnet) plus a price call, which is the V1 register. V4 was weighed first and rejected: no usable topic PHOTO exists for this post (kaspa-logo.png is a rendered logo, not a public figure, mascot or scene, and the V4 data slides would carry specific numbers ChatGPT is known to drift). V2 editorial is too quiet for a news week. Every slide is pinned to version1/yt-posts-828eee71-01-hook.png per the V1 contamination note, with the 'N OF 5' counter text stated explicitly and the pure-green (not chartreuse) instruction in every prompt; the Kaspa coin is described from the exemplar's own coin.)"
+  },
+  "missing_references": [
+    "Polygon / $POL logo: none in images/reference; rendered only as a plain dull purple coin with no mark (x-tweets 106be266, ig-single 106be266, carousel slide 7c4108cf)",
+    "Bitcoin logo / coin: no bitcoin reference file; the Bitcoin stand-in in 1eba2be0 and 2c3d5860 is a plain unmarked gold coin and Bitcoin is named only in copy",
+    "Quant, Litecoin, Gram (formerly Toncoin) logos: none; rendered as plain white, silver, blue and purple coins with no marks in the alt-season scene 1eba2be0"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "106be266",
+      "slug": "kaspa-knocking-on-5-cents-flips-polygon",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A confident anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, strides up a tall dark podium staircase and plants one foot on the top step, chest out, triumphant, while a smaller plain dull purple coin character with a surprised face slides down onto the step below it, arms flailing. Just above the top step hangs a thin horizontal bar of pale glowing light that the Kaspa coin is reaching up to punch through with one fist. The purple coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background with faint drifting particles. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, cold purple fill on the smaller coin, a soft spotlight from above. Mood: triumphant, hungry for the next level. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "106be266",
+      "slug": "kaspa-knocking-on-5-cents-flips-polygon",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A confident anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, strides up a tall dark podium staircase that fills the portrait frame from bottom to top and plants one foot on the top step, chest out, triumphant, while a smaller plain dull purple coin character with a surprised face slides down onto the step below it, arms flailing. Just above the top step hangs a thin horizontal bar of pale glowing light that the Kaspa coin is reaching up to punch through with one fist. The purple coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background with faint drifting particles. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, cold purple fill on the smaller coin, a soft spotlight from above. Mood: triumphant, hungry for the next level. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "19c20b91",
+      "slug": "first-vprog-live-kaspa-testnet",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. In a dark futuristic workshop, a glowing greenish cyan Kaspa coin character with the backwards-K (mirrored K) Kaspa logo exactly like the coin in the attached reference image, with little arms and legs, leans over a floating holographic 3 by 3 game grid made of thin greenish cyan light lines and places a glowing ring token into the centre square with one hand; two glowing cross-shaped tokens and one ring token already sit in other squares (simple geometric crosses and rings, not letters). Beneath the grid a faint lattice of interconnected glowing blocks fans out like a directed graph and feeds into the board, and a small glowing seal of light pulses where the board meets the lattice, as if the game is being stamped and verified. Deep navy near-black background with faint circuit traces. Dramatic cinematic lighting: greenish cyan rim light from the coin and the grid, soft cool blue fill. Mood: calm, focused, a first step. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text, letters, numbers or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "19c20b91",
+      "slug": "first-vprog-live-kaspa-testnet",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. In a dark futuristic workshop, a glowing greenish cyan Kaspa coin character with the backwards-K (mirrored K) Kaspa logo exactly like the coin in the attached reference image, with little arms and legs, leans over a floating holographic 3 by 3 game grid made of thin greenish cyan light lines and places a glowing ring token into the centre square with one hand; two glowing cross-shaped tokens and one ring token already sit in other squares (simple geometric crosses and rings, not letters). Beneath the grid, filling the lower part of the tall portrait frame, a faint lattice of interconnected glowing blocks fans out like a directed graph and feeds into the board, and a small glowing seal of light pulses where the board meets the lattice, as if the game is being stamped and verified. Deep navy near-black background with faint circuit traces. Dramatic cinematic lighting: greenish cyan rim light from the coin and the grid, soft cool blue fill. Mood: calm, focused, a first step. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text, letters, numbers or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "1eba2be0",
+      "slug": "bitcoin-dominance-under-60-alt-season",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A huge plain gold coin character with a sleepy, surprised face sits heavily on a dark throne in the centre of a dark arena, and all around it a crowd of smaller anthropomorphized coin characters leaps upward off the arena floor on bright trails of light, arms raised, cheering, clearly rising past the big coin's shoulders: at the front of the crowd a greenish cyan Kaspa coin with the backwards-K (mirrored K) Kaspa logo exactly like the coin in the attached reference image leaps highest, flanked by a plain white coin, a plain silver coin, a plain blue coin and a plain purple coin. Every coin face other than the Kaspa coin is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting: warm gold glow around the throne fading as the smaller coins rise, greenish cyan rim light on the Kaspa coin, multicoloured light trails behind the others. Mood: hungry, the crowd breaking loose. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "1fc28922",
+      "slug": "tao-ai-inference-layer-robots",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A sleek white-and-silver Bittensor coin, its face embossed with the mark shown in the attached reference image (a bold black glyph shaped like a capital T with a curved, tapering stem), hovers at the centre of a dark hangar like a small sun, radiating soft white light, and a row of friendly rounded humanoid robots with glossy white shells and glowing chest cores stands around it in a semicircle, each robot's chest core lit by a thin thread of white light running from the coin, as if the coin is powering their thinking. THE MARK ON THE COIN IS COPIED EXACTLY FROM THE REFERENCE: use the attached reference only for that glyph's shape; do not copy the reference's white background and add no other lettering. The robots carry no markings, badges or lettering. Deep navy near-black background with faint hangar structure. Dramatic cinematic lighting: bright white glow from the coin, cool blue rim light on the robots, soft floor reflections. Mood: calm, powerful, the future switching on. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "2c3d5860",
+      "slug": "kaspa-50-cents-internet-speed",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A grinning anthropomorphized Kaspa coin character with the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs and cool dark sunglasses, rockets along a dark highway made of glowing fibre-optic light strands, leaving a long greenish cyan light trail, while far behind it a plain slow gold coin character trudges along pulling a heavy old wooden cart, looking exhausted. The road ahead curves up toward a huge bright greenish cyan sunrise on the horizon. The gold coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting: greenish cyan rim light on the Kaspa coin and the road, warm dim gold on the cart. Mood: triumphant, unstoppable speed. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "2c3d5860",
+      "slug": "kaspa-50-cents-internet-speed",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A grinning anthropomorphized Kaspa coin character with the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs and cool dark sunglasses, rockets along a dark highway made of glowing fibre-optic light strands, leaving a long greenish cyan light trail, while far behind it a plain slow gold coin character trudges along pulling a heavy old wooden cart, looking exhausted. The road ahead climbs up through the tall portrait frame toward a huge bright greenish cyan sunrise on the horizon. The gold coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting: greenish cyan rim light on the Kaspa coin and the road, warm dim gold on the cart. Mood: triumphant, unstoppable speed. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "6f385591",
+      "slug": "golden-kitty-new-ath-8m-in-view",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A gleaming chrome-gold cat trophy figurine, a stylized sitting cat sculpted in polished gold with a small round collar medallion, modeled on the gold cat statue shown on the LEFT side of the attached reference image, stands on top of a tall dark mountain peak at night with gold light blazing off it; a series of lower peaks steps up toward it from the left, each capped with a small pale marker of light, and beyond the trophy, higher still in the distance, one more peak rises into the clouds with a faint gold glow at its summit. Gold sparkles drift upward around the trophy. The trophy carries no lettering or plaque. The attached reference contains a screenshot with text on its right side: do NOT reproduce that screenshot, its text, its logo or any of its lettering; use only the gold cat statue as the shape, pose and colour key. Deep navy near-black sky with faint stars. Dramatic cinematic lighting: warm gold rim light on the trophy, cold blue moonlight on the peaks. Mood: triumphant, the next peak already in view. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\golden-kitty.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "7551b067",
+      "slug": "01-hook",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '1 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'KASPA FLIPPED POLYGON, PRINTED A 66% MONTH, AND THE FIRST VPROG WENT LIVE.'. Behind the headline, a large glowing greenish cyan Kaspa coin rises on a vertical beam of neon green light out of a dark chart panel whose green bars climb steeply from left to right, sparks scattering from the beam. The Kaspa coin, where it appears, is a glowing greenish cyan coin with the backwards-K (mirrored K) Kaspa logo exactly like the Kaspa coin in the attached reference image; every other coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "7c4108cf",
+      "slug": "02-flipped-polygon",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '2 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'KASPA FLIPPED POLYGON ON MARKET CAP: ABOUT $1.35B VS $1.28B.'. Behind the headline, two coins on a split dark panel: on the right a large glowing greenish cyan Kaspa coin lifted high on a tall neon green pedestal, on the left a smaller plain dull purple coin sitting on a lower grey pedestal, with a tall neon green bar beside the Kaspa coin and a shorter grey bar beside the purple coin. The Kaspa coin, where it appears, is a glowing greenish cyan coin with the backwards-K (mirrored K) Kaspa logo exactly like the Kaspa coin in the attached reference image; every other coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "946db0ac",
+      "slug": "03-first-vprog",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '3 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'FIRST VPROG LIVE ON TESTNET: OFF-CHAIN EXECUTION, ZK SETTLEMENT ON THE L1.'. Behind the headline, a glowing greenish cyan Kaspa coin beside a floating holographic 3 by 3 grid drawn in neon green light lines holding simple geometric cross and ring tokens (not letters), with a faint lattice of interconnected glowing blocks feeding into the grid from below like a directed graph. The Kaspa coin, where it appears, is a glowing greenish cyan coin with the backwards-K (mirrored K) Kaspa logo exactly like the Kaspa coin in the attached reference image; every other coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "ac9333e4",
+      "slug": "04-the-long-road",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '4 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: '50 CENTS OVER THE NEXT FEW YEARS. 2027, MAYBE 2028. STICK WITH IT.'. Behind the headline, a long road built from glowing neon green blocks stretches from the bottom of the frame toward a distant horizon where a huge glowing greenish cyan Kaspa coin rises like a sun, a small dark chart panel at the bottom showing green bars stepping higher toward the horizon. The Kaspa coin, where it appears, is a glowing greenish cyan coin with the backwards-K (mirrored K) Kaspa logo exactly like the Kaspa coin in the attached reference image; every other coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "c51cc864",
+      "slug": "05-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '5 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'WHERE DOES $KAS TOP OUT THIS BULL RUN?'. Below the headline, four dark rounded option panels stacked vertically with neon green borders, rendered exactly: 'UNDER 25 CENTS', '25 TO 50 CENTS', '50 CENTS TO $1', 'OVER $1'. Beside the panels a glowing greenish cyan Kaspa coin with a large neon green question mark symbol hovering above it. The Kaspa coin, where it appears, is a glowing greenish cyan coin with the backwards-K (mirrored K) Kaspa logo exactly like the Kaspa coin in the attached reference image; every other coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Kaspa ($KAS) is up about 25% on the week and about 66% on the month, and it is knocking on 5 cents.\n\n5 cents is where the sell orders are stacked. Break it and the next stop is 5.5 cents.\n\nMeanwhile $KAS quietly flipped Polygon ($POL) on market cap this week, about $1.35B vs $1.28B... a fair-launch proof-of-work DAG with no premine just passed one of the most VC-backed chains of the last cycle. Well deserved.\n\n#kaspa #kas",
+      "hook": "Kaspa ($KAS) is up about 25% on the week and about 66% on the month, and it is knocking on 5 cents.",
+      "image_id": "106be266"
+    },
+    {
+      "tweet": "The first vProg is live on Kaspa testnet.\n\nA tic-tac-toe game with real off-chain execution and zero-knowledge settlement on the Kaspa L1. Proof of concept, a stack of PRs still to merge, but it runs.\n\nThat is what vProgs are: verifiable programs. Anybody can build an app that runs off-chain and proves itself back to a proof-of-work DAG doing 10 blocks per second. The 'Kaspa is just a payments coin' crowd is going to have a rough 2027.\n\n#kaspa #vprogs",
+      "hook": "The first vProg is live on Kaspa testnet.",
+      "image_id": "19c20b91"
+    },
+    {
+      "tweet": "Bitcoin dominance dropped below 60% this week and the alts did not wait for permission.\n\n$QNT +157%, $TAO +32%, $LTC +26%, $KAS +25%, $GRAM +18% on the week, while $BTC did about 6%.\n\nBitcoin dominance has been rolling over since June and total market cap excluding the top 10 keeps climbing. My read: alt season started the same week Bitcoin reclaimed its 50-week SMA, which is not supposed to happen this early.\n\n#altseason #bitcoin #crypto",
+      "hook": "Bitcoin dominance dropped below 60% this week and the alts did not wait for permission.",
+      "image_id": "1eba2be0"
+    },
+    {
+      "tweet": "$TAO is up about 32% on the week to around $335, and the AI trade in crypto is just getting started.\n\nRobots are going to be everywhere in a couple of years. Every one of them runs on inference, and the governments and corporations racing to control that compute are exactly why a neutral inference layer nobody owns gets more valuable.\n\n$TAO is the AI inference layer. $KAS is the proof-of-work money layer. Two sides of the same principle, and both are ripping this week.\n\n#bittensor #tao",
+      "hook": "$TAO is up about 32% on the week to around $335, and the AI trade in crypto is just getting started.",
+      "image_id": "1fc28922"
+    },
+    {
+      "tweet": "Kaspa ($KAS) is knocking on 5 cents this week, and 50 cents over the next few years is going to happen 😎\n\n#kaspa #kas",
+      "hook": "Kaspa ($KAS) is knocking on 5 cents this week, and 50 cents over the next few years is going to happen 😎",
+      "image_id": "2c3d5860",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #5, a provocative prediction ('50 cents over the next few years is going to happen') stated as Mike's own call from the stream; no fact is manufactured (the 5-cent approach and the +66% month are verified)."
+    },
+    {
+      "tweet": "Golden Kitty ($GOLDEN) printed another all-time high this week, up about 88% on the week to a $5.5M cap, and my $8M call is coming into view 🔥\n\n#GoldenKitty #RobinhoodChain",
+      "hook": "Golden Kitty ($GOLDEN) printed another all-time high this week, up about 88% on the week to a $5.5M cap, and my $8M call is coming into view 🔥",
+      "image_id": "6f385591"
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-09-27-kaspa-week-flipped-polygon-first-vprog",
+      "topic": "Kaspa week: flipped Polygon on market cap, +66% month knocking on 5 cents, the first vProg live on testnet, what vProgs mean, and the long-road 50-cent read (built from the YT post)",
+      "variation_label": "A (news-stack-first)",
+      "tweets": [
+        {
+          "text": "Kaspa flipped Polygon on market cap, printed a 66% month, and the first vProg went live on testnet.\n\nAll in the same week.\n\nHere is what each piece actually means for $KAS...",
+          "hook": "Kaspa flipped Polygon on market cap, printed a 66% month, and the first vProg went live on testnet."
+        },
+        {
+          "text": "The chart: $KAS is up about 25% on the week and about 66% on the month, sitting just under 5 cents.\n\n5 cents is where the sell orders are stacked. Break it and 5.5 cents is the next stop."
+        },
+        {
+          "text": "The flip: $KAS passed Polygon ($POL) on market cap this week, about $1.35B vs $1.28B.\n\nA fair-launch proof-of-work DAG with no premine and no VC cap table just passed one of the most VC-backed chains of the last cycle. Well deserved."
+        },
+        {
+          "text": "The tech: the first vProg is live on Kaspa testnet. A tic-tac-toe game with real off-chain execution and zero-knowledge settlement on the L1.\n\nProof of concept, PRs still to merge, but it runs, and it survived a 17-hour stress test on testnet this week."
+        },
+        {
+          "text": "vProgs are verifiable programs. The app runs off-chain and proves itself back to a proof-of-work DAG doing 10 blocks per second. Anybody can build on it.\n\nThat is Kaspa going from 'fast payments coin' to a chain that can do anything the others do."
+        },
+        {
+          "text": "The long road: the KRC20 days are coming back, bigger, because once apps live on the L1 every Kaspa token gets a reason to exist again.\n\nNot 2026. Maybe 2027, maybe 2028. And I still think 50 cents happens over the next few years."
+        },
+        {
+          "text": "If this made the Kaspa week click...\n\nFollow me for the vProgs deep dive when it drops, and for the Kaspa read before the crowd catches up.\n\n😎"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-09-27-bitcoin-dominance-under-60-alt-season-early",
+      "topic": "Bitcoin dominance under 60%, the alts outrunning Bitcoin, others dominance breaking its downtrend, the two-weekly-close 50-week SMA rule, the long-term holder read and why alt season started early (second thread; the brief limits YT posts to one, so this thread is built from the stream's macro segment rather than a second YT post)",
+      "variation_label": "B (macro-argument)",
+      "tweets": [
+        {
+          "text": "Bitcoin dominance dropped below 60% this week and the alts did not wait for permission.\n\n$QNT +157%, $TAO +32%, $LTC +26%, $KAS +25%, $GRAM +18% on the week, while $BTC did about 6%.\n\nWhy I think alt season started early...",
+          "hook": "Bitcoin dominance dropped below 60% this week and the alts did not wait for permission."
+        },
+        {
+          "text": "Bitcoin dominance has been rolling over since June. Total crypto market cap excluding the top 10 keeps climbing week after week, and the dominance of everything outside the top 10 just broke through a downtrend that had held for months."
+        },
+        {
+          "text": "The weird part: this is happening the same week Bitcoin reclaimed its 50-week SMA (about $78,800) with an $81,159 weekly close on Sept 20, the first close above it since November 2025.\n\nAlt season is not supposed to start this early in the reclaim. It is."
+        },
+        {
+          "text": "My rule: two weekly closes above the 50-week SMA before I officially call it a bull market. The first printed Sept 20 at $81,159, and $BTC has been trading around $85K since, so I like the odds on the second."
+        },
+        {
+          "text": "Look at the long-term holders. They sold the whole way down (four-year cycle zombies waiting for an October bottom), and now that price is going up almost nobody is selling. Bitcoin god candles with no sellers on the other side. That is buyers, not zombies."
+        },
+        {
+          "text": "The last time dominance broke 60% was September 2025 and the alt season index collapsed by December. The difference this time: $2.4B went into spot Bitcoin ETFs in the same week dominance fell, and the big caps ran first. The micro caps from $1M to $500M have barely moved yet."
+        },
+        {
+          "text": "If this made the alt season read click...\n\nFollow me for the macro take that ignores the four-year cycle echo chamber, and for the $KAS and $TAO reads before the flood.\n\n🚀"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-09-27-where-does-kas-top-this-run",
+      "topic": "Where $KAS tops out this bull run after the 5-cent approach, the Polygon flip and the first vProg on testnet",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Kaspa ($KAS) is knocking on 5 cents, up about 66% in a month, it flipped Polygon on market cap, and the first vProg is live on testnet.\n\nWhere does $KAS top out this bull run?\n\n#kaspa",
+      "hook": "Kaspa ($KAS) is knocking on 5 cents, up about 66% in a month, it flipped Polygon on market cap, and the first vProg is live on testnet.",
+      "options": [
+        "Under 25 cents",
+        "25 to 50 cents",
+        "50 cents to $1",
+        "Over $1"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-09-27-where-does-kas-top-this-run",
+      "topic": "Where $KAS tops out this bull run",
+      "source_post": "yt-post-2026-09-27-kaspa-week-flipped-polygon-first-vprog",
+      "question_text": "Kaspa ($KAS) is up about 66% in a month and knocking on 5 cents, it just flipped Polygon on market cap, and the first vProg went live on testnet this week. I think 50 cents happens over the next few years.\n\nWhere does $KAS top out THIS bull run?",
+      "hook": "Kaspa ($KAS) is up about 66% in a month and knocking on 5 cents, it just flipped Polygon on market cap, and the first vProg went live on testnet this week.",
+      "options": [
+        "Under 25 cents",
+        "25 to 50 cents",
+        "50 cents to $1",
+        "Over $1"
+      ],
+      "x_poll_eligible": true,
+      "notes": "Kaspa topic: X twin poll-2026-09-27-where-does-kas-top-this-run."
+    },
+    {
+      "id": "yt-text-poll-2026-09-27-alt-season-started-or-fakeout",
+      "topic": "Alt season started or another fakeout after Bitcoin dominance broke below 60%",
+      "source_post": null,
+      "question_text": "Bitcoin dominance dropped below 60% this week (58.5% on Sept 26) while $QNT, $TAO, $LTC, $KAS and $GRAM all outran Bitcoin on the week. The last time dominance broke 60% was September 2025, and the alt season index collapsed by December. My read: this time it is real, because it is happening right as Bitcoin reclaims its 50-week SMA.\n\nAlt season: started, or another fakeout?",
+      "hook": "Bitcoin dominance dropped below 60% this week while $QNT, $TAO, $LTC, $KAS and $GRAM all outran Bitcoin.",
+      "options": [
+        "Started, this is the real one",
+        "Fakeout, Bitcoin leads again like 2025",
+        "Not until Bitcoin takes out $100K"
+      ],
+      "x_poll_eligible": false,
+      "notes": "Topic is Bitcoin dominance / alt season, not kaspa/tao/toncoin/golden-kitty: NO X poll twin (hard filter)."
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-09-27-kaspa-week-flipped-polygon-first-vprog",
+      "topic": "Kaspa week: flipped Polygon on market cap, +66% month knocking on 5 cents, the first vProg live on testnet, what vProgs mean for the L1 and the KRC20 comeback, and the 50-cent long-road read",
+      "variation_label": "A + CTA1",
+      "body_style": "news stack: the three-piece week in the pre-fold hook, the chart and the 5-cent resistance, the Polygon flip, the vProg proof of concept and the stress test, what vProgs are and why they change the chain, the long-road KRC20 and 50-cent read, a forked price-target question and a like/subscribe ask tied to the coming vProgs video",
+      "cta_target": "subscribe_youtube",
+      "body": "Kaspa flipped Polygon on market cap, printed a 66% month, and the first vProg went live on testnet. All in the same week.\n\nI have been making Kaspa videos through the whole bear market. This is the week the chain and the chart finally started moving together, and here is what each piece actually means.\n\nThe chart first. $KAS is up about 25% on the week and about 66% on the month, sitting just under 5 cents. I have said for a while that 5 cents is where the sell orders are stacked; it is a resistance level, and if it breaks, 5.5 cents is the next stop. On the way up, $KAS passed Polygon ($POL) on market cap, about $1.35B vs $1.28B. A fair-launch proof-of-work DAG with no premine and no VC cap table just passed one of the most VC-backed chains of the last cycle. Well deserved.\n\nNow the part that matters more than the price. The first vProg is live on Kaspa testnet: a tic-tac-toe game with real off-chain execution and zero-knowledge settlement on the L1. It is a proof of concept, there is a stack of PRs still to review and merge, and the front end is basic and gets built separately. But it runs, and it ran through a 17-hour stress test on testnet this week.\n\nvProgs are verifiable programs. The app runs off-chain and proves itself back to the Kaspa L1, a proof-of-work DAG doing 10 blocks per second. Anybody can build on it. That is Kaspa going from 'fast payments coin' to a chain that can do anything the other chains do, and I am planning a full video on it.\n\nHere is my read on the long road. Remember the KRC20 days? They are coming back, bigger, because once apps live on the L1 every Kaspa token gets a reason to exist again. It is not going to be 2026; it could be 2027, it could be 2028. You stick with it, and the portfolio keeps growing. And yes, I still think 50 cents happens over the next few years.\n\nSo commit in the comments: where does $KAS top out THIS bull run: under 25 cents, 25 to 50 cents, 50 cents to a dollar, or higher?\n\nClick that like button and click the subscribe button if you want the vProgs deep dive when it drops.",
+      "engagement_question": "Where does $KAS top out this bull run: under 25 cents, 25 to 50 cents, 50 cents to a dollar, or higher?",
+      "images": [
+        {
+          "image_id": "7551b067",
+          "slide_text": "Kaspa flipped Polygon, printed a 66% month, and the first vProg went live."
+        },
+        {
+          "image_id": "7c4108cf",
+          "slide_text": "Kaspa flipped Polygon on market cap: about $1.35B vs $1.28B."
+        },
+        {
+          "image_id": "946db0ac",
+          "slide_text": "First vProg live on testnet: off-chain execution, ZK settlement on the L1."
+        },
+        {
+          "image_id": "ac9333e4",
+          "slide_text": "50 cents over the next few years. 2027, maybe 2028. Stick with it."
+        },
+        {
+          "image_id": "c51cc864",
+          "slide_text": "Where does $KAS top out this bull run?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-09-27-kaspa-knocking-on-5-cents-flips-polygon",
+      "kaspa_subject": true,
+      "image_id": "106be266",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa ($KAS) is knocking on 5 cents.",
+      "caption": "Kaspa ($KAS) is knocking on 5 cents.\n\nUp about 25% on the week and about 66% on the month. 5 cents is where the sell orders are stacked, and I have been saying it for a while: break it and the next stop is 5.5 cents.\n\nThe part nobody is talking about: $KAS quietly flipped Polygon ($POL) on market cap this week, about $1.35B vs $1.28B. A fair-launch proof-of-work DAG with no premine, no VC cap table and no Coinbase listing just passed one of the most VC-backed chains of the last cycle. Well deserved.\n\nAnd this is still the early innings. The first vProg went live on testnet the same week. The chain is getting more usable while the price is waking up... that is the combination you want.\n\nSave this for the next time someone tells you Kaspa is dead.\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #crypto #cryptocurrency #altcoins #blockchain #altseason #cryptoinvesting #cryptonews #bitcoin",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#altseason",
+        "#cryptoinvesting",
+        "#cryptonews",
+        "#bitcoin"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa ($KAS) is up about 25% on the week and about 66% on the month, and it is knocking on 5 cents."
+    },
+    {
+      "id": "ig-2026-09-27-first-vprog-live-kaspa-testnet",
+      "kaspa_subject": true,
+      "image_id": "19c20b91",
+      "aspect_ratio": "4:5",
+      "hook": "The first vProg is live on Kaspa testnet.",
+      "caption": "The first vProg is live on Kaspa testnet.\n\nA tic-tac-toe game with real off-chain execution and zero-knowledge settlement on the Kaspa L1. Proof of concept, a stack of PRs still to merge, but it runs, and it ran through a 17-hour stress test on testnet this week.\n\nThat is what vProgs are: verifiable programs. Anybody can build an app that runs off-chain and proves itself back to a proof-of-work DAG doing 10 blocks per second. No premine, no gatekeeper deciding who gets to build.\n\nThis is why I keep saying the KRC20 days are coming back, bigger. Once apps live on the L1, every Kaspa token gets a reason to exist again. Long road, 2027, maybe 2028, but the road just got paved.\n\nThe 'Kaspa is just a payments coin' crowd is going to have a rough 2027.\n\n#kaspa #kas #vprogs #krc20 #proofofwork #fairlaunch #ghostdag #crypto #cryptocurrency #altcoins #blockchain #cryptonews #cryptoinvesting",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#vprogs",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#cryptonews",
+        "#cryptoinvesting"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "The first vProg is live on Kaspa testnet."
+    },
+    {
+      "id": "ig-2026-09-27-kaspa-50-cents-internet-speed",
+      "kaspa_subject": true,
+      "image_id": "2c3d5860",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa ($KAS) is knocking on 5 cents this week, and 50 cents over the next few years is going to happen 😎",
+      "caption": "Kaspa ($KAS) is knocking on 5 cents this week, and 50 cents over the next few years is going to happen 😎\n\nNot this year. Maybe not next year. But look at what is stacking up: up about 66% in a month, flipped Polygon on market cap, the first vProg live on testnet, and this bull run has barely started.\n\nInternet money should move at internet speed. Kaspa moves at 10 blocks per second. Friends don't let friends wait 10 minutes for a confirmation.\n\nTag the friend who is still waiting for a dip.\n\n#kaspa #kas #proofofwork #fairlaunch #ghostdag #crypto #cryptocurrency #altcoins #blockchain #altseason #cryptoinvesting #cryptonews #bitcoin",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#altseason",
+        "#cryptoinvesting",
+        "#cryptonews",
+        "#bitcoin"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa ($KAS) is knocking on 5 cents this week, and 50 cents over the next few years is going to happen 😎"
+    }
+  ]
+}

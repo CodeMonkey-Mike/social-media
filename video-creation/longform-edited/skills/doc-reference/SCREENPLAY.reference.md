@@ -76,7 +76,8 @@ The chapter map above is the spine; CH1 carries the hook and the opening, nothin
 🔒 `[SAY-EXACT]` 🗣️ `[COVER]` <The locked continuation, face off.>
 🎬 `[SHOW]` On "<word>" cut to <the marquee motion card>. Hold the dark atmosphere under the locked line.
 🔍 `[VERIFY]` <A one-line live check for a number in this beat; load-bearing ones go in the box below.>
-🗣️ `[COVER]` So, let's dive into all this.
+🗣️ `[COVER]` <The handoff line into the body, ROTATED per video: one `approved` line from persona.json `dive_in_variants`, e.g. "So, let's break it all down.">
+💬 `[NOTE]` Handoff alternates for Mike are listed in OPEN QUESTIONS.
 
 > [!IMPORTANT]
 > CH1 verify list:
@@ -145,4 +146,5 @@ Exact carving (in-points, loops, dB under VO, breaths) is the `music-placement-s
 ## OPEN QUESTIONS / NEXT SESSION
 
 1. <A decision Mike must make at GATE 1 (title, CTA vs hard-out, naming a team).>
-2. <The live 🔍 `[VERIFY]` checklist carried from DATA.md.>
+2. <The handoff line (CH1 close): the scripted pick plus 2-3 alternates from persona.json `dive_in_variants`, at least one `proposed`, for Mike to choose.>
+3. <The live 🔍 `[VERIFY]` checklist carried from DATA.md.>

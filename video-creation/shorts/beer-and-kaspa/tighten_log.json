@@ -1,0 +1,164 @@
+[
+  {
+    "n": 1,
+    "slug": "kaspa-bear-called-1-cent",
+    "variant": "full",
+    "raw_s": 58.6,
+    "relocked_s": 58.8,
+    "tightened_s": 51.4,
+    "desilenced_s": 35.5,
+    "span_removed_pct": 12.7,
+    "voiced_content_removed_pct": 13.0,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 39.4,
+    "boundary_relock": [
+      {
+        "segment_index": 0,
+        "new_end": 1583.15
+      }
+    ],
+    "removals": [
+      {
+        "start": 1543.15,
+        "end": 1549.43,
+        "reason": "restatement: 'And so this was just three days ago, right? Because we're at September 26.' (edges on measured silence)"
+      },
+      {
+        "start": 1555.45,
+        "end": 1556.71,
+        "reason": "restart doubling: 'Long term, | long term downtrend did not break' (edges on measured silence)"
+      }
+    ],
+    "notes": "Peak beats 1574.15-1582.91 and 2521.37-2528.17 untouched. Measured voiced removal 12.7% via clip_measures. seg1 still ends on 'cents' at 142.44 with 'if' starting at 142.44; if the tail sounds clipped at 2nd review, the only clean earlier phrase end is 137.94 ('ready') because 137.94-139.80 is now removed and that would lose the 5.5c payoff, so prefer keeping 142.44. seg4 ('Kaspa flipped Polygon... Did it? Oh that's cool. Yeah I mean, well deserved') left intact at 7s; the 'Did it?' and 'Yeah, I mean' tics were the next candidates but did not fit under the ceiling. Caption fixes: 'cast the bears' -> 'Kaspa bears' (1551), 'cast by the bottom' -> 'Kaspa at the bottom' (2523), 'Pumper Linsky' -> 'Pumperlinsky' (2545), 'polygon' -> 'Polygon' (2921), 'cell orders' -> 'sell orders' (137)."
+  },
+  {
+    "n": 2,
+    "slug": "golden-kitty-8-million",
+    "variant": "full",
+    "raw_s": 30.3,
+    "relocked_s": 26.0,
+    "tightened_s": 24.4,
+    "desilenced_s": 21.7,
+    "span_removed_pct": 6.4,
+    "voiced_content_removed_pct": 4.8,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 28.6,
+    "boundary_relock": [
+      {
+        "segment_index": 2,
+        "new_start": 2735.55,
+        "new_end": 2758.97
+      }
+    ],
+    "removals": [
+      {
+        "start": 2753.65,
+        "end": 2755.41,
+        "reason": "hedge stall after the call: 'I don't know. We'll see what happens.' -> straight from '8 million this coming week or a few days or something' to 'I think it's a good play'"
+      }
+    ],
+    "notes": "Light touch is deliberate: the peak beat 2737.41-2753.43 covers 16 of seg2's 28 seconds (including the 'in like, just like a couple of weeks or. I mean,' stall, which is protected), the anaphora 'It's happening with...' in seg0 is a signature device, and seg1 is 2.6s of the number. The relock removed 4.3s of run-off on top (uncapped). Measured 5.9% voiced, above the 5% note floor. Caption fixes: 'Golden kid' -> 'Golden Kitty' (2716), 'golden kitty' -> 'Golden Kitty' (2741), 'quant' -> 'Quant' (2703), 'ton coin' -> 'Toncoin' (2705), 'Tao' -> 'TAO' (2707)."
+  },
+  {
+    "n": 3,
+    "slug": "first-vprog-live-on-kaspa",
+    "variant": "full",
+    "raw_s": 96.4,
+    "relocked_s": 91.6,
+    "tightened_s": 78.9,
+    "desilenced_s": 62.3,
+    "span_removed_pct": 13.9,
+    "voiced_content_removed_pct": 14.0,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 35.4,
+    "boundary_relock": [
+      {
+        "segment_index": 0,
+        "new_start": 3676.49,
+        "new_end": 3690.65
+      },
+      {
+        "segment_index": 1,
+        "new_start": 3742.15
+      },
+      {
+        "segment_index": 4,
+        "new_start": 3804.67
+      }
+    ],
+    "removals": [
+      {
+        "start": 346.81,
+        "end": 355.83,
+        "reason": "naming tangent: 'or um you know whatever you call this I guess you could just say Kaspa tokens at this point um you know' -> 'all these Kaspa tokens, you know whatever you want to call them now, KRC20s | they're gonna become hot too'"
+      },
+      {
+        "start": 3680.93,
+        "end": 3683.09,
+        "reason": "self-correction: 'main net. I'm sorry Kaspa' -> 'tic-tac-toe on Kaspa | test net'"
+      },
+      {
+        "start": 3805.33,
+        "end": 3807.13,
+        "reason": "false start in the closer: 'for our' (+1.2s pause) -> 'It's pretty good news | for the long term for Kaspa' (most dispensable, drop first if the gate trips)"
+      }
+    ],
+    "notes": "Peak beat 3748.51-3760.6 untouched (it contains the 'That's like really like I think' stall, protected). Measured 14.0% voiced via clip_measures, under the 15% gate; over the usual 13% buffer because the 9.0s naming tangent is the single worst span in the batch and has to go whole. Left for desilence/5C because they did not fit: seg2 'and [1.7s] um [1.8s] yeah' 314.77-318.69 (mostly silence inside stretched tokens, desilence collapses it, 5C catches the um), 'um' 311.63-312.11, the 'more more' 319.59-320.37, seg3 'you know the steam keeps, it' false start 335.73-338.41 and 'and I get they' 341.63-342.11. Caption fixes: 'B-PROG' -> 'vProg' (3677, 3685), 'Big tech toe' -> 'tic-tac-toe' (3679), 'very prime verifiable program' -> 'verifiable program' (3685), 'real set of move' -> 'real state moves' (3690, verify vs the tweet on screen), 'virtual program from a verifiable programs' -> 'vProg, verifiable programs' (3743, verify by ear), 'vprogs' -> 'vProgs' (305), 'l1' -> 'L1' (314), 'KRC 20s' -> 'KRC20s' (346)."
+  },
+  {
+    "n": 4,
+    "slug": "114x-in-eight-days",
+    "variant": "full",
+    "raw_s": 114.4,
+    "relocked_s": 106.3,
+    "tightened_s": 89.5,
+    "desilenced_s": 63.9,
+    "span_removed_pct": 15.8,
+    "voiced_content_removed_pct": 13.3,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 44.2,
+    "boundary_relock": [
+      {
+        "segment_index": 0,
+        "new_start": 1758.17
+      },
+      {
+        "segment_index": 2,
+        "new_start": 1728.77,
+        "new_end": 1734.61
+      }
+    ],
+    "removals": [
+      {
+        "start": 3108.21,
+        "end": 3114.03,
+        "reason": "self-correction that refers to a line outside the cut: 'And then [2s] you're talking about on the 13th. No, it wasn't two days, right?' -> 'It was on the fifth. | It was on the 13th. We're like nearly 11 million.' Overlaps the peak beat 3113.13-3128.37 by 0.90s (the 'No, it wasn't two days, right?' words); clip-plan.json notes explicitly say tighten can remove it and the quoted peak text starts at 'It was on the 13th' (3114.03), which is intact. Strict-guard alternative: end this removal at 3113.13."
+      },
+      {
+        "start": 1784.49,
+        "end": 1787.71,
+        "reason": "screen aside + hesitation: 'And, um, I haven't put them all in with' -> 'pairing memes with perps. | 17x on [ethics] and then there was STONK 13x. Crazy dude.'"
+      },
+      {
+        "start": 1762.11,
+        "end": 1764.31,
+        "reason": "screen aside: 'or look, I put it over here, man.' -> 'the 110x. | Holy crap.'"
+      },
+      {
+        "start": 3099.79,
+        "end": 3104.53,
+        "reason": "screen aside: 'Right. I guess over here.' (+ pauses) -> 'So it was like 90K. | It was on the fifth.'"
+      },
+      {
+        "start": 1765.79,
+        "end": 1766.89,
+        "reason": "screen aside: 'I started adding them in.' -> 'Holy crap. | We had a lot of good plays' (most dispensable, drop first if the gate trips)"
+      }
+    ],
+    "notes": "Peak beat 876.61-884.45 untouched; peak beat 3113.13-3128.37 touched ONLY by the 0.90s self-correction the clip-plan invited (see removal 1). Measured 13.3% voiced via clip_measures. Left for desilence/5C: 'I just can't wait for it, man' 869.23-871.33 (duplicates the closer 'I just can't wait'), 'You know,' 874.05, 'like, like' 888.35-889.39, 'um' 1781.23-1781.83, 'with with' 1782.63-1783.33, 'I guess it's' 1775.05-1775.51. Both segments still end before the promo-code lines (1793.81, 3128.37). Caption fixes: 'Purps pad' -> 'Perps Pad' (1777), 'purps' -> 'perps' (1783), 'ethics' -> UNKNOWN token, verify with Mike (1789), 'stonk' -> 'STONK' (1791), '110 X / 114 / 17 X / 13 X' -> '110x / 114x / 17x / 13x', '90 K' -> '90K' (3099). Spoken '110x' then '114' both stay in the audio; only captions/publish copy reconcile the number."
+  }
+]

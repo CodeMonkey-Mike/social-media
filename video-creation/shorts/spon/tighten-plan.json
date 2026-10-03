@@ -1,0 +1,182 @@
+{
+  "batch": "spon",
+  "authored_by": "tighten-strategist agents via batch orchestrator 2026-09-30",
+  "clips": [
+    {
+      "id": "spawn-my-own-members-hate-it",
+      "n": 1,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_end": 337.75
+        },
+        {
+          "segment_index": 2,
+          "new_end": 503.4
+        },
+        {
+          "segment_index": 3,
+          "new_end": 573.45
+        },
+        {
+          "segment_index": 4,
+          "new_start": 743.9
+        }
+      ],
+      "boundary_relock_note": "seg0: 337.40 cut inside the word PONS (word ends 337.51, trough 337.51-338.32); end moved to 337.75 so the word completes. seg2: drop the 'Very interesting.' tail, end on '2.5% of supply already gone.' (trough 503.21-503.69). seg3: take the clip-strategist's own fallback, end on 'not 75x smaller.' (trough 573.24-573.75); drops the restated 'if you compare PONS to STONK and KNOTS to SPON, then SPON should be a lot, lot bigger' (12.75s). seg4: start on 'you put in 20 bucks' (trough 743.45-744.09), dropping the stammered lead-in 'The worst case, the worst case scenario is like, look,'.",
+      "removals": [
+        {
+          "start": 318.4,
+          "end": 329.3,
+          "reason": "restart + explanatory aside: 'Now, what is it? What is spawn? It's like an anagram, as I say. It's a mix around of the letters of spawns.' The name lands on 'Spawn. The first and only PONS-native token' right after the outburst; both edges in measured troughs (318.15-318.89, 328.75-329.52)"
+        },
+        {
+          "start": 499.75,
+          "end": 501.1,
+          "reason": "filler tic 'right?' after 'nobody else on chain does this' (troughs 499.67-500.34 and 500.60-501.20)"
+        },
+        {
+          "start": 335.7,
+          "end": 336.35,
+          "reason": "filler tic 'right?' after 'dividends of PONS' (troughs 335.60-335.83 and 336.11-336.41)"
+        },
+        {
+          "start": 555.4,
+          "end": 557.2,
+          "reason": "filler tic 'right?' plus stall after 'trades at 12 million' (troughs 555.28-556.22 and 556.49-557.43)"
+        },
+        {
+          "start": 561.52,
+          "end": 562.32,
+          "reason": "self-repeat: second '660' of 'PONS is 660, 660, 660 million' (trough 561.48-561.63 in, 562.32 dip out; between two identical syllables so any residue is masked). MOST DISPENSABLE, drop first if the gate trips"
+        }
+      ],
+      "removed_seconds_est": 15.5,
+      "removed_pct_est": 9.4,
+      "notes": "Peak beats 746.90-775.40 and 4531.20-4548.20 untouched (the 'people are, people are hating' and 'of all, of all things' stammers sit inside the protected outburst and stay). The hook's own false start ('Some of my own members are actually, some of my own members are actually hating on it') stays: burst_profile shows no trough between 'actually,' and the restart (312.26 is a 10ms dip), a cut there would clip. Spoken numbers all kept (12M, 254M, 660M, 75x, 20 bucks, 50K, 5M, 100x). Relocks take 16.3s on top (seg3 -12.75, seg4 -2.75, seg2 -1.10); raw 138.7s -> tight 106.9s before desilence. Captions: Pons/pawns/ponds -> PONS, spawn/spon -> Spawn / $SPON, knots -> KNOTS, stonk -> STONK, 'requiring' at 457.22 is 'recurring'."
+    },
+    {
+      "id": "golden-kitty-too-dispersed-to-rug",
+      "n": 2,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 3,
+          "new_start": 5997.55
+        },
+        {
+          "segment_index": 0,
+          "new_end": 847.8
+        },
+        {
+          "segment_index": 2,
+          "new_end": 5238.42
+        },
+        {
+          "segment_index": 1,
+          "new_start": 4699.3
+        }
+      ],
+      "boundary_relock_note": "seg3 (the opener): voice onset of 'I'm even open' is 5997.61 by burst_profile (silence 5997.00-5997.61), so 5997.70 clipped the first word; start moved to 5997.55. seg0: end on 'everything else man just looks like crap.' (trough 847.55-849.09), dropping the restated 'Like every single meme looks like crap.' seg2: end on 'it takes a profit.' (trough 5238.37-5238.52), dropping the 'It's right.' tail. seg1: start on 'it's a four million market cap right now' (trough 4699.05-4699.59), dropping the lead-in 'Also for all of us, so if we're in early,' which has no trough after 'us,'.",
+      "removals": [
+        {
+          "start": 6015.95,
+          "end": 6020.85,
+          "reason": "hesitation stall + vague timing hedge: 'you know, next month or whatever it is, and' -> 'if we do get a nice run up, and I'm sure it's going to pump' (troughs 6015.83-6016.19 and 6019.40-6020.91; the 1.4s 'you' and 1.3s 'and' are stalls)"
+        },
+        {
+          "start": 4702.5,
+          "end": 4709.3,
+          "reason": "restatement / self-correction of a number already said: 'It's four million, right? 4.1 million.' after 'four million market cap right now' (troughs 4702.32-4703.29 and 4708.33-4709.79; ends before the 4709.70 peak beat)"
+        },
+        {
+          "start": 5221.0,
+          "end": 5225.4,
+          "reason": "triple restatement -> double: cut the middle 'You know, every meme is going to dump hard.' keeping 'every meme is going to dump hard. Every meme that we talked about today eventually is going to dump hard.' (troughs 5220.94-5223.19 and 5224.97-5225.79). MOST DISPENSABLE of the three"
+        }
+      ],
+      "removed_seconds_est": 16.1,
+      "removed_pct_est": 11.8,
+      "notes": "Peak beats 5997.70-6011.90 and 4709.70-4717.90 untouched (the 'Like, like golden kitty, I don't, I don't think I think' stammer is inside the protected opener and stays). Two candidates deliberately NOT taken to stay under the ceiling: 834.75-842.20 'So there's a lot, a lot, a lot of influencers that are pushing golden golden kitty' (5.3s voiced; a restatement, but it is the hype line the clip plan quotes) and 5199.30-5205.15 'I mean, it's possible.' (2.1s; adding it lands at 14.6%, too close to the gate). Either is a like-for-like swap for a listed removal if Mike prefers. The 'dump hard' lines are Mike answering a chatter about every meme, not disparaging Golden Kitty. Raw 116.4s -> tight 94.4s before desilence. Captions: 'golden golden kitty' -> Golden Kitty; the 4.1 million line is gone, so the on-screen cap is 4M."
+    },
+    {
+      "id": "september-114x-in-eight-days",
+      "n": 3,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 1,
+          "new_start": 1865.5
+        },
+        {
+          "segment_index": 2,
+          "new_end": 2602.82
+        }
+      ],
+      "boundary_relock_note": "seg1: start on the restart 'one of them we did like 100x' (trough 1865.20-1865.76), dropping the false start 'And one of them,'. seg2 (the hook): 2601.30 cut inside '9x' (voice runs 2601.02-2602.78 with no trough, straight into 'That's why these are all the Solana plays.'); end moved to 2602.82 (trough 2602.78-2602.85, next word 'So,' at 2603.21) so the list closes on a whole sentence.",
+      "removals": [
+        {
+          "start": 1643.45,
+          "end": 1645.8,
+          "reason": "restatement: 'And I was like, let me get it on the pump.' after 'it was pumping. And I was like, I took a chance.' -> straight into 'And I still did a 52x, man.' (troughs 1643.30-1643.66 and 1645.19-1646.09; ends before the 1645.90 peak beat)"
+        }
+      ],
+      "removed_seconds_est": 2.3,
+      "removed_pct_est": 3.2,
+      "notes": "LIGHT TOUCH, JUSTIFIED: the two peak beats (2625.80-2649.90 and 1645.90-1660.40) are 35 of the 52 voiced seconds and are untouched (including 'Crazy, right? That's crazy.' and 'Although there was some good ones'). Every other disfluency was checked with burst_profile and has NO trough on at least one edge, so cutting it would clip a word: 'Man, we did so many, like in the beginning,' (no gap between 'beginning,' and 'the'); 'And that would, that happened' (no gap before 'that'); 'Ethics, there's another launch pad,' (no gap after 'Ethics,'); 'And these are all Solana.' (no gap after '15x.'); 'And I was like, I took a chance.' (no gap after 'pumping.'). The '100x, like 110x, man, 114x' ramp is kept on purpose (spoken numbers stay; it is the delivery). Reviewer note: seg0 starts at 1639.50, inside Whisper's 'like' (1639.34-1639.58) with no trough anywhere in 1639.30-1639.70; left as cut, may carry a faint 'k' onset that desilence will not fix. Captions: Perp's pad -> Perps Pad, Ethics -> confirm with Mike, lowercase x on all multipliers, peanut -> Peanut."
+    },
+    {
+      "id": "zombies-pushed-btc-back-above-50-week",
+      "n": 4,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_start": 4457.74
+        }
+      ],
+      "boundary_relock_note": "seg0: 4457.45 cut inside the word 'about' (from 'I was talking about'); trough is 4457.71-4457.79, start moved to 4457.74 so the clip opens clean on 'all these four-year cycle zombies'.",
+      "removals": [
+        {
+          "start": 4470.5,
+          "end": 4472.4,
+          "reason": "hesitation stall: 'They pushed us above the, the Bitcoin's May swing high' -> the two drawn-out 'the' stalls and their pauses (troughs 4470.43-4471.29 and 4471.82-4472.47); 'the Bitcoin's May swing high' resumes at 4472.47"
+        },
+        {
+          "start": 4494.78,
+          "end": 4497.05,
+          "reason": "restatement: 'and they're getting back in October.' duplicates the 'front run the quote unquote bottom in October and get in' line that follows (troughs 4494.73-4494.89 and 4496.85-4497.29)"
+        },
+        {
+          "start": 4474.75,
+          "end": 4476.1,
+          "reason": "filler tic 'Right.' after 'May swing high' (troughs 4474.53-4475.29 and 4475.58-4476.29). MOST DISPENSABLE"
+        }
+      ],
+      "removed_seconds_est": 5.5,
+      "removed_pct_est": 8.7,
+      "notes": "Peak beat 4477.50-4491.80 untouched ('And I'm just like, is these four year cycle zombies' stays). The pair 'They're going to be buying back in. And I think they already are buying back in.' is kept on purpose: prediction then confirmation is the vindication structure (persona: calls read vindicated). 'They've been doing it.' and 'zombies, right?' left in: no trough after 'it.' / before 'right?'. Captions: Benjamin Cowan -> Benjamin Cowen, 'the bitcoins may swing high' -> Bitcoin's May swing high, four year cycle -> four-year cycle, on-screen text uses 50-week SMA."
+    },
+    {
+      "id": "spawn-my-own-members-hate-it-impact",
+      "n": 5,
+      "variant": "impact",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_start": 313.35
+        },
+        {
+          "segment_index": 2,
+          "new_start": 4532.35
+        }
+      ],
+      "boundary_relock_note": "seg0 (the hook): 310.30 lands in voiced audio (burst_profile: -19.9 dB at 310.31, loud 309.83-310.31 = the tail of 'members.') and keeps the false start 'Some of my own members are actually,'. Whisper hides the restart gap inside a stretched 1.06s 'some' (312.52-313.58), but the master has a hard silence 312.83-313.53 (-83 to -250 dB) with the restarted 'some' onset at 313.54; start moved to 313.35 so the clip opens clean on the real hook 'some of my own members are actually hating on it.' Drops 3.05s (~2.4s voiced) of stammer. seg2 (the outburst): 4531.20 cuts inside Whisper's 'that' (4531.07-4531.33) with no trough anywhere 4530.4-4532.1; the real gap is 4532.12-4532.59 (Whisper's second 'people' at 4532.03 is ~0.55s early, voice onset 4532.60). Start moved to 4532.35 so it opens on 'people are hating on in my own community, of all things', dropping the 'that people are,' lead-in (1.15s, ~0.8s voiced). seg1 (peak beat) boundaries confirmed clean: trough 755.61-756.40 before 'then', trough 775.25-775.74 after 'crap.'; seg0 end 318.50 sits in trough 318.15-319.0; seg2 end 4548.20 after 'runner.' (4547.95).",
+      "removals": [],
+      "removed_seconds_est": 0.0,
+      "removed_pct_est": 0.0,
+      "notes": "DISPATCH NOTE: the clip list in the request was empty; part1 covers clips 1-4, so this authors the only uncovered clip (n=5). LIGHT TOUCH, JUSTIFIED (expect the validator's NOTE_FLOOR note): this clip is three peak beats stitched (clip-plan notes), 34.3s voiced. seg0 is the hook and seg1 (756.0-775.4) is the listed peak_beat = ~21.5s protected voiced, untouched (the third 'and I got in at 50k' repeat at 769.16-771.06 sits inside the protected beat and stays). seg2 (12.8s voiced) is the outburst the plan names as the emotional core (4537-4543); every non-core candidate in it was burst-profiled and fails a clean edge: 'This one would do pretty good.' (4544.43-4546.71, the one real restatement before 'This will become a nice runner') has NO trough at 'good.|This' (min -27 dB at 4546.76-4546.78), so cutting it would clip; 'of all, of all things' cannot collapse either way (community|of continuous, all|things continuous; the only trough is 4535.35-4536.02 between the two 'of all's); 'Jesus Christ.' has clean edges but is the quoted core and stays; 'people are, people are' is resolved by the seg2 start relock instead. Ending seg2 on 'Jesus Christ.' to drop 'This one would do pretty good. This will become a nice runner.' was rejected: 'nice runner' is the forward-looking button and the bridge into seg1's 'then you're gonna be like, damn, I got in at 50K'. The 0.7s pause inside 'This one [pause] would do pretty good' (4545.15-4545.85) and the 2.1s gap before 'Jesus Christ.' are desilence's job. Raw 44.6s -> ~40.4s before desilence, all from relocks. No spoken numbers touched (50K x3, 5 million, 100x). Named-project guard: 'punch these guys' targets the haters in his own community, not a project. CROSS-CLIP FYI for the executor, not a change to part1: clip 1 shares seg0 (310.3 start); the same new_start 313.35 fix applies there if Mike wants its hook opened clean too (part1 left it because Whisper's 312.38-312.52 window showed no trough; the real gap is 312.83-313.53). Captions: '50k' -> 50K, lowercase x on 100x, 'hating on in my own community' -> Whisper dropped 'it' (say 'hating on it in my own community' on screen), 'Spawn' is never spoken in these beats so the title card/overlay must carry the name ($SPON); the 'ponds' garble at 755.52 is outside the kept range."
+    }
+  ]
+}

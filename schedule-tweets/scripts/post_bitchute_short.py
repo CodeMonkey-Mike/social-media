@@ -531,14 +531,21 @@ def main():
                     "re-upload and duplicate).")
 
             # Compose the real video URL from upload_code.
+            #
+            # HARD RULE (2026-08-13): when there is no upload_code we record url=None,
+            # NOT the "/content" dashboard placeholder. The placeholder is not a video
+            # URL; writing it made rows look recorded while carrying nothing usable, and
+            # three of them sat that way until Mike spotted the videos live on the
+            # channel. A null is honest and is what reconcile_short_urls.py looks for.
             if upload_code:
                 posted_url = f"https://www.bitchute.com/video/{upload_code}/"
                 print(f"  Real URL from upload_code: {posted_url}")
             else:
-                posted_url = "https://www.bitchute.com/content"
-                print("  Warning: no upload_code captured — using /content placeholder")
+                posted_url = None
+                print("  Warning: no upload_code captured — recording url=None; "
+                      "recover with scripts/reconcile_short_urls.py --platform bitchute")
 
-            print(f"\nPosted (processing): {posted_url}", flush=True)
+            print(f"\nPosted (processing): {posted_url or '(no URL captured)'}", flush=True)
 
             # Liveness check: the public video page must resolve with the real
             # og:title (a phantom URL returns the generic "Bitchute"). Retry while
@@ -581,23 +588,31 @@ def main():
                         upload_page.wait_for_timeout(retry_ms)
                 return False
 
-            live = verify_live(posted_url, title)
+            live = verify_live(posted_url, title) if posted_url else False
 
             short["platforms"][PLATFORM]["status"] = "posted" if live else "posted_unverified"
             short["platforms"][PLATFORM]["posted_at"] = now_iso_z()
             short["platforms"][PLATFORM]["url"] = posted_url
             if live:
                 short["platforms"][PLATFORM].pop("error", None)
-            else:
+            elif posted_url:
                 short["platforms"][PLATFORM]["error"] = (
                     "Publish confirmed via /content but public URL did not resolve "
-                    "within retry window: verify on the channel manually.")
+                    "within retry window: verify on the channel, or run "
+                    "scripts/reconcile_short_urls.py --platform bitchute --apply. "
+                    "Do NOT re-run the poster (would duplicate).")
+            else:
+                short["platforms"][PLATFORM]["error"] = (
+                    "Publish confirmed via /content but no upload_code was captured, so "
+                    "no URL was recorded. Recover it with: python "
+                    "scripts/reconcile_short_urls.py --platform bitchute --apply. "
+                    "Do NOT re-run the poster (would duplicate).")
             save(data)
             print("shorts.json updated (posted, liveness confirmed). Done ✓" if live
                   else "⚠ shorts.json updated as posted_unverified — publish was "
-                       "confirmed but the public URL did not resolve in time. Check "
-                       "the channel; do NOT re-run (would duplicate).")
-            print(f"POST OK platform=bitchute url={posted_url}"
+                       "confirmed but the public URL is not recorded/verified. Run "
+                       "reconcile_short_urls.py; do NOT re-run the poster (would duplicate).")
+            print(f"POST OK platform=bitchute url={posted_url or 'none'}"
                   + ("" if live else " status=posted_unverified"), flush=True)
 
         except SystemExit:

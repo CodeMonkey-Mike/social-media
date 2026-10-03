@@ -28,7 +28,7 @@ const { stripHashtags, buildCaption } = require('./lib/strip-hashtags');
 const SHORTS_JSON    = path.join(__dirname, '..', 'data', 'shorts.json');
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\fbbot-profile';
 const WORKSPACE_ROOT = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
-const DEBUG_DIR      = path.join(WORKSPACE_ROOT, 'tmp-fb-debug');
+const DEBUG_DIR      = path.join(WORKSPACE_ROOT, 'tmp', 'fb-debug');
 const FB_PAGE        = 'realCodeMonkeyMike';
 const PAGE_URL       = `https://www.facebook.com/${FB_PAGE}/`;
 const PLATFORM       = 'facebook';
@@ -141,6 +141,29 @@ async function clickByLabelInDialog(page, label) {
   }, label);
 }
 
+// Facebook's /videos tab does not reliably sort by recency (an old pinned or
+// high-engagement post can sit above a just-published one), so links[0] is
+// not "the newest" — it previously produced false-positive verifications
+// against a stale, already-live video. Capture a baseline before posting and
+// diff against it afterward (mirrors upload_longform_facebook.py's approach).
+async function captureVideoIds(page) {
+  await page.goto(`https://www.facebook.com/${FB_PAGE}/videos`, { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(rnd(VIDEOS_TAB_WAIT_MIN, VIDEOS_TAB_WAIT_MAX));
+  const links = await page.evaluate(() =>
+    [...document.querySelectorAll('a[href]')]
+      .map(a => a.href.split('?')[0])
+      .filter(h => (h.includes('/videos/') || h.includes('/reel/')) && h.includes('facebook.com')
+        && !h.endsWith('/videos') && !h.endsWith('/videos/') && !h.endsWith('/reel/'))
+      .filter((h, i, arr) => arr.indexOf(h) === i)
+  );
+  const byId = new Map();
+  for (const link of links) {
+    const m = link.match(/(\d{10,})/);
+    if (m && !byId.has(m[1])) byId.set(m[1], link);
+  }
+  return byId;
+}
+
 (async () => {
   const data = JSON.parse(fs.readFileSync(SHORTS_JSON, 'utf8'));
 
@@ -197,6 +220,12 @@ async function clickByLabelInDialog(page, label) {
       return (await page.locator('input[name="email"], input[name="pass"]').count()) > 0;
     };
     if (await isLoggedOut()) throw new Error('Not logged in — sign in to fbbot-profile manually');
+
+    console.log('Capturing baseline video IDs...');
+    const baselineIds = await captureVideoIds(page);
+    console.log(`  baseline: ${baselineIds.size} existing video/reel IDs`);
+    await page.goto(PAGE_URL, { waitUntil: 'domcontentloaded' });
+    await actionPause(page, 'back to page');
 
     // Dismiss notifications & switch to Page
     await page.keyboard.press('Escape');
@@ -373,22 +402,42 @@ async function clickByLabelInDialog(page, label) {
       }
     }
 
-    // ── Capture URL from Videos tab ─────────────────────────────────────────
-    console.log('\nCapturing video URL from /videos tab...');
+    // ── Capture URL from Videos tab (baseline diff) ─────────────────────────
+    console.log('\nCapturing video URL from /videos tab (baseline diff; up to 6 min)...');
     let videoUrl = null;
     try {
-      await page.goto(`https://www.facebook.com/${FB_PAGE}/videos`, { waitUntil: 'domcontentloaded' });
-      await longWait(page, VIDEOS_TAB_WAIT_MIN, VIDEOS_TAB_WAIT_MAX, 'videos tab settle');
-      const links = await page.evaluate(() =>
-        [...document.querySelectorAll('a[href]')]
-          .map(a => a.href.split('?')[0])
-          .filter(h => (h.includes('/videos/') || h.includes('/reel/')) && h.includes('facebook.com')
-            && !h.endsWith('/videos') && !h.endsWith('/videos/') && !h.endsWith('/reel/'))
-          .filter((h, i, arr) => arr.indexOf(h) === i)
-          .slice(0, 3)
-      );
-      console.log(`  Recent video URLs: ${JSON.stringify(links)}`);
-      if (links.length) videoUrl = links[0];
+      const pollDeadline = Date.now() + 6 * 60 * 1000;
+      while (Date.now() < pollDeadline && !videoUrl) {
+        const current = await captureVideoIds(page);
+        const newIds = [...current.keys()].filter(id => !baselineIds.has(id));
+        if (newIds.length === 1) {
+          videoUrl = current.get(newIds[0]);
+          console.log(`  New video found: ${videoUrl}`);
+          break;
+        } else if (newIds.length > 1) {
+          console.log(`  ${newIds.length} candidate new IDs (${newIds.join(', ')}) — disambiguating by comment count`);
+          for (const id of newIds) {
+            const candidateUrl = current.get(id);
+            try {
+              await page.goto(candidateUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
+              await page.waitForTimeout(rnd(2500, 4000));
+              const noComments = await page.evaluate(() => document.body.innerText.includes('No comments yet'));
+              if (noComments) {
+                videoUrl = candidateUrl;
+                console.log(`  Picked ${candidateUrl} (no comments yet — freshest)`);
+                break;
+              }
+            } catch (e) { console.log(`  candidate check failed for ${id}: ${e.message}`); }
+          }
+          if (!videoUrl) {
+            console.log('  Could not disambiguate by comments — flagging for manual check, not guessing.');
+          }
+          break;
+        }
+        console.log('  no new video yet (processing)...');
+        await page.waitForTimeout(20000);
+      }
+      if (!videoUrl) console.log('  WARNING: no (unambiguous) new video surfaced within poll window.');
     } catch (e) { console.log(`  URL fetch error: ${e.message}`); }
 
     // ── Post-publish verification ───────────────────────────────────────────

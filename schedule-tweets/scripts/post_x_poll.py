@@ -156,9 +156,18 @@ def check_already_posted(page, poll):
         page.evaluate("() => window.scrollBy(0, 1500)")
         page.wait_for_timeout(2000)
 
-        recent_texts = page.evaluate("""() => {
-  const els = document.querySelectorAll('[data-testid="tweetText"]');
-  return [...els].slice(0, 30).map(el => el.innerText.trim().toLowerCase());
+        # Scope the scan to posts that actually CARRY A POLL WIDGET. A poll's
+        # duplicate can only be another poll, so a plain tweet must never be a
+        # match candidate (see the 2026-08-19 note below).
+        recent = page.evaluate("""() => {
+  const arts = [...document.querySelectorAll('article')].slice(0, 30);
+  return arts.map(a => {
+    const t = a.querySelector('[data-testid="tweetText"]');
+    const hasPoll = !!a.querySelector('[data-testid="cardPoll"]')
+      || !!a.querySelector('[role="radiogroup"]')
+      || /final results|\\d+\\s+votes/i.test(a.innerText || '');
+    return { text: t ? t.innerText.trim().toLowerCase() : '', hasPoll: hasPoll };
+  }).filter(o => o.text);
 }""")
 
         hook = (poll.get("hook") or poll["tweet_text"].split("\n")[0]).strip().lower()[:60]
@@ -168,11 +177,25 @@ def check_already_posted(page, poll):
         # poll against an unrelated TWEET that merely quoted the same sentence mid-body
         # (2026-06-20: poll "The Kaspa hard fork is almost here." false-matched a
         # tweet whose body contained that sentence -> poll marked posted, never sent).
-        for text in recent_texts:
+        #
+        # startswith ALONE is still not enough (2026-08-19): a repurpose batch gives the
+        # tweet, the poll and the YT post the SAME opening line, so the poll's hook
+        # startswith-matched the single tweet posted minutes earlier in the same run ->
+        # poll marked posted, never sent. The has-poll gate is what actually separates
+        # them; keep BOTH conditions.
+        polls_seen = 0
+        for row in recent:
+            if not row.get("hasPoll"):
+                continue
+            polls_seen += 1
+            text = row["text"]
             if hook and text.startswith(hook):
                 print(f'  Duplicate found: "{text[:80]}"')
                 return True
-        print(f"  Not found in {len(recent_texts)} recent posts \u2713")
+        print(
+            f"  Not found in {polls_seen} recent POLL post(s) "
+            f"(scanned {len(recent)} posts) \u2713"
+        )
         return False
     except Exception as err:
         print(f"  Pre-check error (ignoring): {err}")

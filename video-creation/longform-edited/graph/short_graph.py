@@ -92,6 +92,22 @@ FACE_ROW_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?
 MISHEAR_RE = re.compile(r'"([^"]+)"\s*->\s*"([^"]+)"')
 
 
+def _burned_final(proj: Path, scope: str):
+    """The windows where the delivered picture ALREADY carries burned captions, in FINAL-video seconds: the project's
+    captions node output (assets/captions.json `windows`, source-spine seconds through sh). Only these are exempt from
+    the short's caption track. NOT every FACE window: the house rule burns captions on face holds over 5 s only, so a
+    short face beat (golden-kitty F9, the kicker, 4.4 s) arrives bare (caught at the short gate, 2026-10-02)."""
+    sh, _, _ = _sh_fn(proj, scope)
+    cj = proj / "assets" / "captions.json"
+    if cj.is_file():
+        try:
+            wins = json.loads(cj.read_text(encoding="utf-8")).get("windows") or []
+            return [(sh(float(a)), sh(float(b))) for a, b in wins]
+        except Exception:
+            pass
+    return _faces_final(proj, scope)
+
+
 def _faces_final(proj: Path, scope: str):
     """AS-RECORDED FACE windows in FINAL-video seconds (sh applied)."""
     sh, _, _ = _sh_fn(proj, scope)
@@ -339,7 +355,7 @@ def s_captions(state: ShortState) -> ShortState:
         return {"steps": C._step(state, node, "stub")}
     work = _work(proj)
     table = json.loads((work / "spans.json").read_text(encoding="utf-8"))
-    faces = _faces_final(proj, scope)
+    faces = _burned_final(proj, scope)            # the frames that already carry burned captions (not every FACE window)
     raw = work / "captions.raw.ts"
     r = subprocess.run([sys.executable, str(BUILD_CAPTIONS), "--words", str(proj / "spine" / "FINAL-TIME-words.json"), "--style", "montserrat",
                         "--max-words", "2", "--max-short", "4", "--var", "ZCAPTIONS", "--out", str(raw)], capture_output=True, text=True)
@@ -351,7 +367,7 @@ def s_captions(state: ShortState) -> ShortState:
     kept, windows = [], []
     for s in table["spans"]:
         a, b, o = float(s["src_start"]), float(s["src_end"]), float(s["out_start"])
-        # the COVER-sourced part(s) of this span = the span minus the FACE windows
+        # the part(s) of this span with NO burned captions = the span minus the burned-caption windows
         segs = [(a, b)]
         for fa, fz in faces:
             nxt = []
@@ -398,7 +414,11 @@ def s_comp(state: ShortState) -> ShortState:
     report = _sdir(proj) / "comp-build-report.json"
     work = _work(proj)
     table = json.loads((work / "spans.json").read_text(encoding="utf-8"))
-    total = float(table["spans_total_seconds"]) + OUTRO_S
+    # the outro ABSORBS the rounding: the spans land within +-1 s of their budget (the plan check), the final must hit
+    # the target within 0.25 s (s_verify_final), so the card holds target - spans, never a fixed 3.0 s (golden-kitty
+    # 2026-10-02: 26.53 s of spans + 3.0 = 29.53 s failed the 30 s target by construction)
+    outro = max(OUTRO_S, round(_target(state) - float(table["spans_total_seconds"]), 3))
+    total = float(table["spans_total_seconds"]) + outro
     if not (comp.is_file() and report.is_file() and not _redo(state, node)):
         prompt = (f"Build the SHORT composition for the longform-edited project `{proj.name}` (folder `{proj}`) per "
                   f"`video-creation/longform-edited/skills/longform-to-short/longform-to-short.md` §5 Stage B and your SHORT section.\n"
@@ -412,7 +432,7 @@ def s_comp(state: ShortState) -> ShortState:
                   "inside CAPTION_WINDOWS, they are the COVER-sourced frames; the FACE-sourced frames already carry burned captions). Montserrat house style.\n"
                   f"Variant overlays (Mike's variety rule): `{proj / 'assets' / 'short' / 'variants.json'}`; for each entry overlay the file full-frame over "
                   "its `overlay_short` window (copy the file into the public dir under variants/ first), with the same ingress the vertical used.\n"
-                  f"Outro: the last {OUTRO_S:.0f} s hold the last span's final frame and bring in a full-frame TITLE-SLIDE card reading exactly "
+                  f"Outro: the last {outro:.3f} s hold the last span's final frame and bring in a full-frame TITLE-SLIDE card reading exactly "
                   "\"WATCH THE FULL VIDEO\" in the locked container stylesheet (dark, Playfair headline, green accent word, no em dash), with a "
                   "downward arrow glyph; the CTA voice is mixed later, the comp has no audio.\n"
                   "Run lint_comp_imports.py + lint_covers.py on the comp, bundle once and smoke-test one still per span + the outro, LOOK at them, "

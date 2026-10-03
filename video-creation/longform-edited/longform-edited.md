@@ -275,7 +275,8 @@ exact regression: kaspa-covenants C1 held 18s, C2a showed the full hardfork slid
 The base cut (`spine/<scope>.c.desilenced.mp4`) is the spoken spine. The edit layers production value on top of it. Tools
 already in the repo to draw from — don't reinvent:
 
-- **B-roll:** `video-creation/generate-broll-batch.js` / `generate-broll-batch` flow, Higgsfield
+- **B-roll:** ChatGPT image b-roll via the `image-gen` agent (`repurpose/gen_batch.py` / `repurpose/gen_images.py`, the
+  Python browser pipeline; the old `generate-broll-batch.js` flow is frozen), Higgsfield
   (`higgsfield-generate` skill, Seedance video) for AI b-roll of Mike's likeness or concept shots.
   **Stock video b-roll:** `video-creation/skills/envato-broll/SKILL.md` (Envato Elements search +
   license + download, Playwright). Full-screen image b-roll: ChatGPT image gen (repurpose
@@ -337,8 +338,9 @@ and approved on `banks-own-chain` (2026-06-11, supersedes the looser 06-09 sketc
   the slide-9 "use your voice" box wasn't in the recording, so it isn't in the video.) Don't
   show content the narration never touches.
 - **Receipts (article screenshots) are edit-time cutaway assets, NOT embedded in the deck HTML.**
-  Capture them to `media/<project>/screenshots/` ahead of the edit (a throwaway headless-Chrome
-  Playwright script works; see `banks-own-chain/_capture-screenshots.js`). They pop in centered
+  Capture them ahead of the edit with the `receipt-capturer` agent / `video-creation/skills/receipt-capture/capture.py`
+  (Python; into `media/<project>/assets/receipts/`). Never a throwaway per-project script (banks-own-chain used a
+  one-off `_capture-screenshots.js`; that is history). They pop in centered
   over the content body (scale-back pop, ~0.4s) and obey rule #4 like everything else.
 
 **2. Full-screen b-roll is sparse punctuation: ~5 video + 5 image per longform, 1-4s each.**
@@ -381,7 +383,7 @@ overlays, lip-sync — anything), and back IN after it clears.** (Mike, 2026-06-
 presentation scene and an overlay at the same time, even partially. Implement as occlusion
 windows: scene layer fades out ~0.35s before each overlay window opens and fades back ~0.35s
 after it closes; merge windows that sit closer than ~0.6s so the scene doesn't flicker between
-back-to-back overlays (see `OCCLUSIONS` in `remotion/src/BanksOwnChain.tsx`).
+back-to-back overlays.
 
 **5. Default transition kit** (chosen by Mike on `banks-own-chain`, 2026-06-11 — reuse unless he
 specifies otherwise, and ASK only if a new device type appears):
@@ -404,7 +406,8 @@ swallows frames and drifts sync — the README HARD RULE). The **chapter title-c
 exception: a title card is a self-contained scene, so it uses a `@remotion/transitions` presentation picked
 per video from `../assets/transitions/README.md` (the canonical transition reference for all tracks). The
 glitch library (`../assets/transitions/library.json`) is a THIRD, separate set for glitchy-fast hits.
-Working implementations of the hand-rolled originals live in `remotion/src/BanksOwnChain.tsx`; the
+The comp that first implemented the hand-rolled originals (banks-own-chain) has since been deleted, so
+build them from the recipes in the table above and in `skills/comp-build/comp-build.md` §6; the
 gated-face **film-burn reuses that same film-burn**, and the **light-leak overlay is a new device to
 build** (drive its drift/intensity with `@remotion/noise` or `random(seed)` keyed to frame, never `Math.random`).
 
@@ -594,7 +597,7 @@ CTA treatment._
   desilence 250ms hook / 600ms rest, drift 15 ms). Taught the "Whisper HIDES retakes" audit
   (now mandatory in Phase 3) — Whisper dedupe cut Mike's GOOD retakes 4 times before the
   silencedetect-vs-word-coverage diff caught it.
-- **Phase 4:** Remotion comp `remotion/src/BanksOwnChain.tsx` — spine strip crop + spotlight
+- **Phase 4:** Remotion comp `BanksOwnChain` (since deleted) — spine strip crop + spotlight
   scene engine + occlusion windows + the default transition kit, all per house rules #1-#5
   above (this video is where every one of those rules was set). 10 chapters, 33 scenes,
   5 Envato clips + 5 ChatGPT images (BROLL-PLAN.md), 3 receipt pop-ins, 1 AI lip-sync insert
@@ -614,7 +617,7 @@ CTA treatment._
   strip to crop) and the impacts/SFX + vibe-cut model. This video is where both were set.
 - **Phases 1-3:** 30:35 single-take → defumble (`EDIT.mp4` 8:10, defumbler.md) → desilence
   250ms/500ms (`spine.mp4`, 427.6s). Pauses clustered ~0.6s, so 500ms body gave the rapid pacing.
-- **Phase 4:** `remotion/src/SilverScript.tsx` — gated full-screen face spine (zoom 1.35, centered) +
+- **Phase 4:** comp `SilverScript` (since deleted) — gated full-screen face spine (zoom 1.35, centered) +
   data-driven `FACE_SPANS` / `BROLL` / `CONTAINERS` (spotlight, full-screen) / `LOWER_THIRDS` /
   `CHAPTERS` (cube transitions) / `IMPACTS` + Kaspa-K logo (screen-blend) + end card. Diagrams/
   code/timelines are CONTAINERS, not AI images (text accuracy). Music = dynamic-leveled bed +

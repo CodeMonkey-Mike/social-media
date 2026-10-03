@@ -107,7 +107,7 @@ cheap signal checks (ffmpeg `volumedetect` / `signalstats` at specific timecodes
    (not a plain cut = its plate/tile assets are missing), the OUTGOING side shows the real outgoing content
    (not black, not the wrong source, not a different zoom level), and the INCOMING side settles clean.
    Cross-check the count against `TRANSITIONS.md` — a planned transition that was never wired looks like
-   nothing at all. Gate this with `../comp-build/lint-transition-assets.js` (CLAUDE.md §6c) BEFORE the render.
+   nothing at all. Gate this with `../comp-build/lint_transition_assets.py` (CLAUDE.md §6c) BEFORE the render.
 14. **⛔ DOUBLED / ECHOED VO at transitions (ethereum-rwa, 2026-08-01).** Any node an engine mounts is mounted
    **twice** (outgoing + incoming), so one unmuted video node replays the VO 2 more times ~0.1s late. Mike
    caught it by ear as a word said twice a few ms apart; it is invisible in every frame check. **Test

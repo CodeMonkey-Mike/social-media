@@ -382,15 +382,33 @@ def main():
                         page.goto("https://rumble.com/account/content", wait_until="domcontentloaded",
                                  timeout=30000)
                         page.wait_for_timeout(4000)
+                        # ROW-BOUNDARY FIX (2026-08-13). The previous matcher climbed up to
+                        # 5 ancestors from each anchor and accepted ANY ancestor whose text
+                        # contained the title. Two-plus levels up, that container spans
+                        # SEVERAL rows, so an anchor matched its NEIGHBOUR's title. Result:
+                        # every Rumble short id from 2026-08-07 to 2026-08-13 was shifted by
+                        # one (18 rows, each holding the next-older video's id) and the
+                        # liveness check dutifully reported the neighbour's title, which read
+                        # as harmless "processing lag".
+                        #   PASS 1 (authoritative): Rumble renders the title as its own link
+                        #     inside the row, so the anchor's OWN text identifies it, with no
+                        #     ancestor climbing and therefore no way to cross a row boundary.
+                        #   PASS 2 (fallback): climb, but stop the moment an ancestor holds
+                        #     more than one distinct /shorts/v id, i.e. it spans rows.
                         href = page.evaluate(
                             "(want) => { const n = s => (s || '').toLowerCase().replace(/\\s+/g, ' ').trim();"
-                            " let best = null, bestLevel = 99;"
-                            " for (const a of document.querySelectorAll('a[href*=\"/shorts/v\"]')) {"
-                            " let c = a;"
-                            " for (let lvl = 0; lvl < 5 && c; lvl++) {"
-                            " if (n(c.innerText).includes(want)) { if (lvl < bestLevel) "
-                            "{ bestLevel = lvl; best = a; } break; } c = c.parentElement; } }"
-                            " return best ? best.getAttribute('href') : null; }", title_needle)
+                            " const idOf = a => ((a.getAttribute('href') || '').match(/\\/shorts\\/(v[\\w]+)/) || [])[1];"
+                            " const anchors = [...document.querySelectorAll('a[href*=\"/shorts/v\"]')];"
+                            " for (const a of anchors) { if (n(a.innerText).includes(want)) "
+                            "return a.getAttribute('href'); }"
+                            " for (const a of anchors) { let c = a.parentElement;"
+                            " for (let lvl = 1; lvl < 5 && c; lvl++) {"
+                            " const ids = new Set([...c.querySelectorAll('a[href*=\"/shorts/v\"]')]"
+                            ".map(idOf).filter(Boolean));"
+                            " if (ids.size > 1) break;"
+                            " if (n(c.innerText).includes(want)) return a.getAttribute('href');"
+                            " c = c.parentElement; } }"
+                            " return null; }", title_needle)
                         if href:
                             full = (href if href.startswith("http") else "https://rumble.com" + href).split("?")[0]
                             print(f"  Matched short on /account/content: {full}")
@@ -403,10 +421,24 @@ def main():
                 return None
 
             # Liveness: fetch the public /shorts/ page and confirm its title matches.
+            #
+            # Returns "live" | "mismatch" | "lag".
+            #   mismatch = the page resolved to a title belonging to a DIFFERENT row in
+            #     shorts.json, i.e. the captured id is another video's (the 2026-08-13
+            #     off-by-one class, which shifted 18 rows). Such a URL must NEVER be
+            #     written: a null is honest, a wrong URL silently corrupts the record and
+            #     still looks fine on the dashboard. Only a title belonging to a known
+            #     OTHER short counts as mismatch, so a generic/blank page while the video
+            #     is still processing stays "lag" and keeps its (probably correct) URL.
+            other_titles = [norm(o.get("title") or "")
+                            for o in data.get("shorts", [])
+                            if o is not short and (o.get("title") or "").strip()]
+
             def verify_live(u):
                 want = norm(title)[:25]
                 ua = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                       "(KHTML, like Gecko) Chrome/120 Safari/537.36")
+                foreign = None
                 for i in range(1, 6):
                     try:
                         resp = browser.request.get(u, timeout=20000, headers={"User-Agent": ua})
@@ -416,30 +448,50 @@ def main():
                         got = norm(m.group(1) if m else "")
                         if got and want and want in got:
                             print(f'  Liveness \u2713 (title="{m.group(1)}")')
-                            return True
+                            return "live"
+                        if got and any(t and (t in got or got in t) for t in other_titles):
+                            foreign = m.group(1) if m else got
+                            print(f'  Liveness {i}/5: WRONG VIDEO (title="{foreign}") '
+                                  "\u2014 this id belongs to another short")
+                            break
                         print(f'  Liveness {i}/5: not live yet (title="{m.group(1) if m else "none"}")')
                     except Exception as e:
                         print(f"  Liveness {i}/5 error: {str(e).splitlines()[0]}")
                     if i < 5:
                         page.wait_for_timeout(20000)
-                return False
+                return "mismatch" if foreign else "lag"
 
             print("\nCapturing short URL from /account/content (matching by title)...", flush=True)
             short_url = capture_short_url_by_title()
-            live = verify_live(short_url) if short_url else False
+            live = verify_live(short_url) if short_url else "lag"
 
             short["platforms"][PLATFORM]["posted_at"] = now_iso_z()
-            if short_url and live:
+            if short_url and live == "live":
                 short["platforms"][PLATFORM]["status"] = "posted"
                 short["platforms"][PLATFORM]["url"] = short_url
                 short["platforms"][PLATFORM].pop("error", None)
                 print(f"\nPosted (live, verified): {short_url}")
+            elif short_url and live == "mismatch":
+                # HARD RULE (2026-08-13): a title mismatch against a known other short
+                # means the captured id is NOT ours. Drop it rather than record it.
+                short["platforms"][PLATFORM]["status"] = "posted_unverified"
+                short["platforms"][PLATFORM]["url"] = None
+                short["platforms"][PLATFORM]["error"] = (
+                    f"Upload submitted, but the captured id ({short_url}) resolves to a "
+                    "DIFFERENT short, so it was discarded rather than recorded. Recover the "
+                    "real URL with: python scripts/reconcile_short_urls.py --platform rumble "
+                    "--apply. Do NOT re-run the poster (would duplicate).")
+                print(f"\n\u26a0 posted_unverified: captured id {short_url} belongs to another "
+                      "short \u2014 URL discarded (never record a wrong URL). Run "
+                      "reconcile_short_urls.py to recover it.")
             elif short_url:
                 short["platforms"][PLATFORM]["status"] = "posted_unverified"
                 short["platforms"][PLATFORM]["url"] = short_url
                 short["platforms"][PLATFORM]["error"] = (
                     "Short URL found on /account/content but public page did not resolve "
-                    "within the retry window: verify manually. Do NOT re-run (would duplicate).")
+                    "within the retry window: verify manually, or run "
+                    "scripts/reconcile_short_urls.py --platform rumble. "
+                    "Do NOT re-run the poster (would duplicate).")
                 print(f"\n\u26a0 posted_unverified: {short_url} (URL captured, liveness not confirmed in window)")
             else:
                 short["platforms"][PLATFORM]["status"] = "posted_unverified"

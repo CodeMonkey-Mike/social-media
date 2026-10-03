@@ -71,7 +71,7 @@ Two things go wrong with large longform files and are handled explicitly:
 
 ## Debug artifacts
 
-Each wizard step saves to `tmp-fb-longform-debug/stepN_state.png`. Inspect on failure (`FAILED_final_state.png`).
+Each wizard step saves to `tmp/fb-longform-debug/stepN_state.png`. Inspect on failure (`FAILED_final_state.png`).
 
 ## When to use this vs. `fb-post-vertical.md`
 

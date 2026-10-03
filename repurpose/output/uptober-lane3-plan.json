@@ -1,0 +1,474 @@
+{
+  "batch": "uptober",
+  "date": "2026-09-30",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/uptober LOW BPS VERTICAL/uptober LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-09-30",
+  "brief": null,
+  "fact_check": [
+    {
+      "claim": "'Can Kaspa realistically reach a dollar this cycle? Yeah, I think so, maybe we got a few more years to prove it' (transcript, answering chat)",
+      "verdict": "Mike's own forward-looking prediction, written in first person. The supporting numbers are verified on 2026-09-30: $KAS $0.0440, market cap about $1.22B, rank 71, +15.2% 7d, +57.5% 30d, 78.8% below its ATH of $0.2074 (2024-07-31); circulating supply 27.73B of a 28.70B max (96.6%, written 'about 97%'); $1 x 27.73B = about $27.7B; $1 / $0.044 = about 22.7x, written 'roughly 23x'. Used in the Kaspa tweet, the engagement-bait one-liner, YT post 2, thread 2, both polls and both IG captions.",
+      "source": "api.coingecko.com/api/v3/coins/kaspa and /coins/markets?ids=kaspa (2026-09-30); transcript"
+    },
+    {
+      "claim": "Zcash: 'just another token', miners like it, 'I don't know if there's any point of Zcash in the long run', 'if they wanted to turn Kaspa into an optional privacy network they could do it, I saw a project like that for Kaspa', 'not like I'm going to be DCAing into Zcash'; 'you can mine both Kaspa and Zcash at the same time' (transcript)",
+      "verdict": "Mike's opinion, written as his view ('in my view a feature like that can be built on top of Kaspa'); the unnamed Kaspa privacy project is NOT named (unverified). Zcash numbers verified 2026-09-30: $ZEC $1,412.65, market cap about $23.97B, rank 9 to 10 on CoinGecko (written 'top 10', 'about $24B'), +65.6% 30d (written 'about 66% on the month'). The 'mine Kaspa and Zcash at the same time' line could NOT be verified (different hash algorithms) and is dropped, as is 'even though it's a DAG'.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=zcash and top-12 by market cap (2026-09-30); transcript"
+    },
+    {
+      "claim": "Kaspa context used in YT post 2 / thread 2: 10 blocks per second, fair launch with no premine, the first vProg live on testnet; Mike's vProgs video pulled 3,600 views in one day (transcript)",
+      "verdict": "10 BPS since the Crescendo hard fork (May 2025) and the fair launch are established public facts (persona core_theses). The first vProg (a verifiable tic-tac-toe game, real off-chain execution with ZK settlement on the L1) on testnet was verified in the beer-and-kaspa plan (KuCoin news 2026-09-27, github.com/biryukovmaxim/vprog-tictactoe); written 'went live on testnet in September', testnet only. The 3,600 views figure is Mike's own channel stat stated on stream, used once in the YT post as his statement.",
+      "source": "repurpose/output/beer-and-kaspa-lane3-plan.json fact_check; kucoin.com/news/trends/KAS/6ab8dffe74fd460007c5a9fe; persona.json core_theses; transcript"
+    },
+    {
+      "claim": "'Unbelievably good economic news': ADP employment change better than expected and more than double prior; PCE month over month and year over year better than expected; GDP quarter over quarter final better than expected and better than prior; personal spending better than expected; corporate profits negative (transcript)",
+      "verdict": "verified for Sept 30, 2026 and numbers added: ADP +90K vs 73K forecast, prior 38K (more than double, as Mike said); headline PCE (August) 0.3% m/m vs 0.4% forecast and 3.4% y/y vs 3.7% forecast; core PCE under forecast on both readings (sources disagree on the core y/y figure, 3.0% vs 3.3%, so NO core number is written, only 'core came in under forecast too'); Q2 GDP final 2.2% annualized vs 1.5% forecast (the prior estimate is reported inconsistently, so 'better than prior' is not written). Personal spending and corporate profits could not be pinned to a figure and are not used. Stocks rose on the day (Nasdaq about +1%).",
+      "source": "investing.com/news/stock-market-news/adp-jobs-data-gdp-core-pce-and-oil-inventories-due-wednesday-93CH-4923296 (forecasts and priors); foxbusiness.com/economy/august-2026-pce-inflation (2026-09-30); mediacenter.adp.com (August +38K); WebSearch summary of the Sept 30 releases (ADP 90K, GDP 2.2%)"
+    },
+    {
+      "claim": "'There was supposed to be another rate hike on October 28; the probability of a rate pause increased to 62% compared to 50' (transcript)",
+      "verdict": "verified and UPDATED: CME FedWatch showed a 65.1% probability of a hold on Oct 28 vs 34.9% for a 25 bp hike after the data, 'essentially an even split the previous day' (Fox Business, Sept 30); prediction markets 65% hold / 34% hike the same evening (DeFiRate); one week earlier FedWatch priced a 70.9% chance of a hike (CoinEdition). Copy: 'about 65% odds of no hike, from a coin flip the day before; a week ago about a 70% chance of a hike'. Mike's on-stream 62% is replaced by the updated 65%. Kevin Warsh as Fed chair is confirmed by the same coverage but he is not named in copy.",
+      "source": "foxbusiness.com/economy/august-2026-pce-inflation; defirate.com/prediction-markets/fed-decision-odds; coinedition.com/bitcoin-price-prediction-october-2026-btc-eyes-90000-in-october-as-fed-hike-odds-slide-below-50"
+    },
+    {
+      "claim": "Bitcoin: the previous resistance (the May high) is now acting as support and the daily candles keep bouncing off it; Benjamin Cowen is 'perplexed' that Bitcoin went above the May high; Bitcoin dominance is falling off a cliff and 'others excluding top 10' is on the rise; people are buying back in because the bottom is in (transcript)",
+      "verdict": "verified and UPDATED: $BTC $83,444 on 2026-09-30, daily closes between $83.4K and $86.6K every day since Sept 22, above the May 2026 peak near $82,000 (level not quoted as a number in copy; written 'so far it will not go below'). Bitcoin dominance 58.3% (CoinGecko global), below 60% since the week ending Sept 26 (Yahoo Finance). Cowen: his own X post 'Bitcoin broke through the May high this week, which I clearly got wrong' (verified in the spon plan) and BeInCrypto/Mitrade 'Waited for Bitcoin's October Bottom? Benjamin Cowen Says He Was Wrong'; copy quotes only 'clearly got wrong', the word 'perplexed' is NOT used. 'Everything outside the top 10 is climbing' is Mike's chart read, written as his read. October seasonality added from CoinEdition: Bitcoin closed October higher in 10 of 15 years (2011 to 2025).",
+      "source": "api.coingecko.com (bitcoin market_chart 21d, /global, 2026-09-30); finance.yahoo.com/markets/crypto/articles/bitcoin-share-crypto-market-drops-170914034.html; mitrade.com/au/insights/crypto/bitcoin/beincrypto-BTCUSD-202609220948; repurpose/output/spon-lane3-plan.json fact_check; coinedition.com (October seasonality)"
+    },
+    {
+      "claim": "Four-year cycle zombies: 'everybody is going to want to buy back in in October', a run-up caused by the four-year cycle zombies buying back in (transcript)",
+      "verdict": "Mike's own thesis, written in first person and per persona core_theses: the zombies all planned to buy an October bottom, so their own demand turns October green and the real low prints before October; never written as the zombies causing a bottom in October.",
+      "source": "transcript; persona.json core_theses"
+    },
+    {
+      "claim": "Golden Kitty 'recovered already', pulled out of its downward trend and is going sideways; should go up because of the influencers and KOLs behind it; very few memes are really pumping; if the bulls start running in a couple of weeks it probably goes to something like $50M, 'maybe 10x from here' (transcript)",
+      "verdict": "verified and UPDATED: $GOLDEN $0.004467, market cap about $4.47M on 2026-09-30, ATH $0.006087 on 2026-09-27 (26.6% below, written 'about 27%'), +12.3% 7d, +80.7% 14d (written 'about 80% over two weeks'); daily closes Sept 29 to Oct 1 UTC sit between $0.0045 and $0.0048, consistent with 'sideways'. The $50M read and 'about 10x' are Mike's own call, kept with 'never financial advice'. Golden Kitty is mention-triggered in persona project_handles (2026-09-30), so the tweet closes with 'Follow: @golden_kitty_rh' before the hashtag line. Mike's 'I am going to make a Golden Kitty video' is a plan, not news, and is not drafted.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=golden-kitty and market_chart (2026-09-30); persona.json project_handles"
+    },
+    {
+      "claim": "'Spawn' was at a 50K market cap when Mike talked about it on the previous stream and is at 101K on this one ('doubled our money'); it pays holders in Pons, buys back and burns; 'if Spawn becomes the Knots of Pons'; Knots ran to about $45M on a $330M Stonk; Pons ran to $645M; '$5M would be a 100x' (transcript)",
+      "verdict": "verified as $SPON (SPONGE, Robinhood Chain, 0xba356353542ED5564f8b9E48Fc6C8d5e6c14a1A8; mechanics verified in the spon plan from the project site: first Pons-native token turning trading fees into $PONS rewards plus recurring $SPON buybacks and burns; pool opened 2026-09-22). UPDATED on 2026-09-30: DexScreener market cap about $137K, +107% 24h, about $36K liquidity; the spon plan logged about $76K earlier the same day, consistent with Mike's $50K to $101K. Comp UPDATED: $KNOTS about $6.4M vs $STONK about $255M (about 2.5%), $PONS about $357M (CoinGecko), so the ratio gives about $9M. Mike's historical peaks ($45M KNOTS, $330M STONK, $645M PONS) and the '100x at $5M' line are NOT used; copy uses current caps only and keeps 'something can always go wrong; never financial advice'. spon is not in persona project_handles, so no Follow line.",
+      "source": "api.dexscreener.com/latest/dex/pairs/robinhood/0x55565d405e966765e2dc44e450978741c830960383d1845a50f35375fc713d50; api.dexscreener.com search KNOTS, STONK; api.coingecko.com (pons) (all 2026-09-30); repurpose/output/spon-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "TAO: Mike sold some at $326 and hopes to get back in around $290 to $300; 'either way I think it's still a good deal' (transcript)",
+      "verdict": "price verified and UPDATED: $TAO $300.67 on 2026-09-30, +33.7% 14d, +5.3% 7d, daily closes of $318 to $321 on Sept 26 to 28. The sell at $326 and the swing-trade alert are trader-portfolio framing (persona no_rotation_framing) and are NOT used; the one-liner keeps only the verified pullback and Mike's 'still a good deal' view. persona project_handles tao = null, so no Follow line.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=bittensor and market_chart (2026-09-30)"
+    },
+    {
+      "claim": "Uptober meme tokens: Mike called one at a $29K market cap; a 2024 Uptober on Solana hit $75M in the first week of October; a brand new one launched on the 22nd pumped to $500K; no Uptober token is on CoinMarketCap (transcript)",
+      "verdict": "NOT drafted. DexScreener lists 25+ separate tokens named UPTOBER across Robinhood Chain, Solana, BNB Chain and Ethereum (several launched on Sept 30 alone), so the specific token Mike called cannot be identified with certainty, and the $75M 2024 peak and the $500K pump could not be verified. 'Uptober' appears in copy only as the seasonal idea (a green October), never as a token or cashtag. images/reference/uptober.png (a cat in a green hoodie flying up a green arrow) is used only as the topic scene for the V4 hook of YT post 1.",
+      "source": "api.dexscreener.com/latest/dex/search?q=uptober (2026-09-30)"
+    },
+    {
+      "claim": "Dropped from the batch: promo code ARCHIE / 50% off, the Discord and website tour, the swing-trading software, the call list (PerpsPad 114x, Ethics 17x, STONK 13x, OTC, Polly 8x, Stockorium, LAB 353x, MYX 550x, Pippin 89x) (membership pitches, already shipped in archie-promo / perpspad / ready-for-pumps); Archie and What If / $IF (already covered; any mention forces the Follow line); the 'commodity markets exchange' launchpad that deleted its X profile and the BingX listing (unverified, Mike unsure on stream); Zebec ($ZBCN), peaq, Orbeo, Qubic, Harmonic agent, Something the Cat, A-Pawn Phone, Good, Tendies, Kitsu, Frog In Hood, Polly, Near, Quant, Cockroach (passing mentions, Mike says he knows little about several of them); the Elon Musk 'universal high income' clip, robots replacing trades, longevity escape velocity by 2033, AI continuing cancelled TV shows (off-topic futurism with unverifiable dates); the anagram / TV show tangent, the Ethereum pronunciation story, the XRP army joke, the Richard Branson video, YouTube view counts and 'am I shadow banned' talk (personal / self-focused tangents).",
+      "verdict": "not drafted per persona avoid_in_drafts and the agent instructions (no membership pitches, no re-announcements, no unverified claims, no personal tangents, no trader-portfolio framing).",
+      "source": "persona.json avoid_in_drafts; repurpose/output/archie-promo-lane3-plan.json; transcript"
+    },
+    {
+      "claim": "Topic weighting (Kaspa first, then TAO, Toncoin, Housecoin, Pengu)",
+      "verdict": "Kaspa and TAO were discussed and lead the batch: Kaspa (1 tweet, 1 one-liner, YT post 2, thread 2, YT poll 1, the X poll, 2 IG companions), TAO (1 one-liner). Toncoin was only named in passing as a 2024 top ('now it's called Gram'), Housecoin was not discussed, Pengu only as a reward token for Polly: none drafted. The rest follows the stream: the Sept 30 data sweep and the Oct 28 Fed odds with Bitcoin (1 tweet, YT post 1, thread 1, YT poll 2), Golden Kitty (1 tweet), SPON (1 tweet). 5 of 6 tweets are crypto projects.",
+      "source": "transcript"
+    },
+    {
+      "claim": "Whisper corrections applied: 'spawn' -> $SPON; 'ponds' / 'pawn' -> Pons / $PONS; 'not so' / 'knots' / 'not' -> $KNOTS; 'stonk' / 'stunk' -> $STONK; 'goal and kitty' / 'golden' -> Golden Kitty ($GOLDEN); 'Benjamin Kowloon' -> Benjamin Cowen; 'wash' -> Warsh (not named in copy); 'cast by' / 'cast' -> Kaspa; 'October' (token) -> Uptober; 'pce personal consumption and expenditures' -> PCE; 'v prog' -> vProg",
+      "verdict": "applied throughout; none of the persona-listed mishears (the wrong-chain spelling of Kaspa, the car-brand mishear of cyan, the lowercase Greek-letter mishear of TAO, the wrong What If ticker, the abbreviated moving-average form) appear in the copy.",
+      "source": "persona.json terminology_rules, ticker_corrections"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-09-30-uptober-setup-data-sweep-fed-odds": "version4 (a usable topic scene exists: images/reference/uptober.png, the cat in a green hoodie flying up a green arrow, which is the literal picture of the post's hook; the post is number-led (ADP +90K vs 73K, PCE 3.4% vs 3.7%, GDP 2.2% vs 1.5%, the Oct 28 odds swinging from about 70% hike to about 65% no hike, dominance under 60%, October green 10 of 15 years), so the V4 data slides fit. The hook cites uptober.png + version4/hook.png as an array with an explicit instruction to use only the cat, arrow and sky and never the baked 'UPTOBER' lettering; slides 2-5 cite version4/slide.png. Benjamin-Cowen.png was NOT reused (it fronted the 2026-09-30 spon V4 carousel). Per the SKILL.md 2026-09-10 note, the figure-bearing data slides 2, 3 and 4 are candidates for the code-rendered V4 path (render_v4_slide.py) if ChatGPT drifts the numbers)",
+    "yt-post-2026-09-30-kaspa-one-dollar-is-a-zcash-sized-cap": "version2 (an analytical, math-led argument: supply, the $27.7B cap at $1, the Zcash comp, what is shipping. No Kaspa topic photo exists in images/reference (only the flat kaspa-logo.png, which is a logo, not a V4 hook photo), so V4 cannot be anchored; V2 has a role-matched exemplar for every slide: 9611992a-01-hook, 4a9a572c-02, 44d02f9a-03, 074be0dc-04, 81abb2d9-06-question)"
+  },
+  "missing_references": [
+    "Zcash ($ZEC) logo / coin: no zcash reference file; no Zcash likeness is rendered anywhere (image f64d8dfd shows only the Kaspa coin and plain unmarked coins), Zcash is named only in copy",
+    "Bitcoin logo / coin: no bitcoin reference file; the macro image 8047925c uses plain unmarked coins and Bitcoin is named only in copy",
+    "Kaspa topic photo for a V4 hook: only the flat kaspa-logo.png exists, so the Kaspa YT post uses version2"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "8047925c",
+      "slug": "data-sweep-jobs-inflation-gdp-fed-pause",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Inside a dark control room, three giant round analog gauges are mounted side by side on a steel wall, each with a single needle that has just swung hard into a brightly glowing green zone, small sparks popping off the dials. In front of them a crowd of small plain coin characters with little arms and legs jumps and cheers, and at the centre a larger plain gold coin character with a huge relieved grin throws both arms in the air. In the background, through a tall window, a stern grey marble bank building with columns sits under a night sky, and a big brass lever beside its door has been pulled back to a resting position with a soft blue light glowing above it. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the gauges carry no numbers, no tick labels and no lettering; the building carries no signage. Deep navy near-black background. Dramatic cinematic lighting: bright green glow from the three gauges washing over the crowd, warm gold rim light on the centre coin, cool blue light from the window. Mood: triumphant, relieved. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "f64d8dfd",
+      "slug": "kaspa-one-dollar-is-a-zcash-sized-cap",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A determined anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands at the foot of a tall dark winners' podium made of ten rising stone steps and looks up with a hungry grin, one foot already on the first step and one hand pointing at a single empty step near the top that is lit by a bright greenish cyan spotlight, clearly waiting for it. A few plain dull grey and silver coin characters sit on the other upper steps looking down nervously. The grey and silver coins' faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the steps carry no numbers. Deep navy near-black background with faint drifting particles. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, the greenish cyan spotlight on the empty step, cold dim fill on the other coins. Mood: hungry, the seat is already there. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "f64d8dfd",
+      "slug": "kaspa-one-dollar-is-a-zcash-sized-cap",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A determined anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands at the foot of a tall dark winners' podium made of ten rising stone steps that fills the portrait frame from bottom to top, and looks up with a hungry grin, one foot already on the first step and one hand pointing at a single empty step near the top that is lit by a bright greenish cyan spotlight, clearly waiting for it. A few plain dull grey and silver coin characters sit on the other upper steps looking down nervously. The grey and silver coins' faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the steps carry no numbers. Deep navy near-black background with faint drifting particles. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, the greenish cyan spotlight on the empty step, cold dim fill on the other coins. Mood: hungry, the seat is already there. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "c2075a80",
+      "slug": "golden-kitty-out-of-the-downtrend",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\golden-kitty.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A gleaming chrome-gold cat trophy figurine, a stylized sitting cat sculpted in polished gold with a small round collar medallion, modeled on the gold cat statue in the attached reference, sits calm and upright at the mouth of a dark descending canyon it has just come out of, on the edge of a wide flat plateau at night. Behind it the canyon path slopes down into shadow, littered with small cracked plain dark coins; ahead of it the flat plateau stretches toward a distant mountain whose peak glows with warm gold light. Gold sparkles drift around the trophy. The trophy carries no lettering or plaque; every coin is completely plain with no symbol or marking. The attached reference shows a polished gold cat trophy statue on its LEFT side and a social media screenshot with text on its RIGHT side: use ONLY the gold cat statue as the shape, pose and colour key, and do NOT reproduce the screenshot, its logo, its emojis or any of its lettering. Deep navy near-black sky with faint stars. Dramatic cinematic lighting: warm gold rim light on the trophy, cold blue moonlight on the canyon rocks, a soft gold glow on the far peak. Mood: calm, out of the downtrend, the next climb in view. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "0fa54ecd",
+      "slug": "spon-doubled-the-knots-of-pons",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\spon.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\pons.png"
+      ],
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. TWO REFERENCE IMAGES ARE ATTACHED. The hero is the lime green sponge blob mascot shown in the FIRST attached reference: a soft glossy lime green blob with round sponge holes, two shiny black bead eyes and a small curved black smile, kept faithful to that reference in shape, colour and face. It stands on a glowing platform in a dark vault, visibly swollen to twice its size and beaming, arms spread wide, soaking up a shower of glossy translucent silvery-green glass tokens that rain down from above; each falling token is the rounded glass letter-P shape shown in the SECOND attached reference, rendered as a small solid glass object in that exact pale silvery-green glass colour. A faint smaller outline of the same blob glows on the floor behind it, showing how small it was a moment ago. Do not reproduce the blue sky, the clouds or the golden dripping shape from the first reference; no other characters, coins, logos or symbols appear. Deep navy near-black background. Dramatic cinematic lighting: bright lime green (Robinhood brand neon green, approximately #CCFF00) glow from the blob, cool silver highlights on the glass tokens, soft rim light from above. Mood: hungry, growing fast. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image other than the glass P-shaped tokens themselves."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "98cb6576",
+      "slug": "tao-pullback-to-300-still-a-good-deal",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A calm, confident anthropomorphized Bittensor TAO coin character, a white coin whose face carries the single black TAO glyph exactly as shown in the attached reference image (the Greek-letter-shaped mark, one horizontal bar over one curved stem), with little arms and legs, sits resting on a wide ledge partway up a steep dark mountain of stacked glowing server racks, catching its breath with a small satisfied smile and looking up. Below it the long slope it has just climbed drops away into the dark; above it the path continues to a bright white summit beacon. A coiled climbing rope and a small backpack rest beside it. The coin carries no other symbol, lettering or marking. Deep navy near-black background with faint data-light particles. Dramatic cinematic lighting: clean white rim light on the coin, cool blue glow from the server racks, a bright white beacon at the top. Mood: calm, a rest stop before the next leg. Use the attached reference only for the TAO glyph. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image other than the single TAO glyph on the coin."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "caf0ff83",
+      "slug": "kaspa-one-dollar-this-cycle",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A defiant anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands on a rocky ledge at night with its chest out, planting a tall plain greenish cyan flag in the rock with one hand and pointing with the other at a single enormous glowing greenish cyan star hanging far above a distant mountain summit. A small group of plain grey coin characters stands behind it with crossed arms and doubtful faces. The grey coins' faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the flag is a plain solid colour with no emblem or lettering. Deep navy near-black sky with faint stars. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin and the flag, the greenish cyan star glow on the summit, cold dim fill on the doubters. Mood: defiant, certain. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "caf0ff83",
+      "slug": "kaspa-one-dollar-this-cycle",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A defiant anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands on a rocky ledge at night in the lower half of the portrait frame with its chest out, planting a tall plain greenish cyan flag in the rock with one hand and pointing with the other at a single enormous glowing greenish cyan star hanging high in the upper part of the frame above a distant mountain summit. A small group of plain grey coin characters stands behind it with crossed arms and doubtful faces. The grey coins' faces are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the flag is a plain solid colour with no emblem or lettering. Deep navy near-black sky with faint stars. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin and the flag, the greenish cyan star glow on the summit, cold dim fill on the doubters. Mood: defiant, certain. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "18af9aea",
+      "slug": "01-hook",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\uptober.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ],
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference as the source of the full-bleed background picture: ONLY its flying tabby cat in a green hoodie and green cape with glowing eyes, the bright green upward arrow trail behind it and the dramatic green and gold night sky with clouds, recomposed so the cat and the arrow fill the upper two thirds of the square frame, kept faithful to that reference in character, colours and lighting; the large glowing lettering on the LEFT side of that reference must NOT be reproduced in any way. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple green line chart that climbs steadily from lower left to upper right. Bold all-caps text across the bottom: 'JOBS UP. INFLATION DOWN. GDP UP.' in white on the first line, then 'OCTOBER IS SET UP' with 'SET UP' in bright green. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no artist signature and no initials anywhere in the frame or in any corner; the attached style reference carries a watermark and it must NOT be reproduced. No human faces. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "b5b3921c",
+      "slug": "02-the-data-sweep",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The data sweep: Sept 30'. Stat boxes: 'ADP JOBS: +90K VS 73K EXPECTED', 'PCE INFLATION: 3.4% VS 3.7% EXPECTED', 'Q2 GDP FINAL: 2.2% VS 1.5% EXPECTED'. Centre: a bar chart with labeled axes showing three pairs of bars labelled 'JOBS', 'INFLATION', 'GDP', each pair one grey bar labelled 'EXPECTED' and one green bar labelled 'ACTUAL'; the green bar is taller for JOBS and GDP and shorter for INFLATION. Bottom green box labelled 'THE READ' with two bullets: 'Employment, inflation and growth all came in better than expected on the same day.' and 'ADP more than doubled the prior month's 38K.'. Page number 2 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "0e865240",
+      "slug": "03-the-fed-odds",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The Fed on Oct 28'. Stat boxes: 'ONE WEEK AGO: ABOUT 70% ODDS OF A HIKE', 'THE DAY BEFORE: A COIN FLIP', 'AFTER THE DATA: ABOUT 65% NO HIKE'. Centre: a line chart with labeled axes, the vertical axis labelled 'ODDS OF A HIKE', showing a red line that starts high at the left at a point labelled 'ABOUT 70%', steps down to a point labelled 'ABOUT 50%', then drops to a point at the right labelled 'ABOUT 35%'. Bottom green box labelled 'WHY IT MATTERS' with two bullets: 'Cooler inflation took the pressure off another rate hike.' and 'More readings like this and crypto will be absolutely flying.'. Page number 3 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "1bf955bd",
+      "slug": "04-bitcoin-holds-the-line",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Bitcoin is holding the line'. Stat boxes: 'THE MAY HIGH: OLD RESISTANCE, NOW SUPPORT', 'BITCOIN DOMINANCE: UNDER 60%', 'OCTOBER: GREEN IN 10 OF THE LAST 15 YEARS'. Centre: a candlestick chart with labeled axes showing price rising through a dashed horizontal line labelled 'MAY HIGH' and then several candles whose lower wicks touch that line from above without closing below it. Bottom green box labelled 'THE SETUP' with two bullets: 'The four-year cycle zombies all planned to buy an October bottom.' and 'Their own demand turns October green. The real low prints before it.'. Page number 4 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "3941a622",
+      "slug": "05-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Where does Bitcoin close October?'. Stat boxes: 'A: ABOVE $90K', 'B: $80K TO $90K', 'C: BELOW $80K'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'Bet right now: which one, and does the Fed spoil it on Oct 28?'. Page number 5 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "983b173c",
+      "slug": "01-hook",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-9611992a-01-hook.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '1 OF 5'. Large bold white title: 'Kaspa at $1 is a market cap the market already pays for.'. Below, a teal accent line: '$1 Kaspa is about $27.7B. Zcash sits at about $24B right now.'. At the bottom a dark rounded box with teal label 'THE CALL' and white body text: 'Can Kaspa reach $1 this cycle? My answer is yes. Here is the math.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '1 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "6ffcd7dd",
+      "slug": "02-the-math",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-4a9a572c-02-btc-failure.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '2 OF 5'. Large bold white title: '27.7 billion coins. About 97% of the supply is already out.'. Below, a teal accent line: 'At $1 that is about a $27.7B market cap, roughly 23x from here'. At the bottom a dark rounded box with teal label 'WHERE WE ARE' and white body text: 'About 4.4 cents and a $1.2B cap. Up about 57% on the month, still about 79% under the 20.7 cent all-time high.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '2 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "eb58c3e1",
+      "slug": "03-the-comp",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-44d02f9a-03-the-problem.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '3 OF 5'. Large bold white title: 'The market is paying $24B for a proof-of-work coin right now.'. Below, a teal accent line: 'Zcash: top 10 this week, up about 66% on the month'. At the bottom a dark rounded box with teal label 'MY TAKE' and white body text: 'Optional privacy is a feature, and a feature like that can be built on top of Kaspa. The number is the point: $24B is already on the table.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '3 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "d4acc216",
+      "slug": "04-not-standing-still",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-074be0dc-04-the-solution.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '4 OF 5'. Large bold white title: 'Kaspa is not standing still.'. Below, a teal accent line: '10 blocks per second on proof of work'. At the bottom a dark rounded box with teal label 'WHAT IS COMING' and white body text: 'The first vProg went live on testnet in September: real off-chain execution, zero-knowledge settlement on the L1. Fair launch, almost fully mined, programmability on the way.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '4 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "962e5ac1",
+      "slug": "05-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-81abb2d9-06-question.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '5 OF 5'. Large bold white title: 'Does Kaspa hit $1 this cycle?'. Below, a teal accent line: 'This cycle, a few more years, or never'. At the bottom a dark rounded box with teal label 'BET RIGHT NOW' and white body text: 'Tell me in the comments which one, and why.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '5 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Zcash ($ZEC) is a top-10 coin this week at about a $24B market cap, up about 66% on the month.\n\nSomebody asked me on stream what I think about it. It is another proof-of-work coin you can make money on, but I am not DCAing into it. Optional privacy is a feature, and in my view a feature like that can be built on top of Kaspa.\n\nHere is what that $24B tells me: Kaspa ($KAS) at $1 is about a $27.7B market cap. The market is already paying that kind of money for a PoW coin right now, and $KAS sits at about $1.2B.\n\n#kaspa #zcash",
+      "hook": "Zcash ($ZEC) is a top-10 coin this week at about a $24B market cap, up about 66% on the month.",
+      "image_id": "f64d8dfd"
+    },
+    {
+      "tweet": "Golden Kitty ($GOLDEN) already pulled out of its downtrend and is going sideways at about a $4.5M cap. That is about 27% under its Sept 27 all-time high and still up about 80% over two weeks.\n\nLook across the board: very few memes are holding a chart right now. $GOLDEN is one of them, with a lot of influencers and KOLs behind it.\n\nIf the bulls start running in October, I think this goes to something like $50M. That is about 10x from here. Never financial advice.\n\nFollow: @golden_kitty_rh\n\n#GoldenKitty #RobinhoodChain",
+      "hook": "Golden Kitty ($GOLDEN) already pulled out of its downtrend and is going sideways at about a $4.5M cap.",
+      "image_id": "c2075a80"
+    },
+    {
+      "tweet": "I do not know if we could ask for a better day of economic data than Sept 30.\n\nADP jobs: +90K vs 73K expected, more than double the prior 38K.\nPCE inflation: 3.4% vs 3.7% expected.\nQ2 GDP, final: 2.2% vs 1.5% expected.\n\nJobs up, inflation cooling, growth revised up. The odds of the Fed NOT hiking on Oct 28 jumped to about 65%, from a coin flip the day before.\n\nFor a year every other market did well while crypto bled. Everything doing well AND crypto doing well is even better: that is how more money flows into $BTC and the alts.\n\n#macro #bitcoin",
+      "hook": "I do not know if we could ask for a better day of economic data than Sept 30.",
+      "image_id": "8047925c"
+    },
+    {
+      "tweet": "$SPON was at about a $50K market cap when I talked about it on stream. It doubled within a day and sits around $137K this week.\n\nIt is the first Pons-native token that pays its holders in $PONS, and it buys back and burns its own supply. It launched on Sept 22.\n\nMy comp: $KNOTS pays its holders in $STONK and trades at about 2.5% of $STONK's cap ($6.4M vs $255M). $PONS is at about $357M. If $SPON becomes the $KNOTS of Pons, that ratio is about $9M. Something can always go wrong; never financial advice.\n\n#SPON #RobinhoodChain",
+      "hook": "$SPON was at about a $50K market cap when I talked about it on stream. It doubled within a day and sits around $137K this week.",
+      "image_id": "0fa54ecd"
+    },
+    {
+      "tweet": "Bittensor ($TAO) pulled back to about $300 and it is still up about 33% over two weeks... I think $300 is still a good deal 🧠\n\n#TAO #Bittensor",
+      "hook": "Bittensor ($TAO) pulled back to about $300 and it is still up about 33% over two weeks... I think $300 is still a good deal 🧠",
+      "image_id": "98cb6576"
+    },
+    {
+      "tweet": "Can Kaspa ($KAS) realistically reach $1 this cycle? Yes. It is up about 57% on the month and $1 is still about 23x away. How am I wrong? 😎\n\n#kaspa #KAS",
+      "hook": "Can Kaspa ($KAS) realistically reach $1 this cycle? Yes. It is up about 57% on the month and $1 is still about 23x away. How am I wrong? 😎",
+      "image_id": "caf0ff83",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #5 (a provocative prediction, Mike's own '$1 this cycle, yeah I think so' from the stream) plus technique #3 (the 'How am I wrong?' closer). No fact is manufactured; the 57% and 23x figures are verified."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-09-30-uptober-setup-data-sweep-fed-odds",
+      "topic": "The Sept 30 data sweep (ADP, PCE, GDP all better than expected), the Oct 28 Fed odds swinging to no hike, Bitcoin holding its May high as support with dominance under 60%, and why the four-year cycle zombies turn October green (built from the YT post)",
+      "variation_label": "A (stat-stack-and-conclusion)",
+      "tweets": [
+        {
+          "text": "Jobs beat. Inflation cooled. GDP got revised up. All on the same day.\n\nAnd the odds of a Fed hike on Oct 28 fell off a cliff.\n\nWhy this is the best setup crypto has had in a year...",
+          "hook": "Jobs beat. Inflation cooled. GDP got revised up. All on the same day."
+        },
+        {
+          "text": "The data, all from Sept 30:\n\nADP jobs: +90K vs 73K expected, more than double the prior 38K.\nPCE inflation: 3.4% vs 3.7% expected.\nQ2 GDP, final: 2.2% vs 1.5% expected.\n\nEmployment, inflation, growth. Every one of them better than expected."
+        },
+        {
+          "text": "What it did to the Fed: a week ago the market priced about a 70% chance of another hike on Oct 28.\n\nAfter this data, the odds of NO hike jumped to about 65%, from a coin flip the day before.\n\nMore readings like this and we will be absolutely flying."
+        },
+        {
+          "text": "For the past year every other market did well while crypto sat in a bear market.\n\nThe scenario I like even more than crypto running alone: everything doing well AND crypto doing well. That is how more money flows into crypto."
+        },
+        {
+          "text": "The chart agrees. $BTC broke above its May high and that old resistance is now support; it keeps tapping it on the daily candles and so far it will not go below.\n\nBitcoin dominance is under 60%. Benjamin Cowen posted that he 'clearly got wrong' that break."
+        },
+        {
+          "text": "The four-year cycle zombies all planned to buy an October bottom. So their own demand turns October green, and in my read the real low is already behind us.\n\n$BTC has closed October higher in 10 of the last 15 years."
+        },
+        {
+          "text": "If this changed how you see October...\n\nFollow me for the macro read that ignores the four-year cycle echo chamber.\n\n🧠 + 😎"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-09-30-kaspa-one-dollar-is-a-zcash-sized-cap",
+      "topic": "Why $1 Kaspa is a market cap the market already pays for: the supply math ($27.7B at $1, about 97% already circulating), the Zcash comp at about $24B, and what Kaspa is shipping (built from the YT post)",
+      "variation_label": "B (hook-and-thesis-first)",
+      "tweets": [
+        {
+          "text": "Can Kaspa ($KAS) realistically reach $1 this cycle?\n\nMy answer is yes.\n\nThe math that makes $1 a lot less crazy than it sounds, and the coin that proves the market will pay for it...",
+          "hook": "Can Kaspa ($KAS) realistically reach $1 this cycle?"
+        },
+        {
+          "text": "Where we are: $KAS trades around 4.4 cents, about a $1.2B market cap.\n\nUp about 15% on the week and about 57% on the month, and still about 79% under its 20.7 cent all-time high from July 2024."
+        },
+        {
+          "text": "The math: about 27.7 billion $KAS are circulating out of a 28.7 billion max. About 97% of the supply is already out. No premine, no VC unlocks.\n\nAt $1 that is about a $27.7B market cap, roughly 23x from here."
+        },
+        {
+          "text": "The comp: Zcash ($ZEC) is in the top 10 this week at about a $24B market cap, up about 66% on the month.\n\nThe market is paying $24B for a proof-of-work coin RIGHT NOW. $KAS at $1 is a $27.7B coin. That is not a fantasy valuation."
+        },
+        {
+          "text": "And Kaspa is not standing still: 10 blocks per second on proof of work, and the first vProg (real off-chain execution, zero-knowledge settlement on the L1) went live on testnet in September.\n\nFair launch, almost fully mined, programmability on the way."
+        },
+        {
+          "text": "If this made $1 Kaspa click...\n\nFollow me for the Kaspa reads the price-only crowd keeps missing.\n\n🔥"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-09-30-does-kas-hit-one-dollar",
+      "topic": "Does Kaspa ($KAS) reach $1, and when: the $27.7B cap at $1 vs Zcash at about $24B",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Kaspa ($KAS) is up about 57% on the month, about 97% of its supply is already circulating, and $1 would be a $27.7B market cap. Zcash is worth about $24B right now.\n\nDoes $KAS hit $1?\n\n#kaspa",
+      "hook": "Kaspa ($KAS) is up about 57% on the month, about 97% of its supply is already circulating, and $1 would be a $27.7B market cap.",
+      "options": [
+        "Yes, this cycle",
+        "Yes, in a few more years",
+        "50 cents is the top",
+        "Never"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-09-30-does-kas-hit-one-dollar",
+      "topic": "Does Kaspa ($KAS) reach $1 this cycle",
+      "source_post": "yt-post-2026-09-30-kaspa-one-dollar-is-a-zcash-sized-cap",
+      "question_text": "Somebody asked me on stream this week: can Kaspa realistically reach $1 this cycle? My answer is yes, even if it takes a few more years to prove it.\n\nThe math: about 27.7 billion $KAS are circulating, about 97% of the max supply, so $1 is about a $27.7B market cap. Zcash, another proof-of-work coin, is worth about $24B right now. Kaspa sits at about $1.2B, up about 57% on the month.\n\nDoes $KAS hit $1?",
+      "hook": "Somebody asked me on stream this week: can Kaspa realistically reach $1 this cycle?",
+      "options": [
+        "Yes, $1 this cycle",
+        "Yes, but it takes a few more years",
+        "50 cents is the ceiling",
+        "It never gets to $1"
+      ],
+      "x_poll_eligible": true,
+      "notes": "Kaspa topic: X twin poll-2026-09-30-does-kas-hit-one-dollar."
+    },
+    {
+      "id": "yt-text-poll-2026-09-30-where-does-bitcoin-close-october",
+      "topic": "Where Bitcoin closes October after the Sept 30 data sweep and the Oct 28 Fed odds swinging to no hike",
+      "source_post": "yt-post-2026-09-30-uptober-setup-data-sweep-fed-odds",
+      "question_text": "Jobs beat, inflation cooled and GDP got revised up, all on Sept 30. The odds of a Fed rate hike on Oct 28 went from about 70% a week ago to about 35%. Bitcoin is holding above its May high, and it has closed October higher in 10 of the last 15 years.\n\nMy read: the four-year cycle zombies all planned to buy an October bottom, so their own demand turns October green.\n\nWhere does Bitcoin close October?",
+      "hook": "Jobs beat, inflation cooled and GDP got revised up, all on Sept 30.",
+      "options": [
+        "Above $90K: the zombies buy back in and October is green",
+        "Between $80K and $90K: chop until the Fed on Oct 28",
+        "Below $80K: the rate hike fear comes back"
+      ],
+      "x_poll_eligible": false,
+      "notes": "Topic is Bitcoin / macro, not kaspa/tao/toncoin/golden-kitty: NO X poll twin (hard filter)."
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-09-30-uptober-setup-data-sweep-fed-odds",
+      "topic": "The Sept 30 data sweep (ADP +90K vs 73K, PCE 3.4% vs 3.7%, Q2 GDP 2.2% vs 1.5%), the Oct 28 Fed odds swinging from about 70% hike to about 65% no hike, Bitcoin holding its May high as support with dominance under 60%, and why the four-year cycle zombies turn October green",
+      "variation_label": "A + CTA1",
+      "body_style": "stat-stack arc: the three beats and the Fed odds in the pre-fold hook, the numbered data, what it did to the Oct 28 odds, the everything-plus-crypto scenario, the Bitcoin chart and the Cowen tell, the zombie mechanics and October seasonality, a forked price question and a like/subscribe ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Jobs beat. Inflation cooled. GDP got revised up. All on the same day, and the odds of a Fed rate hike on Oct 28 fell off a cliff.\n\nHere is why I told my group I do not know if we could ask for anything better, and what it sets up for October.\n\nThe data, all from Sept 30:\n\n1. Jobs. ADP private payrolls came in at +90K against 73K expected, more than double the prior month's 38K.\n\n2. Inflation. PCE, the Fed's preferred inflation gauge, printed 3.4% year over year against 3.7% expected, and 0.3% on the month against 0.4%. Core came in under forecast too. One more reading that says inflation is cooling.\n\n3. Growth. The final read on Q2 GDP came in at 2.2% against 1.5% expected.\n\nEmployment, inflation, GDP: every one of them better than expected on the same day.\n\nWhat it did to the Fed. A week ago the market was pricing about a 70% chance of another rate hike on Oct 28. After this data, the odds of NO hike jumped to about 65%, from a coin flip the day before. We need more readings like this and we will be absolutely flying.\n\nNow put crypto on top of that. For the past year every other market did well while crypto sat in a bear market. The scenario I like even more than crypto running alone is everything doing well AND crypto doing well, because that means more money flows into crypto.\n\nAnd the chart agrees. Bitcoin ($BTC) broke above its May high, and that old resistance is now acting as support: it keeps tapping it on the daily candles and so far it will not go below. Bitcoin dominance is under 60% while the chart of everything outside the top 10 keeps climbing. Benjamin Cowen posted that he 'clearly got wrong' the break above the May high.\n\nThat is the part the four-year cycle zombies never see coming. They all planned to buy an October bottom, so their own demand turns October green, and in my read the real low is already behind us. For what it is worth, Bitcoin has closed October higher in 10 of the last 15 years.\n\nSo bet right now, in the comments: does Bitcoin close October above $90K, or does the Fed spoil the party on Oct 28?\n\nClick that like button and click the subscribe button if you want the macro read that ignores the four-year cycle echo chamber.",
+      "engagement_question": "Does Bitcoin close October above $90K, or does the Fed spoil the party on Oct 28?",
+      "images": [
+        {
+          "image_id": "18af9aea",
+          "slide_text": "Jobs up. Inflation down. GDP up. October is set up"
+        },
+        {
+          "image_id": "b5b3921c",
+          "slide_text": "The data sweep: Sept 30"
+        },
+        {
+          "image_id": "0e865240",
+          "slide_text": "The Fed on Oct 28"
+        },
+        {
+          "image_id": "1bf955bd",
+          "slide_text": "Bitcoin is holding the line"
+        },
+        {
+          "image_id": "3941a622",
+          "slide_text": "Where does Bitcoin close October?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-09-30-kaspa-one-dollar-is-a-zcash-sized-cap",
+      "topic": "Can Kaspa ($KAS) reach $1 this cycle: the supply math ($27.7B cap at $1, about 97% of supply already circulating, roughly 23x from 4.4 cents), the Zcash comp at about $24B, and what Kaspa is shipping (10 BPS, the first vProg on testnet)",
+      "variation_label": "B + CTA2",
+      "body_style": "question-led analytical arc: the $1 question and Mike's yes in the pre-fold hook, where Kaspa sits, the supply math, the Zcash comp and Mike's take on Zcash, what Kaspa is shipping, a three-way question and a like/subscribe ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Can Kaspa realistically reach $1 this cycle? Somebody asked me that on stream this week and my answer is yes. Maybe it takes a few more years to prove it, but yes.\n\nHere is the math that makes $1 a lot less crazy than it sounds, and the coin that proves the market will pay for it.\n\nWhere we are. Kaspa ($KAS) trades around 4.4 cents, about a $1.2B market cap. It is up about 15% on the week and about 57% on the month, and it is still about 79% under its all-time high of 20.7 cents from July 2024.\n\nThe math. There are about 27.7 billion $KAS in circulation out of a 28.7 billion max, so about 97% of the supply is already out. No premine, no VC unlocks waiting to get dumped on you. At $1, that is a market cap of about $27.7B, roughly 23x from here.\n\nNow the comp. Zcash ($ZEC) is sitting in the top 10 this week at about a $24B market cap, up about 66% on the month. Somebody asked me what I think about Zcash. It is another proof-of-work coin you can make money on, but I am not DCAing into it. Optional privacy is a feature, and in my view a feature like that can be built on top of Kaspa.\n\nBut look at what that number tells you. The market is paying about $24B for a proof-of-work coin RIGHT NOW. Kaspa at $1 is a $27.7B coin. We are not talking about some fantasy valuation; we are talking about a market cap the market is already handing to a PoW coin this week.\n\nAnd Kaspa is not standing still. It runs 10 blocks per second on proof of work. The first vProg (a verifiable program: real off-chain execution with zero-knowledge settlement on the L1) went live on testnet in September. I put out a video on vProgs and it pulled 3,600 views in a single day, so people are paying attention.\n\nFair launch, almost fully mined, 10 blocks per second, and programmability on the way. That is why I say $1.\n\nSo tell me in the comments: does $KAS hit $1 this cycle, does it take a few more years, or does it never get there?\n\nClick that like button and click the subscribe button if you want to be early on the next Kaspa move.",
+      "engagement_question": "Does $KAS hit $1 this cycle, does it take a few more years, or does it never get there?",
+      "images": [
+        {
+          "image_id": "983b173c",
+          "slide_text": "Kaspa at $1 is a market cap the market already pays for."
+        },
+        {
+          "image_id": "6ffcd7dd",
+          "slide_text": "27.7 billion coins. About 97% of the supply is already out."
+        },
+        {
+          "image_id": "eb58c3e1",
+          "slide_text": "The market is paying $24B for a proof-of-work coin right now."
+        },
+        {
+          "image_id": "d4acc216",
+          "slide_text": "Kaspa is not standing still."
+        },
+        {
+          "image_id": "962e5ac1",
+          "slide_text": "Does Kaspa hit $1 this cycle?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-09-30-kaspa-one-dollar-is-a-zcash-sized-cap",
+      "kaspa_subject": true,
+      "image_id": "f64d8dfd",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa ($KAS) at $1 is a market cap the market is already paying for.",
+      "caption": "Kaspa ($KAS) at $1 is a market cap the market is already paying for.\n\nSomebody asked me on stream what I think about Zcash. It is a top-10 coin this week at about a $24B market cap, up about 66% on the month. It is another proof-of-work coin you can make money on, but I am not DCAing into it. Optional privacy is a feature, and in my view a feature like that can be built on top of Kaspa.\n\nHere is what that $24B tells me. There are about 27.7 billion $KAS in circulation, about 97% of the max supply, so $1 Kaspa is about a $27.7B market cap. The market is handing that kind of valuation to a PoW coin right now, and Kaspa sits at about $1.2B.\n\nFair launch, no premine, 10 blocks per second, and the first vProg already live on testnet. The seat is there... Kaspa just has to go take it.\n\nSave this for the next time someone tells you $1 Kaspa is impossible.\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #crypto #cryptocurrency #altcoins #blockchain #zcash #cryptoinvesting #cryptonews #bitcoin",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#zcash",
+        "#cryptoinvesting",
+        "#cryptonews",
+        "#bitcoin"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Zcash ($ZEC) is a top-10 coin this week at about a $24B market cap, up about 66% on the month."
+    },
+    {
+      "id": "ig-2026-09-30-kaspa-one-dollar-this-cycle",
+      "kaspa_subject": true,
+      "image_id": "caf0ff83",
+      "aspect_ratio": "4:5",
+      "hook": "Can Kaspa ($KAS) realistically reach $1 this cycle? Yes.",
+      "caption": "Can Kaspa ($KAS) realistically reach $1 this cycle? Yes.\n\nSomebody asked me that on stream this week. Maybe it takes a few more years to prove it, but my answer does not change.\n\nKaspa is up about 15% on the week and about 57% on the month, and it is still about 79% under its 20.7 cent all-time high. From 4.4 cents, $1 is about 23x away. About 97% of the supply is already circulating, so there is no premine and no unlock schedule standing between here and there.\n\nHow am I wrong? Tell me in the comments 😎\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #crypto #cryptocurrency #altcoins #blockchain #altseason #cryptoinvesting #cryptonews #bitcoin",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#altseason",
+        "#cryptoinvesting",
+        "#cryptonews",
+        "#bitcoin"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Can Kaspa ($KAS) realistically reach $1 this cycle? Yes. It is up about 57% on the month and $1 is still about 23x away. How am I wrong? 😎"
+    }
+  ]
+}

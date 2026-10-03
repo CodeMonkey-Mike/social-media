@@ -241,11 +241,24 @@ def main():
                 add_btn = page.locator('button[data-testid="addButton"]')
                 mouse_click(page, add_btn)
 
-                page.wait_for_selector(f'[data-testid="tweetTextarea_{i}"]', timeout=10000)
+                # Past ~5 tweets the composer modal grows taller than the viewport, so the new
+                # textarea EXISTS but is scrolled out of view and never satisfies a visibility
+                # wait (deterministic `tweetTextarea_5` timeout, 2026-07-30). Wait on attachment,
+                # scroll it in, and fall back to a native JS click if the pointer click is blocked.
+                page.wait_for_selector(f'[data-testid="tweetTextarea_{i}"]',
+                                       state="attached", timeout=30000)
+                ta = page.locator(f'[data-testid="tweetTextarea_{i}"]')
+                try:
+                    ta.scroll_into_view_if_needed(timeout=10000)
+                except Exception as e:
+                    print(f"  scroll_into_view_if_needed failed ({e}); continuing", flush=True)
                 action_pause(page, f"textarea {i} ready")
 
-                ta = page.locator(f'[data-testid="tweetTextarea_{i}"]')
-                ta.click()
+                try:
+                    ta.click(timeout=5000)
+                except Exception:
+                    print("  normal click blocked, using JS click", flush=True)
+                    ta.evaluate("el => el.click()")
                 page.keyboard.press("Control+Home")
                 page.wait_for_timeout(500)
                 print(f"Typing tweet {i + 1}/{len(tweets)} ({tweets[i]['char_count']} chars)...")

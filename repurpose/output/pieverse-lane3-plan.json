@@ -1,0 +1,464 @@
+{
+  "batch": "pieverse",
+  "date": "2026-09-21",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/pieverse LOW BPS VERTICAL/pieverse LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-09-21",
+  "brief": "Pieverse is the featured project of this stream. A NEW Pieverse reference image is available at schedule-tweets/images/reference/pieverse.jpg (a plush white cat with a glowing headband at a holographic desk in a futuristic city, sending a USDT transaction between two windows); use it as the ref for every Pieverse image and treat it as the canonical Pieverse mascot/visual. The longform video is NOT being produced for this batch, so do not reference or promote a full-length video.",
+  "fact_check": [
+    {
+      "claim": "Pieverse ($PIEVERSE): identity, chain, product (transcript: 'pi-verse', 'agent to agent x402 type of tech', 'in the payment narrative', 'they have a little character')",
+      "verdict": "verified: Pieverse Token, contract 0x0e63b9c287e32a05e6b9ab8ee8df88a2760225a9 on BNB Chain and Ethereum, CoinGecko rank 109; an agent-native payment stack on x402b (an extension of the x402 HTTP payment protocol) with gasless stablecoin settlement, TEE keyless wallets, an agent-to-agent commerce protocol, and agents operating inside messaging apps (Line, Kakao, WhatsApp); listed on Gate, Bybit, Kraken, MEXC and PancakeSwap. Copy says 'agent-to-agent payments on x402 rails', 'x402b, an extension of the x402 HTTP payment protocol', 'stablecoins with no gas token in the way', 'straight from inside a chat app', 'keyless wallets, gasless settlement'. The mascot (plush white cat with a glowing headband) is Mike's reference image per the brief. Whisper's 'pi-verse' is corrected to Pieverse everywhere",
+      "source": "api.coingecko.com/api/v3/coins/pieverse (fetched 2026-09-21); coingecko.com/en/coins/pieverse; whales.market/blog/what-is-pieverse (x402 with EIP-3009); phemex.com/academy/what-is-pieverse-agent-native-payment-stack; pieverse.io/whitepaper (search summary); api.dexscreener.com search pieverse"
+    },
+    {
+      "claim": "Pieverse hit another all-time high on stream, market cap about $500 million (transcript: 'hit another all-time high again', 'it's a 500 million')",
+      "verdict": "verified and UPDATED: CoinGecko ATH $1.98 on 2026-09-21 12:58 UTC; price $1.82, market cap $499M (274.75M circulating of 1B total, FDV $1.82B); 7d +55.6%, 14d +43.1%, 30d +94.3%, 60d +168%. Copy says 'new all-time high at $1.98', 'near a $500M cap', 'up 94% in 30 days'. The FDV is not quoted",
+      "source": "api.coingecko.com/api/v3/coins/pieverse and market_chart days=365 (fetched 2026-09-21); dexscreener BSC PancakeSwap PIEVERSE/USDT mcap 500.8M"
+    },
+    {
+      "claim": "Mike called Pieverse back in November as a long-term play and it is up about 8x since; held as a private gem in his community favorites until about a week ago (transcript)",
+      "verdict": "Mike's own community call; the multiple is consistent with the data: CoinGecko's price history starts 2025-11-14 at $0.22 and November 2025 traded $0.134 to $0.518, so $1.82 is 8.3x the first November print (3.5x to 13.6x across the month's range). Copy says 'about 8x since I called it in November' and 'held as a private gem for ten months' (November to September)",
+      "source": "api.coingecko.com/api/v3/coins/pieverse/market_chart (days=365, daily); transcript (pieverse, 2026-09-21)"
+    },
+    {
+      "claim": "Mike's target: at least another 10x, roughly $5 billion (transcript: 'going to do at least another 10x... 500 million... 5 billion more or less')",
+      "verdict": "Mike's own prediction, written in first person and conditional on nothing external; marked as the batch's deliberate engagement-bait item (technique #5). 'Never financial advice' kept",
+      "source": "transcript (pieverse, 2026-09-21); persona.json 1_in_10_engagement_bait"
+    },
+    {
+      "claim": "The payments-narrative community favorites: ZBCN and Keeta are the public ones, Pieverse was private, a fourth is still private; 'Pieverse is nothing like ZBCN or Keeta, not really competitors' (transcript)",
+      "verdict": "the two named tokens are verified to exist ($ZBCN = Zebec Network, CoinGecko rank 188; Keeta = $KTA, rank 468); the list membership and the not-competitors read are Mike's own. Copy calls Zebec and Keeta 'payment networks' (general form) and never characterizes their products further",
+      "source": "api.coingecko.com/api/v3/search?query=zebec and ?query=keeta (fetched 2026-09-21); transcript"
+    },
+    {
+      "claim": "LAB precedent: 'I thought we were going to do a 20x on LAB, we did a 353x' (transcript)",
+      "verdict": "Mike's own community result, already on record in persona.json (spoken_voice cta_style: 'a freaking 353X on the LAB token'); written as his own numbers",
+      "source": "persona.json; transcript"
+    },
+    {
+      "claim": "Bitcoin closed above the 50-week moving average for the first time in 11 months on a weekly close; two consecutive weekly closes above it make the bull market official (transcript)",
+      "verdict": "verified and made precise: the week ending Sept 20, 2026 closed at $81,159, above the 50-week SMA of about $78,788, the first weekly close above it since Nov 9, 2025 (45 weeks below); own recomputation from CoinGecko Sunday closes gives a 50-week SMA of about $78,740 and a Sept 20 close of $81,169, consistent. BTC $85,533 at drafting (+5.3% 24h). The two-consecutive-closes rule is Mike's own and is written as 'my rule' / 'in my book'. Copy says '45 weeks' rather than '11 months'",
+      "source": "cryptobriefing.com/bitcoin-50-week-moving-average-breakout-september-2026 (fetched 2026-09-21); tradingview.com news cryptobriefing 18b6c23cc094b; thecryptobasic.com 2026/09/21; api.coingecko.com coins/bitcoin/market_chart days=365 and simple/price (fetched 2026-09-21)"
+    },
+    {
+      "claim": "Galaxy Research (Alex Thorn): historical outcome after Bitcoin reclaims the 50-week after a bear-market breakdown (not in transcript; added as the verified stat behind Mike's 'bear market is over' read)",
+      "verdict": "verified: 13 comparable instances, 11 of 13 did not make new cycle lows (prior similar recoveries 2015, 2019, 2023). Copy: '13 comparable cases. In 11 of the 13, no new cycle low followed'",
+      "source": "cryptobriefing.com/bitcoin-50-week-moving-average-breakout-september-2026 (fetched 2026-09-21)"
+    },
+    {
+      "claim": "Bitcoin cycle low and drawdown (transcript: 'hit the 208 moving average how many times, like three times', 'new bottom... 57k 56k... zombies say 38k')",
+      "verdict": "verified: cycle low about $58,525 on June 30, 2026 (CoinGecko daily close $58,566), a 53% drawdown from the October 2025 peak above $124,000; copy says 'the actual low printed at $58K on June 30'. The 200-week SMA touches and the $38K zombie target are not used",
+      "source": "cryptobriefing.com (above); api.coingecko.com coins/bitcoin/market_chart days=365 (1y low 2026-07-01 00:00 UTC point = June 30 close $58,566; 1y high 2025-10-07 $124,740)"
+    },
+    {
+      "claim": "Benjamin Cowen admitted he was wrong: 'clearly I was wrong', 'I was wrong, not going to make excuses, I deserve to be dunked on' (transcript, reading his posts and video)",
+      "verdict": "verified verbatim: on Sept 21, 2026 Cowen posted 'I was wrong. Not going to make excuses. I deserve to be dunked on'. Prior call: on Sept 8 he put 65% odds on the cycle low still being ahead (35% already in), October as the potential bottom window, $53K as key support, downside scenarios toward $44K, based on 2014/2018/2022 patterns. The $85K breakout liquidated $647.9M of shorts in 24 hours ($746.6M total). Saylor replied 'welcome back' (not used). Copy quotes the three lines exactly, says 'on Sept 8 he had 65% odds on the cycle low still being ahead, with $44K in his downside scenarios' and '$648M of shorts got liquidated in a day'",
+      "source": "kucoin.com/news/flash/benjamin-cowen-admits-mistake-as-bitcoin-surpasses-85k-triggering-massive-short-liquidations (fetched 2026-09-21); benzinga.com 2026/09 michael-saylor-says-welcome-back; cryptotimes.io 2026/09/21 cowen-scrap-october-bottom-call; mitrade.com beincrypto BTCUSD-202609220948"
+    },
+    {
+      "claim": "Cowen believed in lengthening cycles back in 2020 before becoming the four-year cycle camp's figurehead (transcript: 'in 2020... he believed in the lengthening cycles theory')",
+      "verdict": "verified: during 2020 and 2021 Cowen argued for lengthening cycles with diminishing returns (vs PlanB's stock-to-flow) and declared the model dead in May 2022 after the tops kept arriving on the four-year schedule. Copy: 'back in 2020 he believed in lengthening cycles, then joined the four-year camp and became its king'. 'King of the four-year cycle zombies' is Mike's own label (persona named_opposition)",
+      "source": "beincrypto.com benjamin-cowen-lengthening-cycles-are-dead; beincrypto.com planb-and-benjamin-cowen-discuss-the-future-of-bitcoin; datawallet.com who-is-ben-cowen"
+    },
+    {
+      "claim": "Mike's read: four-year cycle believers sold from October 2025 through March 2026 and will buy back around October; some are early because they realize the bottom is in; 'transfer of wealth', 'they're going to pump our bags' (transcript, his on-chain chart)",
+      "verdict": "Mike's own thesis, written in first person; the persona drafting rule is honored: copy never says the zombies cause an October bottom, it says they sold waiting for one, the real low printed in June, and they buy back higher than they sold",
+      "source": "transcript (pieverse, 2026-09-21); persona.json core_theses (October-bottom drafting rule)"
+    },
+    {
+      "claim": "Bitwise CIO Matt Hougan: 'this will be the strongest and longest bull market in crypto's history' (transcript)",
+      "verdict": "verified as a CNBC interview on Sept 21, 2026: Hougan said the crypto winter / downturn is over and, per multiple write-ups, that this could become the strongest and longest-running bull market in crypto's history; because the sources paraphrase the second half, copy attributes it as 'could be the strongest and longest bull market in crypto's history' rather than a verbatim quote. CNBC's own page returns 403 to fetches",
+      "source": "cnbc.com/2026/09/21/bitcoin-price-crypto-rally (search summary); fool.com/investing/2026/09/21 bitcoin-hits-85000; tradingkey.com 262178416 bitcoin-tops-85000-crypto-winter-over (fetched 2026-09-21); theblock.co 2026-09-17 hougan revises clarity act outlook"
+    },
+    {
+      "claim": "Mike's cycle thesis: year five of the current cycle, the 2025 top was a mid-cycle top because it never broke above the average power law, multiple all-time highs possibly every year, the halving supply shock cannot cause the cycle (transcript)",
+      "verdict": "Mike's own thesis, written in first person ('I count this as year five', 'which tells me'); persona core_theses records that he shed the four-year cycle belief in Q2 2025, which the Bitwise one-liner cites. No external power-law claim is asserted as fact",
+      "source": "transcript (pieverse, 2026-09-21); persona.json core_theses"
+    },
+    {
+      "claim": "Kaspa is above its 50-week SMA, about 4.4 cents (transcript: 'Kaspa's above the 50', '4.4 cents', 'Kaspa is going to be a fun ride')",
+      "verdict": "verified and UPDATED 2026-09-21: KAS $0.04265, market cap $1.18B, rank 72, 7d +22.0%, 30d +47.4%; the 50-week SMA of Sunday closes recomputed from CoinGecko is about $0.0412, so the price is above it intraweek, but the last weekly close (Sept 20, $0.0399) was still under it. Copy therefore says 'trading above its 50-week SMA this week', 'back over 4 cents', 'up 47% in 30 days', and 'one weekly close above that line and Kaspa makes it official', never 'closed above'. The '4.4 cents' is not printed (price moves). 'Over 96% of the supply already mined' reuses the verified 96.5% figure from the ready-for-pumps ledger",
+      "source": "api.coingecko.com/api/v3/coins/kaspa and market_chart days=365 (fetched 2026-09-21); repurpose/output/ready-for-pumps-lane3-plan.json fact_check (supply mined)"
+    },
+    {
+      "claim": "'$160 billion added to the crypto market in the past 24 hours'; 'odds of Bitcoin hitting $100K this year at a four-month high' (transcript)",
+      "verdict": "DROPPED: the $160B figure is a stale intraday number (global cap $2.91T, +1.3% 24h at drafting) and the Polymarket four-month-high claim could not be located (the live market leads with '$100K by Dec 31, 2027' at 82%); neither is used",
+      "source": "api.coingecko.com/api/v3/global (fetched 2026-09-21); polymarket.com/event/when-will-bitcoin-hit-100k (search summary)"
+    },
+    {
+      "claim": "TAO 'is going to move a lot'; Toncoin held as 'gram' (transcript)",
+      "verdict": "TAO $315.84, 7d +35.7%, 30d +43.0% (verified) but the stream carries no TAO or TON substance beyond the mention, so neither gets a stand-alone item; the Kaspa-first weighting is honored with the Kaspa tweet, IG companion, YT poll and X poll, and the rest of the batch follows what the stream actually discussed (Pieverse as the featured project per the brief, the 50-week close, Cowen, Bitwise)",
+      "source": "api.coingecko.com/api/v3/coins/bittensor (fetched 2026-09-21); transcript"
+    },
+    {
+      "claim": "Degen-play recap (Perps Pad 110x, STONK 11x, ethics 14x in a day, Orbio $2M to $73M, Delta, Uptober, Golden Kitty, Swirl, TCAT, Marie, Doggie), Bitcat rug on BNB, Crypto Archie / $IF / WEN drama, Pippin 85x, Discord tour, membership and course pitch, WAP payments (transcript)",
+      "verdict": "NOT drafted: Perps Pad / STONK / TCAT already shipped in the ready-for-pumps batch (no re-announcing); the remaining micro-cap moves are trader-portfolio and chain-rotation framing (persona no_rotation_framing) and unverifiable community entries; the Bitcat rug and 'my $IF bag has been destroyed' are self-deprecating; the Archie thumbnail / cucking image is personal off-the-cuff material; membership, Discord tour and course pitches are excluded by the skill; the longform video is not referenced per the brief",
+      "source": "persona.json avoid_in_drafts; repurpose/output/ready-for-pumps-lane3-plan.json; batches.json briefs.lane3"
+    },
+    {
+      "claim": "Iran war / Strait of Hormuz supply crunch caused inflation and wrecked the 2027 cycle-top timing; peak QE still ahead; diesel prices (transcript)",
+      "verdict": "NOT drafted: geopolitical / dark-register material stays out of the YT amplification formats and the tweet slots are filled by stronger stream-original material; 'peak QE still ahead' is left for a macro batch",
+      "source": "repurpose/SKILL.md (geopolitical content stays at tweet-tier); persona.json"
+    },
+    {
+      "claim": "Image references: Pieverse mascot, Kaspa logo, Bitcoin coin, Benjamin Cowen, Bitwise, Zebec / Keeta",
+      "verdict": "pieverse.jpg (the brief's canonical mascot) is cited on both Pieverse tweet images and, with version4/hook.png, on the V4 hook slide; kaspa-logo.png is cited on the Kaspa X image and its IG 4:5 companion with the instruction to use it only as the backwards-K source (persona kaspa_logo_reference caution); no Bitcoin coin file exists so the zombie scenes use plain unmarked gold coins; no Cowen photo exists so the 'zombie king' is a generic cartoon with no real likeness; Bitwise and Zebec / Keeta are named only in copy (missing_references). Every V4 data slide cites version4/slide.png and every V1 slide is pinned to version1/yt-posts-828eee71-01-hook.png with the 'N OF 5' counter stated once",
+      "source": "schedule-tweets/images/reference (ls 2026-09-21); persona.json image_generation; repurpose/SKILL.md V1 contamination note"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-09-21-pieverse-private-gem-new-ath": "version4 (the brief supplies a usable topic photo, pieverse.jpg, the canonical Pieverse mascot, which is the exact V4 use case and carries the extra V4 weight; the post is number-led: November call, about 8x, $1.98 ATH on Sept 21, $500M cap, +94% in 30 days, $5B target, 20x call vs 353x result, so the V4 data slides fit; hook cites pieverse.jpg + version4/hook.png, slides 2-5 cite version4/slide.png. Per the SKILL.md 2026-09-10 note, the figure-bearing data slides 2 and 4 are candidates for the code-rendered V4 path (repurpose/output/kaspa-lane3-fix/render_v4_slide.py) if ChatGPT drifts the numbers)",
+    "yt-post-2026-09-21-zombies-came-back-early": "version1 (high-energy news-flash: a 45-week breakout, a public 'I was wrong' from the zombies' king, $648M of liquidations and a transfer-of-wealth punchline told in punchy all-caps beats, which is the V1 register; V4 was weighed first per the extra-weight rule but no topic photo exists (no Benjamin Cowen or Bitcoin reference file in images/reference, and a generic zombie is not a topic photo), and V4 data slides carrying authored figures ($81,159, 11 of 13, $648M) are the known ChatGPT figure-drift case; V2 editorial is too calm for a dunk-and-breakout story; all five slides are pinned to version1/yt-posts-828eee71-01-hook.png per the V1 contamination note, with the 'N OF 5' counter stated explicitly once and the pure-green hue called out)"
+  },
+  "missing_references": [
+    "Bitcoin logo / coin (zombie images 73684d4c and 7a99800c, V1 slides): no bitcoin reference file in images/reference; every coin is rendered as a plain unmarked gold coin and Bitcoin is named only in the copy",
+    "Benjamin Cowen: no reference photo in images/reference; the 'zombie king' image 7a99800c and V1 slide 2 render a generic cartoon zombie king with no real person's likeness, Cowen is named only in the copy",
+    "Bitwise / Matt Hougan: no logo or photo; the bull-market image 7cc956b0 renders an unbranded bull and Bitwise is named only in the copy",
+    "Zebec ($ZBCN) and Keeta logos: none in images/reference; named only in the copy and as text labels on the V4 slides, never rendered as marks",
+    "Pieverse coin / logo: only the mascot banner pieverse.jpg exists (used as the canonical mascot per the brief); the coins in the Pieverse scenes stay plain and unmarked"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "088d09e2",
+      "slug": "kaspa-fun-ride-above-50-week",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Kaspa coin character, a round coin with short arms and legs showing the backwards-K (mirrored-K) Kaspa logo exactly as shown in the attached reference on its face, glowing greenish cyan, rides in the front car of a roller coaster that has just crested the top of a long climb and is tipping into a huge glowing greenish cyan track that swoops up and away toward the sky; the coin has both arms raised and a wide triumphant grin, its cheeks pushed back by the wind. Far below, a dark valley floor with a faint horizontal band of pale light the coaster has just risen above. Use the attached reference ONLY as the source of the backwards-K symbol; do not reproduce the reference coin full-frame and do not copy its composition. The coin carries no marking other than the backwards-K. The coaster cars and track carry no lettering or emblems. Deep navy near-black night sky background with faint stars. Dramatic cinematic lighting with an intense greenish cyan rim light from the track and a soft warm glow on the coin's face. Triumphant. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "088d09e2",
+      "slug": "kaspa-fun-ride-above-50-week",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio (taller than wide), film-quality render. A Kaspa coin character, a round coin with short arms and legs showing the backwards-K (mirrored-K) Kaspa logo exactly as shown in the attached reference on its face, glowing greenish cyan, rides in the front car of a roller coaster that has just crested the top of a long climb and is tipping into a huge glowing greenish cyan track that swoops up and away toward the sky; the coin has both arms raised and a wide triumphant grin, its cheeks pushed back by the wind. Far below, a dark valley floor with a faint horizontal band of pale light the coaster has just risen above. Use the attached reference ONLY as the source of the backwards-K symbol; do not reproduce the reference coin full-frame and do not copy its composition. The coin carries no marking other than the backwards-K. The coaster cars and track carry no lettering or emblems. Deep navy near-black night sky background with faint stars. Dramatic cinematic lighting with an intense greenish cyan rim light from the track and a soft warm glow on the coin's face. Triumphant. No text or words anywhere in the image. Compose for the tall 4:5 portrait frame: the coaster climbs from the bottom of the frame and the glowing track swoops up through the top.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "09218202",
+      "slug": "pieverse-agent-to-agent-payment",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The plush white cat mascot exactly as shown in the attached reference (a round fluffy white cat with small black button eyes, tiny whiskers and a slim glowing blue headband across its forehead) sits at a sleek holographic desk in a futuristic city at dusk and slides a small plain glowing coin along a beam of light to a second identical plush white cat at a matching desk on the far side of the frame, which catches the coin in both paws. Between them a stream of glowing blue and violet light particles arcs through the air. Behind them, tall glass towers with blue and violet neon accents. The holographic panels on both desks are blank glowing rectangles with no lettering, symbols or numbers. Keep both cats' likeness faithful to the reference: same proportions, same headband, same fur; use the reference only for the cat and its desk, do not copy its panel text. The coin face is completely plain: no symbol, no logo, no glyph, no lettering. Deep navy near-black sky background above the skyline. Dramatic cinematic lighting with a cool blue rim light from the holograms and a warm violet-orange glow from the sunset. Calm and confident. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\pieverse.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "73684d4c",
+      "slug": "zombies-buying-back-higher",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A long line of goofy, harmless cartoon zombies in tattered suits, green-skinned with droopy eyes and arms held out in front, shuffles up a steep dark hillside path toward a large plain glowing gold coin resting on a pedestal at the summit; each zombie clutches a small wad of plain paper cash and reaches for the coin. Halfway up the path a small cartoon monkey character in a hoodie with bright green eyes sits calmly on a rock beside a tall stack of plain glowing coins, looking back down at the shuffling line with a knowing grin. A horizontal band of pale light crosses the hillside just below the monkey, and the zombies are only now stepping over it. Every coin face and every bill is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No blood, no gore, family-friendly zombies. Deep navy near-black night sky background. Dramatic cinematic lighting with a warm gold glow from the summit coin and a cool green-blue rim light on the zombies. Amused and triumphant. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "7a99800c",
+      "slug": "zombie-king-white-flag",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. In a crumbling dark throne room, a goofy harmless cartoon zombie king in a tattered purple robe has stepped down off his throne and holds up a small plain white flag in one hand while his oversized golden crown slips off his head and tumbles toward the floor; his expression is sheepish and resigned, eyes drooping. Behind him a tall arched window shows a plain glowing gold coin rocketing up into the night sky on a bright streak of light, and a crowd of smaller cartoon zombies in tattered suits presses against the window pointing up at it in shock. The flag is plain white with no lettering. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No blood, no gore, family-friendly zombies, a generic cartoon character with no real person's likeness. Deep navy near-black background. Dramatic cinematic lighting with a cold blue-green rim light on the king and a warm gold glow pouring through the window. Sheepish and defeated. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "7cc956b0",
+      "slug": "longest-bull-market-thaw",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A colossal, muscular cartoon bull with a gleaming bronze hide and glowing gold eyes charges along an endless glowing highway that runs straight to a distant horizon and curves up into the night sky and out of the frame; the road is lined on both sides by a cheering crowd of small plain coin characters with their arms raised. Snow and cracked thawing ice cling to the road behind the bull and melt into puddles, while the road ahead of it is dry and bright. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The road carries no signs or markings. Deep navy near-black night sky background with faint stars. Dramatic cinematic lighting with a warm gold rim light on the bull and cool blue light on the melting ice behind it. Triumphant and hungry. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "940d5b1c",
+      "slug": "pieverse-cat-new-summit",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The plush white cat mascot exactly as shown in the attached reference (a round fluffy white cat with small black button eyes, tiny whiskers and a slim glowing blue headband across its forehead) stands on the very peak of a tall dark mountain above a sea of clouds at dawn, one paw raised in triumph and a small plain glowing coin held up in the other paw; beside it a plain flag on a pole flutters, and a faint trail of glowing blue paw prints climbs the last stretch of rock behind it. Far below the clouds, the faint lights of a futuristic city. Keep the cat's likeness faithful to the reference: same proportions, same headband, same fur; use the reference only for the cat, not its desk or panels. The flag is plain with no lettering or emblem, and the coin face is completely plain: no symbol, no logo, no glyph, no lettering. Deep navy near-black sky above with the first warm orange band of sunrise on the horizon. Dramatic cinematic lighting with a cool blue rim light from the headband and warm sunrise light on the cat's face. Triumphant. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\pieverse.jpg"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "9a272721",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the plush white cat with the glowing headband seated at a holographic desk in a futuristic city) as the full-bleed background image, keeping the cat's likeness faithful, cropped to a square on the LEFT-HAND cat only with its face and desk centred in the upper two thirds of the frame; render the small holographic panels as blank glowing rectangles and do not reproduce any lettering or numbers from the reference. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple green upward line chart. Bold all-caps text across the bottom: 'I CALLED PIEVERSE IN NOVEMBER.' in white on the first line, then '8X LATER, A NEW ALL-TIME HIGH' with 'ALL-TIME HIGH' in bright green. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no artist signature and no initials anywhere in the frame or in any corner; the attached style reference carries a repeating watermark and it must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\pieverse.jpg",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "c1b29b26",
+      "slug": "02-the-call",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The call: November to a new all-time high'. Stat boxes: 'CALLED: NOVEMBER 2025', 'SINCE THEN: ABOUT 8X', 'ATH: $1.98 ON SEPT 21'. Centre: a line chart with labeled axes showing a green price line rising from the lower left, labelled 'NOVEMBER', to a peak at the upper right, labelled 'SEPT 21'. Bottom green box labelled 'WHAT HAPPENED' with two bullets: 'Held as a private gem for ten months before I said the name out loud.' and 'Up 94% in thirty days; market cap near $500M.' Page number 2 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "c6dbb8da",
+      "slug": "03-what-it-is",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Payment rails for AI agents'. Stat boxes: 'RAILS: X402B', 'GAS TOKEN: NONE', 'PAYS IN: STABLECOINS'. Centre panel: a simple system diagram of three plain rounded nodes in a row labelled 'AGENT A', 'PIEVERSE', 'AGENT B', connected left to right by two green arrows. Bottom green box labelled 'WHY IT IS DIFFERENT' with two bullets: 'An AI agent pays another agent in stablecoins, no gas token in the way.' and 'Nothing like ZBCN or Keeta; they are not even competitors.' Page number 3 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "cfe3df18",
+      "slug": "04-the-target",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'At least another 10x from here'. Stat boxes: 'CAP NOW: ABOUT $500M', 'MY TARGET: $5B', 'LAB: 20X CALL, 353X RESULT'. Centre: a bar chart with labeled axes showing two bars rising left to right labelled '$500M' and '$5B', the second bar ten times taller than the first. Bottom green box labelled 'THE READ' with two bullets: 'A long-term hold in the payments narrative, not a flip.' and 'Sometimes expectations get blown away. Never financial advice.' Page number 4 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "d3beebf5",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Does Pieverse do $5B this run?'. Stat boxes: 'A: YES, $5B OR MORE', 'B: TOPS OUT UNDER $5B', 'C: ZBCN OR KEETA LEADS'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'Name the payments play you think leads the narrative.' Page number 5 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "d4b26bec",
+      "slug": "01-hook",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '1 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: '45 WEEKS BELOW THE 50-WEEK SMA. BITCOIN JUST CLOSED ABOVE IT.'. Behind the headline, a dark chart panel with a long flat horizontal neon green line and a bright green candle streak punching up through it at the far right, a single plain glowing coin riding the top of the streak, lit from below. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "e2fa8341",
+      "slug": "02-the-king-was-wrong",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '2 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'THE KING OF THE FOUR-YEAR CYCLE ZOMBIES: 'I WAS WRONG''. Behind the headline, a large empty dark throne with a golden crown lying toppled on the floor in front of it and a small plain white flag leaning against the armrest, a faint green glow rising behind the throne. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "e55229aa",
+      "slug": "03-eleven-of-thirteen",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '3 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: '13 RECLAIMS OF THE 50-WEEK. 11 MADE NO NEW LOW.'. Behind the headline, a row of thirteen small dark chart panels, eleven of them showing a bright green line rising to the upper right and two showing a dim grey line dipping down, the green panels glowing brighter than the grey ones. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "e588bb0f",
+      "slug": "04-transfer-of-wealth",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '4 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'THEY SOLD OCTOBER TO MARCH. NOW THEY BUY BACK HIGHER.'. Behind the headline, a dark staircase of glowing green steps rising from bottom left to top right, a small plain coin resting on the lowest step with a dim grey arrow pointing down at it and a larger plain coin glowing bright on the top step with a bright green arrow pointing up. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "fe0b14a4",
+      "slug": "05-question",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '5 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'BEAR MARKET OVER, OR A HEAD FAKE?'. Two plain glowing coins side by side on a dark panel, the left one bright green with a glowing upward arrow above it, the right one dim grey with a faint downward arrow above it, and a question-mark shaped glow hanging between them. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "$KAS is trading above its 50-week SMA this week, back over 4 cents with the market cap above $1 billion again.\n\nUp 47% in 30 days. One weekly close above that line and Kaspa makes it official, the same way Bitcoin just did.\n\nKaspa is going to be a fun ride...\n\n#kaspa #kas",
+      "hook": "$KAS is trading above its 50-week SMA this week, back over 4 cents with the market cap above $1 billion again.",
+      "image_id": "088d09e2"
+    },
+    {
+      "tweet": "Pieverse ($PIEVERSE) printed a new all-time high at $1.98 this week: about 8x since I called it in November as a long-term play, and it is sitting near a $500M cap.\n\nIt is nothing like $ZBCN or Keeta, and they are not competing. Pieverse is agent-to-agent payments on x402 rails: AI agents paying each other in stablecoins with no gas token in the way.\n\nPayments narrative, long-term hold, and I think this one has at least another 10x in it. Never financial advice.\n\n#pieverse #x402",
+      "hook": "Pieverse ($PIEVERSE) printed a new all-time high at $1.98 this week: about 8x since I called it in November as a long-term play, and it is sitting near a $500M cap.",
+      "image_id": "09218202",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #5, a provocative prediction ('at least another 10x', a $500M cap to $5B) stated in first person as Mike's own read; no fact is manufactured, the ATH, the cap and the November call are verified. No Follow line: Pieverse is not in persona project_handles (verified official handle @pieverse_io, flagged in the report for Mike to add)."
+    },
+    {
+      "tweet": "Bitcoin just closed a week above its 50-week SMA for the first time in 45 weeks: $81,159 on Sept 20, the first weekly close above that line since Nov 9, 2025.\n\nThe four-year cycle zombies sold from October through March waiting for an October bottom. Now they are buying back higher than they sold. That is a transfer of wealth, and it goes to the people who never left.\n\nOne more weekly close above the 50-week and the bull market is official in my book.\n\n#bitcoin #btc",
+      "hook": "Bitcoin just closed a week above its 50-week SMA for the first time in 45 weeks: $81,159 on Sept 20, the first weekly close above that line since Nov 9, 2025.",
+      "image_id": "73684d4c"
+    },
+    {
+      "tweet": "Benjamin Cowen, the king of the four-year cycle zombies, posted three lines this week: 'I was wrong. Not going to make excuses. I deserve to be dunked on.'\n\nOn Sept 8 he had 65% odds on the cycle low still being ahead, with $44K in his downside scenarios. Bitcoin closed above its 50-week SMA instead and $648M of shorts got liquidated in a day.\n\nSmart guy, honorable admission. The four-year cycle was the problem, not him.\n\n#bitcoin #btc",
+      "hook": "Benjamin Cowen, the king of the four-year cycle zombies, posted three lines this week: 'I was wrong. Not going to make excuses. I deserve to be dunked on.'",
+      "image_id": "7a99800c"
+    },
+    {
+      "tweet": "Bitwise's CIO told CNBC this week the crypto winter is over and this could be the strongest and longest bull market in crypto's history; I have been calling this year five of a much longer cycle since I shed the four-year cycle in Q2 2025 😎\n\n#bitcoin #crypto",
+      "hook": "Bitwise's CIO told CNBC this week the crypto winter is over and this could be the strongest and longest bull market in crypto's history; I have been calling this year five of a much longer cycle since I shed the four-year cycle in Q2 2025 😎",
+      "image_id": "7cc956b0"
+    },
+    {
+      "tweet": "Pieverse ($PIEVERSE) is up 94% in 30 days and just printed a new all-time high, and I think the agent-payments narrative it sits in is only getting started 🚀\n\n#pieverse #x402",
+      "hook": "Pieverse ($PIEVERSE) is up 94% in 30 days and just printed a new all-time high, and I think the agent-payments narrative it sits in is only getting started 🚀",
+      "image_id": "940d5b1c"
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-09-21-pieverse-private-gem-new-ath",
+      "topic": "Pieverse: the private gem called in November, 8x later at a new all-time high, and why agent-to-agent payments is the narrative",
+      "variation_label": "A",
+      "tweets": [
+        {
+          "text": "One of my long-term plays just printed a new all-time high, and I held it as a private gem for ten months before saying the name out loud.\n\nPieverse ($PIEVERSE): called in November, about 8x since, a $1.98 ATH on Sept 21, near a $500M cap.\n\nHere is what it actually is...",
+          "hook": "One of my long-term plays just printed a new all-time high, and I held it as a private gem for ten months before saying the name out loud."
+        },
+        {
+          "text": "My community favorites list has four plays in the payments narrative. Two are public: $ZBCN and Keeta. Pieverse was the third, private until about a week ago. The fourth is still private.\n\nAnd Pieverse is nothing like the other two. They are not even competitors."
+        },
+        {
+          "text": "Zebec and Keeta are payment networks. Pieverse is payment rails for AI agents.\n\nIt runs on x402b, an extension of the x402 HTTP payment protocol: an agent pays another agent in stablecoins, no gas token in the way, straight from inside a chat app."
+        },
+        {
+          "text": "When agents start transacting with each other at scale, somebody has to run the rails.\n\nIt also has a mascot: a plush white cat with a glowing headband. A payments protocol with a meme character. That is exactly why it ended up on my list."
+        },
+        {
+          "text": "My read: at least another 10x from here. A $500M cap in a narrative this size can be $5B, and this is a long-term hold, not a flip.\n\nI thought $LAB was a 20x and we did a 353x. Sometimes expectations get blown away. Never financial advice. Never."
+        },
+        {
+          "text": "If this put a name on the agent-payments narrative before the crowd finds it...\n\nFollow me for the long-term plays and the macro read behind them.\n\n🚀 + 😎"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-09-21-zombies-came-back-early",
+      "topic": "Bitcoin's first weekly close above the 50-week SMA in 45 weeks, Cowen's 'I was wrong', and the four-year cycle zombies buying back higher than they sold",
+      "variation_label": "B",
+      "tweets": [
+        {
+          "text": "Bitcoin just did something it had not done in 45 weeks, and the king of the four-year cycle zombies posted 'I was wrong' the next day.\n\nWeekly close $81,159 on Sept 20, above the 50-week SMA for the first time since Nov 9, 2025.\n\nHere is what it means for your bags...",
+          "hook": "Bitcoin just did something it had not done in 45 weeks, and the king of the four-year cycle zombies posted 'I was wrong' the next day."
+        },
+        {
+          "text": "Galaxy Research checked every time Bitcoin reclaimed the 50-week after a bear-market breakdown: 13 comparable cases.\n\nIn 11 of the 13, no new cycle low followed."
+        },
+        {
+          "text": "Benjamin Cowen posted: 'I was wrong. Not going to make excuses. I deserve to be dunked on.'\n\nOn Sept 8 he had 65% odds on the cycle low still being ahead, October as the window, $44K in the downside scenarios. $648M of shorts got liquidated in a day instead."
+        },
+        {
+          "text": "Smart guy, honorable admission. And the funny part: back in 2020 he believed in lengthening cycles, then joined the four-year camp and became its king.\n\nThe cycle was the problem, not him."
+        },
+        {
+          "text": "The zombies sold from October through March because the cycle said a new bottom was coming in October 2026. The real low printed at $58K on June 30.\n\nNow they are buying back higher than they sold. A transfer of wealth, to the people who never left."
+        },
+        {
+          "text": "My rule: two consecutive weekly closes above the 50-week SMA and the bull market is official. One down, one to go.\n\nAnd I count this as year five of the cycle: the 2025 top never broke above the average power law, so it was a mid-cycle top, not the top. No halving required."
+        },
+        {
+          "text": "If this reframed what the 50-week close means for the next twelve months...\n\nFollow me for the macro read that ignores the four-year cycle echo chamber.\n\n🧠 + 😎"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-09-21-where-does-kas-close-2026",
+      "topic": "Where does $KAS close 2026 now that it is trading above its 50-week SMA",
+      "eligible_topic": "kaspa",
+      "tweet_text": "$KAS is above its 50-week SMA this week, back over 4 cents with the cap above $1B, and Bitcoin just made its first weekly close above its own 50-week SMA in 45 weeks.\n\nWhere does $KAS close 2026?",
+      "hook": "$KAS is above its 50-week SMA this week, back over 4 cents with the cap above $1B.",
+      "options": [
+        "Under 5 cents",
+        "5 to 10 cents",
+        "10 to 20 cents",
+        "Over 20 cents (near ATH)"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-09-21-where-does-kas-close-2026",
+      "topic": "Where does $KAS close 2026 now that it is trading above its 50-week SMA",
+      "source_post": null,
+      "question_text": "Kaspa is trading above its 50-week SMA this week, back over 4 cents with the market cap above $1 billion again, and Bitcoin just made its first weekly close above its own 50-week SMA in 45 weeks. The four-year cycle zombies are coming back early.\n\nWhere does $KAS close 2026?",
+      "hook": "Kaspa is trading above its 50-week SMA this week, back over 4 cents with the market cap above $1 billion again.",
+      "options": [
+        "Under 5 cents",
+        "5 to 10 cents",
+        "10 to 20 cents",
+        "Over 20 cents: back near the all-time high"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-09-21-is-the-bear-market-over",
+      "topic": "Is the bear market over after the first weekly close above the 50-week SMA in 45 weeks",
+      "source_post": "yt-post-2026-09-21-zombies-came-back-early",
+      "question_text": "Bitcoin closed above its 50-week SMA for the first time in 45 weeks, the king of the four-year cycle zombies posted 'I was wrong', and Bitwise's CIO says the crypto winter is over.\n\nMy rule is two consecutive weekly closes above the 50-week SMA. One down, one to go. Call it:",
+      "hook": "Bitcoin closed above its 50-week SMA for the first time in 45 weeks, the king of the four-year cycle zombies posted 'I was wrong', and Bitwise's CIO says the crypto winter is over.",
+      "options": [
+        "Over. The bottom was $58K in June.",
+        "Not over. A new low is still coming."
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-09-21-pieverse-private-gem-new-ath",
+      "topic": "Pieverse: the private gem called in November, 8x later at a new all-time high, and why agent-to-agent payments is the narrative",
+      "variation_label": "A + CTA1",
+      "body_style": "narrative arc: the November call and the new ATH, what Pieverse actually is (x402b agent-payment rails vs the other payments plays), the mascot, the $5B target with the LAB precedent, the zombies-returning tailwind, the caveat",
+      "cta_target": "subscribe_youtube",
+      "body": "One of my long-term plays just printed another all-time high, and I held it as a private gem for ten months before I said the name out loud.\n\nPieverse ($PIEVERSE). I called it in November as a long-term play in the payments narrative, and it is up about 8x since then. It hit $1.98 on September 21, a fresh all-time high, and the market cap is sitting near $500 million. Up 94% in thirty days.\n\nHere is what it actually is, because it is not what most people assume.\n\nMy community favorites list has four plays in the payments narrative. Two are public: $ZBCN and Keeta. Pieverse was the third, private until about a week ago. There is a fourth I have not exposed yet. And Pieverse is nothing like the other two; they are not even competitors. Zebec and Keeta are payment networks. Pieverse is payment rails for AI agents: it runs on x402b, an extension of the x402 HTTP payment protocol, so an agent can pay another agent in stablecoins with no gas token in the way, straight from inside a chat app. Keyless wallets, agent-to-agent commerce, gasless settlement. When agents start transacting with each other at scale, somebody has to run the rails.\n\nIt also has a mascot: a plush white cat with a glowing headband. I put it in my thumbnail. Yes, a payments protocol with a meme character. That is exactly why it ended up on my list.\n\nNow the part that matters. I think this one has at least another 10x in it. A $500 million cap in a narrative this size can be $5 billion, and this is a long-term hold, not a flip. Sometimes expectations get blown away: I thought $LAB was a 20x and we did a 353x. I got a little scared of sounding like a moon boy after that. I think this is the run where the moon-boyish predictions start coming true.\n\nBitcoin just closed a week above its 50-week SMA for the first time in 45 weeks, and the four-year cycle zombies are coming back early. Plays like this are what they will be buying.\n\nNever financial advice. Never.\n\nSo commit in the comments: does Pieverse do $5 billion this run, or does the payments narrative top out before that? And which one leads the narrative: Pieverse, $ZBCN or Keeta?\n\nHit like and subscribe if you want to hear the next long-term play before it stops being private.",
+      "engagement_question": "Does Pieverse do $5 billion this run, or does the payments narrative top out before that? And which one leads the narrative: Pieverse, $ZBCN or Keeta?",
+      "images": [
+        {
+          "image_id": "9a272721",
+          "slide_text": "I called Pieverse in November. 8x later, a new all-time high."
+        },
+        {
+          "image_id": "c1b29b26",
+          "slide_text": "The call: November to a new all-time high"
+        },
+        {
+          "image_id": "c6dbb8da",
+          "slide_text": "Payment rails for AI agents"
+        },
+        {
+          "image_id": "cfe3df18",
+          "slide_text": "At least another 10x from here"
+        },
+        {
+          "image_id": "d3beebf5",
+          "slide_text": "Does Pieverse do $5B this run?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-09-21-zombies-came-back-early",
+      "topic": "Bitcoin's first weekly close above the 50-week SMA in 45 weeks, Cowen's 'I was wrong', and the four-year cycle zombies buying back higher than they sold",
+      "variation_label": "B + CTA2",
+      "body_style": "stat-stack-and-conclusion: the weekly close and the 50-week SMA, Galaxy's 11 of 13, Cowen's admission and his prior call, the zombies' sell-and-buy-back transfer of wealth, Mike's two-close rule, the year-five / mid-cycle-top thesis with the Bitwise quote, the black-swan caveat",
+      "cta_target": "subscribe_youtube",
+      "body": "Bitcoin just did something it had not done in 45 weeks, and the king of the four-year cycle zombies posted 'I was wrong' the next day.\n\nThe weekly candle closed at $81,159 on September 20. That is above the 50-week SMA (about $78,800) for the first time since November 9, 2025. Forty-five weeks below the line, and the line is reclaimed. Bitcoin is trading around $85K as I write this.\n\nGalaxy Research went back and checked every time Bitcoin reclaimed the 50-week after a bear-market breakdown: 13 comparable cases. In 11 of the 13, no new cycle low followed.\n\nThen Benjamin Cowen, the king of the four-year cycle zombies, posted: 'I was wrong. Not going to make excuses. I deserve to be dunked on.' On September 8 he had 65% odds on the cycle low still being ahead of us, October as the window, $44K in the downside scenarios. Smart guy, honorable admission, and the funny part is that back in 2020 he believed in lengthening cycles before he joined the four-year camp and became its king. The cycle was the problem, not him.\n\nHere is what the zombies did. They sold from October through March because the four-year cycle told them a new bottom was coming in October 2026. The actual low printed at $58K on June 30. Now they are waking up early, realizing the bottom may already be in, and buying back higher than they sold. That is a transfer of wealth, and it goes to the people who never left. They are going to pump our bags.\n\nMy rule: two consecutive weekly closes above the 50-week SMA and the bull market is official. One down, one to go.\n\nAnd I do not think this is a four-year cycle at all. I count this as year five of the current cycle. The 2025 top never broke above the average power law the way every previous mid-cycle top did, which tells me it was a mid-cycle top, not the cycle top. Bitwise's CIO told CNBC this week the crypto winter is over and this could be the strongest and longest bull market in crypto's history. I agree: multiple all-time highs, possibly one every year, for reasons that have nothing to do with a halving.\n\nWhat would it take for a new bottom now? Something catastrophically bad, a real black swan. Short of that, the zombies buying back in is the fuel.\n\nSo call it in the comments: is the bear market over, or is this the head fake the zombies say it is? And if it is over, where do the zombies finally buy back in: $90K, $100K, or higher?\n\nHit like and subscribe if you want the macro read that ignores the four-year cycle echo chamber.",
+      "engagement_question": "Is the bear market over, or is this the head fake the zombies say it is? And if it is over, where do the zombies finally buy back in: $90K, $100K, or higher?",
+      "images": [
+        {
+          "image_id": "d4b26bec",
+          "slide_text": "45 weeks below the 50-week SMA. Bitcoin just closed above it."
+        },
+        {
+          "image_id": "e2fa8341",
+          "slide_text": "The king of the four-year cycle zombies: 'I was wrong'"
+        },
+        {
+          "image_id": "e55229aa",
+          "slide_text": "13 reclaims of the 50-week. 11 made no new low."
+        },
+        {
+          "image_id": "e588bb0f",
+          "slide_text": "They sold October to March. Now they buy back higher."
+        },
+        {
+          "image_id": "fe0b14a4",
+          "slide_text": "Bear market over, or a head fake?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-09-21-kaspa-fun-ride-above-50-week",
+      "kaspa_subject": true,
+      "image_id": "088d09e2",
+      "aspect_ratio": "4:5",
+      "hook": "$KAS is trading above its 50-week SMA this week, back over 4 cents with the market cap above $1 billion again.",
+      "caption": "$KAS is trading above its 50-week SMA this week, back over 4 cents with the market cap above $1 billion again.\n\nUp 47% in 30 days. Bitcoin just made its first weekly close above its own 50-week SMA in 45 weeks, and the four-year cycle zombies who sold from October through March are coming back early. Kaspa is where a lot of that money lands: fair launch, no premine, proof of work, and over 96% of the supply already mined.\n\nOne weekly close above that line and Kaspa makes it official too.\n\nKaspa is going to be a fun ride...\n\nSave this for the next time somebody tells you Kaspa is dead.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#mining",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "$KAS is trading above its 50-week SMA this week, back over 4 cents with the market cap above $1 billion again."
+    }
+  ]
+}

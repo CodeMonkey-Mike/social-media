@@ -53,6 +53,20 @@ You operate inside the `social-media` repo (working directory is the repo root).
    **`TRANSITIONS.md`** if a prior draft exists (you are redesigning it).
 8. `persona/persona.json` — register, no-em-dash, brand feel.
 
+## Variety across videos (Mike, 2026-10-01) — read the ledger BEFORE you pick
+Run `python video-creation/skills/usage-ledger/usage_ledger.py report --what transitions --exclude-project "<project>"` (doc: `video-creation/skills/usage-ledger/usage-ledger.md`).
+- **GATED slots, the previous video's pick is BLOCKED:** the card move (`card_pick`), the melt look
+  (`melt_pick.family`) and the spin look (`spin_pick.family`). A look is `CATEGORY/Variant`, so `melt-rgb-1`
+  and `melt-rgb-short-3` are both `MELT/RGB`. Among the looks that fit the beat prefer `fresh`, then the least
+  recently used; avoid the last three videos' looks. Fit comes first.
+- **Advisory:** the face pick (film burn vs the Blocks glitch) and the AI-still glitch family. The report shows
+  what recent videos used; weigh it, the register still decides.
+- **Constant house style, never rotated:** `hand:fade` on video b-roll, the cross-fade + scale-in on text
+  containers, the cross-warp on stills, `hand:punch` on face holds.
+- A waiver is Mike's call only: add `"usage_waivers": {"<card name | CATEGORY/Variant>": "<his ruling>"}` to
+  the plan ONLY when the project's PROJECT-LOG.md records it. The graph runs `usage_ledger.py check --what
+  transitions` on your plan and fails a repeat of the previous video.
+
 ## Method — assign every scene change, then reserve MELT/SPIN for the marquee diagrams
 
 **Bucket 1 — Chapter / title cards: ONE presentation for the whole video.** Pick a single card move

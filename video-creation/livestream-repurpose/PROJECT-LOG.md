@@ -6,6 +6,72 @@ linkedin-automation/PROJECT-LOG.md.)_
 
 ---
 
+## 2026-08-13 — batch `wen-moon` run end to end through the graphs · ONE real finding: the cut graph was clobbering Lane 3's `repurpose=done`
+
+Mike's run contract: "make sure it goes through LangGraph as intended... only do two clips, no
+YouTube posts, no X threads... hopefully this time we won't have to make any modifications."
+
+**Ran, in order, all through the graphs, no hand-rolled substitutes:**
+`run.py --source "…/wen-moon.mkv" --min-sil 0.5` (intake) → clip-strategist (Fable, 2-clip cap) →
+`run.py repurpose --batch wen-moon` (Lane 3) → `run.py cut --batch wen-moon` (Lane 2).
+Intake: 53.2 min master at 0.66 Mbps · Lane 1 longform 36.6 min staged and queued as
+`lf-20260813-wen-moon` (NO THUMB, no PNG in the media folder) · vertical 1080x1920 SAR 1:1 ·
+7,478 words / 902 segments / 36 chunk windows · glossary TAO:1, **zero flags** (Kaspa never
+came up in this stream). Lane 3: 6 images generated + verified, 8 queue entries, lint clean.
+Lane 2: 2 clips (97.2s + 90.8s), dashboard built, progress.json at the 4b gate.
+
+**The intake run was REAPED mid-Whisper at 46:28 of 53:14** (the known background-task killer,
+not a graph failure). `--resume` did exactly its job: encode / Lane 1 / verticalize all skipped
+from the checkpoint and only the transcribe node re-ran. No duplicate longs entry, no re-encode.
+
+### LANE 2 ABANDONED by Mike at the 4b review — both clips rejected, doctrine hardened
+
+He reviewed the two cut clips and killed the lane outright ("I don't like them at all... we'll
+abandon the clip process for this time around. No shorts."). Both mp4s, `dashboard.html`,
+`progress.json` and `_cut_results.json` were deleted; `clip-plan.json` kept as the record;
+`batches.json` `pipelines.shorts="skip"`, dashboard null. His reasons, both now HARD RULES in
+`skills/topic-finding/SKILL.md`:
+1. **Clip 1 opened on a critique** ("why would you launch a Toshi coin on the Robinhood chain"):
+   *"I just don't think that has any substance... it just seems like it's a useless opening."*
+   A put-down of somebody else's launch is not a hook. The positive thesis (he wants the REAL
+   Robinhood office dog, the one that gets listed in the app) must be what the clip OPENS on, and
+   without that beat there is no clip. Stricter than the disparagement rule: the critique is
+   uninteresting even when it is fair.
+2. **Clip 2 was forward market speculation**, and having named opposition + the 50/40/10 split +
+   a tribal payoff did NOT save it: *"just talking about what might happen with the next 30 days...
+   it's not like me hyping up another coin... it was just normal talk from the live stream."*
+   "Tribal contrast wearing a macro coat" is not a loophole for odds-estimating; that is ordinary
+   talk he does every stream. When a stream yields only market talk, return FEWER clips and say so.
+Same feedback hardened in the `feedback_shorts_hype_over_market_data` memory.
+
+### THE FINDING — `scripts/register_batch.py upsert()` full-replaced the batch entry
+
+Lane 3 finished FIRST this run (Lane 2 was waiting on the strategist), so it set
+`pipelines.repurpose="done"`. Then the Lane 2 cut graph registered and **reset it to
+"pending"** — `upsert()` did `batches[i] = entry`, and `make_entry()` hard-defaulted
+`repurpose="pending"` even though a cut-lane caller knows nothing about Lane 3. The batch would
+have looked un-repurposed and been re-drafted (repurpose/SKILL.md Phase 1 picks the first batch
+whose `pipelines.repurpose` is `"pending"`). Every earlier batch ran Lane 3 LAST, which is why
+this never showed. Same bug also dropped keys the other lane's writer adds (`track`, `title`,
+`pipelines.longform`) — `repurpose/lane3_batch.py` was always the well-behaved side: it only
+ever sets its own key on an existing entry.
+
+Second defect in the same function: `json.dump(..., indent=2)` with the default
+`ensure_ascii=True` rewrote the WHOLE registry as `\uXXXX` noise on every cut run (391 escapes
+this time) — the same emoji-mangling class of bug the repo bans PowerShell JSON round-trips for.
+
+**FIXED in `scripts/register_batch.py`** (verified in a sandbox: an existing entry keeps
+`repurpose=done` + `longform=done` + `track` + `title` through a cut-lane registration, a brand
+new entry still gets `repurpose=pending`, and an em dash + emoji survive the write unescaped):
+- `make_entry(repurpose=None)` = "not my lane, leave it alone"; only an explicit value writes it.
+- `upsert()` shallow-merges the old entry under the new one and merges `pipelines` key by key.
+- `json.dump(..., ensure_ascii=False)`.
+- CLI `--repurpose` no longer defaults to `pending`.
+The `wen-moon` entry was repaired by hand after the fix (`repurpose=done`) and the escape churn
+reverted in the same write.
+
+---
+
 ## 2026-08-11 (evening) — THE POSTING TAIL IS PORTED AND LIVE · segment 7 POST graph · longform trio + 1 short blessed through Python · migration endpoint reached (all-Python except Remotion)
 
 Mike's authorization: "make all the final repairs and port it over... anything that has to do with
@@ -2119,3 +2185,86 @@ glossary caught a live Casper→Kaspa mishear on its first run; one bug found+fi
 (longs_append staged-root derivation + thumbnail cross-check in verify_queue).
 Commit `a653faf`. Decisions of record (Mike): documented desilencer for Lane 1 · ChatGPT
 browser stack ports LAST · one wave per real stream, port-first-then-graph.
+
+## 2026-08-12 — the build→publish seam goes mechanical (batch `johnny`)
+
+Both johnny renders finished with PASS gates and `run.py publish` then sat unrun for over an
+hour: the orchestrator was following stale prose ("publish ONLY after Mike gates the renders")
+that survived from before the 2026-08-07 eliza correction (staging IS the review handoff; an
+authorization note gates POSTING only). Mike: "there's no step where I have to review anything
+after the remotion build... this is the reason why we added langgraph to this whole flow."
+Three changes, all live-blessed on johnny the same day:
+
+1. **PUBLISH graph gained `built` → `verify_built` entry nodes** (`shorts_graph.py`): the
+   builder-frontier check (every clip phase == `7-built`, `PASS` in gate, render on disk,
+   meta present) is now graph-owned and recorded, not just a CLI front door. Blessed via a
+   live idempotent re-run (`--thread publish-johnny-20260812-bless2`): BUILT lines for both
+   clips, 0 added / 2 skipped, md5 re-verified. (First bless attempt crashed on a missing
+   `os` import in `verify_built` — fixed to `Path`, the file has no `os` import.)
+2. **`finalized_short_gate.py` prints a BATCH FRONTIER footer** when the passing clip
+   completes the batch (all siblings 7-built + PASS): it names the exact publish command.
+   Gate output is quoted verbatim in every builder report, so the last builder mechanically
+   hands the orchestrator the trigger. Also warns on near-miss phase labels (a builder wrote
+   `7-rendered` this batch; the front door requires `7-built` verbatim).
+3. **Stale contract prose fixed** everywhere live ("gates the renders" grep): `run.py`
+   (header, report_finish next-line, publish argparse), `shorts_graph.py` Wave-5 header,
+   `playbooks/livestream-repurpose.md`, `langgraph.html` lane-5 haltNote. Dashboard honesty:
+   the Phase 7 seam is now labeled "agents — NOT graph-owned" in the pipeline + architecture
+   views, and `flowchart.html`'s PUBLISH cluster shows built/verify_built. PROJECT-LOG lines
+   from the eliza era retain the old wording as historical record.
+
+   Same-session rename at Mike's call: `built`/`verify_built` -> `frontier`/`verify_frontier` ('built' read like a build step on the flowchart, when the node only VERIFIES the builder frontier; the progress.json phase string `7-built` is unchanged).
+
+## 2026-08-12 — johnny session addenda (batch milestone · incident · decisions of record)
+
+**Batch milestone.** `johnny` ran end to end in ONE day: intake -> cut (2 clips, Mike's per-run
+cap) -> tighten (canonical min-sil 0.25) -> finish -> 2 remotion builds (both gate PASS) ->
+publish (2 staged, md5-verified, `j-20260812-*`) + lane 3 (10 queue entries, 11 images; 3
+carousel slides REGENERATED after visual-qa caught fabricated chart data — the documented v4
+ChatGPT-charts-invent-numbers failure; regens used no-numeric-axis charts so only stat boxes
+carry figures) + the longform live on all three platforms the same morning. Clip 1 is the
+knowingly-demonetized Johnny Cash button gag (Mike's explicit call; the song span is protected
+by the scoped `protect-johnny-cash-music` build directive and was verified untouched on the
+final render: render-minus-spine RMS delta -0.01/-0.02 dB across the song window). Fact-check
+discipline earned its keep in lane 3: the "first weekly close below the 200-week SMA since June
+2022" claim was corrected against raw Bitstamp/Kraken history (closes below ran through Oct
+2023 -> "since the 2022-23 bear market"), MARA numbers were fixed to the 10-Q ($1.63B / 23,093
+BTC, H1 cumulative), and the Kitsu/Cooper "Vlad's dog / office dog" angle was dropped entirely
+(claims trace only to the tokens' own marketing, which disclaims the relationship). Tighten
+plans were authored by the tighten-strategist agent on an OPUS FALLBACK after five consecutive
+Fable/max 529s (provenance recorded in tighten-plan.json).
+
+**Near-miss: cleanup recycled the LIVE batch mid-run (11:05).** The status reconciler computed
+`completed` for johnny while the shorts were still mid-pipeline: ZERO shorts staged yet (an
+empty set trivially satisfies "every short posted") while the longform had already gone live on
+all three platforms that morning. Cleanup then recycled `media/johnny/` (source .mkv + LOW BPS
++ VERTICAL masters) and the transcripts folder. Mike restored both from the Recycle Bin
+(byte-verified against the run's recorded sizes); status forced back to `active`. Mechanical
+fix landed the same day: `scripts/reconcile-batch-status.js` rule 5 (freshness guard) — a batch
+with write activity in the last 6h is in flight and is never completed.
+
+**Decisions of record (Mike, 2026-08-12 — full text in ORCHESTRATOR-PLAN.md):**
+1. **Phase 2 target shape for lane 2 ADOPTED:** FINISH + Phase 7 builds + PUBLISH merge into
+   ONE StateGraph (per-clip Send fan-out under the existing chatgpt/render stage locks, which
+   already give clip-N+1-generates-while-clip-N-renders pipelining today). The only HITL gates
+   inside the lane: 4b review and 2nd review.
+2. **Vocabulary standardized:** the repo-coined "judgment seam" is retired from every live doc,
+   code comment, error message and dashboard label -> **HITL gate** (human) / **agent handoff**
+   (advisor + builder artifacts, "handoff artifact/contract"); "interrupt"/"breakpoint" stays
+   reserved for literal LangGraph pause-and-resume, which this pipeline deliberately does not
+   use. Historical ledger entries keep the old word; ORCHESTRATOR-PLAN's doctrine line carries
+   the translation breadcrumb. (Video-editing "seam" — splice joins, the zone-seam pixel row —
+   is standard vocabulary and untouched.)
+3. **The queue is the pipeline's TERMINAL state.** Posting is a separate queue-driven,
+   batch-agnostic process (segment 7 + the schedule-tweets posters) and is no longer drawn
+   inside the lanes on the Now-running / Architecture views — the Posting seam cards are gone,
+   lanes end at "pending in the queue", and the segment-7 details card is relabeled
+   "downstream of this pipeline". Matches the standing playbook rule that posting is out of
+   scope for the repurpose lanes.
+
+**Dashboard.** Now-running step cards now carry a mono CODE CHIP naming the executing file(s)
+per step — canonical executor first, `via <graph wrapper>` second; agent handoffs show the
+agent definition + the mechanical gate (a learning surface Mike asked for). Hard lesson baked
+into process: langgraph.html's script block is syntax-checked with `node --check` after every
+edit — an unescaped apostrophe from the vocabulary sweep briefly broke the whole page (symptom:
+every container stuck at "loaded").

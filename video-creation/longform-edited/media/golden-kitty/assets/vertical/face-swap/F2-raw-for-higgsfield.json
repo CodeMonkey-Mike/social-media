@@ -1,0 +1,38 @@
+{
+  "name": "F2",
+  "final_spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\spine\\ALL.g.pickup.mp4",
+  "handles_from": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\spine\\ALL.a.defumbled.mp4",
+  "window_s": [
+    40.233,
+    44.033
+  ],
+  "window_frames": [
+    1207,
+    1321
+  ],
+  "clip": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\assets\\vertical\\face-swap\\F2-raw-for-higgsfield.mp4",
+  "clip_frames": 150,
+  "clip_s": 5.0,
+  "window_starts_at_clip_frame": 12,
+  "window_starts_at_clip_s": 0.4,
+  "head_handle_frames": 12,
+  "tail_handle_frames": 24,
+  "source_index_of_first_window_frame": 3553,
+  "source_index_of_last_window_frame": 3676,
+  "match_mse": {
+    "head": 0.25,
+    "tail": 0.37
+  },
+  "picture_jumps_at_clip_s": [
+    0.667,
+    0.733,
+    1.8
+  ],
+  "pre_cropped_to_face_reframe": [
+    608,
+    1080,
+    838,
+    0
+  ],
+  "note": "the clip is PRE-FRAMED (already centred and zoomed): the comp plays the returned swap clip full-frame, WITHOUT FACE_REFRAME, starting at window_starts_at_clip_s; the spine's audio stays. The window frames are the final spine's own frames, so the returned clip lines up with the spine frame for frame."
+}

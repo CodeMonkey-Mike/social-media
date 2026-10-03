@@ -53,6 +53,15 @@ no SFX on the strength of a bad delegation. Never again.)
 3. Run the **finalized-short gate**; then blackdetect, audio levels, overlay-collision frame checks,
    whisper-verify captions on the final render.
 
+## Never end your turn to wait (headless = your turn ending IS your exit)
+The batch orchestrator runs you as `claude -p`: the moment you reply without a tool call, the
+process exits and the build is left half-done (archie-promo 2026-09-24: clip 1 wrote its comp,
+saw the image generator queued behind a sibling on the `chatgpt` stage lock, said "I'll continue
+when it finishes", and exited unbuilt). Shared locks (`chatgpt`, `render`) are waited on by a
+BLOCKING foreground command (`stage_lock.py acquire ...` polls until free; give the Bash call a
+long timeout, up to 600000 ms, and re-issue it if it times out). Keep calling tools until the
+render + gate are done; your final message is the JSON report and nothing else.
+
 ## Output — return a JSON report, ONLY that
 The report MUST include the skill's `finalized` block (gate output verbatim, broll_beats,
 sfx_events, etc.) plus `slug`, `variant`, `composition`, `render_mp4`, `duration_s`, `qa`,

@@ -24,9 +24,19 @@ no-cold-open rule; the format owner wins on conflict):
   6. NO COLD OPEN: no heading or beat NAMED "cold open" / "teaser" before CH1.
   7. NO EM DASHES anywhere (persona).
   8. FACE BUDGET: `--face-max N` -> at most N tagged `[FACE]` lines (the video's constraint).
+  9. YEARS ARE DIGITS: a spoken line never spells out a year ("twenty fifteen"); write 2015
+     (persona `year_and_date_format`, Mike 2026-10-01).
+ 10. NO DOLLAR SIGNS anywhere outside a code span: written money is "4.2M" / "1.04B", tickers
+     carry no cashtag sign (persona `money_format`, Mike 2026-10-01). A pair of dollar signs
+     also renders as math in the VS Code Markdown preview and scrambles the page.
+ 11. NUMBERS ARE DIGITS on a spoken line: no spelled-out number of ten or more ("three hundred
+     sixty-nine billion" -> "369 billion"), and no one..nine in front of percent or a scale word
+     ("four million" -> "4 million"). Scale words and "dollars" / "percent" stay words (persona
+     `whole_number_format`, Mike 2026-10-01: spelled-out numbers make him fumble the read).
+     `--voice-clone` skips 9 and 11: a script for the ElevenLabs voice clone spells numbers out.
 
 Usage:
-  python video-creation/longform-edited/skills/doc-reference/lint_screenplay.py <SCREENPLAY.md> [--face-max N] [--fix]
+  python video-creation/longform-edited/skills/doc-reference/lint_screenplay.py <SCREENPLAY.md> [--face-max N] [--fix] [--voice-clone]
 Exit: 0 = PASS (may print WARNs) · 1 = FAIL · 2 = usage.
 --fix rewrites the SAFE, mechanical deviations in place (backtick bare tags outside code spans,
 on tagged lines and legend rows; put `[SAY-EXACT]` first on locked lines; em dash -> ", ") and
@@ -50,6 +60,16 @@ STARTS_WITH_TAGISH = re.compile(r"^\s*(?:" + EMO + r"\s*)?`?\[(?:FACE|COVER|SAY-
 BARE_TAG = re.compile(r"(?<!`)\[(" + TAGNAME + r")\](?! HOLD`)(?!`)")
 UNIT_RE = re.compile(EMO + r"?\s*`\[" + TAGNAME + r"\]" + HOLD + r"`")
 SPOKEN = {"FACE", "COVER", "SAY-EXACT"}
+# A year written as words: "twenty fifteen", "nineteen ninety-nine", "twenty twenty-six". A quantity
+# never has this shape ("twenty-eight million" is hyphenated, "twenty four seven" has a ones word).
+SPELLED_YEAR = re.compile(r"\b(?:nineteen|twenty)\s+(?:oh\s+\w+|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|"
+                          r"seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)\b", re.I)
+# A number written as words that Mike should read as digits: anything of ten or more, or one..nine
+# carrying percent / a scale word. "thousand / million / billion" alone are legal scale words.
+SPELLED_NUMBER = re.compile(
+    r"\b(?:ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|"
+    r"forty|fifty|sixty|seventy|eighty|ninety|hundred)\b"
+    r"|\b(?:one|two|three|four|five|six|seven|eight|nine)\s+(?:percent|thousand|million|billion|trillion)\b", re.I)
 REQUIRED = [
     (r"^##\s+.*chapter map", "## CHAPTER MAP section"),
     (r"^\|\s*👤\s*`\[FACE\]`", "the tag legend table with backticked tags (a `| 👤 `[FACE]` |` row)"),
@@ -102,7 +122,7 @@ def fix_text(text: str) -> str:
     return "\n".join(out) + ("\n" if text.endswith("\n") else "")
 
 
-def lint(text: str, face_max=None):
+def lint(text: str, face_max=None, voice_clone=False):
     fails, warns = [], []
     lines = text.splitlines()
     for pat, what in REQUIRED:                                    # 5
@@ -116,6 +136,9 @@ def lint(text: str, face_max=None):
     for i, l in enumerate(lines):                                 # 7
         if "—" in l:
             fails.append(f"line {i + 1}: em dash (persona: never)")
+    for i, l in enumerate(lines):                                 # 10
+        if "$" in re.sub(r"`[^`]*`", "", l):
+            fails.append(f"line {i + 1}: dollar sign (persona money_format: write 4.2M / 1.04B, tickers without the cashtag sign)")
     in_ch, faces, beats, ch_name = False, 0, 0, None
     for i, l in enumerate(lines):                                 # 1-4, 8
         if re.match(r"^##\s+", l):
@@ -136,6 +159,12 @@ def lint(text: str, face_max=None):
             rest = l[TAGGED_LINE.match(l).end():]
             if (set(tags) & SPOKEN) and (BARE_TAG.search(rest) or re.search(r"`\[(SHOW|NOTE|VERIFY)\]`", rest)):
                 fails.append(f"line {i + 1}: a spoken line carries a direction tag mid-line (one job per line)")
+            spoken_text = re.sub(r"\([^)]*\)", "", rest)             # (parens) = a note, not spoken
+            m11 = SPELLED_NUMBER.search(spoken_text)
+            if (set(tags) & SPOKEN) and m11 and not voice_clone and not SPELLED_YEAR.search(rest):   # 11
+                fails.append(f"line {i + 1}: a number spelled out as words ('{m11.group(0)}'); numbers are digits on a line Mike reads (persona whole_number_format)")
+            if (set(tags) & SPOKEN) and SPELLED_YEAR.search(rest) and not voice_clone:    # 9
+                fails.append(f"line {i + 1}: a year spelled out as words ('{SPELLED_YEAR.search(rest).group(0)}'); years and dates are digits (persona year_and_date_format)")
             if "SAY-EXACT" in tags and not (set(tags) & {"FACE", "COVER"}):
                 fails.append(f"line {i + 1}: a locked `[SAY-EXACT]` line must carry its gate (`[FACE]` or `[COVER]`) written out")
             elif "SAY-EXACT" in tags and tags[0] != "SAY-EXACT":
@@ -154,6 +183,8 @@ def main():
     ap.add_argument("screenplay")
     ap.add_argument("--face-max", type=int, default=None)
     ap.add_argument("--fix", action="store_true", help="apply the safe mechanical fixes in place, then lint")
+    ap.add_argument("--voice-clone", action="store_true",
+                    help="the script is read by the ElevenLabs voice clone: numbers and dates as WORDS are allowed (skips 9 and 11)")
     args = ap.parse_args()
     p = Path(args.screenplay)
     if not p.is_file():
@@ -166,7 +197,7 @@ def main():
             p.write_text(fixed, encoding="utf-8", newline="\n")
             print(f"--fix: rewrote {p.name} (tags backticked / locked-line order / em dashes)")
             text = fixed
-    fails, warns, faces = lint(text, args.face_max)
+    fails, warns, faces = lint(text, args.face_max, args.voice_clone)
     for w in warns:
         print(f"WARN  {w}")
     for f in fails:

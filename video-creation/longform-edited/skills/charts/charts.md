@@ -53,7 +53,7 @@ static PNG placeholder. "The draft is the FULL feature set at low bitrate, never
 HARD RULE) — so deferring the animation to the HQ pass is a violation, not an option. A static PNG standing in for
 an `animated-chart` beat is a **GATE VIOLATION** (comp-build.md §7). The executor building the Remotion comp must
 route every `animated-chart` ref to a component. **MECHANICAL GATE (run before every render):**
-`node skills/comp-build/lint-animated-charts.js <comp.tsx> <covers.ts>` — FAILS if any `chart` cover renders a static PNG.
+`python skills/comp-build/lint_animated_charts.py <comp.tsx> [<covers.ts>]` (Python since 2026-09-28; the `.js` twin is frozen rollback) — FAILS if any `chart` cover renders a static PNG.
 (Origin: on zebec I shipped the CH1 buyback-flywheel as a static PNG in the draft "to animate in HQ" — wrong.)
 
 **⛔ HARD GUARDRAIL — never let an image model be the source of a NUMBER.** If a specific number is the message

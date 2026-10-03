@@ -1,0 +1,146 @@
+{
+  "batch": "beer-and-kaspa",
+  "authored_by": "tighten-strategist agents via batch orchestrator 2026-09-27",
+  "clips": [
+    {
+      "id": "kaspa-bear-called-1-cent",
+      "n": 1,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_end": 1583.15
+        }
+      ],
+      "boundary_relock_note": "2nd-review re-author (seg 0 only): end moved into measured silence so 'man.' is not clipped.",
+      "removals": [
+        {
+          "start": 1543.15,
+          "end": 1549.43,
+          "reason": "restatement: 'And so this was just three days ago, right? Because we're at September 26.' (edges on measured silence)"
+        },
+        {
+          "start": 1555.45,
+          "end": 1556.71,
+          "reason": "restart doubling: 'Long term, | long term downtrend did not break' (edges on measured silence)"
+        }
+      ],
+      "removed_seconds_est": 15.54,
+      "removed_pct_est": 12.97,
+      "notes": "Peak beats 1574.15-1582.91 and 2521.37-2528.17 untouched. Measured voiced removal 12.7% via clip_measures. seg1 still ends on 'cents' at 142.44 with 'if' starting at 142.44; if the tail sounds clipped at 2nd review, the only clean earlier phrase end is 137.94 ('ready') because 137.94-139.80 is now removed and that would lose the 5.5c payoff, so prefer keeping 142.44. seg4 ('Kaspa flipped Polygon... Did it? Oh that's cool. Yeah I mean, well deserved') left intact at 7s; the 'Did it?' and 'Yeah, I mean' tics were the next candidates but did not fit under the ceiling. Caption fixes: 'cast the bears' -> 'Kaspa bears' (1551), 'cast by the bottom' -> 'Kaspa at the bottom' (2523), 'Pumper Linsky' -> 'Pumperlinsky' (2545), 'polygon' -> 'Polygon' (2921), 'cell orders' -> 'sell orders' (137).",
+      "mike_2nd_review": "2026-09-27: reduced to segment 0 per Mike (end at :35); re-authored by tighten-strategist: 12.97% voiced. The 'Yeah, let's click on what he says' aside stays (no clean trough to shorten it; it would push the clip over the 15% gate)."
+    },
+    {
+      "id": "golden-kitty-8-million",
+      "n": 2,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 2,
+          "new_start": 2735.55,
+          "new_end": 2758.97
+        }
+      ],
+      "boundary_relock_note": "seg2: open on 'this thing is like rocking, man' (drop the 'You know,' lead-in) and end on 'so many people are getting behind it, right?' at 2758.97; the run-off 'There's like so many people, so many influence and so on' (2759.57-2762.81) restates the same line and trails into 'and so on'.",
+      "removals": [
+        {
+          "start": 2753.65,
+          "end": 2755.41,
+          "reason": "hedge stall after the call: 'I don't know. We'll see what happens.' -> straight from '8 million this coming week or a few days or something' to 'I think it's a good play'"
+        }
+      ],
+      "removed_seconds_est": 2.6,
+      "removed_pct_est": 5.9,
+      "notes": "Light touch is deliberate: the peak beat 2737.41-2753.43 covers 16 of seg2's 28 seconds (including the 'in like, just like a couple of weeks or. I mean,' stall, which is protected), the anaphora 'It's happening with...' in seg0 is a signature device, and seg1 is 2.6s of the number. The relock removed 4.3s of run-off on top (uncapped). Measured 5.9% voiced, above the 5% note floor. Caption fixes: 'Golden kid' -> 'Golden Kitty' (2716), 'golden kitty' -> 'Golden Kitty' (2741), 'quant' -> 'Quant' (2703), 'ton coin' -> 'Toncoin' (2705), 'Tao' -> 'TAO' (2707).",
+      "mike_2nd_review": "2026-09-27: segment 0 dropped per Mike; its removal (2701.01-2701.85) removed with it."
+    },
+    {
+      "id": "first-vprog-live-on-kaspa",
+      "n": 3,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_start": 3676.49,
+          "new_end": 3690.65
+        },
+        {
+          "segment_index": 1,
+          "new_start": 3742.15
+        },
+        {
+          "segment_index": 4,
+          "new_start": 3804.67
+        }
+      ],
+      "boundary_relock_note": "seg0: Whisper has a stuttered 'first first vProg is live'; the first 'first' is a hallucinated 5s token (3671.45-3676.49) so open on the second 'first' at 3676.49 (if 2nd review hears a clipped f, fall back to 3676.30). End on 'real state moves' at 3690.65; 'Right, and since yesterday, man' (3691.93-3693.97) is run-off and day-relative. seg1: drop the 'You know,' lead-in, open on 'this is really interesting'. seg4: drop 'this is pretty good news.' (3803.65-3804.57), it is doubled by 'It's pretty good news for the long term for Kaspa' which becomes the closer.",
+      "removals": [
+        {
+          "start": 346.81,
+          "end": 355.83,
+          "reason": "naming tangent: 'or um you know whatever you call this I guess you could just say Kaspa tokens at this point um you know' -> 'all these Kaspa tokens, you know whatever you want to call them now, KRC20s | they're gonna become hot too'"
+        },
+        {
+          "start": 3680.93,
+          "end": 3683.09,
+          "reason": "self-correction: 'main net. I'm sorry Kaspa' -> 'tic-tac-toe on Kaspa | test net'"
+        },
+        {
+          "start": 3805.33,
+          "end": 3807.13,
+          "reason": "false start in the closer: 'for our' (+1.2s pause) -> 'It's pretty good news | for the long term for Kaspa' (most dispensable, drop first if the gate trips)"
+        }
+      ],
+      "removed_seconds_est": 12.98,
+      "removed_pct_est": 14.0,
+      "notes": "Peak beat 3748.51-3760.6 untouched (it contains the 'That's like really like I think' stall, protected). Measured 14.0% voiced via clip_measures, under the 15% gate; over the usual 13% buffer because the 9.0s naming tangent is the single worst span in the batch and has to go whole. Left for desilence/5C because they did not fit: seg2 'and [1.7s] um [1.8s] yeah' 314.77-318.69 (mostly silence inside stretched tokens, desilence collapses it, 5C catches the um), 'um' 311.63-312.11, the 'more more' 319.59-320.37, seg3 'you know the steam keeps, it' false start 335.73-338.41 and 'and I get they' 341.63-342.11. Caption fixes: 'B-PROG' -> 'vProg' (3677, 3685), 'Big tech toe' -> 'tic-tac-toe' (3679), 'very prime verifiable program' -> 'verifiable program' (3685), 'real set of move' -> 'real state moves' (3690, verify vs the tweet on screen), 'virtual program from a verifiable programs' -> 'vProg, verifiable programs' (3743, verify by ear), 'vprogs' -> 'vProgs' (305), 'l1' -> 'L1' (314), 'KRC 20s' -> 'KRC20s' (346)."
+    },
+    {
+      "id": "114x-in-eight-days",
+      "n": 4,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_start": 1758.17
+        },
+        {
+          "segment_index": 2,
+          "new_start": 1728.77,
+          "new_end": 1734.61
+        }
+      ],
+      "boundary_relock_note": "seg0: open on 'We need, well, we just got a nice runner' at 1758.17; the two earlier 'we need a runner. We need a nice runner.' takes (1754.71-1757.01) are the same setup three times. seg2: open on the second 'Multiple scores of plays in our community' at 1728.77 (the first 'We have multiple scores of plays. I know, right?' is a chat reaction) and end on 'a lot.' at 1734.61, dropping the 'There's a lot.' restatement.",
+      "removals": [
+        {
+          "start": 3108.21,
+          "end": 3114.03,
+          "reason": "self-correction that refers to a line outside the cut: 'And then [2s] you're talking about on the 13th. No, it wasn't two days, right?' -> 'It was on the fifth. | It was on the 13th. We're like nearly 11 million.' Overlaps the peak beat 3113.13-3128.37 by 0.90s (the 'No, it wasn't two days, right?' words); clip-plan.json notes explicitly say tighten can remove it and the quoted peak text starts at 'It was on the 13th' (3114.03), which is intact. Strict-guard alternative: end this removal at 3113.13."
+        },
+        {
+          "start": 1784.49,
+          "end": 1787.71,
+          "reason": "screen aside + hesitation: 'And, um, I haven't put them all in with' -> 'pairing memes with perps. | 17x on [ethics] and then there was STONK 13x. Crazy dude.'"
+        },
+        {
+          "start": 1762.11,
+          "end": 1764.31,
+          "reason": "screen aside: 'or look, I put it over here, man.' -> 'the 110x. | Holy crap.'"
+        },
+        {
+          "start": 3099.79,
+          "end": 3104.53,
+          "reason": "screen aside: 'Right. I guess over here.' (+ pauses) -> 'So it was like 90K. | It was on the fifth.'"
+        },
+        {
+          "start": 1765.79,
+          "end": 1766.89,
+          "reason": "screen aside: 'I started adding them in.' -> 'Holy crap. | We had a lot of good plays' (most dispensable, drop first if the gate trips)"
+        }
+      ],
+      "removed_seconds_est": 17.08,
+      "removed_pct_est": 13.3,
+      "notes": "Peak beat 876.61-884.45 untouched; peak beat 3113.13-3128.37 touched ONLY by the 0.90s self-correction the clip-plan invited (see removal 1). Measured 13.3% voiced via clip_measures. Left for desilence/5C: 'I just can't wait for it, man' 869.23-871.33 (duplicates the closer 'I just can't wait'), 'You know,' 874.05, 'like, like' 888.35-889.39, 'um' 1781.23-1781.83, 'with with' 1782.63-1783.33, 'I guess it's' 1775.05-1775.51. Both segments still end before the promo-code lines (1793.81, 3128.37). Caption fixes: 'Purps pad' -> 'Perps Pad' (1777), 'purps' -> 'perps' (1783), 'ethics' -> UNKNOWN token, verify with Mike (1789), 'stonk' -> 'STONK' (1791), '110 X / 114 / 17 X / 13 X' -> '110x / 114x / 17x / 13x', '90 K' -> '90K' (3099). Spoken '110x' then '114' both stay in the audio; only captions/publish copy reconcile the number."
+    }
+  ]
+}

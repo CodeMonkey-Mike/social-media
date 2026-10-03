@@ -1,0 +1,560 @@
+{
+  "batch": "ready-for-pumps",
+  "date": "2026-09-14",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/ready-for-pumps LOW BPS VERTICAL/ready-for-pumps LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-09-14 (amended 2026-09-14: brief corrected, 6 X tweets, 2 YT polls and 2 X polls added; the X thread, the YT post and its six carousel images are unchanged); TCAT image re-prompted with Mike's mascot reference 2026-09-14; amendment 2 (lane3-drafter agent, 2026-09-14): +5 Kaspa and +5 $IF X tweets with ten new 1:1 x-tweets images, X only, no IG companions by Mike's ask",
+  "brief": "Cap the formats: exactly ONE X thread and exactly ONE YT post (instead of the default two each). Every other Lane 3 format keeps its default count (X tweets, IG companions where the tweet is Kaspa-subject, YT polls, X polls per the eligibility rule). Amendment 2 (Mike, 2026-09-14): +5 Kaspa and +5 $IF X tweets with images, X only, no IG companions.",
+  "fact_check": [
+    {
+      "claim": "Perps Pad (PERPSPAD, Solana) launches coins tied to a perp position; each coin runs a leveraged perp treasury that buys and burns supply on up ticks; launches can pair with tokenized stocks (xStocks / Backpack); pools on Meteora DLMM (transcript: 'pairing to perpetuals', 'pairing to leverage position')",
+      "verdict": "verified in general form; copy describes the mechanic as 'tied to a perp position, a leveraged perp treasury that buys and burns on the way up'",
+      "source": "perpspad.fun ('solana coins with a perp treasury'); x.com/PerpsPadfun (via search summary); solana_daily on X (launchpad for coins backed by perps, stocks and RWAs); dexscreener.com contract PerPsCe2SJ7Q25CN4R5TTX4fmBdmknE2hQmqCt96fHL. NOTE: perpspad.site is a DIFFERENT Robinhood-Chain product (Pons V2 bonding curve, Uniswap v4); not used"
+    },
+    {
+      "claim": "Perps Pad did a 110x from Mike's community alert; entry around a $90K cap (transcript: 'I got in at 90K', '110x'; batch title 'We Just Rode Perps Pad To A 110x')",
+      "verdict": "the 110x and the entry are Mike's own community result (batch registry title); the implied peak is corroborated: CoinGecko ATH $0.01362 on 2026-09-13 x 734M supply = ~$10.0M cap, which is 110x a ~$90K entry; current cap ~$4.9M (DexScreener 2026-09-14, -32% 24h), so copy says 'already well off its top' and never quotes a current cap",
+      "source": "api.coingecko.com coins/solana/contract/PerPsCe2SJ7Q25CN4R5TTX4fmBdmknE2hQmqCt96fHL (ath 0.01362047, ath_date 2026-09-13, supply 734,140,977); api.dexscreener.com search perpspad (mcap 4,857,012, liq $264K, vol24 $2.3M)"
+    },
+    {
+      "claim": "STONK (StonkFun launchpad token): Mike got in around a $30M cap, it ran to 'almost 300 million', 'almost 10x' (transcript)",
+      "verdict": "verified; CoinGecko ATH $0.343 on 2026-09-11 x 846M circulating = ~$290M peak cap ('a peak near $300M on September 11'); current ~$178M (CoinGecko) / ~$211M (DexScreener, 1B supply basis); the $30M entry is Mike's own; slide 3 says 'STONK: $30M TO NEAR $300M'",
+      "source": "api.coingecko.com coins/solana/contract/6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx (ath 0.342971, ath_date 2026-09-11T23:45Z, supply 846,139,003); api.dexscreener.com pair zxtpi4btawx3mgdapoezkmd1hxx8cdecfrqxmwvsclx (price 0.2105, mcap 210.6M); cryptorank.io/price/stonk-fun (ATH $0.3395 Sept 11 via search summary)"
+    },
+    {
+      "claim": "StonkFun on Solana pairs launches with tokenized stocks (xStocks like NVDAx, SPYx) and with crypto assets including ZEC, HYPE and TAO; STONK hit ~$140M cap on Sept 6 with ~$135M daily volume; launches moved to Raydium LaunchLab (transcript: 'pairing to NVIDIA', 'pairing against other big cap cryptos like TAO')",
+      "verdict": "verified",
+      "source": "theblock.co 2026-09-06 STONK surges 250% to $140M market cap (pairs with tokenized stocks/ETFs; ZEC, HYPE, TAO pairs; STONK paired with SPYx; Raydium LaunchLab)"
+    },
+    {
+      "claim": "Boomer on Robinhood Chain pays holders stock-token rewards (basket SPY, COST, MSFT, XOM, INTC at 20% each, rounds every 15 minutes when available) (transcript: 'Boomer gives you tokenized stock rewards')",
+      "verdict": "verified; copy says 'Boomer sends stock-token rewards (SPY, Costco, Microsoft and more) straight to holders' wallets'; Boomer ~$3.1M cap on DexScreener 2026-09-14 (no cap used in copy)",
+      "source": "boomerstocks.com (via search summary: reward basket and 15-minute rounds); kucoin.com/blog/robinhood-stock-paired-meme-coins; airdropalert.com tokenized-stock-airdrops; api.dexscreener.com search BOOMER (robinhood chain 0x73c2dE14C7FA..., mcap 3,136,314)"
+    },
+    {
+      "claim": "Robinhood Chain launched July 2026 and its meme scene ran through the summer; 'Robinhood summer' is Mike's framing for the last leg (transcript: 'we just had Robinhood summer')",
+      "verdict": "launch timing verified; 'Robinhood summer' kept as Mike's own framing",
+      "source": "airdropalert.com robinhood-stock-tokens (Ethereum-compatible L2 launched July 2026); cryptoticker.io robinhood-chain-memecoins-explained (August 2026 guide)"
+    },
+    {
+      "claim": "Clarity Act Senate cloture vote Sept 15, 2026 at 2:15 pm ET, 60 votes needed, Republicans hold 53; White House agreed to new ethics language Sept 13 (transcript: 'clarity', 'this should pass')",
+      "verdict": "verified; copy uses only the date and the word 'cloture vote'",
+      "source": "bitget.com academy clarity-act-vote-september-2026-senate-cloture; crypto.news clarity-act-september-15-vote-cloture; political.org 2026/09/13 White House agrees to new ethics language"
+    },
+    {
+      "claim": "FOMC meeting Sept 15-16, decision Sept 16; Polymarket odds of a 25 bps hike (transcript: '84%')",
+      "verdict": "verified and UPDATED: Polymarket 'Fed decision in September' shows 25 bps increase 88%, no change 13% ($163.7M volume) on 2026-09-14; copy says '88% priced in on Polymarket'",
+      "source": "polymarket.com/event/fed-decision-in-september-762 (fetched 2026-09-14); finance.yahoo.com fomc-september-2026-odds; macroodds.com fed-rate-hike-odds-september-2026"
+    },
+    {
+      "claim": "August CPI (released Sept 11): core 2.4% y/y, lowest since March 2021; headline 3.4% y/y, +0.4% m/m; gasoline +3.9% in August, over a third of the monthly gain (transcript: 'core inflation at its best rate in five years', 'food and energy threw things off')",
+      "verdict": "verified; NOT used in copy (the macro beat is kept to the hike odds and the two dates so the post does not repeat the perpspad batch's CPI post)",
+      "source": "finance.yahoo.com u-cpi-rose-0-4 (Aug 2026); usinflationcalculator.com us-cpi-august-2026; cnbc.com/2026/09/11/cpi-inflation-report-august-2026"
+    },
+    {
+      "claim": "Mike's read: a hike is priced in so a hike is business as usual, a hold is the surprise that sends the market flying; either catalyst sends us flying, and if neither lands, October does (transcript)",
+      "verdict": "Mike's own thesis, stated as his read in first person; no external fact claimed",
+      "source": "transcript (ready-for-pumps, 2026-09-14)"
+    },
+    {
+      "claim": "T-Cat (Robinhood chain meme airdropping tokenized TAO), Golden Kitty, $IF at ~$13M cap and +18%/hour, OXO, Chip, Slippy revival (transcript)",
+      "verdict": "AMENDED 2026-09-14 at the format-count fix: T-Cat and Golden Kitty are now VERIFIED (see the dedicated rows below; T-Cat is Artificial Cat on Solana, not Robinhood Chain). $IF cap is a what-is-pumping trader read, OXO/OTC exits are already-announced position changes, Chip is a dead position; those stay dropped. Slippy is handled in its own row",
+      "source": "api.dexscreener.com searches TCAT / IF (robinhood chain 0x232CDFc415D1..., mcap ~11.5M)"
+    },
+    {
+      "claim": "AI / robots / longevity tangent, China trade politics, Ukraine energy-target claims, soy-milk anecdote, flock-camera stories",
+      "verdict": "personal/political off-the-cuff material per persona avoid_in_drafts; not drafted",
+      "source": "persona.json avoid_in_drafts"
+    },
+    {
+      "claim": "T-Cat pairs to TAO and rewards holders in TAO (transcript: 'let's talk about T-Cat... it's a new one', 'how do you get rewards on T-Cat? it's an airdrop, they'll give you a tokenized towel' = Whisper mishear of TAO)",
+      "verdict": "verified: the token is Artificial Cat ($TCAT) on Solana; its main Raydium CPMM pool quotes TAO (Bittensor on Solana, taoC6xy...), and the project site says 'Hold $TCAT. Get rewarded in $TAO' with a 3% buy / 3% sell tax funding $TAO reflection rewards, so copy says 'paired to $TAO and pays its holders reflections in $TAO'. Cap ~$1.39M, -30% 24h, ~$97K liquidity on 2026-09-14 (no cap, price or 'should rocket' claim used in copy). The project X handle @artificialcat_ (from the DexScreener profile) is NOT in persona project_handles, so no Follow line is appended; Mike can add it to the map",
+      "source": "api.dexscreener.com search TCAT (pair BtKFCWBQ3T16saR8pN4hkEuhLV2s7Vo65oBqvF7eEZSz, base BifUDWQFpbTrSxYXBnqCpAVYgcyQGzHzJk2MDmeM2Gyv, quote TAO); tcatonsol.com (fetched 2026-09-14)"
+    },
+    {
+      "claim": "Golden Kitty: 'more influencers talking about it, probably a little more safer than I thought'; if one group holds the floor that group can rug everybody, spread out is safer; '10x from here if Clarity passes and rates pause' (transcript)",
+      "verdict": "verified to exist: $GOLDEN on Robinhood Chain, GOLDEN/GLD pool on Uniswap v4 (paired to the SPDR Gold Trust Robinhood stock token), ~$2.66M cap, +37% 24h, ~$146K liquidity on 2026-09-14; goldenkitty.vip says no utility, no rewards, fan tribute. NOT drafted: the six-tweet default is filled by stronger stream-original material, the on-stream take leans on third-party influencer commentary (which group 'holds the floor') that cannot be verified, and the 10x is a conditional price call on a micro-cap. The floor-diversification heuristic is Mike's own and is a candidate for a future batch",
+      "source": "api.dexscreener.com search 'golden kitty' (base 0x92e4B008161aC64a7D0C5e540F453F8e6B8Bd8D7, quote GLD 0xC9a981FEE1F9DEc688bb123ccDeCc63D0deBFC4e); goldenkitty.vip (fetched 2026-09-14); X @golden_kitty_rh"
+    },
+    {
+      "claim": "Humanoid robots will outnumber humans within 10 years (transcript: 'there are plans for so many humanoid robots... going to outnumber humans within 10 years')",
+      "verdict": "verified and CORRECTED to the actual prediction: Musk told a virtual G20 session on Sept 1, 2026 'well over a billion humanoid robots' within ten years, 'each roughly five times as productive as a person', a fleet that 'would outproduce all of humanity'; at Davos (Jan 2026) he said there will eventually be more robots than people. Copy uses the Sept 1 G20 figures and never says robots outnumber humans within 10 years",
+      "source": "breitbart.com/tech/2026/09/02 elon-musk-predicts-1-billion-humanoid-robots; en.sedaily.com/international/2026/09/02; euronews.com/2026/01/22 musk predicts robot-majority future at Davos"
+    },
+    {
+      "claim": "Jensen Huang said radiology is the first job being wiped out by AI, no need for radiologists again (transcript)",
+      "verdict": "INVERTED by the transcript and DROPPED: Huang's point (CMU commencement, May 2026, and earlier) is that radiology was the job computer scientists predicted AI would automate first, yet radiologist headcount grew; he uses it to argue AI does not destroy jobs. Not used in any copy",
+      "source": "thenextweb.com jensen-huang-carnegie-mellon-ai-revolution; cnbc.com/2025/12/04 jensen-huang-cited-radiologists-to-dispute-ai-jobs-impact"
+    },
+    {
+      "claim": "The dollar was backed by gold, then oil, and is transitioning to being backed by stablecoins / crypto usage; asteroid-mined gold would devalue every country stacking gold, China included (transcript)",
+      "verdict": "Mike's own thesis, written as his read; the one external fact in copy is verified: the People's Bank of China has raised its gold reserves for 22 consecutive months through August 2026 (+20.2 tonnes in August, the largest monthly add since October 2023, 2,387 tonnes total). Asteroid mining is written as a conditional future ('the day asteroid mining brings gold home by the ton'), not as a current event",
+      "source": "gold.org goldhub China gold market update September 2026 (official buying accelerated in August); finance.yahoo.com China bought 20 tons of gold in August; goldsilver.com pboc-gold-reserves-august-2026-22-months"
+    },
+    {
+      "claim": "KRC20 season was 2024; this year the meme money went to Robinhood Chain and Solana while Kaspa tokens sat quiet; Mike renamed his Discord channel from KRC20 tokens to Kaspa tokens (transcript)",
+      "verdict": "verified: Kasplex's KRC-20 standard went live on Kaspa in 2024 (closed beta May 24, public beta June 30, 2024); Robinhood Chain launched July 1, 2026 and its meme scene ran through the summer (Cash Cat ~$150M cap in July); StonkFun runs on Solana. The renaming and the 'sat quiet' read are Mike's own. Used in the Kaspa YT poll and its X poll twin",
+      "source": "kasmedia.com introducing-kasplex-krc-20; web3.bitget.com kasplex mainnet launch; fortune.com/crypto/2026/07/13 robinhood-chain-memecoin-trading-cash-cat; theblock.co 2026-09-06 STONK"
+    },
+    {
+      "claim": "Slippy, a KRC20 frog on Kaspa at a ~$7K to $10K cap, tripled when Mike mentioned it on stream; its X account posted Sept 12 (transcript)",
+      "verdict": "Mike's own on-stream statement; the token is not indexed on DexScreener (every SLIPPY result is an unrelated Robinhood Chain / Solana / Ethereum token) so the move cannot be checked externally. NOT named in any copy: the 2026-05-21 review recorded Mike's no-name-microcaps rule for top-level content, and the same story shape already shipped on 2026-05-25 ('cheers to Slippy'). The Kaspa-token revival poll references it unnamed ('one tiny KRC20 frog'). Judgment call per the brief: the Kaspa material does not carry a stand-alone tweet, so there is no Kaspa-subject X tweet and therefore NO IG entry this batch",
+      "source": "api.dexscreener.com search slippy (2026-09-14); repurpose/output/2026-05-21_market-update-polymarket-clarity-meme-rugs_REVIEW.md; schedule-tweets/data/x-tweets.json tweet-2026-05-25-s1-slippy-150pc-after-mention"
+    },
+    {
+      "claim": "Perps Pad and STONK current caps at amendment time",
+      "verdict": "re-checked 2026-09-14 evening: PERPSPAD main Meteora pool $4.80M cap, -21.5% 24h, $263K liquidity, $2.16M 24h volume (peak near $10M on Sept 13 per the CoinGecko ATH row above), so the 110x tweet says 'already well off the top' and quotes no current cap; STONK ~$212M on DexScreener (1B supply basis). The $90K entry is Mike's own ('I got in at 90K')",
+      "source": "api.dexscreener.com search perpspad (PerPsCe2SJ7Q25CN4R5TTX4fmBdmknE2hQmqCt96fHL) and stonk (6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx)"
+    },
+    {
+      "claim": "Polymarket September Fed odds at amendment time; Mike's '51/49' read (transcript: 'I'm like 51% on the side of it happening... I want to prepare for it')",
+      "verdict": "re-checked 2026-09-14 evening, unchanged: 25 bps increase 88%, no change 13%, $163.9M volume; the tweet says 'Polymarket has a September hike at 88%' and states the 51/49 hold read in first person as Mike's own",
+      "source": "polymarket.com/event/fed-decision-in-september-762 (fetched 2026-09-14); transcript (ready-for-pumps)"
+    },
+    {
+      "claim": "'A meme that pays you in tokenized Tesla' (stonk-season tweet)",
+      "verdict": "illustrative, not a claim about any named project: Mike's words are 'tokenized stock, AMD, Tesla, whatever it is'; Boomer's verified basket is SPY, COST, MSFT, XOM, INTC and the tweet only says Boomer 'pays holders in stock tokens'",
+      "source": "transcript (ready-for-pumps); boomerstocks.com via the Boomer row above"
+    },
+    {
+      "claim": "AMENDMENT 2 (2026-09-14, +5 Kaspa / +5 $IF X tweets): Kaspa ($KAS) is not listed for spot trading on Coinbase; Coinbase delisted its KAS perpetual futures contract on Sept 3, 2026 (velvet-rope tweet: 'nearly five years in, still no spot listing')",
+      "verdict": "verified: Coinbase's own KAS price page states Kaspa is not tradable on Coinbase (search summary of coinbase.com/price/kaspa, the page itself returns 403 to fetches); KAS remains absent from the spot markets of Binance, Coinbase, OKX and Crypto.com; Coinbase announced on Aug 19 that nine perp contracts (ESP, 2Z, RED, AEVO, ATH, KAS, SKY, POPCAT, BRETT) were delisted on Sept 3, 2026 at 13:00 UTC. The perp delisting already shipped as two tweets on Sept 11, so the new copy does not repeat it. 'Nearly five years in' = fair launch Nov 7, 2021 to Sept 2026. WHY it is not listed (no premine to fund a listing) is Mike's stated thesis (persona core_theses) and is written as his position",
+      "source": "coinbase.com/price/kaspa (via search summary, 2026-09-14); cryptonews.net/news/market/33320519 (Coinbase perp delisting, published Aug 19, effective Sept 3, 2026; 'spot trading remains unaffected' is the article's generic note, KAS has no Coinbase spot market); mexc.com/news/1173120 'Could Binance and Coinbase Ignore Listing Kaspa Forever?' (via search summary); schedule-tweets/data/x-tweets.json Sept 11 perp-delisting tweets"
+    },
+    {
+      "claim": "Kaspa fair launch: Nov 7, 2021, no premine, no pre-sale, no coin allocations; the founding company DAGLabs dissolved at launch, so there is no company behind the chain (tweets 1, 4, 5)",
+      "verdict": "verified; copy says 'no premine', 'no insider bag', 'no company behind it', 'no CEO to call'. The phrase 'no foundation treasury' was deliberately NOT used because a community Kaspa Ecosystem Foundation exists",
+      "source": "kaspa.org/kaspas-fair-launch; kaspa.org/lore; medium.com/kaspa-currency/kaspas-fair-launch; kaspa-lens.com wiki 'History of Kaspa and Fair Launch' (all via search summary 2026-09-14)"
+    },
+    {
+      "claim": "Throughput: Mike's shorthand '5,700 TPS vs Bitcoin's 7' (persona core thesis; shipped as '5,700 TPS' on May 4 and June 20)",
+      "verdict": "UPDATED to the documented record: the highest recorded Kaspa mainnet rate is 5,584 TPS (October 2025, 158,441,966 transactions in one 24-hour period; sources date the record Oct 2 or Oct 5, so copy names no day), at 10 blocks per second since the Crescendo hard fork of May 5, 2025 (a block every 100 milliseconds); Bitcoin processes roughly 7 TPS. No public source carries a 5,700 figure, so the tweet prints '5,584' (a sourced record beats a round number that invites a 'source?' reply); flagged in the report for Mike",
+      "source": "ourcryptotalk.com/blog/kaspa-tps-guide (Apr 18, 2026: 'demonstrated peak of 5,584 TPS', 'Bitcoin processes roughly 7 TPS'); kaspahub.org/post/kaspa-max-tps ('5,584 transactions per second in real network conditions'); kaspa.org blocks-per-second-vs-transactions-per-second; search summary 2026-09-14"
+    },
+    {
+      "claim": "Kaspa market data for the phoenix and neutral-layer tweets: 2.5 cent low on Aug 14, 'up close to 40% off that low', 3.5 cents, 'knocking on a $1 billion market cap', 96.5% of supply mined (Mike's brief said '57% run, still under a billion at 3.4 cents')",
+      "verdict": "verified and UPDATED 2026-09-14: KAS $0.03495, market cap $968M, rank 75; 90-day low $0.02526 on Aug 14 (daily), so +38.4% off the low; 30d +35.4%, 14d +25.5%, 7d -4.2%; the cap closed above $1B on Sept 8 ($1,010.7M) and Sept 10 ($1,010.9M) and sits just under it now, hence 'knocking on'; circulating 27.70B of 28.70B max = 96.5% mined. The 57% figure is not reproduced by daily closes (Aug 14 low to the Sept 10 high is +44.5%), so copy uses 'close to 40%'. ATH $0.207 (July 31, 2024, -83%) is not used",
+      "source": "api.coingecko.com/api/v3/coins/kaspa and coins/kaspa/market_chart (days=90, daily) fetched 2026-09-14; coinmarketcap.com/cmc-ai/kaspa/latest-updates ('September 10, 2026: Kaspa surpassed $1 billion in market capitalization')"
+    },
+    {
+      "claim": "Cascade tweet: '$ETH sits at about a fifth of Bitcoin's market cap right now'; ETH flips BTC around 2030 and Bitcoin maxis then migrate to $KAS",
+      "verdict": "the ratio is verified: BTC $77,956 / $1.566T cap vs ETH $2,512 / $306.6B cap = 19.6% on 2026-09-14. The 2030 flip and the maxi migration are Mike's own thesis (persona core_theses 'Long-term cascade') written in first person; 'the cascade nobody is pricing in' is his coined phrase (shipped May 5 and May 28, reused deliberately as the label)",
+      "source": "api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum (fetched 2026-09-14); persona.json core_theses; transcript is silent on the cascade (concept approved by Mike in the amendment brief)"
+    },
+    {
+      "claim": "Neutral-layer tweet: 'Washington is voting on the crypto rulebook (the Clarity Act)', 'corporations are minting their own dollars'",
+      "verdict": "the Clarity Act cloture vote (Sept 15) is verified in the rows above; 'corporations minting their own dollars' is written in general form (corporate stablecoins) with no company named; the neutral-layer thesis itself is Mike's (persona core_theses). Written Kaspa-only, so the persona's 'lead with $TAO when tying the two together' rule does not apply",
+      "source": "fact_check rows 'Clarity Act Senate cloture vote Sept 15' above; persona.json core_theses"
+    },
+    {
+      "claim": "$IF (What IF, Robinhood Chain, contract 0x232CDFc415D10b673845D83Dc02ba2eaBe7e30d1): price, cap, ATH, drawdown, two-week move (ATH tweet, survivor tweet, doors tweet, wormhole tweet)",
+      "verdict": "verified and UPDATED 2026-09-14: price $0.0136 to $0.0137 ('near 1.4 cents this week'), market cap $12.3M to $12.4M ('near a $12M cap'), main IF/WETH Uniswap pool liquidity $517K, 24h +10% to +12%; all-time high $0.03899 on 2026-08-02 (CoinGecko; GeckoTerminal daily high $0.0391 the same day), current price 65% below it ('about 65% under that ceiling', 'a 65% drawdown from the Aug 2 top'); a new ATH from here is 2.87x ('close to a 3x'); 14-day change +47.8% ('up about 48% in two weeks'), 30d -15.6%, 7d +0.5%; pool created 2026-07-11, ten days after Robinhood Chain's July 1 launch ('launched in the chain's second week'). Also trades IF/USDT on BloFin (not used in copy). The Aug 5 print of $0.0045 is an intraday wick (daily close $0.0084) and is not used",
+      "source": "api.dexscreener.com/token-pairs/v1/robinhood/0x232CDFc415D10b673845D83Dc02ba2eaBe7e30d1; api.geckoterminal.com networks/robinhood/pools/0x39a200271525e9641e799127bdab299daef21953 (+ ohlcv/day, 67 candles); api.coingecko.com/api/v3/coins/what-if-3 (ath 0.03898743, ath_date 2026-08-02, ath_change -65.16%, 14d +47.76%, 30d -15.57%); all fetched 2026-09-14"
+    },
+    {
+      "claim": "$IF project facts used in the cosmic-question tweet: the 'what if I aped earlier / held / this is the one' 3am framing, 'everybody is the dev', 9.5% of supply burned",
+      "verdict": "verified: whatifonhood.com describes the coin as the trader's 3am 'What if' thought ('What $IF this is the one?'), states 'Everybody is the dev' with holder community managers, and 1B total supply with 94.9M (9.49%) permanently burned to 0x...dEaD. 'No single owner, no tribe that can dump on the rest' is Mike's own prior framing (Aug 4 and Aug 6 tweets). The 'Not if, when' tagline was NOT reused because the site fetch did not show it",
+      "source": "whatifonhood.com (fetched 2026-09-14); schedule-tweets/data/x-tweets.json posted $IF tweets of Aug 4 to Aug 15"
+    },
+    {
+      "claim": "Official What IF X handle for the Follow line",
+      "verdict": "verified: @WhatIFonHOOD (x.com/WhatIFonHOOD) is the twitter link on the token's DexScreener profile and on its CoinGecko page, and matches persona project_handles ('what if' / 'whatif' / 'if' -> @WhatIFonHOOD, which the amendment brief assumed was absent). 'Follow: @WhatIFonHOOD' is appended to all five $IF tweets per the project-focused-tweet rule; no persona edit needed",
+      "source": "api.dexscreener.com token profile socials (x.com/WhatIFonHOOD, t.me/WhatIFonHoodChain); api.coingecko.com coins/what-if-3 links.twitter_screen_name; persona.json project_handles"
+    },
+    {
+      "claim": "Survivor tweet: 'Robinhood summer is over. The smaller memes it launched are fading one by one', '$IF did the opposite', '$IF stays on my list into stonk season' (transcript: 'what if it's looking pretty good... it's going up', 'Doggie's not doing too good', 'quite a few... going a little bit further down', 'Boomer hanging in there')",
+      "verdict": "Mike's own read, written in first person and scoped to 'the smaller memes' with none named: the chain's biggest memes are NOT fading (Cash Cat ~$159M cap, 24h +1.5% on DexScreener 2026-09-14; Robinhood Chain DEX volume set records in early September per KuCoin/cryptoticker guides), so no chain-wide decline is claimed. The $IF move is the verified +47.8% 14-day figure. 'Stonk season' is the batch's own framing (yt_post above)",
+      "source": "transcript (ready-for-pumps, 2026-09-14); api.dexscreener.com search 'cash cat' (robinhood, mcap 159,253,590); kucoin.com/blog/robinhood-stock-paired-meme-coins (via search summary)"
+    },
+    {
+      "claim": "ATH tweet: 'if the bullish news lands, Clarity passing and a Fed hold, $IF breaks a new all-time high' (transcript: 'if we get that bullish news... I think that we're going to get like clarity pass and we're also going to get a rate pause... if it does happen, man, this is going to break new all-time high')",
+      "verdict": "Mike's on-stream call, written as 'my read from the stream' and strictly conditional; the ATH (3.9 cents, Aug 2), the current level (near 1.4 cents), the 65% gap and the 'close to a 3x' are the verified figures from the $IF row above. Per the amendment brief no invented number is used and the downside branch ('if neither lands, the ceiling waits') is stated",
+      "source": "transcript (ready-for-pumps, 2026-09-14); $IF market-data row above"
+    },
+    {
+      "claim": "Doors tweet: Clarity Act cloture vote Sept 15, Fed decision Sept 16, hike 88% priced in on Polymarket; '$IF... with the strongest community on Robinhood Chain behind it'",
+      "verdict": "the two dates and the 88% are the already-verified rows above (re-used, no new claim); 'the strongest community on Robinhood Chain' is Mike's own published ranking (Aug 10 tweet: '$IF: the strongest community on the chain') and is written as his view. Copy says 'Clarity Act week hands the market two doors' rather than 'this week' so the tweet still reads correctly if it posts after the two dates",
+      "source": "fact_check rows 'Clarity Act Senate cloture vote' and 'FOMC meeting Sept 15-16' above; schedule-tweets/data/x-tweets.json 2026-08-10 rankings tweet"
+    },
+    {
+      "claim": "Image references for the amendment: Kaspa logo, Ethereum emblem, What IF art; Bitcoin and Coinbase marks",
+      "verdict": "kaspa-logo.png is attached ONLY to the single-coin phoenix spotlight (persona kaspa_logo_reference caution); the four multi-element Kaspa scenes describe the backwards-K in words with no logo file; ethereum-eth.png (a clean flat logo) anchors the ETH chess piece; what-if.jpg is cited on all five $IF images as the neon-green-figure colour key with the SKILL.md positive-geometry block and the no-signature line (it is a hatched illustration, not a logo); every $IF prompt pins the glow to lime green about #CCFF00 with no greenish-cyan (persona robinhood_coin). No Bitcoin or Coinbase reference file exists, so the chess king is a plain gold piece and the exchange door is unbranded (missing_references)",
+      "source": "schedule-tweets/images/reference (ls 2026-09-14); persona.json image_generation; repurpose/SKILL.md reference-style note (2026-08-13 wen-moon batch)"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-09-14-perps-pad-110x-stonk-season": "version1 (high-energy news-flash: a 110x community win plus a launchpad-mania ladder told in punchy all-caps beats with round numbers, which is the V1 register; V4 was weighed first per the extra-weight rule but the only topic photo candidates in images/reference are Vlad-Tenev.webp (Robinhood's CEO, not the subject of a Solana perp-launchpad post) and bittensor-tao.png (a tiny black glyph, not a photo), no Perps Pad / StonkFun / STONK reference exists, and V4 data slides carrying authored figures (110x, $300M) are the known ChatGPT figure-drift case; V2 editorial is too calm for this story; all six slides are pinned to version1/yt-posts-828eee71-01-hook.png per the V1 contamination note, with the 'N OF 6' counter stated explicitly once and the pure-green hue called out)"
+  },
+  "missing_references": [
+    "Perps Pad / PERPSPAD logo: none in images/reference; the V1 slides use plain unmarked coins and Perps Pad is named only in the slide text and copy",
+    "StonkFun / STONK logo: none; plain unmarked coins and a plain paper certificate, StonkFun named only in copy",
+    "Boomer (Robinhood Chain) logo: none; named only in copy, not rendered",
+    "Usable Version 4 topic photo for this post: none (Vlad-Tenev.webp exists but is not the subject; bittensor-tao.png is a glyph, not a photo), so the carousel is Version 1",
+    "Golden Kitty ($GOLDEN) logo: none in images/reference; the token is verified but not drafted this batch",
+    "Elon Musk: no reference photo in images/reference; the robots tweet image renders generic unbranded robots and no named person",
+    "Bitcoin logo (chess-cascade image ef425ecc): no bitcoin reference file in images/reference; the toppled king is a plain gold chess piece with no symbol, Bitcoin is named only in the copy",
+    "Coinbase logo / wordmark (velvet-rope image 0d00fd4d): no reference file; the exchange doorway is rendered unbranded with no sign or lettering, Coinbase is named only in the copy",
+    "$IF coin emblem: no standalone What IF coin or logo file, only the project art what-if.jpg (the neon-green figure), used as the colour key and as an embossed silhouette on the $IF coin faces; the coins otherwise stay plain"
+  ],
+  "images": [
+    {
+      "purpose": "yt-posts",
+      "image_id": "c7a08baa",
+      "slug": "01-hook",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '1 OF 6', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'A MEME PAIRED TO A PERP JUST DID A 110X'. Behind the headline, a single glowing green coin chained by a short glowing link to a dark leverage lever panel, the coin shooting upward on a bright green candle streak that fills the lower half of the frame, lit from below. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "94f6a7b5",
+      "slug": "02-the-ladder",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '2 OF 6', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'FOUR STEPS IN TWO MONTHS: STOCK PAIRS, STOCK REWARDS, TAO PAIRS, PERP PAIRS'. Below the headline, four plain glowing coins climbing a dark four-step staircase from bottom left to top right, each step lit a little brighter than the last, the top coin glowing brightest. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "250f161e",
+      "slug": "03-the-receipts",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '3 OF 6', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'PERPS PAD: 110X. STONK: $30M TO NEAR $300M.'. Two dark chart panels side by side behind the headline, each with a steep green price line rising from the bottom left to the top right and a small green glow at the peak. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "f3882dd0",
+      "slug": "04-the-catalysts",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '4 OF 6', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'CLARITY VOTE SEPT 15. FED SEPT 16. EITHER ONE SENDS US FLYING.'. Behind the headline, two glowing green doors standing open on a dark floor with a plain glowing coin launching upward between them on a streak of light. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "e4fb3a1f",
+      "slug": "05-stonk-season",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '5 OF 6', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'ROBINHOOD SUMMER IS OVER. STONK SEASON IS NEXT.'. Behind the headline, a plain glowing coin resting on a white paper stock certificate with green dollar-glow particles drifting up from it, a dark chart panel faintly visible behind. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "9e3630a1",
+      "slug": "06-question",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '6 OF 6', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'STOCK PAIR, TAO PAIR OR PERP PAIR: WHICH LEADS THE NEXT LEG?'. Three plain glowing coins in a row on a dark panel, one white, one green, one brighter green, with a question-mark shaped glow hanging above the middle coin. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "570db342",
+      "slug": "perps-pad-110x-paired-to-a-perp",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A small plain glowing green coin character with short arms and legs and a wide triumphant grin, strapped into the seat of a giant dark iron lever machine that has just launched it: the coin is rocketing straight up out of a tiny launch pad on a dark trading floor, trailing bright green fire with its arms thrown up in celebration, while far below a crowd of small plain gold coins with astonished faces crane their necks to watch it go. The lever machine has plain metal gauges with no numbers or markings. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting with a bright green rim light from the fire trail and a cold blue key light on the machine. Triumphant and hungry. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "03d30991",
+      "slug": "robinhood-summer-over-stonk-season",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A round plain coin character with short arms and legs stepping through an open doorway from a fading sunset beach into a dark trading floor: behind it a folded beach umbrella and an empty lounge chair sit in warm orange dusk light, ahead of it a tall staircase of four glowing green steps rises into the dark with the top step brightest. The coin is mid-change, pulling a suit jacket and tie on over its swim trunks with one hand and clutching a plain crisp paper stock certificate in the other, its face eager and hungry. The coin face and the certificate are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background on the trading floor side. Dramatic cinematic lighting with warm orange sunset light behind the coin and a bright pure green rim light from the staircase ahead. Eager and hungry. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "e5f3bff6",
+      "slug": "hold-is-the-surprise-51-49",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A giant dark wooden seesaw balanced on a stone fulcrum in a dim arena: on the left end a dense crowd of identical small grey faceless figures in suits is packed shoulder to shoulder, all leaning the same way and pointing confidently downward, while on the right end a single small cartoon monkey character in a hoodie with bright green eyes stands calmly alone holding a bulging plain sack of coins, and the seesaw has just begun to tip toward the monkey as a burst of warm gold light breaks through a tall closed gate behind him. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting with warm gold light leaking through the gate onto the monkey and cold grey light on the crowd. Calm and defiant. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "3767e44d",
+      "slug": "robots-crypto-foothold",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A cozy two-storey house at night seen from the front yard: on the roof a sleek white humanoid robot is nailing down shingles, by the front door a second humanoid robot stands guard with a flashlight like a night watchman, and a third walks up the path carrying a crate of plumbing parts, while in a warmly lit upstairs window a small cartoon monkey character in a hoodie with bright green eyes leans back in a chair with his feet up beside a tall stack of plain glowing coins. The robots are generic smooth white machines with no brand marks. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black night sky background. Dramatic cinematic lighting with warm gold light from the window and cool blue moonlight rim light on the robots. Calm and confident. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "fc9f9935",
+      "slug": "dollar-gold-oil-crypto-asteroid",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. High above a dark planet, a chunky cartoon mining spacecraft tows an enormous cracked asteroid veined with glowing gold, and a torrent of gold nuggets pours out of it down toward the planet, where a small underground vault stacked with gold bars is being buried under the avalanche while a tiny cartoon banker figure in a grey suit clutches one bar and stares up in horror. Off to the side a single plain glowing coin floats serenely in orbit, untouched by the falling gold. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black space background with faint stars. Dramatic cinematic lighting with a warm gold glow from the asteroid and a cool blue rim light on the floating coin. Absurd and ominous. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "0b60fea6",
+      "slug": "artificial-cat-pays-tao",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The Artificial Cat mascot exactly as shown in the attached mascot reference: a chubby brown-and-orange striped tabby cat with a white muzzle and chest, big gleeful eyes, a cybernetic glowing blue robotic eye in place of its right eye, and a black tech collar with a single glowing blue letter T emblem at the front. Keep the composition of the attached previous render: the cat sits on a dark stage on top of a growing pile of Bittensor TAO coins, each coin glowing electric white and bearing only the black Bittensor glyph shown in the attached glyph reference, while more TAO coins rain gently down from above and the cat holds one coin up in both front paws. Anatomy must be correct: the cat has exactly two front legs and two hind legs, each front leg clearly attached at the shoulder on its own side of the body and both raised symmetrically to hold the coin, no limb emerging from the chest or belly, a fully visible white chest below the collar. The coins carry no lettering other than the single glyph from the reference; the only other mark in the image is the T emblem on the collar. Deep navy near-black background. Dramatic cinematic lighting with a cold electric white rim light from the coins and a soft warm key light on the cat's face. Gleeful and hungry. No text or words anywhere in the image apart from the collar's T emblem.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\artificial-cat-tcat.jpg",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png",
+        "C:\\Users\\mnede\\AppData\\Local\\Temp\\claude\\C--Users-mnede-Documents-Claude-social-media\\db228cce-25e7-4537-a17b-53a93604d546\\scratchpad\\x-tweets-0b60fea6-artificial-cat-pays-tao.PREV-generic-cat.png"
+      ]
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "0d00fd4d",
+      "slug": "kaspa-velvet-rope-receipt",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Outside the grand entrance of an exclusive exchange nightclub at night, a burly bouncer character in a black suit holds up one white-gloved hand and stops a Kaspa coin character at the velvet rope: the Kaspa coin is a round coin with short arms and legs showing the backwards-K (mirrored-K) Kaspa logo on its face, glowing greenish-cyan, standing calm and defiant with its chin up. Beside it the rope is unclipped and a long line of identical plain gold coin characters, each clutching a fat leather money sack, is being waved straight through the glowing doorway, glancing back smugly. The doorway glows warm gold; the building carries no sign, no emblem and no lettering. Every gold coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the only marking in the image is the greenish-cyan backwards-K on the Kaspa coin. Deep navy near-black background. Dramatic cinematic lighting with a greenish-cyan rim light on the Kaspa coin and warm gold light spilling from the doorway. Calm and defiant. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "50789693",
+      "slug": "kaspa-highway-5584-tps-vs-bitcoin-7",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A high aerial night view of two roads running side by side into the distance: on the left, a single narrow cobblestone lane with one slow, boxy gold armored truck crawling along it alone under a tiny warm gold headlight glow; on the right, an enormous multi-lane superhighway packed with thousands of greenish-cyan light streams racing forward in long-exposure trails, so dense the road itself glows. A large Kaspa coin showing the backwards-K (mirrored-K) Kaspa logo, glowing greenish-cyan, is mounted like a gateway arch over the highway entrance in the foreground. The armored truck is plain metal with no emblem, no badge and no lettering. Deep navy near-black background with a faint horizon. Dramatic cinematic lighting with greenish-cyan rim light flooding from the highway and a dim, lonely gold glow on the single lane. Triumphant and hungry. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "ce3b2eda",
+      "slug": "kaspa-phoenix-things-dont-die",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A single Kaspa coin showing the backwards-K (mirrored-K) Kaspa logo exactly as shown in the attached reference, glowing greenish-cyan, rising out of a heap of grey ash and dying embers as a phoenix: two vast wings of greenish-cyan flame spread from the coin's sides, a tail of greenish-cyan fire trails below it, and sparks and embers swirl upward around it. The coin carries no marking other than the backwards-K from the reference. Deep navy near-black background. Dramatic cinematic lighting with an intense greenish-cyan rim light from the flames and a faint warm ember glow below. Triumphant. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "ef425ecc",
+      "slug": "kaspa-chess-cascade-eth-flips-btc",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A close, low-angle view of a chess board on a dark table: a tall gold king piece lies toppled on its side, knocked over by a glossy purple-blue chess piece carved in the shape of the Ethereum diamond emblem shown in the attached reference, which stands upright over it. From the right edge of the frame a player's hand in a rumpled orange hoodie sleeve reaches past both of them toward a third piece waiting at the board's edge: a Kaspa coin piece showing the backwards-K (mirrored-K) Kaspa logo, glowing greenish-cyan. The attached reference is used ONLY for the shape of the Ethereum emblem; the backwards-K is described here and is not in the reference. The gold king's face and crown are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The only markings in the image are the Ethereum diamond emblem on the purple-blue piece and the greenish-cyan backwards-K on the Kaspa piece. Deep navy near-black background. Dramatic cinematic lighting with a greenish-cyan rim light on the Kaspa piece, a cool purple-blue glow on the Ethereum piece and a dim gold glow on the fallen king. Tense and hungry. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\ethereum-eth.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "9f265e46",
+      "slug": "kaspa-neutral-pow-layer-nobody-owns",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A dark city skyline at night: on the left a cluster of grey neoclassical government buildings with columns and domes, on the right a cluster of sleek black corporate glass towers, and from both sides giant mechanical claw arms and grasping hands extend inward, straining toward a brilliant greenish-cyan sphere, a glowing lattice of light with a molten core, that hovers in the empty air between them, just out of every grip. Above the sphere, floating free and untouched, a Kaspa coin showing the backwards-K (mirrored-K) Kaspa logo, glowing greenish-cyan. The buildings carry no flags, no seals, no emblems and no lettering of any kind. Deep navy near-black background. Dramatic cinematic lighting with an intense greenish-cyan rim light from the sphere and the coin, and cold grey-blue light on the buildings and claws. Calm and defiant. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "0a46be42",
+      "slug": "if-cosmic-question-mark-nebula",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The neon-green figure from the attached reference (a bald, powerfully muscular neon-green figure seen from behind) stands on a rocky cliff edge gazing up at a vast spiral galaxy filling the night sky; inside the galaxy a colossal glowing nebula has formed into the unmistakable shape of a single question mark, its dot a bright star, lit in the same lime green (about #CCFF00) as the figure. Use the attached reference ONLY as the character and colour key: do not copy its drawing style, its linework or its hatching. THE FIGURE IS SCULPTED 3D GEOMETRY: rounded volumetric musculature, smooth glossy skin with soft subsurface scattering, raytraced volumetric light on the shoulders and back. Deep navy near-black space background with faint stars. Dramatic cinematic lighting with a bright lime-green rim light from the galaxy on the figure's shoulders; no greenish-cyan anywhere in the image, the glow is lime green, never cyan. Awed and hungry. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image; the only symbol is the question-mark shape of the nebula.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "6e597096",
+      "slug": "if-coin-breaking-glass-ceiling-ath",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A thick, glowing lime-green (about #CCFF00) coin character with short arms and legs punches straight upward through a pane of glass ceiling, its fist leading, the glass exploding into hundreds of shards that catch the light as they scatter; the coin's face is completely plain apart from a subtle embossed silhouette of the neon-green figure from the attached reference (a bald, muscular figure seen from behind), no lettering, no other marking. Above the shattered ceiling is open night sky with a spiral galaxy glowing faintly in the same lime green; below it, a dim grey room. Use the attached reference ONLY as the colour key and the source of the embossed silhouette: do not copy its drawing style, its linework or its hatching. Deep navy near-black background. Dramatic cinematic lighting with a bright lime-green rim light from the coin and cool white glints on the glass shards; no greenish-cyan anywhere in the image, the glow is lime green, never cyan. Triumphant. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "d1991bb3",
+      "slug": "if-beach-survivor-robinhood-summer",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A beach at the end of a summer sunset: dozens of dull, faded, half-buried coin characters lie washed up along the tideline like driftwood, eyes closed, sand and seaweed over them, every face completely plain with no symbol, no logo, no glyph and no lettering. Standing upright in the middle of them, the only one awake, is a single thick coin glowing lime green (about #CCFF00), arms folded, feet planted in the wet sand, its face plain apart from a subtle embossed silhouette of the neon-green figure from the attached reference (a bald, muscular figure seen from behind), no lettering. Use the attached reference ONLY as the colour key and the source of the embossed silhouette: do not copy its drawing style, its linework or its hatching. The sky is a deep navy dusk with the last orange band of sunset on the horizon. Dramatic cinematic lighting with a bright lime-green rim light from the standing coin and dim warm orange light on the washed-up coins; no greenish-cyan anywhere in the image, the glow is lime green, never cyan. Defiant. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "1555372f",
+      "slug": "if-two-catalyst-doors-clarity-fed",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. In a dark marble hall, two tall doors stand open side by side, each pouring out brilliant light: the left door glows warm gold, the right door glows cool white. Seen from behind, the neon-green figure from the attached reference (a bald, powerfully muscular neon-green figure) walks calmly down the hall toward the light between the two doors, holding a thick glowing lime-green (about #CCFF00) coin in one hand at his side; the coin's face is completely plain, no symbol, no lettering. Use the attached reference ONLY as the character and colour key: do not copy its drawing style, its linework or its hatching. THE FIGURE IS SCULPTED 3D GEOMETRY: rounded volumetric musculature, smooth glossy skin with soft subsurface scattering, raytraced volumetric light on the shoulders and back. The doors carry no signs, seals, emblems or lettering. Deep navy near-black background. Dramatic cinematic lighting with a bright lime-green rim light on the figure, gold light from the left door and white light from the right door; no greenish-cyan anywhere in the image, the glow is lime green, never cyan. Calm and hungry. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "f3681c9e",
+      "slug": "if-wormhole-portal-trading-floor",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The neon-green figure from the attached reference (a bald, powerfully muscular neon-green figure seen from behind) steps through a swirling spiral-galaxy portal, one foot already landing on the far side: behind him the portal shows deep space, ahead of him a vast trading floor lit entirely in lime green (about #CCFF00), rows of glowing blank screens, and a crowd of small plain coin characters turning to look up at him in astonishment. Use the attached reference ONLY as the character and colour key: do not copy its drawing style, its linework or its hatching. THE FIGURE IS SCULPTED 3D GEOMETRY: rounded volumetric musculature, smooth glossy skin with soft subsurface scattering, raytraced volumetric light on the shoulders and back. Every coin face and every screen is completely blank: no symbol, no logo, no glyph, no chart, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting with a bright lime-green rim light from the trading floor and a cool starlight glow from the portal behind him; no greenish-cyan anywhere in the image, the glow is lime green, never cyan. Triumphant and hungry. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "I got into Perps Pad ($PERPSPAD) at a $90K market cap for one reason: the concept was brand new.\n\nA meme tied to a perp position, with a leveraged perp treasury that buys and burns on the way up. Sounds insane. It ran to a peak near a $10M cap on Sept 13, a 110x for my community 😎\n\nIt is already well off the top, and plenty of these retrace 50% before anything else happens. Never financial advice. Never.\n\n#solana #memecoins",
+      "hook": "I got into Perps Pad ($PERPSPAD) at a $90K market cap for one reason: the concept was brand new.",
+      "image_id": "570db342"
+    },
+    {
+      "tweet": "Robinhood summer is over. The next leg up gets a new name: stonk season.\n\nThe ladder in two months: memes paired to tokenized stocks (StonkFun on Solana, against NVDAx). Memes that pay holders in stock tokens (Boomer on Robinhood Chain). Memes paired to $TAO. Now memes paired to a perp position.\n\nA meme that pays you in tokenized Tesla is a more enticing hold than a picture of a dog. That is the whole narrative, and the market is figuring it out in real time.\n\n#stonks #robinhood",
+      "hook": "Robinhood summer is over. The next leg up gets a new name: stonk season.",
+      "image_id": "03d30991"
+    },
+    {
+      "tweet": "Polymarket has a September hike at 88%. Everybody is certain. I'm 51/49 on a hold, and I'm preparing for it.\n\nA hike is business as usual, it is already priced. A hold is the surprise, and surprises are what send $BTC and everything under it flying. Add the Clarity Act cloture vote on Sept 15 and that is two shots at a surprise in two days.\n\nNeither lands? Then October does it, because October is where everybody is waiting to buy.\n\n#bitcoin #macro",
+      "hook": "Polymarket has a September hike at 88%. Everybody is certain. I'm 51/49 on a hold, and I'm preparing for it.",
+      "image_id": "e5f3bff6"
+    },
+    {
+      "tweet": "Musk told a G20 session on Sept 1: well over a billion humanoid robots within ten years, each about five times as productive as a person.\n\nElectricians, roofers, plumbers, the overnight security guard: the robot does the job and orders its own parts. Things get incredibly cheap to make, and the competition gets brutal.\n\nThe foothold in that world is owning what appreciates while everything else gets cheaper. That is why I'm in crypto, and why I want enough of it to afford as many robots as I please 🧠\n\n#crypto #ai",
+      "hook": "Musk told a G20 session on Sept 1: well over a billion humanoid robots within ten years, each about five times as productive as a person.",
+      "image_id": "3767e44d"
+    },
+    {
+      "tweet": "Gold backed the dollar, then oil did, and next it is crypto usage: the day asteroid mining brings gold home by the ton, every central bank still stacking it (China, 22 straight months) is holding the one reserve that just got flooded.\n\n#gold #macro",
+      "hook": "Gold backed the dollar, then oil did, and next it is crypto usage: the day asteroid mining brings gold home by the ton, every central bank still stacking it (China, 22 straight months) is holding the one reserve that just got flooded.",
+      "image_id": "fc9f9935"
+    },
+    {
+      "tweet": "Artificial Cat ($TCAT on Solana) is paired to $TAO and pays its holders reflections in $TAO: hold the cat, collect Bittensor, which is exactly what step three of stonk season looks like 🐱\n\n#bittensor #tao",
+      "hook": "Artificial Cat ($TCAT on Solana) is paired to $TAO and pays its holders reflections in $TAO: hold the cat, collect Bittensor, which is exactly what step three of stonk season looks like 🐱",
+      "image_id": "0b60fea6"
+    },
+    {
+      "tweet": "Who pays to get a coin past the velvet rope at Coinbase?\n\nThe premine does. Insider bags cover the market makers, the liquidity and the 'ecosystem fund' that get a new coin waved in.\n\n$KAS has no premine and no insider bag, so it stands outside the rope while pre-allocated coins walk straight past it. Nearly five years in, still no spot listing.\n\nThe exclusion is the receipt of a fair launch. 😎\n\n#kaspa #coinbase",
+      "hook": "Who pays to get a coin past the velvet rope at Coinbase?",
+      "image_id": "0d00fd4d",
+      "notes": "Deliberate engagement-bait item for this amendment (persona 1-in-10 rule, 1 of the 10 new tweets): technique #1, a defensible-but-debatable take (listings are funded out of premines; Coinbase says it charges no listing fee, and BTC/LTC/DOGE are fair-launched and listed, so the replies will argue). No factual error manufactured: KAS spot is verified unlisted and the funding mechanism is stated as Mike's thesis."
+    },
+    {
+      "tweet": "$BTC: about 7 transactions per second.\n\n$KAS: a recorded mainnet peak of 5,584 per second, on the same proof of work, with a block every 100 milliseconds.\n\nOne is a single lane with one armored truck every ten minutes. The other is a highway with thousands of lanes, and it was fair launched.\n\nThe maxis say speed does not matter for money. Then why does every payment rail on earth compete on it?\n\n#kaspa #bitcoin",
+      "hook": "$BTC: about 7 transactions per second.",
+      "image_id": "50789693"
+    },
+    {
+      "tweet": "$KAS printed a 2.5 cent low on Aug 14 and the obituaries went up again; a month later Kaspa is up close to 40% off that low, 3.5 cents, knocking on a $1 billion market cap with 96.5% of the supply already mined 🔥\n\n#kaspa #crypto",
+      "hook": "$KAS printed a 2.5 cent low on Aug 14 and the obituaries went up again; a month later Kaspa is up close to 40% off that low, 3.5 cents, knocking on a $1 billion market cap with 96.5% of the supply already mined 🔥",
+      "image_id": "ce3b2eda"
+    },
+    {
+      "tweet": "Where does a Bitcoin maxi go the day $ETH takes the number one spot?\n\nNot to proof of stake. He spent a decade saying it is not money. He goes looking for a fair-launched proof-of-work chain that actually scales, and he finds $KAS.\n\n$ETH sits at about a fifth of $BTC's market cap right now. I have the flip around 2030, and the maxi migration after it is the cascade nobody is pricing in...\n\n#kaspa #ethereum",
+      "hook": "Where does a Bitcoin maxi go the day $ETH takes the number one spot?",
+      "image_id": "ef425ecc"
+    },
+    {
+      "tweet": "Washington is voting on the crypto rulebook (the Clarity Act). Corporations are minting their own dollars. Everybody wants to own the rails.\n\nThe one thing none of them can own is a proof-of-work chain with no premine, no company behind it and 96.5% of its supply already mined. No CEO to call, no insider bag to buy.\n\nThe harder governments and corporations race to control money, the more a neutral layer nobody owns is worth. That is why I hold $KAS.\n\n#kaspa #crypto",
+      "hook": "Washington is voting on the crypto rulebook (the Clarity Act). Corporations are minting their own dollars. Everybody wants to own the rails.",
+      "image_id": "9f265e46"
+    },
+    {
+      "tweet": "What if I aped earlier. What if I held. What if this is the one.\n\nEvery trader has that 3am thought. On Robinhood Chain one community turned it into the ticker: $IF launched in the chain's second week, everybody is the dev, and 9.5% of the supply is burned for good.\n\nNo single owner, no tribe that can dump on the rest, and a question every trader already asks himself. That is the setup I want in a meme.\n\nFollow: @WhatIFonHOOD\n\n#IF #RobinhoodChain",
+      "hook": "What if I aped earlier. What if I held. What if this is the one.",
+      "image_id": "0a46be42"
+    },
+    {
+      "tweet": "$IF's all-time high is 3.9 cents, printed Aug 2. It sits near 1.4 cents this week, about 65% under that ceiling.\n\nMy read from the stream: if the bullish news lands, Clarity passing and a Fed hold, $IF breaks a new all-time high. That is close to a 3x from here.\n\nIf neither lands, the ceiling waits and I keep holding.\n\nFollow: @WhatIFonHOOD\n\n#IF #memecoins",
+      "hook": "$IF's all-time high is 3.9 cents, printed Aug 2. It sits near 1.4 cents this week, about 65% under that ceiling.",
+      "image_id": "6e597096"
+    },
+    {
+      "tweet": "Robinhood summer is over. The smaller memes it launched are fading one by one...\n\n$IF did the opposite: up about 48% in two weeks and back near a $12M cap. The 3am 'what if' turned out to be the one with staying power.\n\nThe memes that survive the end of their own narrative are the ones that run in the next one. $IF stays on my list into stonk season.\n\nFollow: @WhatIFonHOOD\n\n#IF #RobinhoodChain",
+      "hook": "Robinhood summer is over. The smaller memes it launched are fading one by one...",
+      "image_id": "d1991bb3"
+    },
+    {
+      "tweet": "Clarity Act week hands the market two doors: the Senate cloture vote on Sept 15 and the Fed decision on Sept 16.\n\nA hike is 88% priced in on Polymarket, so a hike is business as usual and a hold is the surprise. Clarity passing is the door Washington can open on its own. Either one sends the market flying.\n\n$IF walks toward both near a $12M cap with the strongest community on Robinhood Chain behind it. I want to be holding when a door opens.\n\nFollow: @WhatIFonHOOD\n\n#IF #ClarityAct",
+      "hook": "Clarity Act week hands the market two doors: the Senate cloture vote on Sept 15 and the Fed decision on Sept 16.",
+      "image_id": "1555372f"
+    },
+    {
+      "tweet": "What if it actually happens? $IF is the one meme where the question is the ticker, and the communities that carried it through a 65% drawdown from the Aug 2 top are still here for the answer 🚀\n\nFollow: @WhatIFonHOOD\n\n#IF #RobinhoodChain",
+      "hook": "What if it actually happens? $IF is the one meme where the question is the ticker, and the communities that carried it through a 65% drawdown from the Aug 2 top are still here for the answer 🚀",
+      "image_id": "f3681c9e"
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-09-14-perps-pad-110x-stonk-season",
+      "topic": "Pairing a meme to a perp did a 110x: the four-step narrative ladder and why stonk season leads the next leg",
+      "variation_label": "A",
+      "tweets": [
+        {
+          "text": "A meme coin paired to a leveraged perp position just did a 110x from my community's alert.\n\nBrand new concept. I got in at a 90k cap.\n\nHere is the four-step ladder that got us here, and why stonk season leads the next leg...",
+          "hook": "Pairing a meme coin to a leveraged perp position sounds like the dumbest idea in crypto."
+        },
+        {
+          "text": "Step one: pair the meme with a tokenized stock instead of SOL. StonkFun on Solana launches coins against xStocks like NVDAx.\n\nStep two: pay the holders in the stock. On Robinhood Chain, Boomer sends stock-token rewards (SPY, Costco, Microsoft) straight to holders' wallets."
+        },
+        {
+          "text": "Step three: swap the stock for a big cap. The same launchpad now pairs coins against $TAO, ZEC and HYPE. Hold a meme, collect Bittensor exposure.\n\nStep four: pair the coin to a perpetual. Perps Pad coins run a leveraged perp treasury that buys and burns on the way up."
+        },
+        {
+          "text": "The receipts:\n\nPerps Pad was under a $100K cap when the alert hit my Discord. We rode it to a 110x; it peaked near a $10M cap on Sept 13.\n\nSTONK, the launchpad's own token, went from about $30M when we got in to a peak near $300M on Sept 11."
+        },
+        {
+          "text": "Every leg of this market gets a narrative. Robinhood summer was the last one.\n\nThe next leg gets stonk season: memes that pay you in something you already wanted. A meme that pays you in tokenized Tesla is a more enticing hold than a picture of a dog."
+        },
+        {
+          "text": "Two catalysts on the calendar: the Clarity Act cloture vote Sept 15 and the Fed decision Sept 16.\n\nA 25 bps hike is 88% priced in, so a hike is business as usual. A hold is the surprise.\n\nEither one landing sends things flying. Neither, and October does it anyway."
+        },
+        {
+          "text": "Plenty of these retrace 50% first. Perps Pad is already well off its top. Some will rug outright. Never financial advice. Never.\n\nThe pattern matters more than any ticker: the next leg's winners pay their holders in something they already wanted."
+        },
+        {
+          "text": "If this put a name on the next leg before it starts...\n\nFollow me for macro and crypto narratives with receipts, not a four-year cycle chart.\n\n💪 + 😎"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-09-14-tao-itself-or-the-meme-that-pays-tao",
+      "topic": "Bittensor exposure: $TAO itself or a meme that pays you in $TAO",
+      "eligible_topic": "tao",
+      "tweet_text": "Memes are now paired to $TAO. Artificial Cat ($TCAT on Solana) is paired to $TAO and pays its holders reflections in $TAO: hold the cat, collect Bittensor.\n\nIf you want Bittensor exposure, which bag is it?",
+      "hook": "Memes are now paired to $TAO.",
+      "options": [
+        "$TAO itself",
+        "The meme that pays $TAO",
+        "Both"
+      ],
+      "duration": "1d"
+    },
+    {
+      "id": "poll-2026-09-14-kaspa-tokens-revival",
+      "topic": "Do Kaspa tokens (KRC20) get their revival this run",
+      "eligible_topic": "kaspa",
+      "tweet_text": "KRC20 season was 2024. This year the meme money went to Robinhood Chain and Solana while Kaspa tokens sat quiet. I just renamed the channel in my Discord from KRC20 tokens to Kaspa tokens.\n\nDo Kaspa tokens get their revival this run?",
+      "hook": "KRC20 season was 2024.",
+      "options": [
+        "Yes, before year end",
+        "Yes, but 2027",
+        "No, that season is over"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-09-14-tao-itself-or-the-meme-that-pays-tao",
+      "topic": "Bittensor exposure: $TAO itself or a meme that pays you in $TAO",
+      "source_post": "yt-post-2026-09-14-perps-pad-110x-stonk-season",
+      "question_text": "Memes are now paired to $TAO. StonkFun on Solana launches coins against Bittensor, and Artificial Cat ($TCAT) is paired to $TAO and pays its holders reflections in $TAO. Hold the cat, collect Bittensor.\n\nSo if you want Bittensor exposure, which bag is it?",
+      "hook": "Memes are now paired to $TAO.",
+      "options": [
+        "$TAO itself, nothing else",
+        "The meme that pays me in $TAO",
+        "Both: the meme feeds my $TAO stack"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-09-14-kaspa-tokens-revival",
+      "topic": "Do Kaspa tokens (KRC20) get their revival this run",
+      "source_post": null,
+      "question_text": "KRC20 season was 2024. This year the meme money went to Robinhood Chain and Solana while Kaspa tokens sat quiet; one tiny KRC20 frog tripled off a single mention on my stream this week, which tells you how little attention is in there. I just renamed the channel in my Discord from KRC20 tokens to Kaspa tokens.\n\nDo Kaspa tokens get their revival this run?",
+      "hook": "KRC20 season was 2024.",
+      "options": [
+        "Yes, before year end",
+        "Yes, but 2027",
+        "No, that season is over"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-09-14-perps-pad-110x-stonk-season",
+      "topic": "Pairing a meme to a perp did a 110x: the four-step narrative ladder and why stonk season leads the next leg",
+      "variation_label": "A + CTA1",
+      "body_style": "narrative arc: four-step evolution of paired meme coins (stock pair, stock rewards, $TAO pair, perp pair), the community 110x and STONK receipts, the stonk-season thesis, the two catalysts, the caveat",
+      "cta_target": "subscribe_youtube",
+      "body": "A meme coin paired to a leveraged perp position sounds like the dumbest idea in crypto. One of them just did a 110x from my community's alert. Here is the four-step ladder that got us there, and why I think stonk season is the narrative that leads the next leg up.\n\nTwo months ago the idea was simple: launch a meme, but pair it with a tokenized stock instead of SOL. StonkFun on Solana pairs launches against xStocks like NVDAx, so the meme trades against NVIDIA. That was step one.\n\nStep two: pay the holders in the stock. Robinhood Chain ran its own version of this over the summer. Boomer sends stock-token rewards (SPY, Costco, Microsoft and more) straight to holders' wallets. Hold the meme, get paid in stock tokens.\n\nStep three: swap the stock for a big cap. The same launchpad now pairs coins against $TAO, ZEC and HYPE, so holding a meme becomes a way to collect Bittensor exposure instead of NVIDIA.\n\nStep four is the strange one: pair the coin to a perpetual. Perps Pad launches Solana coins tied to a perp position, and each coin runs a leveraged perp treasury that buys and burns on the way up. When the alert hit my Discord the token was sitting under a $100K market cap, and we rode it to a 110x; it peaked near a $10M cap on September 13. STONK, the launchpad token itself, went from about $30M when we got in to a peak near $300M on September 11.\n\nThat is the pattern I care about, not any single ticker. Every leg of this market gets a narrative. Robinhood summer was the last one. The next leg gets stonk season: memes that pay you in something you already wanted, paired to stocks, to big caps, and now to perps. A meme that pays you in tokenized Tesla is a more enticing hold than a picture of a dog, and the market is figuring that out in real time.\n\nTwo catalysts sit on the calendar: the Clarity Act cloture vote on September 15 and the Fed decision on September 16. A 25 bps hike is 88% priced in on Polymarket, so a hike is business as usual; a hold is the surprise, and surprises are what send this market flying. Either one landing does it. Neither, and October does it anyway.\n\nPlenty of these retrace 50% first. Perps Pad is already well off its top. Some will rug outright. Never financial advice. Never.\n\nSo commit in the comments: which pairing leads the next leg, a tokenized stock, a big cap like $TAO, or a perp position? And if you think pairing a meme to leverage is the top signal, say that too.\n\nHit like and subscribe if you want the next narrative before it has a name.",
+      "engagement_question": "Which pairing leads the next leg, a tokenized stock, a big cap like $TAO, or a perp position? And if you think pairing a meme to leverage is the top signal, say that too.",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #1 (defensible-but-debatable take: 'stonk season is the narrative that leads the next leg') plus technique #3 ('if you think pairing a meme to leverage is the top signal, say that too' invites the pushback). No factual error manufactured.",
+      "images": [
+        {
+          "image_id": "c7a08baa",
+          "slide_text": "A MEME PAIRED TO A PERP JUST DID A 110X"
+        },
+        {
+          "image_id": "94f6a7b5",
+          "slide_text": "FOUR STEPS IN TWO MONTHS: STOCK PAIRS, STOCK REWARDS, TAO PAIRS, PERP PAIRS"
+        },
+        {
+          "image_id": "250f161e",
+          "slide_text": "PERPS PAD: 110X. STONK: $30M TO NEAR $300M."
+        },
+        {
+          "image_id": "f3882dd0",
+          "slide_text": "CLARITY VOTE SEPT 15. FED SEPT 16. EITHER ONE SENDS US FLYING."
+        },
+        {
+          "image_id": "e4fb3a1f",
+          "slide_text": "ROBINHOOD SUMMER IS OVER. STONK SEASON IS NEXT."
+        },
+        {
+          "image_id": "9e3630a1",
+          "slide_text": "STOCK PAIR, TAO PAIR OR PERP PAIR: WHICH LEADS THE NEXT LEG?"
+        }
+      ]
+    }
+  ],
+  "ig_single": []
+}

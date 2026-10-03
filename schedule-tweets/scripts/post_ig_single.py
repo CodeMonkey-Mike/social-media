@@ -399,7 +399,7 @@ def main():
             # -- Caption -------------------------------------------------------------------
             print("Typing caption...")
             caption_area = page.locator(
-                '[aria-label="Write a caption..."], textarea[placeholder*="caption"], '
+                '[aria-label="Write a caption..."], [aria-label="Add a caption..."], textarea[placeholder*="caption"], '
                 '[contenteditable][placeholder*="caption"]'
             ).first
             caption_area.wait_for(timeout=10000)

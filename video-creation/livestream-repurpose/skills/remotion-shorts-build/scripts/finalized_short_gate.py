@@ -138,4 +138,45 @@ for n in notes:
 for f in fails:
     print("  FAIL " + f)
 print("PASS" if not fails else "FAIL: build is NOT a finalized short - fix and re-run")
+
+# ─── BATCH-FRONTIER FOOTER (2026-08-12, batch `johnny`) ──────────────────────────────────────
+# WHY: both johnny clips rendered with PASS gates and `run.py publish` then sat unrun for over
+# an hour, because the orchestrator was following stale prose ("publish ONLY after Mike gates
+# the renders") that contradicted the actual contract (2026-08-07, batch `eliza`): STAGING IS
+# MIKE'S REVIEW HANDOFF — he reviews finished shorts FROM THE :8766 QUEUE, and only POSTING is
+# his gate. There is no graph node between the builders and publish (Phase 7 is agent
+# territory by design), so the trigger lived in prose and prose triggers nothing. This footer
+# makes the trigger mechanical: gate output is quoted VERBATIM in every builder report, so the
+# builder that completes the batch hands the orchestrator the publish command itself.
+if not fails and a.clip is not None:
+    try:
+        import json as _json
+        _bdir = os.path.dirname(os.path.abspath(a.public_dir))
+        _pp = os.path.join(_bdir, "progress.json")
+        if os.path.isfile(_pp):
+            with open(_pp, encoding="utf-8") as _f:
+                _prog = _json.load(_f)
+            _batch = _prog.get("batch") or os.path.basename(_bdir)
+            _sib = [c for c in _prog.get("clips", []) if c.get("n") != a.clip and c.get("slug")]
+            _built = [c for c in _sib
+                      if str(c.get("phase", "")).startswith("7-") and "PASS" in str(c.get("gate", ""))]
+            if len(_built) == len(_sib):
+                _odd = [c["slug"] for c in _built if c.get("phase") != "7-built"]
+                print(f"BATCH FRONTIER: this PASS completes the batch - all {len(_sib) + 1} "
+                      f"clip(s) built with PASS gates.")
+                print(f"  NEXT (mechanical - do NOT wait for a render-review gate): verify "
+                      f"shorts/{_batch}/publish-meta.json exists, then run:")
+                print(f"    python video-creation/livestream-repurpose/graph/run.py publish "
+                      f"--batch {_batch}")
+                print(f"  Staging IS Mike's review handoff (2026-08-07): he reviews from the "
+                      f":8766 queue; only POSTING is his gate.")
+                if _odd:
+                    print(f"  WARN sibling phase label(s) not exactly '7-built' (the publish "
+                          f"front door requires it verbatim): {_odd} - normalize before publish.")
+            else:
+                print(f"frontier: {len(_sib) - len(_built)} sibling clip(s) not yet built+PASS "
+                      f"- publish waits for them, then runs IMMEDIATELY (no render-review gate).")
+    except Exception as _e:                     # the footer must never break a build
+        print(f"  WARN frontier check unavailable ({type(_e).__name__}: {_e})")
+
 sys.exit(0 if not fails else 1)

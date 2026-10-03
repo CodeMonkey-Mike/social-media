@@ -36,6 +36,19 @@ You operate inside the `social-media` repo (working directory is the repo root).
 4. `persona/persona.json` — brand/tone; and the memory rule that bed level ~16-18 dB under the VO
    (measure, don't guess), Remotion `volume = 10**(dB/20)`.
 
+## Variety across videos (Mike, 2026-10-01) — read the ledger BEFORE you pick
+Run `python video-creation/skills/usage-ledger/usage_ledger.py report --what music --exclude-project "<project>"` (doc: `video-creation/skills/usage-ledger/usage-ledger.md`).
+- A track marked **BLOCKED** (the previous video used it, in any pool) is off the table. Avoid the last three
+  videos' tracks.
+- Among the tracks that FIT the register and the beat, prefer **`fresh`** (never used), then the least recently
+  used. Fit comes first: never place a wrong-mood track only because it is unused.
+- The pools rotate separately: `intro_hype` (opens the video), `subtle_bed` (gear-2 explainer), `hype_body`,
+  `epic_close` (the final chapter). The subtle pool is the small one; say so in `open_questions` when it is
+  running out of fresh beds.
+- A waiver is Mike's call only: add `"usage_waivers": {"<track id>": "<his ruling>"}` to the plan ONLY when the
+  project's PROJECT-LOG.md records it. The graph runs `usage_ledger.py check --what music` on your plan and
+  fails a repeat of the previous video.
+
 ## Method (do this, in order)
 1. **Map the canvas.** From the caller's chapter map, list every chapter as `[tIn, tOut]` with its register
    (gear-3 epic / gear-2 explainer) and any FACE window or hard beat (the pillar reveal, the verdict, the

@@ -1,6 +1,6 @@
 # lane3_batch.py — canonical Lane 3 stage runner (Wave 6, 2026-08-09).
 # The repurpose graph (graph/repurpose_graph.py) wraps THESE stages as nodes; hand runs
-# use the same CLI. Consumes the per-batch lane3-plan.json seam artifact (drafting is
+# use the same CLI. Consumes the per-batch lane3-plan.json handoff artifact (drafting is
 # judgment and stays in the Claude session; this executes the plan mechanically).
 #
 #   python repurpose/lane3_batch.py --plan <lane3-plan.json>
@@ -38,6 +38,7 @@ sys.path.insert(0, str(HERE))
 
 import queue_writer as qw  # noqa: E402
 from gen_images import Generator, subdir_for  # noqa: E402
+import chat_pool  # noqa: E402
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
@@ -45,6 +46,12 @@ sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 STAGE_LOCK = REPO_ROOT / "video-creation" / "shorts" / "_tooling" / "stage_lock.py"
 RATIO = {"x-tweets": 1.0, "yt-posts": 1.0, "ig-single": 0.8, "ig-carousel": 1.0}
 RATIO_TOL = 0.10
+
+
+def held_path(args, plan) -> Path:
+    """The HELD ledger next to the plan: entries whose images did not verify. Written by
+    verify, consumed by queues/finalize (partial-append, 2026-09-10)."""
+    return Path(args.plan).resolve().with_name(f"{plan['batch']}-lane3-held.json")
 
 
 def load_plan(path: Path) -> dict:
@@ -86,6 +93,24 @@ def stage_generate(plan, args) -> int:
         ordered += [i for i in items if not i.get("ref")]
         ordered += [i for i in items if i.get("ref")]
 
+    # PRE-FILTER (Mike, 2026-09-10): a re-run must not open a browser per finished item
+    # (~40 s each, seen as endless Chrome open/close). Skip on disk first, browser only for
+    # what is missing; the IMG SKIP lines keep the graph's accounting identical.
+    base = Path(args.images_base) if args.images_base else qw.IMAGES_BASE_DEFAULT
+    todo = []
+    for k, item in enumerate(ordered):
+        out = base / subdir_for(item["purpose"]) /             f"{item['purpose']}-{item['image_id']}-{item['slug']}.png"
+        if out.is_file() and out.stat().st_size >= 5000:
+            print(f"IMG SKIP purpose={item['purpose']} id={item['image_id']} "
+                  f"slug={item['slug']} (exists, pre-filtered)")
+        else:
+            todo.append(item)
+    print(f"generate: {len(ordered) - len(todo)} on disk, {len(todo)} to generate")
+    if not todo:
+        print("STAGE-DONE generate (fails=0)")
+        return 0
+    ordered = todo
+
     owner = f"lane3-{plan['batch']}"
     locked = False
     fails = 0
@@ -103,6 +128,18 @@ def stage_generate(plan, args) -> int:
                           registry=args.registry, batch=plan["batch"],
                           fake=args.fake_gen)
             res = g.run([item])
+            if res["fail"] and not args.fake_gen:
+                # A chat that stops surfacing renders (the capture keeps seeing the
+                # uploaded reference / nothing) is the documented "dead chat" case:
+                # retire it and retry this ONE item in a fresh chat (2026-09-10).
+                print(f"ROTATE: {item['purpose']} chat retired after a failed capture; "
+                      f"retrying {item['slug']} in a fresh chat")
+                chat_pool.mark_dead(item["purpose"],
+                                    reg_path=Path(args.registry) if args.registry else None)
+                g = Generator(item["purpose"], images_base=args.images_base,
+                              registry=args.registry, batch=plan["batch"],
+                              fake=args.fake_gen)
+                res = g.run([item])
             fails += res["fail"]
             print(f"PROGRESS {int((k + 1) * 100 / len(ordered))}% "
                   f"(batch item {k + 1}/{len(ordered)})")
@@ -110,7 +147,16 @@ def stage_generate(plan, args) -> int:
         if locked:
             _lock("release", owner)
     print(f"STAGE-DONE generate (fails={fails})")
-    return 1 if fails else 0
+    # PARTIAL-APPEND (2026-09-10): a failed image is NOT a stage failure. verify writes the
+    # HELD ledger for exactly the entries that need it and everything else proceeds to the
+    # queues; only zero successes with nothing on disk is a real failure.
+    if fails and fails >= len(ordered):
+        n_disk = sum(1 for im in plan.get("images") or [] if (
+            base / subdir_for(im["purpose"]) / f"{im['purpose']}-{im['image_id']}-{im['slug']}.png").is_file())
+        if n_disk == 0:
+            print("FATAL generate: every image failed and none is on disk", file=sys.stderr)
+            return 1
+    return 0
 
 
 # ── verify ───────────────────────────────────────────────────────────────────
@@ -172,17 +218,91 @@ def verify_images(plan, images_base=None) -> list:
     return problems
 
 
+def compute_held(plan, problems) -> dict:
+    """Which plan entries depend on an image that did not verify."""
+    import re as _re
+    blocked = set()
+    for pr in problems:
+        head = pr.split(":", 1)[0].strip()
+        first = head.split(" ")[0]
+        if _re.fullmatch(r"[0-9a-f]{8}", first):
+            blocked.add(first)
+        for m in _re.finditer(r"-([0-9a-f]{8})-", pr):     # byte-dup lines name files
+            blocked.add(m.group(1))
+    held = {"x_tweets": [], "ig_single": [], "yt_posts": []}
+    for t in plan.get("x_tweets") or []:
+        if t.get("image_id") in blocked:
+            held["x_tweets"].append(t["image_id"])
+    for ig in plan.get("ig_single") or []:
+        if ig.get("image_id") in blocked:
+            held["ig_single"].append(ig["id"])
+    for y in plan.get("yt_posts") or []:
+        if any(im.get("image_id") in blocked for im in (y.get("images") or [])):
+            held["yt_posts"].append(y["id"])
+    return {"batch": plan["batch"], "written": datetime.now().isoformat(timespec="seconds"),
+            "blocked_images": sorted(blocked), "problems": problems, "held": held}
+
+
 def stage_verify(plan, args) -> int:
     problems = verify_images(plan, args.images_base)
+    hp = held_path(args, plan)
+    if not problems:
+        if hp.is_file():
+            hp.unlink()
+        print("STAGE-DONE verify (problems=0)")
+        return 0
+    # PARTIAL-APPEND (2026-09-10): a missing image holds back ONLY the entries that
+    # need it; everything else proceeds to the queues. The HELD ledger is the record.
+    ledger = compute_held(plan, problems)
     for pr in problems:
-        print(f"FATAL verify: {pr}", file=sys.stderr)
-    print(f"STAGE-DONE verify (problems={len(problems)})")
-    return 1 if problems else 0
+        print(f"VERIFY PROBLEM: {pr}", file=sys.stderr)
+    hp.write_text(json.dumps(ledger, indent=2, ensure_ascii=False), encoding="utf-8")
+    h = ledger["held"]
+    n_held = sum(len(v) for v in h.values())
+    n_all = sum(len(plan.get(k) or []) for k in qw.QUEUE_FILES)
+    print(f"BLOCKED images={len(ledger['blocked_images'])}")
+    print(f"HELD x_tweets={len(h['x_tweets'])} ig_single={len(h['ig_single'])} "
+          f"yt_posts={len(h['yt_posts'])} -> {hp}")
+    print(f"STAGE-DONE verify (problems={len(problems)} held={n_held})")
+    if n_held >= n_all:
+        print("FATAL verify: every planned entry is blocked; nothing can proceed",
+              file=sys.stderr)
+        return 1
+    return 0
 
 
 # ── queues ───────────────────────────────────────────────────────────────────
 
+def reduced_plan(plan, ledger) -> dict:
+    h = ledger.get("held") or {}
+    blocked = set(ledger.get("blocked_images") or [])
+    held_posts = set(h.get("yt_posts") or [])
+    red = dict(plan)
+    red["x_tweets"] = [t for t in plan.get("x_tweets") or []
+                       if t.get("image_id") not in set(h.get("x_tweets") or [])]
+    red["ig_single"] = [ig for ig in plan.get("ig_single") or []
+                        if ig.get("id") not in set(h.get("ig_single") or [])]
+    red["yt_posts"] = [y for y in plan.get("yt_posts") or [] if y.get("id") not in held_posts]
+    post_imgs = {im["image_id"] for y in plan.get("yt_posts") or []
+                 if y.get("id") in held_posts for im in (y.get("images") or [])}
+    red["images"] = [im for im in plan.get("images") or []
+                     if im["image_id"] not in blocked and im["image_id"] not in post_imgs]
+    return red
+
+
 def stage_queues(plan, args) -> int:
+    hp = held_path(args, plan)
+    ledger = None
+    if hp.is_file():
+        try:
+            ledger = json.loads(hp.read_text(encoding="utf-8"))
+        except Exception:
+            ledger = None
+    if ledger and sum(len(v) for v in (ledger.get("held") or {}).values()):
+        for key, ids in (ledger.get("held") or {}).items():
+            for i in ids:
+                print(f"  HELD BACK        : {key} {i}  (image not verified)")
+        plan = reduced_plan(plan, ledger)
     qw.append_to_queues(plan, data_dir=args.data_dir)
     print("STAGE-DONE queues")
     return 0
@@ -233,7 +353,20 @@ def stage_finalize(plan, args) -> int:
         entry.setdefault("pipelines", {})
         entry["pipelines"]["repurpose"] = "done"
         print(f"REGISTERED={batch} (existing entry)")
-    print("PIPELINE repurpose=done")
+    hp = held_path(args, plan)
+    n_held = 0
+    if hp.is_file():
+        try:
+            n_held = sum(len(v) for v in (json.loads(hp.read_text(encoding="utf-8"))
+                                          .get("held") or {}).values())
+        except Exception:
+            n_held = 0
+    if n_held:
+        entry["pipelines"]["repurpose"] = "partial"
+        print(f"PIPELINE repurpose=partial (held={n_held}; re-run the repurpose graph "
+              "after the missing images land)")
+    else:
+        print("PIPELINE repurpose=done")
     qw.save_queue(reg_path, data, indent)
     print("STAGE-DONE finalize")
     return 0

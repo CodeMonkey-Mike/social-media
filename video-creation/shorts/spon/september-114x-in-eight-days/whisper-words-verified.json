@@ -1,0 +1,834 @@
+{
+ "source": "medium.en full-clip word timestamps (whisper_jobs, cpu) on render-assets/september-114x-in-eight-days.mp4, patched per large-v3 window decodes: 0.8: 'many' -> 'many,' | 1.10: 'in' -> 'like in' (large-v3 window + base decode both hear 'like in the beginning') | 5.7: 'Perp's' -> 'Perps' | 7.66: 'Ethix' -> 'Ethics' | 10.44: 'Perp's,' -> 'Perps,' | 21.6: 'Perp's' -> 'Perps' | 16.06: dropped filler 'a' ('these are all a Solana') | 38.4: 'we've' -> 'we' | 38.66: 'been' -> 'be' | 39.24: 'group.' -> 'group,' | inserted 'man.' after 'group' (large-v3: 'in my group, man. Crazy.') | 56.44: 'join' -> 'for' | 56.6: 'in' -> 'joining' | ('join in' -> 'for joining': large-v3 + medium window both hear 'for joining my group') | 56.10: 'get,' -> 'get'",
+ "segments": [
+  {
+   "words": [
+    {
+     "word": " Man",
+     "start": 0.0,
+     "end": 0.2
+    },
+    {
+     "word": " we",
+     "start": 0.2,
+     "end": 0.32
+    },
+    {
+     "word": " did",
+     "start": 0.32,
+     "end": 0.48
+    },
+    {
+     "word": " so",
+     "start": 0.48,
+     "end": 0.8
+    },
+    {
+     "word": " many,",
+     "start": 0.8,
+     "end": 1.1
+    },
+    {
+     "word": " like in",
+     "start": 1.1,
+     "end": 1.42
+    },
+    {
+     "word": " the",
+     "start": 1.42,
+     "end": 1.58
+    },
+    {
+     "word": " beginning,",
+     "start": 1.58,
+     "end": 2.28
+    },
+    {
+     "word": " the",
+     "start": 2.74,
+     "end": 2.88
+    },
+    {
+     "word": " first",
+     "start": 2.88,
+     "end": 3.08
+    },
+    {
+     "word": " two",
+     "start": 3.08,
+     "end": 3.3
+    },
+    {
+     "word": " weeks",
+     "start": 3.3,
+     "end": 3.5
+    },
+    {
+     "word": " of",
+     "start": 3.5,
+     "end": 3.9
+    },
+    {
+     "word": " September,",
+     "start": 3.9,
+     "end": 4.38
+    },
+    {
+     "word": " it",
+     "start": 4.52,
+     "end": 4.6
+    },
+    {
+     "word": " was",
+     "start": 4.6,
+     "end": 4.74
+    },
+    {
+     "word": " crazy.",
+     "start": 4.74,
+     "end": 5.2
+    },
+    {
+     "word": " We",
+     "start": 5.42,
+     "end": 5.48
+    },
+    {
+     "word": " got",
+     "start": 5.48,
+     "end": 5.7
+    },
+    {
+     "word": " Perps",
+     "start": 5.7,
+     "end": 6.1
+    },
+    {
+     "word": " pad,",
+     "start": 6.1,
+     "end": 6.3
+    },
+    {
+     "word": " 114x,",
+     "start": 6.4,
+     "end": 7.44
+    },
+    {
+     "word": " Ethics",
+     "start": 7.66,
+     "end": 8.12
+    },
+    {
+     "word": " as",
+     "start": 8.12,
+     "end": 8.3
+    },
+    {
+     "word": " another",
+     "start": 8.3,
+     "end": 8.56
+    },
+    {
+     "word": " launch",
+     "start": 8.56,
+     "end": 8.86
+    },
+    {
+     "word": " pad,",
+     "start": 8.86,
+     "end": 9.22
+    },
+    {
+     "word": " 17x,",
+     "start": 9.3,
+     "end": 10.16
+    },
+    {
+     "word": " Perps,",
+     "start": 10.44,
+     "end": 10.9
+    },
+    {
+     "word": " 15x,",
+     "start": 10.92,
+     "end": 11.48
+    },
+    {
+     "word": " and",
+     "start": 11.62,
+     "end": 11.64
+    },
+    {
+     "word": " these",
+     "start": 11.64,
+     "end": 11.8
+    },
+    {
+     "word": " are",
+     "start": 11.8,
+     "end": 11.94
+    },
+    {
+     "word": " all",
+     "start": 11.94,
+     "end": 12.12
+    },
+    {
+     "word": " Solana.",
+     "start": 12.12,
+     "end": 12.52
+    },
+    {
+     "word": " The",
+     "start": 12.76,
+     "end": 12.96
+    },
+    {
+     "word": " Stonk",
+     "start": 12.96,
+     "end": 13.22
+    },
+    {
+     "word": " 13x,",
+     "start": 13.22,
+     "end": 13.94
+    },
+    {
+     "word": " OTC",
+     "start": 14.08,
+     "end": 14.54
+    },
+    {
+     "word": " 9x,",
+     "start": 14.54,
+     "end": 15.26
+    },
+    {
+     "word": " that's",
+     "start": 15.3,
+     "end": 15.52
+    },
+    {
+     "word": " why",
+     "start": 15.52,
+     "end": 15.66
+    },
+    {
+     "word": " these",
+     "start": 15.66,
+     "end": 15.82
+    },
+    {
+     "word": " are",
+     "start": 15.82,
+     "end": 15.98
+    },
+    {
+     "word": " all",
+     "start": 15.98,
+     "end": 16.22
+    },
+    {
+     "word": " Solana.",
+     "start": 16.22,
+     "end": 16.5
+    },
+    {
+     "word": " One",
+     "start": 16.64,
+     "end": 16.82
+    },
+    {
+     "word": " of",
+     "start": 16.82,
+     "end": 16.96
+    },
+    {
+     "word": " them",
+     "start": 16.96,
+     "end": 17.06
+    },
+    {
+     "word": " we",
+     "start": 17.06,
+     "end": 17.18
+    },
+    {
+     "word": " did",
+     "start": 17.18,
+     "end": 17.38
+    },
+    {
+     "word": " like",
+     "start": 17.38,
+     "end": 17.62
+    },
+    {
+     "word": " 100x,",
+     "start": 17.62,
+     "end": 18.66
+    },
+    {
+     "word": " like",
+     "start": 18.9,
+     "end": 18.94
+    },
+    {
+     "word": " 110x",
+     "start": 18.94,
+     "end": 19.9
+    },
+    {
+     "word": " man,",
+     "start": 19.9,
+     "end": 20.14
+    },
+    {
+     "word": " 114x.",
+     "start": 20.2,
+     "end": 20.98
+    },
+    {
+     "word": " It",
+     "start": 21.06,
+     "end": 21.14
+    },
+    {
+     "word": " was",
+     "start": 21.14,
+     "end": 21.36
+    },
+    {
+     "word": " on",
+     "start": 21.36,
+     "end": 21.6
+    },
+    {
+     "word": " Perps",
+     "start": 21.6,
+     "end": 22.04
+    },
+    {
+     "word": " pad.",
+     "start": 22.04,
+     "end": 22.2
+    },
+    {
+     "word": " And",
+     "start": 22.36,
+     "end": 22.66
+    },
+    {
+     "word": " that",
+     "start": 22.66,
+     "end": 22.84
+    },
+    {
+     "word": " happened",
+     "start": 22.84,
+     "end": 23.32
+    },
+    {
+     "word": " in",
+     "start": 23.32,
+     "end": 23.5
+    },
+    {
+     "word": " like",
+     "start": 23.5,
+     "end": 23.56
+    },
+    {
+     "word": " eight",
+     "start": 23.56,
+     "end": 23.82
+    },
+    {
+     "word": " days.",
+     "start": 23.82,
+     "end": 24.3
+    },
+    {
+     "word": " Like",
+     "start": 24.52,
+     "end": 24.54
+    },
+    {
+     "word": " when",
+     "start": 24.54,
+     "end": 24.92
+    },
+    {
+     "word": " I",
+     "start": 24.92,
+     "end": 25.06
+    },
+    {
+     "word": " got",
+     "start": 25.06,
+     "end": 25.24
+    },
+    {
+     "word": " into",
+     "start": 25.24,
+     "end": 25.46
+    },
+    {
+     "word": " peanut",
+     "start": 25.46,
+     "end": 25.7
+    },
+    {
+     "word": " it",
+     "start": 25.7,
+     "end": 25.84
+    },
+    {
+     "word": " was",
+     "start": 25.84,
+     "end": 25.96
+    },
+    {
+     "word": " pumping",
+     "start": 25.96,
+     "end": 26.3
+    },
+    {
+     "word": " and",
+     "start": 26.3,
+     "end": 26.44
+    },
+    {
+     "word": " I",
+     "start": 26.44,
+     "end": 26.52
+    },
+    {
+     "word": " was",
+     "start": 26.52,
+     "end": 26.6
+    },
+    {
+     "word": " like,",
+     "start": 26.6,
+     "end": 26.72
+    },
+    {
+     "word": " I",
+     "start": 26.8,
+     "end": 26.84
+    },
+    {
+     "word": " took",
+     "start": 26.84,
+     "end": 26.96
+    },
+    {
+     "word": " a",
+     "start": 26.96,
+     "end": 27.12
+    },
+    {
+     "word": " chance.",
+     "start": 27.12,
+     "end": 27.4
+    },
+    {
+     "word": " And",
+     "start": 27.4,
+     "end": 27.58
+    },
+    {
+     "word": " I",
+     "start": 27.58,
+     "end": 27.8
+    },
+    {
+     "word": " still",
+     "start": 27.8,
+     "end": 28.18
+    },
+    {
+     "word": " did",
+     "start": 28.18,
+     "end": 28.94
+    },
+    {
+     "word": " a",
+     "start": 28.94,
+     "end": 29.3
+    },
+    {
+     "word": " 52x",
+     "start": 29.3,
+     "end": 30.36
+    },
+    {
+     "word": " man,",
+     "start": 30.36,
+     "end": 30.88
+    },
+    {
+     "word": " holy",
+     "start": 31.04,
+     "end": 31.44
+    },
+    {
+     "word": " crap",
+     "start": 31.44,
+     "end": 31.84
+    },
+    {
+     "word": " dude.",
+     "start": 31.84,
+     "end": 32.3
+    },
+    {
+     "word": " That's",
+     "start": 37.3,
+     "end": 37.74
+    },
+    {
+     "word": " the",
+     "start": 37.74,
+     "end": 37.86
+    },
+    {
+     "word": " type",
+     "start": 37.86,
+     "end": 38.06
+    },
+    {
+     "word": " of",
+     "start": 38.06,
+     "end": 38.22
+    },
+    {
+     "word": " things",
+     "start": 38.22,
+     "end": 38.4
+    },
+    {
+     "word": " we",
+     "start": 38.4,
+     "end": 38.66
+    },
+    {
+     "word": " be",
+     "start": 38.66,
+     "end": 38.74
+    },
+    {
+     "word": " doing",
+     "start": 38.74,
+     "end": 38.94
+    },
+    {
+     "word": " in",
+     "start": 38.94,
+     "end": 39.1
+    },
+    {
+     "word": " my",
+     "start": 39.1,
+     "end": 39.24
+    },
+    {
+     "word": " group,",
+     "start": 39.24,
+     "end": 39.48
+    },
+    {
+     "word": " man.",
+     "start": 39.48,
+     "end": 39.68
+    },
+    {
+     "word": " Crazy.",
+     "start": 39.72,
+     "end": 40.04
+    },
+    {
+     "word": " Man",
+     "start": 40.24,
+     "end": 40.36
+    },
+    {
+     "word": " this",
+     "start": 40.36,
+     "end": 40.56
+    },
+    {
+     "word": " month",
+     "start": 40.56,
+     "end": 41.24
+    },
+    {
+     "word": " has",
+     "start": 41.24,
+     "end": 41.38
+    },
+    {
+     "word": " been",
+     "start": 41.38,
+     "end": 41.5
+    },
+    {
+     "word": " explosive.",
+     "start": 41.5,
+     "end": 42.16
+    },
+    {
+     "word": " When",
+     "start": 42.36,
+     "end": 42.4
+    },
+    {
+     "word": " I",
+     "start": 42.4,
+     "end": 42.48
+    },
+    {
+     "word": " keep",
+     "start": 42.48,
+     "end": 42.62
+    },
+    {
+     "word": " adding",
+     "start": 42.62,
+     "end": 42.88
+    },
+    {
+     "word": " these",
+     "start": 42.88,
+     "end": 43.14
+    },
+    {
+     "word": " in,",
+     "start": 43.14,
+     "end": 43.38
+    },
+    {
+     "word": " it's",
+     "start": 43.4,
+     "end": 43.52
+    },
+    {
+     "word": " probably",
+     "start": 43.52,
+     "end": 43.74
+    },
+    {
+     "word": " gonna",
+     "start": 43.74,
+     "end": 43.92
+    },
+    {
+     "word": " be",
+     "start": 43.92,
+     "end": 44.08
+    },
+    {
+     "word": " more",
+     "start": 44.08,
+     "end": 44.38
+    },
+    {
+     "word": " than",
+     "start": 44.38,
+     "end": 44.56
+    },
+    {
+     "word": " the",
+     "start": 44.56,
+     "end": 44.7
+    },
+    {
+     "word": " entire",
+     "start": 44.7,
+     "end": 45.06
+    },
+    {
+     "word": " year",
+     "start": 45.06,
+     "end": 45.86
+    },
+    {
+     "word": " of",
+     "start": 45.86,
+     "end": 46.08
+    },
+    {
+     "word": " 2025.",
+     "start": 46.08,
+     "end": 46.52
+    },
+    {
+     "word": " Although",
+     "start": 46.8,
+     "end": 47.0
+    },
+    {
+     "word": " there",
+     "start": 47.0,
+     "end": 47.22
+    },
+    {
+     "word": " was",
+     "start": 47.22,
+     "end": 47.36
+    },
+    {
+     "word": " some",
+     "start": 47.36,
+     "end": 47.54
+    },
+    {
+     "word": " good",
+     "start": 47.54,
+     "end": 47.68
+    },
+    {
+     "word": " ones.",
+     "start": 47.68,
+     "end": 48.0
+    },
+    {
+     "word": " There",
+     "start": 48.1,
+     "end": 48.16
+    },
+    {
+     "word": " was",
+     "start": 48.16,
+     "end": 48.36
+    },
+    {
+     "word": " a",
+     "start": 48.36,
+     "end": 48.64
+    },
+    {
+     "word": " 550x",
+     "start": 48.64,
+     "end": 49.7
+    },
+    {
+     "word": " on",
+     "start": 49.7,
+     "end": 49.92
+    },
+    {
+     "word": " MYX.",
+     "start": 49.92,
+     "end": 50.38
+    },
+    {
+     "word": " Oh",
+     "start": 50.5,
+     "end": 50.6
+    },
+    {
+     "word": " my",
+     "start": 50.6,
+     "end": 50.9
+    },
+    {
+     "word": " God.",
+     "start": 50.9,
+     "end": 51.36
+    },
+    {
+     "word": " Oh",
+     "start": 51.62,
+     "end": 51.8
+    },
+    {
+     "word": " my",
+     "start": 51.8,
+     "end": 52.24
+    },
+    {
+     "word": " God,",
+     "start": 52.24,
+     "end": 52.54
+    },
+    {
+     "word": " oh",
+     "start": 52.7,
+     "end": 52.9
+    },
+    {
+     "word": " my",
+     "start": 52.9,
+     "end": 53.26
+    },
+    {
+     "word": " God.",
+     "start": 53.26,
+     "end": 53.58
+    },
+    {
+     "word": " Crazy",
+     "start": 53.68,
+     "end": 54.12
+    },
+    {
+     "word": " right,",
+     "start": 54.12,
+     "end": 54.74
+    },
+    {
+     "word": " that's",
+     "start": 54.84,
+     "end": 55.02
+    },
+    {
+     "word": " crazy.",
+     "start": 55.02,
+     "end": 55.44
+    },
+    {
+     "word": " That's",
+     "start": 55.44,
+     "end": 55.84
+    },
+    {
+     "word": " what",
+     "start": 55.84,
+     "end": 55.92
+    },
+    {
+     "word": " you",
+     "start": 55.92,
+     "end": 56.1
+    },
+    {
+     "word": " get",
+     "start": 56.1,
+     "end": 56.3
+    },
+    {
+     "word": " for",
+     "start": 56.44,
+     "end": 56.6
+    },
+    {
+     "word": " joining",
+     "start": 56.6,
+     "end": 56.78
+    },
+    {
+     "word": " my",
+     "start": 56.78,
+     "end": 56.92
+    },
+    {
+     "word": " group.",
+     "start": 56.92,
+     "end": 57.16
+    }
+   ]
+  }
+ ]
+}

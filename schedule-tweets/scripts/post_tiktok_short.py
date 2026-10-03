@@ -47,7 +47,7 @@ SHORTS_JSON = HERE.parent / "data" / "shorts.json"
 CHROME_EXE = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 MAIN_USER_DATA = r"C:\Users\mnede\AppData\Local\Google\Chrome\tiktokbot-profile"
 WORKSPACE_ROOT = Path(r"C:\Users\mnede\Documents\Claude\social-media\schedule-tweets")
-DEBUG_DIR = WORKSPACE_ROOT / "tmp-tiktok-debug"
+DEBUG_DIR = WORKSPACE_ROOT / "tmp" / "tiktok-debug"
 CDP_PORT = 9224
 TIKTOK_UPLOAD_URL = "https://www.tiktok.com/tiktokstudio/upload?lang=en"
 PLATFORM = "tiktok"

@@ -5,6 +5,16 @@ landing in `video-creation/livestream-repurpose/media/<name>/`.
 **What this is:** the umbrella map. One livestream fans out into **three independent lanes** that all
 converge in `schedule-tweets/`. This file points; canonical detail lives where cited and **wins on conflict.**
 
+> **⚙️ CANONICAL SINCE 2026-09-10 — the BATCH ORCHESTRATOR drives all three lanes in ONE
+> invocation:** `python video-creation/livestream-repurpose/graph/run.py batch --source "<recording>"`
+> (author `longform-meta.json` first). It runs the intake graph, launches Lane 3 concurrently
+> (lane3-drafter agent → repurpose graph → visual-qa), drives Lane 2 through its segments with
+> headless clip-/tighten-strategists and remotion-builders, stops at Mike's 4b and 2nd-review gates
+> (exit 2 + the resume command), and refuses DONE while any lane is pending. `run.py status --batch
+> <b>` prints the lanes footer any time. Everything below is the per-segment SPEC and the repair
+> path; it is no longer how a batch is started. (Built after batch `kaspa`, where Lane 3 was never
+> invoked by hand despite the frontier banner.)
+
 ## The branch point — LOW BPS
 
 Everything starts with **Phase 1 Step 1** in `video-creation/SKILL.md`: the high-bitrate source recording
@@ -44,8 +54,8 @@ vertical (Phase 2) → find topics, 90s chunk-and-group (Phase 3) → clip selec
 (4b) → tighten (5) → silence removal (5B) → Whisper captions (6) → Remotion render (7) → publish (8).
 
 > **Canonical (LangGraph Waves 2-5): every mechanical Lane 2 segment is ONE graph invocation**
-> (`run.py` = `video-creation/livestream-repurpose/graph/run.py`); each starts after its judgment
-> seam lands on disk and ends at the next gate:
+> (`run.py` = `video-creation/livestream-repurpose/graph/run.py`); each starts after its gate
+> artifact lands on disk (a HITL approval or an agent handoff) and ends at the next gate:
 > - **cut** (Wave 2, blessed 2026-08-04): `python run.py cut --batch <batch>` — after the
 >   clip-strategist's `clip-plan.json` lands; ends at Mike's 4b review.
 > - **tighten + 5B** (Wave 3, blessed 2026-08-06): `python run.py tighten --batch <batch>
@@ -58,9 +68,12 @@ vertical (Phase 2) → find topics, 90s chunk-and-group (Phase 3) → clip selec
 > - **Phase 7 stays agent territory**: remotion-builder per clip (BROLL-PLAN, ChatGPT b-roll,
 >   comp, SFX, render, gate) — the browser image stack ports LAST.
 > - **publish** (Wave 5, built 2026-08-07): `python run.py publish --batch <batch> --date D` —
->   ONLY after Mike gates the renders AND authorizes publish, with `publish-meta.json`
->   (hook/caption/tags) authored first. Stages the queue + md5-verifies + persona-lints;
->   POSTING stays Mike-gated and sequential.
+>   runs **as soon as every builder reports 7-built with a PASS gate** (the gate's BATCH
+>   FRONTIER footer prints the command). **Staging IS Mike's review handoff** — he reviews
+>   finished shorts from the :8766 queue; an authorization note gates POSTING only, never
+>   staging (Mike, 2026-08-07, batch eliza). `publish-meta.json` (hook/caption/tags) is
+>   authored first. Stages the queue + md5-verifies + persona-lints; POSTING stays
+>   Mike-gated and sequential.
 Publish hands off via **`/publish-shorts`**, which writes `schedule-tweets/data/shorts.json`. Shows on the
 **Shorts** tab.
 - **Canonical detail:** `video-creation/SKILL.md` (Phases 1B–8) + `video-creation/PUBLISH-SHORTS.md`.
@@ -93,7 +106,15 @@ inline during Phase 1 itself**, so it has no `pipelines` key; it's done when the
 
 ## Watch for
 - **Lane 1 forks off the LOW BPS file; lanes 2 and 3 both depend on verticalize + transcribe first** —
-  so lane 3 hangs off lane 2's transcript, not off the raw LOW BPS file.
+  so lane 3 hangs off the transcript, not off the raw LOW BPS file.
+- **Lanes 2 and 3 are SIBLINGS off that transcript. RUN THEM IN PARALLEL.** The transcript is
+  produced by INTAKE (segment 1) and is shared; lane 2's own work is segments 2-5, lane 3's is
+  segment 6. Lane 3 never waits on clip selection, cutting, tightening, rendering or publishing, and
+  its only precondition is its own `repurpose/output/<batch>-lane3-plan.json`. They touch disjoint
+  files and disjoint resources (ffmpeg/GPU vs the pooled ChatGPT browser behind the `chatgpt` stage
+  lock), so there is nothing to serialize. Anywhere this doc says lane 3 runs "off lane 2's
+  transcript", that names the ARTIFACT, not an order. (Mike, 2026-08-15, after lane 3 was held
+  behind lane 2 for no reason; intake's LANE FRONTIER footer now states both lanes explicitly.)
 - Keep the long-form **small** (~0.7 Mbps) — never queue the crf-18 desilence intermediate.
 - Convergence point is `schedule-tweets/`; **posting** (cadence/order) is a schedule-tweets decision —
   see `playbooks/posting.md`, out of scope for the repurpose lanes themselves.

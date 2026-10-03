@@ -1,0 +1,69 @@
+    0.00 -     6.42  Casper is building Vprogs, verifiable programs, real apps on a base layer, on a proof of work,
+    6.48 -     7.30  not an L2.
+    7.40 -    12.40  A Vprog is an app that runs on its own node, keeps its own state and posts zero knowledge
+   12.40 -    14.40  proof of that state back to Casper.
+   14.54 -    20.08  Now Casper already has smart contracts, covenants, live on mainnet since June, straight from
+   20.08 -    21.06  the core devs.
+   21.22 -    27.32  Vprogs are the next layer up, whole applications on a chain that already runs 10 blocks every
+   27.32 -    28.10  single second.
+   28.10 -    31.90  Casper is never going to run your app, Casper is going to verify it.
+   31.90 -    37.76  And that one flip is how you get apps on the base layer with proof of work security and
+   37.76 -    38.74  no L2 in the middle.
+   38.82 -    41.72  So let's break this all down.
+   41.72 -    47.52  So back in 2020 Vitalik laid out Ethereum's plan and it said in plain English, all in
+   47.52 -    53.46  on rollups, your accounts, your businesses, your assets living inside a layer 2.
+   53.68 -    59.58  And every rollup is its own chain, its own sequencer, the machine that orders your transaction
+   59.58 -    62.52  payments, its own bridge, its own slice of liquidity.
+   62.72 -    67.92  And every one of those pieces is a place for something to break and a place for your liquidity
+   67.92 -    69.14  to get split up.
+   69.30 -    74.46  Now Casper's founder, Janitem Sampalinski looked at all of that and back in December
+   74.46 -    80.20  he said the whole point of Vprogs was to avoid the obsolete path of L2s.
+   80.22 -    81.48  His words, not mine.
+   81.56 -    83.20  And he hasn't softened on it.
+   83.20 -    85.46  So here's how a Vprog actually works.
+   85.46 -    90.50  You send a transaction and you declare upfront which account it reads and which one it writes.
+   90.88 -    92.22  Casper does four jobs.
+   92.34 -    95.90  It orders every transaction so Casper itself is the sequencer.
+   96.00 -    99.60  It stores the data, it checks the proofs, it meters the work.
+   99.68 -   101.84  What it never does is run the app.
+  101.92 -   103.60  The app runs on its own nodes.
+  103.84 -   108.40  Every Vprog owns its own accounts and it's the only thing allowed to write to them.
+  108.60 -   113.56  And provers, for-profit operators, post a zero-knowledge proof back to Casper.
+  113.56 -   118.84  That's a math receipt that says the state is correct and Casper checks the receipt instead
+  118.84 -   119.88  of redoing the math.
+  119.94 -   121.58  And this buys you two things.
+  121.74 -   122.22  Sovereignty.
+  122.34 -   124.68  If another app breaks, yours keeps running.
+  124.84 -   125.68  And composability.
+  125.76 -   127.16  Apps can read each other's state.
+  127.26 -   131.90  And a transaction that touches two apps goes through as one unit or not at all.
+  131.94 -   136.42  And this just means the rules for checking all of this live inside of Casper's consensus
+  136.42 -   138.88  itself, not on some other chain.
+  140.58 -   142.72  Now where does this all actually stand?
+  142.84 -   143.70  Look at this ladder.
+  143.70 -   146.26  May 2025, Crescendo.
+  146.64 -   147.70  10 blocks a second.
+  147.92 -   149.40  September, the yellow paper.
+  149.70 -   150.28  First draft.
+  150.46 -   153.24  June 30th of this year, Tukada.
+  153.54 -   155.84  Zero-knowledge verification and covenants.
+  156.02 -   157.22  Live on mainnet.
+  157.54 -   158.90  Inside Casper's consensus.
+  159.18 -   163.14  And September 2026, Silverscript 1.0.
+  163.34 -   164.82  The smart contract language.
+  165.22 -   166.14  Official release.
+  166.28 -   166.94  Next rung.
+  167.30 -   169.22  The first standalone zero-knowledge app.
+  169.38 -   171.26  Above that, full Vprogs.
+  171.56 -   172.78  Still under construction.
+  172.78 -   175.74  And casper.org says so in plain text.
+  175.84 -   180.42  And in December, Sam Polinsky said the Covenant fork was three to six months out.
+  180.58 -   181.26  It shipped in June.
+  181.54 -   184.26  Everyone is racing to control compute and money.
+  184.40 -   187.68  The more they race, the more layer nobody owns is worth.
+  187.76 -   191.54  Proof of work money with apps on it and no L2 in the middle.
+  191.64 -   193.94  Click that like button and comment below.
+  194.22 -   197.74  Let me know what you think is going to be built on it in the near future.
+  198.10 -   199.48  Gonna be some exciting times.
+  199.48 -   203.52  And click the link in the description below for the greatest community ever.
+  203.96 -   205.56  And I'll catch you guys later.

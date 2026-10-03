@@ -392,7 +392,9 @@ async function main() {
       await page.waitForTimeout(1500);
 
       // Use the FIRST file input (the multi-file one). The second one is "add more" and unreliable.
-      const fileInputs = page.locator('input[type="file"]');
+      // Exclude YouTube's unrelated searchbox hidden file input (ytSearchboxComponentHiddenFileInput),
+      // which now sits earlier in the DOM and breaks a bare .first() (found 2026-08-27).
+      const fileInputs = page.locator('input[type="file"]:not(.ytSearchboxComponentHiddenFileInput)');
       await fileInputs.first().waitFor({ state: 'attached', timeout: 10000 });
       await fileInputs.first().setInputFiles(imagePaths);
       const uploadWait = randomBetween(6000, 10000);

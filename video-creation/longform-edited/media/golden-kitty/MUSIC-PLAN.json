@@ -1,0 +1,1017 @@
+{
+  "track": {
+    "title": "Fearless (Bed A, CH1) + Afterlife (Bed B, CH2-CH3, and its reprise B2 in CH5 from 287.3) + Slow Rise (Bed C, CH4) + Hello, And Good Morning (Bed D, CH5 to 287.3) + Emerald City (Bed E, CH6-CH7)",
+    "duration_sec": 470.46,
+    "bpm": 128,
+    "key": "A minor (A) / A major (B) / Eb major (C) / C major (D) / E minor (E)",
+    "license_code": "A: ARAZC70SFALU4F6O, B: VZCIZWWGGT6HE5UC, C: LMNT8RRL5UMI78DW, D: ODK91F1ARECNTSSU, E: KSC0EIALPM9TAVCI (all Soundstripe; the codes go in a YouTube description only)"
+  },
+  "tracks": [
+    {
+      "bed": "A",
+      "id": "fearless",
+      "title": "Fearless",
+      "artist": "Anthony Catacoli",
+      "file": "video-creation/assets/music/Fearless/Anthony_Catacoli_Fearless_instrumental_3_31.mp3",
+      "duration_sec": 211.72,
+      "bpm": 128,
+      "key": "A minor",
+      "aggression": 94,
+      "lufs_integrated": -8.9,
+      "lufs_seat_reference": -8.1,
+      "license_code": "ARAZC70SFALU4F6O",
+      "ledger": "fresh",
+      "pool": "intro_hype"
+    },
+    {
+      "bed": "B",
+      "id": "afterlife",
+      "title": "Afterlife",
+      "artist": "Bryant Lowry",
+      "file": "video-creation/assets/music/Afterlife/Bryant_Lowry_Afterlife_instrumental_4_18.mp3",
+      "duration_sec": 258.91,
+      "bpm": 92,
+      "key": "A major",
+      "aggression": 63,
+      "lufs_integrated": -10.6,
+      "lufs_seat_reference": -11.1,
+      "license_code": "VZCIZWWGGT6HE5UC",
+      "ledger": "fresh",
+      "pool": "subtle_bed"
+    },
+    {
+      "bed": "C",
+      "id": "slow-rise",
+      "title": "Slow Rise",
+      "artist": "EVOE",
+      "file": "video-creation/assets/music/Slow Rise/EVOE_Slow_Rise_instrumental_4_36-4.wav",
+      "duration_sec": 276.19,
+      "bpm": 120,
+      "key": "Eb/D# major",
+      "aggression": 33,
+      "lufs_integrated": -10.5,
+      "lufs_seat_reference": -14.0,
+      "license_code": "LMNT8RRL5UMI78DW",
+      "ledger": "fresh",
+      "pool": "subtle_bed"
+    },
+    {
+      "bed": "D",
+      "id": "hello-and-good-morning",
+      "title": "Hello, And Good Morning",
+      "artist": "Liberty",
+      "file": "video-creation/assets/music/Hello, And Good Morning/Liberty_Hello_And_Good_Morning_instrumental_2_02.mp3",
+      "duration_sec": 122.23,
+      "bpm": 120,
+      "key": "C major",
+      "aggression": 69,
+      "lufs_integrated": -11.9,
+      "lufs_seat_reference": -11.8,
+      "license_code": "ODK91F1ARECNTSSU",
+      "ledger": "fresh",
+      "pool": "hype_body"
+    },
+    {
+      "bed": "E",
+      "id": "emerald-city",
+      "title": "Emerald City",
+      "artist": "Tiger Gang",
+      "file": "video-creation/assets/music/Emerald City/Tiger_Gang_Emerald_City_instrumental_2_27-7.wav",
+      "duration_sec": 147.17,
+      "bpm": 122,
+      "key": "E minor",
+      "aggression": 58,
+      "lufs_integrated": -11.6,
+      "lufs_seat_reference": -9.4,
+      "license_code": "KSC0EIALPM9TAVCI",
+      "ledger": "fresh",
+      "pool": "hype_body + epic_close"
+    }
+  ],
+  "canvas": {
+    "spine": "spine/ALL.g.pickup.mp4",
+    "duration_sec": 470.456,
+    "vo_lufs_integrated": -18.0,
+    "vo_lufs_by_bed_span": {
+      "A": -18.1,
+      "B": -17.9,
+      "C": -17.8,
+      "D": -17.9,
+      "E": -18.1
+    },
+    "coordinates": "Every t is a FINAL-spine second, before the card pauses. Bed spans butt-join in spine time: the four bed changes (51.20, 171.20, 260.00, 363.46) sit on title cards, so the breath lives INSIDE the card pause the comp inserts there (assumed 1.5 s: outgoing bed fades 0.4 s from the card start, 0.6 s of air, incoming bed fades in 0.5 s and is full on the first word of the chapter). source_in is the file position ON the first word of the chapter (the mixer pre-rolls the fade-in before it). CH3 and CH7 are cardless continuations of the bed before them: same file, sample-continuous source_in, no fade, no breath.",
+    "chapters": [
+      {
+        "chapter": "CH1",
+        "span": [
+          0.0,
+          51.1
+        ],
+        "register": "gear-3-epic",
+        "card": false,
+        "bed": "A",
+        "face_windows": [
+          [
+            0.0,
+            9.667
+          ],
+          [
+            40.233,
+            44.033
+          ]
+        ],
+        "hard_beats": {
+          "hook_first_word": 0.0,
+          "this_is_the_real_deal": 15.22,
+          "robinhood_chain_card_H1": 24.78,
+          "crowd_28_million": 30.04,
+          "F2_very_bullish": 40.08,
+          "time_tunnel_E3": 46.96,
+          "break_it_all_down": 49.88
+        }
+      },
+      {
+        "chapter": "CH2",
+        "span": [
+          51.2,
+          121.94
+        ],
+        "register": "gear-2-explainer",
+        "card": true,
+        "bed": "B",
+        "face_windows": [
+          [
+            89.6,
+            91.833
+          ]
+        ],
+        "hard_beats": {
+          "card_the_golden_kitty": 51.2,
+          "timeline_C4": [
+            78.3,
+            89.6
+          ],
+          "award_went_on_to_mean_something": 98.42,
+          "winners_card": [
+            100.9,
+            112.5
+          ]
+        }
+      },
+      {
+        "chapter": "CH3",
+        "span": [
+          122.16,
+          170.92
+        ],
+        "register": "gear-2-explainer",
+        "card": false,
+        "bed": "B",
+        "face_windows": [
+          [
+            122.1,
+            131.233
+          ],
+          [
+            167.433,
+            169.533
+          ]
+        ],
+        "hard_beats": {
+          "real_chart_C12_up_roughly_15x": [
+            142.25,
+            156.25
+          ],
+          "cap_vs_volume": [
+            162.48,
+            167.433
+          ],
+          "look_at_what_it_trades_against": 169.66
+        }
+      },
+      {
+        "chapter": "CH4",
+        "span": [
+          171.2,
+          259.84
+        ],
+        "register": "gear-2-explainer",
+        "card": true,
+        "bed": "C",
+        "face_windows": [
+          [
+            213.933,
+            216.5
+          ]
+        ],
+        "hard_beats": {
+          "card_priced_in_gold": 171.2,
+          "C1_state_B_marquee_reveal": [
+            203.1,
+            213.933
+          ],
+          "F6_other_side_of_every_trade_is_gold": 213.98,
+          "gold_word": 216.18,
+          "priced_in_gold": 218.46,
+          "honest_line": [
+            248.22,
+            255.62
+          ],
+          "most_tokens_cant_say_that": 255.7
+        }
+      },
+      {
+        "chapter": "CH5",
+        "span": [
+          260.0,
+          363.44
+        ],
+        "register": "gear-2-rising-to-3",
+        "card": true,
+        "bed": "D",
+        "face_windows": [
+          [
+            342.567,
+            348.0
+          ]
+        ],
+        "hard_beats": {
+          "card_the_stonk_narrative": 260.0,
+          "and_it_took_off": 276.3,
+          "pairing_ladder_C27": [
+            310.24,
+            321.82
+          ],
+          "and_now_with_gold": 331.2,
+          "F7_since_september_4th": 345.44,
+          "verdict_here_is_what_i_think": 352.88,
+          "prime_spot_for_it": [
+            362.36,
+            363.44
+          ]
+        }
+      },
+      {
+        "chapter": "CH6",
+        "span": [
+          363.46,
+          425.66
+        ],
+        "register": "gear-2-rising-to-3",
+        "card": true,
+        "bed": "E",
+        "face_windows": [
+          [
+            407.533,
+            410.833
+          ]
+        ],
+        "hard_beats": {
+          "card_robinhood_chain": 363.46,
+          "look_at_those_numbers": 380.54,
+          "count_up_1B_then_90B": [
+            387.62,
+            392.86
+          ],
+          "only_2_percent": 401.74,
+          "F8_barely_shown_up_yet": 407.72,
+          "works_great_for_memes_too": 418.82,
+          "golden_kitty_is_both": 420.96
+        }
+      },
+      {
+        "chapter": "CH7",
+        "span": [
+          425.72,
+          470.46
+        ],
+        "register": "gear-3-epic",
+        "card": false,
+        "bed": "E",
+        "face_windows": [
+          [
+            453.1,
+            457.467
+          ]
+        ],
+        "hard_beats": {
+          "here_is_the_case": 425.72,
+          "amc_receipt": 442.28,
+          "F9_priced_in_gold": 456.66,
+          "four_million_token": 457.72,
+          "cta": [
+            463.44,
+            470.4
+          ],
+          "last_word_chain": [
+            470.16,
+            470.4
+          ]
+        }
+      }
+    ],
+    "clip_insert_duck_windows": "none: every cover in COVER-PLAN.json is a muted clip, still, capture or code container and there is no R-TALK insert, so bed-duck-expr.py yields no windows (expected, not a gap)."
+  },
+  "bed_groups": [
+    {
+      "bed": "A",
+      "track_id": "fearless",
+      "chapters": [
+        "CH1"
+      ],
+      "span": [
+        0.0,
+        51.2
+      ],
+      "source_in": 0.0,
+      "file_time": [
+        0.0,
+        51.2
+      ]
+    },
+    {
+      "bed": "B",
+      "track_id": "afterlife",
+      "chapters": [
+        "CH2",
+        "CH3"
+      ],
+      "span": [
+        51.2,
+        171.2
+      ],
+      "source_in": 41.65,
+      "file_time": [
+        41.65,
+        161.65
+      ]
+    },
+    {
+      "bed": "C",
+      "track_id": "slow-rise",
+      "chapters": [
+        "CH4"
+      ],
+      "span": [
+        171.2,
+        260.0
+      ],
+      "source_in": 60.72,
+      "file_time": [
+        60.72,
+        149.52
+      ]
+    },
+    {
+      "bed": "D",
+      "track_id": "hello-and-good-morning",
+      "chapters": [
+        "CH5"
+      ],
+      "span": [
+        260.0,
+        287.3
+      ],
+      "source_in": 11.48,
+      "file_time": [
+        11.48,
+        38.78
+      ]
+    },
+    {
+      "bed": "B2",
+      "track_id": "afterlife",
+      "chapters": [
+        "CH5"
+      ],
+      "span": [
+        287.3,
+        363.46
+      ],
+      "source_in": 122.42,
+      "file_time": [
+        122.42,
+        198.58
+      ]
+    },
+    {
+      "bed": "E",
+      "track_id": "emerald-city",
+      "chapters": [
+        "CH6",
+        "CH7"
+      ],
+      "span": [
+        363.46,
+        470.46
+      ],
+      "source_in": 37.45,
+      "file_time": [
+        37.45,
+        144.45
+      ]
+    }
+  ],
+  "energy_profile": {
+    "video-creation/assets/music/Fearless/Anthony_Catacoli_Fearless_instrumental_3_31.mp3": {
+      "low_energy_regions": [
+        [
+          16,
+          34
+        ],
+        [
+          142,
+          154
+        ],
+        [
+          206,
+          212
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          0,
+          16
+        ],
+        [
+          34,
+          142
+        ],
+        [
+          154,
+          206
+        ]
+      ],
+      "notes": "Catalog env (2 s per char) opens 8888888 7 444444 5 66 777 6 77 8888: level 8 at 0-14, a level-4 breakdown at 16-28, a 5-6 rebuild at 28-34, level 7 at 34-46 (one 6 at 40-42), level 8 from 46. Aggression 94, mean -11.0 dBFS, opening cold_hot, ending epic_hit. Used 0.0-51.6. Alignment read (0.1 s RMS, timing only, the energy calls above are from the catalog): full level on the first sample (-7 dBFS at 0.0), breakdown onset 15.0, rebuild step 30.0, drop hit 46.9. Region loudness (ebur128): hot 0-15 = -8.1 LUFS, breakdown 15.5-29 = -19.3, mid 30-46 = -11.7, drop 47-52 = -8.8."
+    },
+    "video-creation/assets/music/Afterlife/Bryant_Lowry_Afterlife_instrumental_4_18.mp3": {
+      "low_energy_regions": [
+        [
+          0,
+          20
+        ],
+        [
+          20,
+          42
+        ],
+        [
+          168,
+          186
+        ],
+        [
+          252,
+          260
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          42,
+          168
+        ],
+        [
+          186,
+          252
+        ]
+      ],
+      "notes": "Catalog env: level 0-3 intro to 20, level 4 at 20-40, then a long flat 7 from 42 to 124 (one 8 at 82-84, a 6-7 wobble at 86-94), level 8 at 124-146, level 7 at 146-168, a 5-6 breakdown at 168-186 (not used). Aggression 63, mean -13.8 dBFS, opening build, ending fade. Used 41.65-161.65, which skips both the quiet intro and the breakdown. Alignment read (timing only): the beat enters at file 41.65 (-21 to -13 dBFS in 0.1 s). Region loudness: body 41-120 = -11.1 LUFS, plateau 120-146 = -8.8, 147-161 = -11.2; LRA 4.0 over the used span, the flattest long window on the Bed B shortlist."
+    },
+    "video-creation/assets/music/Slow Rise/EVOE_Slow_Rise_instrumental_4_36-4.wav": {
+      "low_energy_regions": [
+        [
+          0,
+          6
+        ],
+        [
+          6,
+          104
+        ],
+        [
+          138,
+          176
+        ],
+        [
+          236,
+          276
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          104,
+          138
+        ],
+        [
+          176,
+          236
+        ]
+      ],
+      "notes": "Catalog env: a pulsing 5-6 pad (some 7s) from 6 to 104, a level 8-9 peak at 104-138, back to 5-6 from 138. Aggression 33 (loud smooth pads, no transients), the lowest of the five beds, opening build, ending resolve. Used 60.72-149.52 = mid pad, the first peak, mid pad. Alignment read (timing only): the swell starts rising at file 104.8 and crests at 105.7; the peak falls away over 137.9-138.4. Region loudness: mid 61-104.8 = -14.0 LUFS, peak 105.5-137.5 = -6.8, tail 138.2-150 = -14.2 (the peak is 7 LU over the pad, hence the automation row)."
+    },
+    "video-creation/assets/music/Hello, And Good Morning/Liberty_Hello_And_Good_Morning_instrumental_2_02.mp3": {
+      "low_energy_regions": [
+        [
+          28,
+          36
+        ],
+        [
+          78,
+          82
+        ],
+        [
+          116,
+          122
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          0,
+          28
+        ],
+        [
+          36,
+          78
+        ],
+        [
+          82,
+          116
+        ]
+      ],
+      "notes": "Catalog env: level 7 at 0-28, a 6-4-5-6 dip at 28-36, level 7 at 36-78 (8s at 64 and 72), a 6-5 dip at 78-82, level 7 at 82-96, level 8 at 96-100 and 104-114, silent from 116. Aggression 69, mean -13.8 dBFS, opening cold_hot, ending epic_hit. Used 11.48-114.94. Alignment read (timing only): accents at 113.1 and 113.7, the FINAL chord lands at 114.1, decays to -22 dBFS by 115.0 and -33 by 116.0. Loudness: used span -11.8 LUFS (LRA 4.4), final rise 104-114.8 = -9.3."
+    },
+    "video-creation/assets/music/Emerald City/Tiger_Gang_Emerald_City_instrumental_2_27-7.wav": {
+      "low_energy_regions": [
+        [
+          0,
+          30
+        ],
+        [
+          30,
+          62
+        ],
+        [
+          76,
+          82
+        ],
+        [
+          114,
+          118
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          62,
+          76
+        ],
+        [
+          82,
+          114
+        ],
+        [
+          118,
+          144
+        ]
+      ],
+      "notes": "Catalog env: level 2-3 intro to 30, a 4-5 build at 30-54, a 2 at 54-56, 5-6-5 at 56-62, level 8 at 64-76, a 5-3-3 breakdown at 76-82, level 8 at 84-90, 6-6-7 at 90-96, level 8 at 96-114, a 6-3-6 breakdown at 114-120, level 8 at 120-144, then out. Aggression 58, opening build, ending epic_hit. Used 37.45-144.45, so the whole low-to-high arc of the file is spent on CH6 to CH7. Alignment read (timing only): stabs at 60.7 and 62.2, full groove from 63.7; breakdown 76.0-82.95 with the groove back at 83.0; a one-second stop at 93.7-94.7 with the slam back in at 94.8; breakdown 114.0-118.75, groove back at 118.8; the track ENDS with a hard stop at 144.15 (-12 to -33 dBFS in 0.1 s) and a reverb tail to 145.5. Region loudness: build 37.3-62 = -19.3 LUFS, groove = -9.6 and -9.2, breakdown 76.5-82.5 = -22.0."
+    }
+  },
+  "beds": [
+    {
+      "chapter": "CH1",
+      "bed": "A",
+      "track_id": "fearless",
+      "span": [
+        0.0,
+        51.2
+      ],
+      "register": "gear-3-epic",
+      "source_file": "video-creation/assets/music/Fearless/Anthony_Catacoli_Fearless_instrumental_3_31.mp3",
+      "source_in": 0.0,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -22.0,
+      "remotion_gain_db": -31.9,
+      "remotion_volume": 0.0254,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "file_time_at_span": [
+        0.0,
+        51.2
+      ],
+      "fade_in_sec": 0.0,
+      "fade_out": "0.4 s fade from the first frame of the CH2 card (the file is on its level-8 drop there, so the card impact covers the cut)",
+      "automation": [
+        {
+          "window": [
+            15.0,
+            30.0
+          ],
+          "gain_db": -25.9,
+          "volume": 0.0507,
+          "ramp_sec": 0.3,
+          "why": "+6 dB LIFT (absolute seat) on the breakdown inside the file: unlifted it would sit 33 dB under the VO for 15 s and read as the music dropping out of the hook; lifted it sits 27 under, a pull-back under the Robinhood post receipt, not a silent stretch. Back to the nominal seat exactly on the rebuild step at 30.0."
+        }
+      ],
+      "why": "Gear-3 hook wants the punchiest region on the shortlist and a bed that is hot on word one: Fearless is aggression 94, opening cold_hot, level 8 from the first sample. Played from file 0.0 its measured shape lands on three picture beats with no edit: the breakdown (15.0) opens as the line 'trades against gold.' ends, so 'This is the real deal.' (15.22) is said into the pull-back and the receipt read runs over the quiet region; the rebuild step (30.0) hits the crowd clip and 'with more than 28 million customers' (30.04); F2 'very bullish on this token' (40.08) sits on the level 6-7 mid section, 3.6 dB under the hook seat, so the face line gets the softer bed without a dip row; the full drop (46.9) lands on the time-tunnel clip and 'starts more than 10 years before' (46.96). Seat -22 under on the hot body: breakdown -27 (lifted), mid -25.6, drop -22.7. 211.7 s file, 51.2 s used, no loop."
+    },
+    {
+      "chapter": "CH2",
+      "bed": "B",
+      "track_id": "afterlife",
+      "span": [
+        51.2,
+        122.16
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Afterlife/Bryant_Lowry_Afterlife_instrumental_4_18.mp3",
+      "source_in": 41.65,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -23.0,
+      "remotion_gain_db": -29.9,
+      "remotion_volume": 0.032,
+      "breath_before_sec": 0.6,
+      "loop_point_sec": null,
+      "file_time_at_span": [
+        41.65,
+        112.61
+      ],
+      "fade_in_sec": 0.5,
+      "fade_in_anchor": "starts 0.5 s before 'So what is Golden Kitty?' (51.20) inside the CH2 card pause, on the quiet pad of the file (41.15-41.65); the beat enters on the first word",
+      "fade_out": "none: Bed B runs straight on into the CH3 row (same file, file 112.61 at spine 122.16)",
+      "continues_into": "CH3",
+      "automation": [],
+      "why": "Gear-2 story bed = the retro synth track with the longest flat region on the shortlist: file 42-124 is level 7 for 82 s (LRA 4.0), so nothing in the music moves while the trophy history, the timeline ladder and the winners card are read. source_in 41.65 skips the level 0-4 intro (40 s that would read as silence after the hot hook) and puts the beat entrance on the first word of the chapter. The one level-8 blip (file 82-84) falls on 'And this award went on to mean something' (98.42), the 6-7 wobble under the winners rows. F3 (89.6) sits on the flat 7: no dip needed at -23. Covers CH2 + CH3 in one pass (120 s of a 259 s file), no loop."
+    },
+    {
+      "chapter": "CH3",
+      "bed": "B",
+      "track_id": "afterlife",
+      "span": [
+        122.16,
+        171.2
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Afterlife/Bryant_Lowry_Afterlife_instrumental_4_18.mp3",
+      "source_in": 112.61,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -23.0,
+      "remotion_gain_db": -29.9,
+      "remotion_volume": 0.032,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "file_time_at_span": [
+        112.61,
+        161.65
+      ],
+      "fade_in_sec": 0.0,
+      "continues_from": "CH2",
+      "fade_out": "0.4 s fade from the first frame of the CH4 card (file 161.65, still inside the level-7 region, 7 s before the breakdown of the file)",
+      "automation": [],
+      "why": "Same bed, no card, no breath: 112.61 = 41.65 + (122.16 - 51.20), sample-continuous with the CH2 row. The only long level-8 plateau of the file (file 120-147, +2.3 dB over the body) maps to spine 129.6-156.6, so the bed lifts by itself under the project-site read and the real chart ('look at this chart', 'up roughly 15x', the steady climb, 142.25-156.25) and settles back to 7 as the market-cap stats start (156.30). F5 (167.48, the line about the part that got his attention) and 'Look at what it trades against' ride the settled level into the PRICED IN GOLD card."
+    },
+    {
+      "chapter": "CH4",
+      "bed": "C",
+      "track_id": "slow-rise",
+      "span": [
+        171.2,
+        260.0
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Slow Rise/EVOE_Slow_Rise_instrumental_4_36-4.wav",
+      "source_in": 60.72,
+      "cover": "section",
+      "intensity": "subtle",
+      "level_db_under_vo": -23.0,
+      "remotion_gain_db": -27.0,
+      "remotion_volume": 0.0447,
+      "breath_before_sec": 0.6,
+      "loop_point_sec": null,
+      "file_time_at_span": [
+        60.72,
+        149.52
+      ],
+      "fade_in_sec": 0.5,
+      "fade_in_anchor": "starts 0.5 s before 'In general, meme coins' (171.20) inside the CH4 card pause; the 0.4 s fade of Bed B ends first, the air between them is the breath",
+      "fade_out": "0.4 s fade from the first frame of the CH5 card (file 149.52, on the quiet pad)",
+      "automation": [
+        {
+          "window": [
+            215.3,
+            249.2
+          ],
+          "gain_db": -32.0,
+          "volume": 0.0251,
+          "ramp_sec": 1.0,
+          "why": "-5 dB (absolute seat) across the 8-9 peak of the file: the peak is 7 LU louder than the pad, which would put it 16 under the VO on top of the price formula and the fees counter. Tamed, the pad sits 23 under and the peak 21 under: the swell is still felt (+2 dB and a much fuller arrangement) but stays an explainer bed. The 1 s ramps ride the rise (215.3-216.2) and the fall (248.4-248.9) of the file."
+        }
+      ],
+      "why": "The centerpiece teaching chapter gets the lowest-aggression bed of the video (33: smooth pads, no drums to fight the diagram narration), carved so its ONE swell is the pillar reveal. File 60.72-104.8 is the level 5-6 pad under GLD, SPDR, 'backed one to one' and the C1 buy/sell arrows (171.2-215.3). The swell rises through 'every trade is' and crests ON 'gold.' (file 105.7 = spine 216.18), so 'Golden Kitty is priced in gold' (218.46) rides the peak, which then carries the formula, the 50 percent gold run and the fees paid in gold. The peak falls away at file 137.9 = spine 248.4, as he says 'Now let me be clear about what this is', so the honest line (meme coin, not backed, not redeemable) is spoken over the bare pad, and the closing line (most tokens on this chain cannot say that) ends the chapter quietly so Bed D reads as a lift. 276 s file, 88.8 s used, no loop."
+    },
+    {
+      "chapter": "CH5",
+      "bed": "D",
+      "track_id": "hello-and-good-morning",
+      "span": [
+        260.0,
+        287.3
+      ],
+      "register": "gear-2-rising-to-3",
+      "source_file": "video-creation/assets/music/Hello, And Good Morning/Liberty_Hello_And_Good_Morning_instrumental_2_02.mp3",
+      "source_in": 11.48,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -22.0,
+      "remotion_gain_db": -28.2,
+      "remotion_volume": 0.0389,
+      "breath_before_sec": 0.6,
+      "loop_point_sec": null,
+      "file_time_at_span": [
+        11.48,
+        38.78
+      ],
+      "fade_in_sec": 0.5,
+      "fade_in_anchor": "starts 0.5 s before the first CH5 word 'So now Golden Kitty' (260.00) inside the CH5 card pause, already at level 7 (the file is cold_hot): the clear lift out of the gold chapter",
+      "fade_out": "1.4 s fade ending at 287.30 (a crossfade into the Afterlife reprise: no card here, so no breath)",
+      "automation": [],
+      "why": "Mike's ruling at the draft gate (2026-10-02): the playful bed fits the opening of the chapter but is cut short. It plays from the CH5 card to the line where he names Artificial Inu (file 11.48-38.78, hot from its first bar), then hands over to the bed heard around 2:00. Its short dip (278.5-282.0) still falls on 'By the end of August'.",
+      "fade_out_sec": 1.4
+    },
+    {
+      "chapter": "CH5",
+      "bed": "B2",
+      "track_id": "afterlife",
+      "span": [
+        287.3,
+        363.46
+      ],
+      "register": "gear-2-rising-to-3",
+      "source_file": "video-creation/assets/music/Afterlife/Bryant_Lowry_Afterlife_instrumental_4_18.mp3",
+      "source_in": 122.42,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -23.0,
+      "remotion_gain_db": -29.9,
+      "remotion_volume": 0.032,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "file_time_at_span": [
+        122.42,
+        198.58
+      ],
+      "fade_in_sec": 1.4,
+      "fade_in_anchor": "fades in over 285.90-287.30 under 'is a meme coin called', full on 'Artificial' (287.22): a crossfade with Bed D, no card",
+      "fade_out": "0.4 s fade from the first frame of the CH6 card (file 198.6, on the hot return)",
+      "automation": [
+        {
+          "window": [
+            332.3,
+            352.6
+          ],
+          "gain_db": -26.9,
+          "ramp_sec": 0.5,
+          "why": "+3 dB (absolute seat) across the breakdown of the file (file 167.4-187.7, -14.5 LUFS against the -11 body): lifted so the stripped-back stretch still reads as a bed (house rule 10), about 23.5 under the VO"
+        }
+      ],
+      "why": "Mike's ruling at the draft gate (2026-10-02): for the rest of the chapter use the more exciting bed heard around 2:00 (Afterlife), because the chapter is data, money and launches. Same seat as he heard it (23 under at the body). In-point 122.42 puts the level-8 plateau of the file (file 123.1-146, -8.8 LUFS, the exact stretch that plays around 2:15 of the draft) under Artificial Inu, the 150 million line, Solana and StonkFun. The file's own breakdown (file 167.4) opens at 332.3, in the pause after 'And now with gold,', and sits under the gold announcement and the F7 line; the full band returns (file 188.0, -8.5 LUFS, the hottest stretch of the file) ON 'So here's what I think' (352.88) and carries the verdict and 'a prime spot for it' into the CH6 card. 76.2 s of a 259 s file, no loop."
+    },
+    {
+      "chapter": "CH6",
+      "bed": "E",
+      "track_id": "emerald-city",
+      "span": [
+        363.46,
+        425.72
+      ],
+      "register": "gear-2-rising-to-3",
+      "source_file": "video-creation/assets/music/Emerald City/Tiger_Gang_Emerald_City_instrumental_2_27-7.wav",
+      "source_in": 37.45,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -22.0,
+      "remotion_gain_db": -30.6,
+      "remotion_volume": 0.0295,
+      "breath_before_sec": 0.6,
+      "loop_point_sec": null,
+      "file_time_at_span": [
+        37.45,
+        99.71
+      ],
+      "fade_in_sec": 0.5,
+      "fade_in_anchor": "starts 0.5 s before 'So now we get to that chain' (363.46) inside the CH6 card pause, after the final chord of Bed D has rung out",
+      "fade_out": "none: Bed E runs straight on into the CH7 row (same file, file 99.71 at spine 425.72)",
+      "continues_into": "CH7",
+      "automation": [
+        {
+          "window": [
+            363.46,
+            386.3
+          ],
+          "gain_db": -24.6,
+          "volume": 0.0589,
+          "ramp_sec": 0.5,
+          "why": "+6 dB LIFT (absolute seat) on the level 4-5 build of the file: unlifted it would sit 32 under the VO for 23 s after the card. Lifted it sits 26 under, which is the starts-subtle half of the chapter. The window closes before the two loud stabs (file 60.7 and 62.2 = spine 386.7 and 388.2) so they are not boosted."
+        },
+        {
+          "window": [
+            402.0,
+            409.0
+          ],
+          "gain_db": -24.6,
+          "volume": 0.0589,
+          "ramp_sec": 0.4,
+          "why": "+6 dB LIFT on the 7 s breakdown of the file (file 76-83) so the music floor stays audible under 'only 2 percent' and the first half of F8; back to the seat as the groove returns at 409.0"
+        }
+      ],
+      "why": "Bed E is placed by its END (see CH7), and the arc of the file then does the starts-subtle-then-grows the chapter asks for. The level 4-5 build runs under the launch facts of the chain (363.5-386); the dip to level 2 (spine 378-382.5) is the held breath on 'And look at those numbers' (380.54); the stabs land on 'Three months in' and the 1B count-up (386.7, 388.2) and the full groove drops at 389.7 on 'and more than 90 billion'. Level 8 carries the 28.4 million / 369 billion growth engine to 401.5. The breakdown (402.0-409.0) empties the bed under the 'only 2 percent' line and the first half of the F8 face line (the softest bed of the chapter under the face), and the groove comes back on 'have barely shown up yet' (409.0). One more gift from the file: a one-second stop at spine 419.7-420.7 under 'for memes too', and the slam back in at 420.8 on 'And Golden Kitty is both.' 147.2 s file, used from 37.45, no loop."
+    },
+    {
+      "chapter": "CH7",
+      "bed": "E",
+      "track_id": "emerald-city",
+      "span": [
+        425.72,
+        470.46
+      ],
+      "register": "gear-3-epic",
+      "source_file": "video-creation/assets/music/Emerald City/Tiger_Gang_Emerald_City_instrumental_2_27-7.wav",
+      "source_in": 99.71,
+      "cover": "section",
+      "intensity": "aggressive",
+      "level_db_under_vo": -22.0,
+      "remotion_gain_db": -30.6,
+      "remotion_volume": 0.0295,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": null,
+      "file_time_at_span": [
+        99.71,
+        144.45
+      ],
+      "fade_in_sec": 0.0,
+      "continues_from": "CH6",
+      "right_align": "file 144.15 (the hard stop of the track) == spine 470.16 (onset of the last word 'chain.'), i.e. file_t = spine_t - 326.01. CH6 source_in 37.45 and CH7 source_in 99.71 both follow from it. Do NOT use track_duration - span: the file carries 3 s of reverb tail after the stop, so that would park the stop at 467.4, in the middle of the CTA.",
+      "fade_out": "0.25 s fade ending on the last frame 470.456 (file 144.45): it only trims the reverb tail, the stop itself has already happened",
+      "automation": [
+        {
+          "window": [
+            440.1,
+            444.75
+          ],
+          "gain_db": -24.6,
+          "volume": 0.0589,
+          "ramp_sec": 0.3,
+          "why": "+6 dB LIFT on the 4.7 s breakdown of the file (file 114-118.75) so the floor stays audible under 'what attention does on this chain. A different meme coin'; the groove returns by itself at 444.8"
+        },
+        {
+          "window": [
+            456.5,
+            457.6
+          ],
+          "gain_db": -4.2,
+          "volume": 0.6166,
+          "ramp_sec": 0.2,
+          "relative": true,
+          "note": "gain_db is RELATIVE to the bed seat (the vibe-cut duck)",
+          "why": "THE one vibe-cut duck of the video: 'priced in gold.' (456.66-457.46) at the end of the locked F9 face line, the conviction close. Bigger impact + this -4.2 dB dip in the per-frame volume function, while the bed is on its final level-8 run."
+        }
+      ],
+      "why": "Gear-3 close on the peak of the same build, cardless, sample-continuous with the CH6 row. With the stop pinned to 'chain.' the last three sections of the file fall on the case: level 8 (file 94.8-114 = spine 420.8-440.0) under the case statement (if Robinhood routes even a small piece of those 28.4 million customers onto its chain); the short breakdown (440.0-444.8) under the set-up of the AMC story; the final level-8 run (file 118.8-144.15 = spine 444.8-470.16) comes back in on 'AMC stock went from 40 million to 150 million' and holds through the F9 face line (own trophy, own chain, priced in gold), the 4 million line and the whole CTA. The music stops dead as he starts the last word, so 'chain.' is said in the clear over the reverb tail: a button, not a fade."
+    }
+  ],
+  "hard_hits": [
+    {
+      "t": 0.0,
+      "beat": "hook first word 'In 2015, Robinhood won a trophy' (FACE F1, the golden background swap)",
+      "music_move": "Bed A enters at full bed level on frame 0 (file 0.0, cold_hot, no fade-in, no dip): the cold hit IS the hook"
+    },
+    {
+      "t": 15.0,
+      "beat": "'This one trades against gold.' ends, 'This is the real deal.' (15.22)",
+      "music_move": "the breakdown of Bed A opens here: the drums pull out so the line is said into the pull-back (lifted +6 dB so it stays a bed, not a silence)"
+    },
+    {
+      "t": 30.0,
+      "beat": "crowd clip + 'with more than 28 million customers' (30.04)",
+      "music_move": "the rebuild step of Bed A (level 4 to 6-7) lands on the cut; the +6 dB lift releases on the same frame"
+    },
+    {
+      "t": 40.08,
+      "beat": "FACE F2, the conviction line: very bullish on this token and very bullish on this chain",
+      "music_move": "no automation: the file is on its level 6-7 mid section, 3.6 dB under the hook seat, so the conviction line already has the softer bed"
+    },
+    {
+      "t": 46.9,
+      "beat": "time-tunnel clip + 'starts more than 10 years before the chain even existed' (46.96)",
+      "music_move": "the full drop of Bed A (file 46.9, back to level 8) lands on the cut and carries the break-it-all-down handoff into the card"
+    },
+    {
+      "t": 51.2,
+      "beat": "CH2 title card THE GOLDEN KITTY (bed change A to B)",
+      "music_move": "A fades 0.4 s from the card start; breath; B fades in over the last 0.5 s of the pause and its beat enters on 'So what is Golden Kitty?'"
+    },
+    {
+      "t": 142.3,
+      "beat": "the real chart: 'Now look at this chart... up roughly 15x' (C12, 142.25-156.25)",
+      "music_move": "Bed B is on its only level-8 plateau (spine 129.6-156.6, +2.3 dB): the lift comes from the file, no automation; it settles as the market-cap stats start"
+    },
+    {
+      "t": 171.2,
+      "beat": "CH4 title card PRICED IN GOLD (bed change B to C)",
+      "music_move": "B fades 0.4 s from the card start; breath; the pad of C fades in and is up on 'In general, meme coins'"
+    },
+    {
+      "t": 203.1,
+      "beat": "C1 state B, the marquee diagram reveal (buy and sell arrows, 203.10-213.93)",
+      "music_move": "Bed C HOLDS on the quiet pad: the reveal belongs to the transition and its SFX, the music saves its swell for the conclusion 12 s later"
+    },
+    {
+      "t": 216.18,
+      "beat": "pillar reveal: FACE F6 'So the other side of every trade is gold.' then 'Golden Kitty is priced in gold' (218.46)",
+      "music_move": "the swell of Bed C rises through 'every trade is' (215.3) and CRESTS on 'gold.' (file 105.7); the tamed peak (21 under) carries the formula and the fees beats"
+    },
+    {
+      "t": 248.4,
+      "beat": "the honest line: 'Now let me be clear about what this is', a meme coin, not backed by gold, not redeemable (248.22-255.62)",
+      "music_move": "the peak of Bed C falls away (file 137.9) and the bare pad sits under the disclaimer and the closing line of the chapter"
+    },
+    {
+      "t": 260.0,
+      "beat": "CH5 title card THE STONK NARRATIVE (bed change C to D)",
+      "music_move": "C fades 0.4 s from the card start; breath; D enters hot (level 7, cold_hot): the lift out of the gold chapter"
+    },
+    {
+      "t": 287.3,
+      "beat": "'...a meme coin called Artificial Inu' (287.22): the chapter turns from the setup to the money",
+      "music_move": "bed change with NO card: Bed D fades out and the Afterlife reprise fades in across 285.90-287.30, on its plateau as he says the name"
+    },
+    {
+      "t": 331.2,
+      "beat": "'And now with gold' (the StonkFun gold announcement)",
+      "music_move": "the full band of the Afterlife reprise carries the line; its breakdown opens 1.1 s later (332.3), in the pause after 'gold,', so the announcement is read over the stripped-back bed"
+    },
+    {
+      "t": 345.5,
+      "beat": "FACE F7 'Golden Kitty has been doing this since September 4th'",
+      "music_move": "the line sits on the breakdown of the reprise (lifted +3 dB): the softest bed of the chapter under the face line"
+    },
+    {
+      "t": 352.5,
+      "beat": "the verdict: 'So here's what I think. The next run is going to be about real world assets and the stonk narrative' (352.88)",
+      "music_move": "the full band of the reprise returns (file 188.0, its hottest stretch) ON 'So here's what I think': gear 3 from the file itself"
+    },
+    {
+      "t": 362.62,
+      "beat": "'...sitting in a prime SPOT for it.'",
+      "music_move": "the reprise is still on its hot return; no final chord here, the 0.4 s card fade takes it out"
+    },
+    {
+      "t": 363.46,
+      "beat": "CH6 title card ROBINHOOD CHAIN (bed change D to E)",
+      "music_move": "the Afterlife reprise fades 0.4 s from the card start; breath; E fades in on its quiet build, lifted +6 dB"
+    },
+    {
+      "t": 389.7,
+      "beat": "count-up cards: '1B+ locked' (387.62) then 'more than 90 billion in total trading volume' (390.22)",
+      "music_move": "the stabs of Bed E hit at 386.7 and 388.2, the full groove DROPS at 389.7: the growing half of the chapter starts on the big numbers"
+    },
+    {
+      "t": 409.0,
+      "beat": "FACE F8, Robinhood customers 'have barely shown up yet' (407.72-410.86)",
+      "music_move": "the line starts over the breakdown of Bed E (the softest bed of the chapter) and the groove returns on 'have barely shown up yet'"
+    },
+    {
+      "t": 420.8,
+      "beat": "'It works great for memes too.' then 'And Golden Kitty is both.' (420.96)",
+      "music_move": "Bed E stops for one second under 'for memes too' (419.7-420.7) and slams back in on 'And Golden Kitty is both'"
+    },
+    {
+      "t": 444.8,
+      "beat": "'...a tokenized AMC stock went from 40 million to 150 million' (C29 receipt)",
+      "music_move": "the last breakdown of Bed E ends and the final level-8 run starts; it holds to the end"
+    },
+    {
+      "t": 456.66,
+      "beat": "FACE F9, the conviction close: own trophy, own chain, PRICED IN GOLD",
+      "music_move": "vibe cut: bigger impact + the -4.2 dB (x0.617) bed duck across 456.5-457.6, the only duck in the video"
+    },
+    {
+      "t": 470.16,
+      "beat": "last word 'chain.' (470.16-470.40), end of the spine at 470.456",
+      "music_move": "the hard stop of Bed E (file 144.15) lands on the onset of 'chain.': the word is said in the clear over the reverb tail, 0.25 s fade to the last frame"
+    }
+  ],
+  "open_questions": [
+    "MIXER, fix before mix_audio: scripts/mix_music.py ends a bed only at a title card or at the end of the video (the branch `if not ends_at_card: t_end = total`). This video has two cardless continuations (CH2 into CH3, CH6 into CH7), so the CH2 and CH6 rows would keep playing to the end of the file and double up with the CH3 and CH7 rows. The rows are written sample-continuous (CH3 source_in 112.61 = 41.65 + 70.96; CH7 source_in 99.71 = 37.45 + 62.26) and `bed_groups` lists each physical bed as ONE placement: the mixer should merge a `continues_from` row into the row before it (one input per bed group, the automation of both rows kept), or cut the earlier row at the start of the next row with no fade. kaspa-vprogs never hit this because all three of its beds started on cards.",
+    "LEVEL: seated at the last ruling Mike gave (kaspa-vprogs gate, 2026-09-28: hype beds 22 under, explainer 23 under), not the 17 default: A -22, B -23, C -23 (its peak tamed to 21 under), D -22, E -22, against a measured -18.0 LUFS VO. Each gain is computed from the loudness of the region the bed actually seats on (lufs_seat_reference), not the whole file. If he wants the beds hotter it is one number per bed: add the same dB to remotion_gain_db and to every absolute automation seat of that bed.",
+    "LIFTS: four automation rows RAISE a quiet region of the file by 6 dB instead of dipping (Bed A breakdown 15.0-30.0; Bed E build 363.46-386.3 and breakdowns 402.0-409.0, 440.1-444.75). They exist so no stretch reads as the bed having run out (house rule 10). mix_music.py handles them as absolute seats above the bed gain; listen for them in the chunk QA. If Mike prefers the natural drop-outs, delete the rows.",
+    "BED A: Fearless has a real 15 s breakdown inside the hook (spine 15-30). It is placed on purpose (the receipt read sits in it, the rebuild and the drop land on picture cuts) and lifted 6 dB. If Mike wants a wall of sound with no pull-back, the swap is `pathways` (shortlist pick 3, fresh, flat level 8 for 190 s, source_in 0.0, same seat).",
+    "BED C: `slow-rise` (shortlist pick 2) is used instead of `tome-of-fate` (pick 1). Both are fresh and both swell from a mid pad to an 8-9 peak, but the Slow Rise peak is 34 s long and then RETURNS to the pad, which is what lets the swell land on 'gold.' AND the honest line be spoken over the quiet pad. The Tome Of Fate peak runs 50 s and would still be at full weight under the not-backed-by-gold line. Slow Rise is ambient cinematic, not full orchestra: if Mike wants the orchestral weight more than the shape, swap to `Cody_Martin_Tome_Of_Fate_instrumental_full_3_06-5.wav` at source_in about 53 (swell onset near file 95 on F6) and extend the taming row to 260.0.",
+    "BED B: Afterlife measures aggression 63, on the punchy side for a subtle bed, though it carries the explainer_bed role in the catalog and its used span is very flat (LRA 4.0). It is seated 23 under. If it pokes through on the 10 s chunk QA, drop it to 24, or swap to `lightheart` (aggression 44; its instrumental full needs source_in 60 to skip a level 2-3 intro, and its outro goes quiet after file 148, so it would need a loop for the 120 s span).",
+    "ENDING: the hard stop of Bed E is on the ONSET of 'chain.' (470.16), the same convention Mike ruled for 'later.' on kaspa-vprogs. The spine ends 0.30 s after that, so the button only reads if the picture holds: recommend the comp hold the end card about 1.0 s past the last word so the reverb tail (file 144.2-145.5) rings out. If he would rather have music under the whole word, shift both Bed E in-points by +0.24 (CH6 37.69, CH7 99.95) and the stop lands on the END of 'chain.' (470.40), but then it is indistinguishable from the video simply ending.",
+    "CARD PAUSE: the breath maths assumes a 1.5 s title-card pause (0.4 s out-fade + 0.6 s air + 0.5 s in-fade). With a 1.0 s pause the air shrinks to 0.1 s; keep the pauses at 1.4 s or more, or drop fade_in_sec to 0.3 on CH2, CH4, CH5 and CH6.",
+    "USAGE LEDGER: report read before picking. None of the shortlisted tracks in the screenplay is BLOCKED or in the last three videos, so nothing had to be replaced, and no waiver is used. All five picks are `fresh`: fearless (intro_hype), afterlife + slow-rise (subtle_bed), hello-and-good-morning (hype_body), emerald-city (hype_body + epic_close). The subtle pool is the small one but is not running out: 31 fresh explainer beds before this video, 29 after it. Only about a dozen of those sit under aggression 45, and this video spends one of them (slow-rise).",
+    "MEASUREMENT NOTE: every intensity call is from the catalog `analysis` (env, segments, aggression). The catalog env is 2 s per character, too coarse to pin an in-point, so the onsets (breakdowns, drops, the final chord, the hard stop) were read at 0.1 s on the five chosen files for TIMING only, and loudness was measured with ffmpeg ebur128 per music.md. No catalog number was re-derived.",
+    "LICENSE CODES for a YouTube cut only (this longform posts to Rumble / BitChute / Facebook): Fearless ARAZC70SFALU4F6O, Afterlife VZCIZWWGGT6HE5UC, Slow Rise LMNT8RRL5UMI78DW, Hello And Good Morning ODK91F1ARECNTSSU, Emerald City KSC0EIALPM9TAVCI. Record them in PROJECT-LOG.",
+    "DUCK WINDOWS: there is no clip insert with its own audio (all covers are muted), so bed-duck-expr.py returning nothing is expected; the only duck is the F9 vibe cut."
+  ]
+}

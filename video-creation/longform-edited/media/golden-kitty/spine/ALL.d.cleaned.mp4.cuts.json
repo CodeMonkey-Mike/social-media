@@ -1,0 +1,104 @@
+{
+ "skill": "burst-removal",
+ "date": "2026-10-01",
+ "project": "golden-kitty",
+ "source": "ALL.c.desilenced.mp4",
+ "output": "ALL.d.cleaned.mp4",
+ "backup": "ALL.c.desilenced.bak-burst.mp4",
+ "mike_given_spans": [
+  "43.5-43.8 doubled now (remove FIRST now), c coords by ear",
+  "130.1-130.9 burst after blockchain, c coords by ear"
+ ],
+ "locate_note": "Both bursts are isolated orphan desilencer keep-chunks. Burst 1 = b 115.50-115.78 (first now, abandoned-take leftover). Burst 2 = b 325.70-326.40 (two non-word vocal blips, Whisper on b reads it as a low-confidence Wait.), spliced between blockchain (keep ends b 309.46) and About (keep starts b 328.98). NOTE: on the c FILE the burst-2 chunk sits at 130.38-131.08, about +0.24 s later than ALL.c.desilenced.map.json predicts (130.14-130.84); word B About onset is 131.086 on file, not ~130.85. The second blip (c 130.93-131.06) is part of the orphan chunk, not the start of About.",
+ "source_duration": {
+  "format": 491.295,
+  "video": 491.272,
+  "audio": 491.282
+ },
+ "output_duration": {
+  "format": 490.367,
+  "video": 490.367,
+  "audio": 490.319
+ },
+ "fps": "30/1",
+ "encode": "libx264 crf 18 preset medium yuv420p -r 30 cfr, aac 192k 44.1k, +faststart",
+ "method": "single sync-safe filter_complex, 3 keep-segments (trim/atrim + concat n=3), both tracks together; setpts PTS / PTS-cut_end/TB per segment (precedent kaspa-vprogs)",
+ "cuts": [
+  {
+   "n": 1,
+   "kind": "doubled word (first of two rapid now, abandoned-take leftover)",
+   "word_a": "gold.",
+   "word_b": "now (the second, kept)",
+   "context": "...against tokenized gold. [now] now, I am very bullish...",
+   "cut_start": 43.537,
+   "cut_end": 43.824,
+   "removed": 0.287,
+   "trough_start_db": -90,
+   "trough_end_db": -98,
+   "burst_span": [
+    43.55,
+    43.8
+   ],
+   "burst_peak_db": -15.3,
+   "in_face_window": false,
+   "note": "b 115.50-115.78, inside COVER blackout (a/b 32.128-118.184); blackdetect output 42.5-44.03 black, so no head jump",
+   "join_on_output": 43.537,
+   "verify": {
+    "join_valley_db": -105,
+    "join_valley_at": 43.546,
+    "whisper": "...against tokenized gold. Now, I am very bullish on this token",
+    "word_a_prob": 0.99,
+    "word_b_prob": 0.96
+   }
+  },
+  {
+   "n": 2,
+   "kind": "orphan non-word vocal blips (2 humps, peak -21 dB) in a kept 0.70 s desilencer chunk",
+   "word_a": "blockchain.",
+   "word_b": "About",
+   "context": "...launches its own blockchain. [burst] About two months after the chain goes live...",
+   "cut_start": 130.385,
+   "cut_end": 131.082,
+   "removed": 0.697,
+   "trough_start_db": -88,
+   "trough_end_db": -89,
+   "burst_span": [
+    130.39,
+    131.07
+   ],
+   "burst_peak_db": -19.2,
+   "in_face_window": "pre-cut side COVER (b 309.46 / 325.7 inside blackout 234.843-327.681); post-cut side FACE (About at b 328.98)",
+   "note": "cut lands on the existing black-to-face transition: c had black end 131.090 at About onset 131.091; output black end 130.133 vs About onset 130.127 (sub-frame). No head jump possible, pre side is black.",
+   "join_on_output": 130.116,
+   "verify": {
+    "join_valley_db": -95,
+    "join_valley_at": 130.116,
+    "whisper": "...launches its own blockchain. About two months after the chain goes live",
+    "word_a_prob": 0.86,
+    "word_b_prob": 0.93
+   }
+  }
+ ],
+ "timecode_shift": [
+  {
+   "applies_to": "c times in [43.824, 130.385)",
+   "shift_s": -0.268,
+   "note": "measured on file: second now onset 43.846 -> 43.578"
+  },
+  {
+   "applies_to": "c times >= 131.082",
+   "shift_s": -0.964,
+   "note": "measured on file: About onset 131.091 -> 130.127"
+  },
+  {
+   "applies_to": "c times < 43.537",
+   "shift_s": 0
+  }
+ ],
+ "total_removed_planned": 0.984,
+ "total_removed_measured": 0.964,
+ "flags": [
+  "ALL.c.desilenced.map.json out-times drift from the c file (+0.08 s at 43.5, +0.24 s at 130.4); re-derive downstream cue times from the file, not the map.",
+  "Small 50 ms blip right after gold (c 43.46-43.51, peak -22.5 dB) left in place: likely the d release, Whisper reads clean gold. Not acted on."
+ ]
+}

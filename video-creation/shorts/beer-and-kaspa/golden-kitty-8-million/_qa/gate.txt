@@ -1,0 +1,8 @@
+gate: constants-beer-and-kaspa-golden-kitty-8-million.ts | duration 21.6s | 11 distinct staticFile refs
+  ok  thumbnail: thumb-bk2-cover.png
+  ok  b-roll assets: 3 (>= 1 required)
+  ok  sfx refs: 5
+  ok  WARN unreferenced assets in public-dir (orphans): ['broll-kb1-bear-stunned.png', 'broll-kb1-bear-throne.png', 'broll-kb1-climax-blown-out-of-water.png', 'broll-kb1-hook-thesis-shatters.png', 'broll-kb1-kas-rocket-stopwatch.png']
+  ok  zone b-roll: 3 beat(s) in BrollEv[] (coverage present)
+PASS
+frontier: 2 sibling clip(s) not yet built+PASS - publish waits for them, then runs IMMEDIATELY (no render-review gate).

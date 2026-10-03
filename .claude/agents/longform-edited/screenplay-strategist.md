@@ -75,7 +75,11 @@ You operate inside the `social-media` repo (working directory is the repo root).
 5. **Write the MUSIC MOOD PLAN** (a `## MUSIC-MOOD-PLAN` section). For each chapter give: mood + gear,
    **subtle vs aggressive** intent, whether it **STARTS A NEW BED** or continues the prior one, and a
    **shortlist of candidate tracks from `library.json`** chosen by mood/aggression/opening/ending meta
-   (reserve an `epic_hit`-ending track for the outro closer). Because a title card lands ONLY on a new bed
+   (reserve an `epic_hit`-ending track for the outro closer). **Variety (Mike, 2026-10-01): run
+   `python video-creation/skills/usage-ledger/usage_ledger.py report --what music --exclude-project "<project>"` first.** Never shortlist a track it marks BLOCKED
+   (the previous video used it); avoid the last three videos' tracks; among tracks that fit the mood prefer
+   `fresh` (never used), then the least recently used. Fit comes first. Doc:
+   `video-creation/skills/usage-ledger/usage-ledger.md`. Because a title card lands ONLY on a new bed
    (Convention 2), **derive the Title-card flags FROM this bed map** — one card per new bed; continuing-bed
    chapters flow in cardless even if they teach.
 6. **Flag the marquee visuals as 🎬 `[SHOW]` cues** (do not build the full cover plan — that is the

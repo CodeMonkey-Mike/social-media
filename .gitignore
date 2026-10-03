@@ -31,9 +31,9 @@ schedule-tweets/images/ig/
 schedule-tweets/images/yt/
 
 # Loose debug/temp screenshots are throwaway, not content.
-schedule-tweets/tmp-fb-debug/
-schedule-tweets/tmp-fb-longform-debug/
-schedule-tweets/tmp-tiktok-debug/
+# Every poster's DEBUG_DIR lives under schedule-tweets/tmp/ (fb-debug,
+# fb-longform-debug, ig-diag, tiktok-debug) — one rule covers new ones too.
+schedule-tweets/tmp/
 schedule-tweets/*.png
 schedule-tweets/*.jpg
 
@@ -70,3 +70,10 @@ linkedin-automation/data/*.tmp
 video-creation/livestream-repurpose/graph/data/graph_checkpoints.sqlite*
 video-creation/livestream-repurpose/graph/data/lane_progress.json
 video-creation/livestream-repurpose/graph/data/*.tmp
+
+# longform-edited LangGraph (2026-09-17): checkpoints + heartbeat + agent logs are local; lane_runs.json is the committed history feed
+video-creation/longform-edited/graph/data/graph_checkpoints.sqlite*
+video-creation/longform-edited/graph/data/lane_progress.json
+video-creation/longform-edited/graph/data/*.tmp
+video-creation/longform-edited/graph/data/*.log
+video-creation/longform-edited/graph/data/*.log.err

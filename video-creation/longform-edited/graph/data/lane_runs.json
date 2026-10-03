@@ -8071,5 +8071,2444 @@
       }
     },
     "error": null
+  },
+  {
+    "run_id": "longform-golden-kitty@2026-10-01T10:15:20",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty",
+    "started_at": "2026-10-01T10:15:20",
+    "ended_at": "2026-10-01T10:31:00",
+    "duration_s": 940.4,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "screenplay",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-01T10:15:20"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (67 source links)",
+          "at": "2026-10-01T10:25:41"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (3 FACE beat(s))",
+          "at": "2026-10-01T10:31:00"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-golden-kitty@2026-10-01T19:21:07",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty",
+    "started_at": "2026-10-01T19:21:07",
+    "ended_at": "2026-10-01T19:57:57",
+    "duration_s": 2210.1,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [
+        "screenplay"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "desilence_coarse",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-01T10:15:20"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (67 source links)",
+          "at": "2026-10-01T10:25:41"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (3 FACE beat(s))",
+          "at": "2026-10-01T10:31:00"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-01T19:21:07"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-01T19:21:07"
+        },
+        "compress": {
+          "status": "ran",
+          "detail": "ALL.lowbps.mp4 (2057.1s)",
+          "at": "2026-10-01T19:23:54"
+        },
+        "defumble": {
+          "status": "ran",
+          "detail": "ALL.a.defumbled.mp4 (1233.6s)",
+          "at": "2026-10-01T19:46:41"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (1233.6s)",
+          "at": "2026-10-01T19:57:48"
+        },
+        "desilence_coarse": {
+          "status": "failed",
+          "detail": "desilencer did not write C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\spine\\ALL.c.desilenced.mp4 (agent rc 0)",
+          "at": "2026-10-01T19:57:57"
+        }
+      }
+    },
+    "error": "desilence_coarse: desilencer did not write C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\spine\\ALL.c.desilenced.mp4 (agent rc 0)\nI haven't run anything yet, because the prompt doesn't give a min-silence duration. \"COARSE pass\" names the pass but not a value, and I'm not allowed to pick one or fall back to the skill's 250 ms default.\n\nPlease send one of these:\n- **Single value:** `--min-sil <sec>`. Mike's usual loose first pass is about 800 ms (`--min-sil 0.8`), but I'd rather you confirm the number than have me assume it.\n- **Two-zone:** `--split <sec> --sil-pre <sec> --sil-post <sec>`.\n\nOnce I have it, this is what I'll do:\n- **Input:** the blacked spine for `golden-kitty`. That should be `longform-edited/media/golden-kitty/spine/<segment>.c.mp4`, and I'll confirm the segment name on disk.\n- **Output:** `spine/<segment>.c.desilenced.mp4`, per comp-build §13a. If you want the cut/keep map, it goes to `spine/<segment>.c.desilenced.map.json`. Tell me whether you want it.\n- **Method:** the dual-threshold RMS detector at the fixed thresholds (−57 dB silence, −52 dB audio), 80 ms MIN_AUD and 8 ms declick on every join. I'll run the render in the foreground.\n- **QA:** a swallowed-speech scan of every cut.\n"
+  },
+  {
+    "run_id": "longform-golden-kitty-b@2026-10-01T20:00:43",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-b",
+    "started_at": "2026-10-01T20:00:43",
+    "ended_at": "2026-10-01T20:04:55",
+    "duration_s": 252.5,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "desilence_coarse",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-01T20:00:43"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-01T20:00:43"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-01T20:00:43"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-01T20:00:43"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-01T20:00:43"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-01T20:00:43"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-01T20:00:43"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-01T20:00:44"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (491.3s)",
+          "at": "2026-10-01T20:04:55"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-golden-kitty-b@2026-10-01T21:05:21",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-b",
+    "started_at": "2026-10-01T21:05:21",
+    "ended_at": "2026-10-01T21:17:45",
+    "duration_s": 744.2,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [
+        "spine_review"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "verify_spine",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-01T20:00:43"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-01T20:00:43"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-01T20:00:43"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-01T20:00:43"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-01T20:00:43"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-01T20:00:43"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-01T20:00:43"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-01T20:00:44"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (491.3s)",
+          "at": "2026-10-01T20:04:55"
+        },
+        "gate_spine_review": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-01T21:05:21"
+        },
+        "burst_removal": {
+          "status": "ran",
+          "detail": "ALL.d.cleaned.mp4 (490.4s)",
+          "at": "2026-10-01T21:11:13"
+        },
+        "desilence_final": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 (472.9s)",
+          "at": "2026-10-01T21:13:10"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.medium-words.json (0.0s)",
+          "at": "2026-10-01T21:17:45"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (472.9s), 1400 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-01T21:17:45"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-golden-kitty-c@2026-10-01T21:22:14",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-c",
+    "started_at": "2026-10-01T21:22:14",
+    "ended_at": "2026-10-01T21:26:35",
+    "duration_s": 260.3,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "verify_spine",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-01T21:22:14"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-01T21:22:14"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-01T21:22:15"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-01T21:22:15"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-01T21:22:15"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-01T21:22:15"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-01T21:22:15"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-01T21:22:15"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-01T21:22:16"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:05:21",
+          "at": "2026-10-01T21:22:16"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-01T21:22:16"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-01T21:22:17"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.f.cut.medium-words.json (0.0s)",
+          "at": "2026-10-01T21:26:34"
+        },
+        "verify_spine": {
+          "status": "failed",
+          "detail": "final spine or its .medium-words.json missing",
+          "at": "2026-10-01T21:26:35"
+        }
+      }
+    },
+    "error": "verify_spine: final spine or its .medium-words.json missing"
+  },
+  {
+    "run_id": "longform-golden-kitty-d@2026-10-01T21:27:26",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-d",
+    "started_at": "2026-10-01T21:27:26",
+    "ended_at": "2026-10-01T21:31:42",
+    "duration_s": 255.9,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "verify_spine",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-01T21:27:27"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-01T21:27:27"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-01T21:27:27"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-01T21:27:27"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-01T21:27:27"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-01T21:27:27"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-01T21:27:27"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-01T21:27:28"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-01T21:27:28"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:05:21",
+          "at": "2026-10-01T21:27:28"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-01T21:27:28"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-01T21:27:29"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.medium-words.json (0.0s)",
+          "at": "2026-10-01T21:31:42"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.mp4 ok (470.5s), 1393 words, fps 30, chain lowbps+a+b+c+g",
+          "at": "2026-10-01T21:31:42"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-golden-kitty-d@2026-10-01T21:37:02",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-d",
+    "started_at": "2026-10-01T21:37:02",
+    "ended_at": "2026-10-01T22:35:12",
+    "duration_s": 3490.4,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [
+        "spine"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "music_plan",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-01T21:27:27"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-01T21:27:27"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-01T21:27:27"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-01T21:27:27"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-01T21:27:27"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-01T21:27:27"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-01T21:27:27"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-01T21:27:28"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-01T21:27:28"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:05:21",
+          "at": "2026-10-01T21:27:28"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-01T21:27:28"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-01T21:27:29"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.medium-words.json (0.0s)",
+          "at": "2026-10-01T21:31:42"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.mp4 ok (470.5s), 1393 words, fps 30, chain lowbps+a+b+c+g",
+          "at": "2026-10-01T21:31:42"
+        },
+        "gate_spine": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-01T21:37:02"
+        },
+        "as_recorded": {
+          "status": "ran",
+          "detail": "AS-RECORDED.md written, lint PASS (9 FACE windows)",
+          "at": "2026-10-01T21:41:08"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (89 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-01T22:14:08"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (7 beds over 7 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-01T22:35:12"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-golden-kitty-d@2026-10-02T06:31:05",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-d",
+    "started_at": "2026-10-02T06:31:05",
+    "ended_at": "2026-10-02T08:23:51",
+    "duration_s": 6766.6,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [
+        "plan"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-01T21:27:27"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-01T21:27:27"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-01T21:27:27"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-01T21:27:27"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-01T21:27:27"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-01T21:27:27"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-01T21:27:27"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-01T21:27:28"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-01T21:27:28"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:05:21",
+          "at": "2026-10-01T21:27:28"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-01T21:27:28"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-01T21:27:29"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.medium-words.json (0.0s)",
+          "at": "2026-10-01T21:31:42"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.mp4 ok (470.5s), 1393 words, fps 30, chain lowbps+a+b+c+g",
+          "at": "2026-10-01T21:31:42"
+        },
+        "gate_spine": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-01T21:37:02"
+        },
+        "as_recorded": {
+          "status": "ran",
+          "detail": "AS-RECORDED.md written, lint PASS (9 FACE windows)",
+          "at": "2026-10-01T21:41:08"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (89 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-01T22:14:08"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (7 beds over 7 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-01T22:35:12"
+        },
+        "gate_plan": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-02T06:31:05"
+        },
+        "assets": {
+          "status": "failed",
+          "detail": "visual-qa FAILED 69 asset(s): BR-14-aerial-suburb-pools.mid.png: bright midday daylight grade (white roads, saturated orange roofs); breaks the dark-grade rule for b-roll; BR-16-jump-flip-splash.mid.png: washed-out, pale grey-white water fills the frame; not dark-graded, reads as a bright flash between dark shots; BR-18-night-festival-crowd.mid.png: content does not match spec: aerial concert/festival crowd at a stage, spec is \"black friday shoppers rushing store doors\"; BR-26-seedlings-timelapse.mid.png: content does not match spec: sprouting seedlings on black, spec is \"city skyline construction timelapse skyscrapers rising\"; C7-producthunt-robinhood-awards.png: CLAIM CONFLICT: the page shows \"Robinhood Crypto / Golden Kitty / Crypto / 2018\" with the same gold Golden Kitty badge as the 2015 win (and ; C10-goldenkitty-vip-faq-fan-dedication.png: CUT-OFF: the FAQ heading is sliced by the top frame edge (only the lower half of the glyphs shows); C11a-matcarpenter-trophy-post.png: profanity on screen: the background monitor in the photo reads \"stupid f***ing glitter\" (and \"PEOPLE YOU HATE\"), fully legible; C11c-arthcmr-trophy-post.png: spec requires the base lettering readable: the \"Product Hunt Golden Kitty\" base script is tiny and soft in this photo and cannot be read at  (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)",
+          "at": "2026-10-02T08:23:51"
+        }
+      }
+    },
+    "error": "assets: visual-qa FAILED 69 asset(s): BR-14-aerial-suburb-pools.mid.png: bright midday daylight grade (white roads, saturated orange roofs); breaks the dark-grade rule for b-roll; BR-16-jump-flip-splash.mid.png: washed-out, pale grey-white water fills the frame; not dark-graded, reads as a bright flash between dark shots; BR-18-night-festival-crowd.mid.png: content does not match spec: aerial concert/festival crowd at a stage, spec is \"black friday shoppers rushing store doors\"; BR-26-seedlings-timelapse.mid.png: content does not match spec: sprouting seedlings on black, spec is \"city skyline construction timelapse skyscrapers rising\"; C7-producthunt-robinhood-awards.png: CLAIM CONFLICT: the page shows \"Robinhood Crypto / Golden Kitty / Crypto / 2018\" with the same gold Golden Kitty badge as the 2015 win (and ; C10-goldenkitty-vip-faq-fan-dedication.png: CUT-OFF: the FAQ heading is sliced by the top frame edge (only the lower half of the glyphs shows); C11a-matcarpenter-trophy-post.png: profanity on screen: the background monitor in the photo reads \"stupid f***ing glitter\" (and \"PEOPLE YOU HATE\"), fully legible; C11c-arthcmr-trophy-post.png: spec requires the base lettering readable: the \"Product Hunt Golden Kitty\" base script is tiny and soft in this photo and cannot be read at  (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)"
+  },
+  {
+    "run_id": "longform-golden-kitty-e@2026-10-02T08:36:28",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-e",
+    "started_at": "2026-10-02T08:36:28",
+    "ended_at": "2026-10-02T08:54:39",
+    "duration_s": 1091.6,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-02T08:36:28"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-02T08:36:28"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-02T08:36:28"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-02T08:36:28"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-02T08:36:28"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-02T08:36:28"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-02T08:36:29"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-02T08:36:29"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-02T08:36:29"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:05:21",
+          "at": "2026-10-02T08:36:29"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-02T08:36:30"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-02T08:36:30"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.g.pickup.medium-words.json present",
+          "at": "2026-10-02T08:36:30"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.mp4 ok (470.5s), 1393 words, fps 30, chain lowbps+a+b+c+g",
+          "at": "2026-10-02T08:36:31"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:37:02",
+          "at": "2026-10-02T08:36:31"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (9 FACE windows)",
+          "at": "2026-10-02T08:36:31"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (92 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-02T08:36:31"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (7 beds over 7 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-02T08:36:33"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-02T06:31:05",
+          "at": "2026-10-02T08:36:33"
+        },
+        "assets": {
+          "status": "failed",
+          "detail": "assets still missing after the builders ran: receipt-capturer: C30 (read graph/data/agent-assets-<builder>-<project>.log; a re-drive dispatches only the missing ids)",
+          "at": "2026-10-02T08:54:39"
+        }
+      }
+    },
+    "error": "assets: assets still missing after the builders ran: receipt-capturer: C30 (read graph/data/agent-assets-<builder>-<project>.log; a re-drive dispatches only the missing ids)"
+  },
+  {
+    "run_id": "longform-golden-kitty-f@2026-10-02T08:55:56",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-f",
+    "started_at": "2026-10-02T08:55:56",
+    "ended_at": "2026-10-02T09:03:53",
+    "duration_s": 476.3,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-02T08:55:56"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-02T08:55:56"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-02T08:55:57"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-02T08:55:57"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-02T08:55:57"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-02T08:55:57"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-02T08:55:57"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-02T08:55:57"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-02T08:55:58"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:05:21",
+          "at": "2026-10-02T08:55:58"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-02T08:55:58"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-02T08:55:58"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.g.pickup.medium-words.json present",
+          "at": "2026-10-02T08:55:58"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.mp4 ok (470.5s), 1393 words, fps 30, chain lowbps+a+b+c+g",
+          "at": "2026-10-02T08:55:59"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:37:02",
+          "at": "2026-10-02T08:55:59"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (9 FACE windows)",
+          "at": "2026-10-02T08:55:59"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (92 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-02T08:55:59"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (7 beds over 7 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-02T08:56:00"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-02T06:31:05",
+          "at": "2026-10-02T08:56:00"
+        },
+        "assets": {
+          "status": "failed",
+          "detail": "visual-qa FAILED 6 asset(s): C10-goldenkitty-vip-faq-fan-dedication.png: CONTENT: the spec'd proof line 'Independent fan token. Not affiliated with Robinhood.' is NOT in frame, and the receipt's whole job is provi; C11a-matcarpenter-trophy-post.png: PARTIAL REDACTION: the blur box over the monitor text stops short of the trophy. Unblurred fragments of the monitor text ('VE', 'I', 'vic', ; C1-B4-buy.png: PALETTE: the BUY panel, the 'GOLDEN OUT' / 'GLD IN' arrows and their labels are Robinhood lime #ccff00. This project's own stylesheet (conta; C2-example-gold.png: PALETTE: same as C2-payoff. The lit border on 'GOLD IN DOLLARS' and the '+10%' chip are Robinhood lime #ccff00, which is reserved for Robinh; C2-payoff.png: PALETTE: the '+10%' chips and the glowing borders on 'GOLDEN IN DOLLARS' and 'GOLD IN DOLLARS' are Robinhood lime #ccff00. The project style; C21-5-flow-pulse.png: RENDER ARTIFACT: the pulse glow on card 05 renders as stepped, hard-edged rectangles instead of a soft glow. You can see a dark vertical ban (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)",
+          "at": "2026-10-02T09:03:53"
+        }
+      }
+    },
+    "error": "assets: visual-qa FAILED 6 asset(s): C10-goldenkitty-vip-faq-fan-dedication.png: CONTENT: the spec'd proof line 'Independent fan token. Not affiliated with Robinhood.' is NOT in frame, and the receipt's whole job is provi; C11a-matcarpenter-trophy-post.png: PARTIAL REDACTION: the blur box over the monitor text stops short of the trophy. Unblurred fragments of the monitor text ('VE', 'I', 'vic', ; C1-B4-buy.png: PALETTE: the BUY panel, the 'GOLDEN OUT' / 'GLD IN' arrows and their labels are Robinhood lime #ccff00. This project's own stylesheet (conta; C2-example-gold.png: PALETTE: same as C2-payoff. The lit border on 'GOLD IN DOLLARS' and the '+10%' chip are Robinhood lime #ccff00, which is reserved for Robinh; C2-payoff.png: PALETTE: the '+10%' chips and the glowing borders on 'GOLDEN IN DOLLARS' and 'GOLD IN DOLLARS' are Robinhood lime #ccff00. The project style; C21-5-flow-pulse.png: RENDER ARTIFACT: the pulse glow on card 05 renders as stepped, hard-edged rectangles instead of a soft glow. You can see a dark vertical ban (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)"
+  },
+  {
+    "run_id": "longform-golden-kitty-g@2026-10-02T09:13:08",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-g",
+    "started_at": "2026-10-02T09:13:08",
+    "ended_at": "2026-10-02T09:46:17",
+    "duration_s": 1988.6,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "reconcile_docs",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-02T09:13:08"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-02T09:13:08"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-02T09:13:08"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-02T09:13:08"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-02T09:13:08"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-02T09:13:08"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-02T09:13:09"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-02T09:13:09"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-02T09:13:10"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:05:21",
+          "at": "2026-10-02T09:13:10"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-02T09:13:10"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-02T09:13:10"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.g.pickup.medium-words.json present",
+          "at": "2026-10-02T09:13:10"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.mp4 ok (470.5s), 1393 words, fps 30, chain lowbps+a+b+c+g",
+          "at": "2026-10-02T09:13:11"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:37:02",
+          "at": "2026-10-02T09:13:11"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (9 FACE windows)",
+          "at": "2026-10-02T09:13:11"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (92 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-02T09:13:11"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (7 beds over 7 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-02T09:13:12"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-02T06:31:05",
+          "at": "2026-10-02T09:13:12"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "89 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 151 file(s)",
+          "at": "2026-10-02T09:16:53"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "89 ids / 151 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-02T09:16:56"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (359 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-02T09:27:58"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (107 scene changes), variety PASS (0 fails, 0 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-02T09:46:16"
+        },
+        "reconcile_docs": {
+          "status": "failed",
+          "detail": "blueprint set does not reconcile (see FAIL lines above; fix the named rows by hand, then re-drive)",
+          "at": "2026-10-02T09:46:17"
+        }
+      }
+    },
+    "error": "reconcile_docs: blueprint set does not reconcile (see FAIL lines above; fix the named rows by hand, then re-drive)\n  warn  no plan row matches the placeholder at 0:04.3: no event line to carry hand:punch (punch-in)\n  warn  no plan row matches the placeholder at 0:54.7: no event line to carry hand:xfade-scale (container-xfade)\n  warn  no plan row matches the placeholder at 1:40.9: no event line to carry hand:xfade-scale (container-xfade)\n  warn  no plan row matches the placeholder at 2:36.2: no event line to carry hand:xfade-scale (container-xfade)\n  warn  no plan row matches the placeholder at 2:55.6: no event line to carry hand:xfade-scale (container-xfade)\n  warn  no plan row matches the placeholder at 4:26.5: no event line to carry hand:xfade-scale (container-xfade)\n  warn  no plan row matches the placeholder at 5:57.3: no event line to carry lib:melt-equidistant-1 (MELT-transform)\n  warn  no plan row matches the placeholder at 7:36.7: no event line to carry hand:punch (punch-in)\n  note  resolved 103 placeholder(s) in EDIT-PLAN.md; CUE-SHEET TRANSITIONS section unchanged\n\nreconcile_docs — golden-kitty\n----------------------------------------------------------------\n  FAIL  1 `→TRANSITIONS.md` placeholder(s) still unresolved (run with --apply, then fix the leftovers by hand)\n  FAIL  [TRANSITION] event without a prefixed id: 3:23.1  [DIAGRAM] C1-B1-pool IN, header 'WHAT PAIRED MEANS' → 3:33.9 · [TRANSITI\n----------------------------------------------------------------\nRECONCILE FAIL resolved=103 placeholders_left=1 fails=2\n"
+  },
+  {
+    "run_id": "longform-golden-kitty-h@2026-10-02T09:48:22",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-h",
+    "started_at": "2026-10-02T09:48:22",
+    "ended_at": "2026-10-02T09:48:48",
+    "duration_s": 26.7,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "lint_docset",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-02T09:48:22"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-02T09:48:22"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-02T09:48:22"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-02T09:48:22"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-02T09:48:22"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-02T09:48:22"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-02T09:48:22"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-02T09:48:23"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-02T09:48:23"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:05:21",
+          "at": "2026-10-02T09:48:23"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-02T09:48:23"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-02T09:48:24"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.g.pickup.medium-words.json present",
+          "at": "2026-10-02T09:48:24"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.mp4 ok (470.5s), 1393 words, fps 30, chain lowbps+a+b+c+g",
+          "at": "2026-10-02T09:48:24"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:37:02",
+          "at": "2026-10-02T09:48:24"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (9 FACE windows)",
+          "at": "2026-10-02T09:48:24"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (92 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-02T09:48:25"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (7 beds over 7 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-02T09:48:26"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-02T06:31:05",
+          "at": "2026-10-02T09:48:26"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "89 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 151 file(s)",
+          "at": "2026-10-02T09:48:43"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "89 ids / 151 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-02T09:48:47"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (359 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-02T09:48:47"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (107 scene changes), variety PASS (0 fails, 0 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-02T09:48:48"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-02T09:48:48"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-02T09:48:48"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-golden-kitty-h@2026-10-02T09:49:02",
+    "lane": 4,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-h",
+    "started_at": "2026-10-02T09:49:02",
+    "ended_at": "2026-10-02T10:55:08",
+    "duration_s": 3966.1,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [
+        "blueprint"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "mix_audio",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-02T09:48:22"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-02T09:48:22"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-02T09:48:22"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-02T09:48:22"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-02T09:48:22"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-02T09:48:22"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-02T09:48:22"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-02T09:48:23"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-02T09:48:23"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:05:21",
+          "at": "2026-10-02T09:48:23"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-02T09:48:23"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-02T09:48:24"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.g.pickup.medium-words.json present",
+          "at": "2026-10-02T09:48:24"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.mp4 ok (470.5s), 1393 words, fps 30, chain lowbps+a+b+c+g",
+          "at": "2026-10-02T09:48:24"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:37:02",
+          "at": "2026-10-02T09:48:24"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (9 FACE windows)",
+          "at": "2026-10-02T09:48:24"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (92 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-02T09:48:25"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (7 beds over 7 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-02T09:48:26"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-02T06:31:05",
+          "at": "2026-10-02T09:48:26"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "89 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 151 file(s)",
+          "at": "2026-10-02T09:48:43"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "89 ids / 151 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-02T09:48:47"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (359 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-02T09:48:47"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (107 scene changes), variety PASS (0 fails, 0 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-02T09:48:48"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-02T09:48:48"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-02T09:48:48"
+        },
+        "gate_blueprint": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-02T09:49:02"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "4 card pause(s) x 1.5s baked -> ALL.h.paused.mp4 (476.49s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-10-02T09:50:11"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "32 caption groups over 3 FACE window(s) -> GoldenKittyCaptions.ts",
+          "at": "2026-10-02T09:50:16"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "GoldenKitty.tsx registered, draft golden-kitty-draft-v1.mp4 (476.61s, audio ok)",
+          "at": "2026-10-02T10:54:28"
+        },
+        "verify_comp": {
+          "status": "ran",
+          "detail": "8 gate(s) PASS on GoldenKitty.tsx, draft golden-kitty-draft-v1.mp4 matches the spine",
+          "at": "2026-10-02T10:54:31"
+        },
+        "mix_audio": {
+          "status": "ran",
+          "detail": "golden-kitty-draft-v1-mix.mp4 (476.61s, peak -2.6 dBFS) from MUSIC-PLAN + event-log SFX",
+          "at": "2026-10-02T10:55:08"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-golden-kitty-h@2026-10-02T13:50:45",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-golden-kitty-h",
+    "started_at": "2026-10-02T13:50:45",
+    "ended_at": "2026-10-02T13:52:56",
+    "duration_s": 131.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "golden-kitty",
+      "until": "",
+      "approve": [
+        "draft"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "golden-kitty: folder + PROJECT-LOG ready",
+          "at": "2026-10-02T09:48:22"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-02T09:48:22"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (9 FACE beat(s))",
+          "at": "2026-10-02T09:48:22"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T19:21:07",
+          "at": "2026-10-02T09:48:22"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-02T09:48:22"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-02T09:48:22"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-02T09:48:22"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-02T09:48:23"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-02T09:48:23"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:05:21",
+          "at": "2026-10-02T09:48:23"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-02T09:48:23"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-02T09:48:24"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.g.pickup.medium-words.json present",
+          "at": "2026-10-02T09:48:24"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.g.pickup.mp4 ok (470.5s), 1393 words, fps 30, chain lowbps+a+b+c+g",
+          "at": "2026-10-02T09:48:24"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-01T21:37:02",
+          "at": "2026-10-02T09:48:24"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (9 FACE windows)",
+          "at": "2026-10-02T09:48:24"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (92 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-02T09:48:25"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (7 beds over 7 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-02T09:48:26"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-02T06:31:05",
+          "at": "2026-10-02T09:48:26"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "89 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 151 file(s)",
+          "at": "2026-10-02T09:48:43"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "89 ids / 151 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-02T09:48:47"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (359 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-02T09:48:47"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (107 scene changes), variety PASS (0 fails, 0 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-02T09:48:48"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-02T09:48:48"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-02T09:48:48"
+        },
+        "gate_blueprint": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-02T09:49:02"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "4 card pause(s) x 1.5s baked -> ALL.h.paused.mp4 (476.49s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-10-02T09:50:11"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "32 caption groups over 3 FACE window(s) -> GoldenKittyCaptions.ts",
+          "at": "2026-10-02T09:50:16"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "GoldenKitty.tsx registered, draft golden-kitty-draft-v1.mp4 (476.61s, audio ok)",
+          "at": "2026-10-02T10:54:28"
+        },
+        "verify_comp": {
+          "status": "ran",
+          "detail": "8 gate(s) PASS on GoldenKitty.tsx, draft golden-kitty-draft-v1.mp4 matches the spine",
+          "at": "2026-10-02T10:54:31"
+        },
+        "mix_audio": {
+          "status": "ran",
+          "detail": "golden-kitty-draft-v1-mix.mp4 (476.61s, peak -2.6 dBFS) from MUSIC-PLAN + event-log SFX",
+          "at": "2026-10-02T10:55:08"
+        },
+        "gate_draft": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-02T13:50:45"
+        },
+        "final_render": {
+          "status": "ran",
+          "detail": "golden-kitty-final-v1.mp4 (crf 18) + music/SFX -> golden-kitty-final-v1-mix.mp4 (476.61s)",
+          "at": "2026-10-02T13:50:45"
+        },
+        "verify_final": {
+          "status": "ran",
+          "detail": "golden-kitty-final-v1-mix.mp4 verified (476.61s, -17.9 LUFS, peak -2.6 dBFS)",
+          "at": "2026-10-02T13:51:15"
+        },
+        "definition_of_done": {
+          "status": "ran",
+          "detail": "promoted golden-kitty-final-v1-mix.mp4 -> golden-kitty-FINAL.mp4 (385 MB)",
+          "at": "2026-10-02T13:51:15"
+        },
+        "stage_longform": {
+          "status": "ran",
+          "detail": "staged longform\\golden-kitty\\golden-kitty.mp4 + longs.json entry 'Golden Kitty: The Robinhood Chain Token Priced in ', usage ledger recorded, _previews recycled",
+          "at": "2026-10-02T13:52:56"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "vertical-golden-kitty@2026-10-02T15:14:59",
+    "lane": 6,
+    "lane_name": "longform",
+    "thread": "vertical-golden-kitty",
+    "started_at": "2026-10-02T15:14:59",
+    "ended_at": "2026-10-02T15:29:39",
+    "duration_s": 879.5,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "vertical",
+      "project": "golden-kitty",
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "v_assets",
+      "steps": {
+        "v_preflight": {
+          "status": "ran",
+          "detail": "golden-kitty-FINAL.mp4 present, vertical asset tree ready under assets/vertical/",
+          "at": "2026-10-02T15:14:59"
+        },
+        "v_face_crop": {
+          "status": "ran",
+          "detail": "face at 59.58% (spread [55.52, 64.11]), objectPosition '59.6% center'",
+          "at": "2026-10-02T15:14:59"
+        },
+        "v_assets": {
+          "status": "failed",
+          "detail": "visual-qa FAILED 1 vertical asset(s): C13-gld-token-page-full-name.png: Top band y=0-~370 is a blank dark capture artifact split into two tones (rgb 17,17,22 on the left, 29,29,34 on the right (delete the failing files and re-drive; the builders get the defects as feedback)",
+          "at": "2026-10-02T15:29:39"
+        }
+      }
+    },
+    "error": "v_assets: visual-qa FAILED 1 vertical asset(s): C13-gld-token-page-full-name.png: Top band y=0-~370 is a blank dark capture artifact split into two tones (rgb 17,17,22 on the left, 29,29,34 on the right (delete the failing files and re-drive; the builders get the defects as feedback)"
+  },
+  {
+    "run_id": "vertical-golden-kitty@2026-10-02T15:30:53",
+    "lane": 6,
+    "lane_name": "longform",
+    "thread": "vertical-golden-kitty",
+    "started_at": "2026-10-02T15:30:53",
+    "ended_at": "2026-10-02T15:39:16",
+    "duration_s": 503.4,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "vertical",
+      "project": "golden-kitty",
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "v_assets",
+      "steps": {
+        "v_preflight": {
+          "status": "ran",
+          "detail": "golden-kitty-FINAL.mp4 present, vertical asset tree ready under assets/vertical/",
+          "at": "2026-10-02T15:30:53"
+        },
+        "v_face_crop": {
+          "status": "ran",
+          "detail": "face at 59.58% (spread [55.52, 64.11]), objectPosition '59.6% center'",
+          "at": "2026-10-02T15:30:53"
+        },
+        "v_assets": {
+          "status": "failed",
+          "detail": "visual-qa FAILED 1 vertical asset(s): C13-gld-token-page-full-name.png: Off-spec content in frame: the 'Go+ Security  1 issue ⚠' and 'Quick Intel  1 issue ⚠' rows (y~1360-1700) are shown in re (delete the failing files and re-drive; the builders get the defects as feedback)",
+          "at": "2026-10-02T15:39:16"
+        }
+      }
+    },
+    "error": "v_assets: visual-qa FAILED 1 vertical asset(s): C13-gld-token-page-full-name.png: Off-spec content in frame: the 'Go+ Security  1 issue ⚠' and 'Quick Intel  1 issue ⚠' rows (y~1360-1700) are shown in re (delete the failing files and re-drive; the builders get the defects as feedback)"
+  },
+  {
+    "run_id": "vertical-golden-kitty@2026-10-02T15:40:09",
+    "lane": 6,
+    "lane_name": "longform",
+    "thread": "vertical-golden-kitty",
+    "started_at": "2026-10-02T15:40:09",
+    "ended_at": "2026-10-02T15:42:00",
+    "duration_s": 110.3,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "vertical",
+      "project": "golden-kitty",
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "v_assets",
+      "steps": {
+        "v_preflight": {
+          "status": "ran",
+          "detail": "golden-kitty-FINAL.mp4 present, vertical asset tree ready under assets/vertical/",
+          "at": "2026-10-02T15:40:09"
+        },
+        "v_face_crop": {
+          "status": "ran",
+          "detail": "face at 59.58% (spread [55.52, 64.11]), objectPosition '59.6% center'",
+          "at": "2026-10-02T15:40:09"
+        },
+        "v_assets": {
+          "status": "failed",
+          "detail": "visual-qa FAILED 1 vertical asset(s): C13-gld-token-page-full-name.png: Large EMPTY band at the TOP: rows 0 to ~335 (about 17% of the frame) are flat dark with zero content. It is a dead gap a (delete the failing files and re-drive; the builders get the defects as feedback)",
+          "at": "2026-10-02T15:42:00"
+        }
+      }
+    },
+    "error": "v_assets: visual-qa FAILED 1 vertical asset(s): C13-gld-token-page-full-name.png: Large EMPTY band at the TOP: rows 0 to ~335 (about 17% of the frame) are flat dark with zero content. It is a dead gap a (delete the failing files and re-drive; the builders get the defects as feedback)"
+  },
+  {
+    "run_id": "vertical-golden-kitty@2026-10-02T15:43:21",
+    "lane": 6,
+    "lane_name": "longform",
+    "thread": "vertical-golden-kitty",
+    "started_at": "2026-10-02T15:43:21",
+    "ended_at": "2026-10-02T16:47:01",
+    "duration_s": 3820.9,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "vertical",
+      "project": "golden-kitty",
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "v_verify_final",
+      "steps": {
+        "v_preflight": {
+          "status": "ran",
+          "detail": "golden-kitty-FINAL.mp4 present, vertical asset tree ready under assets/vertical/",
+          "at": "2026-10-02T15:43:21"
+        },
+        "v_face_crop": {
+          "status": "ran",
+          "detail": "face at 59.58% (spread [55.52, 64.11]), objectPosition '59.6% center'",
+          "at": "2026-10-02T15:43:21"
+        },
+        "v_assets": {
+          "status": "ran",
+          "detail": "89 vertical asset id(s) built, visual-qa PASS on 151 file(s)",
+          "at": "2026-10-02T15:44:59"
+        },
+        "v_verify_assets": {
+          "status": "ran",
+          "detail": "89 ids / 151 portrait files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-02T15:45:02"
+        },
+        "v_comp": {
+          "status": "ran",
+          "detail": "GoldenKittyVertical.tsx registered (1080x1920), face crop 59.6% center",
+          "at": "2026-10-02T16:13:37"
+        },
+        "v_verify_comp": {
+          "status": "ran",
+          "detail": "7 gate(s) PASS on GoldenKittyVertical.tsx",
+          "at": "2026-10-02T16:13:39"
+        },
+        "v_render": {
+          "status": "ran",
+          "detail": "golden-kitty-VERTICAL-v1-video.mp4 (476.65s, 14295 frames in parts)",
+          "at": "2026-10-02T16:45:10"
+        },
+        "v_mix": {
+          "status": "ran",
+          "detail": "golden-kitty-VERTICAL-v1.mp4 mixed (same beds + SFX as the 16:9)",
+          "at": "2026-10-02T16:46:08"
+        },
+        "v_verify_final": {
+          "status": "ran",
+          "detail": "golden-kitty-VERTICAL-v1.mp4: 476.65s, 1080x1920, -17.9 LUFS, faces 43%, 49%, 45%, 46%, 47%, 46%, 50%, 46%, 50%",
+          "at": "2026-10-02T16:47:01"
+        }
+      }
+    },
+    "error": "v_assets: visual-qa FAILED 1 vertical asset(s): C13-gld-token-page-full-name.png: Large EMPTY band at the TOP: rows 0 to ~335 (about 17% of the frame) are flat dark with zero content. It is a dead gap a (delete the failing files and re-drive; the builders get the defects as feedback)"
+  },
+  {
+    "run_id": "vertical-golden-kitty@2026-10-02T19:18:09",
+    "lane": 6,
+    "lane_name": "longform",
+    "thread": "vertical-golden-kitty",
+    "started_at": "2026-10-02T19:18:09",
+    "ended_at": "2026-10-02T19:18:14",
+    "duration_s": 4.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "vertical",
+      "project": "golden-kitty",
+      "approve": [
+        "vertical"
+      ],
+      "redo": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "v_deliver",
+      "steps": {
+        "v_preflight": {
+          "status": "ran",
+          "detail": "golden-kitty-FINAL.mp4 present, vertical asset tree ready under assets/vertical/",
+          "at": "2026-10-02T15:43:21"
+        },
+        "v_face_crop": {
+          "status": "ran",
+          "detail": "face at 59.58% (spread [55.52, 64.11]), objectPosition '59.6% center'",
+          "at": "2026-10-02T15:43:21"
+        },
+        "v_assets": {
+          "status": "ran",
+          "detail": "89 vertical asset id(s) built, visual-qa PASS on 151 file(s)",
+          "at": "2026-10-02T15:44:59"
+        },
+        "v_verify_assets": {
+          "status": "ran",
+          "detail": "89 ids / 151 portrait files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-02T15:45:02"
+        },
+        "v_comp": {
+          "status": "ran",
+          "detail": "GoldenKittyVertical.tsx registered (1080x1920), face crop 59.6% center",
+          "at": "2026-10-02T16:13:37"
+        },
+        "v_verify_comp": {
+          "status": "ran",
+          "detail": "7 gate(s) PASS on GoldenKittyVertical.tsx",
+          "at": "2026-10-02T16:13:39"
+        },
+        "v_render": {
+          "status": "ran",
+          "detail": "golden-kitty-VERTICAL-v1-video.mp4 (476.65s, 14295 frames in parts)",
+          "at": "2026-10-02T16:45:10"
+        },
+        "v_mix": {
+          "status": "ran",
+          "detail": "golden-kitty-VERTICAL-v1.mp4 mixed (same beds + SFX as the 16:9)",
+          "at": "2026-10-02T16:46:08"
+        },
+        "v_verify_final": {
+          "status": "ran",
+          "detail": "golden-kitty-VERTICAL-v1.mp4: 476.65s, 1080x1920, -17.9 LUFS, faces 43%, 49%, 45%, 46%, 47%, 46%, 50%, 46%, 50%",
+          "at": "2026-10-02T16:47:01"
+        },
+        "gate_vertical": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-02T19:18:09"
+        },
+        "v_deliver": {
+          "status": "ran",
+          "detail": "promoted -> golden-kitty-VERTICAL.mp4 (375 MB); not queued",
+          "at": "2026-10-02T19:18:14"
+        }
+      }
+    },
+    "error": "v_assets: visual-qa FAILED 1 vertical asset(s): C13-gld-token-page-full-name.png: Large EMPTY band at the TOP: rows 0 to ~335 (about 17% of the frame) are flat dark with zero content. It is a dead gap a (delete the failing files and re-drive; the builders get the defects as feedback)"
+  },
+  {
+    "run_id": "short-golden-kitty@2026-10-02T19:30:03",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-golden-kitty",
+    "started_at": "2026-10-02T19:30:03",
+    "ended_at": "2026-10-02T19:44:14",
+    "duration_s": 850.3,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "golden-kitty",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "s_cut_plan",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 476.50s == spine 476.49s; FINAL-TIME transcript written (134 segments)",
+          "at": "2026-10-02T19:30:04"
+        },
+        "s_cut_plan": {
+          "status": "failed",
+          "detail": "SHORT-CUT-PLAN.json failed verification: span 0.0-9.7 lacks `sourced: FACE|COVER` (the hook-face check and the caption windows depend on it) (fix the plan and re-drive; --redo s_cut_plan re-runs the strategist)",
+          "at": "2026-10-02T19:44:13"
+        }
+      }
+    },
+    "error": "s_cut_plan: SHORT-CUT-PLAN.json failed verification: span 0.0-9.7 lacks `sourced: FACE|COVER` (the hook-face check and the caption windows depend on it) (fix the plan and re-drive; --redo s_cut_plan re-runs the strategist)"
+  },
+  {
+    "run_id": "short-golden-kitty@2026-10-02T19:45:04",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-golden-kitty",
+    "started_at": "2026-10-02T19:45:04",
+    "ended_at": "2026-10-02T19:45:06",
+    "duration_s": 1.9,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "golden-kitty",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "s_cut_plan",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 476.50s == spine 476.49s; FINAL-TIME transcript written (134 segments)",
+          "at": "2026-10-02T19:45:05"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 26.4s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-02T19:45:06"
+        }
+      }
+    },
+    "error": "s_cut_plan: SHORT-CUT-PLAN.json failed verification: span 0.0-9.7 lacks `sourced: FACE|COVER` (the hook-face check and the caption windows depend on it) (fix the plan and re-drive; --redo s_cut_plan re-runs the strategist)"
+  },
+  {
+    "run_id": "short-golden-kitty@2026-10-02T19:47:52",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-golden-kitty",
+    "started_at": "2026-10-02T19:47:52",
+    "ended_at": "2026-10-02T20:09:04",
+    "duration_s": 1272.0,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "golden-kitty",
+      "seconds": 30.0,
+      "approve": [
+        "short_plan"
+      ],
+      "redo": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "s_verify_final",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 476.50s == spine 476.49s; FINAL-TIME transcript written (134 segments)",
+          "at": "2026-10-02T19:45:05"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 26.4s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-02T19:45:06"
+        },
+        "gate_short_plan": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-02T19:47:52"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "1 variant asset(s) ready: IMG-1",
+          "at": "2026-10-02T19:56:13"
+        },
+        "s_extract": {
+          "status": "ran",
+          "detail": "4 intermediates, 26.533s of spans",
+          "at": "2026-10-02T19:56:27"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "16 caption groups over 4 COVER-sourced window(s) -> GoldenKittyShortCaptions.ts",
+          "at": "2026-10-02T19:56:34"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "GoldenKittyShort.tsx registered (29.5s)",
+          "at": "2026-10-02T20:06:53"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on GoldenKittyShort.tsx",
+          "at": "2026-10-02T20:06:53"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v1-video.mp4 (29.59s)",
+          "at": "2026-10-02T20:08:30"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v1.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-02T20:08:34"
+        },
+        "s_verify_final": {
+          "status": "failed",
+          "detail": "short does not verify: runtime 29.59s vs target 30.0s",
+          "at": "2026-10-02T20:09:04"
+        }
+      }
+    },
+    "error": "s_verify_final: short does not verify: runtime 29.59s vs target 30.0s"
+  },
+  {
+    "run_id": "short-golden-kitty@2026-10-02T20:11:20",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-golden-kitty",
+    "started_at": "2026-10-02T20:11:20",
+    "ended_at": "2026-10-02T20:13:35",
+    "duration_s": 134.3,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "golden-kitty",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [
+        "s_render",
+        "s_mix",
+        "s_verify_final"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "s_verify_final",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 476.50s == spine 476.49s; FINAL-TIME transcript written (134 segments)",
+          "at": "2026-10-02T20:11:21"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 26.4s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-02T20:11:22"
+        },
+        "gate_short_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-02T19:47:52",
+          "at": "2026-10-02T20:11:22"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "1 variant asset(s) ready: IMG-1",
+          "at": "2026-10-02T20:11:22"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-10-02T20:11:22"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "16 caption groups over 4 COVER-sourced window(s) -> GoldenKittyShortCaptions.ts",
+          "at": "2026-10-02T20:11:29"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "GoldenKittyShort.tsx registered (30.0s)",
+          "at": "2026-10-02T20:11:29"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on GoldenKittyShort.tsx",
+          "at": "2026-10-02T20:11:29"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v2-video.mp4 (30.06s)",
+          "at": "2026-10-02T20:13:14"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v2.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-02T20:13:18"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v2.mp4: 30.06s, -18.4 LUFS, peak -6.0 dBFS, hook face 61%",
+          "at": "2026-10-02T20:13:35"
+        }
+      }
+    },
+    "error": "s_verify_final: short does not verify: runtime 29.59s vs target 30.0s"
+  },
+  {
+    "run_id": "short-golden-kitty@2026-10-02T20:15:30",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-golden-kitty",
+    "started_at": "2026-10-02T20:15:30",
+    "ended_at": "2026-10-02T20:15:49",
+    "duration_s": 19.0,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "golden-kitty",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [
+        "s_captions",
+        "s_render",
+        "s_mix",
+        "s_verify_final"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "s_render",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 476.50s == spine 476.49s; FINAL-TIME transcript written (134 segments)",
+          "at": "2026-10-02T20:15:30"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 26.4s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-02T20:15:32"
+        },
+        "gate_short_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-02T19:47:52",
+          "at": "2026-10-02T20:15:32"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "1 variant asset(s) ready: IMG-1",
+          "at": "2026-10-02T20:15:32"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-10-02T20:15:32"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "22 caption groups over 4 COVER-sourced window(s) -> GoldenKittyShortCaptions.ts",
+          "at": "2026-10-02T20:15:39"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "GoldenKittyShort.tsx registered (30.0s)",
+          "at": "2026-10-02T20:15:39"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on GoldenKittyShort.tsx",
+          "at": "2026-10-02T20:15:39"
+        },
+        "s_render": {
+          "status": "failed",
+          "detail": "short render failed",
+          "at": "2026-10-02T20:15:49"
+        }
+      }
+    },
+    "error": "s_render: short render failed\ndisk: swept 0 stale remotion temp bundle(s); 5.1 GB free\nRENDER-START mode=final comp=GoldenKittyShort out=C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\_previews\\short\\golden-kitty-SHORT-30s-v3-video.mp4\nFATAL: render exit 1; log: C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\_previews\\short\\golden-kitty-SHORT-30s-v3-video-render.log\n"
+  },
+  {
+    "run_id": "short-golden-kitty@2026-10-02T20:16:46",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-golden-kitty",
+    "started_at": "2026-10-02T20:16:46",
+    "ended_at": "2026-10-02T20:18:47",
+    "duration_s": 121.4,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "golden-kitty",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [
+        "s_render",
+        "s_mix",
+        "s_verify_final"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "s_verify_final",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 476.50s == spine 476.49s; FINAL-TIME transcript written (134 segments)",
+          "at": "2026-10-02T20:16:46"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 26.4s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-02T20:16:47"
+        },
+        "gate_short_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-02T19:47:52",
+          "at": "2026-10-02T20:16:47"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "1 variant asset(s) ready: IMG-1",
+          "at": "2026-10-02T20:16:47"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-10-02T20:16:47"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "22 caption groups over 4 COVER-sourced window(s) -> GoldenKittyShortCaptions.ts",
+          "at": "2026-10-02T20:16:53"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "GoldenKittyShort.tsx registered (30.0s)",
+          "at": "2026-10-02T20:16:53"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on GoldenKittyShort.tsx",
+          "at": "2026-10-02T20:16:54"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v3-video.mp4 (30.06s)",
+          "at": "2026-10-02T20:18:29"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v3.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-02T20:18:32"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v3.mp4: 30.06s, -18.4 LUFS, peak -6.0 dBFS, hook face 61%",
+          "at": "2026-10-02T20:18:47"
+        }
+      }
+    },
+    "error": "s_render: short render failed\ndisk: swept 0 stale remotion temp bundle(s); 5.1 GB free\nRENDER-START mode=final comp=GoldenKittyShort out=C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\_previews\\short\\golden-kitty-SHORT-30s-v3-video.mp4\nFATAL: render exit 1; log: C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\_previews\\short\\golden-kitty-SHORT-30s-v3-video-render.log\n"
+  },
+  {
+    "run_id": "short-golden-kitty@2026-10-02T22:51:54",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-golden-kitty",
+    "started_at": "2026-10-02T22:51:54",
+    "ended_at": "2026-10-02T22:51:57",
+    "duration_s": 3.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "golden-kitty",
+      "seconds": 30.0,
+      "approve": [
+        "short"
+      ],
+      "redo": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "golden-kitty",
+      "last_node": "s_deliver",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 476.50s == spine 476.49s; FINAL-TIME transcript written (134 segments)",
+          "at": "2026-10-02T20:16:46"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 26.4s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-02T20:16:47"
+        },
+        "gate_short_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-02T19:47:52",
+          "at": "2026-10-02T20:16:47"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "1 variant asset(s) ready: IMG-1",
+          "at": "2026-10-02T20:16:47"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-10-02T20:16:47"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "22 caption groups over 4 COVER-sourced window(s) -> GoldenKittyShortCaptions.ts",
+          "at": "2026-10-02T20:16:53"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "GoldenKittyShort.tsx registered (30.0s)",
+          "at": "2026-10-02T20:16:53"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on GoldenKittyShort.tsx",
+          "at": "2026-10-02T20:16:54"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v3-video.mp4 (30.06s)",
+          "at": "2026-10-02T20:18:29"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v3.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-02T20:18:32"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "golden-kitty-SHORT-30s-v3.mp4: 30.06s, -18.4 LUFS, peak -6.0 dBFS, hook face 61%",
+          "at": "2026-10-02T20:18:47"
+        },
+        "gate_short": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-02T22:51:55"
+        },
+        "s_deliver": {
+          "status": "ran",
+          "detail": "promoted -> golden-kitty-SHORT-30s.mp4 (23 MB); not queued",
+          "at": "2026-10-02T22:51:57"
+        }
+      }
+    },
+    "error": "s_render: short render failed\ndisk: swept 0 stale remotion temp bundle(s); 5.1 GB free\nRENDER-START mode=final comp=GoldenKittyShort out=C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\_previews\\short\\golden-kitty-SHORT-30s-v3-video.mp4\nFATAL: render exit 1; log: C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\_previews\\short\\golden-kitty-SHORT-30s-v3-video-render.log\n"
   }
 ]

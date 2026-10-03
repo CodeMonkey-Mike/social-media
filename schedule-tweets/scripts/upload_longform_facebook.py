@@ -23,7 +23,7 @@ sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 MIN_FILE_SIZE = 1_000_000
 CHROME_PROFILE = r"C:\Users\mnede\AppData\Local\Google\Chrome\fbbot-profile"
 WORKSPACE_ROOT = Path(r"C:\Users\mnede\Documents\Claude\social-media\schedule-tweets")
-DEBUG_DIR = WORKSPACE_ROOT / "tmp-fb-longform-debug"
+DEBUG_DIR = WORKSPACE_ROOT / "tmp" / "fb-longform-debug"
 FB_PAGE = "realCodeMonkeyMike"
 PAGE_URL = f"https://www.facebook.com/{FB_PAGE}/"
 
@@ -82,6 +82,24 @@ def dismiss_upsells(page, quiet=False):
     if not any_dismissed and not quiet:
         print("  (no upsell modal present)")
     return any_dismissed
+
+
+def dismiss_shortcuts_nag(page):
+    """Facebook occasionally stacks a 'Keep single-character shortcuts turned on?'
+    dialog on top of the composer, which becomes the last [role="dialog"] in DOM
+    order and blocks snapshot()/click_by_label_in_dialog() from seeing the real
+    composer buttons. Dismiss it (keep existing behavior) so the wizard loop can
+    see the composer dialog again."""
+    try:
+        btn = page.get_by_role("button", name=re.compile(r"^Keep Turned On$", re.I)).first
+        if btn.is_visible(timeout=500):
+            print("  Dismissing 'keep shortcuts on?' nag (Keep Turned On)")
+            btn.click(timeout=5000)
+            page.wait_for_timeout(rnd(1200, 2200))
+            return True
+    except Exception:
+        pass
+    return False
 
 
 def mouse_click(page, locator):
@@ -363,6 +381,7 @@ def main():
             final_labels = ["Share now", "Post", "Publish", "Share", "Done"]
             posted = False
             for step in range(1, 13):
+                dismiss_shortcuts_nag(page)
                 state = snapshot(page, f"step{step}_state")
                 final_label = None
                 for lbl in final_labels:
@@ -382,8 +401,29 @@ def main():
                 next_enabled = any((not b["disabled"]) and (b["aria"] == "Next" or b["text"] == "Next")
                                    for b in state["buttons"])
                 if not next_enabled:
-                    print(f"\n-> No Next and no final button at step {step}. Stopping.")
-                    break
+                    if dismiss_shortcuts_nag(page):
+                        print(f"  Retrying step {step} after dismissing nag...")
+                        state = snapshot(page, f"step{step}_state_retry")
+                        final_label = None
+                        for lbl in final_labels:
+                            if any((not b["disabled"]) and (b["aria"] == lbl or b["text"] == lbl)
+                                   for b in state["buttons"]):
+                                final_label = lbl
+                                break
+                        if final_label:
+                            print(f'\n-> Final button "{final_label}" found on step {step} — clicking')
+                            r = click_by_label_in_dialog(page, final_label)
+                            print(f"  click result: {r}")
+                            if r.get("ok"):
+                                action_pause(page, "after final click")
+                                posted = True
+                                snapshot(page, f"step{step}_after_final")
+                                break
+                        next_enabled = any((not b["disabled"]) and (b["aria"] == "Next" or b["text"] == "Next")
+                                           for b in state["buttons"])
+                    if not next_enabled:
+                        print(f"\n-> No Next and no final button at step {step}. Stopping.")
+                        break
                 print(f"\n-> Clicking Next (step {step})")
                 r = click_by_label_in_dialog(page, "Next")
                 print(f"  click result: {r}")

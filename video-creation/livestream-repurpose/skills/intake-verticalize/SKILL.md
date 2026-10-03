@@ -124,8 +124,8 @@ transform        = translate(PositionX − 960, PositionY − 540) scale(scale)
 
 → Content: `translate(-264px, -124px) scale(0.81)` · Face: `translate(-2277px, 465px) scale(2.58)`
 
-**Remotion implementation:** `remotion/src/LivestreamRepurpose.tsx` (`CONTENT_FRAMING` /
-`FACE_FRAMING`, with the math documented in its header). Face layer is `muted`; the content layer
+**In a Remotion comp** those two transforms are the whole implementation (the original
+`LivestreamRepurpose` comp has since been deleted). Face layer is `muted`; the content layer
 carries the audio (both layers are the same source — muting one avoids doubled audio).
 
 ### Port rule — Premiere Motion → ffmpeg (the fast path for the full-length pass)

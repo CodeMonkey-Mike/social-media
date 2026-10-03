@@ -1,6 +1,6 @@
 ---
-description: Repurpose a livestream across all 3 lanes (longform, shorts, text/image), delegating clip selection to the clip-strategist (Fable).
-argument-hint: "<path-to-livestream> [optional run overrides, e.g. skip the polls]"
+description: Repurpose a livestream across all 3 lanes (longform, shorts, text/image) through the BATCH ORCHESTRATOR graph, which owns every lane and cannot forget one.
+argument-hint: "<path-to-livestream> [optional run overrides, e.g. double the tweets / clips under 80s / skip the polls]"
 model: opus
 effort: medium
 ---
@@ -12,93 +12,55 @@ Let's repurpose a livestream across all three lanes.
 The input above is the **path to the livestream recording**, optionally followed by
 **per-run overrides**.
 
-- **Identify the livestream file path** — a video path (`.mp4`/`.mkv`/`.mov`), possibly
-  quoted and possibly containing spaces. This is the source recording for the whole run.
-- **Treat anything else in the input as a per-run override** to the task list below —
-  e.g. "skip the X and YT polls", "make 6 tweet images not 4", "threads only", "skip Lane 1".
-  Honor every override. When no overrides are given, run the full list as written.
+- **Identify the livestream file path** — a video path (`.mp4`/`.mkv`/`.mov`), possibly quoted
+  and possibly containing spaces. This is the source recording for the whole run.
+- **Treat anything else as a per-run override.** Split the overrides into two briefs: things
+  about the SHORTS (clip length caps, topic preferences, "skip lane 2") go into the clip brief;
+  things about the TEXT/IMAGE content (tweet counts, "skip the polls", "threads only", carousel
+  version preferences, facts Mike confirms) go into the Lane 3 brief. Every override is honored
+  by passing it through; when none are given, the defaults in the agents' own instructions apply.
 - If you cannot find a valid livestream path in the input, STOP and ask for it.
 
-Follow the canonical pipeline map in `playbooks/livestream-repurpose.md`, and observe all
-global rules in `CLAUDE.md` and `persona/persona.json` (no em dashes in anything written to a
-queue file; edit `data/*.json` with Node, never PowerShell; every image unique).
+Observe all global rules in `CLAUDE.md` and `persona/persona.json` (no em dashes in anything
+written to a queue file; edit `data/*.json` with Python/Node, never PowerShell; every image
+unique).
 
 ---
 
-## Lanes 1 + 2 mechanical head -> the INTAKE GRAPH (one invocation, canonical since 2026-08-02)
+## The procedure (the graph owns the lanes; you are its operator)
 
-Phase 1 (LOW BPS), Lane 1 (longform desilence + stage + queue), Phase 1B (verticalize) and
-Phase 2 (transcribe + STT glossary) run as ONE LangGraph invocation:
+1. **Source housekeeping.** If the recording has an OBS timestamp name, rename it to match its
+   folder (`media/<name>/<name>.mkv`); the folder name keys every downstream artifact.
+2. **Author `longform-meta.json` next to the recording** (title / description / tags for the
+   `longs.json` entry, Mike's brand voice, no em dashes). The graph validates it before any
+   encoding. If you need content knowledge first, run a quick local whisper pass on the audio
+   (the canonical transcript is produced later by the graph). Make sure the PNG thumbnail is in
+   the media folder BEFORE launching (the Lane 1 stage node scans once, at its start).
+3. **Check disk headroom** (the intake needs ~5 GB on the media drive). If it is short, tell
+   Mike what you would free and ASK before running cleanup or anything destructive.
+4. **Launch the batch orchestrator in a detached console** (it runs for hours and must survive
+   the harness's background ceiling), logging to `video-creation/livestream-repurpose/graph/data/batch-<batch>.log`:
+   ```
+   python video-creation/livestream-repurpose/graph/run.py batch --source "<recording>" --min-sil 0.5 --shorts-min-sil 0.25 --lane3-brief "<lane 3 overrides>" --clip-brief "<clip overrides>"
+   ```
+   Lane 3 starts concurrently by itself. Never hand-invoke `run.py cut/tighten/repurpose` for
+   this batch while the orchestrator runs; `run.py status --batch <batch>` shows every lane.
+5. **Poll the log** (short foreground checks, never a busy loop). Adjudicate any GLOSSARY FLAGS
+   the intake prints in the transcript artifacts (a real KRC20 token vs a Kaspa mishear) as soon
+   as intake finishes; the strategist and drafter read the corrected files.
+6. **At exit code 2 (WAITING)** the graph is at Mike's 4b review (raw cuts on
+   `video-creation/shorts/<batch>/dashboard.html`) or his 2nd review (tightened clips). Tell Mike,
+   with the clip table, and resume ONLY with his verdicts:
+   `run.py batch --batch <batch> --resume --approve 4b [--delete N,N]` (same for `2nd`).
+   Lane 3 keeps running through both gates; report its state from `run.py status`.
+7. **Do not go past the 2nd-review gate unless Mike asks for renders/publish.** The default
+   scope of this command is: Lane 1 queued, Lane 3 fully queued (images visual-QA'd), Lane 2
+   tightened and waiting at the 2nd review.
 
-1. **Author `longform-meta.json` next to the recording FIRST** — title / description / tags for
-   the longs.json entry, in my brand voice per `persona/persona.json` (no em dashes). This is the
-   judgment seam; the graph validates it before any encoding starts.
-2. Run (foreground): `python video-creation/livestream-repurpose/graph/run.py --source "<recording>" --min-sil 0.5`
-   — honor any per-run overrides (`--skip-longform` if "skip Lane 1"). If the run is killed,
-   re-run the same command with `--resume` (completed nodes skip). Live state: dashboard
-   LangGraph -> Livestream tab.
-3. **Adjudicate any GLOSSARY FLAGS from the run report** (kaspy/kasy/kappy/kasper = real KRC20
-   token vs Kaspa mishear) in the transcript artifacts before Phase 3.
+## When done (or at each gate)
 
-(Canonical detail: `video-creation/livestream-repurpose/skills/intake-verticalize/SKILL.md` +
-`transcribe-vertical/SKILL.md`, each with the graph banner.)
-
-## Lane 2 -> Vertical shorts (from Phase 3, up to clip generation only)
-
-With the vertical master + transcript on disk (produced by the intake graph), **delegate the
-topic/clip SELECTION step to the `clip-strategist` subagent** (Fable). Hand it the transcript;
-it returns the clip plan.
-
-- Constraints for the strategist: **best 5 topics, no more than 8 clips total.** It may define a
-  long clip AND a small clip of a very impactful section within it. It may stitch scattered
-  segments (same topic at multiple points in the stream) into a single short.
-- **Persist the returned plan** to `shorts/<batch>/clip-plan.json`, then continue the mechanical
-  pipeline **to the point of generating clips** (Phase 4). Do NOT go past clip generation
-  (no tighten / caption / render / publish in this run).
-
-## Lane 3 -> Repurpose (text + images)
-
-Using the repurpose skill at `repurpose/` (canonical: `repurpose/SKILL.md`), process the plain
-transcript of this livestream (Lane 2's transcript).
-
-**Execution is graph-owned (Wave 6, 2026-08-09).** Draft everything below as judgment (fact-check,
-copy, image prompts), persist the whole set to `repurpose/output/<batch>-lane3-plan.json` (schema:
-`repurpose/queue_writer.py`), then run ONE invocation:
-`python video-creation/livestream-repurpose/graph/run.py repurpose --batch <batch>` — it generates
-the images (Python browser stack, chatgpt stage lock), verifies them, appends all queue files
-idempotently, persona-lints, and flips `batches.json pipelines.repurpose=done`. Visual-QA the
-images after the run. Do NOT hand-append queue entries or hand-run generators in a batch.
-
-**You choose the topics to write about.** ~80% of chosen topics should be crypto projects, with
-**Kaspa carrying the most weight, then TAO, Toncoin, HouseCoin, Pengu**, and others if discussed
-in the livestream. If nearly none of these were discussed, disregard this weighting rule.
-
-**Fact-check first.** Then, using the chosen topics, produce the following (shuffle topics while
-producing, and append to the JSON at every step):
-
-1. **4** different 3-to-4-line X tweets in my brand voice -> add to the x-tweets json -> generate
-   images for them.
-2. Then **2** single-line X tweets -> add to the x-tweets json -> generate images for them.
-3. Then if any of the x-tweets images are about Kaspa, repurpose them to a **4:5** image and queue
-   them as an Instagram single-image post.
-4. Then **2** polls for the best-suited topics as YT polls; then adjust them into X polls **only if**
-   they are Kaspa, TAO, or Toncoin related, otherwise do not save them as X polls.
-5. Then **2** long-text YouTube posts of ~2000 characters -> create carousel images for them. Tell me
-   the reason for choosing which of the 3 reference carousels for each YT post at the end. Put extra
-   weight into using **reference carousel v4**.
-6. Then **2** threads based on the YouTube posts just created -> observe all predefined rules
-   (5 to 8 tweets per thread).
-
-Observe all rules, writing style, persona, and brand voice throughout. Generate every image you can
-where reference images are already provided or none are needed. If a generation could not be done
-because a reference image is missing, do NOT block on it, collect it for the final list.
-
----
-
-## When done
-
-- **Status per lane:** give a status update when each lane is complete and ready for review,
-  **in a table** so it is easy to scan.
-- **Missing-reference list:** list any generations you could not complete because a reference image
-  was needed, so we can follow up with those references and finish them.
-- **Summary:** summarize everything done, with any callouts for reference images that may be needed.
+- **Status per lane in a table** (the `run.py status` footer is the source of truth).
+- **Missing-reference list:** anything the drafter could not generate for lack of a reference
+  image (`missing_references` in `repurpose/output/<batch>-lane3-plan.json`) and any visual-QA
+  FAILs (`repurpose/output/<batch>-lane3-visual-qa.md`), so Mike can supply references.
+- **Summary** of everything done, with the carousel version chosen per YT post and why.

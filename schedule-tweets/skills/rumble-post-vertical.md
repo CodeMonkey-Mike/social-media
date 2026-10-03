@@ -82,6 +82,31 @@ fs.writeFileSync('data/shorts.json', JSON.stringify(d, null, 2));
 
 Short captions must NOT contain visible `#hashtags`. The poster script strips inline `#word` tokens from the caption body via `scripts/lib/strip-hashtags.js` before posting. Cashtags (`$KAS`, `$BTC`) are preserved. The dedicated platform keyword/tags field (where one exists) is left intact — that is invisible metadata, not a visible hashtag. This is automatic; no manual step needed.
 
+## ⛔⛔ ROOT CAUSE FOUND 2026-08-13: the title match crossed ROW BOUNDARIES — 19 rows held their NEIGHBOUR's id
+
+The 2026-07-22 note below describes the symptom; this is the cause. The matcher walked every
+`a[href*="/shorts/v"]` and climbed up to 5 ancestors, accepting **any** ancestor whose text
+contained the title. Two or more levels up, that container spans SEVERAL rows — so an anchor
+matched the *adjacent* row's title. Every id from 2026-08-04 to 2026-08-13 was shifted by exactly
+one position (19 consecutive rows, **zero correct**), each holding the next-older video's URL.
+
+**Why it survived so long:** the liveness check *was* reporting the wrong title every time
+(`Liveness 1/5: not live yet (title="<the neighbour's title>")`), and that was read as benign
+processing lag. The documented grep-for-duplicates guard below could not catch it either, because
+the mis-assigned ids were *new* ids sitting on the wrong rows, not ids already recorded elsewhere.
+**A title comparison catches it instantly; a duplicate-id check never will.**
+
+**Fixed in `post_rumble_short.py`** (the canonical port; the JS twin is frozen rollback and STILL
+CARRIES THIS BUG, so run Rumble shorts through the POST graph):
+- Pass 1 matches the anchor's **own text** — Rumble renders the title as its own link inside the
+  row, so no climbing is needed and no row boundary can be crossed.
+- Pass 2 only climbs while the ancestor holds a **single distinct `/shorts/v` id**, and bails the
+  moment it spans rows.
+- A title that matches a **known other short** is now treated as fatal: the URL is discarded
+  (`url: null`) instead of recorded.
+
+**Recovery / standing end-of-run step:** `python scripts/reconcile_short_urls.py --platform rumble --apply`
+
 ## ⛔ URL capture can write a WRONG (stale, already-used) id — always grep before trusting it (2026-07-22)
 
 The post-upload "Capturing short URL from /account/content (matching by title)" step can **false-match a fresh upload onto an older grid entry** and write that entry's URL to `shorts.json`. On 2026-07-22 both shorts in the same run captured the identical `https://rumble.com/shorts/v7d0pt4` — an id already recorded for a *different* short on 2026-07-21 — while the liveness retries reported the title of a *third*, older short.

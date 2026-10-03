@@ -1,0 +1,278 @@
+{
+  "batch": "bull-trap",
+  "date": "2026-10-03",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/bull-trap LOW BPS VERTICAL/bull-trap LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-10-03",
+  "brief": "Half the usual volume this run: 2 multi-line X tweets (instead of 4) and 1 single-line X tweet (instead of 2); 1 long YouTube community post with its carousel (instead of 2); 1 X thread built from that one YT post (instead of 2). Everything else at the defaults (2 YT polls plus eligible X polls, IG single-image companions for Kaspa-subject tweets).",
+  "fact_check": [
+    {
+      "claim": "Bitcoin went from $84,500 to $87,200 in 15 hours, $216M in shorts liquidated; it reversed one hour after the jobs data and dropped $3,100, wiping out $270M of longs in five hours (transcript, a post Mike read on stream)",
+      "verdict": "verified in shape, numbers UPDATED: the Coinbase daily candle for Oct 2, 2026 is open $84,849, high $87,249, low $83,850, close $84,505; CoinGecko's 24h high is $87,086; the peak printed about 13:30 UTC, an hour after the 8:30 ET jobs report, and price fell until about 19:00 UTC. CoinGlass 24h liquidations: $433.57M total, longs $321.77M (74.2%), shorts $111.80M. $BTC $84,886 on 2026-10-03. The $216M / $270M snapshot figures could not be matched to a source and are replaced by the CoinGlass 24h totals. Copy: 'tagged $87K', 'gave the whole move back within hours', 'about $434M liquidated in 24 hours, roughly three quarters of it longs'.",
+      "source": "api.exchange.coinbase.com/products/BTC-USD/candles (daily, fetched 2026-10-03); api.coingecko.com/api/v3/coins/markets?ids=bitcoin (2026-10-03); cryptotimes.io/2026/10/03/bitcoin-price-slips-to-84600-as-433m-liquidations-hit-longs-after-87k-rejection; coindesk.com/tech/2026/10/02/live-updates-bitcoin-gold-and-tech-futures-edge-higher-as-markets-await-u-s-jobs-report"
+    },
+    {
+      "claim": "Employment data came in weaker than expected, which lowers the chance of a Fed rate hike at the end of October; 'we are going to get a pause' (transcript)",
+      "verdict": "verified and numbers added: September nonfarm payrolls +29K against forecasts of 84K to 90K, unemployment rate 4.2% (BLS, Oct 2, 2026). Prediction markets on Oct 3: 82% hold on Oct 28, hike about 18% (Kalshi 18.5%, Polymarket 17.5%), up from about 65% hold on Sept 30 (uptober plan). Copy: '29K against about 90K expected', 'about an 82% chance the Fed holds rates on Oct 28'. The 'another hike' / 'hike cycle' wording is not used.",
+      "source": "cnbc.com/2026/10/02/jobs-report-september-2026.html; bls.gov/news.release/empsit.nr0.htm; investinglive.com/news/us-september-non-farm-payrolls-29k-vs-90k-expected; defirate.com/prediction-markets/fed-decision-odds (read 2026-10-03); repurpose/output/uptober-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "ISM PMI: expectation 55, September 54.5, prior 54.6; the index sat below 50 for four or five years for the first time since 1948, broke above 50 in January of this year, and is now growing slowly instead of shooting up; a parabolic bull run needs it above 60 (transcript)",
+      "verdict": "figures verified: September 2026 Manufacturing PMI 54.5 vs 55.0 expected, August 54.6 (released Oct 1), the ninth consecutive month of expansion; January 2026 printed 52.6, the first expansion in 12 months. The pre-2026 history is CORRECTED: 26 straight months of contraction through Dec 2024, two months above 50 (Jan and Feb 2025), then contraction for the rest of 2025, so about 36 of the 38 months from Nov 2022 to Dec 2025 were under 50. Mike's 'four or five years' is written 'most of three years'; 'first time since 1948' is not used. The index last ran above 60 in 2021 (64.7 in March 2021, the highest since 1983); copy says only 'above 60'. The 'needs above 60 for a parabolic run' and the 'slow grind above 50' are Mike's own thesis, in first person, and carry the deliberate engagement-bait one-liner.",
+      "source": "prnewswire.com/news-releases/manufacturing-pmi-at-54-5-september-2026-ism-manufacturing-pmi-report-302894520.html; fxstreet.com/news/us-ism-manufacturing-pmi-fell-to-545-in-september-202610011406; ismworld.org January 2026 PMI report (52.6); aa.com.tr/en/economy/us-manufacturing-sector-expands-for-1st-time-in-12-months-in-january/3818151; ftportfolios.com (ISM 64.7 in March 2021)"
+    },
+    {
+      "claim": "CNBC is telling its millions of viewers that Bitcoin is setting up for a massive bull market; the clip: Citi lifting its price target on Strategy shares, only three negative Octobers since 2013, CryptoQuant showing whale stablecoin inflows to Binance up 40% to $30 billion in 30 days (transcript, a post and a TV clip Mike played)",
+      "verdict": "verified, wording tightened to the sourced headline: CNBC, Oct 2, 2026, 'Bitcoin just formed a golden cross pattern. The crypto is setting up for a big fourth quarter'. Citi raised its Strategy (MSTR) target to $240 from $136 (Buy) and its 12-month Bitcoin forecast to $113K from $82K. Red Octobers since 2013: 2014, 2018 and 2025 (three). CryptoQuant (Darkfost): 30-day whale (transfers above $1M) stablecoin inflows to Binance rose from $21.7B to $30.5B, more than 40%, in a little over a month; UPDATED from the clip's '$30 billion' to $30.5B. Copy: 'CNBC is telling its audience Bitcoin is setting up for a big fourth quarter' (not 'massive bull market', not 'new all-time high soon'). The golden cross itself is not written (the article returned 403 to fetch, only its headline was read).",
+      "source": "cnbc.com/2026/10/02/bitcoin-just-formed-a-golden-cross-pattern-the-crypto-is-setting-up-for-a-big-fourth-quarter.html (headline via search, body 403); thecryptobasic.com/2026/10/02/citi-raises-strategy-price-target-to-240-as-higher-bitcoin-forecast-lifts-mstr-outlook; cryptotimes.io/2026/10/02/citigroup-raises-strategy-mstr-price-target-to-240-on-higher-bitcoin-forecast; cointelegraph.com/markets/bitcoin-set-for-first-red-october-in-seven-years-what-will-november; tokenpost.com/news/investing/26303; crypto.news/why-are-bitcoin-whales-sending-30-5b-to-binance"
+    },
+    {
+      "claim": "'We could be in a larger bull trap': the monthly open is $83,555; Bitcoin might go up for a week or two, maybe to $90K, then retrace below $83,555, and October could turn out to be a red month; 'what happened to all the talk about the bottom in October?' (transcript)",
+      "verdict": "level verified: Coinbase Sept 30 close and Oct 1 open $83,556 (Mike's chart reads $83,555; written 'about $83,555'). The run-to-$90K-then-close-below-the-open path is Mike's own scenario and is written as 'the scenario I am watching', never as a forecast of a new low. Persona core_theses honored: the four-year cycle zombies are written as having waited for an October bottom, talk that has now gone quiet; no copy says they cause a bottom in October.",
+      "source": "api.exchange.coinbase.com/products/BTC-USD/candles (daily, fetched 2026-10-03); transcript; persona.json core_theses"
+    },
+    {
+      "claim": "'It's official, we're in a bull market': above the 50-week moving average and staying above it, above the May high; the bottom is already in, 'we ain't going down to 40K', not even back to 57 or 58 (transcript)",
+      "verdict": "verified: weekly closes of $81,159 (Sept 20) and $84,462 (Sept 27, Coinbase) both sit above the 50-week SMA (about $78,800), which meets Mike's own two-close rule from the beer-and-kaspa stream; the May 2026 peak was near $82,000. The 2026 low was about $57,800 around the start of July (one source dates the 21-month low near $58,000 to June), written 'the low near $58K this summer'. 'That was the bottom, forget $40K' is Mike's own call in first person. Whisper's '50 week moving average' is written '50-week SMA'. Benjamin Cowen being 'perplexed' is NOT used (already covered in the spon and uptober batches; the word could not be sourced).",
+      "source": "api.exchange.coinbase.com/products/BTC-USD/candles; repurpose/output/beer-and-kaspa-lane3-plan.json and golden-kitty-dominance-lane3-plan.json fact_check (50-week SMA, May high); mudrex.com/learn/when-will-bitcoin-bottom-prediction; coinmarketcap.com/academy (Bitcoin 4-year cycle, October 2026)"
+    },
+    {
+      "claim": "A lot of new money is flowing into crypto, about $300 billion over the last few weeks, but it goes into the top 50 / top 100 (Quant, Near, TAO); mid caps, low caps and micro caps are dying; Bitcoin dominance has fallen off a cliff since May (transcript)",
+      "verdict": "verified in general form: the total crypto market cap crossed $3 trillion around Sept 22 for the first time since January; it is $2.90T on 2026-10-03 after a 4.4% drop in 24 hours; Bitcoin dominance 58.7%. The '$300 billion in a few weeks' figure could not be pinned to a baseline and is NOT used. The top-100 read is Mike's own and is supported by the tape: $QNT +143% on the week (rank 34), $NEAR +148% on the month (rank 22), $TAO +31% on the month (rank 37); $QNT and $NEAR are not named in copy. Copy: 'crossed $3 trillion in late September', 'the money is flowing into the top 100', 'mid caps, low caps and micro caps are bleeding out'.",
+      "source": "cointelegraph.com/markets/crypto-market-cap-3-trillion-bitcoin-altcoins-rally; 247wallst.com/investing/cryptocurrency/2026/09/22/the-crypto-market-surpasses-3-trillion-what-drove-this-milestone-and-what-could-keep-it-there; api.coingecko.com/api/v3/global and /coins/markets (2026-10-03)"
+    },
+    {
+      "claim": "TAO: Mike sold at $326, waited for $290, bought back at $310 expecting $330 to $338, and it dropped within two hours: 'a classic bull trap, it happens to the best of us'; 'we had some really good pumps with TAO' (transcript)",
+      "verdict": "price action verified and UPDATED: $TAO $289.73 on 2026-10-03, 24h high $316.11 and low $282.93, -6.9% 24h, -9.0% 7d, +31.3% 30d, rank 37; hourly closes held about $308 to $312 through 17:00 UTC on Oct 2 and printed $287.8 by 19:00 UTC. Mike's own trade (the $326 sale, the $310 re-entry, the missed $290) is NOT used: it is a self-deprecating take on his own call and trader-portfolio framing (persona avoid_in_drafts, no_rotation_framing). The bull trap is written as market action on $TAO. 'I said $300 was still a good deal' refers to the one-liner already posted from the uptober batch; '$290 is a better one' follows his on-stream $290 level. persona project_handles tao = null, so no Follow line.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=bittensor and /coins/bittensor/market_chart?days=4 (2026-10-03); schedule-tweets/data/x-tweets.json (posted TAO one-liner); persona.json"
+    },
+    {
+      "claim": "Golden Kitty is the one low cap doing well: it was coming down and printed one straight-up four-hour candle; 'it could easily make 10 million in the next couple of weeks' if things pump; it is paired to gold (transcript)",
+      "verdict": "verified and UPDATED: $GOLDEN $0.004263, market cap about $4.26M on 2026-10-03, +25.2% 24h, -11.2% 7d, +100% 14d; the 24h low was $0.00287 and hourly closes bottomed near $0.0030 on Oct 2 (about a $3M cap); ATH $0.006087 on Sept 27. Copy: 'dipped to about a $3M cap on Oct 2 and was back above $4.2M a day later'. The $10M read is Mike's own call, kept with 'Never financial advice'. The GOLDEN/GLD tokenized-gold pool was verified in the golden-kitty-dominance plan. Golden Kitty is mention-triggered in persona project_handles, so the tweet closes with 'Follow: @golden_kitty_rh' before the hashtag line.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=golden-kitty and /coins/golden-kitty/market_chart?days=5 (2026-10-03); repurpose/output/golden-kitty-dominance-lane3-plan.json fact_check; persona.json project_handles"
+    },
+    {
+      "claim": "Golden Kitty video clip played on stream: Robinhood won the Golden Kitty in December 2015 for 'the sexiest product of the year'; ChatGPT, Telegram, TikTok, Tesla, Apple, Google and others won one; Coinbase Wallet won the crypto category in 2018 (transcript)",
+      "verdict": "verified against the golden-kitty longform DATA.md (primary Product Hunt sources, read 2026-10-01): ChatGPT, AI Product of the Year, 2022 edition; TikTok, Product of the Year, 2018; Telegram, Breakout Product of the Year, 2017; Apple (AirPods Pro), Product of the Year, 2019; Robinhood, Sexiest Product, 2015, with Robinhood's own Dec 23, 2015 post. Copy names only those four winners plus Robinhood. Tesla (rated medium-high in DATA.md) and Google are left out of the tweet; the 2018 crypto category and any 'Vlad Tenev held the trophy' line are not used (unsourced per DATA.md). The token is an independent fan token; copy says 'that trophy is now a meme coin on Robinhood Chain', never that Robinhood issued or endorsed it.",
+      "source": "video-creation/longform-edited/media/golden-kitty/DATA.md (producthunt.com newsletters 18243, 2411, 540; producthunt.com/stories/announcing-the-2019-golden-kitty-award-winners; x.com/RobinhoodApp/status/679773248020594688)"
+    },
+    {
+      "claim": "Dropped from the batch: the 'October' (Uptober) token being down; SPON ('spawn'): still holding, 'going down with the ship', the existing-Pons-coin vault setup, the dev-wallet read, about a $330K cap; KNOTS bleeding because it is paired to STONK ($330M to $184M); the Send Nudes swap into SPON; Stockorium; Velvet (58x, took 11 months) and TUT (94x, the Oct 10 crash, then 350x); the PerpsPad 114x call list; promo code ARCHIE and its Oct 10 expiry; Archie's Rolex and what he covers now; What If as the coin Golden Kitty could replace; ZCAT; Bitcoin priced in gold showing no 2025 top; the like-button and viewer-count asks",
+      "verdict": "not drafted. The Uptober token cannot be identified (25+ tokens of that name, see the uptober plan). SPON already shipped in the spon and uptober batches and the new vault feature was not verified this run. The KNOTS / STONK caps were not re-checked. The swap is trader-portfolio framing. Mike's call multiples for Velvet and TUT cannot be checked, and both sit far below their highs ($TUT about 92% under its Aug 9 ATH of $0.29, Velvet about 96% under its June 29 ATH of $2.08). Call lists and the promo code are membership pitches; the Archie material is a personal tangent; any What If mention would force the @WhatIFonHOOD follow line on a topic already covered. ZCAT is a passing mention of a Stonk launchpad meme (the transcript contains no Zcash line, so the zKAS mishear rule does not apply). The gold-ratio claim is unverified.",
+      "source": "persona.json avoid_in_drafts; repurpose/output/uptober-lane3-plan.json and spon-lane3-plan.json fact_check; api.coingecko.com (tutorial, velvet, 2026-10-03); transcript"
+    },
+    {
+      "claim": "Topic weighting (Kaspa first, then TAO, Toncoin, Housecoin, Pengu)",
+      "verdict": "Kaspa is named once in passing (as a coin another creator covers); Toncoin, Housecoin and Pengu were not discussed; TAO was. The Kaspa-first weighting is therefore dropped and the batch follows the stream: TAO (1 multi-line tweet, YT poll 2 and its X twin), Golden Kitty (1 multi-line tweet), Bitcoin and the October bull trap (the YT post, the thread, YT poll 1), ISM PMI (the single-line tweet). Consequence: ZERO IG single-image entries this batch, because no X tweet is about Kaspa (IG is Kaspa-only, hard rule).",
+      "source": "transcript; repurpose/SKILL.md IG topic filter and X poll topic filter"
+    },
+    {
+      "claim": "Whisper corrections applied: 'towel' / 'tower' / 'towering' -> TAO; 'CnC' -> CNBC; 'Frank City' -> Citi (the anchor addresses Frank); 'hide interest rates' -> hike; 'gold and Katie' / 'golden kitty hot' -> Golden Kitty ($GOLDEN); 'chat apt' -> ChatGPT; 'Point-based wallet' -> Coinbase Wallet; 'spawn' / 'spot' -> $SPON; 'ponds' -> Pons; 'Benjamin Cowan' -> Benjamin Cowen; '50 week moving average' -> 50-week SMA; 'stock a ream' -> Stockorium",
+      "verdict": "applied throughout; none of the persona-listed mishears (the wrong-chain spelling of Kaspa, the car-brand mishear of cyan, the lowercase Greek-letter mishear of TAO, the wrong What If ticker, the abbreviated moving-average form) appear in the copy.",
+      "source": "persona.json terminology_rules, ticker_corrections"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-10-03-october-bull-trap-scenario": "version4 (a usable topic photo exists: images/reference/michael-saylor.png, the public face of Strategy, and the post's first bullish talking point is Citi raising its Strategy target to $240 from $136, so a public-figure hook is the exact V4 use case and carries the extra V4 weight; the post is number-led ($87K, $434M liquidated, 74% longs, $240 from $136, three red Octobers, +40% to $30.5B, the $83,555 open, $90K, ISM 54.5 vs the 60 threshold), so the V4 data slides fit. The hook cites michael-saylor.png + version4/hook.png as an array, with the conference backdrop and its lettering replaced by a clean background and no quote attributed to him; slides 2-6 cite version4/slide.png. Benjamin-Cowen.png and uptober.png were NOT reused (they fronted the 2026-09-30 V4 carousels). Six slides because the ISM beat is a genuine sixth idea. Per the SKILL.md 2026-09-10 note, the figure-bearing data slides 2, 3, 4 and 5 are candidates for the code-rendered V4 path (render_v4_slide.py) if ChatGPT drifts the numbers)"
+  },
+  "missing_references": [
+    "Bitcoin logo / coin: no bitcoin reference file; no Bitcoin likeness is rendered (image 5d1d5ba7 uses plain unmarked coins and the carousel charts carry no logos), Bitcoin is named only in copy",
+    "ChatGPT, TikTok, Telegram, Apple and Robinhood logos (named in the Golden Kitty tweet): no reference files; none is rendered, image 8fc37b57 shows only the gold cat trophies from golden-kitty.png",
+    "CNBC and Citi logos: no reference files; neither is rendered on any slide, both are named only in copy"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "5d1d5ba7",
+      "slug": "ism-pmi-short-of-60-no-parabolic-run-yet",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Inside a dark factory hall, one giant round analog pressure gauge is mounted on a steel wall. Its dial is split into three unlabeled colour zones: a dull red zone on the left, a pale green zone in the middle and a blazing gold zone on the far right. The single needle sits in the pale green zone a little past the centre, trembling, clearly short of the gold zone. In front of the gauge a small plain steel rocket stands on a launch pad with its engines cold, and a hungry, impatient plain gold coin character with little arms and legs stands beside it with its arms crossed, tapping one foot and staring up at the needle. A few smaller plain coin characters sit on crates behind it, waiting. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the gauge carries no numbers, no tick labels and no lettering; the rocket carries no markings. Deep navy near-black background. Dramatic cinematic lighting: warm gold glow from the far right zone of the gauge, soft green light from the middle zone falling on the coin, cool blue rim light from above. Mood: hungry, impatient, the launch is not cleared yet. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "bc499b08",
+      "slug": "tao-textbook-bull-trap-290-better-deal",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A calm, confident anthropomorphized Bittensor TAO coin character, a white coin whose face carries the single black TAO glyph exactly as shown in the attached reference image (the Greek-letter-shaped mark, one horizontal bar over one curved stem), with little arms and legs, stands at the edge of a large square trapdoor that has just dropped open in a dark stone floor. A big cartoon bull sculpted from glowing green glass has fallen halfway into the opening, its front legs gripping the edge and its eyes wide with surprise, while the TAO coin looks down at it with a small knowing smile, arms folded, completely unbothered. Behind them a steep staircase of stacked glowing server racks climbs toward a bright white beacon. The coin carries no other symbol, lettering or marking; the bull carries no markings. Deep navy near-black background with faint data-light particles. Dramatic cinematic lighting: clean white rim light on the coin, a green glow from the glass bull, cool blue glow from the server racks, the bright white beacon at the top. Mood: calm, unshaken, the climb continues. Use the attached reference only for the TAO glyph. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image other than the single TAO glyph on the coin."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "8fc37b57",
+      "slug": "golden-kitty-a-winner-among-winners",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\golden-kitty.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A gleaming chrome-gold cat trophy figurine, a stylized sitting cat sculpted in polished gold with a small round collar medallion, modeled on the gold cat statue in the attached reference, stands triumphant on the top step of a dark awards stage under a single bright spotlight, gold confetti drifting down around it. Behind it, receding into the dark, a long curved shelf holds a row of smaller identical gold cat trophies on plain black pedestals, each lit by a faint warm pin light, like a hall of past winners. A red velvet rope on brass posts runs along the front of the stage. The trophies carry no lettering, no plaque and no engraving; the pedestals are completely plain with no nameplates. The attached reference shows a polished gold cat trophy statue on its LEFT side and a social media screenshot with text on its RIGHT side: use ONLY the gold cat statue as the shape, pose and colour key, and do NOT reproduce the screenshot, its logo, its emojis or any of its lettering. Deep navy near-black background. Dramatic cinematic lighting: warm gold rim light on the hero trophy, a bright white spotlight from above, soft gold glints on the row behind. Mood: triumphant, a winner among winners. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "cdc2add9",
+      "slug": "01-hook",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\michael-saylor.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ],
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the photo of the grey-haired man with a short grey beard, a black blazer over a black t-shirt and a thin headset microphone) as the full-bleed background photo, keeping his face and likeness faithful to the photo, cropped to a square with his head and shoulders filling the upper two thirds of the frame; render it as a rich photographic image. The backdrop behind him must be completely clean: replace the conference backdrop with a soft out-of-focus pale blue studio background with no signage, no banners, no logos and no lettering of any kind, and do not reproduce the small image-size label in the bottom right corner of that photo. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple candlestick chart that climbs to a sharp peak in green candles and then reverses down in red candles. Bold all-caps text across the bottom: 'EVERYBODY IS BULLISH ON OCTOBER' in white on the first line, then 'IS IT A BULL TRAP?' with 'BULL TRAP' in bright green. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no artist signature and no initials anywhere in the frame or in any corner; the attached style reference carries a watermark and it must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "323cad15",
+      "slug": "02-the-trap-on-the-daily-chart",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The bull trap on the daily chart'. Stat boxes: 'HIGH AFTER THE JOBS REPORT: ABOUT $87K', 'LIQUIDATED IN 24 HOURS: ABOUT $434M', 'SHARE THAT WAS LONGS: ABOUT 74%'. Centre: a candlestick chart with labeled axes showing a run of green candles climbing to one tall wick at a peak labelled 'ABOUT $87K', followed by a run of red candles falling back to the starting level labelled 'ABOUT $84.5K'. Bottom green box labelled 'WHAT HAPPENED' with two bullets: 'Jobs: 29K vs about 90K expected. Bitcoin spiked within the hour.' and 'It gave the whole move back the same day.'. Page number 2 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "b51de536",
+      "slug": "03-the-bullish-case-is-on-tv",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The bullish case is on national TV'. Stat boxes: 'CITI ON STRATEGY: TARGET $240, FROM $136', 'RED OCTOBERS SINCE 2013: ONLY 3', 'WHALE STABLECOINS TO BINANCE: UP 40% TO $30.5B'. Centre: a bar chart with a horizontal zero line and thirteen bars labelled 2013 to 2025 along the bottom, ten green bars rising above the line and three red bars dropping below it at 2014, 2018 and 2025; the bars carry no value labels. Bottom green box labelled 'THE MOOD FLIP' with two bullets: 'A few weeks ago the crowd was waiting for an October bottom.' and 'Now everybody leans the same way. That is how a trap gets set.'. Page number 3 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "7a0385e9",
+      "slug": "04-the-level-that-decides-october",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The level that decides October'. Stat boxes: 'OCTOBER OPEN: ABOUT $83,555', 'THE RUN: MAYBE $90K FIRST', 'THE TRAP: A CLOSE BELOW THE OPEN'. Centre: a line chart with labeled axes showing a dashed horizontal line labelled 'OCTOBER OPEN' and a price line that starts on it, climbs to a peak labelled 'ABOUT $90K', then falls back through the dashed line and ends below it in red. Bottom green box labelled 'MY READ' with two bullets: 'A red October would be a pullback inside a bull market.' and 'Two weekly closes above the 50-week SMA. The low near $58K holds.'. Page number 4 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "2dfdc65a",
+      "slug": "05-not-parabolic-yet",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Why this is not parabolic yet'. Stat boxes: 'ISM PMI, SEPTEMBER: 54.5', 'MONTHS ABOVE 50: 9 IN A ROW', 'A PARABOLIC RUN NEEDS: ABOVE 60'. Centre: a line chart with labeled axes and two dashed horizontal lines labelled '50' and '60'; the line runs below the 50 line for most of its length, crosses above it near the right side, then moves sideways between the two dashed lines without reaching the 60 line. Bottom green box labelled 'THE GRIND' with two bullets: 'Most of three years under 50, then a breakout in January.' and 'Expansion, but slow. It has to shoot up before the real run.'. Page number 5 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "ae47c58a",
+      "slug": "06-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Does Bitcoin close October above or below $83,555?'. Stat boxes: 'OCTOBER OPEN: ABOUT $83,555', 'A: ABOVE IT, A GREEN OCTOBER', 'B: BELOW IT, THE BULL TRAP'. Centre panel: two plain rounded panels side by side, one headed A and one headed B, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'Bet right now: A or B, and why?'. Page number 6 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Bittensor ($TAO) just ran a textbook bull trap.\n\nIt pushed to $316 on Oct 2 while the whole market pumped on the jobs report, then gave it all back to $283 within hours when Bitcoin reversed.\n\nZoom out: $TAO is still up about 31% on the month, and the new money coming into crypto is going straight to the top 100. I said $300 was still a good deal. $290 is a better one.\n\n#TAO #Bittensor",
+      "hook": "Bittensor ($TAO) just ran a textbook bull trap.",
+      "image_id": "bc499b08"
+    },
+    {
+      "tweet": "ChatGPT won a Golden Kitty. So did TikTok, Telegram and Apple. In 2015 Robinhood won one too: 'Sexiest Product of the Year.'\n\nThat trophy is now a meme coin on Robinhood Chain, and it trades against tokenized gold: Golden Kitty ($GOLDEN).\n\nWhile almost every other low cap was bleeding, $GOLDEN dipped to about a $3M cap on Oct 2 and was back above $4.2M a day later. If the October pumps show up, I think $10M comes easily. Never financial advice.\n\nFollow: @golden_kitty_rh\n\n#GoldenKitty #RobinhoodChain",
+      "hook": "ChatGPT won a Golden Kitty. So did TikTok, Telegram and Apple.",
+      "image_id": "8fc37b57"
+    },
+    {
+      "tweet": "ISM Manufacturing PMI printed 54.5 for September, nine straight months above 50 after most of three years under it... and we still do not get a parabolic crypto bull run until that number is above 60. What am I missing? 🤔\n\n#ISM #macro",
+      "hook": "ISM Manufacturing PMI printed 54.5 for September, nine straight months above 50 after most of three years under it... and we still do not get a parabolic crypto bull run until that number is above 60. What am I missing? 🤔",
+      "image_id": "5d1d5ba7",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #1 (a strong, defensible-but-debatable take, Mike's own on-stream threshold that a parabolic run needs ISM PMI above 60) plus technique #3 (the 'What am I missing?' closer). No fact is manufactured; the 54.5 print, the nine-month streak and the three-year stretch under 50 are verified."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-10-03-october-bull-trap-scenario",
+      "topic": "Is October a bull trap: Bitcoin's $87K spike and reversal on the Oct 2 jobs report, the suddenly unanimous bullish case (CNBC, Citi's Strategy target, three red Octobers since 2013, whale stablecoin inflows, Fed hold odds), the $83,555 October open as the level that decides it, why the bull market is still official, and why ISM PMI at 54.5 says not parabolic yet (built from the YT post)",
+      "variation_label": "A (contrarian-debunk)",
+      "tweets": [
+        {
+          "text": "Bitcoin ($BTC) tagged $87K on the jobs report and gave the whole move back within hours.\n\nAbout $434M liquidated in 24 hours, roughly three quarters of it longs.\n\nThat was a bull trap on the daily chart. What if the whole market is setting one up for October...",
+          "hook": "Bitcoin ($BTC) tagged $87K on the jobs report and gave the whole move back within hours."
+        },
+        {
+          "text": "Look how fast the mood flipped.\n\nA few weeks ago the four-year cycle zombies were all waiting for an October bottom. That talk is gone.\n\nNow CNBC is telling its audience Bitcoin is setting up for a big fourth quarter."
+        },
+        {
+          "text": "And the talking points are real:\n\nCiti raised its Strategy target to $240 from $136.\nOnly three red Octobers since 2013.\nWhale stablecoin inflows to Binance up about 40% in a month, to $30.5B.\nAbout 82% odds the Fed holds on Oct 28 after a 29K jobs print."
+        },
+        {
+          "text": "All of it is bullish. And when everybody leans the same way, that is how a trap gets set.\n\nMy scenario: $BTC opened October at about $83,555. It runs another week or two, maybe to $90K, pulls everybody back in, then closes the month below that open.\n\nA red October."
+        },
+        {
+          "text": "I am not turning bearish.\n\n$BTC has two weekly closes above the 50-week SMA and it is above the May high. For me the bull market is official.\n\nThe low near $58K was the bottom. A red October would be a pullback inside a bull market, and forget $40K."
+        },
+        {
+          "text": "But parabolic? Not yet.\n\nISM Manufacturing PMI printed 54.5 for September: nine straight months above 50 after most of three years under it, grinding sideways instead of shooting up.\n\nWe need that number above 60 before I talk about a parabolic run."
+        },
+        {
+          "text": "If this made you look twice at the October hype...\n\nFollow me for macro and crypto reads that ignore the four-year cycle echo chamber.\n\n🧠"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-10-03-tao-bull-trap-or-dip",
+      "topic": "Bittensor ($TAO) after the Oct 2 bull trap ($316 to $283 within hours): $350 first or $250 first",
+      "eligible_topic": "tao",
+      "tweet_text": "Bittensor ($TAO) pushed to $316 on the jobs report pump, then gave it all back to $283 within hours. Textbook bull trap.\n\nIt sits around $290, still up about 31% on the month.\n\nWhat comes first for $TAO?\n\n#TAO",
+      "hook": "Bittensor ($TAO) pushed to $316 on the jobs report pump, then gave it all back to $283 within hours.",
+      "options": [
+        "$350: that was the dip",
+        "$250: trap not finished"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-10-03-is-october-a-bull-trap",
+      "topic": "Is October a bull trap for Bitcoin: a monthly close above or below the $83,555 open",
+      "source_post": "yt-post-2026-10-03-october-bull-trap-scenario",
+      "question_text": "Bitcoin tagged $87K on the Oct 2 jobs report and gave the whole move back within hours. CNBC is telling its audience Bitcoin is setting up for a big fourth quarter, Citi just raised its Strategy target to $240, and there have only been three red Octobers since 2013.\n\nMy read: when everybody leans the same way, that is how a bull trap gets set. Bitcoin opened October at about $83,555. The trap scenario is a run toward $90K, then a monthly close back below that open.\n\nIs October a bull trap?",
+      "hook": "Bitcoin tagged $87K on the Oct 2 jobs report and gave the whole move back within hours.",
+      "options": [
+        "Bull trap: October closes red, below the $83,555 open",
+        "No trap: October closes green, above the $83,555 open"
+      ],
+      "x_poll_eligible": false,
+      "notes": "Topic is Bitcoin / macro, not kaspa/tao/toncoin/golden-kitty: NO X poll twin (hard filter)."
+    },
+    {
+      "id": "yt-text-poll-2026-10-03-tao-bull-trap-or-dip",
+      "topic": "Bittensor ($TAO) after the Oct 2 bull trap: $350 first or $250 first",
+      "source_post": null,
+      "question_text": "Bittensor ($TAO) pushed to $316 on Oct 2 while the whole market pumped on the jobs report, then gave it all back to $283 within hours. A textbook bull trap.\n\nIt sits around $290, still up about 31% on the month, and the new money coming into crypto keeps going to the top 100. I said $300 was still a good deal. $290 is a better one.\n\nWhat comes first for $TAO?",
+      "hook": "Bittensor ($TAO) pushed to $316 on Oct 2 while the whole market pumped on the jobs report, then gave it all back to $283 within hours.",
+      "options": [
+        "$350 first: that was the dip to buy",
+        "$250 first: the trap is not finished"
+      ],
+      "x_poll_eligible": true,
+      "notes": "TAO topic: X twin poll-2026-10-03-tao-bull-trap-or-dip."
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-10-03-october-bull-trap-scenario",
+      "topic": "Is October a bull trap: Bitcoin's $87K spike and same-day reversal on the Oct 2 jobs report (about $434M liquidated, about 74% longs), the suddenly unanimous bullish case (CNBC, Citi's $240 Strategy target, three red Octobers since 2013, whale stablecoin inflows up 40% to $30.5B, about 82% Fed hold odds), the $83,555 October open as the level that decides it, why the bull market is still official, and why ISM PMI at 54.5 says not parabolic yet",
+      "variation_label": "A + CTA1",
+      "body_style": "contrarian arc: the daily-chart bull trap and the liquidation stat in the pre-fold hook with the October question left open, the mood flip and the numbered bullish talking points, the trap scenario and its level, where the money is going, the not-bearish stance (bull market official, the bottom is in), the ISM PMI reason it is not parabolic yet, a forked level question and a like/subscribe ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Bitcoin tagged $87K on the Oct 2 jobs report and gave the whole move back within hours. About $434M got liquidated in 24 hours, and roughly three quarters of it was longs.\n\nThat is a bull trap on the daily chart. Here is the question I keep coming back to: what if the whole market is setting one up for October?\n\nLook at how fast the mood flipped. A few weeks ago the four-year cycle zombies were all waiting for an October bottom. That talk is gone. Now CNBC is telling its audience Bitcoin is setting up for a big fourth quarter, and the talking points are real:\n\n1. Citi raised its price target on Strategy to $240 from $136, and its 12-month Bitcoin forecast to $113K from $82K.\n\n2. There have only been three red Octobers since 2013: 2014, 2018 and 2025.\n\n3. CryptoQuant shows whale stablecoin inflows to Binance up about 40% in a month, to $30.5B.\n\n4. Jobs came in at 29K against about 90K expected, and prediction markets now price about an 82% chance the Fed holds rates on Oct 28.\n\nAll of that is bullish. And when everybody leans the same way, that is exactly how a trap gets set.\n\nThe scenario I am watching. Bitcoin ($BTC) opened October at about $83,555. It runs for another week or two, maybe to $90K, pulls everybody back in, then rolls over and closes the month below that open. That is a red October, the opposite of what everybody is pricing in.\n\nNotice where the money is going too. The total crypto market crossed $3 trillion in late September, but the money is flowing into the top 100. Mid caps, low caps and micro caps are bleeding out.\n\nI am not turning bearish. Bitcoin has two weekly closes above the 50-week SMA and it is above the May high, so for me the bull market is official. The low near $58K this summer was the bottom. We are not going back there, and forget $40K. A red October would be a pullback inside a bull market.\n\nBut parabolic? Not yet. ISM Manufacturing PMI printed 54.5 for September. It spent most of three years under 50, broke out in January, and has been grinding sideways above it for nine straight months instead of shooting up. We need that number above 60 before I start talking about a parabolic run.\n\nSo bet right now, in the comments: does Bitcoin close October above or below $83,555?\n\nClick that like button and click the subscribe button if you want the macro read that ignores the four-year cycle echo chamber.",
+      "engagement_question": "Does Bitcoin close October above or below $83,555?",
+      "images": [
+        {
+          "image_id": "cdc2add9",
+          "slide_text": "Everybody is bullish on October. Is it a bull trap?"
+        },
+        {
+          "image_id": "323cad15",
+          "slide_text": "The bull trap on the daily chart"
+        },
+        {
+          "image_id": "b51de536",
+          "slide_text": "The bullish case is on national TV"
+        },
+        {
+          "image_id": "7a0385e9",
+          "slide_text": "The level that decides October"
+        },
+        {
+          "image_id": "2dfdc65a",
+          "slide_text": "Why this is not parabolic yet"
+        },
+        {
+          "image_id": "ae47c58a",
+          "slide_text": "Does Bitcoin close October above or below $83,555?"
+        }
+      ]
+    }
+  ],
+  "ig_single": []
+}

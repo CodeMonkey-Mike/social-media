@@ -12,7 +12,7 @@ const { pickNextLongform, stripMusicCredits, recordLongformPost } = require('./l
 const MIN_FILE_SIZE  = 1_000_000; // 1MB
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\fbbot-profile';
 const WORKSPACE_ROOT = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
-const DEBUG_DIR      = path.join(WORKSPACE_ROOT, 'tmp-fb-longform-debug');
+const DEBUG_DIR      = path.join(WORKSPACE_ROOT, 'tmp', 'fb-longform-debug');
 const FB_PAGE        = 'realCodeMonkeyMike';
 const PAGE_URL       = `https://www.facebook.com/${FB_PAGE}/`;
 

@@ -94,6 +94,12 @@ node scripts/_register-playlist.js <playlistId> [--skip a,b] # 3. register all i
 - Precedent run: private playlist **430508** → 39 songs, 2 already present (9141, 11370) → **37 added**.
 
 ## 2c. Waveform analysis — the catalog is the picker's eyes (added 2026-07-17)
+> **Pick for VARIETY too (2026-10-01):** before choosing, read the usage ledger
+> (`python video-creation/skills/usage-ledger/usage_ledger.py report --what music`). A track the previous video used is blocked, prefer never-used then least
+> recently used within the pool (intro hype / subtle bed / hype body / epic close). Usage is recorded in
+> `video-creation/assets/usage-ledger.json` by the graph; the `used_in[]` field in `library.json` is frozen
+> legacy notes and is no longer written. Doc: `../usage-ledger/usage-ledger.md`.
+
 Every library track gets a MACHINE-WRITTEN `analysis` block per audio file (full master + every
 section cut; stems excluded) so music is **chosen from `assets/music/library.json` alone — no
 audio scanning at selection time**. Schema + semantics live in the `$analysis_note` key at the top

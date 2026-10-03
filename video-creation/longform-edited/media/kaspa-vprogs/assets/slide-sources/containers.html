@@ -181,6 +181,83 @@ h1,.hero,.hl{font-variant-numeric:lining-nums}
 #end-card-community .ln1{display:flex;align-items:center;gap:26px}
 #end-card-community .ln1 svg{width:62px;height:62px;fill:var(--text-secondary);opacity:.75;flex:none}
 #end-card-community .ln1.on svg{fill:var(--accent-green);opacity:1}
+
+/* =====================================================================================
+   VERTICAL (9:16) REFLOW, vertical-repurpose.md section 1: the SAME frames re-shot at a
+   1080x1920 viewport (`python _shot.py --vertical`). Portrait-only LAYOUT rules: tokens,
+   fonts, colors, content and state classes are untouched; only frame size, stacking and
+   phone-size type change. The 16:9 (landscape viewport) render is unaffected.
+   ===================================================================================== */
+@media (orientation: portrait){
+  .frame{width:1080px;height:1920px;padding:0 60px}
+  .ey{font-size:30px;margin-bottom:24px}
+  p,.body{font-size:40px;line-height:1.45}
+  .card{padding:72px 58px 80px;border-radius:30px}
+  .card .divider{margin:32px 0}
+
+  /* ten-bps-card: number over unit */
+  #ten-bps-card .bps{flex-direction:column;align-items:flex-start;gap:6px}
+  #ten-bps-card .num{font-size:340px}
+  #ten-bps-card .unit{font-size:118px}
+  #ten-bps-card p{font-size:44px}
+
+  /* execute-verify-flip */
+  #execute-verify-flip .flip{font-size:168px}
+  .frows{gap:22px}
+  .frow{padding:30px 32px;gap:26px}
+  .frow .ttl{font-size:46px}
+
+  /* chapter title cards */
+  .titlecard .hero{font-size:180px}
+  .titlecard .ey{font-size:34px}
+
+  /* sompolinsky-name-card: name wraps to two lines, stamp gets its own zone at the card foot */
+  #sompolinsky-name-card .card{padding-bottom:250px}
+  #sompolinsky-name-card h1{font-size:112px}
+  #sompolinsky-name-card .handle{font-size:44px}
+  #sompolinsky-name-card .facts{gap:20px}
+  #sompolinsky-name-card .fact{font-size:40px;align-items:flex-start;line-height:1.35}
+  #sompolinsky-name-card .fact::before{margin-top:21px}
+  #sompolinsky-name-card .stamp{right:64px;top:auto;bottom:74px;font-size:46px}
+
+  /* zk-math-receipt: receipt stacks, stamp lands in the foot of the receipt */
+  #zk-math-receipt .card{padding-bottom:300px}
+  #zk-math-receipt h1{font-size:132px}
+  #zk-math-receipt .rline{font-size:46px;gap:18px;padding:18px 0}
+  #zk-math-receipt .rline .dots{min-width:40px}
+  #zk-math-receipt .stamp{right:64px;top:auto;bottom:70px;font-size:42px}
+
+  /* sovereignty-card: the two vProgs stack */
+  #sovereignty-card h1{font-size:130px}
+  #sovereignty-card p{font-size:44px;margin-bottom:44px}
+  #sovereignty-card .nodes{flex-direction:column;gap:30px}
+  .vnode{padding:40px 40px;min-height:190px}
+  .vnode .nm{font-size:56px}
+  .vnode .sub{font-size:34px}
+  .vnode .pill{font-size:30px}
+
+  /* pow-money-hammer: three spotlight lines, each may wrap; K bug flows under the card */
+  #pow-money-hammer .card{width:100%!important}
+  #pow-money-hammer .hl{font-size:112px;word-spacing:.06em;line-height:1.06;margin-bottom:26px}
+  #pow-money-hammer .card .divider{margin:14px 0 0}
+  #pow-money-hammer .kbug{position:relative;right:auto;bottom:auto;width:300px;align-self:center;margin-top:56px}
+
+  /* cta-engage: prompt label sits over its line */
+  #cta-engage h1{font-size:112px}
+  #cta-engage .tiles{gap:26px;margin-bottom:26px}
+  .tile{flex:1;padding:28px 30px;gap:22px}
+  .tile .tl2{font-size:46px}
+  .prompt{flex-direction:column;gap:10px;padding:32px 38px}
+  .prompt .ptx{font-size:52px;line-height:1.2}
+
+  /* end-card-community: K logo over the card, lines allowed to wrap */
+  #end-card-community .card{width:100%;padding:72px 58px 80px}
+  #end-card-community .kbug{position:relative;right:auto;top:auto;transform:none;width:640px;
+    align-self:center;margin:0 0 30px}
+  #end-card-community .hl{font-size:84px;white-space:normal}
+  #end-card-community .ln1{align-items:flex-start}
+  #end-card-community .ln1 svg{width:76px;height:76px;margin-top:14px}
+}
 </style></head>
 <body>
 

@@ -201,6 +201,26 @@ All voice rules live in `persona/persona.json` (`spoken_voice`). Three gears: (1
 beats; drop toward gear 2 for mechanics). No "right?" tags / no conviction-then-hedge in gear 3. No em
 dashes anywhere.
 
+**Numbers on the page (persona `whole_number_format` + `year_and_date_format`, Mike 2026-10-01).** In a
+screenplay Mike reads himself, numbers are DIGITS, whole numbers included: "369 billion dollars", "250 percent",
+"2,200 holders", "15x", "24/7", "28.4 million". The scale word (thousand, million, billion) and "dollars" /
+"percent" stay words. One through nine may stay words in plain speech with no unit ("two things"). Years and
+dates are digits ("in December of 2015", "July 1st, 2026"). Spelled-out numbers make him fumble the read.
+`lint_screenplay.py` fails a spelled-out year or a spelled-out number of ten or more on a spoken line.
+**Voice-clone scripts are the exception:** numbers, dates and symbols are spelled out as words so the model
+reads them right (persona `tts_note`); lint those with `--voice-clone`.
+**No dollar signs in a screenplay (persona `money_format`, Mike 2026-10-01).** Written money is a number with
+K / M / B, the way Mike types it ("4.2M market cap", "1.04B TVL"), in notes, verify lines and on-screen text
+alike; tickers carry no cashtag sign ("GOLDEN"). Spoken lines stay words ("about a 4.2 million dollar market
+cap"). A pair of dollar signs also breaks the VS Code Markdown preview (it renders the text between them as
+math). `lint_screenplay.py` fails any dollar sign outside a code span; exact figures live in DATA.md.
+
+**The hook-to-body handoff line is ROTATED (Mike, 2026-10-01).** The line that closes CH1 ("So, let's dive
+into all this.") must not be the same wording every video. The variant list and the rotation rule live in
+`persona/persona.json` -> `spoken_voice.signature_devices.dive_in_variants`: script ONE `approved` line that
+is not the most recent in `recent_use`, and list 2-3 alternates (at least one `proposed`) in the screenplay's
+OPEN QUESTIONS so Mike picks at GATE 1. Record his pick back into that persona entry the same turn.
+
 ## Honesty / verified-claims rules (persona `verified_claims_only`)
 
 - Fact-check every named entity, date, stat, and call before it goes on screen; mark unverified ones

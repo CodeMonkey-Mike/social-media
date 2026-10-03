@@ -63,5 +63,5 @@ overview).
   repeats. Cropping a deck is the exact regression that made this "hard." A purpose-built container has none of
   those problems and is how the early videos were easy.
 - One container per talking point; show them **contiguously per section**, do not scatter the same one across
-  the whole video (the `../comp-build/lint-deck-containers.py` + `../comp-build/lint-covers.js` gates watch for this).
+  the whole video (the `../comp-build/lint-deck-containers.py` + `../comp-build/lint_covers.py` gates watch for this).
 - System-design DIAGRAMS (topology/flow SVGs) may keep their headline and hold while explained.

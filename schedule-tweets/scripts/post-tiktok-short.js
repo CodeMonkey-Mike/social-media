@@ -23,7 +23,7 @@ const SHORTS_JSON       = path.join(__dirname, '..', 'data', 'shorts.json');
 const CHROME_EXE        = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const MAIN_USER_DATA    = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\tiktokbot-profile';
 const WORKSPACE_ROOT    = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
-const DEBUG_DIR         = path.join(WORKSPACE_ROOT, 'tmp-tiktok-debug');
+const DEBUG_DIR         = path.join(WORKSPACE_ROOT, 'tmp', 'tiktok-debug');
 const CDP_PORT          = 9224;
 const TIKTOK_UPLOAD_URL = 'https://www.tiktok.com/tiktokstudio/upload?lang=en';
 const PLATFORM          = 'tiktok';

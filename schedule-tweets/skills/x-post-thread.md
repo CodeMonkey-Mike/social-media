@@ -101,7 +101,17 @@ Write full text to system clipboard, verify composer is empty, focus, `Ctrl+V`, 
 
 ---
 
-## ⛔ NEW 2026-07-30 — `tweetTextarea_5` visibility timeout: the composer cannot grow past 5 tweets in-viewport
+## ✅ FIXED 2026-08-12 — the `tweetTextarea_5` timeout below is CLOSED (fix #1 landed in `post_thread.py`)
+
+Applied the canonical fix in the Python port (the JS twin is frozen rollback): wait on
+`state="attached"` with a 30s timeout, then `scroll_into_view_if_needed()`, then click with a
+native-JS-click fallback. **Validated live on a 7-tweet thread** (`thread-2026-08-12-200-week-line`,
+7/7 articles + 7/7 snippets verified) — tweets 6 and 7 composed with no hesitation, so the defect was
+exactly the diagnosed visibility-vs-attachment issue, not an X-side 5-tweet cap.
+**This run also LIVE-BLESSES `post_thread.py`** — it is now the production thread poster.
+Historical writeup retained below.
+
+## ⛔ 2026-07-30 (RESOLVED, see above) — `tweetTextarea_5` visibility timeout: the composer cannot grow past 5 tweets in-viewport
 
 `post-thread.js` failed **deterministically, twice in a row** on a 6-tweet thread
 (`thread-2026-07-29-three-out-of-ten`), at exactly the same point both times:

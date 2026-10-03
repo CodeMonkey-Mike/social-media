@@ -29,10 +29,14 @@
 #       [--plan PATH] [--model medium] [--title TEXT] [--subtitle TEXT]
 #       [--thread ID] [--resume] [--stub ok|fail] [--test-sandbox DIR] [--force]
 #
-#   PUBLISH (Wave 5 — Phase 8 exec, AFTER Mike gates the renders AND authorizes
-#   publish; hook/caption/tags/title land in shorts/<batch>/publish-meta.json
-#   BEFORE the run. Stages the queue + md5-verifies + persona-lints; POSTING
-#   stays Mike-gated and sequential):
+#   PUBLISH (Wave 5 — Phase 8 exec. Runs AS SOON AS every clip is 7-built with a
+#   PASS gate — STAGING IS MIKE'S REVIEW HANDOFF (2026-08-07, batch eliza: "if
+#   you completed the shorts, they should be in the queue, ready for my
+#   review"); an authorization note gates POSTING only, never staging. The
+#   graph's own `frontier`/`verify_frontier` entry nodes re-check that frontier from
+#   disk (added 2026-08-12). hook/caption/tags/title land in
+#   shorts/<batch>/publish-meta.json BEFORE the run. Stages the queue +
+#   md5-verifies + persona-lints; POSTING stays Mike-gated and sequential):
 #   python video-creation/livestream-repurpose/graph/run.py publish --batch <batch>
 #       [--date YYYY-MM-DD] [--meta PATH] [--id-prefix XX] [--thread ID]
 #       [--resume] [--stub ok|fail] [--test-sandbox DIR]
@@ -121,6 +125,11 @@ from shorts_graph import (  # noqa: E402
     build_cut_graph, build_finish_graph, build_publish_graph, build_tighten_graph,
 )
 from repurpose_graph import build_repurpose_graph  # noqa: E402
+from batch_graph import (  # noqa: E402  (the batch orchestrator, 2026-09-10)
+    GATE_EXIT_CODE, build_batch_graph, build_lane3_graph, lanes_status,
+    print_lanes_footer, reg_entry as batch_reg_entry, reg_write as batch_reg_write,
+)
+from langgraph.types import Command  # noqa: E402
 
 from langgraph.checkpoint.sqlite import SqliteSaver  # noqa: E402
 
@@ -157,6 +166,15 @@ def validate_meta(path: str):
         print("EM DASH in longform-meta.json — persona hard rule; fix it before running.",
               file=sys.stderr)
         sys.exit(1)
+    # day-relative words are false by post time (the long posts days after the stream):
+    # persona avoid_in_drafts, Mike 2026-09-11. Same gate as queue_writer.DAY_WORDS.
+    import re as _re
+    _dw = _re.compile(r"\b(today|tonight|yesterday|tomorrow|this (morning|afternoon|evening)|last night)\b", _re.I)
+    hit = _dw.search(str(meta.get("title", "")) + " " + str(meta.get("description", "")))
+    if hit:
+        print(f"day-relative word {hit.group(0)!r} in longform-meta.json title/description; "
+              "write 'this week' or the date (persona hard rule, 2026-09-11).", file=sys.stderr)
+        sys.exit(1)
 
 
 def report_intake(final) -> int:
@@ -187,13 +205,30 @@ def report_intake(final) -> int:
     flags = s.get("flags") or []
     if flags:
         print("  ** GLOSSARY FLAGS — adjudicate before Phase 3 (real KRC20 token vs "
-              "Kaspa mishear):")
+              "Kaspa mishear; zcash vs zKAS = ASK MIKE):")
         for fl in flags:
             print(f"     - {fl}")
     else:
         print("  glossary flags: none")
-    print("  next: Phase 3+ as usual — clip-strategist off the _chunks_90s file, "
-          "Lane 3 off the _plain transcript.")
+    # LANE FRONTIER footer (Mike, 2026-08-15). Same idiom as the finalized_short_gate's
+    # BATCH FRONTIER: state what is UNBLOCKED, do not leave the orchestrator to infer it.
+    # WHY: the old one-line "next:" read as an ordered list, and combined with the docs
+    # calling Lane 3 "off Lane 2's transcript" it got read as a DEPENDENCY. Lane 3 was
+    # serialized behind Lane 2 for no reason and burned wall-clock. The transcript is a
+    # SHARED segment-1 artifact; Lane 2 (segments 2-5) and Lane 3 (segment 6) are
+    # SIBLINGS off it, touch disjoint files, and use disjoint resources (ffmpeg/GPU vs
+    # the pooled ChatGPT browser behind the `chatgpt` stage lock).
+    batch = s.get("slug") or "<batch>"   # slug IS the batch id (IntakeState.slug)
+    print()
+    print("  " + "-" * 68)
+    print("  LANE FRONTIER — Lanes 2 and 3 are BOTH unblocked now. RUN THEM IN PARALLEL;")
+    print("  neither waits on the other, and Lane 3 never waits on Lane 2 at all.")
+    print(f"    Lane 2: clip-strategist off the _chunks_90s file -> shorts/{batch}/clip-plan.json")
+    print(f"            then: python video-creation/livestream-repurpose/graph/run.py cut --batch {batch}")
+    print(f"    Lane 3: draft off the _plain transcript -> repurpose/output/{batch}-lane3-plan.json")
+    print(f"            then: python video-creation/livestream-repurpose/graph/run.py repurpose --batch {batch}")
+    print("  Lane 3's ONLY precondition is its plan file. Do not hold it for Lane 2.")
+    print("  " + "-" * 68)
     return 0
 
 
@@ -280,7 +315,7 @@ def main_cut():
         if not os.path.isfile(plan_path):
             print(f"clip-plan.json not found: {plan_path}\n"
                   "The clip-strategist's plan must land on disk BEFORE the cut segment "
-                  "runs (the judgment seam).", file=sys.stderr)
+                  "runs (the agent-handoff gate: the plan IS the gate artifact).", file=sys.stderr)
             sys.exit(1)
         try:
             with open(plan_path, encoding="utf-8") as f:
@@ -465,7 +500,7 @@ def main_tighten():
         if not os.path.isfile(plan_path):
             print(f"tighten-plan.json not found: {plan_path}\n"
                   "The tighten-strategists' plan must land on disk BEFORE the tighten "
-                  "segment runs (the judgment seam).", file=sys.stderr)
+                  "segment runs (the agent-handoff gate: the plan IS the gate artifact).", file=sys.stderr)
             sys.exit(1)
         if not os.path.isfile(cplan_path):
             print(f"clip-plan.json not found: {cplan_path}", file=sys.stderr)
@@ -583,7 +618,8 @@ def report_finish(final) -> int:
     print(f"  dashboard: {s.get('dashboard')} · progress at the ready-for-build gate")
     print("  next: remotion-builder (7) per clip — builder b-roll runs the canonical "
           "python repurpose/gen_batch.py (ported 2026-08-11; JS twins frozen rollback); "
-          "then `run.py publish` once Mike gates the renders.")
+          "then `run.py publish` THE MOMENT every builder reports 7-built PASS (staging "
+          "IS Mike's review handoff — he reviews from the queue; only POSTING is his gate).")
     return 0
 
 
@@ -646,9 +682,12 @@ def main_finish():
                 REPO_ROOT / "video-creation" / "shorts" / args.batch)
 
         prog = load_progress(Path(out_base))
-        prog_clips = [c for c in prog.get("clips", []) if c.get("slug")]
+        # clips Mike deleted at the 4b/2nd gate carry gate="deleted-<gate>" and stay in
+        # progress.json (numbers frozen); they are not part of the frontier (silver, 2026-09-11)
+        prog_clips = [c for c in prog.get("clips", []) if c.get("slug")
+                      and not str(c.get("gate", "")).startswith("deleted")]
         if not prog_clips:
-            print("progress.json has no clips.", file=sys.stderr)
+            print("progress.json has no surviving clips.", file=sys.stderr)
             sys.exit(1)
         not_ready = [c["slug"] for c in prog_clips
                      if c.get("phase") not in ("5B-desilenced", "5C-final", "6-transcribed")]
@@ -669,7 +708,7 @@ def main_finish():
                 print(f"filler-plan.json is not valid JSON: {e}", file=sys.stderr)
                 sys.exit(1)
         else:
-            plan_path = ""      # optional seam artifact: absent = all passthrough
+            plan_path = ""      # optional handoff artifact: absent = all passthrough
 
         # fail fast on unscoped build directives (clip_directives is the one
         # source of truth; finish is the last machine-owned step before Phase 7
@@ -709,6 +748,9 @@ def main_finish():
             "title": args.title, "subtitle": args.subtitle, "force": args.force,
             "test_sandbox": args.test_sandbox, "stub": "",
             "expected": expected, "status": "running",
+            # publish-shorts globs the render dir, so the ready set is what keeps a
+            # held-back render (BLOCKED / superseded / mid-rebuild) out of the queue.
+            "only_slugs": ",".join(e["slug"] for e in expected),
         }
         thread = args.thread or f"finish-{args.batch}-{date.today():%Y%m%d}"
         set_current_batch(args.batch)
@@ -779,8 +821,10 @@ def main_publish():
 
     ap = argparse.ArgumentParser(prog="run.py publish",
                                  description="Run the Lane 2 PUBLISH segment (Phase 8 exec) "
-                                             "through LangGraph. Run ONLY after Mike gates "
-                                             "the renders AND authorizes publish; the "
+                                             "through LangGraph. Run AS SOON AS every clip "
+                                             "is 7-built with a PASS gate — staging IS "
+                                             "Mike's review handoff (2026-08-07); an "
+                                             "authorization note gates POSTING only. The "
                                              "judgment fields land in publish-meta.json "
                                              "BEFORE the run. Stages the queue only — "
                                              "POSTING stays Mike-gated.")
@@ -846,7 +890,7 @@ def main_publish():
         if not os.path.isfile(meta_path):
             print(f"publish-meta.json not found: {meta_path}\n"
                   "The judgment fields (hook/caption/tags/title) must land on disk BEFORE "
-                  "the publish segment runs (the seam contract).", file=sys.stderr)
+                  "the publish segment runs (the handoff contract).", file=sys.stderr)
             sys.exit(1)
         meta = publish_shorts.load_meta(Path(meta_path))   # its own hard validation
 
@@ -861,13 +905,40 @@ def main_publish():
         if not isinstance(prog, dict) or not prog.get("clips"):
             print(f"progress.json missing/empty: {progress_path}", file=sys.stderr)
             sys.exit(1)
-        not_built = [c["slug"] for c in prog["clips"]
-                     if c.get("phase") != "7-built" or "PASS" not in str(c.get("gate", ""))]
-        if not_built:
-            print(f"clips not at '7-built' with a PASS gate: {not_built}\n"
-                  "Publish runs only after EVERY builder reported PASS (an mp4 on disk is "
-                  "not a completion signal).", file=sys.stderr)
+        # INCREMENTAL PUBLISH (Mike, 2026-08-18). This used to demand that EVERY clip be
+        # 7-built+PASS before anything could ship. That made sense when a batch finished in one
+        # sitting; it does not here. Remotion encodes h264 on CPU on this box, renders are
+        # serialized 2-at-a-time by the render lock, and a six-clip batch spans a whole day, so
+        # an all-or-nothing frontier left finished shorts unpostable for hours.
+        #
+        # Now: publish EVERY clip that is ready, name the ones that are not, and let the run
+        # repeat as each straggler lands. What is NOT relaxed is the completion signal itself -
+        # a clip still ships only at phase '7-built' with a PASS gate. An mp4 on disk proves
+        # nothing (a BLOCKED or superseded render sits in the same folder), so the ready set is
+        # passed down as --only-slugs and publish-shorts stages nothing else.
+        #
+        # Safe to repeat because ids are <prefix>-<date>-<slug>: publish-shorts skips ids already
+        # in shorts.json and never re-copies an existing mp4. Keep --date CONSTANT across the
+        # runs of one batch or every clip re-queues under a new id.
+        ready, pending = [], []
+        for c in prog["clips"]:
+            ok = c.get("phase") == "7-built" and "PASS" in str(c.get("gate", ""))
+            (ready if ok else pending).append(c)
+        if not ready:
+            print("no clip is at '7-built' with a PASS gate yet - nothing to publish.",
+                  file=sys.stderr)
+            print(f"  pending: {[c['slug'] for c in pending]}", file=sys.stderr)
             sys.exit(1)
+        ready_slugs = [c["slug"] for c in ready]
+        if pending:
+            print("  " + "-" * 68)
+            print(f"  INCREMENTAL PUBLISH - staging {len(ready)} ready clip(s); "
+                  f"{len(pending)} NOT publishable yet and deliberately held back:")
+            for c in pending:
+                print(f"    - {c['slug']}: phase={c.get('phase')} gate={c.get('gate')}")
+            print(f"  Re-run this SAME command (same --date {args.date}) as each lands; "
+                  "already-staged clips are skipped.")
+            print("  " + "-" * 68)
 
         # the --date dedupe trap, mechanized: publishing the same batch under a second
         # date re-queues every clip with new ids (publish-shorts globs the whole out dir)
@@ -884,7 +955,7 @@ def main_publish():
         prefix = args.id_prefix or publish_shorts.derive_prefix(args.batch)
         date_compact = args.date.replace("-", "")
         expected = []
-        for c in prog["clips"]:
+        for c in ready:          # ready clips only: a held-back clip is not staged or verified
             slug = publish_shorts.NUM_PREFIX.sub("", c["slug"])
             render = os.path.join(out_root, args.batch, f"{c.get('n')}-{slug}.mp4")
             if not os.path.isfile(render):
@@ -907,10 +978,14 @@ def main_publish():
             "progress_path": progress_path, "id_prefix": args.id_prefix or "",
             "test_sandbox": args.test_sandbox, "stub": "",
             "expected": expected, "status": "running",
+            # publish-shorts globs the render dir, so the ready set is what keeps a
+            # held-back render (BLOCKED / superseded / mid-rebuild) out of the queue.
+            "only_slugs": ",".join(e["slug"] for e in expected),
         }
         thread = args.thread or f"publish-{args.batch}-{date_compact}"
         set_current_batch(args.batch)
-        banner = (f"Publish graph | {args.batch} | {len(expected)} clips | date {args.date}"
+        banner = (f"Publish graph | {args.batch} | {len(expected)} of "
+                  f"{len(prog['clips'])} clips | date {args.date}"
                   + (f" | TEST SANDBOX {args.test_sandbox}" if args.test_sandbox else ""))
 
     DATA.mkdir(parents=True, exist_ok=True)
@@ -966,8 +1041,16 @@ def report_repurpose(final) -> int:
     for fname, d in (s.get("queues") or {}).items():
         print(f"    - {fname}: {d.get('planned')} planned · queue total "
               f"{d.get('queue_total')}")
-    print(f"  lint {s.get('lint')} · batches.json {s.get('registered')} "
-          "pipelines.repurpose=done")
+    if s.get("partial"):
+        print(f"  lint {s.get('lint')} · batches.json {s.get('registered')} "
+              "pipelines.repurpose=PARTIAL")
+        print("  ** HELD BACK (image not verified) — everything else is queued: "
+              + json.dumps(s.get("held"))
+              + "\n     re-run `run.py repurpose --batch <b>` after the missing images land "
+                "(generate skips what exists and retries the rest in a fresh chat).")
+    else:
+        print(f"  lint {s.get('lint')} · batches.json {s.get('registered')} "
+              "pipelines.repurpose=done")
     print("  next: visual-QA the images, then Mike reviews the pending entries on the "
           ":8766 dashboard. POSTING stays his — sequential, one poster at a time.")
     return 0
@@ -1022,7 +1105,7 @@ def main_repurpose():
             print(f"lane3-plan.json not found: {plan_path}\n"
                   "Draft Lane 3 first (topics, fact-check, copy, image prompts) and "
                   "save the plan — the judgment lands on disk BEFORE the segment runs "
-                  "(the clip-plan.json seam contract).", file=sys.stderr)
+                  "(the clip-plan.json handoff contract).", file=sys.stderr)
             sys.exit(1)
         try:
             with open(plan_path, encoding="utf-8") as f:
@@ -1074,7 +1157,7 @@ def main_repurpose():
             registry_root = str(REPO_ROOT)
             fake_gen = False
 
-        # Fail fast on the seam artifact — the same validator lane3_batch.py runs.
+        # Fail fast on the handoff artifact — the same validator lane3_batch.py runs.
         validate_lane3_plan(plan, data_dir=data_dir, images_base=images_base)
 
         sub_for = {"x-tweets": "x", "yt-posts": "yt", "ig-single": "ig",
@@ -1416,9 +1499,271 @@ def main_post():
     sys.exit(report_post(final))
 
 
+
+# ── BATCH ORCHESTRATOR (segment 9) + LANE 3 wrapper (segment 8) + STATUS ─────────────
+# Built 2026-09-10 after batch `kaspa`, where the intake graph's LANE FRONTIER banner was
+# read and Lane 3 was still never invoked. One invocation now owns all three lanes and
+# refuses DONE while any lane is pending. See batch_graph.py for the topology.
+#
+#   python run.py batch --source "<recording>" [--min-sil 0.5] [--shorts-min-sil 0.25]
+#       [--skip-longform] [--until 4b|2nd|finish|build|publish] [--approve 4b,2nd]
+#       [--delete N,N] [--lane3-brief "..."] [--clip-brief "..."] [--publish-date D]
+#       [--max-builders 2] [--thread ID] [--resume] [--stub ok|fail]
+#   python run.py batch --batch <b> --resume --approve 4b [--delete 2,5]   (after a gate)
+#   python run.py lane3 --batch <b> [--resume] [--stub ok|fail]             (Lane 3 alone)
+#   python run.py status --batch <b>                                        (exit 1 if pending)
+#
+# Exit codes: 0 done · 1 failed · 2 WAITING on a human gate (the resume command is printed).
+
+
+def _parse_ints(csv):
+    return [int(x) for x in (csv or "").replace(" ", "").split(",") if x]
+
+
+def _parse_list(csv):
+    return [x for x in (csv or "").replace(" ", "").split(",") if x]
+
+
+def _now_iso_run():
+    return datetime.now().isoformat(timespec="seconds")
+
+
+def report_batch(final, batch):
+    status = final.get("status", "?")
+    intr = final.get("__interrupt__")
+    if intr:
+        v = intr[0].value if hasattr(intr[0], "value") else intr[0]
+        v = v if isinstance(v, dict) else {}
+        print("GRAPH WAITING")
+        print(f"  HITL gate: {v.get('gate')} review · dashboard: {v.get('dashboard')}")
+        print(f"  resume with: {v.get('resume')}")
+        print(f"  Lane 3 keeps running concurrently; `run.py status --batch {batch}` "
+              "shows every lane.")
+        print_lanes_footer(batch)
+        return GATE_EXIT_CODE
+    print(f"GRAPH {status.upper()}")
+    for node, st in (final.get("steps") or {}).items():
+        print(f"  {node:20s} {st.get('status', '?'):8s} {st.get('detail', '')}")
+    if status != "done":
+        print(f"  {final.get('error', 'no error detail')}")
+        print_lanes_footer(batch)
+        return 1
+    summ = final.get("summary") or {}
+    if summ and not summ.get("stub"):
+        print(f"  lane 1 longform : {summ.get('lane1_longform')}")
+        print(f"  lane 2 shorts   : {summ.get('lane2_shorts')} ({summ.get('lane2_clips')} clips)"
+              + (f" · scoped --until {summ['until']}" if summ.get("until") else ""))
+        print(f"  lane 3 repurpose: {summ.get('lane3_repurpose')} · queued "
+              f"{json.dumps(summ.get('lane3_queued'))}")
+    if not summ.get("stub"):
+        print_lanes_footer(batch)
+    return 0
+
+
+def main_batch():
+    ap = argparse.ArgumentParser(prog="run.py batch",
+                                 description="Drive a livestream through ALL THREE LANES in "
+                                             "one invocation (the batch orchestrator).")
+    ap.add_argument("--source", help="the raw recording (needed only until intake is done)")
+    ap.add_argument("--batch", help="batch id (default: slug of the recording's folder)")
+    ap.add_argument("--min-sil", type=float, default=0.5,
+                    help="Lane 1 longform desilence knob (canonical 0.5)")
+    ap.add_argument("--shorts-min-sil", type=float, default=0.25,
+                    help="Lane 2 5B desilence knob (canonical 0.25)")
+    ap.add_argument("--skip-longform", action="store_true")
+    ap.add_argument("--until", choices=["", "4b", "2nd", "finish", "build", "publish"],
+                    default="", help="stop Lane 2 at this stage (Lane 3 still runs to done)")
+    ap.add_argument("--approve", default="", help="pre-approve gates: 4b,2nd")
+    ap.add_argument("--delete", default="",
+                    help="clip numbers to delete at the gate being approved, e.g. 2,5")
+    ap.add_argument("--lane3-brief", default=None, help="Mike's Lane 3 overrides for this batch")
+    ap.add_argument("--clip-brief", default=None, help="Mike's clip-selection overrides")
+    ap.add_argument("--publish-date", default=None)
+    ap.add_argument("--max-builders", type=int, default=2)
+    ap.add_argument("--thread", default=None)
+    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    args = ap.parse_args()
+
+    approve = _parse_list(args.approve)
+    deletes = _parse_ints(args.delete)
+    delete_4b = deletes if "4b" in approve else []
+    delete_2nd = deletes if ("2nd" in approve and "4b" not in approve) else []
+
+    if args.stub:
+        batch = "stub-batch"
+        init = {"batch": batch, "source": "stub.mkv", "stub": args.stub, "steps": {},
+                "status": "running", "until": args.until, "approve": approve}
+        thread = args.thread or f"batch-stub-{datetime.now():%Y%m%d-%H%M%S}"
+        print(f"Batch orchestrator | STUB MODE: {args.stub}")
+    else:
+        if not args.batch and not args.source:
+            print("--batch or --source is required.", file=sys.stderr)
+            sys.exit(1)
+        source = os.path.abspath(args.source) if args.source else None
+        if source and not os.path.isfile(source):
+            print(f"source not found: {source}", file=sys.stderr)
+            sys.exit(1)
+        batch = args.batch or slugify(Path(source).parent.name)
+        media_dir = str(Path(source).parent) if source else None
+        e = batch_reg_entry(batch)
+        if not media_dir and e and e.get("source_media"):
+            media_dir = str((REPO_ROOT / e["source_media"]).parent)
+        if (args.lane3_brief or args.clip_brief) and e:
+            e.setdefault("briefs", {})
+            if args.lane3_brief:
+                e["briefs"]["lane3"] = args.lane3_brief
+            if args.clip_brief:
+                e["briefs"]["clips"] = args.clip_brief
+            batch_reg_write(e)
+            print(f"briefs recorded on batches.json entry {batch}")
+        elif args.lane3_brief or args.clip_brief:
+            print("NOTE: batch not registered yet; the register node will record the briefs.")
+        init = {
+            "batch": batch, "source": source, "media_dir": media_dir,
+            "min_sil": args.min_sil, "shorts_min_sil": args.shorts_min_sil,
+            "skip_longform": args.skip_longform, "publish_date": args.publish_date,
+            "until": args.until, "approve": approve, "delete_4b": delete_4b,
+            "delete_2nd": delete_2nd, "max_builders": args.max_builders,
+            "lane3_brief": args.lane3_brief, "clip_brief": args.clip_brief,
+            "stub": "", "steps": {}, "status": "running",
+        }
+        thread = args.thread or f"batch-{batch}"
+        print(f"Batch orchestrator | {batch} | thread {thread}"
+              + (f" | --until {args.until}" if args.until else "")
+              + (f" | approve {approve}" if approve else ""))
+        set_current_batch(batch)
+
+    DATA.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(CHECKPOINT_DB), check_same_thread=False)
+    app = build_batch_graph(checkpointer=SqliteSaver(conn))
+    config = {"configurable": {"thread_id": thread}, "recursion_limit": 200}
+    started_at = _now_iso_run()
+    t0 = time.monotonic()
+    try:
+        if args.resume:
+            update = {k: v for k, v in init.items()
+                      if k in ("approve", "delete_4b", "delete_2nd", "until", "publish_date",
+                               "shorts_min_sil", "max_builders", "lane3_brief", "clip_brief")}
+            payload = ({"approve": approve[0], "delete": deletes} if approve else None)
+            # A plain resume (no approval) must carry NO state update: the checkpoint's own
+            # pending writes + an update to the same key = InvalidUpdateError (caught live
+            # 2026-09-10). Per-run knobs ride on env (BATCH_MAX_BUILDERS) in that case.
+            final = app.invoke(Command(resume=payload, update=update) if payload else None,
+                               config)
+        else:
+            final = app.invoke(init, config)
+    except Exception as e:
+        final = {"status": "failed", "error": f"orchestrator crashed: {e!r}"}
+    ended_at = _now_iso_run()
+    rc = report_batch(final, batch)
+    status = "waiting" if rc == GATE_EXIT_CODE else final.get("status", "failed")
+    finish_progress(status, None if rc == 0 else str(final.get("error") or "waiting"))
+    record_run(9, thread, {**final, "status": status,
+                           "batch": {"batch": batch, "steps": final.get("steps"),
+                                     "summary": final.get("summary")}},
+               started_at, ended_at, time.monotonic() - t0, stub=args.stub,
+               requested={"batch": batch, "until": args.until, "approve": approve,
+                          "resume": args.resume})
+    sys.exit(rc)
+
+
+def main_lane3():
+    ap = argparse.ArgumentParser(prog="run.py lane3",
+                                 description="Lane 3 end to end: drafter agent -> repurpose "
+                                             "graph -> visual-qa. Normally launched by the "
+                                             "batch orchestrator; safe to run alone.")
+    ap.add_argument("--batch")
+    ap.add_argument("--thread", default=None)
+    ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    args = ap.parse_args()
+    if args.stub:
+        batch = "stub-batch"
+        init = {"batch": batch, "stub": args.stub, "steps": {}, "status": "running"}
+        thread = args.thread or f"lane3-stub-{datetime.now():%Y%m%d-%H%M%S}"
+        print(f"Lane 3 graph | STUB MODE: {args.stub}")
+    else:
+        if not args.batch:
+            print("--batch is required.", file=sys.stderr)
+            sys.exit(1)
+        batch = args.batch
+        if not batch_reg_entry(batch):
+            print(f"batch {batch!r} is not registered in batches.json (run intake/cut or the "
+                  "batch orchestrator first).", file=sys.stderr)
+            sys.exit(1)
+        init = {"batch": batch, "stub": "", "steps": {}, "status": "running"}
+        thread = args.thread or f"lane3-{batch}"
+        print(f"Lane 3 graph | {batch} | thread {thread}")
+        set_current_batch(batch)
+    DATA.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(CHECKPOINT_DB), check_same_thread=False)
+    app = build_lane3_graph(checkpointer=SqliteSaver(conn))
+    config = {"configurable": {"thread_id": thread}, "recursion_limit": 50}
+    started_at = _now_iso_run()
+    t0 = time.monotonic()
+    try:
+        final = app.invoke(init, config)
+    except Exception as e:
+        final = {"status": "failed", "error": f"lane 3 graph crashed: {e!r}"}
+    ended_at = _now_iso_run()
+    status = final.get("status", "?")
+    if status == "running":     # every node returned without a failure = done
+        status = "done"
+        final["status"] = "done"
+    print(f"GRAPH {status.upper()}")
+    for node, st in (final.get("steps") or {}).items():
+        print(f"  {node:12s} {st.get('status', '?'):8s} {st.get('detail', '')}")
+    if status != "done":
+        print(f"  {final.get('error', 'no error detail')}")
+    if not args.stub:
+        print_lanes_footer(batch)
+    finish_progress(status, final.get("error"))
+    record_run(8, thread, {**final, "lane3": {"batch": batch, "steps": final.get("steps")}},
+               started_at, ended_at, time.monotonic() - t0, stub=args.stub,
+               requested={"batch": batch, "resume": args.resume})
+    sys.exit(0 if status == "done" else 1)
+
+
+def main_status():
+    ap = argparse.ArgumentParser(prog="run.py status")
+    ap.add_argument("--batch", required=True)
+    args = ap.parse_args()
+    if not batch_reg_entry(args.batch):
+        print(f"batch {args.batch!r} is not registered in batches.json", file=sys.stderr)
+        sys.exit(1)
+    print_lanes_footer(args.batch)
+    sys.exit(1 if lanes_status(args.batch)["pending"] else 0)
+
+
+def _with_lanes_footer(fn, key, batch_field="batch"):
+    """Every segment report now ends with the BATCH LANES footer, so a pending lane is
+    visible at the end of EVERY invocation, not only in the intake's frontier banner."""
+    def wrapped(final):
+        rc = fn(final)
+        try:
+            s = final.get(key) if isinstance(final, dict) else None
+            b = (s or {}).get(batch_field)
+            if b and not (s or {}).get("stub") and not (s or {}).get("sandbox") \
+                    and batch_reg_entry(b):
+                print_lanes_footer(b)
+        except Exception:
+            pass
+        return rc
+    return wrapped
+
+
+report_intake = _with_lanes_footer(report_intake, "intake", "slug")
+report_cut = _with_lanes_footer(report_cut, "cut")
+report_tighten = _with_lanes_footer(report_tighten, "tighten")
+report_finish = _with_lanes_footer(report_finish, "finish")
+report_publish = _with_lanes_footer(report_publish, "publish")
+report_repurpose = _with_lanes_footer(report_repurpose, "repurpose")
+
 SEGMENTS = {"cut": main_cut, "tighten": main_tighten,
             "finish": main_finish, "publish": main_publish,
-            "repurpose": main_repurpose, "post": main_post}
+            "repurpose": main_repurpose, "post": main_post,
+            "batch": main_batch, "lane3": main_lane3, "status": main_status}
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] in SEGMENTS:

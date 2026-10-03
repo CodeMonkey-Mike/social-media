@@ -163,3 +163,35 @@ reports it, so run `node generate_reply_images.js` and post again.
 
 ## Rate limits
 - Replies: no hard daily limit but keep natural cadence; `post_replies.py` adds 2–6 min gaps
+
+---
+
+## ⚠ `post_replies.py --limit N` is accepted but IGNORED (2026-08-19)
+
+`--limit N` does not hold anything back: the run posts the **entire** queue. Verified on a real
+run where `--limit 1` posted all 10 queued replies in one invocation (~35 min wall-clock,
+2-6 min gaps between each).
+
+Consequences to plan around:
+- **You cannot split a reply queue across task-list steps.** A list with "post 5 replies" early
+  and "post the remaining replies" later gets fully drained by the first step; the second is a
+  no-op skip. Queue only what you are willing to send in one go.
+- The run will blow past the 600s foreground ceiling and be backgrounded. That is still the one
+  attempt: never relaunch it. The task log can rotate down to its last lines, so per-entry
+  failure reasons may be lost - read `data/posted_replies.json` for outcomes instead.
+
+## Image-reply generation: two gotchas worth knowing up front
+
+**A regen will SKIP if the old PNG is still on disk.** `generate_reply_images.js` prints
+`SKIP (exists)` and then re-records the OLD file's path into the queue, so a "successful" rerun
+can silently keep the bad image. To actually regenerate: move/delete
+`data/reply-images/reply-<id>-<style>.png` AND blank that entry's `image_path`, then run.
+
+**The exemplar's content leaks when the prompt mentions Kaspa.** The anti-leak guard in
+`generate_reply_images.js` only fires for non-Kaspa prompts, so a Kaspa-themed prompt inherits
+whatever else the exemplar was carrying. Seen 2026-08-19: an `evolution-march` image put an
+unprompted **Ethereum diamond** on a stage that was supposed to be a plain coin. When a style's
+exemplar has per-stage branding, state the negative explicitly in the prompt, e.g.
+"the first three coins are plain generic coins with NO recognizable project logo, ticker or
+brand mark: no Ethereum diamond, no Bitcoin B, no lettering." QA every stage of a multi-stage
+image, not just the spelling.

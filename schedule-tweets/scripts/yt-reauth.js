@@ -28,6 +28,11 @@ const path  = require('path');
 const OAUTH_FILE    = path.join(__dirname, '..', 'config', 'yt-oauth.json');
 const TOKEN_FILE    = path.join(__dirname, '..', 'config', 'yt-api-token.json');
 const UPLOAD_SCOPES = ['https://www.googleapis.com/auth/youtube.upload'];
+// youtube.readonly enables the authenticated pre-upload duplicate check in post-yt-short-api.js
+// (playlistItems.list on the uploads playlist) so the flaky public RSS feed is never load-bearing.
+const READ_SCOPES   = ['https://www.googleapis.com/auth/youtube.readonly'];
+const AUTH_SCOPES   = [...UPLOAD_SCOPES, ...READ_SCOPES];
+const CHANNEL_FILE  = path.join(__dirname, '..', 'config', 'yt-channel.json');
 
 function loadOauthClient() {
   if (!fs.existsSync(OAUTH_FILE)) {
@@ -82,7 +87,7 @@ function consentAndSave(client_id, client_secret) {
       const authUrl = client.generateAuthUrl({
         access_type: 'offline',
         prompt: 'consent',           // force a fresh refresh_token even on re-auth
-        scope: UPLOAD_SCOPES,
+        scope: AUTH_SCOPES,
       });
       console.log('\nOpen this URL in your browser to authorize (it should auto-open):');
       console.log(`  ${authUrl}\n`);
@@ -101,6 +106,16 @@ async function validate(client_id, client_secret) {
   const at = await client.getAccessToken();
   if (!at || !at.token) throw new Error('Refresh returned no access token');
   console.log('Validation ✓ — refresh token mints an access token (no invalid_grant).');
+  // Confirm the read scope actually landed: this is the exact call the duplicate check makes.
+  try {
+    const channelId = JSON.parse(fs.readFileSync(CHANNEL_FILE, 'utf8')).channelId;
+    const youtube = google.youtube({ version: 'v3', auth: client });
+    const res = await youtube.playlistItems.list({ part: ['snippet'], playlistId: 'UU' + channelId.slice(2), maxResults: 1 });
+    const t = res.data.items?.[0]?.snippet?.title;
+    console.log(`Read scope ✓ — authenticated duplicate check enabled (latest upload: "${t}").`);
+  } catch (err) {
+    console.log(`Read scope ✗ — ${err.message}. The poster will keep using the public RSS/channel-page fallbacks.`);
+  }
 }
 
 (async () => {

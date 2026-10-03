@@ -281,8 +281,8 @@ Word-level captions sit in the band **at the divider** between the zones. Visual
   beat, then get out. Webcam visible below.
 - **Graphics overlays** — code-built badges/cards over the base video. They're small and do NOT blanket the content zone, so they are *not* a substitute for revealing the screen-share.
 - **No full-screen face shots this batch.**
-- Reference model: trimmed `BROLL_RUG` in `remotion/src/constants-rug.ts` is ~50% base showing — that is
-  now **too b-roll-heavy**; treat it as an upper bound to cut back from, not a target.
+- Reference point: ~50% base showing (the density of the old trimmed `rug` clip, whose comp has since been
+  deleted) is now **too b-roll-heavy**; treat it as an upper bound to cut back from, not a target.
 
 Captions: word-level (caption1 style) as standard — `style-guide/captions.md`.
 
@@ -539,20 +539,30 @@ npm run render:tyson
 
 Render speed on this machine: ~90 frames in 8s (test), full 3300 frames in ~4–5 min at 4x concurrency.
 
-#### GPU rendering — MANDATORY (Mike's rule, 2026-05-28)
+#### GPU encoding — the setting stays ON, but KNOW WHAT IT ACTUALLY DOES (corrected 2026-08-19)
 
-**Always render with hardware acceleration. Never CPU-only.** This is baked into
-`remotion.config.ts` via `Config.setHardwareAcceleration("if-possible")`, so the standard
-`npx remotion render ...` command already uses GPU encoding (NVENC on Windows/Linux,
-VideoToolbox on macOS, VA-API on Linux). It silently falls back to libx264 on a machine
-without a supported GPU encoder — so there's no risk in leaving it on.
+`remotion.config.ts` sets `Config.setHardwareAcceleration("if-possible")`. Keep it — but the
+claim this section used to make ("NVENC on Windows/Linux, VA-API on Linux") is **FALSE**, verified
+against the installed source on 2026-08-19 (Remotion 4.0.462,
+`node_modules/@remotion/renderer/dist/get-codec-name.js`): hardware-accelerated encoding is gated
+on `process.platform === 'darwin'` for every codec — **macOS VideoToolbox ONLY**. On Windows the
+h264 branch unconditionally returns `libx264, hardwareAccelerated: false`; there is no NVENC path
+anywhere in the renderer, and `--hardware-acceleration=required` throws on win32 by design. Every
+render on this machine is a CPU x264 encode and always has been, RTX 4070 notwithstanding.
 
-Do **NOT** remove the `setHardwareAcceleration` line from `remotion.config.ts`. Do **NOT**
-pass `--hardware-acceleration=disable` to the CLI. If you're tempted to drop to CPU for
-"determinism" reasons, file the concern instead and keep GPU on.
+**Why we don't chase it (measured on this machine, 2026-08-19, 630-frame 1080×1920@30 short):**
+standalone encode of the whole clip takes ~6.7 s at x264 `medium` (94 fps), ~3.0 s at `veryfast`
+(210 fps), ~2.5 s with `h264_nvenc` (256 fps) — against a ~60 s total render. Encoding is a small,
+overlapped slice of render time; **rasterization in headless Chrome is the bottleneck**, and that
+never touches the encoder. A perfect GPU encoder would save ≤ ~10% per short. If encode cost ever
+matters, the supported knob is `--x264-preset veryfast` (native Remotion option) — it captures most
+of the gap without any pipeline change.
 
-If a render fails with an encoder error, first verify the GPU encoder is available
-(`ffmpeg -encoders | findstr nvenc`); do not work around it by disabling acceleration.
+Do **NOT** remove the `setHardwareAcceleration` line (harmless today, and it self-activates if
+Remotion ever ships Windows hardware encoding). Do **NOT** pass
+`--hardware-acceleration=disable`. And do not "verify NVENC availability" when an encoder error
+appears — system ffmpeg having `h264_nvenc` is irrelevant, because Remotion's bundled encode path
+cannot select it on Windows.
 
 **GL renderer (frame rasterization) — tested 2026-06-04, NOT adopted.** `setHardwareAcceleration`
 only accelerates the *encode*; the heavier part — rasterizing each frame in headless Chrome — runs
@@ -560,9 +570,16 @@ on the default GL backend (software SwiftShader). Benchmarked `--gl=angle` (GPU 
 default on a 300-frame short: **~37s vs ~40s** — a ~7% gain that is mostly bundle/measurement noise,
 because these compositions are DOM/CSS + video (layout/paint/JS bound), not GPU-rasterization bound.
 ANGLE also **changed the output** (PSNR ~44 dB vs default, i.e. NOT bit-identical — font/AA edges
-differ), a determinism risk Remotion itself warns about. **Do not set a GPU GL renderer.** If render
-time becomes a problem, the real lever is CPU `setConcurrency` (frame paint is CPU-bound), not the
-GL backend — benchmark a higher concurrency against core count instead.
+differ), a determinism risk Remotion itself warns about. **Do not set a GPU GL renderer.**
+
+**Concurrency — benchmarked 2026-08-19, leave it at 8.** On this machine (Ryzen AI 9 365,
+10 cores / 20 threads) a 630-frame short was rendered at concurrency 8/12/16/20 with a warm
+bundle: 54s / 67s / 58s (55s repeat) / 65s. Concurrency 8 is at the optimum; 12 measured WORSE,
+and 16/20 are noise at best — more Chrome tabs than physical cores just thrash. `--x264-preset
+veryfast` also changed nothing on wall-clock (55s vs 54s), which confirms the encode overlaps
+rasterization and is off the critical path entirely. Do not re-benchmark these without a hardware
+change; the render pipeline is rasterization-bound and the win is elsewhere (batch pipelining —
+see the rolling-pipeline rule in `livestream-repurpose/skills/remotion-shorts-build/SKILL.md`).
 
 **Important:** Never pipe the render command through `grep | head` — when `head` exits it closes the pipe and kills the render. Run it raw or in background.
 

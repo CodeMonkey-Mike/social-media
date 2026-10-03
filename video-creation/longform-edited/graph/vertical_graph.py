@@ -391,14 +391,20 @@ def v_verify_comp(state: VerticalState) -> VerticalState:
     return {"steps": C._step(state, node, "ran", f"{len(runs)} gate(s) PASS on {comp.name}")}
 
 
-def _concat(parts, out: Path):
+def _concat(parts, out: Path, vo: Path):
+    """Join the render parts PICTURE-ONLY (frame-exact, constant 30 fps) and take the VO WHOLE from the paused spine.
+    Never concat the parts' audio: each part's AAC track runs ~0.05-0.1 s longer than its picture, so an audio+video
+    concat holds the last frame of every part and pushes everything after the seam late (golden-kitty 2026-10-02:
+    a 3-frame hold at frame 12000 and the VO +57 ms late for the last 77 s; vertical-repurpose.md section 3)."""
     n = len(parts)
     inputs = []
     for p in parts:
         inputs += ["-i", str(p)]
-    fc = "".join(f"[{i}:v:0][{i}:a:0]" for i in range(n)) + f"concat=n={n}:v=1:a=1[v][a]"
-    r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", fc, "-map", "[v]", "-map", "[a]",
-                        "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", "-preset", "medium", "-c:a", "aac", "-b:a", "192k", str(out)],
+    inputs += ["-i", str(vo)]
+    fc = "".join(f"[{i}:v:0]" for i in range(n)) + f"concat=n={n}:v=1:a=0,setpts=N/30/TB[v]"
+    r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", fc, "-map", "[v]", "-map", f"{n}:a:0",
+                        "-r", "30", "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", "-preset", "medium",
+                        "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)],
                        capture_output=True, text=True)
     return r.returncode == 0, r.stderr[-600:]
 
@@ -432,9 +438,13 @@ def v_render(state: VerticalState) -> VerticalState:
                 return C._fail(state, node, f"part {a}-{b} failed", res)
             parts.append(part)
             a = b + 1
-        ok, err = _concat(parts, out)
+        ok, err = _concat(parts, out, proj / "assets" / "spine.mp4")
         if not ok:
             return C._fail(state, node, "ffmpeg concat of the parts failed", err)
+        got = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-count_frames", "-show_entries", "stream=nb_read_frames",
+                              "-of", "csv=p=0", str(out)], capture_output=True, text=True).stdout.strip().strip(",")
+        if got != str(frames):
+            return C._fail(state, node, f"the joined picture has {got} frames, expected {frames} (a held or dropped frame at a seam)")
     else:
         rc, res = C.run_streaming(base + ["--out", str(out)], state, node)
         if rc != 0:

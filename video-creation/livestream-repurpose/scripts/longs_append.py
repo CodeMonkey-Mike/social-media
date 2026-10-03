@@ -8,7 +8,7 @@ rollback), carrying both of their guards:
     (the idempotency shape: re-running the queue node is a no-op, not a duplicate).
 
 The judgment fields (title / description / tags) are NOT authored here — they come
-from the longform-meta.json the caller wrote before the run (the pre-run seam). This
+from the longform-meta.json the caller wrote before the run (the pre-run handoff). This
 script is mechanical: schema assembly + guards + atomic write. JSON is written
 python-json with ensure_ascii=False (same bytes-shape as the Node writers; NEVER
 PowerShell ConvertTo-Json).

@@ -29,20 +29,26 @@ def repo_root():
 
 def make_entry(batch, date, livestream_title, *, source_media=None, transcript_plain=None,
                transcripts_dir=None, dashboard=None, status="active", shorts="active",
-               repurpose="pending", shorts_source=None, note=None, directories=None):
+               repurpose=None, shorts_source=None, note=None, directories=None):
     # default transcript_plain from the transcripts_dir (the standard naming)
     if transcript_plain is None and transcripts_dir:
         leaf = os.path.basename(transcripts_dir.rstrip("/"))
         transcript_plain = f"{transcripts_dir}/{leaf}_plain.txt"
     if directories is None:
         directories = [f"video-creation/remotion/out/{batch}", f"video-creation/shorts/{batch}"]
+    # A caller only knows its OWN lane. `repurpose` defaults to None = "I am not the
+    # authority on that lane, leave it alone" (upsert fills "pending" on a brand-new
+    # entry). Passing repurpose="pending" explicitly is a real instruction to reset it.
+    pipelines = {"shorts": shorts}
+    if repurpose is not None:
+        pipelines["repurpose"] = repurpose
     entry = {
         "batch": batch, "status": status, "date": date,
         "livestream_title": livestream_title, "shorts_source": shorts_source,
         "source_media": source_media, "transcript_plain": transcript_plain,
         "transcripts_dir": transcripts_dir, "dashboard": dashboard,
         "directories": directories,
-        "pipelines": {"shorts": shorts, "repurpose": repurpose},
+        "pipelines": pipelines,
     }
     if note:
         entry["note"] = note
@@ -57,13 +63,27 @@ def upsert(entry, root=None):
     name = entry["batch"]
     for i, b in enumerate(batches):
         if b.get("batch") == name:
-            batches[i] = entry          # replace in place (preserve ordering)
+            # MERGE, never clobber: the lanes register independently and whichever runs
+            # LAST used to win the whole entry. On 2026-08-13 (batch wen-moon) Lane 3
+            # finished first and set pipelines.repurpose="done", then the Lane 2 cut
+            # graph registered and reset it to "pending" — the batch looked un-repurposed
+            # and would have been re-drafted. Shallow-merge the old entry under the new
+            # one (so keys another lane added, e.g. track/title/pipelines.longform,
+            # survive) and merge pipelines key by key.
+            merged = {**b, **entry}
+            merged["pipelines"] = {**(b.get("pipelines") or {}),
+                                   **(entry.get("pipelines") or {})}
+            batches[i] = merged         # replace in place (preserve ordering)
             action = "updated"
             break
     else:
+        entry.setdefault("pipelines", {}).setdefault("repurpose", "pending")
         batches.insert(0, entry)        # newest first
         action = "inserted"
-    json.dump(d, open(p, "w", encoding="utf-8"), indent=2)
+    # ensure_ascii=False: the default escapes every non-ASCII character, which rewrote the
+    # whole registry as \uXXXX noise on each run (391 escapes on the wen-moon run) and is
+    # the same emoji-mangling class of bug the repo bans PowerShell JSON round-trips for.
+    json.dump(d, open(p, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
     print(f"batches.json: {action} '{name}'  (status={entry['status']})")
     return p
 
@@ -83,7 +103,9 @@ def _cli():
     ap.add_argument("--dashboard")
     ap.add_argument("--status", default="active")
     ap.add_argument("--shorts", default="active")
-    ap.add_argument("--repurpose", default="pending")
+    ap.add_argument("--repurpose", default=None,
+                    help="only pass this if you ARE the Lane 3 authority; unset leaves "
+                         "an existing entry's repurpose flag untouched")
     ap.add_argument("--shorts-source", dest="shorts_source")
     ap.add_argument("--note")
     a = ap.parse_args()

@@ -331,7 +331,8 @@ where `start_frame` is either a keyframe path or `"chain:prev-last"` (use previo
 ## 9. Editing — Remotion (VALIDATED 2026-05-30)
 
 Rendered clips are raw material; the finished short is built on the Remotion timeline (the repo's
-"motion timeline" lives at `video-creation/remotion/`). Validated full edit for crypto-promo:
+"motion timeline" lives at `video-creation/remotion/`). Validated full edit for crypto-promo (its own
+comp and captions module have since been deleted, so the file names below are the per-video pattern):
 
 **Pipeline:**
 1. **Concat** the approved clips → `crypto-promo-FINAL.mp4` (the raw pre-edit reference) via the
@@ -340,12 +341,12 @@ Rendered clips are raw material; the finished short is built on the Remotion tim
 2. **Captions** — `scripts/build_captions.py` transcribes **each clip on its own clean audio** with
    local Whisper (`--model small --word_timestamps`), offsets each clip's word times by its cumulative
    position in the timeline, groups into ≤4-word groups (break on sentence punctuation), writes
-   `_captions/captions.json` → then emit `remotion/src/cryptoPromoCaptions.ts`. **Per-clip+offset beats
+   `_captions/captions.json` → then emit `remotion/src/<name>Captions.ts`. **Per-clip+offset beats
    transcribing the concatenated file** — avoids cross-boundary word merging / drift.
-3. **Composition** — `remotion/src/CryptoPromo.tsx` (registered in `Root.tsx`, id `CryptoPromo`,
+3. **Composition** — `remotion/src/<Name>.tsx` (registered in `Root.tsx`, id `<Name>`,
    `durationInFrames` = ceil(totalSeconds × 30), 30fps, 1080×1920). Layers: `<OffthreadVideo>` base +
    karaoke captions + top title + end card.
-4. **Render** — `npx remotion render src/index.ts CryptoPromo <out>.mp4 --codec=h264` (GPU per
+4. **Render** — `npx remotion render src/index.ts <Name> <out>.mp4 --codec=h264` (GPU per
    `remotion.config.ts`; `setPublicDir("../assets")` resolves staticFile from `video-creation/assets/`,
    so copy the source video to `assets/crypto-promo/`). **Output is always 1080×1920 regardless of the
    source clip resolution** — this is the free upscale that lets us generate Seedance at 480p (see §3).

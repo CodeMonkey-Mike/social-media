@@ -1,0 +1,11 @@
+gate: constants-beer-and-kaspa-114x-in-eight-days.ts | duration 63.9s | 16 distinct staticFile refs
+  ok  thumbnail: thumb-bk4-cover.png
+  ok  b-roll assets: 7 (>= 1 required)
+  ok  sfx refs: 6
+  ok  WARN unreferenced assets in public-dir (orphans): ['broll-bk2-hook-kitty-vault.png', 'broll-bk2-kitty-oracle.png', 'broll-bk2-kitty-summit.png', 'broll-kb1-bear-stunned.png', 'broll-kb1-bear-throne.png']
+  ok  zone b-roll: 7 beat(s) in BrollEv[] (coverage present)
+PASS
+BATCH FRONTIER: this PASS completes the batch - all 4 clip(s) built with PASS gates.
+  NEXT (mechanical - do NOT wait for a render-review gate): verify shorts/beer-and-kaspa/publish-meta.json exists, then run:
+    python video-creation/livestream-repurpose/graph/run.py publish --batch beer-and-kaspa
+  Staging IS Mike's review handoff (2026-08-07): he reviews from the :8766 queue; only POSTING is his gate.

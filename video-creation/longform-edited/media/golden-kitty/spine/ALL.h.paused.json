@@ -1,0 +1,38 @@
+{
+  "pauses": [
+    {
+      "at": 51.095,
+      "planned": 51.2,
+      "dur": 1.5,
+      "card": "THE GOLDEN KITTY",
+      "sits_in": "trough 51.070-51.100, gate guard -46.7 dB"
+    },
+    {
+      "at": 170.97,
+      "planned": 171.2,
+      "dur": 1.5,
+      "card": "PRICED IN GOLD",
+      "sits_in": "trough 170.920-171.000, gate guard -52.0 dB"
+    },
+    {
+      "at": 260.3,
+      "planned": 260.0,
+      "dur": 1.5,
+      "card": "THE STONK NARRATIVE",
+      "sits_in": "trough 260.260-260.300, gate guard -61.6 dB"
+    },
+    {
+      "at": 363.36,
+      "planned": 363.46,
+      "dur": 1.5,
+      "card": "ROBINHOOD CHAIN",
+      "sits_in": "trough 363.320-363.380, gate guard -62.0 dB"
+    }
+  ],
+  "pause_s": 1.5,
+  "source": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\spine\\ALL.g.pickup.mp4",
+  "output": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\spine\\ALL.h.paused.mp4",
+  "output_duration_s": 476.493,
+  "fps": 30.0,
+  "note": "every comp cue is a SOURCE time; sh() adds pause_s per pause whose `at` <= t"
+}

@@ -1,0 +1,379 @@
+{
+  "batch": "golden-kitty-dominance",
+  "date": "2026-09-25",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/golden-kitty-dominance LOW BPS VERTICAL/golden-kitty-dominance LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-09-25",
+  "brief": "Limit to ONE X thread total. Everything else at the normal defaults.",
+  "fact_check": [
+    {
+      "claim": "Golden Kitty ($GOLDEN) on Robinhood Chain: launched 'the 4th', paired with gold, the only new meme doing anything, a fib 2.618 target of about $8M in the coming weeks, about a double from where it sits (transcript)",
+      "verdict": "verified and UPDATED to 2026-09-25: contract 0x92e4B008161aC64a7D0C5e540F453F8e6B8Bd8D7 on Robinhood Chain; main Uniswap pool GOLDEN/GLD (paired against the tokenized SPDR Gold Trust stock token) created 2026-09-04 13:50 UTC; price $0.00476, market cap about $4.76M, 24h +25%, 7d +170%, 14d +520%, ATH $0.00488 set 2026-09-25, ATL $0.00065 on 2026-09-16; about $195K liquidity in the GLD pool; no centralized exchange listings; official X @golden_kitty_rh (not in persona project_handles, so NO Follow line is added; Mike can add the handle to the map). Copy says 'launched Sept 4', 'up about 170% on the week', 'about 520% over two weeks', 'new all-time high this week at roughly a $4.8M cap', 'paired against tokenized gold (GLD)'. The $8M target is Mike's own fib read, written in first person ('my fib extension puts the next stop around $8M'), and his 'I am waiting for a retracement' stance is his own position, kept forward-looking.",
+      "source": "api.coingecko.com/api/v3/coins/golden-kitty (2026-09-25); api.dexscreener.com/latest/dex/search?q=GOLDEN%20GLD (pairCreatedAt 1788529833000 = 2026-09-04 13:50:33 UTC, Python-checked); coingecko robinhood-chain-meme category markets"
+    },
+    {
+      "claim": "Golden Kitty lore: 'an actual trophy' tied to Robinhood (transcript: 'the lore of golden kitty is that it is an actual trophy that Vlad held up')",
+      "verdict": "verified in general form: the token's own description says it celebrates Robinhood winning Product Hunt's 2015 Golden Kitty Award, and Product Hunt's own 2015 winners post lists Robinhood as Sexiest Product of the Year. Copy: 'Robinhood won Product Hunt's 2015 Golden Kitty award (Sexiest Product of the Year). That chrome-gold cat trophy IS the meme.' The 'Vlad held it up' detail could not be verified and is NOT used.",
+      "source": "blog.producthunt.com/the-golden-kitty-awards-2015-winners-9e19cce3d683; coingecko golden-kitty description; mexc.com/price/golden-kitty/info"
+    },
+    {
+      "claim": "Swole ($SWOLE): paired with HOOD, lore = Vlad's 2021 reply to 'the original name for Robinhood was Cash Cat' with a big beefy cat image, phenomenal non-stop content, chart devastated, about $363K cap (transcript)",
+      "verdict": "verified and UPDATED: Swole Cat contract 0x2f36bA966BF29F702Bb290245406a5b0e3e1a66E, main Uniswap v3 pool SWOLE/HOOD (the Robinhood stock token), market cap about $340K, 24h -26%; Vlad Tenev said publicly in April 2021 that Cash Cat was the original name of the Robinhood app and posted a buff cat towering over a crying cat. Copy: 'Vlad's 2021 swole-cat reply to the Cash Cat name, paired with HOOD, under $350K'. The 'phenomenal content' line is Mike's read and is kept as such.",
+      "source": "api.dexscreener.com/latest/dex/search?q=swole (2026-09-25); fortune.com/crypto/2026/07/13/robinhood-chain-memecoin-trading-cash-cat-vlad-tenev-crypto; phemex.com/blogs/robinhood-first-name-token-chain"
+    },
+    {
+      "claim": "Kitsu ($KITSU): literally Vlad Tenev's Shiba Inu, about $1.1M cap, holding the line, no centralized exchanges (transcript)",
+      "verdict": "verified and UPDATED: KITSU contract 0x8d4dFaaA4198b6486E0293Fec914C2B6a821D4DC, market cap about $1.14M, 24h +3.5%, ATH $0.005 on 2026-07-12; the project describes itself as inspired by Vlad Tenev's Shiba Inu Kitsu (name read off a collar tag in Robinhood posts), independent and not an official Robinhood product; only DEX pools on DexScreener. Copy: 'literally Vlad Tenev's Shiba Inu', 'holding the line near $1.1M'.",
+      "source": "api.dexscreener.com/latest/dex/search?q=kitsu (2026-09-25); kitsu.dog; bitrue.com/blog/what-is-kitsu-robinhood-chain-token-price-and-risks; coingecko robinhood-chain-meme category"
+    },
+    {
+      "claim": "Tendies ($TENDIES): has four or five centralized exchange listings ('LBank... Bitbase'), holding its floor (transcript)",
+      "verdict": "verified in general form: TENDIES (0x45242320DBB855EeA8Fd36804C6487E10E97FCF9) trades on LBank (LBank press release, July 2026) with a market cap about $9.4M and 24h -2.7%; the exact count of CEX listings could not be confirmed, so copy says 'has the CEX listings (LBank among them)' and 'holding its floor near $9.4M'.",
+      "source": "chainwire.org/2026/07/17/lbank-captures-robinhood-chain-momentum...; api.dexscreener.com/latest/dex/search?q=tendies (2026-09-25); coingecko tendies-2"
+    },
+    {
+      "claim": "Cash Cat and Artificial Inu are the big ones already in the hundreds of millions (transcript)",
+      "verdict": "verified: Cash Cat market cap about $176M (ATH 2026-09-03), Artificial Inu about $237M (ATH 2026-09-17). Copy uses only 'Cash Cat sits around $175M'.",
+      "source": "api.coingecko.com/api/v3/coins/markets?category=robinhood-chain-meme (2026-09-25)"
+    },
+    {
+      "claim": "What If ($IF) is dying, nobody is holding a line, could go to a $400K cap (transcript)",
+      "verdict": "verified: $IF price $0.000585, market cap about $524K, 24h -8.6%, 7d -93.9%, 98.5% below the Aug 2 ATH. NOT used in any X copy (a mention would trigger the mandatory @WhatIFonHOOD follow line and the archie-promo batch already covered the $IF story); it appears only on YT post A's data slide 4 as '$IF: UNDER $600K'.",
+      "source": "api.coingecko.com/api/v3/coins/what-if-3 (2026-09-25)"
+    },
+    {
+      "claim": "Bitcoin is at $84K, might dip to $78K and bounce off 'the 58 moving average', not going back below it, not going to a $40K Bitcoin, the bottom is already in (transcript)",
+      "verdict": "verified and UPDATED: Bitcoin trades about $86K on 2026-09-25; the weekly close of Sept 20 was $81,159, above the 50-week SMA of roughly $78,788, the first weekly close above it since Nov 9, 2025 (45 weeks); Galaxy's review found 13 reclaims of the 50-week average since 2011 with no new market low in 11 of them. The transcript's '58 moving average' is a Whisper mishear of the 50-week SMA (the level he names, $78K, matches it). Copy: 'reclaimed the 50-week SMA (about $78,800) with an $81,159 weekly close on Sept 20', 'trades near $86K this week', 'first weekly close above it since Nov 9, 2025', the Galaxy 13/11 count; 'not going to $40K' and 'the bottom is in' are Mike's own calls in first person.",
+      "source": "cryptobriefing.com/bitcoin-50-week-moving-average-breakout-september-2026; kucoin.com/news/flash/bitcoin-reclaims-50-week-moving-average-for-first-time-in-45-weeks; thecryptobasic.com/2026/09/21/bitcoin-records-first-weekly-close-above-50-week-average-since-november-2025; finance.yahoo.com BTC-USD (2026-09-25)"
+    },
+    {
+      "claim": "Another injection of billions of dollars of QE by the Fed 'tomorrow' (transcript)",
+      "verdict": "NOT verified, DROPPED: the Fed extended its pause on reserve management bill purchases through mid-October (Bloomberg, Sept 14) and only plans about $15.6B of reinvestment purchases over the period, which do not expand the balance sheet. No copy claims an imminent Fed injection; the 'we like QE, we hate supply shocks' thesis is written as a general macro stance.",
+      "source": "bloomberg.com/news/articles/2026-09-14/fed-prolongs-pause-on-reserve-management-purchases-to-mid-oct; cryptobriefing.com/fed-reinvestment-purchases-not-liquidity-injection"
+    },
+    {
+      "claim": "US and Iran discussed a deal to reopen the Strait of Hormuz; Xi Jinping urged negotiations; the Hormuz situation is the biggest wrench in the machinery because it raises prices through supply restriction, not money-supply inflation (transcript)",
+      "verdict": "verified and UPDATED: US and Iranian negotiators in New York discussed a phased deal to reopen Hormuz and lift the US blockade (Sept 24); Iran offered to reopen the strait within 7 days and restart nuclear talks (CNBC, Sept 25); Xi said at the Sept 24 Trump summit he supports both sides returning to the interim agreement. Copy: 'Iran is offering to reopen the Strait of Hormuz within 7 days'. Per the repurpose drafting rule, war/geopolitical content stays at tweet tier: it is one X tweet only, no YT post or YT poll carries it.",
+      "source": "cnbc.com/2026/09/25/us-iran-trump-hormuz-.html; usnews.com/news/world/articles/2026-09-24/us-and-iran-discuss-phased-deal-to-reopen-hormuz-and-end-us-blockade-sources-say; aljazeera.com/news/2026/9/24/trump-xi-summit-four-key-takeaways"
+    },
+    {
+      "claim": "New York filed a lawsuit against Polymarket (transcript, passing mention)",
+      "verdict": "verified (NY AG Letitia James and Gov. Hochul sued Polymarket US on Sept 24 for running an illegal gambling operation; Polymarket countersued) but a passing mention only; not drafted.",
+      "source": "ag.ny.gov press release 2026; cnbc.com/2026/09/24/new-york-sues-polymarket-us..."
+    },
+    {
+      "claim": "The four-year cycle zombies sold the whole way down and everybody and their grandma buys back in October; the media then writes 'crypto is pumping' articles and more retail comes in (transcript)",
+      "verdict": "Mike's own macro thesis, written in first person and per persona core_theses (their own demand turns October green, so the bottom prints BEFORE October; never written as the zombies causing an October bottom).",
+      "source": "transcript; persona.json core_theses"
+    },
+    {
+      "claim": "Memes across the board are devastated, charts below the 0.786 and 0.886 retracements, but teams keep posting and the charts are holding the line at sub-$1M caps, so Mike is not selling any of them (transcript)",
+      "verdict": "Mike's own chart read and his own position, kept in first person and general (no unverified small tokens named: BNB Cat, Doggie, Candle, Knots, Spawn, Boomer, October, Yolo, Have, Polly, Bike Tyson, We Love Cats/Dogs, Bit Dog, Lubi and the unnamed AI utility play are all left out).",
+      "source": "transcript"
+    },
+    {
+      "claim": "Dropped from the batch: the ARCHIE promo code and membership pricing (membership pitch, not in this brief, already shipped in archie-promo), the 3,300-view most-viewed livestream and the 'am I throttled' talk (already told in archie-promo, self-focused), the PerpsPad 110x and STONK 11x calls (already shipped in the perpspad / ready-for-pumps batches), 'I could have gotten in' asides (self-deprecating framing), the Discord member's Facebook-video anecdote, the unnamed AI utility play (secret to members)",
+      "verdict": "not drafted per persona avoid_in_drafts (re-announcements, self-deprecating framing, unverified claims) and the agent instructions (no membership pitches).",
+      "source": "persona.json avoid_in_drafts; repurpose/output/archie-promo-lane3-plan.json; repurpose/output/perpspad-lane3-plan.json"
+    },
+    {
+      "claim": "Kaspa, TAO, Toncoin, Housecoin and Pengu on this stream",
+      "verdict": "NOT discussed (Kaspa gets one half-word aside, nothing else), so the Kaspa-first topic weighting is dropped per the agent instructions. Consequences: ZERO IG single-image entries this batch (no X tweet image is about Kaspa; IG is Kaspa-only) and ZERO X polls (no poll topic is kaspa/tao/toncoin); both YT text polls are drafted, neither gets an X twin.",
+      "source": "transcript; repurpose/SKILL.md IG topic filter and X poll topic filter"
+    },
+    {
+      "claim": "Whisper corrections applied: 'Robo hood' / 'Robert Hojain' / 'Robin app' -> Robinhood / Robinhood Chain, 'golden kid' -> Golden Kitty, 'bmb cat' -> BNB Cat, 'artificial eno' -> Artificial Inu, '58 moving average' -> 50-week SMA, 'Kiwi' -> QE, 'straight of a mood' -> Strait of Hormuz, 'Casa Sa' (a username) not used, 'stonk' kept as STONK where relevant, 'lure' -> lore",
+      "verdict": "applied throughout; none of the persona-listed mishears (tau, Casper, scion, $WHATIF, 50WMA) appear in the copy.",
+      "source": "persona.json terminology_rules, ticker_corrections"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-09-25-golden-kitty-only-meme-printing-highs": "version4 (a usable topic photo exists: images/reference/Vlad-Tenev.webp, the public figure the whole Robinhood Chain lore runs through, which is the exact V4 use case and carries the extra V4 weight; the post is number-led ($4.8M cap, +170% week, +520% two weeks, Sept 4 launch, $SWOLE under $350K, $KITSU $1.1M, $TENDIES $9.4M, $IF under $600K), so the V4 data slides fit; the hook cites Vlad-Tenev.webp + version4/hook.png as an array, slides 2-5 cite version4/slide.png. Per the SKILL.md 2026-09-10 note, the figure-bearing data slides 2 and 4 are candidates for the code-rendered V4 path (repurpose/output/kaspa-lane3-fix/render_v4_slide.py) if ChatGPT drifts the numbers)",
+    "yt-post-2026-09-25-bitcoin-50-week-sma-zombies-october": "version2 (analytical/editorial: a macro thesis argued in steps, the 50-week reclaim, the bounce-not-bottom read, the zombie mechanics and the alt board, which is the V2 register; V4 was weighed first but no topic photo fits (no Bitcoin, Fed or zombie reference exists and reusing Vlad-Tenev.webp would put the same face on both carousels), and V1 news-flash is too loud for an editorial argument; each slide cites the role-matched version2 exemplar: 01-hook -> 9611992a-01-hook, 02 -> 4a9a572c-02-btc-failure, 03 -> 44d02f9a-03-the-problem, 04 -> 074be0dc-04-the-solution, 05-question -> 81abb2d9-06-question, with the 'N OF 5' counter stated explicitly and the exemplar's em-dash hazard countered in every prompt)"
+  },
+  "missing_references": [
+    "Golden Kitty ($GOLDEN): reference now EXISTS (images/reference/golden-kitty.png, Mike 2026-09-25) but Mike kept the text-only renders of 02f1f433 / 048d1fd0 / 29aed24d; reference-anchored alternates in repurpose/output/golden-kitty-dominance-lane3-fix/ref-anchored-unused/",
+    "Bitcoin logo / coin: no bitcoin reference file; the Bitcoin stand-in in image 173ced78 is a plain unmarked gold coin and Bitcoin is named only in copy",
+    "GLD / tokenized gold mark: none; rendered only as generic gold bars or gold light, never a logo",
+    "Robinhood / Robinhood Chain logo: none in images/reference; never rendered, the chain is named only in copy (the lime green glow in 048d1fd0 and 34dbfd4d follows the persona robinhood_coin colour rule, no mark)"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "02f1f433",
+      "slug": "golden-kitty-only-meme-printing-highs",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A gleaming chrome-gold cat trophy figurine, a stylized sitting cat sculpted in polished gold, stands upright on a small black pedestal at the center of a dark trading floor, glowing warmly, while all around it a dozen small dull grey round coin characters with little arms and legs slump exhausted on the floor in the shadows, some face down, some holding their heads. The gold cat trophy is the only bright object in the room, lit from below by a rising column of warm golden light with faint gold sparkles drifting upward past it. Every coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the trophy carries no lettering or plaque. Deep navy near-black background. Dramatic cinematic lighting: warm gold rim light on the trophy, cold blue fill on the slumped coins. Mood: triumphant, the lone winner. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": null
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "048d1fd0",
+      "slug": "robinhood-chain-lore-kitsu-golden-trophy",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. TWO REFERENCE IMAGES ARE ATTACHED. Inside a dark museum hall, a single glass display case sits on a pedestal ringed with a thin glowing neon lime green (about #CCFF00) light strip; inside the case a gleaming chrome-gold cat trophy figurine, a stylized sitting cat sculpted in polished gold, glows under a spotlight. Two proud guards flank the pedestal like museum guards. On the LEFT sits a Shiba Inu dog based on the FIRST attached reference image: cream and orange-tan fur, white chest and muzzle, a dark collar with a small round gold tag, a happy closed-mouth smile. On the RIGHT stands a swole cat based on the SECOND attached reference image: an orange tabby cat head with a playful wink and a cheeky grin on a huge bodybuilder body with bulging biceps, a broad chest and a chiseled six-pack, covered in short golden-orange fur, standing upright on two legs and flexing one arm in a classic bicep pose. BOTH CHARACTERS ARE SCULPTED 3D GEOMETRY: rounded volumetric heads, large spherical 3D eyes with a corneal bulge, sculpted noses with a visible bridge and tip, soft groomed fur with real volume, soft subsurface scattering, raytraced volumetric light; use each attached reference ONLY as a colour and character key; do not copy the photo realism, drawing style, linework or background of either reference. The collar tag is a plain blank gold disc with no lettering. The trophy carries no lettering or plaque. Deep navy near-black background. Dramatic cinematic lighting: warm gold glow from the trophy, lime green rim light from the pedestal ring, a soft white spotlight from above. Mood: proud, the lore on display. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kitsu.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\swole.png"
+      ],
+      "note": "Mike 2026-09-25: add Swole (images/reference/swole.png) beside Kitsu"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "173ced78",
+      "slug": "bitcoin-not-going-to-40k-zombies-october",
+      "prompt": "Cinematic photorealistic 3D render, 1:1 square aspect ratio. Across a dark valley floor at dawn stretches a thin horizontal line of pale glowing light, and a large plain gold coin has just bounced hard off that line and is climbing back up into the air on a warm golden trail, sparks scattering from the impact point. Lining the ridge above, a crowd of eerie cartoonish zombies in tattered business suits has stopped mid-shuffle, mouths open, eyes lit gold, watching the coin rise; a few at the front have already broken into a stumbling run down the slope toward it. The coin is completely plain with no symbol, logo or marking of any kind. Dark storm clouds overhead breaking open to a gold sunrise on the horizon. Dramatic rim lighting and gold accent glow. Mood: hungry, too late. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "263ad209",
+      "slug": "hormuz-wrench-out-of-the-machine",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A colossal rusted iron wrench is being lifted straight up and out from between two enormous interlocking metal gears that stand at the mouth of a narrow sea strait, the gears shuddering and beginning to turn again as the wrench comes free, showers of orange sparks and rust flakes falling. Beyond the gears, through the newly open channel, a line of oil tankers is starting to move under a warm sunrise, their wakes catching gold light. In the foreground, a glowing stream of plain gold coins begins to flow along a channel toward the turning gears. Every coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the ships carry no flags, names or markings. Deep navy near-black sky above with dark clouds parting. Dramatic cinematic lighting: warm gold sunrise glow, hot orange sparks, cold blue water. Mood: relief, the machine restarting. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "29aed24d",
+      "slug": "golden-kitty-new-all-time-high",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A gleaming chrome-gold cat trophy figurine, a stylized sitting cat sculpted in polished gold, rockets straight up through a dark night sky on a roaring column of golden light, leaving a long trail of gold sparks behind it and breaking up through a thin band of pale cloud. Far below on the dark ground, a field of small dull grey round coin characters looks up with open mouths, their tiny faces lit gold. The trophy carries no lettering or plaque. Every coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background with faint stars. Dramatic cinematic lighting: blazing gold glow from the trophy and its trail, cold blue fill on the ground. Mood: triumphant, breaking out. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": null
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "34dbfd4d",
+      "slug": "kitsu-holding-the-line",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Shiba Inu dog based on the attached reference image stands braced on all four paws on a narrow ledge of glowing neon lime green (about #CCFF00) light stretched across a black chasm in a howling dark storm, ears flattened, fur whipping in the wind, a determined closed-mouth smile on its face, refusing to be pushed off. The dog has cream and orange-tan fur, a white chest and muzzle, and a dark collar with a small round gold tag. THE DOG IS SCULPTED 3D GEOMETRY: a rounded volumetric head, large spherical 3D eyes with a corneal bulge, a sculpted rounded nose with a visible bridge and tip, soft groomed fur with real volume, soft subsurface scattering, raytraced volumetric light; use the attached reference ONLY as a colour and character key; do not copy its drawing style, its linework or its flat shading. The collar tag is a plain blank gold disc with no lettering. Below the ledge, the chasm is full of swirling dark storm cloud. Deep navy near-black background. Dramatic cinematic lighting: lime green glow from the ledge under the dog, cold blue lightning flashes in the clouds. Mood: defiant. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kitsu.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "5832814c",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the photo of the man with shoulder-length dark hair, a goatee and a tan blazer over a white shirt in front of a blue studio background) as the full-bleed background photo, keeping his face and likeness faithful to the photo, cropped to a square with his head and shoulders filling the upper two thirds of the frame and the blue studio background behind him; render it as a rich photographic image. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple green line chart that climbs steeply to a new high at its right end. Bold all-caps text across the bottom: 'THE ONLY NEW ROBINHOOD CHAIN MEME' in white on the first line, then 'PRINTING NEW HIGHS THIS WEEK' with 'NEW HIGHS' in bright green. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no artist signature and no initials anywhere in the frame or in any corner; the attached style reference carries a repeating watermark and it must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\Vlad-Tenev.webp",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "698739ef",
+      "slug": "02-the-numbers",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The numbers: $GOLDEN this week'. Stat boxes: 'LAUNCHED: SEPT 4, 2026', '7-DAY MOVE: ABOUT +170%', 'MARKET CAP: ABOUT $4.8M, NEW ATH'. Centre: a line chart with labeled axes showing a green price line that starts low at the left, dips to a marked low labelled 'SEPT 16', then climbs steeply to its highest point at the far right labelled 'NEW ATH'. Bottom green box labelled 'THE READ' with two bullets: 'Up about 520% over two weeks while everything launched around it bleeds.' and 'My fib extension puts the next stop around $8M in the coming weeks. Never financial advice.' Page number 2 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "rendered_by": "code: repurpose/output/golden-kitty-dominance-lane3-fix/render_v4_slide.py (V4 figure slide, SKILL.md 2026-09-10)"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "70f9bbad",
+      "slug": "03-the-attribute-stack",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The attribute stack'. Stat boxes: 'LORE: 2015 PRODUCT HUNT GOLDEN KITTY', 'PAIRING: TOKENIZED GOLD (GLD)', 'NARRATIVE: CATS AND STONKS'. Centre panel: a simple system diagram of four plain rounded nodes in a row labelled 'LORE', 'PAIRING', 'CONTENT', 'PUSHERS', connected left to right by three green arrows into a final gold node labelled 'NEW HIGHS'. Bottom green box labelled 'WHY IT WORKS' with two bullets: 'Robinhood won Product Hunt Sexiest Product of the Year in 2015. That gold cat trophy IS the meme.' and 'Every influencer out there is pushing it, and that is what is actually moving it.' Page number 3 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "821bfcdb",
+      "slug": "04-the-rest-of-the-board",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The rest of the board has the lore, not the chart'. Stat boxes: '$SWOLE: UNDER $350K', '$KITSU: ABOUT $1.1M', '$TENDIES: ABOUT $9.4M'. Centre: a horizontal bar chart with labeled axes showing four bars from shortest to longest labelled '$SWOLE', '$IF: UNDER $600K', '$KITSU', '$TENDIES', the first two bars red and the last two green. Bottom red box labelled 'THE READ' with two bullets: 'Vlad's swole cat, Vlad's actual dog, the CEX-listed one: all holding the line, none pumping.' and 'Lore alone does not pump a chart. Lore plus pairing plus content plus a market does.' Page number 4 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "rendered_by": "code: repurpose/output/golden-kitty-dominance-lane3-fix/render_v4_slide.py (V4 figure slide, SKILL.md 2026-09-10)"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "8ed5c07d",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Which Robinhood Chain meme 10x first when October retail shows up?'. Stat boxes: 'A: $GOLDEN', 'B: $KITSU', 'C: $SWOLE'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty, and below them a single wide plain panel headed 'D: ONE THAT HAS NOT LAUNCHED YET'. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'The four-year cycle zombies buy back in October. Which chart with a story moves first?' Page number 5 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "a8a95c7d",
+      "slug": "01-hook",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '1 OF 5'. Large bold white title: 'Bitcoin reclaimed the 50-week SMA. The zombies are about to buy October.'. Below, a teal accent line: 'First weekly close above the line in 45 weeks'. At the bottom a dark rounded box with teal label 'THE READ' and white body text: 'A dip to $78K is a bounce, not a bottom. Everybody and their grandma buys back in October.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '1 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-9611992a-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "ab2f7777",
+      "slug": "02-the-line",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '2 OF 5'. Large bold white title: '$81,159 weekly close. The line sat at about $78,800.'. Below, a teal accent line: 'Sept 20, 2026: first weekly close above the 50-week SMA since Nov 9, 2025'. At the bottom a dark rounded box with teal label 'THE HISTORY' and white body text: 'Galaxy counted 13 reclaims of this line since 2011. In 11 of them Bitcoin never printed a new low.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '2 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-4a9a572c-02-btc-failure.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "af6d7e78",
+      "slug": "03-bounce-not-bottom",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '3 OF 5'. Large bold white title: 'A dip to $78K is a bounce, not a bottom.'. Below, a teal accent line: 'We are not going to a $40K Bitcoin'. At the bottom a dark rounded box with teal label 'WHY' and white body text: 'Too many people already know the bottom is in. They are buying every red candle early, black swan or not.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '3 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-44d02f9a-03-the-problem.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "b76e0feb",
+      "slug": "04-the-zombies",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '4 OF 5'. Large bold white title: 'Everybody and their grandma buys back in October.'. Below, a teal accent line: 'The four-year cycle zombies sold the whole way down waiting for an October bottom'. At the bottom a dark rounded box with teal label 'THE IRONY' and white body text: 'Their own demand turns October green. The real bottom printed before October, and the alt charts that look dead now are just holding the line for the flood.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '4 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-074be0dc-04-the-solution.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "b86e25f7",
+      "slug": "05-question",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '5 OF 5'. Large bold white title: 'Is the Bitcoin bottom in, or do the zombies get their October low?'. Below, a teal accent line: 'Bet right now, in the comments'. At the bottom a dark rounded box with teal label 'AND ONE MORE' and white body text: 'What is the first alt you buy when the flood starts?'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '5 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-81abb2d9-06-question.png"
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Every new meme on Robinhood Chain is getting devastated this week except one.\n\n$GOLDEN (Golden Kitty) launched Sept 4, is up about 170% on the week and printed a new all-time high above a $5M cap, while $SWOLE sits under $350K.\n\nIt stacks every attribute I look for: Robinhood lore (the 2015 Product Hunt Golden Kitty trophy), the cat narrative, a main pool paired against tokenized gold, and every influencer out there pushing it. My fib extension puts the next stop around $8M, then after that, it will be unstoppable... never financial advice.\n\n#GoldenKitty #RobinhoodChain",
+      "hook": "Every new meme on Robinhood Chain is getting devastated this week except one.",
+      "image_id": "02f1f433"
+    },
+    {
+      "tweet": "Robinhood Chain memes have the best lore in crypto right now and the charts have not caught up yet.\n\n$KITSU is literally Vlad Tenev's Shiba Inu (the name came off the collar tag): about $1.1M cap, holding the line.\n$SWOLE is Vlad's 2021 swole-cat reply to the Cash Cat name: paired with HOOD, under $350K.\n$GOLDEN is the 2015 Product Hunt trophy Robinhood won: new all-time high above $5M.\n\nLore, pairing, content. When the four-year cycle zombies buy back in October, the charts with a story move first.\n\n#RobinhoodChain #memecoins",
+      "hook": "Robinhood Chain memes have the best lore in crypto right now and the charts have not caught up yet.",
+      "image_id": "048d1fd0"
+    },
+    {
+      "tweet": "Bitcoin ($BTC) is not going to $40K.\n\nIt reclaimed the 50-week SMA (about $78,800) with an $81,159 weekly close on Sept 20 and trades near $86K this week. If it dips to $78K, that is a bounce off the line, not a new bottom: too many people already know the bottom is in and are buying the red candles early.\n\nEverybody and their grandma is buying back in October. The four-year cycle zombies who sold the whole way down are about to front-run their own bottom.\n\n#bitcoin #crypto",
+      "hook": "Bitcoin ($BTC) is not going to $40K.",
+      "image_id": "173ced78",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #5, a provocative prediction ('not going to $40K', 'a dip to $78K is a bounce, not a new bottom', 'front-run their own bottom') stated as Mike's own read; no fact is manufactured, the 50-week reclaim, the $81,159 close and the ~$86K price are verified."
+    },
+    {
+      "tweet": "Iran is offering to reopen the Strait of Hormuz within 7 days. Crypto should care about this more than about any Fed meeting.\n\nThe Hormuz shutdown was the biggest wrench thrown into the machine since the war started: prices up with zero new money behind them. That is a supply shock, not inflation of the money supply.\n\nWe like QE: money supply up, flows into assets, flows into $BTC and the alts. We hate supply chain restrictions. Pull the wrench out and the liquidity thesis runs clean 🚀\n\n#bitcoin #macro",
+      "hook": "Iran is offering to reopen the Strait of Hormuz within 7 days. Crypto should care about this more than about any Fed meeting.",
+      "image_id": "263ad209"
+    },
+    {
+      "tweet": "I scrolled my entire Robinhood Chain watchlist this week and exactly one chart is printing a new all-time high: $GOLDEN (Golden Kitty), up about 170% on the week 🔥\n\n#GoldenKitty #RobinhoodChain",
+      "hook": "I scrolled my entire Robinhood Chain watchlist this week and exactly one chart is printing a new all-time high: $GOLDEN (Golden Kitty), up about 170% on the week 🔥",
+      "image_id": "29aed24d"
+    },
+    {
+      "tweet": "$KITSU is literally Vlad Tenev's dog, and while $SWOLE gets devastated to under $350K it is doing the one thing that matters in this market: holding the line at a $1.1M cap 💪\n\n#RobinhoodChain #memecoins",
+      "hook": "$KITSU is literally Vlad Tenev's dog, and while $SWOLE gets devastated to under $350K it is doing the one thing that matters in this market: holding the line at a $1.1M cap 💪",
+      "image_id": "34dbfd4d"
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-09-25-golden-kitty-only-meme-printing-highs",
+      "topic": "Golden Kitty ($GOLDEN) is the only new Robinhood Chain meme printing new highs: the numbers, the attribute stack (lore, pairing, content, pushers), the rest of the board holding the line, and the October read",
+      "variation_label": "A (hook-and-numbers-first)",
+      "tweets": [
+        {
+          "text": "Every chart on my Robinhood Chain watchlist looks devastated this week except one.\n\n$GOLDEN (Golden Kitty) just printed a new all-time high, up about 170% on the week.\n\nHere is why it is the only new meme doing anything, and what it says about the rest of the board...",
+          "hook": "Every chart on my Robinhood Chain watchlist looks devastated this week except one."
+        },
+        {
+          "text": "The numbers: $GOLDEN launched Sept 4, bottomed Sept 16, and this week it is up about 170% on the week and about 520% over two weeks, now above a $5M cap.\n\nEverything launched around it is bleeding."
+        },
+        {
+          "text": "Attribute one: lore. Robinhood won Product Hunt's 2015 Golden Kitty award (Sexiest Product of the Year). That chrome-gold cat trophy IS the meme.\n\nAttribute two: the cat narrative, still the hottest lane on the chain. Cash Cat sits around $175M."
+        },
+        {
+          "text": "Attribute three: the stonk narrative. The main $GOLDEN pool is paired against tokenized gold (GLD), so you are holding a meme priced against gold.\n\nAttribute four: every influencer out there is pushing it. That is what is actually moving it right now."
+        },
+        {
+          "text": "The rest of the board has the lore and not the chart:\n\n$SWOLE: Vlad's 2021 swole-cat reply to the Cash Cat name, paired with HOOD, under $350K.\n$KITSU: literally Vlad's Shiba Inu, holding the line near $1.1M.\n$TENDIES: CEX listings, holding its floor near $9.4M."
+        },
+        {
+          "text": "Lore alone does not pump a chart. Lore plus pairing plus content plus a MARKET does, and there is no market yet: memes are holding the line until the four-year cycle zombies buy back in October.\n\n$GOLDEN: my fib extension says $8M next, a double from here. Never financial advice."
+        },
+        {
+          "text": "If this made the Robinhood Chain board click...\n\nFollow me for the meme reads before October retail finds them, and for the macro read behind the October call.\n\n😎 + 🚀"
+        }
+      ]
+    }
+  ],
+  "x_polls": [],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-09-25-golden-kitty-top",
+      "topic": "Where Golden Kitty ($GOLDEN) tops out this run",
+      "source_post": "yt-post-2026-09-25-golden-kitty-only-meme-printing-highs",
+      "question_text": "Golden Kitty ($GOLDEN) just broke a new all-time high above a $5M market cap, the only new Robinhood Chain meme printing highs while everything launched around it bleeds. Paired against tokenized gold, with the 2015 Product Hunt trophy lore and every influencer out there pushing it. My fib extension says the next stop is around $8M.\n\nWhere does $GOLDEN top out after breaking $5M?",
+      "hook": "Golden Kitty ($GOLDEN) just broke a new all-time high above a $5M market cap.",
+      "options": [
+        "Tops out before the $8M fib target",
+        "Around $8M, right at the fib target",
+        "$20M or more once October retail shows up"
+      ],
+      "x_poll_eligible": false,
+      "notes": "Topic is Golden Kitty / Robinhood Chain, not kaspa/tao/toncoin: NO X poll twin (hard filter)."
+    },
+    {
+      "id": "yt-text-poll-2026-09-25-bitcoin-bottom-in",
+      "topic": "Is the Bitcoin bottom in after the 50-week SMA reclaim",
+      "source_post": "yt-post-2026-09-25-bitcoin-50-week-sma-zombies-october",
+      "question_text": "Bitcoin reclaimed its 50-week SMA (about $78,800) with an $81,159 weekly close on Sept 20, the first weekly close above it in 45 weeks, and trades near $86K this week. My read: a dip to $78K is a bounce, not a new bottom, and everybody and their grandma buys back in October.\n\nCall it: is the Bitcoin bottom in?",
+      "hook": "Bitcoin reclaimed its 50-week SMA for the first time in 45 weeks.",
+      "options": [
+        "Bottom is in, $78K holds",
+        "New lows before year end"
+      ],
+      "x_poll_eligible": false,
+      "notes": "Topic is Bitcoin macro, not kaspa/tao/toncoin: NO X poll twin (hard filter)."
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-09-25-golden-kitty-only-meme-printing-highs",
+      "topic": "Golden Kitty ($GOLDEN) is the only new Robinhood Chain meme printing new highs: the numbers, the attribute stack, the rest of the board holding the line, and the October read",
+      "variation_label": "A + CTA1",
+      "body_style": "narrative arc: the devastated watchlist and the one new high, the numbers, the four-attribute stack (lore, cat narrative, gold pairing, pushers), the rest of the board with lore and no chart, the no-market-yet read and the October flood, the $8M fib target and Mike's retracement stance, the forked question",
+      "cta_target": "subscribe_youtube",
+      "body": "Every chart on my Robinhood Chain watchlist looks devastated this week. One of them just printed a new all-time high.\n\nGolden Kitty ($GOLDEN) is the only new meme on the chain doing anything, and the reason it works tells you exactly what the rest of the board is missing.\n\nThe numbers first. $GOLDEN launched Sept 4, bottomed on Sept 16, and this week it is up about 170% on the week and about 520% over two weeks, printing a new all-time high now above a $5M cap. Everything launched around it is bleeding.\n\nNow the attribute stack, because this is not luck:\n\n1. Robinhood lore. Robinhood won Product Hunt's 2015 Golden Kitty award (Sexiest Product of the Year). That chrome-gold cat trophy IS the meme.\n2. The cat narrative, still the hottest lane on this chain. Cash Cat sits around $175M.\n3. The stonk narrative. The main $GOLDEN pool is paired against tokenized gold (GLD), so you are holding a meme priced against gold. That is the crypto-meets-stocks overlap in one token.\n4. Content and pushers. Every influencer out there is on it right now, and that is what is actually moving it.\n\nCompare that to the rest of the board. $SWOLE has some of the best lore on the chain (Vlad's own 2021 swole-cat reply to the Cash Cat name, paired with HOOD, non-stop content) and sits under $350K. $KITSU is literally Vlad's Shiba Inu and is holding the line around $1.1M. $TENDIES has the CEX listings (LBank among them) and is holding its floor near $9.4M.\n\nLore alone does not pump a chart. Lore plus pairing plus content plus a MARKET does, and right now there is no market: memes across the board are holding the line, waiting for new participants.\n\nThose participants are coming. The four-year cycle zombies who sold the whole way down are about to buy back in October, the media starts writing the 'crypto is pumping' articles, and retail comes straight for the memes with a story.\n\nFor $GOLDEN itself: my fib extension puts the next stop around $8M in the coming weeks, roughly a double from here. I am waiting for a retracement rather than chasing it. Never financial advice.\n\nSo commit in the comments: which Robinhood Chain meme 10x's first when October retail shows up, $GOLDEN, $KITSU, $SWOLE, or one that has not launched yet?\n\nHit like and subscribe if you want the meme reads before the crowd finds them.",
+      "engagement_question": "Which Robinhood Chain meme 10x's first when October retail shows up: $GOLDEN, $KITSU, $SWOLE, or one that has not launched yet?",
+      "images": [
+        {
+          "image_id": "5832814c",
+          "slide_text": "The only new Robinhood Chain meme printing new highs this week"
+        },
+        {
+          "image_id": "698739ef",
+          "slide_text": "The numbers: $GOLDEN this week"
+        },
+        {
+          "image_id": "70f9bbad",
+          "slide_text": "The attribute stack"
+        },
+        {
+          "image_id": "821bfcdb",
+          "slide_text": "The rest of the board has the lore, not the chart"
+        },
+        {
+          "image_id": "8ed5c07d",
+          "slide_text": "Which Robinhood Chain meme 10x first when October retail shows up?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-09-25-bitcoin-50-week-sma-zombies-october",
+      "topic": "Bitcoin reclaimed the 50-week SMA after 45 weeks; a dip to $78K is a bounce, not a bottom; the four-year cycle zombies buy back in October and the dead-looking alt charts are holding the line for the flood",
+      "variation_label": "B + CTA2",
+      "body_style": "editorial argument: the 50-week reclaim with the numbers and the Galaxy history, the bounce-not-bottom read and the no-$40K call, the zombie mechanics (their demand turns October green, so the bottom printed before October), the devastated alt board as a no-market-yet signal and why Mike is not selling, a personal-stake two-part question",
+      "cta_target": "subscribe_youtube",
+      "body": "Bitcoin closed the week above its 50-week SMA for the first time in 45 weeks, and every four-year cycle zombie is about to buy back in October.\n\nI do not think we see a new bottom. Here is the read, and why the alt charts that look dead right now are the ones I am not selling.\n\nThe line: Bitcoin ($BTC) closed the week of Sept 20 at $81,159, above the 50-week SMA at roughly $78,800, the first weekly close above it since Nov 9, 2025. It trades near $86K this week. Galaxy counted 13 times since 2011 that Bitcoin regained this line; in 11 of them it never printed a new low.\n\nMy read on the dip everyone is waiting for: if we come down to $78K, that is a bounce off the line, not a new bottom. I have my doubts we even lose it again. And we are not going to a $40K Bitcoin, black swan or not, because there are too many people who already know the bottom is in and are buying every red candle early.\n\nThat is the zombie setup. Almost everybody bought the four-year cycle script, sold the whole way down, and is waiting for an October bottom. Their own demand is what turns October green, which means the real bottom printed before October. Everybody and their grandma buys back in October: Bitcoin, the alts, the memes, all of it. Then the media starts writing the 'crypto is pumping' articles that pull the next wave in.\n\nNow look at the alts. My meme watchlist looks devastated: charts below the 0.786 and 0.886 retracements, caps that went from millions to hundreds of thousands, teams still posting non-stop. Normally a chart like that is dead. Right now there are so many of them that it tells you something else: there is no market yet. They are holding the line at sub-$1M caps waiting for the same participants Bitcoin is waiting for. That is why I am not selling any of them.\n\nWe like liquidity flowing into assets. We hate supply shocks. The next few weeks are the window where the first shows up and the second gets resolved, and the four-year cycle echo chamber is going to be buying the top of the first leg instead of the bottom.\n\nSo if you had to bet right now: is the Bitcoin bottom in, or do the zombies get their October low? And what is the first alt you buy when the flood starts?\n\nHit like and subscribe if you want the macro read that ignores the four-year cycle echo chamber.",
+      "engagement_question": "If you had to bet right now: is the Bitcoin bottom in, or do the zombies get their October low? And what is the first alt you buy when the flood starts?",
+      "images": [
+        {
+          "image_id": "a8a95c7d",
+          "slide_text": "Bitcoin reclaimed the 50-week SMA. The zombies are about to buy October."
+        },
+        {
+          "image_id": "ab2f7777",
+          "slide_text": "$81,159 weekly close. The line sat at about $78,800."
+        },
+        {
+          "image_id": "af6d7e78",
+          "slide_text": "A dip to $78K is a bounce, not a bottom."
+        },
+        {
+          "image_id": "b76e0feb",
+          "slide_text": "Everybody and their grandma buys back in October."
+        },
+        {
+          "image_id": "b86e25f7",
+          "slide_text": "Is the Bitcoin bottom in, or do the zombies get their October low?"
+        }
+      ]
+    }
+  ],
+  "ig_single": []
+}

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>C21 Robinhood stack</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  /* golden-kitty video accents: Robinhood lime = Robinhood / Robinhood Chain; gold = gold, GLD, GOLDEN */
+  --lime:#ccff00; --gold:#ffd700;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:block;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:50;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.26;pointer-events:none;z-index:0}
+.frame>*:not(.orb){z-index:1}
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:68px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:26px 0 0}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.lm{color:var(--lime)} .gd{color:var(--gold)} .re{color:var(--accent-red)} .pu{color:var(--accent-purple)}
+.hdr{position:absolute;left:140px;top:78px;width:1640px}
+.src{position:absolute;left:140px;bottom:40px;font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:19px;color:var(--text-muted)}
+.abs{position:absolute}
+.box{position:absolute;background:var(--bg-card);border:2px solid var(--border);border-radius:22px}
+.box.w{border-color:rgba(232,234,240,.30)}
+.box.gold{border-color:rgba(255,215,0,.62);box-shadow:0 0 70px rgba(255,215,0,.13)}
+.box.lime{border-color:rgba(204,255,0,.62);box-shadow:0 0 70px rgba(204,255,0,.12)}
+.box.red{border-color:rgba(255,64,96,.55)}
+.box.pu{border-color:rgba(168,85,247,.6);box-shadow:0 0 70px rgba(168,85,247,.12)}
+.box.focus-gold{box-shadow:0 0 0 7px rgba(255,215,0,.16),0 0 120px rgba(255,215,0,.38)}
+.box.focus-lime{box-shadow:0 0 0 7px rgba(204,255,0,.16),0 0 120px rgba(204,255,0,.34)}
+.off{opacity:.16}
+.dim{opacity:.38}
+.hid{opacity:0}
+.cap{font-family:'DM Sans';font-weight:700;text-transform:uppercase;letter-spacing:.12em}
+.ttl{font-family:'DM Sans';font-weight:700;color:var(--text-primary)}
+.sub{font-family:'DM Sans';font-weight:400;color:var(--text-secondary)}
+.chip{display:inline-block;padding:8px 20px;border-radius:100px;font-family:'JetBrains Mono';font-weight:600;
+  font-size:26px;border:2px solid var(--border);color:var(--text-primary);background:rgba(255,255,255,.03)}
+.chip.gold{color:var(--gold);border-color:rgba(255,215,0,.5);background:rgba(255,215,0,.10)}
+.chip.lime{color:var(--lime);border-color:rgba(204,255,0,.5);background:rgba(204,255,0,.09)}
+.chip.pu{color:#c99bff;border-color:rgba(168,85,247,.5);background:rgba(168,85,247,.10)}
+.tag{display:inline-block;padding:7px 18px;border-radius:100px;font-family:'DM Sans';font-weight:700;
+  font-size:19px;text-transform:uppercase;letter-spacing:.09em}
+.tag.gold{background:rgba(255,215,0,.14);color:var(--gold)}
+.tag.lime{background:rgba(204,255,0,.13);color:var(--lime)}
+.tag.red{background:rgba(255,64,96,.15);color:var(--accent-red)}
+.tag.w{background:rgba(232,234,240,.08);color:var(--text-primary)}
+.token{position:absolute;border-radius:50%;overflow:hidden;border:4px solid rgba(255,215,0,.85);
+  box-shadow:0 0 50px rgba(255,215,0,.35)}
+.token img{width:100%;height:100%;object-fit:cover;display:block}
+.elab{position:absolute;font-family:'DM Sans';font-weight:700;font-size:19px;letter-spacing:.14em;text-transform:uppercase}
+svg.lay{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+
+
+.sn{position:absolute;top:320px;width:296px;height:440px;border-radius:22px;border:2px solid var(--border);background:var(--bg-card);
+  padding:30px 26px;display:flex;flex-direction:column}
+.sn .no{font-family:'JetBrains Mono';font-weight:600;font-size:22px;color:var(--text-muted)}
+.sn .n{font-family:'DM Sans';font-weight:700;font-size:34px;line-height:1.15;color:var(--text-primary);margin-top:18px}
+.sn .s{font-family:'DM Sans';font-size:23px;line-height:1.35;color:var(--text-secondary);margin-top:12px}
+.sn.on{border-color:rgba(204,255,0,.6);box-shadow:0 0 60px rgba(204,255,0,.11)}
+.sn.peak{border-color:rgba(204,255,0,.95);box-shadow:0 0 0 8px rgba(204,255,0,.14),0 0 130px rgba(204,255,0,.40)}
+.ribbon{position:absolute;top:830px;height:14px;border-radius:7px}
+</style></head>
+<body>
+<!--
+C21 Type 2 SYSTEM-DESIGN (CH7 427.30-439.10, its only appearance).
+1-users @427.66 'Robinhood routes' · 2-customers-tag @430.68 '28.4 million customers' · 3-wallet-chain @433.14 'onto its chain' ·
+4-apps-tokens @434.90 'the tokens already living there' · 5-flow-pulse @437.30 'right in front of that flow'
+(crossfade 4 <-> 5 on a ~0.8s sine to the end of the beat for the pulse).
+-->
+<div class="frame" id="1-users">
+<div class="orb" style="left:1350px;top:-300px;width:640px;height:640px;background:#6d8a00"></div>
+<div class="orb" style="left:-280px;top:640px;width:520px;height:520px;background:#3d4a10"></div>
+<div class="hdr"><div class="ey">THE ROBINHOOD STACK</div><h1>From the App to <span class="lm">the Chain</span></h1><div class="divider"></div></div>
+<div class="sn on" style="left:140px"><div class="no">01</div><div class="n">Robinhood app users</div><div style="margin-top:auto" class="hid"><span class="chip lime" style="font-size:24px">28.4M</span><div class="s" style="margin-top:8px">funded customers</div></div></div>
+<div class="sn off" style="left:476px"><div class="no">02</div><div class="n">Robinhood Wallet</div><div class="s">self-custody wallet</div></div>
+<div class="sn off" style="left:812px"><div class="no">03</div><div class="n">Robinhood Chain</div><div class="s">Arbitrum tech, settles to Ethereum</div></div>
+<div class="sn off" style="left:1148px"><div class="no">04</div><div class="n">Uniswap<br>Morpho<br>Lighter</div></div>
+<div class="sn off" style="left:1484px"><div class="no">05</div><div class="n">Tokens on the chain</div><div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="chip lime" style="font-size:22px">Stock Tokens</span><span class="chip gold" style="font-size:22px">GLD</span><span class="chip" style="font-size:22px">memecoins</span></div></div>
+<svg class="lay"><defs>
+<marker id="1-users--ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffd700"/></marker>
+<marker id="1-users--aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8892a4"/></marker>
+<marker id="1-users--al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ccff00"/></marker>
+<marker id="1-users--ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker>
+<marker id="1-users--am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2a3040"/></marker>
+</defs><line x1="442" y1="540" x2="468" y2="540" stroke="#2a3040" stroke-width="4" marker-end="url(#1-users--am)"/><line x1="778" y1="540" x2="804" y2="540" stroke="#2a3040" stroke-width="4" marker-end="url(#1-users--am)"/><line x1="1114" y1="540" x2="1140" y2="540" stroke="#2a3040" stroke-width="4" marker-end="url(#1-users--am)"/><line x1="1450" y1="540" x2="1476" y2="540" stroke="#2a3040" stroke-width="4" marker-end="url(#1-users--am)"/></svg>
+<div class="ribbon" style="left:140px;width:1640px;background:#1a1f2b"></div>
+<div class="ribbon" style="left:140px;width:296px;background:linear-gradient(90deg,rgba(204,255,0,.15),rgba(204,255,0,.9));box-shadow:0 0 26px rgba(204,255,0,0.45)"></div>
+<svg class="lay"><polygon points="440,818 470,837 440,856" fill="#ccff00" opacity="1"/></svg>
+<div class="elab" style="left:140px;top:872px;width:1640px;font-size:19px;color:var(--text-muted)">THE FLOW</div>
+<div class="src">Robinhood newsroom, Jul 1, 2026 · docs.robinhood.com/chain · Robinhood Q2 2026</div>
+</div>
+<div class="frame" id="2-customers-tag">
+<div class="orb" style="left:1350px;top:-300px;width:640px;height:640px;background:#6d8a00"></div>
+<div class="orb" style="left:-280px;top:640px;width:520px;height:520px;background:#3d4a10"></div>
+<div class="hdr"><div class="ey">THE ROBINHOOD STACK</div><h1>From the App to <span class="lm">the Chain</span></h1><div class="divider"></div></div>
+<div class="sn on" style="left:140px"><div class="no">01</div><div class="n">Robinhood app users</div><div style="margin-top:auto" class=""><span class="chip lime" style="font-size:24px">28.4M</span><div class="s" style="margin-top:8px">funded customers</div></div></div>
+<div class="sn off" style="left:476px"><div class="no">02</div><div class="n">Robinhood Wallet</div><div class="s">self-custody wallet</div></div>
+<div class="sn off" style="left:812px"><div class="no">03</div><div class="n">Robinhood Chain</div><div class="s">Arbitrum tech, settles to Ethereum</div></div>
+<div class="sn off" style="left:1148px"><div class="no">04</div><div class="n">Uniswap<br>Morpho<br>Lighter</div></div>
+<div class="sn off" style="left:1484px"><div class="no">05</div><div class="n">Tokens on the chain</div><div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="chip lime" style="font-size:22px">Stock Tokens</span><span class="chip gold" style="font-size:22px">GLD</span><span class="chip" style="font-size:22px">memecoins</span></div></div>
+<svg class="lay"><defs>
+<marker id="2-customers-tag--ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffd700"/></marker>
+<marker id="2-customers-tag--aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8892a4"/></marker>
+<marker id="2-customers-tag--al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ccff00"/></marker>
+<marker id="2-customers-tag--ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker>
+<marker id="2-customers-tag--am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2a3040"/></marker>
+</defs><line x1="442" y1="540" x2="468" y2="540" stroke="#2a3040" stroke-width="4" marker-end="url(#2-customers-tag--am)"/><line x1="778" y1="540" x2="804" y2="540" stroke="#2a3040" stroke-width="4" marker-end="url(#2-customers-tag--am)"/><line x1="1114" y1="540" x2="1140" y2="540" stroke="#2a3040" stroke-width="4" marker-end="url(#2-customers-tag--am)"/><line x1="1450" y1="540" x2="1476" y2="540" stroke="#2a3040" stroke-width="4" marker-end="url(#2-customers-tag--am)"/></svg>
+<div class="ribbon" style="left:140px;width:1640px;background:#1a1f2b"></div>
+<div class="ribbon" style="left:140px;width:296px;background:linear-gradient(90deg,rgba(204,255,0,.15),rgba(204,255,0,.9));box-shadow:0 0 26px rgba(204,255,0,0.45)"></div>
+<svg class="lay"><polygon points="440,818 470,837 440,856" fill="#ccff00" opacity="1"/></svg>
+<div class="elab" style="left:140px;top:872px;width:1640px;font-size:19px;color:var(--text-muted)">THE FLOW</div>
+<div class="src">Robinhood newsroom, Jul 1, 2026 · docs.robinhood.com/chain · Robinhood Q2 2026</div>
+</div>
+<div class="frame" id="3-wallet-chain">
+<div class="orb" style="left:1350px;top:-300px;width:640px;height:640px;background:#6d8a00"></div>
+<div class="orb" style="left:-280px;top:640px;width:520px;height:520px;background:#3d4a10"></div>
+<div class="hdr"><div class="ey">THE ROBINHOOD STACK</div><h1>From the App to <span class="lm">the Chain</span></h1><div class="divider"></div></div>
+<div class="sn on" style="left:140px"><div class="no">01</div><div class="n">Robinhood app users</div><div style="margin-top:auto" class=""><span class="chip lime" style="font-size:24px">28.4M</span><div class="s" style="margin-top:8px">funded customers</div></div></div>
+<div class="sn on" style="left:476px"><div class="no">02</div><div class="n">Robinhood Wallet</div><div class="s">self-custody wallet</div></div>
+<div class="sn on" style="left:812px"><div class="no">03</div><div class="n">Robinhood Chain</div><div class="s">Arbitrum tech, settles to Ethereum</div></div>
+<div class="sn off" style="left:1148px"><div class="no">04</div><div class="n">Uniswap<br>Morpho<br>Lighter</div></div>
+<div class="sn off" style="left:1484px"><div class="no">05</div><div class="n">Tokens on the chain</div><div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="chip lime" style="font-size:22px">Stock Tokens</span><span class="chip gold" style="font-size:22px">GLD</span><span class="chip" style="font-size:22px">memecoins</span></div></div>
+<svg class="lay"><defs>
+<marker id="3-wallet-chain--ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffd700"/></marker>
+<marker id="3-wallet-chain--aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8892a4"/></marker>
+<marker id="3-wallet-chain--al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ccff00"/></marker>
+<marker id="3-wallet-chain--ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker>
+<marker id="3-wallet-chain--am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2a3040"/></marker>
+</defs><line x1="442" y1="540" x2="468" y2="540" stroke="#ccff00" stroke-width="4" marker-end="url(#3-wallet-chain--al)"/><line x1="778" y1="540" x2="804" y2="540" stroke="#ccff00" stroke-width="4" marker-end="url(#3-wallet-chain--al)"/><line x1="1114" y1="540" x2="1140" y2="540" stroke="#2a3040" stroke-width="4" marker-end="url(#3-wallet-chain--am)"/><line x1="1450" y1="540" x2="1476" y2="540" stroke="#2a3040" stroke-width="4" marker-end="url(#3-wallet-chain--am)"/></svg>
+<div class="ribbon" style="left:140px;width:1640px;background:#1a1f2b"></div>
+<div class="ribbon" style="left:140px;width:968px;background:linear-gradient(90deg,rgba(204,255,0,.15),rgba(204,255,0,.9));box-shadow:0 0 26px rgba(204,255,0,0.45)"></div>
+<svg class="lay"><polygon points="1112,818 1142,837 1112,856" fill="#ccff00" opacity="1"/></svg>
+<div class="elab" style="left:140px;top:872px;width:1640px;font-size:19px;color:var(--text-muted)">THE FLOW</div>
+<div class="src">Robinhood newsroom, Jul 1, 2026 · docs.robinhood.com/chain · Robinhood Q2 2026</div>
+</div>
+<div class="frame" id="4-apps-tokens">
+<div class="orb" style="left:1350px;top:-300px;width:640px;height:640px;background:#6d8a00"></div>
+<div class="orb" style="left:-280px;top:640px;width:520px;height:520px;background:#3d4a10"></div>
+<div class="hdr"><div class="ey">THE ROBINHOOD STACK</div><h1>From the App to <span class="lm">the Chain</span></h1><div class="divider"></div></div>
+<div class="sn on" style="left:140px"><div class="no">01</div><div class="n">Robinhood app users</div><div style="margin-top:auto" class=""><span class="chip lime" style="font-size:24px">28.4M</span><div class="s" style="margin-top:8px">funded customers</div></div></div>
+<div class="sn on" style="left:476px"><div class="no">02</div><div class="n">Robinhood Wallet</div><div class="s">self-custody wallet</div></div>
+<div class="sn on" style="left:812px"><div class="no">03</div><div class="n">Robinhood Chain</div><div class="s">Arbitrum tech, settles to Ethereum</div></div>
+<div class="sn on" style="left:1148px"><div class="no">04</div><div class="n">Uniswap<br>Morpho<br>Lighter</div></div>
+<div class="sn on" style="left:1484px"><div class="no">05</div><div class="n">Tokens on the chain</div><div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="chip lime" style="font-size:22px">Stock Tokens</span><span class="chip gold" style="font-size:22px">GLD</span><span class="chip" style="font-size:22px">memecoins</span></div></div>
+<svg class="lay"><defs>
+<marker id="4-apps-tokens--ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffd700"/></marker>
+<marker id="4-apps-tokens--aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8892a4"/></marker>
+<marker id="4-apps-tokens--al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ccff00"/></marker>
+<marker id="4-apps-tokens--ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker>
+<marker id="4-apps-tokens--am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2a3040"/></marker>
+</defs><line x1="442" y1="540" x2="468" y2="540" stroke="#ccff00" stroke-width="4" marker-end="url(#4-apps-tokens--al)"/><line x1="778" y1="540" x2="804" y2="540" stroke="#ccff00" stroke-width="4" marker-end="url(#4-apps-tokens--al)"/><line x1="1114" y1="540" x2="1140" y2="540" stroke="#ccff00" stroke-width="4" marker-end="url(#4-apps-tokens--al)"/><line x1="1450" y1="540" x2="1476" y2="540" stroke="#ccff00" stroke-width="4" marker-end="url(#4-apps-tokens--al)"/></svg>
+<div class="ribbon" style="left:140px;width:1640px;background:#1a1f2b"></div>
+<div class="ribbon" style="left:140px;width:1640px;background:linear-gradient(90deg,rgba(204,255,0,.15),rgba(204,255,0,.9));box-shadow:0 0 26px rgba(204,255,0,0.45)"></div>
+<svg class="lay"><polygon points="1784,818 1814,837 1784,856" fill="#ccff00" opacity="1"/></svg>
+<div class="elab" style="left:140px;top:872px;width:1640px;font-size:19px;color:var(--text-muted)">THE FLOW</div>
+<div class="src">Robinhood newsroom, Jul 1, 2026 · docs.robinhood.com/chain · Robinhood Q2 2026</div>
+</div>
+<div class="frame" id="5-flow-pulse">
+<div class="orb" style="left:1350px;top:-300px;width:640px;height:640px;background:#6d8a00"></div>
+<div class="orb" style="left:-280px;top:640px;width:520px;height:520px;background:#3d4a10"></div>
+<div class="hdr"><div class="ey">THE ROBINHOOD STACK</div><h1>From the App to <span class="lm">the Chain</span></h1><div class="divider"></div></div>
+<div class="sn on" style="left:140px"><div class="no">01</div><div class="n">Robinhood app users</div><div style="margin-top:auto" class=""><span class="chip lime" style="font-size:24px">28.4M</span><div class="s" style="margin-top:8px">funded customers</div></div></div>
+<div class="sn on" style="left:476px"><div class="no">02</div><div class="n">Robinhood Wallet</div><div class="s">self-custody wallet</div></div>
+<div class="sn on" style="left:812px"><div class="no">03</div><div class="n">Robinhood Chain</div><div class="s">Arbitrum tech, settles to Ethereum</div></div>
+<div class="sn on" style="left:1148px"><div class="no">04</div><div class="n">Uniswap<br>Morpho<br>Lighter</div></div>
+<div class="sn on peak" style="left:1484px"><div class="no">05</div><div class="n">Tokens on the chain</div><div style="margin-top:auto;display:flex;flex-direction:column;gap:12px;align-items:flex-start"><span class="chip lime" style="font-size:22px">Stock Tokens</span><span class="chip gold" style="font-size:22px">GLD</span><span class="chip" style="font-size:22px">memecoins</span></div></div>
+<svg class="lay"><defs>
+<marker id="5-flow-pulse--ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffd700"/></marker>
+<marker id="5-flow-pulse--aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8892a4"/></marker>
+<marker id="5-flow-pulse--al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ccff00"/></marker>
+<marker id="5-flow-pulse--ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker>
+<marker id="5-flow-pulse--am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2a3040"/></marker>
+</defs><line x1="442" y1="540" x2="468" y2="540" stroke="#ccff00" stroke-width="4" marker-end="url(#5-flow-pulse--al)"/><line x1="778" y1="540" x2="804" y2="540" stroke="#ccff00" stroke-width="4" marker-end="url(#5-flow-pulse--al)"/><line x1="1114" y1="540" x2="1140" y2="540" stroke="#ccff00" stroke-width="4" marker-end="url(#5-flow-pulse--al)"/><line x1="1450" y1="540" x2="1476" y2="540" stroke="#ccff00" stroke-width="4" marker-end="url(#5-flow-pulse--al)"/></svg>
+<div class="ribbon" style="left:140px;width:1640px;background:#1a1f2b"></div>
+<div class="ribbon" style="left:140px;width:1640px;background:linear-gradient(90deg,rgba(204,255,0,.15),rgba(204,255,0,.9));box-shadow:0 0 50px rgba(204,255,0,0.85)"></div>
+<svg class="lay"><polygon points="1784,818 1814,837 1784,856" fill="#ccff00" opacity="1"/></svg>
+<div class="elab" style="left:140px;top:872px;width:1640px;font-size:19px;color:var(--text-muted)">THE FLOW</div>
+<div class="src">Robinhood newsroom, Jul 1, 2026 · docs.robinhood.com/chain · Robinhood Q2 2026</div>
+</div>
+</body></html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>gold-dates two-marker timeline</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  /* golden-kitty video accents: Robinhood lime = Robinhood / Robinhood Chain; gold = gold, GLD, GOLDEN */
+  --lime:#ccff00; --gold:#ffd700;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:block;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:50;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.26;pointer-events:none;z-index:0}
+.frame>*:not(.orb){z-index:1}
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:68px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:26px 0 0}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.lm{color:var(--lime)} .gd{color:var(--gold)} .re{color:var(--accent-red)} .pu{color:var(--accent-purple)}
+.hdr{position:absolute;left:140px;top:78px;width:1640px}
+.src{position:absolute;left:140px;bottom:40px;font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:19px;color:var(--text-muted)}
+.abs{position:absolute}
+.box{position:absolute;background:var(--bg-card);border:2px solid var(--border);border-radius:22px}
+.box.w{border-color:rgba(232,234,240,.30)}
+.box.gold{border-color:rgba(255,215,0,.62);box-shadow:0 0 70px rgba(255,215,0,.13)}
+.box.lime{border-color:rgba(204,255,0,.62);box-shadow:0 0 70px rgba(204,255,0,.12)}
+.box.red{border-color:rgba(255,64,96,.55)}
+.box.pu{border-color:rgba(168,85,247,.6);box-shadow:0 0 70px rgba(168,85,247,.12)}
+.box.focus-gold{box-shadow:0 0 0 7px rgba(255,215,0,.16),0 0 120px rgba(255,215,0,.38)}
+.box.focus-lime{box-shadow:0 0 0 7px rgba(204,255,0,.16),0 0 120px rgba(204,255,0,.34)}
+.off{opacity:.16}
+.dim{opacity:.38}
+.hid{opacity:0}
+.cap{font-family:'DM Sans';font-weight:700;text-transform:uppercase;letter-spacing:.12em}
+.ttl{font-family:'DM Sans';font-weight:700;color:var(--text-primary)}
+.sub{font-family:'DM Sans';font-weight:400;color:var(--text-secondary)}
+.chip{display:inline-block;padding:8px 20px;border-radius:100px;font-family:'JetBrains Mono';font-weight:600;
+  font-size:26px;border:2px solid var(--border);color:var(--text-primary);background:rgba(255,255,255,.03)}
+.chip.gold{color:var(--gold);border-color:rgba(255,215,0,.5);background:rgba(255,215,0,.10)}
+.chip.lime{color:var(--lime);border-color:rgba(204,255,0,.5);background:rgba(204,255,0,.09)}
+.chip.pu{color:#c99bff;border-color:rgba(168,85,247,.5);background:rgba(168,85,247,.10)}
+.tag{display:inline-block;padding:7px 18px;border-radius:100px;font-family:'DM Sans';font-weight:700;
+  font-size:19px;text-transform:uppercase;letter-spacing:.09em}
+.tag.gold{background:rgba(255,215,0,.14);color:var(--gold)}
+.tag.lime{background:rgba(204,255,0,.13);color:var(--lime)}
+.tag.red{background:rgba(255,64,96,.15);color:var(--accent-red)}
+.tag.w{background:rgba(232,234,240,.08);color:var(--text-primary)}
+.token{position:absolute;border-radius:50%;overflow:hidden;border:4px solid rgba(255,215,0,.85);
+  box-shadow:0 0 50px rgba(255,215,0,.35)}
+.token img{width:100%;height:100%;object-fit:cover;display:block}
+.elab{position:absolute;font-family:'DM Sans';font-weight:700;font-size:19px;letter-spacing:.14em;text-transform:uppercase}
+svg.lay{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+
+
+.mk{position:absolute;width:56px;height:56px;border-radius:50%;background:var(--bg-deep);border:7px solid}
+.dt{position:absolute;width:760px;text-align:center;font-family:'JetBrains Mono';font-weight:600;font-size:96px;line-height:1}
+.dl{position:absolute;width:760px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:38px;color:var(--text-primary);line-height:1.3}
+.dv{position:absolute;width:760px;text-align:center}
+</style></head>
+<body>
+<!--
+gold-dates Type 2 SYSTEM-DESIGN (CH5 348.00-351.03). 1-sept4 @348.00 · 2-oct1 @349.64 'Solana'.
+Dates only on screen: never 'over a month', never a day count.
+-->
+<div class="frame" id="1-sept4">
+<div class="orb" style="left:-250px;top:-250px;width:620px;height:620px;background:#b89400"></div>
+<div class="orb" style="left:1450px;top:600px;width:560px;height:560px;background:#5b2a91"></div>
+<div class="hdr"><div class="ey">THE TIMING</div><h1>Gold Pairs, <span class="gd">Two Dates</span></h1><div class="divider"></div></div>
+<svg class="lay"><line x1="160" y1="470" x2="960" y2="470" stroke="#ffd700" stroke-width="5" opacity=".9"/><line x1="960" y1="470" x2="1760" y2="470" stroke="#2a3040" stroke-width="5" opacity="1" stroke-dasharray="3 10"/></svg>
+<div class="mk" style="left:532px;top:442px;border-color:#ffd700;box-shadow:0 0 40px rgba(255,215,0,.7)"></div>
+<div class="mk" style="left:1332px;top:442px;border-color:#2a3040;"></div>
+<div class="dt gd" style="left:180px;top:560px">SEPT 4, 2026</div>
+<div class="dl" style="left:180px;top:690px">GOLDEN / GLD pool opens</div>
+<div class="dv" style="left:180px;top:752px"><span class="tag lime" style="font-size:22px">Robinhood Chain</span></div>
+<div class="hid"><div class="dt" style="left:980px;top:560px;color:#c99bff">OCT 1, 2026</div><div class="dl" style="left:980px;top:690px">StonkFun adds gold pairs</div><div class="dv" style="left:980px;top:752px"><span class="tag" style="font-size:22px;background:rgba(168,85,247,.15);color:#c99bff">Solana</span></div></div>
+<div class="src">DexScreener pool record · StonkFun on X, Oct 1, 2026</div>
+</div>
+<div class="frame" id="2-oct1">
+<div class="orb" style="left:-250px;top:-250px;width:620px;height:620px;background:#b89400"></div>
+<div class="orb" style="left:1450px;top:600px;width:560px;height:560px;background:#5b2a91"></div>
+<div class="hdr"><div class="ey">THE TIMING</div><h1>Gold Pairs, <span class="gd">Two Dates</span></h1><div class="divider"></div></div>
+<svg class="lay"><line x1="160" y1="470" x2="960" y2="470" stroke="#ffd700" stroke-width="5" opacity=".9"/><line x1="960" y1="470" x2="1760" y2="470" stroke="#a855f7" stroke-width="5" opacity="0.9" stroke-dasharray="0"/></svg>
+<div class="mk" style="left:532px;top:442px;border-color:#ffd700;box-shadow:0 0 40px rgba(255,215,0,.7)"></div>
+<div class="mk" style="left:1332px;top:442px;border-color:#a855f7;box-shadow:0 0 40px rgba(168,85,247,.7)"></div>
+<div class="dt gd" style="left:180px;top:560px">SEPT 4, 2026</div>
+<div class="dl" style="left:180px;top:690px">GOLDEN / GLD pool opens</div>
+<div class="dv" style="left:180px;top:752px"><span class="tag lime" style="font-size:22px">Robinhood Chain</span></div>
+<div class=""><div class="dt" style="left:980px;top:560px;color:#c99bff">OCT 1, 2026</div><div class="dl" style="left:980px;top:690px">StonkFun adds gold pairs</div><div class="dv" style="left:980px;top:752px"><span class="tag" style="font-size:22px;background:rgba(168,85,247,.15);color:#c99bff">Solana</span></div></div>
+<div class="src">DexScreener pool record · StonkFun on X, Oct 1, 2026</div>
+</div>
+</body></html>

@@ -1,0 +1,139 @@
+{
+  "batch": "uptober",
+  "clips": [
+    {
+      "id": "spawn-doubled-for-the-haters",
+      "n": 1,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_start": 70.3
+        },
+        {
+          "segment_index": 2,
+          "new_end": 536.6
+        }
+      ],
+      "boundary_relock_note": "Seg 0 start moved 69.95 -> 70.30: the tail of the greeting ('how y'all doing') is voiced until 70.14, so the old start clipped it in; 70.30 is in silence before 'this one is dedicated'. Seg 2 end moved 536.95 -> 536.60: the trailing tic 'right' begins at 536.94; the new end sits in the silence after 'hundred x'.",
+      "removals": [
+        {
+          "start": 76.1,
+          "end": 80.28,
+          "reason": "restatement plus stall: 'they were hated on this play, and' is said again, better, at 86.2 ('hating on this play'). Result: 'dedicated to all y'all haters out there. I was talking about it yesterday on stream, I had haters in my own Discord'. Both ends in silence."
+        },
+        {
+          "start": 84.18,
+          "end": 85.5,
+          "reason": "repeated phrasing: 'they were hating on me' right before 'hating on this play'. Result: 'I had haters in my own Discord, hating on this play, and I'm like'. Most dispensable, drop first if the gate trips."
+        }
+      ],
+      "removed_seconds_est": 5.5,
+      "removed_pct_est": 10.0,
+      "notes": "Validator measure: 10.0% voiced (5.50s of 55.03s), tightened 52.66s before desilence. Peak beats 88.52-101.64 and 2839.58-2844.86 are untouched. Left in on purpose because they sit inside a peak beat: the 'holy quiet' false start (92.74-93.78) and the aside 'I was talking about it here' (97.52-99.08); Mike can call either at 2nd review. Not cut because there is no silence at the word boundary: 'yeah' at 535.06 and the 'and' at 2846.6. The dead air in seg 0 is left for the desilencer. Spoken numbers (50K, 101K, 200K, 5 million, 100x, 50x) all kept. Caption fixes: 'heaters' -> haters; 'once a five million' -> once it's at 5 million; 'so they can go to 200k' -> so it can go to 200K."
+    },
+    {
+      "id": "pippin-went-dead-then-89x",
+      "n": 2,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_start": 3834.81
+        }
+      ],
+      "boundary_relock_note": "Seg 0 start moved 3834.97 -> 3834.81 so the hook opens on 'I tell you, there's a backstory' as the clip plan intended; the old start dropped 'I' and opened on 'tell you'. 3834.81 is an energy dip between 'like' and 'I'.",
+      "removals": [
+        {
+          "start": 3908.9,
+          "end": 3910.71,
+          "reason": "false start flagged by the clip plan: 'he just kept on getting and then'. Result: 'oh my god, oh my god. It started ripping, like it started going up and up and up'. Starts in silence, ends on the energy dip before 'it started ripping'."
+        },
+        {
+          "start": 3918.8,
+          "end": 3920.1,
+          "reason": "filler tic: 'you know, you know'. Result: 'by the time we got out of it, took some profits'. Both ends in silence."
+        },
+        {
+          "start": 3837.4,
+          "end": 3837.86,
+          "reason": "stutter: doubled 'on' ('the 89x on, on Pippin')."
+        },
+        {
+          "start": 3839.38,
+          "end": 3839.88,
+          "reason": "stutter: doubled 'in a' ('in a, in a bear market'). Most dispensable, drop first if the gate trips."
+        }
+      ],
+      "removed_seconds_est": 4.07,
+      "removed_pct_est": 9.9,
+      "notes": "Validator measure: 9.9% voiced (4.07s of 40.91s), tightened 39.85s before desilence. EXCEPTION TO FLAG: the first removal (3908.90-3910.71) is inside peak beat 3898.69-3916.80. I made it because the clip plan's own notes ask tighten to remove that fumble and the peak-beat quote skips it; every quoted peak word is kept. Drop it if the peak must stay untouched (the clip then sits near 5.5%). The 89x number, 'took some profits' and 'made tons of money' are kept, so the vindication framing is intact. Caption fixes: 'within the 89x' -> with the 89x; 'make tons of money' -> made tons of money; Pippin, August, Twitter capitalized."
+    },
+    {
+      "id": "no-job-is-safe-robots",
+      "n": 3,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_start": 2359.4
+        },
+        {
+          "segment_index": 1,
+          "new_start": 2380.1
+        }
+      ],
+      "boundary_relock_note": "Seg 0 start moved 2359.35 -> 2359.40 so it opens on 'nobody's safe' without the tail of the preceding 'like'. Seg 1 start moved 2378.72 -> 2380.10: the old start opened on a clipped, subjectless 'could be your security guard, so' ('they' is back at 2377.5, outside the cut) and it restates seg 0's last line. The new start is in the silence right before 'somebody wants to come to your house' (audio onset 2380.16, just ahead of the 2380.26 peak start), so the join reads 'you don't need a security guard. Somebody wants to come to your house...'.",
+      "removals": [
+        {
+          "start": 2390.74,
+          "end": 2394.55,
+          "reason": "stumble flagged by the clip plan: 'you know, you know, but anyways, this, it's going to be like'. Result: 'kill the bastard. It's, I think we're in for like an unimaginable future'. Both ends in silence."
+        },
+        {
+          "start": 2363.6,
+          "end": 2364.05,
+          "reason": "filler tic: 'right' after 'a robot could really do anything'. Most dispensable, drop first if the gate trips."
+        }
+      ],
+      "removed_seconds_est": 4.26,
+      "removed_pct_est": 9.4,
+      "notes": "Validator measure: 9.4% voiced (4.26s of 45.32s), tightened 41.06s before desilence. Peak beats 2380.26-2390.78 and 2407.12-2411.92 are untouched: the first removal starts at 2390.74, in the silence after 'bastard' (audio ends 2390.70), so no peak word is cut. Left in on purpose: the 'and... try... to like' stall and the 'I mean you have a, you have a robot' restart are inside the peak (the stall is mostly silence for the desilencer). The restatement 'a really, really, like an unimaginable future' (2398.3-2400.7) is the next candidate, but adding it lands at 14.7%, too close to the ceiling. 'I got' (2402.06) and 'you don't need like anything' (2370.68) have no silent boundary. The seg 1 relock diverges from clip 7 (the impact version), which shares this segment. Caption fix: 'probably going to make be all set' -> probably going to be all set."
+    },
+    {
+      "id": "golden-kitty-50-million",
+      "n": 5,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 1,
+          "new_start": 2706.02
+        },
+        {
+          "segment_index": 2,
+          "new_start": 4728.41
+        },
+        {
+          "segment_index": 3,
+          "new_start": 4917.98
+        }
+      ],
+      "boundary_relock_note": "Seg 1 start moved 2702.72 -> 2706.02: drops the lead-in 'it's (pause) my understanding it should go up', so the hook 'Golden is gonna be pretty damn good' runs straight into 'it should totally go up, just because of the amount of action...'; the new start is in a 0.58s silence. Seg 2 start moved 4727.41 -> 4728.41: the old start landed between 'if' and 'we' and opened on the false start 'we start running'; the new start is the energy dip before 'if the bulls start running'. Seg 3 start moved 4918.23 -> 4917.98: the old start was mid-speech and clipped 'Golden' off 'Golden Kitty could be a pretty good meme'; Whisper runs about 0.2s early here, so 4917.98 is the dip before 'golden'.",
+      "removals": [
+        {
+          "start": 4920.68,
+          "end": 4923.72,
+          "reason": "triple restart: 'I wish, man, I wish' ahead of the third 'I wish we get a run-up'. Result: 'a pretty good meme with organic growth, man. I wish we get a run-up...'. Starts on an energy dip, ends in silence."
+        },
+        {
+          "start": 4932.1,
+          "end": 4932.62,
+          "reason": "false start: 'are gonna be like' before 'are gonna be flying'. Most dispensable, drop first if the gate trips."
+        }
+      ],
+      "removed_seconds_est": 3.56,
+      "removed_pct_est": 6.9,
+      "notes": "Validator measure: 6.9% voiced (3.56s of 36.03s), tightened 38.67s before desilence. Light on removals because the three relocks already take 4.05s off the raw cut, mostly the hedged lead-in on seg 1. Peak beat 4731.57-4741.25 (the 50 million call) is untouched; its internal fumbles ('I mean', 'we're probably gonna, it's probably', 'you know like', 'or something') are left in because they sit inside the peak. The false-start 'the' at 2709.28 has no silent boundary. Check by ear at 2nd review: the seg 3 start (a stray 'yeah' may sit at 4917.62-4917.95, just before the new start; if 'Golden' sounds clipped, move the start to 4917.60) and the 0.02s gap before 'golden' at the seg 0 hook. Spoken numbers (50 million, 10x) kept. Caption fixes: 'within fluorescence and kols' -> with influencers and KOLs; 'four-year cycles I'll be just buying back in' -> four-year cycle zombies just buying back in (confirm by ear); 'it's probably want to go up' -> it's probably gonna want to go up. SCOPE: the clip list in my prompt arrived empty (cut off after 'ONLY these clips:'). No tighten-plan part file existed on disk, so I took this as group 1 of the orchestrator's 4-per-group split: clips 1, 2, 3 and 5. Clips 6 and 7 are not covered here, and clip 4 was deleted at 4b. I did not write a part file."
+    }
+  ]
+}

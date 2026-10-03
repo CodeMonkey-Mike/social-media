@@ -91,7 +91,7 @@ Uses `fbbot-profile`. **Chrome must be fully closed before running** — Playwri
 
 ## Debug artifacts
 
-Each wizard step saves to `tmp-fb-debug/stepN_state.{json,png}`. On failure: `tmp-fb-debug/FAILED_final_state.{json,png}`. Inspect when Facebook's UI updates change wizard behavior.
+Each wizard step saves to `tmp/fb-debug/stepN_state.{json,png}`. On failure: `tmp/fb-debug/FAILED_final_state.{json,png}`. Inspect when Facebook's UI updates change wizard behavior.
 
 ## Resetting a stuck short
 

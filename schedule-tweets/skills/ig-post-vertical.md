@@ -9,8 +9,40 @@ description: Post the next pending Instagram vertical video (Reel) from data/sho
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-ig-reel.js
+python scripts/post_ig_reel.py
 ```
+
+> ✅ **Python port is the production poster (LIVE-BLESSED 2026-09-24).** `post-ig-reel.js` is FROZEN
+> rollback and still has the defects fixed below. Do not use it for production posts.
+
+## Share outcome is decided by a Reels-grid baseline diff (2026-09-24)
+
+**Why:** on 2026-09-24 the JS twin failed `p-20260922-110x-in-8-days-community-wins` with
+`error after Share: Something went wrong` (91s into an 80 MB upload). File specs matched sibling
+shorts that posted fine, the reel was NOT on the grid, and the script had left no screenshot, so
+the cause could not be proven (most likely a transient IG upload error; 236/241 reels had posted
+clean). The same row posted first try through the fixed port. The investigation exposed four defects:
+
+1. Outcome regexes ran on `document.body.innerText`, i.e. the whole page INCLUDING the home feed
+   behind the composer. Now: composer dialog + `[role=alert]`/`[role=status]` text only, with the
+   typed caption stripped out.
+2. No evidence on error. Now: screenshot + dialog text → `tmp/ig-reel-debug/` (gitignored).
+3. The "pre-share" reel snapshot was taken on the HOME page (0 reel links) and never used, and the URL
+   was the top grid tile (can be an older reel). Now: a real baseline from `/reels/` BEFORE upload,
+   and the new reel is the one absent from it (cannot return a pre-existing reel by construction;
+   an empty baseline skips the diff rather than guess).
+4. The grid diff is the authority on every path:
+
+| Share outcome | New reel on grid? | Row written | Machine line |
+|---|---|---|---|
+| success / modal-closed / timeout | yes | `posted` + url | `POST OK ... status=posted` |
+| success / modal-closed / timeout | no (10-min window) | `posted_unverified`, url null. **Never re-post** | `POST OK url=none status=posted_unverified` |
+| error | yes (3-min window) | `posted` + url + `url_note` (lost response) | `POST OK ... status=posted` |
+| error | no | `failed`, error says *verified NOT on the Reels grid* | `POST FAIL` |
+
+A `failed` row whose error says **"verified NOT on the Reels grid"** is safe to reset to `pending` and
+run once (the grid check already happened). One that says **"grid diff skipped"** is not: check the
+grid by hand first. Env knobs: `IG_GRID_POLL_TIMEOUT_MS` (default 600000), `IG_GRID_POLL_INTERVAL_MS` (60000).
 
 Picks up the first short where `platforms.ig_reels.status === "pending"`, posts it via Instagram's Post flow (IG routes vertical videos to Reels automatically based on aspect ratio), and writes `platforms.ig_reels.status: "posted"`, `posted_at`, and `url` back to `data/shorts.json`.
 
@@ -142,6 +174,8 @@ This is **not** either documented failure mode, and the triage order must now di
 button was already clicked, so the run is past the point of no return in the same sense a clicked
 Post is. IG's generic "try again" does not distinguish "we rejected it, nothing published" from
 "we published it and the client lost the response." A blind re-run risks a duplicate reel.
+
+**Superseded 2026-09-24:** `post_ig_reel.py` now runs this grid check itself (see "Share outcome is decided by a Reels-grid baseline diff" above); the manual procedure below applies only to the frozen JS twin.
 
 **Correct handling:** leave the row `failed`, report it at the end of the run, and let Mike
 eyeball the IG profile grid. If the reel is genuinely absent, reset `ig_reels.status` to

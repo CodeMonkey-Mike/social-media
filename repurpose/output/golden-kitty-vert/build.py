@@ -1,0 +1,25 @@
+import json, os
+P="C:/Users/mnede/Documents/Claude/social-media/"
+IMG=P+"video-creation/longform-edited/media/golden-kitty/assets/img/"
+OUT=P+"video-creation/longform-edited/media/golden-kitty/assets/vertical/img/"
+REF=P+"schedule-tweets/images/reference/"
+pre=("Using the FIRST attached image as the exact composition, palette and subject reference, recreate this SAME shot as a vertical 9:16 portrait image (tall phone-screen frame, 1024x1536 portrait), recomposed for portrait so the subject fills the tall frame, NOT a crop of the landscape picture. Keep the same Pixar-style 3D CGI look, deep navy near-black background, dramatic rim light. ")
+tail=" No text or words anywhere in the image unless stated. Vertical 9:16 portrait orientation."
+items={
+1:("IMG-1-eth-vs-stablecoin.png",["ethereum-eth.png"],"The Ethereum coin character (use the REAL Ethereum diamond mark from the second attached image) stands beside a plain silver stablecoin character stamped with a dollar sign, stacked/arranged so both fit a tall frame, dark trading desk with blurred blue monitors behind. Same characters, faces and thumbs-up as the first image."),
+2:("IMG-2-kitty-rising-from-chain.png",["golden-kitty.png"],"The Golden Kitty (the gold cat with the visor, as in the second attached image) rises as a gold token coin out of a glowing lime green (#CCFF00) chain of linked blocks, the chain running vertically up the tall frame. No numbers, no Robinhood logo."),
+3:("IMG-3-kitty-spotlight-question.png",["golden-kitty.png"],"The Golden Kitty character (from the second attached image) on a pedestal under one stage spotlight in a dark auditorium, a glowing question mark of light floating above it. The only mark in the image is the question mark of light."),
+4:("IMG-4-spider-on-gold-bar.png",[],"A friendly golden spider sitting on top of a gold bar, framed tall."),
+5:("IMG-5-kitty-leads-coin-crowd.png",["golden-kitty.png"],"The Golden Kitty (from the second attached image) at the front of a marching crowd of generic unbranded cartoon coin mascots, the crowd receding up the tall frame behind it."),
+6:("IMG-6-artificial-inu-glow.png",["artificial-inu.png"],"The Artificial Inu mascot (use the REAL mark/character from the second attached image, do not invent a different one) with a soft circuit-light glow. No numbers."),
+7:("IMG-7-stonk-token-launch.png",["stonk.png"],"The STONK token (use the REAL mark from the second attached image) launching upward with a green energy trail streaking up the tall frame. No numbers."),
+8:("IMG-8-kitty-rooftop-lime-city.png",["golden-kitty.png"],"The Golden Kitty (from the second attached image) standing on a rooftop in a futuristic city built of glowing lime green (#CCFF00) blocks, towers rising tall behind it, deep navy near-black sky. No Robinhood logo."),
+9:("IMG-9-vlad-podium-lime-glow.png",["Vlad-Tenev.webp"],"Vlad Tenev (likeness from the second attached image) speaking at a podium, lime green stage glow behind him, hands empty, NO trophy, no cat, no logo."),
+10:("IMG-10-kitty-token-on-gold-bars.png",["golden-kitty.png"],"The Golden Kitty token (from the second attached image) on top of a stack of gold bars, a lime green (#CCFF00) aurora rising tall behind it. No numbers."),
+11:("IMG-11-vlad-trophy-overhead-confetti.png",["Vlad-Tenev.webp","golden-kitty.png"],"Vlad Tenev (likeness from the second attached image) holding the Golden Kitty trophy up over his head in triumph, confetti falling, one warm stage spotlight. Clearly a cartoon, never photoreal. The trophy is the Product Hunt Golden Kitty TROPHY from the third attached image (a chrome-gold seated cat wearing a visor, on a round base), NOT a token or coin. No logo, no ticker, no numbers."),
+12:("IMG-12-vlad-desk-trophy-laptop.png",["Vlad-Tenev.webp","golden-kitty.png"],"Vlad Tenev (likeness from the second attached image) seated at a desk, grinning, the Golden Kitty trophy standing on the desk in front of him with one hand resting on it, a soft lime green (#CCFF00) glow from a laptop beside him. Clearly a cartoon, never photoreal. The trophy is the Product Hunt Golden Kitty TROPHY from the third attached image (a chrome-gold seated cat wearing a visor, on a round base), NOT a token or coin. No logo, no ticker, no numbers."),
+13:("IMG-13-vlad-cabinet-shelf.png",["Vlad-Tenev.webp","golden-kitty.png"],"Vlad Tenev (likeness from the second attached image), seen from the side, setting the Golden Kitty trophy onto a shelf in a glass trophy cabinet, other plain unbranded trophies behind it. Clearly a cartoon, never photoreal. The trophy is the Product Hunt Golden Kitty TROPHY from the third attached image (a chrome-gold seated cat wearing a visor, on a round base), NOT a token or coin. No logo, no ticker, no numbers."),
+}
+for n,(fn,refs,desc) in items.items():
+    ref=[IMG+fn]+[REF+r for r in refs]
+    json.dump([{"file":OUT+fn,"image_id":f"gkv{n}","slug":fn[:-4],"prompt":pre+desc+tail,"ref":ref}],open(f"repurpose/output/golden-kitty-vert/img{n}.json","w"),indent=1)

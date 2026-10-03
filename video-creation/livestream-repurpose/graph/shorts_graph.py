@@ -7,7 +7,7 @@
 #
 # ONE graph = ONE mechanical segment. The cut segment starts AFTER the
 # clip-strategist's judgment lands on disk (clip-plan.json) and ENDS at Mike's
-# Phase 4b dashboard review — the seam stays a seam; no interrupts.
+# Phase 4b dashboard review — the HITL gate stays outside the graph; no interrupts.
 #
 #   START -> cut -> verify_cut -> finalize -> verify_finalize -> END
 #   any node:    -> (failed) -> END                  <- HALT route
@@ -40,8 +40,11 @@
 #
 # Wave 5 (2026-08-07): the PUBLISH segment (Phase 8 exec), wrapping the
 # already-Python scripts/publish-shorts.py + scripts/persona-lint.py. Starts
-# AFTER Mike gates the renders AND says publish, with the judgment fields
-# (hook/caption/tags/title) authored BEFORE the run in publish-meta.json (the
+# AS SOON AS every clip is 7-built with a PASS gate — STAGING IS MIKE'S REVIEW
+# HANDOFF (his 2026-08-07 eliza correction: "if you completed the shorts, they
+# should be in the queue, ready for my review"); a publish-authorization note
+# gates POSTING only, never staging. The judgment fields (hook/caption/tags/
+# title) are authored BEFORE the run in publish-meta.json (the
 # longform-meta.json contract). verify_publish mechanizes the standing manual
 # sweeps: staged-copy md5 vs the FINAL render (the 2026-07-23 stale-stage
 # hazard), complete entries, all 7 platforms pending. POSTING stays Mike-gated
@@ -891,6 +894,7 @@ class PublishState(TypedDict, total=False):
     # inputs (set by run.py, deterministic for the whole run)
     batch: str
     run_date: str            # publish date — MUST stay constant across re-runs
+    only_slugs: str          # comma-separated ready slugs; publish stages ONLY these
     meta_path: str           # publish-meta.json (judgment, authored BEFORE the run)
     out_root: str            # remotion render root (contains <batch>/)
     dest_root: str           # schedule-tweets/shorts (or its sandbox twin)
@@ -902,6 +906,7 @@ class PublishState(TypedDict, total=False):
     # derived by run.py from progress + renders + meta (nodes never re-derive)
     expected: list           # [{n, slug, id, render, staged_name}] per clip
     # bookkeeping
+    frontier_out: dict       # the in-graph builder-frontier check (added 2026-08-12; renamed from built_out same day)
     publish_out: dict
     lint_out: dict
     publish: dict            # verify_lint's final assembled summary
@@ -943,6 +948,73 @@ def _md5(path: Path) -> Optional[str]:
 
 # ── nodes ────────────────────────────────────────────────────────────────────
 
+def frontier(state: PublishState) -> PublishState:
+    """The BUILDER-FRONTIER check, in-graph (added 2026-08-12, batch `johnny`).
+
+    Phase 7 itself stays agent territory (remotion-builder subagents; a graph
+    node cannot spawn them), but the frontier they leave behind IS mechanical:
+    every clip at phase '7-built' with a PASS gate in progress.json, and every
+    expected render on disk. That check used to live only in run.py's CLI front
+    door, so the architecture diagram's 'gated renders · 7-built PASS' artifact
+    had no graph-owned node behind it — and on `johnny` the whole handoff sat
+    unobserved for an hour because the trigger lived in prose. Now the publish
+    graph itself records the frontier as its entry node."""
+    if state.get("stub"):
+        return {"frontier_out": {"stub": True}, "status": "running"}
+    prog = _read_json(state["progress_path"], None)
+    if not isinstance(prog, dict) or not prog.get("clips"):
+        return {"status": "failed",
+                "error": f"progress.json missing/empty: {state['progress_path']}"}
+    by_n = {c.get("n"): c for c in prog["clips"] if c.get("slug")}
+    rows = []
+    for e in state.get("expected", []):
+        c = by_n.get(e["n"])
+        if c is None:
+            return {"status": "failed",
+                    "error": f"clip {e['n']} ({e['slug']}): no progress.json entry"}
+        phase, gate = str(c.get("phase", "")), str(c.get("gate", ""))
+        if phase != "7-built":
+            return {"status": "failed",
+                    "error": f"clip {e['n']} ({e['slug']}): phase {phase!r} != '7-built' "
+                             "(a builder wrote a near-miss label? normalize it — the "
+                             "publish front door requires the exact string)"}
+        if "PASS" not in gate:
+            return {"status": "failed",
+                    "error": f"clip {e['n']} ({e['slug']}): gate {gate!r} carries no PASS"}
+        if not Path(e["render"]).is_file():
+            return {"status": "failed",
+                    "error": f"clip {e['n']} ({e['slug']}): render missing: {e['render']}"}
+        print(f"FRONTIER n={e['n']} slug={e['slug']} phase=7-built gate=PASS render=ok",
+              flush=True)
+        rows.append({"n": e["n"], "slug": e["slug"], "phase": phase})
+    return {"frontier_out": {"clips": rows, "frontier": True}, "status": "running"}
+
+
+def verify_frontier(state: PublishState) -> PublishState:
+    """Re-check the frontier from disk (the verify twin, same doctrine as every
+    other verify node: never trust the work node's summary)."""
+    if state.get("stub"):
+        return {"frontier_out": {**state.get("frontier_out", {}),
+                              "verified": "(stub - skipped)"},
+                "status": "running"}
+    if not state.get("frontier_out", {}).get("frontier"):
+        return {"status": "failed", "error": "frontier node reported no frontier"}
+    prog = _read_json(state["progress_path"], None)
+    by_n = {c.get("n"): c for c in (prog or {}).get("clips", []) if c.get("slug")}
+    for e in state.get("expected", []):
+        c = by_n.get(e["n"]) or {}
+        if str(c.get("phase")) != "7-built" or "PASS" not in str(c.get("gate", "")) \
+                or not Path(e["render"]).is_file():
+            return {"status": "failed",
+                    "error": f"clip {e['n']} ({e['slug']}): frontier no longer holds on "
+                             "re-check (progress.json or a render changed mid-run)"}
+    if not Path(state["meta_path"]).is_file():
+        return {"status": "failed",
+                "error": f"publish-meta.json vanished mid-run: {state['meta_path']}"}
+    return {"frontier_out": {**state.get("frontier_out", {}), "verified": True},
+            "status": "running"}
+
+
 def publish(state: PublishState) -> PublishState:
     """Phase 8 exec: copy renders into the queue folder + append complete entries
     (scripts/publish-shorts.py with --meta; idempotent, skips existing)."""
@@ -951,6 +1023,8 @@ def publish(state: PublishState) -> PublishState:
             "--out-root", state["out_root"], "--dest-root", state["dest_root"],
             "--shorts-json", state["shorts_json"],
             "--progress-json", state["progress_path"]]
+    if state.get("only_slugs"):
+        real += ["--only-slugs", state["only_slugs"]]
     if state.get("id_prefix"):
         real += ["--id-prefix", state["id_prefix"]]
     cmd = _publish_cmd_for(state, "publish", real)
@@ -1019,13 +1093,23 @@ def verify_publish(state: PublishState) -> PublishState:
                     "error": f"{id_}: hashtag in caption (captions are stored hashtag-free)"}
         if not entry.get("tags"):
             return {"status": "failed", "error": f"{id_}: empty tags[]"}
-        plats = entry.get("platforms", {})
-        bad = [p for p in ("yt_shorts", "ig_reels", "x", "tiktok", "facebook",
-                           "rumble", "bitchute")
-               if plats.get(p, {}).get("status") != "pending"]
-        if bad:
-            return {"status": "failed",
-                    "error": f"{id_}: platform block(s) not pending: {bad}"}
+        # "all 7 platforms pending" is only meaningful for an entry THIS run just added.
+        # Under incremental publish (2026-08-18) `expected` also carries clips staged by an
+        # earlier run, and Mike posts from the queue as soon as a clip lands — so those
+        # legitimately read posting/posted/posted_unverified. Asserting pending on them turned
+        # a healthy re-run into a hard GRAPH FAILED the moment posting began. The md5 and
+        # completeness checks above still run for EVERY expected clip: those catch the real
+        # hazard (a render that changed after staging) and stay valid after posting starts.
+        added_ids = {e.get("id") for e in (state.get("publish_out") or {}).get("entries", [])
+                     if e.get("action") == "ADDED"}
+        if id_ in added_ids:
+            plats = entry.get("platforms", {})
+            bad = [p for p in ("yt_shorts", "ig_reels", "x", "tiktok", "facebook",
+                               "rumble", "bitchute")
+                   if plats.get(p, {}).get("status") != "pending"]
+            if bad:
+                return {"status": "failed",
+                        "error": f"{id_}: platform block(s) not pending: {bad}"}
         d = _ffprobe_duration(staged)
         if d is None or entry.get("duration_seconds") is None or \
                 abs(d - float(entry["duration_seconds"])) > 0.2:
@@ -1078,10 +1162,15 @@ def verify_lint(state: PublishState) -> PublishState:
 
 def build_publish_graph(checkpointer=None):
     g = StateGraph(PublishState)
-    for name, fn in (("publish", publish), ("verify_publish", verify_publish),
+    for name, fn in (("frontier", frontier), ("verify_frontier", verify_frontier),
+                     ("publish", publish), ("verify_publish", verify_publish),
                      ("lint", lint), ("verify_lint", verify_lint)):
         g.add_node(name, fn)                 # default retry policy = none. Keep it.
-    g.add_edge(START, "publish")
+    g.add_edge(START, "frontier")
+    g.add_conditional_edges("frontier", _route("verify_frontier"),
+                            {"verify_frontier": "verify_frontier", "halt": END})
+    g.add_conditional_edges("verify_frontier", _route("publish"),
+                            {"publish": "publish", "halt": END})
     g.add_conditional_edges("publish", _route("verify_publish"),
                             {"verify_publish": "verify_publish", "halt": END})
     g.add_conditional_edges("verify_publish", _route("lint"),

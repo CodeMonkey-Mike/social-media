@@ -50,9 +50,33 @@ De-prioritize (clip these ONLY when they carry strong hype/conviction/tribal ene
 
 These macro/data segments go stale in days and are low on hype; a batch made of only these is the failure mode. Macro earns a clip ONLY when it is really a conviction / tribal / philosophical take wearing a macro coat (e.g. the four-year-cycle-zombie thesis), not a data readout. When in doubt, pick the moment that makes a viewer FEEL something or want to ape a project, not the moment that reports a number. (This sharpens criterion 3 above and the "Topic types that work best" ranking below — apply it as the tie-breaker on every batch.)
 
+**HARDENED 2026-08-13 (batch `wen-moon`, Mike rejected BOTH clips): "wearing a macro coat" is not a
+loophole for forward speculation.** A clip built on *what the market might do next* fails even when it
+has named opposition, a specific probability split, and a tribal payoff. Mike's verdict on the
+"bottom is not waiting for October" clip (four-year-cycle zombies + the 50/40/10 split + the
+crypto-diverges-from-stocks flip): *"just talking about what might happen with the next 30 days...
+I just don't know if it's interesting enough. It's not like me hyping up another coin or something.
+It was just normal talk from the live stream. It wasn't anything significant."* The bar is not
+"is there a tribe in it" — the bar is **is this significant, or is it the ordinary talk that fills
+every stream.** Timeline speculation, probability splits and "where do we bottom" are ordinary talk:
+he does them every single stream, so they are never the thing that makes THIS stream worth clipping.
+The zombie thesis earns a clip when he is *hitting* the zombies with something that already happened
+or with a hard conviction claim, not when he is estimating odds out loud. **When a stream gives you
+nothing but market talk, come back with fewer clips and say so; do not fill the slot.**
+
 ### What does NOT make a topic short-worthy
 
 - **Stream housekeeping — the opening welcome / greeting and the closing sign-off.** "What's going on, how's everybody doing, let me welcome all the [X]," and the end-of-stream "alright that's it for me, click the link, catch you later." These have NO substance — no claim, number, or argument to react to — so they NEVER make a clip on their own, no matter how on-brand the phrasing sounds (e.g. "welcome all the four-year cycle zombies" is a greeting, not a take). The *thesis* a welcome gestures at is the clip; the welcome itself is not. Skip them by default.
+- **A clip that OPENS on Mike criticizing another project's decision.** Added 2026-08-13 after he
+  rejected the `wen-moon` clip 1, which opened on "why would you launch a Toshi coin on the Robinhood
+  chain, it belongs on Base": *"I just don't think that has any substance. Maybe later on in the clip
+  I may switch over, saying that I want a real dog on Robinhood, but it just seems like it's a useless
+  opening."* A put-down of somebody else's launch is not a hook — it gives the viewer nothing to want.
+  The POSITIVE thesis is the clip ("I want the real dog, the one that gets listed in the Robinhood
+  app"), so if that beat exists the clip must **open** on it and the critique is at most a short aside
+  inside. If the positive thesis does not exist in the material, there is no clip. This is stricter
+  than the disparagement rule (which is about not attacking projects); this one says the critique is
+  not interesting even when it is fair.
 - Segments that are primarily audience interaction ("what's going on Brian?", chat responses, shoutouts) unless there's a payoff moment embedded in them
 - Technical jargon runs that Mike himself says he doesn't fully understand — unless paired with a "here's what it means for your money" moment
 - Price predictions with heavy hedging ("we'll see, we'll see, who knows") — these don't give the viewer something to react to

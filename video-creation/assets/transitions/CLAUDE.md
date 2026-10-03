@@ -201,6 +201,12 @@ use of an example/preview video; for everything else, Rule 4 still stands.)
 
 ## LIBRARY SCHEMA + picking a transition (for editing)
 
+> **Pick for VARIETY too (2026-10-01):** read the usage ledger first
+> (`python video-creation/skills/usage-ledger/usage_ledger.py report --what transitions`). The card move, the melt look and the spin look rotate (the previous video's
+> pick is blocked; never-used first, then least recently used); the face pick and the AI-still glitch are advisory;
+> fade / cross-fade / cross-warp / punch stay constant house style. Usage lives in `video-creation/assets/usage-ledger.json`;
+> every row's `used_in` here is frozen and no longer written. Doc: `video-creation/skills/usage-ledger/usage-ledger.md`.
+
 Every object carries a **`meta`** block so you can scan `library.json` and choose a fitting
 transition for a cut WITHOUT opening the engines:
 - `aspectRatios` — which aspect it's authored for (currently `["16:9"]` = 1920×1080). **A vertical

@@ -28,7 +28,7 @@ build-ready:
               stage (--force to override).
   all         everything (the manual one-shot; the graph runs stages as separate nodes).
 
-What this deliberately does NOT touch (the judgment seams stay seams):
+What this deliberately does NOT touch (the HITL gates and agent handoffs stay outside the graph):
   - filler span adjudication (see above; skills/filler-removal/filler-removal.md)
   - caption corrections (PHRASE_CORRECTIONS / PROTECTED_DOUBLES / verified-words patches)
     — those live in the Phase 7 builder loop against the clip's OWN audio
@@ -311,7 +311,10 @@ def main():
     out_base = Path(args.out_base) if args.out_base else (
         REPO_ROOT / "video-creation" / "shorts" / args.batch)
     prog = load_progress(out_base)
-    prog_clips = [c for c in prog.get("clips", []) if c.get("slug")]
+    # gate-deleted clips (gate="deleted-4b"/"deleted-2nd") stay in progress.json with frozen
+    # numbers but are never finished (silver, 2026-09-11)
+    prog_clips = [c for c in prog.get("clips", []) if c.get("slug")
+                  and not str(c.get("gate", "")).startswith("deleted")]
     if not prog_clips:
         die("progress.json has no clips")
 
