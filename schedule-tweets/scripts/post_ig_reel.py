@@ -1,7 +1,7 @@
 # post_ig_reel.py — CANONICAL Python port of post-ig-reel.js (2026-08-11,
-# posting-tail migration; the JS twin is FROZEN rollback). Status: PORTED,
-# BLESS-PENDING — invoke the JS twin for production posts until this port is
-# live-blessed with one real post.
+# posting-tail migration; the JS twin is FROZEN rollback). Status: LIVE-BLESSED
+# 2026-09-24 (p-20260922-110x-in-8-days-community-wins -> reel/DdrCMvfhA6L),
+# this port is the production IG Reel poster.
 #
 # Uploads one pending Instagram Reel from data/shorts.json. Instagram web has
 # no dedicated "Reel" creation link; uploading a video via the Post flow
@@ -24,6 +24,26 @@
 # `tcx`/`tcy` trigger-center coords are computed but never used (the actual
 # hover targets the trigger locator directly). Documented divergences ONLY:
 # the final machine line (POST OK/FAIL) + this header comment.
+#
+# DELIBERATE FIX (2026-09-24, after p-20260922-110x-in-8-days-community-wins
+# failed with "IG returned an error after Share: Something went wrong" and
+# left no evidence). The JS twin still carries all of these defects:
+#   1. Share-outcome signals were regex-matched against document.body.innerText,
+#      i.e. the whole page INCLUDING the home feed behind the composer, so any
+#      feed caption saying "try again" / "posted" could fake an outcome. Now
+#      matched only against the composer dialog + [role=alert]/[role=status].
+#   2. An error left no evidence. Now a screenshot + the dialog text are saved
+#      to tmp/ig-reel-debug/ before anything else happens.
+#   3. `preShareReelUrls` was scraped from the HOME page (zero reel links) and
+#      never used, and the URL write-back took the top grid tile, which can be
+#      an older reel. Now a real baseline is scraped from /reels/ BEFORE the
+#      upload, and the grid is baseline-diffed after Share (the post_fb_short.py
+#      pattern): a reel absent from the baseline is ours by construction.
+#   4. An "error after Share" was marked failed blind. The grid diff is now the
+#      authority on every path: new reel -> posted (+url) even if IG showed an
+#      error (lost response); error + no new reel -> failed, verified absent
+#      (safe to reset to pending); no error + no new reel -> posted_unverified,
+#      url null (never failed: a failed row invites a duplicate re-post).
 import json
 import os
 import random
@@ -54,6 +74,15 @@ CHAR_DELAY_MIN = 40
 CHAR_DELAY_MAX = 120
 PRE_COMPOSE_MIN = int(os.environ.get("IG_PRE_COMPOSE_MIN") or 15000)
 PRE_COMPOSE_MAX = int(os.environ.get("IG_PRE_COMPOSE_MAX") or 45000)
+# Post-Share grid baseline diff (see header fix 3/4).
+GRID_POLL_TIMEOUT_MS = int(os.environ.get("IG_GRID_POLL_TIMEOUT_MS") or 600000)
+GRID_POLL_INTERVAL_MS = int(os.environ.get("IG_GRID_POLL_INTERVAL_MS") or 60000)
+DEBUG_DIR = WORKSPACE_ROOT / "tmp" / "ig-reel-debug"
+
+# Text of the composer dialog(s) + IG's alert/status toasts ONLY — never the
+# whole body, which includes the home feed behind the modal (header fix 1).
+SCOPED_TEXT_JS = """() => [...document.querySelectorAll('div[role="dialog"], [role="alert"], [role="status"]')]
+    .map(e => e.innerText || '').join('\\n')"""
 
 
 def rnd(min_ms, max_ms):
@@ -124,6 +153,57 @@ def get_recent_reel_urls(page, count=3):
         """(n) => [...document.querySelectorAll('a[href*="/reel/"]')].slice(0, n).map(a => a.href)""",
         count,
     )
+
+
+def scrape_reel_ids(page):
+    """Every /reel/<id> on the profile's Reels tab, as bare canonical URLs."""
+    urls = get_recent_reel_urls(page, 50)
+    out = []
+    for u in urls:
+        m = re.search(r"/reel/([A-Za-z0-9_-]+)", u or "")
+        if m:
+            url = f"https://www.instagram.com/{IG_USERNAME}/reel/{m.group(1)}/"
+            if url not in out:
+                out.append(url)
+    return out
+
+
+def find_new_reel(page, baseline, timeout_ms):
+    """Poll the Reels tab until a reel NOT in the baseline appears. Returns its
+    URL or None. Cannot return a pre-existing reel by construction."""
+    start = time.monotonic()
+    while True:
+        try:
+            new = [u for u in scrape_reel_ids(page) if u not in baseline]
+        except Exception as e:
+            print(f"  [grid] scrape error: {str(e).splitlines()[0] if str(e) else e}")
+            new = []
+        elapsed = round(time.monotonic() - start)
+        if new:
+            print(f"  [grid] {elapsed}s — NEW reel: {new[0]}")
+            return new[0]
+        if (time.monotonic() - start) * 1000 >= timeout_ms:
+            print(f"  [grid] {elapsed}s — no new reel inside the window")
+            return None
+        print(f"  [grid] {elapsed}s — no new reel yet...")
+        page.wait_for_timeout(GRID_POLL_INTERVAL_MS)
+
+
+def save_error_evidence(page, label):
+    DEBUG_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    png = DEBUG_DIR / f"{label}-{stamp}.png"
+    txt = DEBUG_DIR / f"{label}-{stamp}.txt"
+    try:
+        page.screenshot(path=str(png), full_page=False)
+    except Exception as e:
+        print(f"  (screenshot failed: {e})")
+    try:
+        txt.write_text(page.evaluate(SCOPED_TEXT_JS), encoding="utf-8")
+    except Exception as e:
+        print(f"  (dialog text dump failed: {e})")
+    print(f"  Evidence saved: {png}")
+    return png
 
 
 def _now_iso():
@@ -199,6 +279,21 @@ def main():
             print("Instagram home loaded \u2713")
             dismiss_blocking_dialogs(page)
 
+            # -- Reels-grid baseline BEFORE the upload (header fix 3) ------------------
+            baseline = scrape_reel_ids(page)
+            print(f"  Reels-grid baseline captured: {len(baseline)} reel(s)")
+            if not baseline:
+                # An empty baseline would make the FIRST reel on the tab look new,
+                # i.e. the neighbour-URL bug. Refuse the diff instead.
+                print("  WARN: empty baseline \u2014 post-Share grid diff will be skipped")
+            page.goto("https://www.instagram.com/")
+            try:
+                page.wait_for_load_state("domcontentloaded", timeout=30000)
+            except Exception:
+                pass
+            page.wait_for_timeout(2000)
+            dismiss_blocking_dialogs(page)
+
             # -- Pre-compose wait -----------------------------------------------------
             long_wait(page, PRE_COMPOSE_MIN, PRE_COMPOSE_MAX, "before composer")
             dismiss_blocking_dialogs(page)
@@ -227,13 +322,6 @@ def main():
                 mouse_click(page, post_link)
                 print("  Clicked Post \u2713")
             page.wait_for_timeout(1500)
-
-            # -- Capture profile Reel URLs BEFORE share, so we can diff after ---------
-            pre_share_reel_urls = page.evaluate(
-                """() => [...new Set([...document.querySelectorAll('a[href*="/reel/"]')]"""
-                """.map(a => a.href.split('?')[0]))]"""
-            )
-            print(f"  Pre-share Reel URLs captured: {len(pre_share_reel_urls)}")
 
             # -- Upload video file --------------------------------------------------------
             print("Uploading video...")
@@ -344,7 +432,7 @@ def main():
             # -- Caption ---------------------------------------------------------------------
             print(f"Typing caption ({len(caption)} chars)...")
             caption_area = page.locator(
-                '[aria-label="Write a caption..."], textarea[placeholder*="caption"], '
+                '[aria-label="Write a caption..."], [aria-label="Add a caption..."], textarea[placeholder*="caption"], '
                 '[contenteditable][placeholder*="caption"]'
             ).first
             caption_area.wait_for(state="visible", timeout=15000)
@@ -391,9 +479,15 @@ def main():
             while time.monotonic() - start_wait < 540:
                 page.wait_for_timeout(2000)
                 try:
-                    body = page.evaluate("() => document.body.innerText || ''")
+                    body = page.evaluate(SCOPED_TEXT_JS)
                 except Exception:
                     body = ""
+                # The composer dialog still holds the typed caption until IG swaps
+                # it for the sharing spinner; a caption saying "posted" / "try
+                # again" must not read as an outcome.
+                for line in caption.splitlines():
+                    if line.strip():
+                        body = body.replace(line, "")
                 if success_re.search(body):
                     result = "success"
                     break
@@ -411,46 +505,65 @@ def main():
                     break
             print(f"  upload wait result: {result} (after {round(time.monotonic() - start_wait)}s)")
 
+            err_body = None
             if result == "error":
-                # Capture the error message visible to help diagnose
-                err_body = page.evaluate(
-                    """() => {
-                    const text = document.body.innerText || '';
-                    const m = text.match(/(something went wrong|action blocked|couldn'?t (?:upload|share)"""
-                    """|temporarily restricted|try again).{0,200}/i);
-                    return m ? m[0] : '(no specific message)';
-                }"""
-                )
-                raise RuntimeError(f"IG returned an error after Share: {err_body}")
+                # Evidence FIRST, before anything navigates away (header fix 2)
+                try:
+                    scoped = page.evaluate(SCOPED_TEXT_JS)
+                except Exception:
+                    scoped = ""
+                m = re.search(r"(something went wrong|action blocked|couldn'?t (?:upload|share)"
+                              r"|temporarily restricted|try again|failed to post).{0,200}", scoped, re.IGNORECASE)
+                err_body = m.group(0) if m else "(no specific message)"
+                print(f"  IG error text: {err_body}")
+                save_error_evidence(page, "error-after-share")
+            else:
+                # Extra settle time (5 minutes) so the new post finishes server-side
+                # processing and propagates to the profile grid before we scrape it.
+                # IG appears to silently drop uploads that are interrupted by browser
+                # close, so better to over-wait than to lose the post.
+                print("  Holding 5 minutes for IG to finish server-side processing...")
+                page.wait_for_timeout(300000)
 
-            # Extra settle time (5 minutes) so the new post finishes server-side
-            # processing and propagates to the profile grid before we scrape it.
-            # IG appears to silently drop uploads that are interrupted by browser
-            # close — better to over-wait than to lose the post.
-            print("  Holding 5 minutes for IG to finish server-side processing...")
-            page.wait_for_timeout(300000)
-
-            # -- Grab URL ------------------------------------------------------------------
-            print("Capturing reel URL...")
+            # -- Grid baseline diff: the authority on the outcome (header fix 4) --------
+            print("Checking the Reels grid for a new reel (baseline diff)...")
             reel_url = None
-            try:
-                urls = get_recent_reel_urls(page, 3)
-                if urls:
-                    reel_url = urls[0]
-            except Exception:
-                pass
+            if baseline:
+                # After an error, a short window is enough to catch a lost response;
+                # after success, allow the full processing window.
+                window = min(GRID_POLL_TIMEOUT_MS, 180000) if err_body else GRID_POLL_TIMEOUT_MS
+                reel_url = find_new_reel(page, baseline, window)
 
+            if err_body and not reel_url:
+                if baseline:
+                    raise RuntimeError(
+                        f"IG returned an error after Share: {err_body} "
+                        "(verified NOT on the Reels grid, safe to reset to pending)"
+                    )
+                raise RuntimeError(
+                    f"IG returned an error after Share: {err_body} "
+                    "(grid diff skipped, empty baseline: CHECK THE GRID before re-posting)"
+                )
+
+            p_row = short["platforms"][PLATFORM]
+            p_row["posted_at"] = _now_iso()
+            p_row["url"] = reel_url
+            p_row.pop("error", None)
             if reel_url:
+                p_row["status"] = "posted"
+                if err_body:
+                    p_row["url_note"] = (f"IG showed '{err_body}' after Share, but the reel appeared "
+                                         "on the grid (lost response); URL from the baseline diff.")
                 print(f"\nReel posted: {reel_url}")
             else:
-                print("\nReel posted — URL not captured (check Instagram manually).")
-
-            short["platforms"][PLATFORM]["status"] = "posted"
-            short["platforms"][PLATFORM]["posted_at"] = _now_iso()
-            short["platforms"][PLATFORM]["url"] = reel_url
+                # Submitted, no error, but no new reel in the window: NOT failed,
+                # a failed row invites a duplicate re-post.
+                p_row["status"] = "posted_unverified"
+                print("\nReel submitted but not seen on the grid in the window: "
+                      "posted_unverified, check Instagram manually (do NOT re-post).")
             SHORTS_JSON.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-            print("shorts.json updated. Done \u2713")
-            print(f"POST OK platform={PLATFORM} url={reel_url or ''}", flush=True)
+            print("shorts.json updated. Done ✓")
+            print(f"POST OK platform={PLATFORM} url={reel_url or 'none'} status={p_row['status']}", flush=True)
 
         except Exception as err:
             short["platforms"][PLATFORM]["status"] = "failed"

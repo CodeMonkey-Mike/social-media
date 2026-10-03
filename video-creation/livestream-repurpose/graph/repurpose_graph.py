@@ -8,7 +8,7 @@
 # ONE graph = ONE mechanical segment. Lane 3's judgment — topic choice, fact-checking,
 # drafting every word of copy, image prompt authoring — happens in the Claude session
 # and lands on disk as repurpose/output/<batch>-lane3-plan.json BEFORE this segment
-# runs (the clip-plan.json seam contract). The segment executes the plan mechanically:
+# runs (the clip-plan.json handoff contract). The segment executes the plan mechanically:
 #
 #   START -> generate -> verify_images -> queues -> verify_queues
 #         -> lint -> finalize -> verify_finalize -> END
@@ -47,6 +47,8 @@ PERSONA_LINT = REPO_ROOT / "scripts" / "persona-lint.py"
 
 IMG_RE = re.compile(r"^IMG (OK|SKIP|FAIL) purpose=(\S+) id=(\S+) slug=(\S+)")
 VERIFY_IMG_RE = re.compile(r"^VERIFY IMG OK id=(\S+)")
+HELD_RE = re.compile(r"^HELD x_tweets=(\d+) ig_single=(\d+) yt_posts=(\d+)")
+BLOCKED_RE = re.compile(r"^BLOCKED images=(\d+)")
 ENTRY_RE = re.compile(r"^\s*entry (ADDED|SKIP \(present\))\s*:\s*(\S+)")
 REGISTERED_RE = re.compile(r"^REGISTERED=(\S+)")
 
@@ -173,12 +175,18 @@ def verify_images(state: RepurposeState) -> RepurposeState:
                      {**state.get("generate_out", {}), "verified": len(verified)},
                      rc, output, "lane3_batch.py --stage verify")
     want = len(state.get("expected_images", []))
-    if not state.get("stub") and len(verified) != want:
+    blocked = next((int(m.group(1)) for m in map(BLOCKED_RE.match, output.splitlines())
+                    if m), 0)
+    held = next(({"x_tweets": int(m.group(1)), "ig_single": int(m.group(2)),
+                  "yt_posts": int(m.group(3))}
+                 for m in map(HELD_RE.match, output.splitlines()) if m), None)
+    if not state.get("stub") and len(verified) + blocked != want:
         return {"status": "failed",
-                "error": f"verify_images: {len(verified)} images verified != "
+                "error": f"verify_images: {len(verified)} verified + {blocked} blocked != "
                          f"{want} planned"}
     return {"generate_out": {**state.get("generate_out", {}),
-                             "verified": len(verified)},
+                             "verified": len(verified), "blocked": blocked,
+                             "held": held},
             "status": "running"}
 
 
@@ -208,6 +216,9 @@ def verify_queues(state: RepurposeState) -> RepurposeState:
                 "status": "running"}
     data_dir = Path(state["data_dir"])
     images_base = Path(state["images_base"])
+    # partial-append: entries in the HELD ledger were deliberately not queued
+    held_file = Path(state["plan_path"]).with_name(f"{state['batch']}-lane3-held.json")
+    held = (_read_json(held_file, {}) or {}).get("held") or {} if held_file.is_file() else {}
 
     def img_file_ok(rel_path: str) -> bool:
         # entries carry the PROD-relative path by design; the file this run wrote
@@ -225,7 +236,10 @@ def verify_queues(state: RepurposeState) -> RepurposeState:
             return {"status": "failed",
                     "error": f"{fname}: unreadable or missing {listkey!r} array"}
         by_key = {e.get(lookup): e for e in data[listkey] if isinstance(e, dict)}
+        skip = set(held.get(plan_key) or [])
         for key in keys:
+            if key in skip:
+                continue
             e = by_key.get(key)
             if e is None:
                 return {"status": "failed",
@@ -310,10 +324,15 @@ def verify_finalize(state: RepurposeState) -> RepurposeState:
     if not isinstance(reg, dict) or not isinstance(reg.get("batches"), list):
         return {"status": "failed", "error": "batches.json unreadable after finalize"}
     entry = next((b for b in reg["batches"] if b.get("batch") == state["batch"]), None)
-    if entry is None or (entry.get("pipelines") or {}).get("repurpose") != "done":
+    held_file = Path(state["plan_path"]).with_name(f"{state['batch']}-lane3-held.json")
+    held = (_read_json(held_file, {}) or {}).get("held") or {} if held_file.is_file() else {}
+    n_held = sum(len(v) for v in held.values())
+    flag = (entry.get("pipelines") or {}).get("repurpose") if entry else None
+    want_flag = "partial" if n_held else "done"
+    if entry is None or flag != want_flag:
         return {"status": "failed",
-                "error": f"batches.json: {state['batch']} pipelines.repurpose is not "
-                         "'done' after finalize"}
+                "error": f"batches.json: {state['batch']} pipelines.repurpose is "
+                         f"{flag!r}, expected {want_flag!r} after finalize"}
     gen = state.get("generate_out", {})
     q = state.get("queues_out", {})
     per_queue = {}
@@ -336,6 +355,7 @@ def verify_finalize(state: RepurposeState) -> RepurposeState:
         "queues": per_queue,
         "lint": "clean",
         "registered": state.get("finalize_out", {}).get("registered"),
+        "partial": bool(n_held), "held": held if n_held else None,
     }
     return {"repurpose": summary, "status": "done"}
 

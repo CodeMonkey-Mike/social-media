@@ -17,7 +17,7 @@ description: Turns long-form content (livestream transcripts, podcast episodes, 
 > (`queue_writer.py`, emoji-safe), a persona-lint gate per touched file, and the batches.json
 > `pipelines.repurpose=done` flip. The validator mechanically enforces: no em dashes, no chart
 > emojis, image-id uniqueness vs ALL queues+images, **IG = Kaspa only**, **X polls =
-> Kaspa/TAO/Toncoin only**, threads 5-8 tweets. The JS stack (`gen-images.js` / `chat-pool.js` /
+> Kaspa/TAO/Toncoin/Golden Kitty only**, threads 5-8 tweets. The JS stack (`gen-images.js` / `chat-pool.js` /
 > `chat-delete.js`) is **FROZEN rollback** — builder b-roll scripts still use their own JS against
 > the same shared chat registry. Ad-hoc single drafts outside a batch may still append directly per
 > the sections below.
@@ -120,8 +120,10 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > only as frozen rollback. **Do NOT loop `generate-image.js`** (a new chat per image = orphan-chat sprawl).
 >
 > **Every automation chat is RENAMED at birth, and that name is the deletion gate** (Mike, 2026-07-22).
-> `chat-pool.js confirmAndRegister(page, purpose)` runs right after a fresh chat's first successful
-> generation: it confirms the REAL conversation id via the backend API (never bare `page.url()` — its
+> `chat_pool.confirm_and_register(page, purpose, batch)` runs **right after a fresh chat's FIRST SEND
+> lands** (2026-09-17: it used to wait for the first *successful image*, and every post-send failure —
+> capture timeout, dup reject, crash, kill, lane-3's retry-in-a-fresh-chat — stranded an auto-titled
+> chat the sweep could never see; 68+ piled up in six weeks). It confirms the REAL conversation id via the backend API (never bare `page.url()` — its
 > id silently diverged for ~2 weeks, leaving every registered pointer 404 while the real chats piled
 > up unregistered in the sidebar), renames the chat to **`b-roll: <purpose>`** (any purpose containing
 > `broll` — video b-roll for longform/shorts/persona) or **`social: <purpose>`** (all post-image
@@ -130,12 +132,32 @@ The map needs to be filled in over time — most handles are currently `null`. W
 > refuses to delete ANY chat whose title does not START with `b-roll` or `social`** — so a human's
 > personal chat can never be swept even if the registry is wrong. Gate refusals land on the registry's
 > `title_gate_skipped` list for Mike to handle; deletes are verified (API 404) or reported as failed.
-> Reconcile tool (canonical, 2026-08-11): `python repurpose/reconcile_chats.py` — compares the
-> registry against the LIVE conversation list and reports DEAD / DRIFTED / ORPHAN chats;
-> `--fix` applies the safe repairs (adopt gate-titled orphans, clear dead slots, heal
-> provenance-backed titles). It never deletes; deletion stays with the sweep + title gate.
-> Run it periodically and after any gen-run that reported registration trouble. JS-era tools
-> (`list-chats-api.js` inventory, `test-chat-lifecycle.js` smoke test) remain as frozen fallback.
+> **The chat can never outlive the run unregistered or empty (2026-09-17):** `gen_images.Generator`
+> registers at the first send (above), and its `_end_of_run` runs in a `finally` — crash, timeout
+> and Ctrl-C included — to (1) retire a chat **born this run that holds zero images** (ZERO-IMAGE
+> rule: a fresh chat is free, a stranded one is sprawl), (2) sweep the retired queue, (3) close the
+> run's **journal window** (registry `runs`, `chat_pool.journal_start/journal_end`).
+> Reconcile tool (canonical, 2026-08-11, widened 2026-09-17): `python repurpose/reconcile_chats.py`
+> — pages the WHOLE account (visible + archived) against the registry and reports **DEAD / DRIFTED /
+> ORPHAN** (gate-titled, unknown to the registry) and **REVIEW**: an unregistered chat with NO gate
+> prefix created inside a journaled run window (or after `--since YYYY-MM-DD`) — provenance by
+> recorded time, never by title guessing. `--fix` applies the safe repairs (gate-titled orphans →
+> the delete queue, never the active slot; clear dead slots; heal provenance-backed titles); REVIEW
+> is **report only, never auto-deleted**: Mike approves per URL and
+> `python repurpose/delete_chats.py --approved-file <json>` deletes exactly that list (renames each
+> to a gated title first, verifies the 404, logs it under the registry's `manual_deletes`). The
+> reconcile rides inside every live cleanup (`delete_chats.py`, same browser session as the sweep)
+> and writes `last_reconcile` to the registry so `cleanup.js --dry-run` shows the counts + review
+> list without a browser. **Tests that call `run_reconcile(fix=True)` against the live account MUST
+> pass `fix_ids=` (their own chats)**: with a scratch registry every production chat looks like an
+> orphan — an unscoped test run deleted all 7 registered production chats on 2026-09-17.
+> **ONE way to open the profile:** `chat_pool.launch_profile(p)` for pipeline code, and
+> `chat_pool.probe_session(name)` for ANY ad-hoc probe/diagnostic (yields an authed page; on exit
+> registers + retires + sweeps the conversation the probe created). Never `page.goto("https://chatgpt.com/")`
+> by hand — `scripts/chatgpt-open-lint.py` (run by every cleanup) flags every opener outside the
+> pool. Smoke test: `python repurpose/test_chat_lifecycle.py` (creates + cleans its own throwaway
+> chats on a temp registry; needs the profile free). JS-era tools (`list-chats-api.js`,
+> `test-chat-lifecycle.js`, `delete-chats.js`) remain as frozen fallback.
 >
 > **Spent chats are DELETED, not abandoned** (Mike, 2026-07-08 — the sidebar was drowning in dead image
 > chats; safe because every image downloads to the project folder at generation time). Two mechanisms,
@@ -145,7 +167,7 @@ The map needs to be filled in over time — most handles are currently `null`. W
 >    A failed delete just stays queued — never let it block a generation run.
 > 2. **Batch completion:** a chat registered with a `batch` (batches.json id — pass `--chat-batch`,
 >    or `--batch`, to `gen_batch.py --fresh` for one-off project chats) is retired + deleted by
->    `repurpose/delete-chats.js` once that batch is completed/archived. Cleanup runs it automatically
+>    `repurpose/delete_chats.py` (Python since 2026-09-17) once that batch is completed/archived. Cleanup runs it automatically
 >    (`cleanup/cleanup.js --target video-creation|all`); dry-run prints the plan, live run opens the
 >    chatgpt-profile browser. No `batch` = evergreen purpose (rotation-only); a `batch` matching no
 >    batches.json entry is kept. Manual one-off: `node repurpose/delete-chats.js --retire <purpose>`.
@@ -160,9 +182,15 @@ The map needs to be filled in over time — most handles are currently `null`. W
 schedule-tweets\images\reference\   ← glob / ls this folder EVERY time; it is the only source of truth
 ```
 
+> **⚠️ A reference image drags its ART STYLE in with the logo, and NEGATIONS DO NOT STOP IT (measured 2026-08-13, `wen-moon` batch).** The ElizaOS reference (`ElizaOS-ai16z.webp`) is anime, and the generated image came back as flat anime/cel illustration instead of the house Pixar 3D CGI on **two** consecutive rolls, even with "rendered as a rounded film-quality Pixar 3D character", then "this is NOT anime, NOT 2D illustration, NOT cel shading" spelled out. Roll 1 also inherited a garbled **artist-signature watermark** in the bottom-right corner from the reference's illustration style, which is exactly the banned-text defect. What FIXED it on roll 3 was replacing the negations with a **positive geometry block**: *"THE FACE IS SCULPTED 3D GEOMETRY: a rounded volumetric head, large spherical 3D eyes with a corneal bulge and thick sculpted eyelids, a sculpted rounded nose with a visible bridge and tip, full three dimensional lips with real volume, soft subsurface skin scattering, raytraced volumetric light"* plus *"use the attached reference ONLY as a color key; do not copy its drawing style, its linework or its face construction."* Two standing rules from this: (1) when a reference is a drawing rather than a logo, describe the 3D FORM you want in positive terms, never just what you don't want; (2) add "no artist signature, no watermark, no initials in any corner" to any prompt carrying an illustration reference, and sweep all four corners at boosted brightness during QA.
+
 > Do not trust a remembered or doc-embedded set of filenames. New references get added over there continually, so a static list goes stale. (Real miss, 2026-06-03: `LAB.png` was sitting in the folder and had been used many times, but a hardcoded list here omitted it, so a draft wrongly claimed "no $LAB reference exists." Always `ls`/Glob the directory first.)
 
 Filenames follow the project name (e.g. `LAB.png`, `toshi.png`, `DogInMe.png`, `kasy.png`). If a match exists, pass it via `--reference-image=<path>` on `generate-image.js` and refer to it in the prompt as "the logo shown in the attached reference image". Kaspa, Bittensor, and Toncoin are well-known enough to render correctly without a reference.
+
+> **A mascot/figure reference IS the token's logo (Mike, 2026-09-23, `archie-promo` batch).** Some projects' identity is a character illustration, not a flat mark: `what-if.jpg` (the lime green faceless figure seen from behind) IS the $IF (What If) token's reference. It is never "missing" and never a colour key only: an $IF coin carries that figure as its embossed emblem, and when the figure itself appears it stays faithful to the reference (faceless, engraved hatching, seen from behind), never re-sculpted with eyes/nose/lips. The positive-geometry block above is for giving a FACE to a character that has one; it does not apply to a faceless mascot. (The drafter listed "$IF coin logo: only the figure illustration exists" as a missing reference and rendered every $IF coin plain; 7 prompts had to be patched mid-run.)
+
+> **Promo-code tweet images carry the code as text (Mike, 2026-09-23).** The house "no text in the image" rule has one exception: an X tweet image whose tweet pushes a promo code renders the code in the image, baked in by the generation prompt (not overlaid afterwards): a bold all-caps headline in an empty area of the scene, line 1 `PROMO CODE: <CODE>` with the code in the accent colour, line 2 the offer (e.g. `50% OFF YOUR FIRST MONTH`), plus "spell every word exactly as written" and "NO other text anywhere". Visual QA checks the spelling letter by letter.
 
 **Brand-safety — when a project has multiple reference variants, pick the brand-safe one for monetized YT/TikTok.** Some references have a risqué and a clean variant (e.g. ElizaOS: the orange-tee `ElizaOS-ai16z.webp` is brand-safe; `ElizaOS-ai16z-2.png` is the risqué one). Default to the clean variant for any monetized short/post.
 
@@ -535,13 +563,14 @@ X polls are the highest comment-to-impression ratio format on the platform when 
 
 ### Topic filter — X polls only (do not apply to YouTube polls)
 
-**Only create X polls for topics in these three categories:**
+**Only create X polls for topics in these categories:**
 
 - **Kaspa / KRC20** — anything about $KAS, the Kaspa chain, its tokenomics, upcoming hard forks, KRC20 meme tokens (Kappy, Kasy, Kroak, Kasper, etc.), or Kaspa community debates.
 - **TON / Toncoin** — anything about $TON, the TON ecosystem, Telegram-native crypto, or Notcoin.
 - **TAU** — anything about TAU or its community.
+- **Golden Kitty ($GOLDEN)** — anything about Golden Kitty, the Robinhood Chain meme paired against tokenized gold (added by Mike 2026-09-25: polls are only for highly community-driven coins with a huge audience, and Golden Kitty now qualifies). `eligible_topic: "golden-kitty"`.
 
-**Do NOT create X polls for other topics**, including macro/Fed content (interest rate calls, inflation, jobs data), geopolitical/war content, general BTC/ETH cycle takes, or any other topic that isn't one of the three above. Observed engagement data shows X polls on non-community-coin topics get almost no votes; the audience engages with polls only when tribal identity is on the line. Macro/Washington/Fed content performs as tweets and threads on X but dies as polls.
+**Do NOT create X polls for other topics**, including macro/Fed content (interest rate calls, inflation, jobs data), geopolitical/war content, general BTC/ETH cycle takes, or any other topic that isn't one of the categories above. Observed engagement data shows X polls on non-community-coin topics get almost no votes; the audience engages with polls only when tribal identity is on the line. Macro/Washington/Fed content performs as tweets and threads on X but dies as polls.
 
 This filter applies **only to X polls**. YouTube text polls are not restricted — they get engagement across all topic types and should still be drafted for any approved concept. When a concept passes the topic filter for X polls but wouldn't pass it for YouTube, draft both anyway (YT poll is not filtered); when a concept fails the X poll filter, skip the X poll but still offer the YT poll if the concept warrants it.
 
@@ -1015,6 +1044,7 @@ Each slide gets **one piece of text, ≤ 15 words**. Write it like you're writin
 - Contrarian framing when the post is making a counter-consensus claim
 - No hedging, no filler, no "in today's world"
 - Never use em dashes (use colons, semicolons, or just a line break)
+- **No day-relative words** (today / tonight / yesterday / tomorrow / this morning / last night) anywhere in queue copy: tweets, threads, polls, YT bodies, IG captions, slide text. The stream is repurposed overnight and the entry posts days later, so "today" is false by post time. Write **"this week"** or the date. Enforced by `queue_writer.validate_lane3_plan` (Mike, 2026-09-11).
 
 Slide 1 rules are strictest — it must earn the swipe on its own. If someone screenshots only one slide, it should be slide 1.
 
@@ -1122,12 +1152,16 @@ Two structurally different slide types within the same set:
 
 *Slides 2–N (data):* Light/white or near-white background — completely different from the hook. Structure: title at top, three stat boxes below it (current value / historical average / comparison point), a chart filling the center (line chart, candlestick, or bar chart with labeled axes), and a warning/insight box at the bottom with 2–3 bullet points. Small page-number indicator top-right. Dense, analytical, professional financial look.
 
+**⛔ CONFIRMED 2026-09-10 (batch kaspa): ChatGPT OVERRIDES the authored figures on V4 data slides** (+68% instead of +32%, an invented +320%, on four attempts, fresh chat or not). So a V4 data slide that carries specific numbers is CODE-RENDERED, not ChatGPT-generated: `repurpose/output/kaspa-lane3-fix/render_v4_slide.py` (HTML in the V4 look -> 1254x1254 PNG via Playwright, exact text, page number, no em dashes) is the canonical path until it is promoted to a shared tool; ChatGPT still renders the V4 hook slide and any data slide whose figures are well-known facts it does not fight (e.g. the Bitcoin obituaries count). QA every ChatGPT data slide for figure drift before attaching it.
+
 **Important limitation:** ChatGPT generates charts as illustrations, not from real data. The visual layout will match but the numbers and lines on the chart will be approximated/invented. If you need exact data (specific KAS supply curve values, precise dates, real CAPE ratios), this style requires a code-generated chart approach rather than ChatGPT image generation — flag this to the user before running.
 
 Hook prompt template:
 ```
-Single editorial hook image, 1:1 square. Full-bleed photo from the reference image (the topic-relevant subject) as the background. In one corner, a small circular bubble overlay containing a [chart type] chart in [color]. Bold all-caps text at the bottom: white for '[HOOK LINE]', accent green for '[EMPHASIS WORD/PHRASE]'. 'SWIPE FOR MORE' in small white text at the very bottom. No other text.
+Single editorial hook image, 1:1 square. Full-bleed photo from the reference image (the topic-relevant subject) as the background. In one corner, a small circular bubble overlay containing a [chart type] chart in [color]. Bold all-caps text at the bottom: white for '[HOOK LINE]', accent green for '[EMPHASIS WORD/PHRASE]'. 'SWIPE FOR MORE' in small white text at the very bottom. No pagination dots, no carousel indicators. No other text.
 ```
+
+> **The V4 hook exemplar carries Instagram page dots (measured 2026-09-30, batch `spon`).** `version4/hook.png` has 6 carousel dots under "SWIPE FOR MORE" and ChatGPT copies them (6 dots on a 5-slide set). Keep "No pagination dots, no carousel indicators" in every V4 hook prompt; if dots still ship, black-fill that small rectangle in place (the background there is near-black), never a regen.
 
 Data slide prompt template:
 ```
@@ -1511,7 +1545,7 @@ Missing any of these nestings will misclassify in-use images as orphans and dele
 
 ### Images live in git now
 
-The `.gitignore` was rewritten 2026-05-22 to **track all images under `schedule-tweets/images/`**, including `x/`, `yt/`, `ig/`, and `reference/`. The repo-size cost is accepted in exchange for the safety net: any future accidental deletion is recoverable via `git checkout`. The only image-related exclusions that remain are throwaway debug screenshots (`tmp-fb-debug/`, `tmp-tiktok-debug/`, `schedule-tweets/*.png`, `uploading/*.png`, `uploading/new/`).
+The `.gitignore` was rewritten 2026-05-22 to **track all images under `schedule-tweets/images/`**, including `x/`, `yt/`, `ig/`, and `reference/`. The repo-size cost is accepted in exchange for the safety net: any future accidental deletion is recoverable via `git checkout`. The only image-related exclusions that remain are throwaway debug screenshots (`schedule-tweets/tmp/` — every poster's DEBUG_DIR, `schedule-tweets/*.png`, `uploading/*.png`, `uploading/new/`).
 
 ### ChatGPT image generation — rate limits and delays
 

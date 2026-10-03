@@ -1,0 +1,25 @@
+{
+  "batch": "spon",
+  "clips": [
+    {
+      "id": "spawn-my-own-members-hate-it-impact",
+      "n": 5,
+      "variant": "impact",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_start": 313.35
+        },
+        {
+          "segment_index": 2,
+          "new_start": 4532.35
+        }
+      ],
+      "boundary_relock_note": "seg0 (the hook): 310.30 lands in voiced audio (burst_profile: -19.9 dB at 310.31, loud 309.83-310.31 = the tail of 'members.') and keeps the false start 'Some of my own members are actually,'. Whisper hides the restart gap inside a stretched 1.06s 'some' (312.52-313.58), but the master has a hard silence 312.83-313.53 (-83 to -250 dB) with the restarted 'some' onset at 313.54; start moved to 313.35 so the clip opens clean on the real hook 'some of my own members are actually hating on it.' Drops 3.05s (~2.4s voiced) of stammer. seg2 (the outburst): 4531.20 cuts inside Whisper's 'that' (4531.07-4531.33) with no trough anywhere 4530.4-4532.1; the real gap is 4532.12-4532.59 (Whisper's second 'people' at 4532.03 is ~0.55s early, voice onset 4532.60). Start moved to 4532.35 so it opens on 'people are hating on in my own community, of all things', dropping the 'that people are,' lead-in (1.15s, ~0.8s voiced). seg1 (peak beat) boundaries confirmed clean: trough 755.61-756.40 before 'then', trough 775.25-775.74 after 'crap.'; seg0 end 318.50 sits in trough 318.15-319.0; seg2 end 4548.20 after 'runner.' (4547.95).",
+      "removals": [],
+      "removed_seconds_est": 0.0,
+      "removed_pct_est": 0.0,
+      "notes": "DISPATCH NOTE: the clip list in the request was empty; part1 covers clips 1-4, so this authors the only uncovered clip (n=5). LIGHT TOUCH, JUSTIFIED (expect the validator's NOTE_FLOOR note): this clip is three peak beats stitched (clip-plan notes), 34.3s voiced. seg0 is the hook and seg1 (756.0-775.4) is the listed peak_beat = ~21.5s protected voiced, untouched (the third 'and I got in at 50k' repeat at 769.16-771.06 sits inside the protected beat and stays). seg2 (12.8s voiced) is the outburst the plan names as the emotional core (4537-4543); every non-core candidate in it was burst-profiled and fails a clean edge: 'This one would do pretty good.' (4544.43-4546.71, the one real restatement before 'This will become a nice runner') has NO trough at 'good.|This' (min -27 dB at 4546.76-4546.78), so cutting it would clip; 'of all, of all things' cannot collapse either way (community|of continuous, all|things continuous; the only trough is 4535.35-4536.02 between the two 'of all's); 'Jesus Christ.' has clean edges but is the quoted core and stays; 'people are, people are' is resolved by the seg2 start relock instead. Ending seg2 on 'Jesus Christ.' to drop 'This one would do pretty good. This will become a nice runner.' was rejected: 'nice runner' is the forward-looking button and the bridge into seg1's 'then you're gonna be like, damn, I got in at 50K'. The 0.7s pause inside 'This one [pause] would do pretty good' (4545.15-4545.85) and the 2.1s gap before 'Jesus Christ.' are desilence's job. Raw 44.6s -> ~40.4s before desilence, all from relocks. No spoken numbers touched (50K x3, 5 million, 100x). Named-project guard: 'punch these guys' targets the haters in his own community, not a project. CROSS-CLIP FYI for the executor, not a change to part1: clip 1 shares seg0 (310.3 start); the same new_start 313.35 fix applies there if Mike wants its hook opened clean too (part1 left it because Whisper's 312.38-312.52 window showed no trough; the real gap is 312.83-313.53). Captions: '50k' -> 50K, lowercase x on 100x, 'hating on in my own community' -> Whisper dropped 'it' (say 'hating on it in my own community' on screen), 'Spawn' is never spoken in these beats so the title card/overlay must carry the name ($SPON); the 'ponds' garble at 755.52 is outside the kept range."
+    }
+  ]
+}

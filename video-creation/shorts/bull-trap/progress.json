@@ -1,0 +1,57 @@
+{
+  "batch": "bull-trap",
+  "track": "livestream-repurpose",
+  "source_livestream": "bull-trap",
+  "livestream_date": "2026-10-03",
+  "last_updated": "2026-10-03T09:58:33",
+  "dashboard": "video-creation/shorts/bull-trap/dashboard.html",
+  "dashboard_status": "raw cuts awaiting Mike's Phase 4b review (delete calls by clip number)",
+  "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
+  "clips": [
+    {
+      "n": 1,
+      "slug": "tut-bad-chart-350x-comeback",
+      "title": "It Rugged After Our 94x. Then It Went Up to a 350x.",
+      "variant": "full",
+      "duration_seconds": 73.399,
+      "phase": "cut",
+      "gate": "deleted-4b"
+    },
+    {
+      "n": 2,
+      "slug": "golden-kitty-10-million-while-everything-bleeds",
+      "title": "Golden Kitty Could Easily Make 10 Million While Everything Else Bleeds",
+      "variant": "full",
+      "duration_seconds": 71.359,
+      "phase": "cut",
+      "gate": "awaiting-4b-review"
+    },
+    {
+      "n": 3,
+      "slug": "spon-didnt-sell-holding-the-line",
+      "title": "I Didn't Sell SPON. I'm Still Holding the Line.",
+      "variant": "full",
+      "duration_seconds": 53.295,
+      "phase": "cut",
+      "gate": "awaiting-4b-review"
+    },
+    {
+      "n": 4,
+      "slug": "october-bottom-talk-is-gone",
+      "title": "What Happened to All the October Bottom Talk?",
+      "variant": "full",
+      "duration_seconds": 29.831,
+      "phase": "cut",
+      "gate": "awaiting-4b-review"
+    }
+  ],
+  "resume_protocol": "Phase 4b: Mike reviews dashboard.html and names clips to delete by number. Then per surviving clip: tighten-strategist -> tighten -> 2nd review -> desilence (5B) -> filler pass (5C, optional) -> captions (6) -> remotion-builder (7) -> publish-shorts (8). STT garble fixes for captions are listed in clip-plan.json stt_garble_flags (verify each against the clip's OWN whisper-words.json before applying).",
+  "gates": {
+    "4b": {
+      "approved_at": "2026-10-03T09:58:33",
+      "deleted": [
+        1
+      ]
+    }
+  }
+}

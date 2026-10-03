@@ -5,6 +5,20 @@ description: Post the next pending YouTube community text poll from data/yt-text
 
 > ✅ **FIXED 2026-06-10 — it was NEVER a DOM change; the option-field targeting was the bug.** A read-only diagnostic (`scripts/_diag-yt-poll-selectors.js`) proved every selector is UNCHANGED: poll attachment opens inline, `tp-yt-paper-input.poll-option-input` count = 2, `#add-option button` exists, each row is `[remove-X icon-button][input field]`. The real bug: the old code computed the **host's bounding-box center** and did a raw `page.mouse.click(x,y)` to focus — that coordinate click missed the input (it's offset right of the remove-X), so text never entered (`host.value="null"`) and the widget degraded, which then made the coordinate-based add-option click miss too (the `dispatchEvent` fallback hung 30s). **The fix (selectors untouched):** target the **inner `<input>`** directly (`tp-yt-paper-input.poll-option-input input`), focus it with an actionability-checked `robustClick` (Playwright click → native JS click fallback), type real keystrokes (preserves Polymer two-way binding + YouTube submission state), verify each option via `input.inputValue()`, and add fields with `robustClick` on `#add-option button`. Two safety gates run BEFORE Post: per-option value verify (throws if text didn't register) + waiting for the visible Post button to enable. **Validated end-to-end 2026-06-10:** posted `yt-text-poll-2026-05-31-kaspa-3-dollar` live (3 options, all `✓`) → `youtube.com/post/UgkxoCWoDh4DZ0pNorSpIxuuObW8nNBTwF8R`. YT polls work again.
 
+> ℹ️ **Text polls did NOT follow the quiz onto YouTube's ViewModel components (checked 2026-08-30).**
+> The quiz composer migrated that day and its poster broke outright (see [[yt-post-quiz]]), so the
+> obvious worry was that polls went the same way. They did not: a read-only probe
+> (`scripts/_diag_yt_poll_viewmodel.py`) confirmed `ytd-poll-attachment` is still the LIVE widget
+> (637x148 inline), with `tp-yt-paper-input.poll-option-input input` and `#add-option button` all
+> visible and real. Every selector below stands and `post-yt-poll.js` still posts. Re-run that probe
+> before assuming otherwise — the quiz precedent means a future migration is plausible, and the tell
+> is legacy containers going `display:none` while `ytPostsCreation*` classes appear.
+>
+> One latent defect WAS fixed that day in the bless-pending Python port (`post_yt_poll.py`):
+> `wait_for_function`'s `arg` was passed positionally, which is keyword-only in Python Playwright and
+> crashes the add-option loop on a poll with **3+ options**. It had never fired because the JS twin
+> does production polls. Unrelated to the DOM; relevant only when the port is blessed.
+
 ## Invocation
 
 ```powershell

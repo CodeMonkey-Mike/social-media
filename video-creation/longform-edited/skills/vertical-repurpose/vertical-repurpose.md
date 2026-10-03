@@ -78,6 +78,26 @@ the extremes still fit. A per-window offset is fine if the spread is large.
 the face is horizontally centred and not clipped at either edge.** This is cheap and it is the single
 most visible way a vertical cut fails.
 
+## 1c. When the 16:9 airs FACE BACKGROUND-SWAP clips, the vertical needs its OWN portrait swaps (golden-kitty, 2026-10-02)
+
+A 16:9 swap clip (`assets/face-swap/F<n>-higgsfield-bg-swap.mp4`, comp-build.md section 3b) cannot be cropped to portrait:
+it is already a tight 16:9 crop, so a 9:16 slice of it is narrower than his head. Generate the face windows again, natively
+at 9:16, and tell the lane's comp-builder through `assets/vertical/NOTES.md` (the lane reads it) that every swapped window
+plays `face-swap/F<n>-higgsfield-bg-swap.mp4` from the vertical public dir, full-frame, with no face crop.
+
+1. Sources: `python scripts/build_face_swap_source.py <project> --window <a-b> --name F<n> --approx-src 0 --whole-seconds
+   --vertical --reuse-json assets/face-swap/F<n>-raw-for-higgsfield.json` (a 608x1080 crop centred on THAT window's measured
+   face from `assets/vertical/face-crop.json`; `--reuse-json` skips the slow re-matching; same windows, halves and handles as
+   the 16:9). Voice references: `python scripts/build_swap_voice_ref.py <project> --vertical F<n> ...`.
+2. **A PORTRAIT look reference and a framing lock are mandatory.** Sent with the 16:9 look reference, the first portrait take
+   ZOOMED OUT and invented a torso and a microphone stand. Make the look reference from a real portrait source frame with only
+   the room replaced (an image edit, used as a reference only, never on screen), and add to the prompt: "KEEP THE EXACT FRAMING
+   of the reference video: a close head-and-shoulders portrait ... do NOT zoom out ... do NOT add a microphone stand".
+3. `--aspect_ratio 9:16 --resolution 480p` (returns 496x864 at 24 fps), then `retime_swap_to_voice.py` on every clip. Expect
+   a retake or two: two of eleven clips failed the sync proof on their first take (84% and 72% of speech windows locked).
+4. The same goes for image MOTION clips (comp-build.md section 3c): animate the lane's portrait stills again at 9:16 into
+   `assets/vertical/img-motion/`.
+
 ## 2. The vertical comp
 
 Build `remotion/src/<Project>Vertical.tsx` at **1080×1920, same fps + duration as the 16:9** (same
@@ -111,9 +131,14 @@ PROJECT-LOG.** Short version:
 # render two halves, each well under the ~14000-frame ceiling:
 npx remotion render src/index.ts <Comp> _partA.mp4 --frames=0-9021    --video-bitrate=3M --concurrency=4 --public-dir <render-assets>
 npx remotion render src/index.ts <Comp> _partB.mp4 --frames=9022-18044 --video-bitrate=3M --concurrency=4 --public-dir <render-assets>
-# join with a STANDALONE ffmpeg (no Chrome workers -> no ceiling); sync-safe filter_complex, NEVER concat-demuxer:
-ffmpeg -y -i _partA.mp4 -i _partB.mp4 -filter_complex "[0:v:0][0:a:0][1:v:0][1:a:0]concat=n=2:v=1:a=1[v][a]" \
-  -map "[v]" -map "[a]" -c:v libx264 -b:v 3M -pix_fmt yuv420p -preset medium -c:a aac -b:a 192k <Comp>-VERTICAL-v1-video.mp4
+# join with a STANDALONE ffmpeg (no Chrome workers -> no ceiling): PICTURE ONLY, frame-exact, and the VO taken WHOLE
+# from the paused spine. NEVER concat the parts' audio: each part's AAC track runs ~0.05-0.1 s longer than its picture,
+# so an audio+video concat holds the last frame of every part and pushes everything after the seam late (golden-kitty
+# 2026-10-02: a 3-frame hold at frame 12000 and the VO +57 ms late for the last 77 s). `vertical_graph._concat` does this:
+ffmpeg -y -i _partA.mp4 -i _partB.mp4 -i assets/spine.mp4 -filter_complex "[0:v:0][1:v:0]concat=n=2:v=1:a=0,setpts=N/30/TB[v]" \
+  -map "[v]" -map 2:a:0 -r 30 -c:v libx264 -crf 18 -pix_fmt yuv420p -preset medium -c:a aac -b:a 192k <Comp>-VERTICAL-v1-video.mp4
+# then PROVE it: the joined file has exactly the comp's frame count, and the VO cross-correlates at 0 ms against
+# assets/spine.mp4 before AND after every seam.
 ```
 
 Match `--video-bitrate` to the 16:9 FINAL (carry-trade = 3M ≈ 3.0 Mbps). Process note: the harness may report
@@ -123,10 +148,15 @@ via the log/PID, watch the OUTPUT FILE (persistent Monitor) as the real done-sig
 ## 4. Mix — reuse the 16:9 mix verbatim
 
 The spine audio (VO) is identical between 16:9 and vertical, and the bed + SFX timecodes are audio-domain
-(framing-independent). So the same `audio/mix_draft.sh` applies with IN/OUT overrides:
+(framing-independent). So the SAME mix applies. The VO itself comes from `assets/spine.mp4`, never from a Remotion
+render's own audio track: a render's audio runs 43 ms late against its picture from frame 0 (AAC priming) and steps
+to about 90 ms late by the end of an 8-minute video (measured on golden-kitty, 2026-10-02); `mix_music.py` takes the
+spine's audio by default (`--vo` overrides) and the picture file's audio is only a fallback when no spine matches: `scripts/mix_music.py` resolves the same `MUSIC-PLAN.json` / EDIT-PLAN /
+TRANSITION-PLAN onto the vertical picture (this is the vertical graph's mix node; Python since 2026-09-28, the old per-project
+`audio/mix_draft.sh` is retired):
 
 ```
-IN=<...>-VERTICAL-v1-video.mp4 OUT=<...>-VERTICAL-v1.mp4 bash audio/mix_draft.sh
+python video-creation/longform-edited/scripts/mix_music.py <media/<project>> --video <...>-VERTICAL-v1-video.mp4 --out <...>-VERTICAL-v1.mp4
 ```
 
 ## 5. QA (per `../video-qa/video-qa.md`, plus vertical-specific)

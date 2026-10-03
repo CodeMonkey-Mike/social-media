@@ -1,0 +1,28 @@
+{
+  "project": "golden-kitty",
+  "scope": "short variant assets",
+  "date": "2026-10-02",
+  "assets": [
+    {
+      "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\assets\\short\\img\\IMG-1-eth-vs-stablecoin-lowangle.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": [
+        "Portrait, exact 9:16 aspect (941x1672 = 0.5628). Native pixels are below the 1080x1920 spec. Remotion upscales it about 15%, which is fine for a soft-focus CGI still. Not a defect, just recorded here.",
+        "Concept G1 is met: a Pixar-style 3D CGI Ethereum coin carrying the real two-part octahedron ETH mark (checked in a zoomed crop, it matches the reference), beside a smaller plain silver coin stamped with '$'. Dark trading desk with blurred chart monitors, deep navy near-black background, warm rim light.",
+        "Nothing clipped: both characters, including feet, fists and coin rims, sit fully inside the frame with margin. Only the bokeh background monitors run off the edges, which is intended.",
+        "No text, ticker, numbers or watermark. Corners checked in zoomed crops. The monitor charts are blurred, with no readable glyphs.",
+        "Composition: the subjects sit in the middle band (y about 520-1130). The bottom ~30% is dark floor reflection, which leaves clear space for the bottom-center captions with no conflict.",
+        "Palette is on-brand for a dark video: navy/blue with warm gold rim. Not a blank or white frame.",
+        "Interpretation note (no fix needed): the two coins fist-bump instead of facing off. The plan says 'beside', so this complies."
+      ],
+      "fix": "none"
+    }
+  ],
+  "summary": {
+    "checked": 1,
+    "passed": 1,
+    "failed": 0
+  },
+  "must_fix": []
+}

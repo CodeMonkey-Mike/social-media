@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>stock-pair system design</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  /* golden-kitty video accents: Robinhood lime = Robinhood / Robinhood Chain; gold = gold, GLD, GOLDEN */
+  --lime:#ccff00; --gold:#ffd700;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:block;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:50;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.26;pointer-events:none;z-index:0}
+.frame>*:not(.orb){z-index:1}
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:68px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:26px 0 0}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.lm{color:var(--lime)} .gd{color:var(--gold)} .re{color:var(--accent-red)} .pu{color:var(--accent-purple)}
+.hdr{position:absolute;left:140px;top:78px;width:1640px}
+.src{position:absolute;left:140px;bottom:40px;font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:19px;color:var(--text-muted)}
+.abs{position:absolute}
+.box{position:absolute;background:var(--bg-card);border:2px solid var(--border);border-radius:22px}
+.box.w{border-color:rgba(232,234,240,.30)}
+.box.gold{border-color:rgba(255,215,0,.62);box-shadow:0 0 70px rgba(255,215,0,.13)}
+.box.lime{border-color:rgba(204,255,0,.62);box-shadow:0 0 70px rgba(204,255,0,.12)}
+.box.red{border-color:rgba(255,64,96,.55)}
+.box.pu{border-color:rgba(168,85,247,.6);box-shadow:0 0 70px rgba(168,85,247,.12)}
+.box.focus-gold{box-shadow:0 0 0 7px rgba(255,215,0,.16),0 0 120px rgba(255,215,0,.38)}
+.box.focus-lime{box-shadow:0 0 0 7px rgba(204,255,0,.16),0 0 120px rgba(204,255,0,.34)}
+.off{opacity:.16}
+.dim{opacity:.38}
+.hid{opacity:0}
+.cap{font-family:'DM Sans';font-weight:700;text-transform:uppercase;letter-spacing:.12em}
+.ttl{font-family:'DM Sans';font-weight:700;color:var(--text-primary)}
+.sub{font-family:'DM Sans';font-weight:400;color:var(--text-secondary)}
+.chip{display:inline-block;padding:8px 20px;border-radius:100px;font-family:'JetBrains Mono';font-weight:600;
+  font-size:26px;border:2px solid var(--border);color:var(--text-primary);background:rgba(255,255,255,.03)}
+.chip.gold{color:var(--gold);border-color:rgba(255,215,0,.5);background:rgba(255,215,0,.10)}
+.chip.lime{color:var(--lime);border-color:rgba(204,255,0,.5);background:rgba(204,255,0,.09)}
+.chip.pu{color:#c99bff;border-color:rgba(168,85,247,.5);background:rgba(168,85,247,.10)}
+.tag{display:inline-block;padding:7px 18px;border-radius:100px;font-family:'DM Sans';font-weight:700;
+  font-size:19px;text-transform:uppercase;letter-spacing:.09em}
+.tag.gold{background:rgba(255,215,0,.14);color:var(--gold)}
+.tag.lime{background:rgba(204,255,0,.13);color:var(--lime)}
+.tag.red{background:rgba(255,64,96,.15);color:var(--accent-red)}
+.tag.w{background:rgba(232,234,240,.08);color:var(--text-primary)}
+.token{position:absolute;border-radius:50%;overflow:hidden;border:4px solid rgba(255,215,0,.85);
+  box-shadow:0 0 50px rgba(255,215,0,.35)}
+.token img{width:100%;height:100%;object-fit:cover;display:block}
+.elab{position:absolute;font-family:'DM Sans';font-weight:700;font-size:19px;letter-spacing:.14em;text-transform:uppercase}
+svg.lay{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+
+/* ---- VERTICAL 1080x1920 overrides (portrait twin; locked stylesheet above is unchanged) ---- */
+.frame{width:1080px;height:1920px}
+svg.lay{width:1080px;height:1920px}
+.hdr{left:90px;top:170px;width:900px}
+.ey{font-size:28px}
+h1{font-size:92px;line-height:1.04}
+.src{left:90px;right:90px;bottom:210px;font-size:22px;line-height:1.55}
+
+.nd{display:flex;flex-direction:column;justify-content:center}
+.nd .k{font-family:'JetBrains Mono';font-weight:600;font-size:60px;line-height:1}
+.nd .n{font-family:'DM Sans';font-weight:700;font-size:38px;color:var(--text-primary);line-height:1.15}
+.nd .s{font-family:'DM Sans';font-size:26px;color:var(--text-secondary);line-height:1.35;margin-top:8px}
+.nd .n.gd{color:var(--gold)} .nd .n.lm{color:var(--lime)}
+.impact{position:absolute;border-radius:16px;padding:30px 36px;background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(204,255,0,.04));
+  border:1px solid rgba(255,215,0,.28);font-family:'DM Sans';font-weight:700;font-size:36px;line-height:1.35;color:var(--text-primary)}
+.vessel{position:absolute;border-radius:30px;border:2px solid rgba(232,234,240,.30);background:rgba(18,21,28,.85)}
+.cham{position:absolute;border-radius:20px;border:2px solid var(--border);background:var(--bg-card);
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:26px}
+.cham.glow{border-color:rgba(255,215,0,.75);background:linear-gradient(180deg,rgba(255,215,0,.10),rgba(255,215,0,.02));
+  box-shadow:0 0 0 6px rgba(255,215,0,.10),0 0 90px rgba(255,215,0,.30)}
+.side{position:absolute;border-radius:20px;padding:30px 34px;border:2px solid var(--border);background:var(--bg-card)}
+.side .big{font-family:'DM Sans';font-weight:700;font-size:54px;letter-spacing:.08em}
+.side .ln{font-family:'DM Sans';font-size:31px;color:var(--text-primary);line-height:1.45;margin-top:12px}
+
+/* LONG on top launches the pair into the Pool; MEME COIN and TOKENIZED STOCK hang under the pool as its two sides;
+   the struck ETH ghost sits under the stock side (the side it would have been) */
+
+</style></head>
+<body>
+<!--
+VERTICAL twin of assets/diagrams/stock-pair.html (1080x1920). Wide meme | pool | stock row re-laid as a tree: LONG over the Pool, the two sides under it.
+Same states, same ids, same roles and colours; shared elements are pixel-identical across states.
+-->
+<div class="frame" id="1-eyebrow">
+<div class="orb" style="left:560px;top:-280px;width:760px;height:760px;background:#6d8a00"></div>
+<div class="orb" style="left:-340px;top:1300px;width:700px;height:700px;background:#3d4a10"></div>
+<div class="hdr"><div class="ey">IT STARTED WITH STOCKS</div><h1>Meme Coins Paired With <span class="lm">Stocks</span></h1><div class="divider"></div></div>
+<div class="box lime nd off" style="left:210px;top:490px;width:660px;height:190px;align-items:center;text-align:center"><div class="n lm" style="font-size:50px;letter-spacing:.06em">LONG</div><div class="s" style="margin-top:4px">launchpad on Robinhood Chain</div><div class="mono" style="font-size:27px;color:var(--text-primary);margin-top:6px">JULY 14, 2026</div></div>
+<div class="box w nd off" style="left:330px;top:800px;width:420px;height:150px;align-items:center;text-align:center"><div class="n">Pool</div></div>
+<div class="box w nd off" style="left:90px;top:1090px;width:430px;height:190px;align-items:center;text-align:center"><div class="n" style="font-size:40px">MEME COIN</div><div class="s">launched on Long</div></div>
+<div class="box lime nd off" style="left:560px;top:1090px;width:430px;height:190px;align-items:center;text-align:center"><div class="n lm" style="font-size:40px">TOKENIZED STOCK</div><div class="s">the other side of the pool</div></div>
+<svg class="lay"><defs><marker id="1-eyebrow--ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffd700"/></marker><marker id="1-eyebrow--aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8892a4"/></marker><marker id="1-eyebrow--al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ccff00"/></marker><marker id="1-eyebrow--ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker><marker id="1-eyebrow--am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2a3040"/></marker><marker id="1-eyebrow--agn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00e68a"/></marker></defs><line x1="540" y1="696" x2="540" y2="784" stroke="#2a3040" stroke-width="4" marker-end="url(#1-eyebrow--am)"/><line x1="420" y1="964" x2="320" y2="1076" stroke="#2a3040" stroke-width="4" marker-start="url(#1-eyebrow--am)" marker-end="url(#1-eyebrow--am)"/><line x1="660" y1="964" x2="760" y2="1076" stroke="#2a3040" stroke-width="4" marker-start="url(#1-eyebrow--am)" marker-end="url(#1-eyebrow--am)"/></svg>
+<div class="elab lm" style="left:565px;top:728px;width:400px;font-size:19px"></div>
+<div class="hid"><div class="box nd" style="left:625px;top:1440px;width:300px;height:100px;align-items:center;border-style:dashed;opacity:.5;background:transparent"><div class="mono" style="font-size:48px;color:var(--text-secondary)">ETH</div></div><svg class="lay"><line x1="647" y1="1525" x2="903" y2="1455" stroke="#ff4060" stroke-width="7" stroke-linecap="round"/></svg><div class="elab re" style="left:575px;top:1392px;width:400px;text-align:center;font-size:22px">INSTEAD OF ETHEREUM</div></div>
+<div class="src">DeFiPrime, Sept 1, 2026 · The Block, Aug 31, 2026</div>
+</div>
+<div class="frame" id="2-long">
+<div class="orb" style="left:560px;top:-280px;width:760px;height:760px;background:#6d8a00"></div>
+<div class="orb" style="left:-340px;top:1300px;width:700px;height:700px;background:#3d4a10"></div>
+<div class="hdr"><div class="ey">IT STARTED WITH STOCKS</div><h1>Meme Coins Paired With <span class="lm">Stocks</span></h1><div class="divider"></div></div>
+<div class="box lime nd " style="left:210px;top:490px;width:660px;height:190px;align-items:center;text-align:center"><div class="n lm" style="font-size:50px;letter-spacing:.06em">LONG</div><div class="s" style="margin-top:4px">launchpad on Robinhood Chain</div><div class="mono" style="font-size:27px;color:var(--text-primary);margin-top:6px">JULY 14, 2026</div></div>
+<div class="box w nd off" style="left:330px;top:800px;width:420px;height:150px;align-items:center;text-align:center"><div class="n">Pool</div></div>
+<div class="box w nd off" style="left:90px;top:1090px;width:430px;height:190px;align-items:center;text-align:center"><div class="n" style="font-size:40px">MEME COIN</div><div class="s">launched on Long</div></div>
+<div class="box lime nd off" style="left:560px;top:1090px;width:430px;height:190px;align-items:center;text-align:center"><div class="n lm" style="font-size:40px">TOKENIZED STOCK</div><div class="s">the other side of the pool</div></div>
+<svg class="lay"><defs><marker id="2-long--ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffd700"/></marker><marker id="2-long--aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8892a4"/></marker><marker id="2-long--al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ccff00"/></marker><marker id="2-long--ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker><marker id="2-long--am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2a3040"/></marker><marker id="2-long--agn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00e68a"/></marker></defs><line x1="540" y1="696" x2="540" y2="784" stroke="#ccff00" stroke-width="4" marker-end="url(#2-long--al)"/><line x1="420" y1="964" x2="320" y2="1076" stroke="#2a3040" stroke-width="4" marker-start="url(#2-long--am)" marker-end="url(#2-long--am)"/><line x1="660" y1="964" x2="760" y2="1076" stroke="#2a3040" stroke-width="4" marker-start="url(#2-long--am)" marker-end="url(#2-long--am)"/></svg>
+<div class="elab lm" style="left:565px;top:728px;width:400px;font-size:19px">LAUNCHES THE PAIR</div>
+<div class="hid"><div class="box nd" style="left:625px;top:1440px;width:300px;height:100px;align-items:center;border-style:dashed;opacity:.5;background:transparent"><div class="mono" style="font-size:48px;color:var(--text-secondary)">ETH</div></div><svg class="lay"><line x1="647" y1="1525" x2="903" y2="1455" stroke="#ff4060" stroke-width="7" stroke-linecap="round"/></svg><div class="elab re" style="left:575px;top:1392px;width:400px;text-align:center;font-size:22px">INSTEAD OF ETHEREUM</div></div>
+<div class="src">DeFiPrime, Sept 1, 2026 · The Block, Aug 31, 2026</div>
+</div>
+<div class="frame" id="3-meme-pool">
+<div class="orb" style="left:560px;top:-280px;width:760px;height:760px;background:#6d8a00"></div>
+<div class="orb" style="left:-340px;top:1300px;width:700px;height:700px;background:#3d4a10"></div>
+<div class="hdr"><div class="ey">IT STARTED WITH STOCKS</div><h1>Meme Coins Paired With <span class="lm">Stocks</span></h1><div class="divider"></div></div>
+<div class="box lime nd " style="left:210px;top:490px;width:660px;height:190px;align-items:center;text-align:center"><div class="n lm" style="font-size:50px;letter-spacing:.06em">LONG</div><div class="s" style="margin-top:4px">launchpad on Robinhood Chain</div><div class="mono" style="font-size:27px;color:var(--text-primary);margin-top:6px">JULY 14, 2026</div></div>
+<div class="box w nd " style="left:330px;top:800px;width:420px;height:150px;align-items:center;text-align:center"><div class="n">Pool</div></div>
+<div class="box w nd " style="left:90px;top:1090px;width:430px;height:190px;align-items:center;text-align:center"><div class="n" style="font-size:40px">MEME COIN</div><div class="s">launched on Long</div></div>
+<div class="box lime nd off" style="left:560px;top:1090px;width:430px;height:190px;align-items:center;text-align:center"><div class="n lm" style="font-size:40px">TOKENIZED STOCK</div><div class="s">the other side of the pool</div></div>
+<svg class="lay"><defs><marker id="3-meme-pool--ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffd700"/></marker><marker id="3-meme-pool--aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8892a4"/></marker><marker id="3-meme-pool--al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ccff00"/></marker><marker id="3-meme-pool--ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker><marker id="3-meme-pool--am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2a3040"/></marker><marker id="3-meme-pool--agn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00e68a"/></marker></defs><line x1="540" y1="696" x2="540" y2="784" stroke="#ccff00" stroke-width="4" marker-end="url(#3-meme-pool--al)"/><line x1="420" y1="964" x2="320" y2="1076" stroke="#e8eaf0" stroke-width="4" marker-start="url(#3-meme-pool--aw)" marker-end="url(#3-meme-pool--aw)"/><line x1="660" y1="964" x2="760" y2="1076" stroke="#2a3040" stroke-width="4" marker-start="url(#3-meme-pool--am)" marker-end="url(#3-meme-pool--am)"/></svg>
+<div class="elab lm" style="left:565px;top:728px;width:400px;font-size:19px">LAUNCHES THE PAIR</div>
+<div class="hid"><div class="box nd" style="left:625px;top:1440px;width:300px;height:100px;align-items:center;border-style:dashed;opacity:.5;background:transparent"><div class="mono" style="font-size:48px;color:var(--text-secondary)">ETH</div></div><svg class="lay"><line x1="647" y1="1525" x2="903" y2="1455" stroke="#ff4060" stroke-width="7" stroke-linecap="round"/></svg><div class="elab re" style="left:575px;top:1392px;width:400px;text-align:center;font-size:22px">INSTEAD OF ETHEREUM</div></div>
+<div class="src">DeFiPrime, Sept 1, 2026 · The Block, Aug 31, 2026</div>
+</div>
+<div class="frame" id="4-stock">
+<div class="orb" style="left:560px;top:-280px;width:760px;height:760px;background:#6d8a00"></div>
+<div class="orb" style="left:-340px;top:1300px;width:700px;height:700px;background:#3d4a10"></div>
+<div class="hdr"><div class="ey">IT STARTED WITH STOCKS</div><h1>Meme Coins Paired With <span class="lm">Stocks</span></h1><div class="divider"></div></div>
+<div class="box lime nd " style="left:210px;top:490px;width:660px;height:190px;align-items:center;text-align:center"><div class="n lm" style="font-size:50px;letter-spacing:.06em">LONG</div><div class="s" style="margin-top:4px">launchpad on Robinhood Chain</div><div class="mono" style="font-size:27px;color:var(--text-primary);margin-top:6px">JULY 14, 2026</div></div>
+<div class="box w nd " style="left:330px;top:800px;width:420px;height:150px;align-items:center;text-align:center"><div class="n">Pool</div></div>
+<div class="box w nd " style="left:90px;top:1090px;width:430px;height:190px;align-items:center;text-align:center"><div class="n" style="font-size:40px">MEME COIN</div><div class="s">launched on Long</div></div>
+<div class="box lime nd " style="left:560px;top:1090px;width:430px;height:190px;align-items:center;text-align:center"><div class="n lm" style="font-size:40px">TOKENIZED STOCK</div><div class="s">the other side of the pool</div></div>
+<svg class="lay"><defs><marker id="4-stock--ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffd700"/></marker><marker id="4-stock--aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8892a4"/></marker><marker id="4-stock--al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ccff00"/></marker><marker id="4-stock--ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker><marker id="4-stock--am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2a3040"/></marker><marker id="4-stock--agn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00e68a"/></marker></defs><line x1="540" y1="696" x2="540" y2="784" stroke="#ccff00" stroke-width="4" marker-end="url(#4-stock--al)"/><line x1="420" y1="964" x2="320" y2="1076" stroke="#e8eaf0" stroke-width="4" marker-start="url(#4-stock--aw)" marker-end="url(#4-stock--aw)"/><line x1="660" y1="964" x2="760" y2="1076" stroke="#ccff00" stroke-width="4" marker-start="url(#4-stock--al)" marker-end="url(#4-stock--al)"/></svg>
+<div class="elab lm" style="left:565px;top:728px;width:400px;font-size:19px">LAUNCHES THE PAIR</div>
+<div class="hid"><div class="box nd" style="left:625px;top:1440px;width:300px;height:100px;align-items:center;border-style:dashed;opacity:.5;background:transparent"><div class="mono" style="font-size:48px;color:var(--text-secondary)">ETH</div></div><svg class="lay"><line x1="647" y1="1525" x2="903" y2="1455" stroke="#ff4060" stroke-width="7" stroke-linecap="round"/></svg><div class="elab re" style="left:575px;top:1392px;width:400px;text-align:center;font-size:22px">INSTEAD OF ETHEREUM</div></div>
+<div class="src">DeFiPrime, Sept 1, 2026 · The Block, Aug 31, 2026</div>
+</div>
+<div class="frame" id="5-eth-struck">
+<div class="orb" style="left:560px;top:-280px;width:760px;height:760px;background:#6d8a00"></div>
+<div class="orb" style="left:-340px;top:1300px;width:700px;height:700px;background:#3d4a10"></div>
+<div class="hdr"><div class="ey">IT STARTED WITH STOCKS</div><h1>Meme Coins Paired With <span class="lm">Stocks</span></h1><div class="divider"></div></div>
+<div class="box lime nd " style="left:210px;top:490px;width:660px;height:190px;align-items:center;text-align:center"><div class="n lm" style="font-size:50px;letter-spacing:.06em">LONG</div><div class="s" style="margin-top:4px">launchpad on Robinhood Chain</div><div class="mono" style="font-size:27px;color:var(--text-primary);margin-top:6px">JULY 14, 2026</div></div>
+<div class="box w nd " style="left:330px;top:800px;width:420px;height:150px;align-items:center;text-align:center"><div class="n">Pool</div></div>
+<div class="box w nd " style="left:90px;top:1090px;width:430px;height:190px;align-items:center;text-align:center"><div class="n" style="font-size:40px">MEME COIN</div><div class="s">launched on Long</div></div>
+<div class="box lime nd " style="left:560px;top:1090px;width:430px;height:190px;align-items:center;text-align:center"><div class="n lm" style="font-size:40px">TOKENIZED STOCK</div><div class="s">the other side of the pool</div></div>
+<svg class="lay"><defs><marker id="5-eth-struck--ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ffd700"/></marker><marker id="5-eth-struck--aw" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8892a4"/></marker><marker id="5-eth-struck--al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ccff00"/></marker><marker id="5-eth-struck--ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#ff4060"/></marker><marker id="5-eth-struck--am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2a3040"/></marker><marker id="5-eth-struck--agn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#00e68a"/></marker></defs><line x1="540" y1="696" x2="540" y2="784" stroke="#ccff00" stroke-width="4" marker-end="url(#5-eth-struck--al)"/><line x1="420" y1="964" x2="320" y2="1076" stroke="#e8eaf0" stroke-width="4" marker-start="url(#5-eth-struck--aw)" marker-end="url(#5-eth-struck--aw)"/><line x1="660" y1="964" x2="760" y2="1076" stroke="#ccff00" stroke-width="4" marker-start="url(#5-eth-struck--al)" marker-end="url(#5-eth-struck--al)"/><line x1="775" y1="1286" x2="775" y2="1376" stroke="#505a6e" stroke-width="3" stroke-dasharray="6 10"/></svg>
+<div class="elab lm" style="left:565px;top:728px;width:400px;font-size:19px">LAUNCHES THE PAIR</div>
+<div class=""><div class="box nd" style="left:625px;top:1440px;width:300px;height:100px;align-items:center;border-style:dashed;opacity:.5;background:transparent"><div class="mono" style="font-size:48px;color:var(--text-secondary)">ETH</div></div><svg class="lay"><line x1="647" y1="1525" x2="903" y2="1455" stroke="#ff4060" stroke-width="7" stroke-linecap="round"/></svg><div class="elab re" style="left:575px;top:1392px;width:400px;text-align:center;font-size:22px">INSTEAD OF ETHEREUM</div></div>
+<div class="src">DeFiPrime, Sept 1, 2026 · The Block, Aug 31, 2026</div>
+</div>
+</body></html>

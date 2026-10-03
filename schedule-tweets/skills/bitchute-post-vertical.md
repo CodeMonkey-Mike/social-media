@@ -42,6 +42,25 @@ Uses `bitchutebot-profile`. Shared with `upload-longform-bitchute.js` — don't 
 - **og:title matches → `status: posted`** (liveness confirmed).
 - **never resolves → `status: posted_unverified`** + an `error` note (NOT `failed` — the publish was already confirmed via `/content`; this just means the public page didn't come up in the window). `posted_unverified` keeps it out of the auto-pending queue (no duplicate re-upload) while flagging it for a manual channel check. Don't re-run on `posted_unverified` — verify on the channel instead.
 
+## ⛔ The `upload_code` is often EMPTY at capture time — record `url: null`, never the `/content` placeholder (2026-08-13)
+
+The script reads `upload_code` out of the upload tab's URL immediately after `domcontentloaded`,
+but the popup's URL has often not committed yet, so `uploadPage.url()` returns `""` and the regex
+finds nothing. The log tell is a bare `Upload page:` line with nothing after it, followed by
+`Warning: no upload_code captured`. Nine rows shipped that way (2026-08-07 → 08-13) carrying the
+`https://www.bitchute.com/content` dashboard placeholder, which looks recorded on the dashboard but
+is not a video URL. All nine videos were live on the channel the whole time.
+
+**Fixed in `post_bitchute_short.py`** (canonical port; the JS twin is frozen rollback and still has
+it, so post BitChute shorts through the POST graph): it re-reads `upload_page.url` late, right
+before Proceed, when the param is reliably present. And when there genuinely is no code, it now
+writes **`url: null`** rather than the placeholder — a null is honest and is exactly what the
+reconciler looks for.
+
+**Recovery / standing end-of-run step:** `python scripts/reconcile_short_urls.py --platform bitchute --apply`
+(scrapes `/content`, matches by title, confirms each candidate's `og:title` on the public page,
+writes back only what verifies).
+
 ## Two Proceed-flow variants — both are normal (observed 2026-06-01)
 
 BitChute's post-upload flow shows up in **two shapes**, run-to-run, and the script handles both:

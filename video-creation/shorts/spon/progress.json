@@ -1,0 +1,145 @@
+{
+  "batch": "spon",
+  "track": "livestream-repurpose",
+  "source_livestream": "spon",
+  "livestream_date": "2026-09-30",
+  "last_updated": "2026-09-30T13:39:03",
+  "dashboard": "video-creation/shorts/spon/dashboard.html",
+  "dashboard_status": "5C + captions source done; spines final, render-assets staged. Next: remotion-builder (7) per clip (ChatGPT b-roll stays in the builder), then publish (8).",
+  "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
+  "clips": [
+    {
+      "n": 1,
+      "slug": "spawn-my-own-members-hate-it",
+      "title": "My Own Members Hate This Token, I See a 100x",
+      "variant": "full",
+      "duration_seconds": 82.23,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 1)",
+      "output_mp4": "spawn-my-own-members-hate-it/spawn-my-own-members-hate-it-final.mp4",
+      "whisper_words": "spawn-my-own-members-hate-it/whisper-words.json",
+      "composition": "SponMembersHateIt",
+      "comp_files": [
+        "video-creation/remotion/src/SponMembersHateIt.tsx",
+        "video-creation/remotion/src/constants-spon-spawn-my-own-members-hate-it.ts",
+        "video-creation/remotion/src/captionsSponMembersHateIt.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/spon/1-spawn-my-own-members-hate-it.mp4",
+      "render_duration_s": 82.2,
+      "broll_plan": "spawn-my-own-members-hate-it/BROLL-PLAN.md",
+      "whisper_words_verified": "spawn-my-own-members-hate-it/whisper-words-verified.json",
+      "built_at": "2026-09-30T13:39:03",
+      "broll_beats": 8,
+      "broll_coverage_pct": 29.6,
+      "fullscreens": 2,
+      "sfx_events": 17,
+      "notes": "Glove alpha overlay made with the sanctioned Higgsfield gpt_image_2 fallback (ChatGPT HTTP 429 image cap after 9 images). $660M ding deleted after masking sweep."
+    },
+    {
+      "n": 2,
+      "slug": "golden-kitty-too-dispersed-to-rug",
+      "title": "Golden Kitty Is Too Dispersed to Rug Now",
+      "variant": "full",
+      "duration_seconds": 64.52,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 2)",
+      "output_mp4": "golden-kitty-too-dispersed-to-rug/golden-kitty-too-dispersed-to-rug-final.mp4",
+      "whisper_words": "golden-kitty-too-dispersed-to-rug/whisper-words.json",
+      "composition": "SponGoldenKittyTooDispersed",
+      "comp_files": [
+        "video-creation/remotion/src/SponGoldenKittyTooDispersed.tsx",
+        "video-creation/remotion/src/constants-spon-golden-kitty-too-dispersed-to-rug.ts",
+        "video-creation/remotion/src/captionsSponGoldenKittyTooDispersed.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/spon/2-golden-kitty-too-dispersed-to-rug.mp4",
+      "render_duration_s": 64.5,
+      "broll_plan": "golden-kitty-too-dispersed-to-rug/BROLL-PLAN.md",
+      "whisper_words_verified": "golden-kitty-too-dispersed-to-rug/whisper-words-verified.json",
+      "built_at": "2026-09-30T10:07:07"
+    },
+    {
+      "n": 3,
+      "slug": "september-114x-in-eight-days",
+      "title": "One Call Did 114x in Eight Days",
+      "variant": "full",
+      "duration_seconds": 57.4,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 3)",
+      "output_mp4": "september-114x-in-eight-days/september-114x-in-eight-days-final.mp4",
+      "whisper_words": "september-114x-in-eight-days/whisper-words.json",
+      "composition": "SponSeptember114x",
+      "render_mp4": "video-creation/remotion/out/spon/3-september-114x-in-eight-days.mp4",
+      "broll_plan": "september-114x-in-eight-days/BROLL-PLAN.md",
+      "whisper_words_verified": "september-114x-in-eight-days/whisper-words-verified.json",
+      "built_at": "2026-09-30T10:39:53",
+      "broll_beats": 6,
+      "broll_coverage_pct": 31.7,
+      "fullscreens": 2,
+      "sfx_events": 13
+    },
+    {
+      "n": 4,
+      "slug": "zombies-pushed-btc-back-above-50-week",
+      "title": "The Zombies Pushed BTC Back Above the 50-Week SMA",
+      "variant": "full",
+      "duration_seconds": 38.26,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 4)",
+      "output_mp4": "zombies-pushed-btc-back-above-50-week/zombies-pushed-btc-back-above-50-week-final.mp4",
+      "whisper_words": "zombies-pushed-btc-back-above-50-week/whisper-words.json",
+      "composition": "SponZombiesAbove50Week",
+      "comp_files": [
+        "video-creation/remotion/src/SponZombiesAbove50Week.tsx",
+        "video-creation/remotion/src/constants-spon-zombies-pushed-btc-back-above-50-week.ts",
+        "video-creation/remotion/src/captionsSponZombiesAbove50Week.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/spon/4-zombies-pushed-btc-back-above-50-week.mp4",
+      "render_duration_s": 38.23,
+      "broll_plan": "zombies-pushed-btc-back-above-50-week/BROLL-PLAN.md",
+      "whisper_words_verified": "zombies-pushed-btc-back-above-50-week/whisper-words-verified.json",
+      "built_at": "2026-09-30T11:00:24"
+    },
+    {
+      "n": 5,
+      "slug": "spawn-my-own-members-hate-it-impact",
+      "title": "I Got In at 50K. A 5M Cap Is 100x",
+      "variant": "impact",
+      "duration_seconds": 30.96,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 5)",
+      "output_mp4": "spawn-my-own-members-hate-it-impact/spawn-my-own-members-hate-it-impact-final.mp4",
+      "whisper_words": "spawn-my-own-members-hate-it-impact/whisper-words.json",
+      "composition": "SponMembersHateImpact",
+      "comp_files": [
+        "video-creation/remotion/src/SponMembersHateImpact.tsx",
+        "video-creation/remotion/src/constants-spon-spawn-my-own-members-hate-it-impact.ts",
+        "video-creation/remotion/src/captionsSponMembersHateImpact.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/spon/5-spawn-my-own-members-hate-it-impact.mp4",
+      "render_duration_s": 30.93,
+      "broll_plan": "spawn-my-own-members-hate-it-impact/BROLL-PLAN.md",
+      "whisper_words_verified": "spawn-my-own-members-hate-it-impact/whisper-words-verified.json",
+      "built_at": "2026-09-30T11:50:55",
+      "broll_beats": 3,
+      "broll_coverage_pct": 30.4,
+      "fullscreens": 2,
+      "sfx_events": 9
+    }
+  ],
+  "resume_protocol": "Phase 4b: Mike reviews dashboard.html and names clips to delete by number. Then per surviving clip: tighten-strategist -> tighten -> 2nd review -> desilence (5B) -> filler pass (5C, optional) -> captions (6) -> remotion-builder (7) -> publish-shorts (8). STT garble fixes for captions are listed in clip-plan.json stt_garble_flags (verify each against the clip's OWN whisper-words.json before applying).",
+  "gates": {
+    "4b": {
+      "approved_at": "2026-09-30T07:45:11",
+      "deleted": []
+    },
+    "2nd": {
+      "approved_at": "2026-09-30T08:48:37",
+      "deleted": []
+    }
+  },
+  "phase": "6-transcribed",
+  "status": "ready-for-build",
+  "tighten_log": "video-creation/shorts/spon/tighten_log.json",
+  "tighten_plan": "video-creation/shorts/spon/tighten-plan.json",
+  "filler_log": "video-creation/shorts/spon/filler_log.json"
+}

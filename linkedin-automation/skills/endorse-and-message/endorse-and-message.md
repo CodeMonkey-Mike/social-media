@@ -73,23 +73,27 @@ Eligibility is unchanged: `contact_status === "connected"`, no `dm_sent_at`, not
 **oldest-first**, so taking the top N *is* the rule's selection — and members with no
 `connected_on` sort last, so a count can never sweep one in.
 
-**The gate refuses three ways** rather than guess (all before Chrome opens):
+**The gate resolves three ways** rather than guess (all before Chrome opens):
 
 | Situation | What happens |
 |---|---|
 | Nothing qualifies under either rule | Prints why, **exits 0**, no browser, nothing sent |
-| The rule selects **more than 10** | **REFUSES.** The volume call goes back to Mike — re-run with an explicit `--max` he has decided on. The rest stay queued for the next run. |
+| The rule selects **more than 10** | **CAPS at 10** — runs the oldest 10, queues the rest for the next run, and says so. **It does NOT ask Mike.** |
 | `--max` reaches **past** what the rule selects | **REFUSES.** Those connections are too recent to DM today. (This is the hole the gate was built to close: before it, `--max 5` on a day when only one member qualified would have DM'd four people who hadn't earned it, silently and irreversibly.) |
 
-`--max` survives only as a **reducing** override, for a day when Lane 2/3 already spent
-the volume budget. It can never exceed the rule.
+`--max` is a **reducing** override for a day when Lane 2/3 already spent the volume
+budget, or the way Mike raises the ceiling above 10 when he wants a bigger run. It can
+never exceed what the 14/7-day rule selects.
 
-**Why 10 and not "all of them" (Mike's call, 2026-08-01).** The doc's own binding
-constraint is **total profile-view volume**, not the DM count — and each member here is
-a profile view PLUS ~10 endorse clicks PLUS a DM. A 24-member run stacked on a 60-profile
-scrape is ~85 views against the ~120/24 h threshold that has restricted this account
-**twice**. Above 10 the tool will not cross that line for you; it makes you decide. Same
-shape as Lane 2's `--max > 75` refusal.
+**Why 10, and why it is never a question (Mike, 2026-08-15).** The earlier version of
+this gate refused above 10 and handed the volume call back to Mike every time. He does
+not want to be asked: **"I only want 10 people to be endorsed without you asking me if
+I want more than 10. I will tell you up front."** So 10 is the standing answer — a
+backlog above it is normal and drains over subsequent runs, and only an explicit
+`--max` in the morning ask goes higher. The number itself comes from **total
+profile-view volume**, not the DM count: each member is a profile view PLUS ~10 endorse
+clicks PLUS a DM, and a 24-member run stacked on a 60-profile scrape is ~85 views
+against the ~120/24 h threshold that has restricted this account **twice**.
 
 **One blind spot to know about:** the gate prints the profile views it can see on disk
 today (Lane 3 `contacted_at` + Lane 5 `endorsed_at`), but **Lane 2 scrape views are not

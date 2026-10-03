@@ -6,7 +6,7 @@
 #   yt-posts.json (posts) · yt-text-polls.json (polls) · ig-single-image.json (posts)
 #
 # It also owns `validate_lane3_plan` — the fail-fast validator for the per-batch
-# lane3-plan.json seam artifact (drafting is judgment and happens in the Claude session;
+# lane3-plan.json handoff artifact (drafting is judgment and happens in the Claude session;
 # the plan lands on disk BEFORE `run.py repurpose` runs; the graph consumes it). One
 # source of truth: run.py AND lane3_batch.py import this validator (the cut_topics
 # validate_plan pattern).
@@ -27,7 +27,7 @@
 #     = die at validation
 #   - IG single-image is KASPA ONLY (same subject regex as scripts/persona-lint.py, and
 #     the plan must ALSO declare kaspa_subject=true — belt and braces)
-#   - X polls only for Kaspa/TAO/Toncoin: the plan entry must declare its
+#   - X polls only for Kaspa/TAO/Toncoin/Golden Kitty: the plan entry must declare its
 #     eligible_topic; anything else = die
 #   - threads are 5-8 tweets (the predefined thread rule)
 
@@ -44,13 +44,14 @@ IMAGES_BASE_DEFAULT = REPO_ROOT / "schedule-tweets" / "images"
 HEX8_RE = re.compile(r"^[0-9a-f]{8}$")
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+DAY_WORDS = re.compile(r"\b(today|tonight|yesterday|tomorrow|this (morning|afternoon|evening)|last night)\b", re.I)
 DASHES = ("—", "–")                       # em dash, en dash
 CHART_EMOJI = ("\U0001F4C8", "\U0001F4C9")          # the AI-tell chart emojis
 # Same subject regex as scripts/persona-lint.py lint_ig_kaspa_only (keep in sync).
 KASPA_RX = re.compile(
     r"\bkaspa\b|\$kas\b|\bkrc-?20\b|\bghostdag\b|\bdagknight\b|\bkaspy\b|\bkasy\b|\bkappy\b",
     re.IGNORECASE)
-X_POLL_TOPICS = {"kaspa", "tao", "toncoin"}
+X_POLL_TOPICS = {"kaspa", "tao", "toncoin", "golden-kitty"}   # golden-kitty: Mike 2026-09-25
 
 QUEUE_FILES = {
     "x_tweets": ("x-tweets.json", "tweets"),
@@ -169,6 +170,17 @@ def validate_lane3_plan(plan: dict, data_dir: Path = None,
     for c in CHART_EMOJI:
         if c in blob:
             die("chart emoji in plan copy (the AI tell; persona bans it)")
+    # Day-relative words are banned in queue copy (Mike, 2026-09-11): a livestream is
+    # processed overnight and its entries sit 3rd+ in the queue, so "today" is already
+    # wrong when it posts. Say "this week" (or the date). Checked on the queue entries
+    # only, not image prompts / fact_check notes.
+    for key in QUEUE_FILES:
+        for e in plan.get(key) or []:
+            for sv in _walk_strings(e):
+                m = DAY_WORDS.search(sv)
+                if m:
+                    die(f"day-relative word {m.group(0)!r} in {key} copy (stale by post time; "
+                        f"write 'this week' or the date): {sv[:90]!r}")
 
     images = plan.get("images") or []
     own_filenames = {f"{im.get('purpose')}-{im.get('image_id')}-{im.get('slug')}.png"
@@ -269,10 +281,10 @@ def validate_lane3_plan(plan: dict, data_dir: Path = None,
                   "eligible_topic"):
             if not p.get(k):
                 die(f"{where}: missing {k!r} (eligible_topic is the HARD topic filter: "
-                    "an X poll exists only for kaspa/tao/toncoin)")
+                    "an X poll exists only for kaspa/tao/toncoin/golden-kitty)")
         if str(p["eligible_topic"]).lower() not in X_POLL_TOPICS:
             die(f"{where}: eligible_topic {p['eligible_topic']!r} not in "
-                f"{sorted(X_POLL_TOPICS)} — X polls are Kaspa/TAO/Toncoin ONLY")
+                f"{sorted(X_POLL_TOPICS)} — X polls are Kaspa/TAO/Toncoin/Golden Kitty ONLY")
         if not str(p["id"]).startswith("poll-"):
             die(f"{where}: id must start with 'poll-'")
         if not 2 <= len(p["options"]) <= 4:

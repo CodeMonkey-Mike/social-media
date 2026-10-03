@@ -1,0 +1,162 @@
+{
+  "source_video": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/golden-kitty/golden-kitty-VERTICAL.mp4",
+  "source_audio": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/golden-kitty/spine/ALL.h.paused.mp4",
+  "clock": "final-video seconds",
+  "target_seconds": 30.0,
+  "outro_seconds": 3.0,
+  "spans_budget_seconds": 27.0,
+  "claim": "Robinhood's 2015 Golden Kitty trophy is now a token on Robinhood's own chain, and unlike almost every meme coin it is priced in gold: gold sits on the other side of every trade.",
+  "why_this_claim": "It is the longform's own locked thesis (hook line and closing line are a deliberate bookend), it needs no market-cap, chart, chain-volume or stonk-narrative context to land, and every word chosen is already airable under the project's hard constraints (never 'backed by', never 'treasury', never 'floor'). The trophy history, the token stats, the Robinhood Chain numbers and the stonk narrative are each a second idea; the short proves ONE thing, the gold pairing, with the hook asserting it, the C1 pool diagram showing the mechanism, and the vibe-cut face line sealing it.",
+  "spans": [
+    {
+      "role": "hook",
+      "order": 1,
+      "start": 0.0,
+      "end": 9.7,
+      "seconds": 9.7,
+      "sourced": "FACE",
+      "says": "In 2015, Robinhood won a trophy called the Golden Kitty and that trophy is now a token on Robinhood's own blockchain and it's priced in gold.",
+      "on_screen": "Mike full-frame, portrait F1 Higgsfield background-swap clip (gold-bar vault with golden cat trophies on the shelves, warm relight), burned house captions, light-leak pulse 2.8-6.8, subtle 6% punch-in at 4.3 on the F1a/F1b seam. The F1-out film burn (hand:film-burn, 0.76 s centred on 9.67) is ramping over the last ~0.4 s; the final frame sits at the burn peak.",
+      "why": "The engineered hook and the whole claim in one breath: trophy, Robinhood's own chain, priced in gold. Mike's standing rule: the opening FACE hook is the natural hook, and nothing stronger exists standalone.",
+      "self_contained": "Frame one of the video; names the year, the company, the trophy, the chain and the gold pairing with zero prior context.",
+      "in_gap": null,
+      "in_note": "0.00 is the first frame of the video (no cut).",
+      "out_gap": 0.18,
+      "out_note": "Trough between 'gold.' (ends 9.640) and 'Most' (starts 9.820); proposed 9.70, 0.03 s past the F1 face-out cut at 9.67.",
+      "clear_of_transitions": true,
+      "transition_note": "The only transition touched is the F1-out film burn, a flash overlay peaking on the cut (not a geometry transform). Spans 1 and 2 are SOURCE-CONTIGUOUS at the same trough: butt-join them with NO builder seam hit so the longform's own film burn plays as the hook's face-out exactly as in the master.",
+      "sourced_note": "F1, window 0.00-9.67; burned captions in the master"
+    },
+    {
+      "role": "body",
+      "order": 2,
+      "start": 9.7,
+      "end": 15.16,
+      "seconds": 5.46,
+      "sourced": "COVER",
+      "says": "Most meme coins trade against Ethereum or a stablecoin. This one trades against gold.",
+      "on_screen": "9.70-13.4 IMG-1 'Ethereum vs stablecoin' ChatGPT still (real Ethereum mark beside a plain stablecoin; a ChatGPT image, so Mike's variety rule puts ONE alternative asset from assets/short/ over this slot) -> 13.4 hand:xfade-scale -> C13 DexScreener GOLDEN / GLD pair header (pair identity only, no live stats) -> 14.8 hand:xfade-scale (0.20 s) -> C13 GLD token page with the quote token 'SPDR Gold Trust, Robinhood Token' boxed in gold, lands on 'gold.' and holds to 16.4. Vertical receipts are the lane's mobile-view captures.",
+      "why": "The contrast that makes 'priced in gold' mean something: every other meme coin is quoted in ETH or a stablecoin, this one is quoted in gold. It also hands 'the pool' to span 3.",
+      "self_contained": "A general statement about meme coins followed by 'This one', whose referent (the token the hook just named) is 0.3 s earlier in the same assembled audio.",
+      "in_gap": 0.18,
+      "in_note": "Same trough as span 1's out (9.640 -> 9.820); shared boundary, nothing dropped.",
+      "out_gap": 0.12,
+      "out_note": "Trough between 'gold.' (ends 15.100) and 'This' (starts 15.220); proposed 15.16. Small gap, the lint will snap it; the C13 token page holds steady from 15.0 to 16.38, so any snap inside the gap lands on a still receipt.",
+      "clear_of_transitions": true,
+      "transition_note": "The two internal receipt cross-fades (13.4, 14.8) play whole inside the span. The next scene change (C5 receipt cross-fade) starts at 16.38, 1.2 s after the out point.",
+      "sourced_note": "no burned captions; needs the house caption track"
+    },
+    {
+      "role": "body",
+      "order": 3,
+      "start": 207.64,
+      "end": 214.71,
+      "seconds": 7.07,
+      "sourced": "COVER",
+      "says": "The pool holds two things, Golden Kitty and tokenized gold. When somebody buys, gold goes into the pool.",
+      "on_screen": "C1 state B, THE marquee system-design diagram, header 'WHAT PAIRED MEANS': the pool vessel (Uniswap v4) between GOLDEN and GLD. B1-pool held from 206.1 -> B2 GOLDEN side glows at 209.82 ('Golden Kitty') -> B3 GLD side joins at 211.06 ('tokenized gold') -> B4 green BUY arrow, gold flows INTO the pool at 211.96 ('somebody buys'). The MELT that revealed this diagram (lib:melt-equidistant-1, 205.90-206.74) is 0.9 s before the in point; the B5 sell-arrow state cross-fade starts at 214.88, 0.17 s after the out point. No Envato clip or ChatGPT image here, so no alternative-asset overlay.",
+      "why": "The proof of the claim: what 'priced in gold' mechanically means. The pool holds the token and tokenized gold, and a buy puts gold into the pool. It is the video's centerpiece diagram, so the short's one explainer beat is also its best visual.",
+      "self_contained": "Opens on a definite noun the sentence itself defines ('The pool holds two things, Golden Kitty and tokenized gold'), right after 'This one trades against gold'; the diagram on screen is literally the pool. No 'as I said', no dangling pronoun.",
+      "in_gap": 0.2,
+      "in_note": "Trough between 'means.' (ends 207.540) and 'The' (starts 207.740); proposed 207.64. The sentence before it ('Now here's what paired means.', 206.10-207.54) is rejected because its onset sits inside the MELT window.",
+      "out_gap": 0.34,
+      "out_note": "Trough between 'pool.' (ends 214.540) and 'When' (starts 214.880); proposed 214.71. The snapped trough must stay inside this gap: the B5 state cross-fade (6-10 frames) begins at 214.88.",
+      "clear_of_transitions": true,
+      "transition_note": "Clear of the MELT (ends 206.74) and ahead of the B5 cross-fade (214.88). Internal B2/B3/B4 state swaps are 8-frame cross-fades that play whole. Type 2 diagram (still states), not a Type 1 animated chart, so no bar is frozen mid-count.",
+      "sourced_note": "no burned captions; needs the house caption track"
+    },
+    {
+      "role": "kicker",
+      "order": 4,
+      "start": 459.3,
+      "end": 463.52,
+      "seconds": 4.22,
+      "sourced": "FACE",
+      "says": "Robinhood's own trophy on its own chain, priced in gold.",
+      "on_screen": "Mike full-frame, portrait F9 Higgsfield background-swap clip (same vault as F1), the video's vibe cut: CRASH ZOOM ~20% on 'priced' at 462.66 (hand:punch 0.13 s). The F9-in film burn (centred 459.10) is decaying over the first 0.2 s; the F9-out film burn (centred 463.47) is at its peak on the last frame, handing to IMG-10 (token on gold bars, lime aurora, motion clip) which runs 463.5-467.0 behind the outro card.",
+      "why": "The longform's locked closing line and the deliberate echo of the hook; it restates the claim as a verdict after the mechanism has been shown. The crash zoom gives the short a physical ending beat before the CTA.",
+      "self_contained": "A complete declarative sentence naming Robinhood, the trophy, the chain and gold; every referent is in the hook.",
+      "in_gap": 0.32,
+      "in_note": "Trough between 'account.' (ends 459.120) and the word Robinhood's (starts 459.440); proposed 459.30, 0.2 s after the F9 cut-in so the face is already up.",
+      "out_gap": 0.26,
+      "out_note": "Trough between 'gold.' (ends 463.460) and 'And' (starts 463.720); proposed 463.52, 0.05 s past the F9 cut-out, so the last frame is the burn peak rather than a frozen flash on IMG-10.",
+      "clear_of_transitions": true,
+      "transition_note": "Only the F9 film burns (flash overlays on the face edges) are touched; the crash zoom is internal and plays whole. Nothing else changes scene inside 459.10-463.47.",
+      "sourced_note": "F9, window 459.10-463.47; VERIFY burned captions, see risks"
+    }
+  ],
+  "assembled_read": "In 2015, Robinhood won a trophy called the Golden Kitty and that trophy is now a token on Robinhood's own blockchain and it's priced in gold. Most meme coins trade against Ethereum or a stablecoin. This one trades against gold. The pool holds two things, Golden Kitty and tokenized gold. When somebody buys, gold goes into the pool. Robinhood's own trophy on its own chain, priced in gold. [outro] Click below to watch the full video.",
+  "spans_total_seconds": 26.45,
+  "delivered_seconds_with_outro": 29.45,
+  "outro": {
+    "line": "Click below to WATCH the full video.",
+    "take": "C:/Users/mnede/Documents/Claude/social-media/video-creation/assets/vo/cta-watch-full.mp3 (the SHARED approved take; never re-voiced, no trailing exclamation per longform-to-short.md section 4)",
+    "card_text": "WATCH THE FULL VIDEO",
+    "note": "Hold the master's own picture from 463.52 for the 3 s: IMG-10, the Golden Kitty token art on gold bars with the lime aurora drifting (portrait motion clip, 463.5-467.0 final time), text-free and number-free, under the house-stylesheet card. It continues the kicker's gold frame instead of freezing the burn-peak face. Alternative if the builder prefers a still: the last clean F9 frame before the burn (about 463.0)."
+  },
+  "bed_suggestion": "Bed A fearless (Anthony Catacoli, Fearless; Soundstripe code ARAZC70SFALU4F6O; file 0.0, cold_hot open), the bed that scores the hook chapter in MUSIC-PLAN.json, one continuous placement at the measured house level (16-18 dB under VO). The kicker's crash zoom on 'priced' (462.66) had a kit impact (Impact_Hit_01-1.wav) and a -4.2 dB bed duck in the MASTER mix, which the spine VO does not carry: re-create a hit under 'priced' in the short's own mix or the zoom reads unmotivated.",
+  "rejected": [
+    {
+      "span": "15.22-16.28",
+      "says": "This is the real deal.",
+      "reason": "Would lift the total to 27.6 s, but its out trough (16.28-16.48) sits 0-50 ms before the C5 receipt cross-fade starts at 16.38; 1.1 s of energy is not worth a frame-level transition risk when the budget is already inside the window."
+    },
+    {
+      "span": "16.48-24.78",
+      "says": "December 23rd, 2015, Robinhood posted themselves. Robinhood won the Golden Kitty award for the sexiest product of the year.",
+      "reason": "Proves the trophy history, which is a second idea; the short lands the gold pairing. 8.3 s on the C5 receipt and the IMG-11 Vlad AI illustration (AI ILLUSTRATION tag) would push out the mechanism beat."
+    },
+    {
+      "span": "40.08-43.96",
+      "says": "Now I'm very bullish on this token and I'm very bullish on this chain.",
+      "reason": "Conviction line, but it opens on a continuation 'Now', gaps are 0.16 / 0.12 s, it would be a third FACE span on the same vault backdrop, and F9 closes harder while bookending the hook."
+    },
+    {
+      "span": "174.20-181.52",
+      "says": "In general, meme coins trade against Ethereum or against a stablecoin. Golden Kitty's main pool trades against GLD.",
+      "reason": "Same contrast as 9.82-15.10 but it needs 'GLD' explained and it is not source-contiguous with the hook; the CH1 version plays with no added seam."
+    },
+    {
+      "span": "206.10-207.54",
+      "says": "Now here's what paired means.",
+      "reason": "Its onset sits inside the C1 MELT marquee window (lib:melt-equidistant-1, 205.90-206.74 final time); span 3 starts on the next sentence instead."
+    },
+    {
+      "span": "214.88-216.92",
+      "says": "When somebody sells, gold comes out.",
+      "reason": "Completes the mechanism but its out gap to 'So' is 0.06 s and it pushes the total to 28.5 s, past the +1 s tolerance. The buy half carries the point."
+    },
+    {
+      "span": "216.98-219.46",
+      "says": "So the other side of every trade is gold.",
+      "reason": "The F6 face line is glued to its neighbours (0.06 s in, 0.00 s out into 'And that means that Golden Kitty is priced in gold', whose own out lands on the C2 chart cross-fade at 222.4). F9 says the same thing harder, with the crash zoom and clean 0.32 / 0.26 s gaps."
+    },
+    {
+      "span": "258.70-262.84",
+      "says": "What it is is it's priced in gold and most tokens on this chain can't say that.",
+      "reason": "Opens on 'What it is is', which leans on the disclaimer before it; in gap 0.08 s; its out runs into the CH5 title-card flip (begins 262.9, freeze at 263.3)."
+    },
+    {
+      "span": "357.38-369.44",
+      "says": "So here's what I think. The next run is going to be about real world assets and the stonk narrative. And a gold paired token on Robinhood's own chain is sitting in a prime spot for it.",
+      "reason": "12 s and a second idea (the stonk narrative) that needs the chapter behind it; opinion call, not the claim."
+    },
+    {
+      "span": "463.72-469.32",
+      "says": "And a $4 million token could look very different if this chain keeps growing the way it has.",
+      "reason": "Needs the market-cap context the short never gives; a conditional after the kicker would soften the ending. The short ends on 'priced in gold.'"
+    }
+  ],
+  "risks": [
+    "CAPTIONS ON F9: the 16:9 draft captioned only the three face holds over 5 s (F1, F4, F7) per PROJECT-LOG 2026-10-02, while the blueprint says all nine. The vertical comp may have done the same, so the kicker (F9, 4.37 s) may have NO burned captions. The builder must read frames of the vertical at 459-463 before computing the caption overlay: if F9 is bare, caption it like a COVER span; if captioned, leave it alone. Do not assume from the FACE table.",
+    "FACE edges are film burns: every face edge in this video is a 0.76 s hand:film-burn overlay centred on the cut, so a FACE-sourced span carries part of the burn ramp at its edge (span 1 ends at the F1 burn peak, span 4 opens on the decaying F9 burn-in and ends at its burn-out peak). A burn is a flash, not a geometry transform, so there is no half-melted frame; I have marked these spans clear_of_transitions on that reading. If Mike wants no burn in frame at all, the hook has to end at 9.67 exactly (inside the word gap, fine) and the kicker at 463.47.",
+    "Spans 1 and 2 share one boundary (9.70) and are contiguous in the source: the builder should butt-join them with no seam hit, or the longform's film burn and the builder's seam hit will double up.",
+    "Span 2 out gap (0.12 s) and span 3 in gap (0.20 s) are under the preferred 0.25 s; the lint will snap to the real trough (expect 5-35 ms of movement). Budget the total at 26.45 s plus or minus 0.1 s.",
+    "Span 3's out (214.71) is 0.17 s ahead of the C1 B5 sell-arrow cross-fade (214.88). The snapped trough must stay inside 214.54-214.88; if the lint pushes it later, the last frames catch the sell arrow fading in.",
+    "The crash zoom on 'priced' (462.66) is picture only in the master; its kit impact and bed duck live in the master's mix, not in the spine VO. Without a hit in the short's mix the zoom looks unmotivated.",
+    "Two of four spans (1 and 4) show the same vault background swap. Inside rule 4 (no THREE spans on one visual), but the short opens and closes on the same backdrop by design.",
+    "Span 2 carries a ChatGPT still (IMG-1) for 3.7 s; Mike's variety rule overlays ONE alternative asset from assets/short/ there. on_screen names the original.",
+    "I am working from the transcript and the project documents, not from listening or watching: delivery energy on the kicker (the vibe cut) and the readability of the C13 receipts in portrait are inferred from EDIT-PLAN / CUE-SHEET, not verified.",
+    "Total is 26.45 s of spans, inside the 27 plus or minus 1 s window but at the low side; delivered 29.45 s with the 3 s outro. Adding 'This is the real deal.' (rejected above) is the one safe way to 27.6 s if Mike wants it, at the cost of ending 1-2 frames before a receipt cross-fade."
+  ]
+}

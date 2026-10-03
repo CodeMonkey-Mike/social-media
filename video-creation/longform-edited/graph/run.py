@@ -249,8 +249,9 @@ def main_vertical():
         final = {"status": "failed", "error": f"graph crashed: {e!r}", "steps": {}}
     rc = report(final, proj, args.scope)
     status = "waiting" if rc == C.GATE_EXIT_CODE else final.get("status", "failed")
+    C.finish_progress(status, None if rc == 0 else str(final.get("error") or "waiting"))   # the heartbeat ends with the run (was missing: the dashboard kept showing the gate as live)
     C.record_run(thread, {**final, "status": status}, started_at, _now_run(), time.monotonic() - t0, stub=args.stub,
-                 args={"lane": "vertical", "project": project, "approve": approve, "redo": redo, "resume": args.resume})
+                 requested={"lane": "vertical", "project": project, "approve": approve, "redo": redo, "resume": args.resume})
     vert = proj / f"{project}-VERTICAL.mp4"
     if vert.is_file():
         print(f"  VERTICAL: {vert}")
@@ -299,8 +300,9 @@ def main_short():
         final = {"status": "failed", "error": f"graph crashed: {e!r}", "steps": {}}
     rc = report(final, proj, args.scope)
     status = "waiting" if rc == C.GATE_EXIT_CODE else final.get("status", "failed")
+    C.finish_progress(status, None if rc == 0 else str(final.get("error") or "waiting"))
     C.record_run(thread, {**final, "status": status}, started_at, _now_run(), time.monotonic() - t0, stub=args.stub,
-                 args={"lane": "short", "project": project, "seconds": args.seconds, "approve": approve, "redo": redo, "resume": args.resume})
+                 requested={"lane": "short", "project": project, "seconds": args.seconds, "approve": approve, "redo": redo, "resume": args.resume})
     shorts = sorted(proj.glob(f"{project}-SHORT-*s.mp4"))
     if shorts:
         print(f"  SHORT: {shorts[-1]}")

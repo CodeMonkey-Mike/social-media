@@ -35,6 +35,7 @@ lane 3 was needlessly serialized behind lane 2 and burned wall-clock.)
 | Post pending queued content to a platform | `schedule-tweets/skills/SKILL.md` | `playbooks/posting.md` |
 | Make/render a vertical short or AI-persona video | `video-creation/SKILL.md` · `video-creation/vertical-ai-persona/SKILL.md` | `playbooks/video.md` |
 | Source stock video b-roll (Envato Elements) | `video-creation/skills/envato-broll/SKILL.md` | `playbooks/video.md` |
+| Keep music + transitions VARIED across videos (what did the last videos use? what is fresh?) | `video-creation/skills/usage-ledger/usage-ledger.md` (`usage_ledger.py report`; the longform graph gates + records it) | `playbooks/video.md` |
 | Find/pick music for a video (or source new tracks) | `video-creation/skills/music-sourcing/SKILL.md` (§2c: PICK from the analyzed catalog `assets/music/library.json`, no listening; longform bed plans → `music-placement-strategist` agent) | `playbooks/video.md` |
 | Make the VERTICAL (9:16) cut of a finished longform video | run **`/vertical-repurpose <project folder>`** · canonical `video-creation/longform-edited/skills/vertical-repurpose/vertical-repurpose.md` | `playbooks/video.md` |
 | Make a longform 16:9 video (slide presentation OR heavily-edited) | `video-creation/longform-presentation/longform-presentation.md` (frozen, slide-deck) · `video-creation/longform-edited/longform-edited.md` (evolving, edit-driven) | `playbooks/video.md` |

@@ -16,10 +16,12 @@
 # is a documented rule applied to the data — endorse+DM everyone connected more than
 # 14 days ago, else exactly ONE member in the 7-14 day band, else do nothing — so
 # lane5_gate() derives it (lane5_plan() in lane_graph.py is the rule in code). The
-# gate refuses three ways rather than guess: nothing qualifies -> exit 0 without
-# opening Chrome; a derived run above LANE5_AUTO_MAX -> refuse, the volume call is
-# Mike's; --max reaching PAST what the rule selects -> refuse, those connections are
-# too recent to DM. --max may still REDUCE the run on a heavy-volume day.
+# gate resolves three ways rather than guess: nothing qualifies -> exit 0 without
+# opening Chrome; a derived run above LANE5_AUTO_MAX -> silently CAP at that ceiling
+# and queue the rest (Mike, 2026-08-15 — never ask, 10/run is the standing answer and
+# he says up front when he wants more); --max reaching PAST what the rule selects ->
+# refuse, those connections are too recent to DM. --max may still REDUCE the run on a
+# heavy-volume day, or raise the cap when Mike asks for more than 10 up front.
 #
 # Flags:
 #   --lane N          1 (default), 2, 3, 4, or 5
@@ -98,7 +100,9 @@ def report_lane2(final) -> int:
           f"processed +{s['processed_delta']} | captured +{s['captured_delta']} "
           f"(total {s['captured_total']})")
     print(f"  skipped out-of-zone {s['skipped_out_of_zone']} | already-captured "
-          f"{s['already']} | errors (retry next run) {s['errors']}")
+          f"{s['already']} | 404 strike 1: {s.get('notfound_strike1', 0)} | "
+          f"retired 404 (2nd strike): {s.get('retired_404', 0)} | "
+          f"errors (retry next run) {s['errors']}")
     print(f"  queue remaining: {s['queue_remaining']}")
     if s["mismatch"]:
         print(f"  WARNING {s['mismatch']}")
@@ -210,10 +214,10 @@ def report_lane5(final) -> int:
           + (f", no date: {ea['unknown_date']}" if ea["unknown_date"] else "") + ")")
     over14 = s["eligible_before"].get("over_14d", 0)
     if not s["dry_run"] and over14 > (s["requested"] or 0):
-        print(f"  WARNING --max {s['requested']} under-covered the pool: {over14} member(s) "
-              "were connected more than 14 days ago, and the documented rule is to "
-              "endorse+DM ALL of them (endorse-and-message.md, Mike 2026-07-21). Run "
-              "again with a bigger --max, watching total profile-view volume.")
+        print(f"  NOTE {over14} member(s) were connected more than 14 days ago and this run "
+              f"covered {s['requested']}; the remainder stay queued for the next run. "
+              f"Expected whenever the pool exceeds the {LANE5_AUTO_MAX}/run ceiling — not "
+              "something to ask Mike about (endorse-and-message.md, Mike 2026-08-15).")
     if s["mismatch"]:
         print(f"  WARNING {s['mismatch']}")
     return 0
@@ -261,13 +265,13 @@ def lane5_gate(args):
 
     if args.max is None:
         if plan["max"] > LANE5_AUTO_MAX:
-            print(f"\nREFUSED: the rule selects {plan['max']} member(s), above the "
-                  f"{LANE5_AUTO_MAX}/run ceiling for a self-derived run. Each member is a "
-                  "profile view PLUS ~10 endorse clicks PLUS a DM, and this account has "
-                  "been restricted twice at ~120 views/24h. Decide the number against "
-                  f"today's total volume and re-run, e.g. --lane 5 --max {LANE5_AUTO_MAX} "
-                  "— the rest stay queued for the next run.", file=sys.stderr)
-            sys.exit(1)
+            print(f"\nCAPPED at {LANE5_AUTO_MAX}: the rule selects {plan['max']} member(s), "
+                  f"so this run takes the OLDEST {LANE5_AUTO_MAX} and the rest stay queued "
+                  "for the next run. No question goes back to Mike — 10/run is the standing "
+                  "ceiling (Mike, 2026-08-15: 'I only want 10 people endorsed without you "
+                  "asking; I will tell you up front if I want more'). A bigger run is "
+                  "Mike's to ask for, with an explicit --max.")
+            return LANE5_AUTO_MAX, f"auto-capped at {LANE5_AUTO_MAX} (rule selects {plan['max']})"
         return plan["max"], "auto, from the rule"
 
     if args.max > plan["max"]:

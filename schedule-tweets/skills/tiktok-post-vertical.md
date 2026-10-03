@@ -96,7 +96,7 @@ ffmpeg -y -i video.mp4 -c:v libx264 -crf 26 -preset fast -c:a aac -b:a 128k vide
 
 ## Debug artifacts
 
-Each phase saves to `tmp-tiktok-debug/`:
+Each phase saves to `tmp/tiktok-debug/`:
 - `01_landed.{png,json}` — initial upload page or login redirect
 - `02_composer_ready.{png,json}` — after video attach + composer found
 - `03_caption_done.{png,json}` — after caption typed

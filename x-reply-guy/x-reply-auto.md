@@ -1,11 +1,13 @@
 ---
 name: x-reply-auto
-description: Fire-on-the-fly auto-reply. Scans the Following feed + Reply Guy list over the last ~1 hour, picks the best reply-worthy tweet (favoring high-visibility accounts where Mike has a sharp on-brand take), and replies immediately in Mike's voice — no review, no staging, no authorization. If nothing good is in the window, it no-ops.
+description: Fire-on-the-fly auto-reply. Scans the Reply Guy list over the last ~1 hour, picks the best reply-worthy tweet (favoring high-visibility accounts where Mike has a sharp on-brand take), and replies immediately in Mike's voice — no review, no staging, no authorization. If nothing good is in the window, it no-ops.
 ---
 
 ## What this is
 
-The **automatic** counterpart to the curated reply-guy flow (`CLAUDE.md`). It scans the last ~1 hour and replies to the **best reply-worthy** tweet it finds — favoring high-visibility accounts (big crypto/news accounts and alert bots, where a sharp reply gets seen by their audience and often retweeted) — on the fly, in Mike's voice, **without presenting it for review or queuing it**. No allow-list and no skip-list are needed: anyone worth replying to is already in the Following feed or the Reply Guy list. From Mike's seat it's automatic — Claude drafts the reply in the loop, but there is no approval step.
+The **automatic** counterpart to the curated reply-guy flow (`CLAUDE.md`). It scans the last ~1 hour and replies to the **best reply-worthy** tweet it finds — favoring high-visibility accounts (big crypto/news accounts and alert bots, where a sharp reply gets seen by their audience and often retweeted) — on the fly, in Mike's voice, **without presenting it for review or queuing it**. From Mike's seat it's automatic — Claude drafts the reply in the loop, but there is no approval step.
+
+> ⛔ **Reply Guy list ONLY — the Following feed is NOT scanned (removed 2026-08-28, Mike's call).** Earlier this pulled from both the curated list and Mike's Following feed. Mike found it replying to people he knows personally, in a register that read as weird/out of character for a reply he'd send someone he actually knows. The Following feed carries no such curation — anyone Mike follows can appear there, including personal contacts — while the Reply Guy list (191 accounts) is a deliberately curated set of high-signal crypto accounts, never personal contacts. `auto_reply_scan.py` now scans the Reply Guy list exclusively. Do not re-add the Following feed as a source without Mike explicitly asking for it back.
 
 Designed to be invoked as **a single task within a task-list run**. Drop the task in multiple times if you want more than one reply per session.
 
@@ -15,10 +17,6 @@ Designed to be invoked as **a single task within a task-list run**. Drop the tas
 - **Look back ~1 hour and pick the BEST, not the newest.** `MAX_AGE_SECONDS = 3600` in `auto_reply_scan.py`. The scanner returns the whole last-hour pool sorted freshest-first; the skill (Claude) picks the most reply-worthy one — not necessarily the freshest. The window is a sanity bound, not a deadline. (Evolved 2026-05-23: 2 min → 10 min → 30 min → 1 hour, after observing the feeds are often quiet; freshest tweet was ~19 min old at test time. Tune `MAX_AGE_SECONDS` for busier/quieter hours.)
 - **NEVER retry a "failed" reply.** X's verify step false-negatives under throttle — a reply marked `failed` has very often already posted. `auto_reply_post.py` consumes the pending file on every run, so an accidental re-run is a safe no-op. Never reconstruct a failed pending entry to "try again." (Same rule as the curated flow — see `CLAUDE.md`.)
 - **Voice comes from the central persona:** `../persona/persona.json` → `reply_voice` register (lowercase, conversational openers, length tiers, reaction-only ratio). Never restate voice rules here.
-
-## Feed sort — leave Following on Popular
-
-Mike keeps the Following tab's sort on **Popular** (not Recent), and that's intentional: Popular surfaces high-engagement tweets, so picking the most recent of *those* yields a reply that's both reasonably fresh AND high-visibility — which is the point of reply-guy. **The scanner does NOT set or restore the sort.** It reads whatever tweets are at the top, uses their real `time[datetime]` timestamps, and picks the freshest within the window — so it works regardless of sort. **Do not add sort-toggling logic** (the two reply skills share `xbot-profile`; toggling would just fight each other).
 
 ## Chrome profile
 
@@ -38,7 +36,7 @@ data/auto_reply_pending.json  →  auto_reply_post.py  →  posts + archives to 
 python auto_reply_scan.py
 ```
 
-- Loads the **Following feed** and the **Reply Guy list**, top-of-feed only (no scrolling — both are reverse-chron, so a ≤2-min tweet is at the top if it exists).
+- Loads the **Reply Guy list** ONLY, top-of-feed only (no scrolling — reverse-chron, so a ≤2-min tweet is at the top if it exists).
 - Computes age in **seconds**, keeps only tweets **≤3600s** (1 hour) old.
 - Applies guardrails (see below).
 - Writes qualifying candidates **freshest-first** to `data/auto_reply_candidates.json`.
@@ -47,7 +45,7 @@ python auto_reply_scan.py
 
 1. Read `data/auto_reply_candidates.json`.
 2. **If empty → STOP. Report "nothing reply-worthy in the last hour — skipping" and end.**
-3. **Pick the most recent _reply-worthy_ tweet.** Because the Following tab is on **Popular** sort (see "Feed sort" above), the top tweets are already high-engagement — so replying to them maximizes visibility. From the pool, **skip junk first** (genuine spam/scam the blocklist missed; overtly partisan flamebait that doesn't fit a crypto/macro account), then take the **most recent** of what remains so the reply lands while the tweet is still fresh. Big crypto/news accounts and alert bots (Cointelegraph, Watcher.Guru, etc.) are *good* targets, not noise — their audience sees and retweets the reply. Apply persona special-cases (e.g. `$TURBO`: reply in-tribe, no KAS pivot, no #kaspa tag — `../persona/persona.json` → `stacking_lineup`). If nothing in the pool is reply-worthy, no-op.
+3. **Pick the most recent _reply-worthy_ tweet.** From the pool, **skip junk first** (genuine spam/scam the blocklist missed; overtly partisan flamebait that doesn't fit a crypto/macro account), then take the **most recent** of what remains so the reply lands while the tweet is still fresh. Big crypto/news accounts and alert bots (Cointelegraph, Watcher.Guru, etc.) are *good* targets, not noise — their audience sees and retweets the reply. Apply persona special-cases (e.g. `$TURBO`: reply in-tribe, no KAS pivot, no #kaspa tag — `../persona/persona.json` → `stacking_lineup`). If nothing in the pool is reply-worthy, no-op.
 4. Draft ONE reply in Mike's **reply voice** (`../persona/persona.json` → `reply_voice`): lowercase opener, conversational, short unless the tweet is analytical, typos-stay register. Apply the persona's terminology + avoid-in-drafts rules.
    - **Reaction-only check (don't let this silently regress to always-text).** Per `reply_voice.reaction_only`, ~1 in 20 replies is a reaction with no text — a single emoji OR a GIF — reserved for genuinely exciting (🚀) or crazy/unbelievable (😱) tweets. This flow fires one reply at a time, so the quota only lands if you actively apply it: **before defaulting to a text take, ask whether THIS tweet is one of those moments.** If it is, draft it as a reaction (emoji in `reply_text`, or `gif_search` per the GIF shape below) instead of a text reply. If not, write the text reply. Don't force a reaction onto a tweet that warrants a real take.
 
@@ -57,12 +55,12 @@ Write the chosen reply to `data/auto_reply_pending.json` **as a single JSON obje
 
 **Text reply:**
 ```json
-{ "tweet_url": "https://x.com/.../status/...", "reply_text": "<draft in voice>", "author": "@handle", "source": "Following feed | Reply Guy list" }
+{ "tweet_url": "https://x.com/.../status/...", "reply_text": "<draft in voice>", "author": "@handle", "source": "Reply Guy list" }
 ```
 
 **GIF reaction** (when `reaction_only: true` per persona rules, ~5% of replies):
 ```json
-{ "tweet_url": "https://x.com/.../status/...", "gif_search": "<search query>", "reaction_only": true, "author": "@handle", "source": "Following feed | Reply Guy list" }
+{ "tweet_url": "https://x.com/.../status/...", "gif_search": "<search query>", "reaction_only": true, "author": "@handle", "source": "Reply Guy list" }
 ```
 
 Never put `"[GIF: ...]"` in `reply_text` — it posts that literal string (happened 2026-05-25). Use the `gif_search` shape above instead; `auto_reply_post.py` detects it and routes to the GIF poster automatically.

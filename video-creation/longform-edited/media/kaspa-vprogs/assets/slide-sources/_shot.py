@@ -4,6 +4,10 @@ Renders at device_scale_factor=2 for crisp text, then Lanczos-downsamples to exa
 Slides split by TYPE (comp-build.md section 10): title-card-* -> ../title-slides/, the rest -> ../card-slides/.
 State variants are <id>-s<N>.png; a card with no timed states is a single <id>.png.
 Run: python _shot.py [frame-id ...]   (no args = every frame)
+VERTICAL (9:16, vertical-repurpose.md section 1): python _shot.py --vertical [frame-id ...]
+  re-shoots the SAME containers.html at a 1080x1920 viewport (its @media (orientation: portrait) rules reflow
+  the layout) into ../vertical/title-slides/ + ../vertical/card-slides/ with the SAME file names.
+Optional --out-root <dir>: write <dir>/title-slides + <dir>/card-slides instead (regression checks).
 """
 import io
 import os
@@ -14,8 +18,16 @@ from playwright.sync_api import sync_playwright
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 HTML = "file:///" + os.path.join(HERE, "containers.html").replace("\\", "/")
-OUT_TITLE = os.path.abspath(os.path.join(HERE, "..", "title-slides"))
-OUT_CARD = os.path.abspath(os.path.join(HERE, "..", "card-slides"))
+ARGS = sys.argv[1:]
+VERTICAL = "--vertical" in ARGS
+OUT_ROOT = os.path.join(HERE, "..", "vertical") if VERTICAL else os.path.join(HERE, "..")
+if "--out-root" in ARGS:
+    OUT_ROOT = ARGS[ARGS.index("--out-root") + 1]
+    ARGS = [a for a in ARGS if a != OUT_ROOT]
+ARGS = [a for a in ARGS if not a.startswith("--")]
+W, H = (1080, 1920) if VERTICAL else (1920, 1080)
+OUT_TITLE = os.path.abspath(os.path.join(OUT_ROOT, "title-slides"))
+OUT_CARD = os.path.abspath(os.path.join(OUT_ROOT, "card-slides"))
 os.makedirs(OUT_TITLE, exist_ok=True)
 os.makedirs(OUT_CARD, exist_ok=True)
 
@@ -88,7 +100,7 @@ def apply(page, sel, action):
 
 with sync_playwright() as pw:
     b = pw.chromium.launch(headless=True, channel="chrome")
-    page = b.new_page(viewport={"width": 1920, "height": 1080}, device_scale_factor=2)
+    page = b.new_page(viewport={"width": W, "height": H}, device_scale_factor=2)
     page.goto(HTML, wait_until="networkidle", timeout=60000)
     page.evaluate("() => document.fonts.ready")
     page.wait_for_timeout(1500)
@@ -96,15 +108,19 @@ with sync_playwright() as pw:
     print("fonts loaded (Playfair, DM Sans, JetBrains Mono):", fonts)
     if not all(fonts):
         raise SystemExit("webfonts did not load; refusing to ship fallback-font slides")
-    only = sys.argv[1:]  # optional: frame ids to (re)shoot, e.g. `python _shot.py pow-money-hammer`
+    only = ARGS  # optional: frame ids to (re)shoot, e.g. `python _shot.py pow-money-hammer`
     for name, fid, mods in JOBS:
         if only and fid not in only:
             continue
         page.evaluate(RESET_JS)
         for sel, action in mods:
             apply(page, "#" + fid + " " + sel, action)
-        png = page.query_selector("#" + fid).screenshot()
-        im = Image.open(io.BytesIO(png)).convert("RGB").resize((1920, 1080), Image.LANCZOS)
+        el = page.query_selector("#" + fid)
+        box = el.bounding_box()
+        if (round(box["width"]), round(box["height"])) != (W, H):
+            raise SystemExit(f"{fid}: frame is {box['width']}x{box['height']}, expected {W}x{H}")
+        png = el.screenshot()
+        im = Image.open(io.BytesIO(png)).convert("RGB").resize((W, H), Image.LANCZOS)
         path = os.path.join(out_dir(name), name + ".png")
         im.save(path, optimize=True)
         print("OK", path)

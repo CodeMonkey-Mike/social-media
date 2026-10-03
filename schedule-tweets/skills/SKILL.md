@@ -14,6 +14,39 @@ Most of these Node/Playwright scripts run 3-8 minutes (built-in 60-180s human-pa
 
 ---
 
+## ⛔ Run the URL reconciler at the END of any run that posted Rumble/BitChute shorts (2026-08-13)
+
+```
+python scripts/reconcile_short_urls.py --platform both            # dry run
+python scripts/reconcile_short_urls.py --platform both --apply
+```
+
+**Why this is a standing step, not a cleanup tool.** Both posters capture their video URL
+*mid-flight*, while the platform is still processing, and both got it wrong silently:
+
+- **Rumble** matched title→anchor on `/account/content` by climbing ancestors, and 2+ levels up
+  that container spans SEVERAL rows, so every row got its **neighbour's id**. 19 consecutive rows
+  (2026-08-04 → 08-13) each held the next-older video's URL. The liveness check reported the
+  neighbour's title every single time and it was misread as processing lag.
+- **BitChute** missed the `upload_code` (the popup URL is empty at `domcontentloaded`) and wrote
+  the `/content` dashboard placeholder — 9 rows looked recorded while carrying nothing usable.
+
+Capturing at post time races processing; reconciling afterward does not. The reconciler scrapes
+each content page once (anchor-anchored, refusing any ancestor holding more than one video id),
+matches queue rows by title, confirms every candidate against its public page, and writes back
+only what verifies. It never uploads and never posts.
+
+**Two hard rules now enforced in the posters themselves:**
+1. **Never record a URL that failed title verification.** A title mismatch against a *known other
+   short* means the id is not ours: the URL is discarded (`url: null`) rather than written. A null
+   is honest; a wrong URL silently corrupts the record and still looks fine on the dashboard.
+2. **Never write the `/content` placeholder as a URL** — `url: null` instead, which is what the
+   reconciler looks for.
+
+Coverage caveat: the content pages show roughly one page of recent videos, so the reconciler fixes
+that window. The deeper backlog (108 Rumble / 33 BitChute rows as of 2026-08-13) needs pagination
+added before it can be swept.
+
 ## Posting tail → Python + the POST graph (migration wave, 2026-08-11)
 
 **Every posting/upload script now has a CANONICAL Python port** (`scripts/post_*.py`,
@@ -38,6 +71,10 @@ through it; until then invoke the JS twin):
 | `upload_longform_bitchute.py` | ✅ LIVE-BLESSED 2026-08-11 (first pass; grab-frame thumbnail fallback exercised) |
 | `upload_longform_facebook.py` | ✅ LIVE-BLESSED 2026-08-11 (one diagnosed pre-action re-run: cold-profile nav timeout before any action — hardened to a 60s first-nav timeout) |
 | `post_bitchute_short.py` | ✅ LIVE-BLESSED 2026-08-11 (`t-20260810-freaking-early-not-degen` via `post --kind short`; one found-and-fixed sync-API timing gap: the popup URL is empty at domcontentloaded so `upload_code` missed → placeholder URL + posted_unverified. Port now re-reads the URL before Proceed; that run's real URL was recovered via the public beta API `POST api.bitchute.com/api/beta/channel/videos {channel_id}` — the SPA channel page has no server-side listing, but this API needs no auth and is the URL-recovery path of record) |
+| `post_thread.py` | ✅ LIVE-BLESSED 2026-08-12 (`thread-2026-08-12-200-week-line`, 7 tweets, 7/7 verified — the run that fixed the 2026-07-30 `tweetTextarea_5` defect: `state="attached"` + 30s timeout + `scroll_into_view_if_needed()` + JS-click fallback. The frozen JS twin still carries the defect, so **threads over 5 tweets must go through the Python port**) |
+| `post_fb_short.py` | ✅ LIVE-BLESSED 2026-08-28 (`ewp-20260827-dead-memes-comeback-impact` → `reel/891047553840477`, verified live; 19s on the page vs 18.79s source, URL unique across the queue). The blessing run exercised the new baseline diff on the real failure path: round 1 reported "no new video yet (processing)" — the exact state where the JS twin grabs the PREVIOUS short's URL — and the diff refused it, waited one interval, then captured the true reel. **The frozen JS twin still has the neighbour-URL bug, so FB shorts go through the Python port.** |
+| `post_yt_quiz.py` | ✅ LIVE-BLESSED 2026-08-30 (`yt-quiz-2026-08-28-robinhood-chain-what-is-it` → `youtube.com/post/Ugkx88b83lVM2eUt1JET7Se78SJuFVSITajP`). **The JS twin is not a fallback here — it CANNOT post at all:** YouTube moved the quiz composer off the Polymer `ytd-backstage-quiz-editor-renderer` onto its `ytPostsCreation*ViewModel*` components, so the legacy widget is permanently `display:none` and `post-yt-quiz.js` throws `Quiz editor did not open (display=none)` before Post (clean pre-post fail, nothing published). The port carries the ViewModel selectors; full old→new map in `yt-post-quiz.md`. The bless run also closed the 4x-logged `aria-pressed=null` escalation (the selector is a `<button-view-model>` wrapper with no aria; state is a class on it) and fixed a latent port defect where `wait_for_function`'s `arg` was passed positionally, which crashed on the 3rd option. |
+| `post_ig_reel.py` | ✅ LIVE-BLESSED 2026-09-24 (`p-20260922-110x-in-8-days-community-wins` → `reel/DdrCMvfhA6L`, caption verified on IG). Blessed WITH a deliberate fix after the JS twin failed that row with `error after Share: Something went wrong` and left no evidence: Share-outcome text is matched only inside the composer dialog + `[role=alert/status]` (the JS reads the whole page incl. the home feed), an error saves a screenshot + dialog text to `tmp/ig-reel-debug/`, and a **Reels-grid baseline diff** (scraped from `/reels/` BEFORE upload) decides the outcome on every path. **The JS twin still has all of these defects, so IG Reels go through the Python port.** Detail: `ig-post-vertical.md`. |
 | every other `post_*.py` | PORTED, BLESS-PENDING — JS twin posts until blessed |
 
 **Suite-wide documented divergences from the JS twins (the ONLY two + one deliberate fix):**
@@ -95,7 +132,7 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 | `data/ig-carousel.json` | Instagram carousel | `scripts/post-ig-carousel.js` |
 | `data/shorts.json` → `platforms.x` | X video short | `scripts/post-x-short.js` |
 | `data/shorts.json` → `platforms.yt_shorts` | YouTube Short | `scripts/post-yt-short-api.js` ⭐ |
-| `data/shorts.json` → `platforms.ig_reels` | Instagram Reel | `scripts/post-ig-reel.js` |
+| `data/shorts.json` → `platforms.ig_reels` | Instagram Reel | `scripts/post_ig_reel.py` ⭐ (JS twin frozen) |
 | `data/shorts.json` → `platforms.facebook` | Facebook Reel | `scripts/post-fb-short.js` |
 | `data/shorts.json` → `platforms.tiktok` | TikTok | `scripts/post-tiktok-short.js` |
 | `data/shorts.json` → `platforms.rumble` | Rumble short | `scripts/post-rumble-short.js` |
@@ -160,6 +197,20 @@ yet surfaced the new reel on the /videos tab, so the script latched onto the mos
 "verified" it live. `upload-longform-facebook.js` does poll a baseline diff; the short poster does not.
 Symptom: two `shorts.json` rows with an identical `facebook.url`. **Fix the record, never re-post** — set
 that row to `posted_unverified` with `url: null` and recapture from the Videos tab.
+
+> ✅ **FIXED in `post_fb_short.py` (2026-08-28) — the JS twin still has the bug.** It recurred that day
+> on `ewp-20260827-october-zombies-impact`, which recorded the previous short's reel URL. The baseline
+> diff from `upload_longform_facebook.py` is now ported into the Python poster: it snapshots every
+> video/reel id on `/videos` **before** the upload, then after Share polls that tab (default 10 min,
+> `FB_POLL_TIMEOUT_MS` / `FB_POLL_INTERVAL_MS`) until an id appears that is **not** in the baseline. It
+> cannot return a pre-existing video by construction. An empty baseline is treated as invalid (it would
+> match the first video on the tab, i.e. the original bug) and the capture is skipped instead.
+> **New terminal state:** submitted but no new video inside the window is `posted_unverified` with
+> `url: null`, NOT `failed` — a `failed` row invites a re-post, which is a duplicate upload. Machine line
+> is `POST OK platform=facebook url=none status=posted_unverified`, matching the rumble/bitchute ports.
+> Per the freeze doctrine the fix landed in the Python port ONLY; `post-fb-short.js` is frozen rollback
+> and still writes neighbour URLs, so **post FB shorts through `post_fb_short.py`** from here.
+> Port status: ✅ LIVE-BLESSED 2026-08-28 on the first pass (see the bless ledger above).
 **`CHAR_DELAY` is deliberately NOT env-exposed** — per-keystroke cadence is the strongest bot signal, so
 it stays fixed. The functional waits (IG's 5-min processing hold, FB's reel poll, upload-to-100%) are also
 untouched by these vars; they exist because the platform needs the time, and cutting them loses the post.
@@ -1007,3 +1058,94 @@ IG single ×2, YT community ×2, X poll, IG carousel, all 3 longform uploads, re
 `replies_to_post.json` ×2. The pre-run one-pass Node count over every queue file remains worth the 30
 seconds — it turned 33 ambiguous items into 22 active steps with a per-step expected delta before
 anything opened Chrome.
+
+## ⚠ NEVER `--apply` the URL reconciler without reading the dry run (2026-08-19)
+
+`reconcile_short_urls.py` matches queue rows to scraped rows **by title**, and it matches
+loosely. When two shorts cut from the same segment have near-identical titles
+("One Of The Greatest Memes Ever To Exist" vs "Why I Think This Is One Of The Greatest Memes
+Ever") it collides them and proposes **the same URL for two different rows** - including
+overwriting rows that were already correct.
+
+Observed on a real run: of 3 proposed Rumble fixes, 2 were right and 1 would have replaced a
+correct URL with another video's id; the single proposed BitChute fix was also a false positive
+against an already-correct row.
+
+**Standing procedure:**
+1. Always dry-run first (no `--apply`).
+2. **Reject any plan that assigns one URL to two different rows.** That is the collision
+   signature, not a coincidence.
+3. Confirm each id against its public page before writing. Rumble serves the title
+   unauthenticated, which settles it in one command:
+   `curl -s -L -A "Mozilla/5.0" https://rumble.com/shorts/<id> | grep -oE '<title>[^<]*'`
+   (BitChute: read `og:title`.)
+4. Write only the fixes that verify. Hand-writing 2 verified rows beats `--apply`-ing 3 rows
+   where 1 is wrong.
+
+The reconciler is still the right tool for the neighbour-id bug - it just cannot disambiguate
+same-titled siblings, and it fails silently in the corrupting direction.
+
+## ⚠ Facebook shorts record the WRONG URL (open defect, 2026-08-19)
+
+`post-fb-short.js` captures the **first** entry on the `/videos` tab. A pinned/older non-reel
+video sits permanently at the top of that list, so the poster records THAT `/videos/<id>` URL
+instead of the reel it just posted. Symptom: the same `/videos/<id>` URL appears on several
+different shorts (seen on 3 rows at once, plus a second duplicated pair).
+
+**The post itself is fine - only the recorded URL is wrong.** The real one is the first
+`/reel/<id>` in the captured list; it shifts down by one on the next run, which is how you can
+confirm it across two consecutive posts.
+
+Until the poster is fixed (grab the first `/reel/` href, not the first href), after any Facebook
+short: read the "Recent video URLs" line in the log and write the first `/reel/` id back
+yourself. If you cannot establish it, write `url: null` - a null is honest, a wrong URL silently
+corrupts the record (same principle as the Rumble/BitChute rule above). Facebook blocks
+unauthenticated `og:` fetches, so there is no curl-based verification path.
+
+## Task-list runs: the 600s foreground ceiling
+
+Several posters legitimately exceed the 600s foreground limit and get pushed to background by
+the harness, where an external reaper can kill them mid-flight:
+
+| Script | Typical wall-clock |
+|---|---|
+| `post_thread.py` (7 tweets) | ~11 min - ALWAYS exceeds |
+| `post-tiktok-short.js` | ~7-11 min - often exceeds |
+| `post-ig-reel.js` | ~7 min (built-in 5-min processing hold) |
+| `post_replies.py` | 2-6 min GAP BETWEEN EACH reply |
+
+**A backgrounded posting script is still the one attempt.** Never relaunch it. Empty log output
+is normal (these scripts flush stdout only at exit) - confirm liveness with a process check
+instead.
+
+**If the reaper kills one after `Post clicked`:** treat it as posted. Mark the row
+`posted_unverified` with a note saying post+confirm fired and the task was killed during the
+final verify wait, then move on and verify manually later. Precedent rows already carry exactly
+this note. Re-running risks a duplicate upload.
+
+**`post_replies.py --limit N` DOES NOT WORK** - the flag is accepted and ignored, and the run
+posts the ENTIRE queue. Verified 2026-08-19: `--limit 1` posted all 10 queued replies. So do not
+plan to split a reply queue across task-list steps; one invocation drains it. If a task list has
+"post 5 replies" early and "post the remaining replies" later, the first step consumes both and
+the second is a no-op skip.
+
+## Operational note — 2026-09-10: Instagram renamed the caption field
+
+All three IG posters (single / reel / carousel, JS + Python ports) failed pre-Share with
+`waiting for locator('[aria-label="Write a caption..."]…')`. A read-only DOM dump at the caption
+step showed Instagram now renders the caption box as `div[role=textbox][contenteditable]` with
+`aria-label="Add a caption..."`. Fix: `[aria-label="Add a caption..."]` added to the selector
+list in all six files (old label kept for rollback). Both failures were clean pre-Share aborts
+(caption never typed), so the two `failed` rows were reset to `pending` and re-posted fine.
+
+## Operational note — 2026-09-11: YT-short duplicate check no longer depends on the public RSS feed
+
+Overnight (03:24-06:02 UTC) `post-yt-short-api.js` refused all 3 `kaspa-2026-09-10` shorts with `RSS lookup failed: HTTP 404/500 ... Refusing to upload without a working duplicate check` while the other six platforms posted fine — YouTube's public `feeds/videos.xml` was down for our channel for ~3 hours (feed was 200 again by morning, with the script's own UA too, so not a UA block). The session handled it per the skill (defer, leave `pending`, move on) but the rows sat one-to-three behind the other platforms until posted by hand.
+
+**Fix (both twins, `post-yt-short-api.js` + `post_yt_short_api.py`):** the pre-upload duplicate check now tries three independent sources in order and refuses only when ALL are unavailable: (1) authenticated Data API `playlistItems.list` on the uploads playlist (needs `youtube.readonly`; **skipped with a one-line hint until Mike runs `node scripts/yt-reauth.js` once** — the re-auth now requests `youtube.upload + youtube.readonly` and validates the read scope), (2) public RSS with 5 backoff retries, (3) public channel page parsed from `ytInitialData`. `--check-only` exercises the check without writing/uploading. RSS titles are XML-unescaped before matching. Detail: `yt-post-vertical.md`.
+
+## Operational note — 2026-09-11: a relaunched longform poster is NOT a completed step for every entry
+
+Last night's run had two longforms queued (kaspa, layer1s). Rumble + BitChute ran once per entry and both landed. Facebook ran once for kaspa only: the first two attempts were plain foreground commands that hit the 600 s tool timeout and were killed in the background (documented reaper), the third was a detached console that succeeded ~30 min later. Because Rumble/BitChute had already posted layer1s by then, the session counted the single detached success as "the Facebook longform step" and moved on; layer1s stayed a clean `pending` on Facebook even though the run's own closing pending count listed it. Posted by hand the next morning (`reel/1517233373497543`).
+
+Rules: (1) longform Facebook ALWAYS launches detached with a log file (never a foreground tool call: it needs 15-30 min, the tool ceiling is 10). (2) The pending count at the end of a run is reconciled PER QUEUE ENTRY, per platform, and every remaining `pending` is either posted or named in the summary as left behind. A poster that had to be relaunched has completed exactly the ONE entry it printed, nothing more.

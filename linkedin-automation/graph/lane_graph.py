@@ -102,6 +102,11 @@ PER_NAME_RE = re.compile(
 CAPTURE_RE = re.compile(r"^\s+CAPTURE \[(?P<zone>\w+)\] (?P<location>.+)$")
 SKIP_RE = re.compile(r"^\s+skip\s+\(not a target zone\)")
 ALREADY_RE = re.compile(r"^\s+already captured \[")
+# Dead profile (LinkedIn /404/): a resolved per-profile outcome, NOT a systemic error,
+# so it must not feed the consecutive-error kill-switch (scrape_group_members.py,
+# 2026-09-15). Strike 1 leaves the entry for one later-day retry; strike 2 retires it.
+NOTFOUND_STRIKE1_RE = re.compile(r"^\s+404 \(strike 1")
+NOTFOUND_RETIRED_RE = re.compile(r"^\s+404 \(2nd strike")
 PROFILE_ERR_RE = re.compile(r"^\s+error \(will retry next run\)")
 VISIT_RE = re.compile(r"^\[(?P<i>\d+)/(?P<n>\d+)\] ")
 # Inviter per-member lines (request_connections.py output, byte-identical to the JS).
@@ -149,12 +154,14 @@ SKILLS_RESTRICTION_MARKER = "Restriction page on the skills page"
 # manual step that becomes a mechanical gate.
 ENDORSE_AGE_DAYS = 14
 ENDORSE_FALLBACK_AGE_DAYS = 7
-# A derived run this size or smaller launches with no argument at all. Above it the
-# CLI REFUSES and hands the number back to Mike (his call, 2026-08-01): the rule says
-# "DM everyone over 14 days", but a 24-member endorse run stacked on a scrape day is
-# ~85 profile views PLUS 24 DMs PLUS ~240 endorse clicks, against the ~120/24h
-# threshold that has restricted this account twice. Same shape as Lane 2's --max>75
-# refusal: the tool will not cross the line for you, it makes you decide.
+# The standing per-run ceiling. A derived run this size or smaller launches with no
+# argument at all; above it the CLI CAPS at this number and queues the rest — it does
+# NOT ask (Mike, 2026-08-15: "I only want 10 people endorsed without you asking me if
+# I want more than 10. I will tell you up front."). The cap exists because the rule
+# says "DM everyone over 14 days", but a 24-member endorse run stacked on a scrape day
+# is ~85 profile views PLUS 24 DMs PLUS ~240 endorse clicks, against the ~120/24h
+# threshold that has restricted this account twice. More than 10 only ever happens
+# when Mike asks for it up front with an explicit --max.
 LANE5_AUTO_MAX = 10
 
 # The scraper's per-profile try/catch swallows errors and keeps going, so a
@@ -471,7 +478,7 @@ def _stub_endorse_script(kind: str, max_members: int, dry_run: bool = False) -> 
 # outcomes are capture/skip/already; Lane 3's are sent/already_*/no-connect/dry;
 # Lane 5's are endorsed/no-skills/DM-sent/DM-failed-but-endorsed/dry — anything
 # proving the profile itself opened and was worked.
-LANE2_SUCCESS_RES = (CAPTURE_RE, SKIP_RE, ALREADY_RE)
+LANE2_SUCCESS_RES = (CAPTURE_RE, SKIP_RE, ALREADY_RE, NOTFOUND_STRIKE1_RE, NOTFOUND_RETIRED_RE)
 LANE3_SUCCESS_RES = (SENT_LINE_RE, ALREADY_STATUS_RE, NOCB_LINE_RE, DRY_LINE_RE)
 LANE5_SUCCESS_RES = (ENDORSED_RE, NO_SKILLS_RE, DM_SENT_RE, DM_FAILED_RE,
                      ALREADY_ENDORSED_RE, DRY_ENDORSE_RE, DRY_DM_RE)
@@ -706,6 +713,8 @@ def scrape(state: Lane2State) -> Lane2State:
         "captured": len(captures),
         "already": sum(1 for l in lines if ALREADY_RE.match(l)),
         "skipped": sum(1 for l in lines if SKIP_RE.match(l)),
+        "notfound_strike1": sum(1 for l in lines if NOTFOUND_STRIKE1_RE.match(l)),
+        "retired_404": sum(1 for l in lines if NOTFOUND_RETIRED_RE.match(l)),
         "errors": sum(1 for l in lines if PROFILE_ERR_RE.match(l)),
     }
 
@@ -760,6 +769,8 @@ def verify_scrape(state: Lane2State) -> Lane2State:
             "queue_remaining": len(queue) - processed_after,
             "already": state.get("counts", {}).get("already", 0),
             "skipped_out_of_zone": state.get("counts", {}).get("skipped", 0),
+            "notfound_strike1": state.get("counts", {}).get("notfound_strike1", 0),
+            "retired_404": state.get("counts", {}).get("retired_404", 0),
             "errors": state.get("counts", {}).get("errors", 0),
             "regions": regions,
             "mismatch": mismatch,

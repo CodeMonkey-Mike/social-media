@@ -83,7 +83,7 @@ def load_directives(plan_path):
 
 
 def validate_directives(plan_path):
-    """Front-door seam validator (imported by run.py `finish`, the same pattern as
+    """Front-door handoff validator (imported by run.py `finish`, the same pattern as
     finish_batch.validate_filler_plan and queue_writer.validate_lane3_plan): return
     this plan's UNSCOPED directives. Empty list = every directive is explicitly
     scoped, so the Phase 7 handoff can be composed from records. The `finish`

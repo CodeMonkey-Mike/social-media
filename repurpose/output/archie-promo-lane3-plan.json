@@ -1,0 +1,461 @@
+{
+  "batch": "archie-promo",
+  "date": "2026-09-23",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/archie-promo LOW BPS VERTICAL/archie-promo LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-09-23",
+  "brief": "Mike's overrides: NO longform this batch. Primarily focus ALL content on What If ($IF token) and Archie (the ARCHIE promo code). Make DOUBLE the default number of X tweet images. Make several tweets (with images) about the promo code, in lines like: 'Use promo code: ARCHIE to get 50% off your first month of my monthly community membership.' and 'Be a part of the endless onslaught of great calls without thinking, WHAT $IF I get rugged today?' Keep the $IF cashtag and the ARCHIE code exact. No em dashes.",
+  "fact_check": [
+    {
+      "claim": "Archie is the influencer face of $IF (transcript: 'Archie', 'the if guy', 'he fudded his own token'); the promo code is named after him",
+      "verdict": "verified that Archie (@CryptoArchieYT, YouTube 'Crypto Archie') is publicly the lead promoter of What If: the official @WhatIFonHOOD account advertised X Spaces 'with @CryptoArchieYT and the $IF community' and his channel carries 'Why Robinhood Chain Will DOMINATE + What $IF' (July 2026) and 'These Robinhood Chain Memes Are About to EXPLODE!' (Aug 24, 2026). Copy calls him 'the loudest voice behind $IF' / 'its loudest promoter'. The ARCHIE promo code and its 50%-off-first-month terms come from Mike's brief (counts as confirmed).",
+      "source": "x.com/WhatIFonHOOD/status/2081703507887882624 (via search summary); youtube.com/watch?v=1fy6KljO0Ak; x.com/CryptoArchieYT/status/2091938961472016531; batches.json briefs.lane3"
+    },
+    {
+      "claim": "Archie put out a sell alert on his own $IF bag on Friday (Sept 18) and posted the reasons he had started to doubt the project; $IF was 'holding the line' before it (transcript)",
+      "verdict": "the sell alert itself is Mike's on-stream account (he read it on screen: 'he put out a sell alert and he stated all the reasons why he started to doubt his own project') and could NOT be independently found in press or search; it is CORROBORATED on-chain: the IF/WETH Uniswap pool opened Friday Sept 18 at $0.01044 and closed at $0.00236 (down 77.4%, intraday low $0.00154) on $4.34M volume, its biggest day since launch, after higher daily lows through September (Sept 3 low $0.0068, Sept 10 $0.0077, Sept 17 $0.0096). Copy states the sell alert as the event Mike watched and keeps every harsher on-stream characterization OUT (no 'clown', no 'child', no 'deleting comments', no 'screwed people over' as fact; 'I do not think he meant to screw anybody' is kept as Mike's view). Sept 18, 2026 is a Friday (checked).",
+      "source": "transcript (archie-promo, 2026-09-23); api.geckoterminal.com/api/v2/networks/robinhood/pools/0x39a200271525e9641e799127bdab299daef21953/ohlcv/day (fetched 2026-09-23); Python calendar check"
+    },
+    {
+      "claim": "$IF ($IF, What If, Robinhood Chain) market data used in copy: ~$24M cap at the Aug 2 top, ~$9M on Sept 17, down 77% on Sept 18, under $600K now, 98% off the high, down about 94% on the week",
+      "verdict": "verified and UPDATED to 2026-09-23: price $0.000657, market cap $588K to $594K (CoinGecko / DexScreener), 24h -20%, 7d -94.3%, 30d -93.0%, ATH $0.03899 on 2026-08-02, -98.3% from ATH; Phemex puts the Aug 2 closing cap at about $24.5M and Sept 15 at about $14.1M; Sept 17 close $0.01044 x ~905M circulating = about $9.4M ('about $9M'). Copy says 'about a $24M cap', 'about $9M', 'down 77% in one day', 'under $600K', '98% off the high'. Contract 0x232CDFc415D10b673845D83Dc02ba2eaBe7e30d1; main pool liquidity now $127K.",
+      "source": "api.coingecko.com/api/v3/coins/what-if-3; api.dexscreener.com/token-pairs/v1/robinhood/0x232CDFc415D10b673845D83Dc02ba2eaBe7e30d1; api.geckoterminal.com ohlcv/day; phemex.com/academy/what-is-what-if-robinhood-chain-meme-coin (all 2026-09-23)"
+    },
+    {
+      "claim": "$IF project facts: launched July 11, 2026 on Robinhood Chain, 1B supply, ~9.5% burned, community takeover after the original dev left, official handle @WhatIFonHOOD",
+      "verdict": "verified (launch 2026-07-11 04:32 UTC, ten days after Robinhood Chain went public; 95.2M IF = 9.52% burned as of Sept 16; 'community members who arrived after the original developer departed'); none of these details are used as claims in the copy beyond the chain name and the handle. Follow line 'Follow: @WhatIFonHOOD' applied to every X tweet that mentions $IF per persona project_handles (mention-triggered); threads use the 'Follow me' CTA and carry no handle per the thread CTA rule.",
+      "source": "phemex.com/academy/what-is-what-if-robinhood-chain-meme-coin; persona.json project_handles; whatifonhood.com"
+    },
+    {
+      "claim": "Bitcoin made its first weekly close above the 50-week SMA in 45 weeks, weekly close $81,159 on Sept 20, 50-week SMA about $78,800; Bitcoin 'retracing a little' on stream (transcript: 'Bitcoin is retracing a little bit... not going back down to the 50')",
+      "verdict": "verified: weekly close $81,159 for the week ending Sept 20, 2026, 50-week SMA about $78,786, first close above it since Nov 9, 2025 (45 weeks). Bitcoin trades about $84,400 on 2026-09-23 (24h -2.4%), still above the line; no current BTC price is quoted in the copy.",
+      "source": "kucoin.com/news/flash/bitcoin-reclaims-50-week-moving-average-for-first-time-in-45-weeks; thecryptobasic.com/2026/09/21/bitcoin-records-first-weekly-close-above-50-week-average-since-november-2025; cointelegraph.com bitcoin-reclaims-50-week-moving-average; api.coingecko.com simple/price (2026-09-23)"
+    },
+    {
+      "claim": "Benjamin Cowen's 'I was wrong' video/post; his thesis chain (energy up -> yields up -> Fed hikes -> dollar up -> Bitcoin down) which he says he got right yet Bitcoin rose; his October-bottom call (transcript plays the video)",
+      "verdict": "verified: Cowen posted 'I was wrong. Not going to make excuses. I deserve to be dunked on.' on Sept 21, 2026; on Sept 8 he had 65% odds on the cycle low still being ahead, October as the window, with $44K in downside scenarios; press summaries of his video match the transcript's clip ('rising energy prices would increase bond yields, forcing the Fed to raise rates, followed by a stronger dollar and a decline in Bitcoin'). Copy: 'posted I was wrong on Sept 21', '65% odds on new lows with October as the window', 'energy up, yields up, the Fed hiking, the dollar up'. His 2023 $35K call and the 'humble' framing are not used.",
+      "source": "kucoin.com/news/flash/benjamin-cowen-admits-mistake-as-bitcoin-surpasses-85k-triggering-massive-short-liquidations; benzinga.com 2026/09 michael-saylor-says-welcome-back-as-bitcoin-bear-admits-i-was-wrong; cryptotimes.io/2026/09/21/prominent-analysts-folds-bitcoin-price-rally-forces-cowen-to-scrap-october-bottom-call; mitrade.com beincrypto-BTCUSD-202609220948"
+    },
+    {
+      "claim": "Mike's community pricing and offer: regular VIP $59 a month, Premium $79 a month, promo code ARCHIE = 50% off the first month; site cryptorich.vip; what the membership includes (transcript + brief)",
+      "verdict": "VIP $59/month verified on Whop ('CryptoRich: VIP Membership', $59/ month). Premium $79 is Mike's own on-stream statement about his own product (the Whop store lists '+3 options' but the Premium page returned 404 to fetch), kept because the merchant's own price statement is authoritative. cryptorich.vip verified live: sign-up via Whop, offer lists new coin alerts, insider alerts, CEX listings, rug-pull detection, ATH and market-top alerts, automated trading tools/bots, Discord 'online for help like 24/7'; copy's inclusion list is drawn from that page plus Mike's 'swing trading software my members log into' statement. The promo code and the 50%-off terms are from Mike's brief.",
+      "source": "whop.com/cryptorich/cryptorich-vip-membership/ (fetched 2026-09-23); cryptorich.vip (fetched 2026-09-23); transcript; batches.json briefs.lane3"
+    },
+    {
+      "claim": "Saturday's livestream was Mike's most viewed livestream ever, with the Archie thumbnail (transcript)",
+      "verdict": "Mike's own statement about his own channel (not externally checkable; YouTube channel pages return only footer to fetches). Written in first person as 'my most viewed livestream ever'; the Saturday is dated Sept 19 (the stream calls the promo-code idea 'yesterday' and says 'eight days left until October', placing the stream at Sept 22-23; batch date 2026-09-23).",
+      "source": "transcript (archie-promo); Python calendar check"
+    },
+    {
+      "claim": "This week a doxxed, honest dev announced (in a long tweet) he was closing his project to move to another one; Mike sent an urgent sell alert and the group got out; he had swing traded it so much he was not even down (transcript: 'burgers on base', 'burger money')",
+      "verdict": "Mike's own account of his own alert; the project is NOT named in the copy (general form: 'a doxxed dev I liked', 'closing his project down to move to another one') because the token could not be identified with confidence from the Whisper text. No numbers claimed.",
+      "source": "transcript (archie-promo)"
+    },
+    {
+      "claim": "The zombie thesis: almost everybody believed in a four-year cycle bear for the first time, so they caused one; holders dumped the whole way down; everybody buys back in October and front-runs it; 'everybody and their grandma' (transcript)",
+      "verdict": "Mike's own macro thesis, written in first person as his read. His on-stream '90% of people' estimate is softened to 'almost the entire market' (no verifiable stat). The checkonchain 1-to-1,000 BTC cohort claim ('first time in history they dumped while price fell') is NOT used (unverified).",
+      "source": "transcript (archie-promo); persona core_theses / brand_voice_patterns.named_opposition"
+    },
+    {
+      "claim": "Archie described friends with millions waiting to buy the first week of October no matter what (transcript)",
+      "verdict": "Mike's report of what he heard Archie say ('I have heard Archie describe friends of his... millions of dollars, getting ready for October'); written as 'I have heard him describe', attributed, no figure beyond 'millions'.",
+      "source": "transcript (archie-promo)"
+    },
+    {
+      "claim": "Whisper corrections applied: 'what if' -> What If / $IF (never the long-form ticker spelling), 'the 50' -> 50-week SMA, 'fretted/fudded' -> FUD, 'cell alert' -> sell alert, 'Benjamin Cowan' -> Benjamin Cowen, '200-week movement average' -> 200-week SMA",
+      "verdict": "applied throughout; none of the persona-listed Whisper mishears (the TAO, Kaspa and cyan ones) appear in the copy.",
+      "source": "persona.json ticker_corrections, terminology_rules"
+    },
+    {
+      "claim": "Dropped from the batch: Orbeo ('this is where we got in'), the 'grand bag' add question, NVM on Robinhood Chain (fake-project anecdote), Crypto Galaxy / Crypto John / Blaze, Sui, Arc chain / Argus volume, the Kaspa 7-cent vindication aside, Dan Gambardello, Mike's Roku-channel history, the wife-beating analogy",
+      "verdict": "outside the brief's focus ($IF and Archie), unverifiable as named claims, already-told position changes, or off-register; not drafted.",
+      "source": "batches.json briefs.lane3; persona avoid_in_drafts"
+    },
+    {
+      "claim": "Brief line 'WHAT $IF I get rugged today?'",
+      "verdict": "used with the day-relative word removed ('WHAT $IF I get rugged?') because the validator and persona ban 'today' in queue copy (posts go out days after the stream); the $IF cashtag and the ARCHIE code are kept exact everywhere.",
+      "source": "queue_writer.validate_lane3_plan DAY_WORDS; persona avoid_in_drafts"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-09-23-archie-sold-if-the-day-bitcoin-turned": "version4 (a usable topic photo exists: images/reference/what-if.jpg, the What If mascot figure, which is the exact V4 use case and carries the extra V4 weight; the post is number-led: $81,159 weekly close vs the ~$78,800 50-week SMA, 45 weeks, $24M to $9M to under $600K, 77% in a day, 98% off the high, Cowen's 65% odds, so the V4 data slides fit; hook cites what-if.jpg + version4/hook.png, slides 2-5 cite version4/slide.png. Per the SKILL.md 2026-09-10 note, the figure-bearing data slides 2, 3 and 4 are candidates for the code-rendered V4 path (repurpose/output/kaspa-lane3-fix/render_v4_slide.py) if ChatGPT drifts the numbers)",
+    "yt-post-2026-09-23-promo-code-archie-endless-onslaught": "version1 (high-energy news-flash: a promo-code launch told in punchy all-caps beats: the code, the sell-alert rule, what you get, the price cut, the question; V4 was weighed first but the promo post has no topic photo (no Archie or Mike reference photo in images/reference, and reusing what-if.jpg would make two V4 hooks on the same figure), and V2 editorial is too calm for a promo; all five slides are pinned to version1/yt-posts-828eee71-01-hook.png per the V1 contamination note, with the 'N OF 5' counter stated explicitly once and the pure-green hue called out)"
+  },
+  "missing_references": [
+    "Bitcoin logo / coin: no bitcoin reference file in images/reference; every Bitcoin stand-in (images 06cf5a58, 646377a6, 4c77d992, the V4 slide 2 chart) is a plain unmarked gold coin/sphere and Bitcoin is named only in the copy",
+    "Archie (@CryptoArchieYT): no reference photo in images/reference; no likeness is rendered anywhere (the What If figure from what-if.jpg stands in for the $IF side of the story) and Archie is named only in copy and slide text",
+    "Benjamin Cowen: no reference photo; image 4c77d992 renders two generic blinkered coin characters, no real person's likeness",
+    "Mike (self): no reference photo used; image 41fd11c5 renders a Pixar man with bright green eyes per the persona identifying-trait rule",
+    "Robinhood / Robinhood Chain logo: none in images/reference; never rendered, the chain is named only in copy"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "06cf5a58",
+      "slug": "archie-sold-the-day-bitcoin-turned",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A bright lime green muscular figure with smooth glowing skin stands at the edge of a dark cliff, half turned away, one hand still extended after pushing a small glowing lime green $IF coin off the ledge; the little coin tumbles into the void below. The attached reference image IS the $IF (What If) token's identity: the bright neon lime green (about #CCFF00) bald, faceless humanoid figure with engraved line-hatching shading. Keep that figure faithful to the reference: same faceless head, same lime green body with engraved hatching, shown from behind or in three-quarter back view, never given eyes, a nose or a mouth. The same figure is also the $IF (What If) token's logo: the bright neon lime green (about #CCFF00) faceless humanoid figure with engraved line-hatching shading, seen from behind. The lime green $IF coin's face carries that figure as its embossed emblem, faithful to the reference (head and shoulders seen from behind); that emblem is the ONLY marking on the $IF coin. On the far side of the frame a large plain gold coin rises on a column of warm golden light and breaks up through a thin horizontal band of pale light. Every OTHER coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; only the lime green $IF coin carries the What If emblem. Deep navy near-black night background with faint stars. Dramatic cinematic lighting: lime green rim light on the figure, warm gold glow from the rising coin. Mood: regretful, the wrong move at the wrong moment. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "0ef46de8",
+      "slug": "promo-code-archie-what-if-rugged",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A small round lime green coin character with short arms and legs stands safely on a solid glowing steel platform, arms crossed and grinning, while right beside the platform a red patterned rug is being yanked out from under empty air by two gloved hands reaching in from the frame edge, the rug whipping away into darkness. Behind the platform a warm open doorway of light with a velvet rope unhooked and swung wide. The attached reference image IS the $IF (What If) token's logo: the bright neon lime green (about #CCFF00) faceless humanoid figure with engraved line-hatching shading, seen from behind. The lime green $IF coin's face carries that figure as its embossed emblem, faithful to the reference (head and shoulders seen from behind); that emblem is the ONLY marking on the $IF coin. Every OTHER coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; only the lime green $IF coin carries the What If emblem. Deep navy near-black background. Dramatic cinematic lighting: lime green rim light on the coin, warm gold spill from the doorway. Mood: relieved, cheeky. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "125a35ad",
+      "slug": "zombies-front-run-october",
+      "prompt": "Cinematic photorealistic 3D render, 1:1 square aspect ratio. A long line of eerie cartoonish zombies in tattered business suits shuffles across a dark field at dawn toward a huge golden gate standing wide open; the zombies at the front have broken into a stumbling run with arms outstretched, their eyes lit gold by the light beyond the gate. Behind the gate a warm golden sunrise floods through. Dark storm clouds overhead, moonlit ground. Dramatic rim lighting and gold accent glow. No coins, no symbols, no logos anywhere. Mood: hungry, urgent. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "1e738f3d",
+      "slug": "sell-alerts-always-go-out",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A round gold coin character wearing a firefighter helmet with a spinning red siren lamp on top sprints out through the front doors of a collapsing glass office tower, clutching a bulging sack over its shoulder, as the floor behind it cracks and tilts and glass rains down. On the sidewalk a small crowd of plain coin characters is already safe and cheering it on. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting: red siren light sweeping across the scene, a soft warm glow on the sidewalk. Mood: decisive, just in time. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "2e3e0ff4",
+      "slug": "if-chart-from-24m-to-600k",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A bright lime green muscular figure kneels at the top of a giant staircase of glowing lime green steps that climb steadily from the lower left, each step a little higher than the last, and then the staircase ends abruptly at a sheer cliff that drops into darkness on the right; far below at the bottom of the drop a tiny lime green speck of light. The figure grips the last step and stares over the edge in disbelief. The attached reference image IS the $IF (What If) token's identity: the bright neon lime green (about #CCFF00) bald, faceless humanoid figure with engraved line-hatching shading. Keep that figure faithful to the reference: same faceless head, same lime green body with engraved hatching, shown from behind or in three-quarter back view, never given eyes, a nose or a mouth. Deep navy near-black background with faint stars. Dramatic cinematic lighting: lime green rim light from the steps, cold blue fill from below. Mood: stunned. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "41fd11c5",
+      "slug": "most-viewed-livestream-promo-code",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Pixar-style man with bright green eyes, short dark hair and a trimmed beard, wearing a dark hoodie, sits at a streaming desk with a microphone and a ring light, turned toward the camera with a wide grin and a thumbs-up; behind him an enormous stadium crowd of thousands of tiny glowing plain coin characters cheers under falling confetti. Every monitor and screen in the scene is a blank glowing rectangle with no lettering, numbers or icons. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting: warm spotlight on the man, cool blue glow from the screens, confetti catching the light. Mood: triumphant, grateful. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "4c77d992",
+      "slug": "cowen-and-archie-wrong-same-week",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Two round coin characters sit side by side at a dark desk, each hunched over its own glowing crystal ball; both crystal balls show the same swirling storm, and both coins wear thick leather racehorse blinders so they cannot see the huge golden sunrise breaking through the tall window right beside them. The left coin is plain gold; the right coin is neon lime green. The attached reference image IS the $IF (What If) token's logo: the bright neon lime green (about #CCFF00) faceless humanoid figure with engraved line-hatching shading, seen from behind. The lime green $IF coin's face carries that figure as its embossed emblem, faithful to the reference (head and shoulders seen from behind); that emblem is the ONLY marking on the $IF coin. Every OTHER coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; only the lime green $IF coin carries the What If emblem. Deep navy near-black room. Dramatic cinematic lighting: cold glow from the crystal balls on their faces, a blaze of warm gold from the window they are ignoring. Mood: blinders on. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "50c0385d",
+      "slug": "vip-59-premium-79-half-off",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A cheerful round gold coin character holds a giant pair of chrome scissors and slices a glowing golden admission ticket the size of a door cleanly in half; the cut half drifts away in a shower of sparkles. The ticket is completely blank with no lettering, numbers or symbols. Behind the scene a velvet rope and a warm open doorway spilling light. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting: warm gold glow from the ticket, a rim of soft white light on the scissors. Mood: playful, generous. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "5a094cad",
+      "slug": "what-if-i-get-rugged-not-in-my-group",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A round lime green coin character sits calmly in a small lifeboat, one arm resting on a glowing green life ring, sipping from a mug, while behind it a large dark unmarked ship tilts and sinks into black water and a red siren lamp on the lifeboat's bow spins. Other tiny plain coins bob in the water swimming toward the lifeboat. The attached reference image IS the $IF (What If) token's logo: the bright neon lime green (about #CCFF00) faceless humanoid figure with engraved line-hatching shading, seen from behind. The lime green $IF coin's face carries that figure as its embossed emblem, faithful to the reference (head and shoulders seen from behind); that emblem is the ONLY marking on the $IF coin. Every OTHER coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; only the lime green $IF coin carries the What If emblem. Deep navy near-black night sky. Dramatic cinematic lighting: red siren light on the water, lime green rim light on the coin. Mood: calm, prepared. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. TEXT IN THE IMAGE: across the empty dark sky at the top of the frame, a bold heavy all-caps sans-serif headline in exactly two lines. Line 1: 'PROMO CODE: ARCHIE' with 'PROMO CODE:' in white and 'ARCHIE' in neon lime green (#CCFF00). Line 2, slightly smaller, in white: '50% OFF YOUR FIRST MONTH'. Spell every word exactly as written, keep all text inside a margin of at least 8 percent of the frame width, and render NO other text, letters or numbers anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "646377a6",
+      "slug": "if-fell-77-percent-the-day-btc-reclaimed",
+      "prompt": "Cinematic photorealistic 3D render, 1:1 square aspect ratio. Inside a vast dark canyon, a glowing neon lime green $IF coin plummets down the left canyon wall leaving a bright lime green streak behind it, while on the right canyon wall a plain gold sphere rises on a warm golden streak and has just crossed a thin horizontal line of pale light stretched across the canyon. The attached reference image IS the $IF (What If) token's logo: the bright neon lime green (about #CCFF00) faceless humanoid figure with engraved line-hatching shading, seen from behind. The lime green $IF coin's face carries that figure as its embossed emblem, faithful to the reference (head and shoulders seen from behind); that emblem is the ONLY marking on the $IF coin. The gold sphere is completely plain with no symbol, logo or marking; only the lime green $IF coin carries the What If emblem. Dark storm clouds above the canyon rim. Dramatic rim lighting, lime green and gold accent glows. Mood: brutal contrast. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "6ee9ba82",
+      "slug": "thanks-archie-promo-code",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A round gold coin character in a small black top hat tips the hat toward the camera with one hand and winks, raising a glowing green ticket stub with the other, as gold and green confetti falls around it; behind it a giant blank glowing cinema screen with no lettering. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting: warm spotlight on the coin, cool glow from the screen. Mood: cheeky gratitude. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "708e665e",
+      "slug": "knocking-over-your-own-king",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A round lime green coin character sits at a chessboard in a dark room under a single spotlight and sweeps its own king piece over onto its side with its own arm, mid-game, while the opposing gold pieces stand untouched across the board and a gold coin character opposite it stares in confusion. The chess pieces carry no markings. The attached reference image IS the $IF (What If) token's logo: the bright neon lime green (about #CCFF00) faceless humanoid figure with engraved line-hatching shading, seen from behind. The lime green $IF coin's face carries that figure as its embossed emblem, faithful to the reference (head and shoulders seen from behind); that emblem is the ONLY marking on the $IF coin. Every OTHER coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; only the lime green $IF coin carries the What If emblem. Deep navy near-black background. Dramatic cinematic lighting: hard white spotlight on the board, lime green rim light on the coin. Mood: baffling. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "787ba3fa",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the bright lime green figure seen from behind, looking out at a spiral galaxy in a starry sky) as the full-bleed background image, keeping the figure and the galaxy faithful, cropped to a square with the figure's shoulders in the lower left and the galaxy in the upper right; render it as a rich photographic image. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple red line chart that falls off a cliff at its right end. Bold all-caps text across the bottom: 'ARCHIE SOLD $IF THE DAY' in white on the first line, then 'BITCOIN RECLAIMED THE 50-WEEK SMA' with 'RECLAIMED THE 50-WEEK SMA' in bright green. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no artist signature and no initials anywhere in the frame or in any corner; the attached style reference carries a repeating watermark and it must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\what-if.jpg",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "87022d56",
+      "slug": "02-the-timing",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The timing: Friday, Sept 18, 2026'. Stat boxes: 'BTC WEEKLY CLOSE: $81,159', '50-WEEK SMA: ABOUT $78,800', 'WEEKS BELOW IT: 45'. Centre: a line chart with labeled axes showing a flat dashed grey line across the panel and a green price line that runs below it for most of the width, then breaks up through it at the far right, the breakout point labelled 'SEPT 20'. Bottom green box labelled 'WHAT HAPPENED' with two bullets: 'Friday Sept 18: Archie put out a sell alert on his own $IF bag, the day the breakout was holding.' and 'Two weeks before October, with the four-year cycle zombies about to buy back in.' Page number 2 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "920b3df9",
+      "slug": "03-the-damage",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The damage to $IF'. Stat boxes: 'AUG 2 TOP: ABOUT $24M CAP', 'SEPT 18: DOWN 77% IN ONE DAY', 'NOW: UNDER $600K, 98% OFF THE HIGH'. Centre: a line chart with labeled axes showing a red price line that drifts down from the upper left, levels out with a few small higher lows, then drops off a vertical cliff at a point labelled 'SEPT 18' and flattens near the bottom at the right. Bottom red box labelled 'THE READ' with two bullets: 'It was holding higher lows since early September, about a $9M cap on Sept 17.' and 'Then the loudest voice behind it hit sell on his own bag.' Page number 3 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "96552efc",
+      "slug": "04-the-zombies",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The piece Cowen and Archie both missed'. Stat boxes: 'COWEN, SEPT 8: 65% ODDS OF NEW LOWS', 'COWEN, SEPT 21: I WAS WRONG', 'ZOMBIES BUY BACK: OCTOBER'. Centre panel: a simple system diagram of three plain rounded nodes in a row labelled 'SOLD THE WHOLE WAY DOWN', 'BOTTOM ALREADY IN', 'FRONT-RUN OCTOBER', connected left to right by two green arrows. Bottom green box labelled 'THE READ' with two bullets: 'Almost the entire market believed in a four-year cycle bear, so they caused one.' and 'Now they are waking up early. Everybody and their grandma buys in October.' Page number 4 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "a87f1fc2",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Did Archie just not think, or am I missing something?'. Stat boxes: 'A: HE JUST DID NOT THINK', 'B: THERE IS A REASON I AM MISSING', 'C: $IF IS DONE EITHER WAY'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'Do the zombies buying back in October put a bid under the Robinhood Chain memes?' Page number 5 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "a92f1bdd",
+      "slug": "01-hook",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '1 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'PROMO CODE: ARCHIE. 50% OFF YOUR FIRST MONTH.'. Behind the headline, a glowing golden admission ticket sliced cleanly in half by a beam of neon green light, sparks flying from the cut, a few plain glowing coins stacked at the bottom of the panel. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "b5b102d8",
+      "slug": "02-sell-alerts",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '2 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'I ALWAYS SEND THE SELL ALERTS. ALWAYS.'. Behind the headline, a dark chart panel with a red candle streak dropping off a ledge at the right, and a large glowing red siren lamp mounted above the panel casting red light, a single plain coin safely outside the panel on the left, lit green. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "bc537924",
+      "slug": "03-what-you-get",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '3 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'COIN ALERTS. SELL ALERTS. SWING TRADING TOOLS. DISCORD 24/7.'. Behind the headline, four glowing neon green icon tiles in a row: a bell, a red siren lamp, a rising green candle chart, and a chat bubble, each on a dark rounded tile with no lettering inside the tiles. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "c44cb02e",
+      "slug": "04-the-code",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '4 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'VIP $59 A MONTH. PREMIUM $79. WITH ARCHIE, HALF THAT.'. Behind the headline, two stacks of plain glowing gold coins side by side, the second stack taller, both cut in half by a horizontal beam of neon green light with the top halves fading away. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "c6c937a3",
+      "slug": "05-question",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '5 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons. Headline text, rendered exactly: 'WHICH ALERT MATTERS MORE: THE BUY OR THE SELL?'. Two plain glowing coins side by side on a dark panel, the left one bright green with a glowing upward arrow above it, the right one red with a glowing downward arrow above it, and a question-mark shaped glow hanging between them. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png"
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Bitcoin just made its first weekly close above the 50-week SMA in 45 weeks: $81,159 on Sept 20.\n\nOn Friday Sept 18, the day that breakout was holding, Archie, the loudest voice behind $IF, put out a sell alert on his own token. $IF fell 77% that day and sits 98% under its Aug 2 high this week.\n\nTwo weeks before October, with the four-year cycle zombies about to buy back in. That timing is the one trade I cannot explain.\n\nFollow: @WhatIFonHOOD\n\n#IF #RobinhoodChain",
+      "hook": "Bitcoin just made its first weekly close above the 50-week SMA in 45 weeks: $81,159 on Sept 20.",
+      "image_id": "06cf5a58"
+    },
+    {
+      "tweet": "Use promo code: ARCHIE to get 50% off your first month of my monthly community membership.\n\nBe a part of the endless onslaught of great calls without thinking, WHAT $IF I get rugged?\n\nEvery buy alert comes with a sell alert when it matters. cryptorich.vip, code ARCHIE at checkout 😎\n\nFollow: @WhatIFonHOOD\n\n#crypto #IF",
+      "hook": "Use promo code: ARCHIE to get 50% off your first month of my monthly community membership.",
+      "image_id": "0ef46de8"
+    },
+    {
+      "tweet": "Everybody and their grandma is going to be buying in October.\n\nThat is the whole four-year cycle script: the zombies sold the entire way down waiting for an October bottom, and now they are front-running their own bottom. More liquidity for Bitcoin, the alts, the memes, everything. Two weeks out.\n\nDumping a token you believe in two weeks before that window is the last thing I would do. Whoever did it this month did not think it through.\n\n#bitcoin #memecoins",
+      "hook": "Everybody and their grandma is going to be buying in October.",
+      "image_id": "125a35ad",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #5, a provocative prediction ('everybody and their grandma is going to be buying in October', 'front-running their own bottom') stated as Mike's own read; no fact is manufactured, the zombie thesis and the October buy-back are his on-stream calls and the 45-week reclaim is verified."
+    },
+    {
+      "tweet": "I always send the sell alerts.\n\nThis week a doxxed dev I liked posted a long thread saying he was closing his project down to move to another one. The urgent sell alert hit my group within minutes: dump now, it is going to dump. We caught it. I had swing traded it so much I was not even down.\n\nThat is what a real community does. It does not FUD its own bag for no reason; it gets you out when there is something real to be scared of.\n\nPromo code ARCHIE: 50% off your first month at cryptorich.vip\n\n#crypto #altcoins",
+      "hook": "I always send the sell alerts.",
+      "image_id": "1e738f3d"
+    },
+    {
+      "tweet": "$IF by the numbers this week:\n\nAug 2 top: about a $24M cap.\nSept 17 close: about $9M, higher lows since early September.\nSept 18: a sell alert from its loudest promoter, down 77% in one day.\nNow: under $600K, 98% off the high.\n\nThe chart was holding the line until the guy who pumped it the loudest hit sell, on the exact day Bitcoin was reclaiming the 50-week SMA.\n\nFollow: @WhatIFonHOOD\n\n#IF #RobinhoodChain",
+      "hook": "$IF by the numbers this week:",
+      "image_id": "2e3e0ff4"
+    },
+    {
+      "tweet": "Saturday's livestream (Sept 19) was my most viewed livestream ever. The thumbnail was Archie.\n\nSo I named a promo code after him. Use promo code: ARCHIE for 50% off your first month of my community membership.\n\nThanks, Archie. Seriously 😎\n\ncryptorich.vip, code ARCHIE at checkout.\n\n#crypto #cryptocommunity",
+      "hook": "Saturday's livestream (Sept 19) was my most viewed livestream ever. The thumbnail was Archie.",
+      "image_id": "41fd11c5"
+    },
+    {
+      "tweet": "Benjamin Cowen posted 'I was wrong' on Sept 21. He watches the same data I watch: energy up, yields up, the Fed hiking, the dollar up. He got every piece right and still put 65% odds on new lows with October as the window.\n\nThe piece he is missing is the zombies. Almost the entire market believed in a four-year cycle bear for the first time ever, so they caused one, and they are about to end it by buying back in October.\n\nArchie missed the same piece the same week and hit sell on his own $IF bag on Sept 18. Smart people, blinders on.\n\nFollow: @WhatIFonHOOD\n\n#bitcoin #IF",
+      "hook": "Benjamin Cowen posted 'I was wrong' on Sept 21. He watches the same data I watch: energy up, yields up, the Fed hiking, the dollar up. He got every piece right and still put 65% odds on new lows with October as the window.",
+      "image_id": "4c77d992"
+    },
+    {
+      "tweet": "Regular VIP is $59 a month. Premium is $79. Already better than most of these groups.\n\nPromo code ARCHIE cuts your first month in half.\n\nWhat you get: new coin alerts, insider alerts, CEX listing alerts, rug-pull detection, sell alerts every single time, my swing trading software, and a Discord that is online for help basically 24/7.\n\ncryptorich.vip, code ARCHIE at checkout 💪\n\n#crypto #cryptotrading",
+      "hook": "Regular VIP is $59 a month. Premium is $79. Already better than most of these groups.",
+      "image_id": "50c0385d"
+    },
+    {
+      "tweet": "WHAT $IF I get rugged? Not in my group: the sell alert goes out the second there is something real to be scared of. Promo code ARCHIE, 50% off your first month 😎\n\nFollow: @WhatIFonHOOD\n\n#IF #crypto",
+      "hook": "WHAT $IF I get rugged? Not in my group: the sell alert goes out the second there is something real to be scared of. Promo code ARCHIE, 50% off your first month 😎",
+      "image_id": "5a094cad"
+    },
+    {
+      "tweet": "$IF dropped 77% in a single day on Friday Sept 18, the same day Bitcoin was reclaiming its 50-week SMA, because its loudest promoter put out a sell alert on his own token...\n\nFollow: @WhatIFonHOOD\n\n#IF #RobinhoodChain",
+      "hook": "$IF dropped 77% in a single day on Friday Sept 18, the same day Bitcoin was reclaiming its 50-week SMA, because its loudest promoter put out a sell alert on his own token...",
+      "image_id": "646377a6"
+    },
+    {
+      "tweet": "Promo code ARCHIE gets you 50% off your first month of my community. Thanks for the thumbnail, Archie 🔥\n\n#crypto #cryptocommunity",
+      "hook": "Promo code ARCHIE gets you 50% off your first month of my community. Thanks for the thumbnail, Archie 🔥",
+      "image_id": "6ee9ba82"
+    },
+    {
+      "tweet": "Hitting sell on your own $IF bag two weeks before October, on the day Bitcoin reclaims the 50-week SMA, is knocking over your own king in the middle of the game.\n\nFollow: @WhatIFonHOOD\n\n#IF #memecoins",
+      "hook": "Hitting sell on your own $IF bag two weeks before October, on the day Bitcoin reclaims the 50-week SMA, is knocking over your own king in the middle of the game.",
+      "image_id": "708e665e"
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-09-23-archie-sold-if-the-day-bitcoin-turned",
+      "topic": "Archie's sell alert on his own $IF bag on Friday Sept 18, the day Bitcoin reclaimed the 50-week SMA, two weeks before the October buy-back",
+      "variation_label": "A (hook-and-thesis-first)",
+      "tweets": [
+        {
+          "text": "The loudest voice behind $IF put out a sell alert on his own token on Friday Sept 18: the day Bitcoin was holding its breakout above the 50-week SMA, two weeks before October.\n\nI still cannot make the timing make sense. Here is the whole picture...",
+          "hook": "The loudest voice behind $IF put out a sell alert on his own token on Friday Sept 18: the day Bitcoin was holding its breakout above the 50-week SMA, two weeks before October."
+        },
+        {
+          "text": "Bitcoin closed the week of Sept 20 at $81,159, above the 50-week SMA (about $78,800) for the first time in 45 weeks.\n\nBenjamin Cowen, 65% odds on a new low with October as the window, posted 'I was wrong' the next day."
+        },
+        {
+          "text": "He sees the same data I see: energy up, yields up, the Fed hiking, the dollar up. He got every piece right and still missed the piece that matters.\n\nThe zombies. Almost the entire market believed in a four-year cycle bear for the first time ever, so they caused one."
+        },
+        {
+          "text": "They dumped the whole way down waiting for an October bottom. Now they are waking up early and front-running their own October.\n\nEverybody and their grandma is going to be buying in October. Bitcoin, the alts, the memes, everything."
+        },
+        {
+          "text": "Archie knows this. I have heard him describe friends with millions waiting to buy the first week of October no matter what.\n\nWith that on the calendar he hit sell on his own $IF bag and posted the reasons he had started to doubt his own project."
+        },
+        {
+          "text": "$IF was holding higher lows since early September, about a $9M cap on Sept 17.\n\nSept 18: down 77% in one day.\nThis week: under a $600K cap, 98% below the Aug 2 high.\n\nI do not think he meant to hurt anybody. He just did not think. Think before the severe mistakes, not after."
+        },
+        {
+          "text": "If this made the October setup click...\n\nFollow me for the macro read that ignores the four-year cycle echo chamber, and for sell alerts that only go out when there is something real to be scared of.\n\n🧠 + 😎"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-09-23-promo-code-archie-endless-onslaught",
+      "topic": "Promo code ARCHIE: 50% off the first month of Mike's community membership, how the sell alerts and swing trading actually run, and the What $IF I get rugged pun",
+      "variation_label": "B (personal-narrative pitch)",
+      "tweets": [
+        {
+          "text": "Thanks to Archie, Saturday's livestream was my most viewed ever. So I named a promo code after him.\n\nUse promo code: ARCHIE for 50% off your first month of my community membership.\n\nBe a part of the endless onslaught of great calls without thinking, WHAT $IF I get rugged?",
+          "hook": "Thanks to Archie, Saturday's livestream was my most viewed ever. So I named a promo code after him."
+        },
+        {
+          "text": "A promo code is worthless if the group behind it is not. So here is how the group runs.\n\nI always send the sell alerts. Always. Not as FUD on my own bag: only when there is something real to be scared of."
+        },
+        {
+          "text": "This week a doxxed dev I liked posted that he was closing his project to move to another one, right before the bull market.\n\nThe urgent sell alert hit my group within minutes: dump now. We caught it. I had swing traded it so much I was not even down."
+        },
+        {
+          "text": "The rest of the time we swing trade: sell high, buy back low, with the software my members log into at cryptorich.vip.\n\nNew coin alerts, insider alerts, CEX listing alerts, rug-pull detection, ATH and market-top alerts, and a Discord online basically 24/7."
+        },
+        {
+          "text": "Regular VIP is $59 a month, Premium is $79, already better than most of these groups.\n\nWith ARCHIE your first month is half that. October is around the corner and everybody and their grandma is about to buy in. I want you in the room when the alerts start flying."
+        },
+        {
+          "text": "If you want to be in the room for the next call...\n\nFollow me for the calls, the sell alerts and the macro read behind them. Code ARCHIE at cryptorich.vip.\n\n💪 + 🚀"
+        }
+      ]
+    }
+  ],
+  "x_polls": [],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-09-23-sell-alert-on-his-own-token",
+      "topic": "What you do when the loudest voice behind a token sends a sell alert on it (Archie and $IF, Sept 18)",
+      "source_post": null,
+      "question_text": "Archie put out a sell alert on his own $IF bag on Friday Sept 18, the same day Bitcoin was reclaiming its 50-week SMA. $IF fell 77% that day and is 98% off its high this week.\n\nWhen the loudest voice behind a token sends a sell alert on it, what do you do?",
+      "hook": "Archie put out a sell alert on his own $IF bag on Friday Sept 18, the same day Bitcoin was reclaiming its 50-week SMA.",
+      "options": [
+        "Sell with him, he knows something",
+        "Buy his dump",
+        "Never touch his calls again",
+        "Depends on the reason he gives"
+      ],
+      "x_poll_eligible": false,
+      "notes": "Topic is $IF / Archie, not kaspa/tao/toncoin: NO X poll twin (hard filter)."
+    },
+    {
+      "id": "yt-text-poll-2026-09-23-buy-alerts-or-sell-alerts",
+      "topic": "Which alert matters more in a paid crypto community: the buy or the sell (promo code ARCHIE)",
+      "source_post": null,
+      "question_text": "I always send the sell alerts. This week a doxxed dev announced he was closing his project and the urgent sell alert hit my group within minutes; we got out. Promo code ARCHIE gets you 50% off your first month if you want in.\n\nWhat matters more in a paid crypto community?",
+      "hook": "I always send the sell alerts.",
+      "options": [
+        "The buy alerts",
+        "The sell alerts",
+        "Both, or it is not worth paying for"
+      ],
+      "x_poll_eligible": false,
+      "notes": "Topic is the community / promo code, not kaspa/tao/toncoin: NO X poll twin (hard filter)."
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-09-23-archie-sold-if-the-day-bitcoin-turned",
+      "topic": "Archie's sell alert on his own $IF bag on Friday Sept 18, the day Bitcoin reclaimed the 50-week SMA, two weeks before the October buy-back",
+      "variation_label": "A + CTA1",
+      "body_style": "narrative arc: the sell alert and the timing, Bitcoin's 45-week reclaim, Cowen's admission and the missing piece (the zombies front-running October), Archie knowing the October setup and selling anyway, the $IF damage in numbers, the lesson, the promo code, the forked question",
+      "cta_target": "subscribe_youtube",
+      "body": "The loudest voice behind $IF put out a sell alert on his own token on Friday Sept 18. The same day, Bitcoin was holding its breakout above the 50-week SMA. Two weeks before October.\n\nI still cannot make that timing make sense, and here is the whole picture.\n\nBitcoin closed the week of Sept 20 at $81,159, above the 50-week SMA (about $78,800) for the first time in 45 weeks. Benjamin Cowen, who had 65% odds on the cycle low still being ahead with October as the window, posted 'I was wrong' the next day. He sees the same data I see: energy up, yields up, the Fed hiking, the dollar up. He got every piece right and still missed the one piece that matters.\n\nThe piece is the zombies. For the first time ever, almost the entire market believed in a four-year cycle bear, so they caused one: holders dumped the whole way down waiting for an October bottom. Now they are waking up early, realizing the bottom may already be in, and front-running their own October. Everybody and their grandma is going to be buying in October. More liquidity for Bitcoin, the alts, the memes, everything.\n\nArchie knows this. I have heard him describe friends with millions waiting to buy the first week of October no matter what. And with that on the calendar, he hit sell on his own $IF bag and posted the reasons he had started to doubt his own project.\n\n$IF had been holding higher lows since early September, about a $9M cap on Sept 17. On Sept 18 it fell 77% in one day. This week it sits under a $600K cap, 98% below the Aug 2 high. That is a lot of real people who got hurt.\n\nI do not think he meant to screw anybody. I think he just did not think, and that is the lesson: you avoid the most severe mistakes by thinking before you act, not after. I send sell alerts too, constantly, because we swing trade; but only when there is actually something to be scared of, never as FUD on my own bag.\n\nThanks to Archie, Saturday's livestream was my most viewed ever, and there is now a promo code named after him: ARCHIE, 50% off your first month at cryptorich.vip.\n\nSo commit in the comments: did Archie just not think, or is there a reason I am missing? And do the zombies buying back in October put a bid under the Robinhood Chain memes, or is $IF done either way?\n\nHit like and subscribe if you want the read that ignores the four-year cycle echo chamber.",
+      "engagement_question": "Did Archie just not think, or is there a reason I am missing? And do the zombies buying back in October put a bid under the Robinhood Chain memes, or is $IF done either way?",
+      "images": [
+        {
+          "image_id": "787ba3fa",
+          "slide_text": "Archie sold $IF the day Bitcoin reclaimed the 50-week SMA"
+        },
+        {
+          "image_id": "87022d56",
+          "slide_text": "The timing: Friday, Sept 18, 2026"
+        },
+        {
+          "image_id": "920b3df9",
+          "slide_text": "The damage to $IF"
+        },
+        {
+          "image_id": "96552efc",
+          "slide_text": "The piece Cowen and Archie both missed"
+        },
+        {
+          "image_id": "a87f1fc2",
+          "slide_text": "Did Archie just not think, or am I missing something?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-09-23-promo-code-archie-endless-onslaught",
+      "topic": "Promo code ARCHIE: 50% off the first month of Mike's community membership, how the sell alerts and swing trading actually run, and the What $IF I get rugged pun",
+      "variation_label": "B + CTA2",
+      "body_style": "pitch-with-proof: the most-viewed livestream and the code named after Archie, the brief's two promo lines verbatim, the sell-alert discipline with this week's doxxed-dev example, the contrast with FUD on your own bag, what the membership includes and costs, the October window, a two-part comment question",
+      "cta_target": "subscribe_youtube",
+      "body": "Thanks to Archie, Saturday's livestream was my most viewed livestream ever. So I did the only reasonable thing: I named a promo code after him.\n\nUse promo code: ARCHIE to get 50% off your first month of my monthly community membership. Be a part of the endless onslaught of great calls without thinking, WHAT $IF I get rugged?\n\nHere is what that actually means, because a promo code is worthless if the group behind it is not.\n\nI always send the sell alerts. Always. This week a doxxed, honest dev I liked posted a long thread saying he was closing his project down to move to another one, right before the bull market starts. The urgent sell alert went out to my group within minutes: dump now, this is going to dump. We caught it. I had swing traded that coin so much that I was not even down on it.\n\nThat is the difference. Some influencers do not give sell alerts at all. One put out a sell alert on his own token this month with nothing real to be scared of and took the whole chart down with him. My rule is the opposite: a sell alert goes out when there is something real to be scared of, and the swing trading software my members log into at cryptorich.vip is how we sell high and buy back low the rest of the time.\n\nWhat you get: new coin alerts, insider alerts, CEX listing alerts, rug-pull detection, all-time high and market top alerts, my swing trading tools, and a Discord that is online for help basically 24/7. Regular VIP is $59 a month and Premium is $79, which is already better than most of these groups. With ARCHIE, your first month is half that.\n\nOctober is around the corner. Everybody and their grandma is going to be buying in October, and I want you in the room when the alerts start flying.\n\nSo tell me in the comments: what is the one alert you wish you had gotten in time this year, a buy or a sell? And which one matters more in a paid group?\n\nHit like and subscribe if you want to be early on the next call, and grab the code before I change my mind.",
+      "engagement_question": "What is the one alert you wish you had gotten in time this year, a buy or a sell? And which one matters more in a paid group?",
+      "images": [
+        {
+          "image_id": "a92f1bdd",
+          "slide_text": "Promo code: ARCHIE. 50% off your first month."
+        },
+        {
+          "image_id": "b5b102d8",
+          "slide_text": "I always send the sell alerts. Always."
+        },
+        {
+          "image_id": "bc537924",
+          "slide_text": "Coin alerts. Sell alerts. Swing trading tools. Discord 24/7."
+        },
+        {
+          "image_id": "c44cb02e",
+          "slide_text": "VIP $59 a month. Premium $79. With ARCHIE, half that."
+        },
+        {
+          "image_id": "c6c937a3",
+          "slide_text": "Which alert matters more: the buy or the sell?"
+        }
+      ]
+    }
+  ],
+  "ig_single": []
+}

@@ -313,7 +313,7 @@ async function main() {
     // ── Caption ───────────────────────────────────────────────────────────────
     console.log('Typing caption...');
     const captionArea = page.locator(
-      '[aria-label="Write a caption..."], textarea[placeholder*="caption"], [contenteditable][placeholder*="caption"]'
+      '[aria-label="Write a caption..."], [aria-label="Add a caption..."], textarea[placeholder*="caption"], [contenteditable][placeholder*="caption"]'
     ).first();
     await captionArea.waitFor({ timeout: 10000 });
     await captionArea.click();

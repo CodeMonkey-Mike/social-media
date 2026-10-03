@@ -1,0 +1,532 @@
+{
+  "batch": "silver",
+  "date": "2026-09-10",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/silver LOW BPS VERTICAL/silver LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-09-10",
+  "brief": null,
+  "fact_check": [
+    {
+      "claim": "Silverscript v1 shipped on Kaspa (Kaspaunchained announcement), high-level smart contract language compiling to Kaspa Script on the L1, ~60 lines vs thousands of lines of raw opcodes, eight-month build alongside Toccata",
+      "verdict": "verified (CoinGecko news card 'Kaspaunchained Launches Silverscript v1'; Coinpedia 2026-09-10; kaspaunchained X post 'high-level toolbox')",
+      "source": "coingecko.com/en/coins/kaspa; coinpedia.org/news/kas-price-eyes-0-076-as-kaspa-activity-picks-up; x.com/kaspaunchained/status/2023502570703253543"
+    },
+    {
+      "claim": "Toccata hard fork live on mainnet June 30, 2026; Silverscript announced by Ori Newman on Testnet-12 in February 2026",
+      "verdict": "verified",
+      "source": "docs.kaspa.org/toccata; kasmagazine.com/article/hail-the-silverscript"
+    },
+    {
+      "claim": "KAS ~$0.035 to $0.038, +17% over 7 days, +35% over 30 days, market cap ~$0.97B to $1.05B (transcript's 'lots of pumps over the last week' updated to today's figures)",
+      "verdict": "verified (2026-09-10 values; sources disagree by a few percent intraday, copy says 'about')",
+      "source": "coingecko.com/en/coins/kaspa; coinmarketcap.com/cmc-ai/kaspa/price-analysis"
+    },
+    {
+      "claim": "$KAS tapped the 50-week SMA on a wick this week (no weekly close above it yet)",
+      "verdict": "Mike's own chart read on stream and in the batch title; not web-verifiable, used only as his observation with the 'wick, not a close' caveat he stated himself",
+      "source": "transcript + batches.json title for batch silver"
+    },
+    {
+      "claim": "Bitwise's CIO Matt Hougan and other bigger industry names publicly mentioned Kaspa in early Sept 2026",
+      "verdict": "verified by Mike (batches.json kaspa batch brief, 2026-09-09: 'VERIFIED BY MIKE, treat as fact'); web search could not independently confirm, so every use is the general form ('bigger names in this industry started saying Kaspa out loud'), no quotes, no products, Bitwise not named in copy",
+      "source": "batches.json -> batches[kaspa].briefs.lane3"
+    },
+    {
+      "claim": "Robinhood added searchable ASSET PAGES (not spot trading) for JUGGERNAUT and FRONG on Thursday 2026-09-10; JUGGERNAUT +500% in an hour then ~+380%, volume +3,000%; FRONG ~+130% then ~+100%, volume +1,300%; CASHCAT the only Robinhood Chain meme with spot trading on Robinhood",
+      "verdict": "verified (transcript's 'listed on the Robinhood app' corrected to 'asset pages, not spot trading'; transcript's 'Frog' corrected to FRONG; 'Juggernaut 400%' updated to ~380%)",
+      "source": "crypto.news/robinhood-asset-pages-send-juggernaut-up-500-percent; coingape.com/robinhood-chain-meme-coins-juggernaut-skyrockets-500-and-frong-by-140-on-listing"
+    },
+    {
+      "claim": "JUGGERNAUT is Vlad Tenev's favorite meme: the photo of the Juggernaut hugging Vlad on Wall Street under the Robinhood sign",
+      "verdict": "verified (project site; Marvel origin of the character NOT mentioned by the project, so copy says 'a meme built on an existing character' rather than naming Marvel)",
+      "source": "juggernautrh.com"
+    },
+    {
+      "claim": "FRONG: its frog was the teaser mascot of Uniswap's Pools.trade launchpad on Robinhood Chain (live Aug 5), minted six days before the launchpad went public, launched by Uniswap product designer Zack Labadie himself (transcript's 'Zach LaBaddy')",
+      "verdict": "verified (transcript's 'most holders' claim NOT verified, dropped)",
+      "source": "thedefiant.io/news/defi/uniswap-pools-trade-launchpad-live-frong-memecoin; x.com/Param_eth/status/2085218248875004299; airdropalert.com/blogs/what-is-frong-meme-coin"
+    },
+    {
+      "claim": "Robin the Frog ($ROBIN) passed a $25M market cap (Sept 7 release)",
+      "verdict": "verified",
+      "source": "globenewswire.com 2026/09/07 robin-the-frog-robin-surpasses-25m-market-cap"
+    },
+    {
+      "claim": "CASHCAT ran to a ~$150M cap in July; Robinhood Chain DEX did $4.5B volume in 30 days; Vlad Tenev 'built for RWA, works great for memes too' (July 8 X post)",
+      "verdict": "verified",
+      "source": "fortune.com/crypto/2026/07/13/robinhood-chain-memecoin-trading-cash-cat-vlad-tenev-crypto; coingape.com (DEX volume); x.com/vladtenev/status/2074695821896065360"
+    },
+    {
+      "claim": "'We Love Cats' meme on Robinhood Chain (paired with NVIDIA, launched on long.xyz, Warm Milk conference-room tweet)",
+      "verdict": "NOT verified (no search result); dropped entirely",
+      "source": "none"
+    },
+    {
+      "claim": "August PPI (released Sept 10): headline +0.4% m/m, 5.4% y/y (0.1 above forecast); core +0.2% m/m vs +0.3% expected; core 4.6% y/y in line; energy +4.2%",
+      "verdict": "verified (transcript's 'total PPI really bad, core better than expected' matches)",
+      "source": "bls.gov/news.release/archives/ppi_09102026.htm; cnbc.com/2026/09/10/ppi-inflation-report-august-2026"
+    },
+    {
+      "claim": "Fed Sept 16 hike odds ~59% to 61% after PPI (transcript: 'gone up to 62, 67')",
+      "verdict": "verified, updated to 'near 60%'",
+      "source": "aol.com Fed Rate Hike Odds Rise to 61% After PPI; fool.com/investing/2026/09/10/the-odds-of-a-rate-hike-are-soaring"
+    },
+    {
+      "claim": "ECB raised rates 25bp on Sept 10 to a 2.50% deposit rate (2.65% MRO), second hike of 2026, highest since spring 2025 (transcript: 'highest in 18 months')",
+      "verdict": "verified; copy says 'a year-and-a-half high'",
+      "source": "ecb.europa.eu monetary policy decisions 2026-09-10; cryptobriefing.com/ecb-raises-interest-rates-september-2026"
+    },
+    {
+      "claim": "Bitcoin ~$78K, below $80K on Sept 10",
+      "verdict": "verified",
+      "source": "usethebitcoin.com/bitcoin/bitcoin-price-september-10-2026"
+    },
+    {
+      "claim": "Oil at the highest level since May",
+      "verdict": "partially wrong: Brent is back above $100 for the first time since July, not May; oil is left out of the copy",
+      "source": "search results 2026-09-10 (Brent above $100, US-Iran tensions)"
+    },
+    {
+      "claim": "Trump promised $5,000 to every US adult if Republicans win the midterms; Peter Schiff called it vote-buying / a bribe; estimated cost ~$1.23T to $1.35T",
+      "verdict": "verified; copy says '$1.3 trillion'",
+      "source": "politifact.com/article/2026/sep/10/trump-5k-dividends-republicans-midterm-election; benzinga.com 2026-09 Peter Schiff $5,000 voter bribe; moneywise.com ($1.23T)"
+    },
+    {
+      "claim": "Cooper at a ~25K market cap and Mike's exit",
+      "verdict": "dropped: persona avoid_in_drafts (Cooper sale already announced once)",
+      "source": "persona.json"
+    },
+    {
+      "claim": "Brew, Stonk, Cupsie, Ember, AGI the frog, Artificial Inu pairing, Pepons",
+      "verdict": "dropped: unverified named projects / trader-portfolio framing",
+      "source": "persona.json verified_claims_only + no_rotation_framing"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-09-10-silverscript-shipped-kaspa-50-week-sma": "version4 (three number-led beats: 60 lines vs thousands, +17%/+35%/~$1B, PPI 5.4%/60%/2.50%, so V4 data slides fit; hook photo = the Kaspa coin render kaspa-logo.png as the topic image, cited with version4/hook.png; slides 2-5 cite version4/slide.png. Per SKILL.md 2026-09-10 note, the figure-bearing data slides 2-4 are candidates for the code-rendered V4 path if ChatGPT drifts the numbers)",
+    "yt-post-2026-09-10-robinhood-juggernaut-frong-asset-pages": "version4 (a real public-figure topic photo exists: Vlad-Tenev.webp, the exact V4 use case, and the beats are stat-shaped: +380%/+100%, +500%/+3,000%, $25M cap; hook cites Vlad-Tenev.webp + version4/hook.png, slides 2-5 cite version4/slide.png)"
+  },
+  "missing_references": [
+    "JUGGERNAUT mascot / logo: none in images/reference; the Robinhood tweet image renders an entity-free armored brute in Robinhood neon lime green (persona robinhood_coin) with plain armor, no emblem",
+    "FRONG mascot / logo: none; rendered as a generic small green cartoon frog, and named only in copy and text-label slides",
+    "Peter Schiff face: none; the $5,000-checks single-line image uses a generic grumpy captain figure",
+    "Robin the Frog, CASHCAT logo (cash-cat.jpg exists but is not rendered in any image this batch), Pools.trade / Uniswap logos: named only in copy and text-label slides, never rendered"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "93fb535b",
+      "slug": "silverscript-sixty-lines",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Kaspa coin character showing the backwards-K mirrored-K Kaspa logo from the attached reference, glowing greenish cyan, given short arms and legs and a calm proud craftsman's face, standing at a blacksmith's anvil holding up one small perfectly polished silver ingot between two fingers, while behind it a towering heap of rusted tangled iron chains and old gears crumbles into the dark. Silver highlights on the ingot, faint greenish cyan sparks drifting from the anvil Deep navy near-black background. Dramatic cinematic lighting with a strong greenish cyan rim light on the Kaspa coin. Calm and triumphant. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "93fb535b",
+      "slug": "silverscript-sixty-lines",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A Kaspa coin character showing the backwards-K mirrored-K Kaspa logo from the attached reference, glowing greenish cyan, given short arms and legs and a calm proud craftsman's face, standing at a blacksmith's anvil holding up one small perfectly polished silver ingot between two fingers, while behind it a towering heap of rusted tangled iron chains and old gears crumbles into the dark. Silver highlights on the ingot, faint greenish cyan sparks drifting from the anvil Deep navy near-black background. Dramatic cinematic lighting with a strong greenish cyan rim light on the Kaspa coin. Calm and triumphant. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "a5e41287",
+      "slug": "kaspa-taps-50-week-sma",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Kaspa coin character showing the backwards-K mirrored-K Kaspa logo from the attached reference, glowing greenish cyan, given short arms and legs and a hungry determined face, climbing up a steep dark rock face and stretching one arm up to touch a single long horizontal beam of pale white light hanging in the air just above it, fingertip just grazing the beam and the beam rippling at the touch. Far below, a crowd of small faceless figures in grey suits is turning around to look up at it Deep navy near-black background. Dramatic cinematic lighting with a strong greenish cyan rim light on the Kaspa coin. Hungry and determined. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "a5e41287",
+      "slug": "kaspa-taps-50-week-sma",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A Kaspa coin character showing the backwards-K mirrored-K Kaspa logo from the attached reference, glowing greenish cyan, given short arms and legs and a hungry determined face, climbing up a steep dark rock face and stretching one arm up to touch a single long horizontal beam of pale white light hanging in the air just above it, fingertip just grazing the beam and the beam rippling at the touch. Far below, a crowd of small faceless figures in grey suits is turning around to look up at it Deep navy near-black background. Dramatic cinematic lighting with a strong greenish cyan rim light on the Kaspa coin. Hungry and determined. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "c6c52d14",
+      "slug": "juggernaut-frong-robinhood-page",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A hulking armored brute character in a smooth domed metal helmet, rendered in Robinhood brand neon lime green (approximately CCFF00) with a lime green energy glow, shoulders lowered, smashing through a thick dark concrete wall with chunks flying, and a tiny cheerful cartoon green frog riding on its shoulder holding on with both hands. The brute's armor is completely plain: no symbol, no logo, no emblem, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting with a strong neon lime green rim light and no greenish cyan anywhere in the frame. Unstoppable and gleeful. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "d837a2ca",
+      "slug": "zombies-turn-october-green",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A shambling horde of cartoon zombies in tattered business suits, arms out, eyes glowing faintly, trudging up a hill under a huge orange harvest moon toward a small glowing pile of plain gold coins at the top; every coin face is completely plain with no symbol, no logo, no glyph and no lettering of any kind. Orange autumn leaves drift across the frame. Deep navy near-black sky. Dramatic cinematic lighting with warm orange moonlight and cool blue shadows. Darkly funny and inevitable. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "db5ddfa3",
+      "slug": "opcodes-to-silverscript",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A Kaspa coin character showing the backwards-K mirrored-K Kaspa logo from the attached reference, glowing greenish cyan, given short arms and legs and a serene confident face, holding a slim silver pen from which a single short clean ribbon of greenish cyan light flows forward, while behind it an enormous tangled mountain of rusted iron chain and broken gears fades into the darkness. Silver highlights on the pen Deep navy near-black background. Dramatic cinematic lighting with a strong greenish cyan rim light on the Kaspa coin. Serene and confident. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "db5ddfa3",
+      "slug": "opcodes-to-silverscript",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A Kaspa coin character showing the backwards-K mirrored-K Kaspa logo from the attached reference, glowing greenish cyan, given short arms and legs and a serene confident face, holding a slim silver pen from which a single short clean ribbon of greenish cyan light flows forward, while behind it an enormous tangled mountain of rusted iron chain and broken gears fades into the darkness. Silver highlights on the pen Deep navy near-black background. Dramatic cinematic lighting with a strong greenish cyan rim light on the Kaspa coin. Serene and confident. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "d25408a6",
+      "slug": "five-thousand-dollar-helicopter",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A cartoon helicopter high above a cheering crowd of small cartoon people holding open sacks, showering plain blank paper bills down on them, while in the foreground a grumpy elderly cartoon man in a sea captain's hat and a grey suit points up at the helicopter with an outraged face. Every bill is completely blank with no numbers, no portraits, no lettering of any kind. Deep navy near-black background. Dramatic cinematic lighting with warm gold light on the falling bills and a cold blue rim light on the captain. Absurd and gleeful. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "5cd65cb5",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the dark coin with the glowing greenish cyan backwards-K Kaspa logo bursting with energy on black) as the full-bleed background image, keeping the coin faithful, cropped to a square with the coin filling the upper two thirds of the frame. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple green upward line chart. Bold all-caps text across the bottom: 'SILVERSCRIPT V1 SHIPPED.' in white on the first line, then 'KASPA TAPPED THE 50-WEEK SMA' with '50-WEEK SMA' in bright green. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no artist signature and no initials anywhere in the frame or in any corner; the attached style reference carries a repeating watermark and it must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "f8ef6649",
+      "slug": "02-sixty-lines",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Thousands of lines became sixty'. Stat boxes: 'RAW OPCODES: THOUSANDS OF LINES', 'SILVERSCRIPT: ABOUT 60', 'BUILD TIME: 8 MONTHS'. Centre panel: a two column comparison, the left column headed 'RAW OPCODES' filled with a tall dense stack of many thin plain grey rows, the right column headed 'SILVERSCRIPT' holding a short stack of six plain green rows, with one green arrow pointing from the left column to the right column. Bottom green box labelled 'WHAT IT IS' with two bullets: 'Compiles straight to Kaspa Script on the L1: no separate VM, no sidechain, no bridge.' and 'Toccata went live on mainnet June 30; Silverscript v1 closes the build.'. Page number 2 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "05669397",
+      "slug": "03-the-chart",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The chart noticed'. Stat boxes: 'SEVEN DAYS: +17%', 'THIRTY DAYS: +35%', 'MARKET CAP: ABOUT $1B'. Centre: a line chart with labeled axes showing a green price line rising from the lower left to the upper right with one horizontal dashed grey line labelled '50-WEEK SMA' near the top, and the price line spiking up to touch that dashed line once at the far right before settling just under it. Bottom green box labelled 'THE TELL' with two bullets: 'The weekly candle tapped the 50-week SMA on a wick. No close above it yet.' and 'Bigger names in the industry started saying Kaspa out loud the same week.'. Page number 3 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "c68e30ef",
+      "slug": "04-the-macro",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The macro standing in the way'. Stat boxes: 'PPI: 5.4% Y/Y', 'FED HIKE ODDS: ABOUT 60%', 'ECB: HIKED TO 2.50%'. Centre panel: a simple horizontal timeline with three plain rounded markers labelled 'SEPT 10 PPI', 'SEPT 16 FED', 'OCTOBER', connected left to right by a green arrow, with the last marker filled green. Bottom green box labelled 'MY READ' with two bullets: 'Dip through the weekend pricing in the hike, then sideways for a few weeks.' and 'Then the four-year cycle zombies pile back in and turn October green.'. Page number 4 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "784a043b",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'When does Kaspa close above the 50-week SMA?'. Stat boxes: 'A: BEFORE THE FED', 'B: LATER THIS MONTH', 'C: OCTOBER'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'And if you think it does not happen this run, say that too.'. Page number 5 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "f1742583",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the photo of Vlad Tenev, the Robinhood CEO, with shoulder-length dark hair and a goatee in a tan blazer in front of a studio camera) as the full-bleed background image, keeping his likeness faithful, cropped to a square with his face and shoulders centred in the upper two thirds of the frame and the studio camera on the right cropped out. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple green upward line chart. Bold all-caps text across the bottom: 'VLAD'S FAVORITE MEME JUST RAN 380%.' in white on the first line, then 'ON A ROBINHOOD SEARCH PAGE' with 'SEARCH PAGE' in bright green. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no artist signature and no initials anywhere in the frame or in any corner; the attached style reference carries a repeating watermark and it must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\Vlad-Tenev.webp",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "e3dd8be2",
+      "slug": "02-what-robinhood-did",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'What Robinhood actually did'. Stat boxes: 'JUGGERNAUT: +380%', 'FRONG: +100%', 'SPOT TRADING: NO'. Centre panel: two large plain rounded nodes side by side, the left one filled green and labelled 'ASSET PAGE', the right one outlined in grey and labelled 'SPOT LISTING', with a green arrow pointing from the left node to the right node. Bottom green box labelled 'THE DETAIL' with two bullets: 'Searchable asset pages only: look the token up, watch the price, cannot buy it there.' and 'Volume still jumped 3,000% on JUGGERNAUT and 1,300% on FRONG.'. Page number 2 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "b36c02eb",
+      "slug": "03-why-juggernaut",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Why JUGGERNAUT of all things'. Stat boxes: 'FIRST HOUR: +500%', 'SETTLED: +380%', 'VOLUME: +3,000%'. Centre panel: three plain rounded nodes in a row labelled 'ONE PHOTO ON WALL STREET', 'THE CEO'S FAVORITE MEME', 'THE ASSET PAGE', connected left to right by green arrows. Bottom green box labelled 'THE THESIS' with two bullets: 'Memes built on an existing character almost never work in crypto.' and 'Vlad Tenev posting the Juggernaut hug as his favorite meme was the whole thesis, and it was enough.'. Page number 3 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "3af497c7",
+      "slug": "04-the-frog-race",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The frog race'. Stat boxes: 'FRONG: FIRST ON POOLS.TRADE', 'MINTED: 6 DAYS EARLY', 'ROBIN THE FROG: $25M CAP'. Centre panel: a simple horizontal timeline with three plain rounded markers labelled 'AUG 5 POOLS.TRADE LIVE', 'SEPT 7 ROBIN AT $25M', 'SEPT 10 FRONG PAGE', connected left to right by a green arrow. Bottom green box labelled 'WHY FRONG' with two bullets: 'Its frog was the teaser mascot for Uniswap's launchpad, and a Uniswap designer launched it himself.' and 'CASHCAT is still the only Robinhood Chain meme you can actually buy on Robinhood.'. Page number 4 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "9d497530",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Which one gets real spot trading first?'. Stat boxes: 'A: JUGGERNAUT', 'B: FRONG', 'C: NEITHER'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'And if the search page was the top, say that too.'. Page number 5 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Silverscript v1 just shipped on Kaspa.\n\nA contract that took thousands of lines of raw opcodes is now about 60 readable lines, compiled straight to Kaspa Script on the L1. No separate VM, no bridge.\n\n$KAS is up 17% on the week and 35% on the month while the devs were shipping this.\n\n#kaspa #silverscript",
+      "hook": "Silverscript v1 just shipped on Kaspa.",
+      "image_id": "93fb535b"
+    },
+    {
+      "tweet": "Robinhood added asset pages for JUGGERNAUT and FRONG this week. Search pages, not even spot trading.\n\nJUGGERNAUT ran 380% and FRONG doubled on a search bar.\n\nThe whole JUGGERNAUT thesis was one photo of Vlad Tenev getting hugged by his favorite meme on Wall Street... and it was enough 😎\n\n#robinhood #robinhoodchain",
+      "hook": "Robinhood added asset pages for JUGGERNAUT and FRONG this week. Search pages, not even spot trading.",
+      "image_id": "c6c52d14"
+    },
+    {
+      "tweet": "$KAS tapped the 50-week SMA this week.\n\nA wick, not a close yet. But bigger names in this industry started saying Kaspa out loud, and the people who turned their backs on it are realizing it is not fading away.\n\nThe weekly close above it is a matter of when 💪\n\n#kaspa",
+      "hook": "$KAS tapped the 50-week SMA this week.",
+      "image_id": "a5e41287"
+    },
+    {
+      "tweet": "PPI 5.4%, the ECB hiked, Sept 16 Fed hike odds near 60%, $BTC under $80K.\n\nMy read: dip through the weekend pricing in the hike, chop sideways a few weeks, then October turns green.\n\nThe four-year cycle zombies are not waiting for an October bottom; everybody and their grandma piling back in at once IS the October bid. What am I missing?\n\n#bitcoin #macro",
+      "hook": "PPI 5.4%, the ECB hiked, Sept 16 Fed hike odds near 60%, $BTC under $80K.",
+      "image_id": "d837a2ca",
+      "notes": "ENGAGEMENT BAIT (persona 1-in-10 rule): technique #3, explicit 'What am I missing?' closer on a provocative, defensible timing read. The only deliberate bait item in this batch."
+    },
+    {
+      "tweet": "Thousands of lines of raw opcodes are now 60 lines of Silverscript, and $KAS smart contracts on the L1 just became a toolbox instead of a thesis.\n\n#kaspa",
+      "hook": "Thousands of lines of raw opcodes are now 60 lines of Silverscript, and $KAS smart contracts on the L1 just became a toolbox instead of a thesis.",
+      "image_id": "db5ddfa3"
+    },
+    {
+      "tweet": "Peter Schiff calling the $5,000 midterm checks vote-buying is Captain Obvious putting his hat on; the part that matters for your bags is what $1.3 trillion of fresh liquidity does when it lands.\n\n#macro",
+      "hook": "Peter Schiff calling the $5,000 midterm checks vote-buying is Captain Obvious putting his hat on; the part that matters for your bags is what $1.3 trillion of fresh liquidity does when it lands.",
+      "image_id": "d25408a6"
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-09-10-silverscript-shipped-kaspa-50-week-sma",
+      "topic": "Silverscript v1 shipped on Kaspa the same week $KAS tapped the 50-week SMA",
+      "variation_label": "A",
+      "tweets": [
+        {
+          "text": "Silverscript v1 shipped on Kaspa this week, and the chart noticed.\n\n$KAS tapped the 50-week SMA on a wick.\n\nThree things landed at once and most people only saw one of them...",
+          "hook": "Silverscript v1 shipped on Kaspa this week, and the chart noticed."
+        },
+        {
+          "text": "One: the tech.\n\nSilverscript compiles straight to Kaspa Script on the L1. No separate VM, no sidechain, no bridge.\n\nContracts that took thousands of lines of raw opcodes are now about 60 readable lines."
+        },
+        {
+          "text": "It closes an eight-month build alongside the Toccata hard fork (mainnet June 30).\n\nUTXO programmability: local state per UTXO, covenants, vaults, native assets, on proof of work.\n\nA toolbox instead of an opcode manual."
+        },
+        {
+          "text": "Two: the chart.\n\n$KAS +17% on the week, +35% on the month, market cap right around $1 billion.\n\nThe weekly candle tapped the 50-week SMA on a wick. No close above it yet. The close is a matter of when."
+        },
+        {
+          "text": "Three: the attention.\n\nBigger names in this industry started saying Kaspa out loud, more often than ever.\n\nThe people who turned their backs realize it is not fading away. The people who never heard of it go look it up."
+        },
+        {
+          "text": "The macro in the way: PPI 5.4% year over year, the ECB hiked to a year-and-a-half high, Sept 16 Fed hike odds near 60%, $BTC under $80K.\n\nMy read: dip through the weekend, sideways a few weeks, then the four-year cycle zombies pile in and turn October green."
+        },
+        {
+          "text": "If you would rather hear about the Silverscript than the price,\n\nFollow me for Kaspa and macro takes that ignore the four-year cycle echo chamber.\n\n🧠 + 💪"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-09-10-robinhood-juggernaut-frong-asset-pages",
+      "topic": "Robinhood added asset pages for JUGGERNAUT and FRONG and both ripped without spot trading",
+      "variation_label": "B",
+      "tweets": [
+        {
+          "text": "Robinhood put JUGGERNAUT and FRONG on the app this week.\n\nYou cannot even buy them there yet.\n\nJUGGERNAUT still ran 380%. Here is what actually happened...",
+          "hook": "Robinhood put JUGGERNAUT and FRONG on the app this week."
+        },
+        {
+          "text": "What Robinhood did: searchable asset pages. Look the token up, watch the price. That is it. No spot trading.\n\nJUGGERNAUT: +500% in an hour, settled near +380%, volume up 3,000%.\n\nFRONG: +130%, settled near double, volume up 1,300%."
+        },
+        {
+          "text": "Why a page matters: CASHCAT is still the only Robinhood Chain meme you can actually buy on Robinhood, and it ran to a $150M cap in July off this kind of attention.\n\nAn asset page is the step before a listing."
+        },
+        {
+          "text": "The frog: FRONG was never on my candidate list for the official Robinhood frog.\n\nBut it has the receipts. Its frog was the teaser mascot for Uniswap's Pools.trade launchpad, minted six days early, launched by a Uniswap designer himself."
+        },
+        {
+          "text": "JUGGERNAUT is simpler. Memes built on an existing character almost never work in crypto.\n\nThis one is the exception because the photo of Vlad Tenev getting hugged by the Juggernaut on Wall Street is the CEO's favorite meme. That was the whole thesis."
+        },
+        {
+          "text": "The chain's DEX did $4.5 billion of volume in 30 days on a network built for tokenized stocks.\n\nVlad said it himself: built for RWA, works great for memes too.\n\nNever financial advice. Never."
+        },
+        {
+          "text": "If you want to hear about Robinhood Chain memes before they hit the app,\n\nFollow me. Kaspa first, memes when they earn it.\n\n😎"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-09-10-kaspa-50-week-sma-close",
+      "topic": "When does $KAS close a weekly candle above the 50-week SMA",
+      "eligible_topic": "kaspa",
+      "tweet_text": "$KAS tapped the 50-week SMA on a wick this week, Silverscript v1 just shipped, and the Fed decides on September 16.\n\nA wick is not a close. When does the weekly candle CLOSE above it?",
+      "hook": "$KAS tapped the 50-week SMA on a wick this week, Silverscript v1 just shipped, and the Fed decides on September 16.",
+      "options": [
+        "Before the Fed (Sept 16)",
+        "Later this month",
+        "October",
+        "Not this run"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-09-10-kaspa-50-week-sma-close",
+      "topic": "When does $KAS close a weekly candle above the 50-week SMA",
+      "source_post": "yt-post-2026-09-10-silverscript-shipped-kaspa-50-week-sma",
+      "question_text": "$KAS tapped the 50-week SMA on a wick this week. Silverscript v1 just shipped, the market cap is sitting around a billion dollars, and the Fed decides on September 16 with hike odds near 60%.\n\nA wick is not a close. So commit to it: when does the weekly candle CLOSE above the 50-week SMA?",
+      "hook": "$KAS tapped the 50-week SMA on a wick this week.",
+      "options": [
+        "Before the Fed decides (Sept 16)",
+        "Later this month",
+        "October, after the dip",
+        "Not this run"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-09-10-juggernaut-frong-spot-trading",
+      "topic": "Which Robinhood Chain meme gets real spot trading on Robinhood first",
+      "source_post": "yt-post-2026-09-10-robinhood-juggernaut-frong-asset-pages",
+      "question_text": "Robinhood added searchable asset pages for JUGGERNAUT and FRONG this week. Not spot trading, just a page you can look up, and JUGGERNAUT still ran 380% while FRONG doubled.\n\nCASHCAT is still the only Robinhood Chain meme you can actually buy on Robinhood. Which one gets real spot trading next?",
+      "hook": "Robinhood added searchable asset pages for JUGGERNAUT and FRONG this week.",
+      "options": [
+        "JUGGERNAUT, Vlad's favorite meme",
+        "FRONG, the Uniswap frog",
+        "Neither, the page was the top",
+        "CASHCAT stays the only one"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-09-10-silverscript-shipped-kaspa-50-week-sma",
+      "topic": "Silverscript v1 shipped on Kaspa the same week $KAS tapped the 50-week SMA",
+      "variation_label": "A + CTA1",
+      "body_style": "news breakdown: three Kaspa beats (tech, chart, attention), then the macro timing read",
+      "cta_target": "subscribe_youtube",
+      "body": "Silverscript v1 shipped on Kaspa this week, and the chart noticed.\n\nThree things landed at once, and if you only watch the price you saw one of them.\n\nFirst, the tech. Silverscript is a high-level smart contract language that compiles straight down to Kaspa Script on the L1. No separate virtual machine, no sidechain, no bridge. Contracts that used to take thousands of lines of raw opcodes are now about 60 readable lines. It closes an eight-month build alongside the Toccata hard fork that went live on mainnet June 30. This is UTXO programmability: local state per UTXO, covenants, vaults, native asset management, all on a proof of work chain. The team called it a toolbox, and that is the right word. Developers who want to build on Kaspa now have an on-ramp that does not start with an opcode manual, and this is only the beginning; layers of abstraction get added on top of it from here.\n\nSecond, the chart. $KAS is up about 17% on the week and 35% on the month, the market cap is sitting right around a billion dollars, and this week the weekly candle tapped the 50-week SMA on a wick. Not a close above it yet. But tapping it at all after this bear market is the tell, and the weekly close above it is a matter of when.\n\nThird, the attention. Bigger names in this industry started saying Kaspa out loud over the last couple of weeks, and it is happening more often than it ever has. That does two things: the people who turned their backs on Kaspa realize it is not fading away, and a whole crowd that never heard of it goes and looks it up.\n\nNow the macro, because it matters for timing. PPI printed 5.4% year over year, the ECB just hiked to its highest rate in a year and a half, and the odds of a Fed hike on September 16 are around 60%. Bitcoin is under $80K. My read: we dip through the weekend pricing in the hike, chop sideways for a few weeks, and then the four-year cycle zombies pile back in and turn October green. The Kaspa dip inside that window is the one I want. Spot, not leverage.\n\nNever financial advice. Never.\n\nSo commit to it in the comments: does $KAS close a weekly candle above the 50-week SMA before the Fed decides on the 16th, later this month, or not until October?\n\nHit like and subscribe if you would rather hear about the Silverscript than the price.",
+      "engagement_question": "Does $KAS close a weekly candle above the 50-week SMA before the Fed decides on the 16th, later this month, or not until October?",
+      "images": [
+        {
+          "image_id": "5cd65cb5",
+          "slide_text": "SILVERSCRIPT V1 SHIPPED. KASPA TAPPED THE 50-WEEK SMA"
+        },
+        {
+          "image_id": "f8ef6649",
+          "slide_text": "THOUSANDS OF LINES BECAME SIXTY"
+        },
+        {
+          "image_id": "05669397",
+          "slide_text": "THE CHART NOTICED"
+        },
+        {
+          "image_id": "c68e30ef",
+          "slide_text": "THE MACRO STANDING IN THE WAY"
+        },
+        {
+          "image_id": "784a043b",
+          "slide_text": "WHEN DOES KASPA CLOSE ABOVE THE 50-WEEK SMA?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-09-10-robinhood-juggernaut-frong-asset-pages",
+      "topic": "Robinhood added asset pages for JUGGERNAUT and FRONG and both ripped without spot trading",
+      "variation_label": "B + CTA2",
+      "body_style": "narrative arc: what Robinhood did, why a page matters, the frog race, the Juggernaut exception",
+      "cta_target": "subscribe_youtube",
+      "body": "Robinhood put JUGGERNAUT and FRONG on the app this week, and you cannot even buy them there yet.\n\nRead that again. Robinhood added searchable asset pages for two Robinhood Chain memes: you can look them up and watch the price, that is it. No spot trading. JUGGERNAUT ran over 500% in an hour and settled around +380% with volume up 3,000%. FRONG climbed 130% and settled around double, volume up 1,300%. On a search page.\n\nHere is why that is a bigger deal than the numbers. CASHCAT is still the only Robinhood Chain meme you can actually buy on Robinhood, and it ran to a $150 million cap in July off exactly this kind of attention. An asset page is the step before a listing. The chain's DEX did $4.5 billion of volume in 30 days on a network that was built for tokenized stocks. Vlad Tenev said it himself: built for RWA, works great for memes too.\n\nNow the frog. I will be honest: FRONG was never on my candidate list for the official Robinhood frog. Robin the Frog looks like a Muppet to me, and I was rooting for a different frog entirely. But FRONG has the receipts: its frog was the teaser mascot for Uniswap's Pools.trade launchpad, the token was minted six days before the launchpad went public, and a Uniswap product designer launched it himself. First to Pools, a real origin story, decent pumps ever since. That is why it got the page, and Robin the Frog at a $25 million cap is still chasing it.\n\nJUGGERNAUT is simpler, and I was skeptical of it out loud. Historically, a meme built on an existing character never works in crypto; the ones that work are invented for crypto, or were a meme before they were a coin. JUGGERNAUT is the exception for one reason: the photo of Vlad Tenev getting hugged by the Juggernaut on Wall Street is the CEO's favorite meme. That was the entire thesis, and it was enough.\n\nNever financial advice. Never.\n\nSo tell me straight in the comments: which one gets actual spot trading on Robinhood first, JUGGERNAUT or FRONG? And if you think neither, and the search page was the top, say that too.\n\nHit like and subscribe if you want to hear about Robinhood Chain memes before they hit the app.",
+      "engagement_question": "Which one gets actual spot trading on Robinhood first, JUGGERNAUT or FRONG? And if you think neither, and the search page was the top, say that too.",
+      "images": [
+        {
+          "image_id": "f1742583",
+          "slide_text": "VLAD'S FAVORITE MEME JUST RAN 380%. ON A ROBINHOOD SEARCH PAGE"
+        },
+        {
+          "image_id": "e3dd8be2",
+          "slide_text": "WHAT ROBINHOOD ACTUALLY DID"
+        },
+        {
+          "image_id": "b36c02eb",
+          "slide_text": "WHY JUGGERNAUT OF ALL THINGS"
+        },
+        {
+          "image_id": "3af497c7",
+          "slide_text": "THE FROG RACE"
+        },
+        {
+          "image_id": "9d497530",
+          "slide_text": "WHICH ONE GETS REAL SPOT TRADING FIRST?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-09-10-silverscript-sixty-lines",
+      "kaspa_subject": true,
+      "image_id": "93fb535b",
+      "aspect_ratio": "4:5",
+      "hook": "Silverscript v1 just shipped on Kaspa.",
+      "caption": "Silverscript v1 just shipped on Kaspa.\n\nA contract that took thousands of lines of raw opcodes is now about 60 readable lines, compiled straight to Kaspa Script on the L1. No separate VM, no sidechain, no bridge.\n\nThis is what UTXO programmability looks like when it is done right: local state per UTXO, covenants, vaults and native asset management on a proof of work chain, and an eight-month build that closes out alongside the Toccata hard fork. Developers who want to build on Kaspa finally have a toolbox instead of an opcode manual.\n\n$KAS is up 17% on the week and 35% on the month while the devs were shipping this. That is the order I like: tech first, price second.\n\nSave this for the next person who tells you Kaspa is just a fast Bitcoin.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#silverscript",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptotrading"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Silverscript v1 just shipped on Kaspa."
+    },
+    {
+      "id": "ig-2026-09-10-kaspa-taps-50-week-sma",
+      "kaspa_subject": true,
+      "image_id": "a5e41287",
+      "aspect_ratio": "4:5",
+      "hook": "$KAS tapped the 50-week SMA this week.",
+      "caption": "$KAS tapped the 50-week SMA this week.\n\nA wick, not a close yet. But look at what is lining up around it: Silverscript v1 shipped, the market cap is sitting right around a billion dollars, and bigger names in this industry started saying Kaspa out loud, more often than they ever have.\n\nThat does two things. The people who turned their backs on Kaspa realize it is not fading away, and a whole crowd that never heard of it goes and looks it up.\n\nThe weekly close above the 50-week SMA is a matter of when 💪\n\nTag the Kaspa holder who never sold.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptotrading"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "$KAS tapped the 50-week SMA this week."
+    },
+    {
+      "id": "ig-2026-09-10-opcodes-to-silverscript",
+      "kaspa_subject": true,
+      "image_id": "db5ddfa3",
+      "aspect_ratio": "4:5",
+      "hook": "Thousands of lines of raw opcodes are now 60 lines of Silverscript.",
+      "caption": "Thousands of lines of raw opcodes are now 60 lines of Silverscript, and $KAS smart contracts on the L1 just became a toolbox instead of a thesis.\n\nThe first token mechanisms on Kaspa were written in raw opcodes. Thousands of lines. The same thing in Silverscript is about 60 lines a human can actually read, and it compiles straight down to Kaspa Script, so it runs on the L1 with no separate virtual machine.\n\nEase of development is the whole game for a chain that wants builders. Kaspa just got a lot easier to build on.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#silverscript",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting",
+        "#cryptotrading"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Thousands of lines of raw opcodes are now 60 lines of Silverscript, and $KAS smart contracts on the L1 just became a toolbox instead of a thesis."
+    }
+  ]
+}

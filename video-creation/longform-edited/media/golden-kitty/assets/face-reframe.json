@@ -1,0 +1,138 @@
+{
+  "spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\spine\\ALL.g.pickup.mp4",
+  "scale": 1.359,
+  "x": -575,
+  "y": -370,
+  "centered": true,
+  "css": "transformOrigin: '0 0', transform: 'translate(-575px, -370px) scale(1.359)'",
+  "face_point_out": {
+    "x": 960,
+    "y": 432
+  },
+  "punch_in_note": "scale punch-ins about face_point_out (the face stays put and the frame stays covered)",
+  "targets": {
+    "eye_line": 0.4,
+    "max_headroom": 0.1,
+    "min_scale": 1.0,
+    "max_scale": 1.6
+  },
+  "measured": {
+    "face_cx": 1129.5,
+    "face_cx_pct": 58.8,
+    "eye_y": 590.0,
+    "box_h": 374,
+    "head_top_est": 316.6,
+    "headroom_before_pct": 29.3,
+    "headroom_after_pct": 5.6,
+    "active_area": [
+      84,
+      1836,
+      2,
+      1078
+    ],
+    "face_cx_spread": [
+      1114.5,
+      1208.5
+    ],
+    "scale_needed_by": {
+      "cover_left_right": 1.359,
+      "cover_top": 0.735,
+      "cover_bottom": 1.328,
+      "headroom": 1.185
+    }
+  },
+  "windows": [
+    {
+      "window": [
+        0.0,
+        9.667
+      ],
+      "detections": 5,
+      "face_cx": 1157.0,
+      "eye_y": 571.8,
+      "box_h": 374
+    },
+    {
+      "window": [
+        40.233,
+        44.033
+      ],
+      "detections": 5,
+      "face_cx": 1130.5,
+      "eye_y": 579.0,
+      "box_h": 365
+    },
+    {
+      "window": [
+        89.6,
+        91.833
+      ],
+      "detections": 5,
+      "face_cx": 1208.5,
+      "eye_y": 598.6,
+      "box_h": 374
+    },
+    {
+      "window": [
+        122.1,
+        131.233
+      ],
+      "detections": 5,
+      "face_cx": 1151.0,
+      "eye_y": 591.2,
+      "box_h": 388
+    },
+    {
+      "window": [
+        167.433,
+        169.533
+      ],
+      "detections": 5,
+      "face_cx": 1119.5,
+      "eye_y": 587.0,
+      "box_h": 385
+    },
+    {
+      "window": [
+        213.933,
+        216.5
+      ],
+      "detections": 5,
+      "face_cx": 1116.0,
+      "eye_y": 582.2,
+      "box_h": 350
+    },
+    {
+      "window": [
+        342.567,
+        348.0
+      ],
+      "detections": 5,
+      "face_cx": 1114.5,
+      "eye_y": 592.6,
+      "box_h": 383
+    },
+    {
+      "window": [
+        407.533,
+        410.833
+      ],
+      "detections": 5,
+      "face_cx": 1120.0,
+      "eye_y": 597.8,
+      "box_h": 366
+    },
+    {
+      "window": [
+        453.1,
+        457.467
+      ],
+      "detections": 5,
+      "face_cx": 1177.0,
+      "eye_y": 598.6,
+      "box_h": 378
+    }
+  ],
+  "previews": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\_previews\\qa\\face-reframe",
+  "note": "ONE global transform for every FACE window; background-swap clips of a face window get the same framing. If face_cx_spread is wider than about 8% of the frame, he moved between takes: QA the previews, a per-window offset may be needed."
+}

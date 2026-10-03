@@ -85,8 +85,20 @@ def _try_click(page, candidates, timeout=3000):
     return None
 
 
+RATE_LIMIT_WAITS_MS = (15000, 30000, 45000, 60000)   # HTTP 429 backoff (2026-09-17)
+
+
 def _api_get_chat(page, chat_id):
-    return page.evaluate(_GET_CHAT_JS, chat_id)
+    """GET the conversation via the backend API. A 429 (burst rate limit — hit after ~14
+    rapid deletes on 2026-09-17) backs off and retries before it is reported."""
+    r = page.evaluate(_GET_CHAT_JS, chat_id)
+    for wait in RATE_LIMIT_WAITS_MS:
+        if not (r and r.get("status") == 429):
+            break
+        print(f"   backend API 429 (rate limit) — waiting {wait // 1000}s")
+        page.wait_for_timeout(wait)
+        r = page.evaluate(_GET_CHAT_JS, chat_id)
+    return r
 
 
 def delete_chat(page, url) -> dict:
@@ -159,6 +171,15 @@ def delete_chat(page, url) -> dict:
     except Exception as e:
         return {"ok": False, "note": "ui + api both failed: " + str(e).splitlines()[0]}
 
+    for wait in RATE_LIMIT_WAITS_MS:            # 429 on the PATCH itself: back off, retry
+        if not (res and res.get("status") == 429):
+            break
+        print(f"   backend API 429 on delete (rate limit) — waiting {wait // 1000}s")
+        page.wait_for_timeout(wait)
+        try:
+            res = page.evaluate(_HIDE_JS, chat_id)
+        except Exception as e:
+            return {"ok": False, "note": "api retry failed: " + str(e).splitlines()[0]}
     if res and res.get("status") == 404:
         return {"ok": True, "how": "api", "note": "was already deleted"}
     if res and res.get("status") == 200:

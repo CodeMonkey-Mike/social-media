@@ -676,6 +676,8 @@ const AUTOMATIONS = [
       { n: 3, name: 'plan',           nodes: ['as_recorded', 'coverage', 'music_plan', 'gate_plan', 'assets', 'verify_assets', 'edit_plan', 'transitions', 'reconcile_docs', 'lint_docset', 'gate_blueprint'] },
       { n: 4, name: 'build',          nodes: ['card_pauses', 'captions', 'comp_build', 'verify_comp', 'gate_draft'] },
       { n: 5, name: 'deliver',        nodes: ['final_render', 'verify_final', 'definition_of_done', 'stage_longform'] },
+      { n: 6, name: 'vertical',       nodes: ['v_preflight', 'v_face_crop', 'v_assets', 'v_verify_assets', 'v_comp', 'v_verify_comp', 'v_render', 'v_mix', 'v_verify_final', 'gate_vertical', 'v_deliver'] },
+      { n: 7, name: 'short',          nodes: ['s_preflight', 's_cut_plan', 'gate_short_plan', 's_variants', 's_extract', 's_captions', 's_comp', 's_verify_comp', 's_render', 's_mix', 's_verify_final', 'gate_short', 's_deliver'] },
     ],
     pipeline: {
       subject: 'video',
@@ -814,6 +816,32 @@ const AUTOMATIONS = [
         { seg: 5, node: 'verify_final', label: 'Verify the final', desc: 'duration, fps, audio parity with the approved draft, splice PSNR', code: 'graph/longform_graph.py verify_final' },
         { seg: 5, node: 'definition_of_done', label: 'Definition of done', desc: 'comp-build.md 12a: FINAL to the project root, bed rescued, _previews recycled', code: 'graph/longform_graph.py definition_of_done' },
         { seg: 5, node: 'stage_longform', label: 'Stage + queue', desc: 'schedule-tweets/longform/<project>/ + the longs.json entry (rumble · bitchute · facebook)', code: 'graph/longform_graph.py stage_longform' },
+        { header: 'Vertical (a second lane on the delivered 16:9: run.py vertical --project <p>)' },
+        { seg: 6, lane: 'vertical', node: 'v_preflight', label: 'Preflight', desc: 'the delivered 16:9 FINAL, the blueprint, the paused spine and the mix record are on disk; the lean assets/vertical/ tree', code: 'graph/vertical_graph.py v_preflight' },
+        { seg: 6, lane: 'vertical', node: 'v_face_crop', label: 'Measure the face crop', desc: 'face detection over every FACE window -> assets/vertical/face-crop.json (never a whole-frame centroid)', code: 'video-creation/longform-edited/scripts/measure_face_crop.py · via graph/vertical_graph.py' },
+        { seg: 6, lane: 'vertical', node: 'v_assets', label: 'Rebuild every asset in portrait', desc: 'the five builders in parallel (portrait b-roll, 9:16 images, mobile-view receipts, re-shot slides and diagrams, portrait chart states) + visual-qa on every file', code: '.claude/agents/longform-edited/* + visual-qa · via graph/vertical_graph.py' },
+        { seg: 6, lane: 'vertical', node: 'v_verify_assets', label: 'Reconcile the portrait assets', desc: 'every id has a portrait file, zero orphans, every file PASS', code: 'graph/vertical_graph.py v_verify_assets' },
+        { seam: true, who: 'comp-builder', lane: 'vertical', node: 'v_comp', label: 'Vertical comp', desc: '<Project>Vertical.tsx at 1080x1920 to the same blueprint, the measured face crop, the portrait swap clips (NOTES.md)', code: '.claude/agents/longform-edited/comp-builder.md (VERTICAL mode) -> remotion/src/<Project>Vertical.tsx' },
+        { seg: 6, lane: 'vertical', node: 'v_verify_comp', label: 'Comp gates', desc: 'the Python comp gates on the vertical comp', code: 'graph/vertical_graph.py v_verify_comp' },
+        { seg: 6, lane: 'vertical', node: 'v_render', label: 'Render in parts', desc: 'render_comp.py --mode final in frame-range parts under the stitch ceiling, joined picture-only with the VO from the spine', code: 'video-creation/longform-edited/scripts/render_comp.py · via graph/vertical_graph.py' },
+        { seg: 6, lane: 'vertical', node: 'v_mix', label: 'The same mix', desc: 'mix_music.py lays the same beds + SFX onto the vertical picture (the VO from assets/spine.mp4)', code: 'video-creation/longform-edited/scripts/mix_music.py · via graph/vertical_graph.py' },
+        { seg: 6, lane: 'vertical', node: 'v_verify_final', label: 'Verify the vertical', desc: 'duration, 1080x1920, loudness parity, and a face-centring frame from EVERY face window', code: 'graph/vertical_graph.py v_verify_final' },
+        { seam: true, who: 'Mike', lane: 'vertical', node: 'gate_vertical', gate: 'approve_vertical', label: 'GATE · vertical', desc: 'watch the mixed vertical, then approve', code: 'run.py vertical --project <p> --resume --approve vertical' },
+        { seg: 6, lane: 'vertical', node: 'v_deliver', label: 'Deliver the vertical', desc: '<project>-VERTICAL.mp4 at the project root; NOT queued until Mike says so; _previews/vertical recycled', code: 'graph/vertical_graph.py v_deliver' },
+        { header: 'Short (a third lane on the delivered VERTICAL: run.py short --project <p> [--seconds 30])' },
+        { seg: 7, lane: 'short', node: 's_preflight', label: 'Preflight', desc: 'the delivered vertical and the paused spine share one clock (durations within 0.2 s); the FINAL-TIME transcript', code: 'graph/short_graph.py s_preflight' },
+        { seam: true, who: 'short-cut-strategist', lane: 'short', node: 's_cut_plan', label: 'Cut plan', desc: 'hook, body, kicker: the spans off the finished vertical, snapped to measured troughs, FACE|COVER per span, the outro inside the target length', code: '.claude/agents/short-cut-strategist.md -> media/<project>/SHORT-CUT-PLAN.json · skills/longform-to-short/lint-short-spans.py' },
+        { seam: true, who: 'Mike', lane: 'short', node: 'gate_short_plan', gate: 'approve_short_plan', label: 'GATE · cut plan', desc: 'read the chosen spans, then approve or swap one', code: 'run.py short --project <p> --resume --approve short_plan' },
+        { seam: true, who: 'image-gen / envato-sourcer', lane: 'short', node: 's_variants', label: 'Variant assets', desc: 'the variety rule: a span that carries an Envato clip or a ChatGPT image gets ONE alternative asset for the short (assets/short/), through visual-qa', code: '.claude/agents/longform-edited/image-gen.md · envato-sourcer.md + visual-qa · via graph/short_graph.py' },
+        { seg: 7, lane: 'short', node: 's_extract', label: 'Cut the spans', desc: 'per span: picture from the vertical, voice from the spine, frame-exact small intermediates (never seeking into the master)', code: 'graph/short_graph.py s_extract (ffmpeg)' },
+        { seg: 7, lane: 'short', node: 's_captions', label: 'Caption track', desc: 'the house captions over every span frame that carries NO burned captions (the burned windows are assets/captions.json, not every FACE window)', code: 'video-creation/skills/captions/build_captions.py · via graph/short_graph.py' },
+        { seam: true, who: 'comp-builder', lane: 'short', node: 's_comp', label: 'Short comp', desc: '<Project>Short.tsx: the span intermediates end to end, a fast seam hit, captions, the variant overlay, the WATCH THE FULL VIDEO card (it holds target minus spans)', code: '.claude/agents/longform-edited/comp-builder.md (SHORT mode) -> remotion/src/<Project>Short.tsx' },
+        { seg: 7, lane: 'short', node: 's_verify_comp', label: 'Comp gates', desc: 'the Python comp gates on the short comp', code: 'graph/short_graph.py s_verify_comp' },
+        { seg: 7, lane: 'short', node: 's_render', label: 'Render', desc: 'render_comp.py --mode final on the short comp (small linear clips, one pass)', code: 'video-creation/longform-edited/scripts/render_comp.py · via graph/short_graph.py' },
+        { seg: 7, lane: 'short', node: 's_mix', label: 'Mix + CTA', desc: 'the voice spans crossfaded, the shared CTA take (assets/vo/cta-watch-full.mp3) on the outro, ONE continuous bed', code: 'video-creation/longform-edited/scripts/mix_short.py · via graph/short_graph.py' },
+        { seg: 7, lane: 'short', node: 's_verify_final', label: 'Verify the short', desc: 'runtime == target (+-0.25 s), portrait, loudness, and whisper must hear the CTA in the outro', code: 'graph/short_graph.py s_verify_final' },
+        { seam: true, who: 'Mike', lane: 'short', node: 'gate_short', gate: 'approve_short', label: 'GATE · short', desc: 'watch the mixed short (seams, captions end to end, the outro), then approve', code: 'run.py short --project <p> --resume --approve short' },
+        { seg: 7, lane: 'short', node: 's_deliver', label: 'Deliver the short', desc: '<project>-SHORT-<N>s.mp4 at the project root; NOT queued until Mike says so', code: 'graph/short_graph.py s_deliver' },
       ],
     },
     headline(run) {
@@ -1335,13 +1363,21 @@ function renderPipeline(prog, runs) {
   // `statusFrom: 'steps'` on the automation entry.
   function stepCardSteps(item) {
     const batchOf = r => ((r.summary || {}).batch || (r.requested && r.requested.project) || null);
-    const lastRun = runs.find(r => !r.stub && (!curBatch || batchOf(r) === curBatch));
+    // ONE project runs several lanes (longform, then vertical, then short). A card belongs to one lane (`item.lane`,
+    // default longform), so its ledger is the last run OF THAT LANE, not the last run of the project (golden-kitty
+    // 2026-10-02: once the vertical lane ran, every longform card read "pending" because the newest run was the vertical one).
+    const laneOf = r => ((r.requested && r.requested.lane) || 'longform');
+    const wantLane = item.lane || 'longform';
+    const lastRun = runs.find(r => !r.stub && (!curBatch || batchOf(r) === curBatch) && laneOf(r) === wantLane);
     const steps = (lastRun && (lastRun.summary || {}).steps) || {};
     const st = steps[item.node];
     const gates = (FEEDS[A().id] || {}).gates || {};
-    const liveNode = running ? String(running.node || '') : null;
-    const parked = prog && prog.status === 'waiting' ? String(prog.node || '') : null;
-    const failedNode = prog && prog.status === 'failed' ? String(prog.node || '') : null;
+    const progLane = prog && prog.lane_name === 'vertical' ? 'vertical' : (prog && prog.lane_name === 'short' ? 'short' : 'longform');
+    const mine = progLane === wantLane;        // the heartbeat belongs to ONE lane; it says nothing about the other lanes' cards
+    const liveNode = running && mine ? String(running.node || '') : null;
+    const nodeOrder = (A().lanes || []).reduce((acc, l) => acc.concat(l.nodes || []), []);
+    const parked = mine && prog && prog.status === 'waiting' ? String(prog.node || '') : null;
+    const failedNode = mine && prog && prog.status === 'failed' ? String(prog.node || '') : null;
     const doneSt = s => s && (s.status === 'ran' || s.status === 'skipped');
     const who = (item.who || 'GRAPH').toUpperCase();
     const mikeOwns = (item.who || '') === 'Mike';
@@ -1351,6 +1387,13 @@ function renderPipeline(prog, runs) {
     else if (item.gate && gates[item.gate] === true) { pillHtml = pill('done'); when = mikeOwns ? 'approved' : 'artifact on disk'; }
     else if (doneSt(st)) { pillHtml = pill('done'); when = `${st.status}${st.detail ? ' · ' + clip(st.detail, 60) : ''}${st.at ? ' · ' + relText(st.at) : ''}`; }
     else if (st && st.status === 'failed') { cls += ' is-halt'; pillHtml = pill('failed'); when = clip(st.detail || 'halted', 80); }
+    // A step UPSTREAM of the live node finished earlier in THIS run. The step ledger (lane_runs.json) is only
+    // written when a run ENDS, so without this every step the current run already passed read "pending" until
+    // the run stopped at its next gate (golden-kitty 2026-10-01: compress showed pending while defumble ran).
+    // The graph is linear, so the live node being reached proves everything before it ran or was skipped.
+    else if (liveNode && nodeOrder.indexOf(item.node) >= 0 && nodeOrder.indexOf(liveNode) > nodeOrder.indexOf(item.node)) {
+      pillHtml = pill('done'); when = 'done earlier in this run';
+    }
     else if (parked === item.node) { pillHtml = pill(mikeOwns ? 'awaiting_input' : 'next_up'); when = mikeOwns ? 'waiting on you' : `waiting on the ${item.who || 'orchestrator'}`; }
     else if (!item.seam && !curBatch) { cls += ' dim'; }
     else if (item.seam) { cls += ' dim'; }

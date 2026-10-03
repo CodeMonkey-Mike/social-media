@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-auto_reply_scan.py — Fast scan of the Following feed + Reply Guy list for tweets
-posted in the last 2 minutes that are safe to auto-reply to (x-reply-auto skill).
+auto_reply_scan.py — Fast scan of the Reply Guy list for tweets posted in the last
+2 minutes that are safe to auto-reply to (x-reply-auto skill).
 
-Top-of-feed only — NO scrolling. Both the Following tab and the Reply Guy list are
+Reply Guy list ONLY (2026-08-28: Following feed scan removed on Mike's request — it
+surfaced people he knows personally, and an automated reply landing on them read as
+weird/out of character). Top-of-feed only — NO scrolling. The list is
 reverse-chronological, so the freshest tweets are at the very top; a tweet under 2
 minutes old, if one exists, will be in the first few articles.
 
@@ -35,10 +37,9 @@ except ImportError:
     sys.exit(1)
 
 LIST_URL        = "https://x.com/i/lists/2051819466921533779"
-HOME_URL        = "https://x.com/home"
 CHROME_PROFILE  = r"C:\Users\mnede\AppData\Local\Google\Chrome\xbot-profile"
 MAX_AGE_SECONDS = 3600  # look back up to 1 hour; Claude picks the best reply-worthy tweet from the pool
-TOP_N           = 25   # top-of-feed articles to inspect per source (no scroll; covers ~1h at current list activity)
+TOP_N           = 25   # top-of-feed articles to inspect (no scroll; covers ~1h at current list activity)
 
 HERE            = Path(__file__).parent
 POSTED_FILE     = HERE / "data" / "posted_replies.json"
@@ -166,37 +167,15 @@ def main():
         )
         page = ctx.pages[0] if ctx.pages else ctx.new_page()
         try:
-            # Following feed (reverse-chron)
-            print("Loading Following feed...")
-            page.goto(HOME_URL, wait_until="domcontentloaded", timeout=30000)
+            # Reply Guy list (reverse-chron) — the ONLY source (Following feed removed 2026-08-28)
+            print("Loading Reply Guy list...")
+            page.goto(LIST_URL, wait_until="domcontentloaded", timeout=30000)
             page.wait_for_timeout(3000)
             if page.locator('input[name="text"], input[name="password"]').count() > 0:
                 print("ERROR: not logged in to X on xbot-profile. Aborting.")
                 CANDIDATES_FILE.write_text("[]", encoding="utf-8")
                 ctx.close()
                 return
-            try:
-                tab = page.get_by_role("tab", name="Following")
-                tab.wait_for(state="visible", timeout=8000)
-                tab.click()
-                page.wait_for_timeout(2500)
-            except Exception as e:
-                print(f"  Could not click Following tab: {e} (scraping whatever loaded)")
-            # Confirm which timeline tab is active — 'Following' (recent) vs 'For you' (algorithmic)
-            try:
-                active = page.evaluate(
-                    "() => { const t = document.querySelector('[role=\"tab\"][aria-selected=\"true\"]');"
-                    " return t ? t.innerText.replace(/\\s+/g,' ').trim() : '(none)'; }")
-                print(f"  Active timeline tab: {active}")
-            except Exception:
-                pass
-            wait_for_feed(page)
-            scanned += collect_top(page, "Following feed", TOP_N)
-
-            # Reply Guy list (reverse-chron)
-            print("Loading Reply Guy list...")
-            page.goto(LIST_URL, wait_until="domcontentloaded", timeout=30000)
-            page.wait_for_timeout(3000)
             wait_for_feed(page)
             scanned += collect_top(page, "Reply Guy list", TOP_N)
         finally:
@@ -231,7 +210,7 @@ def main():
     CANDIDATES_FILE.write_text(
         json.dumps(qualifying, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    print(f"\nScanned {len(scanned)} top-of-feed tweets across both sources.")
+    print(f"\nScanned {len(scanned)} top-of-feed tweets from the Reply Guy list.")
     print(f"{len(qualifying)} qualifying (<= {MAX_AGE_SECONDS}s, not blocked, not already-replied).")
     if qualifying:
         top = qualifying[0]

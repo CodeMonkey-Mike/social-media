@@ -35,6 +35,16 @@ Files are 1080p H.264 with audio stripped, cut as slot + ~1s handle each side. *
 | BR-3 (round 1, REJECTED by visual-qa) | file deleted; source kept at `_src/BR-3-src.1080.mp4` | https://app.envato.com/search/stock-video/54a21f2d-66eb-4198-9281-84b7044c993c | "Aerial View of Cracked Ice Floating on Water", Vovchan079 (licensed, unused) | - | - |
 | BR-4 | assets/vid/BR-4-datacenter-corridor-dolly.mp4 (4.84s) | https://app.envato.com/search/stock-video/adad4e78-3c4c-4617-917b-1c1ae414b3d2 | "Flying Through Digital Server Room Data Center Corridor", FlashMovie | 4.50-9.34 | 1.00-3.86 (LEAD: continuous forward travel) |
 
+### VERTICAL (9:16) license trail (envato-sourcer, 2026-09-29, vertical-repurpose §1)
+Files in `assets/vertical/vid/`, 1080x1920 H.264, audio stripped, same slot windows as the 16:9 (**slot in-point = 1.00s into each file**). New sources in `assets/vertical/vid/_src/`. Vertical inventory was verified by probing each candidate's preview (portrait = 304x540).
+
+| id | File | Envato item (license record) | Clip | Source window | Slot window in file |
+|---|---|---|---|---|---|
+| BR-1 | assets/vertical/vid/BR-1-glass-planes-rising.mp4 (6.00s, 30fps) | https://app.envato.com/search/stock-video/5ebd3a8e-edad-4386-a90f-f05a9b37bb55 (same 16:9 item, no new license) | ⚑ FALLBACK: centre crop 1215x2160 of the 4K 16:9 source, scaled to 1080x1920. No vertical "layers rising" inventory (5 portrait searches, 80 candidates: ribbons, spheres, neon, none a stacked-layer rise). Plates fill the frame, so nothing is lost in the crop. | 0.00-6.00 | 1.00-5.00 |
+| BR-2 | assets/vertical/vid/BR-2-glass-shards-burst.mp4 (3.40s, 25fps) | https://app.envato.com/search/stock-video/cd25ed04-a822-4d1a-8f0d-0566da069f79 | "Breaking Glass Fragments Falling on Black Background", BlackBoxGuild (native vertical 1080x1920) | 2.50-5.90, eq gamma 1.3 / contrast 1.05 (source is very dark, mean luma about 5) | 1.00-2.40 (big shards fly at the lens on 'break this all down') |
+| BR-3 | assets/vertical/vid/BR-3-ice-glow-cracks-split.mp4 (5.16s, 25fps) | https://app.envato.com/search/stock-video/a1f341bc-648e-4aec-b988-468836be95cb (same 16:9 item, no new license) | ⚑ FALLBACK: crop 1215x2160 centred at 56% of the 4K 16:9 source (the main crack runs top to bottom through it), same grade as 16:9 (eq gamma 0.8 / contrast 1.06). Vertical ice inventory = bright glacier/floe aerials with no crack forming on screen (the round-1 visual-qa failure mode). | 1.70-6.86 | 1.00-4.20 (new branches cross the crack ~3.0-4.2) |
+| BR-4 | assets/vertical/vid/BR-4-datacenter-corridor-dolly.mp4 (4.88s, 25fps) | https://app.envato.com/search/stock-video/4d8ed422-a8c9-440b-9784-4aa51511adbd | "Futuristic Neon Digital Server Room Corridor Background", MegiasD (native vertical 4K ProRes, 597 MB, under the 800 MB cap, kept as `_src/BR-4-src.mov`) | 0.00-9.72 played at 2x (setpts PTS/2) | 1.00-3.86 (LEAD: continuous forward travel down the aisle, never stops) |
+
 ## ChatGPT images (3) - house style: Pixar 3D CGI, deep navy near-black bg, rim light, no text (agent: image-gen)
 
 _Every row whose beat names a REAL thing (token, project, company, person, product) carries a `Reference` path from `schedule-tweets/images/reference/`, or the explicit string `none exists (generic approved)`. Wording: use the REAL mark from the reference image; never invent one._

@@ -21,10 +21,24 @@
  *   2. every queued short with batch==<id> is fully posted (no platform pending/posting/failed);
  *   3. every queued long  with batch==<id> is fully posted;
  *   4. pipelines.repurpose is not "pending" (the transcript is still needed by the tweet/image
- *      lane until repurpose is done — completing early would let cleanup recycle it).
+ *      lane until repurpose is done — completing early would let cleanup recycle it);
+ *   5. FRESHNESS GUARD: none of the batch's own files were written in the last FRESH_HOURS (6).
+ *      Rules 1-4 read the queue, but a batch mid-build has produced NOTHING to the queue yet, so
+ *      an in-flight project can look identical to a finished one. See below.
  *
  * NOTE: the queue is treated as the publish manifest. Clips rendered but never staged to
  * shorts.json are invisible here — stage them, or the batch may complete without them.
+ *
+ * WHY THE FRESHNESS GUARD (Mike, 2026-08-12): `johnny` was cut that morning; its longform posted
+ * while its two shorts were still being built and had never been staged to shorts.json. So the
+ * queue read 1/1 longs, 0/0 shorts, repurpose done — rules 1-4 all passed, the batch flipped to
+ * `completed`, and cleanup recycled its source master + transcripts WHILE lane 2 was running on
+ * them. A brand-new, actively-processing project must never be reclaimable. The guard holds any
+ * batch whose files are still being written; once the work goes quiet for FRESH_HOURS the normal
+ * queue-derived rules take over, so nothing is pinned `active` forever.
+ *
+ * The guard deliberately does NOT consult `pipelines.shorts` — those flags drift (see above) and
+ * would peg long-finished batches `active` permanently. Recent write activity is self-correcting.
  *
  * MANUAL OVERRIDE: a batch that never flows through the queues (e.g. a longform uploaded by
  * hand, never staged to longs.json) can't be derived and would stay `active` forever. Set
@@ -45,11 +59,49 @@ const LONGS = path.join(REPO_ROOT, 'schedule-tweets', 'data', 'longs.json');
 
 const DRY = process.argv.includes('--dry-run');
 
+// Freshness guard window: a batch touched this recently is still in flight (rule 5).
+// Override for a one-off run with BATCH_FRESH_HOURS=0 to disable, or a larger value.
+const FRESH_HOURS = process.env.BATCH_FRESH_HOURS === undefined
+  ? 6
+  : Number(process.env.BATCH_FRESH_HOURS);
+
 // A platform slot is "done" in any of these terminal states; everything else
 // (pending / posting / failed) means the item is not fully published yet.
 const DONE = new Set(['posted', 'posted_unverified', 'skip', 'skipped']);
 const itemPosted = (it) =>
   Object.values(it.platforms || {}).every((p) => DONE.has(p && p.status));
+
+// Newest mtime (ms) among a batch's own files, or 0 if it owns nothing on disk.
+// Walks FILES rather than trusting directory mtimes: a directory's mtime also moves
+// when something is removed from it (a cleanup run, a Recycle Bin restore), which
+// would read as "fresh" for the wrong reason. Missing paths are simply skipped.
+function newestWrite(paths) {
+  let newest = 0;
+  const visit = (p, depth) => {
+    if (depth > 12) return;
+    let st;
+    try { st = fs.statSync(p); } catch { return; }
+    if (st.isFile()) {
+      if (st.mtimeMs > newest) newest = st.mtimeMs;
+      return;
+    }
+    if (!st.isDirectory()) return;
+    let entries;
+    try { entries = fs.readdirSync(p); } catch { return; }
+    for (const e of entries) visit(path.join(p, e), depth + 1);
+  };
+  for (const p of paths) if (p) visit(path.isAbsolute(p) ? p : path.join(REPO_ROOT, p), 0);
+  return newest;
+}
+
+// Every on-disk location a batch declares. Used only for the freshness check.
+const batchPaths = (b) => [
+  b.source_media,
+  b.transcripts_dir,
+  b.shorts_source,
+  b.dashboard,
+  ...(Array.isArray(b.directories) ? b.directories : []),
+];
 
 function main() {
   const reg = JSON.parse(fs.readFileSync(BATCHES, 'utf8'));
@@ -94,6 +146,18 @@ function main() {
     if (shPending) { completed = false; why.push(`${shPending} short(s) pending`); }
     if (loPending) { completed = false; why.push(`${loPending} long(s) pending`); }
     if (repurposePending) { completed = false; why.push('repurpose pending'); }
+
+    // Rule 5 — freshness guard. Only evaluated when the queue-derived rules say
+    // "completed": a batch still being written to is in flight no matter what the
+    // queue shows, because work that has not reached the queue is invisible to 1-4.
+    if (completed && FRESH_HOURS > 0) {
+      const newest = newestWrite(batchPaths(b));
+      const ageH = newest ? (Date.now() - newest) / 3600000 : Infinity;
+      if (ageH < FRESH_HOURS) {
+        completed = false;
+        why.push(`files written ${ageH < 1 ? `${Math.round(ageH * 60)}m` : `${ageH.toFixed(1)}h`} ago (<${FRESH_HOURS}h)`);
+      }
+    }
 
     const newStatus = completed ? 'completed' : 'active';
     rows.push({

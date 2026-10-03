@@ -23,6 +23,7 @@ table or the track docs that reference them).
 | `higgsfield-generate/` | `SKILL.md` | `/higgsfield-generate` | Generate images/videos via Higgsfield CLI (Seedance 2.0, Nano Banana 2/Pro, GPT Image 2, Soul, Marketing Studio, Virality Predictor). |
 | `higgsfield-soul-id/` | `SKILL.md` | `/higgsfield-soul-id` | Train a Soul Character (personalized face model) → `reference_id` used by higgsfield-generate via `--soul-id`. |
 | `higgsfield-voice/` | `SKILL.md` | — | Drive the Higgsfield Audio/Seed-Speech (voice) tab via Playwright/CDP — the voice feature has no API. Used for persona voice capture (Yuli y Ana). (Single-command `hf-voice.js` wrapper still TODO.) |
+| `usage-ledger/` | `usage-ledger.md` | — | VARIETY across videos: `usage_ledger.py` records the music + transitions every finished video used (`assets/usage-ledger.json`), reports what is fresh per pool / slot before a strategist picks, and gates a plan that repeats the previous video. Wired into the longform graph (`music_plan`, `transitions`, `stage_longform`). |
 | `music-sourcing/` | `SKILL.md` | — | Soundstripe music search + download + license-code minting. |
 
 **External tooling** these wrap (CLI + login, not committed) — install per machine: see

@@ -13,19 +13,34 @@
 # delete any chat whose live title does not start with b-roll/social, so a human's
 # personal chat can never be swept even if the registry is wrong. Do not widen the gate.
 #
-# Caller pattern (per image in a batch) — identical to the JS:
+# Caller pattern (per image in a batch):
 #   import chat_pool as pool
 #   url = pool.get_active_url(purpose)            # None => open a fresh chatgpt.com/ chat
-#   ... navigate (or open fresh) + generate ...
-#   if opened_fresh_this_item: pool.confirm_and_register(page, purpose, batch)
+#   ... navigate (or open fresh) + SEND ...
+#   if opened_fresh: pool.confirm_and_register(page, purpose, batch)   # AT BIRTH: right
+#       after the first send lands (the conversation exists server-side from then on),
+#       NOT after the first successful image. 2026-09-17: registering on success let every
+#       post-send failure (capture timeout, dup reject, crash, kill) strand an auto-titled
+#       chat the sweep could never see — 68 piled up in six weeks.
 #   if saved_ok: pool.record_image(purpose)       # increment ONLY on a successful save
 #   # dead/deleted stored chat: pool.mark_dead(purpose) then treat as fresh
-#   ... end of run: chat_delete.sweep_retired(page)
+#   ... end of run (in a finally): zero-image chat born this run -> retire_url; then
+#       chat_delete.sweep_retired(page); journal_end.
+#
+# RUN JOURNAL (2026-09-17): every browser run records a [started, ended] window under the
+# registry's `runs` list (journal_start/journal_end). reconcile_chats.py puts any
+# UNREGISTERED live chat created inside a window on its REVIEW list — provenance by
+# recorded time, never by title guessing — for Mike's per-URL decision. Never auto-deleted.
+#
+# ONE WAY TO OPEN THE PROFILE: launch_profile(p) for pipeline code, probe_session(name)
+# for ad-hoc probes/diagnostics (registers + retires + sweeps whatever the probe created
+# on exit). scripts/chatgpt-open-lint.py flags any other chatgpt.com/ open in the repo.
 #
 # Retired chats are MOVED to `retired` (never silently dropped) and deleted in the UI by
-# chat_delete.sweep_retired; anything missed is swept by repurpose/delete-chats.js via
-# cleanup/cleanup.js (still JS — cleanup lane not migrated).
+# chat_delete.sweep_retired; anything missed is swept by repurpose/delete_chats.py via
+# cleanup/cleanup.js (Python since 2026-09-17; delete-chats.js is the frozen rollback).
 
+import contextlib
 import json
 import re
 import time
@@ -34,6 +49,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 REG = HERE.parent / "chatgpt-image-chats.json"     # repo root, same file as the JS
+PROFILE_DIR = r"C:\Users\mnede\AppData\Local\Google\Chrome\chatgpt-profile"  # ONE profile
+JOURNAL_MAX = 100                                   # runs / manual_deletes kept (newest)
 
 # The deletion gate: a chat is deletable ONLY if its live title starts with b-roll or
 # social. Single source of truth — chat_delete imports this. Do not widen it.
@@ -267,6 +284,148 @@ def retire(purpose: str, reason=None, reg_path=None) -> int:
     save(d, reg_path)
     print(f"  [chat-pool] retired {purpose} chat ({reason or 'retired'})")
     return len(hits)
+
+
+def count_for_url(url: str, reg_path=None) -> int:
+    c = next((x for x in load(reg_path)["chats"] if x.get("url") == url), None)
+    return (c.get("count") or 0) if c else 0
+
+
+def retire_url(url: str, reason=None, reg_path=None) -> bool:
+    """Retire ONE specific active chat by URL (no replacement). The end-of-run
+    ZERO-IMAGE rule uses it: a chat born this run that holds no image is retired and
+    swept — a fresh chat is free, a stranded one is sidebar sprawl."""
+    d = load(reg_path)
+    hit = next((x for x in d["chats"] if x.get("url") == url), None)
+    if not hit:
+        return False
+    _push_retired(d, hit, reason or "retired")
+    d["chats"] = [x for x in d["chats"] if x.get("url") != url]
+    save(d, reg_path)
+    print(f"  [chat-pool] retired {hit.get('purpose', '?')} chat ({reason or 'retired'}): {url}")
+    return True
+
+
+def queue_orphan(url: str, purpose: str, title: str, reason: str, reg_path=None) -> bool:
+    """Adopt a gate-titled ORPHAN (a live chat our automation renamed — the prefix is
+    written only by confirm_and_register/heal — that no registry list knows) straight
+    onto the delete queue. It never becomes the active chat: its count is unknown, so
+    rotation would replace it anyway. The sweep's title gate still runs at delete time."""
+    if not url or not TITLE_GATE_RE.match(title or ""):
+        return False
+    d = load(reg_path)
+    known = [x.get("url") for x in d["chats"] + d["retired"] + d.get("title_gate_skipped", [])]
+    if url in known:
+        return False
+    _push_retired(d, {"purpose": purpose, "url": url, "count": 0,
+                      "created_at": _now_iso_z(), "title": title, "adopted": True}, reason)
+    save(d, reg_path)
+    print(f"  [chat-pool] orphan queued for deletion ({reason}): {url}")
+    return True
+
+
+# ── run journal (2026-09-17) ──────────────────────────────────────────────────
+
+def journal_start(purpose: str, batch=None, reg_path=None) -> str:
+    """Open a run window: automation is DRIVING the profile from now until journal_end.
+    reconcile_chats puts an unregistered chat created inside a window on REVIEW."""
+    d = load(reg_path)
+    runs = d.setdefault("runs", [])
+    now = _now_iso_z()
+    rid = f"{now}|{purpose}"
+    runs.append({"id": rid, "purpose": purpose, "batch": batch, "started": now, "ended": None})
+    del runs[:-JOURNAL_MAX]
+    save(d, reg_path)
+    return rid
+
+
+def journal_end(rid: str, reg_path=None, **fields):
+    if not rid:
+        return
+    d = load(reg_path)
+    for r in d.get("runs", []):
+        if r.get("id") == rid:
+            r["ended"] = _now_iso_z()
+            r.update({k: v for k, v in fields.items() if v is not None})
+            save(d, reg_path)
+            return
+
+
+def run_windows(reg_path=None):
+    """[(started, ended|None, run)] for the reconcile REVIEW class."""
+    return [(r.get("started"), r.get("ended"), r) for r in load(reg_path).get("runs", [])
+            if r.get("started")]
+
+
+def set_last_reconcile(summary: dict, reg_path=None):
+    """Persist the latest reconcile counts (+ the review list) so cleanup's dry-run can
+    show them without opening a browser."""
+    d = load(reg_path)
+    d["last_reconcile"] = {"at": _now_iso_z(), **summary}
+    save(d, reg_path)
+
+
+def record_manual_delete(url: str, title: str, reg_path=None):
+    """Audit trail for a chat Mike explicitly approved for deletion (delete_chats.py
+    --approved-file): the only path that deletes a chat the registry never recorded."""
+    d = load(reg_path)
+    lst = d.setdefault("manual_deletes", [])
+    lst.append({"url": url, "title": title, "at": _now_iso_z()})
+    del lst[:-JOURNAL_MAX]
+    save(d, reg_path)
+
+
+# ── the ONE way to open the shared chatgpt-profile Chrome ────────────────────
+
+def launch_profile(p):
+    """Playwright (sync) persistent context on the shared chatgpt profile, with the
+    stealth args every pipeline script used to copy by hand. One browser per profile:
+    a second launch while a gen run holds it fails loudly, by design."""
+    ctx = p.chromium.launch_persistent_context(
+        PROFILE_DIR, channel="chrome", headless=False,
+        ignore_default_args=["--enable-automation"],
+        args=["--disable-blink-features=AutomationControlled"], no_viewport=True)
+    ctx.add_init_script(
+        "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+    return ctx
+
+
+@contextlib.contextmanager
+def probe_session(name: str, reg_path=None):
+    """For ad-hoc probes/diagnostics that drive chatgpt.com by hand (the 2026-09-10
+    kaspa-lane3-fix probes left 4 untitled chats behind). Yields an authed page on
+    chatgpt.com/ inside a journal window; on exit the conversation the probe is ON
+    (page.url has /c/) is registered under purpose `probe-<name>` (gated title), retired
+    and swept, so a probe cannot strand a chat. A probe that creates several chats must
+    confirm_and_register + retire_url each one itself before moving on."""
+    from playwright.sync_api import sync_playwright
+    import chat_delete  # local import: chat_delete imports this module
+    purpose = f"probe-{name}"
+    with sync_playwright() as p:
+        ctx = launch_profile(p)
+        page = ctx.new_page()
+        rid = journal_start(purpose, "_probe", reg_path)
+        try:
+            page.goto("https://chatgpt.com/", wait_until="domcontentloaded")
+            yield page
+        finally:
+            try:
+                if "/c/" in page.url:
+                    reg = confirm_and_register(page, purpose, "_probe", reg_path)
+                    if reg:
+                        retire_url(reg["url"], "probe session ended", reg_path)
+                else:
+                    print(f"  [probe] not on a /c/ conversation at exit ({page.url}); "
+                          "nothing to register — if the probe created chats elsewhere, "
+                          "reconcile_chats will list them for review")
+                chat_delete.sweep_retired(page, reg_path)
+            except Exception as e:
+                print("  [probe] exit cleanup error: " + str(e).splitlines()[0])
+            journal_end(rid, reg_path)
+            try:
+                ctx.close()
+            except Exception:
+                pass
 
 
 def get_retired(reg_path=None):

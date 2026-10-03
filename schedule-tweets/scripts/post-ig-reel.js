@@ -275,7 +275,7 @@ async function getRecentReelUrls(page, count = 3) {
     // ── Caption ──────────────────────────────────────────────────────────────
     console.log(`Typing caption (${caption.length} chars)...`);
     const captionArea = page.locator(
-      '[aria-label="Write a caption..."], textarea[placeholder*="caption"], [contenteditable][placeholder*="caption"]'
+      '[aria-label="Write a caption..."], [aria-label="Add a caption..."], textarea[placeholder*="caption"], [contenteditable][placeholder*="caption"]'
     ).first();
     await captionArea.waitFor({ state: 'visible', timeout: 15000 });
     await captionArea.click();

@@ -29,7 +29,10 @@ same selectors, pacing, identity guards, output lines), verifies the members.jso
 deltas from disk, kill-switches on 5 consecutive per-member errors, halts on a
 restriction page, and reports (without halting) if the weekly invite limit stops the
 run. Rollback = swap `INVITE_SCRIPT` to `INVITE_SCRIPT_JS` in `graph/lane_graph.py`;
-the frozen JS original still runs directly:
+the frozen JS original still runs directly (**but the JS twin does NOT carry the
+2026-08-30 email-verification fix — `request-connections.js:190` still matches the
+limit wording against the whole body, so rolling back reintroduces the false
+"weekly limit" halt described under `contact_status` below**):
 
 ```bash
 node linkedin-automation/skills/request-connections/request-connections.js [--max=N] [--dry-run]
@@ -66,7 +69,16 @@ suggestion card**. Three mechanical gates now prevent both:
 1. search-result clicks require the result URL slug to **equal** the saved slug
    (`lib/_li-session.js`);
 2. after navigation the landed URL slug must equal the target's or the member errors
-   out untouched;
+   out untouched — **except when the page was reached by `goto(url)` (nav mode
+   `goto-notfound` / `goto-noquery`, the only modes that end without a click)**: a
+   mismatch there is LinkedIn redirecting OUR OWN stored URL (renamed vanity slug,
+   `ACoAA…` member-ID, unicode-normalized slug) to the same member's current canonical
+   slug, so the script adopts it (`profile_url` ← canonical, old one kept as
+   `profile_url_prev`) and proceeds; if members.json already tracks that canonical
+   slug as its own entry the stale one is retired as `url_redirect_duplicate` instead.
+   Added 2026-09-14 after five stale-slug members accumulated at the queue front and
+   tripped the 5-consecutive kill-switch on every run (they had been "retry next run"
+   errors since 09-08 and could never succeed);
 3. the profile owner's name must resolve (sources in order: `main h1` → tab title →
    top-card "Follow <Name>" aria-label; the 2026 UI has no `main h1`) and the Connect
    control's aria-label must **contain that name** — any other "to connect" button
@@ -122,18 +134,54 @@ On top of the base pacing in `lib/_li-session.js`, this skill adds:
 ## `contact_status` values
 
 `sent` · `already_pending` · `already_connected` (all three set `contacted: true`) ·
-`no_connect_button` (follow-only / out of network, OR the member requires an email to
-verify you know them before connecting, which we never have; left `contacted:false` to
-revisit — logged and skipped, not stopped).
+`no_connect_button` (follow-only / out of network; two strikes then retired) ·
+`url_redirect_duplicate` (our stale URL redirected to a slug already tracked as its own
+entry; retired so the person is never invited twice, see `profile_url_canonical`) ·
+`email_verification` / `send_disabled` (**the member requires an email address to prove
+we know them** — see below; sets `contacted: true` immediately and the batch keeps
+going) · `resend_cooldown` (withdrawn-invite cooldown, parked ~21 d).
 If LinkedIn shows a **limit** (weekly invite or personalized-note cap) or a
 **restriction** page, the run **STOPS immediately** and does not mark that member — it
 never hammers.
+
+### The email-verification wall (per member, NEVER the account) — 2026-08-30
+
+Some members set a privacy option that makes LinkedIn demand **their email address** to
+prove you know them before an invite can be sent. We never have it, so those members can
+never be invited and are retired from the queue on sight. It shows up two ways, and the
+script now catches both:
+
+- **no note field** — the modal replaces the note textarea with the email prompt;
+- **note field, but `Send` stays disabled** until the email is filled in.
+
+Detection is **structural first** (an `input[type=email]`-style field inside the connect
+dialog), because the copy is personalised — "enter **David's** email address" — and the
+old fixed-phrase test (`enter their email`) sailed straight past the possessive form.
+
+**Why this matters far beyond one skipped member.** Until 2026-08-30 a gated member fell
+through to a fallback that matched `reached the limit|upgrade to|premium` against the
+**whole page body**. LinkedIn's own left rail advertises "Try Premium for free" on every
+profile, so that fallback matched page furniture and reported the account-wide
+**weekly invite cap**, halting the entire run and sending zero invites. It fired on
+2026-08-25, 08-28 and 08-30; the week it "capped" us we had sent **72** invites against a
+~100–200 ceiling, and invites flowed normally again the next day each time. Both limit
+tests are now scoped to the dialog (`dialog_text()`), and the bare `premium` / `upgrade
+to` alternatives are gone permanently. **Never match limit wording against the whole
+body** — the same trap already caught the resend-cooldown modal on 2026-08-05.
+
+A `Send`-click timeout is the other tell: it used to surface as a bare
+`Locator.click: Timeout 6000ms exceeded`, which reads as transient, so a gated member was
+retried every single run and burned a profile view each time against the ~120/24 h budget.
 
 ## Hard limits (LinkedIn, not the script)
 
 - Personalized-note invites require **Premium** (Mike has it). Free accounts are
   capped at ~5 notes/month.
-- There is still a **weekly invitation cap** (~100–200) regardless of notes.
+- There is still a **weekly invitation cap** (~100–200) regardless of notes. Before
+  believing a run that reports hitting it, **check the actual weekly send count** in
+  `data/lane_runs.json` (`summary.sent` per lane-3 run): three "limit" reports in
+  Aug 2026 were false positives at only 72 sends that week (see the email-verification
+  section above). A real cap should not be reachable at 30/day.
 - Each invite is also a profile view, so it counts toward the same **volume** limit
   that restricted the scraper on 2026-06-27 — no fixed daily cap, but stay volume-aware,
   and don't run a big scrape and a batch of invites on the same day if it pushes total

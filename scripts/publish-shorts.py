@@ -13,7 +13,7 @@ from the batch progress JSON when available. `hook`, `caption`, and `tags` are l
 
 --meta (Wave 5, 2026-08-07): the judgment fields can instead be AUTHORED BEFORE the run in
 shorts/<batch>/publish-meta.json (auto-discovered; --meta to point elsewhere) — the same
-seam contract as longform-meta.json for the intake graph:
+handoff contract as longform-meta.json for the intake graph:
 
     {"batch": "<batch>", "clips": [{"slug": "...", "title": "optional override",
       "hook": "...", "caption": "...", "tags": [...], "related_longform_url": "optional"}]}
@@ -31,7 +31,11 @@ Example:
     python scripts/publish-shorts.py meme-coins
     python scripts/publish-shorts.py meme-coins --date 2026-05-28 --dry-run
 
-Idempotent: skips ids already in shorts.json and never overwrites an MP4 already copied.
+Idempotent: skips ids already in shorts.json and never overwrites an MP4 already copied. That
+makes INCREMENTAL publishing safe: run it again as each short finishes and it stages only the new
+ones, provided --date stays constant (ids are <prefix>-<date>-<slug>, so a changed date re-queues
+everything under new ids). Pair it with --only-slugs so a render that is on disk but NOT cleared
+for publish (blocked, superseded, mid-rebuild) can never be swept in.
 """
 import argparse
 import datetime as dt
@@ -192,6 +196,12 @@ def main():
     ap.add_argument("--meta", default=None,
                     help="publish-meta.json with hook/caption/tags per clip "
                          "(default: video-creation/shorts/<batch>/publish-meta.json if present)")
+    ap.add_argument("--only-slugs", default=None,
+                    help="comma-separated slugs to stage; everything else in the render folder is "
+                         "IGNORED. This is how INCREMENTAL publishing stays safe: a finished mp4 "
+                         "on disk is NOT a completion signal (a blocked or superseded render can "
+                         "be sitting right next to a good one), so the caller passes the set that "
+                         "is actually 7-built with a PASS gate. Omit to stage every mp4 present.")
     ap.add_argument("--dry-run", action="store_true", help="print what would happen; write nothing")
     args = ap.parse_args()
 
@@ -223,6 +233,22 @@ def main():
                   key=sort_key)
     if not mp4s:
         raise SystemExit(f"ERROR: no .mp4 files in {src_dir}")
+
+    if args.only_slugs:
+        wanted = {x.strip() for x in args.only_slugs.split(",") if x.strip()}
+        held_back = [p.name for p in mp4s if slug_from_filename(p.stem) not in wanted]
+        mp4s = [p for p in mp4s if slug_from_filename(p.stem) in wanted]
+        if not mp4s:
+            raise SystemExit(
+                f"ERROR: --only-slugs matched no render in {src_dir}; "
+                f"wanted: {sorted(wanted)}")
+        missing = sorted(wanted - {slug_from_filename(p.stem) for p in mp4s})
+        if missing:
+            print(f"  NOTE   : {len(missing)} requested slug(s) have no render yet: "
+                  f"{', '.join(missing)}")
+        if held_back:
+            print(f"  HELD   : {len(held_back)} render(s) present but NOT staged "
+                  f"(not in --only-slugs): {', '.join(held_back)}")
 
     titles = load_titles(progress_json)
     meta_path = Path(args.meta) if args.meta else (

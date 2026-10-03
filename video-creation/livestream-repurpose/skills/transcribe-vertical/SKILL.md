@@ -9,7 +9,7 @@ _Moved VERBATIM from `video-creation/SKILL.md` on 2026-07-08 (Mike: per-track sk
 > derived artifact inherits the corrections. It mechanizes the DETERMINISTIC tier of Step 3
 > (tau->TAO, Casper->Kaspa, GhostDAG, D-Agent AI — auto-fixed, counts reported) and only FLAGS
 > kaspy/kasy/kappy/kasper with timestamps (real KRC20 token names; token-vs-mishear is a human
-> call at the Phase 2->3 seam — the graph report lists every flag; adjudicate them before
+> call at the Phase 2->3 HITL gate — the graph report lists every flag; adjudicate them before
 > Phase 3). The prose below remains the SPEC and the manual fallback.
 
 ## Phase 2 — Transcribe the vertical livestream

@@ -1,7 +1,7 @@
 # post_fb_short.py — CANONICAL Python port of post-fb-short.js (2026-08-11,
-# posting-tail migration; the JS twin is FROZEN rollback). Status: PORTED,
-# BLESS-PENDING — invoke the JS twin for production posts until this port is
-# live-blessed with one real post.
+# posting-tail migration; the JS twin is FROZEN rollback). Status: ✅ LIVE-BLESSED
+# 2026-08-28 — this port is the production Facebook shorts poster. The JS twin
+# still has the neighbour-URL capture bug; do NOT fall back to it.
 #
 # Uploads one pending Facebook video from data/shorts.json.
 #
@@ -19,6 +19,10 @@
 #     (Page-level "Photo/video" tabs are NEVER picked up).
 #   - When multiple buttons share the same aria-label (off-screen stacked
 #     wizard pages do this), pick the largest visible area.
+#   - URL capture by BASELINE DIFF (2026-08-28, ported from
+#     upload_longform_facebook.py): snapshot every video/reel id on /videos
+#     BEFORE the upload, then poll after Share until an id appears that is not
+#     in that baseline. See divergence (c) below.
 #   - Post-publish verification: navigate to the captured URL and confirm
 #     the video page loads (HTTP 200 + video player element present).
 #
@@ -28,11 +32,20 @@
 # same exit codes (implicit 0 on every non-error path — this script never calls
 # an explicit success exit, matching the JS twin exactly).
 # Documented divergences ONLY: (a) final machine line (POST OK/FAIL) for the
-# LangGraph wrapper to parse; (b) this header/status block.
+# LangGraph wrapper to parse; (b) this header/status block; (c) URL capture is a
+# baseline diff, NOT the JS twin's top-of-/videos grab (2026-08-28). The JS
+# capture races Facebook's processing: while the new reel is still processing it
+# has not surfaced, so the top of the list is the PREVIOUS short, and that URL
+# got recorded and "verified" as ours (2026-08-10 duplicate pair; again
+# 2026-08-28 on ewp-20260827-october-zombies-impact). This is a deliberate
+# behavioral fix, not an accidental drift, and it carries one write-back change:
+# submitted-but-no-URL is posted_unverified (never re-post) instead of failed.
 import json
 import os
 import random
+import re
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -46,7 +59,7 @@ HERE = Path(__file__).resolve().parent
 SHORTS_JSON = HERE.parent / "data" / "shorts.json"
 CHROME_PROFILE = r"C:\Users\mnede\AppData\Local\Google\Chrome\fbbot-profile"
 WORKSPACE_ROOT = Path(r"C:\Users\mnede\Documents\Claude\social-media\schedule-tweets")
-DEBUG_DIR = WORKSPACE_ROOT / "tmp-fb-debug"
+DEBUG_DIR = WORKSPACE_ROOT / "tmp" / "fb-debug"
 FB_PAGE = "realCodeMonkeyMike"
 PAGE_URL = f"https://www.facebook.com/{FB_PAGE}/"
 PLATFORM = "facebook"
@@ -62,12 +75,57 @@ PRE_POST_MIN = int(os.environ.get("FB_PRE_POST_MIN") or 60000)    # ms before en
 PRE_POST_MAX = int(os.environ.get("FB_PRE_POST_MAX") or 180000)
 VIDEOS_TAB_WAIT_MIN = int(os.environ.get("FB_VIDEOS_TAB_WAIT_MIN") or 5000)    # ms between page load and link scrape
 VIDEOS_TAB_WAIT_MAX = int(os.environ.get("FB_VIDEOS_TAB_WAIT_MAX") or 9000)
+# Baseline-diff poll (2026-08-28). A short surfaces on /videos far faster than a
+# longform, so the budget is 10 min (the longform uploader polls 25).
+POLL_TIMEOUT_MS = int(os.environ.get("FB_POLL_TIMEOUT_MS") or 600_000)
+POLL_INTERVAL_MS = int(os.environ.get("FB_POLL_INTERVAL_MS") or 30_000)
 
 DEBUG_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def rnd(a, b):
     return random.randint(a, b)
+
+
+def get_video_ids(page):
+    """Every video/reel id currently linked on the page (ported from
+    upload_longform_facebook.py, which has always baseline-diffed)."""
+    return page.evaluate(
+        "() => { const ids = new Set();"
+        " for (const a of document.querySelectorAll('a[href*=\"/videos/\"], a[href*=\"/reel/\"]')) {"
+        " const m = a.href.split('?')[0].match(/\\/(?:videos|reel)\\/(\\d+)/);"
+        " if (m) ids.add(m[1]); } return [...ids]; }")
+
+
+def poll_for_new_video(page, baseline_set, timeout_ms=POLL_TIMEOUT_MS,
+                       interval_ms=POLL_INTERVAL_MS):
+    """Poll /videos until an id appears that was NOT in the pre-upload baseline.
+
+    Returns that URL, or None if nothing new surfaced inside the window. Never
+    returns a pre-existing video: that is the whole point — grabbing the top of
+    the list races Facebook's processing and silently records the PREVIOUS
+    short's URL (observed 2026-08-10 and again 2026-08-28).
+    """
+    start = time.monotonic()
+    while (time.monotonic() - start) * 1000 < timeout_ms:
+        try:
+            page.goto(f"https://www.facebook.com/{FB_PAGE}/videos",
+                      wait_until="domcontentloaded")
+            page.wait_for_timeout(rnd(VIDEOS_TAB_WAIT_MIN, VIDEOS_TAB_WAIT_MAX))
+            hrefs = page.evaluate(
+                "() => [...document.querySelectorAll('a[href*=\"/videos/\"], "
+                "a[href*=\"/reel/\"]')].map(a => a.href.split('?')[0])")
+            for href in hrefs:
+                m = re.search(r"/(?:videos|reel)/(\d+)", href)
+                if m and m.group(1) not in baseline_set:
+                    print(f"  [poll] NEW video: {href}", flush=True)
+                    return href
+            print(f"  [poll] {round(time.monotonic() - start)}s — no new video yet "
+                  "(processing)...", flush=True)
+        except Exception as e:
+            print(f"  [poll] error: {e}", flush=True)
+        page.wait_for_timeout(interval_ms)
+    return None
 
 
 def now_iso_z():
@@ -225,6 +283,29 @@ def main():
 
             if is_logged_out():
                 raise RuntimeError("Not logged in — sign in to fbbot-profile manually")
+
+            # -- Baseline video IDs (BEFORE the upload) --------------------------------
+            # Must be captured pre-upload: the post-Share capture is a diff against
+            # this set, so anything already on /videos can never be mistaken for ours.
+            print("Capturing baseline video IDs...", flush=True)
+            baseline_ids = set()
+            baseline_ok = False
+            try:
+                page.goto(f"https://www.facebook.com/{FB_PAGE}/videos",
+                          wait_until="domcontentloaded")
+                long_wait(page, VIDEOS_TAB_WAIT_MIN, VIDEOS_TAB_WAIT_MAX,
+                          "baseline videos settle")
+                baseline_ids = set(get_video_ids(page))
+                # An EMPTY baseline is not a valid baseline: it would make the diff
+                # match the first video on the tab, which is the original bug. The
+                # page always has prior videos, so zero means the scrape failed.
+                baseline_ok = len(baseline_ids) > 0
+                print(f"  baseline: {len(baseline_ids)} existing video/reel IDs"
+                      + ("" if baseline_ok else "  — EMPTY, diff will be skipped"))
+            except Exception as e:
+                print(f"  baseline capture failed: {e}")
+            page.goto(PAGE_URL, wait_until="domcontentloaded")
+            action_pause(page, "back to page")
 
             # Dismiss notifications & switch to Page
             page.keyboard.press("Escape")
@@ -393,24 +474,24 @@ def main():
                     print("  Submitted \u2713")
                     break
 
-            # -- Capture URL from Videos tab ---------------------------------------------------
-            print("\nCapturing video URL from /videos tab...", flush=True)
+            # -- Capture URL by BASELINE DIFF ---------------------------------------------------
+            # Ported from upload_longform_facebook.py (2026-08-28). The old capture took
+            # the top of /videos, which races Facebook's processing: while the new reel is
+            # still processing it has not surfaced, so the top of the list is the PREVIOUS
+            # short and that URL got recorded as ours (2026-08-10 duplicate pair; again
+            # 2026-08-28 on ewp-20260827-october-zombies-impact). Diffing against the
+            # pre-upload baseline cannot pick a pre-existing video by construction.
             video_url = None
-            try:
-                page.goto(f"https://www.facebook.com/{FB_PAGE}/videos", wait_until="domcontentloaded")
-                long_wait(page, VIDEOS_TAB_WAIT_MIN, VIDEOS_TAB_WAIT_MAX, "videos tab settle")
-                links = page.evaluate(
-                    "() => [...document.querySelectorAll('a[href]')]"
-                    ".map(a => a.href.split('?')[0])"
-                    ".filter(h => (h.includes('/videos/') || h.includes('/reel/')) && h.includes('facebook.com')"
-                    " && !h.endsWith('/videos') && !h.endsWith('/videos/') && !h.endsWith('/reel/'))"
-                    ".filter((h, i, arr) => arr.indexOf(h) === i)"
-                    ".slice(0, 3)")
-                print(f"  Recent video URLs: {links}")
-                if links:
-                    video_url = links[0]
-            except Exception as e:
-                print(f"  URL fetch error: {e}")
+            if baseline_ok:
+                print(f"\nPolling for the new video (baseline diff; up to "
+                      f"{POLL_TIMEOUT_MS // 60000} min)...", flush=True)
+                video_url = poll_for_new_video(page, baseline_ids)
+                if not video_url:
+                    print("  No new video surfaced in the poll window — recording no URL "
+                          "rather than a guess.")
+            else:
+                print("\nSkipping URL capture — no valid baseline to diff against. "
+                      "Recording no URL rather than a guess.", flush=True)
 
             # -- Post-publish verification ------------------------------------------------------
             # Navigate to the captured URL and confirm the page loads with a video.
@@ -444,12 +525,28 @@ def main():
             else:
                 print("  Skipping verification — no URL captured")
 
-            status = "posted" if (submitted and verified) else "failed"
+            # Status taxonomy (2026-08-28, alongside the baseline diff). The diff
+            # introduces an outcome the old top-of-list capture could not produce:
+            # Share went through but no new video surfaced inside the poll window,
+            # so there is no URL. That is NOT a failure. Marking it "failed" invites
+            # a re-post, i.e. a duplicate upload, which the standing rules forbid.
+            # It maps to posted_unverified with url=None, matching the blessed
+            # rumble/bitchute ports.
+            if submitted and verified:
+                status = "posted"
+            elif submitted:
+                status = "posted_unverified"
+            else:
+                status = "failed"
             short["platforms"][PLATFORM]["status"] = status
             short["platforms"][PLATFORM]["posted_at"] = now_iso_z()
             short["platforms"][PLATFORM]["url"] = video_url
             if not submitted:
                 short["platforms"][PLATFORM]["error"] = "posting spinner did not clear"
+            elif not video_url:
+                short["platforms"][PLATFORM]["error"] = (
+                    "submitted but no new video surfaced in the baseline-diff window; "
+                    "no URL recorded (recapture from the Videos tab)")
             elif not verified:
                 short["platforms"][PLATFORM]["error"] = f"URL captured but verification failed: {video_url}"
             else:
@@ -457,12 +554,19 @@ def main():
             save(data)
 
             if submitted and verified:
-                print(f"\nDone \u2713  URL: {video_url}")
+                print(f"\nDone ✓  URL: {video_url}")
+            elif submitted:
+                print(f"\nposted_unverified — upload submitted, URL not confirmed. "
+                      f"URL: {video_url or '(not captured)'}. Do NOT re-post; "
+                      "recapture from the Videos tab.")
             else:
                 print(f"\nUncertain — verify manually. URL: {video_url or '(not captured)'}")
 
             if status == "posted":
                 print(f"POST OK platform=facebook url={video_url}", flush=True)
+            elif status == "posted_unverified":
+                print(f"POST OK platform=facebook url={video_url or 'none'} "
+                      "status=posted_unverified", flush=True)
             else:
                 reason = short["platforms"][PLATFORM].get("error") or "unknown"
                 print(f"POST FAIL platform=facebook reason={reason[:120]}", flush=True)

@@ -1,0 +1,22 @@
+{
+ "src": "video-creation/longform-edited/media/golden-kitty/spine/ALL.f.cut.mp4",
+ "pickup": "video-creation/longform-edited/media/golden-kitty/raw/December.mkv",
+ "what": "AUDIO-ONLY replacement of 'And in December of 2025,' with the pickup 'And in December of 2015' (CH2 Beat 1, a COVER line). Same length in and out, so the video stream is copied untouched and every timecode after the splice is unchanged.",
+ "replaced_span_on_src": [
+  59.54,
+  61.6
+ ],
+ "pickup_span": [
+  1.575,
+  3.635
+ ],
+ "length_s": 2.06,
+ "gain_db": 0.0,
+ "levels": {
+  "src_phrase_mean_db": -19.7,
+  "pickup_phrase_mean_db": -19.9
+ },
+ "video": "stream copy (14108 frames, 30/1), black cover under the whole span",
+ "audio": "atrim + concat in one filter_complex, 8 ms fades on the pickup edges, AAC 44.1 kHz stereo",
+ "verified_on_output": "both joins sit in silence (-79 dB at 59.54, -118 dB at 61.60); Whisper medium reads 'And in December of 2015, Product Hunt held its first ever awards, voted on by its own community.'"
+}

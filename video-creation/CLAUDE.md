@@ -21,7 +21,7 @@ deleted on 2026-05-25.
 **ALL reusable, cross-cutting video-creation skills live in `skills/`** (canonical copies committed to
 the repo so they travel with a checkout; `skills/README.md` is the index): `captions`, `defumbler`,
 `desilencer`, `elevenlabs-lipsync`, `envato-broll`, `gaze`, `higgsfield-generate`, `higgsfield-soul-id`,
-`higgsfield-voice`, `music-sourcing`. Skills with a `/command` (`/defumbler`, `/higgsfield-generate`,
+`higgsfield-voice`, `music-sourcing`, `usage-ledger`. Skills with a `/command` (`/defumbler`, `/higgsfield-generate`,
 `/higgsfield-soul-id`) have a 3-line pointer under `.claude/skills/<name>/SKILL.md` that points back to
 `skills/`; the rest are read directly via this routing table or the track docs.
 

@@ -67,9 +67,11 @@ LANE_RUNS_KEEP = 500
 LANE_NAMES = {1: "intake", 2: "cut", 3: "tighten", 4: "finish",
               5: "publish",   # 2-5 = Lane 2 shorts segments (shorts_graph.py)
               6: "repurpose",  # 6 = Lane 3 text/image (repurpose_graph.py, Wave 6)
-              7: "post"}       # 7 = posting tail (posting_graph.py, 2026-08-11)
+              7: "post",       # 7 = posting tail (posting_graph.py, 2026-08-11)
+              8: "lane3",      # 8 = Lane 3 wrapper: drafter agent -> repurpose -> visual-qa
+              9: "batch"}      # 9 = the BATCH ORCHESTRATOR (batch_graph.py, 2026-09-10)
 LANE_SUMMARY_KEY = {1: "intake", 2: "cut", 3: "tighten", 4: "finish", 5: "publish",
-                    6: "repurpose", 7: "post"}
+                    6: "repurpose", 7: "post", 8: "lane3", 9: "batch"}
 
 PROGRESS_RE = re.compile(r"^PROGRESS (\d+)%")
 WHISPER_TS_RE = re.compile(r"^\[(\d+):(\d+)(?:\.\d+)? -->")
@@ -89,7 +91,7 @@ class IntakeState(TypedDict, total=False):
     media_dir: str
     stem: str                # folder name = the load-bearing artifact name
     slug: str                # no-spaces slug (staged folder, longs id, batch id)
-    meta_path: str           # longform-meta.json (title/description/tags seam artifact)
+    meta_path: str           # longform-meta.json (title/description/tags handoff artifact)
     min_sil: float           # the desilencer's ONE knob — caller-specified, never defaulted
     skip_longform: bool
     cpu_verticalize: bool
@@ -324,7 +326,7 @@ def _stub_script(node: str, kind: str) -> str:
                        'print("[74:00.000 --> 74:07.000]  stub end")'],
         "derive": ['print("GLOSSARY fixes: Kaspa:3 TAO:12")',
                    "print(\"FLAG 'kaspy' x2 at [01:10.00, 44:02.10] — real KRC20 token or "
-                   'Kaspa mishear? Human call at the Phase 3 seam; NOT auto-changed.")',
+                   'Kaspa mishear? Human call at the Phase 3 HITL gate; NOT auto-changed.")',
                    'print("3 chunks (90s windows) -> stub")'],
     }[node]
     return "\n".join(lines)
@@ -521,8 +523,24 @@ def verify_vertical(state: IntakeState) -> IntakeState:
 def transcribe(state: IntakeState) -> IntakeState:
     """Phase 2 Step 1: local Whisper (small, word timestamps) on the VERTICAL."""
     Path(state["tdir"]).mkdir(parents=True, exist_ok=True)
+    if not state.get("stub"):
+        existing = _read_json(state["tjson"], None)
+        if isinstance(existing, dict) and existing.get("segments"):
+            words = sum(len(s.get("words", [])) for s in existing["segments"])
+            last_end = max((s.get("end", 0) for s in existing["segments"]), default=0)
+            md = state.get("master_duration_s") or 0
+            if words > 0 and (not md or last_end >= 0.8 * md):
+                print(f"SKIP transcribe: valid transcript already on disk "
+                      f"({words} words, covers {last_end:.0f}s)", flush=True)
+                return {"transcribe_out": {"output_tail": "(skipped — already on disk)"},
+                        "status": "running"}
+    # --language en is mandatory: auto-detect samples the first 30s of a stream, which
+    # is often intro music/noise, and once misread it as Khmer and produced a full
+    # garbage transcript that would have passed verify_transcribe (which checks only
+    # word count + coverage, not correctness). Every other whisper call in the repo pins
+    # the language; this was the lone outlier. (ready-for-pumps, 2026-09-14)
     real = [sys.executable, "-u", "-m", "whisper", state["vertical"],
-            "--model", "small", "--word_timestamps", "True",
+            "--model", "small", "--language", "en", "--word_timestamps", "True",
             "--output_format", "json", "--output_dir", state["tdir"]]
     cmd = _cmd_for(state, "transcribe", real)
     rc, output = _run_streaming(cmd, node="transcribe", stub=state.get("stub", ""),

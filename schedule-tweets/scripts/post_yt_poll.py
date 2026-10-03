@@ -22,6 +22,15 @@
 # visible button) resolved by waiting for an enabled non-zero-rect button, same post-check URL
 # diff (no body/image verification — that's the community poster only). Documented divergences
 # ONLY: final machine line (POST OK/FAIL platform=yt-poll) for the graph.
+#
+# 2026-08-30 — port defect fixed BEFORE it ever ran: `wait_for_function`'s `arg` was passed
+# positionally (it is keyword-only in playwright.sync_api, unlike the JS twin's positional 2nd
+# parameter), which crashes the add-option loop on a poll with 3+ options. Nothing had exercised
+# it because the port is bless-pending and the JS twin does production polls. Found when the
+# identical line crashed post_yt_quiz.py. Probed the same day (scripts/_diag_yt_poll_viewmodel.py):
+# the text-poll composer has NOT followed the quiz onto the ViewModel components — `ytd-poll-attachment`
+# and `tp-yt-paper-input.poll-option-input input` are still the live widget, so every selector below
+# remains correct and the JS twin still posts fine.
 import json
 import math
 import os
@@ -278,9 +287,14 @@ def main():
                     except Exception:
                         pass
                     robust_click(add_btn, "#add-option")
+                    # `arg` is KEYWORD-ONLY on playwright.sync_api (unlike the JS twin's positional
+                    # second parameter). Passing it positionally raises "takes 2 positional arguments
+                    # but 3 were given". Latent since the 2026-08-11 port and only reachable on a 3rd
+                    # option, so no poll had ever hit it; found 2026-08-30 when the identical defect
+                    # crashed post_yt_quiz.py's 3rd option.
                     page.wait_for_function(
                         "({ sel, n }) => document.querySelectorAll(sel).length > n",
-                        {"sel": opt_input_sel, "n": current_inputs},
+                        arg={"sel": opt_input_sel, "n": current_inputs},
                         timeout=8000,
                     )
                     current_inputs = page.locator(opt_input_sel).count()

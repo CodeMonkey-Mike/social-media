@@ -16,7 +16,9 @@ Two tiers — this split is the point:
   FLAG ONLY (reported with timestamps, NEVER auto-changed): kaspy / kasy / kappy /
     kasper. These look like Kaspa mishears but are REAL KRC20 token names from the
     persona glossary — whether Mike said the token or Whisper misheard "Kaspa" is a
-    judgment call, made by a human/Claude at the Phase 2->3 seam, not by a regex.
+    judgment call, made by a human/Claude at the Phase 2->3 HITL gate, not by a regex.
+    Also flagged: zcash / "z cash" — Whisper's spelling of "zKAS" (batch uptober,
+    2026-10-01); ask Mike which he said before any Zcash content is drafted.
 
 Single-word fixes edit word tokens + segment text; bigram fixes MERGE the word pair
 into one token (first token keeps its start, absorbs the second's end, second token
@@ -43,7 +45,15 @@ BIGRAMS = {("ghost", "dag"): "GhostDAG", ("ghost", "dagg"): "GhostDAG",
            ("dag", "ai"): "D-Agent AI", ("de-agent", "ai"): "D-Agent AI",
            ("dagent", "ai"): "D-Agent AI"}
 TRIGRAMS = {("de", "agent", "ai"): "D-Agent AI"}
-FLAGS = ("kaspy", "kasy", "kappy", "kasper")
+FLAGS = ("kaspy", "kasy", "kappy", "kasper", "zcash")
+# (first, second) word pairs flagged as one hit (Whisper splits "z cash")
+FLAG_BIGRAMS = {("z", "cash"): "zcash"}
+KRC20_NOTE = "real KRC20 token or Kaspa mishear? Human call at the Phase 3 HITL gate"
+FLAG_NOTES = {
+    # 2026-10-01 batch uptober: Mike said "zKAS", Whisper wrote "zcash" every time, and
+    # Lane 3 shipped a Zcash-vs-Kaspa thread/posts/polls built on a coin he never discussed.
+    "zcash": "zKAS mishear or a real Zcash mention? ASK MIKE before any Zcash content",
+}
 
 # segment/full-text regex equivalents (word-boundary, case-insensitive)
 TEXT_RULES = [
@@ -102,7 +112,9 @@ def fix_words(words, counts, flags):
             counts[SINGLES[c1]] = counts.get(SINGLES[c1], 0) + 1
             i += 1
             continue
-        if c1 in FLAGS:
+        if c1 and c2 and (c1, c2) in FLAG_BIGRAMS:
+            flags.setdefault(FLAG_BIGRAMS[(c1, c2)], []).append(words[i].get("start", 0.0))
+        elif c1 in FLAGS:
             flags.setdefault(c1, []).append(words[i].get("start", 0.0))
         out.append(words[i])
         i += 1
@@ -147,8 +159,8 @@ def main():
     print(f"GLOSSARY fixes: {summary}{' (dry-run, not written)' if args.dry_run else ''}")
     for word, times in sorted(flags.items()):
         shown = ", ".join(fmt_ts(t) for t in times[:8]) + (" ..." if len(times) > 8 else "")
-        print(f"FLAG '{word}' x{len(times)} at [{shown}] — real KRC20 token or Kaspa "
-              "mishear? Human call at the Phase 3 seam; NOT auto-changed.")
+        print(f"FLAG '{word}' x{len(times)} at [{shown}] — "
+              f"{FLAG_NOTES.get(word, KRC20_NOTE)}; NOT auto-changed.")
     if not flags:
         print("FLAG none")
 

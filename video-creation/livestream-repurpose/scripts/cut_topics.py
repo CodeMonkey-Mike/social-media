@@ -14,7 +14,7 @@ Reads shorts/<batch>/clip-plan.json (the clip-strategist's judgment artifact) an
             progress.json — refuses to clobber a progress.json already past the cut phase
   all       both (the manual one-shot; the graph runs the stages as separate nodes)
 
-Stops at clip generation. Phase 4b (Mike's dashboard review) is the seam — no tighten,
+Stops at clip generation. Phase 4b (Mike's dashboard review) is the HITL gate — no tighten,
 no captions, no render here.
 
 Usage:

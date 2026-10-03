@@ -45,7 +45,7 @@
   <div class="legend">
     <span><span class="sw w"></span> graph work node</span>
     <span><span class="sw v"></span> verify_* node (re-checks from disk)</span>
-    <span><span class="sw a"></span> judgment (agent / orchestrator)</span>
+    <span><span class="sw a"></span> HITL gate or agent handoff (human/agent work outside the graphs)</span>
     <span><span class="sw d"></span> decision</span>
     <span><span class="sw h"></span> halt / dropped</span>
     <span><span class="sw k"></span> done</span>
@@ -158,15 +158,16 @@ flowchart TD
   f_vfin -. "any failure: halt" .-> hf(["failed run"]):::halt
 
   f_vfin --> P7["Phase 7: one remotion-builder agent per clip<br/>captions · b-roll via gen_batch.py · SFX · render<br/>(stage locks serialize chatgpt + render)"]:::agent
+  P7 -.- P2T[/"PHASE 2 TARGET (decided 2026-08-12):<br/>FINISH + builds + PUBLISH merge into ONE StateGraph<br/>(per-clip fan-out; 4b · 2nd review · POSTING stay the only invocation boundaries)"/]:::agent
   P7 --> GATE{"finalized-short gate:<br/>PASS for this clip?"}
   GATE -- "no: builder iterates" --> P7
   GATE -- "yes, all clips" --> PFD{"publish front door: EVERY clip 7-built<br/>with PASS? date not already staged?"}
   PFD -- "no" --> PFX(["REFUSES: 'an mp4 on disk is not a<br/>completion signal' — back to builders ↺"]):::halt
-  PFD -- "yes" --> p_pub
+  PFD -- "yes" --> p_blt
 
   subgraph GP["PUBLISH StateGraph — run.py publish · segment 5"]
     direction TB
-    p_pub["publish"]:::wnode --> p_vpub["verify_publish"]:::vnode --> p_lint["lint"]:::wnode --> p_vlint["verify_lint"]:::vnode
+    p_blt["frontier<br/>(builder-frontier re-check from disk)"]:::wnode --> p_vblt["verify_frontier"]:::vnode --> p_pub["publish"]:::wnode --> p_vpub["verify_publish"]:::vnode --> p_lint["lint"]:::wnode --> p_vlint["verify_lint"]:::vnode
   end
   p_vlint -. "any failure: halt" .-> hp(["failed run"]):::halt
 

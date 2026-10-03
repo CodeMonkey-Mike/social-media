@@ -1,0 +1,11 @@
+gate: constants-spon-spawn-my-own-members-hate-it.ts | duration 82.2s | 17 distinct staticFile refs
+  ok  thumbnail: thumb-spon1-cover.png
+  ok  b-roll assets: 8 (>= 1 required)
+  ok  sfx refs: 6
+  ok  WARN unreferenced assets in public-dir (orphans): ['broll-gk2-billion-colossus.png', 'broll-gk2-candle-rocket.png', 'broll-gk2-dispersed-map.png', 'broll-gk2-hook-rug-yank.png', 'broll-gk2-hundred-million-cliff.png']
+  ok  zone b-roll: 8 beat(s) in BrollEv[] (coverage present)
+PASS
+BATCH FRONTIER: this PASS completes the batch - all 5 clip(s) built with PASS gates.
+  NEXT (mechanical - do NOT wait for a render-review gate): verify shorts/spon/publish-meta.json exists, then run:
+    python video-creation/livestream-repurpose/graph/run.py publish --batch spon
+  Staging IS Mike's review handoff (2026-08-07): he reviews from the :8766 queue; only POSTING is his gate.

@@ -12,7 +12,84 @@ location, and capture the ones in **Europe / North America / South America / the
 Caribbean** into `members.json` as `{ profile_url, location }`. A later (separate)
 script will message the captured members using only their `profile_url`.
 
-## Current state (as of 2026-09-23, after the Lane 2/3/4/5 run — see entry below)
+## Current state (as of 2026-10-02, after the Lane 2/3/4/5 run — see entry below)
+- **2026-10-02 run — Mike's ask: Lane 2=25, Lane 3=30, Lane 4, Lane 5.** All four
+  lanes clean in one shot each, no restriction, no relaunches. Lane 2 (scrape 25):
+  detached, 25 visited, +25 processed, 5 skipped out-of-zone, 1 retired on 2nd 404
+  strike, 0 errors, **+19 captured** (total 1771: 8 europe, 10 north_america, 1
+  south_america). 3404 still to process. Lane 3 (invite 30): detached, 30
+  visited, **27 sent**, 2 errors (retry next run; the first was a 404 landing), no
+  weekly limit. 353 still to contact. Lane 4: foreground, 6 scroll rounds, 20
+  cards, **+16 connected** (507→523; 12 dated 2026-10-01, 4 dated today). 895
+  still awaiting acceptance. Lane 5: gate selected 43 (>14d), auto-capped at the
+  oldest 10; detached — **10 endorsed (99 skills), 10 DM'd**, 0 no_skills, 0
+  errors. Pool left: 33 >14d, 46 at 7-14d, 56 <7d. Day volume ≈ 25 + 30 + 10 =
+  **65**, under the ~120 threshold.
+- **2026-10-01 run — Mike's ask: Lane 2=30, Lane 3=30, Lane 4, Lane 5.** No
+  restriction in any lane. Lane 2 (scrape 30): detached, ~200s pacing (~2.5h), 30
+  visited, +29 processed, 10 skipped out-of-zone, 1 404 strike-1, 1 retired on 2nd
+  404 strike, 0 errors, **+18 captured** (total 1752: 8 south_america, 8
+  north_america, 2 europe). 3429 still to process. Lane 3 (invite 30): detached, 30
+  visited, **27 sent**, 1 retired on the email-verification wall, 2 errors (retry
+  next run), no weekly limit. 361 still to contact. Lane 4: foreground, 6 scroll
+  rounds, 20 cards, **+8 connected** (499→507; 1 no date, recorded as observed
+  today). 884 still awaiting acceptance. Lane 5: gate selected 44 (>14d),
+  auto-capped at the oldest 10; detached. **First attempt died at member 7/10:
+  `Page.wait_for_timeout: Target page, context or browser has been closed`** (the
+  li-bot-profile Chrome window closed mid-member, right after Angie's 10
+  endorsements and before her DM). NOT a restriction (no restriction phrasing),
+  NOT whole-machine loss (other chrome/python processes survived), no orphan bot
+  Chrome; cause unverified. Disk state was lossless: 6 members fully done, Angie
+  endorsed with no `dm_sent_at`. Recovery = ONE relaunch with explicit `--max 4`
+  (a bare relaunch would have taken a fresh 10 and passed the 10/day ceiling);
+  `_eligible` keys on `dm_sent_at` and the endorse phase skips already-endorsed
+  members, so Angie resumed at the DM with no duplicate endorsements. Relaunch
+  clean: 4 DM'd, 3 newly endorsed (25 skills). **Day total: 10 endorsed, 10
+  DM'd**, 0 no_skills, 0 errors. Pool left: 34 >14d, 48 at 7-14d, 47 <7d. Day
+  volume ≈ 30 + 30 + 11 = **~71**, under the ~120 threshold.
+- **2026-09-29 run — Mike's ask: Lane 2=40, Lane 3=30, Lane 4, Lane 5.** All four
+  lanes clean in one shot each, no restriction. Lane 2 (scrape 40): detached, 40
+  visited, +40 processed, 12 skipped out-of-zone, 1 retired on 2nd 404 strike, 0
+  errors, **+27 captured** (total 1714: 20 north_america, 7 europe). 3492 still to
+  process. Lane 3 (invite 30): detached, 30 visited, **27 sent**, 1 email-verification
+  wall, 2 errors (retry next run), no weekly limit. 379 still to contact. Lane 4:
+  foreground, 6 scroll rounds, 20 cards, **+6 connected** (480→486). 849 still
+  awaiting acceptance. Lane 5: gate selected 37 (>14d), auto-capped at the oldest
+  10; detached — **10 endorsed (99 skills), 10 DM'd**, 0 no_skills, 0 errors. Pool
+  left: 27 >14d, 58 at 7-14d, 43 <7d. Day volume ≈ 40 + 30 + 10 = **80**, under
+  the ~120 threshold.
+- **2026-09-28 run — Mike's ask: Lane 2=40, Lane 3=30, Lane 4, Lane 5.** All four
+  lanes clean in one shot each, no restriction. Lane 2 (scrape 40): detached, 40
+  visited, +39 processed, 24 skipped out-of-zone, 1 404 strike-1, 0 retired, 0
+  errors, **+15 captured** (total 1687: 10 north_america, 4 europe, 1
+  south_america). 3532 still to process. Lane 3 (invite 30): detached, 30
+  visited, **27 sent**, 2 errors (retry next run), no weekly limit. 380 still to
+  contact. Lane 4: foreground, 6 scroll rounds, 20 cards, **+16 connected**
+  (464→480; 5 no date, recorded as observed today). 827 still awaiting
+  acceptance. Lane 5: gate selected 39 (>14d), auto-capped at the oldest 10;
+  detached — **10 endorsed (94 skills), 10 DM'd**, 0 no_skills, 0 errors. Pool
+  left: 29 >14d, 63 at 7-14d, 40 <7d. Day volume ≈ 40 + 30 + 10 = **80**, under
+  the ~120 threshold.
+- **2026-09-25 run — Mike's ask: Lane 2=40, Lane 3=30, Lane 4, Lane 5.** All four
+  lanes clean in one shot each, no restriction. Lane 2 (scrape 40): detached, 40
+  visited, +39 processed, 15 skipped out-of-zone, 1 retired on 2nd 404 strike, 1
+  error (retry next run), **+23 captured** (total 1664: 11 north_america, 10
+  europe, 2 south_america). 3594 still to process. Lane 3 (invite 30): detached,
+  30 visited, **28 sent**, 2 errors (retry next run), no weekly limit. 384 still
+  to contact. Lane 4: foreground, 6 scroll rounds, 20 cards, **+6 connected**
+  (458→464; 1 no date, recorded as observed today). 816 still awaiting
+  acceptance. Lane 5: gate selected 28 (>14d), auto-capped at the oldest 10;
+  detached — **10 endorsed (99 skills), 10 DM'd**, 0 no_skills, 0 errors. Pool
+  left: 18 >14d, 70 at 7-14d, 38 <7d. Day volume ≈ 40 + 30 + 10 = **80**, under
+  the ~120 threshold.
+- **2026-09-24 run — Mike's ask: Lane 3=30, Lane 4, Lane 5 (no Lane 2).** All three
+  lanes clean in one shot each, no restriction. Lane 3 (invite 30): detached, 30
+  visited, **27 sent**, 1 retired on the email-verification wall, 2 errors (retry
+  next run), no weekly limit. 389 still to contact. Lane 4: foreground, 6 scroll
+  rounds, 20 cards, **+9 connected** (449→458). 794 still awaiting acceptance.
+  Lane 5: gate selected 37 (>14d), auto-capped at the oldest 10; detached — **9
+  endorsed (80 skills), 9 DM'd**, 1 no_skills (gary-robert-blue), 0 errors. Pool
+  left: 27 >14d, 66 at 7-14d, 37 <7d. Day volume ≈ 30 + 10 = **40**.
 - **2026-09-23 run — Mike's ask: Lane 2=60, Lane 3=30, Lane 4, Lane 5.** All four
   lanes clean in one shot each, no restriction. Lane 2 (scrape 60): detached, ~200s
   pacing (~4h), 60 visited, +59 processed, 24 skipped out-of-zone, 1 404 strike-1,

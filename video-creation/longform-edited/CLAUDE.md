@@ -63,6 +63,10 @@ do NOT render-then-explain-it-as-an-open-item.
      the effect is just missing. Engines read the dirs out of `row.params`, NOT off the row, which is why
      eyeballing top-level keys passes on a broken render.) Deliberate supersessions declare
      `// TRANSITIONS_WAIVED: <id> — reason` in the comp.
+   - `python skills/comp-build/lint_face_reframe.py <comp.tsx> <assets/face-reframe.json>` (2026-10-01, Mike) — **FAILS** unless the
+     comp centres and zooms the face with the MEASURED transform (`scripts/measure_face_reframe.py` -> `assets/face-reframe.json`:
+     face on the horizontal centre, eye line ~40% down, small headroom, bars out of frame). Standard on every gated-face comp
+     (comp-build.md §3a); the graph measures in `comp_build` and gates in `verify_comp`.
    - `python skills/comp-build/lint_comp_imports.py <comp.tsx>` (2026-09-28, Mike) — **FAILS** if the comp imports ANY React file
      from another project: only packages, the shared `./transitions/*` + `./captions/*` infra and its own `<Project>*.tsx`
      files are allowed (old comps are recycled after publish; a cross-project import is a time bomb + copy drift).
@@ -135,6 +139,10 @@ reference files inside the same folder, no orphan files at the `skills/` level (
 - **`skills/doc-reference/lint_as_recorded.py`** (2026-09-27) — the AS-RECORDED.md format gate in code (required sections, every
   beat row marked KEPT / CHANGED / AD-LIB / DROPPED, timecodes within the final spine, FACE budget); the graph runs
   it in its `as_recorded` node right after the `as-recorded-author` agent writes the file.
+- **`../skills/usage-ledger/usage-ledger.md`** (2026-10-01) — VARIETY across videos. The graph reads and gates the usage
+  ledger (`video-creation/assets/usage-ledger.json`): `music_plan` and `transitions` FAIL a plan that repeats the previous
+  video's tracks, card move, melt look or spin look (waiver = Mike's `usage_waivers` in the plan), and `stage_longform`
+  records the delivered video. Strategists read `usage_ledger.py report` before they pick.
 - **`skills/doc-reference/lint_screenplay.py`** (2026-09-17) — the SCREENPLAY.md FORMAT gate in code (Convention 5 tag form
   with backticked tags, one job per line, beat signposts, required sections, no cold open, no em dashes,
   `--face-max N`); the longform graph runs it in its `screenplay` node, `--fix` repairs the mechanical class.

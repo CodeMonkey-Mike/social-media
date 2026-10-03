@@ -21,6 +21,7 @@
 #     SDK — no new dependency; identical request semantics, and an
 #     invalid_grant refresh error surfaces with the same wording.
 #   - Final machine line: POST OK/FAIL platform=yt_shorts.
+import html as _html
 import http.server
 import json
 import os
@@ -28,6 +29,7 @@ import re
 import subprocess
 import sys
 import threading
+import time
 import urllib.parse
 from datetime import datetime, timezone
 from pathlib import Path
@@ -48,6 +50,15 @@ CHANNEL_FILE = HERE.parent / "config" / "yt-channel.json"
 WORKSPACE = HERE.parent
 PLATFORM = "yt_shorts"
 UPLOAD_SCOPES = ["https://www.googleapis.com/auth/youtube.upload"]
+# youtube.readonly lets the pre-upload duplicate check use the Data API (playlistItems.list on
+# the channel's uploads playlist, 1 quota unit) instead of depending on YouTube's flaky public
+# RSS feed. Existing upload-only tokens keep working: the API check reports "insufficient scope"
+# and the public fallbacks take over until Mike re-consents once via scripts/yt-reauth.js.
+READ_SCOPES = ["https://www.googleapis.com/auth/youtube.readonly"]
+AUTH_SCOPES = UPLOAD_SCOPES + READ_SCOPES
+BROWSER_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/128.0 Safari/537.36")
+CHECK_ONLY = "--check-only" in sys.argv
 
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
@@ -115,7 +126,7 @@ def do_initial_auth(client_id, client_secret):
         "client_id": client_id, "redirect_uri": redirect_uri,
         "response_type": "code", "access_type": "offline",
         "prompt": "consent",   # forces refresh_token even on re-auth
-        "scope": " ".join(UPLOAD_SCOPES),
+        "scope": " ".join(AUTH_SCOPES),
     })
     print("\nOpen this URL in your browser to authorize (will auto-redirect back):")
     print(f"  {auth_url}\n", flush=True)
@@ -179,35 +190,158 @@ def get_channel_id():
     return cached["channelId"]
 
 
-def find_existing_upload(channel_id, target_title):
-    """Duplicate check via the channel's public RSS feed (last ~15 entries, no
-    auth) — enough to catch a recent re-upload of the same short."""
-    rss_url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
-    resp = requests.get(rss_url, timeout=30,
-                        headers={"User-Agent": "social-media-script/1.0"})
+def norm(s):
+    return re.sub(r"\s+", " ", (s or "").strip().lower())
+
+
+def _hit(video_id, title, published_at, source):
+    return {"videoId": video_id, "url": f"https://www.youtube.com/shorts/{video_id}",
+            "title": title, "publishedAt": published_at, "source": source}
+
+
+def _fetch(url):
+    resp = requests.get(url, timeout=30, headers={
+        "User-Agent": BROWSER_UA, "Accept-Language": "en-US,en;q=0.9"})
     if resp.status_code != 200:
-        raise RuntimeError(f"HTTP {resp.status_code} from {rss_url}")
-    xml = resp.text
+        raise RuntimeError(f"HTTP {resp.status_code} from {url}")
+    return resp.text
 
-    def norm(s):
-        return re.sub(r"\s+", " ", (s or "").strip().lower())
 
-    target = norm(target_title[:100])
-    for entry in xml.split("<entry>")[1:]:
-        entry = entry.split("</entry>")[0]
-        tm = re.search(r"<title>([\s\S]*?)</title>", entry)
-        title = (tm.group(1) if tm else "").strip()
-        if norm(title) != target:
+# ---- Pre-upload duplicate check --------------------------------------------------------------
+# Purpose: catch a recent re-upload of the same short (a prior run that uploaded but died before
+# flipping the row to 'posted'). Three independent sources, tried in order; the first one that
+# ANSWERS (match or clean "no match") wins. Only if EVERY source is unavailable do we refuse to
+# upload. Added 2026-09-11 after YouTube's public RSS feed 404/500'd for ~3 hours and blocked
+# three shorts that had already gone out to the other six platforms. Mirrors post-yt-short-api.js.
+
+def find_via_data_api(access_token, channel_id, target):
+    """Source 1: authenticated Data API. Uploads playlist id = channel id with UC -> UU
+    (documented YouTube convention). 1 quota unit. Needs youtube.readonly on the token; an
+    upload-only token gets a 403 and the caller falls through to the public sources."""
+    playlist_id = "UU" + channel_id[2:]
+    resp = requests.get(
+        "https://www.googleapis.com/youtube/v3/playlistItems",
+        params={"part": "snippet", "playlistId": playlist_id, "maxResults": 50},
+        headers={"Authorization": f"Bearer {access_token}"}, timeout=30)
+    if resp.status_code == 403:
+        raise RuntimeError("token lacks youtube.readonly (run `node scripts/yt-reauth.js` "
+                           "once to enable the authenticated check)")
+    if resp.status_code != 200:
+        raise RuntimeError(f"HTTP {resp.status_code} from playlistItems.list: {resp.text[:160]}")
+    for it in resp.json().get("items", []):
+        sn = it.get("snippet") or {}
+        if norm(sn.get("title")) != target:
             continue
-        vm = re.search(r"<yt:videoId>([\w-]+)</yt:videoId>", entry)
-        pm = re.search(r"<published>([\w\-:.+]+)</published>", entry)
-        if not vm:
-            continue
-        return {"videoId": vm.group(1),
-                "url": f"https://www.youtube.com/shorts/{vm.group(1)}",
-                "title": title,
-                "publishedAt": pm.group(1) if pm else None}
+        vid = (sn.get("resourceId") or {}).get("videoId")
+        if vid:
+            return _hit(vid, sn.get("title"), sn.get("publishedAt"), "data-api")
     return None
+
+
+def find_via_rss(channel_id, target, attempts=5, base_delay=3.0):
+    """Source 2: the channel's public RSS feed (last ~15 uploads, no auth). It transient-404s and
+    can stay down for a stretch, so retry with backoff (3+6+12+24 s, ~45 s worst case)."""
+    rss_url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
+    last_err = None
+    for i in range(attempts):
+        try:
+            xml = _fetch(rss_url)
+            for entry in xml.split("<entry>")[1:]:
+                entry = entry.split("</entry>")[0]
+                tm = re.search(r"<title>([\s\S]*?)</title>", entry)
+                title = _html.unescape(tm.group(1) if tm else "").strip()
+                if norm(title) != target:
+                    continue
+                vm = re.search(r"<yt:videoId>([\w-]+)</yt:videoId>", entry)
+                pm = re.search(r"<published>([\w\-:.+]+)</published>", entry)
+                if vm:
+                    return _hit(vm.group(1), title, pm.group(1) if pm else None, "rss")
+            return None
+        except Exception as err:  # noqa: BLE001
+            last_err = err
+            if i < attempts - 1:
+                wait = base_delay * (2 ** i)
+                print(f"    RSS attempt {i + 1}/{attempts} failed ({err}); retrying in {wait:g}s",
+                      flush=True)
+                time.sleep(wait)
+    raise last_err
+
+
+def _walk_initial_data(obj, out):
+    if isinstance(obj, list):
+        for v in obj:
+            _walk_initial_data(v, out)
+        return
+    if not isinstance(obj, dict):
+        return
+    lockup = obj.get("shortsLockupViewModel")
+    if isinstance(lockup, dict):
+        title = ((lockup.get("overlayMetadata") or {}).get("primaryText") or {}).get("content")
+        vid = ((((lockup.get("onTap") or {}).get("innertubeCommand") or {})
+                .get("reelWatchEndpoint") or {}).get("videoId"))
+        if not vid:
+            vid = (((((lockup.get("inlinePlayerData") or {}).get("onVisible") or {})
+                     .get("innertubeCommand") or {}).get("reelWatchEndpoint") or {}).get("videoId"))
+        if title and vid:
+            out.append({"title": title, "videoId": vid})
+    vr = obj.get("videoRenderer") or obj.get("reelItemRenderer")
+    if isinstance(vr, dict) and vr.get("videoId"):
+        t = vr.get("title") or {}
+        runs = t.get("runs") or []
+        title = (runs[0].get("text") if runs else None) or \
+            (vr.get("headline") or {}).get("simpleText") or t.get("simpleText")
+        if title:
+            out.append({"title": title, "videoId": vr["videoId"]})
+    for k, v in obj.items():
+        if k in ("shortsLockupViewModel", "videoRenderer", "reelItemRenderer"):
+            continue
+        _walk_initial_data(v, out)
+
+
+def find_via_channel_page(channel_id, target):
+    """Source 3: the public channel page (/shorts, then /videos), parsing the embedded
+    ytInitialData JSON (parsed, not regexed). A page that parses but yields ZERO videos means
+    the layout changed: treated as unavailable, never as "no match"."""
+    failures = []
+    for tab in ("shorts", "videos"):
+        page_url = f"https://www.youtube.com/channel/{channel_id}/{tab}"
+        try:
+            html = _fetch(page_url)
+            m = re.search(r"ytInitialData\s*=\s*(\{[\s\S]*?\});\s*</script>", html)
+            if not m:
+                raise RuntimeError("ytInitialData not found in page")
+            items = []
+            _walk_initial_data(json.loads(m.group(1)), items)
+            if not items:
+                raise RuntimeError("page parsed but yielded 0 videos (layout changed?)")
+            for it in items:
+                if norm(it["title"]) == target:
+                    return _hit(it["videoId"], it["title"], None, f"channel-page/{tab}")
+            return None
+        except Exception as err:  # noqa: BLE001
+            failures.append(f"{tab}: {err}")
+    raise RuntimeError(" | ".join(failures))
+
+
+def find_existing_upload(access_token, channel_id, target_title):
+    """Returns a hit dict or None. Raises only when every source failed."""
+    target = norm(target_title[:100])
+    sources = [
+        ("Data API (authenticated)", lambda: find_via_data_api(access_token, channel_id, target)),
+        ("public RSS feed", lambda: find_via_rss(channel_id, target)),
+        ("public channel page", lambda: find_via_channel_page(channel_id, target)),
+    ]
+    failures = []
+    for name, fn in sources:
+        try:
+            found = fn()
+            print(f"  dedup via {name}: {'MATCH ' + found['url'] if found else 'no match'}",
+                  flush=True)
+            return found
+        except Exception as err:  # noqa: BLE001
+            failures.append(f"{name}: {err}")
+            print(f"  dedup via {name} unavailable: {str(err).splitlines()[0]}", flush=True)
+    raise RuntimeError("every duplicate-check source failed:\n  " + "\n  ".join(failures))
 
 
 def upload_video(access_token, video_path, title, description, tags):
@@ -305,19 +439,13 @@ def main():
     print(f"File:  {video_path}")
     print(f"Title: {title}", flush=True)
 
-    # Pre-upload duplicate check against the channel's recent uploads (RSS).
-    print("Checking channel RSS feed for existing copy...")
+    # Pre-upload duplicate check against the channel's recent uploads (Data API, then public
+    # RSS with retries, then the public channel page). A match = mark posted, skip the upload.
+    print("Checking channel for an existing copy...", flush=True)
     try:
         channel_id = get_channel_id()
     except Exception as err:
         print(f"channelId lookup failed: {err}", file=sys.stderr)
-        sys.exit(1)
-    try:
-        existing = find_existing_upload(channel_id, title)
-    except Exception as err:
-        print(f"RSS lookup failed: {err}", file=sys.stderr)
-        print("Refusing to upload without a working duplicate check. Fix the "
-              "channel RSS access and retry.", file=sys.stderr)
         sys.exit(1)
 
     try:
@@ -327,6 +455,22 @@ def main():
         print(f"POST FAIL platform=yt_shorts reason={str(err).splitlines()[0][:120]}",
               flush=True)
         sys.exit(1)
+
+    try:
+        existing = find_existing_upload(access_token, channel_id, title)
+    except Exception as err:
+        print(f"Duplicate check failed: {err}", file=sys.stderr)
+        print("Refusing to upload without a working duplicate check (every source was "
+              "unavailable). Retry later.", file=sys.stderr)
+        sys.exit(1)
+
+    # --check-only: exercise the duplicate check for the next pending short and stop. Writes
+    # nothing, uploads nothing. Use it to confirm the check is healthy before a posting run.
+    if CHECK_ONLY:
+        print(f"CHECK-ONLY: already on YouTube ({existing['source']}) {existing['url']}"
+              if existing else
+              "CHECK-ONLY: not on YouTube; a real run would upload. Nothing written.", flush=True)
+        sys.exit(0)
 
     if existing:
         print(f"Already on YouTube: {existing['url']}")

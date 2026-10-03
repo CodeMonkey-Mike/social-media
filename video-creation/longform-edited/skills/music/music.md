@@ -6,6 +6,12 @@ catalog `../../assets/music/library.json` (music-sourcing `SKILL.md` §2c; whole
 `music-placement-strategist`). The edit MUST ship with music — never render a silent pass
 (longform-edited.md #10). (Consolidated 2026-06-21 after the bed-A-ran-out / no-loop violation on kaspa.)
 
+## Variety across videos (2026-10-01)
+The beds of one video are not the beds of the next. Track picks rotate through the usage ledger
+(`video-creation/skills/usage-ledger/usage-ledger.md`): the previous video's tracks are blocked, and within each pool
+(intro hype · subtle bed · hype body · epic close) the pick is never-used first, then least recently used. The graph gates
+it at the `music_plan` node and records the delivered video at `stage_longform`.
+
 ## Beds
 - One bed per chapter-group, from the screenplay Music plan, with an **inter-bed breath** at each change
   (short fade-out → fade-in, ~0.3-0.5s gap). Prefer the **instrumental** alternate (no vocals under VO).
@@ -42,10 +48,15 @@ the plan's seats + automation dips, `relative: true` rows = dips), the EDIT-PLAN
 `file start` times; card impacts on the card landing) and the library transitions' SFX (engine-window start) onto
 the render with ONE sync-safe filter_complex, video copied, and writes `mix-audio.json` (every resolved time and
 gain + the rerun command). Re-mix = re-run it. The section below stays as the WHY.
+A chapter that CONTINUES the previous chapter's bed with no title card between them (same file, sample-continuous
+`source_in`) is merged into ONE placement, so the file never restarts or doubles; only the last bed runs to the end
+of the video. `--dry-run` prints where every bed starts and stops without rendering (2026-10-01).
 
 ## ⛔ PERSIST THE MIX — the command is a project artifact, not shell history (ethereum-rwa, 2026-08-01)
+_Today the persisted artifact is `scripts/mix_music.py` + the project's `mix-audio.json` (section above); do NOT write a new
+shell mix script. The paragraph below is the history that led there._
 The bed mix gets re-run every time the picture changes, so **write the ffmpeg mix into a script in the project
-folder** (e.g. `media/<project>/mix-music.sh`) the first time you run it, and reference THAT on every re-mix.
+folder** (historically `media/<project>/mix-music.sh`) the first time you run it, and reference THAT on every re-mix.
 On ethereum-rwa the approved 4-bed mix existed only in a dead session's shell; the PROJECT-LOG said "copy the
 command from the v5 mix" and there was nothing to copy. Reconstructing it from `MUSIC-PLAN.json` means redoing
 every span shift, breath, duck and end-alignment by hand, and getting any one wrong is inaudible-until-Mike.

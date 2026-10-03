@@ -166,3 +166,25 @@ Start-Process "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentL
 ```
 
 Log into @CodeMonkeyMike, then close Chrome with the X button (graceful close — not Task Manager — so cookies save).
+
+---
+
+## The duplicate pre-check can time out on a cold profile (2026-08-19)
+
+**Symptom:** `Posting failed: page.goto: Timeout 30000ms exceeded` while the log is still in
+`Pre-check: scanning recent community posts for duplicates...`, and the row flips to `failed`.
+
+**This is a pre-action failure.** The pre-check opens each of the last 5 community post URLs to
+read their bodies; on a cold profile one of those navigations can exceed the 30s timeout. The
+composer is never opened and **nothing is posted** - Chrome exits cleanly with no orphan.
+
+**Safe to re-run**, unlike a mid-post failure: reset that row to `pending` and invoke again. The
+pre-check is itself the duplicate guard, so a second pass is protected. Confirmed by re-running
+immediately after the timeout and posting cleanly (5/5 images verified).
+
+Before re-running, confirm both signals: (a) the log never reached "Opening community posts
+composer", and (b) no `ytbot-profile` chrome.exe survives. If either is false, treat it as a
+real attempt and verify on the channel before touching it.
+
+Same class as the Facebook longform cold-profile nav timeout that was hardened to a 60s first-nav
+timeout; if this recurs often, raise the pre-check `goto` timeout the same way.

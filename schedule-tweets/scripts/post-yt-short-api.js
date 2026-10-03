@@ -24,7 +24,15 @@ const TOKEN_FILE    = path.join(__dirname, '..', 'config', 'yt-api-token.json');
 const CHANNEL_FILE  = path.join(__dirname, '..', 'config', 'yt-channel.json');
 const WORKSPACE     = path.join(__dirname, '..');
 const PLATFORM      = 'yt_shorts';
+const CHECK_ONLY    = process.argv.includes('--check-only');
 const UPLOAD_SCOPES = ['https://www.googleapis.com/auth/youtube.upload'];
+// youtube.readonly lets the pre-upload duplicate check use the Data API (playlistItems.list on the
+// channel's uploads playlist, 1 quota unit) instead of depending on YouTube's flaky public RSS feed.
+// Existing upload-only tokens keep working: the API check just reports "insufficient scope" and the
+// public fallbacks take over until Mike re-consents once via scripts/yt-reauth.js.
+const READ_SCOPES   = ['https://www.googleapis.com/auth/youtube.readonly'];
+const AUTH_SCOPES   = [...UPLOAD_SCOPES, ...READ_SCOPES];
+const BROWSER_UA    = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36';
 
 function loadOauthClient() {
   if (!fs.existsSync(OAUTH_FILE)) {
@@ -85,7 +93,7 @@ async function doInitialAuth(oauth2Client) {
       const authUrl = fixed.generateAuthUrl({
         access_type: 'offline',
         prompt: 'consent',  // forces refresh_token even on re-auth
-        scope: UPLOAD_SCOPES,
+        scope: AUTH_SCOPES,
       });
       console.log('\nOpen this URL in your browser to authorize (will auto-redirect back):');
       console.log(`  ${authUrl}\n`);
@@ -134,10 +142,10 @@ function getChannelId() {
   return cached.channelId;
 }
 
-function fetchUrl(u) {
+function fetchUrl(u, ua = BROWSER_UA) {
   return new Promise((resolve, reject) => {
-    https.get(u, { headers: { 'User-Agent': 'social-media-script/1.0' } }, res => {
-      if (res.statusCode !== 200) return reject(new Error(`HTTP ${res.statusCode} from ${u}`));
+    https.get(u, { headers: { 'User-Agent': ua, 'Accept-Language': 'en-US,en;q=0.9' } }, res => {
+      if (res.statusCode !== 200) { res.resume(); return reject(new Error(`HTTP ${res.statusCode} from ${u}`)); }
       let body = '';
       res.on('data', c => body += c);
       res.on('end', () => resolve(body));
@@ -145,30 +153,141 @@ function fetchUrl(u) {
   });
 }
 
-// Look for an existing upload on the channel that matches targetTitle. Uses
-// the channel's public RSS feed (last ~15 entries), which needs no auth and
-// is enough to catch the bug we care about: a recent re-upload of the same
-// short. Returns {videoId,url,title,publishedAt} or null.
-async function findExistingUpload(channelId, targetTitle) {
-  const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
-  const xml = await fetchUrl(rssUrl);
-  const entries = xml.split('<entry>').slice(1).map(e => e.split('</entry>')[0]);
-  const norm = s => (s || '').trim().toLowerCase().replace(/\s+/g, ' ');
-  const target = norm(targetTitle.slice(0, 100));
-  for (const entry of entries) {
-    const title = (entry.match(/<title>([\s\S]*?)<\/title>/)?.[1] || '').trim();
-    if (norm(title) !== target) continue;
-    const videoId = entry.match(/<yt:videoId>([\w-]+)<\/yt:videoId>/)?.[1];
-    const publishedAt = entry.match(/<published>([\w\-:.+]+)<\/published>/)?.[1];
-    if (!videoId) continue;
-    return {
-      videoId,
-      url: `https://www.youtube.com/shorts/${videoId}`,
-      title,
-      publishedAt,
-    };
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const norm  = s => (s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+const XML_ENT = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" };
+const unescapeXml = s => (s || '').replace(/&(#x[0-9a-f]+|#\d+|amp|lt|gt|quot|apos);/gi, (m, e) =>
+  e[0] === '#' ? String.fromCodePoint(e[1].toLowerCase() === 'x' ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10))
+               : XML_ENT[e.toLowerCase()]);
+const hit   = (videoId, title, publishedAt, source) =>
+  ({ videoId, url: `https://www.youtube.com/shorts/${videoId}`, title, publishedAt, source });
+
+// ---- Pre-upload duplicate check -------------------------------------------------------------
+// Purpose: catch a recent re-upload of the same short (a prior run that uploaded but died before
+// flipping the row to 'posted'). Three independent sources, tried in order; the first one that
+// ANSWERS (match or clean "no match") wins. Only if EVERY source is unavailable do we refuse to
+// upload. Added 2026-09-11 after YouTube's public RSS feed 404/500'd for ~3 hours and blocked
+// three shorts that had already gone out to the other six platforms.
+
+// Source 1 — authenticated Data API. The uploads playlist id is the channel id with UC -> UU
+// (documented YouTube convention), so no channels.list round-trip. Costs 1 quota unit. Needs the
+// youtube.readonly scope on the token; an upload-only token gets a 403 and we fall through.
+async function findViaDataApi(auth, channelId, target) {
+  const youtube = google.youtube({ version: 'v3', auth });
+  const playlistId = 'UU' + channelId.slice(2);
+  let res;
+  try {
+    res = await youtube.playlistItems.list({ part: ['snippet'], playlistId, maxResults: 50 });
+  } catch (err) {
+    const reason = err?.errors?.[0]?.reason || '';
+    if (err.code === 403 || /insufficient/i.test(reason + err.message)) {
+      throw new Error('token lacks youtube.readonly (run `node scripts/yt-reauth.js` once to enable the authenticated check)');
+    }
+    throw err;
+  }
+  for (const it of res.data.items || []) {
+    const sn = it.snippet || {};
+    if (norm(sn.title) !== target) continue;
+    const videoId = sn.resourceId?.videoId;
+    if (videoId) return hit(videoId, sn.title, sn.publishedAt, 'data-api');
   }
   return null;
+}
+
+// Source 2 — the channel's public RSS feed (last ~15 uploads, no auth). It transient-404s and can
+// stay down for a stretch, so retry with backoff (3+6+12+24 s ≈ 45 s worst case) before giving up.
+async function findViaRss(channelId, target, attempts = 5, baseDelayMs = 3000) {
+  const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+  let lastErr;
+  for (let i = 0; i < attempts; i++) {
+    try {
+      const xml = await fetchUrl(rssUrl);
+      const entries = xml.split('<entry>').slice(1).map(e => e.split('</entry>')[0]);
+      for (const entry of entries) {
+        const title = unescapeXml(entry.match(/<title>([\s\S]*?)<\/title>/)?.[1] || '').trim();
+        if (norm(title) !== target) continue;
+        const videoId = entry.match(/<yt:videoId>([\w-]+)<\/yt:videoId>/)?.[1];
+        const publishedAt = entry.match(/<published>([\w\-:.+]+)<\/published>/)?.[1];
+        if (videoId) return hit(videoId, title, publishedAt, 'rss');
+      }
+      return null;
+    } catch (err) {
+      lastErr = err;
+      if (i < attempts - 1) {
+        const wait = baseDelayMs * 2 ** i;
+        console.log(`    RSS attempt ${i + 1}/${attempts} failed (${err.message}); retrying in ${wait / 1000}s`);
+        await sleep(wait);
+      }
+    }
+  }
+  throw lastErr;
+}
+
+// Source 3 — the public channel page (/shorts, then /videos), parsing the embedded ytInitialData
+// JSON (parsed, not regexed, so escaped apostrophes/quotes in titles are handled). If a page parses
+// but yields ZERO items the layout has changed and we treat that as unavailable, never as "no match".
+function walkInitialData(obj, out) {
+  if (!obj || typeof obj !== 'object') return;
+  if (Array.isArray(obj)) { for (const v of obj) walkInitialData(v, out); return; }
+  const lockup = obj.shortsLockupViewModel;
+  if (lockup) {
+    const title = lockup.overlayMetadata?.primaryText?.content;
+    const videoId = lockup.onTap?.innertubeCommand?.reelWatchEndpoint?.videoId
+      || lockup.inlinePlayerData?.onVisible?.innertubeCommand?.reelWatchEndpoint?.videoId;
+    if (title && videoId) out.push({ title, videoId });
+  }
+  const vr = obj.videoRenderer || obj.reelItemRenderer;
+  if (vr?.videoId) {
+    const title = vr.title?.runs?.[0]?.text || vr.headline?.simpleText || vr.title?.simpleText;
+    if (title) out.push({ title, videoId: vr.videoId });
+  }
+  for (const k of Object.keys(obj)) {
+    if (k === 'shortsLockupViewModel' || k === 'videoRenderer' || k === 'reelItemRenderer') continue;
+    walkInitialData(obj[k], out);
+  }
+}
+async function findViaChannelPage(channelId, target) {
+  const failures = [];
+  for (const tab of ['shorts', 'videos']) {
+    const pageUrl = `https://www.youtube.com/channel/${channelId}/${tab}`;
+    try {
+      const html = await fetchUrl(pageUrl);
+      const m = html.match(/ytInitialData\s*=\s*(\{[\s\S]*?\});\s*<\/script>/);
+      if (!m) throw new Error('ytInitialData not found in page');
+      const items = [];
+      walkInitialData(JSON.parse(m[1]), items);
+      if (!items.length) throw new Error('page parsed but yielded 0 videos (layout changed?)');
+      for (const it of items) {
+        if (norm(it.title) === target) return hit(it.videoId, it.title, null, `channel-page/${tab}`);
+      }
+      return null;
+    } catch (err) {
+      failures.push(`${tab}: ${err.message}`);
+    }
+  }
+  throw new Error(failures.join(' | '));
+}
+
+// Returns {videoId,url,title,publishedAt,source} or null. Throws only when every source failed.
+async function findExistingUpload(auth, channelId, targetTitle) {
+  const target = norm(targetTitle.slice(0, 100));
+  const sources = [
+    ['Data API (authenticated)', () => findViaDataApi(auth, channelId, target)],
+    ['public RSS feed',          () => findViaRss(channelId, target)],
+    ['public channel page',      () => findViaChannelPage(channelId, target)],
+  ];
+  const failures = [];
+  for (const [name, fn] of sources) {
+    try {
+      const found = await fn();
+      console.log(`  dedup via ${name}: ${found ? `MATCH ${found.url}` : 'no match'}`);
+      return found;
+    } catch (err) {
+      failures.push(`${name}: ${err.message}`);
+      console.log(`  dedup via ${name} unavailable: ${String(err.message).split('\n')[0]}`);
+    }
+  }
+  throw new Error('every duplicate-check source failed:\n  ' + failures.join('\n  '));
 }
 
 async function uploadVideo(auth, videoPath, title, description, tags) {
@@ -200,7 +319,9 @@ async function uploadVideo(auth, videoPath, title, description, tags) {
   return res.data;  // { id, snippet: {...}, ... }
 }
 
-(async () => {
+module.exports = { findViaDataApi, findViaRss, findViaChannelPage, findExistingUpload, getAuthorizedClient, getChannelId, norm };
+
+if (require.main === module) (async () => {
   const data = JSON.parse(fs.readFileSync(SHORTS_JSON, 'utf8'));
 
   // Bail if anything is stuck in 'posting' — those need manual review. The
@@ -244,10 +365,10 @@ async function uploadVideo(auth, videoPath, title, description, tags) {
   console.log(`File:  ${videoPath}`);
   console.log(`Title: ${title}`);
 
-  // Pre-upload duplicate check against the channel's recent uploads (RSS).
-  // If a matching title already exists, mark posted with the discovered URL
-  // and skip the upload entirely.
-  console.log('Checking channel RSS feed for existing copy...');
+  // Pre-upload duplicate check against the channel's recent uploads (Data API, then public RSS
+  // with retries, then the public channel page). If a matching title already exists, mark posted
+  // with the discovered URL and skip the upload entirely.
+  console.log('Checking channel for an existing copy...');
   let channelId;
   try {
     channelId = getChannelId();
@@ -255,19 +376,27 @@ async function uploadVideo(auth, videoPath, title, description, tags) {
     console.error(`channelId lookup failed: ${err.message}`);
     process.exit(1);
   }
+  const auth = await getAuthorizedClient();
   let existing = null;
   try {
-    existing = await findExistingUpload(channelId, title);
+    existing = await findExistingUpload(auth, channelId, title);
   } catch (err) {
-    console.error(`RSS lookup failed: ${err.message}`);
-    console.error('Refusing to upload without a working duplicate check. Fix the channel RSS access and retry.');
+    console.error(`Duplicate check failed: ${err.message}`);
+    console.error('Refusing to upload without a working duplicate check (every source was unavailable). Retry later.');
     process.exit(1);
   }
 
-  const auth = await getAuthorizedClient();
+  // --check-only: exercise the duplicate check for the next pending short and stop. Writes nothing,
+  // uploads nothing. Use it to confirm the check is healthy before a posting run.
+  if (CHECK_ONLY) {
+    console.log(existing ? `CHECK-ONLY: already on YouTube (${existing.source}) ${existing.url}`
+                         : 'CHECK-ONLY: not on YouTube; a real run would upload. Nothing written.');
+    process.exit(0);
+  }
+
   if (existing) {
     console.log(`Already on YouTube: ${existing.url}`);
-    console.log(`  Matched title: "${existing.title}"`);
+    console.log(`  Matched title: "${existing.title}" (via ${existing.source})`);
     console.log(`  Published:     ${existing.publishedAt}`);
     short.platforms[PLATFORM].status    = 'posted';
     short.platforms[PLATFORM].posted_at = existing.publishedAt;

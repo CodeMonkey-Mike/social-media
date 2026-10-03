@@ -89,6 +89,53 @@ def body_text(page):
         return ""
 
 
+def dialog_text(page):
+    """Text of the open modal ONLY. Limit/refusal wording must be matched against this,
+    never the whole body: LinkedIn's own page furniture ("Try Premium for free", an
+    "Upgrade to" upsell) sits in the left rail on every profile, so a body-wide match on
+    those words reports a capped account on a page that has no limit at all."""
+    try:
+        dlg = page.locator('div[role="dialog"]').first
+        if dlg.count():
+            return dlg.inner_text()
+    except Exception:
+        pass
+    return ""
+
+
+def needs_email_verification(page):
+    """True when LinkedIn is gating this ONE member behind "enter their email address to
+    verify you know them" (a per-member privacy setting). We never have a member's email,
+    so the invite can never complete for them and they must be skipped, not retried.
+
+    Detected STRUCTURALLY first (an email input inside the connect dialog) because the
+    copy is personalised - "enter David's email address" - and a fixed-phrase match like
+    "enter their email" slips straight past the possessive form. The wording check is
+    only a fallback for layouts that render no input until the field is revealed."""
+    try:
+        if page.locator(
+            'div[role="dialog"] input[type="email"], '
+            'div[role="dialog"] input[name="email"], '
+            'div[role="dialog"] input[id*="email" i], '
+            'div[role="dialog"] input[aria-label*="email" i]'
+        ).first.count():
+            return True
+    except Exception:
+        pass
+    return bool(re.search(
+        r"enter\b[^.]{0,40}\bemail|email address to (verify|connect)|verify (that )?you know",
+        dialog_text(page), re.I,
+    ))
+
+
+def dismiss_dialog(page, label):
+    try:
+        page.keyboard.press("Escape")
+    except Exception:
+        pass
+    S.pause(page, 500, 1000, label)
+
+
 def norm(s):
     return re.sub(r"\s+", " ", str(s or "")).strip().lower()
 
@@ -224,31 +271,27 @@ def send_connection_request(page):
     # the whole run at member 2, reporting "LIMIT reached" and sending zero invites
     # while the account in fact had no limit on it at all. Order is the fix.
     if re.search(r"resend an invitation|invitation not sent", body_text(page), re.I):
-        try:
-            page.keyboard.press("Escape")
-        except Exception:
-            pass
-        S.pause(page, 500, 1000, "closed resend-cooldown modal")
+        dismiss_dialog(page, "closed resend-cooldown modal")
         return "resend_cooldown"
 
-    # A weekly-limit or restriction modal can appear right here.
+    # Some members require the sender to enter their email to verify they know them
+    # (a per-member privacy setting) before a note can even be added. We never have a
+    # member's email, so this member can NEVER be invited and is skipped for good.
+    # This MUST stay ahead of the limit branch, for the same reason the resend-cooldown
+    # check does: an email-gated member leaves no note textarea, and the old body-wide
+    # fallback then matched LinkedIn's own "Premium" rail furniture and halted the whole
+    # run as "weekly limit reached" while the account had no limit at all (2026-08-30).
+    if needs_email_verification(page):
+        dismiss_dialog(page, "closed email-verification modal")
+        return "email_verification"
+
+    # A weekly-limit or restriction modal can appear right here. Matched against the
+    # DIALOG only - see dialog_text().
     if re.search(
         r"weekly invitation limit|reached the limit|no invitations left|temporarily restricted",
-        body_text(page), re.I,
+        dialog_text(page), re.I,
     ):
         return "limit_reached"
-
-    # Some members require the sender to enter their email to verify they know them
-    # (a per-member privacy setting) before a note can even be added. We never have
-    # a member's email, and guessing/typing into an unfamiliar modal is unsafe, so
-    # treat this exactly like no_connect_button: close the dialog and skip them.
-    if re.search(r"enter their email", body_text(page), re.I):
-        try:
-            page.keyboard.press("Escape")
-        except Exception:
-            pass
-        S.pause(page, 500, 1000, "closed email-verification modal")
-        return "no_connect_button"
 
     # The modal opens on "Add a note" / "Send without a note". Click "Add a note"
     # to reveal the textarea (NEVER click "Send without a note").
@@ -276,7 +319,20 @@ def send_connection_request(page):
     except Exception:
         textarea_count = 0
     if not textarea_count:
-        if re.search(r"reached the limit|upgrade to|premium", body_text(page), re.I):
+        # No note field. Decide WHY before blaming the account: an email-gated member
+        # also renders no textarea, and this fallback used to match "premium"/"upgrade
+        # to" against the whole body - words that appear in LinkedIn's own left-rail
+        # upsell on every single profile - so one gated member halted the entire run as
+        # "weekly limit reached" (2026-08-25, 08-28, 08-30; 72 invites that week against
+        # a ~100-200 cap, i.e. no real limit anywhere near). Dialog-scoped, and the bare
+        # "premium"/"upgrade to" alternatives are gone for good.
+        if needs_email_verification(page):
+            dismiss_dialog(page, "closed email-verification modal")
+            return "email_verification"
+        if re.search(
+            r"weekly invitation limit|reached the limit|no invitations left",
+            dialog_text(page), re.I,
+        ):
             return "limit_reached"
         return "error"
     # Focus the field, then type the note character-by-character with a randomized
@@ -299,6 +355,24 @@ def send_connection_request(page):
         send_count = 0
     if not send_count:
         return "error"
+
+    # Some members render the note field but keep Send DISABLED until an email is
+    # supplied to prove we know them. Clicking anyway just burns a 6s Playwright
+    # timeout and surfaces as a bare "Locator.click: Timeout exceeded", which reads as
+    # a transient fault, so the member is retried every run forever and spends a
+    # profile view each time against the ~120/24h budget (david-h-836aa410a did exactly
+    # that twice on 2026-08-30). Detect the wall and retire them instead.
+    if needs_email_verification(page):
+        dismiss_dialog(page, "closed email-verification modal")
+        return "email_verification"
+    try:
+        send_enabled = send.is_enabled()
+    except Exception:
+        send_enabled = True
+    if not send_enabled:
+        dismiss_dialog(page, "closed dialog with Send disabled")
+        return "send_disabled"
+
     gap(page, "before Send")
     send.click(timeout=6000)
     S.pause(page, 1500, 3000, "after send")
@@ -369,14 +443,33 @@ def main():
                 if S.is_restricted(page):
                     print("\n!! LinkedIn restriction / unusual-activity page detected. STOPPING.")
                     break
-                # Must be on the EXACT profile we intended — a redirect or wrong search
-                # click means any Connect on this page belongs to someone else.
+                # Must be on the EXACT profile we intended — after a search CLICK a
+                # mismatch means any Connect on this page belongs to someone else.
+                # After goto(url) (nav goto-notfound / goto-noquery are the only modes
+                # that end there without a click) a mismatch means LinkedIn redirected
+                # OUR OWN stored URL: renamed vanity slug, ACoAA... member-ID, or
+                # unicode normalization. Same member, current canonical slug. A stale
+                # slug otherwise errors forever, clogs the queue front and trips the
+                # 5-consecutive kill-switch (2026-09-14), and Lane 4 would never match
+                # their acceptance either.
+                status = None
                 landed = (S.slug_from_url(page.url) or "").lower()
                 wanted = (S.slug_from_url(url) or "").lower()
                 if not landed or landed != wanted:
-                    raise RuntimeError(f"landed on wrong page ({page.url})")
+                    if not landed or nav not in ("goto-notfound", "goto-noquery"):
+                        raise RuntimeError(f"landed on wrong page ({page.url})")
+                    canonical = page.url.split("?")[0].split("#")[0].rstrip("/") + "/"
+                    if any(x is not m and (S.slug_from_url(x.get("profile_url")) or "").lower() == landed
+                           for x in members):
+                        status = "url_redirect_duplicate"
+                    else:
+                        m["profile_url_prev"] = url
+                        m["profile_url"] = canonical
+                        S.write_json(MEMBERS, members)
+                        print(f"   url redirect {wanted} -> {landed}: canonical slug adopted, proceeding")
 
-                status = send_connection_request(page)
+                if status is None:
+                    status = send_connection_request(page)
                 tally[status] = tally.get(status, 0) + 1
 
                 if status == "limit_reached":
@@ -393,6 +486,27 @@ def main():
                     print(f"   {'INVITE SENT' if status == 'sent' else status}")
                 elif status == "dry-found":
                     print("   [dry] Connect available — would send the note.")
+                elif status in ("email_verification", "send_disabled"):
+                    # ONE member behind a privacy wall we can never satisfy (we do not
+                    # have their email), NOT a capped account: retire them so they stop
+                    # occupying the front of every future batch, and keep the batch
+                    # going. Recorded under its own contact_status so the skip is
+                    # auditable and reversible if LinkedIn ever changes the rule.
+                    m["contacted"] = True
+                    m["contacted_at"] = today()
+                    m["contact_status"] = status
+                    S.write_json(MEMBERS, members)
+                    print(f"   {status} (cannot ever invite without their email — retired from queue, batch continues)")
+                elif status == "url_redirect_duplicate":
+                    # Our stale URL redirected to a slug members.json already tracks as
+                    # its own entry: retire this one so we never invite the same person
+                    # twice; the canonical entry carries the real outreach state.
+                    m["contacted"] = True
+                    m["contacted_at"] = today()
+                    m["contact_status"] = status
+                    m["profile_url_canonical"] = canonical
+                    S.write_json(MEMBERS, members)
+                    print(f"   url redirect {wanted} -> {landed} already tracked as its own entry (retired, batch continues)")
                 elif status == "resend_cooldown":
                     # ONE person blocked by the withdrawn-invite cooldown, not a capped
                     # account: keep going through the batch, but park them so the next

@@ -1,0 +1,498 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>golden-kitty slides - canonical build (slide-builder)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   Pasted verbatim from skills/container-reference/container-canonical.css
+   (tokens + anatomy are LOCKED). Components below the marked line only ADD
+   layout classes that consume these tokens; no token is redefined.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — consistent meaning for THIS video (golden-kitty):
+   .go gold  = Golden Kitty / gold / the spotlight (lit rows, lit tags)
+   .lime     = Robinhood + Robinhood Chain ONLY (DATA.md section 3 + persona robinhood_coin:
+               "Robinhood elements in lime green (about #CCFF00)", never Kaspa greenish cyan).
+               BRAND colour, added as a NEW var like teal's brand-only role; no locked token changed.
+   .g green  = bullish narrative (CH5 title)
+   .c cyan   = neutral supporting (ETH / stablecoin side of the contrast) */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* ======================= components (layout only, locked tokens) ======================= */
+:root{--rh-lime:#ccff00} /* added brand colour (Robinhood), see note above */
+.lime{color:var(--rh-lime)}
+h1,.hero,.hl{font-variant-numeric:lining-nums}
+.ey .mono{font-weight:600;letter-spacing:.12em}
+.hide{display:none!important}
+
+/* rounded card box with top-accent line (CARD SLIDE, per banks-card-* references), sized to FILL the frame */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:28px;
+  padding:70px 84px;position:relative;overflow:hidden;width:100%}
+.card .top{position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan) 40%,transparent 85%)}
+.card.gold .top{background:linear-gradient(90deg,var(--accent-gold),transparent 70%)}
+.card.lime .top{background:linear-gradient(90deg,var(--rh-lime),transparent 70%)}
+.card .divider{margin:30px 0}
+.hero{font-family:'Playfair Display',serif;font-weight:900;line-height:1.02;letter-spacing:-.02em;color:var(--text-primary)}
+
+/* ---- H1 (hook motion-type card) ---- */
+#H1 .card{padding:96px 100px 104px}
+#H1 .ey{font-size:34px}
+#H1 .hero{font-size:172px;color:var(--text-secondary);white-space:nowrap}
+#H1.lit .hero{color:var(--rh-lime)}
+#H1 .status{display:inline-flex;align-items:center;gap:22px;font-family:'JetBrains Mono';font-weight:700;
+  font-size:44px;letter-spacing:.16em;color:var(--text-secondary);border:2px solid var(--border);
+  border-radius:16px;padding:18px 32px;background:rgba(255,255,255,.03)}
+#H1 .status .dot{width:20px;height:20px;border-radius:50%;background:var(--text-secondary);opacity:.75}
+#H1.lit .status{color:var(--text-primary);border-color:rgba(204,255,0,.45);
+  background:linear-gradient(135deg,rgba(204,255,0,.10),rgba(204,255,0,.02) 70%)}
+#H1.lit .status .dot{background:var(--rh-lime);opacity:1;box-shadow:0 0 22px var(--rh-lime)}
+
+/* ---- spotlight rows (winners-card): resting = muted but READABLE (Mike 2026-07-24), .on adds emphasis ---- */
+#winners-card .card{padding:52px 70px 58px}
+#winners-card h1{font-size:76px}
+#winners-card .divider{margin:24px 0 26px}
+.wrows{display:flex;flex-direction:column;gap:12px}
+.wrow{display:grid;grid-template-columns:600px 1fr 120px;align-items:center;column-gap:30px;
+  background:rgba(255,255,255,.035);border:1px solid var(--border);border-left:5px solid var(--border);
+  border-radius:14px;padding:13px 32px}
+.wrow .prod{font-family:'DM Sans';font-weight:700;font-size:40px;color:var(--text-secondary);line-height:1.15}
+.wrow .prod .pn{font-size:36px;font-weight:700;letter-spacing:-.01em}
+.wrow .cat{font-family:'DM Sans';font-weight:500;font-size:31px;color:var(--text-secondary);line-height:1.2}
+.wrow .yr{font-family:'JetBrains Mono';font-weight:600;font-size:32px;color:var(--text-secondary);text-align:right}
+.wrow.on{background:linear-gradient(135deg,rgba(255,215,0,.13),rgba(255,215,0,.02) 70%);
+  border-color:rgba(255,215,0,.40);border-left-color:var(--accent-gold)}
+.wrow.on .prod{color:var(--text-primary)}
+.wrow.on .cat{color:var(--text-primary)}
+.wrow.on .yr{color:var(--accent-gold)}
+
+/* ---- spdr-card ---- */
+#spdr-card .card{padding:80px 90px 96px}
+#spdr-card .divider{margin:32px 0 48px}
+#spdr-card .ey{font-size:32px;margin-bottom:0}
+.srows{display:grid;grid-template-columns:auto auto;justify-content:start;column-gap:84px;row-gap:40px}
+.srow{display:flex;align-items:center;gap:36px}
+.srow .lt{width:150px;height:150px;flex:none;display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-weight:900;font-size:116px;line-height:1;color:var(--text-secondary);
+  border:2px solid var(--border);border-radius:20px;background:rgba(255,255,255,.035)}
+.srow .wd{font-family:'Playfair Display',serif;font-weight:900;font-size:104px;letter-spacing:-.02em;line-height:1;
+  color:var(--text-secondary)}
+.srow .wd .amp{font-weight:700}
+.srow.on .lt{color:var(--accent-gold);border-color:rgba(255,215,0,.5);
+  background:linear-gradient(135deg,rgba(255,215,0,.14),rgba(255,215,0,.02) 70%)}
+.srow.on .wd{color:var(--text-primary)}
+.srow.on .wd .ini{color:var(--accent-gold)}
+
+/* ---- contrast-priced (declared A-vs-B) ---- */
+#contrast-priced .card{padding:64px 76px 76px}
+#contrast-priced .ey{font-size:30px}
+.vs{display:grid;grid-template-columns:1fr 110px 1fr;align-items:stretch}
+.vs .mid{display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;
+  font-style:italic;font-weight:700;font-size:48px;color:var(--text-muted)}
+.side{border:2px solid var(--border);border-radius:22px;background:rgba(255,255,255,.03);
+  padding:50px 52px 58px;display:flex;flex-direction:column}
+.side .lbl{font-family:'DM Sans';font-weight:700;font-size:30px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-secondary);margin-bottom:26px}
+.side .val{font-family:'Playfair Display',serif;font-weight:900;font-size:80px;line-height:1.08;letter-spacing:-.02em;
+  color:var(--text-secondary)}
+.side.on .lbl{color:var(--text-primary)}
+.side.on .val{color:var(--text-primary)}
+#cp-a.on{border-color:rgba(0,194,255,.45);background:linear-gradient(135deg,rgba(0,194,255,.11),rgba(0,194,255,.02) 70%)}
+#cp-a.on .k{color:var(--accent-cyan)}
+#cp-b.on{border-color:rgba(255,215,0,.5);background:linear-gradient(135deg,rgba(255,215,0,.13),rgba(255,215,0,.02) 70%)}
+#cp-b.on .k{color:var(--accent-gold)}
+
+/* ---- both-tags ---- */
+#both-tags .field{position:absolute;right:-120px;top:50%;transform:translateY(-50%);width:1080px;height:1080px;
+  border-radius:50%;background:radial-gradient(circle,rgba(255,215,0,.55) 0%,rgba(255,190,0,.28) 36%,rgba(255,170,0,.08) 58%,transparent 71%);z-index:0}
+#both-tags .art{position:absolute;right:110px;top:50%;transform:translateY(-50%);width:580px;height:580px;
+  border-radius:50%;object-fit:cover;border:6px solid rgba(255,215,0,.75);
+  box-shadow:0 0 0 14px rgba(255,215,0,.10),0 0 90px rgba(255,200,0,.45);z-index:1}
+#both-tags .card{width:1000px;padding:68px 72px 78px}
+#both-tags h1{font-size:90px}
+.tags{display:flex;flex-direction:column;align-items:flex-start;gap:22px}
+.tag{display:inline-flex;align-items:center;gap:20px;font-family:'JetBrains Mono';font-weight:700;font-size:36px;
+  letter-spacing:.10em;text-transform:uppercase;color:var(--text-secondary);border:3px solid var(--border);
+  border-radius:16px;padding:20px 32px;background:rgba(255,255,255,.035)}
+.tag .dot{width:18px;height:18px;border-radius:50%;background:var(--text-secondary);opacity:.75;flex:none}
+#bt-meme.on{color:var(--rh-lime);border-color:var(--rh-lime);background:linear-gradient(135deg,rgba(204,255,0,.12),rgba(204,255,0,.02) 70%)}
+#bt-meme.on .dot{background:var(--rh-lime);opacity:1}
+#bt-rwa.on{color:var(--accent-gold);border-color:var(--accent-gold);background:linear-gradient(135deg,rgba(255,215,0,.13),rgba(255,215,0,.02) 70%)}
+#bt-rwa.on .dot{background:var(--accent-gold);opacity:1}
+
+/* ---- end-card ---- */
+#end-card .bug{position:absolute;right:120px;top:50%;transform:translateY(-50%);width:420px;height:420px;
+  border-radius:50%;box-shadow:0 0 0 3px var(--border),0 0 80px rgba(255,215,0,.16);z-index:1}
+#end-card .card{width:1170px;padding:66px 72px 74px}
+#end-card h1{font-size:84px}
+.tile{display:inline-flex;align-items:center;gap:26px;border:2px solid var(--border);border-radius:20px;
+  background:rgba(255,255,255,.03);padding:22px 42px 22px 30px;margin-bottom:28px}
+.tile svg{width:72px;height:72px;fill:var(--text-secondary);opacity:.75}
+.tile .tl2{font-family:'DM Sans';font-weight:700;font-size:44px;color:var(--text-secondary)}
+.tile.on{border-color:var(--accent-gold);background:linear-gradient(135deg,rgba(255,215,0,.13),rgba(255,215,0,.02) 70%);
+  box-shadow:0 0 40px rgba(255,215,0,.18)}
+.tile.on svg{fill:var(--accent-gold);opacity:1;transform:scale(1.08)}
+.tile.on .tl2{color:var(--text-primary)}
+.prompt{border:2px solid var(--border);border-left:6px solid var(--border);border-radius:18px;
+  background:rgba(255,255,255,.03);padding:26px 36px 30px}
+.prompt .plbl{font-family:'DM Sans';font-weight:700;font-size:28px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-secondary);display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.prompt .plbl svg{width:36px;height:36px;fill:currentColor}
+.prompt .ptx{font-family:'DM Sans';font-weight:700;font-size:46px;line-height:1.25;color:var(--text-secondary)}
+.prompt.on{border-color:rgba(255,215,0,.40);border-left-color:var(--accent-gold);
+  background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(255,215,0,.02) 70%)}
+.prompt.on .plbl{color:var(--text-primary)}
+.prompt.on .ptx{color:var(--text-primary)}
+.prompt.on .ptx .go2{color:var(--accent-gold)}
+.prompt.on .ptx .lime2{color:var(--rh-lime)}
+
+/* ---- cap-holders (dated stat card, two rows, one spotlit at a time) ---- */
+#cap-holders .card{padding:72px 84px 64px}
+#cap-holders .ey{font-size:32px;margin-bottom:0}
+#cap-holders .divider{margin:32px 0 40px}
+.crows{display:flex;flex-direction:column;gap:26px}
+.crow{display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,.035);border:1px solid var(--border);border-left:6px solid var(--border);
+  border-radius:20px;padding:30px 56px 30px 48px}
+.crow .lb{font-family:'DM Sans';font-weight:700;font-size:46px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary)}
+.crow .vl{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:150px;line-height:1;letter-spacing:-.02em;color:var(--text-secondary)}
+.crow.on{background:linear-gradient(135deg,rgba(255,215,0,.13),rgba(255,215,0,.02) 70%);
+  border-color:rgba(255,215,0,.40);border-left-color:var(--accent-gold)}
+.crow.on .lb{color:var(--text-primary)}
+.crow.on .vl{color:var(--accent-gold)}
+#cap-holders .src{font-family:'DM Sans';font-weight:500;font-size:26px;color:var(--text-secondary);margin-top:34px;letter-spacing:.02em}
+
+/* ---- ph-card (what is Product Hunt: two rows, one spotlit at a time; resting = muted but READABLE) ---- */
+#ph-card .card{padding:76px 88px 84px}
+#ph-card h1{font-size:100px}
+#ph-card .divider{margin:32px 0 44px}
+.prows{display:flex;flex-direction:column;gap:28px}
+.prow{display:flex;align-items:center;gap:44px;
+  background:rgba(255,255,255,.035);border:1px solid var(--border);border-left:6px solid var(--border);
+  border-radius:20px;padding:34px 52px 34px 44px}
+.prow .nm{color:var(--text-secondary);opacity:.75;
+  width:96px;height:96px;flex:none;display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--border);border-radius:18px;background:rgba(255,255,255,.03)}
+.prow .nm svg{width:52px;height:52px;fill:currentColor}
+.prow .tx{font-family:'DM Sans';font-weight:700;font-size:58px;line-height:1.15;color:var(--text-secondary)}
+.prow.on{background:linear-gradient(135deg,rgba(255,215,0,.13),rgba(255,215,0,.02) 70%);
+  border-color:rgba(255,215,0,.40);border-left-color:var(--accent-gold)}
+.prow.on .nm{color:var(--accent-gold);opacity:1;border-color:rgba(255,215,0,.5)}
+.prow.on .tx{color:var(--text-primary)}
+
+/* ---- title cards (TITLE SLIDE, no box) ---- */
+.titlecard .hero{font-size:176px}
+.titlecard .ey{font-size:32px}
+
+/* =====================================================================================
+   PORTRAIT (9:16) REFLOW: vertical-repurpose.md section 1. Same design, same locked tokens,
+   same state classes; this block ONLY re-lays out for a 1080x1920 viewport (headline wraps,
+   rows stack, side art moves above the card). It never matches the 1920x1080 16:9 shoot.
+   Driver: python _shot.py --portrait  -> ../vertical/title-slides + ../vertical/card-slides
+   ===================================================================================== */
+@media (max-aspect-ratio: 1/1){
+  .frame{width:1080px;height:1920px;padding:0 64px}
+  h1{max-width:none}
+  .card{padding:64px 60px 72px;border-radius:26px}
+  .ey{font-size:30px}
+  .ey .mono{white-space:nowrap}   /* never split a date across lines */
+
+  /* H1: hero wraps to two lines */
+  #H1 .card{padding:84px 64px 92px}
+  #H1 .ey{font-size:34px}
+  #H1 .hero{font-size:150px;white-space:normal;line-height:1.0}
+  #H1 .status{font-size:42px}
+
+  /* winners-card: product + year on one line, category under it */
+  #winners-card .card{padding:60px 52px 64px}
+  #winners-card h1{font-size:84px}
+  .wrows{gap:16px}
+  .wrow{grid-template-columns:1fr auto;grid-template-areas:"prod yr" "cat cat";row-gap:6px;padding:20px 30px}
+  .wrow .prod{grid-area:prod;font-size:44px}
+  .wrow .prod .pn{font-size:38px}
+  .wrow .cat{grid-area:cat;font-size:32px}
+  .wrow .yr{grid-area:yr;font-size:34px}
+
+  /* spdr-card: one column of four letters */
+  #spdr-card .card{padding:76px 64px 88px}
+  #spdr-card .ey{font-size:32px}
+  .srows{grid-template-columns:auto;row-gap:44px}
+  .srow{gap:34px}
+  .srow .lt{width:150px;height:150px;font-size:116px}
+  .srow .wd{font-size:100px}
+
+  /* contrast-priced (declared A-vs-B): the two sides stack, "vs" between them */
+  #contrast-priced .card{padding:64px 56px 72px}
+  #contrast-priced .ey{font-size:30px}
+  .vs{grid-template-columns:1fr;grid-template-rows:auto 110px auto}
+  .side{padding:46px 48px 52px}
+  .side .val{font-size:84px}
+  .vs .mid{font-size:56px}
+
+  /* both-tags: token art + glow field move ABOVE the card */
+  #both-tags{justify-content:flex-start;padding-top:820px}
+  #both-tags .field{right:auto;left:50%;top:420px;transform:translate(-50%,-50%);width:1000px;height:1000px}
+  #both-tags .art{right:auto;left:50%;top:420px;transform:translate(-50%,-50%);width:540px;height:540px}
+  #both-tags .card{width:100%;padding:60px 56px 68px}
+  #both-tags h1{font-size:92px}
+  .tag{font-size:33px;padding:20px 28px;letter-spacing:.08em}
+
+  /* end-card: logo bug moves ABOVE the card */
+  #end-card{justify-content:flex-start;padding-top:640px}
+  #end-card .bug{right:auto;left:50%;top:330px;transform:translate(-50%,-50%);width:400px;height:400px}
+  #end-card .card{width:100%;padding:60px 56px 68px}
+  #end-card h1{font-size:92px}
+  .prompt .ptx{font-size:48px}
+
+  /* cap-holders: label above the big number */
+  #cap-holders .card{padding:72px 60px 64px}
+  .crow{flex-direction:column;align-items:flex-start;gap:14px;padding:36px 48px 40px 44px}
+  .crow .lb{font-size:42px}
+  .crow .vl{font-size:170px}
+  #cap-holders .src{font-size:28px;line-height:1.45}
+
+  /* ph-card */
+  #ph-card .card{padding:72px 56px 80px}
+  #ph-card h1{font-size:110px}
+  .prow{gap:34px;padding:36px 40px 36px 36px}
+  .prow .tx{font-size:58px}
+
+  /* title slides: hero wraps */
+  .titlecard{padding:0 72px}
+  .titlecard .hero{font-size:140px;line-height:1.04}
+  #title-card-ch2 .hero .go{white-space:nowrap}   /* keep "Golden Kitty" on one line */
+  .titlecard .ey{font-size:34px}
+}
+</style></head><body>
+
+<!-- =========================================================================
+     CARD SLIDES -> assets/card-slides/
+     ========================================================================= -->
+
+<!-- H1 :: CH1@24.78-30.04 :: DATA.md T7 (Robinhood newsroom, mainnet 2026-07-01).
+     s1 resting (eyebrow date lands @25.42, headline readable but muted) · s2 headline + MAINNET LIVE lit lime @28.56 -->
+<div class="frame" id="H1">
+  <div class="orb" style="width:760px;height:760px;background:var(--rh-lime);top:-280px;right:-220px;opacity:.20"></div>
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-gold);bottom:-260px;left:-180px;opacity:.12"></div>
+  <div class="card lime">
+    <div class="top"></div>
+    <div class="ey"><span class="mono">July 1, 2026</span></div>
+    <div class="hero">Robinhood Chain</div>
+    <div class="divider"></div>
+    <div><span class="status"><span class="dot"></span>MAINNET LIVE</span></div>
+  </div>
+</div>
+
+<!-- winners-card :: CH2@100.90-112.50 :: DATA.md Pillar 1 (the PRODUCT that won, its category, edition year).
+     s1..s7 = one row spotlit per spoken name (100.92 · 102.76 · 104.50 · 105.38 · 106.00 · 106.38 · 109.74).
+     Tesla row: DATA.md MEDIUM-HIGH (bench = drop the row). -->
+<div class="frame" id="winners-card">
+  <div class="orb" style="width:700px;height:700px;background:var(--accent-gold);top:-260px;right:-220px;opacity:.20"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-green);bottom:-240px;left:-180px;opacity:.10"></div>
+  <div class="card gold">
+    <div class="top"></div>
+    <div class="ey">Product Hunt awards</div>
+    <h1>Golden Kitty <span class="go">winners</span></h1>
+    <div class="divider"></div>
+    <div class="wrows">
+      <div class="wrow" id="w1"><span class="prod">ChatGPT</span><span class="cat">AI Product of the Year</span><span class="yr">2022</span></div>
+      <div class="wrow" id="w2"><span class="prod">Telegram</span><span class="cat">Breakout Product of the Year</span><span class="yr">2017</span></div>
+      <div class="wrow" id="w3"><span class="prod">TikTok</span><span class="cat">Product of the Year</span><span class="yr">2018</span></div>
+      <div class="wrow" id="w4"><span class="prod">Tesla Model S <span class="mono pn">P100D</span></span><span class="cat">Sexiest Product</span><span class="yr">2016</span></div>
+      <div class="wrow" id="w5"><span class="prod">Apple AirPods Pro</span><span class="cat">Product of the Year</span><span class="yr">2019</span></div>
+      <div class="wrow" id="w6"><span class="prod">Google Gboard</span><span class="cat">Product of the Year</span><span class="yr">2016</span></div>
+      <div class="wrow" id="w7"><span class="prod">Coinbase Wallet</span><span class="cat">Crypto Product of the Year</span><span class="yr">2018</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- spdr-card :: CH4@188.40-194.10 :: DATA.md Pillar 3 (spelling 'Depositary', with the ampersand).
+     s1 resting letters · s2 S lit · s3 +P · s4 +D · s5 +R (spoken 191.32 to 193.52). No fund-size claim. -->
+<div class="frame" id="spdr-card">
+  <div class="orb" style="width:700px;height:700px;background:var(--accent-gold);top:-260px;right:-220px;opacity:.20"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-240px;left:-180px;opacity:.10"></div>
+  <div class="card gold">
+    <div class="top"></div>
+    <div class="ey">What SPDR stands for</div>
+    <div class="divider"></div>
+    <div class="srows">
+      <div class="srow" id="sp1"><span class="lt">S</span><span class="wd"><span class="ini">S</span>tandard <span class="amp">&amp;</span></span></div>
+      <div class="srow" id="sp2"><span class="lt">P</span><span class="wd"><span class="ini">P</span>oor's</span></div>
+      <div class="srow" id="sp3"><span class="lt">D</span><span class="wd"><span class="ini">D</span>epositary</span></div>
+      <div class="srow" id="sp4"><span class="lt">R</span><span class="wd"><span class="ini">R</span>eceipts</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- contrast-priced :: CH4@255.66-260.00 :: COMPARISON_REFS (declared A-vs-B, one rhetorical unit).
+     s1 RIGHT 'GOLDEN KITTY' lit gold @255.70 · s2 LEFT 'TYPICAL MEME COIN' lit @257.72. Never first/only/biggest. -->
+<div class="frame" id="contrast-priced">
+  <div class="orb" style="width:700px;height:700px;background:var(--accent-gold);top:-260px;right:-220px;opacity:.20"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-240px;left:-180px;opacity:.12"></div>
+  <div class="card gold">
+    <div class="top"></div>
+    <div class="ey">What the token trades against</div>
+    <div class="divider"></div>
+    <div class="vs">
+      <div class="side" id="cp-a">
+        <div class="lbl">Typical meme coin</div>
+        <div class="val">Priced in <span class="k">ETH or a stablecoin</span></div>
+      </div>
+      <div class="mid">vs</div>
+      <div class="side" id="cp-b">
+        <div class="lbl">Golden Kitty</div>
+        <div class="val">Priced in <span class="k">tokenized gold</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- both-tags :: CH6@420.90-425.70 :: DATA.md T5. Token art = the project's own profile art (DexScreener
+     pair info.imageUrl, fetched 2026-10-02), not AI. No quote styling, no Vlad.
+     s1 resting tags · s2 MEME lit lime @422.88 · s3 + PRICED IN A REAL-WORLD ASSET lit gold @423.78 -->
+<div class="frame" id="both-tags">
+  <div class="orb" style="width:460px;height:460px;background:var(--rh-lime);bottom:-240px;left:-180px;opacity:.10"></div>
+  <div class="field"></div>
+  <img class="art" src="golden-kitty-token-art.png" alt="">
+  <div class="card gold">
+    <div class="top"></div>
+    <div class="ey">The Golden Kitty token</div>
+    <h1>Golden Kitty is <span class="go">both</span></h1>
+    <div class="divider"></div>
+    <div class="tags">
+      <span class="tag" id="bt-meme"><span class="dot"></span>Meme</span>
+      <span class="tag" id="bt-rwa"><span class="dot"></span>Priced in a real-world asset</span>
+    </div>
+  </div>
+</div>
+
+<!-- end-card :: CH7@463.40-470.46 :: AS-RECORDED CH7. Logo bug = Mike's channel profile logo.
+     s1 resting · s2 like button lit @464.72 · s3 + comment prompt lit @466.10. NO link line. -->
+<div class="frame" id="end-card">
+  <div class="orb" style="width:640px;height:640px;background:var(--accent-gold);top:-240px;right:-200px;opacity:.16"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--rh-lime);bottom:-240px;left:-180px;opacity:.10"></div>
+  <img class="bug" src="mike-profile-logo.jpg" alt="">
+  <div class="card gold">
+    <div class="top"></div>
+    <div class="ey">Before you go</div>
+    <h1>Like and <span class="go">comment</span> below</h1>
+    <div class="divider"></div>
+    <div class="tile" id="ec-like">
+      <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+      <span class="tl2">Like</span>
+    </div>
+    <div class="prompt" id="ec-prompt">
+      <div class="plbl"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>Comment</div>
+      <div class="ptx">What do you think about <span class="go2">Golden Kitty</span> and the <span class="lime2">Robinhood Chain</span>?</div>
+    </div>
+  </div>
+</div>
+
+<!-- cap-holders :: CH3@156.25-162.48 :: DATA.md market snapshot (cap 4.2M DexScreener, holders 2,221 GeckoTerminal,
+     both read 2026-10-01). Replaces the C14 live receipt. s1 MARKET CAP lit gold @158.88 · s2 HOLDERS lit gold @161.06.
+     No price, no 24h change, no supply. -->
+<div class="frame" id="cap-holders">
+  <div class="orb" style="width:700px;height:700px;background:var(--accent-gold);top:-260px;right:-220px;opacity:.20"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--rh-lime);bottom:-240px;left:-180px;opacity:.10"></div>
+  <div class="card gold">
+    <div class="top"></div>
+    <div class="ey">At the time of recording · <span class="mono">Oct 1, 2026</span></div>
+    <div class="divider"></div>
+    <div class="crows">
+      <div class="crow" id="ch1"><span class="lb">Market cap</span><span class="vl">4.2M</span></div>
+      <div class="crow" id="ch2"><span class="lb">Holders</span><span class="vl">2,200+</span></div>
+    </div>
+    <div class="src">DexScreener · GeckoTerminal · read <span class="mono">Oct 1, 2026</span></div>
+  </div>
+</div>
+
+<!-- ph-card :: CH2@54.70-59.58 :: AS-RECORDED CH2; DATA.md Pillar 1. Text only: no logo, no leaderboard, no numbers.
+     s1 row 1 lit gold @56.44 · s2 row 2 lit gold @58.58 (resting row stays readable). Replaces the C30 recording. -->
+<div class="frame" id="ph-card">
+  <div class="orb" style="width:700px;height:700px;background:var(--accent-gold);top:-260px;right:-220px;opacity:.18"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-cyan);bottom:-240px;left:-180px;opacity:.10"></div>
+  <div class="card gold">
+    <div class="top"></div>
+    <div class="ey">What is Product Hunt</div>
+    <h1>Product <span class="go">Hunt</span></h1>
+    <div class="divider"></div>
+    <div class="prows">
+      <div class="prow" id="ph1"><span class="nm"><svg viewBox="0 0 24 24"><path d="M12 3l7 8h-4.5v10h-5V11H5z"/></svg></span><span class="tx">New tech products launch here</span></div>
+      <div class="prow" id="ph2"><span class="nm"><svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg></span><span class="tx">The community votes on them</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================================
+     TITLE SLIDES (no box) -> assets/title-slides/
+     ========================================================================= -->
+
+<!-- title-card-ch2 :: CH2@51.20 (edit-inserted pause) :: 'THE GOLDEN KITTY' -->
+<div class="frame titlecard" id="title-card-ch2">
+  <div class="orb" style="width:760px;height:760px;background:var(--accent-gold);top:-240px;right:-200px;opacity:.24"></div>
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-green);bottom:-260px;left:-200px;opacity:.14"></div>
+  <div class="ey">Chapter <span class="mono">02</span></div>
+  <div class="hero">The <span class="go">Golden Kitty</span></div>
+  <div class="divider"></div>
+</div>
+
+<!-- title-card-ch4 :: CH4@171.20 :: 'PRICED IN GOLD' (gold type) -->
+<div class="frame titlecard" id="title-card-ch4">
+  <div class="orb" style="width:760px;height:760px;background:var(--accent-gold);top:-240px;right:-200px;opacity:.28"></div>
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);bottom:-260px;left:-200px;opacity:.12"></div>
+  <div class="ey">Chapter <span class="mono">04</span></div>
+  <div class="hero"><span class="go">Priced in gold</span></div>
+  <div class="divider"></div>
+</div>
+
+<!-- title-card-ch5 :: CH5@260.00 :: 'THE STONK NARRATIVE' -->
+<div class="frame titlecard" id="title-card-ch5">
+  <div class="orb" style="width:760px;height:760px;background:var(--accent-green);top:-240px;right:-200px;opacity:.22"></div>
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);bottom:-260px;left:-200px;opacity:.12"></div>
+  <div class="ey">Chapter <span class="mono">05</span></div>
+  <div class="hero">The <span class="g">Stonk</span> narrative</div>
+  <div class="divider"></div>
+</div>
+
+<!-- title-card-ch6 :: CH6@363.46 :: 'ROBINHOOD CHAIN' (lime green type) -->
+<div class="frame titlecard" id="title-card-ch6">
+  <div class="orb" style="width:760px;height:760px;background:var(--rh-lime);top:-240px;right:-200px;opacity:.20"></div>
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-gold);bottom:-260px;left:-200px;opacity:.10"></div>
+  <div class="ey">Chapter <span class="mono">06</span></div>
+  <div class="hero"><span class="lime">Robinhood Chain</span></div>
+  <div class="divider"></div>
+</div>
+
+</body></html>

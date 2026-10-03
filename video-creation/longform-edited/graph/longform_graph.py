@@ -162,6 +162,7 @@ def research(state: LongformState) -> LongformState:
 SCREENPLAY_PROMPT = """Author the pre-production SCREENPLAY.md for the longform-edited project `{project}` (folder `{project_dir}`).
 Read first, all of them: video-creation/longform-edited/skills/doc-reference/SCREENPLAY.reference.md (the canonical SHAPE: copy it exactly), `{log}` (the LOCKED concept brief + Mike's hard constraints), `{data}` (the fact source: every on-screen number, date and name comes from here, never invented), video-creation/longform-edited/screenplay.md (the canonical format, Convention 5 tagged lines), persona/persona.json.
 Mike's hard constraints for THIS video, obey them exactly: {constraints}
+VARIETY (the MUSIC-MOOD-PLAN track shortlist): before you shortlist, run `python video-creation/skills/usage-ledger/usage_ledger.py report --what music --exclude-project "{project}"`. Never shortlist a track it marks BLOCKED (the previous video used it); avoid the last three videos' tracks; among tracks that fit the mood prefer `fresh`, then the least recently used.
 Output: return the COMPLETE SCREENPLAY.md per your definition AND save it to EXACTLY `{dest}` using Bash with a quoted heredoc (cat > "{dest}" <<'EOF' ... EOF). FORMAT: Convention 5 exactly as the exemplars write it. Every tagged line starts with its emoji and a BACKTICKED tag (the gray chip in the VS Code preview): 👤 `[FACE]` · 🗣️ `[COVER]` · 🔒 `[SAY-EXACT]` · 🎬 `[SHOW]` · 💬 `[NOTE]` · 🔍 `[VERIFY]`; a locked line is 🔒 `[SAY-EXACT]` 👤 `[FACE]` (or 🗣️ `[COVER]`); the legend table cells are backticked too; one job per line; no em dashes. The graph runs video-creation/longform-edited/skills/doc-reference/lint_screenplay.py on the file and HALTS on a format failure.
 The graph also verifies the file from disk and halts if it is missing its sections (the chapter map, the tagged beats, per-chapter sections, ## MUSIC-MOOD-PLAN, ## VISUAL-PLAN, ## OPEN QUESTIONS).
 """
@@ -353,7 +354,7 @@ def cover_blackout(state: LongformState) -> LongformState:
     cover_json = Path(str(sp["b"]) + ".cover.json")
     prompt = (f"Cover-blackout the defumbled spine for project `{proj.name}` (a gated-face video).\n"
               f"INPUT: `{sp['a']}`\nFACE/COVER tags: `{C.doc(proj, 'screenplay')}` (Convention 5 tagged beats; "
-              "the two 👤 `[FACE]` beats are the ONLY face windows, everything else is COVER).\n"
+              "every line tagged 👤 `[FACE]` is a face window, however many this video has; everything else is COVER).\n"
               f"OUTPUT (fixed 13a path): `{sp['b']}` plus its FACE/COVER map `{cover_json}`.\n"
               "Follow video-creation/skills/cover-blackout/cover-blackout.md exactly: paint black under every COVER "
               "span, audio untouched, duration identical to the input, frame-QA every window midpoint. Foreground only.")
@@ -651,8 +652,13 @@ def coverage(state: LongformState) -> LongformState:
                   f"Rulings: `{C.doc(proj, 'project_log')}`.\n"
                   f"FACE windows (measured from the picture; do NOT cover them): {faces}. Everything else is black video and MUST "
                   f"be covered: consecutive cover_beats over every non-FACE second, no gap over 0.5 s, nothing past {duration:.2f}s.\n"
-                  f"Budget: Envato video max {envato_max}, ChatGPT images max {chatgpt_max} (this is a 3-minute video: containers "
-                  "dominate; b-roll is short punctuation; no asset used twice; receipts + code charts are budget-exempt).\n"
+                  f"Budget: Envato video max {envato_max}, ChatGPT images max {chatgpt_max} for this {duration / 60:.1f}-minute video "
+                  "(no asset used twice; each b-roll item is short punctuation, 4 s or less; receipts + code charts are budget-exempt and "
+                  "still come first wherever the script needs a receipt or a chart). "
+                  + ("Mike RAISED the b-roll budget for this video above the default 10 + 5: he wants MORE b-roll than usual, so place "
+                     "close to the max wherever a beat suits a clip or an image, and break long container holds with b-roll cutaways. "
+                     if (envato_max > 10 or chatgpt_max > 5) else "Containers dominate; b-roll is sparse. ")
+                  + "\n"
                   "cover_type must be one of: receipt | real-chart | animated-chart | container | diagram | timeline | envato-video | "
                   "chatgpt-image (a chapter title card is a zero-length beat tIn == tOut with cover_type 'title'; the pause is an "
                   "edit-time insert). EVERY chatgpt_list row carries a `reference` key: a path under "
@@ -697,6 +703,28 @@ def run_lint_docset(state, node, stage):
 
 
 MUSIC_LIB = C.REPO_ROOT / "video-creation" / "assets" / "music" / "library.json"
+# The VARIETY ledger (Mike, 2026-10-01): which music + transitions every delivered video used, so the next one
+# picks something else. report = what the strategists read; check = the gate here; record = stage_longform.
+USAGE_LEDGER = C.REPO_ROOT / "video-creation" / "skills" / "usage-ledger" / "usage_ledger.py"
+USAGE_LINT_RE = re.compile(r"^USAGE-LINT (PASS|FAIL) what=(\w+) fails=(\d+) warns=(\d+)", re.M)
+
+
+def _usage_prompt(proj: Path, what: str) -> str:
+    return (f"VARIETY RULE (the graph verifies it from disk with usage_ledger.py check): FIRST run "
+            f"`python video-creation/skills/usage-ledger/usage_ledger.py report --what {what} --exclude-project \"{proj.name}\"` "
+            "and pick against it. Anything it marks BLOCKED (the previous video used it) is off the table unless "
+            f"`{C.doc(proj, 'project_log')}` records Mike waiving it (then add a top-level `usage_waivers` object naming it). "
+            "Avoid what the last three videos used. Among the options that FIT the beat, prefer `fresh` (never used), then "
+            "the least recently used. Fit comes first: never pick a wrong-mood option only because it is unused.\n")
+
+
+def _usage_check(state, node, proj: Path, what: str):
+    """usage_ledger.py check: FAIL when the plan repeats the previous video in a rotating pool / slot with no waiver."""
+    if not USAGE_LEDGER.is_file():
+        return True, "usage ledger tool missing (variety not checked)"
+    rc, out = C.run_streaming([sys.executable, "-u", str(USAGE_LEDGER), "check", "--project", str(proj), "--what", what], state, node)
+    m = USAGE_LINT_RE.search(out or "")
+    return bool(rc == 0 and m and m.group(1) == "PASS"), (f"variety {m.group(1)} ({m.group(3)} fails, {m.group(4)} warns)" if m else "no USAGE-LINT line")
 CH_HEADER_RE = re.compile(r"^###\s+(CH\s*\d+)\s*[-:]\s*([^(\n]+?)\s*\((\d+(?:\.\d+)?)-(\d+(?:\.\d+)?)\)([^\n]*)", re.M)
 MAX_BREATH_S = 1.0     # house rule #10: a breath between beds, never a silent stretch
 LEVEL_RANGE = (-24.0, -12.0)   # music.md: ~16-22 dB under the VO; anything outside is a typo, not a call
@@ -806,6 +834,9 @@ def music_plan(state: LongformState) -> LongformState:
                   "MUST have cover 'loop' with a loop_point_sec; `level_db_under_vo` between -24 and -12; no em dashes anywhere. "
                   "Prefer the instrumental variant under VO. Right-align the final bed so its ending lands on the last spoken word "
                   "when the screenplay asks for it, and state the exact source_in that achieves it.\n"
+                  + _usage_prompt(proj, "music") +
+                  "The screenplay's shortlist was written before this report existed: if a shortlisted track is BLOCKED or was "
+                  "used in the last three videos, replace it with a fresh track of the same role and say so in open_questions.\n"
                   f"Return the JSON per your definition AND also save it to EXACTLY `{dest}` with Bash (a quoted heredoc).")
         rc, out = C.spawn_agent(state, node, "music-placement-strategist", prompt, f"agent-music-{proj.name}.log")
         if not C.persist_agent_json(out, dest, want_key="beds"):
@@ -818,11 +849,15 @@ def music_plan(state: LongformState) -> LongformState:
     if why:
         return C._fail(state, node, f"MUSIC-PLAN.json failed verification: {why} (fix MUSIC-PLAN.json and re-drive; "
                                     "--redo music_plan re-runs the strategist instead)")
+    v_ok, v_msg = _usage_check(state, node, proj, "music")
+    if not v_ok:
+        return C._fail(state, node, "MUSIC-PLAN.json repeats the previous video's music (see the USAGE FAIL lines above): pick other "
+                                    "tracks (--redo music_plan re-runs the strategist), or record Mike's waiver as `usage_waivers` in the plan")
     ok, warns, out = run_lint_docset(state, node, "plan")
     if not ok:
         return C._fail(state, node, "plan-stage document set incomplete (see FAIL lines above)", out)
     n = len(plan["beds"])
-    return {"steps": C._step(state, node, "ran", f"MUSIC-PLAN.json ok ({n} beds over {len(chapters)} chapters), plan-stage docset PASS")}
+    return {"steps": C._step(state, node, "ran", f"MUSIC-PLAN.json ok ({n} beds over {len(chapters)} chapters), {v_msg}, plan-stage docset PASS")}
 
 
 def gate_plan(state):
@@ -1162,7 +1197,8 @@ def edit_plan(state: LongformState) -> LongformState:
                   f"card, already on FINAL-spine seconds): `{seed}`. FINAL spine: `{fs}` ({duration:.2f}s, 30 fps).\n"
                   f"Plans: `{C.doc(proj, 'as_recorded')}` (chapter map + FACE windows + flags), `{C.doc(proj, 'cover_plan')}`, "
                   f"`{C.doc(proj, 'music_plan')}` (beds, automation, hard hits, the ONE vibe-cut duck), `{C.doc(proj, 'project_log')}` "
-                  f"(rulings: title-card pauses 1.5 s; the DELIVERED stamp on R8 is approved).\n"
+                  f"(Mike's rulings for THIS video: read its `Open flags` section, every flag is load-bearing, e.g. face background-swap "
+                  f"clips in assets/face-swap/, image slots that play a motion clip from assets/img-motion/, on-screen figure rules).\n"
                   f"Built assets + their word-cued states: `{proj / 'assets'}` (read assets/diagrams/_state-cues.md and "
                   "assets/charts/*.spec.md; card states are the -sN files).\n"
                   "SFX kit: video-creation/assets/sfx/ (Impacts/library.json + WHEN-TO-USE-IMPACTS.md, risers/). Pick every impact by "
@@ -1276,6 +1312,9 @@ def transitions(state: LongformState) -> LongformState:
                   "(hand:film-burn or a lib:blocks-max-* id) with a `face-cut` row at EVERY FACE cut-in and cut-out edge; a `card` row at "
                   "every title card; every row source-tagged (rmn:/lib:/hand:) with a numeric tc on the spine; melt/spin rows set "
                   "sfx_duck true and justify TRANSFORM vs NEW FACET; melt_spin_budget equals the rows; no em dashes anywhere.\n"
+                  + _usage_prompt(proj, "transitions") +
+                  "The gated slots are the card move, the melt look and the spin look; the face pick and the AI-still glitch are "
+                  "reported for your judgment; fade / cross-fade / cross-warp / punch stay the constant house style.\n"
                   f"Return the JSON per your definition AND also save it to EXACTLY `{dest}` with Bash (a quoted heredoc).")
         rc, out = C.spawn_agent(state, node, "transition-strategist", prompt, f"agent-transitions-{proj.name}.log")
         if not C.persist_agent_json(out, dest, want_key="transitions"):
@@ -1291,6 +1330,10 @@ def transitions(state: LongformState) -> LongformState:
     why = _transition_plan_check(plan, duration)
     if why:
         return C._fail(state, node, f"TRANSITION-PLAN.json failed verification: {why} (fix the plan and re-drive; --redo transitions re-runs the strategist)")
+    v_ok, v_msg = _usage_check(state, node, proj, "transitions")
+    if not v_ok:
+        return C._fail(state, node, "TRANSITION-PLAN.json repeats the previous video's card / melt / spin look (see the USAGE FAIL lines "
+                                    "above): pick another (--redo transitions), or record Mike's waiver as `usage_waivers` in the plan")
     args = [sys.executable, "-u", str(RENDER_TRANSITIONS), str(proj)] + (["--force"] if _redo(state, node) else [])
     rc, out = C.run_streaming(args, state, node)
     if rc != 0:
@@ -1299,7 +1342,7 @@ def transitions(state: LongformState) -> LongformState:
     m = TR_LINT_RE.search(out or "")
     if rc != 0 or not m or m.group(1) != "PASS":
         return C._fail(state, node, "TRANSITIONS.md fails lint_transitions.py (see FAIL lines above)", out)
-    return {"steps": C._step(state, node, "ran", f"TRANSITION-PLAN.json ok ({m.group(2)} scene changes), TRANSITIONS.md rendered, lint PASS")}
+    return {"steps": C._step(state, node, "ran", f"TRANSITION-PLAN.json ok ({m.group(2)} scene changes), {v_msg}, TRANSITIONS.md rendered, lint PASS")}
 
 
 RECONCILE_DOCS = EP_SKILL / "reconcile_docs.py"
@@ -1496,6 +1539,13 @@ def comp_build(state: LongformState) -> LongformState:
     if not paused or not meta:
         return C._fail(state, node, "paused spine + sidecar missing (card_pauses must run first)")
     src_secs = _duration(Path(meta.get("source", ""))) if meta.get("source") else None
+    # FACE REFRAME (comp-build §3a, Mike 2026-10-01): measured in code, never eyeballed by the builder.
+    reframe_p = proj / "assets" / "face-reframe.json"
+    if not reframe_p.is_file() or _redo(state, node):
+        rc, out = C.run_streaming([sys.executable, "-u", str(MEASURE_FACE_REFRAME), str(proj), "--scope", scope], state, node)
+        if rc != 0 or not reframe_p.is_file():
+            return C._fail(state, node, "measure_face_reframe.py failed (no face found in the FACE windows? see above)", out)
+    reframe = json.loads(reframe_p.read_text(encoding="utf-8"))
     draft = _latest_draft(proj)
     if not (comp.is_file() and draft and report.is_file() and not _redo(state, node)):
         prompt = (f"Build the Remotion composition for the longform-edited project `{proj.name}` (folder `{proj}`) TO its approved "
@@ -1505,9 +1555,16 @@ def comp_build(state: LongformState) -> LongformState:
                   f"SOURCE spine `{meta.get('source')}` = {src_secs or 0:.3f} s.\n"
                   f"Blueprint: `{C.doc(proj, 'edit_plan')}` · `{C.doc(proj, 'cue_sheet')}` · `{C.doc(proj, 'transitions')}` + "
                   f"`{C.doc(proj, 'transition_plan')}` · `{C.doc(proj, 'cover_plan')}` · `{C.doc(proj, 'as_recorded')}`.\n"
+                  f"Mike's rulings for THIS video: `{C.doc(proj, 'project_log')}`, its `Open flags` section is load-bearing (read it before "
+                  "you write a line). An image slot whose flag or cover-plan note names a clip in assets/img-motion/ plays THAT clip as a "
+                  "muted video cover (from clip 0, cut at the slot end, no extra push on top); the still is only the fallback.\n"
                   f"Assets (the render's --public-dir): `{proj / 'assets'}` (state cues in assets/diagrams/_state-cues.md, chart spec in "
                   f"assets/charts/*.spec.md). Captions: `{proj / 'assets' / 'captions.json'}` -> import ZCAPTIONS + CAPTION_WINDOWS from "
                   f"`{REMOTION / 'src' / (comp_id + 'Captions.ts')}`.\n"
+                  f"FACE REFRAME (comp-build.md section 3a, measured, do not hand-tune): `{reframe_p}` -> declare exactly "
+                  f"`export const FACE_REFRAME = {{ scale: {reframe.get('scale')}, x: {reframe.get('x')}, y: {reframe.get('y')} }};` and apply it to the "
+                  f"spine and to every SpineStill (a background-swap clip `assets/face-swap/F<n>-higgsfield-bg-swap.mp4`, if the project has one, is PRE-FRAMED: play it full-frame WITHOUT FACE_REFRAME from its JSON's window_starts_at_clip_s, comp-build.md section 3b); punch-ins scale about the face point "
+                  f"{reframe.get('face_point_out')}. Previews of each FACE window through the transform: `{proj / '_previews' / 'qa' / 'face-reframe'}`.\n"
                   f"Draft output: `{proj / '_previews' / (proj.name + '-draft-v1.mp4')}` (bump the N if it exists) with the render log beside it; "
                   f"chunk QA into `{proj / '_previews' / 'qa'}`. Save your JSON report to EXACTLY `{report}`.\n"
                   "Follow your agent definition and comp-build.md exactly; no music, no SFX, no watermark in the comp; never end your "
@@ -1537,7 +1594,9 @@ GATE_LINES = {
     "lint_covers.py": r"^COVERS-LINT (PASS|FAIL)", "lint-deck-containers.py": None, "lint_slide_balance.py": r"^SLIDE-BALANCE-LINT (PASS|FAIL)",
     "lint_animated_charts.py": r"^ANIMATED-CHARTS-LINT (PASS|FAIL)", "lint_transition_assets.py": r"^TRANSITION-ASSETS-LINT (PASS|FAIL)",
     "check_spine_fps.py": r"^SPINE-FPS (PASS|FAIL)",
+    "lint_face_reframe.py": r"^FACE-REFRAME-LINT (PASS|FAIL)",
 }
+MEASURE_FACE_REFRAME = C.SCRIPTS / "measure_face_reframe.py"
 
 
 def verify_comp(state: LongformState) -> LongformState:
@@ -1563,6 +1622,7 @@ def verify_comp(state: LongformState) -> LongformState:
         ("lint_animated_charts.py", [str(comp)]),
         ("lint_transition_assets.py", [str(comp), str(assets), str(C.doc(proj, "transitions"))]),
         ("check_spine_fps.py", [str(assets / "spine.mp4"), "30"]),
+        ("lint_face_reframe.py", [str(comp), str(assets / "face-reframe.json")]),   # the face is centred with the MEASURED transform
     ]
     src_text = comp.read_text(encoding="utf-8", errors="replace")
     if re.search(r"INSERTS\s*=\s*\[", src_text):
@@ -1821,10 +1881,14 @@ def stage_longform(state: LongformState) -> LongformState:
         C._write_json_atomic(longs_p, data)
     if not (dest_mp4.is_file() and (_duration(dest_mp4) or 0) > 1):
         return C._fail(state, node, "queue copy did not verify; nothing recycled")
+    if USAGE_LEDGER.is_file():      # the variety ledger: this video's music + transitions are now "used"
+        rc, out = C.run_streaming([sys.executable, "-u", str(USAGE_LEDGER), "record", "--project", str(proj), "--source", "graph"], state, node)
+        if rc != 0 or "USAGE-RECORD ok" not in (out or ""):
+            return C._fail(state, node, "staged, but usage_ledger.py record failed (the next video would not rotate against this one); nothing recycled", out)
     ok, msg = _recycle([proj / "_previews", proj / "_tmp"])
     if not ok:
         return C._fail(state, node, f"staged, but the _previews/_tmp recycle failed: {msg}")
-    return {"steps": C._step(state, node, "ran", f"staged {dest_mp4.relative_to(st)} + longs.json entry '{meta['title'][:50]}', _previews recycled"),
+    return {"steps": C._step(state, node, "ran", f"staged {dest_mp4.relative_to(st)} + longs.json entry '{meta['title'][:50]}', usage ledger recorded, _previews recycled"),
             "status": "done"}
 
 

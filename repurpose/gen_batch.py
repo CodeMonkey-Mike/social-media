@@ -114,7 +114,7 @@ class BatchGenerator(Generator):
             return
         if self.fresh_always:
             # ONE fresh chat for the whole list: open it once, then stay on it
-            # (after the first success it registers and navigated_url is set).
+            # (it registers at its first send and navigated_url is set).
             if self.pending_fresh or self.navigated_url:
                 return
             self.open_fresh()

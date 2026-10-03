@@ -343,6 +343,12 @@ def stub_cmd(node: str, kind: str, lines: List[str]) -> List[str]:
 def claude_cmd() -> List[str]:
     exe = shutil.which("claude") or "claude"
     if exe.lower().endswith((".cmd", ".bat")):
+        # npm's claude.CMD shim runs under cmd.exe, and cmd.exe CUTS a multi-line argument at its first newline:
+        # every headless agent received only LINE ONE of its prompt (found 2026-10-01 when the desilencer never got
+        # its --min-sil, which sits on line 3). Call the real executable the shim wraps whenever it exists.
+        real = Path(exe).parent / "node_modules" / "@anthropic-ai" / "claude-code" / "bin" / "claude.exe"
+        if real.is_file():
+            return [str(real)]
         return ["cmd.exe", "/c", exe]
     return [exe]
 
@@ -383,30 +389,46 @@ PROMPT_ARG_MAX = 6000   # Windows caps a command line at ~32 K chars; long promp
 
 
 def _spawn_once(state, node, agent, prompt, log_name, model):
-    if len(prompt) > PROMPT_ARG_MAX:
+    base = claude_cmd()
+    # Long prompts ride in a file (Windows command-line cap); so does ANY multi-line prompt when the only way to
+    # reach claude is the cmd.exe shim, which would cut it at the first newline.
+    if len(prompt) > PROMPT_ARG_MAX or (base[0].lower() == "cmd.exe" and len(prompt.splitlines()) > 1):
         pf = DATA / f"{log_name}.prompt.md"
         DATA.mkdir(parents=True, exist_ok=True)
         pf.write_text(prompt, encoding="utf-8")
         prompt = (f"Your full task brief is in the file `{pf}`. Read it FIRST with the Read tool, then carry it out "
                   "exactly as written (it is the orchestrator's prompt to you, not user chatter).")
-    cmd = [*claude_cmd(), "-p", "--agent", agent, "--dangerously-skip-permissions",
+    cmd = [*base, "-p", "--agent", agent, "--dangerously-skip-permissions",
            "--output-format", "text", *(["--model", model] if model else []), prompt]
     print(f"[longform] {node}: spawning headless agent {agent}"
           f"{f' (--model {model})' if model else ''} (log graph/data/{log_name})", flush=True)
     started = time.monotonic()
-    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+    proc = subprocess.Popen(cmd, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
                             encoding="utf-8", errors="replace", env=headless_env(),
                             cwd=str(REPO_ROOT))
     lines = []
     DATA.mkdir(parents=True, exist_ok=True)
-    with open(DATA / log_name, "a", encoding="utf-8") as lf:
-        lf.write(f"\n===== {agent} @ {_now_iso()} =====\n")
-        for line in proc.stdout:
-            lines.append(line)
-            lf.write(line)
-            lf.flush()
-            _beat(state, node, f"{agent}: {line.strip()[:120]}", pid=proc.pid)
-    proc.wait()
+    # A headless agent prints NOTHING until it finishes, so without these two beats the dashboard kept showing
+    # the previous node as the last thing that happened for the agent's whole run (golden-kitty defumble, 2026-10-01).
+    _beat(state, node, f"{agent}: started (headless agent, no output until it finishes)", pid=proc.pid)
+    stop = threading.Event()
+
+    def _keepalive():
+        while not stop.wait(60):
+            _beat(state, node, f"{agent}: working, {(time.monotonic() - started) / 60:.0f} min elapsed", pid=proc.pid)
+
+    threading.Thread(target=_keepalive, daemon=True).start()
+    try:
+        with open(DATA / log_name, "a", encoding="utf-8") as lf:
+            lf.write(f"\n===== {agent} @ {_now_iso()} =====\n")
+            for line in proc.stdout:
+                lines.append(line)
+                lf.write(line)
+                lf.flush()
+                _beat(state, node, f"{agent}: {line.strip()[:120]}", pid=proc.pid)
+        proc.wait()
+    finally:
+        stop.set()
     print(f"[longform] {node}: agent {agent} exit {proc.returncode} after "
           f"{(time.monotonic() - started) / 60:.1f} min", flush=True)
     return proc.returncode, "".join(lines)

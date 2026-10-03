@@ -7,14 +7,22 @@ A **YouTube community quiz** is a poll variant: same question + 2-4 options, but
 marked **correct**, and an optional **explanation** is shown to the viewer *after* they answer. Built
 2026-07-07 by mirroring [[yt-post-poll]] (`scripts/post-yt-poll.js`) — same Chrome/CDP setup, same real
 CDP keystrokes, same robustClick, same two-button Post trap, same human timing. The quiz-specific parts
-are a different composer widget (`ytd-backstage-quiz-editor-renderer`), a mandatory correct-answer mark,
-and the explanation field.
+are the composer widget, a mandatory correct-answer mark, and the explanation field.
+
+> ⛔ **Post quizzes with the PYTHON port — the JS twin cannot post any more (2026-08-30).**
+> YouTube migrated the quiz composer off the Polymer `ytd-backstage-quiz-editor-renderer` onto its
+> newer `ytPostsCreation*ViewModel*` components. The legacy widget still exists in the DOM but is
+> permanently `display:none` / 0x0, so `post-yt-quiz.js` throws `Quiz editor did not open
+> (display=none)` before it ever reaches Post (clean pre-post failure, nothing published, no
+> duplicate risk) and every other legacy selector it uses now points at a 0x0 ghost.
+> `scripts/post_yt_quiz.py` carries the ViewModel selectors and is ✅ LIVE-BLESSED 2026-08-30.
+> Per the freeze doctrine the JS twin was left untouched as rollback; it is NOT a fallback here.
 
 ## Invocation
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-yt-quiz.js
+python scripts/post_yt_quiz.py
 ```
 
 Picks up the first quiz with `status === "pending"` from `data/yt-quizzes.json`, posts it, and writes
@@ -58,44 +66,61 @@ identical to the poll poster. **Any Chrome window already using ytbot-profile mu
 2. Launches Chrome on CDP 9223, verifies YouTube login (avatar present).
 3. **Pre-composer wait 30–90s** → navigates to `@CodeMonkeyMike/posts` → expands composer.
 4. Types `question_text` character-by-character.
-5. Opens the quiz editor: `#quiz-button button` via `dispatchEvent('click')` → confirms
-   `ytd-backstage-quiz-editor-renderer#quiz-attachment` is `display:flex` (not `none`).
-6. Fills each option into `.quiz-option-input-input textarea`, adding rows with
-   `button[aria-label="Add answer"]` (the widget starts with 2). Verifies each via `inputValue()`.
-7. **Marks the correct answer:** clicks the `correct_option_index`-th
-   `yt-icon-button.option-selector-button[aria-label="Mark as correct answer"]`.
-8. If `explanation` is set: reveals + fills `.quiz-explanation-input-input textarea` (see gotcha below).
+5. Opens the quiz editor: robustClicks `button[aria-label="Add a quiz"]:visible` → waits for
+   `.ytPostsCreationOptionsEditorViewModelHost` + an answer textarea to render.
+6. Fills each option into `.ytPostsCreationOptionViewModelTextFieldContainer textarea`, adding rows
+   with `button.ytPostsCreationOptionsViewModelAddOptionButton` (starts with 2). Verifies each via
+   `input_value()`.
+7. **Marks the correct answer:** option 1 is marked by DEFAULT, so it clicks the
+   `correct_option_index`-th `.ytPostsCreationOptionViewModelOptionSelectorButton` only when the mark
+   has to move, then GATES on exactly one row carrying `...OptionSelectorButtonCorrect`.
+8. If `explanation` is set: fills the single shared explanation textarea (see gotcha below).
 9. Waits for the **visible** Post button to enable, **pre-post wait 30–90s**, robustClicks Post.
 10. Waits for composer to clear, finds the new `/post/Ugkx…` URL, writes `posted` + `post_url`.
 
 ## Critical implementation details
 
-**Quiz button: `#quiz-button button`** (a `ytd-button-renderer`, aria "Add a quiz"), dispatched — NOT
-`[aria-label*="Quiz"]`. Confirm `#quiz-attachment` becomes `display:flex` after clicking.
+**Quiz button — the two-button trap.** There are TWO `#quiz-button` elements: a 0x0 `span` inside
+`ytd-backstage-post-dialog-renderer` and the real 90x40 `ytd-button-renderer` inside `ytd-commentbox`.
+`.first()` grabs the ghost, so target `button[aria-label="Add a quiz"]:visible`. Same trap already
+documented for the Post button.
 
-**Options are `<textarea>`s, not paper-inputs.** The quiz editor uses
-`tp-yt-iron-autogrow-textarea` (`.quiz-option-input-input textarea`), unlike the poll's
-`tp-yt-paper-input`. Focus with a real (actionability-checked) click, type real CDP keystrokes, verify
-with `inputValue()`, fall back to `.fill()`.
+**Never probe the legacy `#quiz-attachment` for "did it open".** It is a dead node now (permanently
+`display:none`), so it always answers "no". Wait for `.ytPostsCreationOptionsEditorViewModelHost` plus
+a visible answer textarea instead — and note the editor renders **asynchronously**, so wait, don't
+sample once.
 
-**You MUST mark a correct answer or the Post button never enables.** Clicking the
-`correct_option_index`-th `.option-selector-button` is what makes the quiz valid. If Post won't enable,
-the correct answer isn't marked. (`aria-pressed` is not set on the button — the Post-enable gate is the
-real confirmation.)
+**Options are `<textarea>`s.** `.ytPostsCreationOptionViewModelTextFieldContainer textarea`
+(placeholders "Answer N"). Scope by that container: a bare `.ytStandardsTextareaShapeTextarea` also
+matches the explanation field, which throws the answer count off by one. Focus, type real CDP
+keystrokes, verify with `input_value()`, fall back to `.fill()`.
 
-**Explanation field — the per-option gotcha (why the first TWO Kaspa quizzes posted WITHOUT their
-explanation, 2026-07-07):** EVERY option row has its OWN explanation textarea (placeholder "Explain why
-this is correct (optional)"), but only the **correct option's** field is visible/editable — the others
-are `0×0` hidden with `offsetParent === null`. The original code used
-`page.locator(EXPL_TEXTAREA).first()`, which grabbed **option 0's hidden** field whenever the correct
-answer wasn't option 0 (the Kaspa quiz's correct answer is index 1) → keystrokes went nowhere → empty
-explanation, and the script couldn't tell. A 2-option probe hid the bug because there the correct answer
-*was* option 0. **Fix (proven by `scripts/_diag-yt-quiz-explanation.js`):** target
-`EXPL_TEXTAREA.nth(correct_option_index)` (the field is revealed once the correct answer is marked), then
-`scrollIntoView({block:'center'})` + native `el.focus()` (verify `document.activeElement === el`) + real
-keystrokes, with `.fill()` as fallback. If an explanation is set but will not register, the script
-**throws BEFORE clicking Post** — so a quiz is never published missing its intended explanation. Confirm
-`Explanation ✓` in the log.
+**You MUST have exactly one correct answer marked or the Post button never enables.** Two traps:
+- **Option 1 starts marked.** The selector buttons behave like radios, so clicking a row that is
+  already marked risks toggling it off. Click only when the mark must move; verify otherwise.
+- **`.ytPostsCreationOptionViewModelOptionSelectorButton` is a `<button-view-model>` WRAPPER with no
+  aria at all.** The state is the class `...OptionSelectorButtonCorrect` on the wrapper (mirrored as
+  `...QuizOptionCorrect` on the row); `aria-pressed` lives on the wrapper's INNER `<button>`. Reading
+  `aria-pressed` off the wrapper returns `None` for every row, i.e. a false "nothing is marked".
+
+The port now GATES on that class: exactly one row marked AND it is `correct_option_index`, else it
+aborts before Post. A quiz with the wrong answer marked is worse than one not posted.
+
+**Explanation field — now ONE shared field.** Target
+`.ytPostsCreationOptionsEditorViewModelExplanationContainer textarea` (placeholder "Add an explanation
+(optional)") with `.first()`, then `scrollIntoView({block:'center'})` + native `el.focus()` (verify
+`document.activeElement === el`) + real keystrokes, with `.fill()` as fallback. If an explanation is set
+but will not register, the script **throws BEFORE clicking Post** — so a quiz is never published missing
+its intended explanation. Confirm `Explanation ✓` in the log.
+
+> The old per-option quirk is GONE (2026-08-30), and carrying it forward would now break the opposite
+> way. History, because it explains the shape of the code: the Polymer editor gave EVERY option row its
+> own "Explain why this is correct" textarea with only the **correct option's** visible, so
+> `.first()` silently grabbed option 0's hidden field whenever the correct answer wasn't option 0 — the
+> first two Kaspa quizzes (correct answer index 1) posted with an EMPTY explanation, and a 2-option
+> probe missed it because there the correct answer *was* option 0. The fix then was
+> `.nth(correct_option_index)`. Against the ViewModel DOM there is only one field, so `.nth(ci)` would
+> now select **nothing** for any `ci > 0`.
 
 **The two-button Post trap** (identical to polls): two `button[aria-label="Post"]` exist — a hidden 0×0
 disabled placeholder and the real ~61×40 button. Select via `querySelectorAll`, filter for
@@ -129,17 +154,27 @@ read the log before doing anything else.
 
 ## Discovery probes (read-only, kept for future YouTube DOM changes)
 
-- `scripts/_diag-yt-quiz-selectors.js` — dumps the composer toolbar + quiz-editor structure.
-- `scripts/_diag-yt-quiz-explanation.js` — reveals + focus-tests the explanation field.
+- `scripts/_diag_yt_quiz_viewmodel.py` — **start here.** Dumps the composer subtree only: every
+  ViewModel class with counts, the answer rows and their inner controls, all fields (placeholder +
+  dimensions) and visible buttons, plus the legacy containers so you can see at a glance which ones
+  have gone dead. This is the probe that root-caused the 2026-08-30 migration.
+- `scripts/_diag_yt_quiz_correct.py` — the mark-correct control specifically: dumps every selector
+  button (classes / aria / aria-pressed) on a fresh 2-row editor, again after `Add answer` ×2, and
+  again after clicking a row, so you can see exactly which attribute reflects state.
+- `scripts/_diag-yt-quiz-selectors.js` — the original 2026-07-07 probe (legacy DOM; dumps the whole
+  page, so it is noisy now).
+- `scripts/_diag-yt-quiz-explanation.js` — legacy per-option explanation probe.
+
+None of them ever click Post.
 
 ## Re-logging in
 
 Same as polls — see [[yt-post-poll]] (`ytbot-profile`, log into @CodeMonkeyMike, close with the X).
 
-## ⚠ `Correct-answer button aria-pressed=null` — the CONFIRMATION SIGNAL is unreliable, not the mark (3 occurrences: 2026-07-15, 07-21, 07-22)
+## ✅ `Correct-answer button aria-pressed=null` — RESOLVED 2026-08-30 (was logged 4x: 07-15, 07-21, 07-22, 07-30)
 
-When marking the correct answer, the script reads `aria-pressed` on the correct-answer button and expects `"true"`; it logs `null` intermittently (clean on 2026-07-20, present on the three dates above). **Every time, the post still went live with the explanation correctly attached to the right option's field** — so the mark itself works. What is broken is the signal used to confirm it.
+The script used to read `aria-pressed` on the correct-answer button, expect `"true"`, and log `null` intermittently. Every time the post still went live with the explanation on the right option, so the mark itself worked and only the confirmation signal was broken — which is why it decayed into log-and-shrug across four occurrences, with an owed fix outstanding since the escalation threshold was declared on 07-22.
 
-**Current status: known-benign. Do NOT treat `aria-pressed=null` as a failure and do NOT re-run the script on it** (re-running duplicates a live community post).
+**Root cause, found while fixing the ViewModel migration:** the element matched by the selector is a `<button-view-model>` **wrapper**, and the wrapper carries no aria attributes — `aria-pressed` lives on its inner `<button>`. So the read was against the wrong node the whole time; `null` was the honest answer to a malformed question.
 
-**Owed fix (escalation threshold reached at the 3rd occurrence):** the next time `post-yt-quiz.js` is edited, replace the `aria-pressed` read with a signal that actually reflects state — e.g. the checked/selected class on the option row, or re-reading the option element after the click — rather than continuing to log-and-shrug. Until that lands, an occasional visual spot-check of which option shows as correct on a live quiz post is worthwhile.
+**Fixed as the owed fix asked:** the port now reads the option row's state CLASS (`...OptionSelectorButtonCorrect`) and **gates** on it — exactly one row marked and it must be `correct_option_index`, otherwise it aborts before Post. The inner button's `aria-label`/`aria-pressed` are logged per option as a human-readable cross-check. Confirmed on the 2026-08-30 bless run: `marked=[1], expected=[1]`, with `option 2: correct=True aria=Marked as correct aria-pressed=true`. No visual spot-check needed any more.

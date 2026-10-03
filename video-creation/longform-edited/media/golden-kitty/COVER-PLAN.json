@@ -1,0 +1,2027 @@
+{
+  "_meta": "coverage-strategist proposal 2026-10-01 for GATE plan. Timecodes = FINAL spine (spine/ALL.g.pickup.mp4, 470.46s); cues snapped to ALL.g.pickup.medium-words.json. Built to AS-RECORDED, not the screenplay. Receipts-first, then code charts and diagrams, then the raised b-roll budget (Envato max 30, ChatGPT max 15).",
+  "spine": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/golden-kitty/spine/ALL.g.pickup.mp4",
+  "transcript_json": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/golden-kitty/spine/ALL.g.pickup.medium-words.json",
+  "face_windows": [
+    [
+      0.0,
+      9.667
+    ],
+    [
+      40.233,
+      44.033
+    ],
+    [
+      89.6,
+      91.833
+    ],
+    [
+      122.1,
+      131.233
+    ],
+    [
+      167.433,
+      169.533
+    ],
+    [
+      213.933,
+      216.5
+    ],
+    [
+      342.567,
+      348.0
+    ],
+    [
+      407.533,
+      410.833
+    ],
+    [
+      453.1,
+      457.467
+    ]
+  ],
+  "budget": {
+    "envato_video_max": 30,
+    "chatgpt_image_max": 15,
+    "envato_used": 26,
+    "chatgpt_used": 13
+  },
+  "cover_beats": [
+    {
+      "chapter": "CH1",
+      "tIn": 9.667,
+      "tOut": 13.4,
+      "spoken": "Most meme coins trade against Ethereum or a stablecoin.",
+      "cover_type": "chatgpt-image",
+      "what": "G1: Pixar-style 3D CGI Ethereum coin (the real Ethereum diamond mark, per reference) beside a plain silver stablecoin stamped with a dollar sign, on a dark trading desk, navy near-black bg, rim light, no text. 3.73s.",
+      "source": "ChatGPT image concept, persona image_generation house style; Ethereum named explicitly (name_the_asset rule).",
+      "priority": "med",
+      "verify": false,
+      "bench": "start C13 at 9.667 and hold the pair header 6.7s with a slow push-in",
+      "notes": "Hook, gear 3. Image b-roll under 4s. The screenplay's H0 'PRICED IN GOLD' card is not placed in CH1: its cue words sit inside FACE F1 (open questions)."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 13.4,
+      "tOut": 16.38,
+      "spoken": "This one trades against gold. This is the real deal.",
+      "cover_type": "receipt",
+      "what": "C13: DexScreener GOLDEN / GLD pair header, the quote token name 'SPDR Gold Trust, Robinhood Token' boxed in gold. Real-site capture, 2.98s flash with a push-in.",
+      "source": "https://dexscreener.com/robinhood/0x2b2f171fe944df3f8b230272682755b7d5c8adb0e2d76aabb621f1f870251841 (pair header + token info panel). DATA.md T5.",
+      "priority": "high",
+      "verify": false,
+      "bench": "GeckoTerminal pool page header for the same pool",
+      "notes": "Receipts-first on the hook's core claim. R(other). Only appearance of C13 (no asset twice). Live stats (market cap, 24h change, volume) are OUT of frame: pair identity only."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 16.38,
+      "tOut": 21.2,
+      "spoken": "December 23rd, 2015, Robinhood posted themselves. Robinhood won",
+      "cover_type": "receipt",
+      "what": "C5: Robinhood's own 2015-12-23 X post, full post view (handle, date, text, attached graphic); the sentence 'Robinhood won the Golden Kitty Award for the Sexiest Product of the Year!!' highlights in lime green on 'Robinhood won' @20.42.",
+      "source": "https://x.com/RobinhoodApp/status/679773248020594688 (DATA.md T2, primary, verbatim).",
+      "priority": "high",
+      "verify": false,
+      "bench": "the X embed render of the same post if the live page hits a login wall",
+      "notes": "4.82s receipt, slow push toward the highlighted sentence (highlight fires on 'Robinhood won' @20.42). Never restyled. The post's date is visible on screen. Hands off to G11 at 21.20."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 21.2,
+      "tOut": 24.78,
+      "spoken": "the Golden Kitty award for the sexiest product of the year.",
+      "cover_type": "chatgpt-image",
+      "what": "G11: Vlad Tenev (likeness from the reference) holding the Golden Kitty trophy up over his head in triumph, confetti falling, one warm stage spotlight. Pixar-style 3D CGI, clearly a cartoon and never photoreal; the trophy is the Product Hunt Golden Kitty TROPHY from the reference (a chrome-gold seated cat wearing a visor, on a round base), NOT the GOLDEN token or any coin; no text, no logo, no ticker, no numbers; deep navy near-black background, dramatic rim light. The comp overlays a small code tag 'AI ILLUSTRATION' in a lower corner for the whole beat (Mike's ruling 2026-10-02 lets an AI image show Vlad Tenev with the trophy; the tag keeps it from reading as a real photo).",
+      "source": "ChatGPT browser pipeline, from the references (schedule-tweets/images/reference/Vlad-Tenev.webp + schedule-tweets/images/reference/golden-kitty.png (the trophy)). An AI ILLUSTRATION, not a receipt: no source shows Vlad Tenev holding the trophy (DATA.md T3). The line it sits on is about ROBINHOOD winning the award, which is sourced (T2).",
+      "priority": "medium",
+      "verify": false,
+      "bench": "hold the neighbouring receipt / timeline through this window",
+      "notes": "3.58s image b-roll (4 s cap). The hook's win line, right after Robinhood's own post proves it. Never placed on a line about the token, its price or Mike's conviction; the VO never says Vlad held the trophy. PLAYS AS A SLOW MOTION CLIP (Mike, 2026-10-02): assets/img-motion/IMG-11-vlad-trophy-overhead-confetti-motion.mp4 (Seedance 480p from this image, 864x496, 24 fps, 4.04 s, muted), played from clip 0 and cut at the slot end; the still is the fallback."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 24.78,
+      "tOut": 30.04,
+      "spoken": "Then July 1st, 2026, Robinhood launches its own blockchain",
+      "cover_type": "container",
+      "what": "H1: full-frame motion-type card. Eyebrow 'JULY 1, 2026' lands @25.42; headline 'ROBINHOOD CHAIN' in Robinhood lime green slams on 'launches its own blockchain' @28.56; sub-line 'MAINNET LIVE'. Text only, code-rendered.",
+      "source": "DATA.md T7 (Robinhood newsroom, mainnet 2026-07-01). SCREENPLAY VISUAL-PLAN H1.",
+      "priority": "high",
+      "verify": false,
+      "bench": "a 2s C17 newsroom-headline flash ahead of H1 (the screenplay's order; it would be a second C17 appearance)",
+      "notes": "5.26s, meets the card floor. C17 is saved for CH6, where the date is the chapter's claim (no receipt reuse). Lime #CCFF00, never greenish cyan."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 30.04,
+      "tOut": 33.5,
+      "spoken": "with more than 28 million customers behind the company.",
+      "cover_type": "envato-video",
+      "what": "E1: dense crowd of commuters walking a city street on their smartphones, slow motion, 3.46s. LINE-CAPTION overlay 'MORE THAN 28 MILLION CUSTOMERS' (bold condensed uppercase, bottom-left).",
+      "source": "Envato query: 'crowd people walking city street smartphones slow motion'",
+      "priority": "med",
+      "verify": false,
+      "bench": "aerial of a packed stadium crowd",
+      "notes": "Under 4s. Line-caption 1 of 4 (device 3, video b-roll only, 15% of the video covers). Figure per DATA.md Pillar 4 (28.4M funded customers, Q2 2026)."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 33.5,
+      "tOut": 37.16,
+      "spoken": "And two months later, that trophy shows up on the chain",
+      "cover_type": "chatgpt-image",
+      "what": "G2: Pixar-style 3D CGI Golden Kitty (the gold cat with the visor, per reference) rising as a gold token coin out of a glowing lime green chain of linked blocks, navy near-black bg, rim light, no text, no numbers. 3.66s.",
+      "source": "ChatGPT image concept; Golden Kitty from the reference; Robinhood chain glow lime #CCFF00 per persona robinhood_coin.",
+      "priority": "med",
+      "verify": false,
+      "bench": "the project's own token art (DexScreener profile image) over a code-drawn lime chain glow",
+      "notes": "Image under 4s. No Robinhood logo on the coin (independent fan token guard)."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 37.16,
+      "tOut": 40.233,
+      "spoken": "as a token trading against tokenized gold.",
+      "cover_type": "envato-video",
+      "what": "E2: stacked gold bars, macro, a light sweep across the faces, dark background, 3.07s.",
+      "source": "Envato query: 'gold bars stack macro light sweep dark'",
+      "priority": "med",
+      "verify": false,
+      "bench": "gold bullion close-up slow dolly",
+      "notes": "Under 4s. Ends exactly at the F2 face window (40.233)."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 44.033,
+      "tOut": 46.96,
+      "spoken": "And the story of how a cat trophy ended up here",
+      "cover_type": "receipt",
+      "what": "C11a: @matcarpenter's 2016-03-14 X post with the photo of a real Golden Kitty trophy, handle and date visible. 2.93s pop-in on 'cat trophy'.",
+      "source": "https://x.com/matcarpenter/status/709502760023003137 (DATA.md Pillar 1, attributed trophy posts).",
+      "priority": "high",
+      "verify": true,
+      "bench": "a goldenkitty.vip trophy image that shows no person (never the 'held up for the camera' photo)",
+      "notes": "A real trophy on the words 'cat trophy'. R(other). The post shows the object only: not Robinhood, not Vlad Tenev (guard)."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 46.96,
+      "tOut": 51.2,
+      "spoken": "starts more than 10 years before the chain even existed. So let's break it all down.",
+      "cover_type": "envato-video",
+      "what": "E3: time-tunnel fly-through, clock faces and light streaks rushing past the camera, continuous forward motion, 4.24s LEADING-MOTION.",
+      "source": "Envato query: 'time travel tunnel clock fly through'",
+      "priority": "med",
+      "verify": false,
+      "bench": "calendar pages flipping backwards fast",
+      "notes": "Leading-motion exception (continuous camera lead), under the 5s lead cap. Runs to the CH2 card seam at 51.20."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 51.2,
+      "tOut": 51.2,
+      "spoken": "(no spoken line: the card sits in the chapter seam)",
+      "cover_type": "title",
+      "what": "title-card-ch2: 'THE GOLDEN KITTY'. Zero spine time: the readable card pause is an edit-time insert (card_pauses node); every later cue shifts via sh().",
+      "source": "AS-RECORDED chapter map",
+      "priority": "high",
+      "verify": false,
+      "bench": "",
+      "notes": "Card ON: the bed changes here (Bed A to Bed B). One card presentation for all four cards per TRANSITIONS.md (not cube, per the usage ledger)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 51.2,
+      "tOut": 54.7,
+      "spoken": "So what is Golden Kitty? Well, first off,",
+      "cover_type": "chatgpt-image",
+      "what": "G3: Pixar-style 3D CGI Golden Kitty character (per reference) on a pedestal under one stage spotlight in a dark auditorium, a glowing question mark of light floating above it, no other text. 3.5s.",
+      "source": "ChatGPT image concept, persona house style; the question mark is an explicitly requested symbol.",
+      "priority": "med",
+      "verify": false,
+      "bench": "hold the title card longer",
+      "notes": "Image under 4s. Different composition from G2, G5, G8 and G10 (every image unique)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 54.7,
+      "tOut": 59.58,
+      "spoken": "Product Hunt is a site where new tech products launch and the community votes on them.",
+      "cover_type": "container",
+      "what": "ph-card: text card 'Product Hunt'. Row 'New tech products launch here' lights @56.44; row 'The community votes on them' lights @58.58.",
+      "source": "Code card. AS-RECORDED CH2; DATA.md Pillar 1.",
+      "priority": "high",
+      "verify": false,
+      "bench": "hold the G3 image to 56.0 and start C8 early",
+      "notes": "4.88s (narration-bounded, just under the card floor). REPLACES the C30 homepage recording (2026-10-02): producthunt.com now sits behind a Cloudflare human check, which is not worked around. If Mike supplies his own screen recording of the homepage (5 s slow scroll, no ad banner), it goes back in this slot as C30."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 59.58,
+      "tOut": 64.3,
+      "spoken": "And in December of 2015, Product Hunt held its first ever awards,",
+      "cover_type": "receipt",
+      "what": "C8: Product Hunt Golden Kitty hall of fame, the 2015 page: the 'Golden Kitty Awards' header, 2015 selected, the first winner rows. 4.72s, push toward '2015'.",
+      "source": "https://www.producthunt.com/golden-kitty-awards/hall-of-fame?year=2015 (DATA.md Pillar 1).",
+      "priority": "high",
+      "verify": true,
+      "bench": "PC Tech Magazine 2015-12-28 article headline (the first annual Golden Kitty Awards)",
+      "notes": "R(other). Crop out any retirement or sunset notice on the page."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 64.3,
+      "tOut": 68.3,
+      "spoken": "voted on by its own community. They called it the Golden Kitty Awards.",
+      "cover_type": "envato-video",
+      "what": "E4: award-show audience applauding toward a lit stage, warm spotlights, 4.00s.",
+      "source": "Envato query: 'audience applause award ceremony stage spotlights'",
+      "priority": "med",
+      "verify": false,
+      "bench": "hands raised voting in a crowd",
+      "notes": "At the 4s cap, non-lead. No trophy close-up in this clip: the real trophy comes next."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 68.3,
+      "tOut": 74.3,
+      "spoken": "And the trophy is exactly what it sounds like. A chrome gold cat wearing a visor",
+      "cover_type": "receipt",
+      "what": "C11b: @NivDror's 2016-03-07 X post 'Up close with the Golden Kitty Trophy', captured as a SCREEN RECORDING with the post's video playing (the real trophy in frame), handle visible. 6.0s.",
+      "source": "https://x.com/NivDror/status/706934541315760128 (DATA.md Pillar 1).",
+      "priority": "high",
+      "verify": true,
+      "bench": "static capture of the post's video poster frame with a slow push-in",
+      "notes": "R(other), the recording already moves. The real object while he describes it. Not Robinhood, not Vlad Tenev."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 74.3,
+      "tOut": 78.3,
+      "spoken": "sitting on a base that says Product Hunt, Golden Kitty. Look at that thing.",
+      "cover_type": "receipt",
+      "what": "C11c: @arthcmr's 2017-01-11 X post with the trophy photo, push-in toward the trophy on its base, handle visible. 4.0s. (The base lettering is too small to read in this photo: push on the trophy, not on the lettering.)",
+      "source": "https://x.com/arthcmr/status/818976934478516224 (DATA.md Pillar 1).",
+      "priority": "high",
+      "verify": true,
+      "bench": "swap C11a and C11c if the other photo shows the base lettering better",
+      "notes": "R(other). Whichever of the two photo posts reads the base clearly takes THIS slot; the other takes the CH1 slot."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 78.3,
+      "tOut": 86.0,
+      "spoken": "Now Robinhood first showed up on Product Hunt in December of 2013. Two years later, the community votes and Robinhood wins the Golden Kitty",
+      "cover_type": "timeline",
+      "what": "C4 state 1: timeline ladder, four rungs. Rung 1 'DEC 2013: Robinhood first launches on Product Hunt' lights @78.76; rung 2 'DEC 2015: Robinhood wins the Golden Kitty' lights @84.52 with its tag 'SEXIEST PRODUCT OF THE YEAR' already on the rung. Rungs 3 and 4 sit dark and unlabeled.",
+      "source": "Code (Type 2). DATA.md Pillar 1: first launch 2013-12-14; Golden Kitty 2015 'Sexiest Product' (Product Hunt's Robinhood page, Robinhood's 2015 post). No 2025 rung.",
+      "priority": "high",
+      "verify": false,
+      "bench": "C7 receipt for this whole beat (two-stage zoom: the 2013 launch entry, then the 2015 award line)",
+      "notes": "7.7s, the CH2 anchor diagram, actively narrated (shortened from 11.3s to give G12 the quote; the ladder returns as state 2 at 118.78). Hands off to G12 at 86.00."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 86.0,
+      "tOut": 89.6,
+      "spoken": "for, and I quote, the sexiest product of the year.",
+      "cover_type": "chatgpt-image",
+      "what": "G12: Vlad Tenev (likeness from the reference) seated at a desk, grinning, the Golden Kitty trophy standing on the desk in front of him with one hand resting on it, a soft lime green (#CCFF00) glow from a laptop beside him. Pixar-style 3D CGI, clearly a cartoon and never photoreal; the trophy is the Product Hunt Golden Kitty TROPHY from the reference (a chrome-gold seated cat wearing a visor, on a round base), NOT the GOLDEN token or any coin; no text, no logo, no ticker, no numbers; deep navy near-black background, dramatic rim light. The comp overlays a small code tag 'AI ILLUSTRATION' in a lower corner for the whole beat (Mike's ruling 2026-10-02 lets an AI image show Vlad Tenev with the trophy; the tag keeps it from reading as a real photo).",
+      "source": "ChatGPT browser pipeline, from the references (schedule-tweets/images/reference/Vlad-Tenev.webp + schedule-tweets/images/reference/golden-kitty.png (the trophy)). An AI ILLUSTRATION, not a receipt: no source shows Vlad Tenev holding the trophy (DATA.md T3). The line it sits on is about ROBINHOOD winning the award, which is sourced (T2).",
+      "priority": "medium",
+      "verify": false,
+      "bench": "hold the neighbouring receipt / timeline through this window",
+      "notes": "3.60s image b-roll (4 s cap). The win line of the backstory; ends at the F3 face window (89.600). Never placed on a line about the token, its price or Mike's conviction; the VO never says Vlad held the trophy."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 91.833,
+      "tOut": 93.34,
+      "spoken": "They posted it themselves.",
+      "cover_type": "receipt",
+      "what": "C5b: the graphic Robinhood attached to its 2015 post, full frame ('The GOLDEN KITTY AWARDS' art with the cartoon gold cat on a podium). 1.5s flash out of the F3 face cut.",
+      "source": "https://x.com/RobinhoodApp/status/679773248020594688/photo/1 (media https://pbs.twimg.com/media/CW8KKrLUsAAJ-I6.jpg, DATA.md Pillar 1).",
+      "priority": "high",
+      "verify": true,
+      "bench": "start C6 at 91.833 and hold it 6.6s",
+      "notes": "A different asset from C5 (the post's media, not the post view), so no receipt repeats. It is a graphic: no person, no physical trophy."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 93.34,
+      "tOut": 98.4,
+      "spoken": "And in their own year-end recap, they called it the coveted Golden Kitty Award.",
+      "cover_type": "receipt",
+      "what": "C6: Robinhood newsroom '#RobinhoodRewind 2015' (2016-01-07), push-in to the sentence with 'the coveted Golden Kitty Award from Product Hunt' highlighted in lime green @96.84. 5.06s.",
+      "source": "https://robinhood.com/us/en/newsroom/robinhoodrewind-2015/ (DATA.md T2, primary, verbatim).",
+      "priority": "high",
+      "verify": false,
+      "bench": "none (stable primary page)",
+      "notes": "R(article), one push-in move toward the paragraph being read."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 98.4,
+      "tOut": 100.9,
+      "spoken": "And this award went on to mean something.",
+      "cover_type": "envato-video",
+      "what": "E5: slow pan along a shelf of golden trophies in a dark room, 2.5s.",
+      "source": "Envato query: 'golden trophies shelf slow pan dark'",
+      "priority": "low",
+      "verify": false,
+      "bench": "trophy cabinet rack focus",
+      "notes": "Under 4s. Breathes between the receipt run and the winners container."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 100.9,
+      "tOut": 112.5,
+      "spoken": "ChatGPT won the Golden Kitty. Telegram won the Golden Kitty, as well as TikTok, Tesla, Apple, Google, and many others. And in 2018, Coinbase Wallet won the crypto category.",
+      "cover_type": "container",
+      "what": "winners-card: 'GOLDEN KITTY WINNERS', one row lands and spotlights per spoken name: 'ChatGPT, AI Product of the Year, 2022' @100.92; 'Telegram, Breakout Product of the Year, 2017' @102.76; 'TikTok, Product of the Year, 2018' @104.50; 'Tesla Model S P100D, Sexiest Product, 2016' @105.38; 'Apple AirPods Pro, Product of the Year, 2019' @106.00; 'Google Gboard, Product of the Year, 2016' @106.38; 'Coinbase Wallet, Crypto Product of the Year, 2018' @109.74.",
+      "source": "Code container. DATA.md Pillar 1 household-name winners (Product Hunt newsletters, hall of fame, awards pages).",
+      "priority": "high",
+      "verify": true,
+      "bench": "drop the Tesla row if its sourcing is not firmed up (DATA.md rates it MEDIUM-HIGH)",
+      "notes": "11.6s, ONE container with a progressive row spotlight (the names come 0.4 to 1.7s apart, too fast for a card each). Shows the PRODUCT that won, as DATA.md requires. Stacked spotlight rows, not a table."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 112.5,
+      "tOut": 116.0,
+      "spoken": "The same year Robinhood Crypto showed up in that category too.",
+      "cover_type": "receipt",
+      "what": "C7: Product Hunt's Robinhood awards page, the line '2018: Robinhood Crypto, Crypto' highlighted in lime green (the 2015 'Sexiest Product' line visible above it). 3.5s.",
+      "source": "https://www.producthunt.com/products/robinhood/awards (DATA.md Pillar 1).",
+      "priority": "high",
+      "verify": true,
+      "bench": "extend winners-card to 116.00 with a small note 'Robinhood Crypto: in the 2018 Crypto category'",
+      "notes": "R(other). On-screen wording stays 'showed up', never 'won' (Coinbase Wallet won that category)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 116.0,
+      "tOut": 118.78,
+      "spoken": "So Robinhood has this trophy in its history.",
+      "cover_type": "chatgpt-image",
+      "what": "G13: Vlad Tenev (likeness from the reference), seen from the side, setting the Golden Kitty trophy onto a shelf in a glass trophy cabinet, other plain unbranded trophies behind it. Pixar-style 3D CGI, clearly a cartoon and never photoreal; the trophy is the Product Hunt Golden Kitty TROPHY from the reference (a chrome-gold seated cat wearing a visor, on a round base), NOT the GOLDEN token or any coin; no text, no logo, no ticker, no numbers; deep navy near-black background, dramatic rim light. The comp overlays a small code tag 'AI ILLUSTRATION' in a lower corner for the whole beat (Mike's ruling 2026-10-02 lets an AI image show Vlad Tenev with the trophy; the tag keeps it from reading as a real photo).",
+      "source": "ChatGPT browser pipeline, from the references (schedule-tweets/images/reference/Vlad-Tenev.webp + schedule-tweets/images/reference/golden-kitty.png (the trophy)). An AI ILLUSTRATION, not a receipt: no source shows Vlad Tenev holding the trophy (DATA.md T3). The line it sits on is about ROBINHOOD winning the award, which is sourced (T2).",
+      "priority": "medium",
+      "verify": false,
+      "bench": "hold the neighbouring receipt / timeline through this window",
+      "notes": "2.78s image b-roll (4 s cap). The bridge line: the trophy as part of Robinhood's history. Never placed on a line about the token, its price or Mike's conviction; the VO never says Vlad held the trophy."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 118.78,
+      "tOut": 122.1,
+      "spoken": "And then Robinhood goes on and launches its own blockchain.",
+      "cover_type": "timeline",
+      "what": "C4 state 2: the ladder returns with rungs 1 and 2 lit (rung 2 with its 'SEXIEST PRODUCT OF THE YEAR' tag); rung 3 'JULY 1, 2026: Robinhood Chain mainnet' lights in lime green @120.50. Rung 4 'SEPT 4, 2026: GOLDEN / GLD pool' pulses dim: the F4 face line delivers it.",
+      "source": "Code (Type 2). DATA.md T7 + Pillar 2 (pool created 2026-09-04).",
+      "priority": "high",
+      "verify": false,
+      "bench": "none needed (same code asset, second state)",
+      "notes": "3.32s callback, the ladder's second and last appearance (progressive states of ONE code asset; declare DIAGRAM_REFS). Ends at the F4 face window (122.100)."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 131.233,
+      "tOut": 142.25,
+      "spoken": "And the project says exactly what it is. A fan dedication to Robinhood winning that 2015 Golden Kitty. It's an independent fan token and it's not an official Robinhood product.",
+      "cover_type": "receipt",
+      "what": "C10: goldenkitty.vip, two-stage zoom on one capture: the hero and the 'fan dedication to Robinhood winning Product Hunt's 2015 Golden Kitty award' line (131.23 to 138.30), then tighter on 'Independent fan token. Not affiliated with Robinhood.' highlighted @138.40.",
+      "source": "https://goldenkitty.vip/ (hero + sub line; DATA.md Pillar 2, verbatim).",
+      "priority": "high",
+      "verify": true,
+      "bench": "two separate crops of the same page, cut on 138.30",
+      "notes": "11.0s R(other) with the sanctioned two-stage zoom for a long read. The 'Not affiliated' line on screen is the guard made visible. Crop out the site's 'held up for the camera' photo and its 'Gold treasury' panel."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 142.25,
+      "tOut": 156.25,
+      "spoken": "Now look at this chart from its launch day close. This thing is up roughly 15x. It had one wild day in the middle of September, a huge spike and a hard flush. And look at what it did after that. It built a steady climb day after day, quickly recovering.",
+      "cover_type": "real-chart",
+      "what": "C12: the REAL DexScreener GOLDEN / GLD chart since launch, as a screen recording / pan: launch-day candle @143.46, the full run to now @144.60, push to the mid-September spike and flush @146.60, then travel along the climb after it @151.44 to 156.20.",
+      "source": "DexScreener pair URL (same pool as C13), chart view, USD price, full history since 2026-09-04 (4h or 1D candles). DATA.md Pillar 2 candles.",
+      "priority": "high",
+      "verify": true,
+      "bench": "GeckoTerminal chart of the same pool",
+      "notes": "14.0s, actively narrated ('look at this chart'). Must-have real chart, never restyled or redrawn. No all-time-high figure called out as text. VERIFY 'roughly 15x' against the render-day price."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 156.25,
+      "tOut": 162.48,
+      "spoken": "At the time I'm recording, that's about a 4.2 million dollar market cap with over 2200 holders.",
+      "cover_type": "container",
+      "what": "cap-holders: dated stat card, eyebrow 'AT THE TIME OF RECORDING · OCT 1, 2026'. Row 'MARKET CAP 4.2M' lights in gold @158.88; row 'HOLDERS 2,200+' lights @161.06.",
+      "source": "Code card. DATA.md market snapshot (read 2026-10-01): cap 4.2M (DexScreener), holders 2,221 (GeckoTerminal).",
+      "priority": "high",
+      "verify": false,
+      "bench": "the cap-vs-volume chart's start state held early",
+      "notes": "6.23s. REPLACES the C14 live receipt (2026-10-02): the live panel now reads 3.4M with a red 24h change, which would contradict the line Mike speaks ('at the time I'm recording ... about a 4.2 million dollar market cap'). The card carries the recording-day figures with their date. One row spotlighted at a time."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 162.48,
+      "tOut": 167.433,
+      "spoken": "4 million dollars on a chain has already done more than 90 billion dollars in trading volume.",
+      "cover_type": "animated-chart",
+      "what": "cap-vs-volume: animated two-number contrast. 'GOLDEN MARKET CAP 4.2M' counts in gold @162.48 beside a tiny bar; 'ROBINHOOD CHAIN DEX VOLUME, ALL TIME 90B+' counts in lime green @165.12 as its bar races across the frame.",
+      "source": "Our code (Type 1). DATA.md section 5 (cap) + Pillar 4 (DefiLlama daily chart sum 92.14B, shown as 90B+).",
+      "priority": "high",
+      "verify": true,
+      "bench": "static two-number card (still code)",
+      "notes": "4.95s, narration-bounded. Reads '90B+', never the 98.97B / 99.02B headline total. Real useCurrentFrame animation in the draft too. Ends at the F5 face window (167.433)."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 169.533,
+      "tOut": 171.2,
+      "spoken": "Look at what it trades against.",
+      "cover_type": "envato-video",
+      "what": "E6: molten gold pouring into a mold, extreme close-up, 1.67s.",
+      "source": "Envato query: 'molten gold pouring foundry close up'",
+      "priority": "med",
+      "verify": false,
+      "bench": "gold ingot glow macro",
+      "notes": "Short tease out of the F5 face cut, straight into the 'PRICED IN GOLD' card at 171.20."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 171.2,
+      "tOut": 171.2,
+      "spoken": "(no spoken line: the card sits in the chapter seam)",
+      "cover_type": "title",
+      "what": "title-card-ch4: 'PRICED IN GOLD'. Zero spine time: the readable card pause is an edit-time insert (card_pauses node).",
+      "source": "AS-RECORDED chapter map",
+      "priority": "high",
+      "verify": false,
+      "bench": "",
+      "notes": "Card ON: the bed changes here (Bed B to Bed C). Gold type."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 171.2,
+      "tOut": 173.9,
+      "spoken": "In general, meme coins trade against Ethereum",
+      "cover_type": "envato-video",
+      "what": "E7: a physical Ethereum coin rotating on a dark background, 2.7s.",
+      "source": "Envato query: 'ethereum coin rotating dark background'",
+      "priority": "med",
+      "verify": false,
+      "bench": "crypto exchange order book screen close-up",
+      "notes": "Under 4s. First of two fast cuts that open the chapter after the card."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 173.9,
+      "tOut": 175.55,
+      "spoken": "or against a stablecoin.",
+      "cover_type": "envato-video",
+      "what": "E8: dollar bills running through a money counting machine, close-up, 1.65s.",
+      "source": "Envato query: 'money counting machine dollar bills close up'",
+      "priority": "med",
+      "verify": false,
+      "bench": "stack of dollar bills macro",
+      "notes": "The dollar stands in for the stablecoin (literal-noun)."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 175.55,
+      "tOut": 188.4,
+      "spoken": "Golden Kitty's main pool trades against GLD. So what exactly is GLD? It's Robinhood's tokenized version of SPDR Gold Trust, a fund that trades like a stock and holds physical gold.",
+      "cover_type": "diagram",
+      "what": "C1 state A: the centerpiece system-design diagram. Core 'GOLDEN <-> Pool (Uniswap v4) <-> GLD' lights @175.72; the GLD node pulses on 'what exactly is GLD?' @178.58; then its stack lights as spoken: 'GLD: tokenized gold ETF token (issuer Robinhood Assets (Jersey) Limited)' @180.84, 'SPDR Gold Trust ETF share' @182.58, 'gold bars' @186.52.",
+      "source": "Code (Type 2, static states). DATA.md Pillar 3 + T5.",
+      "priority": "high",
+      "verify": false,
+      "bench": "none needed (index asset C1, the centerpiece)",
+      "notes": "12.85s, actively explained, sub-spotlights on the spoken word (never the whole diagram lit at once). Gold nodes in gold, the Robinhood token node edged lime. The stack reads as a chain of holding, not a direct claim on bars. No 'backed', 'floor' or 'redeem' anywhere."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 188.4,
+      "tOut": 194.1,
+      "spoken": "SPDR is an acronym and it just stands for Standard and Poor's Depository Receipts.",
+      "cover_type": "container",
+      "what": "spdr-card: eyebrow 'WHAT SPDR STANDS FOR'; the letters S, P, D, R expand into 'Standard & Poor's Depositary Receipts' on the spoken words @191.32 to 193.52.",
+      "source": "Code card. DATA.md Pillar 3 (SPDR acronym; spelling 'Depositary').",
+      "priority": "med",
+      "verify": false,
+      "bench": "fold the acronym into C1 as a callout on the ETF node",
+      "notes": "5.7s. On-screen spelling is 'Depositary' with the ampersand, per the AS-RECORDED flag. No fund-size claim."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 194.1,
+      "tOut": 196.3,
+      "spoken": "So, S-P-D-R, or spider.",
+      "cover_type": "chatgpt-image",
+      "what": "G4: Pixar-style 3D CGI friendly golden spider sitting on top of a gold bar, navy near-black bg, rim light, no text. 2.2s.",
+      "source": "ChatGPT image concept, persona house style. Generic (no real mark).",
+      "priority": "low",
+      "verify": false,
+      "bench": "extend spdr-card to 196.30 with a 'say it: spider' line",
+      "notes": "Literal-noun gag on the pronunciation, under 4s. Flagged for Mike (open questions)."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 196.3,
+      "tOut": 201.54,
+      "spoken": "And Robinhood says that every one of these tokens is backed one to one by the real share",
+      "cover_type": "receipt",
+      "what": "C16: Robinhood's Stock Tokens page, push-in to 'Every single Stock Token in circulation is backed 1:1 by the corresponding underlying equity' highlighted @199.00, with the issuer line (Robinhood Assets (Jersey) Limited) in frame. 5.24s.",
+      "source": "https://robinhood.com/rhj/stocktokens/ (DATA.md Pillar 3, verbatim).",
+      "priority": "high",
+      "verify": false,
+      "bench": "the docs.robinhood.com/chain/stock-tokens page",
+      "notes": "R(article). 'Backed one to one' is about GLD, Robinhood's token: no Golden Kitty art or ticker anywhere in this slot (guard)."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 201.54,
+      "tOut": 203.1,
+      "spoken": "held by a custodian.",
+      "cover_type": "envato-video",
+      "what": "E9: a heavy steel bank vault door swinging shut, 1.56s.",
+      "source": "Envato query: 'bank vault door closing steel'",
+      "priority": "low",
+      "verify": false,
+      "bench": "extend C16 to 203.10 with the 'held securely by our US-based custody partner' line highlighted",
+      "notes": "Literal-noun punch between the receipt and the diagram."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 203.1,
+      "tOut": 213.933,
+      "spoken": "Now here's what paired means. The pool holds two things, Golden Kitty and tokenized gold. When somebody buys, gold goes into the pool. When somebody sells, gold comes out.",
+      "cover_type": "diagram",
+      "what": "C1 state B: the diagram widens to the pool. Header 'WHAT PAIRED MEANS' @203.10; the pool's two sides glow, GOLDEN @206.82 and GLD @208.06; the BUY arrow animates (GLD in, GOLDEN out) @208.96; the SELL arrow animates (the reverse) @211.88.",
+      "source": "Code (Type 2, static states). DATA.md Pillar 3 mechanics.",
+      "priority": "high",
+      "verify": false,
+      "bench": "none needed (index asset C1)",
+      "notes": "10.83s, uninterrupted through the buy and sell arrows (the marquee reveal for the transition-strategist). Second and last C1 appearance. No pool amounts on screen (live drift). Ends at the F6 face window (213.933)."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 216.5,
+      "tOut": 219.45,
+      "spoken": "And that means that Golden Kitty is priced in gold.",
+      "cover_type": "envato-video",
+      "what": "E10: brass balance scale weighing gold nuggets, close-up, 2.95s.",
+      "source": "Envato query: 'balance scale weighing gold nuggets close up'",
+      "priority": "med",
+      "verify": false,
+      "bench": "gold coin placed on a jeweler's scale",
+      "notes": "Literal 'priced in gold' out of the F6 face cut."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 219.45,
+      "tOut": 230.86,
+      "spoken": "Its dollar price is its price in gold times the price of gold. So if that ratio just holds and gold goes up, like let's say 10%, Golden Kitty goes up 10% in dollars.",
+      "cover_type": "animated-chart",
+      "what": "C2: animated price formula strip. 'GOLDEN in dollars = GOLDEN in gold x gold in dollars' builds term by term @219.70 to 223.32 with the render-day values counting in; then the example: the gold term ticks +10% @227.18 and the dollar result follows +10% @229.64, the ratio tagged 'holds'.",
+      "source": "Our code (Type 1). DATA.md section 5: priceNative 0.00001109 GLD, GLD about 381 USD, GOLDEN about 0.0042 USD at the 2026-10-01 read.",
+      "priority": "high",
+      "verify": true,
+      "bench": "static formula card without live values (still code)",
+      "notes": "11.4s. A number we control, so our own animated chart. The +10% is labeled 'example'. No price target."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 230.86,
+      "tOut": 236.5,
+      "spoken": "It moves with gold both directions and gold is up about 50% over the last two years.",
+      "cover_type": "real-chart",
+      "what": "C15: the REAL two-year gold chart (TradingView, GLD), the whole two-year window in frame including the 2026 pullback, the range's percent change visible. 5.64s.",
+      "source": "https://www.tradingview.com/symbols/AMEX-GLD/ chart, custom range about Oct 2024 to now, weekly candles. DATA.md Pillar 3 (GLD about 253.51 to about 380.96).",
+      "priority": "high",
+      "verify": true,
+      "bench": "Yahoo Finance GLD 2-year chart; or TradingView XAUUSD two-year",
+      "notes": "Must-have real chart, never restyled. Showing the pullback keeps 'both directions' honest. VERIFY it still reads about +50% at capture."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 236.5,
+      "tOut": 238.66,
+      "spoken": "And the trading fees get paid in gold too.",
+      "cover_type": "envato-video",
+      "what": "E11: gold coins falling onto a growing pile, slow motion, 2.16s.",
+      "source": "Envato query: 'gold coins falling pile slow motion'",
+      "priority": "med",
+      "verify": false,
+      "bench": "start C3 at 236.50",
+      "notes": "Under 4s. Different gold texture from E2, E6, E10 and E19 (no two clips alike)."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 238.66,
+      "tOut": 248.14,
+      "spoken": "Per the project's own tracker, this pool has earned about 236 GLD in fees since launch. That's about 90,000 dollars in tokenized gold.",
+      "cover_type": "animated-chart",
+      "what": "C3: animated fees counter. Label 'PER THE PROJECT'S OWN TRACKER' @238.70; 'FEES EARNED IN GLD' counts up to about 236 GLD @241.30; converts to 'about 90K USD in tokenized gold' @245.22, with the ounce equivalent beneath.",
+      "source": "Our code (Type 1). DATA.md Pillar 3 vault.json: 235.89 GLD fees, about 90,060 USD, about 21.66 oz (self-reported).",
+      "priority": "high",
+      "verify": true,
+      "bench": "static card with the same three lines (still code)",
+      "notes": "9.48s. Fees only: the pool's GLD is not spoken in this beat, so it is not shown. Never the word 'treasury', never framed as holder-owned."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 248.14,
+      "tOut": 255.66,
+      "spoken": "Now let me be clear about what this is. It's a meme coin and the project says so. It's not backed by gold and you can't redeem it for gold.",
+      "cover_type": "receipt",
+      "what": "C10b: goldenkitty.vip, the project's own disclaimer; push-in to 'is not backed by, does not represent, and cannot be redeemed for gold or GLD' highlighted @252.64, with the 'meme coin ... no intrinsic value' wording in frame @250.40.",
+      "source": "https://goldenkitty.vip/ (footer disclaimer + the 'what it is' paragraph; DATA.md T8, verbatim).",
+      "priority": "high",
+      "verify": true,
+      "bench": "code card quoting the disclaimer verbatim with the source line 'goldenkitty.vip'",
+      "notes": "7.52s. A different crop from C10 (no receipt repeats). 'The project says so' gets the project's own words on screen."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 255.66,
+      "tOut": 260.0,
+      "spoken": "What it is is it's priced in gold and most tokens on this chain can't say that.",
+      "cover_type": "container",
+      "what": "contrast-priced: declared A-vs-B container. RIGHT 'GOLDEN KITTY: priced in tokenized gold' lights in gold @255.70; LEFT 'TYPICAL MEME COIN: priced in ETH or a stablecoin' lights @257.72.",
+      "source": "Code container (SCREENPLAY CH4 Beat 5). DATA.md Pillar 3 contrast.",
+      "priority": "high",
+      "verify": false,
+      "bench": "a 'PRICED IN GOLD' motion-type stamp (the screenplay's H0 card)",
+      "notes": "4.34s, a two-panel with ten words (under the 5s card floor, narration-bounded before the CH5 card). One side spotlighted at a time. Never 'first', 'only' or 'biggest'. Declare COMPARISON_REFS."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 260.0,
+      "tOut": 260.0,
+      "spoken": "(no spoken line: the card sits in the chapter seam)",
+      "cover_type": "title",
+      "what": "title-card-ch5: 'THE STONK NARRATIVE'. Zero spine time: the readable card pause is an edit-time insert (card_pauses node).",
+      "source": "AS-RECORDED chapter map",
+      "priority": "high",
+      "verify": false,
+      "bench": "",
+      "notes": "Card ON: the bed changes here (Bed C to Bed D)."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 260.0,
+      "tOut": 262.5,
+      "spoken": "So now Golden Kitty isn't out here on its own.",
+      "cover_type": "chatgpt-image",
+      "what": "G5: Pixar-style 3D CGI Golden Kitty (per reference) at the front of a marching crowd of generic unbranded cartoon coin mascots, navy near-black bg, rim light, no text. 2.5s.",
+      "source": "ChatGPT image concept, persona house style; Golden Kitty from the reference.",
+      "priority": "med",
+      "verify": false,
+      "bench": "wide shot of many generic coins rolling together",
+      "notes": "The other mascots are generic on purpose (no real token implied). PLAYS AS A SLOW MOTION CLIP (Mike, 2026-10-02): assets/img-motion/IMG-5-kitty-leads-coin-crowd-motion.mp4 (Seedance 480p from this image, 864x496, 24 fps, 4.04 s, muted), played from clip 0 and cut at the slot end; the still is the fallback."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 262.5,
+      "tOut": 266.5,
+      "spoken": "There's a whole narrative forming all around this. It's called the stonk narrative.",
+      "cover_type": "envato-video",
+      "what": "E12: stock exchange trading floor, ticker boards and screens, traders in motion, 4.00s.",
+      "source": "Envato query: 'stock exchange trading floor ticker screens'",
+      "priority": "med",
+      "verify": false,
+      "bench": "wall of stock ticker displays rack focus",
+      "notes": "At the 4s cap, non-lead. Stocks texture for 'stonk'."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 266.5,
+      "tOut": 276.26,
+      "spoken": "It started with stocks. In the middle of July, a launchpad on the Robinhood chain called Long started letting people launch meme coins that are paired with tokenized stock instead of Ethereum.",
+      "cover_type": "diagram",
+      "what": "stock-pair: system-design diagram. Eyebrow 'IT STARTED WITH STOCKS' @266.54; node 'LONG: launchpad on Robinhood Chain, July 14, 2026' lights lime @271.08; it feeds 'MEME COIN <-> POOL <-> TOKENIZED STOCK' (meme coin @272.88, tokenized stock @274.40); a ghosted 'ETH' node is struck through on 'instead of Ethereum' @275.32.",
+      "source": "Code (Type 2). DATA.md Pillar 6 (DeFiPrime 2026-09-01, The Block 2026-08-31).",
+      "priority": "high",
+      "verify": false,
+      "bench": "long.xyz homepage capture as a receipt for the first 5s",
+      "notes": "9.76s. Same grammar as C1 on purpose: the viewer maps 'same pool idea, a stock on the other side'."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 276.26,
+      "tOut": 277.8,
+      "spoken": "And it took off.",
+      "cover_type": "envato-video",
+      "what": "E13: rocket liftoff, engines igniting, 1.54s.",
+      "source": "Envato query: 'rocket launch liftoff flames close'",
+      "priority": "low",
+      "verify": false,
+      "bench": "start C23 at 276.26",
+      "notes": "Literal 'took off', a fast punch."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 277.8,
+      "tOut": 283.1,
+      "spoken": "By the end of August, meme coins paired to stocks were about a quarter of all the stock trading on the chain.",
+      "cover_type": "receipt",
+      "what": "C23: The Block (2026-08-31), push-in to the sentence 'Memecoins paired against tokenized stocks now account for roughly a quarter of all stock-linked trading volume on Robinhood Chain', highlighted lime. 5.3s.",
+      "source": "https://www.theblock.co/news/markets/2026-08-31-robinhood-chain-activity-surges-in-august-as-dex-volume-near-1-billion-413136 (DATA.md Pillar 6).",
+      "priority": "high",
+      "verify": true,
+      "bench": "code quote card with the sentence verbatim and 'The Block, Aug 31, 2026'",
+      "notes": "R(article), one push-in. Framing stays 'stock trading', never 'all trading'."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 283.1,
+      "tOut": 285.3,
+      "spoken": "And that was across more than 400 pools.",
+      "cover_type": "envato-video",
+      "what": "E14: top-down drone shot over a suburb full of backyard swimming pools, 2.2s. LINE-CAPTION overlay 'ACROSS MORE THAN 400 POOLS'.",
+      "source": "Envato query: 'aerial top down suburb backyard swimming pools'",
+      "priority": "low",
+      "verify": true,
+      "bench": "code stat stamp '400+ STOCK-PAIRED POOLS' (the screenplay's card)",
+      "notes": "Literal-noun pun on liquidity pools (meme-chapter energy). Line-caption 2 of 4; reads 'POOLS' per Mike's ruling. VERIFY the 400+ (432, one secondary source) or drop the caption."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 285.3,
+      "tOut": 288.24,
+      "spoken": "The biggest one is a meme coin called Artificial Inu",
+      "cover_type": "chatgpt-image",
+      "what": "G6: Pixar-style 3D CGI Artificial Inu mascot (per reference) with a soft circuit-light glow, navy near-black bg, rim light, no text, no numbers. 2.94s.",
+      "source": "ChatGPT image concept, persona house style; the real token from its reference image.",
+      "priority": "med",
+      "verify": false,
+      "bench": "the token's own profile art from DexScreener",
+      "notes": "Real token shown from its reference. No price or market cap on the image."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 288.24,
+      "tOut": 290.15,
+      "spoken": "paired against tokenized Nvidia stock.",
+      "cover_type": "envato-video",
+      "what": "E15: macro of a GPU chip on a circuit board with light pulsing through the traces, no brand logo, 1.91s.",
+      "source": "Envato query: 'gpu chip circuit board macro light pulse'",
+      "priority": "low",
+      "verify": false,
+      "bench": "start C23b at 288.24",
+      "notes": "Literal-noun for the chip maker, no logo needed."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 290.15,
+      "tOut": 296.35,
+      "spoken": "It went from a 1.5 million dollar market cap to 150 million in one month.",
+      "cover_type": "receipt",
+      "what": "C23b: The Block (2026-08-31), second crop: the Artificial Inu sentence, 'from a 1.5 million market cap on Aug. 1 to a peak of 135 million on Aug. 30' highlighted. 6.2s.",
+      "source": "Same The Block article as C23, the Artificial Inu paragraph (DATA.md Pillar 6, verbatim).",
+      "priority": "high",
+      "verify": true,
+      "bench": "the real DexScreener chart of Artificial Inu's August run with no number called out",
+      "notes": "Fact-framing trap: the VO says 150 million, the screen shows ONLY the sourced 135 million (Mike's ruling). Never a card repeating the spoken figure. A different crop from C23."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 296.35,
+      "tOut": 298.44,
+      "spoken": "Then Solana jumped in, of course.",
+      "cover_type": "envato-video",
+      "what": "E16: a diver jumping into water, big splash, slow motion, 2.09s.",
+      "source": "Envato query: 'diver jumping into water splash slow motion'",
+      "priority": "low",
+      "verify": false,
+      "bench": "cannonball jump into a lake",
+      "notes": "Literal 'jumped in'. No Solana logo (no reference image exists for one)."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 298.44,
+      "tOut": 302.0,
+      "spoken": "A launchpad over there called StonkFun does the same thing.",
+      "cover_type": "receipt",
+      "what": "C31: stonkfun.xyz homepage, the hero line 'Create and discover onchain coins paired with memes, stocks, currencies, commodities & more.' in frame, 'stocks' highlighted. 3.56s.",
+      "source": "https://stonkfun.xyz/ (DATA.md Pillar 6, primary). New capture, not yet in the DATA.md index.",
+      "priority": "high",
+      "verify": true,
+      "bench": "Datawallet 'Stonk Fun explained' article header",
+      "notes": "R(other). The real site on the launchpad's name."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 302.0,
+      "tOut": 304.4,
+      "spoken": "And its own token, STONK,",
+      "cover_type": "chatgpt-image",
+      "what": "G7: Pixar-style 3D CGI STONK token (the real mark, per reference) launching upward with a green energy trail, navy near-black bg, no text, no numbers. 2.4s.",
+      "source": "ChatGPT image concept, persona house style; the real token from its reference image.",
+      "priority": "med",
+      "verify": false,
+      "bench": "start C24 at 302.00",
+      "notes": "No market cap on the image (the spoken 240 million never appears on screen)."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 304.4,
+      "tOut": 310.24,
+      "spoken": "ran 250% in a single day to 240 million dollars in market cap.",
+      "cover_type": "receipt",
+      "what": "C24: The Block headline (2026-09-06) 'STONK surges 250% to 140 million market cap as stock-paired Solana launchpad StonkFun pulls volume to Raydium and Jupiter'; '250%' highlights @304.66, the headline's own '140 million' @307.94.",
+      "source": "https://www.theblock.co/news/defi/2026-09-06-stonk-surges-250-to-140-million-market-cap-as-stock-paired-solana-launchpad-stonkfun-pulls-volume-to-raydium-and-jupiter-413621 (DATA.md Pillar 6).",
+      "priority": "high",
+      "verify": true,
+      "bench": "a no-number cover (the real STONK chart on DexScreener) if the page will not capture",
+      "notes": "Fact-framing trap: the VO says 240 million, the screen shows ONLY the headline's sourced 140 million (Mike's ruling). R(article)."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 310.24,
+      "tOut": 321.82,
+      "spoken": "And they didn't stop at stocks. You can pair a coin to other things as well, like commodities as you can see with gold. You can pair it to blue chip cryptos like Bitcoin, Solana, and TAO.",
+      "cover_type": "diagram",
+      "what": "C27 overview: the pairing ladder, rebuilt to what was said (three rungs, no PRE-IPO rung). 'STOCKS: Long, Robinhood Chain, July 14, 2026' already lit lime @310.24; 'COMMODITIES: GOLD' lights in gold @315.54; 'BLUE CHIP CRYPTO' lights @318.62 with chips 'WBTC' @319.90, 'SOL' @320.78, 'TAO' @321.44.",
+      "source": "Code (Type 2, static states). DATA.md Pillar 6 (Datawallet quote assets; StonkFun's site lists 'commodities').",
+      "priority": "high",
+      "verify": false,
+      "bench": "none needed (index asset C27)",
+      "notes": "11.58s, the CH5 overview diagram shown once in full (THE BALANCE). The Bitcoin chip reads 'WBTC'. On-screen 'TAO', never 'tau'. No prices."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 321.82,
+      "tOut": 325.1,
+      "spoken": "And some of these are set up to pay their holders rewards as well.",
+      "cover_type": "receipt",
+      "what": "C28: StonkFun's rewards page, cropped to 'distributed to holders in whatever their coin is paired against', highlighted. 3.28s.",
+      "source": "https://stonkfun.xyz/rewards (DATA.md Pillar 6, primary).",
+      "priority": "high",
+      "verify": true,
+      "bench": "code quote card with the line verbatim and 'stonkfun.xyz/rewards'",
+      "notes": "Guard: this is a StonkFun feature on Solana. NO Golden Kitty art, pool or ticker on screen in this slot. R(other)."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 325.1,
+      "tOut": 328.78,
+      "spoken": "So a lot of new tech and a lot of new ideas are being ushered in.",
+      "cover_type": "envato-video",
+      "what": "E17: engineers at a futuristic lab bench with holographic interface light, slow push, 3.68s.",
+      "source": "Envato query: 'futuristic technology lab hologram interface engineers'",
+      "priority": "low",
+      "verify": false,
+      "bench": "light bulbs switching on in sequence",
+      "notes": "Ad-lib opinion beat: atmosphere only, no on-screen text."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 328.78,
+      "tOut": 331.1,
+      "spoken": "And it's going to be all the craze pretty soon.",
+      "cover_type": "envato-video",
+      "what": "E18: a huge festival crowd at night seen from above, 2.32s.",
+      "source": "Envato query: 'black friday shoppers rushing store doors'",
+      "priority": "low",
+      "verify": false,
+      "bench": "crowd sprinting through a festival gate",
+      "notes": "Literal 'craze'. Opinion ad-lib: atmosphere only, no on-screen text."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 331.1,
+      "tOut": 332.7,
+      "spoken": "And now with gold,",
+      "cover_type": "envato-video",
+      "what": "E19: gold leaf flakes drifting through a dark frame, slow motion, 1.6s.",
+      "source": "Envato query: 'gold leaf flakes floating dark slow motion'",
+      "priority": "low",
+      "verify": false,
+      "bench": "start C25 at 331.10",
+      "notes": "Quick gold punch on the pivot, then the receipt carries the date."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 332.7,
+      "tOut": 342.567,
+      "spoken": "on October 1st, 2026, which is the day that I'm recording this right now, StonkFun announced that you can launch coins paired with tokenized gold. So they can do it too.",
+      "cover_type": "receipt",
+      "what": "C25: StonkFun's X post (@LaunchOnSF, 2026-10-01), two-stage zoom: the post with its date @332.78, then the text 'You can now launch coins paired with GOLD from @orogoldapp on StonkFun.' and the 'GOLD Listed on StonkFun' graphic @337.84.",
+      "source": "https://x.com/LaunchOnSF/status/2105685951418954188 (DATA.md Pillar 6, primary).",
+      "priority": "high",
+      "verify": true,
+      "bench": "the X embed render of the same post",
+      "notes": "9.87s R(other) with a two-stage zoom (date, then text + graphic). No backing claim about Oro's GOLD. Ends at the F7 face window (342.567)."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 348.0,
+      "tOut": 351.03,
+      "spoken": "So that's over a month before Solana even offered it.",
+      "cover_type": "timeline",
+      "what": "gold-dates: two-marker timeline in big type. 'SEPT 4, 2026: GOLDEN / GLD pool opens, Robinhood Chain' in gold, then 'OCT 1, 2026: StonkFun adds gold pairs, Solana' lands @349.64.",
+      "source": "Code (Type 2). DATA.md Pillar 6 timing (pool 2026-09-04; StonkFun's gold post 2026-10-01).",
+      "priority": "high",
+      "verify": false,
+      "bench": "fold both dates into the C27 finale's GOLD rung (C27 would then start at 348.00)",
+      "notes": "3.03s, two dates only (under the card floor, narration-bounded; flagged). Fact-framing trap: the screen shows the two dates, never 'over a month' and never a day count."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 351.03,
+      "tOut": 353.92,
+      "spoken": "And people are already connecting the two. So here's what I think.",
+      "cover_type": "receipt",
+      "what": "C26: the Crypto Galaxy X post (2026-10-01) quoting StonkFun's gold post: 'Tokenized gold narrative incoming' with the GOLDEN contract address boxed in gold. 2.89s.",
+      "source": "https://x.com/cryptogalaxycc/status/2105691844449345820 (DATA.md Pillar 6).",
+      "priority": "high",
+      "verify": true,
+      "bench": "extend gold-dates to 353.92 if the post is gone",
+      "notes": "R(other). A receipt that the link is being drawn, not proof of a trend: one account, no 'everyone' framing."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 353.92,
+      "tOut": 357.32,
+      "spoken": "The next run is going to be about real world assets",
+      "cover_type": "envato-video",
+      "what": "E20: a bull charging toward the camera through dust, slow motion, 3.4s.",
+      "source": "Envato query: 'bull charging running slow motion dust'",
+      "priority": "med",
+      "verify": false,
+      "bench": "Wall Street bull statue low-angle dolly",
+      "notes": "Opinion beat: atmosphere only, no on-screen text, no price, no target."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 357.32,
+      "tOut": 363.46,
+      "spoken": "and the stonk narrative. And a gold paired token on Robinhood's own chain is sitting in a prime spot for it.",
+      "cover_type": "diagram",
+      "what": "C27 finale: the ladder returns fully lit; the GOLD rung pulses @358.72 and the Golden Kitty token art (the project's own profile art) lands on it; a lime green chain glow rises underneath on 'Robinhood's own chain' @360.24.",
+      "source": "Code (Type 2, static states). SCREENPLAY CH5 Beat 5; DATA.md Pillar 6.",
+      "priority": "high",
+      "verify": false,
+      "bench": "none needed (same code asset, final state)",
+      "notes": "6.14s callback, C27's second and last appearance (by-design state; declare DIAGRAM_REFS). No price, no target, no 'first / only / biggest'. 'A prime spot' stays his opinion: no claim text on screen."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 363.46,
+      "tOut": 363.46,
+      "spoken": "(no spoken line: the card sits in the chapter seam)",
+      "cover_type": "title",
+      "what": "title-card-ch6: 'ROBINHOOD CHAIN'. Zero spine time: the readable card pause is an edit-time insert (card_pauses node).",
+      "source": "AS-RECORDED chapter map",
+      "priority": "high",
+      "verify": false,
+      "bench": "",
+      "notes": "Card ON: the bed changes here (Bed D to Bed E). Lime green type."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 363.46,
+      "tOut": 366.45,
+      "spoken": "So now we get to that chain that Golden Kitty lives on.",
+      "cover_type": "chatgpt-image",
+      "what": "G8: Pixar-style 3D CGI Golden Kitty (per reference) standing on a rooftop in a futuristic city built of glowing lime green blocks, navy near-black sky, rim light, no text. 2.99s.",
+      "source": "ChatGPT image concept, persona house style; Robinhood chain glow lime #CCFF00 per persona robinhood_coin.",
+      "priority": "med",
+      "verify": false,
+      "bench": "start C17 at 363.46",
+      "notes": "'The chain it lives on' made literal. No Robinhood logo in the image."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 366.45,
+      "tOut": 371.0,
+      "spoken": "July 1st, 2026, Robinhood launches the Robinhood chain.",
+      "cover_type": "receipt",
+      "what": "C17: Robinhood newsroom mainnet announcement, the headline and the 'July 1, 2026' dateline in frame, 'Robinhood Chain' highlighted lime. 4.55s.",
+      "source": "https://robinhood.com/us/en/newsroom/robinhood-accelerates-global-expansion-robinhood-chain-mainnet-stock-tokens-agentic-trading/ (DATA.md T7, primary).",
+      "priority": "high",
+      "verify": false,
+      "bench": "Arbitrum forum factsheet header (Robinhood Chain mainnet launch)",
+      "notes": "R(article), push-in on the headline. Only appearance of C17."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 371.0,
+      "tOut": 375.6,
+      "spoken": "It's built to bring stocks, crypto and real world assets together on chain.",
+      "cover_type": "receipt",
+      "what": "C32: Robinhood Chain docs landing page, push-in to the line about bringing 'traditional markets, crypto, and real-world assets together on a fast, efficient, and open network', highlighted lime. 4.6s.",
+      "source": "https://docs.robinhood.com/chain/ (DATA.md Pillar 4, primary). New capture, not yet in the DATA.md index.",
+      "priority": "high",
+      "verify": true,
+      "bench": "code quote card with the docs line verbatim",
+      "notes": "R(other). The source's own wording on the purpose claim."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 375.6,
+      "tOut": 380.5,
+      "spoken": "Tokenized stocks trading 24/7 in more than 120 countries.",
+      "cover_type": "envato-video",
+      "what": "E21: Earth from orbit at night, city lights, slow continuous rotation, 4.9s LEADING-MOTION. LINE-CAPTION overlay '24/7 IN MORE THAN 120 COUNTRIES'.",
+      "source": "Envato query: 'earth from space night city lights rotating'",
+      "priority": "med",
+      "verify": false,
+      "bench": "world map with glowing connection arcs",
+      "notes": "Leading-motion exception (continuous orbital move), under the 5s lead cap. Line-caption 3 of 4. Figure per the Arbitrum forum factsheet (DATA.md Pillar 4)."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 380.5,
+      "tOut": 386.0,
+      "spoken": "And look at those numbers. On day one, trading volume was just over 200,000 dollars.",
+      "cover_type": "real-chart",
+      "what": "C18: the REAL DefiLlama Robinhood Chain page, the DEX volume daily bar chart from launch (tiny first bars growing into billion-dollar days), cropped to the chart; push toward the launch-day bar @382.12.",
+      "source": "https://defillama.com/chain/robinhood-chain (confirm the slug), DEX volume chart, all-time range, daily. Day-one figure: Fortune 2026-07-13.",
+      "priority": "high",
+      "verify": true,
+      "bench": "the Fortune sentence crop ('just over 200,000 on July 1') as a receipt",
+      "notes": "5.5s, the must-have real chart for CH6. Crop OUT the page's cumulative-volume headline (it reads about 99B; the video's figure is 90B+). VERIFY the first-day bar does not contradict 'just over 200,000'."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 386.0,
+      "tOut": 393.0,
+      "spoken": "Three months in, over a billion dollars locked in its apps and more than 90 billion dollars in total trading volume.",
+      "cover_type": "animated-chart",
+      "what": "C19a: count-up stat cards, one at a time. '1B+ LOCKED IN ITS APPS (TVL)' counts up @387.62; '90B+ TOTAL DEX VOLUME, 3 MONTHS' counts up @390.22.",
+      "source": "Our code (Type 1). DATA.md Pillar 4: DefiLlama TVL about 1.04B; daily chart sum 92.14B.",
+      "priority": "high",
+      "verify": true,
+      "bench": "static stat cards (still code)",
+      "notes": "7.0s. '90B+' only, never 98.97B / 99.02B. Lime green. Re-pull both at render; 'three months' must still be true."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 393.0,
+      "tOut": 394.3,
+      "spoken": "So here's the growth engine.",
+      "cover_type": "envato-video",
+      "what": "E22: jet engine turbine spinning up, close-up, 1.3s.",
+      "source": "Envato query: 'jet engine turbine spinning up close up'",
+      "priority": "low",
+      "verify": false,
+      "bench": "start C19b at 393.00",
+      "notes": "Literal 'engine', a fast punch between the two stat sets."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 394.3,
+      "tOut": 401.7,
+      "spoken": "Robinhood has 28.4 million funded customers and 369 billion dollars in assets on its platform.",
+      "cover_type": "animated-chart",
+      "what": "C19b: count-up stat cards, one at a time. '28.4M FUNDED CUSTOMERS' counts up @395.04; '369B IN PLATFORM ASSETS' counts up @398.06; source line 'Robinhood, Q2 2026'.",
+      "source": "Our code (Type 1). DATA.md Pillar 4 (Q2 2026, via Investing.com's write-up of the release).",
+      "priority": "high",
+      "verify": true,
+      "bench": "receipt: Robinhood's own Q2 2026 results release, the highlights list with both figures boxed",
+      "notes": "7.4s. Re-confirm both figures on Robinhood's primary release at build; update if Q3 results are out."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 401.7,
+      "tOut": 407.533,
+      "spoken": "And one estimate says only 2% of the chain's transactions came from Robinhood app users.",
+      "cover_type": "animated-chart",
+      "what": "app-users-share: animated share bar. Eyebrow 'ONE ESTIMATE' @401.98; a full-width bar labeled 'ROBINHOOD CHAIN TRANSACTIONS' fills only a sliver in lime, tagged '1-2% FROM ROBINHOOD APP USERS' @403.32.",
+      "source": "Our code (Type 1). DATA.md Pillar 4 (ETHNews estimate, single secondary source).",
+      "priority": "high",
+      "verify": true,
+      "bench": "no-number card: 'ROBINHOOD APP USERS: BARELY ON CHAIN YET'",
+      "notes": "5.83s. Fact-framing trap: the VO says 2%, the screen reads '1-2%' with 'one estimate'. The ETHNews page itself is not shown (its headline is off-tone). Ends at the F8 face window (407.533)."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 410.833,
+      "tOut": 414.2,
+      "spoken": "And the CEO, Vlad Tenev, said it himself,",
+      "cover_type": "chatgpt-image",
+      "what": "G9: Pixar-style 3D CGI Vlad Tenev (likeness per reference) speaking at a podium, lime green stage glow behind him, hands empty, NO trophy, no cat, no text. 3.37s. The comp overlays a small code tag 'AI ILLUSTRATION' in a lower corner for the whole beat (Mike's ruling 2026-10-02 lets an AI image show Vlad Tenev with the trophy; the tag keeps it from reading as a real photo).",
+      "source": "ChatGPT image concept, persona house style; likeness from the reference image.",
+      "priority": "med",
+      "verify": false,
+      "bench": "start C20 at 410.833 (the Fortune page carries his real photo)",
+      "notes": "Flagged for Mike (open questions). Guard: never Vlad with a trophy or with Golden Kitty art (C22 stays blocked); this image has neither."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 414.2,
+      "tOut": 420.9,
+      "spoken": "they're building the Robinhood chain to be the best chain in real world assets. And, quote, it works great for memes too.",
+      "cover_type": "receipt",
+      "what": "C20: Vlad Tenev's own X post with the quote (handle visible); push-in to 'While we're building Robinhood Chain to be the best chain for RWA... it works great for memes, too.' with 'it works great for memes, too' highlighted lime @418.82.",
+      "source": "https://fortune.com/crypto/2026/07/13/robinhood-chain-memecoin-trading-cash-cat-vlad-tenev-crypto/ (DATA.md Pillar 2, verbatim).",
+      "priority": "high",
+      "verify": true,
+      "bench": "code quote card with Fortune's verbatim wording and 'Vlad Tenev, via Fortune, July 13, 2026'",
+      "notes": "6.7s R(article). Source wording on screen, never the spoken paraphrase. The quote is about memes on the chain in general."
+    },
+    {
+      "chapter": "CH6",
+      "tIn": 420.9,
+      "tOut": 425.7,
+      "spoken": "And Golden Kitty is both. A meme, priced in a real world asset.",
+      "cover_type": "container",
+      "what": "both-tags: the Golden Kitty token art (the project's own profile art) over a gold field; two code tags land on it: 'MEME' in lime @422.88, 'PRICED IN A REAL-WORLD ASSET' in gold @423.78.",
+      "source": "Code card (SCREENPLAY CH6 Beat 4). DATA.md T5.",
+      "priority": "high",
+      "verify": false,
+      "bench": "the two tags on a gold field with no token art",
+      "notes": "4.8s (0.2s under the card floor, narration-bounded). Mike's own observation: no quote marks, no Fortune styling, no Vlad on this card."
+    },
+    {
+      "chapter": "CH7",
+      "tIn": 425.7,
+      "tOut": 427.3,
+      "spoken": "So here's the case.",
+      "cover_type": "envato-video",
+      "what": "E23: a judge's gavel striking its block, close-up, dark room, 1.6s.",
+      "source": "Envato query: 'judge gavel strike close up dark'",
+      "priority": "low",
+      "verify": false,
+      "bench": "start C21 at 425.70",
+      "notes": "Literal 'the case', opens the cardless chapter with a punch."
+    },
+    {
+      "chapter": "CH7",
+      "tIn": 427.3,
+      "tOut": 439.1,
+      "spoken": "If Robinhood routes even a small piece of those 28.4 million customers onto its chain, the tokens already living there are sitting right in front of that flow.",
+      "cover_type": "diagram",
+      "what": "C21: Robinhood Chain stack diagram. 'Robinhood app users' node lights @427.66 with a '28.4M funded customers' tag @430.68; the flow arrow runs through 'Robinhood Wallet' into 'Robinhood Chain' @433.14; 'Uniswap / Morpho / Lighter' then 'Stock Tokens, GLD, memecoins' light @434.90; the arrow pulses into the token node on 'right in front of that flow' @437.30.",
+      "source": "Code (Type 2). DATA.md Pillar 4.",
+      "priority": "high",
+      "verify": false,
+      "bench": "none needed (index asset C21)",
+      "notes": "11.8s, actively explained, C21's ONLY appearance (its CH6 slot went to receipts that match the spoken words). All conditional: no number on the flow, no price. Lime throughout, the GLD chip in gold."
+    },
+    {
+      "chapter": "CH7",
+      "tIn": 439.1,
+      "tOut": 442.2,
+      "spoken": "And we've already seen what attention does on this chain.",
+      "cover_type": "envato-video",
+      "what": "E24: a wall of press photographers, camera flashes popping, 3.1s.",
+      "source": "Envato query: 'paparazzi camera flashes photographers press'",
+      "priority": "med",
+      "verify": false,
+      "bench": "stage spotlight snapping on over a crowd",
+      "notes": "Literal 'attention'. Under 4s."
+    },
+    {
+      "chapter": "CH7",
+      "tIn": 442.2,
+      "tOut": 445.4,
+      "spoken": "A different meme coin paired to a tokenized AMC stock",
+      "cover_type": "envato-video",
+      "what": "E25: movie theater marquee lights at night, 3.2s. LINE-CAPTION overlay 'A DIFFERENT MEME COIN'.",
+      "source": "Envato query: 'movie theater marquee lights night'",
+      "priority": "med",
+      "verify": false,
+      "bench": "start C29 at 442.20 (10.9s with a two-stage zoom)",
+      "notes": "Line-caption 4 of 4; it doubles as the guard that this is not Golden Kitty. No AMC logo required."
+    },
+    {
+      "chapter": "CH7",
+      "tIn": 445.4,
+      "tOut": 453.1,
+      "spoken": "went from a 40 million to 150 million dollar market cap in an hour after Vlad followed its account.",
+      "cover_type": "receipt",
+      "what": "C29: The Crypto Times headline (2026-09-07) on the AMC-paired meme coin's surge after the Robinhood CEO's follow, real-site capture with the persistent on-screen label 'A DIFFERENT TOKEN'. 7.7s.",
+      "source": "https://www.cryptotimes.io/2026/09/07/robinhood-ceo-follow-sends-amc-paired-meme-coin-surging-150/ (DATA.md Pillar 5). New capture, not yet in the DATA.md index.",
+      "priority": "high",
+      "verify": true,
+      "bench": "code card 'A DIFFERENT TOKEN: 40M to 150M in an hour' with the source line (only if the page will not capture)",
+      "notes": "R(article), one push-in. The guard label stays up the whole slot so it can never read as 'Vlad follows Golden Kitty'. No Golden Kitty art here. Single secondary source: VERIFY. Ends at the F9 face window (453.100)."
+    },
+    {
+      "chapter": "CH7",
+      "tIn": 457.467,
+      "tOut": 461.04,
+      "spoken": "And a 4 million dollar token could look very different",
+      "cover_type": "chatgpt-image",
+      "what": "G10: Pixar-style 3D CGI Golden Kitty token (per reference) on top of a stack of gold bars, a lime green aurora rising behind it, navy near-black bg, no text, no numbers. 3.57s.",
+      "source": "ChatGPT image concept, persona house style; Golden Kitty from the reference; lime #CCFF00 glow.",
+      "priority": "med",
+      "verify": false,
+      "bench": "the project's token art over a code-drawn gold field with a lime glow",
+      "notes": "No price target, no multiplier on screen. VERIFY at render that '4 million' still matches the cap. PLAYS AS A SLOW MOTION CLIP (Mike, 2026-10-02): assets/img-motion/IMG-10-kitty-token-on-gold-bars-motion.mp4 (Seedance 480p from this image, 864x496, 24 fps, 4.04 s, muted), played from clip 0 and cut at the slot end; the still is the fallback."
+    },
+    {
+      "chapter": "CH7",
+      "tIn": 461.04,
+      "tOut": 463.4,
+      "spoken": "if this chain keeps growing the way it has.",
+      "cover_type": "envato-video",
+      "what": "E26: seedlings sprouting in time-lapse on a black background, 2.36s.",
+      "source": "Envato query: 'city skyline construction timelapse skyscrapers rising'",
+      "priority": "low",
+      "verify": false,
+      "bench": "seedling to plant growth time-lapse",
+      "notes": "Literal 'keeps growing'. Under 4s."
+    },
+    {
+      "chapter": "CH7",
+      "tIn": 463.4,
+      "tOut": 470.46,
+      "spoken": "If you like this vid, click that like button and comment below to let me know what you think about Golden Kitty. And the Robinhood chain.",
+      "cover_type": "container",
+      "what": "end-card: logo bug + animated like button @464.72 + comment prompt 'What do you think about Golden Kitty and the Robinhood Chain?' @466.10. No link line.",
+      "source": "Code card. AS-RECORDED CH7 (the ending as recorded).",
+      "priority": "med",
+      "verify": false,
+      "bench": "token art over gold with the logo bug only",
+      "notes": "7.06s to the end of the spine. No 'link in the description' promise (never said). Bed E's hit right-aligns to 'chain.' @470.40."
+    }
+  ],
+  "receipts": [
+    {
+      "id": "C5",
+      "type": "R(other)",
+      "claim": "Robinhood itself posted the 2015 Golden Kitty win ('Sexiest Product of the Year')",
+      "capture": "https://x.com/RobinhoodApp/status/679773248020594688, full post view with handle, date, text and the attached graphic",
+      "beats": [
+        "CH1@16.38-24.78"
+      ],
+      "verify": false
+    },
+    {
+      "id": "C5b",
+      "type": "R(other)",
+      "claim": "The graphic Robinhood attached to that post (they posted it themselves)",
+      "capture": "https://x.com/RobinhoodApp/status/679773248020594688/photo/1 (media CW8KKrLUsAAJ-I6.jpg), the image full frame",
+      "beats": [
+        "CH2@91.83-93.34"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C6",
+      "type": "R(article)",
+      "claim": "Robinhood's own recap called it 'the coveted Golden Kitty Award from Product Hunt'",
+      "capture": "https://robinhood.com/us/en/newsroom/robinhoodrewind-2015/, the paragraph with that sentence",
+      "beats": [
+        "CH2@93.34-98.40"
+      ],
+      "verify": false
+    },
+    {
+      "id": "C7",
+      "type": "R(other)",
+      "claim": "Robinhood Crypto holds a 2018 Crypto-category Golden Kitty badge on Product Hunt's own Robinhood awards page (a placing badge: DATA.md has Coinbase Wallet as that category's winner). The spoken line says only that Robinhood Crypto 'showed up in that category too', so the gold badge beside the 2018 entry is EXPECTED and correct, not a conflict",
+      "capture": "https://www.producthunt.com/products/robinhood/awards, the Golden Kitty entries with '2018: Robinhood Crypto, Crypto' and '2015: Robinhood, Sexiest Product' in frame; no retirement banner",
+      "beats": [
+        "CH2@112.50-116.00"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C8",
+      "type": "R(other)",
+      "claim": "Product Hunt's first Golden Kitty Awards were the 2015 edition",
+      "capture": "https://www.producthunt.com/golden-kitty-awards/hall-of-fame?year=2015, header + 2015 selected + first winner rows; no retirement banner",
+      "beats": [
+        "CH2@59.58-64.30"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C10",
+      "type": "R(other)",
+      "claim": "The project calls itself a fan dedication and an independent fan token, not affiliated with Robinhood",
+      "capture": "https://goldenkitty.vip/ as TWO files: `C10-...-hero` = the site hero, and `C10-...-faq-fan-dedication` = the FAQ answer carrying the 'fan dedication to Robinhood' line (the FAQ file needs ONLY that line, with headroom above the FAQ heading). The 'Independent fan token. Not affiliated with Robinhood.' line is NOT expected on either file: it is the separate receipt C10b. Exclude the 'held up' photo and the 'Gold treasury' panel",
+      "beats": [
+        "CH3@131.23-142.25"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C10b",
+      "type": "R(other)",
+      "claim": "The project itself says it is a meme coin, not backed by and not redeemable for gold",
+      "capture": "https://goldenkitty.vip/ footer disclaimer ('is not backed by, does not represent, and cannot be redeemed for gold or GLD') + the 'no utility and no intrinsic value' wording",
+      "beats": [
+        "CH4@248.14-255.66"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C11a",
+      "type": "R(other)",
+      "claim": "A real Golden Kitty trophy (attributed photo)",
+      "capture": "https://x.com/matcarpenter/status/709502760023003137, post with photo, handle and date visible; crop to the trophy plus the handle and date: the background monitor's text (it carries profanity) must be OUT of frame or blurred",
+      "beats": [
+        "CH1@44.03-46.96"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C11b",
+      "type": "R(other)",
+      "claim": "A real Golden Kitty trophy up close (attributed video)",
+      "capture": "https://x.com/NivDror/status/706934541315760128, screen recording with the post's video playing, handle visible",
+      "beats": [
+        "CH2@68.30-74.30"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C11c",
+      "type": "R(other)",
+      "claim": "A real Golden Kitty trophy on its base (attributed photo)",
+      "capture": "https://x.com/arthcmr/status/818976934478516224, post with photo, handle visible. The base lettering is small in this photo: it is photo proof of the trophy on its base, the lettering does NOT have to be readable",
+      "beats": [
+        "CH2@74.30-78.30"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C12",
+      "type": "R(other)",
+      "claim": "GOLDEN's real price history: launch, the mid-September spike and flush, the climb after (about 15x from the launch-day close)",
+      "capture": "https://dexscreener.com/robinhood/0x2b2f171fe944df3f8b230272682755b7d5c8adb0e2d76aabb621f1f870251841 chart, USD, full history since 2026-09-04, as a screen recording / wide capture the comp can pan",
+      "beats": [
+        "CH3@142.25-156.25"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C13",
+      "type": "R(other)",
+      "claim": "GOLDEN's main pool is quoted in GLD, 'SPDR Gold Trust, Robinhood Token'",
+      "capture": "same DexScreener pair URL, cropped to the PAIR IDENTITY only: the GOLDEN / GLD pair name row and the token info naming the quote token. Crop ABOVE the price-stats block: no MKT CAP, no 24h change, no VOLUME row in frame (the live cap has drifted from the figure spoken at recording), and nothing sliced by a frame edge. The quote token's full name stays on the second file, C13-gld-token-page-full-name.png; VERTICAL: the token page's identity block (nav, full name, GLD / USDG, chain and DEX, the address rows) is short, about 1250 px of the 1920 frame. It is delivered CENTRED on the page's own dark background with even empty bands above and below, BY DESIGN: the rows under it on the live page are two red security-alert rows and the live price stats, which must stay out of frame, so the frame is not padded with more page content",
+      "beats": [
+        "CH1@13.40-16.38"
+      ],
+      "verify": false
+    },
+    {
+      "id": "C15",
+      "type": "R(other)",
+      "claim": "Gold is up about 50% over the last two years, with a pullback in 2026",
+      "capture": "https://www.tradingview.com/symbols/AMEX-GLD/ chart, range about Oct 2024 to now, weekly candles, percent change for the range visible; bench Yahoo Finance GLD 2Y",
+      "beats": [
+        "CH4@230.86-236.50"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C16",
+      "type": "R(article)",
+      "claim": "Robinhood says every Stock Token is backed 1:1 by the underlying share, held by a custody partner",
+      "capture": "https://robinhood.com/rhj/stocktokens/, the 'backed 1:1' sentence + the issuer line",
+      "beats": [
+        "CH4@196.30-201.54"
+      ],
+      "verify": false
+    },
+    {
+      "id": "C17",
+      "type": "R(article)",
+      "claim": "Robinhood Chain public mainnet launched July 1, 2026",
+      "capture": "https://robinhood.com/us/en/newsroom/robinhood-accelerates-global-expansion-robinhood-chain-mainnet-stock-tokens-agentic-trading/, headline + dateline",
+      "beats": [
+        "CH6@366.45-371.00"
+      ],
+      "verify": false
+    },
+    {
+      "id": "C18",
+      "type": "R(other)",
+      "claim": "Robinhood Chain's real DEX volume history, from a tiny first day to billion-dollar days",
+      "capture": "https://defillama.com/chain/robinhood-chain (confirm the slug), DEX volume daily chart, all-time; crop to the chart, exclude the cumulative-volume headline",
+      "beats": [
+        "CH6@380.50-386.00"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C20",
+      "type": "R(article)",
+      "claim": "Vlad Tenev: building Robinhood Chain to be the best chain for RWA, and 'it works great for memes, too'",
+      "capture": "Vlad Tenev's own X post carrying the same quote (captured as C20-tenev-x-post.png), substituted for the Fortune article https://fortune.com/crypto/2026/07/13/robinhood-chain-memecoin-trading-cash-cat-vlad-tenev-crypto/ ; the quote is exact",
+      "beats": [
+        "CH6@414.20-420.90"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C23",
+      "type": "R(article)",
+      "claim": "Stock-paired memecoins were roughly a quarter of stock-linked trading volume on Robinhood Chain",
+      "capture": "https://www.theblock.co/news/markets/2026-08-31-robinhood-chain-activity-surges-in-august-as-dex-volume-near-1-billion-413136, the 'roughly a quarter' sentence; crop to END right after the 'roughly a quarter' paragraph, no half line at the bottom edge",
+      "beats": [
+        "CH5@277.80-283.10"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C23b",
+      "type": "R(article)",
+      "claim": "Artificial Inu went from a 1.5M cap on Aug 1 to a peak of 135M on Aug 30",
+      "capture": "same The Block article, the Artificial Inu sentence (a separate crop from C23); ONLY the Artificial Inu paragraph (from 'The largest stock-paired memecoin' to 'depth of its WETH pool.'), no chart widget bar, no next paragraph, no half line at an edge",
+      "beats": [
+        "CH5@290.15-296.35"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C24",
+      "type": "R(article)",
+      "claim": "STONK surged 250% to a 140M market cap",
+      "capture": "https://www.theblock.co/news/defi/2026-09-06-stonk-surges-250-to-140-million-market-cap-as-stock-paired-solana-launchpad-stonkfun-pulls-volume-to-raydium-and-jupiter-413621, the headline",
+      "beats": [
+        "CH5@304.40-310.24"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C25",
+      "type": "R(other)",
+      "claim": "StonkFun announced gold-paired launches on 2026-10-01",
+      "capture": "https://x.com/LaunchOnSF/status/2105685951418954188, post with date, text and the attached graphic",
+      "beats": [
+        "CH5@332.70-342.57"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C26",
+      "type": "R(other)",
+      "claim": "An account is already tying StonkFun's gold news to the GOLDEN contract",
+      "capture": "https://x.com/cryptogalaxycc/status/2105691844449345820, the quote-post with the contract address",
+      "beats": [
+        "CH5@351.03-353.92"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C28",
+      "type": "R(other)",
+      "claim": "StonkFun reward tokens pay holders in whatever the coin is paired against",
+      "capture": "https://stonkfun.xyz/rewards, the 'distributed to holders in whatever their coin is paired against' line; the section heading whole or cropped out completely, never sliced by the top edge",
+      "beats": [
+        "CH5@321.82-325.10"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C29",
+      "type": "R(article)",
+      "claim": "A different, AMC-paired meme coin went from 40M to 150M in an hour after Tenev followed its account",
+      "capture": "https://www.cryptotimes.io/2026/09/07/robinhood-ceo-follow-sends-amc-paired-meme-coin-surging-150/, the headline (new index row needed)",
+      "beats": [
+        "CH7@445.40-453.10"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C31",
+      "type": "R(other)",
+      "claim": "StonkFun is a Solana launchpad for coins paired with stocks and more",
+      "capture": "https://stonkfun.xyz/ hero line 'Create and discover onchain coins paired with memes, stocks, currencies, commodities & more.' (new index row needed); menus closed and the pointer away from the nav before the shot (no ghosted dropdown over the title)",
+      "beats": [
+        "CH5@298.44-302.00"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C32",
+      "type": "R(other)",
+      "claim": "Robinhood Chain is built to bring traditional markets, crypto and real-world assets together",
+      "capture": "https://docs.robinhood.com/chain/ landing page, the purpose line (new index row needed)",
+      "beats": [
+        "CH6@371.00-375.60"
+      ],
+      "verify": true
+    }
+  ],
+  "envato_list": [
+    {
+      "n": 1,
+      "query": "crowd people walking city street smartphones slow motion",
+      "beat": "CH1@30.04-33.50",
+      "seconds": 3.46,
+      "why": "'more than 28 million customers'; carries LINE-CAPTION 'MORE THAN 28 MILLION CUSTOMERS'",
+      "line_caption": "MORE THAN 28 MILLION CUSTOMERS"
+    },
+    {
+      "n": 2,
+      "query": "gold bars stack macro light sweep dark",
+      "beat": "CH1@37.16-40.23",
+      "seconds": 3.07,
+      "why": "'trading against tokenized gold', the hook's gold payoff"
+    },
+    {
+      "n": 3,
+      "query": "time travel tunnel clock fly through",
+      "beat": "CH1@46.96-51.20",
+      "seconds": 4.24,
+      "why": "'more than 10 years before the chain even existed', LEADING motion into the CH2 card",
+      "lead": true
+    },
+    {
+      "n": 4,
+      "query": "audience applause award ceremony stage spotlights",
+      "beat": "CH2@64.30-68.30",
+      "seconds": 4.0,
+      "why": "'voted on by its own community. They called it the Golden Kitty Awards'"
+    },
+    {
+      "n": 5,
+      "query": "golden trophies shelf slow pan dark",
+      "beat": "CH2@98.40-100.90",
+      "seconds": 2.5,
+      "why": "'this award went on to mean something'"
+    },
+    {
+      "n": 6,
+      "query": "molten gold pouring foundry close up",
+      "beat": "CH3@169.53-171.20",
+      "seconds": 1.67,
+      "why": "'Look at what it trades against', tease into the PRICED IN GOLD card"
+    },
+    {
+      "n": 7,
+      "query": "ethereum coin rotating dark background",
+      "beat": "CH4@171.20-173.90",
+      "seconds": 2.7,
+      "why": "'meme coins trade against Ethereum'"
+    },
+    {
+      "n": 8,
+      "query": "money counting machine dollar bills close up",
+      "beat": "CH4@173.90-175.55",
+      "seconds": 1.65,
+      "why": "'or against a stablecoin' (the dollar)"
+    },
+    {
+      "n": 9,
+      "query": "bank vault door closing steel",
+      "beat": "CH4@201.54-203.10",
+      "seconds": 1.56,
+      "why": "'held by a custodian'"
+    },
+    {
+      "n": 10,
+      "query": "balance scale weighing gold nuggets close up",
+      "beat": "CH4@216.50-219.45",
+      "seconds": 2.95,
+      "why": "'priced in gold', literal"
+    },
+    {
+      "n": 11,
+      "query": "gold coins falling pile slow motion",
+      "beat": "CH4@236.50-238.66",
+      "seconds": 2.16,
+      "why": "'the trading fees get paid in gold too'"
+    },
+    {
+      "n": 12,
+      "query": "stock exchange trading floor ticker screens",
+      "beat": "CH5@262.50-266.50",
+      "seconds": 4.0,
+      "why": "'a whole narrative ... the stonk narrative'"
+    },
+    {
+      "n": 13,
+      "query": "rocket launch liftoff flames close",
+      "beat": "CH5@276.26-277.80",
+      "seconds": 1.54,
+      "why": "'And it took off'"
+    },
+    {
+      "n": 14,
+      "query": "aerial top down suburb backyard swimming pools (graded down in post: the daylight source is darkened, dark grade expected)",
+      "beat": "CH5@283.10-285.30",
+      "seconds": 2.2,
+      "why": "'more than 400 pools' literal-noun pun; carries LINE-CAPTION 'ACROSS MORE THAN 400 POOLS'",
+      "line_caption": "ACROSS MORE THAN 400 POOLS"
+    },
+    {
+      "n": 15,
+      "query": "gpu chip circuit board macro light pulse",
+      "beat": "CH5@288.24-290.15",
+      "seconds": 1.91,
+      "why": "'paired against tokenized Nvidia stock' (no logo)"
+    },
+    {
+      "n": 16,
+      "query": "diver jumping into water splash slow motion (graded down in post: the daylight source is darkened, dark grade expected)",
+      "beat": "CH5@296.35-298.44",
+      "seconds": 2.09,
+      "why": "'Then Solana jumped in'"
+    },
+    {
+      "n": 17,
+      "query": "futuristic technology lab hologram interface engineers",
+      "beat": "CH5@325.10-328.78",
+      "seconds": 3.68,
+      "why": "'a lot of new tech and a lot of new ideas'"
+    },
+    {
+      "n": 18,
+      "query": "huge festival crowd at night seen from above (the bench: every Black Friday clip carried SALE signage)",
+      "beat": "CH5@328.78-331.10",
+      "seconds": 2.32,
+      "why": "'all the craze pretty soon'"
+    },
+    {
+      "n": 19,
+      "query": "gold leaf flakes floating dark slow motion",
+      "beat": "CH5@331.10-332.70",
+      "seconds": 1.6,
+      "why": "'And now with gold'"
+    },
+    {
+      "n": 20,
+      "query": "bull charging running slow motion dust",
+      "beat": "CH5@353.92-357.32",
+      "seconds": 3.4,
+      "why": "'The next run' (opinion beat, no text)"
+    },
+    {
+      "n": 21,
+      "query": "earth from space night city lights rotating",
+      "beat": "CH6@375.60-380.50",
+      "seconds": 4.9,
+      "why": "'24/7 in more than 120 countries', LEADING motion; carries LINE-CAPTION '24/7 IN MORE THAN 120 COUNTRIES'",
+      "lead": true,
+      "line_caption": "24/7 IN MORE THAN 120 COUNTRIES"
+    },
+    {
+      "n": 22,
+      "query": "jet engine turbine spinning up close up",
+      "beat": "CH6@393.00-394.30",
+      "seconds": 1.3,
+      "why": "'here's the growth engine'"
+    },
+    {
+      "n": 23,
+      "query": "judge gavel strike close up dark",
+      "beat": "CH7@425.70-427.30",
+      "seconds": 1.6,
+      "why": "'So here's the case'"
+    },
+    {
+      "n": 24,
+      "query": "paparazzi camera flashes photographers press",
+      "beat": "CH7@439.10-442.20",
+      "seconds": 3.1,
+      "why": "'what attention does on this chain'"
+    },
+    {
+      "n": 25,
+      "query": "movie theater marquee lights night",
+      "beat": "CH7@442.20-445.40",
+      "seconds": 3.2,
+      "why": "'paired to a tokenized AMC stock'; carries LINE-CAPTION 'A DIFFERENT MEME COIN' (guard)",
+      "line_caption": "A DIFFERENT MEME COIN"
+    },
+    {
+      "n": 26,
+      "query": "seedlings sprouting time-lapse on black (the bench: no skyline clip shows towers rising inside 2.4s)",
+      "beat": "CH7@461.04-463.40",
+      "seconds": 2.36,
+      "why": "'if this chain keeps growing the way it has'"
+    }
+  ],
+  "chatgpt_list": [
+    {
+      "n": 1,
+      "prompt_concept": "Pixar-style 3D CGI Ethereum coin (the real Ethereum diamond mark from the reference) beside a plain silver stablecoin stamped with a dollar sign, dark trading desk, deep navy near-black bg, dramatic rim light, no text",
+      "beat": "CH1@9.67-13.40",
+      "why": "'Most meme coins trade against Ethereum or a stablecoin'",
+      "reference": "schedule-tweets/images/reference/ethereum-eth.png"
+    },
+    {
+      "n": 2,
+      "prompt_concept": "Pixar-style 3D CGI Golden Kitty (the gold cat with the visor from the reference) rising as a gold token coin out of a glowing lime green (#CCFF00) chain of linked blocks, deep navy near-black bg, rim light, no text, no numbers, no Robinhood logo",
+      "beat": "CH1@33.50-37.16",
+      "why": "'that trophy shows up on the chain'",
+      "reference": "schedule-tweets/images/reference/golden-kitty.png"
+    },
+    {
+      "n": 3,
+      "prompt_concept": "Pixar-style 3D CGI Golden Kitty character (from the reference) on a pedestal under one stage spotlight in a dark auditorium, a glowing question mark of light floating above it, no other text",
+      "beat": "CH2@51.20-54.70",
+      "why": "'So what is Golden Kitty?'",
+      "reference": "schedule-tweets/images/reference/golden-kitty.png"
+    },
+    {
+      "n": 4,
+      "prompt_concept": "Pixar-style 3D CGI friendly golden spider sitting on top of a gold bar, deep navy near-black bg, dramatic rim light, no text",
+      "beat": "CH4@194.10-196.30",
+      "why": "'S-P-D-R, or spider' pronunciation gag",
+      "reference": "none exists (generic approved)"
+    },
+    {
+      "n": 5,
+      "prompt_concept": "Pixar-style 3D CGI Golden Kitty (from the reference) at the front of a marching crowd of generic unbranded cartoon coin mascots, deep navy near-black bg, rim light, no text",
+      "beat": "CH5@260.00-262.50",
+      "why": "'Golden Kitty isn't out here on its own'",
+      "reference": "schedule-tweets/images/reference/golden-kitty.png"
+    },
+    {
+      "n": 6,
+      "prompt_concept": "Pixar-style 3D CGI Artificial Inu mascot (the real mark from the reference) with a soft circuit-light glow, deep navy near-black bg, rim light, no text, no numbers",
+      "beat": "CH5@285.30-288.24",
+      "why": "'a meme coin called Artificial Inu'",
+      "reference": "schedule-tweets/images/reference/artificial-inu.png"
+    },
+    {
+      "n": 7,
+      "prompt_concept": "Pixar-style 3D CGI STONK token (the real mark from the reference) launching upward with a green energy trail, deep navy near-black bg, rim light, no text, no numbers",
+      "beat": "CH5@302.00-304.40",
+      "why": "'its own token, STONK'",
+      "reference": "schedule-tweets/images/reference/stonk.png"
+    },
+    {
+      "n": 8,
+      "prompt_concept": "Pixar-style 3D CGI Golden Kitty (from the reference) standing on a rooftop in a futuristic city built of glowing lime green (#CCFF00) blocks, deep navy near-black sky, rim light, no text, no Robinhood logo",
+      "beat": "CH6@363.46-366.45",
+      "why": "'that chain that Golden Kitty lives on'",
+      "reference": "schedule-tweets/images/reference/golden-kitty.png"
+    },
+    {
+      "n": 9,
+      "prompt_concept": "Pixar-style 3D CGI Vlad Tenev (likeness from the reference) speaking at a podium, lime green stage glow behind him, hands empty, NO trophy, no cat, no logo, no text",
+      "beat": "CH6@410.83-414.20",
+      "why": "'And the CEO, Vlad Tenev, said it himself'",
+      "reference": "schedule-tweets/images/reference/Vlad-Tenev.webp"
+    },
+    {
+      "n": 10,
+      "prompt_concept": "Pixar-style 3D CGI Golden Kitty token (from the reference) on top of a stack of gold bars, a lime green (#CCFF00) aurora rising behind it, deep navy near-black bg, rim light, no text, no numbers",
+      "beat": "CH7@457.47-461.04",
+      "why": "'a 4 million dollar token could look very different'",
+      "reference": "schedule-tweets/images/reference/golden-kitty.png"
+    },
+    {
+      "n": 11,
+      "prompt_concept": "Vlad Tenev (likeness from the reference) holding the Golden Kitty trophy up over his head in triumph, confetti falling, one warm stage spotlight. Pixar-style 3D CGI, clearly a cartoon and never photoreal; the trophy is the Product Hunt Golden Kitty TROPHY from the reference (a chrome-gold seated cat wearing a visor, on a round base), NOT the GOLDEN token or any coin; no text, no logo, no ticker, no numbers; deep navy near-black background, dramatic rim light.",
+      "beat": "CH1@21.20-24.78",
+      "why": "'the Golden Kitty award for the sexiest product of the year.' (Mike 2026-10-02: AI images of Vlad holding up the Golden Kitty trophy; each one a different composition)",
+      "reference": "schedule-tweets/images/reference/Vlad-Tenev.webp + schedule-tweets/images/reference/golden-kitty.png (the trophy)"
+    },
+    {
+      "n": 12,
+      "prompt_concept": "Vlad Tenev (likeness from the reference) seated at a desk, grinning, the Golden Kitty trophy standing on the desk in front of him with one hand resting on it, a soft lime green (#CCFF00) glow from a laptop beside him. Pixar-style 3D CGI, clearly a cartoon and never photoreal; the trophy is the Product Hunt Golden Kitty TROPHY from the reference (a chrome-gold seated cat wearing a visor, on a round base), NOT the GOLDEN token or any coin; no text, no logo, no ticker, no numbers; deep navy near-black background, dramatic rim light.",
+      "beat": "CH2@86.00-89.60",
+      "why": "'for, and I quote, the sexiest product of the year.' (Mike 2026-10-02: AI images of Vlad holding up the Golden Kitty trophy; each one a different composition)",
+      "reference": "schedule-tweets/images/reference/Vlad-Tenev.webp + schedule-tweets/images/reference/golden-kitty.png (the trophy)"
+    },
+    {
+      "n": 13,
+      "prompt_concept": "Vlad Tenev (likeness from the reference), seen from the side, setting the Golden Kitty trophy onto a shelf in a glass trophy cabinet, other plain unbranded trophies behind it. Pixar-style 3D CGI, clearly a cartoon and never photoreal; the trophy is the Product Hunt Golden Kitty TROPHY from the reference (a chrome-gold seated cat wearing a visor, on a round base), NOT the GOLDEN token or any coin; no text, no logo, no ticker, no numbers; deep navy near-black background, dramatic rim light.",
+      "beat": "CH2@116.00-118.78",
+      "why": "'So Robinhood has this trophy in its history.' (Mike 2026-10-02: AI images of Vlad holding up the Golden Kitty trophy; each one a different composition)",
+      "reference": "schedule-tweets/images/reference/Vlad-Tenev.webp + schedule-tweets/images/reference/golden-kitty.png (the trophy)"
+    }
+  ],
+  "containers": [
+    {
+      "id": "H1",
+      "kind": "card",
+      "shows": "Hook motion-type card: eyebrow 'JULY 1, 2026', headline 'ROBINHOOD CHAIN' in Robinhood lime green, sub-line 'MAINNET LIVE'. Text only. Data: DATA.md T7.",
+      "source": "DATA.md T7",
+      "beats": [
+        "CH1@24.78-30.04"
+      ]
+    },
+    {
+      "id": "C4",
+      "kind": "timeline",
+      "shows": "Timeline ladder, four rungs: 'DEC 2013: Robinhood first launches on Product Hunt', 'DEC 2015: Robinhood wins the Golden Kitty' + tag 'SEXIEST PRODUCT OF THE YEAR', 'JULY 1, 2026: Robinhood Chain mainnet' (lime), 'SEPT 4, 2026: GOLDEN / GLD pool' (gold). State 1: rungs 1 and 2 light as spoken, 3 and 4 dark. State 2: rung 3 lights, rung 4 pulses dim. No 2025 rung.",
+      "source": "DATA.md Pillars 1, 2, 4",
+      "beats": [
+        "CH2@78.30-89.60",
+        "CH2@116.00-122.10"
+      ]
+    },
+    {
+      "id": "winners-card",
+      "kind": "card",
+      "shows": "'GOLDEN KITTY WINNERS', rows spotlight one at a time: ChatGPT, AI Product of the Year, 2022 / Telegram, Breakout Product of the Year, 2017 / TikTok, Product of the Year, 2018 / Tesla Model S P100D, Sexiest Product, 2016 / Apple AirPods Pro, Product of the Year, 2019 / Google Gboard, Product of the Year, 2016 / Coinbase Wallet, Crypto Product of the Year, 2018. One PNG state per row.",
+      "source": "DATA.md Pillar 1",
+      "beats": [
+        "CH2@100.90-112.50"
+      ]
+    },
+    {
+      "id": "cap-vs-volume",
+      "kind": "animated-chart",
+      "shows": "Two-number contrast: 'GOLDEN MARKET CAP 4.2M' (gold, tiny bar) vs 'ROBINHOOD CHAIN DEX VOLUME, ALL TIME 90B+' (lime, bar races across). Values re-pulled at render; never 98.97B / 99.02B.",
+      "source": "DATA.md section 5 + Pillar 4 (VERIFY)",
+      "beats": [
+        "CH3@162.48-167.43"
+      ]
+    },
+    {
+      "id": "C1",
+      "kind": "diagram",
+      "shows": "THE system-design diagram: 'GOLDEN' (gold cat) <-> 'Pool (Uniswap v4)' <-> 'GLD: tokenized gold ETF token (issuer Robinhood Assets (Jersey) Limited)', with the stack 'SPDR Gold Trust ETF share' and 'gold bars' under GLD. State A: core, then the GLD stack lights as spoken. State B: header 'WHAT PAIRED MEANS', both pool sides glow, BUY arrow (GLD in, GOLDEN out), SELL arrow (reverse). No 'backed', 'floor' or 'redeem'; no pool amounts.",
+      "source": "DATA.md Pillar 3, T5",
+      "beats": [
+        "CH4@175.55-188.40",
+        "CH4@203.10-213.93"
+      ]
+    },
+    {
+      "id": "spdr-card",
+      "kind": "card",
+      "shows": "Eyebrow 'WHAT SPDR STANDS FOR'; letters S, P, D, R expand into 'Standard & Poor's Depositary Receipts' (spelling 'Depositary').",
+      "source": "DATA.md Pillar 3",
+      "beats": [
+        "CH4@188.40-194.10"
+      ]
+    },
+    {
+      "id": "C2",
+      "kind": "animated-chart",
+      "shows": "Price formula strip: 'GOLDEN in dollars = GOLDEN in gold x gold in dollars' with render-day values counting in; then the labeled example: gold +10%, dollar price +10%, ratio 'holds'.",
+      "source": "DATA.md section 5 (VERIFY)",
+      "beats": [
+        "CH4@219.45-230.86"
+      ]
+    },
+    {
+      "id": "C3",
+      "kind": "animated-chart",
+      "shows": "Fees counter: label 'PER THE PROJECT'S OWN TRACKER'; 'FEES EARNED IN GLD' counts to about 236 GLD; 'about 90K USD in tokenized gold' + the ounce equivalent. Fees only, never 'treasury'.",
+      "source": "DATA.md Pillar 3 vault.json (VERIFY, self-reported)",
+      "beats": [
+        "CH4@238.66-248.14"
+      ]
+    },
+    {
+      "id": "contrast-priced",
+      "kind": "card",
+      "shows": "Declared A-vs-B comparison: LEFT 'TYPICAL MEME COIN: priced in ETH or a stablecoin'; RIGHT 'GOLDEN KITTY: priced in tokenized gold'. One side spotlighted at a time (two PNG states).",
+      "source": "DATA.md Pillar 3",
+      "beats": [
+        "CH4@255.66-260.00"
+      ]
+    },
+    {
+      "id": "stock-pair",
+      "kind": "diagram",
+      "shows": "Eyebrow 'IT STARTED WITH STOCKS'; node 'LONG: launchpad on Robinhood Chain, July 14, 2026' (lime) feeding 'MEME COIN <-> POOL <-> TOKENIZED STOCK'; ghosted 'ETH' node struck through. States light as spoken.",
+      "source": "DATA.md Pillar 6",
+      "beats": [
+        "CH5@266.50-276.26"
+      ]
+    },
+    {
+      "id": "C27",
+      "kind": "diagram",
+      "shows": "The pairing ladder, rebuilt to what was said: three rungs 'STOCKS: Long, Robinhood Chain, July 14, 2026' (lime), 'COMMODITIES: GOLD' (gold), 'BLUE CHIP CRYPTO: WBTC, SOL, TAO'. No PRE-IPO rung, no prices. Overview state: rungs light as spoken. Finale state: all lit, the GOLD rung pulses, the Golden Kitty token art (project's own profile art) lands on it, lime chain glow underneath.",
+      "source": "DATA.md Pillar 6",
+      "beats": [
+        "CH5@310.24-321.82",
+        "CH5@357.32-363.46"
+      ]
+    },
+    {
+      "id": "gold-dates",
+      "kind": "timeline",
+      "shows": "Two-marker timeline, big type: 'SEPT 4, 2026: GOLDEN / GLD pool opens, Robinhood Chain' (gold) then 'OCT 1, 2026: StonkFun adds gold pairs, Solana'. Dates only: never 'over a month', never a day count.",
+      "source": "DATA.md Pillar 6 timing",
+      "beats": [
+        "CH5@348.00-351.03"
+      ]
+    },
+    {
+      "id": "C19a",
+      "kind": "animated-chart",
+      "shows": "Count-up stat cards, one at a time: '1B+ LOCKED IN ITS APPS (TVL)' then '90B+ TOTAL DEX VOLUME, 3 MONTHS'. Lime. Never the 99B headline total.",
+      "source": "DATA.md Pillar 4, DefiLlama (VERIFY)",
+      "beats": [
+        "CH6@386.00-393.00"
+      ]
+    },
+    {
+      "id": "C19b",
+      "kind": "animated-chart",
+      "shows": "Count-up stat cards, one at a time: '28.4M FUNDED CUSTOMERS' then '369B IN PLATFORM ASSETS'; source line 'Robinhood, Q2 2026'.",
+      "source": "DATA.md Pillar 4 (VERIFY on the primary release)",
+      "beats": [
+        "CH6@394.30-401.70"
+      ]
+    },
+    {
+      "id": "app-users-share",
+      "kind": "animated-chart",
+      "shows": "Eyebrow 'ONE ESTIMATE'; full-width bar 'ROBINHOOD CHAIN TRANSACTIONS' filling only a sliver in lime, tagged '1-2% FROM ROBINHOOD APP USERS'. Never '2%' alone.",
+      "source": "DATA.md Pillar 4 (ETHNews, single secondary; VERIFY)",
+      "beats": [
+        "CH6@401.70-407.53"
+      ]
+    },
+    {
+      "id": "both-tags",
+      "kind": "card",
+      "shows": "The Golden Kitty token art (project's own profile art, not AI) over a gold field with two code tags: 'MEME' (lime) and 'PRICED IN A REAL-WORLD ASSET' (gold). No quote styling, no Vlad.",
+      "source": "DATA.md T5",
+      "beats": [
+        "CH6@420.90-425.70"
+      ]
+    },
+    {
+      "id": "C21",
+      "kind": "diagram",
+      "shows": "Robinhood Chain stack diagram with a flow arrow: 'Robinhood app users' (+ tag '28.4M funded customers') -> 'Robinhood Wallet' -> 'Robinhood Chain (Arbitrum tech, settles to Ethereum)' -> 'Uniswap / Morpho / Lighter' -> 'Stock Tokens, GLD, memecoins'. Lime throughout, GLD chip in gold. Nodes light as spoken; the arrow pulses into the token node.",
+      "source": "DATA.md Pillar 4",
+      "beats": [
+        "CH7@427.30-439.10"
+      ]
+    },
+    {
+      "id": "end-card",
+      "kind": "card",
+      "shows": "End card: logo bug, animated like button, comment prompt 'What do you think about Golden Kitty and the Robinhood Chain?'. No link line.",
+      "source": "AS-RECORDED CH7",
+      "beats": [
+        "CH7@463.40-470.46"
+      ]
+    },
+    {
+      "id": "title-card-ch2",
+      "kind": "title",
+      "shows": "'THE GOLDEN KITTY' chapter card",
+      "beats": [
+        "CH2@51.20"
+      ]
+    },
+    {
+      "id": "title-card-ch4",
+      "kind": "title",
+      "shows": "'PRICED IN GOLD' chapter card (gold type)",
+      "beats": [
+        "CH4@171.20"
+      ]
+    },
+    {
+      "id": "title-card-ch5",
+      "kind": "title",
+      "shows": "'THE STONK NARRATIVE' chapter card",
+      "beats": [
+        "CH5@260.00"
+      ]
+    },
+    {
+      "id": "title-card-ch6",
+      "kind": "title",
+      "shows": "'ROBINHOOD CHAIN' chapter card (lime green type)",
+      "beats": [
+        "CH6@363.46"
+      ]
+    },
+    {
+      "id": "cap-holders",
+      "kind": "card",
+      "shows": "Stat card, two rows, one spotlighted at a time (two PNG states). Eyebrow 'AT THE TIME OF RECORDING · OCT 1, 2026'. Row 1 'MARKET CAP' with '4.2M' in gold; row 2 'HOLDERS' with '2,200+' in gold. Small source line: 'DexScreener · GeckoTerminal · read Oct 1, 2026'. No price, no 24h change, no supply.",
+      "source": "DATA.md market snapshot (cap 4.2M, DexScreener, read 2026-10-01) + holders 2,221 (GeckoTerminal, 2026-10-01 05:55 UTC)",
+      "beats": [
+        "CH3@156.25-162.48"
+      ]
+    },
+    {
+      "id": "ph-card",
+      "kind": "card",
+      "shows": "Card, eyebrow 'WHAT IS PRODUCT HUNT', headline 'Product Hunt', two rows, one spotlighted at a time (two PNG states): row 1 'New tech products launch here'; row 2 'The community votes on them'. Text only: no logo, no mock leaderboard, no numbers.",
+      "source": "AS-RECORDED CH2 (Mike's own line); DATA.md Pillar 1 (community nomination and vote)",
+      "beats": [
+        "CH2@54.70-59.58"
+      ]
+    }
+  ],
+  "budget_check": "Envato 26/30 used (2 tagged LEADING-motion at 4.24s and 4.90s, both continuous-camera; the other 24 run 1.30 to 4.00s). ChatGPT 10/15 used (2.20 to 3.73s each), every row with a reference path or 'none exists (generic approved)'. B-roll totals about 100s of the 427.86 cover seconds (about 23%): 36 items against roughly 15 on a default video, as Mike asked. 4 Envato and 5 ChatGPT slots stay in reserve as benches. Receipts and real charts (28 captures, including the three must-have real charts C12, C15, C18) and code containers (18 plus 4 title cards) are budget-exempt and were placed first. Zero orphans: all 9 non-FACE runs are partitioned into butt-joined consecutive slots with no gap and no black: 9.667-40.233 (7 slots), 44.033-89.600 (9), 91.833-122.100 (6), 131.233-167.433 (4), 169.533-213.933 (9), 216.500-342.567 (26), 348.000-407.533 (13), 410.833-453.100 (8), 457.467-470.46 (3) = 85 cover slots plus 4 zero-length title beats, covering every cover second of the 470.46s spine. No asset appears twice: C4, C1 and C27 each appear in two slots as by-design progressive states of ONE code asset (declare DIAGRAM_REFS); every receipt is a distinct capture (C5/C5b, C10/C10b, C23/C23b are separate crops). Every slot is sequenced per rule 13 (no container held under b-roll). Every on-screen number is code-rendered or a real-site capture; zero numbers come from an image model. Line-captions sit on 4 of 26 video covers (15%). No em dashes. UPDATE 2026-10-02 (Mike): three AI illustrations of Vlad Tenev with the trophy added (G11 CH1, G12 CH2, G13 CH2), so ChatGPT is now 13/15; every cover second is still assigned.",
+  "open_questions": [
+    "H0 'PRICED IN GOLD' hook card is NOT placed: its cue words ('priced in gold') sit inside FACE F1, and the line after it is about Ethereum and stablecoins. The phrase still lands on the CH4 title card and the contrast-priced container. OK to drop H0, or use it as the bench for the 255.66 slot?",
+    "Receipts appear once each. Where the screenplay reused one, this plan uses a distinct capture: C5 (post) vs C5b (its graphic), C10 (hero) vs C10b (disclaimer), C23 vs C23b (two crops of The Block), C13 once (CH1 only), C17 once (CH6 only; H1 carries the July 1, 2026 date in CH1). Say so if you want the screenplay's C17 flash back in the hook.",
+    "New captures need rows in the DATA.md CHART-SOURCE INDEX before the asset stage: C29 (The Crypto Times AMC headline), C30 (Product Hunt homepage recording), C31 (stonkfun.xyz homepage), C32 (Robinhood Chain docs landing), plus the sub-crops C5b, C10b, C23b and C11a/b/c. C14 is re-sourced from the Blockscout explorer to the GeckoTerminal panel (market cap + holders in one view, no Cloudflare wall).",
+    "E14 (aerial swimming pools + caption 'ACROSS MORE THAN 400 POOLS') and G4 (golden spider for 'S-P-D-R, or spider') are deliberate literal-noun gags. Keep both, or take the benches (a '400+ STOCK-PAIRED POOLS' stamp; the spdr-card held to 196.30)?",
+    "C27 is rebuilt to what was said: three rungs (STOCKS / COMMODITIES: GOLD / BLUE CHIP CRYPTO), no PRE-IPO rung, and the Bitcoin chip reads WBTC. Confirm the rung wording.",
+    "C21 appears ONCE, in CH7 (427.30), where the words match its flow arrow. Its planned CH6 slot went to C17 + C32 + the globe clip, which match what is actually said there. Confirm, or restore C21 in CH6 as well.",
+    "Dwell exceptions, all narration-bounded: gold-dates 3.03s (two dates), contrast-priced 4.34s, both-tags 4.80s, cap-vs-volume 4.95s (card floor 5s); stock-pair 9.76s and the C4 / C27 callbacks 6.1s (diagram floor 10s, callbacks are second states); C5b is a 1.5s flash. Each has a bench that removes it.",
+    "Product Hunt captures (C7, C8, C30) must not show a 'RIP Golden Kitty' or Orbit Awards banner: the retirement is cut from this video. If a page cannot be cropped clean, its bench applies.",
+    "C18: the day-one 'just over 200,000' figure is Fortune's, and the DefiLlama page's cumulative total reads about 99B. The capture is cropped to the daily bar chart only. If the first-day bar visibly contradicts 200K, swap to the Fortune sentence crop.",
+    "C19b (28.4M funded customers, 369B platform assets) is a code count-up from the Q2 2026 figures; the bench is a receipt of Robinhood's own release. Re-confirm on the primary page at build and update if Q3 results are out.",
+    "winners-card: the Tesla Model S P100D row is rated MEDIUM-HIGH in DATA.md (Product Hunt's own 2016 announcement was not opened). Keep it on screen, or drop the row (the name is still spoken)?",
+    "418.18 'End quote' vs 'And, quote,' is still open by ear. It only moves the C20 highlight timing: the plan highlights 'it works great for memes, too' at 418.82 either way.",
+    "Live VERIFY at capture and at render: C12 ('roughly 15x'), C14 (4.2M cap, 2,200+ holders), cap-vs-volume and C19a (90B+, 1B+ TVL, 'three months'), C2 values, C3 (about 236 GLD, about 90K), C15 (about +50% in two years), E14's caption (400+ pools, one secondary source), app-users-share (1-2%, one estimate), C29 (single secondary source), and G10's line ('4 million').",
+    "Budget headroom: 4 Envato and 5 ChatGPT slots are unused. The long holds that could take one more cutaway each are C12 (14.0s, but he says 'look at this chart'), winners-card (11.6s), C2 (11.4s) and C25 (9.9s). I left them whole because each is actively narrated; say the word and they get a punch-through.",
+    "RULED 2026-10-02 (Mike, plan gate approved as planned): AI images of Vlad Tenev are in. G9 (podium, hands empty) stays on the quote line; G11 / G12 / G13 show him with the Product Hunt trophy on the three lines about ROBINHOOD winning or having it. Guardrails: Pixar-style cartoon only, the trophy never the token or a coin, an on-screen 'AI ILLUSTRATION' tag on all four, never on a token / price / conviction line, and the VO never says he held it."
+  ]
+}

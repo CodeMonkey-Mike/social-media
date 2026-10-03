@@ -63,6 +63,19 @@ skills):
 Errors are safe: a profile that fails to load stays `processed:false` and is retried
 on the next run (it is **not** silently dropped).
 
+**Dead profiles (LinkedIn `/404/`) are retired after two strikes (2026-09-15).** A
+deleted/renamed member lands on `linkedin.com/404/`. That used to be a plain error, which
+left the entry `processed:false` at the queue FRONT forever — re-burning a profile view
+every run and stacking toward the graph's 5-consecutive-error kill-switch (4 in a row
+on 2026-09-15, the same 4 as 09-14). Now a 404 stamps `notfound_count` +
+`notfound_last: <YYYY-MM-DD>`; the batch selector skips anyone whose `notfound_last`
+is today (nobody is viewed twice in one day, one run/day assumption); a **second 404 on
+a later day** retires the entry as `processed:true, status:"404"` (auditable, reversible
+by clearing `processed`). The graph treats both `404 (…)` lines as resolved per-profile
+outcomes that reset the kill-switch streak — a 404 is per-profile by nature, never
+systemic — and reports them as `404 strike 1` / `retired 404 (2nd strike)`. Any OTHER
+non-profile landing (stuck on search, feed) still raises the plain error exactly as before.
+
 ---
 
 ## How location is read (important)

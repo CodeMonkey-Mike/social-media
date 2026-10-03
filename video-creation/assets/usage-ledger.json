@@ -1,0 +1,660 @@
+{
+ "$doc": "Usage ledger: the music and the transitions every finished video used, so the next video picks something else. Written by video-creation/skills/usage-ledger/usage_ledger.py (record), read by its report / check commands. One entry per video, oldest first. Do not hand-edit picks; re-run record.",
+ "videos": [
+  {
+   "project": "zebec",
+   "track": "longform-edited",
+   "date": "2026-07-12",
+   "source": "backfill",
+   "transitions_from": "transitions-md",
+   "music": [
+    {
+     "id": "pins-and-needles",
+     "pools": [
+      "intro_hype",
+      "subtle_bed",
+      "hype_body",
+      "epic_close"
+     ],
+     "chapters": [
+      "CH1",
+      "CH2",
+      "CH3",
+      "CH4",
+      "CH5"
+     ]
+    }
+   ],
+   "transitions": []
+  },
+  {
+   "project": "kaspa 30bps",
+   "track": "longform-edited",
+   "date": "2026-07-25",
+   "source": "backfill",
+   "transitions_from": "transitions-md",
+   "music": [
+    {
+     "id": "hold-the-line",
+     "pools": [
+      "intro_hype"
+     ],
+     "chapters": [
+      "CH1"
+     ]
+    },
+    {
+     "id": "accomplishments-subtle",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH2"
+     ]
+    },
+    {
+     "id": "going-dark",
+     "pools": [
+      "subtle_bed",
+      "hype_body"
+     ],
+     "chapters": [
+      "CH3",
+      "CH4"
+     ]
+    },
+    {
+     "id": "a-champion-from-the-ashes",
+     "pools": [
+      "epic_close"
+     ],
+     "chapters": [
+      "CH5"
+     ]
+    }
+   ],
+   "transitions": [
+    {
+     "slot": "ai_still",
+     "id": "lib:badsignal-max-1",
+     "key": "GLITCH/Cinematic Bad Signal",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:badsignal-max-2",
+     "key": "GLITCH/Cinematic Bad Signal",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:badsignal-short-1",
+     "key": "GLITCH/Cinematic Bad Signal",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:badsignal-short-2",
+     "key": "GLITCH/Cinematic Bad Signal",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:badsignal-short-3",
+     "key": "GLITCH/Cinematic Bad Signal",
+     "count": 1
+    },
+    {
+     "slot": "broll",
+     "id": "hand:fade",
+     "key": "fade",
+     "count": 2
+    },
+    {
+     "slot": "card",
+     "id": "hand:cube-3d",
+     "key": "cube",
+     "count": 1
+    },
+    {
+     "slot": "card",
+     "id": "rmn:cube",
+     "key": "cube",
+     "count": 1
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade",
+     "key": "xfade",
+     "count": 1
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade-scale",
+     "key": "xfade-scale",
+     "count": 2
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-max",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-max-2",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-rgb-1",
+     "key": "MELT/RGB",
+     "count": 3
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-rgb-short-1",
+     "key": "MELT/RGB",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-3d-side-ease",
+     "key": "SPIN/3D Side Ease",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-3d-side-ease-short-right",
+     "key": "SPIN/3D Side Ease",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-3d-side-ease-up",
+     "key": "SPIN/3D Side Ease",
+     "count": 1
+    },
+    {
+     "slot": "other",
+     "id": "hand:cut",
+     "key": "cut",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "hand:punch",
+     "key": "punch",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "project": "ethereum-rwa",
+   "track": "longform-edited",
+   "date": "2026-08-01",
+   "source": "backfill",
+   "transitions_from": "transitions-md",
+   "music": [
+    {
+     "id": "down-to-the-wire",
+     "pools": [
+      "intro_hype"
+     ],
+     "chapters": [
+      "CH1"
+     ]
+    },
+    {
+     "id": "fortitude",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH2"
+     ]
+    },
+    {
+     "id": "edgerunner",
+     "pools": [
+      "hype_body"
+     ],
+     "chapters": [
+      "CH3"
+     ]
+    },
+    {
+     "id": "searching-for-signs-of-life",
+     "pools": [
+      "subtle_bed",
+      "epic_close"
+     ],
+     "chapters": [
+      "CH4",
+      "CH5"
+     ]
+    }
+   ],
+   "transitions": [
+    {
+     "slot": "ai_still",
+     "id": "lib:badsignal-max-1",
+     "key": "GLITCH/Cinematic Bad Signal",
+     "count": 2
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:badsignal-short-1",
+     "key": "GLITCH/Cinematic Bad Signal",
+     "count": 2
+    },
+    {
+     "slot": "broll",
+     "id": "hand:fade",
+     "key": "fade",
+     "count": 11
+    },
+    {
+     "slot": "card",
+     "id": "rmn:cube",
+     "key": "cube",
+     "count": 5
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade",
+     "key": "xfade",
+     "count": 18
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks",
+     "key": "GLITCH/Blocks",
+     "count": 2
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-max-1",
+     "key": "GLITCH/Blocks",
+     "count": 3
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-max-2",
+     "key": "GLITCH/Blocks",
+     "count": 3
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-max-3",
+     "key": "GLITCH/Blocks",
+     "count": 4
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-strips",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-strips-1x",
+     "key": "GLITCH/Blocks",
+     "count": 6
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-strips-2x",
+     "key": "GLITCH/Blocks",
+     "count": 5
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-strips-3x",
+     "key": "GLITCH/Blocks",
+     "count": 2
+    },
+    {
+     "slot": "image_broll",
+     "id": "hand:cross-warp",
+     "key": "cross-warp",
+     "count": 5
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-rgb",
+     "key": "MELT/RGB",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-rgb-1",
+     "key": "MELT/RGB",
+     "count": 2
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-rgb-2",
+     "key": "MELT/RGB",
+     "count": 4
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-rgb-3",
+     "key": "MELT/RGB",
+     "count": 2
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-3d-side-ease",
+     "key": "SPIN/3D Side Ease",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-3d-side-ease-right",
+     "key": "SPIN/3D Side Ease",
+     "count": 3
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-3d-side-ease-short-right",
+     "key": "SPIN/3D Side Ease",
+     "count": 2
+    },
+    {
+     "slot": "other",
+     "id": "hand:ken-burns",
+     "key": "ken-burns",
+     "count": 1
+    },
+    {
+     "slot": "other",
+     "id": "lib:perspective-ease-in-left",
+     "key": "PERSPECTIVE/Ease In",
+     "count": 1
+    },
+    {
+     "slot": "other",
+     "id": "lib:perspective-ease-in-short-up",
+     "key": "PERSPECTIVE/Ease In",
+     "count": 1
+    },
+    {
+     "slot": "other",
+     "id": "lib:perspective-pan-3d-down",
+     "key": "PERSPECTIVE/Pan 3D",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "hand:punch",
+     "key": "punch",
+     "count": 11
+    }
+   ]
+  },
+  {
+   "project": "kaspa-vprogs",
+   "track": "longform-edited",
+   "date": "2026-09-28",
+   "source": "backfill",
+   "transitions_from": "plan",
+   "music": [
+    {
+     "id": "down-to-the-wire",
+     "pools": [
+      "intro_hype"
+     ],
+     "chapters": [
+      "CH1"
+     ]
+    },
+    {
+     "id": "accomplishments-subtle",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH2"
+     ]
+    },
+    {
+     "id": "fortitude",
+     "pools": [
+      "epic_close"
+     ],
+     "chapters": [
+      "CH3"
+     ]
+    }
+   ],
+   "transitions": [
+    {
+     "slot": "ai_still",
+     "id": "lib:badsignal-max-1",
+     "key": "GLITCH/Cinematic Bad Signal",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:badsignal-short-1",
+     "key": "GLITCH/Cinematic Bad Signal",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:badsignal-short-2",
+     "key": "GLITCH/Cinematic Bad Signal",
+     "count": 1
+    },
+    {
+     "slot": "broll",
+     "id": "hand:fade",
+     "key": "fade",
+     "count": 6
+    },
+    {
+     "slot": "card",
+     "id": "hand:cube-3d",
+     "key": "cube",
+     "count": 2
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade",
+     "key": "xfade",
+     "count": 1
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade-scale",
+     "key": "xfade-scale",
+     "count": 19
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-max-1",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-max-2",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-max-3",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-rgb-3",
+     "key": "MELT/RGB",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-3d-side-ease-up",
+     "key": "SPIN/3D Side Ease",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "hand:punch",
+     "key": "punch",
+     "count": 2
+    }
+   ]
+  },
+  {
+   "project": "golden-kitty",
+   "track": "longform-edited",
+   "date": "2026-10-02",
+   "source": "graph",
+   "transitions_from": "plan",
+   "music": [
+    {
+     "id": "fearless",
+     "pools": [
+      "intro_hype"
+     ],
+     "chapters": [
+      "CH1"
+     ]
+    },
+    {
+     "id": "afterlife",
+     "pools": [
+      "subtle_bed",
+      "hype_body"
+     ],
+     "chapters": [
+      "CH2",
+      "CH3",
+      "CH5"
+     ]
+    },
+    {
+     "id": "slow-rise",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH4"
+     ]
+    },
+    {
+     "id": "hello-and-good-morning",
+     "pools": [
+      "hype_body"
+     ],
+     "chapters": [
+      "CH5"
+     ]
+    },
+    {
+     "id": "emerald-city",
+     "pools": [
+      "hype_body",
+      "epic_close"
+     ],
+     "chapters": [
+      "CH6",
+      "CH7"
+     ]
+    }
+   ],
+   "transitions": [
+    {
+     "slot": "ai_still",
+     "id": "lib:turbulent-h-2x",
+     "key": "GLITCH/Turbulent Displace",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:turbulent-h-3x",
+     "key": "GLITCH/Turbulent Displace",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:turbulent-h-4x",
+     "key": "GLITCH/Turbulent Displace",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:turbulent-h-5x",
+     "key": "GLITCH/Turbulent Displace",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:turbulent-v-3x",
+     "key": "GLITCH/Turbulent Displace",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:turbulent-v-4x",
+     "key": "GLITCH/Turbulent Displace",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:turbulent-v-5x",
+     "key": "GLITCH/Turbulent Displace",
+     "count": 1
+    },
+    {
+     "slot": "broll",
+     "id": "hand:fade",
+     "key": "fade",
+     "count": 23
+    },
+    {
+     "slot": "card",
+     "id": "rmn:flip",
+     "key": "flip",
+     "count": 4
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade-scale",
+     "key": "xfade-scale",
+     "count": 43
+    },
+    {
+     "slot": "face_cut",
+     "id": "hand:film-burn",
+     "key": "film-burn",
+     "count": 17
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-equidistant-1",
+     "key": "MELT/Equidistant",
+     "count": 2
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-3d-center-ease-t-cw",
+     "key": "SPIN/3D Center Ease",
+     "count": 2
+    },
+    {
+     "slot": "punch_in",
+     "id": "hand:punch",
+     "key": "punch",
+     "count": 9
+    }
+   ]
+  }
+ ]
+}

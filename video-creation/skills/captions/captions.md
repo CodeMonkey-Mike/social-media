@@ -49,7 +49,7 @@ Used by: **shorts**, **Yuli y Ana**. The "caption1" base style (was `style-guide
   ease-out on the settle. (NOT word karaoke.)
 - **Color tags (optional):** `<g>` teal/Kaspa, `<y>` yellow/numbers, `<gr>` green/win, `<r>` red/warning.
 - **Output:** TS array `export const CAPTIONS_X: {t:number; h:string}[] = [{ t, h }, ...]` (chunk timestamp + html).
-- **Renderers:** `remotion/src/HeardOfKaspaBrah.tsx`, `YuliCrypto1.tsx` (FONT = Montserrat).
+- **Renderers:** `CaptionLayer` in `remotion/src/_kit.tsx`, `Captions` in `remotion/src/LivestreamShort.tsx` (FONT = Montserrat).
 
 ### `arial-black` — UPPERCASE word karaoke
 Used by: **Kaspa Wise Man**, **crypto-promo**. The "Mother-Satori" karaoke look.
@@ -72,8 +72,7 @@ Used by: **Kaspa Wise Man**, **crypto-promo**. The "Mother-Satori" karaoke look.
 - **Renderer = the ONE canonical component `remotion/src/captions/Caption2.tsx`** (flicker-free; takes a
   `captions` prop). EVERY comp must `import { Caption2 } from './captions/Caption2'` and render
   `<Caption2 captions={CAPTIONS} />` — do **NOT** inline/copy-paste a local karaoke renderer (that reintroduces
-  the flicker bug). Older comps still carrying an inline copy (`WiseManFl07.tsx`, `WiseManIntro.tsx`,
-  `CryptoPromo.tsx`, `AnaToccata.tsx`) should be migrated to import this component.
+  the flicker bug).
 
 ### longform-edited
 **OFF by default; tighter density when used.** The longform-edited caption rule (when allowed, the exact

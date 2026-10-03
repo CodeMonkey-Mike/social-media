@@ -53,17 +53,27 @@ boundaries, never estimated.
 - **Never cut so the result disparages a specific named project.**
 
 ## Output — return the tighten plan as JSON, and ONLY that
-Do not write files. Return a single JSON object. The orchestrator executes each `removals` span
-(cut keep-spans from the master with 8ms declick, concat in assembly order), then desilences.
+Return a single JSON object in the CANONICAL schema below: it is exactly what
+`video-creation/livestream-repurpose/scripts/tighten_clips.py::validate_tighten_plan` accepts
+(read it). Writing the part file the orchestrator names is fine but not required: the
+orchestrator persists whatever JSON you return and validates it. The orchestrator executes each
+`removals` span (cut keep-spans from the master with 8ms declick, concat in assembly order),
+then desilences. (2026-09-14: an older shape here used `slug` + a dict `boundary_relock` and
+failed validation; there is ONE schema now.)
 
 ```json
 {
   "batch": "<batch>",
   "clips": [
     {
-      "slug": "<topic-slug>",
+      "id": "<clip slug, exactly as in clip-plan.json>",
+      "n": 1,
       "variant": "full",
-      "boundary_relock": { "new_start": null, "new_end": null, "note": "<what/why, or null if unchanged>" },
+      "boundary_relock": [
+        { "segment_index": 0, "new_start": 489.68 },
+        { "segment_index": 2, "new_end": 1425.30 }
+      ],
+      "boundary_relock_note": "<what/why, or null if unchanged>",
       "removals": [
         { "start": 2083.3, "end": 2090.3, "reason": "restatement: 'so like I was looking... go back to September'" }
       ],
@@ -75,4 +85,18 @@ Do not write files. Return a single JSON object. The orchestrator executes each 
 }
 ```
 
-Return the JSON. No preamble, no rendering, no file writes.
+Field notes:
+- **`id` = the clip's `slug` and `n` = its `clip_id`** from clip-plan.json, both required;
+  numbers are frozen at the 4b dashboard, never renumber.
+- **`boundary_relock` is a LIST**, one entry per segment you move, keyed by the segment's index
+  in clip-plan `segments[]` (NOT assembly position). Give only the key you change
+  (`new_start` and/or `new_end`); never a null value. An empty list = unchanged. A trim at the
+  START or END of a segment (run-off, clipped word, off-clip reference) is a relock, NOT a
+  removal: relocks are uncapped, removals count toward the ceiling.
+- **The ceiling is measured by the validator as removed VOICED time / total voiced time in the
+  clip (Whisper words), 15% hard.** That is stricter than seconds/duration on speech-dense
+  clips, so keep your own estimate at or under ~13% of voiced content, and put the most
+  dispensable removal last in the list so the reviewer can drop it if the gate trips.
+- Every removal must fall inside a kept segment.
+
+Return the JSON. No preamble, no rendering.

@@ -1,5 +1,5 @@
 {
-  "$doc": "Registry of the ChatGPT chats used for image generation, grouped by PURPOSE. Every image-gen script (repurpose/gen-images.js, gen-batch-freshchat.js, generate-broll-wlw.js, etc.) consults this via repurpose/chat-pool.js. A ChatGPT chat degrades past ~25 images (stops rendering OR returns off-prompt/style-contaminated images), so each chat is capped and auto-rotated. Chats are also keyed by purpose so different visual styles never share a chat and cross-contaminate. Flow: getActiveUrl(purpose) -> if a chat for that purpose has count<cap, reuse it; else the caller opens a fresh chatgpt.com/ chat, generates, captures the /c/<id> URL, and registerNewChat() replaces the full one. A replaced/dead chat is MOVED to the retired list and then DELETED in the ChatGPT UI (chats are disposable: every image is downloaded at generation time) -- the gen scripts sweep retired at end of run via chat-delete.js, and repurpose/delete-chats.js (spawned by cleanup/cleanup.js) sweeps leftovers. Optional per-chat batch = a batches.json id; when that batch is completed/archived, delete-chats.js retires+deletes the chat (no batch = evergreen purpose, rotation-only deletion; batch matching no batches.json entry = kept). recordImage(purpose) increments only on a SUCCESSFUL save. markDead(purpose) retires a chat that would not load (conversation-not-found) so a fresh one is made. TITLE CONVENTION (Mike 2026-07-22): confirmAndRegister() renames every automation chat at registration to start with \"b-roll\" (purposes containing broll) or \"social\" (all other image purposes); that live-title prefix is the ULTIMATE deletion gate — chat-delete.js refuses to delete any chat whose title does not start with b-roll/social (refusals recorded on title_gate_skipped). AUTO-TITLE RACE (2026-07-30): ChatGPT titles a new conversation asynchronously, and when that landed after the gated rename it silently overwrote it (chat showed e.g. 'Cinematic Trading Hall'); confirmAndRegister now waits out the auto-title before renaming, and sweepRetired first runs healTitles(), which re-renames any registry chat whose recorded gated `title` (verified-rename provenance = ours) no longer matches the live title, requeueing healed title_gate_skipped entries for deletion. Entries without that provenance are never touched. Registration is API-confirmed (real conversation id, never bare page.url()): the 2026-07 capture bug stored ids that 404d while real chats piled up unregistered; all dead entries were purged 2026-07-22 and every purpose re-seeds fresh on next use.",
+  "$doc": "Registry of the ChatGPT chats used for image generation, grouped by PURPOSE. Every image-gen script (repurpose/gen-images.js, gen-batch-freshchat.js, generate-broll-wlw.js, etc.) consults this via repurpose/chat-pool.js. A ChatGPT chat degrades past ~25 images (stops rendering OR returns off-prompt/style-contaminated images), so each chat is capped and auto-rotated. Chats are also keyed by purpose so different visual styles never share a chat and cross-contaminate. Flow: getActiveUrl(purpose) -> if a chat for that purpose has count<cap, reuse it; else the caller opens a fresh chatgpt.com/ chat, generates, captures the /c/<id> URL, and registerNewChat() replaces the full one. A replaced/dead chat is MOVED to the retired list and then DELETED in the ChatGPT UI (chats are disposable: every image is downloaded at generation time) -- the gen scripts sweep retired at end of run via chat-delete.js, and repurpose/delete-chats.js (spawned by cleanup/cleanup.js) sweeps leftovers. Optional per-chat batch = a batches.json id; when that batch is completed/archived, delete-chats.js retires+deletes the chat (no batch = evergreen purpose, rotation-only deletion; batch matching no batches.json entry = kept). recordImage(purpose) increments only on a SUCCESSFUL save. markDead(purpose) retires a chat that would not load (conversation-not-found) so a fresh one is made. TITLE CONVENTION (Mike 2026-07-22): confirmAndRegister() renames every automation chat at registration to start with \"b-roll\" (purposes containing broll) or \"social\" (all other image purposes); that live-title prefix is the ULTIMATE deletion gate — chat-delete.js refuses to delete any chat whose title does not start with b-roll/social (refusals recorded on title_gate_skipped). AUTO-TITLE RACE (2026-07-30): ChatGPT titles a new conversation asynchronously, and when that landed after the gated rename it silently overwrote it (chat showed e.g. 'Cinematic Trading Hall'); confirmAndRegister now waits out the auto-title before renaming, and sweepRetired first runs healTitles(), which re-renames any registry chat whose recorded gated `title` (verified-rename provenance = ours) no longer matches the live title, requeueing healed title_gate_skipped entries for deletion. Entries without that provenance are never touched. BIRTH REGISTRATION (Mike 2026-09-17): confirm_and_register runs right after a fresh chat's FIRST SEND lands (not after the first successful image), so a chat can never outlive a failed run unregistered; gen_images' end-of-run (in a finally) retires a chat born that run with ZERO images and sweeps. `runs` = the run journal (journal_start/journal_end windows, newest 100) that reconcile_chats uses for its REVIEW class (unregistered chat created inside a window -> reported for Mike's per-URL approval, never auto-deleted); `last_reconcile` = the latest reconcile counts + review list (cleanup --dry-run prints it); `manual_deletes` = audit trail of delete_chats.py --approved-file deletions. Registration is API-confirmed (real conversation id, never bare page.url()): the 2026-07 capture bug stored ids that 404d while real chats piled up unregistered; all dead entries were purged 2026-07-22 and every purpose re-seeds fresh on next use.",
   "cap": 25,
   "purposes": [
     "x-tweets",
@@ -12,135 +12,1626 @@
   "chats": [
     {
       "purpose": "ig-single",
-      "url": "https://chatgpt.com/c/6a635274-e3a8-83ea-810e-19f97a8cb0a3",
-      "count": 24,
-      "created_at": "2026-07-24T11:56:03.482Z",
+      "url": "https://chatgpt.com/c/6ab1f90c-bbd8-83ea-8d52-9f289ad01c30",
+      "count": 7,
+      "created_at": "2026-09-22T03:44:18.143Z",
+      "batch": "pieverse",
       "title": "social: ig-single"
     },
     {
-      "purpose": "longform-broll",
-      "url": "https://chatgpt.com/c/6a650c69-c23c-83ea-a79c-a0512d366bef",
-      "count": 6,
-      "created_at": "2026-07-25T19:22:20.391Z",
-      "batch": "kaspa-30bps-vertical",
-      "title": "b-roll: longform-broll"
-    },
-    {
-      "purpose": "broll-ref",
-      "url": "https://chatgpt.com/c/6a70cab0-e988-83ea-9a9b-33113d126757",
-      "count": 1,
-      "created_at": "2026-08-03T17:08:52.272Z",
-      "batch": "what-if-1000x",
-      "title": "b-roll: broll-ref"
-    },
-    {
-      "purpose": "broll-ref-rof",
-      "url": "https://chatgpt.com/c/6a727d7f-454c-83ea-abee-4cd172104772",
-      "count": 2,
-      "created_at": "2026-08-05T00:04:22.363Z",
-      "batch": "october-bottom",
-      "title": "b-roll: broll-ref-rof"
-    },
-    {
-      "purpose": "broll-ref-wod",
-      "url": "https://chatgpt.com/c/6a731881-ee78-83ea-9715-b3c36907a4d8",
-      "count": 1,
-      "created_at": "2026-08-05T11:05:34.186Z",
-      "batch": "october-bottom",
-      "title": "b-roll: broll-ref-wod"
-    },
-    {
-      "purpose": "broll-ref-kdi",
-      "url": "https://chatgpt.com/c/6a731ba5-a7cc-83ea-8067-5844ddf868c0",
-      "count": 3,
-      "created_at": "2026-08-05T11:18:41.689Z",
-      "batch": "october-bottom",
-      "title": "b-roll: broll-ref-kdi"
-    },
-    {
-      "purpose": "broll-kdi-plain",
-      "url": "https://chatgpt.com/c/6a731d1b-83f8-83ea-98d5-82b8d2fffd33",
-      "count": 2,
-      "created_at": "2026-08-05T11:24:42.289Z",
-      "batch": "october-bottom",
-      "title": "b-roll: broll-kdi-plain"
-    },
-    {
-      "purpose": "broll-crd-plain",
-      "url": "https://chatgpt.com/c/6a7327f5-cc2c-83ea-b008-004babe4bd13",
-      "count": 9,
-      "created_at": "2026-08-05T12:11:10.722Z",
-      "batch": "october-bottom",
-      "title": "b-roll: broll-crd-plain"
-    },
-    {
-      "purpose": "broll-ref-crd",
-      "url": "https://chatgpt.com/c/6a732d3e-9cb4-83ea-9f10-5c3f9d6c015e",
-      "count": 2,
-      "created_at": "2026-08-05T12:33:59.610Z",
-      "batch": "october-bottom",
-      "title": "b-roll: broll-ref-crd"
-    },
-    {
-      "purpose": "broll-ref-crd2",
-      "url": "https://chatgpt.com/c/6a732f0a-c64c-83ea-b832-573b8010241b",
-      "count": 1,
-      "created_at": "2026-08-05T12:42:17.476Z",
-      "batch": "october-bottom",
-      "title": "b-roll: broll-ref-crd2"
-    },
-    {
-      "purpose": "python-ep01-broll",
-      "url": "https://chatgpt.com/c/6a73c0aa-cf18-83ea-b2a9-cde65238b3c5",
-      "count": 1,
-      "created_at": "2026-08-05T23:02:49.153Z",
-      "title": "b-roll: python-ep01-broll"
-    },
-    {
-      "purpose": "python-ep01-vertical",
-      "url": "https://chatgpt.com/c/6a73ebc9-1be0-83ea-a34e-1a338fa9ab33",
-      "count": 2,
-      "created_at": "2026-08-06T02:06:54.241Z",
-      "title": "social: python-ep01-vertical"
-    },
-    {
-      "purpose": "broll-ref-etao",
-      "url": "https://chatgpt.com/c/6a75bcd3-4264-83ea-b342-756077784646",
-      "count": 1,
-      "created_at": "2026-08-07T11:11:20.688Z",
-      "batch": "eliza",
-      "title": "b-roll: broll-ref-etao"
-    },
-    {
-      "purpose": "reply-images",
-      "url": "https://chatgpt.com/c/6a7663ae-0404-83ea-9943-8cd7c98a4687",
-      "count": 2,
-      "created_at": "2026-08-07T23:03:53.302Z",
-      "title": "social: reply-images"
-    },
-    {
-      "purpose": "yt-posts",
-      "url": "https://chatgpt.com/c/6a768cf8-0e34-83ea-93d8-ae5aed395c39",
-      "count": 27,
-      "created_at": "2026-08-08T02:00:02.991Z",
-      "title": "social: yt-posts"
-    },
-    {
       "purpose": "x-tweets",
-      "url": "https://chatgpt.com/c/6a769ad0-c354-83ea-87a5-583420171216",
-      "count": 23,
-      "created_at": "2026-08-08T02:58:15.084Z",
+      "url": "https://chatgpt.com/c/6ab90f94-e7a4-83ea-a9c5-71906425bc05",
+      "count": 22,
+      "created_at": "2026-09-27T12:47:30.992Z",
+      "batch": "beer-and-kaspa",
       "title": "social: x-tweets"
     },
     {
+      "purpose": "yt-posts",
+      "url": "https://chatgpt.com/c/6abcff7f-0654-83ea-8e53-661adddb417d",
+      "count": 23,
+      "created_at": "2026-09-30T12:27:33.898Z",
+      "batch": "spon",
+      "title": "social: yt-posts"
+    },
+    {
+      "purpose": "golden-kitty-vertical",
+      "url": "https://chatgpt.com/c/6ac002e6-21cc-83ea-b302-3147a80b7aba",
+      "count": 1,
+      "created_at": "2026-10-02T19:19:25.349Z",
+      "batch": "golden-kitty-vert",
+      "title": "social: golden-kitty-vertical"
+    },
+    {
       "purpose": "broll",
-      "url": "https://chatgpt.com/c/6a7b518a-0590-83ea-959a-5e18114e36ce",
-      "count": 13,
-      "created_at": "2026-08-11T17:26:12.245Z",
-      "batch": "last-year",
+      "url": "https://chatgpt.com/c/6ac04396-50cc-83e9-9475-4af6b37e1c9c",
+      "count": 1,
+      "created_at": "2026-10-02T23:52:42.112Z",
       "title": "b-roll: broll"
     }
   ],
   "retired": [],
-  "title_gate_skipped": []
+  "title_gate_skipped": [],
+  "last_reconcile": {
+    "at": "2026-09-17T21:31:04.578Z",
+    "live": 234,
+    "dead": 0,
+    "drifted": 0,
+    "orphans": 0,
+    "review": 57,
+    "queued": 0,
+    "review_list": [
+      {
+        "id": "6aa4179f-9a20-83e9-9f6f-249f43997790",
+        "title": "Highlight POP Red",
+        "created": "2026-09-11T15:00:48",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a833539-b9f4-83ea-a974-e643b3e88f37",
+        "title": "Poster Image Description",
+        "created": "2026-08-17T16:23:26",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a7b63d6-1534-83ea-8371-033018cf569c",
+        "title": "Artistic Image Description",
+        "created": "2026-08-11T18:03:15",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a7b210c-cfb0-83ea-8855-b93e73647b16",
+        "title": "Render revision request",
+        "created": "2026-08-11T13:18:32",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a7b1fe5-6310-83ea-8ad9-402794e8a86d",
+        "title": "Rewrite Coin Scene",
+        "created": "2026-08-11T13:14:59",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a7b1ad9-d2bc-83ea-b099-7ffc82b84791",
+        "title": "Write crypto carousel slide",
+        "created": "2026-08-11T12:51:51",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a788e47-5a98-83ea-97dc-019c65f67cc8",
+        "title": "Editorial Carousel Design",
+        "created": "2026-08-09T14:28:30",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a788dea-22f0-83ea-99a0-e32e5e189f9a",
+        "title": "Editorial Carousel Design",
+        "created": "2026-08-09T14:26:17",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a788d35-0e74-83ea-96ca-9dd738932fc7",
+        "title": "Editorial Carousel Design",
+        "created": "2026-08-09T14:23:55",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a788ce7-7424-83ea-ad03-2e9ffadaa431",
+        "title": "Editorial Slide Design",
+        "created": "2026-08-09T14:21:43",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a788c37-2c80-83ea-85f5-0f4a5abba8c1",
+        "title": "Editorial Carousel Design",
+        "created": "2026-08-09T14:19:45",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a788bb1-da70-83ea-93e6-a981d2a1f5f1",
+        "title": "Crypto Graphic Design Request",
+        "created": "2026-08-09T14:17:27",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a788b0c-976c-83ea-ad1c-535e4274ab04",
+        "title": "Crypto News Graphic Design",
+        "created": "2026-08-09T14:15:02",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a775ed4-4d04-83ea-9dad-a8452f0b3ec8",
+        "title": "Epic Husky Fantasy Scene",
+        "created": "2026-08-08T16:54:35",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a76a1da-2dbc-83ea-b3c1-707d6212a9b7",
+        "title": "Crypto News Graphic Design",
+        "created": "2026-08-08T03:26:27",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a769cbc-e04c-83ea-9bfd-4561952c395d",
+        "title": "Product Photography Description",
+        "created": "2026-08-08T03:05:19",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a769b5a-e824-83ea-b1b8-393e419361b1",
+        "title": "3D Cartoon Coin Celebration",
+        "created": "2026-08-08T02:59:59",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a768db2-b1d8-83ea-a8c6-6b0facc7314b",
+        "title": "Editorial Carousel Design",
+        "created": "2026-08-08T02:01:18",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a768bd7-92ac-83ea-abba-291447e3a52d",
+        "title": "Crypto Graphic Design",
+        "created": "2026-08-08T01:53:41",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a768b72-07ec-83ea-8974-da3943440b96",
+        "title": "Crypto News Graphic Design",
+        "created": "2026-08-08T01:50:55",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a751ba2-c1b4-83ea-8535-7092ae1e4f02",
+        "title": "Crypto Slide Design",
+        "created": "2026-08-06T23:42:53",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a751b2c-06f0-83ea-b8b9-439cc10ac638",
+        "title": "Editorial carousel design",
+        "created": "2026-08-06T23:40:21",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a751a70-72a8-83ea-a845-382d602ef601",
+        "title": "VPN Security Slide Design",
+        "created": "2026-08-06T23:37:36",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a7519d3-63b0-83ea-a878-8e08351057cb",
+        "title": "Crypto Market Graphic Design",
+        "created": "2026-08-06T23:35:07",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a75194a-7500-83ea-951a-325f0e0d3945",
+        "title": "Crypto Lawsuit Graphic Design",
+        "created": "2026-08-06T23:32:36",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a7518bf-c694-83ea-aa3f-558e6afb3eaa",
+        "title": "Crypto Graphic Design",
+        "created": "2026-08-06T23:30:11",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a751840-c278-83ea-8615-01ef7cb16b9d",
+        "title": "3D Crypto Coin Scene",
+        "created": "2026-08-06T23:27:51",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a750e6c-76a8-83ea-addb-647926687aef",
+        "title": "Crypto Poll Design",
+        "created": "2026-08-06T22:46:27",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a750d42-56c4-83ea-a084-e7c7467d470a",
+        "title": "Slide design description",
+        "created": "2026-08-06T22:41:30",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a750caa-5520-83ea-8a28-7f12661e4310",
+        "title": "Design Description Request",
+        "created": "2026-08-06T22:38:58",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a750c1f-1ec8-83ea-8ace-abe4a6228e5c",
+        "title": "Editorial Slide Design",
+        "created": "2026-08-06T22:36:22",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a750baf-a444-83ea-b12c-92c949e2a176",
+        "title": "Crypto Graphic Design",
+        "created": "2026-08-06T22:33:55",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73e012-7460-83ea-92d0-7746bf1e51eb",
+        "title": "Luxury Yachts Night Scene",
+        "created": "2026-08-06T01:16:21",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73df68-9450-83ea-92bb-539cb1bb11f8",
+        "title": "Graphic Design Description",
+        "created": "2026-08-06T01:13:38",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73dcd3-db80-83ea-a5e2-9e241e2973d9",
+        "title": "Crypto Thumbnail Design",
+        "created": "2026-08-06T01:02:33",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73dc50-149c-83ea-b281-bf5b6a0b2d93",
+        "title": "Graphic Design Brief",
+        "created": "2026-08-06T01:00:05",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73dba7-d6ec-83ea-a9f4-96fead8ca121",
+        "title": "Crypto Promo Design Details",
+        "created": "2026-08-06T00:57:18",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73db16-8468-83ea-8552-0b4bb3087a55",
+        "title": "Crypto Poster Design",
+        "created": "2026-08-06T00:55:05",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73d771-b46c-83ea-9040-d6bc63c23d44",
+        "title": "Design Specifications Request",
+        "created": "2026-08-06T00:39:11",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73d6f3-0e6c-83ea-bf24-b3d7c8acf3bf",
+        "title": "Graphic Design Instructions",
+        "created": "2026-08-06T00:37:08",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73d681-b85c-83ea-86fa-7da164a0d35a",
+        "title": "Design Slide Instructions",
+        "created": "2026-08-06T00:35:13",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73d5f3-b720-83ea-850c-8a5a8191a85f",
+        "title": "Design Instructions Summary",
+        "created": "2026-08-06T00:33:02",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a73d56b-5698-83ea-a77c-f8e97aaee718",
+        "title": "Graphic Design Request",
+        "created": "2026-08-06T00:30:43",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a735f4b-1c90-83ea-87b5-8638e5862bd0",
+        "title": "Super yacht $IF design",
+        "created": "2026-08-05T16:06:47",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a727fb1-1158-83ea-804e-cab8a7272bf5",
+        "title": "Financial Data Slide",
+        "created": "2026-08-05T00:12:43",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a727ee4-70bc-83ea-8c00-30a6f4af2a4e",
+        "title": "Kaspa Coin CGI Concept",
+        "created": "2026-08-05T00:09:40",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a727a61-3300-83ea-a949-43fcaa302d7c",
+        "title": "Crypto Graphic Design",
+        "created": "2026-08-04T23:49:58",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a727a20-754c-83ea-8bda-3473470bc2a9",
+        "title": "Crypto Graphic Design",
+        "created": "2026-08-04T23:47:45",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a727953-dd54-83ea-bd7f-f87f0aaf1a2a",
+        "title": "Crypto Bear Market Graphic",
+        "created": "2026-08-04T23:45:35",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a7278dd-b100-83ea-90ea-b24db941479b",
+        "title": "Crypto Graphic Design",
+        "created": "2026-08-04T23:43:26",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a727851-f77c-83ea-8caa-fbe1bd8dc782",
+        "title": "Financial Data Slide Design",
+        "created": "2026-08-04T23:40:56",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a7277a8-32d4-83ea-92ac-427d655aa948",
+        "title": "3D Kaspa Coin Character",
+        "created": "2026-08-04T23:38:22",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a72771d-5e9c-83ea-b79c-0f71da68f64e",
+        "title": "Kaspa Coin Dive CGI",
+        "created": "2026-08-04T23:36:10",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a727156-15c8-83ea-a41c-d5dc5f262819",
+        "title": "Cinematic Vault Scene",
+        "created": "2026-08-04T23:11:12",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a726f71-8f7c-83ea-99fa-d6c3152ba09d",
+        "title": "Cinematic Coin Race",
+        "created": "2026-08-04T23:03:29",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a726ed6-3978-83ea-8593-ef33631e39e9",
+        "title": "Kaspa Coin Hero Shot",
+        "created": "2026-08-04T23:00:51",
+        "why": "created on/after --since 2026-08-04"
+      },
+      {
+        "id": "6a726561-03c0-83ea-9fc7-77212a792889",
+        "title": "Crypto Poster Design",
+        "created": "2026-08-04T22:20:13",
+        "why": "created on/after --since 2026-08-04"
+      }
+    ],
+    "orphan_list": [],
+    "review_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\repurpose\\output\\chat-review-2026-09-17.json"
+  },
+  "manual_deletes": [
+    {
+      "url": "https://chatgpt.com/c/6aac0a97-9dd0-83ea-b0c8-a5b83e18b637",
+      "title": "Ok",
+      "at": "2026-09-17T17:02:34.882Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa6af22-0aec-83e9-9789-383bc11e0da8",
+      "title": "Generate gym picture",
+      "at": "2026-09-17T17:02:45.906Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa37a7b-919c-83ea-86b9-a60bc107eb55",
+      "title": "Create Financial Slide",
+      "at": "2026-09-17T17:02:56.414Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa3793b-f098-83ea-ac08-ee1c1795390e",
+      "title": "Write financial slide#+#+#+#+",
+      "at": "2026-09-17T17:03:07.188Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa3785c-6814-83ea-9109-4b0dfc7affe9",
+      "title": "Financial Slide Design",
+      "at": "2026-09-17T17:03:17.591Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa346cc-87e4-83ea-b45c-0905b4c41126",
+      "title": "Redact Private Gems",
+      "at": "2026-09-17T17:03:29.057Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa31ec1-28d4-83ea-86eb-70af92498e98",
+      "title": "Pixar Linea Coin Scene",
+      "at": "2026-09-17T17:03:39.588Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa2aa60-05d4-83ea-9d24-a811eaf22fde",
+      "title": "Render Flask Launch Scene",
+      "at": "2026-09-17T17:03:51.617Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa2a62c-157c-83ea-bfe0-9d9686b127ec",
+      "title": "Create Financial Slide",
+      "at": "2026-09-17T17:04:01.909Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa2a553-dd9c-83e9-9f0e-99e4d69b28b3",
+      "title": "Write Financial Slide Infographic",
+      "at": "2026-09-17T17:04:13.374Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa2a4f3-d294-83ea-b482-1c1ce9ad60e9",
+      "title": "Generate Carousel Image",
+      "at": "2026-09-17T17:04:23.901Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6aa29bfe-2b40-83ea-a529-9ce32dd8cb28",
+      "title": "Financial infographic design",
+      "at": "2026-09-17T17:04:35.310Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a9a268a-ad70-83ea-889a-f6c0ccb01df3",
+      "title": "Enhance Bitcoin Image",
+      "at": "2026-09-17T17:04:46.754Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a9244be-466c-83e9-907c-5b5f76e1bd53",
+      "title": "social: approved-delete 2026-09-17",
+      "at": "2026-09-17T17:43:49.715Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a92439b-5f5c-83ea-8557-36abba9b36c7",
+      "title": "social: approved-delete 2026-09-17",
+      "at": "2026-09-17T17:47:03.433Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a9217c0-e194-83ea-bae7-54acc077943e",
+      "title": "social: approved-delete 2026-09-17",
+      "at": "2026-09-17T17:49:48.970Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a921702-4b88-83ea-87db-6da918186f50",
+      "title": "social: approved-delete 2026-09-17",
+      "at": "2026-09-17T17:53:02.161Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a921676-8658-83ea-a6a2-6eaa79665d59",
+      "title": "social: approved-delete 2026-09-17",
+      "at": "2026-09-17T17:56:15.329Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a9215f4-8598-83ea-8905-33152ca18258",
+      "title": "Image Prompt Rewrite",
+      "at": "2026-09-17T20:26:26.885Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a920ecf-c9e0-83ea-aa1d-825bb588285b",
+      "title": "Financial Slide Design",
+      "at": "2026-09-17T20:26:41.141Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a920e34-c154-83ea-ba7a-f69d109d96f6",
+      "title": "Financial Data Slide",
+      "at": "2026-09-17T20:26:54.825Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a920d94-dbc0-83ea-8855-bbd3cfdad96a",
+      "title": "Financial Slide Design",
+      "at": "2026-09-17T20:27:06.028Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a901c8e-044c-83ea-9907-182cbe2ab442",
+      "title": "Cinematic Vault Render",
+      "at": "2026-09-17T20:27:19.992Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8e1581-6c4c-83e9-974f-8098e3d0765f",
+      "title": "Editorial slide design",
+      "at": "2026-09-17T20:27:33.131Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8e1098-b638-83ea-a9f3-f208bb7a1d51",
+      "title": "Cinematic landscape prompt",
+      "at": "2026-09-17T20:27:47.349Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8e0dc1-bc00-83ea-8dc5-82eee50f3ce5",
+      "title": "Cinematic mirror scene",
+      "at": "2026-09-17T20:27:59.793Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8e0427-65c4-83ea-ab76-cd92214a01fb",
+      "title": "Sci fi poster description",
+      "at": "2026-09-17T20:28:16.111Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8e00bd-e75c-83ea-be7b-1fe5086f12b1",
+      "title": "Write carousel slide text",
+      "at": "2026-09-17T20:28:30.918Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8e002e-b21c-83ea-a509-98a16118463d",
+      "title": "Editorial slide design",
+      "at": "2026-09-17T20:28:45.007Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8dff84-0870-83ea-a3bc-253876e7eca1",
+      "title": "Write editorial carousel slide",
+      "at": "2026-09-17T20:28:57.186Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8dfe29-8470-83ea-a4e8-1d78e4a146ba",
+      "title": "Create editorial carousel slide",
+      "at": "2026-09-17T20:29:11.694Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8dfc9e-28d8-83ea-8186-c6cb88c6cd6d",
+      "title": "Editorial carousel design",
+      "at": "2026-09-17T20:29:27.441Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8dfc0d-eb58-83ea-b186-3f321d3ed589",
+      "title": "Write editorial carousel slide",
+      "at": "2026-09-17T20:29:41.569Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8dfb78-a3c8-83e9-8138-73e0d12e5581",
+      "title": "Create editorial carousel slide",
+      "at": "2026-09-17T20:29:53.488Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8dfaef-9ad8-83ea-b4a5-812ba6329db8",
+      "title": "Editorial slide design",
+      "at": "2026-09-17T20:30:07.909Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8dfa4a-93a4-83ea-b4d5-06ce5526db7f",
+      "title": "Create editorial slide",
+      "at": "2026-09-17T20:30:19.923Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8de807-41f0-83ea-92c8-9f9a2a7e2ce6",
+      "title": "Kaspa canyon illustration",
+      "at": "2026-09-17T20:30:32.956Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8c6dca-ad08-83ea-a64a-a63de4543679",
+      "title": "Create Kaspa Superyacht",
+      "at": "2026-09-17T20:30:46.413Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a848c6b-045c-83ea-9046-eab1d8a6c2fc",
+      "title": "Financial Slide Design",
+      "at": "2026-09-17T20:30:58.638Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a848bc9-91e4-83ea-b867-00358401db2d",
+      "title": "Financial Slide Design",
+      "at": "2026-09-17T20:31:11.246Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a83397d-54a0-83ea-9ce7-a78836d736d4",
+      "title": "Kaspa Coin CGI Render",
+      "at": "2026-09-17T20:31:22.295Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8337f7-0b0c-83ea-85a6-c9fc83ce224c",
+      "title": "Perfect Square Image Request",
+      "at": "2026-09-17T20:31:35.141Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a833760-1980-83ea-8997-178f509aae7b",
+      "title": "Perfect Square Template",
+      "at": "2026-09-17T20:32:53.688Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8336b9-3d94-83ea-9ef9-a0e6f1f350da",
+      "title": "Kaspa Coin Rendering",
+      "at": "2026-09-17T20:36:57.209Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a832936-576c-83ea-af82-e0654dd34b26",
+      "title": "Futuristic neon candlestick scene",
+      "at": "2026-09-17T20:42:49.458Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a832785-f8f8-83ea-88c2-2a7fdd56c06e",
+      "title": "Perfect Square Image Request",
+      "at": "2026-09-17T20:46:56.343Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a832704-fe8c-83ea-8799-839bce9aff1c",
+      "title": "Square Graphic Design",
+      "at": "2026-09-17T20:51:16.283Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8323db-2d08-83ea-8154-1f1f57963a57",
+      "title": "Visual Template Request",
+      "at": "2026-09-17T20:54:50.931Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a832310-ca0c-83ea-835b-2beba7d576f3",
+      "title": "Visual Template Request",
+      "at": "2026-09-17T20:58:57.110Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a832190-0034-83ea-9d27-55e12e9a67ee",
+      "title": "Visual template request",
+      "at": "2026-09-17T21:02:49.081Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a807afc-d298-83ea-bd19-42c3f0851b84",
+      "title": "Bitcoin Price Infographic",
+      "at": "2026-09-17T21:06:56.132Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8078f9-9068-83ea-9992-43232886796d",
+      "title": "Financial Data Slide Design",
+      "at": "2026-09-17T21:11:18.873Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a807763-7914-83ea-854d-44c8ac492e88",
+      "title": "Financial Data Slide",
+      "at": "2026-09-17T21:14:53.163Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a8076a3-6f20-83ea-9b4c-2d6a3a7aa5ca",
+      "title": "Editorial Hook Design",
+      "at": "2026-09-17T21:18:57.277Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a7c81aa-aec8-83ea-87d6-25de42d31c0f",
+      "title": "Financial Slide Design",
+      "at": "2026-09-17T21:22:49.221Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a7c7fe2-8be4-83ea-b3b7-e7a7366bb88e",
+      "title": "Bitcoin Financial Data",
+      "at": "2026-09-17T21:26:54.330Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a7c7af0-0344-83ea-ab87-308c47157404",
+      "title": "Financial Slide Design",
+      "at": "2026-09-17T21:30:57.840Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a7b63d6-1534-83ea-8371-033018cf569c",
+      "title": "Artistic Image Description",
+      "at": "2026-09-17T21:35:15.067Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a7b210c-cfb0-83ea-8855-b93e73647b16",
+      "title": "Render revision request",
+      "at": "2026-09-17T21:39:18.395Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a7b1fe5-6310-83ea-8ad9-402794e8a86d",
+      "title": "Rewrite Coin Scene",
+      "at": "2026-09-17T21:42:50.937Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a7b1ad9-d2bc-83ea-b099-7ffc82b84791",
+      "title": "Write crypto carousel slide",
+      "at": "2026-09-17T21:50:07.309Z"
+    },
+    {
+      "url": "https://chatgpt.com/c/6a788e47-5a98-83ea-97dc-019c65f67cc8",
+      "title": "Editorial Carousel Design",
+      "at": "2026-09-17T21:54:12.145Z"
+    }
+  ],
+  "runs": [
+    {
+      "id": "2026-09-27T13:01:01.134Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T13:01:01.134Z",
+      "ended": "2026-09-27T13:04:53.180Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T13:04:56.064Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T13:04:56.064Z",
+      "ended": "2026-09-27T13:09:02.495Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T13:09:05.559Z|ig-single",
+      "purpose": "ig-single",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T13:09:05.559Z",
+      "ended": "2026-09-27T13:13:08.898Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T13:13:11.733Z|ig-single",
+      "purpose": "ig-single",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T13:13:11.733Z",
+      "ended": "2026-09-27T13:17:19.403Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T13:17:22.836Z|ig-single",
+      "purpose": "ig-single",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T13:17:22.836Z",
+      "ended": "2026-09-27T13:21:17.213Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T13:21:20.192Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T13:21:20.192Z",
+      "ended": "2026-09-27T13:25:23.360Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T13:25:26.287Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T13:25:26.287Z",
+      "ended": "2026-09-27T13:29:32.389Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T13:29:35.186Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T13:29:35.186Z",
+      "ended": "2026-09-27T13:33:43.305Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T13:33:46.377Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T13:33:46.377Z",
+      "ended": "2026-09-27T13:37:51.214Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T13:37:54.326Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T13:37:54.326Z",
+      "ended": "2026-09-27T13:41:58.738Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T14:05:47.211Z|broll",
+      "purpose": "broll",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T14:05:47.211Z",
+      "ended": "2026-09-27T14:25:48.462Z",
+      "ok": 7,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ab922c7-6440-83e9-b2e5-f423875b503d"
+    },
+    {
+      "id": "2026-09-27T14:28:58.268Z|broll",
+      "purpose": "broll",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T14:28:58.268Z",
+      "ended": "2026-09-27T14:45:48.926Z",
+      "ok": 5,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ab92833-b94c-83ea-969d-e35f69bdacf3"
+    },
+    {
+      "id": "2026-09-27T14:59:22.204Z|broll",
+      "purpose": "broll",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T14:59:22.204Z",
+      "ended": "2026-09-27T15:26:57.580Z",
+      "ok": 10,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-27T15:27:25.613Z|broll",
+      "purpose": "broll",
+      "batch": "beer-and-kaspa",
+      "started": "2026-09-27T15:27:25.613Z",
+      "ended": "2026-09-27T15:53:03.495Z",
+      "ok": 9,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ab935e7-b30c-83ea-a3ff-3484c185cf2a"
+    },
+    {
+      "id": "2026-09-28T22:26:24.038Z|broll",
+      "purpose": "broll",
+      "batch": "kaspa-vprogs",
+      "started": "2026-09-28T22:26:24.038Z",
+      "ended": "2026-09-28T22:35:10.710Z",
+      "ok": 3,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abae99a-d43c-83ea-ac5c-410b77781536"
+    },
+    {
+      "id": "2026-09-28T23:07:02.570Z|broll",
+      "purpose": "broll",
+      "batch": "kaspa-vprogs",
+      "started": "2026-09-28T23:07:02.570Z",
+      "ended": "2026-09-28T23:10:28.491Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abaf321-a924-83ea-a60d-b613cd1e47d9"
+    },
+    {
+      "id": "2026-09-28T23:23:51.752Z|broll",
+      "purpose": "broll",
+      "batch": "kaspa-vprogs",
+      "started": "2026-09-28T23:23:51.752Z",
+      "ended": "2026-09-28T23:27:36.485Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abaf712-c830-83ea-b973-b6daf91f3ffb"
+    },
+    {
+      "id": "2026-09-28T23:35:04.326Z|broll",
+      "purpose": "broll",
+      "batch": "kaspa-vprogs",
+      "started": "2026-09-28T23:35:04.326Z",
+      "ended": "2026-09-28T23:38:43.529Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abaf9b2-92b8-83ea-9690-2a511e230a02"
+    },
+    {
+      "id": "2026-09-29T10:26:19.048Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-09-29T10:26:19.048Z",
+      "ended": "2026-09-29T10:36:06.365Z",
+      "ok": 3,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abb9253-1e70-83ea-a257-01ffbf1e038f"
+    },
+    {
+      "id": "2026-09-30T11:41:02.191Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "spon",
+      "started": "2026-09-30T11:41:02.191Z",
+      "ended": "2026-09-30T11:44:56.853Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T11:44:59.764Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "spon",
+      "started": "2026-09-30T11:44:59.764Z",
+      "ended": "2026-09-30T11:48:53.638Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T11:48:56.437Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "spon",
+      "started": "2026-09-30T11:48:56.437Z",
+      "ended": "2026-09-30T11:52:31.457Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T11:52:34.152Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "spon",
+      "started": "2026-09-30T11:52:34.152Z",
+      "ended": "2026-09-30T11:56:46.290Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T11:56:49.000Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "spon",
+      "started": "2026-09-30T11:56:49.000Z",
+      "ended": "2026-09-30T12:01:55.118Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:01:58.786Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "spon",
+      "started": "2026-09-30T12:01:58.786Z",
+      "ended": "2026-09-30T12:06:16.325Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:06:19.048Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T12:06:19.048Z",
+      "ended": "2026-09-30T12:11:18.851Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:11:21.534Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T12:11:21.534Z",
+      "ended": "2026-09-30T12:15:43.162Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:15:45.815Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T12:15:45.815Z",
+      "ended": "2026-09-30T12:19:58.359Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:20:01.162Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T12:20:01.162Z",
+      "ended": "2026-09-30T12:24:19.237Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:24:21.953Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T12:24:21.953Z",
+      "ended": "2026-09-30T12:29:20.463Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abcff7f-0654-83ea-8e53-661adddb417d"
+    },
+    {
+      "id": "2026-09-30T12:29:23.117Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T12:29:23.117Z",
+      "ended": "2026-09-30T12:32:55.444Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:32:58.164Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T12:32:58.164Z",
+      "ended": "2026-09-30T12:36:32.878Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:36:35.587Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T12:36:35.587Z",
+      "ended": "2026-09-30T12:40:07.424Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:40:10.127Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T12:40:10.127Z",
+      "ended": "2026-09-30T12:43:49.808Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:43:52.771Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T12:43:52.771Z",
+      "ended": "2026-09-30T12:57:42.150Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T12:58:56.853Z|broll",
+      "purpose": "broll",
+      "batch": "spon",
+      "started": "2026-09-30T12:58:56.853Z",
+      "ended": null
+    },
+    {
+      "id": "2026-09-30T13:12:22.112Z|broll",
+      "purpose": "broll",
+      "batch": "spon",
+      "started": "2026-09-30T13:12:22.112Z",
+      "ended": "2026-09-30T13:35:15.699Z",
+      "ok": 7,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abd0ac0-f680-83ea-baf3-c1ecf097b0a9"
+    },
+    {
+      "id": "2026-09-30T13:37:11.448Z|broll",
+      "purpose": "broll",
+      "batch": "spon",
+      "started": "2026-09-30T13:37:11.448Z",
+      "ended": null
+    },
+    {
+      "id": "2026-09-30T13:50:48.196Z|broll",
+      "purpose": "broll",
+      "batch": "spon",
+      "started": "2026-09-30T13:50:48.196Z",
+      "ended": "2026-09-30T14:04:31.331Z",
+      "ok": 5,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T14:05:06.751Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "spon",
+      "started": "2026-09-30T14:05:06.751Z",
+      "ended": "2026-09-30T14:10:49.537Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T14:12:43.101Z|broll",
+      "purpose": "broll",
+      "batch": "spon",
+      "started": "2026-09-30T14:12:43.101Z",
+      "ended": "2026-09-30T14:34:17.641Z",
+      "ok": 7,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abd18e4-4288-83ea-8f51-af3f2464c21c"
+    },
+    {
+      "id": "2026-09-30T14:34:55.395Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "spon",
+      "started": "2026-09-30T14:34:55.395Z",
+      "ended": "2026-09-30T14:39:26.509Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-09-30T14:54:52.827Z|broll",
+      "purpose": "broll",
+      "batch": "spon",
+      "started": "2026-09-30T14:54:52.827Z",
+      "ended": "2026-09-30T15:11:31.883Z",
+      "ok": 5,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abd22fc-c164-83ea-bdb1-18f65779e19c"
+    },
+    {
+      "id": "2026-09-30T15:55:31.401Z|broll",
+      "purpose": "broll",
+      "batch": "spon",
+      "started": "2026-09-30T15:55:31.401Z",
+      "ended": "2026-09-30T16:45:52.364Z",
+      "ok": 9,
+      "fail": 1
+    },
+    {
+      "id": "2026-09-30T16:48:04.008Z|broll",
+      "purpose": "broll",
+      "batch": "spon",
+      "started": "2026-09-30T16:48:04.008Z",
+      "ended": "2026-09-30T17:09:52.768Z",
+      "ok": 0,
+      "fail": 1,
+      "born": "https://chatgpt.com/c/6abd3d4c-da6c-83e9-8557-6e33196a0abf"
+    },
+    {
+      "id": "2026-09-30T17:10:14.409Z|broll",
+      "purpose": "broll",
+      "batch": "spon",
+      "started": "2026-09-30T17:10:14.409Z",
+      "ended": null
+    },
+    {
+      "id": "2026-10-01T02:35:13.955Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "uptober",
+      "started": "2026-10-01T02:35:13.955Z",
+      "ended": "2026-10-01T02:39:57.836Z",
+      "ok": 0,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T10:42:44.194Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "uptober",
+      "started": "2026-10-01T10:42:44.194Z",
+      "ended": "2026-10-01T10:59:34.672Z",
+      "ok": 0,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T11:00:01.197Z|broll",
+      "purpose": "broll",
+      "batch": "uptober",
+      "started": "2026-10-01T11:00:01.197Z",
+      "ended": null
+    },
+    {
+      "id": "2026-10-01T12:59:50.383Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "uptober",
+      "started": "2026-10-01T12:59:50.383Z",
+      "ended": "2026-10-01T13:04:07.370Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:04:10.418Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "uptober",
+      "started": "2026-10-01T13:04:10.418Z",
+      "ended": "2026-10-01T13:08:21.719Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:08:24.874Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "uptober",
+      "started": "2026-10-01T13:08:24.874Z",
+      "ended": "2026-10-01T13:12:53.185Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:12:56.246Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "uptober",
+      "started": "2026-10-01T13:12:56.246Z",
+      "ended": "2026-10-01T13:17:35.234Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:17:38.837Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "uptober",
+      "started": "2026-10-01T13:17:38.837Z",
+      "ended": "2026-10-01T13:21:50.063Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:21:54.738Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "uptober",
+      "started": "2026-10-01T13:21:54.738Z",
+      "ended": "2026-10-01T13:26:04.913Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:26:08.868Z|ig-single",
+      "purpose": "ig-single",
+      "batch": "uptober",
+      "started": "2026-10-01T13:26:08.868Z",
+      "ended": "2026-10-01T13:30:27.272Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:30:30.460Z|ig-single",
+      "purpose": "ig-single",
+      "batch": "uptober",
+      "started": "2026-10-01T13:30:30.460Z",
+      "ended": "2026-10-01T13:34:42.219Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:34:45.580Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "uptober",
+      "started": "2026-10-01T13:34:45.580Z",
+      "ended": "2026-10-01T13:39:56.614Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:39:59.544Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "uptober",
+      "started": "2026-10-01T13:39:59.544Z",
+      "ended": "2026-10-01T13:44:26.914Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:44:30.411Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "uptober",
+      "started": "2026-10-01T13:44:30.411Z",
+      "ended": "2026-10-01T13:49:08.309Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:49:11.140Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "uptober",
+      "started": "2026-10-01T13:49:11.140Z",
+      "ended": "2026-10-01T13:53:33.799Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:53:36.919Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "uptober",
+      "started": "2026-10-01T13:53:36.919Z",
+      "ended": "2026-10-01T13:57:45.077Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T13:57:48.140Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "uptober",
+      "started": "2026-10-01T13:57:48.140Z",
+      "ended": "2026-10-01T14:01:17.770Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T14:01:20.634Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "uptober",
+      "started": "2026-10-01T14:01:20.634Z",
+      "ended": "2026-10-01T14:04:53.787Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T14:04:56.486Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "uptober",
+      "started": "2026-10-01T14:04:56.486Z",
+      "ended": "2026-10-01T14:08:29.791Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T14:08:32.483Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "uptober",
+      "started": "2026-10-01T14:08:32.483Z",
+      "ended": "2026-10-01T14:12:05.063Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T14:12:08.111Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "uptober",
+      "started": "2026-10-01T14:12:08.111Z",
+      "ended": "2026-10-01T14:15:31.347Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T14:15:58.675Z|broll",
+      "purpose": "broll",
+      "batch": "uptober",
+      "started": "2026-10-01T14:15:58.675Z",
+      "ended": "2026-10-01T14:34:37.323Z",
+      "ok": 6,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abe6b26-5308-83ea-b9cb-f1bccb7e1eb8"
+    },
+    {
+      "id": "2026-10-01T14:35:02.642Z|ig-single",
+      "purpose": "ig-single",
+      "batch": "uptober",
+      "started": "2026-10-01T14:35:02.642Z",
+      "ended": "2026-10-01T14:40:10.835Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T14:40:41.216Z|broll",
+      "purpose": "broll",
+      "batch": "uptober",
+      "started": "2026-10-01T14:40:41.216Z",
+      "ended": "2026-10-01T15:05:07.430Z",
+      "ok": 7,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abe7127-479c-83e9-a361-ab55e7937210"
+    },
+    {
+      "id": "2026-10-01T15:08:17.782Z|broll",
+      "purpose": "broll",
+      "batch": "uptober",
+      "started": "2026-10-01T15:08:17.782Z",
+      "ended": "2026-10-01T15:27:22.550Z",
+      "ok": 6,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abe77c7-bf94-83ea-bddb-9b5f580f68b4"
+    },
+    {
+      "id": "2026-10-01T15:28:01.692Z|broll",
+      "purpose": "broll",
+      "batch": "uptober",
+      "started": "2026-10-01T15:28:01.692Z",
+      "ended": "2026-10-01T15:49:21.602Z",
+      "ok": 6,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T15:49:53.123Z|broll",
+      "purpose": "broll",
+      "batch": "uptober",
+      "started": "2026-10-01T15:49:53.123Z",
+      "ended": "2026-10-01T16:11:16.163Z",
+      "ok": 6,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-01T16:34:35.376Z|broll",
+      "purpose": "broll",
+      "batch": "uptober",
+      "started": "2026-10-01T16:34:35.376Z",
+      "ended": "2026-10-01T16:50:29.340Z",
+      "ok": 5,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abe8ba3-d02c-83ea-b8ea-8bdc18849147"
+    },
+    {
+      "id": "2026-10-02T10:32:46.921Z|broll",
+      "purpose": "broll",
+      "batch": "golden-kitty",
+      "started": "2026-10-02T10:32:46.921Z",
+      "ended": "2026-10-02T11:20:09.685Z",
+      "ok": 13,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abf8858-d740-83ea-9328-93b4e57d64e0"
+    },
+    {
+      "id": "2026-10-02T11:20:42.040Z|broll",
+      "purpose": "broll",
+      "batch": "golden-kitty",
+      "started": "2026-10-02T11:20:42.040Z",
+      "ended": "2026-10-02T11:41:04.315Z",
+      "ok": 4,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6abf9392-2258-83e9-b3ab-06b5b51a6299"
+    },
+    {
+      "id": "2026-10-02T17:56:10.939Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T17:56:10.939Z",
+      "ended": "2026-10-02T17:59:54.577Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:00:15.753Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:00:15.753Z",
+      "ended": "2026-10-02T18:03:53.593Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:04:27.800Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:04:27.800Z",
+      "ended": "2026-10-02T18:07:58.731Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:08:12.537Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:08:12.537Z",
+      "ended": "2026-10-02T18:11:25.899Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:11:29.793Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:11:29.793Z",
+      "ended": "2026-10-02T18:14:46.201Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:14:56.380Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:14:56.380Z",
+      "ended": "2026-10-02T18:18:06.465Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:18:10.517Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:18:10.517Z",
+      "ended": "2026-10-02T18:21:27.618Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:21:36.853Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:21:36.853Z",
+      "ended": "2026-10-02T18:24:53.324Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:24:57.025Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:24:57.025Z",
+      "ended": "2026-10-02T18:28:04.864Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:28:16.746Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:28:16.746Z",
+      "ended": "2026-10-02T18:31:28.090Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:31:31.261Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:31:31.261Z",
+      "ended": "2026-10-02T18:35:14.196Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:35:28.878Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:35:28.878Z",
+      "ended": "2026-10-02T18:39:18.899Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T18:39:22.415Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T18:39:22.415Z",
+      "ended": "2026-10-02T18:43:15.328Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-02T19:15:40.849Z|golden-kitty-vertical",
+      "purpose": "golden-kitty-vertical",
+      "batch": "golden-kitty-vert",
+      "started": "2026-10-02T19:15:40.849Z",
+      "ended": "2026-10-02T19:20:53.207Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ac002e6-21cc-83ea-b302-3147a80b7aba"
+    },
+    {
+      "id": "2026-10-02T23:49:11.576Z|broll",
+      "purpose": "broll",
+      "batch": null,
+      "started": "2026-10-02T23:49:11.576Z",
+      "ended": "2026-10-02T23:54:32.845Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ac04396-50cc-83e9-9475-4af6b37e1c9c"
+    },
+    {
+      "id": "2026-10-03T12:55:29.420Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "bull-trap",
+      "started": "2026-10-03T12:55:29.420Z",
+      "ended": "2026-10-03T12:59:44.509Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-03T12:59:47.326Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "bull-trap",
+      "started": "2026-10-03T12:59:47.326Z",
+      "ended": "2026-10-03T13:04:22.035Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-03T13:04:25.091Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "bull-trap",
+      "started": "2026-10-03T13:04:25.091Z",
+      "ended": "2026-10-03T13:08:59.695Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-03T13:09:02.696Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "bull-trap",
+      "started": "2026-10-03T13:09:02.696Z",
+      "ended": "2026-10-03T13:14:27.134Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-03T13:14:30.062Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "bull-trap",
+      "started": "2026-10-03T13:14:30.062Z",
+      "ended": "2026-10-03T13:18:52.726Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-03T13:18:55.493Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "bull-trap",
+      "started": "2026-10-03T13:18:55.493Z",
+      "ended": "2026-10-03T13:23:13.979Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-03T13:23:16.830Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "bull-trap",
+      "started": "2026-10-03T13:23:16.830Z",
+      "ended": "2026-10-03T13:27:36.016Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-03T13:27:38.884Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "bull-trap",
+      "started": "2026-10-03T13:27:38.884Z",
+      "ended": "2026-10-03T13:32:01.455Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-03T13:32:04.123Z|yt-posts",
+      "purpose": "yt-posts",
+      "batch": "bull-trap",
+      "started": "2026-10-03T13:32:04.123Z",
+      "ended": "2026-10-03T13:36:02.430Z",
+      "ok": 1,
+      "fail": 0
+    }
+  ]
 }

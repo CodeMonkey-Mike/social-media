@@ -1,7 +1,10 @@
 // _diag-ig-create.js — READ-ONLY diagnostic. Walks IG Create -> Post and dumps
 // DOM state at each step so we can see why input[type="file"] never attaches.
 const { chromium } = require('playwright');
+const path = require('path');
 const CHROME_PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\igbot-profile';
+const WORKSPACE_ROOT = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets';
+const DEBUG_DIR      = path.join(WORKSPACE_ROOT, 'tmp', 'ig-diag');
 
 async function dump(page, label) {
   const info = await page.evaluate(() => {
@@ -26,12 +29,12 @@ async function dump(page, label) {
   console.log('input[type=file] count:', info.fileInputs.length, JSON.stringify(info.fileInputs));
   console.log('dialogs:', JSON.stringify(info.dialogs, null, 2));
   console.log('clickable texts:', JSON.stringify(info.clickable));
-  await page.screenshot({ path: `tmp-ig-diag/${label}.png` }).catch(e => console.log('screenshot fail', e.message));
+  await page.screenshot({ path: path.join(DEBUG_DIR, `${label}.png`) }).catch(e => console.log('screenshot fail', e.message));
 }
 
 (async () => {
   const fs = require('fs');
-  if (!fs.existsSync('tmp-ig-diag')) fs.mkdirSync('tmp-ig-diag');
+  if (!fs.existsSync(DEBUG_DIR)) fs.mkdirSync(DEBUG_DIR, { recursive: true });
   const browser = await chromium.launchPersistentContext(CHROME_PROFILE, {
     channel: 'chrome', headless: false, slowMo: 50,
     ignoreDefaultArgs: ['--enable-automation'],

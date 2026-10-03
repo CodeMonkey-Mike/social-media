@@ -18,12 +18,13 @@ longform's pipeline and assets — do NOT rebuild from scratch. The exact flow t
      `objectPosition: '50% 22%'`** (bias UP so his head isn't cropped). Cover-cropping a 16:9 face to
      9:16 is the intended path — don't letterbox.
 2. **Containers are LIVE React, re-laid for vertical — NOT PNG re-renders.** The longform's
-   `KaspaCovenants.tsx` builds C3b/C5b as React components; the short mirrors them as vertical
+   comp builds its containers as React components (kaspa-covenants: C3b/C5b); the short mirrors them as vertical
    variants (bigger type, stacked, content in the **upper 2/3** so the caption band at `bottom:470`
    stays clear). The `kaspa-covenants-containers.html` is only a proof source, not the render path.
 3. **Captions = canonical `skills/captions` `arial-black` karaoke** (AI-persona Mother-Satori look),
    transcribed off the **baked spine**. CORRECTIONS already fixes casper->kaspa; verify "royalties"
-   etc. Output `captions.json` -> a `src/<name>Captions.ts` module (mirror `cryptoPromoCaptions.ts`).
+   etc. Output `captions.json` -> a `src/<name>Captions.ts` module (`export const CAPTIONS: CapGroup[] = [...]`,
+   the `CapGroup` type from `./captions/Caption2`).
 4. **FACE transitions in vertical = HARD CUT + glitch SFX** (`sfx-blocks-max.mp3` from the longform
    transition lib). The Blocks **mask** engine is authored 16:9; re-authoring masks for 9:16 is not
    worth it for a 24s teaser, and the SCRIPT sanctions hard-cut+SFX. Glitch SFX at ~0.55 vol sits at

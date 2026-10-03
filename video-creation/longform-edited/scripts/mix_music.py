@@ -78,6 +78,11 @@ def main():
     ap.add_argument("--sfx-db", type=float, default=-6.0)
     ap.add_argument("--lib-sfx-db", type=float, default=-9.0)
     ap.add_argument("--sfx-max", type=float, default=1.8)
+    ap.add_argument("--dry-run", action="store_true", help="resolve and print the beds, render nothing")
+    ap.add_argument("--vo", default=None,
+                    help="the VOICE track to mix under (default: the project's paused spine assets/spine.mp4 when its length matches "
+                         "the video; else the video's own audio). A Remotion render's audio runs 43 to 92 ms LATE against its own "
+                         "picture (AAC priming plus stepped drift, golden-kitty 2026-10-02), so the VO is taken from the spine itself.")
     a = ap.parse_args()
     proj = Path(a.project_dir).resolve()
     video = Path(a.video).resolve()
@@ -90,6 +95,12 @@ def main():
     CARD_T = [float(p["at"]) for p in meta.get("pauses") or []]
     PAUSE = float(meta.get("pause_s") or 1.0)
     total = duration(video)
+    vo = Path(a.vo).resolve() if a.vo else (proj / "assets" / "spine.mp4")
+    if not (vo.is_file() and abs(duration(vo) - total) <= 0.3):
+        if a.vo:
+            print(f"FATAL: --vo {vo} missing or not the video's length", file=sys.stderr)
+            sys.exit(2)
+        vo = video                          # no matching spine: the video's own audio is the VO
 
     def sh(t):
         return t + PAUSE * sum(1 for c in CARD_T if c <= t + 1e-6)
@@ -100,21 +111,50 @@ def main():
     plan = json.loads((proj / "MUSIC-PLAN.json").read_text(encoding="utf-8"))
     beds = sorted(plan.get("beds") or [], key=lambda b: float(b["span"][0]))
     resolved_beds = []
+    prev_row = None
     for i, b in enumerate(beds):
         s0, s1 = float(b["span"][0]), float(b["span"][1])
         # a card may have been trough-snapped a few hundred ms off the plan's chapter time (137.58 -> 137.46)
         card0 = next((c for c in CARD_T if abs(s0 - c) < 0.35), None)
         card1 = next((c for c in CARD_T if abs(s1 - c) < 0.35), None)
         starts_at_card, ends_at_card = card0 is not None, card1 is not None
-        fi = float(b.get("fade_in_sec") or 0.0)
-        t_full = sh(s0)
-        t_start = max(0.0, t_full - fi) if (starts_at_card or i > 0) else 0.0
-        fo = 0.4 if ends_at_card else 0.25
+        last = i == len(beds) - 1
+        # fade_out_sec (optional, golden-kitty 2026-10-02): a bed that hands over to another bed MID-chapter, with no card,
+        # needs a real fade for the crossfade; the default 0.25 s is only right for the last bed's stop
+        fo = float(b.get("fade_out_sec") or (0.4 if ends_at_card else 0.25))
         t_end_full = card_start(card1) if ends_at_card else min(sh(s1), total)
         t_end = min(total, t_end_full + (fo if ends_at_card else 0.0))
         if not ends_at_card:
-            t_end = total
+            # only the LAST bed runs to the end of the file. A mid-video bed that does not end on a card stops at
+            # its own span end (golden-kitty 2026-10-01: CH2 and CH6 continue cardless into CH3 and CH7; the old
+            # `t_end = total` kept those rows playing to the end of the video, doubled over the rows after them).
+            t_end = total if last else min(total, sh(s1))
         gain_db = float(b.get("remotion_gain_db"))
+        # A CARDLESS CONTINUATION: the same file, sample-continuous with the row before it, and no card (so no
+        # pause) at the boundary. It is ONE physical placement: extend the previous bed through this row instead
+        # of starting a second copy of the file, and keep this row's automation on the merged bed's clock.
+        if prev_row is not None and resolved_beds and card0 is None \
+                and str(prev_row.get("source_file")) == str(b.get("source_file")) \
+                and abs((float(b.get("source_in") or 0.0) - float(prev_row.get("source_in") or 0.0))
+                        - (s0 - float(prev_row["span"][0]))) < 0.15:
+            rb = resolved_beds[-1]
+            rb["t_end"], rb["fade_out"] = round(t_end, 3), fo
+            rb["chapter"] = f"{rb['chapter']}+{b.get('chapter')}"
+            if abs(gain_db - rb["gain_db"]) > 0.05:      # the row is seated at a different level: a step, not a restart
+                rb["automation"].append({"start": sh(s0) - rb["t_start"], "end": sh(s1) - rb["t_start"] + 1.0,
+                                         "rel_db": gain_db - rb["gain_db"], "ramp": 0.5})
+            for au in b.get("automation") or []:
+                w0, w1 = (float(x) for x in au["window"])
+                g_au = float(au["gain_db"])
+                rel_db = g_au if (au.get("relative") or g_au > -15) else g_au - gain_db
+                rb["automation"].append({"start": sh(w0) - rb["t_start"], "end": sh(w1) - rb["t_start"], "rel_db": rel_db,
+                                         "ramp": float(au.get("ramp_sec") or 0.2)})
+            prev_row = b
+            continue
+        prev_row = b
+        fi = float(b.get("fade_in_sec") or 0.0)
+        t_full = sh(s0)
+        t_start = max(0.0, t_full - fi) if (starts_at_card or i > 0) else 0.0
         src_in = float(b.get("source_in") or 0.0) - (t_full - t_start)  # so the plan's file position lands on the first word
         autom = []
         for au in b.get("automation") or []:
@@ -195,11 +235,17 @@ def main():
             dur = float(r.get("duration_s") or 0.5)
             lib_sfx.append({"id": tid, "file": str(p), "t": round(max(0.0, sh(float(r["tc"])) - dur / 2), 3), "gain_db": a.lib_sfx_db})
     print(f"MIX-PLAN beds={len(resolved_beds)} sfx={len(sfx)} lib_sfx={len(lib_sfx)}")
+    if a.dry_run:      # resolve only: show where every bed starts and stops, render nothing, write nothing
+        for b in resolved_beds:
+            print(f"  BED {b['chapter']:10} {b['t_start']:8.3f} -> {b['t_end']:8.3f}  file@{b['source_in']:.3f}  gain {b['gain_db']} dB  "
+                  f"fade in {b['fade_in']} / out {b['fade_out']}  automation {len(b['automation'])}  {Path(b['file']).name}")
+        print("DRY-RUN (nothing rendered)")
+        return
 
     # ── filter graph ────────────────────────────────────────────────────────────────────
-    inputs = ["-i", str(video)]
+    inputs = ["-i", str(video), "-i", str(vo)]          # 0 = picture, 1 = the VO (the spine's audio, or the video's own)
     chains, labels = [], []
-    k = 1
+    k = 2
     for b in resolved_beds:
         if b["loop"]:
             inputs += ["-stream_loop", "-1"]
@@ -231,21 +277,21 @@ def main():
         labels.append(f"[s{k}]")
         k += 1
     n = 1 + len(labels)
-    fc = ";".join(chains) + (";" if chains else "") + "[0:a]" + "".join(labels) + f"amix=inputs={n}:normalize=0:duration=first[ao]"
+    fc = ";".join(chains) + (";" if chains else "") + "[1:a]" + "".join(labels) + f"amix=inputs={n}:normalize=0:duration=first[ao]"
     cmd = ["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", fc, "-map", "0:v", "-c:v", "copy", "-map", "[ao]",
            "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)]
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode != 0:
         print("FATAL: ffmpeg failed\n" + r.stderr[-1500:], file=sys.stderr)
         sys.exit(1)
-    li, _ = lufs_and_peak(video)
+    li, _ = lufs_and_peak(vo)
     lo, po = lufs_and_peak(out)
     side = proj / "mix-audio.json"
-    side.write_text(json.dumps({"video": str(video), "out": str(out), "card_t": CARD_T, "pause_s": PAUSE, "beds": resolved_beds,
+    side.write_text(json.dumps({"video": str(video), "vo": str(vo), "out": str(out), "card_t": CARD_T, "pause_s": PAUSE, "beds": resolved_beds,
                                 "sfx": sfx, "lib_sfx": lib_sfx, "lufs_in": li, "lufs_out": lo, "peak_out_dbfs": po,
                                 "rerun": f"python video-creation/longform-edited/scripts/mix_music.py \"{proj}\" --video \"{video}\""},
                                indent=2), encoding="utf-8")
-    print(f"MIX-DONE out={out} dur={duration(out):.3f} lufs_in={li} lufs_out={lo} peak_out={po}")
+    print(f"MIX-DONE out={out} dur={duration(out):.3f} lufs_in={li} lufs_out={lo} peak_out={po} vo={'spine' if vo != video else 'video'}")
     print(f"WROTE {side}")
     print("PROGRESS 100%")
 

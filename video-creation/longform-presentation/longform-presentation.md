@@ -346,8 +346,8 @@ Project folder: `media/QE before bitcoin/`.
 The animated presentation replaces **only 0:31–5:30**; the head (0:00–0:31, on-camera intro) and
 tail (5:30–end, recap + 353X CTA) keep EDIT2's original footage.
 
-- **Composition:** `video-creation/remotion/src/QeMoneyPrinter.tsx` (1920×1080, `QE_FPS=30`,
-  `QE_DURATION=12270` frames ≈ 409s). Registered in `src/Root.tsx` alongside the validated POC
+- **Composition:** `QeMoneyPrinter` (comp file since deleted; 1920×1080, `QE_FPS=30`,
+  `QE_DURATION=12270` frames ≈ 409s). Was registered in `src/Root.tsx` alongside the validated POC
   `QeMoneyPrinterPoc`. Spotlight = one container full-screen at a time, 0.35s cross-fade +
   0.93→1 scale-in; cued to narration via `SCENES[]` (`t` = EDIT2-timeline seconds). Card chrome,
   colors (gold/cyan/red/purple/green), fonts (Playfair/DM Sans/JetBrains Mono) ported from the deck.

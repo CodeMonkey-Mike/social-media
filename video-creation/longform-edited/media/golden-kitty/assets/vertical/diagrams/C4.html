@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>C4 timeline ladder</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8;
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+  /* golden-kitty video accents: Robinhood lime = Robinhood / Robinhood Chain; gold = gold, GLD, GOLDEN */
+  --lime:#ccff00; --gold:#ffd700;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:block;color:var(--text-primary)}
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:50;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.26;pointer-events:none;z-index:0}
+.frame>*:not(.orb){z-index:1}
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:68px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary)}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:26px 0 0}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.lm{color:var(--lime)} .gd{color:var(--gold)} .re{color:var(--accent-red)} .pu{color:var(--accent-purple)}
+.hdr{position:absolute;left:140px;top:78px;width:1640px}
+.src{position:absolute;left:140px;bottom:40px;font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:19px;color:var(--text-muted)}
+.abs{position:absolute}
+.box{position:absolute;background:var(--bg-card);border:2px solid var(--border);border-radius:22px}
+.box.w{border-color:rgba(232,234,240,.30)}
+.box.gold{border-color:rgba(255,215,0,.62);box-shadow:0 0 70px rgba(255,215,0,.13)}
+.box.lime{border-color:rgba(204,255,0,.62);box-shadow:0 0 70px rgba(204,255,0,.12)}
+.box.red{border-color:rgba(255,64,96,.55)}
+.box.pu{border-color:rgba(168,85,247,.6);box-shadow:0 0 70px rgba(168,85,247,.12)}
+.box.focus-gold{box-shadow:0 0 0 7px rgba(255,215,0,.16),0 0 120px rgba(255,215,0,.38)}
+.box.focus-lime{box-shadow:0 0 0 7px rgba(204,255,0,.16),0 0 120px rgba(204,255,0,.34)}
+.off{opacity:.16}
+.dim{opacity:.38}
+.hid{opacity:0}
+.cap{font-family:'DM Sans';font-weight:700;text-transform:uppercase;letter-spacing:.12em}
+.ttl{font-family:'DM Sans';font-weight:700;color:var(--text-primary)}
+.sub{font-family:'DM Sans';font-weight:400;color:var(--text-secondary)}
+.chip{display:inline-block;padding:8px 20px;border-radius:100px;font-family:'JetBrains Mono';font-weight:600;
+  font-size:26px;border:2px solid var(--border);color:var(--text-primary);background:rgba(255,255,255,.03)}
+.chip.gold{color:var(--gold);border-color:rgba(255,215,0,.5);background:rgba(255,215,0,.10)}
+.chip.lime{color:var(--lime);border-color:rgba(204,255,0,.5);background:rgba(204,255,0,.09)}
+.chip.pu{color:#c99bff;border-color:rgba(168,85,247,.5);background:rgba(168,85,247,.10)}
+.tag{display:inline-block;padding:7px 18px;border-radius:100px;font-family:'DM Sans';font-weight:700;
+  font-size:19px;text-transform:uppercase;letter-spacing:.09em}
+.tag.gold{background:rgba(255,215,0,.14);color:var(--gold)}
+.tag.lime{background:rgba(204,255,0,.13);color:var(--lime)}
+.tag.red{background:rgba(255,64,96,.15);color:var(--accent-red)}
+.tag.w{background:rgba(232,234,240,.08);color:var(--text-primary)}
+.token{position:absolute;border-radius:50%;overflow:hidden;border:4px solid rgba(255,215,0,.85);
+  box-shadow:0 0 50px rgba(255,215,0,.35)}
+.token img{width:100%;height:100%;object-fit:cover;display:block}
+.elab{position:absolute;font-family:'DM Sans';font-weight:700;font-size:19px;letter-spacing:.14em;text-transform:uppercase}
+svg.lay{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible}
+
+/* ---- VERTICAL 1080x1920 overrides (portrait twin; locked stylesheet above is unchanged) ---- */
+.frame{width:1080px;height:1920px}
+svg.lay{width:1080px;height:1920px}
+.hdr{left:90px;top:170px;width:900px}
+.ey{font-size:28px}
+h1{font-size:92px;line-height:1.04}
+.src{left:90px;right:90px;bottom:210px;font-size:22px;line-height:1.55}
+
+/* the rising staircase climbs bottom-left to top-right: treads at y 1530 / 1265 / 1000 / 735, each stepping in 110px,
+   each tread running to the right margin; labels sit above their tread in one column at x 560 */
+.band{position:absolute;right:90px}
+.lbl{position:absolute;left:560px;width:430px;display:flex;flex-direction:column;justify-content:flex-end}
+.lbl .d{font-family:'JetBrains Mono';font-weight:600;font-size:42px;line-height:1.15;margin-bottom:8px}
+.lbl .t{font-family:'DM Sans';font-weight:700;font-size:34px;line-height:1.2;color:var(--text-primary)}
+.lbl .tag{margin-top:14px;align-self:flex-start}
+.dot{position:absolute;width:34px;height:34px;border-radius:50%;background:var(--bg-deep);border:5px solid}
+
+</style></head>
+<body>
+<!--
+VERTICAL twin of assets/diagrams/C4.html (1080x1920). The four-step staircase climbs the height of the frame; labels in one column above each tread.
+Same states, same ids, same roles and colours; shared elements are pixel-identical across states.
+-->
+<div class="frame" id="s1-0-dark">
+<div class="orb" style="left:560px;top:-280px;width:760px;height:760px;background:#b89400"></div>
+<div class="orb" style="left:-340px;top:1300px;width:700px;height:700px;background:#6d8a00"></div>
+<div class="hdr"><div class="ey">THE BACKSTORY</div><h1>Robinhood and the <span class="gd">Golden Kitty</span></h1><div class="divider"></div></div>
+<svg class="lay"><line x1="90" y1="1530" x2="990" y2="1530" stroke="#2a3040" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="200" y1="1516" x2="200" y2="1265" stroke="#2a3040" stroke-width="3" opacity="1" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="200" y1="1265" x2="990" y2="1265" stroke="#2a3040" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="310" y1="1251" x2="310" y2="1000" stroke="#2a3040" stroke-width="3" opacity="1" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="310" y1="1000" x2="990" y2="1000" stroke="#2a3040" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="420" y1="986" x2="420" y2="735" stroke="#2a3040" stroke-width="3" opacity="1" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="420" y1="735" x2="990" y2="735" stroke="#2a3040" stroke-width="5" opacity="1" stroke-linecap="round"/></svg>
+<div class="band" style="left:90px;top:1530px;height:60px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 90%)"></div>
+<div class="dot" style="left:104px;top:1513px;border-color:#2a3040;opacity:1"></div>
+<div class="band" style="left:200px;top:1265px;height:265px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 90%)"></div>
+<div class="dot" style="left:214px;top:1248px;border-color:#2a3040;opacity:1"></div>
+<div class="band" style="left:310px;top:1000px;height:265px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 90%)"></div>
+<div class="dot" style="left:324px;top:983px;border-color:#2a3040;opacity:1"></div>
+<div class="band" style="left:420px;top:735px;height:265px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 90%)"></div>
+<div class="dot" style="left:434px;top:718px;border-color:#2a3040;opacity:1"></div>
+<div class="src">Product Hunt, Robinhood awards page · Robinhood on X, Dec 23, 2015 · Robinhood newsroom, Jul 1, 2026 · DexScreener</div>
+</div>
+<div class="frame" id="s1-a-2013">
+<div class="orb" style="left:560px;top:-280px;width:760px;height:760px;background:#b89400"></div>
+<div class="orb" style="left:-340px;top:1300px;width:700px;height:700px;background:#6d8a00"></div>
+<div class="hdr"><div class="ey">THE BACKSTORY</div><h1>Robinhood and the <span class="gd">Golden Kitty</span></h1><div class="divider"></div></div>
+<svg class="lay"><line x1="90" y1="1530" x2="990" y2="1530" stroke="#e8eaf0" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="200" y1="1516" x2="200" y2="1265" stroke="#2a3040" stroke-width="3" opacity="1" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="200" y1="1265" x2="990" y2="1265" stroke="#2a3040" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="310" y1="1251" x2="310" y2="1000" stroke="#2a3040" stroke-width="3" opacity="1" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="310" y1="1000" x2="990" y2="1000" stroke="#2a3040" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="420" y1="986" x2="420" y2="735" stroke="#2a3040" stroke-width="3" opacity="1" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="420" y1="735" x2="990" y2="735" stroke="#2a3040" stroke-width="5" opacity="1" stroke-linecap="round"/></svg>
+<div class="band" style="left:90px;top:1530px;height:60px;background:linear-gradient(180deg,rgba(232,234,240,0.17),rgba(232,234,240,0) 92%)"></div>
+<div class="dot" style="left:104px;top:1513px;border-color:#e8eaf0;box-shadow:0 0 28px rgba(232,234,240,.75);opacity:1"></div>
+<div class="lbl" style="bottom:412px;opacity:1"><div class="d" style="color:var(--text-secondary)">DEC 2013</div><div class="t">Robinhood first launches on Product Hunt</div></div>
+<div class="band" style="left:200px;top:1265px;height:265px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 90%)"></div>
+<div class="dot" style="left:214px;top:1248px;border-color:#2a3040;opacity:1"></div>
+<div class="band" style="left:310px;top:1000px;height:265px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 90%)"></div>
+<div class="dot" style="left:324px;top:983px;border-color:#2a3040;opacity:1"></div>
+<div class="band" style="left:420px;top:735px;height:265px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 90%)"></div>
+<div class="dot" style="left:434px;top:718px;border-color:#2a3040;opacity:1"></div>
+<div class="src">Product Hunt, Robinhood awards page · Robinhood on X, Dec 23, 2015 · Robinhood newsroom, Jul 1, 2026 · DexScreener</div>
+</div>
+<div class="frame" id="s1-b-2015">
+<div class="orb" style="left:560px;top:-280px;width:760px;height:760px;background:#b89400"></div>
+<div class="orb" style="left:-340px;top:1300px;width:700px;height:700px;background:#6d8a00"></div>
+<div class="hdr"><div class="ey">THE BACKSTORY</div><h1>Robinhood and the <span class="gd">Golden Kitty</span></h1><div class="divider"></div></div>
+<svg class="lay"><line x1="90" y1="1530" x2="990" y2="1530" stroke="#e8eaf0" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="200" y1="1516" x2="200" y2="1265" stroke="#e8eaf0" stroke-width="3" opacity="0.9" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="200" y1="1265" x2="990" y2="1265" stroke="#e8eaf0" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="310" y1="1251" x2="310" y2="1000" stroke="#2a3040" stroke-width="3" opacity="1" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="310" y1="1000" x2="990" y2="1000" stroke="#2a3040" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="420" y1="986" x2="420" y2="735" stroke="#2a3040" stroke-width="3" opacity="1" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="420" y1="735" x2="990" y2="735" stroke="#2a3040" stroke-width="5" opacity="1" stroke-linecap="round"/></svg>
+<div class="band" style="left:90px;top:1530px;height:60px;background:linear-gradient(180deg,rgba(232,234,240,0.17),rgba(232,234,240,0) 92%)"></div>
+<div class="dot" style="left:104px;top:1513px;border-color:#e8eaf0;box-shadow:0 0 28px rgba(232,234,240,.75);opacity:1"></div>
+<div class="lbl" style="bottom:412px;opacity:1"><div class="d" style="color:var(--text-secondary)">DEC 2013</div><div class="t">Robinhood first launches on Product Hunt</div></div>
+<div class="band" style="left:200px;top:1265px;height:265px;background:linear-gradient(180deg,rgba(232,234,240,0.17),rgba(232,234,240,0) 92%)"></div>
+<div class="dot" style="left:214px;top:1248px;border-color:#e8eaf0;box-shadow:0 0 28px rgba(232,234,240,.75);opacity:1"></div>
+<div class="lbl" style="bottom:677px;opacity:1"><div class="d" style="color:var(--text-secondary)">DEC 2015</div><div class="t">Robinhood wins the Golden Kitty</div><span class="tag gold">SEXIEST PRODUCT OF THE YEAR</span></div>
+<div class="band" style="left:310px;top:1000px;height:265px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 90%)"></div>
+<div class="dot" style="left:324px;top:983px;border-color:#2a3040;opacity:1"></div>
+<div class="band" style="left:420px;top:735px;height:265px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0) 90%)"></div>
+<div class="dot" style="left:434px;top:718px;border-color:#2a3040;opacity:1"></div>
+<div class="src">Product Hunt, Robinhood awards page · Robinhood on X, Dec 23, 2015 · Robinhood newsroom, Jul 1, 2026 · DexScreener</div>
+</div>
+<div class="frame" id="s2-a-chain">
+<div class="orb" style="left:560px;top:-280px;width:760px;height:760px;background:#b89400"></div>
+<div class="orb" style="left:-340px;top:1300px;width:700px;height:700px;background:#6d8a00"></div>
+<div class="hdr"><div class="ey">THE BACKSTORY</div><h1>Robinhood and the <span class="gd">Golden Kitty</span></h1><div class="divider"></div></div>
+<svg class="lay"><line x1="90" y1="1530" x2="990" y2="1530" stroke="#e8eaf0" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="200" y1="1516" x2="200" y2="1265" stroke="#e8eaf0" stroke-width="3" opacity="0.9" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="200" y1="1265" x2="990" y2="1265" stroke="#e8eaf0" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="310" y1="1251" x2="310" y2="1000" stroke="#ccff00" stroke-width="3" opacity="0.9" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="310" y1="1000" x2="990" y2="1000" stroke="#ccff00" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="420" y1="986" x2="420" y2="735" stroke="#ffd700" stroke-width="3" opacity="0.35" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="420" y1="735" x2="990" y2="735" stroke="#ffd700" stroke-width="5" opacity="0.4" stroke-linecap="round"/></svg>
+<div class="band" style="left:90px;top:1530px;height:60px;background:linear-gradient(180deg,rgba(232,234,240,0.17),rgba(232,234,240,0) 92%)"></div>
+<div class="dot" style="left:104px;top:1513px;border-color:#e8eaf0;box-shadow:0 0 28px rgba(232,234,240,.75);opacity:1"></div>
+<div class="lbl" style="bottom:412px;opacity:1"><div class="d" style="color:var(--text-secondary)">DEC 2013</div><div class="t">Robinhood first launches on Product Hunt</div></div>
+<div class="band" style="left:200px;top:1265px;height:265px;background:linear-gradient(180deg,rgba(232,234,240,0.17),rgba(232,234,240,0) 92%)"></div>
+<div class="dot" style="left:214px;top:1248px;border-color:#e8eaf0;box-shadow:0 0 28px rgba(232,234,240,.75);opacity:1"></div>
+<div class="lbl" style="bottom:677px;opacity:1"><div class="d" style="color:var(--text-secondary)">DEC 2015</div><div class="t">Robinhood wins the Golden Kitty</div><span class="tag gold">SEXIEST PRODUCT OF THE YEAR</span></div>
+<div class="band" style="left:310px;top:1000px;height:265px;background:linear-gradient(180deg,rgba(204,255,0,0.17),rgba(204,255,0,0) 92%)"></div>
+<div class="dot" style="left:324px;top:983px;border-color:#ccff00;box-shadow:0 0 28px rgba(204,255,0,.75);opacity:1"></div>
+<div class="lbl" style="bottom:942px;opacity:1"><div class="d" style="color:#ccff00">JULY 1, 2026</div><div class="t">Robinhood Chain mainnet</div></div>
+<div class="band" style="left:420px;top:735px;height:265px;background:linear-gradient(180deg,rgba(255,215,0,0.06),rgba(255,215,0,0) 92%)"></div>
+<div class="dot" style="left:434px;top:718px;border-color:#ffd700;opacity:0.45"></div>
+<div class="lbl" style="bottom:1207px;opacity:0.38"><div class="d" style="color:#ffd700">SEPT 4, 2026</div><div class="t">GOLDEN / GLD pool</div></div>
+<div class="src">Product Hunt, Robinhood awards page · Robinhood on X, Dec 23, 2015 · Robinhood newsroom, Jul 1, 2026 · DexScreener</div>
+</div>
+<div class="frame" id="s2-b-pool-pulse">
+<div class="orb" style="left:560px;top:-280px;width:760px;height:760px;background:#b89400"></div>
+<div class="orb" style="left:-340px;top:1300px;width:700px;height:700px;background:#6d8a00"></div>
+<div class="hdr"><div class="ey">THE BACKSTORY</div><h1>Robinhood and the <span class="gd">Golden Kitty</span></h1><div class="divider"></div></div>
+<svg class="lay"><line x1="90" y1="1530" x2="990" y2="1530" stroke="#e8eaf0" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="200" y1="1516" x2="200" y2="1265" stroke="#e8eaf0" stroke-width="3" opacity="0.9" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="200" y1="1265" x2="990" y2="1265" stroke="#e8eaf0" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="310" y1="1251" x2="310" y2="1000" stroke="#ccff00" stroke-width="3" opacity="0.9" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="310" y1="1000" x2="990" y2="1000" stroke="#ccff00" stroke-width="5" opacity="1" stroke-linecap="round"/><line x1="420" y1="986" x2="420" y2="735" stroke="#ffd700" stroke-width="3" opacity="0.6" stroke-dasharray="2 9" stroke-linecap="round"/><line x1="420" y1="735" x2="990" y2="735" stroke="#ffd700" stroke-width="5" opacity="0.7" stroke-linecap="round"/></svg>
+<div class="band" style="left:90px;top:1530px;height:60px;background:linear-gradient(180deg,rgba(232,234,240,0.17),rgba(232,234,240,0) 92%)"></div>
+<div class="dot" style="left:104px;top:1513px;border-color:#e8eaf0;box-shadow:0 0 28px rgba(232,234,240,.75);opacity:1"></div>
+<div class="lbl" style="bottom:412px;opacity:1"><div class="d" style="color:var(--text-secondary)">DEC 2013</div><div class="t">Robinhood first launches on Product Hunt</div></div>
+<div class="band" style="left:200px;top:1265px;height:265px;background:linear-gradient(180deg,rgba(232,234,240,0.17),rgba(232,234,240,0) 92%)"></div>
+<div class="dot" style="left:214px;top:1248px;border-color:#e8eaf0;box-shadow:0 0 28px rgba(232,234,240,.75);opacity:1"></div>
+<div class="lbl" style="bottom:677px;opacity:1"><div class="d" style="color:var(--text-secondary)">DEC 2015</div><div class="t">Robinhood wins the Golden Kitty</div><span class="tag gold">SEXIEST PRODUCT OF THE YEAR</span></div>
+<div class="band" style="left:310px;top:1000px;height:265px;background:linear-gradient(180deg,rgba(204,255,0,0.17),rgba(204,255,0,0) 92%)"></div>
+<div class="dot" style="left:324px;top:983px;border-color:#ccff00;box-shadow:0 0 28px rgba(204,255,0,.75);opacity:1"></div>
+<div class="lbl" style="bottom:942px;opacity:1"><div class="d" style="color:#ccff00">JULY 1, 2026</div><div class="t">Robinhood Chain mainnet</div></div>
+<div class="band" style="left:420px;top:735px;height:265px;background:linear-gradient(180deg,rgba(255,215,0,0.11),rgba(255,215,0,0) 92%)"></div>
+<div class="dot" style="left:434px;top:718px;border-color:#ffd700;box-shadow:0 0 18px rgba(255,215,0,.45);opacity:0.75"></div>
+<div class="lbl" style="bottom:1207px;opacity:0.7"><div class="d" style="color:#ffd700">SEPT 4, 2026</div><div class="t">GOLDEN / GLD pool</div></div>
+<div class="src">Product Hunt, Robinhood awards page · Robinhood on X, Dec 23, 2015 · Robinhood newsroom, Jul 1, 2026 · DexScreener</div>
+</div>
+</body></html>

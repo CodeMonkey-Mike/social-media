@@ -27,6 +27,7 @@
 
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
@@ -65,6 +66,14 @@ REST_MAX = 480000     # ...up to 8 min
 
 MAX_SCROLL_ROUNDS = 400   # hard ceiling so a stuck scroll can't loop forever
 SCROLL_STALL_LIMIT = 6    # stop scrolling after this many rounds with no new members
+
+# LinkedIn's dead-profile landing (deleted / renamed member) after a goto(url).
+NOTFOUND_RE = re.compile(r"linkedin\.com/404(?:/|$)")
+
+
+def today():
+    """Today's date as YYYY-MM-DD (local)."""
+    return date.today().strftime("%Y-%m-%d")
 
 # ----------------------------------------------------------------------------
 # Location classification
@@ -337,7 +346,10 @@ def main():
             print(f"\n--collect-only: stopping after collection. {len(queue)} members seeded.")
             return
 
-        todo = [m for m in queue if not m.get("processed")]
+        # Skip anyone who already took a 404 strike TODAY: the two-strike retirement
+        # below assumes one run/day, and nobody should be viewed twice in one day.
+        todo = [m for m in queue
+                if not m.get("processed") and m.get("notfound_last") != today()]
         if MAX_PROFILES is not None:
             print(f"\n--max={MAX_PROFILES}: limiting this run to {MAX_PROFILES} profile(s).")
             todo = todo[:MAX_PROFILES]
@@ -352,36 +364,53 @@ def main():
                 nav = S.search_and_open(page, entry)
                 S.ensure_logged_in(page)
                 print(f"   reached via {nav}")
-                # Guard: only proceed if we actually landed on a profile page.
-                # Otherwise raise so this member stays processed:false and is
-                # retried next run (never mark it done off the wrong page).
-                if not re.search(r"/in/", page.url):
-                    raise RuntimeError(f"not on a profile page ({page.url})")
-                S.pause(page, S.ACTION_MIN, S.ACTION_MAX, "read profile")
-
-                location = read_location(page)
-                zone = classify(location)
-
-                if zone and url not in captured:
-                    # Tag the capture with the QUEUE ENTRY's own group_id (seeding
-                    # writes it per member), not the hardcoded collect-phase
-                    # GROUP_ID — the queue crosses groups.
-                    members.append({
-                        "profile_url": url,
-                        "location": location,
-                        "group_id": entry.get("group_id") or GROUP_ID,
-                    })
-                    captured.add(url)
-                    S.write_json(OUT_MEMBERS, members)
-                    print(f"   CAPTURE [{zone}] {location}")
-                elif zone:
-                    print(f"   already captured [{zone}] {location}")
+                # LinkedIn's /404/ = the profile no longer exists (deleted or renamed
+                # member). A plain error would leave it processed:false at the queue
+                # FRONT forever, re-burning a profile view every run and stacking up
+                # toward the 5-consecutive kill-switch (4 in a row on 2026-09-15).
+                # Two strikes on different days, then retire it — auditable via
+                # status:"404", reversible by clearing processed.
+                if NOTFOUND_RE.search(page.url):
+                    entry["notfound_count"] = (entry.get("notfound_count") or 0) + 1
+                    entry["notfound_last"] = today()
+                    if entry["notfound_count"] >= 2:
+                        entry["processed"] = True
+                        entry["status"] = "404"
+                        print("   404 (2nd strike — retired from queue)")
+                    else:
+                        print("   404 (strike 1, one retry left)")
+                    S.write_json(QUEUE, queue)
                 else:
-                    print(f'   skip  (not a target zone) "{location or "no location found"}"')
+                    # Guard: only proceed if we actually landed on a profile page.
+                    # Otherwise raise so this member stays processed:false and is
+                    # retried next run (never mark it done off the wrong page).
+                    if not re.search(r"/in/", page.url):
+                        raise RuntimeError(f"not on a profile page ({page.url})")
+                    S.pause(page, S.ACTION_MIN, S.ACTION_MAX, "read profile")
 
-                # Visited successfully -> mark processed so we never re-check it.
-                entry["processed"] = True
-                S.write_json(QUEUE, queue)
+                    location = read_location(page)
+                    zone = classify(location)
+
+                    if zone and url not in captured:
+                        # Tag the capture with the QUEUE ENTRY's own group_id (seeding
+                        # writes it per member), not the hardcoded collect-phase
+                        # GROUP_ID — the queue crosses groups.
+                        members.append({
+                            "profile_url": url,
+                            "location": location,
+                            "group_id": entry.get("group_id") or GROUP_ID,
+                        })
+                        captured.add(url)
+                        S.write_json(OUT_MEMBERS, members)
+                        print(f"   CAPTURE [{zone}] {location}")
+                    elif zone:
+                        print(f"   already captured [{zone}] {location}")
+                    else:
+                        print(f'   skip  (not a target zone) "{location or "no location found"}"')
+
+                    # Visited successfully -> mark processed so we never re-check it.
+                    entry["processed"] = True
+                    S.write_json(QUEUE, queue)
             except Exception as err:
                 # Leave processed:false so a genuine load error is retried next run.
                 print(f"   error (will retry next run): {str(err).splitlines()[0]}")

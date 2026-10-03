@@ -86,3 +86,42 @@ Stay within the SPA. Never call `navigate` or trigger a full page reload on a lo
 
 ### Rule 2 — ALWAYS use clipboard paste to enter text into X
 Write full text to system clipboard, verify composer is empty, focus, `Ctrl+V`, screenshot to verify. This applies to both the tweet body AND each poll option field.
+
+---
+
+## ⚠ The duplicate pre-check must only compare against OTHER POLLS (fixed 2026-08-19)
+
+**Symptom:** a pending poll is silently marked `posted` with no `poll_url`, logging
+`Duplicate found: "<some other post>"`. Nothing was ever sent.
+
+**Root cause (second time this bit us).** The pre-check scraped every
+`[data-testid="tweetText"]` on the profile and matched the poll's hook against all of them.
+A repurpose batch gives the tweet, the poll, the thread and the YT community post the SAME
+opening line, so the poll's hook `startsWith`-matched the **single tweet posted minutes
+earlier in the same task-list run** and the poll was thrown away.
+
+The 2026-06-20 fix (`includes` -> `startsWith`) does NOT cover this: the strings do not merely
+overlap, they start identically. Tightening the string comparison further cannot fix it, because
+the two posts genuinely begin with the same sentence.
+
+**The fix is a type gate, not a string gate.** A poll's duplicate can only be another POLL, so
+the scan now walks `article` elements and keeps only those carrying a poll widget
+(`[data-testid="cardPoll"]`, `[role="radiogroup"]`, or "Final results"/"N votes" text) before
+comparing hooks. Plain tweets are never match candidates. The log line now reads
+`Not found in N recent POLL post(s) (scanned M posts)` - if N is 0 while M is large, the widget
+selectors have drifted and need re-checking.
+
+**Landed in `scripts/post_x_poll.py`** (the canonical Python port; the JS twin is frozen
+rollback and still carries the bug, so post polls with the Python port).
+
+**Recovery if it happens again:** the poll was NOT posted. Reset that ONE row to `pending` and
+re-run. **Do not bulk-reset every `posted` row with an empty `poll_url`** - a blank `poll_url` is
+normal and expected (URL capture is best-effort and never a failure), so a blank URL is NOT
+evidence a poll went unsent. Only reset the row you just watched get falsely skipped.
+
+## Duration is ALWAYS 7 days - confirmed by Mike 2026-08-19
+
+Both twins call `set_poll_duration(page, "7d")` regardless of the row's `duration` field, so a
+row saying `1d` still posts as a 7-day poll. **Mike confirmed this is the wanted behaviour: every
+X poll runs 7 days.** Do NOT "fix" this to honour the per-row `duration` value, and do not raise
+it as a defect again. The `duration` field in `x-polls.json` is vestigial; ignore it.

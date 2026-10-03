@@ -23,7 +23,11 @@ You operate inside the `social-media` repo (working directory is the repo root).
 
 ## ⛔ Read FIRST, every run, in this order (canonical sources win; never work from memory or an old comp)
 1. `video-creation/longform-edited/skills/comp-build/comp-build.md` in FULL. It is self-contained: §0 model ·
-   §1 registration · §2 `sh()` · §3 spine · §4 COVER track · §5 containers + THE SPOTLIGHT CONTRACT · §6 the
+   §1 registration · §2 `sh()` · §3 spine + **§3a the MEASURED face reframe** (`FACE_REFRAME` from
+   `assets/face-reframe.json`, on the spine and every SpineStill; punch-ins scale about the reframed face point)
+   + **§3b a background-swap clip is PRE-FRAMED: it plays full-frame WITHOUT `FACE_REFRAME`**, from its JSON's
+   `window_starts_at_clip_s`, 30 fps (already re-timed onto the real voice), muted + **§3c an image slot with a
+   motion clip in `assets/img-motion/` plays the clip, not the still** · §4 COVER track · §5 containers + THE SPOTLIGHT CONTRACT · §6 the
    three transition buckets + §6a the engine traps (SpineStill = a real `<Freeze>`, muted, same transform, same
    source; engine window = exactly `win`; absolute-clock context; the video cost trap and the CUTFRAME still) ·
    §7 animated charts · §8 captions · §9 no music/SFX in the comp · §10 assets layout · §11 render command.
@@ -38,7 +42,8 @@ You operate inside the `social-media` repo (working directory is the repo root).
    `[COVER-kind]`, `[TRANSITION]`, `[PUNCH-IN]`, `[LIGHTLEAK]`, `[CAPTION]`, `[CARD]` row is a thing you wire),
    `CUE-SHEET.md`, `TRANSITIONS.md` §5 + `TRANSITION-PLAN.json` (the exact ids), `COVER-PLAN.json` (state cues
    and bench), `AS-RECORDED.md` (FACE windows), `assets/diagrams/_state-cues.md` + `assets/charts/*.spec.md`
-   (the animated chart's choreography you implement for real).
+   (the animated chart's choreography you implement for real). **Plus the project's `PROJECT-LOG.md` `Open flags`
+   section: Mike's per-video rulings (swap clips, motion clips, on-screen figure rules) are load-bearing.**
 4. `spine/<scope>.<letter>.paused.json`: **`CARD_T` = its `pauses[].at` and `PAUSE` = its `pause_s`** (NOT the
    skill's 1.0 default). `SPINE_SECS` = the SOURCE spine duration (the sidecar's `source`); the paused spine
    is `assets/spine.mp4`. Every cue you write is a SOURCE time routed through `sh()`/`F()`.
@@ -67,7 +72,10 @@ You operate inside the `social-media` repo (working directory is the repo root).
 1. Run every Python gate and fix until each prints PASS (paste the machine lines into your report):
    `skills/comp-build/lint_comp_imports.py <comp>` · `lint_covers.py <comp>` · `lint-deck-containers.py <comp> assets/card-slides assets/title-slides assets/diagrams`
    · `lint_slide_balance.py <comp>` · `lint_animated_charts.py <comp>` · `lint_transition_assets.py <comp> assets TRANSITIONS.md`
-   · `check_spine_fps.py assets/spine.mp4 30` (all under `video-creation/longform-edited/skills/comp-build/`).
+   · `check_spine_fps.py assets/spine.mp4 30` · `lint_face_reframe.py <comp> assets/face-reframe.json`
+   (all under `video-creation/longform-edited/skills/comp-build/`). The face reframe numbers are never hand-tuned:
+   if `assets/face-reframe.json` is missing, run `scripts/measure_face_reframe.py <project>` first; open the
+   previews in `_previews/qa/face-reframe/` and include one reframed FACE frame in your chunk QA.
 2. Chunk QA per `skills/video-qa/video-qa.md` STEP 0: render ~10 s slices (`--frames=A-B`) at the risky spots
    (each face cut, each card, each marquee, the animated chart, the end card) into `_previews/qa/`, extract
    frames, LOOK at them (Read the PNGs), fix, re-render the chunk. A frame just before an engine window and one
