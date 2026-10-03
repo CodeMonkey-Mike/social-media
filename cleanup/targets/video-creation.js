@@ -203,8 +203,9 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
   }
 
   // ── remotion/out/ — keep ONLY active batches' render folders ───────────────
-  // out/ is disposable scratch: posted shorts live in the schedule-tweets queue and
-  // every comp is in git, so anything not tied to an active batch is recyclable.
+  // out/ is disposable scratch: posted shorts live in the schedule-tweets queue, so anything
+  // not tied to an active batch is recyclable. (The comps in remotion/src/ follow the same
+  // active-batch rule, in cleanup/remotion_comps.py — they need Root.tsx edited, not just a move.)
   const OUT = path.join(ROOT, 'remotion', 'out');
   const activeOutDirs = new Set(
     batches

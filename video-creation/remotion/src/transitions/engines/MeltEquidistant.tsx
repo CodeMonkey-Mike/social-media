@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   AbsoluteFill,
   continueRender,
@@ -161,26 +161,38 @@ export const MeltEquidistant: React.FC<TransitionProps & { params: MeltEquidista
   const beforeCut = p < cut;
   const angle = sampleKF(beforeCut ? curveIn : curveOut, tSec);
   const src = beforeCut ? fromSrc : toSrc;
+  const url = src ? staticFile(src) : null;
+  const [, bump] = useState(0);
 
+  // Paint-race fix ported from SpinTwirl (golden-kitty 2026-10-02): load once per src under
+  // delayRender; PAINT synchronously in a layout effect on every committed render, and release the
+  // handle only after a paint commits. The old version painted inside the promise and released the
+  // handle there, which could screenshot a blank canvas (silent black frames).
+  const handleRef = useRef<number | null>(null);
   useEffect(() => {
-    if (!src) return;
-    const handle = delayRender(`melt-equidistant f${frame}`);
-    const url = staticFile(src);
-    loadImageData(url, W, H).then((data) => {
-      const cv = canvasRef.current;
-      if (cv) {
-        const ctx = cv.getContext('2d')!;
-        if (Math.abs(angle) < 0.01) {
-          ctx.putImageData(data, 0, 0);
-        } else {
-          const out = ctx.createImageData(W, H);
-          warp(data, out, W, H, angle, axis);
-          ctx.putImageData(out, 0, 0);
-        }
-      }
-      continueRender(handle);
-    }).catch(() => continueRender(handle));
-  }, [src, angle, axis, W, H, frame]);
+    if (!url || srcCache.has(url) || handleRef.current !== null) return;
+    handleRef.current = delayRender(`melt-equidistant load f${frame}`);
+    loadImageData(url, W, H)
+      .then(() => bump((t) => t + 1))
+      .catch(() => {
+        if (handleRef.current !== null) { continueRender(handleRef.current); handleRef.current = null; }
+      });
+  }, [url, W, H, frame]);
+
+  useLayoutEffect(() => {
+    const data = url ? srcCache.get(url) : null;
+    const cv = canvasRef.current;
+    if (!data || !cv) return;
+    const ctx = cv.getContext('2d')!;
+    if (Math.abs(angle) < 0.01) {
+      ctx.putImageData(data, 0, 0);
+    } else {
+      const out = ctx.createImageData(W, H);
+      warp(data, out, W, H, angle, axis);
+      ctx.putImageData(out, 0, 0);
+    }
+    if (handleRef.current !== null) { continueRender(handleRef.current); handleRef.current = null; }
+  });
 
   if (!src) {
     // VIDEO path not implemented for the canvas warp (documented TODO)
