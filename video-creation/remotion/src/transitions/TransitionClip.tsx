@@ -25,7 +25,16 @@ export const TransitionClip: React.FC<{
   cutFrame: number;
   outgoing: () => React.ReactNode;
   incoming: () => React.ReactNode;
-}> = ({ id, cutFrame, outgoing, incoming }) => {
+  /** Mount the row's paired SFX. Default true (unchanged behaviour). Longform-edited comps pass
+   * `sfx={false}`: their SFX are an ffmpeg POST-mix (comp-build §9), never in the comp. */
+  sfx?: boolean;
+  /** Optional staticFile() paths of STILL frames for the outgoing / incoming scenes. Image-only canvas
+   * engines (MeltEquidistant, SpinTwirl) read these instead of the live nodes; pass a pre-extracted
+   * cut-frame still for a video side (comp-build §6a cost trap). Other engines ignore them when
+   * outClip/inClip are present. (golden-kitty 2026-10-02: the MELT/Equidistant marquees.) */
+  fromSrc?: string;
+  toSrc?: string;
+}> = ({ id, cutFrame, outgoing, incoming, sfx = true, fromSrc, toSrc }) => {
   const { fps } = useVideoConfig();
   const row = getTransition(id);
   if (!row) {
@@ -57,6 +66,8 @@ export const TransitionClip: React.FC<{
           to={incoming()}
           outClip={outgoing}
           inClip={incoming}
+          fromSrc={fromSrc}
+          toSrc={toSrc}
           durationInFrames={win}
           params={row.params}
           sfxSrc={row.sfx}
@@ -69,7 +80,7 @@ export const TransitionClip: React.FC<{
       </Sequence>
 
       {/* SFX from the transition start, ringing out past the window into clip B. */}
-      {row.sfx && (
+      {sfx && row.sfx && (
         <Sequence from={winStart}>
           <Audio src={staticFile(row.sfx)} />
         </Sequence>

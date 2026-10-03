@@ -32,6 +32,8 @@ livestream-repurpose/transcripts/
 # ^ Whisper output (re-run as needed)
 remotion/out/
 # ^ renders
+remotion/build-*/
+# ^ remotion bundle output (webpack build + source maps, regenerable)
 
 # ── Per-clip artifacts (regenerable from source + scripts) ───────────────────
 **/preview.mp4

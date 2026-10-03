@@ -1,0 +1,38 @@
+// GoldenKittyCaptions.ts: GENERATED 2026-10-02 by longform-edited/scripts/build_project_captions.py
+// (build_captions.py --style montserrat --max-words 2 --max-short 4 on ALL.g.pickup.medium-words.json; filtered to the FACE holds > 5.0s). NEVER hand-edit; re-run the graph's captions node.
+// Times are SOURCE-spine seconds: the comp routes every t through sh() (card pauses).
+export const CAPTION_WINDOWS: [number, number][] = [[0.000, 9.667], [122.100, 131.233], [342.567, 348.000]];
+export const ZCAPTIONS: { t: number; h: string }[] = [
+  { t:    0.00, h: 'in 2015' },
+  { t:    1.64, h: 'robinhood won' },
+  { t:    2.18, h: 'a trophy' },
+  { t:    2.80, h: 'called the' },
+  { t:    3.56, h: 'golden kitty' },
+  { t:    4.24, h: 'and that' },
+  { t:    4.74, h: 'trophy is' },
+  { t:    5.42, h: 'now a' },
+  { t:    5.90, h: 'token on' },
+  { t:    6.52, h: 'robinhood\\\'s own' },
+  { t:    7.44, h: 'blockchain and' },
+  { t:    8.22, h: 'it\\\'s priced' },
+  { t:    9.02, h: 'in gold.' },
+  { t:  122.16, h: 'about two' },
+  { t:  122.62, h: 'months after' },
+  { t:  123.52, h: 'the chain' },
+  { t:  123.92, h: 'goes live on' },
+  { t:  125.10, h: 'september 4th' },
+  { t:  126.42, h: '2026, a' },
+  { t:  127.76, h: 'token launches' },
+  { t:  128.54, h: 'on it' },
+  { t:  129.34, h: 'called golden' },
+  { t:  130.04, h: 'kitty, ticker' },
+  { t:  130.80, h: 'golden.' },
+  { t:  342.62, h: 'so as you can' },
+  { t:  343.26, h: 'see, golden kitty' },
+  { t:  344.34, h: 'is well' },
+  { t:  344.80, h: 'positioned.' },
+  { t:  345.44, h: 'golden kitty has' },
+  { t:  346.22, h: 'been doing' },
+  { t:  346.64, h: 'this since' },
+  { t:  347.28, h: 'september 4th.' },
+];

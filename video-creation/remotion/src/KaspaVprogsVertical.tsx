@@ -308,14 +308,20 @@ const CARDS: Card[] = [
   { t: 137.46, png: 'title-slides/title-card-ch3.png', lead: 0.25 },  // plan 2:17.6 hand:cube-3d 'WHERE IT STANDS'
 ];
 same(CARDS, CARDS_169, 'CARDS');                                         // same file names, portrait re-shoots
-{                                                                        // build-time asset check (incl. the cards)
+// build-time asset check (incl. the cards). Runs when THIS composition renders (called at the top of the
+// component), NOT at module load: Root.tsx imports every comp, so a module-level throw killed every OTHER
+// render whose public dir is not assets/vertical (found by KaspaVprogsShort, 2026-09-29). Same guarantee here.
+let verticalAssetsChecked = false;
+const assertVerticalAssets = () => {
+  if (verticalAssetsChecked) return;
   const have = new Set(getStaticFiles().map((s) => s.name.split('\\').join('/')));
   const missing = [...REQUIRED, ...CARDS.map((k) => k.png)].filter((p) => !have.has(p));
   if (missing.length) {
     throw new Error(`KaspaVprogsVertical: ${missing.length} vertical asset(s) missing from the public dir ` +
       `(render with --public-dir media/kaspa-vprogs/assets/vertical): ${missing.join(', ')}`);
   }
-}
+  verticalAssetsChecked = true;
+};
 const TURN = 11;
 const cardFrames = (k: Card) => ({ cs: Math.round((cardStart(k.t) - k.lead) * FPS), ce: F(k.t) });
 
@@ -686,6 +692,7 @@ const LAYERS: Layer[] = (() => {
 })();
 
 export const KaspaVprogsVertical: React.FC = () => {
+  assertVerticalAssets();
   const frame = useCurrentFrame();
   return (
     <AbsFrame.Provider value={frame}>

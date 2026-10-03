@@ -14,6 +14,13 @@ export type BadgeEv = { tIn: number; tOut: number; color: string; line1: string;
 // for true alpha PNGs (alpha-from-luminance) so they show over LIGHT backgrounds too
 // (screen blend can't darken white, so a bright overlay vanishes over a light screen-share).
 export type OverlayEv = { src: string; tIn: number; tOut: number; top?: number; left?: number; width?: number; blend?: 'normal' | 'screen' };
+// REDACTION PLATE (added 2026-08-27, batch everything-will-pump clip 4). A code-drawn opaque panel
+// that hides a burned-in region of the BASE video — e.g. a viewer chat message the livestream
+// composited into the screen-share which must not ship. It is deliberately rendered BETWEEN the base
+// video and BrollLayer, so any b-roll beat still paints over it normally and a full-screen image is
+// never contaminated by a bar. Default-off: omitting `redactions` leaves every existing caller
+// byte-identical.
+export type RedactEv = { tIn: number; tOut: number; top: number; height: number; left?: number; width?: number; accent?: string };
 // `img` = an optional generated background image for the frame-0 cover; the title/chip stay CODE-drawn
 // on top of it (never baked into the art, per SKILL "B-ROLL IMAGE GENERATION RULES"). Omit it and the
 // cover is the historical gradient-over-video card.
@@ -39,6 +46,8 @@ export type ShortData = {
   accent?: string;
   captions: Caption[];
   broll?: BrollEv[];
+  /** opaque plates over burned-in base-video regions; painted UNDER the b-roll layer */
+  redactions?: RedactEv[];
   badges?: BadgeEv[];
   overlays?: OverlayEv[];
   sounds?: Sfx[];
@@ -122,6 +131,25 @@ const Overlays: React.FC<{ overlays: OverlayEv[]; t: number; fps: number }> = ({
   </>
 );
 
+// Opaque plate over a burned-in region of the base video. Rendered under BrollLayer (see RedactEv).
+const Redactions: React.FC<{ redactions: RedactEv[]; t: number }> = ({ redactions, t }) => (
+  <>
+    {redactions.map((r, i) => {
+      if (t < r.tIn || t >= r.tOut) return null;
+      const accent = r.accent ?? TEAL;
+      return (
+        <div key={i} style={{
+          position: 'absolute', top: r.top, left: r.left ?? 0,
+          width: r.width ?? 1080, height: r.height,
+          background: 'linear-gradient(180deg, #0a1424 0%, #060c16 55%, #04080f 100%)',
+          borderTop: `4px solid ${accent}`,
+          boxShadow: `0 -10px 26px ${accent}33, inset 0 14px 34px rgba(0,0,0,0.65)`,
+        }} />
+      );
+    })}
+  </>
+);
+
 const Badges: React.FC<{ badges: BadgeEv[]; t: number; fps: number }> = ({ badges, t, fps }) => (
   <AbsoluteFill style={{ zIndex: 130 }}>
     {badges.map((b, i) => {
@@ -152,6 +180,9 @@ export const LivestreamShort: React.FC<{ data: ShortData }> = ({ data }) => {
       <AbsoluteFill style={{ overflow: 'hidden' }}>
         <OffthreadVideo src={data.clip} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
       </AbsoluteFill>
+
+      {/* redaction plates sit BETWEEN the base and the b-roll on purpose: b-roll paints over them */}
+      {data.redactions && <Redactions redactions={data.redactions} t={t} />}
 
       {data.broll && <BrollLayer broll={data.broll} t={t} seam={data.seam} accent={data.accent} />}
 

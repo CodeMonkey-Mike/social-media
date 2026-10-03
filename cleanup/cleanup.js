@@ -37,18 +37,43 @@ function syncBatchStatus(dryRun) {
 // ChatGPT image chats are cleaned alongside files: a chat tied (via its `batch` property in
 // chatgpt-image-chats.json) to a completed/archived batch is deleted in the ChatGPT UI, plus any
 // rotation leftovers on the registry's `retired` list. The browser work lives in
-// repurpose/delete-chats.js (next to the other ChatGPT Playwright code) — this engine only spawns
-// it. It opens the shared chatgpt-profile Chrome briefly on a LIVE run (never in --dry-run), so
-// don't run a live cleanup while an image-gen batch is in flight; a locked profile fails loudly
-// and the chats stay queued for the next run.
+// repurpose/delete_chats.py (Python, 2026-09-17 port of delete-chats.js, which stays as frozen
+// rollback) — this engine only spawns it. A LIVE run also RECONCILES the registry against the
+// live account in the same browser session (DEAD / DRIFTED / ORPHAN / REVIEW classes, see
+// repurpose/reconcile_chats.py; --fix = its safe repairs) so an unregistered automation chat
+// surfaces HERE, not in Mike's sidebar; --dry-run prints the plan plus the last reconcile
+// summary without a browser. It opens the shared chatgpt-profile Chrome briefly on a LIVE run
+// (never in --dry-run), so don't run a live cleanup while an image-gen batch is in flight; a
+// locked profile fails loudly and the chats stay queued for the next run.
 function runChatCleanup(dryRun) {
-  const script = path.join(REPO_ROOT, 'repurpose', 'delete-chats.js');
+  const script = path.join(REPO_ROOT, 'repurpose', 'delete_chats.py');
   if (!fs.existsSync(script)) return;
-  console.log(`\n--- ChatGPT image chats (repurpose/delete-chats.js${dryRun ? ' --dry-run' : ''}) ---`);
-  const args = [script];
-  if (dryRun) args.push('--dry-run');
-  const res = spawnSync(process.execPath, args, { stdio: 'inherit', cwd: REPO_ROOT });
-  if (res.status !== 0) console.error('  WARNING: chat deletion incomplete (profile busy or UI drift); retired chats stay queued for the next run.');
+  console.log(`\n--- ChatGPT image chats (repurpose/delete_chats.py${dryRun ? ' --dry-run' : ' --fix'}) ---`);
+  const args = [script, dryRun ? '--dry-run' : '--fix'];
+  const res = spawnSync('python', args, { stdio: 'inherit', cwd: REPO_ROOT });
+  if (res.status !== 0) console.error('  WARNING: chat cleanup incomplete (profile busy, UI drift, or a failed delete); retired chats stay queued for the next run.');
+}
+// The React files of finished livestream shorts (video-creation/remotion/src/) are cleaned alongside
+// files too, but they are not a plain path list: each short is a family of files PLUS an import and a
+// <Composition> block in Root.tsx, so recycling one means rewriting Root.tsx and type-checking it
+// before anything moves. That lives in cleanup/remotion_comps.py — this engine only spawns it. It
+// keeps the comps of ACTIVE batches and anything written in the last 24 h, and never touches a
+// longform / ai-engineering comp or the shared kit. (Mike 2026-10-03: 461 files had piled up.)
+const COMP_SRC = 'video-creation/remotion/src';
+function runCompCleanup(dryRun) {
+  const script = path.join(REPO_ROOT, 'cleanup', 'remotion_comps.py');
+  if (!fs.existsSync(script)) return;
+  console.log(`\n--- Remotion shorts comps (cleanup/remotion_comps.py${dryRun ? ' --dry-run' : ''}) ---`);
+  const res = spawnSync('python', dryRun ? [script, '--dry-run'] : [script], { stdio: 'inherit', cwd: REPO_ROOT });
+  if (res.status !== 0) { console.error('  WARNING: comp cleanup failed (see above); Root.tsx is restored whenever its check fails.'); process.exitCode = 1; }
+}
+// Static gate, no browser: a script that opens chatgpt.com / the chatgpt profile outside the pool
+// (chat_pool.launch_profile / probe_session) is exactly how untitled chats leak. WARN lines only.
+function runChatOpenLint() {
+  const script = path.join(REPO_ROOT, 'scripts', 'chatgpt-open-lint.py');
+  if (!fs.existsSync(script)) return;
+  console.log('\n--- chatgpt.com openers outside the pool (scripts/chatgpt-open-lint.py) ---');
+  spawnSync('python', [script], { stdio: 'inherit', cwd: REPO_ROOT });
 }
 const TARGETS = {
   'schedule-tweets': require('./targets/schedule-tweets'),
@@ -154,9 +179,14 @@ function main() {
     totalMoved += r.moved; totalBytes += r.bytes;
   }
 
+  // The shorts-comp tier rides with the video-creation target. It works on whole comp families, not
+  // paths, so under --only it runs when the filter names remotion/src or a folder above it.
+  const onlyNeedle = opts.only ? opts.only.replace(/\\/g, '/').toLowerCase() : null;
+  if (names.includes('video-creation') && (!onlyNeedle || COMP_SRC.includes(onlyNeedle))) runCompCleanup(opts.dryRun);
+
   // Chat cleanup rides with the video-creation target (its batch lifecycle drives eligibility).
   // Skipped under --only: that's a folder-scoped file run, and chats aren't paths.
-  if (names.includes('video-creation') && !opts.only) runChatCleanup(opts.dryRun);
+  if (names.includes('video-creation') && !opts.only) { runChatCleanup(opts.dryRun); runChatOpenLint(); }
 
   if (names.length > 1 && !opts.dryRun) {
     console.log(`\n=== total: recycled ${totalMoved} item(s), freed ~${lib.fmtBytes(totalBytes)} ===`);

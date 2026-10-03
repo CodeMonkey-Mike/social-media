@@ -29,9 +29,9 @@ const MONO = loadMono('normal', { weights: ['600', '700'], subsets: ['latin'] })
 
 // ─── §2 timing model ──────────────────────────────────────────────────────────────────────────────
 export const FPS = 30;
-const PAUSE = 1.5;                       // spine/ALL.g.paused.json pause_s (Mike GATE 3: 1.5 s, not the 1.0 default)
-const CARD_T = [40.22, 137.46];          // spine/ALL.g.paused.json pauses[].at (CH3 snapped 137.58 -> 137.46 trough)
-const SPINE_SECS = 202.822;              // SOURCE spine (ALL.f.cut.mp4) duration
+export const PAUSE = 1.5;                       // spine/ALL.g.paused.json pause_s (Mike GATE 3: 1.5 s, not the 1.0 default)
+export const CARD_T = [40.22, 137.46];          // spine/ALL.g.paused.json pauses[].at (CH3 snapped 137.58 -> 137.46 trough)
+export const SPINE_SECS = 202.822;              // SOURCE spine (ALL.f.cut.mp4) duration
 const sh = (t: number) => t + PAUSE * CARD_T.filter((c) => c <= t).length;   // source -> paused-spine secs
 const cardStart = (b: number) => b + PAUSE * CARD_T.filter((c) => c < b).length;
 const F = (t: number) => Math.round(sh(t) * FPS);                           // source secs -> comp frame
@@ -55,14 +55,14 @@ const PUNCH_ORIGIN = '1240px 500px';     // Mike's face center on the 16:9 spine
 const punchAt = (f: number) => (PUNCH_SRC.some(([a, b]) => f >= F(a) && f < F(b)) ? PUNCH : 1);
 
 // ─── §4 cover track (one row per state / sub-point, SOURCE seconds, EDIT-PLAN row for row) ───────
-type Kind = 'receipt' | 'deck' | 'container' | 'vid' | 'still' | 'chart';
-type Cover = {
+export type Kind = 'receipt' | 'deck' | 'container' | 'vid' | 'still' | 'chart';
+export type Cover = {
   tIn: number; tOut: number; kind: Kind; ref: string; state?: string;
   ing?: string;          // ingress (plan id) on a group's FIRST row; state swaps carry none
   clip?: number;         // vid: file seconds the slot starts at
   lead?: boolean; cap?: boolean;
 };
-const COVERS: Cover[] = [
+export const COVERS: Cover[] = [
   // CH1 STRAIGHT INTO IT (F1 face 0.000-7.333 above)
   { tIn: 7.333, tOut: 9.5, kind: 'receipt', ref: 'R1-yellow-paper-title-page', state: 'title', ing: 'lib:blocks-max-1' },
   { tIn: 9.5, tOut: 10.86, kind: 'deck', ref: 'vprog-loop-mini', state: 'nodes', ing: 'hand:xfade-scale' },
@@ -189,8 +189,8 @@ const HAND_IN: Record<string, number> = { 'hand:xfade-scale': 11, 'hand:fade': 1
 const inFrames = (g: Group) => HAND_IN[g.ing] ?? 0;
 
 // ─── chapter cards: ONE pick, hand:cube-3d (rotateY in ~11f, hold through the pause, never cube out) ──
-type Card = { t: number; png: string; lead: number };
-const CARDS: Card[] = [
+export type Card = { t: number; png: string; lead: number };
+export const CARDS: Card[] = [
   { t: 40.22, png: 'title-slides/title-card-ch2.png', lead: 0.0 },    // plan 0:40.2 hand:cube-3d 'NOT AN L2'
   { t: 137.46, png: 'title-slides/title-card-ch3.png', lead: 0.25 },  // plan 2:17.6 hand:cube-3d 'WHERE IT STANDS'
 ];
@@ -531,6 +531,9 @@ const LIB_CUTS: LibCut[] = [
   // plan 3:15.1 lib:badsignal-short-2: cta-engage s3 -> IMG-3
   { t: 195.1, id: 'badsignal-short-2', out: () => <GroupNode g={G('cta-engage')} />, inn: () => <GroupNode g={G('IMG-3-kaspa-coin-sunrise')} /> },
 ];
+
+// the wired library cuts as [t, id] pairs: KaspaVprogsVertical asserts its own list against this (same beats, same ids)
+export const LIB_PLAN: [number, string][] = LIB_CUTS.map((c) => [c.t, c.id]);
 
 // ─── overlays: F1 light leak (hold 7.33 s > 5 s: centered, min(7.333 - 2, 4) = 4 s, ~0.3 screen) ─────
 const LEAK: [number, number] = [3.6665 - 2, 3.6665 + 2];
