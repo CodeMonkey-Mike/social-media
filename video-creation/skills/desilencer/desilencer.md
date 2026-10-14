@@ -19,7 +19,8 @@ Tool: `desilencer/scripts/desilence.py`. Read this doc before running it.
 Three longform scripts (`build_two_zone.py`, `desilence_audio.py`, `desilence_synced.py`) each
 re-implemented silence detection with ffmpeg's single-threshold `silencedetect`, instead of reusing
 the validated dual-threshold RMS detector from the shorts tool. That divergence led to an off-protocol
-`-42 dB` pass that clipped words (silverscript, 2026-06-13). All of them now redirect here. See
+`-42 dB` pass that clipped words (silverscript, 2026-06-13). The longform-presentation copies were stubbed to redirect here, then recycled (2026-10-13); that track
+now carries only its preset on top of this tool (`longform-presentation/skills/desilence/`). See
 [[feedback_factor_cross_cutting_into_skill]].
 
 ## Hard rules (do not violate)
@@ -80,7 +81,11 @@ python desilencer/scripts/desilence.py in.mp4 --out out.mp4 --min-sil 0.5 --map-
 ```
 
 Audio-only inputs work (no `[outv]`). `--map-out` writes `{cuts, keeps}` in **source** coords for
-re-timing a downstream editor. `--pad` defaults to 0 (declick makes padding unnecessary).
+re-timing a downstream editor. `--pad` defaults to 0 (as a click guard it is unnecessary: declick handles that).
+Its real use is a PACING residual: the pad is kept on EACH side of a cut, so `--pad 0.1` leaves 0.2 s
+between sentences instead of butting them together. The longform-presentation track pins that shape
+(800 ms / `--pad 0.1`) in its own preset, `longform-presentation/skills/desilence/`; shorts and
+longform-edited run pad 0.
 
 **The map's keep-boundaries double as JUMP-CUT ANCHORS (Mike, 2026-07-06).** Every keep→keep join in the
 output is a cut that sat in silence, i.e. a natural sentence/phrase boundary. For longform-edited comps,
@@ -108,3 +113,8 @@ print('FLAGS (>=100ms speech inside a cut):', flag or 'none')"
 
 A flag at speech level (−16 to −25 dB) = a clipped word → lower `MIN_AUD` is NOT the answer, inspect the
 spot. A flag that is only −45 to −52 dB is a faint breath, not a word (false positive) — fine to keep.
+
+**Output length vs plan:** the rendered file runs a little LONGER than `total − removed`: at every join the
+segment runs to the later of its two streams, so each join may add up to one video frame (33 ms; measured
+about 5 ms on average, +0.40 s over 75 joins on what-to-buy, 2026-10-13). That is frame rounding, not a
+bug; the check that matters is the video-vs-audio stream drift (< 50 ms).

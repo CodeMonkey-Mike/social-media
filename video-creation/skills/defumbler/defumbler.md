@@ -116,4 +116,5 @@ text shows a clipped word at a join, drift OK. Only then is it done.
   approach clipped words and missed fumbles 3 times. −40 dB desilence clipped "353x"→"three",
   "runtime"→"run"; −50 dB is clean. The chunk map exposed 11 fumbles the whole-file transcript hid.
 - The old per-track helpers (`detect_fumbles.py`, `audit_coverage.py`) are **context/diagnosis only**
-  — never derive a cut directly from them. `build_two_zone.py` is for the *separate* silence pass.
+  — never derive a cut directly from them. The *separate* silence pass is the desilencer skill (`video-creation/skills/desilencer/`); the old
+  `build_two_zone.py` is gone.

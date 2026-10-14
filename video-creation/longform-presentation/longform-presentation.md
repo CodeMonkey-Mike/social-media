@@ -4,13 +4,15 @@ Pipeline for turning a raw screen/talking-head recording (slide deck + presenter
 finished longform 16:9 presentation video. Mirrors the livestream-repurpose *starting* process
 (compress first, work off the lighter file), but tuned for presentations: pacing is more fragile
 than a tight short, so the bitrate floor is higher (slide text/code must stay readable) and
-silence cutting is gentler and zone-aware.
+silence cutting is gentler: one zone, 800 ms min-silence, 200 ms left between sentences, pinned in
+code in `skills/desilence/` (the track's own skills folder, index `skills/README.md`).
 
 For the parked production vision (clone PiP intro + voice-first Remotion timeline) see `TODO.md`.
 Slide-deck style reference: `kaspa_toccata_hardfork_deck.html`.
 
-**Two production modes:** (a) **record-and-edit**, where Mike records himself over the deck, then
-Phases 1-4 below clean it up; (b) **AI-narrated, script-first**, where Mike films only a short
+**Two production modes:** (a) **record-and-edit**, where Mike records himself over the deck (or over a
+live screen share with no deck at all, the what-to-buy shape), then Phases 1-4 below clean it up (a
+no-deck recording needs only Phase 3); (b) **AI-narrated, script-first**, where Mike films only a short
 on-camera intro and an ElevenLabs voice clone narrates the rest over the deck (see "AI-narrated
 presentation mode" near the bottom). Phases 1-4 are the record-and-edit path.
 
@@ -18,23 +20,31 @@ presentation mode" near the bottom). Phases 1-4 are the record-and-edit path.
 
 Each recording is its own project folder under `media/<project name>/`, holding the master, the
 working files, transcripts, and the project's slide-deck HTML. Example: `media/QE before bitcoin/`.
-Scripts in `scripts/` all take paths as arguments — point them at the project folder.
+Scripts in `scripts/` all take paths as arguments — point them at the project folder. Track-specific
+POLICY and processing customizations live in `skills/` (one folder per skill, index `skills/README.md`),
+on top of the shared `video-creation/skills/`.
 
 ```
 media/<project>/
-  <project>.mkv                  master raw (OBS, ~6 Mbps 1080p30) — never edit, never delete
-  <project> LOW BPS.mp4          2 Mbps working master (Phase 1)
+  <master>.mkv                   master raw (OBS, ~6 Mbps 1080p30; OBS names it by timestamp, the FOLDER
+                                 name is the project name) — never edit, never delete
+  <project> LOW BPS.mp4          2 Mbps working master (Phase 1; only when a deck / Remotion step needs it)
   <project> LOW BPS.medium-words.json   canonical transcript (Phase 2)
-  <project> EDIT.mp4             deliverable (Phase 3)
-  <project>.html                 the slide deck used in the recording
+  <project> DEFUMBLED.mp4        after the defumbler (Phase 3 step 1; only when the take needs it)
+  <project> EDIT.mp4             deliverable (Phase 3) + <project> EDIT.map.json (its cut/keep map)
+  <project>.html                 the slide deck used in the recording (deck recordings only)
 ```
 
 ---
 
 ## Phase 1 — compress to a LOW BPS mp4
 
-Transcode the heavy raw `.mkv` down to a lighter mp4 everything downstream reads. Single-pass
-NVENC, **no silence cutting**.
+Transcode the heavy raw `.mkv` down to a lighter mp4 for the steps that need a working copy
+(transcribe, deck-sync, Remotion). Single-pass NVENC, **no silence cutting**.
+
+**Skip this phase when the deliverable is the recording itself** (no deck, no Remotion, screen share +
+PiP as filmed): run Phase 3 straight on the master `.mkv`. Master to 2 Mbps to 2 Mbps would soften the
+on-screen text twice; one crf 18 generation off the master keeps it sharp (what-to-buy, 2026-10-13).
 
 ```
 python scripts/to_low_bps.py "media/<project>/<project>.mkv"
@@ -63,20 +73,29 @@ python scripts/transcribe.py "media/<project>/<project> LOW BPS.mp4"   # --model
 
 ---
 
-## Phase 3 — edit: defumble, THEN zone-aware desilence (two separate sync-safe passes)
+## Phase 3 — edit: defumble (only if the take needs it), THEN desilence with the track preset
 
-Fumble removal and silence removal are now **separate canonical skills** — do not combine them in one
-script (the old combined `build_two_zone.py --cut` is deprecated and redirects).
+Two separate, sync-safe passes, in this order. Never combine them (the old combined script did, and it
+is gone).
 
-1. **Defumble** via `video-creation/skills/defumbler/defumbler.md` → `<project> EDIT.mp4`.
-2. **Desilence** via the canonical desilencer skill (`video-creation/skills/desilencer/desilencer.md`):
-```
-python ../skills/desilencer/scripts/desilence.py "media/<project>/<project> EDIT.mp4" \
-    --out "media/<project>/<project> EDIT-tight.mp4" \
-    --split 90 --sil-pre 0.5 --sil-post 0.5 --map-out "media/<project>/rapid-map.json" --nvenc
-```
-The min-silence duration is the only knob (pick it BELOW the speaker's pause cluster — see `desilencer.md`);
-the −57/−52 dB RMS thresholds are fixed. NEVER single-threshold `silencedetect`.
+1. **Defumble**, only when the recording has retakes / false starts / abandoned fragments:
+   `video-creation/skills/defumbler/defumbler.md` (chunk-map, cut only inside silence, Mike approves the
+   text cut-plan BEFORE rendering) -> `media/<project>/<project> DEFUMBLED.mp4`. Be aggressive about what
+   counts as a fumble (Mike would rather over-detect than catch misses himself), but the METHOD is the
+   defumbler's: never cut from a whole-file Whisper transcript or word timestamps (the repo-wide hard rule;
+   it hides retakes and drifts). Skip this step for a clean on-the-fly recording.
+2. **Desilence** via the track's own skill, **`skills/desilence/desilence.md`**, which pins the presentation
+   silence definition IN CODE (800 ms min-silence, 200 ms residual between sentences, one zone; Mike,
+   2026-10-13) and wraps the canonical desilencer (`video-creation/skills/desilencer/`: the -57/-52 dB RMS
+   method, declick, frame-lock; nothing is re-implemented):
+   ```
+   python skills/desilence/desilence_preset.py "media/<project>/<master>.mkv" --dry-run   # plan + QA, no render
+   python skills/desilence/desilence_preset.py "media/<project>/<master>.mkv"             # -> <project> EDIT.mp4 + .map.json
+   ```
+   Input = the master `.mkv` (no-deck deliverable, see Phase 1) or the DEFUMBLED / LOW BPS file.
+   `--min-sil` / `--pad` are Mike-only deviations and the script banners them; the thresholds are not knobs.
+   Default encode is libx264 crf 18 (deliverable quality for screen text); an encode longer than 10 min is
+   launched detached with a log, never as a tracked background task.
 
 ### The cutting method (non-negotiable — this is the desync fix)
 
@@ -89,74 +108,29 @@ re-stamps audio and video independently and they drift, producing the "mouth mov
 desync bug. (Hit and diagnosed 2026-06-06: a 90s test had audio sliding against video at the
 start.) The demuxer is "acceptable at long-form scale" for a livestream, not for a talking head.
 
-### Zone-aware silence (the tuned criteria)
-
-Silence = quieter than **−50 dB** for at least the zone's min-duration; keep **0.06s pad** on each
-edge so word onsets/tails aren't clipped. Min-duration is **per zone**:
-
-| Zone | min silence to cut | rationale |
-|---|---|---|
-| `0 .. split` (intro, default split = **90s**) | **0.5s** (`--sil-pre`) | tighter intro |
-| `split .. end` | **1.0s** (`--sil-post`) | removes dead space ≥1s, KEEPS the sub-second beats so delivery isn't rushed |
-
-Lowering min-duration = MORE cuts (more aggressive); raising = fewer. The shorts pipeline uses
-250ms/−57dB; this longform flow is deliberately gentler. A ~10-min recording typically carries
-~3 min of pauses — at a flat 0.5s everywhere that all gets cut (too aggressive); the zone split
-keeps the post-intro breathing room.
-
-### Fumble removal (false starts / restarts)
-
-**Be aggressive.** Mike would rather I over-detect and remove every fumble than leave misses he has
-to catch himself while watching. When automating, hunt ALL of these, not just the obvious restarts:
-- **Restarts** — starts a sentence, stops, restarts it ("Layer 4… I'm messing up here… Layer 4…").
-- **Restatements** — says the same fact twice ("the Bank of Japan goes to zero. Rates drop to zero").
-- **Self-corrections** — swaps a word and re-says the clause ("point" → "endpoint"; "playing" → "paying").
-- **Hesitation stalls** — a word held for seconds or a long filled pause mid-sentence. These survive
-  the silence pass because they're voiced/noisy, not clean silence, so they need explicit cuts.
-- **Abandoned false starts** — a dropped fragment before the real line ("We want to make rich, …").
-
-**Systematic detection** (don't eyeball the transcript alone — it misses subtle ones). Script a pass
-over the word-level json that flags:
-- repeated consecutive 3-grams within ~22 words → restart/restatement candidates;
-- words with duration > ~1.3s, or inter-word gaps > ~0.9s → stall/hesitation candidates.
-Then review each candidate in context.
-
-Procedure per fumble:
-1. Pull **word-level** timestamps around the candidate.
-2. Cut span = **[just after the last kept word] .. [just before the restart/resume word]**, ~0.05–0.10s
-   margins inside the gaps so kept words aren't clipped. The cut also swallows the dead pause.
-3. Pass each as `--cut a-b`.
-
-**Skip only true intentional rhetoric:** parallelism/anaphora ("it was done through… it was done
-through…"), deliberate repetition for emphasis, list cadence, and CTA rhythm ("we don't… but if you
-DO…"). Awkward phrasing that's a complete thought is NOT a fumble.
-
-**Timeline gotcha (Whisper is non-deterministic):** the master transcript and an edited-file
-transcript can disagree on collapsed restarts — one captures the doubled phrase, the other hides it
-in a long held word. Fumble timestamps are timeline-specific. **Cut in the timeline where the fumble
-is actually visible.** If that's the already-edited file, use `remove_spans.py` on it (accept one
-extra encode generation) rather than guessing a master-timeline span you can't see. Always re-QA by
-re-transcribing the output and reading every join.
-
 ### Mandatory QA before declaring done
 
-1. **Re-transcribe** the output (`transcribe.py --model medium`) and read each cut join — confirm
-   every fumble phrase is gone and the seam reads as clean speech.
-2. **A/V drift:** script reports `video` vs `audio` stream duration — expect < ~50ms (end-of-file
+1. **Swallowed speech:** the preset prints the desilencer skill's scan (no cut may hold 100 ms or more of
+   speech-level audio; a flag peaking at -45 to -52 dB is a breath, fine). After a defumble pass, also
+   re-transcribe the output (`scripts/transcribe.py --model medium`) and read every join.
+2. **A/V drift:** the preset prints video vs audio stream duration; expect < ~50 ms (end-of-file
    sample-vs-frame rounding, not progressive slippage).
-3. **Visual splice check:** extract a frame either side of the biggest cut; confirm live footage,
-   no black/frozen frame.
+3. **Visual splice check:** extract a frame either side of the biggest cut; confirm live footage, no
+   black/frozen frame.
 
 ---
 
 ## Supporting scripts
 
-- **Silence removal → the desilencer skill** (`video-creation/skills/desilencer/desilencer.md`, tool
-  `desilence.py`). The ONE canonical tool, all tracks. `desilence_synced.py`, `desilence_audio.py`, and
-  `build_two_zone.py` are DEPRECATED (single-threshold `silencedetect`, which clips words) and now redirect
-  there. Whole-file uniform criterion = `--min-sil`; zones = `--split/--sil-pre/--sil-post`.
-- `scripts/remove_spans.py` — remove arbitrary `--cut a-b` spans only (no silence detection),
-  sync-safe. Use for pure section excision (fumble removal proper = `defumbler/defumbler.md`).
+- `scripts/to_low_bps.py`: Phase 1 working copy (skipped for a no-deck deliverable).
+- `scripts/transcribe.py`: Phase 2 word-level Whisper (medium, GPU).
+- `scripts/remove_spans.py`: remove arbitrary `--cut a-b` spans only (no silence detection), sync-safe. Use
+  for pure section excision; fumble removal proper = `defumbler/defumbler.md`.
+- `scripts/generate_narration.py`: the AI-narrated mode's ElevenLabs generation (below).
+- **Silence removal = `skills/desilence/`** (the track preset) on top of the canonical
+  `video-creation/skills/desilencer/`. The three old per-track silence scripts (`desilence_audio.py`,
+  `desilence_synced.py`, `build_two_zone.py`: single-threshold `silencedetect`, which clips words) were
+  deprecated on 2026-06-14 and recycled on 2026-10-13; never recreate them.
 
 ## Gaze / camera-look analysis → see `video-creation/skills/gaze/SKILL.md`
 
