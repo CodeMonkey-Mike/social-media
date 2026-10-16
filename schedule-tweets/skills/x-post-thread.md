@@ -149,3 +149,14 @@ transient click miss. Retrying just burns 7 minutes per attempt.
 threads succeeded through 2026-07-25), so the break is recent and may be an X composer change
 rather than a hard 5-tweet cap. Confirm the tweet count at which it starts failing before
 assuming the cause.
+
+## ✅ ROOT CAUSE of the recurring `tweetTextarea_5` timeout (fixed 2026-10-10, `post_thread.py`)
+
+Not a viewport/scroll problem. A tweet that ENDS in an `@handle` or `$cashtag`, typed keystroke by
+keystroke, leaves X's suggestion dropdown (`div[id^=typeaheadDropdown][role=listbox]`) open, and it
+covers the composer toolbar where `addButton` lives, so the next textarea is never created. Proven by
+the read-only `scripts/_diag_x_thread_addbutton.py` (dropdown with 11 suggestions after typing
+"Follow: @TurboToadToken"; Control+Home closed it). Fix: `close_typeahead()` runs after every verified
+tweet (Control+Home, never Escape, which can open the discard-draft prompt), and `addButton` is now
+scrolled into view and locator-clicked with a JS-click fallback. Verified live: thread
+`thread-2026-10-09-meme-dominance-fell-off-a-cliff-cult-memes-only`, 7/7 matched.

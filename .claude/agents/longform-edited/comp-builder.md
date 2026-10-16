@@ -27,7 +27,10 @@ You operate inside the `social-media` repo (working directory is the repo root).
    `assets/face-reframe.json`, on the spine and every SpineStill; punch-ins scale about the reframed face point)
    + **§3b a background-swap clip is PRE-FRAMED: it plays full-frame WITHOUT `FACE_REFRAME`**, from its JSON's
    `window_starts_at_clip_s`, 30 fps (already re-timed onto the real voice), muted + **§3c an image slot with a
-   motion clip in `assets/img-motion/` plays the clip, not the still** · §4 COVER track · §5 containers + THE SPOTLIGHT CONTRACT · §6 the
+   motion clip in `assets/img-motion/` plays the clip, not the still** + **§3d a SPLICED CLIP INSERT (a third-party
+   clip with its OWN voice at a spine pause): the sidecar's pauses table drives `sh()`, `INSERTS` is exported for every
+   pause, the clip plays FULL-FRAME and MUTED over its paused window (its voice is already in the VO), with the plan's
+   `insert-in` / `insert-out` transitions and the lead-in / lead-out stills** · §4 COVER track · §5 containers + THE SPOTLIGHT CONTRACT · §6 the
    three transition buckets + §6a the engine traps (SpineStill = a real `<Freeze>`, muted, same transform, same
    source; engine window = exactly `win`; absolute-clock context; the video cost trap and the CUTFRAME still) ·
    §7 animated charts · §8 captions · §9 no music/SFX in the comp · §10 assets layout · §11 render command.
@@ -40,13 +43,23 @@ You operate inside the `social-media` repo (working directory is the repo root).
    "a DRAFT is the FULL build at low bitrate" hard rule: every documented element is IN the draft.
 3. The blueprint, which the comp is built TO, row for row: `EDIT-PLAN.md` (time-ordered event log; every
    `[COVER-kind]`, `[TRANSITION]`, `[PUNCH-IN]`, `[LIGHTLEAK]`, `[CAPTION]`, `[CARD]` row is a thing you wire),
+   `[PUNCH-IN]` + `[LIGHTLEAK]` share a frame ON a desilencer join (`spine/jumpcuts-final.json`): a hard ~15-20% scale step
+   (alternating in / back out across a window's joins) and the LIBRARY leak named by the matching `punch-leak` row
+   (`lib:lightleaks-*`, the `LightLeaks` engine, screen blend, under the captions); the Remotion-synthetic `<LightLeak>` is
+   retired (overlays.md section 1, Mike 2026-10-07); a video whose face style is `glitch` (GRAPH-PROGRESS.json `settings`,
+   Mike 2026-10-16) has `[PUNCH-IN]` + `[GLITCH]` instead: the same punch step plus the `punch-glitch` row's GlitchOffset /
+   GlitchBlocks engine across the join (spine as A and B), and a SPLIT Swinging Offset (GlassBeveled) on every cover→face
+   cut-in (comp-build.md section 5),
    `CUE-SHEET.md`, `TRANSITIONS.md` §5 + `TRANSITION-PLAN.json` (the exact ids), `COVER-PLAN.json` (state cues
-   and bench), `AS-RECORDED.md` (FACE windows), `assets/diagrams/_state-cues.md` + `assets/charts/*.spec.md`
+   and bench, and `chapter_themes` when present: the REAL animated charts you code and the chapter title cards take THAT
+   chapter's accent as their lit colour, Mike 2026-10-10), `AS-RECORDED.md` (FACE windows), `assets/diagrams/_state-cues.md` + `assets/charts/*.spec.md`
    (the animated chart's choreography you implement for real). **Plus the project's `PROJECT-LOG.md` `Open flags`
    section: Mike's per-video rulings (swap clips, motion clips, on-screen figure rules) are load-bearing.**
-4. `spine/<scope>.<letter>.paused.json`: **`CARD_T` = its `pauses[].at` and `PAUSE` = its `pause_s`** (NOT the
-   skill's 1.0 default). `SPINE_SECS` = the SOURCE spine duration (the sidecar's `source`); the paused spine
-   is `assets/spine.mp4`. Every cue you write is a SOURCE time routed through `sh()`/`F()`.
+4. `spine/<scope>.<letter>.paused.json`: **`pauses[]` IS the time map: every row has `at` (source s) and `dur`
+   (a title card = `pause_s`; a clip insert = the clip's length, with `clip` + `label`), so
+   `sh(t) = t + sum(dur for rows with at <= t)`; export `CARD_T` for the card rows and `INSERTS = [{at, dur}]` for
+   EVERY row** (NOT the skill's 1.0 default). `SPINE_SECS` = the SOURCE spine duration (the sidecar's `source`);
+   the paused spine is `assets/spine.mp4`. Every cue you write is a SOURCE time routed through `sh()`/`F()`.
 5. `assets/captions.json` + the generated `remotion/src/<Project>Captions.ts`: import `ZCAPTIONS` and
    `CAPTION_WINDOWS`; render only inside the windows, topmost, the §8 Montserrat style verbatim.
 6. `video-creation/assets/transitions/README.md` + `library.json` for the engines; copy each used id's plates /

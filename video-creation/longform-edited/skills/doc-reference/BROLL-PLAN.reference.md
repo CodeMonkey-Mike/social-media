@@ -56,6 +56,12 @@ _Every row whose beat names a REAL thing (token, project, company, person, produ
 | R5 | R(other) | About 95% of KAS supply already mined (circulating vs max 28.7B) | https://coinmarketcap.com/currencies/kaspa/ supply stats panel, cropped to the panel; confirm ~95% still holds at capture | CH5@436.30-442.96 | yes | captured + verified opened (receipt-capturer) + visual-qa PASS |
 | R6 | R(article) | Solana's Alpenglow upgrade pushes finality under one second (doubles as the open public-source VERIFY) | Anza Alpenglow announcement, believed https://www.anza.xyz/blog/alpenglow-a-new-consensus-for-solana, headline + finality claim; else a major-outlet article | CH4@376.50-382.38 | yes | ✅ captured + QA PASS |
 
+## CLIP INSERTS capture worklist (0) - a third-party clip plays with its OWN voice while the spine pauses; audio KEPT, context caption burned, words verified (agent: receipt-capturer; tool + rule: `skills/clip-inserts/clip-inserts.md`)
+
+| id | Who / what plays | Source (URL + window) | Length | Splice at (final spine, after words) | Burned caption | Expect (Whisper) | Verify | Status |
+|---|---|---|---|---|---|---|---|---|
+| (none this video) | DATA.md Clip candidates found no video of a named speaker saying a load-bearing line; the Kaspa points are carried by receipts and code charts | | | | | | | |
+
 ## CHARTS build worklist (7) - Type 1 ANIMATED (code, animates for real) · Type 2 SYSTEM-DESIGN (code-rendered stills) (agent: chart-builder)
 
 | id | Type | What moves / which states | Placement (beats) | Data source | Status |

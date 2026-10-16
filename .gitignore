@@ -57,13 +57,13 @@ schedule-tweets/UsersmnedeAppData*/
 # ── Python ───────────────────────────────────────────────────────────────────
 __pycache__/
 
-# ── LangGraph checkpoints (private resume DB — data/*.json is the source of truth)
-linkedin-automation/data/graph_checkpoints.sqlite*
-
-# LangGraph live heartbeat — rewritten every second while a lane runs; the run
-# HISTORY (lane_runs.json) is committed, this transient snapshot is not.
-linkedin-automation/data/lane_progress.json
-linkedin-automation/data/*.tmp
+# ── LinkedIn: EVERYTHING that names a LinkedIn member, a group, or Mike's own profile lives in
+# linkedin-automation/private/ and never reaches the public repo (Mike, 2026-10-08): members.json,
+# members-urls.json, groups.json, endorsements.json, lane_runs.json, the lane logs, PROJECT-LOG.md
+# (member names in run entries), the friend handoff bundle, headshots, the job radar data +
+# dashboard, LangGraph checkpoints + heartbeat. Only the folder's README is committed.
+linkedin-automation/private/*
+!linkedin-automation/private/README.md
 
 # Livestream-repurpose graph: same policy as linkedin's (history committed,
 # heartbeat + checkpoints not).

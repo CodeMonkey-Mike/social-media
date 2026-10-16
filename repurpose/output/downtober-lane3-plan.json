@@ -1,0 +1,593 @@
+{
+  "batch": "downtober",
+  "date": "2026-10-14",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/downtober LOW BPS VERTICAL/downtober LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-10-14",
+  "brief": "Make EXTRA X tweets about Kaspa: more standalone Kaspa tweets than the default mix. No longform this batch.",
+  "fact_check": [
+    {
+      "claim": "'The expectation was pretty damn bad and it's even worse than it was expected... we got the inflation reading' (transcript)",
+      "verdict": "verified. September 2026 CPI (released Oct 14, 2026): +0.6% month over month (0.5% expected), 3.7% year over year (3.6% expected, 3.4% in August); core +0.3% on the month and 2.6% on the year, both above forecasts; gasoline +9.1% in the month. Copy uses 3.7%, 0.6%, 2.6%, 9.1% and 'hotter than expected'.",
+      "source": "cnbc.com/2026/10/14/cpi-inflation-report-september-2026.html; finance.yahoo.com/economy/live/cpi-inflation-live-updates-prices-rose-37-in-september-142456444.html; thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-14-2026"
+    },
+    {
+      "claim": "'The odds of a rate hike only went up by a little bit... 34.4% today, yesterday it was 20... Polymarket traders put the odds of a 25 basis point hike on October 28th at 35% versus 66% for no change' (transcript)",
+      "verdict": "verified and kept approximate. CME FedWatch after the CPI release: about 35% for a hike at the Oct 27-28 meeting, up from about 20-22% the day before (Yahoo 35%; Forbes 66% hold); CNBC quoted a higher 54% at one point in the day, so copy says 'about one in three' / 'from about 20% to about 35%' and never a decimal. A hike by December is priced above 96% (CNBC), written as 'better than 95%'. The Fed hiked on Sept 16, 2026 to 3.75% to 4.00%, its first hike in three years. The Polymarket 35/66 split could not be re-fetched and is not quoted as Polymarket; it matches the CME figure.",
+      "source": "finance.yahoo.com/economy/policy/articles/fed-interest-rate-hike-seems-195052044.html; forbes.com/sites/digital-assets/2026/10/14/fed-66-likely-to-hold-rates-steady-following-high-inflation-data/; cnbc.com/2026/10/14/cpi-inflation-report-september-2026.html"
+    },
+    {
+      "claim": "'The five year yield just hit a new 19 year high at 5.15%, 115 basis points above the Fed's rate of 3.75 to 4.0... highest rate to borrow for five years since 2007' (transcript)",
+      "verdict": "verified in direction, figure NOT used. The 5-year yield rose about 15 bp on Oct 14 to its highest level since 2007; a curve tracker showed 5.05% that day and the 10-year about 5.2-5.3%. The exact 5.15% could not be confirmed (intraday vs close), so copy says 'above 5% for the first time since 2007' and '10-year above 5.2%'.",
+      "source": "chaincatcher.com/en/article/2296255; streetstats.finance/rates/treasuries; bloomberg.com/news/articles/2026-09-23/us-treasury-five-year-yields-breach-5-for-first-time-since-2007; babypips.com/news/financial-forex-market-recap-2026-10-14"
+    },
+    {
+      "claim": "'One trillion wiped out from the US stock market today'; 'stocks dumping and crypto really isn't' (transcript)",
+      "verdict": "CORRECTED. No source reports a $1 trillion wipeout on Oct 14; the S&P 500 closed down about 1.1% and the Nasdaq about 1.9%, with the Dow flat. Copy says 'stocks dropped only about 1% on the print' and never the trillion figure.",
+      "source": "cnbc.com/2026/10/13/stock-market-today-live-updates-.html; thestreet.com/stock-market-today/stock-market-today-dow-jones-sp-500-nasdaq-updates-oct-14-2026"
+    },
+    {
+      "claim": "'US Treasury to buy back six billion in long term debt tomorrow... maybe everybody's being psyched about some QE' (transcript)",
+      "verdict": "verified as a program (Treasury has been running up-to-$6B buybacks of long-dated debt since September), but the specific date is day-relative and the QE read is speculation, so it is NOT used in any copy.",
+      "source": "foxbusiness.com/economy/treasury-buy-back-up-6b-longer-term-debt-bond-yields-hit-highest-level-since-2023; newsquawk.com headlines Oct 2026"
+    },
+    {
+      "claim": "'Bitcoin is 81, the 50 week moving average is at 77, only like a 4k drop... a channel is forming... people front running the October bottom pushed us above the May high in September... they pushed us below the 50 week moving average last November' (transcript)",
+      "verdict": "verified and UPDATED. $BTC $81,413 (CoinGecko, -1.9% 7d, +3.9% 30d, ATH $126,080 on Oct 6, 2025). 50-week SMA from the last 50 completed weekly Coinbase closes is about $77.1K, so 'about $4K below at roughly $77K' holds. Coinbase daily candles: 2026 low $57,718 on July 1; May 2026 high $82,814; September high $87,397; October low so far $80,315. Bitcoin traded below its 50-week SMA from October 2025 (Leverage Shares, Dec 2025) and reclaimed it in September 2026 (archie-promo plan, Sept 20 breakout), so 'sold below the 50-week SMA last November, pushed back above in September' is kept general. '50 week moving average' written as 50-week SMA.",
+      "source": "api.exchange.coinbase.com/products/BTC-USD/candles (daily, computed 2026-10-15 00:52 UTC); api.coingecko.com/api/v3/coins/markets?ids=bitcoin; crypto.leverageshares.com/insights/bitcoin-technical-analysis-3-charts-to-watch; repurpose/output/archie-promo-lane3-plan.json"
+    },
+    {
+      "claim": "'Kaspa, 3.6 cents right now... down at its lowest level for the week but it's still up for the month... another great buy... everything worthy of buying is worthy of a DCA at this particular moment' (transcript)",
+      "verdict": "verified and UPDATED. $KAS $0.03664 (about 3.7 cents), about a $1.02B cap, rank 76, -5.7% 24h, -8.3% 7d, -14.7% 14d, +4.9% 30d; ATH $0.2074 on July 31, 2024, so about 82% under it. Copy uses 'about 3.7 cents', 'lowest level of the week', 'still up on the month', 'about 82% under its all-time high of 20.7 cents', 'about a $1B market cap'. 'Another great buy' and the DCA stance are Mike's own. Fair launch / no premine / proof of work are persona core theses; no TPS figure is used.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=kaspa (fetched 2026-10-15 00:52 UTC); persona.json core_theses; transcript"
+    },
+    {
+      "claim": "'TAO going to 3000? Hell yeah, I totally agree. I think TAO can go a lot more than that in the long run... we should be going into one hell of a fantastic economic expansion' (transcript, Whisper 'Tao')",
+      "verdict": "verified and UPDATED. $TAO $268.84, about a $3.05B cap, rank 36, -6.6% 7d, +15.8% 30d; ATH $757.60 on March 7, 2024, so about 64% under it; $3,000 / $269 = about 11.2x, written 'roughly an 11x from here'. The $3,000 target is a viewer's number that Mike endorsed on stream, written as his own conviction. Whisper's Greek-letter mishear corrected to TAO everywhere. persona project_handles tao = null, so no Follow line. The bittensor-tao.png reference is cited on the image.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=bittensor (fetched 2026-10-15); persona.json tao_spelling; transcript"
+    },
+    {
+      "claim": "'Some of those decent memes that have been around... Toshi, Turbo, Pengu, definitely Pengu... some won't make their all time highs but you can sort of be assured that they're going to pump and give you like a 10x' (transcript)",
+      "verdict": "verified and UPDATED with the guarantee softened. $PENGU $0.00758, about a $477M cap, rank 119, -11.3% 7d, +7.1% 30d; ATH $0.0684 on Dec 17, 2024, so about 89% under it and about 9x to the old high. Copy never says 'assured'; it says the established memes with real exchange listings 'are the ones that come back when meme season returns' and 'its old high from here is about a 9x'. Follow: @pudgypenguins per project_handles. Turbo ($63M cap) and Toshi ($44M) were covered in the aliens batch (2026-10-09) and are not repeated. No Pudgy Penguins reference image exists, so the image is entity-free (see missing_references).",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=pudgy-penguins,turbo,toshi (fetched 2026-10-15); persona.json project_handles; repurpose/output/aliens-lane3-plan.json"
+    },
+    {
+      "claim": "'Mr. TA himself, the king of the four year cycle zombies, Benjamin Cowen, was absolutely perplexed about how Bitcoin went above the May high... people are front running the October bottom because they realize the bottom is in' (transcript)",
+      "verdict": "verified in substance, 'perplexed' NOT attributed to him as a quote. Cowen's late-May 2026 cycle model (Bitcoin near $75.6K at the time) called a Q4 2026 bottom with October the most likely month, based on the last top falling inside the day count of the two prior cycles. On Sept 25, 2026 he posted that the weekly close would set up Q4 and that 'If Bitcoin accepts above the May high, that will improve the bull case substantially', with acceptance back below 'a massive fakeout before typical Q4 weakness'. Copy quotes only those words, describes him as 'staring at a chart that broke his model' (Mike's characterisation, in Mike's voice) and keeps 'I was not perplexed' in first person. The front-running read and the self-defeating October bottom are persona core_theses item 9, drafted per its rule (the zombies' demand is why the bottom never lands in October; never that they cause an October bottom). Benjamin-Cowen.png is used as the V4 topic photo.",
+      "source": "crypto-economy.com/benjamin-cowen-reveals-bitcoin-level-that-could-define-q4-2026/ (Sept 25, 2026); coinmarketcap.com/academy/article/bitcoin-4-year-cycle-october-2026; beincrypto.com/bitcoin-four-year-cycle-not-dead-benjamin-cowen/; persona.json core_theses"
+    },
+    {
+      "claim": "'If this war never started, or if it was concluded within the six weeks... none of this inflation stuff would have happened... Trump decides he wants to attack Iran, you can't predict that on a chart' (transcript)",
+      "verdict": "kept GENERAL. The specific war claim is a political/geopolitical tangent (persona avoid_in_drafts) and its causal chain is not independently verified, so copy says 'you cannot chart an inflation shock' and anchors on the verified gasoline +9.1% / CPI 3.7% figures. No country, leader or war is named.",
+      "source": "persona.json avoid_in_drafts; cnbc.com/2026/10/14/cpi-inflation-report-september-2026.html"
+    },
+    {
+      "claim": "'Golden Kitty is doing better than most, even though it's essentially dead too... went over 400k again... to be at 285... I saw his new token and I would stay away... the dev took the liquidity out?' (transcript)",
+      "verdict": "verified (Golden Kitty about $295K-$312K cap on DexScreener, down 9-16% on the day) but NOT drafted: Mike's Golden Kitty exit already shipped (golden-kitty and grapes batches), the 'liquidity pulled' claim is a viewer comment he could not confirm, and the promoter's new 'Hellhound' token could not be verified, so nothing is built on it.",
+      "source": "api.dexscreener.com/latest/dex/search?q=golden%20kitty (2026-10-15); persona.json avoid_in_drafts (re-announcing decisions); schedule-tweets/data/yt-posts.json"
+    },
+    {
+      "claim": "'I also bought some ARB... it's the tech behind Robinhood... tokenized stock narrative'; 'there's a new one in my group for my members... VCs, tens of millions in funding' (transcript)",
+      "verdict": "verified (Robinhood Chain is an Arbitrum Orbit L2; $ARB $0.18, +35% 30d) but NOT drafted: a 'what I bought this week' tweet is trader-portfolio framing (persona no_rotation_framing) and the members-only pick is a membership pitch.",
+      "source": "quicknode.com/guides/robinhood/what-is-robinhood-chain; api.coingecko.com/api/v3/coins/markets?ids=arbitrum; persona.json brand_voice_patterns"
+    },
+    {
+      "claim": "'Meme coin dominance is falling off a cliff' (transcript); 'a spawn? I never sold my spawn'; 'Holly Marcus said 80% chance the Clarity Act passes'; 'Ramses up 125%'; Stonk, Pons, Kitsu, YOLO, Vault, Veil, Flame, Rage Guy, Nauts, Polly, Candle, Broker Cat (transcript)",
+      "verdict": "meme dominance verified (about 3% of the altcoin market, CryptoQuant Oct 5, 2026) and used only as one supporting line in an IG caption because the full thesis shipped in the aliens batch. 'spawn' is the SPON mishear (persona spon_not_spawn); SPON is a position Mike is down on with no news, not drafted. The Clarity Act odds are a viewer's number, not drafted. None of the small Robinhood-chain / launchpad tokens are drafted (unverified caps, dead charts, no references).",
+      "source": "cryptobriefing.com/meme-coins-record-low-altcoin-share/; persona.json ticker_corrections; repurpose/output/aliens-lane3-plan.json"
+    },
+    {
+      "claim": "Zcash / zKAS scan",
+      "verdict": "no 'Zcash' or 'ZEC' string appears in this transcript; nothing to resolve.",
+      "source": "transcript (grep)"
+    },
+    {
+      "claim": "PPI timing: 'at 8:30 tomorrow morning Eastern time' (transcript)",
+      "verdict": "day-relative and stale by post time; copy says 'PPI is next' with no date.",
+      "source": "persona.json avoid_in_drafts (day-relative words)"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-10-14-rate-hikes-get-front-run-not-reacted-to": "version1 (high-energy news-flash: a hot CPI print, a 2007-high bond yield and a hike-odds swing is headline material, one hammer claim per slide, and the V1 near-black / neon green look fits the chart-panel iconography. V4 was weighed first per the extra-weight rule, but no usable topic PHOTO exists in images/reference/ for the Fed / bond-market subject (no Powell, no Fed building, no bond scene; the public-figure files are unrelated), so V4 cannot be anchored; V2 was rejected because the tone is loud, not editorial. Per the V1 contamination note every slide is pinned to version1/yt-posts-828eee71-01-hook.png and states its counter text explicitly ('N OF 5', exactly once); the prompts tell the model not to reproduce the exemplar's Bitcoin or Kaspa coins and keep every coin face plain. Five slides: hook, three beats, question.)",
+    "yt-post-2026-10-14-october-bottom-already-printed-in-july": "version4 (a usable topic photo exists: images/reference/Benjamin-Cowen.png, the named public figure the post argues against, which is the exact V4 use case and carries the extra V4 weight; the post is number-led: Q4 2026 / October call, $57.7K July 1 low, $82.8K May high, $87K September high, gasoline +9.1%, CPI 3.7%, hike odds about 35%, so the V4 data slides fit. Slide 1 cites BOTH Benjamin-Cowen.png and version4/hook.png in ref (array), slides 2-5 cite version4/slide.png; every prompt carries 'no pagination dots', the watermark warning (slide.png carries a repeating @handle watermark) and the layout-only / exact-text clause. Per the SKILL.md 2026-09-10 note, the figure-bearing data slides 2, 3, 4 and 5 are candidates for the code-rendered V4 path (repurpose/output/kaspa-lane3-fix/render_v4_slide.py) if ChatGPT drifts the figures; QA each one for figure drift before attaching. Five slides: hook, three beats, question.)"
+  },
+  "missing_references": [
+    "Pudgy Penguins / $PENGU mascot: no reference file in images/reference/; not rendered (image dda869d5 is an entity-free storm-and-lighthouse scene with plain unmarked coins and explicitly no animals or mascots), Pengu is named only in copy",
+    "Federal Reserve / Jerome Powell / Fed building: no reference file; not rendered (image 083e185a is an entity-free bond-giant boardroom scene; the bond certificate carries no text or seal and the coin is plain)",
+    "Bitcoin logo / coin: no bitcoin reference file; not rendered (images 083e185a, 59724c5c and the V1 carousel slides use plain unmarked coins, and the V1 prompts forbid reproducing the exemplar's Bitcoin coin), Bitcoin is named only in copy",
+    "Toncoin and Pepe: discussed only in passing on stream, no content drafted, no image"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "5a478e3b",
+      "slug": "kaspa-at-3-7-cents-another-great-buy",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render.  A calm, hungry-eyed an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs stands at the bottom of a wide, dim stone staircase that descends into the frame, one foot already on the lowest step, holding a small open burlap sack and scooping up a loose pile of smaller greenish cyan Kaspa coins that have slid down the stairs and pooled at the bottom; the small coins carry the same backwards-K logo as the reference. Higher up the staircase, barely lit, several plain grey coin characters stand frozen on upper steps, arms crossed, waiting and looking down. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character and the pooled coins, a single warm spotlight pooling on the bottom step, cold blue fill on the waiting coins above. Mood: hungry, calm, a bargain being collected while others wait. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind on the grey coins. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "5a478e3b",
+      "slug": "kaspa-at-3-7-cents-another-great-buy",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The scene fills the tall portrait frame, the main character in the lower centre with more of the environment above it. A calm, hungry-eyed an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs stands at the bottom of a wide, dim stone staircase that descends into the frame, one foot already on the lowest step, holding a small open burlap sack and scooping up a loose pile of smaller greenish cyan Kaspa coins that have slid down the stairs and pooled at the bottom; the small coins carry the same backwards-K logo as the reference. Higher up the staircase, barely lit, several plain grey coin characters stand frozen on upper steps, arms crossed, waiting and looking down. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character and the pooled coins, a single warm spotlight pooling on the bottom step, cold blue fill on the waiting coins above. Mood: hungry, calm, a bargain being collected while others wait. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind on the grey coins. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "59724c5c",
+      "slug": "zombies-wait-for-an-october-bottom-that-printed-in-july",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render.  Night scene at an empty bus stop on a dark road. A crowd of slumped, grey-green zombie-like plain coin characters with hollow eyes and torn little jackets stand in a line under a flickering bus-stop lamp, staring down the empty road, one holding a blank cardboard sign with nothing written on it. In the foreground, walking confidently the other way with a full backpack over one shoulder, an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs glances back with a small knowing smile; the backpack is stuffed with smaller greenish cyan Kaspa coins carrying the same backwards-K logo. A plain blank calendar page lies in the gutter at the zombies' feet with no letters or numbers on it. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character, sickly cold green-grey light from the lamp over the zombies, mist low on the road. Mood: defiant, knowing, leaving the waiting crowd behind. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind on the zombie coins. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "59724c5c",
+      "slug": "zombies-wait-for-an-october-bottom-that-printed-in-july",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The scene fills the tall portrait frame, the main character in the lower centre with more of the environment above it. Night scene at an empty bus stop on a dark road. A crowd of slumped, grey-green zombie-like plain coin characters with hollow eyes and torn little jackets stand in a line under a flickering bus-stop lamp, staring down the empty road, one holding a blank cardboard sign with nothing written on it. In the foreground, walking confidently the other way with a full backpack over one shoulder, an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs glances back with a small knowing smile; the backpack is stuffed with smaller greenish cyan Kaspa coins carrying the same backwards-K logo. A plain blank calendar page lies in the gutter at the zombies' feet with no letters or numbers on it. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character, sickly cold green-grey light from the lamp over the zombies, mist low on the road. Mood: defiant, knowing, leaving the waiting crowd behind. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind on the zombie coins. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "a85418f9",
+      "slug": "no-team-to-quit-no-premine-to-dump",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render.  A dark, foggy token graveyard at night: rows of small cracked stone slabs with plain dull coins slumped against them, lifeless, some toppled over, a few cobwebs. In the centre, rising out of the fog on a low rock, a proud an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs stands upright with arms folded, lit from within, and behind it a small cluster of chunky industrial mining rigs with spinning fans hums away, each rig throwing off a steady greenish cyan glow and warm light, cables running into the ground. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character and the rigs, cold blue-grey fog over the dead coins. Mood: calm, alive, running while everything around it has stopped. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind on the graveyard coins. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "a85418f9",
+      "slug": "no-team-to-quit-no-premine-to-dump",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The scene fills the tall portrait frame, the main character in the lower centre with more of the environment above it. A dark, foggy token graveyard at night: rows of small cracked stone slabs with plain dull coins slumped against them, lifeless, some toppled over, a few cobwebs. In the centre, rising out of the fog on a low rock, a proud an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs stands upright with arms folded, lit from within, and behind it a small cluster of chunky industrial mining rigs with spinning fans hums away, each rig throwing off a steady greenish cyan glow and warm light, cables running into the ground. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character and the rigs, cold blue-grey fog over the dead coins. Mood: calm, alive, running while everything around it has stopped. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind on the graveyard coins. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "083e185a",
+      "slug": "rate-hikes-get-front-run-not-reacted-to",
+      "prompt": "Cinematic photorealistic 3D render, 1:1 square aspect ratio. Inside a dark, grand marble boardroom at night, a long polished table with a row of empty leather chairs and a single tall wall clock with a blank face. Standing on the table is a huge, muscular anthropomorphized bond certificate character, a thick cream-coloured scroll of paper with an angry face, flexing with bulging paper arms, towering over a tiny, plain gold coin character that cowers below it with wide eyes. The paper giant carries no printed text, no numbers, no seal, no lettering: its surface is blank cream paper with engraved decorative borders only. Through the tall windows behind them, a dark city skyline under storm clouds. Dramatic rim lighting in cold steel blue with a hot amber glow from a single desk lamp; dust in the air. Mood: ominous, the bigger force already moved first. The coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "bd8588b0",
+      "slug": "tao-to-3000-is-about-an-11x-from-here",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A determined anthropomorphized Bittensor TAO coin character, a white coin whose face carries the single black TAO glyph exactly as shown in the attached reference image (the Greek-letter-shaped mark, one horizontal bar over one curved stem), with little arms and legs, is climbing a sheer dark mountain face at night, both hands gripping a rock ledge, looking up with hungry, focused eyes. Far above, the summit glows under a swirling aurora made of fine white neural-network lines connecting glowing nodes across the sky. Far below, small plain grey coin characters sit around a tiny campfire at base camp, not climbing. The TAO coin carries no other symbol, lettering or marking; every grey coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting: clean white rim light on the TAO coin, cool violet-white aurora glow from above, warm orange fire glow far below. No greenish cyan anywhere in the image. Mood: hungry, a long climb with the top in sight. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "1843683d",
+      "slug": "kaspa-green-on-the-month-while-the-meme-board-is-a-graveyard",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render.  A dark, misty token graveyard at night full of toppled plain dull coins lying face down among dead weeds and small cracked stone markers. In the middle of it, one an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs sits cross-legged on a tree stump, relaxed, wearing tiny dark sunglasses, one arm resting on its knee, with a single small green sprout growing out of the ground beside it. Deep navy near-black background with fog. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character and the sprout, cold blue-grey light on the dead coins. Mood: cool, unbothered, the only thing alive in the yard. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind on the graveyard coins. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "1843683d",
+      "slug": "kaspa-green-on-the-month-while-the-meme-board-is-a-graveyard",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The scene fills the tall portrait frame, the main character in the lower centre with more of the environment above it. A dark, misty token graveyard at night full of toppled plain dull coins lying face down among dead weeds and small cracked stone markers. In the middle of it, one an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs sits cross-legged on a tree stump, relaxed, wearing tiny dark sunglasses, one arm resting on its knee, with a single small green sprout growing out of the ground beside it. Deep navy near-black background with fog. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character and the sprout, cold blue-grey light on the dead coins. Mood: cool, unbothered, the only thing alive in the yard. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind on the graveyard coins. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "3329ead0",
+      "slug": "everything-might-go-lower-still-buying-kaspa",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render.  A dark, moody discount warehouse at night with tall metal shelves fading into shadow. On a low wooden pallet in the foreground sits a glowing pile of greenish cyan Kaspa coins, each carrying the backwards-K logo from the reference, with a large blank red paper price tag hanging off the pallet by a string (no letters or numbers on the tag, only a bold red diagonal slash). Standing in front of it, an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs pushes a small shopping cart already half full of the same coins, grinning, flexing one little arm. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the coins and the character, a single warm overhead work lamp, cold blue fill in the aisles. Mood: hungry, happy, buying the markdown. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "3329ead0",
+      "slug": "everything-might-go-lower-still-buying-kaspa",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The scene fills the tall portrait frame, the main character in the lower centre with more of the environment above it. A dark, moody discount warehouse at night with tall metal shelves fading into shadow. On a low wooden pallet in the foreground sits a glowing pile of greenish cyan Kaspa coins, each carrying the backwards-K logo from the reference, with a large blank red paper price tag hanging off the pallet by a string (no letters or numbers on the tag, only a bold red diagonal slash). Standing in front of it, an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs pushes a small shopping cart already half full of the same coins, grinning, flexing one little arm. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the coins and the character, a single warm overhead work lamp, cold blue fill in the aisles. Mood: hungry, happy, buying the markdown. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "dda869d5",
+      "slug": "pengu-89-percent-under-ath-definitely-pengu",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A stormy dark harbour at night. Dozens of tiny flimsy paper boats, each carrying a small plain coin character with a panicked face, are capsizing and sinking in the black waves. In the middle of the storm stands one sturdy old stone lighthouse built from stacked, weathered plain coins fused together, its lamp throwing a strong warm beam across the water, waves breaking harmlessly against its base; a small plain coin character with a calm, proud face stands on the lighthouse gallery holding the railing. Every coin's face everywhere in the image is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No animals and no mascots anywhere in the image. Deep navy near-black background with storm clouds and rain. Dramatic cinematic lighting: warm amber beam from the lamp, cold blue-white rim light from lightning, sea spray catching the light. Mood: endurance, the one that was built to last while the new ones sink. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "cddd4668",
+      "slug": "01-hook",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '1 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'CPI 3.7%. 5-YEAR YIELD ABOVE 5%, HIGHEST SINCE 2007. HIKE ODDS: ONE IN THREE.'. Behind the headline, a dark chart panel whose neon green line climbs steeply from left to right into a glowing thermometer-shaped bar that is near bursting at the top, with a faint dark bank-like marble column silhouette on each side; every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and do not reproduce the Bitcoin coin or the Kaspa coin from the attached reference; use the reference for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "90dc794b",
+      "slug": "02-the-bond-market",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '2 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'THE BOND MARKET ALREADY HIKED: 5-YEAR ABOVE 5%, 10-YEAR ABOVE 5.2%.'. Behind the headline, a towering dark chrome bar chart with five bars rising left to right, the tallest two glowing neon green and casting light upward, a small plain glowing gold coin dwarfed at the foot of the tallest bar; every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and do not reproduce the Bitcoin coin or the Kaspa coin from the attached reference; use the reference for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "41af9ea6",
+      "slug": "03-front-run",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '3 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'HIKES GET FRONT-RUN, NOT REACTED TO. THE SELLING COMES BEFORE THE 28TH.'. Behind the headline, a dark chart panel showing a neon green price line sliding down across most of the width, then flattening and ticking up at the far right where a glowing neon green vertical marker line stands, with a plain glowing gold coin resting at the low point; every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and do not reproduce the Bitcoin coin or the Kaspa coin from the attached reference; use the reference for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "a9d62222",
+      "slug": "04-the-floor",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '4 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'BITCOIN AT $81K, 50-WEEK SMA AT ABOUT $77K. OCTOBER DIP BUYERS ARE THE FLOOR.'. Behind the headline, a dark chart panel with a neon green price line bouncing along a thick glowing horizontal support line, and beneath that line a crowd of small plain glowing gold coins stacked like a wall holding it up; every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and do not reproduce the Bitcoin coin or the Kaspa coin from the attached reference; use the reference for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "b5715d87",
+      "slug": "05-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '5 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'HIKE LANDS AND BITCOIN IS GREEN THAT DAY: FRONT-RUN OR FAKEOUT?'. Behind the headline, a split dark panel: on the left a neon green candle rising above a dark calendar-shaped block with no markings, on the right a red candle falling off the same block, with one large glowing neon green question mark symbol floating between them; the question mark symbol is the only extra mark allowed; every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and do not reproduce the Bitcoin coin or the Kaspa coin from the attached reference; use the reference for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "cc1f184e",
+      "slug": "01-hook",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\Benjamin-Cowen.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ],
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the photo of the man with short dark hair and a beard) as the full-bleed background photo, keeping his face faithful to the photo, framed from the chest up and placed slightly left of centre, rendered as a rich photographic image with a dark vignette toward the bottom. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple line chart that drops to a low point about a third of the way across, then climbs steadily to the right end, drawn in green with no numbers or axis labels. Bold all-caps text across the bottom: 'THE OCTOBER BOTTOM' in white on the first line, then 'ALREADY PRINTED IN JULY' in bright green on the second line. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no artist signature and no initials anywhere in the frame or in any corner; the attached style reference carries a repeating watermark and it must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "52119a60",
+      "slug": "02-the-model",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The model: a Q4 2026 bottom'. Stat boxes: 'CYCLE CALL: Q4 2026 BOTTOM', 'MOST LIKELY MONTH: OCTOBER', 'BTC WHEN CALLED: ABOUT $75K'. Centre: a line chart with labeled axes showing a grey price line sliding gently down from the left toward a dashed vertical marker labelled 'OCT 2026' at the right, with a small circle at the marker. Bottom orange box labelled 'THE FOUR-YEAR CYCLE CALL' with two bullets: 'Late May: the cycle math said the last top fell inside the day count of the two prior cycles, so the low lands in the fourth quarter.' and 'October was named the most likely month for the bottom.' Page number 2 in a circle at the top right. No human faces, no watermark, no @handle, no signature or initials in any corner (the attached reference carries a repeating watermark and it must NOT be reproduced), no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "5091bdf2",
+      "slug": "03-what-the-chart-did",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'What the chart did instead'. Stat boxes: '2026 LOW: $57.7K ON JULY 1', 'MAY HIGH: ABOUT $82.8K', 'SEPT HIGH: ABOUT $87K'. Centre: a line chart with labeled axes showing a green price line that bottoms sharply at a point labelled 'JULY 1', climbs through a flat dashed grey line labelled 'MAY HIGH', peaks at a point labelled 'SEPT', and eases back to sit just under the dashed line at the right edge. Bottom green box labelled 'WHAT ACTUALLY HAPPENED' with two bullets: 'The low printed on July 1. By September Bitcoin was above the May high at about $87K.' and 'Front-runners bought the summer because they decided the bottom was in; the October crowd is buying from them at about $81K.' Page number 3 in a circle at the top right. No human faces, no watermark, no @handle, no signature or initials in any corner (the attached reference carries a repeating watermark and it must NOT be reproduced), no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "8286ead6",
+      "slug": "04-what-a-chart-cannot-see",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'What a chart cannot see'. Stat boxes: 'GASOLINE, SEPT: +9.1%', 'CPI, SEPT: 3.7%', 'OCT 28 HIKE ODDS: ABOUT 35%'. Centre: a bar chart with labeled axes showing six monthly bars for inflation rising left to right, the last bar the tallest and coloured red, the others grey. Bottom red box labelled 'NOT A CALENDAR, THE WORLD' with two bullets: 'An inflation shock put a rate hike back on the table; without it the talk would be rate cuts and this market would be flying.' and 'Last November they sold below the 50-week SMA and called it a bear; in September they pushed it back above. Same chart, opposite story.' Page number 4 in a circle at the top right. No human faces, no watermark, no @handle, no signature or initials in any corner (the attached reference carries a repeating watermark and it must NOT be reproduced), no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "ac3ae8e0",
+      "slug": "05-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Did the 2026 bottom already print?'. Stat boxes: 'JULY 1 LOW: $57.7K', 'BTC THIS WEEK: ABOUT $81K', 'KASPA THIS WEEK: ABOUT 3.7 CENTS'. Centre: a simple two-column panel: on the left a large green check mark above the words 'JULY WAS THE LOW', on the right a large grey question mark above the words 'OCTOBER STILL COMING'. Bottom green box labelled 'TELL ME IN THE COMMENTS' with two bullets: 'Did the 2026 Bitcoin bottom already print in July, or does the four-year cycle still get its October low?' and 'Pick one and tell me why. I am not waiting on a calendar: every red day on Kaspa is a DCA day.' Page number 5 in a circle at the top right. No human faces, no watermark, no @handle, no signature or initials in any corner (the attached reference carries a repeating watermark and it must NOT be reproduced), no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Kaspa ($KAS) at about 3.7 cents is another great buy.\n\nLowest level of the week, still up on the month, about 82% under its all-time high of 20.7 cents at about a $1B market cap. Could the whole market go lower from here? Sure, and then you get a better deal. That does not change what it is.\n\nFair launch, no premine, proof of work. Everything worth owning is worth a DCA right now, and Kaspa is first on my list.\n\n#kaspa #KAS",
+      "hook": "Kaspa ($KAS) at about 3.7 cents is another great buy.",
+      "image_id": "5a478e3b"
+    },
+    {
+      "tweet": "The four-year cycle zombies are still waiting for the October bottom.\n\nBitcoin's ($BTC) low this year printed on July 1 at about $57.7K. Then the front-runners piled in through September, took it above the May high to about $87K, and the zombies now get to buy their 'October dip' at $81K.\n\nTheir own demand is the reason the bottom never lands in October. Kaspa Maxis stacked $KAS through the summer instead and are still adding at about 3.7 cents...\n\nHow am I wrong?\n\n#kaspa #bitcoin",
+      "hook": "The four-year cycle zombies are still waiting for the October bottom.",
+      "image_id": "59724c5c",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #1 (a strong, defensible-but-debatable take: the 2026 bottom already printed on July 1 and the zombies' own October demand is why it never lands in October) plus technique #3 (the 'How am I wrong?' closer). No fact is manufactured: the July 1 low, the May high, the September high and the current price are verified from Coinbase daily candles; the thesis is persona core_theses item 9 and Mike's own on-stream read."
+    },
+    {
+      "tweet": "The divider between a dead token and a sleeping one is whether the team still posts every day.\n\nI scrolled a graveyard of charts on stream this week, and the only ones with a pulse were the ones where the team refuses to quit.\n\nKaspa ($KAS) never has that problem. No team to quit, no premine to dump, no company whose budget runs out. Proof-of-work miners keep the chain running at 3.7 cents exactly the same as at 20 cents. That is what a fair launch buys you in a dead market.\n\n#kaspa #KAS",
+      "hook": "The divider between a dead token and a sleeping one is whether the team still posts every day.",
+      "image_id": "a85418f9"
+    },
+    {
+      "tweet": "September CPI came in at 3.7%, hotter than expected, and the market still gives an October 28 rate hike about a one-in-three shot.\n\nI do not get the pause camp. The 5-year Treasury yield is above 5% for the first time since 2007; the bond market already hiked.\n\nHere is what I do get: if the market decides the hike is coming, it sells NOW and shrugs on the 28th. Hikes get front-run, not reacted to. The red candles come before the meeting, not after, and everybody who waited all year for an 'October dip' is the floor under them.\n\n#Fed #bitcoin",
+      "hook": "September CPI came in at 3.7%, hotter than expected, and the market still gives an October 28 rate hike about a one-in-three shot.",
+      "image_id": "083e185a"
+    },
+    {
+      "tweet": "$TAO to $3,000? Hell yeah. And in the long run, a lot more than that.\n\nBittensor is at about $269 this week, about 64% under its all-time high of $757 at about a $3B market cap. $3,000 is roughly an 11x from here, for the network that IS the decentralized AI layer.\n\nWe have to get through some craziness first. Then one hell of an economic expansion, and AI leads it.\n\n#Bittensor #TAO",
+      "hook": "$TAO to $3,000? Hell yeah. And in the long run, a lot more than that.",
+      "image_id": "bd8588b0"
+    },
+    {
+      "tweet": "Kaspa ($KAS) printed its lowest price of the week at about 3.7 cents and is still green on the month, while the meme board I scrolled on stream this week is a graveyard 😎\n\n#kaspa #KAS",
+      "hook": "Kaspa ($KAS) printed its lowest price of the week at about 3.7 cents and is still green on the month, while the meme board I scrolled on stream this week is a graveyard 😎",
+      "image_id": "1843683d"
+    },
+    {
+      "tweet": "The whole market might go lower from here, Kaspa ($KAS) included... that just means a better deal on a fair-launch proof-of-work chain at about 3.7 cents, so I keep buying 💪\n\n#kaspa #KAS",
+      "hook": "The whole market might go lower from here, Kaspa ($KAS) included... that just means a better deal on a fair-launch proof-of-work chain at about 3.7 cents, so I keep buying 💪",
+      "image_id": "3329ead0"
+    },
+    {
+      "tweet": "Pengu ($PENGU) at about $0.0076 is about 89% under its all-time high, and the established memes with real exchange listings are the ones that come back when meme season returns; its old high from here is about a 9x. Definitely Pengu 🐧\n\nFollow: @pudgypenguins\n\n#PENGU #memecoins",
+      "hook": "Pengu ($PENGU) at about $0.0076 is about 89% under its all-time high, and the established memes with real exchange listings are the ones that come back when meme season returns; its old high from here is about a 9x. Definitely Pengu 🐧",
+      "image_id": "dda869d5"
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-10-14-rate-hikes-get-front-run-not-reacted-to",
+      "topic": "The October 28 rate hike gets front-run, not reacted to: CPI 3.7%, the 5-year yield above 5%, one-in-three hike odds, the bond market already hiked, sell now and shrug on the 28th, Bitcoin's channel at $81K over the 50-week SMA at about $77K, the October-dip floor, PPI next (built from YT post 1)",
+      "variation_label": "A (stat-stack-and-mechanics)",
+      "tweets": [
+        {
+          "text": "September CPI: 3.7%, hotter than expected.\n\n5-year Treasury yield: above 5%, first time since 2007.\n\nOdds of an October 28 rate hike: about one in three.\n\nI do not get the pause camp. But the hike does not hit your bags on the 28th. It hits before. Here is why...",
+          "hook": "September CPI: 3.7%, hotter than expected."
+        },
+        {
+          "text": "The print. Headline CPI +0.6% in September alone, 3.7% on the year, up from 3.4%. Core +0.3% on the month, 2.6% on the year, both above forecasts. Gasoline alone +9.1%.\n\nThe Fed already hiked on September 16, its first hike in three years, to 3.75% to 4.00%."
+        },
+        {
+          "text": "Hike odds for October 28 roughly doubled on the release, from about 20% to about 35%. A hike by December is priced above 95%.\n\nThe bond market is not waiting for either meeting: 5-year above 5%, 10-year above 5.2%, highest since 2007. The bond market already hiked."
+        },
+        {
+          "text": "So why did stocks drop only about 1% and Bitcoin ($BTC) hold about $81K?\n\nBecause hikes get front-run, not reacted to. If the market decides the hike is coming, it sells NOW, over the next two weeks, then does nothing on the 28th. It might even go up on the day."
+        },
+        {
+          "text": "Bitcoin sits in a channel at about $81K, the 50-week SMA about $4K below at roughly $77K. A visit down there is a 5% move: a normal week for Bitcoin.\n\nAnd there is a floor under the red candles: everybody who waited all year for an 'October dip' is buying every one of them."
+        },
+        {
+          "text": "PPI is next. Soft, and the pause camp gets its argument. Hot, and the front-run starts in earnest.\n\nIf the hike lands on October 28 and Bitcoin is GREEN that day: front-run theory, or fakeout? Tell me which.\n\nFollow me for the macro read before the headline hits 🔥"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-10-14-october-bottom-already-printed-in-july",
+      "topic": "The four-year cycle zombies cannot explain this market: Cowen's Q4 / October bottom model versus the July 1 low, the September break of the May high, front-running the October bottom, the self-defeating October bottom, the inflation shock, the 50-week SMA sold and reclaimed, Kaspa at 3.7 cents as the DCA (built from YT post 2)",
+      "variation_label": "B (named-opposition)",
+      "tweets": [
+        {
+          "text": "Benjamin Cowen's four-year cycle model says the Bitcoin bottom lands in Q4 2026, October most likely.\n\nBitcoin's ($BTC) low this year printed on July 1 at about $57.7K.\n\nThe four-year cycle zombies cannot explain this market. Here is what actually moved it...",
+          "hook": "Benjamin Cowen's four-year cycle model says the Bitcoin bottom lands in Q4 2026, October most likely."
+        },
+        {
+          "text": "May, Bitcoin near $75K: Cowen's cycle math said the last top fell inside the day count of the two prior cycles, so the low lands in Q4.\n\nThen Bitcoin ran above the May high in September, to about $87K. His own words: acceptance above it 'improves the bull case substantially'."
+        },
+        {
+          "text": "I was not perplexed. People were front-running the October bottom.\n\nHolders who missed the lows all year looked at July, decided the bottom was in, and refused to wait for a calendar. I have said it on every stream since January: the October bottom is self-defeating."
+        },
+        {
+          "text": "Because the zombies, and the people front-running them, all plan to buy in October, the actual low prints BEFORE October. Their own demand is the reason October never gets to be the reddest month.\n\nYou cannot see that on a chart."
+        },
+        {
+          "text": "You cannot chart an inflation shock either. Without gasoline +9.1% in September we would be talking rate cuts, not a hike, and we would be flying.\n\nLast November they sold $BTC below the 50-week SMA and called it a bear. September, back above it. Same chart, opposite story."
+        },
+        {
+          "text": "So I do not wait for October. Kaspa ($KAS) at about 3.7 cents: lowest level of the week, still up on the month. Fair launch, no premine, proof of work. Every red day is a DCA day.\n\nThe zombies are waiting for a bottom that already printed. Kaspa Maxis are stacking."
+        },
+        {
+          "text": "Did the 2026 Bitcoin bottom already print in July, or does the four-year cycle still get its October low? Pick one and tell me why.\n\nFollow me if you are done waiting on a calendar 😎"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-10-14-kaspa-red-day-buy-wait-or-hold",
+      "topic": "Kaspa at about 3.7 cents, lowest level of the week and still up on the month: buy now, wait for the dip, or hold",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Kaspa ($KAS) at about 3.7 cents: lowest level of the week, still up on the month, about 82% under its all-time high.\n\nThe whole market might go lower if the rate hike gets front-run. So what are you doing with $KAS right now?",
+      "hook": "Kaspa ($KAS) at about 3.7 cents: lowest level of the week, still up on the month, about 82% under its all-time high.",
+      "options": [
+        "Buying every red day",
+        "Waiting for the dip",
+        "Holding, not adding"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-10-14-kaspa-red-day-buy-wait-or-hold",
+      "topic": "Kaspa at about 3.7 cents, lowest level of the week and still up on the month, with the whole market possibly going lower: buy now, wait for the dip, or hold",
+      "question_text": "Kaspa ($KAS) is at about 3.7 cents this week: its lowest level of the week, still up on the month, about 82% under its all-time high. I called it another great buy on stream, and I also said the whole market might go lower from here if the rate hike gets front-run. So what are you doing with Kaspa right now?",
+      "hook": "Kaspa ($KAS) is at about 3.7 cents this week: its lowest level of the week, still up on the month, about 82% under its all-time high.",
+      "options": [
+        "Buying now, every red day is a DCA day",
+        "Waiting for the deeper dip before I add",
+        "Holding what I have, not adding yet"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-10-14-october-28-hike-pause-or-done",
+      "topic": "September CPI 3.7%, 5-year yield highest since 2007, and the market gives an October 28 hike about one in three: hike, pause then December, or no more hikes",
+      "question_text": "September CPI came in at 3.7%, hotter than expected. The 5-year Treasury yield is above 5% for the first time since 2007. And the market STILL gives an October 28 rate hike only about a one-in-three shot. I do not get the pause camp. Where do you land?",
+      "hook": "September CPI came in at 3.7%, hotter than expected. The 5-year Treasury yield is above 5% for the first time since 2007.",
+      "options": [
+        "Hike on October 28",
+        "Pause now, hike in December",
+        "No more hikes this year"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-10-14-rate-hikes-get-front-run-not-reacted-to",
+      "topic": "The October 28 rate hike gets front-run, not reacted to: September CPI 3.7% (0.6% on the month, core 2.6%, gasoline +9.1%), the Sept 16 hike to 3.75% to 4.00%, hike odds from about 20% to about 35% with a December hike above 95%, the 5-year yield above 5% (highest since 2007) and the 10-year above 5.2%, stocks down about 1% and Bitcoin holding about $81K with the 50-week SMA at about $77K, the October-dip buyers as the floor, PPI next",
+      "variation_label": "A + CTA1",
+      "body_style": "news-flash arc: the CPI / yield / one-in-three shock and the 'it hits before the 28th' promise in the pre-fold hook, the print in numbers, the bond market already hiked, the front-run mechanics (sell now, shrug on the 28th, maybe green on the day), Bitcoin's channel and the 50-week SMA with the October-dip floor, the PPI fork, a personal-stake front-run-or-fakeout question and a like/subscribe ask",
+      "cta_target": "subscribe_youtube",
+      "body": "September CPI came in at 3.7%, hotter than expected, the 5-year Treasury yield is above 5% for the first time since 2007... and the market still gives an October 28 rate hike about a one-in-three shot.\n\nI do not get the pause camp. But here is the part that matters for your bags: the hike does not hit the market on the 28th. It hits before.\n\nStart with the print. Headline CPI rose 0.6% in September alone and 3.7% on the year, up from 3.4% in August. Core came in at 0.3% on the month and 2.6% on the year, both above forecasts, and gasoline alone jumped 9.1%. The Fed already hiked on September 16, its first hike in three years, to 3.75% to 4.00%. Hike odds for October 28 roughly doubled on the CPI release, from about 20% to about 35%, and a hike by December is priced at better than 95%.\n\nNow the bond market. The 5-year yield is above 5%, its highest since 2007, and the 10-year is above 5.2%. The US government is paying its highest rate to borrow for five years since before the 2008 crisis. That is not a pause signal. The bond market already hiked.\n\nSo why did stocks drop only about 1% on the print, and why is Bitcoin ($BTC) still holding about $81K? Because this is how hikes work: they get front-run, not reacted to. If the market decides the hike is coming, it sells now, over the next two weeks, and then does nothing on the 28th. It might even go UP on the day the hike lands, and everybody scratches their head.\n\nThat is my read. Bitcoin is sitting in a channel at about $81K with the 50-week SMA about $4K below at roughly $77K. A visit down there is a 5% move; for Bitcoin that is a normal week. And there is a floor under the red candles: everybody who waited all year for an 'October dip' is buying every one of them.\n\nPPI is next. If producer prices come in soft, the pause camp gets its argument. If they come in hot, the front-run starts in earnest, and the people who bought the first red candle find out what a real one looks like.\n\nNever financial advice.\n\nPersonal stake question: if the hike lands on October 28 and Bitcoin is GREEN that day, do you believe the front-run theory, or do you call it a fakeout? Tell me which one and why.\n\nClick that like button and click the subscribe button if you want the macro read before the headline hits.",
+      "engagement_question": "If the hike lands on October 28 and Bitcoin is GREEN that day, do you believe the front-run theory, or do you call it a fakeout? Tell me which one and why.",
+      "images": [
+        {
+          "image_id": "cddd4668",
+          "slide_text": "CPI 3.7%. 5-YEAR YIELD ABOVE 5%, HIGHEST SINCE 2007. HIKE ODDS: ONE IN THREE."
+        },
+        {
+          "image_id": "90dc794b",
+          "slide_text": "THE BOND MARKET ALREADY HIKED: 5-YEAR ABOVE 5%, 10-YEAR ABOVE 5.2%."
+        },
+        {
+          "image_id": "41af9ea6",
+          "slide_text": "HIKES GET FRONT-RUN, NOT REACTED TO. THE SELLING COMES BEFORE THE 28TH."
+        },
+        {
+          "image_id": "a9d62222",
+          "slide_text": "BITCOIN AT $81K, 50-WEEK SMA AT ABOUT $77K. OCTOBER DIP BUYERS ARE THE FLOOR."
+        },
+        {
+          "image_id": "b5715d87",
+          "slide_text": "HIKE LANDS AND BITCOIN IS GREEN THAT DAY: FRONT-RUN OR FAKEOUT?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-10-14-october-bottom-already-printed-in-july",
+      "topic": "The four-year cycle zombies cannot explain this market: Cowen's Q4 2026 / October bottom model versus the July 1 low at $57.7K and the September run above the May high to about $87K, people front-running the October bottom, the self-defeating October bottom thesis, the inflation shock no chart saw, the 50-week SMA sold last November and reclaimed in September, and Kaspa at about 3.7 cents as the DCA while the zombies wait",
+      "variation_label": "B + CTA2",
+      "body_style": "named-opposition arc: Cowen's model versus the July 1 low in the pre-fold hook with the explanation withheld, the cycle call and the September break of the May high in his own words, the front-running read and the self-defeating October bottom, what a chart cannot see (the inflation shock), the 50-week SMA sold then reclaimed, the Kaspa DCA stance, a forked July-or-October question and a like/subscribe ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Benjamin Cowen's four-year cycle model says the Bitcoin bottom lands in Q4 2026, October the most likely month. Bitcoin's ($BTC) low this year printed on July 1 at about $57.7K.\n\nThe four-year cycle zombies cannot explain this market. Here is what actually moved it, and what I am doing about it.\n\nIn late May, with Bitcoin around $75K, Cowen laid out the cycle math: the last top fell inside the day count of the two prior cycles, so the bottom should arrive in the fourth quarter. Then Bitcoin ran above the May high in September, up to about $87K, and by his own words acceptance above that level 'improves the bull case substantially'. The king of the four-year cycle crowd was staring at a chart that broke his model.\n\nI was not perplexed. People were front-running the October bottom. A lot of holders who missed the lows all year looked at July, decided the bottom was in, and were not going to wait for a calendar. I have said this on every stream since January: the October bottom is self-defeating. Because the zombies, and the people front-running them, all plan to buy in October, the actual low prints BEFORE October, and their own demand is the reason October never gets to be the reddest month.\n\nYou cannot see that on a chart. You also cannot chart an inflation shock. If gasoline had not jumped 9.1% in September alone and CPI had not come in at 3.7%, we would be talking about rate cuts right now instead of a hike, and this market would be flying. That is not a four-year cycle. That is the world.\n\nLast November they sold Bitcoin below the 50-week SMA and called it a bear market. In September they pushed it back above. Same chart, opposite story, and the thing that changed was not the calendar.\n\nSo here is what I do about it. I do not wait for October. Kaspa ($KAS) at about 3.7 cents is the lowest level of the week and still up on the month, and I treat every red day as a DCA day: fair launch, no premine, proof of work, about 82% under its all-time high. The zombies are waiting for a bottom that already printed. Kaspa Maxis are stacking.\n\nNever financial advice.\n\nForked question: did the 2026 Bitcoin bottom already print in July, or does the four-year cycle still get its October low? Pick one and tell me why.\n\nClick that like button and click the subscribe button if you are done waiting on a calendar.",
+      "engagement_question": "Did the 2026 Bitcoin bottom already print in July, or does the four-year cycle still get its October low? Pick one and tell me why.",
+      "images": [
+        {
+          "image_id": "cc1f184e",
+          "slide_text": "THE OCTOBER BOTTOM ALREADY PRINTED IN JULY"
+        },
+        {
+          "image_id": "52119a60",
+          "slide_text": "The model: a Q4 2026 bottom, October the most likely month"
+        },
+        {
+          "image_id": "5091bdf2",
+          "slide_text": "What the chart did instead: a July 1 low, then above the May high"
+        },
+        {
+          "image_id": "8286ead6",
+          "slide_text": "What a chart cannot see: gasoline +9.1%, CPI 3.7%, hike odds back up"
+        },
+        {
+          "image_id": "ac3ae8e0",
+          "slide_text": "Did the 2026 bottom already print in July?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-10-14-kaspa-at-3-7-cents-another-great-buy",
+      "kaspa_subject": true,
+      "image_id": "5a478e3b",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa ($KAS) at about 3.7 cents is another great buy.",
+      "caption": "Kaspa ($KAS) at about 3.7 cents is another great buy.\n\nIt printed its lowest level of the week and it is still up on the month, about 82% under its all-time high of 20.7 cents, at about a $1B market cap. Could the whole market go lower from here? Sure. Then you get a better deal on the same chain. The price moves; what Kaspa is does not.\n\nFair launch, no premine, proof of work, and a GhostDAG that runs the same at 3.7 cents as it did at 20. In a market where the meme board is a graveyard, everything worth owning is worth a DCA, and Kaspa is first on my list.\n\nRed day on Kaspa: are you adding, waiting, or holding? Tell me in the comments.\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #ghostdag #crypto #cryptocurrency #altcoins #blockchain #bitcoin #cryptoinvesting #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#bitcoin",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa ($KAS) at about 3.7 cents is another great buy."
+    },
+    {
+      "id": "ig-2026-10-14-zombies-wait-for-an-october-bottom-that-printed-in-july",
+      "kaspa_subject": true,
+      "image_id": "59724c5c",
+      "aspect_ratio": "4:5",
+      "hook": "The four-year cycle zombies are still waiting for the October bottom.",
+      "caption": "The four-year cycle zombies are still waiting for the October bottom.\n\nBitcoin's ($BTC) low this year printed on July 1 at about $57.7K. Then the front-runners piled in through September, took it above the May high to about $87K, and now the zombies get to buy their 'October dip' at about $81K, from the people who bought the summer.\n\nThat is the whole joke of the October bottom: because the zombies, and the people front-running them, all plan to buy in October, the actual low prints BEFORE October. Their own demand is the reason the bottom never lands in October.\n\nKaspa Maxis did not wait for a calendar. We stacked $KAS through the summer and we are still adding at about 3.7 cents, lowest level of the week and still up on the month.\n\nHow am I wrong? Tell me in the comments.\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #ghostdag #crypto #cryptocurrency #altcoins #blockchain #bitcoin #cryptoinvesting #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#bitcoin",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "The four-year cycle zombies are still waiting for the October bottom."
+    },
+    {
+      "id": "ig-2026-10-14-no-team-to-quit-no-premine-to-dump",
+      "kaspa_subject": true,
+      "image_id": "a85418f9",
+      "aspect_ratio": "4:5",
+      "hook": "The divider between a dead token and a sleeping one is whether the team still posts every day.",
+      "caption": "The divider between a dead token and a sleeping one is whether the team still posts every day.\n\nI scrolled a graveyard of charts on stream this week: token after token down 90% or more, and the only ones with a pulse were the ones where the team refuses to quit, posting every few hours into the silence. When the pumps come back, those are the ones that come back to life. The rest stay dead.\n\nKaspa ($KAS) never has that problem. No team to quit, no premine to dump, no company whose budget runs out. Proof-of-work miners keep the chain running at 3.7 cents exactly the same as at 20 cents, block after block, whether anyone is posting about it or not. That is what a fair launch buys you in a dead market: a chain that does not need a cheerleader to survive.\n\nWhich dead token on your watchlist still has a team showing up every day? Name it in the comments.\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #ghostdag #crypto #cryptocurrency #altcoins #blockchain #bitcoin #cryptoinvesting #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#bitcoin",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "The divider between a dead token and a sleeping one is whether the team still posts every day."
+    },
+    {
+      "id": "ig-2026-10-14-kaspa-green-on-the-month-while-the-meme-board-is-a-graveyard",
+      "kaspa_subject": true,
+      "image_id": "1843683d",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa ($KAS) printed its lowest price of the week at about 3.7 cents and is still green on the month, while the meme board I scrolled on stream this week is a graveyard 😎",
+      "caption": "Kaspa ($KAS) printed its lowest price of the week at about 3.7 cents and is still green on the month, while the meme board I scrolled on stream this week is a graveyard 😎\n\nDown about 8% on the week, up about 5% on the month, about a $1B market cap, still about 82% under the all-time high. Meanwhile the fresh launches from September are down 90% and worse, and meme coins have fallen to about 3% of the altcoin market.\n\nA red week on a fair-launch proof-of-work chain is a discount. A red week on a dead meme is a funeral.\n\nSave this for the next time someone tells you Kaspa is 'just another alt'.\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #ghostdag #crypto #cryptocurrency #altcoins #blockchain #bitcoin #cryptoinvesting #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#bitcoin",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa ($KAS) printed its lowest price of the week at about 3.7 cents and is still green on the month, while the meme board I scrolled on stream this week is a graveyard 😎"
+    },
+    {
+      "id": "ig-2026-10-14-everything-might-go-lower-still-buying-kaspa",
+      "kaspa_subject": true,
+      "image_id": "3329ead0",
+      "aspect_ratio": "4:5",
+      "hook": "The whole market might go lower from here, Kaspa ($KAS) included... that just means a better deal on a fair-launch proof-of-work chain at about 3.7 cents, so I keep buying 💪",
+      "caption": "The whole market might go lower from here, Kaspa ($KAS) included... that just means a better deal on a fair-launch proof-of-work chain at about 3.7 cents, so I keep buying 💪\n\nHotter-than-expected inflation, the 5-year Treasury yield above 5% for the first time since 2007, a rate hike back on the table for October 28. If the market front-runs that hike, we go down first. I know that, and I am DCAing Kaspa anyway, because the question is never 'can it dip'; the question is what you are buying when it does.\n\nNo premine. No team allocation. Proof of work. About 82% under its all-time high. The dip is the point.\n\nAre you buying red days or waiting for the bottom? Tell me in the comments.\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #ghostdag #crypto #cryptocurrency #altcoins #blockchain #bitcoin #cryptoinvesting #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#bitcoin",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "The whole market might go lower from here, Kaspa ($KAS) included... that just means a better deal on a fair-launch proof-of-work chain at about 3.7 cents, so I keep buying 💪"
+    }
+  ]
+}

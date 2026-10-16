@@ -1,0 +1,216 @@
+{
+ "skill": "burst-removal",
+ "date": "2026-10-10",
+ "project": "retire-early",
+ "source": "ALL.c.desilenced.mp4",
+ "output": "ALL.d.cleaned.mp4",
+ "backup": null,
+ "backup_note": "source left untouched (the output is a new file); the pre-face-patch c is _previews/ALL.c.desilenced.before-face-patch.mp4",
+ "mike_given_spans": [
+  "0:00 distortion in the first fraction of a second before the first word (c coords by ear)",
+  "6:08 remainder of a bad take 'DAGKnight is still a prop..' then repeated",
+  "7:27 'about fifty' then said again in a retake",
+  "8:55 strange sound after 'distribution'",
+  "9:46 burst after 'of this list'"
+ ],
+ "locate_note": "Every spot profiled at 10 ms (burst_profile.py) and bracketed with Whisper small.en word times; the 0:00 'distortion' is 4 frames of the wrong camera framing (Mike still zooming in) plus a -32 dB blip, both before the 'I' onset at 0.18. Also in this pass (a repair, not a cut): the ARB-disclosure picture at c 267.2-275.4 was restored from ALL.a.defumbled.mp4 (Mike: 'all that should be in a face scene'; it had been blacked as COVER).",
+ "source_duration": {
+  "format": 665.333,
+  "video": 665.333,
+  "audio": 665.276
+ },
+ "output_duration": {
+  "format": 662.557,
+  "video": 662.533,
+  "audio": 662.557
+ },
+ "output_frames": 19876,
+ "fps": "30/1",
+ "encode": "libx264 crf 18 preset medium yuv420p -r 30 cfr, aac 192k 44.1k, +faststart; audio apad to the picture length",
+ "method": "single sync-safe filter_complex, 5 keep-segments (trim start_frame/end_frame + atrim start_sample/end_sample at exact frame boundaries k/30 = 1470k samples, setpts PTS-STARTPTS) + concat n=5, both tracks together",
+ "removed_total": 2.799999,
+ "cuts": [
+  {
+   "n": 1,
+   "kind": "head: 4 frames of the wrong camera framing (wide, looking off right) + a -32 dB blip before the first word",
+   "word_a": "(file head)",
+   "word_b": "I",
+   "context": "[frames 0-3 wrong framing, blip 0.02-0.10] I want to talk about some of the altcoins...",
+   "cut_start": 0.0,
+   "cut_end": 0.133333,
+   "removed": 0.133333,
+   "trough_start_db": -81.5,
+   "trough_end_db": -77.2,
+   "burst_span": [
+    0.02,
+    0.1
+   ],
+   "burst_peak_db": -32.3,
+   "in_face_window": true,
+   "note": "Mike: 'distortion in the first fraction of a second before I even say a word'. Frame 4 (0.133) is the first frame of the real framing; the I onset is 0.18 (trough 0.12-0.16). Both tracks cut at frame 4 = sample 5880.",
+   "join_on_output": 0.0,
+   "verify": {
+    "join_valley_db": -110.4,
+    "join_valley_at": 0.02,
+    "peak_within_60ms_db": -19.3,
+    "whisper": "I want to talk about some of the altcoins that you can hold and stack.",
+    "around_join": [
+     "I[0.00-0.12|0.82]",
+     "want[0.12-0.20|0.81]",
+     "to[0.20-0.32|1.00]",
+     "talk[0.32-0.48|1.00]"
+    ],
+    "word_a_prob": null,
+    "word_b_prob": 0.82
+   }
+  },
+  {
+   "n": 2,
+   "kind": "retake remnant: the abandoned first take of the DAGKnight line",
+   "word_a": "early,",
+   "word_b": "DAGKnight (the retake, kept)",
+   "context": "...the tooling is early, [DAGKnight is still a proto] DAGKnight is still a proposed protocol.",
+   "cut_start": 367.766667,
+   "cut_end": 369.2,
+   "removed": 1.433333,
+   "trough_start_db": -43.3,
+   "trough_end_db": -85.1,
+   "burst_span": [
+    367.79,
+    369.08
+   ],
+   "burst_peak_db": -18.0,
+   "in_face_window": false,
+   "note": "no <SIL trough between 'early,' and the bad take (he launched straight in): cut_start sits in the breath dip 367.68-367.78 (-34 to -43 dB, bottom 367.77), cut_end in the 369.10-369.43 true-silence trough leaving 0.24 s of natural pause before the retake onset at 369.44. Both edges black (COVER).",
+   "join_on_output": 367.633333,
+   "verify": {
+    "join_valley_db": -99.0,
+    "join_valley_at": 367.58,
+    "peak_within_60ms_db": -56.8,
+    "whisper": "instance is all it gets here. But here's the thing. The apps aren't live yet. The tooling is early. Agnite is still a proposed protocol. My verdict, my opinion if the world ends",
+    "around_join": [
+     "tooling[366.48-366.88|0.99]",
+     "is[366.88-367.04|0.98]",
+     "early.[367.04-367.44|0.99]",
+     "Agnite[367.98-368.26|0.54]",
+     "is[368.26-368.42|1.00]",
+     "still[368.42-368.58|1.00]",
+     "a[368.58-368.70|0.99]"
+    ],
+    "word_a_prob": 0.99,
+    "word_b_prob": null
+   }
+  },
+  {
+   "n": 3,
+   "kind": "retake remnant: the abandoned first take of 'about fifty-four' (the retake carries the 'and')",
+   "word_a": "day,",
+   "word_b": "and (the retake, kept)",
+   "context": "...about 3,600 a day, [about fifty-four] and about fifty-four percent of the cap is out.",
+   "cut_start": 446.466667,
+   "cut_end": 447.3,
+   "removed": 0.833333,
+   "trough_start_db": -83.4,
+   "trough_end_db": -84.4,
+   "burst_span": [
+    446.5,
+    447.29
+   ],
+   "burst_peak_db": -17.3,
+   "in_face_window": false,
+   "note": "Whisper (small+medium on tight fragments) + the energy profile: bad take 'about fifty-four' 446.50-447.29, retake 'and about fifty-four percent' from 447.32. cut_start in the 446.22-446.48 trough after 'day,' (keeps 0.25 s of its pause), cut_end in the one-bin trough 447.30 before 'and'. A first attempt that kept the bad 'about' read 'day, about and about 54' and was discarded. Both edges black (COVER).",
+   "join_on_output": 444.9,
+   "verify": {
+    "join_valley_db": -86.0,
+    "join_valley_at": 444.88,
+    "peak_within_60ms_db": -35.1,
+    "whisper": "0 .5 tau a block now, about 3600 a day, and about 54 % of the cap is out. Who's actually building there? There's a hard cap of...",
+    "around_join": [
+     "3600[443.32-444.14|0.84]",
+     "a[444.14-444.30|0.96]",
+     "day,[444.30-444.58|1.00]",
+     "and[444.72-445.10|0.99]",
+     "about[445.10-445.28|1.00]",
+     "54[445.28-445.74|0.99]",
+     "%[445.74-446.16|0.92]"
+    ],
+    "word_a_prob": 1.0,
+    "word_b_prob": 0.99
+   }
+  },
+  {
+   "n": 4,
+   "kind": "non-word vocal sound (0.15 s, peak -21 dB) in the pause after 'distribution.'",
+   "word_a": "distribution.",
+   "word_b": "Telegram",
+   "context": "...Why does it help jobs go away? Distribution. [sound] Telegram has, by Durov's count...",
+   "cut_start": 536.233333,
+   "cut_end": 536.433333,
+   "removed": 0.2,
+   "trough_start_db": -50.5,
+   "trough_end_db": -50.0,
+   "burst_span": [
+    536.26,
+    536.4
+   ],
+   "burst_peak_db": -20.9,
+   "in_face_window": false,
+   "note": "'distribution' nasal tail decays to -50 at 536.23 / -81 at 536.24; sound 536.26-536.40; trough 536.41-536.42; 'Telegram' onset 536.46. Frame-snapped edges 16087 / 16093. Join leaves ~0.03 s before the T (the sound filled the whole pause). Both edges black (COVER).",
+   "join_on_output": 533.833333,
+   "verify": {
+    "join_valley_db": -56.1,
+    "join_valley_at": 533.89,
+    "peak_within_60ms_db": -22.5,
+    "whisper": "biggest validator on the network. Why does it help jobs go away? Distribution. Telegram has by dwarves count in March of 2025 significantly over.",
+    "around_join": [
+     "go[532.26-532.44|0.97]",
+     "away?[532.44-532.78|1.00]",
+     "Distribution.[533.60-533.60|0.84]",
+     "Telegram[534.02-534.22|0.97]",
+     "has[534.22-534.74|0.99]",
+     "by[534.74-535.10|0.39]",
+     "dwarves[535.10-535.42|0.25]"
+    ],
+    "word_a_prob": 0.84,
+    "word_b_prob": 0.97
+   }
+  },
+  {
+   "n": 5,
+   "kind": "burst (0.13 s, peak -24 dB) in the pause after 'of this list.'",
+   "word_a": "list.",
+   "word_b": "So",
+   "context": "...the obvious distribution play of this list. [burst] So that's the list. Rails that charge rent...",
+   "cut_start": 586.766667,
+   "cut_end": 586.966667,
+   "removed": 0.2,
+   "trough_start_db": -48.3,
+   "trough_end_db": -50.9,
+   "burst_span": [
+    586.8,
+    586.93
+   ],
+   "burst_peak_db": -24.4,
+   "in_face_window": true,
+   "note": "'list.' decays to -44/-48 by 586.72-586.78 (-52 at 586.79); burst 586.80-586.93; trough 586.95; the S of 'So' from 586.98, vowel 587.04. cut_start is a FACE frame, cut_end is black: the cover-blackout's start moves <=0.2 s earlier inside the same pause, no speech touched.",
+   "join_on_output": 584.166667,
+   "verify": {
+    "join_valley_db": -45.6,
+    "join_valley_at": 584.16,
+    "peak_within_60ms_db": -29.3,
+    "whisper": "paying with Graham, it's the obvious distribution play of this list. So that's the list, rails that charge rent, money nobody controls.",
+    "around_join": [
+     "of[583.60-583.78|0.98]",
+     "this[583.78-583.92|0.97]",
+     "list.[583.92-584.16|0.99]",
+     "So[584.38-584.42|0.95]",
+     "that's[584.42-584.82|0.96]",
+     "the[584.82-584.94|0.99]",
+     "list,[584.94-585.28|0.99]"
+    ],
+    "word_a_prob": 0.99,
+    "word_b_prob": 0.95
+   }
+  }
+ ]
+}

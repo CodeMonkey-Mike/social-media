@@ -48,10 +48,21 @@ no SFX on the strength of a bad delegation. Never again.)
 - Overlays must NEVER collide in time AND space.
 
 ## Render + self-QA (do not skip)
-1. Draft render ~0.3 Mbps; chunk-QA a slice (thumbnail handoff + a b-roll transition).
-2. Full render to `remotion/out/<batch>/<n>-<slug>.mp4`.
-3. Run the **finalized-short gate**; then blackdetect, audio levels, overlay-collision frame checks,
-   whisper-verify captions on the final render.
+1. **ONE full-quality render on the first try. NO low-bitrate draft, ever** (Mike, 2026-10-05: the
+   0.2-0.3 Mbps draft is a longform-edited review proxy, never a shorts step). Render ONLY via the tool,
+   never a hand-typed `npx remotion render`:
+   `python video-creation/livestream-repurpose/skills/remotion-shorts-build/scripts/render_short.py full --batch <b> --clip <n> --slug <slug> --comp <CompId> --expect-frames <durationInFrames>`
+   (h264 crf 18 pinned in code; it takes and releases the `render` lock itself; output
+   `remotion/out/<batch>/<n>-<slug>.mp4`).
+2. Run the **finalized-short gate**; then blackdetect, audio levels, overlay-collision frame checks
+   (thumbnail handoff + every b-roll transition), whisper-verify captions, all on THAT render.
+3. **Fix by SPLICE, never a second full render:**
+   - VISUAL defect: `render_short.py splice ... --frames A-B [--frames C-D]` re-renders only those frame
+     windows and stitches them into the full render (audio copied untouched, frame total + PSNR verified).
+   - AUDIO-only defect (SFX masking the VO, a level, a cue retime): `render_short.py audio ...` re-renders
+     the audio alone and remuxes it, zero video frames.
+   - A second `full` is correct ONLY when the defect is on every frame (clip-wide).
+   Then re-run the gate + the step-2 checks on the fixed render.
 
 ## Never end your turn to wait (headless = your turn ending IS your exit)
 The batch orchestrator runs you as `claude -p`: the moment you reply without a tool call, the

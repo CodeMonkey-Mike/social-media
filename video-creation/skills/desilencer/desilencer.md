@@ -82,10 +82,13 @@ python desilencer/scripts/desilence.py in.mp4 --out out.mp4 --min-sil 0.5 --map-
 
 Audio-only inputs work (no `[outv]`). `--map-out` writes `{cuts, keeps}` in **source** coords for
 re-timing a downstream editor. `--pad` defaults to 0 (as a click guard it is unnecessary: declick handles that).
-Its real use is a PACING residual: the pad is kept on EACH side of a cut, so `--pad 0.1` leaves 0.2 s
-between sentences instead of butting them together. The longform-presentation track pins that shape
-(800 ms / `--pad 0.1`) in its own preset, `longform-presentation/skills/desilence/`; shorts and
-longform-edited run pad 0.
+Its real use is a PACING residual: `--pad` is kept AFTER the sentence that ends a cut pause and, unless
+`--pad-head` says otherwise, the same amount BEFORE the sentence that follows, so `--pad 0.1` leaves 0.2 s
+between sentences instead of butting them together. The tail side also protects word ENDINGS: a word-final
+stop/affricate release after its closure is a short island the 80 ms blip-absorb folds into the silence, and it
+measured up to 55 ms past a 100 ms tail pad (history-of-crypto, 2026-10-14). The longform-presentation track pins
+its shape (800 ms / `--pad 0.2 --pad-head 0.1`) in its own preset, `longform-presentation/skills/desilence/`;
+shorts and longform-edited run pad 0.
 
 **The map's keep-boundaries double as JUMP-CUT ANCHORS (Mike, 2026-07-06).** Every keep→keep join in the
 output is a cut that sat in silence, i.e. a natural sentence/phrase boundary. For longform-edited comps,

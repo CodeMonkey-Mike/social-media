@@ -116,10 +116,17 @@ def regions(lv):
     return coalesce(regs)
 
 
-def zone_cuts(regs, split, sil_pre, sil_post, pad):
+def zone_cuts(regs, split, sil_pre, sil_post, pad, pad_head=None):
     """For each SILENCE region, cut it if it is >= the zone's min-silence. Keep shorter gaps
-    (natural cadence). pad leaves a sliver of silence on each side (default 0 — declick handles
-    clicks, so no pad is needed; the -57 floor guarantees we never cut into a word tail)."""
+    (natural cadence). pad leaves a sliver of silence AFTER the word that ends the region (the tail
+    pad); pad_head leaves one BEFORE the word that starts the next (default = pad, symmetric).
+    Default 0 — declick handles clicks, so no pad is needed for a clean join. The -57 floor itself
+    never cuts into a word tail, but a word-final release after a closure (the k+s of "banks", the
+    j of "age") is a < 80 ms island that MIN_AUD folds into the silence: measured on
+    history-of-crypto (2026-10-14) such releases spill up to 55 ms past a 100 ms tail pad, so a
+    track that cares about word endings runs a 200 ms tail pad (longform-presentation preset)."""
+    if pad_head is None:
+        pad_head = pad
     cuts = []
     for typ, s, e in regs:
         if typ != 'sil':
@@ -127,7 +134,7 @@ def zone_cuts(regs, split, sil_pre, sil_post, pad):
         zmin = sil_pre if s < split else sil_post
         if (e - s) >= zmin:
             a = s + pad
-            b = max(a, e - pad)
+            b = max(a, e - pad_head)
             if b - a > 0.02:
                 cuts.append((a, b))
     return cuts
@@ -247,7 +254,11 @@ def main():
                     help="zone boundary (sec): before it use --sil-pre, after it --sil-post")
     ap.add_argument("--sil-pre", type=float, default=None, help="min silence before --split")
     ap.add_argument("--sil-post", type=float, default=None, help="min silence after --split")
-    ap.add_argument("--pad", type=float, default=0.0, help="silence to leave each side (sec); default 0")
+    ap.add_argument("--pad", type=float, default=0.0,
+                    help="silence to leave AFTER the word before each cut (sec; also before the next word "
+                         "unless --pad-head); default 0")
+    ap.add_argument("--pad-head", type=float, default=None,
+                    help="silence to leave BEFORE the word after each cut (sec); default = --pad")
     ap.add_argument("--no-declick", action="store_true", help="disable 8 ms join fades (NOT advised)")
     ap.add_argument("--nvenc", action="store_true", help="use h264_nvenc --bps instead of libx264 crf18")
     ap.add_argument("--bps", default="2M")
@@ -270,7 +281,7 @@ def main():
     total = dur(args.src)
     vid = has_video(args.src)
     regs = regions(levels(args.src))
-    cuts = zone_cuts(regs, split, pre, post, args.pad)
+    cuts = zone_cuts(regs, split, pre, post, args.pad, args.pad_head)
     keeps, removed = complement(cuts, total)
 
     zinfo = (f"zones: <{split}s>={pre*1000:.0f}ms / >={post*1000:.0f}ms"

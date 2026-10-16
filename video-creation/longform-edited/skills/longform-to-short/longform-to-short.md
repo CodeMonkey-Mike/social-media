@@ -11,6 +11,23 @@ argument (30 s default, outro inside), the opening FACE hook is the natural hook
 Envato clip or a ChatGPT image gets ONE alternative asset (`assets/short/`) overlaid in the short. The CTA line is the SHARED
 take `assets/vo/cta-watch-full.mp3` ("Click below to watch the full video"), mixed by `scripts/mix_short.py`; never re-voiced.
 
+## 16:9-SOURCED MODE (no full vertical; every-job, Mike 2026-10-08)
+When Mike skips the full vertical ("I only want the short"), the lane still needs its two sources on one clock, so the
+VERTICAL master is an ADAPTER: a full-length 1080x1920 canvas (black) on the paused spine's clock, with the short's spans
+painted in after the cut plan is approved. The span pictures come from the 16:9 comp rendered WITHOUT its caption track
+(`render_comp.py --frames a-b --props <json with "captions": false>`; the comp exposes `inputProps.captions`), re-framed per
+span: FACE spans crop 608x1080 on the measured face centre (`assets/vertical/face-crop.json`, `measure_face_crop.py`),
+cover spans centre-crop (the variety rule overlays native-vertical alternates on Envato / AI-still spans anyway). The flag
+file `assets/short/from-16x9.json` tells `s_captions` that NOTHING is burned, so every span gets the short's captions.
+Brief the strategist to prefer FACE spans and croppable covers and to avoid charts, receipts and text cards. Everything
+downstream (extract, variants, captions, comp, render, mix, verify, gates) is the normal lane.
+
+### Captions never cross a span end (lane rule in code, 2026-10-08)
+`s_captions` builds the short's caption groups from the words the short KEEPS only (a word belongs to a span when its
+midpoint lies inside the span; Whisper onsets run early). Grouping on the whole transcript welded a span's last word to the
+longform's next word ("fast i" on every-job: "coming fast" + "I think we're only a few years away"), a word the short never
+says. If a seam caption ever shows a stray word again, check this rule before anything else.
+
 ## When this runs
 
 After the vertical longform exists and Mike has approved it. **The short is a CONDENSATION, not a new

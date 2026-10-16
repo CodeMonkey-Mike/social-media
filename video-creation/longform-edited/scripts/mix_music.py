@@ -55,11 +55,54 @@ def lufs_and_peak(path):
     return (float(m[-1]) if m else None), (float(p[-1]) if p else None)
 
 
+def _num(v):
+    try:
+        return None if v is None else float(v)
+    except (TypeError, ValueError):
+        return None
+
+
 def tc(s):
     if ":" in s:
         m, sec = s.split(":")
         return int(m) * 60 + float(sec)
     return float(s)
+
+
+def bed_chain(k, b, file_len):
+    """The filter chain for one resolved bed. REMIX LOOP (music.md section LOOP, Mike 2026-10-06): when the bed names a
+    bar-aligned region loop_in/loop_out (file seconds), the region is repeated with aloop as many times as the span
+    needs (N extra passes) and the file's real ending stays in place; nothing restarts from the top. A right-aligned
+    bed (align_end) sheds the surplus from its head so the ending lands on the span end; any other bed sheds it from
+    the tail. Legacy rows with cover=loop and no region keep the old whole-file restart (the input gets -stream_loop)."""
+    import math
+    length = b["t_end"] - b["t_start"]
+    g = 10 ** (b["gain_db"] / 20)
+    expr = f"{g:.6f}"
+    for au in b["automation"]:
+        mlt = 10 ** (au["rel_db"] / 20)
+        r = max(0.05, au["ramp"])
+        f = f"clip((t-{au['start']:.3f})/{r:.3f},0,1)*clip(({au['end']:.3f}-t)/{r:.3f},0,1)"
+        expr += f"*(1+({mlt:.6f}-1)*{f})"
+    fo_st = max(0.0, length - b["fade_out"])
+    tail = ((f"afade=t=in:st=0:d={b['fade_in']:.3f}," if b["fade_in"] > 0 else "")
+            + f"afade=t=out:st={fo_st:.3f}:d={b['fade_out']:.3f},volume='{expr}':eval=frame,"
+            f"adelay={int(round(b['t_start'] * 1000))}|{int(round(b['t_start'] * 1000))}[m{k}]")
+    li, lo = b.get("loop_in"), b.get("loop_out")
+    if li is not None and lo is not None:
+        src_in = b["source_in"]
+        avail = max(0.0, file_len - src_in)
+        reps = 0 if avail + 0.01 >= length else int(math.ceil((length - avail) / (lo - li)))
+        total = avail + reps * (lo - li)
+        head = max(0.0, total - length) if b.get("align_end") else 0.0
+        b["loop_resolved"] = {"loop_in": li, "loop_out": lo, "extra_passes": reps, "head_trim": round(head, 3),
+                              "tail_trim": round(0.0 if b.get("align_end") else max(0.0, total - length), 3)}
+        loop = (f"aloop=loop={reps}:size={int(round((lo - li) * 48000))}:start={int(round((li - src_in) * 48000))},"
+                if reps > 0 else "")
+        return (f"[{k}:a]atrim=start={src_in:.3f},asetpts=PTS-STARTPTS,aformat=sample_rates=48000:channel_layouts=stereo,"
+                f"{loop}atrim=start={head:.3f}:end={head + length:.3f},asetpts=PTS-STARTPTS," + tail)
+    return (f"[{k}:a]atrim=start={b['source_in']:.3f}:end={b['source_in'] + length:.3f},asetpts=PTS-STARTPTS,"
+            f"aformat=sample_rates=48000:channel_layouts=stereo," + tail)
 
 
 def find_sfx(name):
@@ -92,8 +135,11 @@ def main():
         print("FATAL: no paused sidecar in spine/", file=sys.stderr)
         sys.exit(2)
     meta = json.loads(paused[-1].read_text(encoding="utf-8"))
-    CARD_T = [float(p["at"]) for p in meta.get("pauses") or []]
     PAUSE = float(meta.get("pause_s") or 1.0)
+    # every baked pause: title cards (dur = pause_s, a bed breathes at them) AND clip inserts (their own dur, e.g. a 10 s
+    # spliced clip whose audio sits in the VO track; no card breath, the plan's automation ducks the bed). 2026-10-08.
+    PAUSES = [(float(p["at"]), float(p.get("dur") or PAUSE), bool(p.get("card"))) for p in meta.get("pauses") or []]
+    CARD_T = [at for at, _, is_card in PAUSES if is_card]
     total = duration(video)
     vo = Path(a.vo).resolve() if a.vo else (proj / "assets" / "spine.mp4")
     if not (vo.is_file() and abs(duration(vo) - total) <= 0.3):
@@ -103,7 +149,7 @@ def main():
         vo = video                          # no matching spine: the video's own audio is the VO
 
     def sh(t):
-        return t + PAUSE * sum(1 for c in CARD_T if c <= t + 1e-6)
+        return t + sum(dur for at, dur, _ in PAUSES if at <= t + 1e-6)
 
     def card_start(t):  # paused-spine time where the card at source t begins
         return sh(t) - PAUSE
@@ -167,7 +213,22 @@ def main():
         resolved_beds.append({"chapter": b.get("chapter"), "file": str((REPO / b["source_file"]).resolve() if not Path(b["source_file"]).is_absolute() else b["source_file"]),
                               "t_start": round(t_start, 3), "t_end": round(t_end, 3), "source_in": round(max(0.0, src_in), 3),
                               "fade_in": fi if t_start < t_full else 0.0, "fade_out": fo, "gain_db": gain_db, "loop": str(b.get("cover", "")).lower() == "loop",
+                              "loop_in": _num(b.get("loop_in_sec", b.get("loop_point_sec"))) if b.get("loop_out_sec") is not None else None,
+                              "loop_out": _num(b.get("loop_out_sec")),
+                              "align_end": bool(b.get("align_end")) or str(b.get("align", "")).lower() == "end" or last,
                               "automation": autom})
+    # CLIP INSERTS duck the bed automatically (2026-10-08, every-job R17): a spliced clip's voice sits in the VO track over
+    # a baked pause, so every bed that overlaps the insert's paused-time window dips INSERT_DUCK_DB with a short ramp.
+    INSERT_DUCK_DB, INSERT_RAMP = -14.0, 0.3
+    for at, dur, is_card in PAUSES:
+        if is_card:
+            continue
+        ps = at + sum(d for a2, d, _ in PAUSES if a2 < at - 1e-6)       # paused time where the insert begins
+        pe = ps + dur
+        for rb in resolved_beds:
+            if rb["t_start"] < pe and rb["t_end"] > ps:
+                rb["automation"].append({"start": round(max(0.0, ps - rb["t_start"]), 3), "end": round(min(rb["t_end"], pe) - rb["t_start"], 3),
+                                         "rel_db": INSERT_DUCK_DB, "ramp": INSERT_RAMP, "why": f"clip insert at source {at} ({dur:.1f}s)"})
     # SFX rows from the event log
     ep = (proj / "EDIT-PLAN.md").read_text(encoding="utf-8")
     ep_lines = ep.split("\n")
@@ -239,6 +300,13 @@ def main():
         for b in resolved_beds:
             print(f"  BED {b['chapter']:10} {b['t_start']:8.3f} -> {b['t_end']:8.3f}  file@{b['source_in']:.3f}  gain {b['gain_db']} dB  "
                   f"fade in {b['fade_in']} / out {b['fade_out']}  automation {len(b['automation'])}  {Path(b['file']).name}")
+            if b.get("loop_in") is not None and b.get("loop_out") is not None:
+                bed_chain(0, b, duration(b["file"]))   # resolve the loop for the report
+                lr = b["loop_resolved"]
+                print(f"      LOOP {lr['loop_in']:.3f}-{lr['loop_out']:.3f}s x{lr['extra_passes']} extra pass(es), head trim {lr['head_trim']}s, "
+                      f"tail trim {lr['tail_trim']}s, {'END-aligned' if b.get('align_end') else 'start-aligned'}")
+            elif b["loop"]:
+                print("      LOOP: whole-file restart (no region given; music.md wants loop_in_sec/loop_out_sec)")
         print("DRY-RUN (nothing rendered)")
         return
 
@@ -247,23 +315,14 @@ def main():
     chains, labels = [], []
     k = 2
     for b in resolved_beds:
-        if b["loop"]:
+        file_len = duration(b["file"])
+        has_region = b.get("loop_in") is not None and b.get("loop_out") is not None
+        if b["loop"] and not has_region:
+            print(f"WARN bed {b['chapter']}: cover=loop with no loop_in_sec/loop_out_sec, falling back to a whole-file restart "
+                  "(music.md: loops are bar-aligned section repeats; give the region)", flush=True)
             inputs += ["-stream_loop", "-1"]
         inputs += ["-i", b["file"]]
-        length = b["t_end"] - b["t_start"]
-        g = 10 ** (b["gain_db"] / 20)
-        expr = f"{g:.6f}"
-        for au in b["automation"]:
-            mlt = 10 ** (au["rel_db"] / 20)
-            r = max(0.05, au["ramp"])
-            f = f"clip((t-{au['start']:.3f})/{r:.3f},0,1)*clip(({au['end']:.3f}-t)/{r:.3f},0,1)"
-            expr += f"*(1+({mlt:.6f}-1)*{f})"
-        fo_st = max(0.0, length - b["fade_out"])
-        chains.append(f"[{k}:a]atrim=start={b['source_in']:.3f}:end={b['source_in'] + length:.3f},asetpts=PTS-STARTPTS,"
-                      f"aformat=sample_rates=48000:channel_layouts=stereo,"
-                      + (f"afade=t=in:st=0:d={b['fade_in']:.3f}," if b["fade_in"] > 0 else "")
-                      + f"afade=t=out:st={fo_st:.3f}:d={b['fade_out']:.3f},volume='{expr}':eval=frame,"
-                      f"adelay={int(round(b['t_start'] * 1000))}|{int(round(b['t_start'] * 1000))}[m{k}]")
+        chains.append(bed_chain(k, b, file_len))
         labels.append(f"[m{k}]")
         k += 1
     for s in sfx + lib_sfx:
@@ -287,7 +346,7 @@ def main():
     li, _ = lufs_and_peak(vo)
     lo, po = lufs_and_peak(out)
     side = proj / "mix-audio.json"
-    side.write_text(json.dumps({"video": str(video), "vo": str(vo), "out": str(out), "card_t": CARD_T, "pause_s": PAUSE, "beds": resolved_beds,
+    side.write_text(json.dumps({"video": str(video), "vo": str(vo), "out": str(out), "card_t": CARD_T, "pause_s": PAUSE, "pauses": [{"at": a, "dur": d, "card": c} for a, d, c in PAUSES], "beds": resolved_beds,
                                 "sfx": sfx, "lib_sfx": lib_sfx, "lufs_in": li, "lufs_out": lo, "peak_out_dbfs": po,
                                 "rerun": f"python video-creation/longform-edited/scripts/mix_music.py \"{proj}\" --video \"{video}\""},
                                indent=2), encoding="utf-8")

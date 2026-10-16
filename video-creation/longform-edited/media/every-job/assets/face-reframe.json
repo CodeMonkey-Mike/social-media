@@ -1,0 +1,218 @@
+{
+  "spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\every-job\\spine\\ALL.d.desilenced.mp4",
+  "scale": 1.478,
+  "x": -798,
+  "y": -287,
+  "centered": true,
+  "css": "transformOrigin: '0 0', transform: 'translate(-798px, -287px) scale(1.478)'",
+  "face_point_out": {
+    "x": 960,
+    "y": 432
+  },
+  "punch_in_note": "scale punch-ins about face_point_out (the face stays put and the frame stays covered)",
+  "targets": {
+    "eye_line": 0.4,
+    "max_headroom": 0.1,
+    "min_scale": 1.0,
+    "max_scale": 1.6
+  },
+  "measured": {
+    "face_cx": 1189.5,
+    "face_cx_pct": 62.0,
+    "eye_y": 486.6,
+    "box_h": 379,
+    "head_top_est": 208.9,
+    "headroom_before_pct": 19.3,
+    "headroom_after_pct": 2.0,
+    "active_area": [
+      88,
+      1839,
+      2,
+      1078
+    ],
+    "face_cx_spread": [
+      1114.5,
+      1255.5
+    ],
+    "scale_needed_by": {
+      "cover_left_right": 1.478,
+      "cover_top": 0.891,
+      "cover_bottom": 1.096,
+      "headroom": 1.167
+    }
+  },
+  "windows": [
+    {
+      "window": [
+        0.167,
+        10.4
+      ],
+      "detections": 5,
+      "face_cx": 1188.0,
+      "eye_y": 464.8,
+      "box_h": 396
+    },
+    {
+      "window": [
+        28.3,
+        31.233
+      ],
+      "detections": 5,
+      "face_cx": 1190.5,
+      "eye_y": 460.2,
+      "box_h": 415
+    },
+    {
+      "window": [
+        138.333,
+        141.7
+      ],
+      "detections": 5,
+      "face_cx": 1155.5,
+      "eye_y": 479.4,
+      "box_h": 367
+    },
+    {
+      "window": [
+        206.7,
+        212.133
+      ],
+      "detections": 5,
+      "face_cx": 1189.5,
+      "eye_y": 483.8,
+      "box_h": 365
+    },
+    {
+      "window": [
+        303.467,
+        305.8
+      ],
+      "detections": 5,
+      "face_cx": 1237.0,
+      "eye_y": 500.4,
+      "box_h": 392
+    },
+    {
+      "window": [
+        321.933,
+        325.3
+      ],
+      "detections": 5,
+      "face_cx": 1240.0,
+      "eye_y": 518.6,
+      "box_h": 404
+    },
+    {
+      "window": [
+        452.2,
+        454.4
+      ],
+      "detections": 5,
+      "face_cx": 1189.0,
+      "eye_y": 504.8,
+      "box_h": 368
+    },
+    {
+      "window": [
+        550.767,
+        556.533
+      ],
+      "detections": 5,
+      "face_cx": 1183.5,
+      "eye_y": 489.6,
+      "box_h": 375
+    },
+    {
+      "window": [
+        574.033,
+        577.367
+      ],
+      "detections": 5,
+      "face_cx": 1255.5,
+      "eye_y": 483.4,
+      "box_h": 383
+    },
+    {
+      "window": [
+        592.0,
+        596.767
+      ],
+      "detections": 5,
+      "face_cx": 1190.0,
+      "eye_y": 486.2,
+      "box_h": 368
+    },
+    {
+      "window": [
+        676.067,
+        683.0
+      ],
+      "detections": 5,
+      "face_cx": 1169.0,
+      "eye_y": 485.4,
+      "box_h": 378
+    },
+    {
+      "window": [
+        740.533,
+        743.033
+      ],
+      "detections": 5,
+      "face_cx": 1207.5,
+      "eye_y": 477.8,
+      "box_h": 378
+    },
+    {
+      "window": [
+        785.833,
+        788.6
+      ],
+      "detections": 5,
+      "face_cx": 1114.5,
+      "eye_y": 501.4,
+      "box_h": 386
+    },
+    {
+      "window": [
+        883.967,
+        887.033
+      ],
+      "detections": 5,
+      "face_cx": 1130.5,
+      "eye_y": 503.6,
+      "box_h": 394
+    },
+    {
+      "window": [
+        1057.633,
+        1062.267
+      ],
+      "detections": 5,
+      "face_cx": 1166.5,
+      "eye_y": 466.4,
+      "box_h": 375
+    },
+    {
+      "window": [
+        1069.4,
+        1075.267
+      ],
+      "detections": 5,
+      "face_cx": 1172.5,
+      "eye_y": 498.4,
+      "box_h": 353
+    },
+    {
+      "window": [
+        1077.633,
+        1120.967
+      ],
+      "detections": 5,
+      "face_cx": 1198.0,
+      "eye_y": 499.0,
+      "box_h": 371
+    }
+  ],
+  "previews": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\every-job\\_previews\\qa\\face-reframe",
+  "note": "ONE global transform for every FACE window; background-swap clips of a face window get the same framing. If face_cx_spread is wider than about 8% of the frame, he moved between takes: QA the previews, a per-window offset may be needed."
+}

@@ -69,10 +69,17 @@ Run `python video-creation/skills/usage-ledger/usage_ledger.py report --what mus
    and any quiet confessional beat get the softest bed (or a dip), not a drop.
 4. **Cover a timeline longer than the track.** If the video is longer than the full track, DO NOT stretch one
    pass thin. Prefer: (a) place distinct section cuts as separate per-chapter beds with breaths between; (b)
-   loop a bed within its chapter (seamless loop point chosen at a low-energy bar); (c) reserve the full
+   loop a bed within its chapter as a REMIX loop (Mike, 2026-10-06): a bar-aligned region `loop_in_sec` /
+   `loop_out_sec` inside ONE steady section of the catalog's `analysis.segments`, a whole number of bars apart
+   (one bar = 60 / bpm × 4 s) so the exit matches the entry, repeated as often as the span needs, with the file's
+   real ending kept for a right-aligned hit; NEVER a whole-file restart (`music.md` ⛔ LOOP); (c) reserve the full
    track's drop for the single biggest beat. State the exact source-file in-point for each placement.
 5. **Level + breath.** Give a bed level target in dB under the VO (default ~-17 dB, note where to duck harder
-   under dense narration or a clip insert) and mark the inter-bed breath (~0.4-0.8s) at every chapter change.
+   under dense narration) and mark the inter-bed breath (~0.4-0.8s) at every chapter change. **Clip inserts**
+   (COVER-PLAN `clip_inserts`, a third-party clip with its OWN voice at a spine pause) are ducked AUTOMATICALLY by
+   `mix_music.py` (-14 dB, 0.3 s ramp, from the paused-spine sidecar): write NO automation row for them, but never
+   seat a bed change, a hard hit or a riser inside an insert's window (`splice_at` to `splice_at + seconds`, source
+   time), and say in `notes` which bed carries each insert.
 
 ## Output — return ONLY this JSON (no prose around it), the orchestrator writes it to MUSIC-PLAN.json
 ```
@@ -86,7 +93,7 @@ Run `python video-creation/skills/usage-ledger/usage_ledger.py report --what mus
       "chapter": "CH1", "span": [tIn, tOut], "register": "gear-3-epic",
       "source_file": "<path>", "source_in": 0.0, "cover": "loop|oneshot|section",
       "intensity": "aggressive|subtle|dip", "level_db_under_vo": -17,
-      "breath_before_sec": 0.0, "loop_point_sec": null,
+      "breath_before_sec": 0.0, "loop_point_sec": null, "loop_in_sec": null, "loop_out_sec": null, "align_end": false,
       "why": "energy region X under this register + this beat"
     }
   ],

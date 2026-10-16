@@ -36,6 +36,7 @@ Chapter map  (one line per chapter) <- the spine; CH1 carries the hook + opening
   (lock CH1's opening lines verbatim if the exact words matter — see the No-Cold-Open rule above)
 Production conventions  (line-tag legend + title-card flags table + FACE/COVER rules; see below)
 Per-chapter sections: register · Title card flag · tagged beats (Convention 5) · a `[!IMPORTANT]` verify box
+Clip inserts  (## CLIP-INSERTS: every candidate as a CLIP-<n> row with a status, or NONE + why; Convention 6) <- CONSIDERED on every video
 Facts + receipts (sources)
 Open items / next session
 ```
@@ -64,7 +65,10 @@ Three states, each unambiguous:
   signpost/beat name, still part of the same spoken bullet.
 - **`(parentheses) = direction / note to Mike**, NOT spoken** — register, camera, b-roll, a "tighten
   this", a lightweight word-swap ("(say 'a tech CEO', don't name Amazon)"). Inline parens are for
-  LIGHTWEIGHT directions only.
+  LIGHTWEIGHT directions only. **In a tagged screenplay (Convention 5, every screenplay the graph writes) a
+  parenthesis never rides on a spoken line (Mike, 2026-10-15):** a 👤 `[FACE]` / 🗣️ `[COVER]` / 🔒 `[SAY-EXACT]`
+  line is only the words he says, so the direction, word-swap or pronunciation goes on its own 💬 `[NOTE]` or
+  🎬 `[SHOW]` line (Convention 5, "A spoken line holds ONLY what Mike says").
 - **No unglossed jargon in spoken bullets (Mike, 2026-07-06).** Mike reads bullets near-verbatim — never
   hand him a term of art he hasn't been given a plain-language handle for ("pips", "basis points", "OI",
   "contango"…). Either replace it with plain language in the bullet, or gloss it INSIDE the same bullet
@@ -128,7 +132,10 @@ The spine is a **gated face** (longform-edited house rule #6): face is NOT on sc
   ONLY if they're very small/tight ("Gone. For everyone."). **Tag the very next line `[COVER]` explicitly**
   after a face sentence so the cut can't visually carry across the lines that follow. Untagged still
   defaults to COVER, but inside a `>` verbatim block (e.g. CH1's opening, locked SAY: beats) write the `[COVER]`
-  return out — gating there must be unambiguous, not inferred from the default.
+  return out — gating there must be unambiguous, not inferred from the default. The "next line" is the next
+  SPOKEN line: when the face sentence ends a beat or a chapter, the next beat's first spoken line already carries
+  its `[COVER]`. Never write a placeholder spoken line (an empty or parenthetical 🗣️ `[COVER]` such as "(CH2
+  follows)") to satisfy this rule (Mike, 2026-10-15, tao-detailed GATE 1).
 - Rule of thumb: a beat that TEACHES → `[COVER]`; Mike making a point / connecting → `[FACE]`.
 
 ## Convention 4 — Explainer visuals = SYSTEM-DESIGN containers, one per talking point
@@ -146,6 +153,25 @@ time as Mike speaks each bullet (cued to Phase-2 word-timings; one-container-at-
 - Full doctrine + rationale: the `feedback_diagrams_system_design_not_tables` memory.
 
 ---
+
+### Convention 4b — Chapter themes: the visual differential per chapter (Mike, 2026-10-10)
+When a video gives chapters their own music beds, give them their own LOOK too, so the viewer sees the chapter change
+as well as hears it. The screenplay's `## VISUAL-PLAN` carries a **Chapter themes** table: per chapter, ONE accent
+colour (from `container-canonical.css`'s palette unless a brand colour is the point: gold, cyan, purple, green, red,
+teal, or the token's own brand hex) that lights that chapter's charts, slides, containers and title card, and ONE
+image style for its ChatGPT b-roll ("house" = the persona Pixar look, or a different look per chapter: photoreal
+cinematic, clean 3D render, neon neural illustration, flat vector ...). Envato video is NOT themed (too costly to
+control); receipts and real marks always keep their real pixels. The coverage-strategist copies the table into
+COVER-PLAN.json `chapter_themes`, the BROLL-PLAN prints it per row, and the image / chart / slide / comp builders
+honour it. Mike rules the table with the screenplay (or at GATE 3 when it is added after GATE 1).
+
+```
+### Chapter themes
+| CH | Accent | Image style | Note |
+|---|---|---|---|
+| CH1 | #ffd700 (gold) | photoreal cinematic, warm amber rim, deep charcoal | the intro: assets and paychecks, not a token |
+| CH2 | #12aaff (Arbitrum blue) | clean 3D glass-and-chrome render, cool blue light | the token's own colour |
+```
 
 ## Convention 5 — the line-tag layout (one job per line, tagged at the front)
 
@@ -166,6 +192,7 @@ editors; markdown gets the same contrast from leading tags + emoji + VS Code cal
 | 🎬 `[SHOW]` | on-screen direction: b-roll, container, image, receipt, transition, lower-third |
 | 💬 `[NOTE]` | a note / recommendation to Mike, NOT in the video |
 | 🔍 `[VERIFY]` | confirm before it goes on screen |
+| 🎞️ `[INSERT]` | a third-party clip plays with its OWN voice while the spine pauses (Convention 6); names its CLIP-<n> |
 
 **Rules:**
 - **One job per line.** Never weld a spoken line to a direction or a verify in the same line. If a beat needs
@@ -179,6 +206,9 @@ editors; markdown gets the same contrast from leading tags + emoji + VS Code cal
 - **`[SHOW]` is the single umbrella for non-spoken visual direction** (it replaces bare `(parens)` directions
   and the cryptic `DIR`). Transitions/SFX get their detailed treatment later in the EDIT-PLAN; the screenplay
   only needs the umbrella cue.
+- **`[INSERT]` is the only tag for a clip that plays with its own voice** (Convention 6): a direction line, never
+  spoken, one per clip, naming its `CLIP-<n>` row of `## CLIP-INSERTS`, placed between the set-up line and the resume
+  line. A muted clip under narration is a `[SHOW]` receipt, not an `[INSERT]`.
 - **`[VERIFY]` replaces the cryptic `CHK`/inline `[VERIFY]`** sprawl; a one-line check stays inline as a
   `🔍 [VERIFY]` line, anything load-bearing moves to the `> [!IMPORTANT]`/`> [!WARNING]` box.
 - Tags are plain text, so they survive raw view + every renderer; the emoji is the color anchor. Renaming a
@@ -190,7 +220,46 @@ editors; markdown gets the same contrast from leading tags + emoji + VS Code cal
   `skills/doc-reference/SCREENPLAY.reference.md` (copy it, do not re-derive), and the rule is enforced in code:
   `python video-creation/longform-edited/skills/doc-reference/lint_screenplay.py <SCREENPLAY.md> [--face-max N] [--fix]`** (the
   longform graph runs it in its `screenplay` node on every video: tag form, one job per line, beat signposts,
-  required sections, no cold open, no em dashes, the FACE budget; `--fix` repairs the mechanical class only).
+  required sections, no cold open, no em dashes, the FACE budget, the `## CLIP-INSERTS` section with its id cross-check,
+  no parentheses on a spoken line; `--fix` repairs the mechanical class only).
+- **A spoken line holds ONLY what Mike says: no parentheses, no placeholders (Mike, 2026-10-15).** 👤 `[FACE]`,
+  🗣️ `[COVER]` and 🔒 `[SAY-EXACT]` all mean "Mike says this": word for word when locked, in his own words
+  otherwise. A direction, an aside, a word-swap, a pronunciation ("arXiv is said 'archive'") or a "the next
+  chapter follows" goes on its own 💬 `[NOTE]` / 🎬 `[SHOW]` line, never in parentheses on the spoken line.
+  `lint_screenplay.py` FAILS a spoken line that carries a parenthesis (its rule 15), so the graph halts before
+  the screenplay reaches Mike's gate. Origin: tao-detailed GATE 1, where four 🗣️ `[COVER]` lines held nothing
+  but a parenthetical stage note.
+
+---
+
+## Convention 6 — 🎞️ `[INSERT]` clip inserts: a THIRD voice, the spine pauses (Mike, 2026-10-09)
+
+Canonical rule, pipeline, capture tool and gates: **`skills/clip-inserts/clip-inserts.md`**. What the SCRIPT owes it:
+
+- **Consider it on every video.** Read DATA.md's "Clip candidates" (the researcher lists every real clip of someone
+  saying the thing: a CEO, a founder, a politician, a demo, with verbatim words, URL + timecodes and the in-context
+  check). Propose the ones that earn their seconds; write the rest off. Many videos carry none; one may carry three
+  or four. The decision is WRITTEN either way, in `## CLIP-INSERTS` (a `CLIP-<n>` row per candidate with a status,
+  or `NONE: <why>`), and Mike rules at GATE 1. `lint_screenplay.py` FAILS a screenplay without the section.
+- **A spliced clip is NOT a muted cover.** It plays FULL-FRAME WITH ITS OWN VOICE while Mike's spine PAUSES (exactly
+  like a title-card pause, longer, with the clip's audio in the gap), transition in and out, bed ducked. A muted clip
+  under his narration is a receipt cover (R(other)), a different device. "Splice it in" / "don't put his voice on
+  mine" always means the pause (every-job, 2026-10-08: read as a muted cover once, never again).
+- **Write the beat around the clip:** a 🗣️ `[COVER]` (or 👤 `[FACE]`) SET-UP line that names the speaker and ENDS THE
+  SENTENCE, then the 🎞️ `[INSERT]` line (`CLIP-<n>`, who, the seconds, the burned context caption), then the RESUME
+  line with Mike's answer. Mike never reads the words the clip is about to say; the set-up names it, the clip says it.
+  The set-up line's last word is the splice point (the baker snaps it into the silence trough), so it must be a real
+  sentence end with a breath, never a mid-clause comma.
+- **Honesty:** the burned caption names who / where / when; the clip is never trimmed to change the speaker's
+  meaning; DATA.md's do-not-air list applies to clips. Any claim ABOUT the clip is Mike's, said as his, in the resume
+  line (every-job: "It hasn't happened yet.").
+- **Length:** the quoted seconds, typically 4 to 15 s; more only on Mike's ruling.
+
+The `## CLIP-INSERTS` table (copy the shape from `skills/doc-reference/SCREENPLAY.reference.md`):
+`| id | Who / what plays (verbatim words) | Source + timecodes | Length | Lands (chapter / beat, after which set-up line) | Burned caption | Status |`
+Status is `PROPOSED` (Mike rules at GATE 1), `APPROVED`, `REJECTED` or `HELD`. A REJECTED / HELD row needs no
+`[INSERT]` line; a PROPOSED / APPROVED row must land in a chapter (the lint checks both ways). When nothing fits, the
+section is one line: `NONE: <what DATA.md's Clip candidates found and why none earns its seconds>`.
 
 ---
 
@@ -230,6 +299,13 @@ OPEN QUESTIONS so Mike picks at GATE 1. Record his pick back into that persona e
 - Never frame Mike's own calls as a timing mistake (`avoid_in_drafts`: no self-undermining). Conviction
   reads vindicated and forward-looking.
 - Put any debunked-claim warning in a VERIFIED-FALSE box near the thesis so it can't creep back on screen.
+- **Caveats are LINES, never a SECTION (Mike, 2026-10-15, tao-detailed GATE 1).** In a video that is bullish on a
+  coin, an honest caveat rides as one line here and there, inside the beat it belongs to ("Here's the thing:
+  emissions still pay Lium about twice what customers do. But back in May, it was 4 to 5 times"). Never a
+  dedicated caveats / risks / bear-case beat or chapter, never a numbered list of negatives, never a summary line
+  that stacks them up: a whole section of downside reads as Mike talking his own coin down. His words: "I'm okay
+  with a few lines here and there that have brutal honesty, but not an entire section dedicated to it." (persona
+  `avoid_in_drafts`). The same goes for the concept brief: no "caveats" pillar.
 
 ---
 
@@ -273,6 +349,9 @@ edit is cued off THIS, not SCREENPLAY.md. Divergences are listed at the bottom._
    table: TC | as recorded (the actual words) | vs screenplay
    Mark every row KEPT / CHANGED / AD-LIB / DROPPED. Quote the real words, never the scripted ones.
    Flag on the row any line carrying a [!WARNING] guard, and whether that guard HELD on the take.
+   A screenplay [INSERT] beat gets its OWN row: TC = where the set-up line ENDS as spoken, text "(clip insert CLIP-n)",
+   verdict KEPT · INSERT CLIP-n after "<the last words said>", or DROPPED when the set-up line was not said (Mike
+   re-places it or drops it). The coverage-strategist takes the splice point from this row.
 
 ## Divergences from SCREENPLAY.md    Dropped (scripted lines not said) · Added (ad-libs) · which guards HELD.
                        **Record Mike's ruling inline and mark it RESOLVED or OPEN** (e.g. "1 + 2 RESOLVED by
@@ -297,6 +376,8 @@ Rules that keep it honest:
 1. Lock topic / title / spine architecture / register (PROJECT-LOG decision).
 2. Lock the **chapter map** + **CH1's opening** (the hook lives in CH1 — no separate "cold open").
 3. Draft each chapter as **Outline (beats)** with `[FACE]/[COVER]` + Title-card flag + facts/`[VERIFY]`.
+3b. Decide the CLIP-INSERTS (Convention 6) from DATA.md's Clip candidates: a 🎞️ `[INSERT]` line per clip that
+   earns its seconds, the set-up line written to END before it, the `## CLIP-INSERTS` table (or NONE + why).
 4. Build the **system-design containers** for explainer chapters (Convention 4).
 5. Resolve open decisions + run live `[VERIFY]` checks.
 6. Pull music (LUFS + MUSIC_DB) + write **BROLL-PLAN.md** (cover every non-`[FACE]` beat). Music is

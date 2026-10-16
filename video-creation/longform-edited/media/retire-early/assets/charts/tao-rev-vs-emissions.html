@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>tao-rev-vs-emissions | retire-early</title>
+<!--
+tao-rev-vs-emissions: Type 1 ANIMATED chart (design states), retire-early, chapter CH4 (accent #a855f7).
+COMPUTED comparison. States: -start / -mid / -payoff = the design spec. What moves when: tao-rev-vs-emissions.spec.md.
+Render: open in headless Chromium at viewport 1920x1080 (device scale 2), wait for document.fonts, then
+screenshot each .frame by its id -> <id>.png (the screenshot driver used: _previews/chart-build/shoot.py).
+-->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+:root{--acc:#a855f7;--acc-rgb:168,85,247;--accent-red:#ff4060}
+
+/* ===== chart-builder layer (adds classes; tokens above untouched; --acc = the CHAPTER accent) ===== */
+.frame.dg{padding:0;display:block}
+.stage{width:1920px;height:1080px}
+.stage>*{position:absolute}
+.k{color:var(--acc)}
+.hdr{left:140px;top:76px;width:1640px}
+.hdr .ey{margin-bottom:16px}
+.hdr h1{font-size:62px;line-height:1.08;max-width:1640px}
+.hdr .divider{margin:24px 0 0} /* the LOCKED green->cyan gradient stays: the chapter accent re-colours only lit elements */
+.src{left:140px;bottom:38px;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--text-muted);letter-spacing:.01em;white-space:nowrap}
+svg.edges{left:0;top:0;width:1920px;height:1080px;overflow:visible}
+.num{font-family:'JetBrains Mono',monospace;font-weight:600}
+
+/* nodes: ghost (map preview) < dim (stepped back) < built (neutral) < on (accent edge) < lit (spotlight) */
+.node{box-sizing:border-box;border-radius:16px;background:var(--bg-card);border:2px solid rgba(136,146,164,.26);padding:18px 26px}
+.node .tag{font-family:'DM Sans';font-weight:700;font-size:16px;line-height:1.2;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.node .ttl{font-family:'DM Sans';font-weight:700;font-size:31px;line-height:1.15;color:var(--text-primary)}
+.node .sub{font-family:'DM Sans';font-weight:400;font-size:22px;line-height:1.38;color:var(--text-secondary);margin-top:6px}
+.node.on{border-color:rgba(var(--acc-rgb),.85)}
+.node.on .tag,.node.lit .tag{color:var(--acc)}
+.node.lit{border-color:var(--acc);box-shadow:0 0 0 1px rgba(var(--acc-rgb),.35),0 0 56px rgba(var(--acc-rgb),.30);
+  background:linear-gradient(180deg,rgba(var(--acc-rgb),.13),rgba(18,21,28,.97) 64%)}
+.node.lit .sub{color:#b4bccb}
+.node.ghost{opacity:.14}
+.node.dim{opacity:.40;filter:saturate(.25)}
+.node.dashed{border-style:dashed;background:transparent}
+.node.risk{border-color:rgba(255,64,96,.42)}
+.node.risk .tag{color:rgba(255,64,96,.85)}
+.node.risk.lit{border-color:var(--accent-red);box-shadow:0 0 0 1px rgba(255,64,96,.35),0 0 56px rgba(255,64,96,.30);
+  background:linear-gradient(180deg,rgba(255,64,96,.12),rgba(18,21,28,.97) 64%)}
+.node.risk.lit .tag{color:var(--accent-red)}
+.row{display:flex;justify-content:space-between;align-items:center;height:100%;gap:24px}
+.vc{display:flex;flex-direction:column;justify-content:center;height:100%}
+.ctr{text-align:center;align-items:center}
+.chip{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:21px;padding:8px 18px;border-radius:100px;white-space:nowrap;
+  border:1.5px solid rgba(136,146,164,.4);color:var(--text-primary)}
+.node.on .chip,.node.lit .chip{border-color:var(--acc);color:var(--acc);background:rgba(var(--acc-rgb),.12)}
+
+/* labels on edges */
+.lbl{font-family:'DM Sans';font-weight:500;font-size:21px;line-height:1.25;color:var(--text-secondary);white-space:nowrap}
+.lbl.ghost{opacity:.14}
+.lbl.dim{opacity:.4}
+.lbl.on{color:rgba(var(--acc-rgb),.95)}
+.lbl.lit{color:var(--acc);font-weight:700;text-shadow:0 0 18px rgba(var(--acc-rgb),.55)}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;padding:5px 16px;border-radius:100px;
+  border:1.5px solid rgba(136,146,164,.45);background:var(--bg-deep);color:var(--text-primary)}
+.lbl.on .pill{border-color:rgba(var(--acc-rgb),.8);color:var(--acc)}
+.lbl.lit .pill{border-color:var(--acc);color:#fff;background:rgba(var(--acc-rgb),.30);box-shadow:0 0 26px rgba(var(--acc-rgb),.55);text-shadow:none}
+
+/* edges + arrowheads */
+.e{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.e.ghost{stroke:rgba(136,146,164,.55);stroke-width:2.5;opacity:.22}
+.e.dim{stroke:rgba(136,146,164,.5);stroke-width:2.5;opacity:.45}
+.e.built{stroke:rgba(136,146,164,.6);stroke-width:2.5}
+.e.on{stroke:rgba(var(--acc-rgb),.9);stroke-width:3}
+.e.lit{stroke:var(--acc);stroke-width:4;filter:drop-shadow(0 0 7px rgba(var(--acc-rgb),.85))}
+.e.dash{stroke-dasharray:9 10}
+.ah{stroke:none}
+.ah.ghost{fill:rgba(136,146,164,.55);opacity:.22}
+.ah.dim{fill:rgba(136,146,164,.5);opacity:.45}
+.ah.built{fill:rgba(136,146,164,.75)}
+.ah.on{fill:rgba(var(--acc-rgb),.95)}
+.ah.lit{fill:var(--acc);filter:drop-shadow(0 0 7px rgba(var(--acc-rgb),.85))}
+
+
+.lab{left:140px;width:420px}
+.lab .tag{font-family:'DM Sans';font-weight:700;font-size:16px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted)}
+.lab .ttl{font-family:'DM Sans';font-weight:700;font-size:34px;color:var(--text-primary);margin-top:6px}
+.lab .sub{font-family:'DM Sans';font-size:22px;line-height:1.35;color:var(--text-secondary);margin-top:6px}
+.lab.on .tag{color:var(--acc)}
+.lab.ghost{opacity:.14}
+.plot{left:0;top:0;width:1920px;height:1080px}
+.ax{font-family:'JetBrains Mono',monospace;font-size:19px;fill:var(--text-muted)}
+.axt{font-family:'DM Sans';font-weight:700;font-size:16px;letter-spacing:.16em;text-transform:uppercase;fill:var(--text-muted)}
+.grid{stroke:rgba(136,146,164,.14);stroke-width:1.5;stroke-dasharray:4 7}
+.base{stroke:rgba(136,146,164,.45);stroke-width:2}
+.trk{fill:rgba(136,146,164,.07)}
+.vlab{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:30px;fill:var(--text-primary)}
+.vin{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:36px;fill:#fff}
+.vsm{font-family:'DM Sans';font-size:20px;fill:var(--text-secondary)}
+.cmp{left:600px;top:880px;width:1180px;font-family:'DM Sans';font-size:21px;line-height:1.45;color:var(--text-secondary)}
+.cmp b{color:var(--acc);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:16px;margin-right:12px}
+
+</style></head>
+<body>
+<div class="frame dg" id="tao-rev-vs-emissions-start"><div class="orb" style="width:600px;height:600px;right:-300px;top:-320px;background:var(--acc)"></div></div>
+<div class="frame dg" id="tao-rev-vs-emissions-mid"><div class="orb" style="width:600px;height:600px;right:-300px;top:-320px;background:var(--acc)"></div></div>
+<div class="frame dg" id="tao-rev-vs-emissions-payoff"><div class="orb" style="width:600px;height:600px;right:-300px;top:-320px;background:var(--acc)"></div></div>
+<script>
+const ACCRGB='168,85,247';
+const HEADER="<div class=\"hdr \"><div class=\"ey\">TAO &middot; WHERE THE PAY COMES FROM</div><h1>Customer money against <span class=\"k\">new coins</span></h1><div class=\"divider\"></div></div>";
+const SRC="Sources: Crypto Briefing, 2026-09-29 &middot; Bittensor docs, emissions &middot; CoinGecko, 2026-10-09 21:55 UTC";
+const PARAMS={"tao-rev-vs-emissions-start": {"cust": 35, "custLit": 1, "row2": 0, "emis": 0, "emisVal": 0}, "tao-rev-vs-emissions-mid": {"cust": 35, "custLit": 0, "row2": 1, "emis": 170, "emisVal": 0}, "tao-rev-vs-emissions-payoff": {"cust": 35, "custLit": 0, "row2": 1, "emis": 360, "emisVal": 1}};
+
+const BX=600,BX1=1720,VM=400,xv=v=>BX+(BX1-BX)*v/VM, R1=[372,84], R2=[592,84];
+function render(frame,P){
+  const st=document.createElement('div');st.className='stage';st.innerHTML=HEADER+`<div class="src">${SRC}</div>`;
+  st.insertAdjacentHTML('beforeend',`<div class="lab on" style="top:${R1[0]-6}px"><div class="tag">Customer money</div><div class="ttl">Paid by customers</div><div class="sub">about two dozen subnets,<br>a year, as reported</div></div>`);
+  st.insertAdjacentHTML('beforeend',`<div class="lab ${P.row2?'on':'ghost'}" style="top:${R2[0]-6}px"><div class="tag">New TAO issued</div><div class="ttl">about 1.3M TAO a year</div><div class="sub">3,600 a day &times; 365</div></div>`);
+  let s=`<svg class="plot" width="1920" height="1080"><defs>
+   <linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="rgba(${ACCRGB},.55)"/><stop offset="1" stop-color="rgba(${ACCRGB},1)"/></linearGradient>
+   <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="rgba(${ACCRGB},${P.custLit?.35:.22})"/><line x1="0" y1="0" x2="0" y2="10" stroke="rgba(${ACCRGB},${P.custLit?.95:.6})" stroke-width="4"/></pattern></defs>`;
+  for(const v of [100,200,300,400])s+=`<line class="grid" x1="${xv(v)}" x2="${xv(v)}" y1="340" y2="760"/>`;
+  s+=`<line class="base" x1="${BX}" x2="${BX1}" y1="780" y2="780"/>`;
+  for(const v of [0,100,200,300,400])s+=`<line class="base" x1="${xv(v)}" x2="${xv(v)}" y1="780" y2="788"/><text class="ax" x="${xv(v)}" y="816" text-anchor="middle">${v?v+'M':'0'}</text>`;
+  s+=`<text class="axt" x="${BX1}" y="850" text-anchor="end">dollars a year</text>`;
+  s+=`<rect class="trk" x="${BX}" y="${R1[0]}" width="${BX1-BX}" height="${R1[1]}" rx="10"/><rect class="trk" x="${BX}" y="${R2[0]}" width="${BX1-BX}" height="${R2[1]}" rx="10"/>`;
+  const c28=xv(Math.min(P.cust,28)),c35=xv(P.cust);
+  s+=`<rect x="${BX}" y="${R1[0]}" width="${c28-BX}" height="${R1[1]}" rx="8" fill="rgba(${ACCRGB},${P.custLit?1:.6})"${P.custLit?` style="filter:drop-shadow(0 0 12px rgba(${ACCRGB},.8))"`:''}/>`;
+  if(P.cust>28)s+=`<rect x="${c28}" y="${R1[0]}" width="${c35-c28}" height="${R1[1]}" fill="url(#hatch)"/>`;
+  s+=`<text class="vlab" x="${c35+22}" y="${R1[0]+R1[1]/2+11}">28M to 35M</text>`;
+  if(P.emis>0){const e=xv(P.emis);s+=`<rect x="${BX}" y="${R2[0]}" width="${e-BX}" height="${R2[1]}" rx="8" fill="url(#g2)" style="filter:drop-shadow(0 0 14px rgba(${ACCRGB},.7))"/>`;
+    if(P.emisVal)s+=`<text class="vin" x="${e-24}" y="${R2[0]+R2[1]/2+13}" text-anchor="end">about 360M</text><text class="vsm" x="${e}" y="${R2[0]+R2[1]+34}" text-anchor="end">at the TAO price, read 2026-10-09 21:55 UTC</text>`;}
+  s+='</svg>';st.insertAdjacentHTML('beforeend',s);
+  if(P.emisVal)st.insertAdjacentHTML('beforeend',`<div class="cmp"><b>Computed</b>3,600 TAO a day &times; 365 &times; the TAO price at read (CoinGecko). Customer money: Crypto Briefing on Steeves&rsquo; keynote, 2026-09-29 (a SubConnect index), annualized.</div>`);
+  frame.appendChild(st);}
+document.querySelectorAll('.frame').forEach(f=>render(f,PARAMS[f.id]));
+
+</script>
+</body></html>

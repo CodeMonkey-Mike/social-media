@@ -52,6 +52,10 @@ You operate inside the `social-media` repo (working directory is the repo root).
    to a change that already exists here. Also read **`SCREENPLAY.md`** for the register/gear arc and
    **`TRANSITIONS.md`** if a prior draft exists (you are redesigning it).
 8. `persona/persona.json` — register, no-em-dash, brand feel.
+9. The project's **`COVER-PLAN.json` `clip_inserts[]`** (rule: `video-creation/longform-edited/skills/clip-inserts/clip-inserts.md`):
+   every spliced clip (its OWN voice at a spine pause) gets bucket `insert` rows: one `insert-in` and one
+   `insert-out`, both at its `splice_at` (the comp lands them on the paused window's edges), default `hand:fade`
+   0.5 s, `sfx_duck` false. `lint_transitions.py` fails the plan without them.
 
 ## Variety across videos (Mike, 2026-10-01) — read the ledger BEFORE you pick
 Run `python video-creation/skills/usage-ledger/usage_ledger.py report --what transitions --exclude-project "<project>"` (doc: `video-creation/skills/usage-ledger/usage-ledger.md`).
@@ -62,7 +66,11 @@ Run `python video-creation/skills/usage-ledger/usage_ledger.py report --what tra
 - **Advisory:** the face pick (film burn vs the Blocks glitch) and the AI-still glitch family. The report shows
   what recent videos used; weigh it, the register still decides.
 - **Constant house style, never rotated:** `hand:fade` on video b-roll, the cross-fade + scale-in on text
-  containers, the cross-warp on stills, `hand:punch` on face holds.
+  containers, the cross-warp on stills.
+- **Gated too: the FACE LIGHT-LEAK SET (slot `face_leak`, rotated PER ID).** Pick 3 or 4 ids from the LIGHT LEAKS
+  family (`lightleaks-1..8` 1.12 s · `lightleaks-short-1..8` 0.4 s · `lightleaks-soft-1..9` 1.44 s ·
+  `lightleaks-soft-short-1..9` 0.4 s; browse `assets/transitions/browse/LIGHT LEAKS/gallery.html`) that the previous
+  video did NOT use (the report marks them BLOCKED); prefer `fresh`. One look or mixed looks, your call by register.
 - A waiver is Mike's call only: add `"usage_waivers": {"<card name | CATEGORY/Variant>": "<his ruling>"}` to
   the plan ONLY when the project's PROJECT-LOG.md records it. The graph runs `usage_ledger.py check --what
   transitions` on your plan and fails a repeat of the previous video.
@@ -80,8 +88,18 @@ glitch id (rotate short/max variants; SFX rings from the wrapper). Envato VIDEO 
 it fades. No glitch on any container/diagram/chart/receipt.
 
 **Bucket 3 — FACE + b-roll + container overlays: hand-rolled on the continuous spine.**
-- FACE cut-in = the per-video FACE glitch (`lib:` pick that fits the register) + `hand:punch` (~15-20%
-  zoom) on face holds > ~2s. Never a cross-fade to the face.
+- FACE cut-in = the per-video FACE glitch (`lib:` pick that fits the register). Never a cross-fade to the face.
+- **FACE punch-in = ON a desilencer/defumbler JOIN inside the window, with a LIBRARY light leak (Mike, 2026-10-07).**
+  `spine/jumpcuts-final.json` (`scripts/list_face_joins.py`) lists every join per FACE window and the
+  `punch_candidates_s` (joins at least 0.5 s from the window's edges). At EVERY punch candidate write one row:
+  `bucket: face`, `role: punch-leak`, `source: lib`, `id: lib:<one of the video's 3-4 leak ids>` (cycle them),
+  `dur` = the leak clip's `durationSeconds`, `why` naming the join. The comp steps the ~15-20% punch-in and peaks
+  the leak on that frame. A face hold with NO interior join gets NO punch and NO leak. No `hand:punch` rows, no
+  synthetic light leak, no punch at a fixed +2 s (overlays.md section 1).
+- **FACE STYLE `glitch` (per video; the graph prompt says when it is on; Mike 2026-10-16).** Every cover→face CUT-IN row
+  takes a RANDOM `lib:split-swinging-offset-*` id (long or short, varied, never the same id twice in a row); the cut-OUTS
+  keep `face_glitch_pick`. Every punch point gets a `role: punch-glitch` row with a RANDOM `lib:glitchoffset-*` or
+  `lib:blocks-*` id (mix both families, varied) instead of a `punch-leak` light leak. The graph verifies it from disk.
 - Envato b-roll ingress = `hand:fade` (~0.5s).
 - **Quiet TEXT containers** (spotlight sub-point cards) = `hand:` cross-fade + 0.93→1 scale-in. Keep these
   quiet — a melt/spin on every text card is exhausting and burns the move's specialness.
@@ -124,11 +142,11 @@ melt). Point spins/melts in the direction the edit is already moving.
   "transitions": [
     {
       "tc": 198.30,
-      "bucket": "diagram-marquee",
+      "bucket": "diagram-marquee | card | glitch-still | face | broll | container | insert",
       "change": "<what cuts to what, from the CUE-SHEET>",
       "source": "lib | rmn | hand",
       "id": "melt-rgb-1 | spin-3d-side-ease-right | badsignal-max-1 | hand:fade | hand:punch | rmn:cube",
-      "role": "MELT-transform | SPIN-newfacet | glitch-still | face-cut | punch-in | broll-fade | container-xfade | card",
+      "role": "MELT-transform | SPIN-newfacet | glitch-still | face-cut | punch-in | broll-fade | container-xfade | card | insert-in | insert-out",
       "duration_s": 0.76,
       "sfx_duck": true,
       "why": "<why THIS move for THIS beat — the transform/new-facet rationale for melt/spin>"
@@ -146,6 +164,8 @@ Field notes:
 - **Every `melt`/`spin` row must justify TRANSFORM vs NEW-FACET** in `why`, and set `sfx_duck: true`.
 - **`melt_spin_budget`** proves you reserved the moves (a small deliberate count), not sprayed them.
 - **`consistency_check`** proves one card / one melt look / one spin look, text containers quiet.
+- **Clip inserts:** one `insert-in` + one `insert-out` row per COVER-PLAN `clip_inserts` entry, at its `splice_at`
+  (bucket `insert`, the quiet `hand:fade` 0.5 s unless Mike rules a library move); never a melt / spin on a clip.
 - **`open_questions`** surfaces anything Mike should overrule.
 
 Return the JSON. No preamble, no rendering, no file writes.

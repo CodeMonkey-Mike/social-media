@@ -1,0 +1,103 @@
+{
+  "batch": "downtober",
+  "authored_by": "tighten-strategist agents via batch orchestrator 2026-10-14",
+  "clips": [
+    {
+      "id": "zombies-cant-see-the-bottom",
+      "n": 1,
+      "variant": "full",
+      "removals": [
+        {
+          "start": 1641.1,
+          "end": 1642.12,
+          "why": "filler tic 'you know,' between 'cycle zombies,' and 'Benjamin Cowen'"
+        }
+      ],
+      "boundary_relock": [
+        {
+          "segment_index": 1,
+          "new_start": 1654.78
+        },
+        {
+          "segment_index": 2,
+          "new_start": 1556.5
+        }
+      ],
+      "boundary_relock_note": "seg 1: planned 1654.7 starts inside the tail of the off-clip word 'high.' (ends 1654.74); move to the gap before 'And I'm like, dude'. seg 2: drop the lead-in tic 'You know,' so the payoff opens on 'I feel like I felt illuminated'.",
+      "notes": "Peak beats cover segments 1 and 2 in full, so the restatement 'when I realized, like when I came to the conclusion' (1558.0-1559.3) and the stall 'That's, that's it. That doesn't,' (1660.4-1663.6) are NOT cut: peak-beat guard. Only segment 0 is cuttable; low pct is by design, not an oversight. Reviewer may add 1662.40-1663.80 ('That doesn't,' false start) if willing to trim inside peak beat 1. Caption fixes: Cowell -> Cowen, four year -> four-year.",
+      "removed_seconds_est": 1.02,
+      "removed_pct_est": 2.2
+    },
+    {
+      "id": "tao-3000-is-not-the-ceiling",
+      "n": 2,
+      "variant": "full",
+      "removals": [
+        {
+          "start": 2769.2,
+          "end": 2772.8,
+          "why": "hedge question 'Is it going to get through this?' between 'craziness going on right now.' and 'We should be going into'"
+        },
+        {
+          "start": 2777.9,
+          "end": 2780.14,
+          "why": "restatement/hedge 'It should be happening, right?' between 'economic expansion.' and 'Very, very soon.' (most dispensable, drop first if gate trips)"
+        }
+      ],
+      "boundary_relock": [],
+      "boundary_relock_note": null,
+      "notes": "At 14.4% voiced, inside the 15% ceiling; the weak 'Yeah.' at 2753.9-2754.2 was deliberately left in to stay under. Peak beat 2755.3-2764.8 kept whole, including the restart 'Tao going to three. I think Tao can go...' (2758.5-2759.2), a false start inside the protected range; reviewer may swap 2757.90-2759.28 in for the second removal if willing to trim inside the peak beat. Caption: Tao -> TAO.",
+      "removed_seconds_est": 5.84,
+      "removed_pct_est": 14.4
+    },
+    {
+      "id": "long-term-plays-58x-350x",
+      "n": 3,
+      "variant": "full",
+      "removals": [
+        {
+          "start": 1393.1,
+          "end": 1397.95,
+          "why": "pre-statement 'So long term plays, right?' repeats the payoff line that closes the clip; cut lands 'took 11 months. Called LAB in October'"
+        },
+        {
+          "start": 1385.15,
+          "end": 1385.43,
+          "why": "filler tic 'right?' after 'where they move,' (tight margins 0.03s each side; most dispensable, drop first if gate trips or audio clips)"
+        }
+      ],
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_end": 1416.28
+        }
+      ],
+      "boundary_relock_note": "end on 'crazy things.' (ends 1416.10); drops the trailing tic 'you know.' (1416.38-1416.54).",
+      "notes": "Peak beat 1398.0-1412.0 untouched (the repeated 'December' at 1404.1 stays). Numbers 58x / 11 months / 350x all kept. Caption: 'Cold lab' -> 'Called LAB'.",
+      "removed_seconds_est": 5.13,
+      "removed_pct_est": 8.9
+    },
+    {
+      "id": "get-in-make-money-get-out",
+      "n": 4,
+      "variant": "full",
+      "removals": [
+        {
+          "start": 2954.4,
+          "end": 2957.3,
+          "why": "hedge 'It all depends.' between 'pump to 3 billion.' and 'If something dumps at 6 million'"
+        },
+        {
+          "start": 3006.3,
+          "end": 3008.8,
+          "why": "aside restating the 10x: 'You know, like a 10 million market cap.' between 'in a couple of weeks.' and 'You'll do a 10x'"
+        }
+      ],
+      "boundary_relock": [],
+      "boundary_relock_note": null,
+      "notes": "Both peak beats untouched (the 'and be like, damn, you know,' at 3013.9-3015.2 sits inside peak 2 and is left). Golden Kitty is defended, Hellhound stays a neutral hypothetical. Tightened duration 34.75s before desilence, under the 40s brief. Caption: 'Old and Kitty' -> 'Golden Kitty'.",
+      "removed_seconds_est": 5.4,
+      "removed_pct_est": 7.5
+    }
+  ]
+}

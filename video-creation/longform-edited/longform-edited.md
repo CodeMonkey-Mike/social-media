@@ -396,7 +396,7 @@ specifies otherwise, and ASK only if a new device type appears):
 | Container scene change within a chapter | **Cross-fade + scale-in** (0.35s, 0.93→1) |
 | Lip-sync / avatar insert in AND out | **Film burn** (warm radial flash peaking exactly on the cut, ±0.38s) |
 | **FACE cut in AND out (gated-face spine, #6)** | **Film burn** on EVERY cut to/from his face — same warm radial flash; this is the gated-face signature (reuses the film-burn slot since the gated spine has no lip-sync avatar). Keep intensity dialed so frequent face cuts don't strobe. (Mike's standing rule, 2026-06-17.) |
-| **FACE hold on screen > 5s (gated-face spine, #6)** | **Light leak** overlay — canonical rule in **`skills/overlays/overlays.md`** (sustained-interior warmth, inset ~0.6s off the film-burn cut so an overlay never shares a frame with a transition). Short punctuation faces (<5s) stay clean, film-burn only. |
+| **FACE punch-in on a desilencer JOIN inside the window (gated-face spine, #6)** | **Library light leak** (`lib:lightleaks-*`, the LIGHT LEAKS family, 34 clips) peaking on the join frame together with the ~15-20% scale step — canonical rule in **`skills/overlays/overlays.md`** section 1 (Mike, 2026-10-07; the Remotion-synthetic glow and the hold-over-5s trigger are retired). Each video cycles a rotated set of 3-4 leaks (usage ledger slot `face_leak`). A hold with no interior join gets no punch and no leak. |
 | Vertical insert display (lip-sync clip etc.) | Centered portrait + **blurred wings** (blurred, dimmed copy of the same clip filling the frame) |
 
 **Scope note (reconciled 2026-06-24):** the rows ABOVE that ride the **continuous face spine** —
@@ -421,9 +421,9 @@ above still holds; it is our internal library. Pick by scanning each row's `meta
 `aspectRatios` — match the comp's 16:9). Catalog rules + how it's built live in `assets/transitions/CLAUDE.md`.
 - **EXPERIMENTAL gated-FACE glitch convention (Mike, 2026-06-20; validate in editing):** cut TO Mike's gated
   face with a **Glitch · Blocks · Max** (`blocks-max-1/2/3`) instead of (or alongside) the film-burn. For a
-  FACE beat that runs longer than ~2s, add a re-engagement **punch-in** at ~2s: cut into a **~15% zoom** on his
-  face with a **short** glitch (`blocks-short-*` or `blocks-strips-*` — the lower "Min/other" tier; there is no
-  literal Min intensity). Decide glitch-vs-film-burn per video.
+  FACE beat with a desilencer JOIN inside it, add a re-engagement **punch-in** ON that join (never at a fixed ~2s):
+  a hard **~15-20% step** on his face with a **library light leak** peaking on the same frame (overlays.md section 1,
+  Mike 2026-10-07). Decide glitch-vs-film-burn for the cut-ins per video.
 
 **6. Second valid spine architecture: full-screen GATED face (use when there's no clean webcam
 strip to crop).** (Established on `silverscript`, 2026-06-14.) banks-own-chain's strip + content-body
@@ -487,6 +487,16 @@ explicit time slot**. The container is just another item on that one track, not 
   overlay, it **yields its TIME** to it. In the comp, build cover as a `<Series>`/sequential cue list with
   non-overlapping `[tIn,tOut]` windows for every cover item (container AND b-roll alike), not two independent
   layers that can fight for the same seconds.
+
+**14. CLIP INSERTS are a standing consideration on every video (Mike, 2026-10-09).** A short third-party clip (a CEO,
+a founder, a politician, a demo, a news anchor) can be SPLICED in: it plays full-frame WITH ITS OWN VOICE while the
+spine PAUSES, transition in and out, bed ducked, a burned context caption on every frame. Many videos carry none, one
+may carry three or four; what is forbidden is never asking. DATA.md lists the candidates (`## 6. Clip candidates`),
+SCREENPLAY.md's `## CLIP-INSERTS` proposes or says NONE with the reason (lint-gated, Convention 6), Mike rules at the
+screenplay gate, and the graph carries the rest (COVER-PLAN `clip_inserts` with the splice point dry-run against the
+silence trough, capture WITH audio, the pause baked, the bed ducked). A muted clip under narration is a RECEIPT, not a
+splice; "splice it in" / "don't put his voice on mine" always means the pause (every-job, 2026-10-08, rebuilt after the
+draft). Canonical: `skills/clip-inserts/clip-inserts.md`; comp recipe `skills/comp-build/comp-build.md` §3d.
 
 ### Phase 4 build recipe (validated on banks-own-chain, 2026-06-11)
 
@@ -581,6 +591,8 @@ CTA treatment._
 - Never edit or delete the master `.mkv`. Deletions go to the **Recycle Bin** (recoverable).
 - Locate fumbles in the file you're about to cut; don't reuse timestamps across timelines.
 - **No em dashes** in any titles/captions/queue text (persona `terminology_rules.no_em_dashes`).
+- **A clip Mike wants "spliced in" PAUSES the spine and plays with its OWN voice** (never a muted cover), and clip
+  inserts are considered on every video, with NONE written down when there are none (`skills/clip-inserts/clip-inserts.md`, #14).
 - This track is separate from `longform-presentation/` — don't port edited-track techniques back
   into the frozen presentation skill, and don't pull slide-deck assumptions into here.
 

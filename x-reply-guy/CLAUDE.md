@@ -166,18 +166,18 @@ reports it, so run `node generate_reply_images.js` and post again.
 
 ---
 
-## ⚠ `post_replies.py --limit N` is accepted but IGNORED (2026-08-19)
+## `post_replies.py --limit N` works (fixed 2026-10-09)
 
-`--limit N` does not hold anything back: the run posts the **entire** queue. Verified on a real
-run where `--limit 1` posted all 10 queued replies in one invocation (~35 min wall-clock,
-2-6 min gaps between each).
+From 2026-08-19 to 2026-10-09, `--limit` was silently ignored and every run posted the entire
+queue. The parser read the word `--limit` itself instead of the number after it. It is fixed:
+`--limit 5` posts the first 5 and leaves the rest in `replies_to_post.json`.
 
-Consequences to plan around:
-- **You cannot split a reply queue across task-list steps.** A list with "post 5 replies" early
-  and "post the remaining replies" later gets fully drained by the first step; the second is a
-  no-op skip. Queue only what you are willing to send in one go.
-- The run will blow past the 600s foreground ceiling and be backgrounded. That is still the one
-  attempt: never relaunch it. The task log can rotate down to its last lines, so per-entry
+- **Split a queue across task-list steps with `--limit N`, never by trimming the queue file.**
+  On 2026-10-08 a session worked around the old bug by cutting the live queue to 5 and stashing
+  the other 9 in its session scratchpad; a shutdown mid-run lost them from the dashboard until
+  they were recovered by hand. The queue file is the only place unposted replies may live.
+- A multi-reply run will blow past the 600s foreground ceiling and be backgrounded. That is still
+  the one attempt: never relaunch it. The task log can rotate down to its last lines, so per-entry
   failure reasons may be lost - read `data/posted_replies.json` for outcomes instead.
 
 ## Image-reply generation: two gotchas worth knowing up front

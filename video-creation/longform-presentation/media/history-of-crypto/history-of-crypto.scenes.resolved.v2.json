@@ -1,0 +1,752 @@
+{
+ "project": "history-of-crypto",
+ "comp": "HistoryOfCryptoSpotlight",
+ "deck": "lecture3-history-of-crypto.html",
+ "fps": 30,
+ "chapter_pause": 1.0,
+ "_doc": "Spotlight scene spec (longform-presentation/skills/spotlight). One scene per container Mike is talking about; `cue` = the words he says that bring it on screen (resolved to EDIT-timeline seconds by cue_scenes.py, written back as `t`). `head_until` / `tail_from` bound the Remotion window: the EDIT's own footage plays before/after. A pinned `t` beats a cue. Bullet items with their own cue get `t` too (the active-item highlight).",
+ "head_until": {
+  "cue": "Most people think Bitcoin started in 2009",
+  "t": 35.2
+ },
+ "tail_from": {
+  "cue": "In the next lecture we look at how crypto compares",
+  "t": 1176.7666666666667
+ },
+ "scenes": [
+  {
+   "id": "ch02",
+   "kind": "chapter",
+   "eyebrow": "Chapter 02 — 1990s",
+   "title": "The Cypherpunk Movement",
+   "cue": "Most people think Bitcoin started in 2009",
+   "t": 35.56,
+   "score": 0.993,
+   "match": "Most people think that bitcoin started in 2009,"
+  },
+  {
+   "id": "ch02-who",
+   "kind": "bullets",
+   "label": "Who Were They?",
+   "cue": "The Cypherpunks were a loose group of activists",
+   "items": [
+    {
+     "strong": "Activists, mathematicians & engineers",
+     "rest": "",
+     "cue": "The Cypherpunks were a loose group of activists",
+     "t": 44.0,
+     "score": 1.05,
+     "match": "The cypherpunks were a loose group of activists,"
+    },
+    {
+     "strong": "Believed in privacy & freedom through cryptography",
+     "rest": "",
+     "cue": "privacy is a fundamental right",
+     "t": 52.48,
+     "score": 1.05,
+     "match": "privacy is a fundamental right"
+    },
+    {
+     "strong": "The Cypherpunk Mailing List",
+     "rest": " — where the ideas were born",
+     "cue": "They communicated through the Cypherpunk Mailing List",
+     "t": 61.88,
+     "score": 1.05,
+     "match": "They communicated through the cypherpunk mailing list,"
+    },
+    {
+     "strong": "Core belief",
+     "rest": " — governments & corporations can't be trusted with financial data"
+    }
+   ],
+   "t": 44.0,
+   "score": 1.05,
+   "match": "The cypherpunks were a loose group of activists,"
+  },
+  {
+   "id": "ch02-may",
+   "kind": "card",
+   "title": "Timothy C. May",
+   "sub": "Author of the Crypto Anarchist Manifesto (1988)",
+   "cue": "Timothy C. May wrote the Crypto Anarchist Manifesto",
+   "t": 80.02,
+   "score": 1.008,
+   "match": "Timothy C. May wrote Crypto Anarchist Manifesto"
+  },
+  {
+   "id": "ch02-hughes",
+   "kind": "card",
+   "title": "Eric Hughes",
+   "sub": "Author of A Cypherpunk's Manifesto (1993)",
+   "cue": "Eric Hughes wrote A Cypherpunk's Manifesto",
+   "t": 94.22,
+   "score": 1.038,
+   "match": "Eric Hughes wrote A Cypherpunks Manifesto"
+  },
+  {
+   "id": "ch02-chaum",
+   "kind": "card",
+   "title": "David Chaum",
+   "sub": "Pioneer of cryptographic digital cash — DigiCash (1989)",
+   "cue": "And then there's David Chaum",
+   "t": 105.6,
+   "score": 0.995,
+   "match": "And then there's David Chom."
+  },
+  {
+   "id": "ch02-who-belief",
+   "kind": "bullets",
+   "label": "Who Were They?",
+   "active": 3,
+   "cue": "The core belief running through all of this was simple",
+   "items": [
+    {
+     "strong": "Activists, mathematicians & engineers",
+     "rest": ""
+    },
+    {
+     "strong": "Believed in privacy & freedom through cryptography",
+     "rest": ""
+    },
+    {
+     "strong": "The Cypherpunk Mailing List",
+     "rest": " — where the ideas were born"
+    },
+    {
+     "strong": "Core belief",
+     "rest": " — governments & corporations can't be trusted with financial data"
+    }
+   ],
+   "t": 120.7,
+   "score": 1.05,
+   "match": "The core belief running through all of this was simple."
+  },
+  {
+   "id": "ch03",
+   "kind": "chapter",
+   "eyebrow": "Chapter 03 — Pre-Bitcoin",
+   "title": "Failed Attempts at Digital Money",
+   "cue": "Before Bitcoin, there were several serious attempts to create digital money",
+   "t": 136.14,
+   "score": 1.05,
+   "match": "Before bitcoin, there were several serious attempts to create digital money."
+  },
+  {
+   "id": "ch03-digicash",
+   "kind": "card",
+   "icon": "💸",
+   "title": "DigiCash — 1989",
+   "sub": "David Chaum's early digital cash — went bankrupt 1998",
+   "cue": "DigiCash, founded by David Chaum in 1989, was the first real attempt",
+   "t": 148.1,
+   "score": 1.027,
+   "match": "Digicash, founded by David Chom in 1989, was the first real attempt."
+  },
+  {
+   "id": "ch03-egold",
+   "kind": "card",
+   "icon": "🪙",
+   "title": "e-gold — 1996",
+   "sub": "Gold-backed digital currency — shut down by US government 2008",
+   "cue": "Then there was e-gold, which launched in 1996",
+   "t": 170.72,
+   "score": 1.039,
+   "match": "Then there was eGold, which launched in 1996."
+  },
+  {
+   "id": "ch03-bitgold",
+   "kind": "card",
+   "icon": "🔩",
+   "title": "Bit Gold — 1998",
+   "sub": "Nick Szabo's proposal — never implemented, but a direct blueprint for Bitcoin",
+   "cue": "Nick Szabo, a computer scientist and legal scholar",
+   "t": 202.58,
+   "score": 1.05,
+   "match": "Nick Szabo, a computer scientist and legal scholar,"
+  },
+  {
+   "id": "ch03-bmoney",
+   "kind": "card",
+   "icon": "💾",
+   "title": "b-money — 1998",
+   "sub": "Wei Dai's proposal — also never implemented",
+   "cue": "Around the same time, a developer named Wei Dai",
+   "t": 221.36,
+   "score": 0.932,
+   "match": "At the same time, a developer named Wei Dai"
+  },
+  {
+   "id": "ch03-lesson",
+   "kind": "accent",
+   "title": "The lesson — every attempt was either centralized or failed to solve the double-spend problem",
+   "cue": "So what do all of these have in common",
+   "t": 235.12,
+   "score": 1.05,
+   "match": "So what do all of these have in common?"
+  },
+  {
+   "id": "ch04",
+   "kind": "chapter",
+   "eyebrow": "Chapter 04 — 2008 / 2009",
+   "title": "Satoshi Nakamoto & The Bitcoin Whitepaper",
+   "cue": "Now we get to the moment that changed everything",
+   "t": 261.76,
+   "score": 1.05,
+   "match": "Now we get to the moment that changed everything."
+  },
+  {
+   "id": "ch04-whitepaper",
+   "kind": "titem",
+   "date": "October 31, 2008",
+   "title": "Bitcoin whitepaper published — \"Bitcoin: A Peer-to-Peer Electronic Cash System\"",
+   "cue": "On October 31st, 2008, Halloween",
+   "t": 264.4,
+   "score": 1.05,
+   "match": "On October 31st, 2008, Halloween,"
+  },
+  {
+   "id": "ch04-who",
+   "kind": "titem",
+   "date": "Who is Satoshi?",
+   "title": "Anonymous — identity never confirmed to this day",
+   "cue": "Who is Satoshi Nakamoto? Nobody knows",
+   "t": 306.8,
+   "score": 1.05,
+   "match": "Who is Satoshi Nakamoto? Nobody knows."
+  },
+  {
+   "id": "ch04-genesis",
+   "kind": "titem",
+   "date": "January 3, 2009",
+   "title": "The Genesis Block is mined — Bitcoin's first ever block",
+   "cue": "On January 3rd, 2009, Satoshi mined the very first Bitcoin block",
+   "t": 331.2,
+   "score": 1.05,
+   "match": "On January 3rd, 2009, Satoshi mined the very first bitcoin block,"
+  },
+  {
+   "id": "ch04-chancellor",
+   "kind": "titem",
+   "date": "Embedded in the Genesis Block",
+   "title": "\"Chancellor on brink of second bailout for banks\" — not an accident",
+   "cue": "And embedded directly into that block was a message",
+   "t": 339.7,
+   "score": 1.05,
+   "match": "and embedded directly into that block was a message,"
+  },
+  {
+   "id": "ch04-finney",
+   "kind": "titem",
+   "date": "January 12, 2009",
+   "title": "First ever Bitcoin transaction — Satoshi sends 10 BTC to Hal Finney",
+   "cue": "Nine days later, on January 12th, Satoshi sent 10 Bitcoin",
+   "t": 358.1,
+   "score": 1.05,
+   "match": "Nine days later, on January 12th, Satoshi sent 10 bitcoin"
+  },
+  {
+   "id": "ch04-gone",
+   "kind": "titem",
+   "date": "2010",
+   "title": "Satoshi disappears — hands off development and is never heard from again",
+   "cue": "Then in 2010, something remarkable happened",
+   "t": 379.0,
+   "score": 1.05,
+   "match": "Then in 2010, something remarkable happened."
+  },
+  {
+   "id": "ch05",
+   "kind": "chapter",
+   "eyebrow": "Chapter 05 — 2009 to 2012",
+   "title": "The Early Days of Bitcoin",
+   "cue": "In the very early days, Bitcoin was essentially worthless",
+   "t": 406.74,
+   "score": 1.05,
+   "match": "in the very early days, bitcoin was essentially worthless"
+  },
+  {
+   "id": "ch05-zero",
+   "kind": "titem",
+   "date": "2009",
+   "title": "Bitcoin launches with zero monetary value",
+   "cue": "It was a technical experiment being run by a small community",
+   "t": 412.36,
+   "score": 0.997,
+   "match": "It was a technical experiment run by a small community"
+  },
+  {
+   "id": "ch05-pizza",
+   "kind": "titem",
+   "date": "May 22, 2010 — Bitcoin Pizza Day",
+   "title": "10,000 BTC paid for two pizzas — the first real-world Bitcoin transaction",
+   "cue": "That changed on May 22nd, 2010",
+   "t": 427.26,
+   "score": 1.05,
+   "match": "That changed on May 22nd, 2010,"
+  },
+  {
+   "id": "ch05-pizza-worth",
+   "kind": "accent",
+   "title": "Those 10,000 BTC would be worth hundreds of millions of dollars today",
+   "cue": "Those 10,000 Bitcoin, at Bitcoin's all-time high",
+   "t": 458.62,
+   "score": 1.05,
+   "match": "Those 10 ,000 bitcoin at bitcoin's all time high"
+  },
+  {
+   "id": "ch05-gox",
+   "kind": "titem",
+   "date": "2010",
+   "title": "Mt. Gox launches — Bitcoin's first major exchange",
+   "cue": "Also in 2010, a website called Mt. Gox launched",
+   "t": 477.92,
+   "score": 1.05,
+   "match": "Also in 2010, a website called Mt. Gox launched"
+  },
+  {
+   "id": "ch05-ecosystem",
+   "kind": "titem",
+   "date": "2011 – 2012",
+   "title": "Developers, libertarians & early adopters begin to build the ecosystem",
+   "cue": "Through 2011 and into 2012, the ecosystem slowly grew",
+   "t": 503.66,
+   "score": 1.05,
+   "match": "Through 2011 and into 2012, the ecosystem slowly grew."
+  },
+  {
+   "id": "ch05-dollar",
+   "kind": "titem",
+   "date": "February 2011",
+   "title": "Bitcoin hits $1 for the first time",
+   "cue": "And in February 2011, Bitcoin hit $1 for the first time",
+   "t": 517.56,
+   "score": 0.962,
+   "match": "In February 2011, bitcoin hit $1 for the first time,"
+  },
+  {
+   "id": "ch06",
+   "kind": "chapter",
+   "eyebrow": "Chapter 06 — 2012 to 2016",
+   "title": "The Wild West Era",
+   "cue": "This era is called the Wild West for good reason",
+   "t": 530.28,
+   "score": 1.03,
+   "match": "This era is called the Wild West for a good reason."
+  },
+  {
+   "id": "ch06-dark",
+   "kind": "bullets",
+   "label": "The Dark Side",
+   "cue": "Let's start with the dark side",
+   "items": [
+    {
+     "strong": "Silk Road",
+     "rest": " — darknet marketplace, Bitcoin's most controversial chapter",
+     "cue": "In 2011, a darknet marketplace called Silk Road",
+     "t": 542.7,
+     "score": 1.05,
+     "match": "In 2011, a darknet marketplace called Silk Road"
+    },
+    {
+     "strong": "Mt. Gox collapses",
+     "rest": " — 2014, 850,000 BTC lost",
+     "cue": "Then came the Mt. Gox collapse",
+     "t": 575.22,
+     "score": 1.05,
+     "match": "Then came the Mt. Gox collapse."
+    },
+    {
+     "strong": "The trust crisis",
+     "rest": " — mainstream media declares Bitcoin dead",
+     "cue": "It was a catastrophic event for crypto's credibility",
+     "t": 602.42,
+     "score": 1.05,
+     "match": "It was a catastrophic event for crypto's credibility"
+    }
+   ],
+   "t": 540.02,
+   "score": 1.05,
+   "match": "Let's start with the dark side."
+  },
+  {
+   "id": "ch06-eth",
+   "kind": "card",
+   "icon": "⚡",
+   "title": "Ethereum Launches — 2015",
+   "sub": "Smart contracts — programmable money is born",
+   "cue": "In 2015, a young programmer named Vitalik Buterin launched Ethereum",
+   "t": 615.48,
+   "score": 0.969,
+   "match": "In 2015, a young programmer named Vigtalik Buterin launched"
+  },
+  {
+   "id": "ch06-programmable",
+   "kind": "card",
+   "icon": "🌐",
+   "title": "The Idea of Programmable Money",
+   "sub": "Opens the door to DeFi, NFTs, tokens & beyond",
+   "cue": "This was a watershed moment. Ethereum opened the door to programmable money",
+   "t": 639.64,
+   "score": 1.023,
+   "match": "This was a watershed moment. Ethereum opened a door to programmable money."
+  },
+  {
+   "id": "ch06-halving",
+   "kind": "card",
+   "icon": "✂️",
+   "title": "Bitcoin Halving Events Begin",
+   "sub": "Supply reduction driving the 4-year market cycle",
+   "cue": "Also during this period, Bitcoin's halving mechanism began to play out",
+   "t": 658.86,
+   "score": 1.05,
+   "match": "Also during this period, bitcoin's halving mechanism began to play out."
+  },
+  {
+   "id": "ch07",
+   "kind": "chapter",
+   "eyebrow": "Chapter 07 — The Cycles",
+   "title": "The First Three Bull Runs",
+   "cue": "One of the most important things to understand about Bitcoin is that it moves in cycles",
+   "t": 683.66,
+   "score": 1.044,
+   "match": "One of the most important things to understand about bitcoin is that it moves in cycle."
+  },
+  {
+   "id": "ch07-c1",
+   "kind": "cycle",
+   "num": "Cycle 01",
+   "peak": "$32",
+   "date": "Peak — June 2011",
+   "crash": "↓ 93% crash",
+   "cue": "Cycle one. Bitcoin's price climbed from essentially zero",
+   "t": 689.36,
+   "score": 1.05,
+   "match": "Cycle one. Bitcoin's price climbed from essentially zero"
+  },
+  {
+   "id": "ch07-c2",
+   "kind": "cycle",
+   "num": "Cycle 02",
+   "peak": "$1,150",
+   "date": "Peak — December 2013",
+   "crash": "↓ 85% crash",
+   "cue": "Cycle two. Over the next two years",
+   "t": 713.34,
+   "score": 1.05,
+   "match": "Cycle two. Over the next two years,"
+  },
+  {
+   "id": "ch07-c3",
+   "kind": "cycle",
+   "num": "Cycle 03",
+   "peak": "$20,000",
+   "date": "Peak — December 2017",
+   "crash": "↓ 84% crash",
+   "cue": "Cycle three. This is the one most people remember",
+   "t": 744.38,
+   "score": 1.05,
+   "match": "Cycle three. This is the one most people remember."
+  },
+  {
+   "id": "ch07-row",
+   "kind": "cyclerow",
+   "cue": "Now step back and look at the pattern across these three cycles",
+   "cycles": [
+    {
+     "num": "Cycle 01",
+     "peak": "$32",
+     "date": "Peak — June 2011",
+     "crash": "↓ 93% crash"
+    },
+    {
+     "num": "Cycle 02",
+     "peak": "$1,150",
+     "date": "Peak — December 2013",
+     "crash": "↓ 85% crash"
+    },
+    {
+     "num": "Cycle 03",
+     "peak": "$20,000",
+     "date": "Peak — December 2017",
+     "crash": "↓ 84% crash"
+    }
+   ],
+   "t": 779.92,
+   "score": 1.0,
+   "match": "Now step back and look at the pattern across these cycles."
+  },
+  {
+   "id": "ch07-pattern",
+   "kind": "bullets",
+   "active": 1,
+   "cue": "Higher highs. Higher lows. Longer timeframes",
+   "items": [
+    {
+     "strong": "ICO mania in 2017",
+     "rest": " — thousands of new tokens launched overnight"
+    },
+    {
+     "strong": "Each cycle",
+     "rest": " — higher highs, higher lows, longer timeframes"
+    },
+    {
+     "strong": "The pattern repeats",
+     "rest": " — boom, crash, rebuild, repeat",
+     "cue": "This is the pattern that Bitcoin traders and long-term holders",
+     "t": 801.92,
+     "score": 1.05,
+     "match": "This is the pattern that bitcoin traders and long -term holders"
+    }
+   ],
+   "t": 797.86,
+   "score": 1.026,
+   "match": "Higher highs, higher lows, longer time frame."
+  },
+  {
+   "id": "ch08",
+   "kind": "chapter",
+   "eyebrow": "Chapter 08 — 2019 to 2021",
+   "title": "Maturation & Institutional Adoption",
+   "cue": "After the brutal bear market of 2018, the industry spent 2019 rebuilding",
+   "t": 810.42,
+   "score": 1.05,
+   "match": "After the brutal bear market of 2018, the industry spent 2019 rebuilding."
+  },
+  {
+   "id": "ch08-defi",
+   "kind": "titem",
+   "date": "2020 — DeFi Summer",
+   "title": "Decentralized Finance explodes — lending, borrowing & yield without banks",
+   "cue": "The summer of 2020 saw the rise of what became known as DeFi",
+   "t": 826.6,
+   "score": 1.05,
+   "match": "The summer of 2020 saw the rise of what became known as DeFi,"
+  },
+  {
+   "id": "ch08-nft",
+   "kind": "titem",
+   "date": "2020 – 2021",
+   "title": "NFT boom begins — digital ownership enters mainstream conversation",
+   "cue": "At around the same time, NFTs",
+   "t": 852.74,
+   "score": 1.05,
+   "match": "At around the same time, NFTs,"
+  },
+  {
+   "id": "ch08-institutions",
+   "kind": "titem",
+   "date": "2020 – 2021",
+   "title": "Institutions enter — MicroStrategy, Tesla & Square add Bitcoin to their balance sheets",
+   "cue": "But perhaps the most significant shift in this period was the arrival of institutional money",
+   "t": 876.86,
+   "score": 1.05,
+   "match": "But perhaps the most significant shift in this period was the arrival of institutional money."
+  },
+  {
+   "id": "ch08-salvador",
+   "kind": "titem",
+   "date": "June 2021",
+   "title": "El Salvador adopts Bitcoin as legal tender — a first for any nation",
+   "cue": "In June 2021, El Salvador made history",
+   "t": 906.14,
+   "score": 1.05,
+   "match": "In June 2021, El Salvador made history"
+  },
+  {
+   "id": "ch08-ath",
+   "kind": "titem",
+   "date": "November 2021",
+   "title": "Bitcoin hits an all-time high of ~$69,000",
+   "cue": "All of this drove Bitcoin to a new all-time high",
+   "t": 925.44,
+   "score": 1.05,
+   "match": "All of this drove Bitcoin to a new all time high"
+  },
+  {
+   "id": "ch09",
+   "kind": "chapter",
+   "eyebrow": "Chapter 09 — 2022 to Today",
+   "title": "The Crypto Winter & Beyond",
+   "cue": "And then 2022 happened",
+   "t": 947.66,
+   "score": 0.9,
+   "match": "then 2022 happened."
+  },
+  {
+   "id": "ch09-collapse",
+   "kind": "bullets",
+   "label": "The Collapse of 2022",
+   "cue": "It started in May 2022 with the collapse of Terra",
+   "items": [
+    {
+     "strong": "Terra/LUNA",
+     "rest": " — May 2022, $40 billion wiped out overnight",
+     "cue": "It started in May 2022 with the collapse of Terra",
+     "t": 961.0,
+     "score": 1.05,
+     "match": "It started in May 2022 with the collapse of Terra"
+    },
+    {
+     "strong": "Three Arrows Capital & Celsius",
+     "rest": " — contagion spreads",
+     "cue": "The contagion spread. Three Arrows Capital",
+     "t": 991.98,
+     "score": 1.05,
+     "match": "The contagion spread. Three arrows capital,"
+    },
+    {
+     "strong": "FTX collapse",
+     "rest": " — Sam Bankman-Fried, the biggest fraud in crypto history",
+     "cue": "And then came FTX",
+     "t": 1018.8,
+     "score": 1.05,
+     "match": "And then came FTX."
+    },
+    {
+     "strong": "Bitcoin drops below $16,000",
+     "rest": "",
+     "cue": "Bitcoin dropped below $16,000",
+     "t": 1046.12,
+     "score": 0.939,
+     "match": "Bitcoin dropped below 16K."
+    }
+   ],
+   "t": 961.0,
+   "score": 1.05,
+   "match": "It started in May 2022 with the collapse of Terra"
+  },
+  {
+   "id": "ch09-winter",
+   "kind": "sma",
+   "variant": "winter",
+   "label": "❄️ Crypto Winter",
+   "title": "Price at or below the 200-Week SMA",
+   "cue": "A crypto winter is defined as Bitcoin's price being at or below the 200-week",
+   "t": 1067.04,
+   "score": 1.05,
+   "match": "A crypto winter is defined as Bitcoin's price being at or below the 200 week"
+  },
+  {
+   "id": "ch09-bear",
+   "kind": "sma",
+   "variant": "bear",
+   "label": "🐻 Bear Market",
+   "title": "Price below the 50-Week SMA and/or the 200-Day SMA",
+   "cue": "A bear market, more broadly, is defined as Bitcoin trading below its 50-week",
+   "t": 1091.44,
+   "score": 1.05,
+   "match": "A bear market, more broadly, is defined as Bitcoin trading below its 50 week"
+  },
+  {
+   "id": "ch09-benchmarks",
+   "kind": "accent",
+   "title": "These moving averages are the benchmarks traders use to define market conditions",
+   "cue": "We'll go much deeper into moving averages and how to use them",
+   "t": 1109.5,
+   "score": 1.05,
+   "match": "We'll go much deeper into moving averages and how to use them"
+  },
+  {
+   "id": "ch09-recovery",
+   "kind": "bullets",
+   "label": "The Recovery",
+   "cue": "The recovery from the 2022 lows was driven by several factors",
+   "items": [
+    {
+     "strong": "Bitcoin ETFs approved",
+     "rest": " — US, January 2024",
+     "cue": "In January 2024, the US Securities and Exchange Commission approved Bitcoin spot ETFs",
+     "t": 1124.22,
+     "score": 1.002,
+     "match": "In January 2024, the U .S. Securities and Exchange Commission approved Bitcoin's spotty"
+    },
+    {
+     "strong": "Bitcoin hits new all-time highs",
+     "rest": " — 2024",
+     "cue": "went on to set new all-time highs in 2024",
+     "t": 1146.5,
+     "score": 1.014,
+     "match": "went on to set a new all time high in 2024."
+    }
+   ],
+   "t": 1115.1,
+   "score": 1.025,
+   "match": "The recovery from the 2022 lows was given by several factors."
+  }
+ ],
+ "timeline": {
+  "chapter_pause": 1.0,
+  "pauses": [
+   {
+    "scene": "ch02",
+    "planned": 35.56,
+    "at": 35.2,
+    "dur": 1.0,
+    "note": "gap 35.03-35.37 (340 ms)",
+    "t_paused": 35.2
+   },
+   {
+    "scene": "ch03",
+    "planned": 136.14,
+    "at": 136.133,
+    "dur": 1.0,
+    "note": "gap 136.02-136.29 (270 ms)",
+    "t_paused": 137.133
+   },
+   {
+    "scene": "ch04",
+    "planned": 261.76,
+    "at": 261.533,
+    "dur": 1.0,
+    "note": "gap 261.43-261.64 (210 ms)",
+    "t_paused": 263.533
+   },
+   {
+    "scene": "ch05",
+    "planned": 406.74,
+    "at": 406.5,
+    "dur": 1.0,
+    "note": "gap 406.35-406.67 (320 ms)",
+    "t_paused": 409.5
+   },
+   {
+    "scene": "ch06",
+    "planned": 530.28,
+    "at": 529.867,
+    "dur": 1.0,
+    "note": "gap 529.73-530.05 (320 ms)",
+    "t_paused": 533.867
+   },
+   {
+    "scene": "ch07",
+    "planned": 683.66,
+    "at": 683.333,
+    "dur": 1.0,
+    "note": "gap 683.23-683.48 (250 ms)",
+    "t_paused": 688.333
+   },
+   {
+    "scene": "ch08",
+    "planned": 810.42,
+    "at": 809.867,
+    "dur": 1.0,
+    "note": "gap 809.73-810.04 (310 ms)",
+    "t_paused": 815.867
+   },
+   {
+    "scene": "ch09",
+    "planned": 947.66,
+    "at": 947.167,
+    "dur": 1.0,
+    "note": "gap 947.02-947.34 (320 ms)",
+    "t_paused": 954.167
+   }
+  ],
+  "pause_total": 8.0,
+  "head_until": 35.2,
+  "tail_from_edit": 1176.7666666666667,
+  "tail_from_paused": 1184.767,
+  "middle_frames": 34487,
+  "_doc": "paused time = EDIT time + sum(dur of pauses with at <= t); a chapter card starts AT its pause; stitch.py inserts the silences into the audio, the EDIT file is not re-encoded"
+ }
+}

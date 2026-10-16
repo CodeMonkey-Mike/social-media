@@ -40,8 +40,12 @@ it never discovers what is missing.
    land each impact on its REAL reveal frame; a riser ENDS on the hit; pick impacts by MEASURED audible
    tail, never by filename: measure where the envelope falls ~40 dB below peak with ffmpeg if the library
    row does not state it).
-7. `video-creation/longform-edited/skills/overlays/overlays.md` (light leaks on face holds > 5 s, inset
-   ~0.6 s off the cut) and `longform-edited.md` house rules #5 (face transitions) and #10 (music).
+7. `video-creation/longform-edited/skills/overlays/overlays.md` (a punch-in + a LIBRARY light leak land ON every
+   desilencer join inside a face window, from `spine/jumpcuts-final.json`; no join = no punch, no leak) and
+   `longform-edited.md` house rules #5 (face transitions) and #10 (music).
+8. `video-creation/longform-edited/skills/clip-inserts/clip-inserts.md` when COVER-PLAN.json carries `clip_inserts`
+   (a third-party clip that plays with its OWN voice while the spine pauses): the seed already holds one `[INSERT]`
+   row per insert at its `splice_at`.
 
 ## What you author (the judgment slices)
 - **Sub-point spotlight rows**: one `[DIAGRAM]`/`[CHART]`/`[CONTAINER]` row per STATE, at the word onset
@@ -50,7 +54,14 @@ it never discovers what is missing.
   becomes `[IMPACT]`, `[RISER→IMPACT]` or `[DUCK]` with the file (riser end == hit frame); the vibe-cut
   duck rides with a bigger impact. Fewer, bigger hits beat an impact on every edit.
 - **Face treatment**: `[TRANSITION]` at every face cut-in/out (`→TRANSITIONS.md`), `[PUNCH-IN]` on holds
-  > 2 s, `[LIGHTLEAK]` on holds > 5 s, `[CAPTION] ON` over FACE windows ONLY (never over a cover).
+  ON every desilencer join inside the window (the seed carries them from `spine/jumpcuts-final.json`), `[LIGHTLEAK]`
+  on the SAME join (a library leak, `→TRANSITIONS.md (punch-leak)`), never a mid-hold pulse, `[CAPTION] ON` over FACE
+  windows ONLY (never over a cover).
+- **Clip inserts** (`[INSERT]` rows seeded from COVER-PLAN `clip_inserts`): keep the row (id, seconds, OWN voice,
+  the spine PAUSES, bed ducks automatically, `→TRANSITIONS.md` insert-in / insert-out) and author the two stills
+  around it exactly as every-job's R17 (2026-10-08): a lead-in row before it (the clip's FIRST frame held as a still
+  under the set-up line, from the moment the beat turns to the clip) and a lead-out row after it (its LAST frame
+  under the resume line, into the next cover). The lint fails a plan missing an `[INSERT]` event per planned insert.
 - **Zero orphans**: every file in `assets/` (by id) is PLACED with a timecode or marked `BENCH` / `REJECTED`
   in the log. State that in the header.
 - **CUE-SHEET.md**: every §2 section the video uses, counts in the headers ("FACE spans ... 2 spans"),

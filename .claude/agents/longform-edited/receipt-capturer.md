@@ -6,8 +6,10 @@ description: >
   receipts worklist. Mechanical work with one hard discipline: every capture is OPENED and
   verified before it is returned — bot walls, cookie banners, paywalls, and blank pages are the
   known silent failure mode. Consult when the receipts worklist is ready to capture. Returns the
-  file list + a per-receipt verification note + flags for anything that would not verify. Captures
-  only; never fabricates, never redraws a receipt, never substitutes an AI image.
+  file list + a per-receipt verification note + flags for anything that would not verify. Also captures
+  the video's CLIP INSERTS (third-party clips pulled WITH their audio, the context caption burned, the
+  words verified by Whisper) via the canonical clip-inserts tool. Captures only; never fabricates, never
+  redraws a receipt, never substitutes an AI image, never mutes a clip insert.
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: sonnet
 effort: xhigh
@@ -32,6 +34,21 @@ comp-ready capture files.
 - A capture behind a bot wall / paywall / consent wall that will not clear → try the plan's BENCH
   source; if that also fails, FLAG it in the return — never ship the blocked page, never fake it.
 
+## CLIP INSERTS (the second worklist on the same BROLL-PLAN; rule: `video-creation/longform-edited/skills/clip-inserts/clip-inserts.md`)
+A clip insert is a third-party clip Mike SPLICES IN: it plays full-frame WITH ITS OWN VOICE while his spine
+pauses. It is the opposite of a muted screen recording, so the "strip audio" rule above does NOT apply to it
+(every-job, 2026-10-08: the Huang clip was captured muted and had to be re-muxed after the draft).
+- Capture each `CLIP-<n>` row with the canonical tool, never by hand:
+  `python video-creation/longform-edited/skills/clip-inserts/capture_clip_insert.py --url "<source>" --start <M:SS.s> --end <M:SS.s>
+   --out "<project>/assets/clip-inserts/CLIP-<n>-<slug>.mp4" --caption "<the plan's caption>" --expect "<the plan's expect phrase>"`
+  It pulls the window with audio (yt-dlp section pull; falls back to a full-audio mux), normalises to 1920x1080 at
+  30 fps, burns the caption on every frame, and VERIFIES: audio present and not silent, exact length, Whisper hears
+  the expected phrase. It prints `CLIP-INSERT-OK ... words="..."`; quote those words in your report.
+- FLAG a clip whose heard words differ from the plan's `says`, whose source is gone, or whose window needs to move
+  to keep the speaker's meaning. Never trim a clip into a different meaning, never swap in a different clip.
+- The graph's `verify_assets` FAILS a clip insert with no audio stream or off its planned length; `visual-qa` opens
+  its middle frame (the caption must be on it).
+
 ## The verification discipline (the whole point — non-negotiable)
 - **Open and LOOK at every file before returning it.** Confirm it shows the intended content (the
   claim's numbers/headline visible and legible), not an error page, not a half-loaded skeleton, not a
@@ -42,6 +59,7 @@ comp-ready capture files.
 ## Output location (FIXED, comp-build.md §10 merged layout, Mike 2026-07-24)
 - `media/<project>/assets/receipts/<R-id>-<slug>.png` (or `.mp4` for recordings; no separate
   render-assets/).
+- `media/<project>/assets/clip-inserts/CLIP-<n>-<slug>.mp4` for clip inserts (audio KEPT, caption burned).
 
 ## Return contract
 - Per receipt: file path · what it shows (one line) · verification result (incl. every 🔍 answer) ·

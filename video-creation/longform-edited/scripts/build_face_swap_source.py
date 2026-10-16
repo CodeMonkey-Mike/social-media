@@ -33,7 +33,9 @@ import numpy as np
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 FPS = 30
 TW, TH = 96, 54          # match size
-EPS = 0.004               # the trims select by TIMESTAMP, exactly like the matcher's seeks. A frame-COUNT select
+EPS = 0.004               # the trims select by TIMESTAMP, exactly like the matcher's seeks, then each segment is CAPPED to its
+                          # frame count (trim=end_frame): the defumbled spine runs ~29.99 fps, so a timestamp trim alone can
+                          # hand back one frame too many (every-job F2, 121 for 120, 2026-10-07). A frame-COUNT select
 #                           (`between(n, ...)`) landed two frames late on this footage and pulled black frames into the window.
 
 
@@ -43,10 +45,11 @@ def final_spine(proj: Path, scope: str):
     return hits[-1] if hits else None
 
 
-def frames(video: Path, f0: int, n: int):
-    """n small grey frames starting at frame f0 (frame-accurate: -ss after -i)."""
+def frames(video: Path, f0: int, n: int, crop: str = ""):
+    """n small grey frames starting at frame f0 (frame-accurate: -ss after -i). `crop` = the builder's ",crop=w:h:x:y"
+    so a pre-cropped output clip can be compared with the uncropped spine (the alignment check)."""
     cmd = ["ffmpeg", "-v", "error", "-i", str(video), "-ss", f"{max(0, f0) / FPS:.4f}", "-frames:v", str(n), "-vf",
-           f"scale={TW}:{TH},format=gray", "-f", "rawvideo", "-"]
+           f"{crop.lstrip(',') + ',' if crop else ''}scale={TW}:{TH},format=gray", "-f", "rawvideo", "-"]
     raw = subprocess.run(cmd, capture_output=True).stdout
     k = len(raw) // (TW * TH)
     return np.frombuffer(raw[: k * TW * TH], dtype=np.uint8).reshape(k, TH, TW).astype(np.float32)
@@ -161,28 +164,41 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     parts, labels = [], []
     if head:
-        parts.append(f"[1:v]trim=start={(m0 - head) / FPS - EPS:.4f}:end={m0 / FPS - EPS:.4f},setpts=N/{FPS}/TB,format=yuv420p[h]")
+        parts.append(f"[1:v]trim=start={(m0 - head) / FPS - EPS:.4f}:end={m0 / FPS - EPS:.4f},trim=end_frame={head},setpts=N/{FPS}/TB,format=yuv420p[h]")
         labels.append("[h]")
-    parts.append(f"[0:v]trim=start={n0 / FPS - EPS:.4f}:end={n1 / FPS - EPS:.4f},setpts=N/{FPS}/TB,format=yuv420p[w]")
+    parts.append(f"[0:v]trim=start={n0 / FPS - EPS:.4f}:end={n1 / FPS - EPS:.4f},trim=end_frame={n1 - n0},setpts=N/{FPS}/TB,format=yuv420p[w]")
     labels.append("[w]")
     if tail:
-        parts.append(f"[2:v]trim=start={(m1 + 1) / FPS - EPS:.4f}:end={(m1 + 1 + tail) / FPS - EPS:.4f},setpts=N/{FPS}/TB,format=yuv420p[t]")
+        parts.append(f"[2:v]trim=start={(m1 + 1) / FPS - EPS:.4f}:end={(m1 + 1 + tail) / FPS - EPS:.4f},trim=end_frame={tail},setpts=N/{FPS}/TB,format=yuv420p[t]")
         labels.append("[t]")
     fc = ";".join(parts) + ";" + "".join(labels) + f"concat=n={len(labels)}:v=1:a=0,setpts=N/{FPS}/TB{crop}[v]"
+    n_out = head + (n1 - n0) + tail
     cmd = ["ffmpeg", "-y", "-v", "error", "-i", str(fs), "-i", str(src), "-i", str(src), "-filter_complex", fc, "-map", "[v]",
-           "-r", str(FPS), "-an", "-c:v", "libx264", "-crf", "16", "-preset", "slow", "-pix_fmt", "yuv420p", str(out)]
+           "-r", str(FPS), "-frames:v", str(n_out),   # hard cap: the cfr muxer can append one duplicate frame (every-job F2, 2026-10-07)
+           "-an", "-c:v", "libx264", "-crf", "16", "-preset", "slow", "-pix_fmt", "yuv420p", str(out)]
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode != 0 or not out.is_file():
         print("FATAL: ffmpeg failed\n" + r.stderr[-800:], file=sys.stderr)
         sys.exit(1)
-    n_out = head + (n1 - n0) + tail
-    # verify the WRITTEN clip: the frame count, and no black frame anywhere (black = the window ran past the face)
+    # verify the WRITTEN clip: the frame count, no black frame anywhere (black = the window ran past the face), and the
+    # window's first frame sits exactly at frame `head` (so window_starts_at_clip_s is true, not off by a frame)
     chk = frames(out, 0, n_out + 5)
     dark = [i for i, f in enumerate(chk) if f.mean() < 8]
     if len(chk) != n_out or dark:
         print(f"FATAL: the clip has {len(chk)} frames (expected {n_out}) and black frames at {dark[:6]}: "
               "trim --window to the face frames", file=sys.stderr)
         sys.exit(1)
+    g0 = frames(fs, n0, 1, crop)                       # the window's first spine frame, cropped like the clip
+    e_head = float(((chk[head] - g0[0]) ** 2).mean()) if len(g0) else 0.0
+    # the spine's timestamps are not exactly on the 1/30 grid (~29.95 fps average), so the two seek paths can land on
+    # ADJACENT frames: a moderate error (tens) is one frame of motion and harmless (the retime re-locks the lips);
+    # hundreds+ means a different framing/scene and the clip is wrong (a crop mismatch scored ~2900).
+    if e_head > 300:
+        print(f"FATAL: the window's first frame is not at clip frame {head} (match error {e_head:.1f}); the clip is misframed",
+              file=sys.stderr)
+        sys.exit(1)
+    if e_head > 25:
+        print(f"WARN: window start vs clip frame {head} match error {e_head:.1f} (about one frame of motion; acceptable)", file=sys.stderr)
     # the desilencer joins inside the window = where the picture jumps (for the QA of the returned clip)
     d = ((G[1:] - G[:-1]) ** 2).mean(axis=(1, 2))
     med = float(np.median(d)) + 1e-6

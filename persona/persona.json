@@ -96,19 +96,23 @@
         "_rule": "Mike, 2026-10-01: the handoff line from the hook into the body ('let's dive into this') must vary from video to video. When writing a longform screenplay: (1) script ONE line from 'approved', never the one at the top of 'recent_use'; (2) in the screenplay's OPEN QUESTIONS list 2-3 alternates for Mike to pick from at GATE 1, at least one from 'proposed' (or a fresh one in the same plain, spoken style) so he keeps seeing new options; (3) when Mike picks or says a line, add it to 'approved' and put it at the top of 'recent_use'; when he rejects one, move it to 'rejected'. Keep them short, plain and sayable, opening on 'So,'. No 'right?' tag in gear 3.",
         "approved": [
           "So, let's dive into all this.",
-          "So, let's break it all down."
+          "So, let's break it all down.",
+          "So, let's go through it, piece by piece.",
+          "So, let's get into all of this."
         ],
         "proposed": [
           "So, let's get into it.",
           "So, let's walk through all of this.",
           "So, let's unpack all of this.",
           "So, let's take this from the top.",
-          "So, let's go through it, piece by piece.",
           "So, let me show you how we got here.",
           "So, here's how it all fits together."
         ],
         "rejected": [],
         "recent_use": [
+          "tao-detailed (2026-10-16, said at 1:20 on the coarse spine instead of the scripted 'So, let's dive into all this.'): So, let's break it all down.",
+          "retire-early (2026-10-10, said on the recording at 1:43): So, let's get into all of this.",
+          "every-job (2026-10-06): So, let's go through it, piece by piece.",
           "golden-kitty (2026-10-01): So, let's break it all down."
         ]
       },
@@ -160,7 +164,9 @@
       "_purpose": "Living list of specific words/phrasings Mike does NOT say (and the term he prefers) in spoken scripts. He builds this as he catches diction that doesn't sound like him while reviewing outlines/scripts. Apply these when drafting any spoken narration; add to it whenever he corrects a word choice.",
       "manually_written_not_handwritten": "For code, NEVER 'hand-write / hand-writing / hand-written' (Mike reads that as literal pen-and-paper). Say 'manually write / manually written' (e.g. 'manually writing low-level opcodes'). Corrected on the silverscript outline 2026-06-13.",
       "tack_on_not_bolt_on": "Prefer 'tack on' over 'bolt on' for the add-an-extra-layer idiom (e.g. 'it doesn't tack on a virtual machine'). Mike wasn't sure he'd say 'bolt'. Corrected on the silverscript outline 2026-06-13.",
-      "caught_off_guard_not_flat_footed": "Never 'caught flat-footed'. Say 'caught off-guard' instead. Corrected on the carry-trade CH7 outline 2026-07-06 (he recorded it as 'off-guard' despite the script saying 'flat-footed')."
+      "caught_off_guard_not_flat_footed": "Never 'caught flat-footed'. Say 'caught off-guard' instead. Corrected on the carry-trade CH7 outline 2026-07-06 (he recorded it as 'off-guard' despite the script saying 'flat-footed').",
+      "no_honest_side_say_heres_the_thing": "NEVER the 'honest' lead-in in anything Mike says: not 'the honest side', not 'to be honest with you', not 'honestly', not 'I'll be honest'. Mike reads that phrasing as deceitful: it implies everything said before it was not honest, so the viewer starts doubting the rest. His lead-in for the caveat / risk part of a beat is 'Here's the thing' (also fine: 'But a few caveats'). The screenplay lint FAILS a spoken line that carries 'honest'. Corrected on the retire-early screenplay 2026-10-10 (CH2 'Now the honest side' -> 'But a few caveats'; CH3 / CH4 / CH5 'The honest side' -> 'Here's the thing').",
+      "around_not_about_for_numbers": "For a rough number, Mike says 'around', NEVER 'about': 'around 23 percent', 'around 23,000 TAO', 'from around 214 dollars to around 263', 'around 3 years out'. 'About' stays only for its topic sense ('a video about why', 'what this is about'). Seeing 'about' in front of a number makes him fumble the read. Applies to every spoken line (FACE / COVER / SAY-EXACT) and anything he reads on camera. Corrected after recording the tao-detailed screenplay 2026-10-16."
     }
   },
   "brand_voice_patterns": {
@@ -227,6 +233,7 @@
     "Overly hedged analyst language ('it could go either way')",
     "Corporate or formal tone",
     "Excessive caveats and disclaimers",
+    "A dedicated caveats / risks / bear-case SECTION in a video that is bullish on a coin (a beat or chapter that lists the negatives, a numbered list of them, or a line that stacks them up): it reads as Mike talking his own coin down. Honest caveats ride as a line here and there, inside the beat they belong to. Mike, 2026-10-15, tao-detailed GATE 1: 'I'm okay with a few lines here and there that have brutal honesty, but not an entire section dedicated to it.'",
     "Being timid or mealy-mouthed",
     "Self-deprecating or self-undermining framing about Mike's own calls/trades (e.g. 'wrong on the timing', 'I was early/late', 'I should have'). Mike's conviction posts read as vindicated and forward-looking; frame early entries as conviction proven right, never as a timing mistake.",
     "Fake-contrarian hooks that disparage a concept or play Mike is actually in ('sounds like the dumbest idea in crypto', 'this should not work', 'stupid on paper'). He does not think his plays are dumb and would never say so; 'weird/strange/new concept' is as far as his own wording goes, and even that is framed as novelty he got into early. Lead with the win and the novelty instead. (Mike, 2026-09-14, ready-for-pumps thread hook.)",
@@ -252,7 +259,7 @@
     "robinhood_coin": "For Robinhood or Robinhood-chain themed coins/glow, use Robinhood's brand colors: bright neon/lime green (approx #CCFF00) as primary, or Robinhood yellow as the alternate. NEVER render Robinhood coins in the greenish-cyan / teal glow (that is Kaspa's signature color, kaspa_coin above, and misreads as Kaspa). Mike flagged 2026-07-17 that teal Robinhood coins looked like Kaspa/9Hood."
   },
   "project_handles": {
-    "note": "Map of project name (lowercase, no $ prefix) -> X handle for the official project account. When drafting tweets that focus on a specific project, append a final line: \"Follow: @<handle>\". Skip for Kaspa-focused tweets (Mike IS the Kaspa voice). Skip if handle is null/unknown. Adding the follow line tags the project and often earns retweets. Cooper (@RobinHoodCooper, the Robinhood office black lab) is MENTION-triggered, not focus-triggered: any post that talks about Cooper at all gets the handle, even when the post's main subject is something else on the Robinhood chain. What If ($IF, @WhatIFonHOOD) is ALSO MENTION-triggered (Mike, 2026-09-15): ANY tweet that mentions What If / $IF in any way gets 'Follow: @WhatIFonHOOD', and this overrides the skip-for-Kaspa clause when a tweet covers both (e.g. a Kaspa-vs-What-If comparison still gets the line). Golden Kitty ($GOLDEN, @golden_kitty_rh) is ALSO MENTION-triggered (Mike, 2026-09-30): ANY X tweet about Golden Kitty / $GOLDEN gets 'Follow: @golden_kitty_rh' as its closing line. Placement: after the body/cashtags, before the hashtag line.",
+    "note": "Map of project name (lowercase, no $ prefix) -> X handle for the official project account. When drafting tweets that focus on a specific project, append a final line: \"Follow: @<handle>\". Skip for Kaspa-focused tweets (Mike IS the Kaspa voice). Skip if handle is null/unknown. Adding the follow line tags the project and often earns retweets. Cooper (@RobinHoodCooper, the Robinhood office black lab) is MENTION-triggered, not focus-triggered: any post that talks about Cooper at all gets the handle, even when the post's main subject is something else on the Robinhood chain. What If ($IF, @WhatIFonHOOD) is ALSO MENTION-triggered (Mike, 2026-09-15): ANY tweet that mentions What If / $IF in any way gets 'Follow: @WhatIFonHOOD', and this overrides the skip-for-Kaspa clause when a tweet covers both (e.g. a Kaspa-vs-What-If comparison still gets the line). Golden Kitty ($GOLDEN, @golden_kitty_rh) is ALSO MENTION-triggered (Mike, 2026-09-30): ANY X tweet about Golden Kitty / $GOLDEN gets 'Follow: @golden_kitty_rh' as its closing line. SPON ($SPON, @spononpons) is ALSO MENTION-triggered (Mike, 2026-10-03): ANY X post (tweet, thread, poll, short caption) that talks about the SPON meme coin gets 'Follow: @spononpons' as its closing line. Placement: after the body/cashtags, before the hashtag line.",
     "handles": {
       "doginme": "@doginme",
       "housecoin": "@HousecoinOnSol",
@@ -288,7 +295,8 @@
       "if": "@WhatIFonHOOD",
       "golden kitty": "@golden_kitty_rh",
       "goldenkitty": "@golden_kitty_rh",
-      "golden": "@golden_kitty_rh"
+      "golden": "@golden_kitty_rh",
+      "spon": "@spononpons"
     }
   }
 }

@@ -45,12 +45,15 @@ The chapter map above is the spine; CH1 carries the hook and the opening, nothin
 | 🎬 `[SHOW]` | on-screen direction (chart, container, receipt, b-roll cue). Not spoken |
 | 💬 `[NOTE]` | a note / recommendation to Mike, NOT in the video |
 | 🔍 `[VERIFY]` | confirm before it goes on screen |
+| 🎞️ `[INSERT]` | a third-party clip plays with its OWN voice while the spine pauses (Convention 6). Names its CLIP-<n> row. Not spoken |
 
 **Title cards (Convention 2):** a card lands ONLY at a chapter that STARTS A NEW music bed; a chapter that continues a bed flows in cardless. The card set falls out of the MUSIC-MOOD-PLAN.
 
 **FACE/COVER rules (Convention 3):** face is gated OFF by default; a face cut is ONE sentence (tight pairs allowed); the line after a face line is explicitly `[COVER]`; build to the transcript, omit beats he did not say.
 
 **Explainer visuals (Convention 4):** system-design containers, code-rendered, one per talking point, spotlight-swapped. Never tables, never AI images for text.
+
+**Clip inserts (Convention 6):** CONSIDERED on every video. A third-party clip that plays with its OWN voice while the spine pauses is a 🎞️ `[INSERT]` line between its set-up line (which ENDS the sentence) and the resume line, plus a row in `## CLIP-INSERTS`; when nothing fits that section says NONE with the reason. Never a muted cover.
 
 ---
 
@@ -99,6 +102,12 @@ The chapter map above is the spine; CH1 carries the hook and the opening, nothin
 🗣️ `[COVER]` <talking point>
 🎬 `[SHOW]` C9 receipt: <real-site capture, the sentence highlighted>. Real-site capture, never restyled.
 
+**Beat 2 - <the quoted voice (a clip insert, Convention 6)>**
+
+🗣️ `[COVER]` <The SET-UP line: names the speaker and what they said, and ENDS THE SENTENCE. e.g. "You've probably seen the clip of <name>, the CEO of <company>, saying <the claim>.">
+🎞️ `[INSERT]` CLIP-1: <name>, <n> s with their own voice, the spine pauses after the set-up line; burned caption "<name>, <month year>, <context>". Transition in and out.
+🗣️ `[COVER]` <The RESUME line: Mike's own answer to the clip, said as his.>
+
 > [!IMPORTANT]
 > CH2 verify list:
 > - <every figure and quote in this chapter, with its DATA.md source>.
@@ -127,6 +136,14 @@ The chapter map above is the spine; CH1 carries the hook and the opening, nothin
 
 ---
 
+## CLIP-INSERTS
+
+_Considered on every video (Convention 6; rule + pipeline in `skills/clip-inserts/clip-inserts.md`). A clip insert plays with its OWN voice while the spine pauses; never a muted cover. Mike rules each row at GATE 1. When nothing fits, this section is one line: `NONE: <what DATA.md's Clip candidates found and why none earns its seconds>`._
+
+| id | Who / what plays (verbatim words) | Source + timecodes | Length | Lands (chapter / beat, after which set-up line) | Burned caption | Status |
+|---|---|---|---|---|---|---|
+| CLIP-1 | <name, role>: "<the words, verbatim from the video, DATA.md Clip candidates>" | <video URL> <M:SS.s-M:SS.s> | <n> s | CH2 Beat 2, after "...saying <the claim>." | <name>, <month year>, <one-line context> | PROPOSED |
+
 ## MUSIC-MOOD-PLAN
 
 | CH | Mood + gear | Subtle / aggressive | New bed? | Track shortlist (assets/music/library.json) |
@@ -139,6 +156,12 @@ Exact carving (in-points, loops, dB under VO, breaths) is the `music-placement-s
 
 ## VISUAL-PLAN
 
+### Chapter themes (Convention 4b, optional: one accent + one image style per chapter, mirroring the beds)
+| CH | Accent | Image style | Note |
+|---|---|---|---|
+| CH1 | #ffd700 (gold) | photoreal cinematic, warm amber rim, deep charcoal | <why this look for this chapter> |
+| CH2 | #00c2ff (cyan) | house | <...> |
+
 - C1 <the centerpiece system-design diagram: what it shows, which beat, which nodes light when>.
 - C2 <contrast graphic>. C3 <the animated ladder>. Receipts C4, C5, C6, C9 (real-site captures).
 - H0 / H1 <hook motion cards, text only, no numbers>.
@@ -148,3 +171,4 @@ Exact carving (in-points, loops, dB under VO, breaths) is the `music-placement-s
 1. <A decision Mike must make at GATE 1 (title, CTA vs hard-out, naming a team).>
 2. <The handoff line (CH1 close): the scripted pick plus 2-3 alternates from persona.json `dive_in_variants`, at least one `proposed`, for Mike to choose.>
 3. <The live 🔍 `[VERIFY]` checklist carried from DATA.md.>
+4. <Each PROPOSED clip insert (CLIP-1 ...): in or out, and the exact set-up wording.>

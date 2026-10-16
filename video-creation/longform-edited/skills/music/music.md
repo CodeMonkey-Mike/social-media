@@ -22,10 +22,19 @@ it at the `music_plan` node and records the delivered video at `stage_longform`.
   Linear gain `volume = 10**(dB/20)`. Use an explicit `MUSIC_DB`/constant, not a raw decimal. It's a ratio, so
   YouTube normalization preserves it.
 
-## ⛔ LOOP — a bed shorter than its span MUST loop
-- If a bed file's duration < the chapter span it covers, add `loop` to the `<Audio>`. A 178s bed over a 206s
-  span leaves ~28s of SILENCE otherwise. **This is the rule that was violated on kaspa (bed A).** Always check
-  `bed_duration ≥ span` for every bed; loop if not.
+## ⛔ LOOP — a bed shorter than its span MUST loop, and it loops as a REMIX loop
+- If a bed file's duration < the chapter span it covers, it loops. A 178s bed over a 206s span leaves ~28s of
+  SILENCE otherwise. **This is the rule that was violated on kaspa (bed A).** Always check `bed_duration ≥ span`
+  for every bed; loop if not.
+- **HOW it loops (Mike, 2026-10-06, every-job): as a seamless, bar-aligned SECTION REPEAT, the way Premiere Pro's
+  "Remix" extends a track to a target length. NEVER a whole-file restart** (a restart is audible: the intro comes
+  back, the energy drops, the beat skips). The placement plan names the region per bed: `loop_in_sec` and
+  `loop_out_sec` on the track's beat grid (one bar = 60 / bpm × 4 seconds), both inside ONE steady section of the
+  catalog `analysis.segments` (a verse or chorus plateau, not across a build or a drop), a whole number of bars
+  apart, so the audio at `loop_out` matches the audio at `loop_in`. The region repeats as many times as the span
+  needs, and the file's REAL ending is kept for any right-aligned hit (play from the loop's exit into the ending,
+  not from the top). The older `loop_point_sec` field means `loop_in_sec`; write the pair.
+- **Mixer: `scripts/mix_music.py` repeats the region with ffmpeg `aloop` (2026-10-07).** A bed row with `loop_in_sec` + `loop_out_sec` plays from `source_in` to `loop_out`, repeats the region as many extra passes as the span needs, then runs on into the file's real ending. The surplus comes off the TAIL by default; the LAST bed (and any row with `align_end: true` or `align: "end"`) sheds it from the HEAD so the ending lands on the span end, so pick `source_in` and the region so that surplus is small. `--dry-run` prints each loop's extra passes and trims. A `cover: loop` row with no region still falls back to the old whole-file restart with a WARN, and the graph's music_plan verifier now REFUSES such a plan when the file is shorter than its span.
 
 ## Fades + end-align
 - **Inter-bed breath** at each bed change (fade the outgoing ~0.3s, fade the incoming in).
@@ -36,6 +45,9 @@ it at the `music_plan` node and records the delivered video at `stage_longform`.
 ## Ducking (vibe cuts)
 - On a vibe-cut / biggest conviction beat: duck the bed ~18% across the hit via a per-frame
   `volume={(f)=>...}` dip (NOT a separate edit). Pair with the bigger impact.
+- **Clip inserts duck AUTOMATICALLY** (`scripts/mix_music.py` reads the paused-spine sidecar's `pauses[].clip` and drops
+  every bed -14 dB with a 0.3 s ramp under a spliced clip's own voice): no manual automation row, and no bed change, hard
+  hit or riser inside an insert's window (`../clip-inserts/clip-inserts.md`, 2026-10-09).
 
 ## Dynamic leveling (only when asked)
 - When Mike asks the bed to "come down when it gets loud, up when subtle," bake it into the track:

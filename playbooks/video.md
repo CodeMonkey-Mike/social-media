@@ -16,8 +16,11 @@
 - **vertical-ai-persona:** AI-generated shorts of Mike's likeness via Higgsfield/Seedance — see that SKILL
   (Higgsfield gotchas, the proven recipe, characters). **HARD RULE: every Seedance generation (incl. tests)
   = `--resolution 480p` ONLY, never higher — root CLAUDE.md; Remotion upscales free.**
-- **longform-presentation** (16:9, FROZEN): slide-deck + presenter PiP, readable on-screen text, gentle
-  pacing, spotlight-Remotion payoff — `video-creation/longform-presentation/longform-presentation.md`.
+- **longform-presentation** (16:9, revived 2026-10-13): record-and-edit over a slide deck (the lecture videos
+  for Mike's Whop course) or over a live screen share; defumble -> preset desilence -> transcribe -> spotlight
+  render (one deck container at a time cued to the words, a breath before every chapter card, as-filmed
+  head/tail kept); a fix round splices only the moved windows —
+  `video-creation/longform-presentation/longform-presentation.md`.
 - **longform-edited** (16:9, evolving): heavily-edited / production-value longform (b-roll, music, motion
   graphics, tighter cuts) — `video-creation/longform-edited/longform-edited.md`. Style guide grows per video.
 

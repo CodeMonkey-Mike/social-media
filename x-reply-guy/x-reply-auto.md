@@ -123,6 +123,26 @@ Seen 2026-07-22: run-1 replied to @SenLummis's own CLARITY Act post; run-2's can
 
 **Related:** also vary the ANGLE when replying to an account you have replied to recently. Same run, @MartyBent drew a Jevons-paradox take specifically because the grid-flexibility take had been used on that same account on 2026-07-21.
 
+## ⛔ "Scanned 0 / 1 top-of-feed tweets" from a busy list = the scanner, not a quiet feed (fixed 2026-10-13)
+
+Two scans in one run reported `Scanned 1` then `Scanned 0` from the Reply Guy list. A read-only probe
+of the same list on `xbot-profile` showed 7 tweet articles rendering normally after ~8 s. Root cause in
+`auto_reply_scan.py collect_top()`: a **quote tweet nests a second `tweetText`, `time` and `User-Name`**
+inside its article, Playwright's strict mode makes `inner_text()` / `get_attribute()` throw on a
+multi-match, and the per-article `except: continue` swallowed it. Every quote tweet was silently
+dropped, so a feed of quote tweets + replies + reposts scanned as empty. **Fix:** `.first` on all three
+locators (the outer tweet's elements come first in DOM order). The re-scan picked up the quote tweets
+(2 scanned, 1 qualifying) and run 2 fired instead of no-opping.
+
+- **Rule:** if `Scanned N` is 0-2 while the list obviously has activity, treat it as a scanner defect,
+  not a no-op. Probe the list read-only (count `article[data-testid='tweet']`, dump body text) before
+  accepting the skip.
+- **Known remaining gap (not fixed):** the reply filter `art.locator('text=/^Replying to/')` also matches
+  a "Replying to" line INSIDE a quoted tweet, so a top-level tweet that quotes a reply gets skipped as
+  if it were itself a reply (seen: @DesheShai's quote of a reply, 2026-10-13). Scope that check to the
+  outer tweet if it starts costing real candidates.
+- The list header showed **103 members** on 2026-10-13 (CLAUDE.md still says 191).
+
 ## ✅ An AMA / open-question tweet is reply-worthy — ask the sharpest QUESTION, don't force a take (2026-07-30)
 
 Run-2's pool was thin: an @jaltucher "Weekly Q&A, ask me anything" announcement and a Pomp hiring-thread

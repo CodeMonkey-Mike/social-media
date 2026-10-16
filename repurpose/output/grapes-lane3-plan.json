@@ -1,0 +1,375 @@
+{
+  "batch": "grapes",
+  "date": "2026-10-05",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/grapes LOW BPS VERTICAL/grapes LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-10-05",
+  "brief": "Mike override for this batch: produce exactly ONE YouTube community post (one carousel). Do NOT draft any YouTube poll (yt-text-polls) and do NOT draft any X poll. All other Lane 3 content at defaults.",
+  "fact_check": [
+    {
+      "claim": "Golden Kitty 'is holding up pretty damn good', 'it's not dying, not by a long shot', 'get into this at a 3.2 million, at a discount', 'literally one of like five memes out there that's not dying' among memes more than three weeks old; the promotion is dispersed across many influencers and Discords, 'not just one guy' who could dump it; centralized exchange listings 'pretty soon' (transcript)",
+      "verdict": "numbers UPDATED and the framing tightened. $GOLDEN $0.00288, about a $2.88M cap at 11:07 UTC on 2026-10-05: -28.9% 24h, -49.7% 7d, +9.8% 14d; ATH $0.006087 on Sept 27 (about a $6.1M cap), so about 53% under the high. Hourly caps: about $3.1M to $3.4M from 20:00 to 23:00 UTC on Oct 4 (matches the '3.2 million' Mike read on stream), a low near $2.27M at 09:00 UTC on Oct 5 (CoinGecko 24h low $0.00213), back near $2.9M two hours later. Copy uses round figures that hold across that range ('about half off its Sept 27 high', 'around a $3M cap') and reads the drop through Mike's own retracement rule. 'About five' is written as his dated on-stream count, never as a live claim about the other four. Launch date Sept 4 per the golden-kitty-dominance plan. The dispersed-promoters read is Mike's own (also in the 2026-09-30 thread). The CEX listing expectation is NOT used (unverified). OPERATOR FLAG: $GOLDEN fell about 29% in the 24 hours after the stream; re-check the price before the Golden Kitty tweet, thread, YT post and carousel slide 4 go out.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=golden-kitty and /coins/golden-kitty/market_chart?days=9 (fetched 2026-10-05); repurpose/output/golden-kitty-dominance-lane3-plan.json and spon-lane3-plan.json fact_check; transcript; persona.json project_handles (mention-triggered Follow line)"
+    },
+    {
+      "claim": "The five memes more than three weeks old that are hanging in there: Golden Kitty, Broker Cat, Harmonic Agent, Frog In Hood and Boner (transcript)",
+      "verdict": "partly verified, and only Golden Kitty is named in copy. Boner Coin ($BONER): about a $75.5M cap, +56% 7d, +115% 30d, 8% under its Sept 7 ATH. Harmonic Agent ($HARMONIC): about a $3.6M cap, -30% 24h, about 50% under its Oct 2 ATH. Frog In Hood ($FIH): about a $738K cap, about 66% under its Sept 29 ATH. Broker Cat: no listing found. Three of the four moved hard after the stream, so the count stays 'about five' as Mike's dated count and the other names are left out.",
+      "source": "api.coingecko.com/api/v3/search (harmonic-agent, frog-in-hood, boner-coin; no result for Broker Cat) and /coins/markets (fetched 2026-10-05); transcript"
+    },
+    {
+      "claim": "Mike's meme rules: new memes pump for a day or two and are dead by day four or five ('its half-life'); 'I wouldn't touch that with a 10 foot pole'; 86% down is 'completely normal for a meme'; 'you don't start to talk about something being officially a rug till it's 97'; for more safety go bigger cap (Cash Cat); 'everything else is retracing, even the bigger caps' (transcript)",
+      "verdict": "Mike's own heuristics, written in first person. The 97% line already shipped as a standalone one-liner on 2026-10-01 (x-tweets 1de894a8), so here it is a supporting line inside the Golden Kitty tweet, the YT post and thread 1, never its own item. Cash Cat ($CASHCAT) verified: $0.1593, about a $157M cap, -15.5% 7d, -36.3% 30d, 49.3% under its Sept 3 ATH of $0.3143; 'flagship meme of Robinhood Chain' per Crypto Briefing (Aug 16, 2026). Copy: 'about half off its Sept 3 high and down about 36% on the month'.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=cash-cat (fetched 2026-10-05); cryptobriefing.com/robinhood-chain-retrace-five-tokens; schedule-tweets/data/x-tweets.json; transcript"
+    },
+    {
+      "claim": "A viewer asked for a run on Kroak; Mike: 'Kaspa has to really do its run... Kaspa has to go above at least 10 cents to start talking like that... when it hits 15 cents I'd be like okay let's switch our attention to some of those Kaspa tokens' (transcript)",
+      "verdict": "the 10 cent and 15 cent levels are Mike's own, written in first person. Price UPDATED: $KAS $0.0433, about a $1.20B cap, rank 73, +2.8% 24h, -7.1% 7d, +43.0% 30d; ATH $0.2074 on July 31, 2024, so about 79% under it. CoinGecko's 365-day daily series tops out at $0.0783 (Oct 7, 2025), so 'has not traded at 10 cents in the past year' holds; the low in that window is $0.0253 on Aug 14, 2026 (about +71% since). 10 cents is about 2.3x and 15 cents about 3.5x from here. Kroak is NOT named: $KROAK sits 97.7% under its ATH at about a $60K cap, past Mike's own rug line, and the chart he read right after ('one million', '86% down') could not be matched to a token.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=kaspa,kroak-on-kaspa and /coins/kaspa/market_chart?days=365&interval=daily (fetched 2026-10-05); transcript"
+    },
+    {
+      "claim": "'If you got five thousand dollars from Trump, what would you do with it? Drop a comment... would it be Golden Kitty, would it be Kaspa?'; chat answers: Kaspa, Golden Kitty, memes (transcript, a post Mike read on stream)",
+      "verdict": "used in general form only. The question is Mike's own on-stream ask and the chat answers are in the transcript, so the single-line Kaspa tweet and its IG caption ask what a surprise $5,000 would buy and say the chat came back with Kaspa and meme coins. The Trump / government-check premise was not researched and is NOT used (political tangent; the copy does not depend on it).",
+      "source": "transcript; persona.json avoid_in_drafts"
+    },
+    {
+      "claim": "'Linea got the partnership with Swift, which is something that XRP was supposed to do, which is why Linea is one of my community favorites'; Linea 'was 64 million' market cap and 'isn't too bad for the monthly' (transcript)",
+      "verdict": "CORRECTED. Swift announced in September 2025 that it is building a blockchain shared ledger with Consensys, the company that built Linea, and Consensys CEO Joe Lubin said publicly that it is being built on Linea. The ledger went into a live pilot on July 9, 2026 with 17 banks (BNY, Citi, Wells Fargo, BNP Paribas, HSBC, Lloyds, Standard Chartered, UBS, ANZ, DBS, MUFG, OCBC, UOB, First Abu Dhabi Bank, Mashreq, Itau Unibanco, FirstRand). The live ledger runs on a permissioned Hyperledger Besu network built by Consensys: 'Linea-family in lineage but not the public Linea network'. So copy says 'Swift picked Consensys, the team that built Linea, to build its blockchain ledger' and never that Swift runs on Linea or uses the $LINEA token. $LINEA UPDATED: $0.00289, about a $71M cap, rank 382, +2.6% 7d, +11.4% 30d. 'Swift was supposed to be the $XRP story' is Mike's commentary. persona project_handles linea = null, so no Follow line.",
+      "source": "theblock.co/post/372706/swift-blockchain-ledger-consensys; cointelegraph.com/news/swift-building-linea-says-consenys-ceo-joe-lubin; eco.com/support/en/articles/15900833-the-17-banks-piloting-swift-s-blockchain-ledger (Aug 27, 2026); api.coingecko.com/api/v3/coins/markets?ids=linea (fetched 2026-10-05); persona.json stacking_lineup, project_handles"
+    },
+    {
+      "claim": "'Coinbase and Citigroup expanded their partnership on the 28th to bridge traditional banking and blockchain infrastructure; the integration allows merchants to accept stablecoins without holding or managing the digital assets, as Coinbase handles the blockchain transaction and the conversion'; 'why doesn't Coinbase just become a bank?'; the stablecoin-yield drama on centralized exchanges (transcript, a video Mike saw)",
+      "verdict": "verified. Sept 28, 2026: Citi and Coinbase expanded the partnership first announced in October 2025. Citi's institutional clients can accept stablecoin payments through Spring by Citi with Coinbase running the stablecoin rails and converting to fiat while Citi settles as the bank of record; Coinbase Virtual Accounts run on Citi's Virtual Account Wallet; US first; the companies cite more than 150 million stablecoin holders. Added context for Mike's bank question: the OCC gave Coinbase conditional approval for a national trust charter on April 2, 2026 (a trust charter, no retail deposits), so the tweet says 'already has conditional approval for a national trust charter' before asking why it does not go all the way. The stablecoin-yield fight is NOT used (its current status was not verified).",
+      "source": "theblock.co/post/417082/citi-coinbase-stablecoin-payments-corporate-clients; decrypt.co/379497/citi-stablecoin-payments-coinbase-without-touching-crypto; theblock.co/post/396244/coinbase-receives-conditional-approval-national-trust-charter-occ; nasdaq.com/articles/coin-gets-conditional-nod-trust-bank-everything-exchange-sight"
+    },
+    {
+      "claim": "'Bitcoin posts a 42.7% Q3 gain, best since 2017'; 'Bitcoin surges 40% in its best quarter since late 2024' (transcript, headlines Mike read)",
+      "verdict": "verified and recomputed. Coinbase: June 30 close $58,523.93 to Sept 30 close $83,556.14 = +42.8%; press figure +42.71%, the best third quarter since 2017 (+80.41%) and the second-best Q3 on record (Q3 2013 +40.6%, Q3 2025 +6.31%). First half of 2026: $87,497.94 (Dec 31 close) to $58,523.93 = about -33%. The 2026 low is $57,717.55 on July 1 (Coinbase daily lows from Oct 2025 through Oct 5, 2026); ATH $126,296 on Oct 6, 2025. Copy: 'best third quarter since 2017, up about 43%', 'second-best Q3 ever', 'lost about a third of its value in the first half', 'printed its low on July 1 at about $57.7K'. 'Best quarter since late 2024' is NOT used: sources disagree on which quarter it beats.",
+      "source": "api.exchange.coinbase.com/products/BTC-USD/candles (daily, fetched 2026-10-05); en.bloomingbit.io/feed/news/121385; weissratings.com/en/weiss-crypto-daily/bitcoin-set-to-close-second-best-q3-in-history; news.bitcoin.com/bitcoin-price-gains-44-for-second-best-q3-as-ethereum-jumps-71; cryptobriefing.com/bitcoin-q3-up-44-best-quarter"
+    },
+    {
+      "claim": "'US Treasury yields post worst fourth quarter since 1994, when the stock market started to go on that run, the dot com run' (transcript, a headline Mike read)",
+      "verdict": "verified with one correction: it is the THIRD quarter of 2026. The 10-year Treasury yield rose 87.1 basis points in Q3 to just under 5.28%, the sharpest quarterly rise since 1994 (Reuters: 'US Treasuries' worst quarter since 1994'); the 30-year reached 5.65%, the highest since 2002. Copy: 'Treasuries had their worst selloff since 1994', 'the 10-year yield jumped about 87 basis points to roughly 5.28%'. Mike's dot-com parallel is not used.",
+      "source": "hl.co.uk/news/bonds-teeter-after-us-treasuries-worst-quarter-since-1994 (Reuters, Oct 1, 2026); roic.ai/news/treasuries-suffer-worst-quarter-since-1994-as-real-yields-surge-09-30-2026"
+    },
+    {
+      "claim": "Cycle history: the first Bitcoin cycle ran two and a half years from inception to a June 2011 top; the second ran two and a half years to a December 2013 top; the cycle that topped in 2017 was the first four-year cycle, 'absolutely boring for the first three years', then parabolic from Q3 into December; the first cycle had one mid-cycle top, the second had two, the third had none (transcript)",
+      "verdict": "dates verified, mid-cycle counts trimmed. Genesis block Jan 3, 2009; top near $32 in June 2011 (about 29 months); top near $1,150 to $1,200 in late 2013 (sources date it Nov 30 or Dec 4, so copy says 'late 2013'; about 30 months); top near $20K in December 2017 (48 months). Q3 2017 returned +80.41%. Only the spring 2013 mid-cycle top is written (documented: Bitcoin crossed $100 that spring before the late-2013 run past $1,000); 'the first cycle had one, the second had two, the third had none' is not used. 'Three of those four years were dead boring' is Mike's read. 'I shed my four-year cycle belief in Q2 2025' is persona core_theses.",
+      "source": "cointelegraph.com/news/a-dazzling-history-of-bitcoins-ups-and-downs; forex.com/en/news-and-analysis/bitcoin-price-history-a-review-of-past-price-cycles-for-the-worlds-oldest-cryptocurrency; en.bloomingbit.io/feed/news/121385 (Q3 2017); persona.json core_theses"
+    },
+    {
+      "claim": "'Bitcoin has closed October in the green 77% of the time'; October opened at 83K; 'I think we're going into a bull trap and there's going to be a correction', not 'to a new bottom, like 56K let alone 38K... maybe go down to like 75'; the four-year cycle zombies 'were waiting for an October bottom'; a bearish divergence on Bitcoin (transcript)",
+      "verdict": "verified where checkable. 10 of 13 Octobers since 2013 closed green = 76.9% (red: 2014, 2018, 2025). October 2026 open $83,556.14 (Coinbase). $BTC $85,952 on 2026-10-05, +4.2% 7d. The pullback toward $75K is Mike's own scenario and is written 'I still think a pullback comes first, maybe toward $75K. Not a new low.' The bull trap already shipped as a full YT post and thread on 2026-10-03, so it gets one tweet of thread 2 with the new $75K level instead of its own item. Persona core_theses honored: the zombies are written as having October circled for a bottom that printed three months earlier; no copy says they cause a bottom in October. The bearish divergence is not used (a chart read that cannot be checked here).",
+      "source": "api.exchange.coinbase.com/products/BTC-USD/candles; api.coingecko.com/api/v3/coins/markets?ids=bitcoin (fetched 2026-10-05); repurpose/output/bull-trap-lane3-plan.json fact_check; persona.json core_theses"
+    },
+    {
+      "claim": "Dropped from the batch: SPON ('spawn') 94% down, 'I'll go down with the ship'; promo code ARCHIE and its Oct 10 expiry; What If as a coin 'I thought was going to go to 100 million'; the Archie livestream riff; the PerpsPad 114x, Orbeo, Stonk and Stockorium call list and 'the gains make up for it'; getting out of Poly, Flame, Candle, Marie and other memes; Boomer and Doggie; Dynamite; 'Tensor Cash'; Qubic; BNB cat; the chat complaints about an influencer's affiliation with Golden Kitty; the Elon Musk 'SpaceX SI' rebrand, the X.com / PayPal branding story and the Gulf of America aside; Millie Bobby Brown / Stranger Things; the week-ahead calendar (ISM Services PMI, ADP weekly, a Fed speech); Bitcoin dominance ticking up over 24 hours; the golden grapes story itself",
+      "verdict": "not drafted. SPON and What If are self-deprecating takes on Mike's own calls, and both already shipped. The promo code and the call list are membership pitches (OPERATOR FLAG: Mike said on stream that code ARCHIE expires Oct 10, in case he wants a manual promo post before then). Exiting positions is trader-portfolio framing. The other named memes and 'Tensor Cash' are passing chat mentions that could not be identified or verified ($PERPSPAD checks out at +2,404% over 30 days and about 80% under its Sept 13 ATH, but stays out with the call list). The influencer-affiliation complaint is unverified chat talk. The Musk / Trump branding rant is a political and personal tangent: per persona it is surfaced here as something Mike can post himself, and its factual premise was not researched. The week-ahead calendar is stale by post time and day-relative. The golden grapes survive only as a visual motif (tweet image eba0398a and the carousel hook).",
+      "source": "persona.json avoid_in_drafts, no_rotation_framing, ticker_corrections (spon); api.coingecko.com (perpspad, fetched 2026-10-05); transcript"
+    },
+    {
+      "claim": "Zcash check (zKAS mishear rule)",
+      "verdict": "the transcript contains no Zcash, ZEC or zKAS line, so the rule is not triggered. The only near miss is a viewer's 'Tensor Cash', an unidentified token that is not drafted.",
+      "source": "transcript (searched for zcash / z cash / zec)"
+    },
+    {
+      "claim": "Brief: exactly ONE YouTube community post (one carousel), NO YouTube poll, NO X poll, everything else at defaults",
+      "verdict": "honored: 1 YT post with a 5-slide carousel, 0 yt_text_polls, 0 x_polls, 4 multi-line X tweets, 2 single-line X tweets, IG companions for the two Kaspa-subject tweets. Threads stay at the default count of 2: thread 1 is built from the YT post; with only one post to build from, thread 2 is a standalone thread on the Bitcoin Q3 topic (same reading as the 2026-09-27 beer-and-kaspa batch, whose brief also cut YT posts to one and kept two threads).",
+      "source": "batches.json briefs.lane3; repurpose/output/beer-and-kaspa-lane3-plan.json"
+    },
+    {
+      "claim": "Topic weighting (Kaspa first, then TAO, Toncoin, Housecoin, Pengu)",
+      "verdict": "Kaspa came up twice in passing (the KRC20 / 10 cent remark and the $5,000 question) and both became Kaspa-subject tweets with IG companions; TAO, Toncoin, Housecoin and Pengu were not discussed, so the rest follows the stream: Golden Kitty and the state of the meme market (1 multi-line tweet, the YT post, thread 1), Linea (1 multi-line tweet), Citi and Coinbase (1 multi-line tweet), Bitcoin's Q3 (1 single-line tweet, thread 2).",
+      "source": "transcript; repurpose/SKILL.md IG topic filter"
+    },
+    {
+      "claim": "Whisper corrections applied: 'golden kiddie' / 'golden kid' / 'golden kitten' -> Golden Kitty ($GOLDEN); 'spawn' -> SPON; 'ponds' -> Pons; 'purse pad' / 'perps had' -> PerpsPad; 'stalker ream' -> Stockorium; 'croak' -> Kroak; 'artificial eno' -> Artificial Inu; 'frog and hood' -> Frog In Hood; 'got the partner strip which swift' -> the partnership with Swift; 'city group' / 'city' -> Citi",
+      "verdict": "applied throughout; none of the persona-listed mishears (the wrong-chain spelling of Kaspa, the car-brand mishear of cyan, the lowercase Greek-letter mishear of TAO, the wrong What If ticker, the abbreviated moving-average form) appear in the copy.",
+      "source": "persona.json terminology_rules, ticker_corrections"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-10-05-three-week-test-golden-kitty-still-standing": "version4 (a usable topic photo exists: images/reference/golden-kitty.png, the gold cat trophy that IS the Golden Kitty meme and the post's featured survivor, which is the exact V4 use case and carries the extra V4 weight. The post is rule-and-number-led (1 to 2 days, day 5, 3 weeks, 86%, 97%, Sept 4, Sept 27, just over $6M, around $3M, about half off), so the V4 data slides fit. golden-kitty.png also fronted the 2026-09-30 Golden Kitty V4 hook, so this hook is staged differently on purpose: the statue right of centre on a slate tabletop with a bunch of golden grapes at its base (the stream's own motif), a red spike-and-collapse chart bubble and a different headline. Vlad-Tenev.webp was not used (it fronted the 2026-09-25 carousel and this post is not about Robinhood). V1 was weighed for the hammer-line rules and V2 for the framework; with a topic photo on hand V4 wins. The hook cites golden-kitty.png + version4/hook.png as an array with the instruction to use only the statue half of the reference and never the screenshot half; slides 2-5 cite version4/slide.png. Five slides: hook, three beats, question. Per the SKILL.md 2026-09-10 note, the figure-bearing data slides 2, 3 and 4 are candidates for the code-rendered V4 path (render_v4_slide.py) if ChatGPT drifts the numbers.)"
+  },
+  "missing_references": [
+    "Citi and Coinbase logos: no reference files; neither is rendered (image 7bd4ad20 shows an unbranded stone bank building and a plain royal blue coin), both are named only in copy",
+    "Bitcoin logo / coin: no bitcoin reference file; no Bitcoin likeness is rendered (image 7b6dc09b uses a plain unmarked gold coin), Bitcoin is named only in copy",
+    "Swift, Consensys and bank logos (BNY, Citi, Wells Fargo, HSBC, UBS) and the XRP logo, all named in the Linea tweet: no reference files; none is rendered, image a08ed049 shows only the Linea coin from linea.png and unbranded bank buildings",
+    "KRC20 token mascots: none is named in copy, so the waiting crowd in image a3373a36 (X and IG) is plain pastel coins with no marks (kroak.png, kasy.png and kappy.png exist but were deliberately not used)"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "7bd4ad20",
+      "slug": "citi-coinbase-stablecoin-checkout-no-crypto",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. On a glowing bridge between two cities at night, a friendly anthropomorphized classical stone bank building character with tall columns, a triangular pediment, little arms and legs and a warm confident smile shakes hands with a sleek plain royal blue coin character with little arms and legs and a calm grin. On the left behind the bank stands an old stone financial district; on the right behind the coin rises a futuristic city of glowing blue light towers. Where their hands meet, a soft burst of white light spreads along the bridge in both directions. The coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The bank building carries no signage, no nameplate, no lettering and no numbers anywhere, and its pediment is blank stone. Deep navy near-black background. Dramatic cinematic lighting: warm amber light from the old city on the bank, cool royal blue rim light on the coin, a bright white glow at the handshake. Mood: calm, triumphant, two worlds merging. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "7b6dc09b",
+      "slug": "bitcoin-best-q3-since-2017-zombies-waiting",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Five cartoon zombies in rumpled office suits and loosened ties stand in a row at the edge of a deep dark pit, peering down into it with empty buckets and little shovels, patiently waiting, their backs half turned to the viewer. Behind them, unnoticed, a big plain gold coin character with little arms and legs and a confident grin has already climbed out of the pit and is striding up a steep staircase of glowing gold steps toward a bright sunrise, glancing back over its shoulder at the zombies. The zombies are friendly, rounded, Pixar-style comedy zombies with pale grey-green skin and sleepy eyes, not gory. The coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The buckets, shovels and suits carry no lettering or markings. Deep navy near-black background. Dramatic cinematic lighting: warm gold rim light from the sunrise on the coin and the staircase, cold dim blue light on the zombies and the pit. Mood: defiant, the move already happened behind their backs. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "eba0398a",
+      "slug": "golden-kitty-one-of-five-memes-standing",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\golden-kitty.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A gleaming chrome-gold cat trophy figurine, a stylized sitting cat sculpted in polished gold with a small round collar medallion, modeled on the gold cat statue shown on the LEFT side of the attached reference image, stands upright and defiant on a low stone pedestal in the middle of a dark misty field. All around it lie dozens of toppled, cracked, dull grey plain coins half sunk in the ground like fallen headstones, and a small bunch of golden-yellow grapes rests at the foot of the pedestal, catching the light. Far in the background four small plain coins still stand upright with a faint warm glow, tiny against the dark. Every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The trophy carries no lettering, no plaque and no engraving, and the pedestal is completely plain with no nameplate. The attached reference contains a social media screenshot with text on its right side: do NOT reproduce that screenshot, its text, its logo, its emojis or any of its lettering; use only the gold cat statue as the shape, pose and colour key. Deep navy near-black background. Dramatic cinematic lighting: warm gold rim light on the trophy, a single bright spotlight from above, cold blue mist over the fallen coins. Mood: defiant, still standing. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "a08ed049",
+      "slug": "swift-picked-consensys-team-behind-linea",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\linea.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A calm, confident anthropomorphized Linea coin character, a pale sky blue coin whose face carries the Linea mark exactly as shown in the attached reference image (one dark navy right-angle stroke shaped like a capital L with one solid dark navy dot floating at its upper right), with little arms and legs, stands at the centre of a vast dark hall. From under its feet, glowing pale sky blue rails of light fan out across the floor to a semicircle of tall classical stone bank buildings, and one after another the windows of those buildings are lighting up in the same pale blue as the rails reach them. The coin holds one hand out toward the buildings like a conductor. The mark on the coin is copied exactly from the reference; use the attached reference only for that mark and its two colours, and add no other symbol or lettering to the coin. The bank buildings carry no signage, no nameplates, no lettering and no numbers, and their pediments are blank stone. Deep navy near-black background. Dramatic cinematic lighting: pale sky blue rim light on the coin and along the rails, warm amber accents on the stone columns. Mood: calm, triumphant, the old system plugging in. No greenish cyan anywhere in the image; the blue is the pale sky blue of the reference, not green tinted. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image other than the single Linea mark on the coin."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "a3373a36",
+      "slug": "krc20-season-waits-for-kaspa-10-cents",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A determined anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, climbs a steep dark stone staircase toward two thin horizontal bars of pale glowing light that hang across the stairway one above the other, the lower bar close above its head and the higher bar far up the stairs. At the bottom of the staircase a small crowd of tiny cute coin characters in soft pastel colours waits behind a velvet rope, bouncing on their toes and looking up eagerly at the Kaspa coin, one of them shading its eyes with a hand. Every small coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The light bars carry no numbers and no lettering. Deep navy near-black background with faint drifting particles. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, a soft spotlight from the top of the stairs, dim cool fill on the waiting crowd. Mood: hungry, the leader goes first. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "a3373a36",
+      "slug": "krc20-season-waits-for-kaspa-10-cents",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A determined anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, climbs a steep dark stone staircase that fills the tall portrait frame from bottom to top toward two thin horizontal bars of pale glowing light that hang across the stairway one above the other, the lower bar close above its head and the higher bar far up the stairs. At the bottom of the staircase a small crowd of tiny cute coin characters in soft pastel colours waits behind a velvet rope, bouncing on their toes and looking up eagerly at the Kaspa coin, one of them shading its eyes with a hand. Every small coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The light bars carry no numbers and no lettering. Deep navy near-black background with faint drifting particles. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, a soft spotlight from the top of the stairs, dim cool fill on the waiting crowd. Mood: hungry, the leader goes first. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "0259135e",
+      "slug": "five-thousand-dollars-how-much-kaspa",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. On a dark wooden tabletop a cheerful anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands beside a big open brown leather wallet that is overflowing with plain gold coins. The Kaspa coin leans toward the viewer with a playful grin and points one thumb at itself, its other hand resting on the edge of the wallet. One single large glowing white question mark symbol floats in the air above the wallet. Every gold coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and the wallet carries no logo and no lettering. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, warm gold glints on the coins in the wallet, a soft spotlight from above. Mood: playful, hungry, your move. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text, letters, numbers or words anywhere in the image other than the single question mark symbol."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "0259135e",
+      "slug": "five-thousand-dollars-how-much-kaspa",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. On a dark wooden tabletop a cheerful anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands beside a big open brown leather wallet that is overflowing with plain gold coins. The Kaspa coin leans toward the viewer with a playful grin and points one thumb at itself, its other hand resting on the edge of the wallet. One single large glowing white question mark symbol floats high above the wallet in the upper part of the tall portrait frame. Every gold coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and the wallet carries no logo and no lettering. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, warm gold glints on the coins in the wallet, a soft spotlight from above. Mood: playful, hungry, your move. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text, letters, numbers or words anywhere in the image other than the single question mark symbol."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "1c14a967",
+      "slug": "01-hook",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\golden-kitty.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ],
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference as the source of the full-bleed background photo: ONLY the polished gold cat trophy statue on its LEFT side, placed a little right of centre and enlarged so the statue fills the upper two thirds of the square frame, standing on a dark slate tabletop against a dark charcoal studio background, with one small bunch of golden-yellow grapes resting on the tabletop at the statue's base on the left; render it as a rich photographic image with the statue's gold surface, its small round collar medallion and its sitting pose kept faithful to the photo; the RIGHT side of that reference contains a social media screenshot with text, a logo and emojis and it must NOT be reproduced in any way. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple red line chart that spikes up once and then collapses to a flat line near the bottom. Bold all-caps text across the bottom: 'ALMOST EVERY MEME OVER 3 WEEKS OLD IS DYING' in white on the first lines, then 'I COUNTED ABOUT FIVE THAT ARE NOT' with 'ABOUT FIVE' in bright green. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no artist signature and no initials anywhere in the frame or in any corner; the attached style reference carries a watermark and it must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "119f38ba",
+      "slug": "02-the-three-week-test",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The three-week test'. Stat boxes: 'A NEW MEME PUMPS FOR: 1 TO 2 DAYS', 'MOST ARE DEAD BY: DAY 5', 'MY FILTER: OLDER THAN 3 WEEKS'. Centre: a line chart with labeled axes showing a red price line that spikes sharply upward at the far left, collapses back to almost zero and then runs flat along the bottom all the way to the right, with one dashed vertical line near the right side labelled '3 WEEKS'; the horizontal axis is labelled 'DAYS SINCE LAUNCH', the vertical axis is labelled 'PRICE', and neither axis carries any numbers. Bottom green box labelled 'MY READ' with two bullets: 'Anything can pump on day one. Day one tells you nothing.' and 'Across my whole watchlist, about five memes passed the test.'. Page number 2 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "5020ed93",
+      "slug": "03-retracement-or-rug",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Retracement or rug?'. Stat boxes: 'DOWN 86%: NORMAL FOR A MEME', 'DOWN 97%: NOW IT IS A RUG', 'GOLDEN KITTY: ABOUT HALF OFF ITS HIGH'. Centre: a horizontal bar chart with three bars labelled 'GOLDEN KITTY', 'NORMAL MEME DIP' and 'RUG LINE' from top to bottom; the first bar is green and reaches about half the width of the chart, the second is amber and reaches most of the width, the third is red and reaches almost the full width; the bars carry the value labels 'ABOUT 50%', '86%' and '97%' in that order, and the horizontal axis is labelled 'DOWN FROM THE HIGH' with no other numbers. Bottom green box labelled 'THE RULE' with two bullets: 'Down 86% is what memes do between runs.' and 'I do not say rug until a chart is 97% down.'. Page number 3 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "125b76f0",
+      "slug": "04-golden-kitty-still-standing",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Golden Kitty: one of about five still standing'. Stat boxes: 'LAUNCHED: SEPT 4', 'ALL-TIME HIGH: SEPT 27, JUST OVER $6M', 'THIS WEEK: AROUND $3M, ABOUT HALF OFF'. Centre: a line chart with labeled axes showing a green price line that starts low at the left, climbs steeply to its highest point labelled 'SEPT 27', then pulls back to about half that height at the far right labelled 'THIS WEEK'; the axes carry no numbers. Bottom green box labelled 'WHY IT HOLDS' with two bullets: 'A lot of influencers and Discords are behind it, not one guy who can dump the chart.' and 'A month old and still trading. Never financial advice.'. Page number 4 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "68fc2709",
+      "slug": "05-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: '$500 on one meme: which one do you buy?'. Stat boxes: 'THE BUDGET: $500', 'A: A MONTH-OLD CHART, HALF OFF ITS HIGH', 'B: A BRAND-NEW LAUNCH, DAY ONE'. Centre panel: two plain rounded panels side by side, one headed A and one headed B, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'Bet right now: A or B, and why?'. Page number 5 in a circle at the top right. No human faces, no watermark, no signature or initials in any corner, no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "KRC20 season does not start until Kaspa ($KAS) runs first.\n\n$KAS is at about 4.3 cents this week: up about 43% on the month, and it has not traded at 10 cents in the past year.\n\nAbove 10 cents is where I start talking about a run on the Kaspa tokens. At 15 cents I switch my attention to them. Kaspa has to do its thing first...\n\n#kaspa #KRC20",
+      "hook": "KRC20 season does not start until Kaspa ($KAS) runs first.",
+      "image_id": "a3373a36",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #1 (a strong, defensible-but-debatable take: KRC20 season does not start until Kaspa is above 10 cents, which KRC20 holders will want to argue). No fact is manufactured: the price, the 30-day move and the one-year 10 cent check are verified, and the 10 cent and 15 cent levels are Mike's own on-stream levels."
+    },
+    {
+      "tweet": "Swift was supposed to be the $XRP story.\n\nInstead Swift picked Consensys, the team that built Linea ($LINEA), to build its blockchain ledger. That ledger has been in a live pilot since July with 17 banks, including BNY, Citi, Wells Fargo, HSBC and UBS.\n\n$LINEA sits at about a $71M market cap, up about 11% on the month while most of the low caps got decimated. That is why it is one of my community favorites 💪\n\n#Linea #Swift",
+      "hook": "Swift was supposed to be the $XRP story.",
+      "image_id": "a08ed049"
+    },
+    {
+      "tweet": "Almost every meme more than three weeks old is dying right now.\n\nI went through my whole watchlist on stream this week and counted about five charts that are not. Golden Kitty ($GOLDEN) is one of them: launched Sept 4, about half off its Sept 27 high, around a $3M cap. For a meme that is a retracement. I do not say rug until a chart is 97% down.\n\nA month-old chart with a whole crowd of influencers and Discords behind it, not one guy who can dump it, is a different animal. Never financial advice.\n\nFollow: @golden_kitty_rh\n\n#GoldenKitty #RobinhoodChain",
+      "hook": "Almost every meme more than three weeks old is dying right now.",
+      "image_id": "eba0398a"
+    },
+    {
+      "tweet": "Citi's corporate clients can now take stablecoin payments without ever touching crypto.\n\nCiti and Coinbase expanded their partnership on Sept 28. Coinbase runs the stablecoin rails and converts to dollars, Citi settles as the bank of record, and merchants get access to more than 150 million stablecoin holders. US first.\n\nThis is the banks and crypto merging, and I think it is a step in the right direction. Coinbase already has conditional approval for a national trust charter... so why not go all the way and just become a bank?\n\n#stablecoins #Coinbase",
+      "hook": "Citi's corporate clients can now take stablecoin payments without ever touching crypto.",
+      "image_id": "7bd4ad20"
+    },
+    {
+      "tweet": "Bitcoin ($BTC) just posted its best third quarter since 2017, up about 43%, in the same quarter Treasuries had their worst selloff since 1994... and the four-year cycle zombies spent it waiting for an October bottom 😎\n\n#bitcoin #crypto",
+      "hook": "Bitcoin ($BTC) just posted its best third quarter since 2017, up about 43%, in the same quarter Treasuries had their worst selloff since 1994... and the four-year cycle zombies spent it waiting for an October bottom 😎",
+      "image_id": "7b6dc09b"
+    },
+    {
+      "tweet": "If $5,000 landed in your account this week, how much of it goes into Kaspa ($KAS) at about 4.3 cents, still about 79% under its all-time high? 🤔\n\n#kaspa #KAS",
+      "hook": "If $5,000 landed in your account this week, how much of it goes into Kaspa ($KAS) at about 4.3 cents, still about 79% under its all-time high? 🤔",
+      "image_id": "0259135e"
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-10-05-three-week-test-golden-kitty-still-standing",
+      "topic": "Almost every meme more than three weeks old is dying: the half-life of a new meme, the three-week test, the 86% normal / 97% rug rule, Cash Cat about half off its high, and why Golden Kitty is one of about five still standing (built from the YT post)",
+      "variation_label": "A (numbered-breakdown, rules first)",
+      "tweets": [
+        {
+          "text": "I went through my entire meme watchlist on stream this week.\n\nAlmost everything more than three weeks old is dying. I counted about five charts that are not.\n\nHow I tell a retracement from a rug...",
+          "hook": "I went through my entire meme watchlist on stream this week."
+        },
+        {
+          "text": "Start with what a new meme does right now: it launches, pumps for a day or two, and by day four or five most of them are dead.\n\nAnything can go up on day one, so day one tells you nothing. I would not touch a brand-new launch with a 10-foot pole in this market."
+        },
+        {
+          "text": "So I run one filter: show me a chart that is more than three weeks old and still has buyers.\n\nAcross my whole list that was about five memes. Even the bigger caps are retracing: Cash Cat ($CASHCAT) is about half off its Sept 3 high and down about 36% on the month."
+        },
+        {
+          "text": "Rule two. People call everything a rug. I do not.\n\nA meme that is 86% off its high is completely normal. I do not use the word rug until a chart is 97% down. Above that line it can still come back and take out its all-time high."
+        },
+        {
+          "text": "Now run Golden Kitty ($GOLDEN) through both rules.\n\nLaunched Sept 4, so a month old. Topped at a little over a $6M cap on Sept 27, about half off that high this week at around $3M.\n\nThat is a retracement, nowhere near a rug.\n\nFollow: @golden_kitty_rh"
+        },
+        {
+          "text": "And look at who is behind it: a lot of influencers and a lot of Discords, all buying it and pushing it.\n\nIt is dispersed, not one guy who can dump his bag and crash the chart.\n\nIf the market starts flying, the memes still standing are the ones that run. Never financial advice."
+        },
+        {
+          "text": "If this changed how you read a meme chart...\n\nFollow me for the meme reads before the crowd shows up.\n\n🔥"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-10-05-bitcoin-best-q3-since-2017-cycle-history",
+      "topic": "Bitcoin's best third quarter since 2017 (about +43%) and what the 2017 comparison really says: the first two cycles ran about two and a half years, 2017 was the first four-year cycle, the 2026 low printed July 1 (three months before the October the four-year cycle zombies had circled) in the quarter Treasuries had their worst selloff since 1994, and the pullback Mike still expects (standalone second thread: the brief limits YT posts to one, so there is no second post to build from)",
+      "variation_label": "B (historical-parallel)",
+      "tweets": [
+        {
+          "text": "Bitcoin ($BTC) just posted its best third quarter since 2017: up about 43%.\n\nNow everybody wants to compare this run to 2017.\n\nFine. Let's actually look at 2017, because it is where the whole four-year cycle story comes from...",
+          "hook": "Bitcoin ($BTC) just posted its best third quarter since 2017: up about 43%."
+        },
+        {
+          "text": "Cycle one: Bitcoin's first block in January 2009 to the top in June 2011. About two and a half years.\n\nCycle two: that June 2011 top to the top in late 2013. About two and a half years again, with a mid-cycle top in the spring of 2013 along the way."
+        },
+        {
+          "text": "Cycle three is the one everybody remembers: late 2013 to December 2017.\n\nThat was the FIRST four-year cycle. Three of those four years were dead boring. Then Q3 2017 printed about +80% and the whole thing went parabolic into December."
+        },
+        {
+          "text": "So the four-year cycle is not a law of Bitcoin. The first two cycles ran about two and a half years each.\n\nOne cycle stretched to four years and a whole generation of traders built a religion on it. I shed my four-year cycle belief in Q2 2025."
+        },
+        {
+          "text": "This year the four-year cycle zombies had October circled for the bottom.\n\n$BTC lost about a third of its value in the first half, printed its low on July 1 at about $57.7K, then ran about 43% in Q3.\n\nThe low came three months before their date."
+        },
+        {
+          "text": "And it did that in the same quarter Treasuries had their worst selloff since 1994: the 10-year yield jumped about 87 basis points to roughly 5.28%.\n\nBonds were bleeding and Bitcoin had its second-best Q3 ever."
+        },
+        {
+          "text": "Is this 2017 again? Not yet.\n\n$BTC has closed October green in 10 of the last 13 years, so everybody is leaning the same way. It opened the month at about $83,556.\n\nI still think a pullback comes first, maybe toward $75K. Not a new low. Forget $56K, forget $38K."
+        },
+        {
+          "text": "If this made you rethink the four-year cycle...\n\nFollow me for the macro read that ignores the echo chamber.\n\n🧠"
+        }
+      ]
+    }
+  ],
+  "x_polls": [],
+  "yt_text_polls": [],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-10-05-three-week-test-golden-kitty-still-standing",
+      "topic": "Almost every meme more than three weeks old is dying: the half-life of a new meme (a day or two of pump, dead by day five), the three-week test, the 86% normal / 97% rug rule, Cash Cat about half off its high, and why Golden Kitty (launched Sept 4, about half off its Sept 27 high at around a $3M cap, a dispersed crowd of promoters) is one of about five still standing",
+      "variation_label": "A + CTA1",
+      "body_style": "rules-first arc: the on-stream watchlist sweep and the count of five in the pre-fold hook with the payoff (retracement vs rug, why Golden Kitty) left open, the half-life of a new meme, the three-week filter with Cash Cat as the bigger-cap check, the 86/97 rule, Golden Kitty run through both rules with updated numbers, the dispersed-promoters read, the bigger-cap and discount close, a personal-stake $500 question and a like/subscribe ask",
+      "cta_target": "subscribe_youtube",
+      "body": "I went through my entire meme watchlist on stream this week, and almost everything more than three weeks old is dying. I counted about five charts that are not.\n\nHere is how I tell a retracement from a rug, and why one of those five is Golden Kitty ($GOLDEN).\n\nStart with what a new meme does right now. It launches, it pumps for a day or two, and by day four or five most of them are dead. Anything can go up on day one, so day one tells you nothing. I would not touch a brand-new launch with a 10-foot pole in this market.\n\nSo I run one simple filter: show me a chart that is more than three weeks old and still has buyers. Across my whole list, that was about five memes. Even the bigger caps are retracing. Cash Cat ($CASHCAT), the flagship meme of Robinhood Chain, is about half off its Sept 3 high and down about 36% on the month.\n\nThen the second rule. People call everything a rug. I do not. A meme that is 86% off its high is completely normal; that is what memes do between runs. I do not use the word rug until a chart is 97% down. Above that line it can still come back and take out its all-time high, and I have watched it happen.\n\nNow run Golden Kitty through both rules. It launched Sept 4, so it is a month old. It topped at a little over a $6M cap on Sept 27, and it is about half off that high this week, at around a $3M cap. By my rules that is a retracement, nowhere near a rug.\n\nAnd here is the part I like most. Look at who is behind it: a lot of influencers and a lot of Discords, all buying it and all pushing it. It is dispersed. It is not one guy who can dump his bag and crash the chart.\n\nIf you want to play it safer, go bigger cap. But if the market starts flying over the next couple of weeks, the memes that are still standing are the ones that run. To me that is a chance to get into something that is not dying, at a discount. Never financial advice.\n\nSo tell me in the comments: if you had $500 for one meme right now, do you buy the month-old chart that is half off its high, or the one that launched this week?\n\nClick that like button and click the subscribe button if you want the meme reads before the crowd shows up.",
+      "engagement_question": "If you had $500 for one meme right now, do you buy the month-old chart that is half off its high, or the one that launched this week?",
+      "images": [
+        {
+          "image_id": "1c14a967",
+          "slide_text": "Almost every meme over three weeks old is dying. I counted about five that are not."
+        },
+        {
+          "image_id": "119f38ba",
+          "slide_text": "The three-week test"
+        },
+        {
+          "image_id": "5020ed93",
+          "slide_text": "Retracement or rug?"
+        },
+        {
+          "image_id": "125b76f0",
+          "slide_text": "Golden Kitty: one of about five still standing"
+        },
+        {
+          "image_id": "68fc2709",
+          "slide_text": "$500 on one meme: which one do you buy?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-10-05-krc20-season-waits-for-kaspa-10-cents",
+      "kaspa_subject": true,
+      "image_id": "a3373a36",
+      "aspect_ratio": "4:5",
+      "hook": "KRC20 season does not start until Kaspa ($KAS) runs first.",
+      "caption": "KRC20 season does not start until Kaspa ($KAS) runs first.\n\nSomebody in my livestream chat this week called for a run on the KRC20 memes. I like the thought, but the order matters: Kaspa has to do its thing before the tokens built on it get theirs.\n\nWhere we are: $KAS is at about 4.3 cents this week, up about 43% on the month and about 70% off its August low. It has not traded at 10 cents in the past year, and it is still about 79% under its all-time high of 20.7 cents.\n\nMy levels: above 10 cents is where I start talking about a run on the Kaspa tokens. At 15 cents I switch my attention to them. That is about 2.3x and 3.5x from here, on a fair-launch proof-of-work chain with no premine.\n\nWhich KRC20 token are you holding for that day?\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #ghostdag #crypto #cryptocurrency #altcoins #blockchain #memecoins #cryptoinvesting #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#memecoins",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "KRC20 season does not start until Kaspa ($KAS) runs first."
+    },
+    {
+      "id": "ig-2026-10-05-five-thousand-dollars-how-much-kaspa",
+      "kaspa_subject": true,
+      "image_id": "0259135e",
+      "aspect_ratio": "4:5",
+      "hook": "If $5,000 landed in your account this week, how much of it goes into Kaspa ($KAS)? 🤔",
+      "caption": "If $5,000 landed in your account this week, how much of it goes into Kaspa ($KAS)? 🤔\n\nI asked my livestream what they would buy with a surprise $5,000. The chat came back with Kaspa and meme coins, and more than one said both.\n\n$KAS is at about 4.3 cents: up about 43% on the month and still about 79% under its all-time high. Fair launch, proof of work, no premine.\n\nDrop your split in the comments.\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #crypto #cryptocurrency #altcoins #blockchain #bitcoin #cryptoinvesting #cryptotrading #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#bitcoin",
+        "#cryptoinvesting",
+        "#cryptotrading",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "If $5,000 landed in your account this week, how much of it goes into Kaspa ($KAS) at about 4.3 cents, still about 79% under its all-time high? 🤔"
+    }
+  ]
+}

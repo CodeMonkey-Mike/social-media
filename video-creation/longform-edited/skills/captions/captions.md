@@ -16,8 +16,8 @@ canonical caption skill `video-creation/skills/captions/captions.md`; THIS file 
     `WebkitTextStroke:'12px #000'`, `paintOrder:'stroke fill'`, pop 0.7->1.12->1. **Run the `captions-builder`
     agent** — never hand-roll or copy an old comp's inline captions (zebec 2026-07-12 regression).
 - **Scope = EVERY sustained-face hold > 5s, automatically (Mike, 2026-06-18; corrected — NOT a per-video
-  pick).** When a video uses captions, they appear on **every** gated-face hold longer than 5s — the same
-  > 5s face-view trigger as the light-leak overlay (`skills/overlays/overlays.md`). It is not optional per-hold; if the
+  pick).** When a video uses captions, they appear on **every** gated-face hold longer than 5s — (the light leak used to share
+  this > 5s trigger; since 2026-10-07 leaks ride the punch-ins on desilencer joins instead, `skills/overlays/overlays.md` section 1). It is not optional per-hold; if the
   face is held > 5s, it gets captions. They are a talking-head device:
   - **NEVER over b-roll, containers, diagrams, or receipts** (the cover layer is the visual there), and
     **never over short (< 5s) face punctuation** (too brief to read).

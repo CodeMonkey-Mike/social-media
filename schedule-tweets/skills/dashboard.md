@@ -39,7 +39,7 @@ python C:\Users\mnede\Documents\Claude\social-media\schedule-tweets\scripts\serv
 
 - Serves `index.html`, `langgraph.html` and all static files from `schedule-tweets/` at `/`
 - Routes `/x-reply-guy/...` GET requests to `../x-reply-guy/` on disk
-- Routes `/linkedin/<file>` to `../linkedin-automation/data/<file>` — an **allowlist**
+- Routes `/linkedin/<file>` to `../linkedin-automation/private/data/<file>` — an **allowlist**
   (`lane_runs.json`, `lane_progress.json`) rather than a directory mount, because that
   folder also holds `members.json`, the project log and the restriction history. Served
   `Cache-Control: no-store`; the page polls them while a run is writing them.

@@ -41,6 +41,7 @@ One line per correction, wrong -> right, with the timecode. The word-time JSON s
 | TC | as recorded (the actual words) | vs screenplay |
 |---|---|---|
 | 40.22 | "<spoken>" | KEPT · guard [!WARNING <n>] HELD |
+| 52.90 | (clip insert CLIP-1 lands here; the set-up line ends "...saying <the claim>.") | KEPT · INSERT CLIP-1 (<n> s, the speaker's own voice; the splice is the trough after "<last word>") |
 
 ### CH3 - <TITLE> (<start>-<end>) · card ON "<CARD TEXT>" · Bed C
 
@@ -53,6 +54,7 @@ One line per correction, wrong -> right, with the timecode. The word-time JSON s
 - **Dropped:** <scripted lines not said> - RESOLVED by Mike <date> (<ruling>) | OPEN.
 - **Added (ad-libs):** <TC> "<words>" - <keep / cut ruling or OPEN>.
 - **Guards:** every `[!WARNING]` do-not-air claim: HELD / BROKEN at <TC> (<what was said, ruling>).
+- **Clip inserts (Convention 6):** CLIP-1 set-up line said -> KEPT at 52.90 | CLIP-2 set-up line not said -> DROPPED (the insert goes with it; Mike re-places or drops it) | none scripted.
 
 ## Flags carried into the edit
 

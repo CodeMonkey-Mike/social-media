@@ -1,0 +1,1221 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>every-job slides - canonical build (slide-builder)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700;1,900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600;700&family=Nosifer&display=swap" rel="stylesheet">
+<style>
+/* Pasted VERBATIM from skills/container-reference/container-canonical.css (tokens + anatomy LOCKED).
+   Components below the marked line only ADD layout classes that consume these tokens. */
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+/* ======================= components (layout only; the locked tokens above are untouched) ======================= */
+h1,.hl,.quote{font-variant-numeric:lining-nums}
+.ey .mono{font-weight:600;letter-spacing:.12em}
+
+/* rounded card box with top-accent line (CARD SLIDE, per banks-card-* references), sized to FILL the frame */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:28px;padding:76px 96px 84px;
+  position:relative;overflow:hidden;width:100%}
+.card>.top{position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan) 40%,transparent 85%)}
+.card.k-gold>.top{background:linear-gradient(90deg,var(--accent-gold),transparent 75%)}
+.card.k-red>.top{background:linear-gradient(90deg,var(--accent-red),transparent 75%)}
+.card.k-cyan>.top{background:linear-gradient(90deg,var(--accent-cyan),transparent 75%)}
+.card .divider{margin:30px 0}
+.hd{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-bottom:26px}
+.hd .ey{margin-bottom:0}
+
+/* tier badges: identical on every slide, house or Halloween (SCREENPLAY VISUAL-PLAN: tier badges stay exact) */
+.badge{display:inline-flex;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;font-weight:700;
+  font-size:23px;letter-spacing:.16em;text-transform:uppercase;border-radius:999px;padding:10px 22px 10px 18px;
+  border:2px solid currentColor;white-space:nowrap;line-height:1}
+.badge::before{content:"";width:11px;height:11px;border-radius:50%;background:currentColor}
+.badge.fc{color:var(--accent-gold);background:rgba(255,215,0,.08)}
+.badge.dep{color:var(--accent-green);background:rgba(0,230,138,.08)}
+.badge.tierslot{color:var(--text-secondary);border-style:dashed;background:transparent;padding:10px 26px}
+.badge.tierslot::before{display:none}
+/* THE project tier badge (C3 honesty ladder, diagrams/_state-cues.md; visual-qa 2026-10-07): any DEPLOYED / CLAIMED
+   tier pill on a slide uses THIS, never the mono pill above, so it matches every chart and diagram pixel for pixel.
+   Pill h 58, 2.5 px border in the tier colour, fill rgba(6,7,10,.80), DM Sans 700 22 px caps .16em, 18 px icon. */
+.tier{display:inline-flex;align-items:center;gap:14px;height:58px;padding:0 26px 0 22px;border-radius:29px;
+  border:2.5px solid currentColor;background:rgba(6,7,10,.80);white-space:nowrap;line-height:1;
+  font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.16em;text-transform:uppercase}
+.tier .ic{width:18px;height:18px;border-radius:50%;flex:none;box-sizing:border-box}
+.tier .q{font-weight:500;letter-spacing:.10em;opacity:.78}
+.tier.dep{color:var(--text-primary)} .tier.dep .ic{background:currentColor}
+.tier.cla{color:var(--text-secondary)} .tier.cla .ic{border:2.5px solid currentColor;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
+
+.quote{font-family:'Playfair Display',serif;font-weight:900;font-size:76px;line-height:1.15;letter-spacing:-.015em;
+  color:var(--text-primary);max-width:1450px}
+.who{font-family:'DM Sans';font-size:30px;line-height:1.5;color:var(--text-secondary)}
+.who b{font-weight:700}
+.lead{font-family:'DM Sans';font-size:38px;line-height:1.45;color:var(--text-secondary)}
+.src{font-family:'DM Sans';font-size:24px;color:var(--text-muted);margin-top:30px}
+.big{font-size:96px}
+
+/* generic spotlight state (Mike 2026-07-24 resting-state legibility): resting = muted but READABLE,
+   .done = already spoken (lit text, no tint), .on = the current point (lit + tinted + accent edge).
+   The spotlight adds emphasis; it never toggles visibility. Accent per element via --sp (rgb) + --spc (colour). */
+.sp{--sp:0,194,255;--spc:var(--accent-cyan)}
+.rw{display:flex;align-items:center;gap:26px;border:1px solid var(--border);border-left:5px solid var(--border);
+  border-radius:16px;padding:16px 30px;background:rgba(255,255,255,.03);color:var(--text-secondary)}
+.rw .ic{opacity:.75}
+.rw.done{color:var(--text-primary)}
+.rw.done .ic,.rw.on .ic{opacity:1}
+.rw.on{color:var(--text-primary);border-color:rgba(var(--sp),.45);border-left-color:var(--spc);
+  background:linear-gradient(135deg,rgba(var(--sp),.15),rgba(var(--sp),.02) 70%)}
+.rw .num{font-family:'JetBrains Mono';font-weight:700;color:var(--text-muted)}
+.rw.done .num,.rw.on .num{color:var(--spc)}
+
+/* ---------------- TITLE SLIDES (no box) ---------------- */
+.title h1{font-size:150px;line-height:1.02;max-width:1640px}
+.title .ey{font-size:30px;margin-bottom:30px}
+.title .divider{margin:42px 0 0}
+
+/* ---------------- HALLOWEEN LOOK (CH2 + CH3 only; Mike 2026-10-06, SCREENPLAY VISUAL-PLAN) ----------------
+   Scoped to .frame.hw: black / blood red / pumpkin orange / bone white on grunge. The anatomy (muted eyebrow ->
+   serif headline -> divider -> DM Sans body, card box, mono numbers) is unchanged; only the palette is themed.
+   Added colours, not redefined tokens. */
+:root{--hw-black:#070506;--hw-card:#120c0c;--hw-border:#30191a;--hw-blood:#c8141c;--hw-blood-hi:#ea2a30;
+  --hw-pumpkin:#ff7a1a;--hw-bone:#ece3cf;--hw-ash:#a69c8e}
+.frame.hw{background:var(--hw-black)}
+.frame.hw>.grunge{position:absolute;inset:0;z-index:0;width:1920px;height:1080px;pointer-events:none}
+.frame.hw>.vig{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 75% 70% at 42% 50%,transparent 40%,rgba(0,0,0,.72) 100%)}
+.hw h1,.hw .quote{color:var(--hw-bone)}
+.hw p,.hw .lead,.hw .who{color:var(--hw-ash)}
+.hw .divider{background:linear-gradient(90deg,var(--hw-blood),var(--hw-pumpkin))}
+.hw .card{background:rgba(18,12,12,.93);border-color:var(--hw-border);box-shadow:0 40px 120px rgba(0,0,0,.65)}
+.hw .card>.top{background:linear-gradient(90deg,var(--hw-blood),var(--hw-pumpkin) 45%,transparent 85%)}
+.bl{color:var(--hw-blood-hi)} .pk{color:var(--hw-pumpkin)} .bn{color:var(--hw-bone)}
+.slasher{font-family:'Nosifer',cursive;font-weight:400;color:var(--hw-blood);letter-spacing:.01em;line-height:1.2;
+  text-shadow:0 0 42px rgba(200,20,28,.38)}
+.hw .rw{background:rgba(255,240,220,.025);border-color:var(--hw-border);border-left-color:var(--hw-border);color:var(--hw-ash)}
+.hw .rw.done{color:var(--hw-bone)}
+.hw .rw.on{color:var(--hw-bone);border-color:rgba(var(--sp),.5);border-left-color:var(--spc);
+  background:linear-gradient(135deg,rgba(var(--sp),.17),rgba(var(--sp),.02) 70%)}
+.hw .sp{--sp:255,122,26;--spc:var(--hw-pumpkin)}
+.title.hw .slasher{font-size:128px}
+.frame.hw>svg.drips{position:absolute;left:0;top:0;width:1920px;height:260px;z-index:0}
+
+/* ================================== per-slide layout ================================== */
+
+/* hinton-quote-full */
+#hinton-quote-full .quote{font-size:80px}
+
+/* automation-before-now */
+.flow2{display:grid;grid-template-columns:1fr 120px 1fr;align-items:stretch}
+.node{border-radius:20px;padding:34px 38px;display:flex;flex-direction:column;gap:10px}
+.node .nl{font-family:'JetBrains Mono';font-weight:700;font-size:24px;letter-spacing:.16em;text-transform:uppercase}
+.node .nt{font-family:'Playfair Display';font-weight:900;font-size:64px;line-height:1.05}
+.node .nd{font-family:'DM Sans';font-size:31px;line-height:1.35}
+.node.rw{display:flex;flex-direction:column;align-items:flex-start}
+.node.rw .nl{color:var(--text-muted)}
+.node.rw.on .nl,.node.rw.done .nl{color:var(--spc)}
+.flow2 .arr{display:flex;align-items:center;justify-content:center}
+
+/* labor-substitution */
+.gloss{font-family:'Playfair Display';font-weight:700;font-size:70px;line-height:1.25;color:var(--hw-bone)}
+.strike{position:relative;color:var(--hw-ash);opacity:.85}
+.strike::after{content:"";position:absolute;left:-6px;right:-6px;top:54%;height:7px;border-radius:4px;
+  background:var(--hw-blood-hi);transform:rotate(-4deg)}
+.rep{font-family:'Playfair Display';font-weight:900;color:var(--hw-blood-hi);letter-spacing:.02em}
+
+/* new-jobs-cliche / dissect */
+#new-jobs-cliche .slasher{font-size:86px;white-space:nowrap}
+.cutline{display:flex;align-items:center;gap:24px;margin-top:44px}
+.cutline .dash{flex:1;height:0;border-top:4px dashed rgba(234,42,48,.75)}
+.cutline .lbl{font-family:'JetBrains Mono';font-weight:700;font-size:24px;letter-spacing:.18em;color:var(--hw-ash)}
+.pieces{display:flex;flex-direction:column;gap:40px;margin:14px 0 10px}
+.prow{display:flex;align-items:center;gap:26px}
+.piece{font-family:'Nosifer';font-size:58px;color:var(--hw-blood);padding:22px 26px 34px;border:2px dashed rgba(236,227,207,.22);
+  border-radius:10px;background:rgba(255,240,220,.025);line-height:1.15}
+.piece.p1{transform:rotate(-2.5deg) translateY(-8px)}
+.piece.p2{transform:rotate(2deg) translateY(-4px);position:relative;color:var(--hw-ash)}
+.piece.p2::after{content:"";position:absolute;left:8px;right:8px;top:47%;height:9px;border-radius:5px;background:var(--hw-blood-hi);transform:rotate(-6deg)}
+.piece.p3{transform:rotate(-1.5deg) translateY(4px)}
+.piece.p4{transform:rotate(2.5deg) translateY(8px)}
+.snip{width:46px;flex:none;display:flex;justify-content:center}
+
+/* body-vs-worker / math-is-brutal / nine-to-five rows */
+.kv{display:grid;grid-template-columns:330px 1fr;align-items:center;column-gap:40px;row-gap:22px}
+.kv .k{font-family:'JetBrains Mono';font-weight:700;font-size:27px;letter-spacing:.16em;color:var(--hw-ash)}
+.kv .v{font-family:'Playfair Display';font-weight:900;font-size:76px;line-height:1.05;color:var(--hw-bone);display:flex;align-items:baseline;gap:22px;flex-wrap:wrap}
+.kv .v .mono{font-size:80px;letter-spacing:-.01em}
+.kv .v .u{font-family:'DM Sans';font-weight:500;font-size:34px;color:var(--hw-ash)}
+.kv .n{grid-column:2;font-family:'DM Sans';font-size:29px;color:var(--hw-ash);margin-top:-12px;display:flex;align-items:center;gap:18px}
+.kv .sep{grid-column:1 / -1;height:1px;background:var(--hw-border)}
+
+/* combined-knowledge */
+.ck-flow{display:grid;grid-template-columns:1fr 150px 420px;align-items:center;margin-top:6px}
+.crowd{display:grid;grid-template-columns:repeat(12,1fr);gap:10px 8px;width:100%}
+.crowd svg{width:100%;height:auto}
+.ck-lbl{font-family:'JetBrains Mono';font-weight:700;font-size:24px;letter-spacing:.14em;margin-top:22px;line-height:1.4}
+.one{display:flex;flex-direction:column;align-items:center;text-align:center}
+
+/* math-is-brutal */
+.stats2{display:grid;grid-template-columns:1fr 110px 1fr;align-items:center}
+.stat{border:1px solid var(--hw-border);border-radius:20px;padding:30px 36px;background:rgba(255,240,220,.025)}
+.stat .sk{font-family:'JetBrains Mono';font-weight:700;font-size:24px;letter-spacing:.16em;color:var(--hw-ash)}
+.stat .sv{font-family:'JetBrains Mono';font-weight:700;font-size:104px;line-height:1.1;color:var(--hw-bone)}
+.stat .su{font-family:'DM Sans';font-size:30px;color:var(--hw-ash)}
+.vs{font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:48px;color:var(--hw-ash);text-align:center}
+.tagline{font-family:'Playfair Display';font-weight:700;font-size:52px;color:var(--hw-bone);margin-top:40px}
+
+/* nine-to-five */
+.week{display:flex;gap:10px}
+.day{width:74px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.day .blk{width:74px;height:58px;border-radius:10px;border:2px solid var(--hw-border);background:rgba(255,240,220,.02)}
+.day .dl{font-family:'JetBrains Mono';font-weight:700;font-size:21px;color:var(--hw-ash)}
+.sched{display:grid;grid-template-columns:340px 590px 1fr;align-items:center;column-gap:36px;row-gap:34px}
+.sched .k{font-family:'JetBrains Mono';font-weight:700;font-size:26px;letter-spacing:.14em;color:var(--hw-ash);line-height:1.35}
+.sched .v{font-family:'DM Sans';font-weight:500;font-size:33px;line-height:1.35;color:var(--hw-bone)}
+.blk.o{background:rgba(255,122,26,.55);border-color:var(--hw-pumpkin)}
+.blk.r{background:rgba(200,20,28,.6);border-color:var(--hw-blood-hi)}
+
+/* C4-template + radiologists note */
+.slots{display:flex;flex-direction:column;gap:18px}
+.slot{display:grid;grid-template-columns:70px 470px 1fr;align-items:center;column-gap:24px;padding:22px 32px}
+.slot .sl{font-family:'JetBrains Mono';font-weight:700;font-size:28px;letter-spacing:.12em}
+.slot .sb{height:22px;border-radius:11px;background:rgba(255,255,255,.06);border:1px dashed rgba(136,146,164,.35)}
+.slot.on .sb{background:rgba(var(--sp),.10);border-color:rgba(var(--sp),.55)}
+.slot .num{font-size:30px}
+.chips{display:flex;gap:18px;flex-wrap:wrap}
+.chip{font-family:'JetBrains Mono';font-weight:700;font-size:30px;letter-spacing:.06em;color:var(--text-primary);
+  border:1px solid var(--border);border-radius:14px;padding:12px 24px;background:rgba(255,255,255,.04)}
+.chip small{font-size:22px;letter-spacing:.14em;color:var(--text-secondary);margin-left:10px}
+.note{font-family:'Playfair Display';font-weight:900;font-size:66px;line-height:1.1;color:var(--text-primary)}
+.mine{display:flex;align-items:center;gap:26px;margin-top:34px}
+.mine .tagk{font-family:'JetBrains Mono';font-weight:700;font-size:23px;letter-spacing:.16em;color:var(--text-secondary);
+  border:1px solid var(--border);border-radius:10px;padding:10px 18px;white-space:nowrap}
+.mine .txt{font-family:'DM Sans';font-weight:500;font-size:40px;color:var(--text-primary)}
+
+/* C4-radiologists-note = the SECOND STATE of the chart-builder job card C4-radiologists (charts/C4-radiologists.html,
+   payoff frame). visual-qa 2026-10-07: it must read as the same card, so every shared element below copies that
+   frame's geometry and styles 1:1 (absolute layout, same tokens); the state only ADDS the gold '... YET' stamp and
+   the MY TAKE panel. Scoped to the id so nothing else in this file moves. */
+#C4-radiologists-note{display:block;padding:0}
+#C4-radiologists-note::after{z-index:50}
+#C4-radiologists-note>.abs,#C4-radiologists-note>.cardx,#C4-radiologists-note>.stamp,#C4-radiologists-note>.tier,
+#C4-radiologists-note>.jc-src{position:absolute}
+#C4-radiologists-note .num{font-family:'JetBrains Mono',monospace;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+#C4-radiologists-note .lbl{font-family:'DM Sans';font-weight:600;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)}
+#C4-radiologists-note .cardx{background:var(--bg-card);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+#C4-radiologists-note .cardx .top-accent{position:absolute;top:0;left:0;right:0;height:3px}
+#C4-radiologists-note .stamp{z-index:6;padding:14px 26px;border:5px solid currentColor;border-radius:12px;
+  font-family:'DM Sans';font-weight:700;font-size:34px;letter-spacing:.08em;text-transform:uppercase;line-height:1.1;
+  background:rgba(10,12,16,.55);transform:rotate(-6deg);white-space:nowrap}
+#C4-radiologists-note .stamp.bone{color:var(--text-primary)}
+#C4-radiologists-note .stamp.gold{color:var(--accent-gold);border-style:dashed;z-index:7;background:rgba(10,12,16,.82)}
+#C4-radiologists-note>.tier{top:58px;right:80px;z-index:5}
+#C4-radiologists-note>.jc-src{left:140px;bottom:38px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:19px;
+  color:var(--text-muted);letter-spacing:.01em;z-index:2}
+/* the state's new element: MY TAKE (Mike's opinion), lit in gold as the current spotlight */
+#C4-radiologists-note .take-x{border-color:rgba(255,215,0,.45);box-shadow:0 0 60px rgba(255,215,0,.10);
+  background:linear-gradient(135deg,rgba(255,215,0,.10),rgba(255,215,0,.02) 70%),var(--bg-card)}
+#C4-radiologists-note .take-x .lbl{color:var(--accent-gold)}
+#C4-radiologists-note .take-x .tx{position:absolute;left:34px;top:76px;right:30px;font-family:'Playfair Display';font-weight:900;
+  font-size:50px;line-height:1.14;letter-spacing:-.01em;color:var(--text-primary)}
+
+/* download-card */
+.cmp2{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.cbox{border:1px solid var(--border);border-radius:20px;padding:30px 36px;background:rgba(255,255,255,.03)}
+.cbox .ck{font-family:'JetBrains Mono';font-weight:700;font-size:26px;letter-spacing:.16em;color:var(--text-secondary)}
+.cbox .cv{font-family:'Playfair Display';font-weight:900;font-size:60px;line-height:1.1;margin-top:10px;color:var(--text-secondary)}
+.cbox.hot{border-color:rgba(0,194,255,.45);background:linear-gradient(135deg,rgba(0,194,255,.14),rgba(0,194,255,.02) 70%)}
+.cbox.hot .ck{color:var(--accent-cyan)} .cbox.hot .cv{color:var(--text-primary)}
+.callrow{display:flex;align-items:center;gap:26px;margin-top:38px}
+.callrow .txt{font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:50px;color:var(--text-primary)}
+
+/* never-card / where-safer / conviction lines */
+.lines{display:flex;flex-direction:column;gap:16px}
+.ln{font-family:'Playfair Display';font-weight:900;font-size:66px;line-height:1.12;padding:14px 32px}
+.ln .re,.ln .g,.ln .go,.ln .c{opacity:.8}
+.ln.on .re,.ln.done .re,.ln.on .g,.ln.done .g,.ln.on .go,.ln.done .go,.ln.on .c,.ln.done .c{opacity:1}
+.ln.sm2{font-size:56px}
+.ln.bodyln{font-family:'DM Sans';font-weight:500;font-size:40px}
+.lamp-row{display:flex;align-items:center;gap:30px}
+.lamp{width:118px;height:118px;border-radius:50%;border:4px solid rgba(136,146,164,.5);background:rgba(255,255,255,.04);
+  display:flex;align-items:center;justify-content:center;flex:none}
+.lamp i{width:58px;height:58px;border-radius:50%;background:rgba(136,146,164,.35)}
+.lamp.on{border-color:var(--accent-green);box-shadow:0 0 50px rgba(0,230,138,.55),inset 0 0 30px rgba(0,230,138,.25)}
+.lamp.on i{background:var(--accent-green);box-shadow:0 0 34px var(--accent-green)}
+.lamp-lbl{font-family:'JetBrains Mono';font-weight:700;font-size:46px;letter-spacing:.2em;color:var(--text-secondary)}
+.lamp-lbl.on{color:var(--accent-green)}
+
+/* unemployment */
+.un-grid{display:grid;grid-template-columns:600px 1fr;column-gap:56px;align-items:center}
+.un-stat{padding:30px 36px}
+.un-stat.rw{flex-direction:column;align-items:flex-start;gap:6px}
+.un-stat .k{font-family:'JetBrains Mono';font-weight:700;font-size:25px;letter-spacing:.16em;color:var(--text-secondary)}
+.un-stat .v{font-family:'JetBrains Mono';font-weight:700;font-size:150px;line-height:1.02;color:var(--text-primary);letter-spacing:-.03em}
+.un-stat .s{font-family:'DM Sans';font-size:27px;color:var(--text-secondary)}
+.un-stat .h{font-family:'Playfair Display';font-weight:700;font-size:44px;margin-top:10px}
+.un-arrow{position:relative;height:330px;padding:0;display:block}
+.un-arrow svg{position:absolute;left:0;top:0;color:var(--text-secondary)}
+.un-arrow.on svg,.un-arrow.done svg{color:var(--accent-gold)}
+.un-arrow .badge{position:absolute;left:300px;top:222px;background:#1d1c17}
+.un-arrow .cap{position:absolute;left:40px;top:30px;font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:44px}
+.un-q{font-family:'Playfair Display';font-weight:900;font-size:70px;padding:16px 32px}
+
+/* column header (shared: C15-jobs-fade .jf-col, recap-list .jobcol) */
+.colh{font-family:'JetBrains Mono';font-weight:700;font-size:24px;letter-spacing:.08em;white-space:nowrap;padding:0 4px 16px;color:var(--text-muted);
+  display:flex;align-items:center;gap:14px;line-height:1.3}
+.colh::before{content:"";width:14px;height:14px;border-radius:50%;background:currentColor;flex:none}
+.colh.on{color:var(--spc)}
+.colh.done{color:var(--spc);opacity:.7}
+
+/* C15 = TWO LIST CARDS that BUILD AS SPOKEN (visual-qa 2026-10-07 CONTENT-ORDER / SPOILER fix; BROLL-PLAN: "List card
+   SURVIVES" -> "SURVIVES list continues" -> "List card GOES EXTINCT ... header lands (764.50)" -> "EXTINCT list continues").
+   The SURVIVES card is cloned into C15-survives-a/-b, the GOES EXTINCT card into C15-extinct-a/-b. Every row and tag is
+   INVISIBLE (opacity 0, its space reserved so nothing shifts between states) until its cue word; once cued it stays:
+   .on = the current spotlight, .done = said and lit. The EXTINCT list never shares the screen with an unsaid word, and
+   no card ever carries the other list, so nothing is readable before it is said and no card is an 11-row wall. */
+.c15{width:100%}
+.c15 .c15g{display:grid;grid-template-columns:1fr 1fr;column-gap:40px;align-items:start}
+.c15 .c15one{max-width:1060px}
+.c15 .items{display:flex;flex-direction:column;gap:14px}
+.c15 .it{padding:17px 30px;gap:24px;font-family:'DM Sans';font-weight:500;font-size:40px;line-height:1.25;border-radius:14px}
+.c15 .it .num{font-size:30px;width:44px;flex:none}
+.c15 .it.on{font-weight:700}
+.c15 .it .sub{display:block;font-weight:500;font-size:29px;line-height:1.3;color:var(--text-secondary);margin-top:4px}
+.c15 .it.on .sub,.c15 .it.done .sub{color:var(--text-primary)}
+.c15 .tg{margin:4px 0 0 70px;padding:6px 22px;font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:33px;white-space:nowrap;
+  line-height:1.3;color:var(--text-secondary);border-left:3px solid var(--border)}
+.c15 .tg.on{color:var(--accent-gold);border-left-color:var(--accent-gold)}
+.c15 [data-k]{opacity:0}
+.c15 [data-k].on,.c15 [data-k].done{opacity:1}
+
+/* tiles (survivors / land-energy-compute) */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.tile{flex-direction:column;align-items:flex-start;gap:18px;padding:34px 36px 36px;border-radius:22px}
+.tile .tn{font-family:'Playfair Display';font-weight:900;font-size:72px;line-height:1;letter-spacing:.01em}
+.tile .ic{width:84px;height:84px}
+.tile.rw{display:flex}
+.sub{transition:none}
+.sub.rs{color:var(--text-secondary)}
+.sub.on{color:var(--text-primary)}
+
+/* C15-jobs-fade */
+.jf{display:grid;grid-template-columns:600px 1fr;column-gap:64px;align-items:center}
+.jf-col{border:1px solid rgba(0,230,138,.45);border-left:5px solid var(--accent-green);border-radius:18px;padding:26px 30px;
+  background:linear-gradient(135deg,rgba(0,230,138,.12),rgba(0,230,138,.02) 70%)}
+.jf-col .colh{color:var(--accent-green);padding-bottom:12px}
+.jf-col ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.jf-col li{font-family:'DM Sans';font-weight:500;font-size:27px;color:var(--text-primary);line-height:1.3}
+.jobs-tag{margin-top:22px;display:inline-flex;align-items:center;gap:16px;font-family:'JetBrains Mono';font-weight:700;font-size:30px;
+  letter-spacing:.16em;color:var(--text-primary);border:2px solid var(--text-secondary);border-radius:14px;padding:14px 26px;position:relative}
+.jobs-tag.faded{opacity:.28}
+.jobs-tag.faded::after{content:"";position:absolute;left:-8px;right:-8px;top:50%;height:4px;background:var(--accent-red);border-radius:2px}
+.jf-q{flex-direction:column;align-items:flex-start;gap:16px;padding:34px 40px}
+.jf-q .qh{font-family:'Playfair Display';font-weight:900;font-size:76px;line-height:1.08}
+.jf-q .qb{font-family:'DM Sans';font-weight:500;font-size:38px;line-height:1.35}
+
+/* us-law */
+.dateline{font-family:'JetBrains Mono';font-weight:700;font-size:56px;color:var(--accent-cyan);margin-top:18px;letter-spacing:.02em}
+
+/* frozen-split */
+.split{display:grid;grid-template-columns:1fr 1fr;column-gap:34px;align-items:stretch;min-height:420px}
+.split .bar{display:none}
+.half{padding:40px 56px;border-radius:20px;display:flex;flex-direction:column;justify-content:center;gap:18px;border-left-width:5px}
+.half .hh{font-family:'Playfair Display';font-weight:900;font-size:96px;line-height:1.02}
+.half .hs{font-family:'DM Sans';font-weight:500;font-size:40px}
+.half .hi{width:96px;height:96px}
+.half.rw{display:flex;align-items:flex-start}
+.half.rw.on{background:linear-gradient(135deg,rgba(var(--sp),.16),rgba(var(--sp),.02) 75%)}
+.half .hh .ac{color:var(--text-secondary)}
+.half.on .hh .ac,.half.done .hh .ac{color:var(--spc)}
+
+/* protect-yourself */
+.pr{display:grid;grid-template-columns:1fr 360px;column-gap:56px;align-items:center}
+.pr-q{font-family:'Playfair Display';font-weight:900;font-size:80px;line-height:1.08;padding:6px 0}
+.pr-a{font-family:'Playfair Display';font-weight:700;font-size:62px;line-height:1.15;padding:6px 0}
+.pr .s-rest{color:var(--text-secondary)}
+.pr .s-on{color:var(--text-primary)}
+.clock{width:360px;height:360px}
+.clock.dim{opacity:.28;filter:grayscale(1)}
+
+/* three-reasons-1 */
+.reasons{display:flex;flex-direction:column;gap:16px}
+.reason{display:grid;grid-template-columns:86px 1fr;column-gap:26px;align-items:center;padding:22px 32px}
+.reason .rn{font-family:'JetBrains Mono';font-weight:700;font-size:54px;color:var(--text-muted)}
+.reason.on .rn,.reason.done .rn{color:var(--accent-green)}
+.reason .rt{font-family:'JetBrains Mono';font-weight:700;font-size:40px;letter-spacing:.06em}
+.reason .rs{font-family:'DM Sans';font-weight:500;font-size:34px;margin-top:8px;color:var(--text-secondary)}
+.reason .rs.on{color:var(--text-primary)}
+.reason.dark{background:rgba(0,0,0,.25);border:1px dashed var(--border);border-left:5px solid var(--border)}
+.reason.dark .bar{height:20px;border-radius:10px;background:rgba(255,255,255,.035);width:62%}
+
+/* thesis-card */
+.th-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.th{border:1px solid var(--border);border-radius:20px;padding:28px 30px;background:rgba(255,255,255,.03)}
+.th .tn{font-family:'JetBrains Mono';font-weight:700;font-size:44px;letter-spacing:.08em;color:var(--text-primary)}
+.th .pair{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:20px}
+.th .pc{display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono';font-weight:700;font-size:21px;letter-spacing:.12em;
+  padding:9px 14px;border-radius:10px;border:1px solid var(--border);color:var(--text-secondary);white-space:nowrap}
+.th .pc svg{width:24px;height:24px;flex:none}
+.ctrl .th .pc.lk{color:var(--accent-red);border-color:rgba(255,64,96,.55);background:rgba(255,64,96,.10)}
+.open .th .pc.lk{color:var(--text-secondary)}
+.open .th .pc.op{color:var(--accent-green);border-color:rgba(0,230,138,.55);background:rgba(0,230,138,.10)}
+.open .th{border-color:rgba(0,230,138,.35)}
+.ctrl .th{border-color:rgba(255,64,96,.30)}
+.th-lbl{font-family:'JetBrains Mono';font-weight:700;font-size:24px;letter-spacing:.16em;margin-bottom:20px;color:var(--text-secondary)}
+.ctrl .th-lbl{color:var(--accent-red)}
+.th-line{font-family:'Playfair Display';font-weight:900;font-size:60px;line-height:1.12;color:var(--text-secondary)}
+.open .th-line{color:var(--text-primary)}
+.sig{font-family:'Playfair Display';font-style:italic;font-weight:900;font-size:50px;color:var(--text-secondary);text-align:right;margin-top:6px}
+.open .sig{color:var(--accent-gold)}
+
+/* catch-card */
+.ct{display:grid;grid-template-columns:1fr 380px;column-gap:60px;align-items:center}
+
+/* guard-then-deflation */
+.gd .rw{display:grid;grid-template-columns:110px 1fr;column-gap:28px;align-items:center;padding:26px 34px}
+.gd .gk{font-family:'JetBrains Mono';font-weight:700;font-size:23px;letter-spacing:.16em;color:var(--text-muted);margin-bottom:6px;display:flex;align-items:center;gap:18px}
+.gd .rw.on .gk,.gd .rw.done .gk{color:var(--spc)}
+.gd .gt{font-family:'Playfair Display';font-weight:900;font-size:58px;line-height:1.1}
+.gd .gi{display:flex;justify-content:center}
+.gd .g3{font-family:'JetBrains Mono';font-weight:700;font-size:84px;color:var(--text-muted)}
+.gd .rw.on .g3{color:var(--spc)}
+
+/* checks-card */
+.ch-flow{display:grid;grid-template-columns:1fr 120px 1fr;align-items:center}
+.ch-box{border-radius:20px;padding:30px 36px;border:1px solid var(--border);background:rgba(255,255,255,.03)}
+.ch-box .k{font-family:'JetBrains Mono';font-weight:700;font-size:24px;letter-spacing:.16em}
+.ch-box .v{font-family:'Playfair Display';font-weight:900;font-size:58px;line-height:1.1;margin-top:10px}
+
+/* dyor-card */
+.tick{display:flex;gap:22px}
+.tick .t{font-family:'JetBrains Mono';font-weight:700;font-size:60px;letter-spacing:.06em;color:var(--text-primary);
+  border:1px solid var(--border);border-radius:18px;padding:16px 34px;background:rgba(255,255,255,.04)}
+.dyor{display:inline-flex;align-items:center;gap:22px;font-family:'JetBrains Mono';font-weight:700;font-size:46px;letter-spacing:.14em;
+  color:var(--accent-gold);border:3px solid var(--accent-gold);border-radius:18px;padding:20px 38px;background:rgba(255,215,0,.07)}
+
+/* recap-list */
+.rc{display:grid;grid-template-columns:1fr 560px;column-gap:60px;align-items:center}
+.rc-l{display:flex;flex-direction:column;gap:14px}
+.rc-l .ln{font-size:60px;padding:12px 28px}
+.rc-l .ln.pre{font-size:44px;color:var(--text-secondary);border:none;background:none;padding:0 32px}
+.jobcol{border:1px solid var(--border);border-radius:20px;padding:26px 34px;background:rgba(255,255,255,.03)}
+.jobcol .colh{padding-bottom:12px}
+.jobcol.on{border-color:rgba(255,64,96,.4)}
+.jobcol.on .colh{color:var(--accent-red)}
+.jobcol ol{list-style:none;display:flex;flex-direction:column;gap:2px}
+.jobcol li{font-family:'DM Sans';font-weight:600;font-size:30px;line-height:1.36;color:var(--text-primary);position:relative;display:inline-block;width:max-content}
+.jobcol li.x{color:var(--text-secondary)}
+.jobcol li.x::after{content:"";position:absolute;left:-6px;right:-6px;top:50%;height:3px;border-radius:2px;background:var(--accent-red)}
+
+/* Mike 2026-10-08: the corner tier pills are unnecessary; hidden everywhere, every state re-shot */
+.badge.dep,.badge.for,.badge.cla,.badge.fc{display:none!important}
+</style></head>
+<body>
+
+<!-- Halloween grunge filters (defined once, referenced by every .hw frame) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <filter id="hw-stain" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".0042 .0065" numOctaves="5" seed="11"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 .24  0 0 0 0 .035  0 0 0 0 .03  0 0 0 -3.2 1.62"/>
+  </filter>
+  <filter id="hw-speck" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="4"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 .93  0 0 0 0 .89  0 0 0 0 .81  0 0 0 16 -10.9"/>
+  </filter>
+  <filter id="hw-scratch" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".0016 .42" numOctaves="2" seed="9"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 .92  0 0 0 0 .86  0 0 0 0 .78  0 0 0 20 -13.9"/>
+  </filter>
+</defs></svg>
+
+<!-- ICON SYMBOLS -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-arrow" viewBox="0 0 120 60"><path d="M6 30H100" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><path d="M84 12L106 30L84 48" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-person" viewBox="0 0 40 46"><circle cx="20" cy="12" r="9" fill="currentColor"/><path d="M3 45c0-11 7.6-18 17-18s17 7 17 18z" fill="currentColor"/></symbol>
+  <symbol id="i-robot" viewBox="0 0 200 260"><g fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M100 8v20"/><circle cx="100" cy="8" r="6" fill="currentColor"/>
+    <rect x="52" y="28" width="96" height="74" rx="22"/><rect x="70" y="52" width="60" height="22" rx="11" fill="currentColor" fill-opacity=".25"/>
+    <path d="M86 102v14h28v-14"/><rect x="44" y="116" width="112" height="92" rx="20"/>
+    <path d="M44 132l-26 52M156 132l26 52"/><path d="M74 208v44M126 208v44"/><circle cx="100" cy="160" r="14"/></g></symbol>
+  <symbol id="i-scalpel" viewBox="0 0 120 40"><path d="M4 22C30 6 62 4 86 14L84 26C60 28 30 28 4 22Z" fill="currentColor"/><rect x="84" y="13" width="34" height="12" rx="4" fill="currentColor" fill-opacity=".55"/></symbol>
+  <symbol id="i-beam" viewBox="0 0 80 80"><path d="M10 12h60v12H46v32h24v12H10V56h24V24H10z" fill="currentColor"/></symbol>
+  <symbol id="i-wheat" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M40 74V18"/><path d="M40 30c-10-2-16-10-16-18 10 2 16 9 16 18zM40 30c10-2 16-10 16-18-10 2-16 9-16 18zM40 46c-10-2-16-10-16-18 10 2 16 9 16 18zM40 46c10-2 16-10 16-18-10 2-16 9-16 18zM40 62c-10-2-16-10-16-18 10 2 16 9 16 18zM40 62c10-2 16-10 16-18-10 2-16 9-16 18z" fill="currentColor"/></g></symbol>
+  <symbol id="i-bolt" viewBox="0 0 80 80"><path d="M46 4L14 46h22l-4 30 34-44H44z" fill="currentColor"/></symbol>
+  <symbol id="i-land" viewBox="0 0 80 80"><g fill="currentColor"><path d="M4 62L28 28l14 18 10-12 24 28z"/><rect x="4" y="66" width="72" height="8" rx="3"/></g></symbol>
+  <symbol id="i-flame" viewBox="0 0 80 80"><path d="M40 4c4 16 22 22 22 44a22 22 0 0 1-44 0c0-10 5-17 10-22 1 8 5 12 9 13-3-14 0-26 3-35z" fill="currentColor"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><rect x="18" y="18" width="44" height="44" rx="6"/><rect x="30" y="30" width="20" height="20" rx="3" fill="currentColor"/><path d="M28 6v10M40 6v10M52 6v10M28 64v10M40 64v10M52 64v10M6 28h10M6 40h10M6 52h10M64 28h10M64 40h10M64 52h10"/></g></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="10.5" width="16" height="11" rx="2.5" fill="currentColor" fill-opacity=".25"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></g></symbol>
+  <symbol id="i-unlock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="10.5" width="16" height="11" rx="2.5" fill="currentColor" fill-opacity=".25"/><path d="M8 10.5V7.5a4 4 0 0 1 7.6-1.7"/></g></symbol>
+  <symbol id="i-snow" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M40 6v68M10.6 23l58.8 34M10.6 57l58.8-34"/><path d="M30 10l10 8 10-8M30 70l10-8 10 8M8 35l12-4 2-12M58 19l2 12 12 4M8 45l12 4 2 12M58 61l2-12 12-4"/></g></symbol>
+  <symbol id="i-open" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><circle cx="40" cy="40" r="32"/><path d="M26 41l10 10 20-22"/></g></symbol>
+  <symbol id="i-house" viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M18 92L100 22l82 70"/><path d="M38 76v104h124V76"/><path d="M134 46V24h22v40"/>
+    <rect x="80" y="112" width="40" height="68" rx="4" fill="currentColor" fill-opacity=".18"/><circle cx="111" cy="148" r="4" fill="currentColor"/>
+    <rect x="52" y="104" width="18" height="18" rx="2"/><rect x="130" y="104" width="18" height="18" rx="2"/></g></symbol>
+  <symbol id="i-shield" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"><path d="M40 6l28 10v20c0 18-12 31-28 38C24 67 12 54 12 36V16z" fill="currentColor" fill-opacity=".14"/><path d="M28 40l9 9 16-18" stroke-linecap="round"/></g></symbol>
+  <symbol id="i-paycheck" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><rect x="6" y="20" width="68" height="40" rx="6"/><path d="M16 34h26M16 46h16M54 46h10"/></g></symbol>
+</defs></svg>
+
+<!-- =============================== CH1 =============================== -->
+
+<!-- black-lead: 5-frame deck-navy lead before the first face frame; nothing else on it -->
+<div class="frame" id="black-lead"></div>
+
+<!-- hinton-quote-full (CARD, house style; CH1 does not foreshadow the Halloween look) -->
+<div class="frame" id="hinton-quote-full">
+  <div class="orb" style="width:900px;height:900px;right:-300px;top:-340px;background:var(--accent-gold);opacity:.18"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.12"></div>
+  <div class="card k-gold"><div class="top"></div>
+    <div class="ey">How he finished the sentence</div>
+    <div class="quote">&ldquo;&hellip;a good bet would be to be a plumber. <span class="go">Until the humanoid robots show&nbsp;up.</span>&rdquo;</div>
+    <div class="divider"></div>
+    <div class="who"><b>Geoffrey Hinton</b>, the godfather of AI &nbsp;&middot;&nbsp; <i>The Diary of a CEO</i> &nbsp;&middot;&nbsp; <span class="mono">2025-06-16</span></div>
+  </div>
+</div>
+
+<!-- =============================== CH2 (HALLOWEEN) =============================== -->
+
+<div class="frame title hw" id="title-CH2">
+  <svg class="grunge" viewBox="0 0 1920 1080" preserveAspectRatio="none"><rect width="1920" height="1080" filter="url(#hw-stain)" opacity=".5"/><rect width="1920" height="1080" filter="url(#hw-speck)" opacity=".28"/><rect width="1920" height="1080" filter="url(#hw-scratch)" opacity=".09"/></svg>
+  <div class="orb" style="width:1000px;height:1000px;right:-300px;top:-360px;background:var(--hw-blood);opacity:.30"></div>
+  <div class="orb" style="width:700px;height:700px;left:-280px;bottom:-320px;background:var(--hw-pumpkin);opacity:.14"></div>
+  <svg class="drips" data-seed="7" viewBox="0 0 1920 260" preserveAspectRatio="none"></svg>
+  <div class="vig"></div>
+  <div class="ey">Chapter 02</div>
+  <div class="slasher">THE BRAIN<br>WENT FIRST</div>
+  <div class="divider"></div>
+</div>
+
+<div class="frame hw" id="automation-before-now">
+  <svg class="grunge" viewBox="0 0 1920 1080" preserveAspectRatio="none"><rect width="1920" height="1080" filter="url(#hw-stain)" opacity=".55"/><rect width="1920" height="1080" filter="url(#hw-speck)" opacity=".22"/><rect width="1920" height="1080" filter="url(#hw-scratch)" opacity=".12"/></svg>
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--hw-blood);opacity:.26"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--hw-pumpkin);opacity:.12"></div>
+  <div class="vig"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">Every wave of automation</div>
+    <h1 class="sm">It used to come for <span class="pk">muscle</span>. This one went after the <span class="bl">office</span>.</h1>
+    <div class="divider"></div>
+    <div class="flow2">
+      <div class="node rw sp" id="abn-b"><div class="nl">Automation, before</div><div class="nt">Muscle</div><div class="nd">the factory, the assembly line</div></div>
+      <div class="arr" style="color:var(--hw-ash)"><svg width="96" height="48"><use href="#i-arrow"/></svg></div>
+      <div class="node rw sp" id="abn-n" style="--sp:234,42,48;--spc:var(--hw-blood-hi)"><div class="nl">Automation, now</div><div class="nt">Knowledge work</div><div class="nd">the office</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="frame hw" id="labor-substitution">
+  <svg class="grunge" viewBox="0 0 1920 1080" preserveAspectRatio="none" style="transform:scaleX(-1)"><rect width="1920" height="1080" filter="url(#hw-stain)" opacity=".55"/><rect width="1920" height="1080" filter="url(#hw-speck)" opacity=".22"/><rect width="1920" height="1080" filter="url(#hw-scratch)" opacity=".12"/></svg>
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--hw-blood);opacity:.26"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--hw-pumpkin);opacity:.12"></div>
+  <div class="vig"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">It has a name</div>
+    <h1 class="big">Labor <span class="bl">substitution</span></h1>
+    <div class="divider"></div>
+    <div class="gloss">The machine <span class="strike">helps</span>&nbsp; <span class="rep">REPLACES</span> the worker.</div>
+  </div>
+</div>
+
+<div class="frame hw" id="new-jobs-cliche">
+  <svg class="grunge" viewBox="0 0 1920 1080" preserveAspectRatio="none" style="transform:scaleY(-1)"><rect width="1920" height="1080" filter="url(#hw-stain)" opacity=".6"/><rect width="1920" height="1080" filter="url(#hw-speck)" opacity=".24"/><rect width="1920" height="1080" filter="url(#hw-scratch)" opacity=".14"/></svg>
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--hw-blood);opacity:.28"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--hw-pumpkin);opacity:.12"></div>
+  <div class="vig"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">What everybody says</div>
+    <div class="slasher">TECHNOLOGY ALWAYS<br>CREATES NEW JOBS</div>
+    <div class="cutline">
+      <svg width="120" height="40" style="color:var(--hw-bone);flex:none"><use href="#i-scalpel"/></svg>
+      <div class="dash"></div>
+      <div class="lbl">DISSECT THE PHRASE</div>
+    </div>
+  </div>
+</div>
+
+<div class="frame hw" id="new-jobs-dissect">
+  <svg class="grunge" viewBox="0 0 1920 1080" preserveAspectRatio="none" style="transform:scale(-1,-1)"><rect width="1920" height="1080" filter="url(#hw-stain)" opacity=".6"/><rect width="1920" height="1080" filter="url(#hw-speck)" opacity=".24"/><rect width="1920" height="1080" filter="url(#hw-scratch)" opacity=".14"/></svg>
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--hw-blood);opacity:.28"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--hw-pumpkin);opacity:.12"></div>
+  <div class="vig"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">The phrase, dissected</div>
+    <div class="pieces">
+      <div class="prow">
+        <div class="piece p1">TECHNOLOGY</div>
+        <div class="snip"><svg width="18" height="120"><path d="M9 4V116" stroke="rgba(234,42,48,.8)" stroke-width="4" stroke-dasharray="10 9"/></svg></div>
+        <div class="piece p2">ALWAYS</div>
+      </div>
+      <div class="prow" style="margin-left:170px">
+        <div class="piece p3">CREATES</div>
+        <div class="snip"><svg width="18" height="120"><path d="M9 4V116" stroke="rgba(234,42,48,.8)" stroke-width="4" stroke-dasharray="10 9"/></svg></div>
+        <div class="piece p4">NEW JOBS</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <h1 class="sm">The truth is, it <span class="bl">isn't</span> like that at all.</h1>
+  </div>
+</div>
+
+<!-- =============================== CH3 (HALLOWEEN) =============================== -->
+
+<div class="frame title hw" id="title-CH3">
+  <svg class="grunge" viewBox="0 0 1920 1080" preserveAspectRatio="none" style="transform:scaleX(-1)"><rect width="1920" height="1080" filter="url(#hw-stain)" opacity=".5"/><rect width="1920" height="1080" filter="url(#hw-speck)" opacity=".28"/><rect width="1920" height="1080" filter="url(#hw-scratch)" opacity=".09"/></svg>
+  <div class="orb" style="width:1000px;height:1000px;right:-300px;top:-360px;background:var(--hw-blood);opacity:.30"></div>
+  <div class="orb" style="width:700px;height:700px;left:-280px;bottom:-320px;background:var(--hw-pumpkin);opacity:.14"></div>
+  <svg class="drips" data-seed="23" viewBox="0 0 1920 260" preserveAspectRatio="none"></svg>
+  <div class="vig"></div>
+  <div class="ey">Chapter 03</div>
+  <div class="slasher">THEN IT GOT<br>A BODY</div>
+  <div class="divider"></div>
+</div>
+
+<div class="frame hw" id="body-vs-worker">
+  <svg class="grunge" viewBox="0 0 1920 1080" preserveAspectRatio="none"><rect width="1920" height="1080" filter="url(#hw-stain)" opacity=".55"/><rect width="1920" height="1080" filter="url(#hw-speck)" opacity=".22"/><rect width="1920" height="1080" filter="url(#hw-scratch)" opacity=".12"/></svg>
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--hw-blood);opacity:.26"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--hw-pumpkin);opacity:.12"></div>
+  <div class="vig"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">A humanoid you can buy</div>
+    <h1>The body is <span class="pk">cheap</span>.</h1>
+    <div class="divider"></div>
+    <div class="kv">
+      <div class="k">THE BODY</div>
+      <div class="v"><span class="mono pk">5,900</span><span class="u">dollars</span><span class="tier dep" style="margin-left:10px;align-self:center"><span class="ic"></span>Deployed</span></div>
+      <div class="n">Unitree R1 &nbsp;&middot;&nbsp; remote-controlled</div>
+      <div class="sep"></div>
+      <div class="k">THE WORKER</div>
+      <div class="v"><span class="bl">Not yet</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="frame hw" id="combined-knowledge">
+  <svg class="grunge" viewBox="0 0 1920 1080" preserveAspectRatio="none" style="transform:scaleX(-1)"><rect width="1920" height="1080" filter="url(#hw-stain)" opacity=".55"/><rect width="1920" height="1080" filter="url(#hw-speck)" opacity=".22"/><rect width="1920" height="1080" filter="url(#hw-scratch)" opacity=".12"/></svg>
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--hw-pumpkin);opacity:.20"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--hw-blood);opacity:.16"></div>
+  <div class="vig"></div>
+  <div class="card"><div class="top"></div>
+    <div class="hd"><div class="ey">The power of a robot in your own house</div><span class="badge fc">Forecast</span></div>
+    <h1 class="sm">Their <span class="pk">combined knowledge</span>, instantly</h1>
+    <div class="divider"></div>
+    <div class="ck-flow">
+      <div>
+        <div class="crowd" data-n="36"></div>
+        <div class="ck-lbl" style="color:var(--hw-ash)">EVERY EXPERT ELECTRICIAN<br>ON THE PLANET</div>
+      </div>
+      <div style="display:flex;justify-content:center;color:var(--hw-pumpkin)"><svg width="110" height="56"><use href="#i-arrow"/></svg></div>
+      <div class="one">
+        <svg width="200" height="260" style="color:var(--hw-pumpkin)"><use href="#i-robot"/></svg>
+        <div class="ck-lbl" style="color:var(--hw-bone)">ONE ROBOT,<br>INSTANTLY</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="frame hw" id="math-is-brutal">
+  <svg class="grunge" viewBox="0 0 1920 1080" preserveAspectRatio="none" style="transform:scaleY(-1)"><rect width="1920" height="1080" filter="url(#hw-stain)" opacity=".55"/><rect width="1920" height="1080" filter="url(#hw-speck)" opacity=".22"/><rect width="1920" height="1080" filter="url(#hw-scratch)" opacity=".12"/></svg>
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--hw-blood);opacity:.26"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--hw-pumpkin);opacity:.12"></div>
+  <div class="vig"></div>
+  <div class="card"><div class="top"></div>
+    <div class="hd"><div class="ey">The day a machine at that price can</div><span class="badge fc">Forecast</span></div>
+    <h1>The math is <span class="bl">brutal</span></h1>
+    <div class="divider"></div>
+    <div class="stats2">
+      <div class="stat"><div class="sk">MEDIAN PLUMBER</div><div class="sv">63,800</div><div class="su">dollars a year &nbsp;&middot;&nbsp; BLS, May 2025</div></div>
+      <div class="vs">vs</div>
+      <div class="stat" style="border-color:rgba(255,122,26,.45)"><div class="sk" style="color:var(--hw-pumpkin)">HOME ROBOT, RENTED</div><div class="sv pk">5,988</div><div class="su">dollars a year &nbsp;&middot;&nbsp; <span class="mono">499</span> a month list price</div></div>
+    </div>
+    <div class="tagline">And it doesn't need <span class="pk">weekends</span>.</div>
+  </div>
+</div>
+
+<div class="frame hw" id="nine-to-five">
+  <svg class="grunge" viewBox="0 0 1920 1080" preserveAspectRatio="none" style="transform:scale(-1,-1)"><rect width="1920" height="1080" filter="url(#hw-stain)" opacity=".55"/><rect width="1920" height="1080" filter="url(#hw-speck)" opacity=".22"/><rect width="1920" height="1080" filter="url(#hw-scratch)" opacity=".12"/></svg>
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--hw-pumpkin);opacity:.20"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--hw-blood);opacity:.16"></div>
+  <div class="vig"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">Ever tried to book a contractor?</div>
+    <h1 class="sm">Their hours are <span class="pk">your</span> hours</h1>
+    <div class="divider"></div>
+    <div class="sched">
+      <div class="k">CONTRACTOR<br>HOURS</div>
+      <div class="week" data-fill="o"></div>
+      <div class="v"><span class="mono">9</span> to <span class="mono">5</span>, Monday to Friday</div>
+      <div class="k">YOUR<br>HOURS</div>
+      <div class="week" data-fill="r"></div>
+      <div class="v">The same, so the <span class="bl">most difficult time</span> for you</div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== CH4 (house style again) =============================== -->
+
+<div class="frame title" id="title-CH4">
+  <div class="orb" style="width:1000px;height:1000px;right:-300px;top:-360px;background:var(--accent-red);opacity:.20"></div>
+  <div class="orb" style="width:700px;height:700px;left:-280px;bottom:-320px;background:var(--accent-green);opacity:.10"></div>
+  <div class="ey">Chapter 04</div>
+  <h1>The <span class="re">list</span></h1>
+  <div class="divider"></div>
+</div>
+
+<div class="frame" id="C4-template">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-cyan);opacity:.18"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.12"></div>
+  <div class="card k-cyan"><div class="top"></div>
+    <div class="hd"><div class="ey">The list</div><span class="badge tierslot">Tier</span></div>
+    <h1>Same pattern, every time</h1>
+    <div class="divider"></div>
+    <div class="slots">
+      <div class="slot rw sp" id="t1"><div class="num">01</div><div class="sl">THE JOB</div><div class="sb"></div></div>
+      <div class="slot rw sp" id="t2"><div class="num">02</div><div class="sl">HOW MANY PEOPLE DO IT</div><div class="sb"></div></div>
+      <div class="slot rw sp" id="t3" style="--sp:255,64,96;--spc:var(--accent-red)"><div class="num">03</div><div class="sl">WHY IT'S AT RISK</div><div class="sb"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="frame" id="download-card">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-cyan);opacity:.18"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.12"></div>
+  <div class="card k-cyan"><div class="top"></div>
+    <div class="hd"><div class="ey">Plumbers</div><span class="badge fc">Forecast</span></div>
+    <h1>It needs a <span class="c">download</span></h1>
+    <div class="divider"></div>
+    <div class="cmp2">
+      <div class="cbox"><div class="ck">APPRENTICESHIP</div><div class="cv">Years, per person</div></div>
+      <div class="cbox hot"><div class="ck">DOWNLOAD</div><div class="cv">Once, every robot</div></div>
+    </div>
+    <div class="callrow"><div class="txt">&ldquo;I give it just a few years.&rdquo;</div></div>
+  </div>
+</div>
+
+<div class="frame" id="huang-real-line">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-cyan);opacity:.18"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.12"></div>
+  <div class="card k-cyan"><div class="top"></div>
+    <div class="ey">What he also says</div>
+    <div class="quote">&ldquo;Every radiology platform and package today is driven by&nbsp;<span class="c">AI</span>.&rdquo;</div>
+    <div class="divider"></div>
+    <div class="who"><b>Jensen Huang</b>, Nvidia CEO &nbsp;&middot;&nbsp; Lex Fridman Podcast, via Fortune &nbsp;&middot;&nbsp; <span class="mono">2026-04-01</span></div>
+  </div>
+</div>
+
+<!-- C4-radiologists-note: second state of the C4-radiologists job card (chart-builder payoff frame, same geometry).
+     Adds: gold dashed '... YET' stamp under the TOOLS, NOT REPLACEMENT stamp + the MY TAKE panel (628.24 to 633.52). -->
+<div class="frame" id="C4-radiologists-note">
+  <div class="orb" style="width:560px;height:560px;left:1500px;top:-240px;background:#ff4060;opacity:0.14"></div>
+  <div class="orb" style="width:420px;height:420px;left:-200px;top:780px;background:#00c2ff;opacity:0.12"></div>
+  <div class="abs ey" style="left:140px;top:108px">THE LIST · <span class="num" style="letter-spacing:.1em">11</span></div>
+  <div class="abs" style="left:136px;top:150px;font-family:'Playfair Display';font-weight:900;font-size:116px;line-height:1.05;letter-spacing:-.02em;color:var(--text-primary);white-space:nowrap">Radiologists</div>
+  <div class="abs" style="left:130px;top:330px;color:var(--text-primary);white-space:nowrap"><span class="num" style="font-size:186px;line-height:1">28,700</span></div>
+  <div class="abs" style="left:142px;top:536px;font-family:'DM Sans';font-weight:500;font-size:38px;color:var(--text-secondary)">jobs in the US</div>
+  <div class="cardx" style="left:140px;top:700px;width:470px;height:150px"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-cyan),transparent)"></div><div class="lbl" style="position:absolute;left:30px;top:26px;font-size:19px">MEDIAN PAY</div><div style="position:absolute;left:30px;top:62px;white-space:nowrap"><span class="num" style="font-size:56px;color:var(--text-primary)">420,860</span><span style="font-family:'DM Sans';font-weight:700;font-size:30px;color:var(--text-secondary)"> a year</span></div></div>
+  <div class="cardx take-x" style="left:660px;top:620px;width:580px;height:230px"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div><div class="lbl" style="position:absolute;left:34px;top:28px;font-size:19px">MY TAKE</div><div class="tx">Not the career I'd pick right now.</div></div>
+  <div class="cardx" style="left:1290px;top:236px;width:490px;height:514px"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-red),transparent)"></div><div class="lbl" style="position:absolute;left:30px;top:24px;font-size:19px">THE TEST</div></div>
+  <svg class="abs" style="position:absolute;left:0;top:0;z-index:2;" width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><circle cx="1352" cy="352" r="38" fill="#151922" stroke="#2a3242" stroke-width="2.0"/><ellipse cx="1341.4" cy="339.1" rx="10.6" ry="5.7" fill="#fff" opacity=".05"/><text x="1412" y="364" font-family="DM Sans" font-weight="700" font-size="34" letter-spacing="4" fill="#505a6e">BETTER</text><circle cx="1352" cy="470" r="38" fill="#151922" stroke="#2a3242" stroke-width="2.0"/><ellipse cx="1341.4" cy="457.1" rx="10.6" ry="5.7" fill="#fff" opacity=".05"/><text x="1412" y="482" font-family="DM Sans" font-weight="700" font-size="34" letter-spacing="4" fill="#505a6e">FASTER</text><circle cx="1352" cy="588" r="38" fill="#151922" stroke="#2a3242" stroke-width="2.0"/><ellipse cx="1341.4" cy="575.1" rx="10.6" ry="5.7" fill="#fff" opacity=".05"/><text x="1412" y="600" font-family="DM Sans" font-weight="700" font-size="34" letter-spacing="4" fill="#505a6e">CHEAPER</text><circle cx="1352" cy="706" r="38" fill="#151922" stroke="#2a3242" stroke-width="2.0"/><ellipse cx="1341.4" cy="693.1" rx="10.6" ry="5.7" fill="#fff" opacity=".05"/><text x="1412" y="718" font-family="DM Sans" font-weight="700" font-size="34" letter-spacing="4" fill="#505a6e">SAFER</text></svg>
+  <div class="stamp bone" style="right:140px;top:872px">Tools, not replacement</div>
+  <div class="stamp gold" style="right:132px;top:936px">... yet</div>
+  <div class="tier dep"><span class="ic"></span><span>DEPLOYED</span><span class="q">· TOOLS</span></div>
+  <div class="jc-src" data-edge-ok>BLS Occupational Outlook Handbook · 2025 employment · May 2025 median pay · projections 2025 to 2035</div>
+</div>
+
+<div class="frame" id="never-card">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-red);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.12"></div>
+  <div class="card k-gold"><div class="top"></div>
+    <div class="hd"><div class="ey">The brain surgeon</div><span class="badge fc">Forecast</span></div>
+    <h1 class="sm">The day there is a robot surgeon, it</h1>
+    <div class="divider"></div>
+    <div class="lines">
+      <div class="ln rw sp" id="nv1" style="--sp:255,64,96;--spc:var(--accent-red)"><span><span class="re">never</span> takes a day off.</span></div>
+      <div class="ln rw sp" id="nv2" style="--sp:255,64,96;--spc:var(--accent-red)"><span><span class="re">never</span> goes home.</span></div>
+      <div class="ln rw sp" id="nv3" style="--sp:255,64,96;--spc:var(--accent-red)"><span><span class="re">never</span> sleeps.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="frame" id="where-safer-leads">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-green);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">Once the machine is safer</div>
+    <div class="lines">
+      <div class="ln rw sp" id="ws1">It's a no-brainer.</div>
+      <div class="ln rw sp" id="ws2">There's no law like that now.</div>
+      <div class="ln rw sp" id="ws3" style="--sp:0,230,138;--spc:var(--accent-green)"><span>But look where <span class="g">safer</span> leads.</span></div>
+    </div>
+    <div class="divider"></div>
+    <div class="lamp-row"><div class="lamp" id="ws-lamp"><i></i></div><div class="lamp-lbl" id="ws-lbl">SAFER</div></div>
+  </div>
+</div>
+
+<!-- =============================== CH5 =============================== -->
+
+<div class="frame title" id="title-CH5">
+  <div class="orb" style="width:1000px;height:1000px;right:-300px;top:-360px;background:var(--accent-cyan);opacity:.20"></div>
+  <div class="orb" style="width:700px;height:700px;left:-280px;bottom:-320px;background:var(--accent-green);opacity:.10"></div>
+  <div class="ey">Chapter 05</div>
+  <h1>What it does to the <span class="c">economy</span></h1>
+  <div class="divider"></div>
+</div>
+
+<div class="frame" id="price-collapse">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-green);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">Two things, pulling in opposite directions</div>
+    <div style="display:flex;align-items:center;gap:40px">
+      <div class="mono" style="font-size:150px;line-height:1;color:var(--accent-green)">1</div>
+      <h1 class="big">Price <span class="g">collapse</span></h1>
+    </div>
+    <div class="divider"></div>
+    <div class="lead"><b>Already happened</b>, to the things the machine makes.</div>
+  </div>
+</div>
+
+<div class="frame" id="optimists-card">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-gold);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="card k-gold"><div class="top"></div>
+    <div class="ey">The optimists say</div>
+    <h1>The cost of living could fall<br>as much as <span class="mono c">10x</span></h1>
+    <div class="divider"></div>
+    <div class="lines"><div class="ln rw sp" id="op-v" style="--sp:255,215,0;--spc:var(--accent-gold)"><span><span class="go">A hope.</span> It hasn't shown up yet.</span></div></div>
+  </div>
+</div>
+
+<div class="frame" id="unemployment-4.2-forecast">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-gold);opacity:.14"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="card k-cyan"><div class="top"></div>
+    <div class="ey">The honest number</div>
+    <div class="un-grid">
+      <div class="un-stat rw sp" id="u-stat">
+        <div class="k">US UNEMPLOYMENT</div>
+        <div class="v">4.2%</div>
+        <div class="s"><span class="mono">September 2026</span> &nbsp;&middot;&nbsp; BLS</div>
+        <div class="h">It hasn't happened yet.</div>
+      </div>
+      <div class="un-arrow rw sp" id="u-arrow" style="--sp:255,215,0;--spc:var(--accent-gold)">
+        <div class="cap">Where I think it's heading</div>
+        <svg width="780" height="330" viewBox="0 0 792 330"><path d="M54 300 C 300 292, 480 236, 724 132" fill="none" stroke="currentColor" stroke-width="7" stroke-dasharray="20 14" stroke-linecap="round"/><path d="M684 118 L734 128 L708 172" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="54" cy="300" r="12" fill="currentColor"/></svg>
+        <span class="badge fc">Forecast</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="un-q rw sp" id="u-q">Which industries make it?</div>
+  </div>
+</div>
+
+<!-- C15: TWO list cards (survives / goes extinct), each cloned into two frames; rows land as spoken (see the CSS note) -->
+<template id="c15-surv-tpl">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-green);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="card c15"><div class="top"></div>
+    <div class="hd"><div class="ey">How I see it</div><span class="badge fc">Forecast</span></div>
+    <h1 class="sm">What <span class="g">survives</span></h1>
+    <div class="divider"></div>
+    <div class="c15g">
+      <div class="items">
+        <div class="it rw sp" data-k="s1" style="--sp:0,230,138;--spc:var(--accent-green)"><span class="num">01</span><span>Raw materials and energy</span></div>
+        <div class="it rw sp" data-k="s2" style="--sp:0,230,138;--spc:var(--accent-green)"><span class="num">02</span><span>Chips</span></div>
+        <div class="it rw sp" data-k="s3" style="--sp:0,230,138;--spc:var(--accent-green)"><span class="num">03</span><span>Robotics</span></div>
+        <div class="tg" data-k="tg3">In a gold rush, you sell the pickaxes</div>
+      </div>
+      <div class="items">
+        <div class="it rw sp" data-k="s4" style="--sp:0,230,138;--spc:var(--accent-green)"><span class="num">04</span><span>Water</span></div>
+        <div class="it rw sp" data-k="s5" style="--sp:0,230,138;--spc:var(--accent-green)"><span class="num">05</span><span>Farming</span></div>
+        <div class="it rw sp" data-k="s6" style="--sp:0,230,138;--spc:var(--accent-green)"><span class="num">06</span><span>Solar and nuclear</span></div>
+        <div class="it rw sp" data-k="s7" style="--sp:0,230,138;--spc:var(--accent-green)"><span class="num">07</span><span>Experiences<span class="sub">restaurants, travel, vacations</span></span></div>
+      </div>
+    </div>
+  </div>
+</template>
+<template id="c15-ext-tpl">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-red);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.08"></div>
+  <div class="card k-red c15"><div class="top"></div>
+    <div class="hd"><div class="ey">How I see it</div><span class="badge fc">Forecast</span></div>
+    <h1 class="sm">Goes <span class="re">extinct</span>, or unrecognizable</h1>
+    <div class="divider"></div>
+    <div class="items c15one">
+      <div class="it rw sp" data-k="e1" style="--sp:255,64,96;--spc:var(--accent-red)"><span class="num">01</span><span>Health care as we know it</span></div>
+      <div class="it rw sp" data-k="e2" style="--sp:255,64,96;--spc:var(--accent-red)"><span class="num">02</span><span>Universities</span></div>
+      <div class="it rw sp" data-k="e3" style="--sp:255,64,96;--spc:var(--accent-red)"><span class="num">03</span><span>Insurance and thin-margin finance</span></div>
+      <div class="it rw sp" data-k="e4" style="--sp:255,64,96;--spc:var(--accent-red)"><span class="num">04</span><span>Hollywood</span></div>
+      <div class="tg" data-k="tg4">No actors needed</div>
+    </div>
+  </div>
+</template>
+<div class="frame c15s" id="C15-survives-a"></div>
+<div class="frame c15s" id="C15-survives-b"></div>
+<div class="frame c15e" id="C15-extinct-a"></div>
+<div class="frame c15e" id="C15-extinct-b"></div>
+
+<div class="frame" id="survivors-tiles">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-green);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">That survivor list, again</div>
+    <h1 class="sm">We're still going to need</h1>
+    <div class="divider"></div>
+    <div class="tiles">
+      <div class="tile rw sp" id="sv1" style="--sp:0,230,138;--spc:var(--accent-green)"><svg class="ic"><use href="#i-beam"/></svg><div class="tn">Steel</div></div>
+      <div class="tile rw sp" id="sv2" style="--sp:0,230,138;--spc:var(--accent-green)"><svg class="ic"><use href="#i-wheat"/></svg><div class="tn">Food</div></div>
+      <div class="tile rw sp" id="sv3" style="--sp:0,230,138;--spc:var(--accent-green)"><svg class="ic"><use href="#i-bolt"/></svg><div class="tn">Power</div></div>
+    </div>
+    <div class="lead sub rs" id="sv-sub" style="margin-top:36px">Even if every bit of it is made by machines.</div>
+  </div>
+</div>
+
+<div class="frame" id="C15-jobs-fade">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-gold);opacity:.14"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.12"></div>
+  <div class="card"><div class="top"></div>
+    <div class="hd"><div class="ey">The industry survives. The job doesn't.</div><span class="badge fc">Forecast</span></div>
+    <div class="jf">
+      <div>
+        <div class="jf-col">
+          <div class="colh">SURVIVES</div>
+          <ul><li>Raw materials and energy</li><li>Chips</li><li>Robotics</li><li>Water</li><li>Farming</li><li>Solar and nuclear</li><li>Experiences</li></ul>
+        </div>
+        <div class="jobs-tag" id="jf-jobs"><svg width="30" height="34" style="color:currentColor"><use href="#i-person"/></svg>JOBS</div>
+      </div>
+      <div class="jf-q rw sp" id="jf-q" style="--sp:255,215,0;--spc:var(--accent-gold)">
+        <div class="qh">What holds its <span class="go">value</span>?</div>
+        <div class="qb">The things you can't make more of.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="frame" id="land-energy-compute">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-gold);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="card k-gold"><div class="top"></div>
+    <div class="ey">What holds its value</div>
+    <h1 class="sm">The things you can't make <span class="go">more</span> of</h1>
+    <div class="divider"></div>
+    <div class="tiles">
+      <div class="tile rw sp" id="le1" style="--sp:255,215,0;--spc:var(--accent-gold)"><svg class="ic"><use href="#i-land"/></svg><div class="tn">Land</div></div>
+      <div class="tile rw sp" id="le2" style="--sp:255,215,0;--spc:var(--accent-gold)"><svg class="ic"><use href="#i-flame"/></svg><div class="tn">Energy</div></div>
+      <div class="tile rw sp" id="le3" style="--sp:255,215,0;--spc:var(--accent-gold)"><svg class="ic"><use href="#i-chip"/></svg><div class="tn">Compute</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================== CH6 =============================== -->
+
+<div class="frame" id="us-law-july-2025">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-cyan);opacity:.18"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.10"></div>
+  <div class="card k-cyan"><div class="top"></div>
+    <div class="ey">Not theory</div>
+    <h1 class="big">A <span class="c">US law</span>, signed</h1>
+    <div class="dateline">July 2025</div>
+    <div class="divider"></div>
+    <div class="lead"><b>The GENIUS Act.</b></div>
+  </div>
+</div>
+
+<template id="split-tpl">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-green);opacity:.14"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-red);opacity:.12"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">Some digital money</div>
+    <div class="split">
+      <div class="half rw sp" data-k="L" style="--sp:255,64,96;--spc:var(--accent-red)">
+        <svg class="hi ic" style="color:var(--accent-cyan)"><use href="#i-snow"/></svg>
+        <div class="hh"><span class="ac">Can be frozen</span></div>
+        <div class="hs">by design</div>
+      </div>
+      <div class="bar"></div>
+      <div class="half rw sp" data-k="R" style="--sp:0,230,138;--spc:var(--accent-green)">
+        <svg class="hi ic" style="color:var(--accent-green)"><use href="#i-open"/></svg>
+        <div class="hh"><span class="ac" data-k="Rh">Can't</span></div>
+        <div class="hs" data-k="Rs"></div>
+      </div>
+    </div>
+  </div>
+</template>
+<div class="frame splitf" id="frozen-split"></div>
+
+<!-- =============================== CH7 =============================== -->
+
+<div class="frame title" id="title-CH7">
+  <div class="orb" style="width:1000px;height:1000px;right:-300px;top:-360px;background:var(--accent-green);opacity:.18"></div>
+  <div class="orb" style="width:700px;height:700px;left:-280px;bottom:-320px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="ey">Chapter 07</div>
+  <h1>How to <span class="g">protect</span> yourself</h1>
+  <div class="divider"></div>
+</div>
+
+<div class="frame" id="protect-yourself">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-gold);opacity:.14"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.12"></div>
+  <div class="card k-gold"><div class="top"></div>
+    <div class="ey">The answer</div>
+    <div class="pr">
+      <div>
+        <div class="pr-q s-rest" id="pr-q">How do you protect yourself?</div>
+        <div class="divider"></div>
+        <div class="pr-a s-rest" id="pr-a">Stop depending on selling your <span class="go">time</span>.</div>
+      </div>
+      <svg class="clock" id="pr-clock" viewBox="0 0 360 360">
+        <circle cx="180" cy="180" r="160" fill="rgba(255,215,0,.06)" stroke="var(--accent-gold)" stroke-width="8"/>
+        <g stroke="var(--text-primary)" stroke-width="7" stroke-linecap="round">
+          <path d="M180 34v26M180 300v26M34 180h26M300 180h26"/>
+          <path d="M253 53l-8 14M307 107l-14 8M307 253l-14-8M253 307l-8-14M107 307l8-14M53 253l14-8M53 107l14 8M107 53l8 14" stroke-width="4"/>
+        </g>
+        <path d="M180 180V92" stroke="var(--accent-gold)" stroke-width="12" stroke-linecap="round"/>
+        <path d="M180 180l62 40" stroke="var(--accent-gold)" stroke-width="9" stroke-linecap="round"/>
+        <circle cx="180" cy="180" r="13" fill="var(--accent-gold)"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<div class="frame" id="own-scarce">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-gold);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.12"></div>
+  <div class="card k-gold"><div class="top"></div>
+    <div class="ey">Stop being a worker. Start being an owner.</div>
+    <h1 class="big" style="line-height:1.12">Own what stays <span class="go">scarce</span>.<br>Own what <span class="g">nobody controls</span>.</h1>
+    <div class="divider"></div>
+  </div>
+</div>
+
+<div class="frame" id="three-reasons-1">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-green);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">Here is why I think</div>
+    <h1 class="sm">Crypto <span class="g">flourishes</span> in an AI world</h1>
+    <div class="divider"></div>
+    <div class="reasons">
+      <div class="reason rw sp" id="r1" style="--sp:0,230,138;--spc:var(--accent-green)">
+        <div class="rn">1</div>
+        <div><div class="rt">MACHINES NEED MONEY</div><div class="rs" id="r1s">An AI agent can't walk into a bank and open an account.</div></div>
+      </div>
+      <div class="reason dark"><div class="rn">2</div><div class="bar"></div></div>
+      <div class="reason dark"><div class="rn">3</div><div class="bar" style="width:48%"></div></div>
+    </div>
+  </div>
+</div>
+
+<template id="split-filled-marker"></template>
+<div class="frame splitf" id="frozen-split-filled"></div>
+
+<div class="frame" id="thesis-card">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-green);opacity:.14"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-red);opacity:.10"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">Who controls the layers</div>
+    <div class="th-lbl">GOVERNMENTS AND CORPORATIONS RACE TO CONTROL</div>
+    <div class="th-tiles">
+      <div class="th"><div class="tn">COMPUTE</div><div class="pair"><div class="pc lk"><svg><use href="#i-lock"/></svg>CONTROLLED</div><div class="pc op"><svg><use href="#i-unlock"/></svg>OPEN SOURCE</div></div></div>
+      <div class="th"><div class="tn">MONEY</div><div class="pair"><div class="pc lk"><svg><use href="#i-lock"/></svg>CONTROLLED</div><div class="pc op"><svg><use href="#i-unlock"/></svg>OPEN SOURCE</div></div></div>
+      <div class="th"><div class="tn">AI</div><div class="pair"><div class="pc lk"><svg><use href="#i-lock"/></svg>CONTROLLED</div><div class="pc op"><svg><use href="#i-unlock"/></svg>OPEN SOURCE</div></div></div>
+    </div>
+    <div class="divider"></div>
+    <div class="th-line">The <span class="g">open source</span> versions get more valuable.</div>
+    <div class="sig">My thesis</div>
+  </div>
+</div>
+
+<div class="frame" id="catch-card">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-red);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="card k-red"><div class="top"></div>
+    <div class="ey">The catch</div>
+    <div class="ct">
+      <div>
+        <h1 class="sm">If nobody can freeze your money, the only way to take it is to <span class="re">come to your house</span>.</h1>
+        <div class="divider"></div>
+      </div>
+      <svg width="380" height="380" style="color:var(--text-primary)"><use href="#i-house"/></svg>
+    </div>
+  </div>
+</div>
+
+<div class="frame" id="guard-then-deflation">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-green);opacity:.14"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-gold);opacity:.10"></div>
+  <div class="card"><div class="top"></div>
+    <div class="ey">Why crypto flourishes in an AI world</div>
+    <h1 class="sm">The catch, and reason <span class="mono">3</span></h1>
+    <div class="divider"></div>
+    <div class="gd" style="display:flex;flex-direction:column;gap:18px">
+      <div class="rw sp" id="gd-a" style="--sp:255,215,0;--spc:var(--accent-gold)">
+        <div class="gi"><svg width="90" height="90" class="ic" style="color:var(--accent-gold)"><use href="#i-shield"/></svg></div>
+        <div><div class="gk">THE HALLWAY ROBOT <span class="badge fc" style="font-size:19px;padding:7px 16px 7px 14px">Forecast</span></div><div class="gt">That's a security guard you might want.</div></div>
+      </div>
+      <div class="rw sp" id="gd-b" style="--sp:0,230,138;--spc:var(--accent-green)">
+        <div class="gi"><div class="g3">3</div></div>
+        <div><div class="gk">REASON THREE</div><div class="gt">Machines make things cheaper = <span class="g">deflation</span></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="frame" id="checks-card">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-gold);opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-red);opacity:.10"></div>
+  <div class="card k-gold"><div class="top"></div>
+    <div class="hd"><div class="ey">What I think happens next</div><span class="badge fc">Forecast</span></div>
+    <h1>The government sends out <span class="go">checks</span></h1>
+    <div class="divider"></div>
+    <div class="ch-flow">
+      <div class="ch-box" style="border-color:rgba(255,64,96,.4)"><div class="k re" style="display:flex;align-items:center;gap:14px"><svg width="40" height="40"><use href="#i-paycheck"/></svg>PAYCHECKS</div><div class="v">Lost</div></div>
+      <div style="display:flex;justify-content:center;color:var(--text-secondary)"><svg width="96" height="48"><use href="#i-arrow"/></svg></div>
+      <div class="ch-box" style="border-color:rgba(255,215,0,.45);background:linear-gradient(135deg,rgba(255,215,0,.12),rgba(255,215,0,.02) 70%)"><div class="k go">THE GOVERNMENT</div><div class="v">Sends out checks</div></div>
+    </div>
+    <div class="src" style="font-size:30px;font-style:italic;color:var(--text-secondary)">I think.</div>
+  </div>
+</div>
+
+<div class="frame" id="conviction-card">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-gold);opacity:.14"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.10"></div>
+  <div class="card k-gold"><div class="top"></div>
+    <div class="ey">Over the long run</div>
+    <div class="lines">
+      <div class="ln rw sp sm2" id="cv1" style="--sp:255,215,0;--spc:var(--accent-gold)"><span>I believe <span class="go">scarce assets</span> soak up that difference, over the long run.</span></div>
+      <div class="ln rw sp" id="cv2" style="--sp:255,215,0;--spc:var(--accent-gold)"><span>My conviction, <span class="go">not a promise</span>.</span></div>
+      <div class="ln rw sp bodyln" id="cv3" style="--sp:136,146,164;--spc:var(--text-primary)">Nothing here is financial advice.</div>
+    </div>
+  </div>
+</div>
+
+<div class="frame" id="dyor-card">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-gold);opacity:.14"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-cyan);opacity:.10"></div>
+  <div class="card k-gold"><div class="top"></div>
+    <div class="ey">As I'm recording this</div>
+    <div class="tick"><div class="t">BTC</div><div class="t">KAS</div><div class="t">TAO</div></div>
+    <h1 style="margin-top:30px">Well below their <span class="c">all-time highs</span></h1>
+    <div class="divider"></div>
+    <div class="dyor">DO YOUR OWN RESEARCH</div>
+  </div>
+</div>
+
+<!-- =============================== CH8 =============================== -->
+
+<div class="frame" id="recap-list">
+  <div class="orb" style="width:900px;height:900px;right:-320px;top:-360px;background:var(--accent-red);opacity:.14"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-300px;background:var(--accent-green);opacity:.10"></div>
+  <div class="card k-red"><div class="top"></div>
+    <div class="ey">So that's the whole picture</div>
+    <div class="rc">
+      <div class="rc-l">
+        <div class="ln pre">The brain went first.</div>
+        <div class="ln rw sp" id="rc-body" style="--sp:255,64,96;--spc:var(--accent-red)">Then it got a body.</div>
+        <div class="ln rw sp" id="rc-list" style="--sp:255,64,96;--spc:var(--accent-red)"><span>The list of safe jobs keeps getting <span class="re">shorter</span>.</span></div>
+      </div>
+      <div class="jobcol" id="rc-col">
+        <div class="colh">SAFE JOBS</div>
+        <ol>
+          <li>Cashiers</li><li>Taxi drivers</li><li>Warehouse workers</li><li>Customer service reps</li><li>Roofers</li><li>Truck drivers</li>
+          <li>Carpenters</li><li>Electricians</li><li>Plumbers</li><li>Computer programmers</li><li>Radiologists</li><li>Brain surgeons</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- C15 list cards: SURVIVES -> C15-survives-a/-b, GOES EXTINCT -> C15-extinct-a/-b (same card per pair, rows land as spoken)
+const c15s = document.getElementById('c15-surv-tpl'), c15e = document.getElementById('c15-ext-tpl');
+document.querySelectorAll('.c15s').forEach(f => f.appendChild(c15s.content.cloneNode(true)));
+document.querySelectorAll('.c15e').forEach(f => f.appendChild(c15e.content.cloneNode(true)));
+// ---- frozen split: one template, two frames; the CH7 frame carries the filled right half
+const st = document.getElementById('split-tpl');
+document.querySelectorAll('.splitf').forEach(f => f.appendChild(st.content.cloneNode(true)));
+(() => {
+  const f = document.getElementById('frozen-split-filled');
+  f.querySelector('[data-k="Rh"]').textContent = "Can't be frozen";
+  f.querySelector('[data-k="Rs"]').textContent = 'No issuer, no gatekeeper.';
+  f.querySelector('[data-k="L"]').classList.add('done');
+  f.querySelector('[data-k="R"]').classList.add('on');
+})();
+// ---- the expert-electrician crowd
+document.querySelectorAll('.crowd').forEach(c => {
+  const n = +c.dataset.n;
+  for (let i = 0; i < n; i++) {
+    const r = Math.floor(i / 12), col = i % 12;
+    const op = (0.92 - r * 0.16 - Math.abs(col - 5.5) * 0.012).toFixed(2);
+    c.insertAdjacentHTML('beforeend', `<svg viewBox="0 0 40 46" style="color:var(--hw-bone);opacity:${op}"><use href="#i-person"/></svg>`);
+  }
+});
+// ---- weekly schedule strips (nine-to-five): Monday to Friday filled, the weekend empty
+document.querySelectorAll('.week').forEach(w => {
+  'MTWTFSS'.split('').forEach((d, i) => {
+    w.insertAdjacentHTML('beforeend', `<div class="day"><div class="blk ${i < 5 ? w.dataset.fill : ''}"></div><div class="dl">${d}</div></div>`);
+  });
+});
+// ---- slasher drips along the top edge of the Halloween title slides (seeded, deterministic)
+function rng(seed) { return () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+document.querySelectorAll('svg.drips').forEach(s => {
+  const R = rng(+s.dataset.seed);
+  let d = 'M0 0H1920V18', x = 1920;
+  while (x > 0) {
+    const w = 18 + R() * 46, len = R() < 0.35 ? 30 + R() * 190 : 6 + R() * 22, x2 = Math.max(0, x - w), mid = (x + x2) / 2;
+    if (len > 30) d += ` L${x.toFixed(1)} 18 C${(x - 2).toFixed(1)} 26 ${(mid + 7).toFixed(1)} 30 ${(mid + 7).toFixed(1)} ${(len - 12).toFixed(1)} a7 7 0 0 1 -14 0 C${(mid - 7).toFixed(1)} 30 ${(x2 + 2).toFixed(1)} 26 ${x2.toFixed(1)} 18`;
+    else d += ` Q${mid.toFixed(1)} ${(18 + len).toFixed(1)} ${x2.toFixed(1)} 18`;
+    x = x2;
+  }
+  d += ' Z';
+  s.innerHTML = `<path d="${d}" fill="var(--hw-blood)" opacity=".92"/>`;
+});
+</script>
+</body></html>

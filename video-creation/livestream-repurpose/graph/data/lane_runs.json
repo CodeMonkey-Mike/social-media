@@ -1,167 +1,5 @@
 [
   {
-    "run_id": "intake-stub-20260802-171931@2026-08-02T17:19:31",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-stub-20260802-171931",
-    "started_at": "2026-08-02T17:19:31",
-    "ended_at": "2026-08-02T17:19:32",
-    "duration_s": 0.5,
-    "status": "done",
-    "stub": "ok",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": {
-      "slug": "stub-stream",
-      "sandbox": false,
-      "master_duration_s": 4520.0,
-      "master_mbps": null,
-      "longform": {
-        "duration_s": 4100.0,
-        "removed_s": 420.0,
-        "mbps": null,
-        "thumb_staged": null,
-        "queued_id": "lf-20260101-stub-stream",
-        "already_present": false,
-        "queue_total": null
-      },
-      "vertical": {
-        "geometry": null,
-        "duration_s": null
-      },
-      "words": 0,
-      "segments": null,
-      "glossary": "Kaspa:3 TAO:12",
-      "flags": [
-        "'kaspy' x2 at [01:10.00, 44:02.10] — real KRC20 token or Kaspa mishear? Human call at the Phase 3 seam; NOT auto-changed."
-      ]
-    },
-    "error": null
-  },
-  {
-    "run_id": "intake-stub-20260802-171940@2026-08-02T17:19:40",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-stub-20260802-171940",
-    "started_at": "2026-08-02T17:19:40",
-    "ended_at": "2026-08-02T17:19:41",
-    "duration_s": 0.1,
-    "status": "failed",
-    "stub": "fail",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": null,
-    "error": "encode_low_bps.py exit code 3; output tail:\nstub: pretending to work\nFATAL: stub failure\n"
-  },
-  {
-    "run_id": "intake-graph-test-stream-20260802@2026-08-02T17:21:07",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-graph-test-stream-20260802",
-    "started_at": "2026-08-02T17:21:07",
-    "ended_at": "2026-08-02T17:23:09",
-    "duration_s": 122.5,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "graph-test-stream",
-    "summary": {
-      "slug": "graph-test-stream",
-      "sandbox": true,
-      "master_duration_s": 63.534341,
-      "master_mbps": 0.81,
-      "longform": {
-        "duration_s": 56.8,
-        "removed_s": 6.74,
-        "mbps": 0.97,
-        "thumb_staged": true,
-        "queued_id": "lf-20260802-graph-test-stream",
-        "already_present": false,
-        "queue_total": 1
-      },
-      "vertical": {
-        "geometry": "1080x1920 SAR 1:1",
-        "duration_s": 63.6
-      },
-      "words": 311,
-      "segments": 34,
-      "glossary": "Kaspa:1",
-      "flags": []
-    },
-    "error": null
-  },
-  {
-    "run_id": "intake-test-fix@2026-08-02T17:24:03",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-test-fix",
-    "started_at": "2026-08-02T17:24:03",
-    "ended_at": "2026-08-02T17:25:44",
-    "duration_s": 101.2,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "graph-test-stream",
-    "summary": {
-      "slug": "graph-test-stream",
-      "sandbox": true,
-      "master_duration_s": 63.534341,
-      "master_mbps": 0.81,
-      "longform": {
-        "duration_s": 56.8,
-        "removed_s": 6.74,
-        "mbps": 0.97,
-        "thumb_staged": true,
-        "queued_id": "lf-20260802-graph-test-stream",
-        "already_present": false,
-        "queue_total": 1
-      },
-      "vertical": {
-        "geometry": "1080x1920 SAR 1:1",
-        "duration_s": 63.6
-      },
-      "words": 309,
-      "segments": 34,
-      "glossary": "Kaspa:1",
-      "flags": []
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-stub-20260804-130218@2026-08-04T13:02:18",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-stub-20260804-130218",
-    "started_at": "2026-08-04T13:02:18",
-    "ended_at": "2026-08-04T13:02:19",
-    "duration_s": 0.2,
-    "status": "done",
-    "stub": "ok",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": {
-      "batch": "stub-batch",
-      "stub": true,
-      "clips": 2
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-stub-20260804-130222@2026-08-04T13:02:22",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-stub-20260804-130222",
-    "started_at": "2026-08-04T13:02:22",
-    "ended_at": "2026-08-04T13:02:22",
-    "duration_s": 0.1,
-    "status": "failed",
-    "stub": "fail",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": null,
-    "error": "cut_topics.py --stage cut exit code 3; output tail:\nstub: pretending to cut\nFATAL: stub failure\n"
-  },
-  {
     "run_id": "cut-sandbox-cut-20260804@2026-08-04T13:03:15",
     "lane": 2,
     "lane_name": "cut",
@@ -14931,6 +14769,2692 @@
           "at": "2026-10-03T09:40:23"
         }
       }
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-u-20261001-pippin-went-dead-then-89x-bitchute@2026-10-03T10:22:42",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-u-20261001-pippin-went-dead-then-89x-bitchute",
+    "started_at": "2026-10-03T10:22:42",
+    "ended_at": "2026-10-03T10:25:29",
+    "duration_s": 167.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "u-20261001-pippin-went-dead-then-89x:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/0XuwKEFUAW5y/",
+      "title": "There's a backstory to our 89x on Pippin in a bear market",
+      "posted_at": "2026-10-03T14:25:28.831Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-bull-trap-20261003@2026-10-03T10:26:39",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-bull-trap-20261003",
+    "started_at": "2026-10-03T10:26:39",
+    "ended_at": "2026-10-03T10:28:04",
+    "duration_s": 85.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "bull-trap",
+    "summary": {
+      "batch": "bull-trap",
+      "sandbox": false,
+      "clips": 3,
+      "total_s": 108.2,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\bull-trap\\dashboard.html",
+      "clip_durations": {
+        "golden-kitty-10-million-while-everything-bleeds": 48.573,
+        "spon-didnt-sell-holding-the-line": 37.234,
+        "october-bottom-talk-is-gone": 22.389
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-bull-trap@2026-10-03T09:58:33",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-bull-trap",
+    "started_at": "2026-10-03T09:58:33",
+    "ended_at": "2026-10-03T10:28:04",
+    "duration_s": 1771.2,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "bull-trap",
+      "until": "",
+      "approve": [
+        "4b"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "bull-trap",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-03T08:38:37"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-03T08:38:37"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 21420",
+          "at": "2026-10-03T08:38:37"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "4 clips planned",
+          "at": "2026-10-03T09:01:10"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "4 clips cut",
+          "at": "2026-10-03T09:02:20"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [1]",
+          "at": "2026-10-03T09:58:33"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "3 clips planned from 1 part(s)",
+          "at": "2026-10-03T10:26:36"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-03T10:28:04"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-bull-trap-20261003@2026-10-03T11:22:08",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-bull-trap-20261003",
+    "started_at": "2026-10-03T11:22:08",
+    "ended_at": "2026-10-03T11:23:40",
+    "duration_s": 91.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "bull-trap",
+    "summary": {
+      "batch": "bull-trap",
+      "sandbox": false,
+      "clips": 3,
+      "total_s": 108.2,
+      "filler_cuts": 0,
+      "words": {
+        "golden-kitty-10-million-while-everything-bleeds": 166,
+        "spon-didnt-sell-holding-the-line": 133,
+        "october-bottom-talk-is-gone": 85
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\bull-trap\\dashboard.html",
+      "clip_durations": {
+        "golden-kitty-10-million-while-everything-bleeds": 48.57,
+        "spon-didnt-sell-holding-the-line": 37.23,
+        "october-bottom-talk-is-gone": 22.39
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261002-golden-kitty-bitchute@2026-10-03T11:22:13",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261002-golden-kitty-bitchute",
+    "started_at": "2026-10-03T11:22:13",
+    "ended_at": "2026-10-03T11:27:08",
+    "duration_s": 294.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261002-golden-kitty:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/WwQjmY8xs4Vd/",
+      "title": "Golden Kitty: The Robinhood Chain Token Priced in Gold",
+      "posted_at": "2026-10-03T15:26:07.076Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261002-golden-kitty-rumble@2026-10-03T11:27:15",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261002-golden-kitty-rumble",
+    "started_at": "2026-10-03T11:27:15",
+    "ended_at": "2026-10-03T11:32:42",
+    "duration_s": 327.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261002-golden-kitty:rumble",
+    "summary": {
+      "platform": "rumble",
+      "status": "posted",
+      "url": "https://rumble.com/v7gbx0s-golden-kitty-the-robinhood-chain-token-priced-in-gold.html",
+      "title": "Golden Kitty: The Robinhood Chain Token Priced in Gold",
+      "posted_at": "2026-10-03T15:31:41.633Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261002-golden-kitty-facebook@2026-10-03T11:32:50",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261002-golden-kitty-facebook",
+    "started_at": "2026-10-03T11:32:50",
+    "ended_at": "2026-10-03T11:54:49",
+    "duration_s": 1318.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261002-golden-kitty:facebook",
+    "summary": {
+      "platform": "facebook",
+      "status": "posted",
+      "url": "https://www.facebook.com/reel/950257937640748/",
+      "title": "Golden Kitty: The Robinhood Chain Token Priced in Gold",
+      "posted_at": "2026-10-03T15:54:47.997Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-u-20261001-no-job-is-safe-robots-bitchute@2026-10-03T11:58:17",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-u-20261001-no-job-is-safe-robots-bitchute",
+    "started_at": "2026-10-03T11:58:17",
+    "ended_at": "2026-10-03T12:00:57",
+    "duration_s": 160.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "u-20261001-no-job-is-safe-robots:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/ILghZN2aOss2/",
+      "title": "No job is safe. The good news if you're in crypto...",
+      "posted_at": "2026-10-03T16:00:56.410Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-bull-trap@2026-10-03T11:22:06",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-bull-trap",
+    "started_at": "2026-10-03T11:22:06",
+    "ended_at": "2026-10-03T13:22:49",
+    "duration_s": 7242.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "bull-trap",
+      "until": "build",
+      "approve": [
+        "2nd"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "bull-trap",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-03T08:38:37"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-03T08:38:37"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 21420",
+          "at": "2026-10-03T08:38:37"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "4 clips planned",
+          "at": "2026-10-03T09:01:10"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "4 clips cut",
+          "at": "2026-10-03T09:02:20"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [1]",
+          "at": "2026-10-03T09:58:33"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "3 clips planned from 1 part(s)",
+          "at": "2026-10-03T10:26:36"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-03T10:28:04"
+        },
+        "gate_2nd": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-03T11:22:06"
+        },
+        "lane2_finish": {
+          "status": "ran",
+          "detail": "6-transcribed, render-assets staged",
+          "at": "2026-10-03T11:23:40"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "3 built here, 0 awaited; all 3 7-built PASS",
+          "at": "2026-10-03T13:22:49"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-03T13:22:49"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-03T13:22:49"
+        }
+      },
+      "summary": {
+        "batch": "bull-trap",
+        "lane1_longform": "queued",
+        "lane2_shorts": "built",
+        "lane2_clips": 3,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "build"
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-bull-trap@2026-10-03T14:04:19",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-bull-trap",
+    "started_at": "2026-10-03T14:04:19",
+    "ended_at": "2026-10-03T14:04:20",
+    "duration_s": 0.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "bull-trap",
+      "until": "",
+      "approve": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "bull-trap",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-03T08:38:37"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-03T08:38:37"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 21420",
+          "at": "2026-10-03T08:38:37"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "4 clips planned",
+          "at": "2026-10-03T09:01:10"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "4 clips cut",
+          "at": "2026-10-03T09:02:20"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [1]",
+          "at": "2026-10-03T09:58:33"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "3 clips planned from 1 part(s)",
+          "at": "2026-10-03T10:26:36"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-03T10:28:04"
+        },
+        "gate_2nd": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-03T11:22:06"
+        },
+        "lane2_finish": {
+          "status": "ran",
+          "detail": "6-transcribed, render-assets staged",
+          "at": "2026-10-03T11:23:40"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "3 built here, 0 awaited; all 3 7-built PASS",
+          "at": "2026-10-03T13:22:49"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-03T13:22:49"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-03T13:22:49"
+        }
+      },
+      "summary": {
+        "batch": "bull-trap",
+        "lane1_longform": "queued",
+        "lane2_shorts": "built",
+        "lane2_clips": 3,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "build"
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-bull-trap@2026-10-03T14:04:34",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-bull-trap",
+    "started_at": "2026-10-03T14:04:34",
+    "ended_at": "2026-10-03T14:04:34",
+    "duration_s": 0.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "bull-trap",
+      "until": "publish",
+      "approve": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "bull-trap",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-03T08:38:37"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-03T08:38:37"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 21420",
+          "at": "2026-10-03T08:38:37"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "4 clips planned",
+          "at": "2026-10-03T09:01:10"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "4 clips cut",
+          "at": "2026-10-03T09:02:20"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [1]",
+          "at": "2026-10-03T09:58:33"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "3 clips planned from 1 part(s)",
+          "at": "2026-10-03T10:26:36"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-03T10:28:04"
+        },
+        "gate_2nd": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-03T11:22:06"
+        },
+        "lane2_finish": {
+          "status": "ran",
+          "detail": "6-transcribed, render-assets staged",
+          "at": "2026-10-03T11:23:40"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "3 built here, 0 awaited; all 3 7-built PASS",
+          "at": "2026-10-03T13:22:49"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-03T13:22:49"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-03T13:22:49"
+        }
+      },
+      "summary": {
+        "batch": "bull-trap",
+        "lane1_longform": "queued",
+        "lane2_shorts": "built",
+        "lane2_clips": 3,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "build"
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-bull-trap-20261003@2026-10-03T14:06:54",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-bull-trap-20261003",
+    "started_at": "2026-10-03T14:06:54",
+    "ended_at": "2026-10-03T14:06:56",
+    "duration_s": 1.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "bull-trap",
+    "summary": {
+      "batch": "bull-trap",
+      "sandbox": false,
+      "date": "2026-10-03",
+      "clips": 3,
+      "added": 3,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\bull-trap-2026-10-03",
+      "queue_total": 262,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-bull-trap@2026-10-03T14:05:47",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-bull-trap",
+    "started_at": "2026-10-03T14:05:47",
+    "ended_at": "2026-10-03T14:06:57",
+    "duration_s": 70.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "bull-trap",
+      "until": "publish",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "bull-trap",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-10-03T14:05:47"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-03T14:05:47"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already done",
+          "at": "2026-10-03T14:05:47"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-10-03T14:05:47"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-10-03T14:05:47"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-10-03T09:58:33",
+          "at": "2026-10-03T14:05:47"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-10-03T14:05:47"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-03T14:05:47"
+        },
+        "gate_2nd": {
+          "status": "skipped",
+          "detail": "approved 2026-10-03T11:22:06",
+          "at": "2026-10-03T14:05:47"
+        },
+        "lane2_finish": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-03T14:05:47"
+        },
+        "lane2_build": {
+          "status": "skipped",
+          "detail": "every surviving clip is 7-built PASS",
+          "at": "2026-10-03T14:05:47"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 3 clip(s) under date 2026-10-03; 3 queued total",
+          "at": "2026-10-03T14:06:57"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-03T14:06:57"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-03T14:06:57"
+        }
+      },
+      "summary": {
+        "batch": "bull-trap",
+        "lane1_longform": "queued",
+        "lane2_shorts": "published",
+        "lane2_clips": 3,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "publish"
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-u-20261001-golden-kitty-50-million-bitchute@2026-10-04T09:35:05",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-u-20261001-golden-kitty-50-million-bitchute",
+    "started_at": "2026-10-04T09:35:05",
+    "ended_at": "2026-10-04T09:38:04",
+    "duration_s": 178.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "u-20261001-golden-kitty-50-million:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/WAP6JXddZhuG/",
+      "title": "Golden Kitty is gonna be pretty damn good. Here's the number.",
+      "posted_at": "2026-10-04T13:38:03.096Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261003-bull-trap-bitchute@2026-10-04T10:18:27",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261003-bull-trap-bitchute",
+    "started_at": "2026-10-04T10:18:27",
+    "ended_at": "2026-10-04T10:26:16",
+    "duration_s": 469.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261003-bull-trap:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/ItkLraXl7rsQ/",
+      "title": "I Got Caught In A Bull Trap On TAO, And The Whole Market Could Be Setting One Up For October",
+      "posted_at": "2026-10-04T14:25:15.491Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261003-bull-trap-rumble@2026-10-04T10:26:27",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261003-bull-trap-rumble",
+    "started_at": "2026-10-04T10:26:27",
+    "ended_at": "2026-10-04T10:34:44",
+    "duration_s": 497.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261003-bull-trap:rumble",
+    "summary": {
+      "platform": "rumble",
+      "status": "posted",
+      "url": "https://rumble.com/v7gdi84-i-got-caught-in-a-bull-trap-on-tao-and-the-whole-market-could-be-setting-on.html",
+      "title": "I Got Caught In A Bull Trap On TAO, And The Whole Market Could Be Setting One Up For October",
+      "posted_at": "2026-10-04T14:33:43.478Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261003-bull-trap-facebook@2026-10-04T10:35:04",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261003-bull-trap-facebook",
+    "started_at": "2026-10-04T10:35:04",
+    "ended_at": "2026-10-04T11:14:14",
+    "duration_s": 2350.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261003-bull-trap:facebook",
+    "summary": {
+      "platform": "facebook",
+      "status": "posted",
+      "url": "https://www.facebook.com/reel/972420625916749",
+      "title": "I Got Caught In A Bull Trap On TAO, And The Whole Market Could Be Setting One Up For October",
+      "posted_at": "2026-10-04T15:14:13.637Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-u-20261001-no-job-is-safe-robots-impact-bitchute@2026-10-04T11:18:05",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-u-20261001-no-job-is-safe-robots-impact-bitchute",
+    "started_at": "2026-10-04T11:18:05",
+    "ended_at": "2026-10-04T11:20:38",
+    "duration_s": 152.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "u-20261001-no-job-is-safe-robots-impact:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/2pUwZK5HQ6Zs/",
+      "title": "Somebody comes to your house for your crypto. Then your robot...",
+      "posted_at": "2026-10-04T15:20:37.549Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-grapes-20261005@2026-10-05T06:45:59",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-grapes-20261005",
+    "started_at": "2026-10-05T06:45:59",
+    "ended_at": "2026-10-05T07:03:26",
+    "duration_s": 1047.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "grapes",
+    "summary": {
+      "slug": "grapes",
+      "sandbox": false,
+      "master_duration_s": 3648.833333,
+      "master_mbps": 0.63,
+      "longform": "skipped",
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 3648.9
+      },
+      "words": 7757,
+      "segments": 513,
+      "glossary": "Kaspa:9",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-grapes-20261005@2026-10-05T07:21:48",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-grapes-20261005",
+    "started_at": "2026-10-05T07:21:48",
+    "ended_at": "2026-10-05T07:22:24",
+    "duration_s": 36.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "grapes",
+    "summary": {
+      "batch": "grapes",
+      "sandbox": false,
+      "clips": 3,
+      "total_s": 160.3,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\grapes\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "golden-kitty-one-of-five": 93.503,
+        "zombies-best-q3-since-2017": 34.207,
+        "golden-kitty-one-of-five-impact": 32.575
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-grapes@2026-10-05T06:45:57",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-grapes",
+    "started_at": "2026-10-05T06:45:57",
+    "ended_at": "2026-10-05T07:22:25",
+    "duration_s": 2188.0,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "grapes",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "grapes",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-05T07:03:26"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-05T07:03:26"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 33720",
+          "at": "2026-10-05T07:03:26"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "3 clips planned",
+          "at": "2026-10-05T07:21:46"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "3 clips cut",
+          "at": "2026-10-05T07:22:25"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-grapes-20261005@2026-10-05T07:41:56",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-grapes-20261005",
+    "started_at": "2026-10-05T07:41:56",
+    "ended_at": "2026-10-05T07:42:15",
+    "duration_s": 18.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "grapes",
+    "summary": {
+      "batch": "grapes",
+      "sandbox": false,
+      "clips": 1,
+      "total_s": 23.7,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\grapes\\dashboard.html",
+      "clip_durations": {
+        "golden-kitty-one-of-five-impact": 23.654
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-grapes-20261005@2026-10-05T07:42:17",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-grapes-20261005",
+    "started_at": "2026-10-05T07:42:17",
+    "ended_at": "2026-10-05T07:43:43",
+    "duration_s": 85.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "grapes",
+    "summary": {
+      "batch": "grapes",
+      "sandbox": false,
+      "clips": 1,
+      "total_s": 23.7,
+      "filler_cuts": 0,
+      "words": {
+        "golden-kitty-one-of-five-impact": 82
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\grapes\\dashboard.html",
+      "clip_durations": {
+        "golden-kitty-one-of-five-impact": 23.65
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-grapes-20261005@2026-10-05T07:24:39",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-grapes-20261005",
+    "started_at": "2026-10-05T07:24:39",
+    "ended_at": "2026-10-05T08:41:03",
+    "duration_s": 4584.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "grapes",
+    "summary": {
+      "batch": "grapes",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-10-05",
+      "images": {
+        "planned": 13,
+        "generated": 13,
+        "skipped": 0,
+        "verified": 13
+      },
+      "entries_added": 11,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 465
+        },
+        "x-threads.json": {
+          "planned": 2,
+          "queue_total": 116
+        },
+        "yt-posts.json": {
+          "planned": 1,
+          "queue_total": 215
+        },
+        "ig-single-image.json": {
+          "planned": 2,
+          "queue_total": 154
+        }
+      },
+      "lint": "clean",
+      "registered": "grapes",
+      "partial": false,
+      "held": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "lane3-grapes@2026-10-05T07:03:29",
+    "lane": 8,
+    "lane_name": "lane3",
+    "thread": "lane3-grapes",
+    "started_at": "2026-10-05T07:03:29",
+    "ended_at": "2026-10-05T08:42:49",
+    "duration_s": 5960.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "grapes",
+      "resume": true
+    },
+    "summary": {
+      "batch": "grapes",
+      "steps": {
+        "draft": {
+          "status": "ran",
+          "detail": "plan validated",
+          "at": "2026-10-05T07:24:37"
+        },
+        "repurpose": {
+          "status": "ran",
+          "detail": "{\"x-tweets\": 0, \"x-threads\": 0, \"x-polls\": 0, \"yt-posts\": 0, \"yt-text-polls\": 0, \"ig-single-image\": 0}",
+          "at": "2026-10-05T08:41:04"
+        },
+        "visual_qa": {
+          "status": "ran",
+          "detail": "agent exit 1, no report (non-fatal)",
+          "at": "2026-10-05T08:42:49"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-grapes@2026-10-05T07:37:13",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-grapes",
+    "started_at": "2026-10-05T07:37:13",
+    "ended_at": "2026-10-05T09:51:13",
+    "duration_s": 8039.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "grapes",
+      "until": "build",
+      "approve": [
+        "4b",
+        "2nd"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "grapes",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-05T07:03:26"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-05T07:03:26"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 33720",
+          "at": "2026-10-05T07:03:26"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "3 clips planned",
+          "at": "2026-10-05T07:21:46"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "3 clips cut",
+          "at": "2026-10-05T07:22:25"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [1, 2]",
+          "at": "2026-10-05T07:37:13"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "1 clips planned from 1 part(s)",
+          "at": "2026-10-05T07:41:54"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-05T07:42:15"
+        },
+        "gate_2nd": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-05T07:42:15"
+        },
+        "lane2_finish": {
+          "status": "ran",
+          "detail": "6-transcribed, render-assets staged",
+          "at": "2026-10-05T07:43:43"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "1 built here, 0 awaited; all 1 7-built PASS",
+          "at": "2026-10-05T09:51:13"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-05T09:51:13"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-05T09:51:13"
+        }
+      },
+      "summary": {
+        "batch": "grapes",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "built",
+        "lane2_clips": 1,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "build"
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-grapes-20261005@2026-10-05T09:53:05",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-grapes-20261005",
+    "started_at": "2026-10-05T09:53:05",
+    "ended_at": "2026-10-05T09:53:06",
+    "duration_s": 0.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "grapes",
+    "summary": {
+      "batch": "grapes",
+      "sandbox": false,
+      "date": "2026-10-05",
+      "clips": 1,
+      "added": 1,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\grapes-2026-10-05",
+      "queue_total": 262,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-grapes@2026-10-05T09:52:33",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-grapes",
+    "started_at": "2026-10-05T09:52:33",
+    "ended_at": "2026-10-05T09:53:06",
+    "duration_s": 33.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "grapes",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "grapes",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-10-05T09:52:33"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-05T09:52:33"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already done",
+          "at": "2026-10-05T09:52:33"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-10-05T09:52:33"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-10-05T09:52:33"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-10-05T07:37:13",
+          "at": "2026-10-05T09:52:33"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-10-05T09:52:33"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 7-built",
+          "at": "2026-10-05T09:52:33"
+        },
+        "gate_2nd": {
+          "status": "skipped",
+          "detail": "approved 2026-10-05T07:42:15",
+          "at": "2026-10-05T09:52:33"
+        },
+        "lane2_finish": {
+          "status": "skipped",
+          "detail": "phase 7-built",
+          "at": "2026-10-05T09:52:33"
+        },
+        "lane2_build": {
+          "status": "skipped",
+          "detail": "every surviving clip is 7-built PASS",
+          "at": "2026-10-05T09:52:33"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 1 clip(s) under date 2026-10-05; 1 queued total",
+          "at": "2026-10-05T09:53:06"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-05T09:53:06"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-05T09:53:06"
+        }
+      },
+      "summary": {
+        "batch": "grapes",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "published",
+        "lane2_clips": 1,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": ""
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261008-every-job-bitchute@2026-10-09T09:29:35",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261008-every-job-bitchute",
+    "started_at": "2026-10-09T09:29:35",
+    "ended_at": "2026-10-09T09:38:48",
+    "duration_s": 553.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261008-every-job:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/YhpVXdbKFssK/",
+      "title": "Literally Every Job Is at Risk. Here's How to Protect Yourself",
+      "posted_at": "2026-10-09T13:37:47.927Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261008-every-job-rumble@2026-10-09T14:33:11",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261008-every-job-rumble",
+    "started_at": "2026-10-09T14:33:11",
+    "ended_at": "2026-10-09T14:41:59",
+    "duration_s": 528.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261008-every-job:rumble",
+    "summary": {
+      "platform": "rumble",
+      "status": "posted",
+      "url": "https://rumble.com/v7gmqje-literally-every-job-is-at-risk.-heres-how-to-protect-yourself.html",
+      "title": "Literally Every Job Is at Risk. Here's How to Protect Yourself",
+      "posted_at": "2026-10-09T18:40:59.176Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261008-every-job-facebook@2026-10-09T14:42:20",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261008-every-job-facebook",
+    "started_at": "2026-10-09T14:42:20",
+    "ended_at": "2026-10-09T14:59:31",
+    "duration_s": 1031.0,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261008-every-job:facebook",
+    "summary": null,
+    "error": "upload_longform_facebook.py exited 1 — READ THE LOG before any re-run: the post may have landed (check longs.json + the platform page)."
+  },
+  {
+    "run_id": "post-lf-20261008-every-job-facebook-r2@2026-10-09T15:24:52",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261008-every-job-facebook-r2",
+    "started_at": "2026-10-09T15:24:52",
+    "ended_at": "2026-10-09T15:53:27",
+    "duration_s": 1714.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261008-every-job:facebook",
+    "summary": {
+      "platform": "facebook",
+      "status": "posted",
+      "url": "https://www.facebook.com/reel/1445052787549068/",
+      "title": "Literally Every Job Is at Risk. Here's How to Protect Yourself",
+      "posted_at": "2026-10-09T19:53:26.317Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-aliens-20261009@2026-10-09T16:26:26",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-aliens-20261009",
+    "started_at": "2026-10-09T16:26:26",
+    "ended_at": "2026-10-09T16:46:16",
+    "duration_s": 1190.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "aliens",
+    "summary": {
+      "slug": "aliens",
+      "sandbox": false,
+      "master_duration_s": 4328.833008,
+      "master_mbps": 0.64,
+      "longform": "skipped",
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 4328.8
+      },
+      "words": 9211,
+      "segments": 606,
+      "glossary": "Kaspa:4 TAO:8",
+      "flags": [
+        "'zcash' x2 at [54:05.21, 54:08.89] — zKAS mishear or a real Zcash mention? ASK MIKE before any Zcash content; NOT auto-changed."
+      ]
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-aliens-20261009@2026-10-09T17:02:38",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-aliens-20261009",
+    "started_at": "2026-10-09T17:02:38",
+    "ended_at": "2026-10-09T17:03:42",
+    "duration_s": 64.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "aliens",
+    "summary": {
+      "batch": "aliens",
+      "sandbox": false,
+      "clips": 8,
+      "total_s": 261.6,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\aliens\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "every-job-at-risk-own-assets": 42.455,
+        "tao-no-better-ai-play": 23.047,
+        "meme-dominance-off-a-cliff": 42.639,
+        "pippin-89x-held-a-year": 42.367,
+        "ledger-reseller-long-con": 42.383,
+        "every-job-at-risk-own-assets-impact": 22.991,
+        "meme-dominance-off-a-cliff-impact": 23.071,
+        "pippin-89x-held-a-year-impact": 22.671
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-aliens@2026-10-09T16:26:24",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-aliens",
+    "started_at": "2026-10-09T16:26:24",
+    "ended_at": "2026-10-09T17:03:42",
+    "duration_s": 2238.7,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "aliens",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "aliens",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-09T16:46:17"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-09T16:46:17"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 6300",
+          "at": "2026-10-09T16:46:17"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "8 clips planned",
+          "at": "2026-10-09T17:02:36"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "8 clips cut",
+          "at": "2026-10-09T17:03:42"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "lane3-aliens@2026-10-09T16:46:19",
+    "lane": 8,
+    "lane_name": "lane3",
+    "thread": "lane3-aliens",
+    "started_at": "2026-10-09T16:46:19",
+    "ended_at": "2026-10-09T17:10:39",
+    "duration_s": 1459.8,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "aliens",
+      "resume": true
+    },
+    "summary": {
+      "batch": "aliens",
+      "steps": {
+        "draft": {
+          "status": "ran",
+          "detail": "plan validated",
+          "at": "2026-10-09T17:08:42"
+        },
+        "repurpose": {
+          "status": "failed",
+          "detail": "repurpose graph exit 3221225794; pipelines.repurpose='pending'; tail:\n",
+          "at": "2026-10-09T17:10:39"
+        }
+      }
+    },
+    "error": "repurpose graph exit 3221225794; pipelines.repurpose='pending'; tail:\n"
+  },
+  {
+    "run_id": "tighten-aliens-20261009@2026-10-09T18:19:46",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-aliens-20261009",
+    "started_at": "2026-10-09T18:19:46",
+    "ended_at": "2026-10-09T18:21:59",
+    "duration_s": 133.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "aliens",
+    "summary": {
+      "batch": "aliens",
+      "sandbox": false,
+      "clips": 6,
+      "total_s": 153.0,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\aliens\\dashboard.html",
+      "clip_durations": {
+        "every-job-at-risk-own-assets": 32.2,
+        "tao-no-better-ai-play": 14.219,
+        "meme-dominance-off-a-cliff": 25.789,
+        "pippin-89x-held-a-year": 32.56,
+        "ledger-reseller-long-con": 29.58,
+        "every-job-at-risk-own-assets-impact": 18.674
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-aliens@2026-10-09T17:32:24",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-aliens",
+    "started_at": "2026-10-09T17:32:24",
+    "ended_at": "2026-10-09T18:21:59",
+    "duration_s": 2975.0,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "aliens",
+      "until": "",
+      "approve": [
+        "4b"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "aliens",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-09T16:46:17"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-09T16:46:17"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 6300",
+          "at": "2026-10-09T16:46:17"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "8 clips planned",
+          "at": "2026-10-09T17:02:36"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "8 clips cut",
+          "at": "2026-10-09T17:03:42"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [7, 8]",
+          "at": "2026-10-09T17:32:25"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "6 clips planned from 2 part(s)",
+          "at": "2026-10-09T18:19:44"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-09T18:21:59"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-aliens-20261009@2026-10-09T18:22:57",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-aliens-20261009",
+    "started_at": "2026-10-09T18:22:57",
+    "ended_at": "2026-10-09T18:23:44",
+    "duration_s": 47.0,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": "aliens",
+    "summary": null,
+    "error": "finish_batch.py --stage transcribe exit code 2; output tail:\nfinish_batch | batch aliens | 6 clips | stage transcribe | filler plan: 0 clip(s) with spans (no filler-plan.json — all passthrough)\nloading whisper 'medium' on cuda for 8 clip(s)...\nFATAL: transcribe_clips.py exit 3221225477\n"
+  },
+  {
+    "run_id": "batch-aliens@2026-10-09T18:22:54",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-aliens",
+    "started_at": "2026-10-09T18:22:54",
+    "ended_at": "2026-10-09T18:23:44",
+    "duration_s": 49.9,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "aliens",
+      "until": "",
+      "approve": [
+        "2nd"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "aliens",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-09T16:46:17"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-09T16:46:17"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 6300",
+          "at": "2026-10-09T16:46:17"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "8 clips planned",
+          "at": "2026-10-09T17:02:36"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "8 clips cut",
+          "at": "2026-10-09T17:03:42"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [7, 8]",
+          "at": "2026-10-09T17:32:25"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "6 clips planned from 2 part(s)",
+          "at": "2026-10-09T18:19:44"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-09T18:21:59"
+        },
+        "gate_2nd": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-09T18:22:54"
+        },
+        "lane2_finish": {
+          "status": "failed",
+          "detail": "finish graph exit 1; phase '5B-desilenced'; tail:\n-play mode=passthrough removed=0.00 out=14.220\nPROGRESS 33% clip 2/6\nFILLER n=3 slug=meme-dominance-off-a-cliff mode=passthrough removed=0.00 out=25.790\nPROGRESS 50% clip 3/6\nFILLER n=4 slug=pippin-89x-held-a-year mode=passthrough removed=0.00 out=32.560\nPROGRESS 66% clip 4/6\nFILLER n=5 slug=ledger-reseller-long-con mode=passthrough removed=0.00 out=29.580\nPROGRESS 83% clip 5/6\nFILLER n=6 slug=every-job-at-risk-own-assets-impact mode=passthrough removed=0.00 out=18.670\nPROGRESS 100% clip 6/6\nLOG=C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\aliens\\filler_log.json\nSTAGE-DONE fillers\nfinish_batch | batch aliens | 6 clips | stage transcribe | filler plan: 0 clip(s) with spans (no filler-plan.json — all passthrough)\nloading whisper 'medium' on cuda for 8 clip(s)...\nFATAL: transcribe_clips.py exit 3221225477\n------------------------------------------------------------\nGRAPH FAILED\n  finish_batch.py --stage transcribe exit code 2; output tail:\nfinish_batch | batch aliens | 6 clips | stage transcribe | filler plan: 0 clip(s) with spans (no filler-plan.json — all passthrough)\nloading whisper 'medium' on cuda for 8 clip(s)...\nFATAL: transcribe_clips.py exit 3221225477\n\n",
+          "at": "2026-10-09T18:23:44"
+        }
+      },
+      "summary": null
+    },
+    "error": "finish graph exit 1; phase '5B-desilenced'; tail:\n-play mode=passthrough removed=0.00 out=14.220\nPROGRESS 33% clip 2/6\nFILLER n=3 slug=meme-dominance-off-a-cliff mode=passthrough removed=0.00 out=25.790\nPROGRESS 50% clip 3/6\nFILLER n=4 slug=pippin-89x-held-a-year mode=passthrough removed=0.00 out=32.560\nPROGRESS 66% clip 4/6\nFILLER n=5 slug=ledger-reseller-long-con mode=passthrough removed=0.00 out=29.580\nPROGRESS 83% clip 5/6\nFILLER n=6 slug=every-job-at-risk-own-assets-impact mode=passthrough removed=0.00 out=18.670\nPROGRESS 100% clip 6/6\nLOG=C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\aliens\\filler_log.json\nSTAGE-DONE fillers\nfinish_batch | batch aliens | 6 clips | stage transcribe | filler plan: 0 clip(s) with spans (no filler-plan.json — all passthrough)\nloading whisper 'medium' on cuda for 8 clip(s)...\nFATAL: transcribe_clips.py exit 3221225477\n------------------------------------------------------------\nGRAPH FAILED\n  finish_batch.py --stage transcribe exit code 2; output tail:\nfinish_batch | batch aliens | 6 clips | stage transcribe | filler plan: 0 clip(s) with spans (no filler-plan.json — all passthrough)\nloading whisper 'medium' on cuda for 8 clip(s)...\nFATAL: transcribe_clips.py exit 3221225477\n\n"
+  },
+  {
+    "run_id": "batch-aliens@2026-10-09T18:26:18",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-aliens",
+    "started_at": "2026-10-09T18:26:18",
+    "ended_at": "2026-10-09T18:26:18",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "aliens",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "aliens",
+      "steps": {
+        "intake": {
+          "status": "failed",
+          "detail": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph",
+          "at": "2026-10-09T18:26:18"
+        }
+      },
+      "summary": null
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "finish-aliens-20261009@2026-10-09T18:26:33",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-aliens-20261009",
+    "started_at": "2026-10-09T18:26:33",
+    "ended_at": "2026-10-09T18:28:16",
+    "duration_s": 102.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "aliens",
+    "summary": {
+      "batch": "aliens",
+      "sandbox": false,
+      "clips": 6,
+      "total_s": 153.0,
+      "filler_cuts": 0,
+      "words": {
+        "every-job-at-risk-own-assets": 120,
+        "tao-no-better-ai-play": 45,
+        "meme-dominance-off-a-cliff": 80,
+        "pippin-89x-held-a-year": 128,
+        "ledger-reseller-long-con": 90,
+        "every-job-at-risk-own-assets-impact": 74
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\aliens\\dashboard.html",
+      "clip_durations": {
+        "every-job-at-risk-own-assets": 32.2,
+        "tao-no-better-ai-play": 14.22,
+        "meme-dominance-off-a-cliff": 25.79,
+        "pippin-89x-held-a-year": 32.56,
+        "ledger-reseller-long-con": 29.58,
+        "every-job-at-risk-own-assets-impact": 18.67
+      }
+    },
+    "error": "finish_batch.py --stage transcribe exit code 2; output tail:\nfinish_batch | batch aliens | 6 clips | stage transcribe | filler plan: 0 clip(s) with spans (no filler-plan.json — all passthrough)\nloading whisper 'medium' on cuda for 8 clip(s)...\nFATAL: transcribe_clips.py exit 3221225477\n"
+  },
+  {
+    "run_id": "repurpose-aliens-20261009@2026-10-09T17:10:56",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-aliens-20261009",
+    "started_at": "2026-10-09T17:10:56",
+    "ended_at": "2026-10-09T18:42:33",
+    "duration_s": 5496.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "aliens",
+    "summary": {
+      "batch": "aliens",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-10-09",
+      "images": {
+        "planned": 18,
+        "generated": 18,
+        "skipped": 0,
+        "verified": 18
+      },
+      "entries_added": 16,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 471
+        },
+        "x-threads.json": {
+          "planned": 2,
+          "queue_total": 118
+        },
+        "x-polls.json": {
+          "planned": 2,
+          "queue_total": 89
+        },
+        "yt-posts.json": {
+          "planned": 2,
+          "queue_total": 217
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 140
+        },
+        "ig-single-image.json": {
+          "planned": 2,
+          "queue_total": 156
+        }
+      },
+      "lint": "clean",
+      "registered": "aliens",
+      "partial": false,
+      "held": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-aliens-20261009@2026-10-09T21:08:58",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-aliens-20261009",
+    "started_at": "2026-10-09T21:08:58",
+    "ended_at": "2026-10-09T21:09:00",
+    "duration_s": 2.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "aliens",
+    "summary": {
+      "batch": "aliens",
+      "sandbox": false,
+      "date": "2026-10-09",
+      "clips": 6,
+      "added": 6,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\aliens-2026-10-09",
+      "queue_total": 268,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-aliens@2026-10-09T18:26:30",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-aliens",
+    "started_at": "2026-10-09T18:26:30",
+    "ended_at": "2026-10-09T21:09:01",
+    "duration_s": 9750.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "aliens",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "aliens",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-10-09T18:26:30"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-09T18:26:30"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already running pid 40128",
+          "at": "2026-10-09T18:26:31"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-10-09T18:26:31"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-10-09T18:26:31"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-10-09T17:32:25",
+          "at": "2026-10-09T18:26:31"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-10-09T18:26:31"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 5B-desilenced",
+          "at": "2026-10-09T18:26:31"
+        },
+        "gate_2nd": {
+          "status": "skipped",
+          "detail": "approved 2026-10-09T18:22:54",
+          "at": "2026-10-09T18:26:31"
+        },
+        "lane2_finish": {
+          "status": "ran",
+          "detail": "6-transcribed, render-assets staged",
+          "at": "2026-10-09T18:28:16"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "6 built here, 0 awaited; all 6 7-built PASS",
+          "at": "2026-10-09T21:08:00"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 6 clip(s) under date 2026-10-09; 6 queued total",
+          "at": "2026-10-09T21:09:01"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-09T21:09:01"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-09T21:09:01"
+        }
+      },
+      "summary": {
+        "batch": "aliens",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "published",
+        "lane2_clips": 6,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 2,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": ""
+      }
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "post-a-20261009-every-job-at-risk-own-assets-bitchute@2026-10-09T21:58:18",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-a-20261009-every-job-at-risk-own-assets-bitchute",
+    "started_at": "2026-10-09T21:58:18",
+    "ended_at": "2026-10-09T22:00:36",
+    "duration_s": 138.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "a-20261009-every-job-at-risk-own-assets:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/d68Y1MtHO1Y3/",
+      "title": "Every Goddamn Job Is at Risk, Get In Now",
+      "posted_at": "2026-10-10T02:00:35.574Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-a-20261009-tao-no-better-ai-play-bitchute@2026-10-09T23:01:47",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-a-20261009-tao-no-better-ai-play-bitchute",
+    "started_at": "2026-10-09T23:01:47",
+    "ended_at": "2026-10-09T23:03:53",
+    "duration_s": 126.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "a-20261009-tao-no-better-ai-play:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/r4lVKGtlwO5C/",
+      "title": "There Is No Better AI Play Than TAO",
+      "posted_at": "2026-10-10T03:03:51.996Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-a-20261009-meme-dominance-off-a-cliff-bitchute@2026-10-11T08:42:13",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-a-20261009-meme-dominance-off-a-cliff-bitchute",
+    "started_at": "2026-10-11T08:42:13",
+    "ended_at": "2026-10-11T08:44:48",
+    "duration_s": 155.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "a-20261009-meme-dominance-off-a-cliff:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/HYVhJSj6Mt1a/",
+      "title": "Nobody Wants Memes Anymore: It Is Us Trading Against Ourselves",
+      "posted_at": "2026-10-11T12:44:46.953Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-a-20261009-every-job-at-risk-own-assets-impact-bitchute@2026-10-13T06:35:57",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-a-20261009-every-job-at-risk-own-assets-impact-bitchute",
+    "started_at": "2026-10-13T06:35:57",
+    "ended_at": "2026-10-13T06:38:33",
+    "duration_s": 155.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "a-20261009-every-job-at-risk-own-assets-impact:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/FuSKBtSvdsUf/",
+      "title": "It Is Going to Be Illegal for Humans to Drive",
+      "posted_at": "2026-10-13T10:38:31.714Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-downtober-20261014@2026-10-14T20:34:13",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-downtober-20261014",
+    "started_at": "2026-10-14T20:34:13",
+    "ended_at": "2026-10-14T20:50:49",
+    "duration_s": 995.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "downtober",
+    "summary": {
+      "slug": "downtober",
+      "sandbox": false,
+      "master_duration_s": 3303.5,
+      "master_mbps": 0.64,
+      "longform": "skipped",
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 3303.5
+      },
+      "words": 7303,
+      "segments": 482,
+      "glossary": "Kaspa:4",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-downtober-20261014@2026-10-14T20:58:05",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-downtober-20261014",
+    "started_at": "2026-10-14T20:58:05",
+    "ended_at": "2026-10-14T20:58:39",
+    "duration_s": 33.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "downtober",
+    "summary": {
+      "batch": "downtober",
+      "sandbox": false,
+      "clips": 4,
+      "total_s": 143.0,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\downtober\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "zombies-cant-see-the-bottom": 38.151,
+        "tao-3000-is-not-the-ceiling": 30.943,
+        "long-term-plays-58x-350x": 33.663,
+        "get-in-make-money-get-out": 40.207
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-downtober@2026-10-14T20:34:11",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-downtober",
+    "started_at": "2026-10-14T20:34:11",
+    "ended_at": "2026-10-14T20:58:39",
+    "duration_s": 1468.2,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "downtober",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "downtober",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-14T20:50:49"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-14T20:50:49"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 31476",
+          "at": "2026-10-14T20:50:49"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "4 clips planned",
+          "at": "2026-10-14T20:58:03"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "4 clips cut",
+          "at": "2026-10-14T20:58:39"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-downtober-20261014@2026-10-14T21:19:47",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-downtober-20261014",
+    "started_at": "2026-10-14T21:19:47",
+    "ended_at": "2026-10-14T21:21:12",
+    "duration_s": 85.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "downtober",
+    "summary": {
+      "batch": "downtober",
+      "sandbox": false,
+      "clips": 4,
+      "total_s": 91.7,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\downtober\\dashboard.html",
+      "clip_durations": {
+        "zombies-cant-see-the-bottom": 27.2,
+        "tao-3000-is-not-the-ceiling": 19.291,
+        "long-term-plays-58x-350x": 17.801,
+        "get-in-make-money-get-out": 27.367
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-downtober@2026-10-14T22:08:53",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-downtober",
+    "started_at": "2026-10-14T22:08:53",
+    "ended_at": "2026-10-14T22:08:53",
+    "duration_s": 0.0,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "downtober",
+      "until": "",
+      "approve": [
+        "2nd"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "downtober",
+      "steps": null,
+      "summary": null
+    },
+    "error": "orchestrator crashed: InvalidUpdateError(\"At key 'shorts_min_sil': Can receive only one value per step. Use an Annotated key to handle multiple values.\\nFor troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CONCURRENT_GRAPH_UPDATE\")"
+  },
+  {
+    "run_id": "repurpose-downtober-20261014@2026-10-14T21:08:32",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-downtober-20261014",
+    "started_at": "2026-10-14T21:08:32",
+    "ended_at": "2026-10-14T22:42:15",
+    "duration_s": 5623.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "downtober",
+    "summary": {
+      "batch": "downtober",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-10-14",
+      "images": {
+        "planned": 23,
+        "generated": 23,
+        "skipped": 0,
+        "verified": 23
+      },
+      "entries_added": 20,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 8,
+          "queue_total": 479
+        },
+        "x-threads.json": {
+          "planned": 2,
+          "queue_total": 120
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 90
+        },
+        "yt-posts.json": {
+          "planned": 2,
+          "queue_total": 221
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 142
+        },
+        "ig-single-image.json": {
+          "planned": 5,
+          "queue_total": 161
+        }
+      },
+      "lint": "clean",
+      "registered": "downtober",
+      "partial": false,
+      "held": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "lane3-downtober@2026-10-14T20:50:52",
+    "lane": 8,
+    "lane_name": "lane3",
+    "thread": "lane3-downtober",
+    "started_at": "2026-10-14T20:50:52",
+    "ended_at": "2026-10-14T23:02:25",
+    "duration_s": 7893.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "downtober",
+      "resume": true
+    },
+    "summary": {
+      "batch": "downtober",
+      "steps": {
+        "draft": {
+          "status": "ran",
+          "detail": "plan validated",
+          "at": "2026-10-14T21:08:29"
+        },
+        "repurpose": {
+          "status": "ran",
+          "detail": "{\"x-tweets\": 0, \"x-threads\": 0, \"x-polls\": 0, \"yt-posts\": 0, \"yt-text-polls\": 0, \"ig-single-image\": 0}",
+          "at": "2026-10-14T22:42:16"
+        },
+        "visual_qa": {
+          "status": "ran",
+          "detail": "report written",
+          "at": "2026-10-14T23:02:25"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-downtober@2026-10-15T05:54:54",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-downtober",
+    "started_at": "2026-10-15T05:54:54",
+    "ended_at": "2026-10-15T05:54:54",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "downtober",
+      "until": "",
+      "approve": [
+        "2nd"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "downtober",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-14T20:50:49"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-14T20:50:49"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 31476",
+          "at": "2026-10-14T20:50:49"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "4 clips planned",
+          "at": "2026-10-14T20:58:03"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "4 clips cut",
+          "at": "2026-10-14T20:58:39"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-14T21:15:44"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "4 clips planned from 1 part(s)",
+          "at": "2026-10-14T21:19:44"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-14T21:21:12"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-15T05:54:54"
+        },
+        "verify_batch": {
+          "status": "failed",
+          "detail": "batch NOT complete: {\"batch\": \"downtober\", \"lane1_longform\": \"skipped\", \"lane2_shorts\": \"5B-desilenced\", \"lane2_clips\": 4, \"lane3_repurpose\": \"done\", \"lane3_queued\": {\"x-tweets\": 0, \"x-threads\": 0, \"x-polls\": 0, \"yt-posts\": 0, \"yt-text-polls\": 0, \"ig-single-image\": 0}, \"until\": \"\"}",
+          "at": "2026-10-15T05:54:54"
+        }
+      },
+      "summary": {
+        "batch": "downtober",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "5B-desilenced",
+        "lane2_clips": 4,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": ""
+      }
+    },
+    "error": "batch NOT complete: {\"batch\": \"downtober\", \"lane1_longform\": \"skipped\", \"lane2_shorts\": \"5B-desilenced\", \"lane2_clips\": 4, \"lane3_repurpose\": \"done\", \"lane3_queued\": {\"x-tweets\": 0, \"x-threads\": 0, \"x-polls\": 0, \"yt-posts\": 0, \"yt-text-polls\": 0, \"ig-single-image\": 0}, \"until\": \"\"}"
+  },
+  {
+    "run_id": "batch-downtober@2026-10-15T05:56:08",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-downtober",
+    "started_at": "2026-10-15T05:56:08",
+    "ended_at": "2026-10-15T05:56:08",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "downtober",
+      "until": "",
+      "approve": [
+        "4b",
+        "2nd"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "downtober",
+      "steps": {
+        "intake": {
+          "status": "failed",
+          "detail": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph",
+          "at": "2026-10-15T05:56:08"
+        }
+      },
+      "summary": {
+        "batch": "downtober",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "5B-desilenced",
+        "lane2_clips": 4,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": ""
+      }
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "finish-downtober-20261015@2026-10-15T05:57:06",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-downtober-20261015",
+    "started_at": "2026-10-15T05:57:06",
+    "ended_at": "2026-10-15T05:58:56",
+    "duration_s": 110.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "downtober",
+    "summary": {
+      "batch": "downtober",
+      "sandbox": false,
+      "clips": 4,
+      "total_s": 91.7,
+      "filler_cuts": 0,
+      "words": {
+        "zombies-cant-see-the-bottom": 90,
+        "tao-3000-is-not-the-ceiling": 62,
+        "long-term-plays-58x-350x": 60,
+        "get-in-make-money-get-out": 120
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\downtober\\dashboard.html",
+      "clip_durations": {
+        "zombies-cant-see-the-bottom": 27.2,
+        "tao-3000-is-not-the-ceiling": 19.29,
+        "long-term-plays-58x-350x": 17.8,
+        "get-in-make-money-get-out": 27.37
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-downtober-20261015@2026-10-15T07:54:24",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-downtober-20261015",
+    "started_at": "2026-10-15T07:54:24",
+    "ended_at": "2026-10-15T07:54:26",
+    "duration_s": 2.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "downtober",
+    "summary": {
+      "batch": "downtober",
+      "sandbox": false,
+      "date": "2026-10-15",
+      "clips": 4,
+      "added": 4,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\downtober-2026-10-15",
+      "queue_total": 272,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-downtober@2026-10-15T05:57:04",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-downtober",
+    "started_at": "2026-10-15T05:57:04",
+    "ended_at": "2026-10-15T07:54:27",
+    "duration_s": 7043.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "downtober",
+      "until": "",
+      "approve": [
+        "4b",
+        "2nd"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "downtober",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-10-15T05:57:04"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-15T05:57:04"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already done",
+          "at": "2026-10-15T05:57:04"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-10-15T05:57:04"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-10-15T05:57:04"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-10-14T21:15:44",
+          "at": "2026-10-15T05:57:04"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-10-15T05:57:04"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 5B-desilenced",
+          "at": "2026-10-15T05:57:04"
+        },
+        "gate_2nd": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-15T05:57:04"
+        },
+        "lane2_finish": {
+          "status": "ran",
+          "detail": "6-transcribed, render-assets staged",
+          "at": "2026-10-15T05:58:57"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "4 built here, 0 awaited; all 4 7-built PASS",
+          "at": "2026-10-15T07:50:37"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 4 clip(s) under date 2026-10-15; 4 queued total",
+          "at": "2026-10-15T07:54:27"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-15T07:54:27"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-15T07:54:27"
+        }
+      },
+      "summary": {
+        "batch": "downtober",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "published",
+        "lane2_clips": 4,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": ""
+      }
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "post-d-20261015-zombies-cant-see-the-bottom-bitchute@2026-10-15T09:22:18",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-d-20261015-zombies-cant-see-the-bottom-bitchute",
+    "started_at": "2026-10-15T09:22:18",
+    "ended_at": "2026-10-15T09:27:22",
+    "duration_s": 304.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "d-20261015-zombies-cant-see-the-bottom:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted_unverified",
+      "url": "https://www.bitchute.com/video/M04ZtzvMO370/",
+      "title": "The King of the Cycle Zombies Can't Explain This Bitcoin Move",
+      "posted_at": "2026-10-15T13:27:21.757Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-d-20261015-tao-3000-is-not-the-ceiling-bitchute@2026-10-15T10:32:43",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-d-20261015-tao-3000-is-not-the-ceiling-bitchute",
+    "started_at": "2026-10-15T10:32:43",
+    "ended_at": "2026-10-15T10:37:14",
+    "duration_s": 270.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "d-20261015-tao-3000-is-not-the-ceiling:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted_unverified",
+      "url": "https://www.bitchute.com/video/LZrtdzLByO8W/",
+      "title": "TAO to $3,000? That's Not the Ceiling",
+      "posted_at": "2026-10-15T14:37:13.631Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-d-20261015-long-term-plays-58x-350x-bitchute@2026-10-15T23:24:09",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-d-20261015-long-term-plays-58x-350x-bitchute",
+    "started_at": "2026-10-15T23:24:09",
+    "ended_at": "2026-10-15T23:28:41",
+    "duration_s": 271.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "d-20261015-long-term-plays-58x-350x:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted_unverified",
+      "url": "https://www.bitchute.com/video/wuX7GtgUYmmn/",
+      "title": "They Take a Long Time to Move. Then They Do a 350x.",
+      "posted_at": "2026-10-16T03:28:40.315Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-d-20261015-get-in-make-money-get-out-bitchute@2026-10-16T00:30:17",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-d-20261015-get-in-make-money-get-out-bitchute",
+    "started_at": "2026-10-16T00:30:17",
+    "ended_at": "2026-10-16T00:33:00",
+    "duration_s": 163.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "d-20261015-get-in-make-money-get-out:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/ffBYyh5mc6wy/",
+      "title": "You Took a 10x. Then Everybody Called It a Scam.",
+      "posted_at": "2026-10-16T04:32:59.752Z"
     },
     "error": null
   }

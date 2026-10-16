@@ -118,19 +118,24 @@ def collect_top(page, source_label: str, top_n: int) -> list:
             if art.locator('text=/^Replying to/').count() > 0:
                 continue
 
-            text_el = art.locator("[data-testid='tweetText']")
+            # .first on every per-tweet field: a QUOTE tweet nests a second tweetText /
+            # time / User-Name inside the article, and Playwright's strict mode makes
+            # inner_text()/get_attribute() throw on a multi-match, which the except
+            # below swallowed, so every quote tweet was silently dropped (2026-10-13).
+            # The outer tweet's elements always come first in DOM order.
+            text_el = art.locator("[data-testid='tweetText']").first
             if text_el.count() == 0:
                 continue
             text = text_el.inner_text(timeout=2000).strip()
             if not text or text in seen:
                 continue
 
-            time_el = art.locator("time")
+            time_el = art.locator("time").first
             ts = time_el.get_attribute("datetime") if time_el.count() > 0 else ""
             if not ts:
                 continue
 
-            author_el = art.locator('[data-testid="User-Name"]')
+            author_el = art.locator('[data-testid="User-Name"]').first
             author = (author_el.inner_text(timeout=2000).split("\n")[0].strip()
                       if author_el.count() > 0 else "")
 

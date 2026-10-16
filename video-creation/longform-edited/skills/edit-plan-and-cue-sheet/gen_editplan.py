@@ -9,6 +9,8 @@ it from the PRE-build artifacts the graph already verified, so every timecode is
   - AS-RECORDED.md      chapter headers (card ON/OFF, bed letter), FACE windows, Whisper mishears
   - <spine>.medium-words.json   the SAY lines (segment text, mishears corrected, times untouched)
   - COVER-PLAN.json     every cover beat -> [CONTAINER]/[DIAGRAM]/[CHART]/[RECEIPT]/[VIDEO]/[IMAGE]/[CARD]
+                        + every clip_inserts row -> [INSERT] at its splice_at (the spine pauses, the clip plays with
+                        its OWN voice; skills/clip-inserts/clip-inserts.md, 2026-10-09)
   - MUSIC-PLAN.json     beds, automation dips, hard hits -> [MUSIC]/[DUCK]/[IMPACT]/[RISER] placeholders
   - assets/diagrams/_state-cues.md + assets/charts/*.spec.md   (pointers only; the author writes the rows)
 The `edit-plan-author` agent then REFINES the seed into EDIT-PLAN.md (sub-point spotlight rows, the SFX
@@ -20,6 +22,7 @@ Machine lines: EDITPLAN-SEED events=N say=N covers=N hits=N · WROTE <file>
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -30,7 +33,7 @@ FACE_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*
 MISHEAR_RE = re.compile(r'"([^"]+)"\s*->\s*"([^"]+)"')
 LAYER_OF = {"receipt": "RECEIPT", "real-chart": "RECEIPT", "animated-chart": "CHART", "container": "CONTAINER",
             "diagram": "DIAGRAM", "timeline": "DIAGRAM", "envato-video": "VIDEO", "chatgpt-image": "IMAGE",
-            "card": "CONTAINER", "title": "CARD"}
+            "card": "CONTAINER", "title": "CARD", "clip-insert": "INSERT"}
 
 
 def fmt(t):
@@ -86,16 +89,36 @@ def main():
             txt = txt.replace(w, r)
         add(s["start"], "SAY", f'"{txt}"', order=9)
         n_say += 1
-    # FACE windows -> cut in/out, captions, punch-in, light leak
+    # FACE windows -> cut in/out, captions; the punch-in + library light leak land ON the desilencer joins inside the
+    # window (spine/jumpcuts-final.json from scripts/list_face_joins.py; Mike 2026-10-07: library leaks on the punch
+    # scenes, never the Remotion-synthetic glow; a hold with no interior join gets no punch and no leak)
+    joins_p = proj / "spine" / "jumpcuts-final.json"
+    if not joins_p.is_file():
+        subprocess.run([sys.executable, str(Path(__file__).resolve().parents[2] / "scripts" / "list_face_joins.py"), str(proj), "--scope", scope],
+                       check=False)
+    # the per-video FACE transition style (graph/common.py FACE_STYLES, `run.py --face-style`, GRAPH-PROGRESS.json settings)
+    try:
+        face_glitch = (json.loads((proj / "GRAPH-PROGRESS.json").read_text(encoding="utf-8")).get("settings") or {}).get("face_style") == "glitch"
+    except (OSError, ValueError):
+        face_glitch = False
+    punch_by_window = {}
+    if joins_p.is_file():
+        jj = json.loads(joins_p.read_text(encoding="utf-8"))
+        for w in jj.get("face_windows") or []:
+            punch_by_window[int(w["n"])] = [float(x) for x in w.get("punch_candidates_s") or []]
     for i, (fa, fz, what) in enumerate(faces, 1):
         if fa > 0.05:
             add(fa, "TRANSITION", f"cover→face cut-in F{i} →TRANSITIONS.md (face pick)")
         add(fa, "FACE", f"F{i} {'opens ON face' if fa <= 0.05 else 'IN'} → {fmt(fz)}  {what[:80]}")
-        add(fa, "CAPTION", f"ON → {fmt(fz)} (FACE window only; montserrat house style)")
-        if fz - fa > 2.0:
-            add(fa + (fz - fa) / 2, "PUNCH-IN", f"~15-20% zoom mid-hold (face > 2s) → {fmt(fz)}")
-        if fz - fa > 5.0:
-            add(fa + 2.0, "LIGHTLEAK", f"sustained-face warmth → {fmt(fz - 0.6)} (overlays.md)")
+        if fz - fa > 5.0:                 # captions.md: EVERY face hold over 5 s, never short face punctuation
+            add(fa, "CAPTION", f"ON → {fmt(fz)} (face hold over 5 s; FACE window only; montserrat house style)")
+        for pj in punch_by_window.get(i, []):
+            add(pj, "PUNCH-IN", f"F{i} hard ~15-20% step ON the desilencer join (jumpcuts-final.json) → holds to the next join or {fmt(fz)}")
+            if face_glitch:
+                add(pj, "GLITCH", f"F{i} random glitch offset / glitch blocks hit ACROSS the same join (lib:glitchoffset-* / lib:blocks-*; "
+                                  f"face style glitch, Mike 2026-10-16) →TRANSITIONS.md (punch-glitch)")
+            else:
+                add(pj, "LIGHTLEAK", f"F{i} library light leak ON the same join (lib:lightleaks-*, the video's set of 3-4; overlays.md) →TRANSITIONS.md (punch-leak)")
         add(fz, "TRANSITION", f"face→cover F{i} out →TRANSITIONS.md")
     # chapter cards + bed changes
     for cid, title, ta, tz, tail in chapters:
@@ -103,12 +126,23 @@ def main():
         if card:
             add(ta, "CARD", f"{cid} title card \"{card.group(1)}\" (edit-time pause >= 1 s, zero spine time) · "
                             f"[TRANSITION] card presentation →TRANSITIONS.md · [IMPACT] card impact (pick by MEASURED tail)")
+    # clip inserts (COVER-PLAN clip_inserts): the spine PAUSES at splice_at and the clip plays with its OWN voice
+    n_ins = 0
+    for ci in cover.get("clip_inserts") or []:
+        t, sec = float(ci.get("splice_at") or 0), float(ci.get("seconds") or 0)
+        add(t, "INSERT", f"{ci.get('id')} SPLICED CLIP, {sec:.1f} s: the spine PAUSES after \"{ci.get('after_words', '')}\" "
+                         f"(bake_clip_insert.py snaps the point into the silence trough) and assets/clip-inserts/{ci.get('id')}-*.mp4 plays "
+                         f"FULL-FRAME with {ci.get('who') or 'the speaker'}'s OWN voice (baked into the VO track); the bed ducks automatically; "
+                         f"[TRANSITION] insert-in / insert-out →TRANSITIONS.md (bucket insert) · lead-in: the clip's FIRST frame held as a still "
+                         f"under the set-up line before this point; lead-out: its LAST frame under the resume line (comp-build §3d; author both rows)",
+            order=1)
+        n_ins += 1
     # cover beats
     n_cov = 0
     for b in sorted(cover.get("cover_beats") or [], key=lambda b: float(b["tIn"])):
         ct = str(b.get("cover_type", "")).lower()
-        if ct == "title":
-            continue  # the card row above covers it
+        if ct in ("title", "clip-insert"):
+            continue  # the card row above / the [INSERT] row covers it
         tag = LAYER_OF.get(ct, ct.upper())
         dur = float(b["tOut"]) - float(b["tIn"])
         what = str(b.get("what", ""))[:150]
@@ -168,7 +202,7 @@ def main():
     dest = Path(a.out) if a.out else proj / "_previews" / "EDIT-PLAN.seed.md"
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text("\n".join(out).replace("—", ", "), encoding="utf-8", newline="\n")
-    print(f"EDITPLAN-SEED events={len(ev)} say={n_say} covers={n_cov} hits={n_hits}")
+    print(f"EDITPLAN-SEED events={len(ev)} say={n_say} covers={n_cov} hits={n_hits} inserts={n_ins}")
     print(f"WROTE {dest}")
     print("PROGRESS 100%")
 

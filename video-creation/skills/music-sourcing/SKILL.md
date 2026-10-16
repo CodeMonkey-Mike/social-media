@@ -31,12 +31,24 @@ the platforms' in-app music, whose license is app-only and gets claimed on cross
 
 ## 1. Auth (same pattern as schedule-tweets posters)
 Real Chrome + a dedicated persistent profile:
-`C:\Users\mnede\AppData\Local\Google\Chrome\soundstripe-profile`. Log in **once** (Google OAuth);
-the session persists across runs, exactly like `xbot-profile` etc. `launchPersistentContext(..., {
-channel:'chrome' })`. No login step in the scripts.
+`C:\Users\mnede\AppData\Local\Google\Chrome\soundstripe-profile`. `launchPersistentContext(..., {
+channel:'chrome' })`.
+**Since 2026-10-14 the login cookie (`_soundstripe_session`) is SESSION-ONLY**, so Chrome drops it every
+time the automated browser closes and the next run is logged out (that is how the 7-track elevator
+batch failed first). Fix in the script: **`node scripts/soundstripe.js login [--wait 10]`** opens the
+profile, waits for Mike to sign in, and saves the cookies to `_recon/session-cookies.json`; every
+`download` / `download-alt` run re-injects + re-saves them. A logged-out run now fails fast with
+`NOT SIGNED IN` (the page flag `data-download-handoff-signed-in-value`), never a selector timeout.
+If you see it: run `login`, have Mike sign in, retry. Never open the profile in a hand-launched
+Chrome while a script runs (profile lock = "Opening in existing browser session").
+**Song-page markup (2026-10):** the download controls are `<a data-controller="download-handoff">`
+anchors keyed by `data-download-handoff-media-id-value="<objectID>"` (row control
+`data-song-detail-row-action="download"`); the old `button[data-testid="song-license-btn"]` is gone.
+`downloadControl()` in the script owns the selector.
 
 ## 2. Commands
 ```
+node scripts/soundstripe.js login [--wait 10]              # once per lost session (see §1)
 node scripts/soundstripe.js search "<query>" [--limit 24] [--all-partners]
 node scripts/soundstripe.js download <objectID> [--query "<title>"] [--dest <dir>]
 node scripts/soundstripe.js download-alt <objectID> [--query "<title>"] [--dest <dir>] [--stems]
@@ -92,6 +104,14 @@ node scripts/_register-playlist.js <playlistId> [--skip a,b] # 3. register all i
 - **register** — upserts one full catalog entry per track (artist/bpm/energy/mood/genre/key from the
   stored Algolia meta, `yt_license_code`, `folder`, `primary_file`, `sections[]`), keyed by `soundstripe_id`.
 - Precedent run: private playlist **430508** → 39 songs, 2 already present (9141, 11370) → **37 added**.
+
+## 2d. Pick categories: `tags[]` (added 2026-10-14)
+Catalog entries can carry a human-set `tags[]` + `use_case`. First tag: **`elevator`** = lounge / jazz /
+muzak elevator beds Mike wants on **programming / coding longform-presentation videos** (8 tracks: the
+Envato `Elevator Music Gold-Tiger` + Soundstripe Lounge Lover, Yellow Letter, Duff And A Shot, Sidestep,
+Tiki Time, Seaside Samba, Sophistikitty). Those entries also pin `roles_pinned: [elevator_bed,
+explainer_bed]` because the measured `roles[]` call them hype (loud + steady). **For a programming video,
+filter `tags` for `elevator` first**, then apply the usage-ledger variety rule within that pool.
 
 ## 2c. Waveform analysis — the catalog is the picker's eyes (added 2026-07-17)
 > **Pick for VARIETY too (2026-10-01):** before choosing, read the usage ledger

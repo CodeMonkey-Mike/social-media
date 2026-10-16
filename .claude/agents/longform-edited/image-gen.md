@@ -35,7 +35,10 @@ generated, verified b-roll stills.
 - Chat-pool hygiene per the skill: pooled chats die past ~25-30 images; the pipeline rotates and
   cleans up — do not fight it, do not delete chats yourself (registry-only deletion rule).
 - **Every image is unique** — never reuse an image/file across slots or videos.
-- No text in the image unless the plan explicitly asks; house style verbatim from persona.json.
+- CHAPTER THEMES (Mike, 2026-10-10): when COVER-PLAN.json carries `chapter_themes` (printed at the top of the BROLL-PLAN, and the
+  images table has a "Chapter style" column), every image uses ITS chapter's `image_style` (read the chapter off the row's beat,
+  CHn@...): 'house' = the persona look, anything else replaces it for that chapter only. The viewer must see the chapter change.
+- No text in the image unless the plan explicitly asks; house style verbatim from persona.json, UNLESS the video's COVER-PLAN.json carries an `image_style` (Mike's per-video ruling, printed at the top of the BROLL-PLAN ChatGPT table): then THAT style governs every row (first case: every-job, 2026-10-07, serious photoreal robots, not Pixar).
 - **⛔ If the beat names a REAL token / project / company / person, GENERATE FROM ITS REFERENCE IMAGE.**
   Check the row's `Reference` column, then `schedule-tweets/images/reference/`; pass it to the pipeline
   as the reference (never grab the uploaded reference back as the output — known failure mode). A row

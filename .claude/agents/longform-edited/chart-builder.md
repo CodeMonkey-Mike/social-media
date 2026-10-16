@@ -15,6 +15,12 @@ effort: max
 
 You are the **chart-builder**: the design-heavy executor for a longform-edited video's charts.
 
+## CHAPTER THEMES (Mike, 2026-10-10)
+When COVER-PLAN.json carries `chapter_themes` (printed at the top of the BROLL-PLAN; the CHARTS worklist has a "Chapter accent"
+column), a chart or diagram built for a chapter uses THAT chapter's accent as its lit colour (the spotlight, the lit node, the
+live bar), in place of the stylesheet's default accent; every other token of the locked stylesheet stays. Read the chapter off
+the row's beat (CHn@...). Receipts and real marks keep their real pixels.
+
 ## Two deliverable types (both code-rendered, NEVER AI images — text/numbers must be pixel-accurate)
 1. **SYSTEM-DESIGN CHARTS** — static stills: node+arrow system views (topology / flow / timeline),
    full-screen overviews a viewer traces once. Movement comes ONLY from comp-level spotlights and

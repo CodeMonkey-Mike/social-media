@@ -56,6 +56,10 @@ sections (Mike, 2026-07-24: these assets were invisible when they lived only as 
 - The **RECEIPTS capture worklist** (when the plan has receipts) types every row **R(article) or R(other)**
   per `../broll-and-containers/broll-and-containers.md` "Cover STYLE devices" §1 — article receipts carry the mandatory
   reading/motion treatment (push-in / single-image camera-move), other receipts are treatment-per-capture.
+- The **CLIP INSERTS capture worklist** (rendered on EVERY video: the plan's `clip_inserts[]` rows, or one
+  "(none this video)" row carrying the reason) — a third-party clip spliced in WITH ITS OWN VOICE at a spine pause,
+  audio kept, context caption burned, words Whisper-verified (`../clip-inserts/clip-inserts.md`, Mike 2026-10-09). Not a
+  receipt: a receipt is muted under narration, an insert pauses it.
 
 ### ⛔ The IMAGES worklist carries a REFERENCE column (Mike, 2026-07-25 — root-caused, not a reminder)
 **Every image row whose beat names a REAL, identifiable thing — a token, a project, a company, a person,
@@ -102,7 +106,9 @@ Format (one event per line, time-sorted):
 ...
 ```
 - **Layers:** `SAY` · `IMAGE` · `VIDEO` · `CONTAINER` · `DIAGRAM` · `CHART` · `RECEIPT` · `LOGO` ·
-  `TRANSITION` · `LIGHTLEAK` · `FILMBURN`/`GLITCH` · `RISER` · `IMPACT` · `CTA` · `CAPTION` · `CUT`.
+  `TRANSITION` · `LIGHTLEAK` · `FILMBURN`/`GLITCH` · `RISER` · `IMPACT` · `CTA` · `CAPTION` · `CUT` ·
+  `INSERT` (a spliced third-party clip with its OWN voice: the spine PAUSES at the row's time for the clip's length;
+  one row per COVER-PLAN `clip_inserts` entry, bracketed by a lead-in and a lead-out still row; `../clip-inserts/clip-inserts.md`).
 - **Zero orphans:** every IMAGE/VIDEO/IMPACT/RISER asset appears here PLACED (with timecode) or marked
   `REJECTED`/`BENCH`. A file in `render-assets/` that's in neither is a bug.
 - Header line names the watch file + what the log was authored from (the graph's seed + the plan set).
@@ -158,7 +164,7 @@ CONTAINER / CHART scene changes = cross-fade + 0.93→1 scale-in (see CONTAINER 
 - 0:07.2  C-RANK chart — <what it shows> `[VERIFY nums]`
 
 ## RECEIPTS / inserts begin
-- 0:00.0  R-WP <what> ;  ~3:56 ⏸ R-TALK clip INSERT (audio up, bed ducks) + LT-x lower-third
+- 0:00.0  R-WP <what> ;  ~3:56 ⏸ [INSERT] CLIP-1 (10.0 s, the speaker's OWN voice, spine paused, bed ducks, insert-in / insert-out) + LT-x lower-third
 
 ## VIDEO b-roll begins  (Envato + AI clips)   <N>
 - 0:11.0  BR-x (<beat>) — Envato fade

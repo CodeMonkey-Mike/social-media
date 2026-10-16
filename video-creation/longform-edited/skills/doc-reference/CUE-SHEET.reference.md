@@ -98,6 +98,7 @@ MARQUEE (§4 reserved, 2 MELT + 2 SPIN):
 - 6:16.5  R6 R(article) Alpenglow announcement `[VERIFY, doubles as the public-source check]`, push-in on the finality claim
 - 6:45.0  R4 R(other) repo-activity slow-scroll recording `[VERIFY no testnet-ready claims visible]`
 - 7:16.3  R5 R(other) CMC supply panel `[VERIFY ~95% live]`
+- (a CLIP INSERT, when the video has one, lists here too: `10:16.1  ⏸ [INSERT] CLIP-1 (10.0 s, the speaker's OWN voice, spine paused, bed ducks, insert-in / insert-out)`; every-job 2026-10-08. None in this video.)
 - 4:51.4  R7 R(other) cryptorich.vip/products, OVERLAY on F5 → 5:05.1 end of plug, kept alive with
   single-image MOTION moves (slow zoom + 3D pan mix; Mike 2026-07-24)
 - 3:47.8  LT-LINK 'LINK IN THE DESCRIPTION' lower-third (under the F5 plug)

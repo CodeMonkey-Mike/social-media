@@ -9,6 +9,9 @@ that is what clips words. See defumbler.md.
 Usage:
     python remove_spans.py "media/<file>.mp4" --out "media/<out>.mp4" \
         --cut 106.70-108.02 --cut 167.94-174.62 ...
+    ... --crf 18        libx264 crf 18 instead of the default NVENC 2 Mbps proxy encode (deliverable
+                       quality for on-screen text; longform-presentation uses this because the defumbled
+                       file is the master its spotlight render takes the head/tail footage from)
 """
 import argparse, os, subprocess, sys
 
@@ -31,7 +34,11 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--cut", action="append", default=[], help="span to REMOVE, 'start-end' in seconds")
     ap.add_argument("--cuts-file", help="text file with one 'start-end' span per line (for large cut lists)")
-    ap.add_argument("--bps", default="2M")
+    ap.add_argument("--bps", default="2M", help="NVENC target bitrate (default encode: h264_nvenc, capped 2.5M)")
+    ap.add_argument("--crf", type=int, default=None,
+                    help="encode with libx264 at this crf instead of NVENC (deliverable quality, e.g. 18 for "
+                         "on-screen text; the longform-presentation track's choice when the cut file IS the "
+                         "master for the head/tail of a spotlight render)")
     args = ap.parse_args()
 
     if not os.path.isfile(args.src):
@@ -75,12 +82,16 @@ def main():
     with open(fc_path, "w", encoding="utf-8") as f:
         f.write("\n".join(parts))
 
+    if args.crf is not None:
+        venc = ["-c:v", "libx264", "-crf", str(args.crf), "-preset", "medium", "-pix_fmt", "yuv420p"]
+    else:
+        venc = ["-c:v", "h264_nvenc", "-rc", "vbr", "-b:v", args.bps,
+                "-maxrate", "2.5M", "-bufsize", "4M", "-preset", "p5"]
+    print("encode:", " ".join(venc))
     r = subprocess.run(["ffmpeg", "-y", "-i", args.src,
                         "-filter_complex_script", fc_path,
-                        "-map", "[outv]", "-map", "[outa]",
-                        "-c:v", "h264_nvenc", "-rc", "vbr", "-b:v", args.bps,
-                        "-maxrate", "2.5M", "-bufsize", "4M", "-preset", "p5",
-                        "-c:a", "aac", "-b:a", "128k", args.out], capture_output=True, text=True)
+                        "-map", "[outv]", "-map", "[outa]"] + venc +
+                       ["-c:a", "aac", "-b:a", "128k", args.out], capture_output=True, text=True)
     try: os.remove(fc_path)
     except OSError: pass
     if r.returncode != 0:

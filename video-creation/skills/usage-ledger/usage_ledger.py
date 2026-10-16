@@ -26,7 +26,8 @@ POOLS (music, one rotation each): intro_hype (the track that opens the video) ·
 explainer beds) · hype_body (aggressive mid-video beds) · epic_close (the track on the final chapter).
 A track the previous video used in ANY pool is blocked for the next video.
 
-SLOTS (transitions): ROTATING, gated: card (the one title-card move) · marquee_melt · marquee_spin (the
+SLOTS (transitions): ROTATING, gated: card (the one title-card move) · marquee_melt · marquee_spin · face_leak (the
+          3-4 LIGHT LEAKS ids a video cycles on its face punch-ins, rotated PER ID; Mike 2026-10-07) (the
 look, i.e. library category/variant). ADVISORY, reported only: face_cut (film burn vs the Blocks glitch is
 a per-video pick) · ai_still. CONSTANT house style, never rotated: punch_in · broll (dissolve) ·
 container (cross-fade + scale-in) · image_broll (cross-warp).
@@ -54,7 +55,7 @@ MEDIA = REPO / "video-creation" / "longform-edited" / "media"
 
 POOLS = ("intro_hype", "subtle_bed", "hype_body", "epic_close")
 POOL_ROLE = {"intro_hype": "intro_hype", "subtle_bed": "explainer_bed", "hype_body": "hype_peak", "epic_close": "epic_outro"}
-ROTATING = ("card", "marquee_melt", "marquee_spin")
+ROTATING = ("card", "marquee_melt", "marquee_spin", "face_leak")   # face_leak rotates PER LEAK ID (a set of 3-4 per video)
 ADVISORY = ("face_cut", "ai_still")
 CONSTANT = ("punch_in", "broll", "container", "image_broll")
 CARD_NAMES = {"cube", "flip", "slide", "book-flip", "swap", "fade"}
@@ -106,11 +107,13 @@ def tkey(tid, lib):
 
 def slot_of(tid, key, bucket="", role=""):
     b, r = bucket.lower(), role.lower()
+    if r == "punch-leak" or key.startswith("LIGHT LEAKS/"):
+        return "face_leak"                      # the library light leak on a face punch-in (overlays.md 1, 2026-10-07)
     if b == "card" or r == "card":
         return "card"
     if r == "face-cut":
         return "face_cut"
-    if r == "punch-in":
+    if r in ("punch-in", "punch-glitch"):         # punch-glitch = face style glitch (Mike 2026-10-16): house style, not rotated
         return "punch_in"
     if r == "glitch-still" or b == "ai-still":
         return "ai_still"
@@ -196,7 +199,8 @@ def transitions_of(proj: Path, lib):
             if not re.match(r"^(rmn|lib|hand):", tid):
                 continue
             key = tkey(tid, lib)
-            counts[(slot_of(tid, key, str(r.get("bucket", "")), str(r.get("role", ""))), tid, key)] += 1
+            slot = slot_of(tid, key, str(r.get("bucket", "")), str(r.get("role", "")))
+            counts[(slot, tid, tid if slot == "face_leak" else key)] += 1
     else:
         md = proj / "TRANSITIONS.md"
         if not md.is_file():
@@ -205,7 +209,8 @@ def transitions_of(proj: Path, lib):
         for m in re.finditer(r"(?<![A-Za-z0-9-])((?:lib|rmn|hand):[a-z0-9]+(?:-[a-z0-9]+)*)", md.read_text(encoding="utf-8")):
             tid = m.group(1)
             key = tkey(tid, lib)
-            counts[(slot_of(tid, key), tid, key)] += 1
+            slot = slot_of(tid, key)
+            counts[(slot, tid, tid if slot == "face_leak" else key)] += 1
     rows = [{"slot": s, "id": i, "key": k, "count": n} for (s, i, k), n in sorted(counts.items())]
     return rows, waivers, source
 
@@ -399,6 +404,8 @@ def _trans_report(vids, lib):
             options = sorted(k for k in fams if k.startswith(slot.split("_")[1].upper() + "/"))
         elif slot == "face_cut":
             options = ["film-burn", "GLITCH/Blocks"]
+        elif slot == "face_leak":
+            options = sorted(f"lib:{i}" for i, r in lib.items() if r.get("category") == "LIGHT LEAKS")   # per id
         else:
             options = sorted(k for k in fams if k.startswith("GLITCH/"))
         rows = []

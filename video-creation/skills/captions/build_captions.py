@@ -152,6 +152,12 @@ CORRECTIONS = [
 # tokens and keeps the whole span (first .t -> last .end); an N-word replacement rewrites in place.
 # A replacement longer than the match is not supported (there are no timings to invent).
 PHRASE_CORRECTIONS = [
+    # --- every-job, 2026-10-08 (Mike, draft v1 review): the CTA domain is ONE token, never spelled out. Whisper hears
+    # "crypto rich VIP" / "crypto rich dot vip" (1116.77 s); the captions must read cryptorich.vip (merged, times kept).
+    (("crypto", "rich", "dot", "vip"), ["cryptorich.vip"]),
+    (("crypto", "rich", "vip"), ["cryptorich.vip"]),
+    (("cryptorich", "vip"), ["cryptorich.vip"]),
+    (("cryptorich", "dot", "vip"), ["cryptorich.vip"]),
     # --- pieverse batch, 2026-09-22 (clip 2 four-year-cycle-zombies-returned-early) ---
     # "a supply shortage created by the HALVING" / "the HALVING couldn't cause the cycle." The clip's
     # own pass writes the noun as "haven" (87.88, 93.12 s); medium.en AND large-v3 re-decoding the same
@@ -3564,6 +3570,11 @@ FILLER = {"uh", "um", "uhh", "umm", "mm", "hmm", "m"}
 # everything else still collapses exactly as before, so no past output can change. Key the run tightly
 # (include the words AROUND the doubling) so an unrelated stutter is never spared.
 PROTECTED_DOUBLES = [
+    # bull-trap/golden-kitty-10-million-while-everything-bleeds (clip 2), 2026-10-03. "I REALLY, REALLY
+    # want to see some October pumps." An intensifier doubling, not a stutter: medium.en renders
+    # "I really really want" on the 16-24 AND 20-28 windows, two full tokens (23.36 / 23.66). Keyed with
+    # the words on both sides so a genuine "really really" stutter elsewhere still collapses.
+    ("i", "really", "really", "want"),
     # uptober/golden-kitty-50-million (clip 5), 2026-10-01. "That is gonna be like a BIG, BIG pump." The
     # clip's peak beat (clip-plan peak_beats): an intensifier doubling, not a stutter. medium.en renders
     # "a big, big pump" on the 11-18.5 AND 14.5-21.5 windows; two full tokens (17.00-17.20 / 17.20-17.42).
@@ -3809,6 +3820,14 @@ PROTECTED_DOUBLES = [
     # SOON") so a genuine "very very" stutter elsewhere still collapses, and so the EARLIER single
     # "very soon" at 12.02-12.60 s cannot match.
     ("be", "very", "very", "soon"),
+    # downtober/tao-3000-is-not-the-ceiling clip 2, 2026-10-15. THE CLOSING LINE: "one hell of a
+    # fantastic economic expansion. VERY, VERY soon." An intensifier doubling, not a stutter:
+    # MEASURED on this spine at 5 ms RMS the limbs are separate stressed utterances (18.45-18.79
+    # and 18.865-19.03 s, with a real articulatory trough at 18.80-18.86 dipping to -30 dB), and
+    # medium.en's whole-file pass (plain AND TAO-prompted) reads "Very, very soon." Without this the
+    # ADJACENT collapse ships "very, soon." on the clip's last caption. Keyed with the words on both
+    # sides ("EXPANSION very very SOON") so a genuine "very very" stutter elsewhere still collapses.
+    ("expansion", "very", "very", "soon"),
     # everything-will-pump/october-zombies-wealth-transfer clip 1, 2026-08-27. THE HOOK: "there are
     # going to be some MAJOR, MAJOR PUMPS in October" - the doubling is the whole scale claim and it
     # is the first thing the viewer hears. Two full utterances, MEASURED on this spine (25 ms RMS /

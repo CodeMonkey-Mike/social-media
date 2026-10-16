@@ -1149,3 +1149,33 @@ Overnight (03:24-06:02 UTC) `post-yt-short-api.js` refused all 3 `kaspa-2026-09-
 Last night's run had two longforms queued (kaspa, layer1s). Rumble + BitChute ran once per entry and both landed. Facebook ran once for kaspa only: the first two attempts were plain foreground commands that hit the 600 s tool timeout and were killed in the background (documented reaper), the third was a detached console that succeeded ~30 min later. Because Rumble/BitChute had already posted layer1s by then, the session counted the single detached success as "the Facebook longform step" and moved on; layer1s stayed a clean `pending` on Facebook even though the run's own closing pending count listed it. Posted by hand the next morning (`reel/1517233373497543`).
 
 Rules: (1) longform Facebook ALWAYS launches detached with a log file (never a foreground tool call: it needs 15-30 min, the tool ceiling is 10). (2) The pending count at the end of a run is reconciled PER QUEUE ENTRY, per platform, and every remaining `pending` is either posted or named in the summary as left behind. A poster that had to be relaunched has completed exactly the ONE entry it printed, nothing more.
+
+## Operational notes — 2026-10-13 session (35-step run, 14 active)
+
+### A pending Chrome UPDATE kills the FIRST launch of the run — looks like an orphan collision, is not
+The first poster of the run (`post-rumble-short.js`) died at `launchPersistentContext: Target page, context or
+browser has been closed` within ~1 s of `Launching Chrome...`, with **zero** chrome.exe processes running before
+(so not the orphaned-profile collision). Cause: Chrome had downloaded an update (154 -> 155) while closed, and the
+first `chrome.exe` launch performs the version swap and exits with code 0, which Playwright reads as the browser
+dying. **Tell:** `C:\Program Files\Google\Chrome\Application` holds TWO version folders before the launch, and the
+old one (plus `SetupMetrics` mtime) changes at the exact second of the failed launch; `(Get-Item chrome.exe).VersionInfo.ProductVersion`
+then reports the new version. The failure is strictly pre-page (nothing typed, nothing uploaded), so: reset the
+row `posting` -> `pending` (Node) and run once more. It posted first try and every later launch was normal.
+Cheap pre-flight for any run: if the Application folder lists two version directories, expect this on launch #1.
+
+### Rumble JS twin still writes the NEIGHBOUR's id (the 2026-08-13 guard lives only in the port)
+`post-rumble-short.js` captured `rumble.com/shorts/v7gr2b6` for "It Is Going to Be Illegal for Humans to Drive";
+liveness showed the PREVIOUS short's title 5/5, and `grep -c v7gr2b6 data/shorts.json` = 2 (the ledger-reseller
+row already owned it, confirmed by the public `<title>`). The "never record a URL that failed title verification"
+rule is enforced in `post_rumble_short.py`, NOT in the frozen JS twin the run still invokes (port is bless-pending).
+Handled per the rule: set `url: null` + `url_note` on the row right away, then the standing end-of-run
+`reconcile_short_urls.py --platform both` dry run proposed exactly one fix (`v7gsj50`, no collision); curl `<title>`
+matched, `--apply` wrote it and flipped the row to `posted`. **After every JS Rumble short: run the grep-count guard
+(1 = fine, 2+ = neighbour id, null it).**
+
+### Smaller notes
+- **Every Chrome-driven poster ran FOREGROUND with `timeout: 600000` and a redirect to a scratchpad log** (`> "$L" 2>&1; echo "exit=$?"; tail "$L"`). Zero reaper kills in 14 steps. Only TikTok pass 1 passed 600 s and was auto-backgrounded (safe); a `Monitor` with `until grep -q "exit=" <task output>` gave the completion signal, and the scratchpad log held the full trace.
+- `run.py post --platform bitchute --kind short` printed `longs.json write-back verified from disk` for a SHORT. Cosmetic: `verify_post` really reads `shorts.json`; only the report line in `run.py report_post` is hard-coded to longs.
+- FB short via `post_fb_short.py`: baseline diff caught the new reel on the 2nd poll (11 s), id unique across both queues; no manual set-difference needed.
+- YT Quiz `post_yt_quiz.py`: the per-option correct-state readout (`option 3: correct=True ... aria-pressed=true`) confirmed the mark; the old `aria-pressed=null` escalation is closed.
+- x-reply-auto scanner silently dropped every QUOTE tweet (fixed this run). Details in `x-reply-guy/x-reply-auto.md`.

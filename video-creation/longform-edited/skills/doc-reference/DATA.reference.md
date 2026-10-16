@@ -76,6 +76,17 @@ Pulled <YYYY-MM-DD HH:MM UTC> from <API/page URL>. All [VERIFY] at render.
 
 ---
 
+## 6. Clip candidates
+
+Every real VIDEO CLIP of someone saying a thing this video could splice in with their own voice (`skills/clip-inserts/clip-inserts.md`; considered on every video, Mike 2026-10-09). Open the video, quote the words VERBATIM from the audio (never from a write-up), give the exact window, and check the full context (what is said just before and after; whether the circulating cut misrepresents it). None found is a valid result: say what was searched.
+
+| ID | Who / what is said (verbatim, opened) | Source URL + window | Length | Context check | Supports |
+|---|---|---|---|---|---|
+| CLIP-1 | <name, role>: "<the exact words heard>" | <video URL> <M:SS.s-M:SS.s> | <n> s | <in context / the full remark says X; do-not-air risk if cut short> | <thesis claim T1 / pillar 2> |
+| (none) | searched: <channels, interviews, keynotes, hearings, dates> | | | | |
+
+---
+
 ## CHART-SOURCE INDEX
 
 | ID | Chart / graphic | Seen in / source | Build mode |

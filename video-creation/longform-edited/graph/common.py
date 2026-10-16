@@ -74,11 +74,16 @@ DOCS = {
     "music_plan": "MUSIC-PLAN.json",
 }
 # comp-build.md §10 — the merged assets/ layout
-ASSET_DIRS = ("img", "vid", "title-slides", "card-slides", "receipts", "charts", "diagrams",
+ASSET_DIRS = ("img", "vid", "title-slides", "card-slides", "receipts", "clip-inserts", "charts", "diagrams",
               "slide-sources", "transitions")
 
 PROGRESS_RE = re.compile(r"^PROGRESS (\d+)%")
-FABLE_LIMIT_RE = re.compile(r"reached your Fable limit", re.I)
+# The CLI's message when the weekly Fable allowance is out (seen live 2026-09-14, batch perpspad):
+#   "You've reached your Fable limit. Switch to another model, or manage usage credits at claude.ai/settings/usage..."
+# Matched loosely ("Fable" and "limit" on one line, either order) so a CLI rewording ("weekly limit for Fable",
+# "Fable usage limit reached") still triggers the ONE Opus respawn; only checked when the agent exited non-zero.
+# Keep this pattern IDENTICAL in every headless spawner (longform common.py, batch_graph.py, find_jobs.py).
+FABLE_LIMIT_RE = re.compile(r"\bFable\b[^\n]{0,40}\blimit\b|\blimit\b[^\n]{0,40}\bFable\b", re.I)
 FABLE_FALLBACK_MODEL = "opus"
 
 CURRENT_PROJECT = None
@@ -188,6 +193,31 @@ def mark_gate(proj: Path, gate: str, note: str = ""):
     p = prog(proj)
     p.setdefault("gates", {})[gate] = {"approved_at": _now_iso(), "note": note}
     prog_write(proj, p)
+
+
+def setting(proj: Path, key: str, default=None):
+    """A per-video graph setting persisted in GRAPH-PROGRESS.json `settings` (survives fresh threads)."""
+    return (prog(proj).get("settings") or {}).get(key, default)
+
+
+def set_setting(proj: Path, key: str, value):
+    p = prog(proj)
+    p.setdefault("settings", {})[key] = value
+    prog_write(proj, p)
+
+
+# FACE transition style (per video, `run.py --face-style`):
+#   leak   = the house default: the per-video face pick on every FACE cut in/out + a LIBRARY light leak on every
+#            face punch-in (overlays.md section 1, Mike 2026-10-07).
+#   glitch = Mike 2026-10-16 (tao-detailed): every cover->face CUT-IN is a random SPLIT Swinging Offset
+#            (lib:split-swinging-offset-*), every face punch-in plays a random GLITCH Offset / GLITCH Blocks
+#            (lib:glitchoffset-* / lib:blocks-*) across the join instead of a light leak; the cut-out keeps the face pick.
+FACE_STYLES = ("leak", "glitch")
+
+
+def face_style(proj: Path) -> str:
+    v = setting(proj, "face_style", "leak")
+    return v if v in FACE_STYLES else "leak"
 
 
 def manual_done(proj: Path, node: str) -> bool:

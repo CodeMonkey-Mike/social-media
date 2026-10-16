@@ -1,6 +1,6 @@
 {
  "$doc": "Reusable music-library catalog. Tracks listed here are PERMANENT and reused across many videos (Mike's go-to ~20-30 beds). Project-only/trial downloads live in that project's media folder, NOT here; promote a track here only once it's a reusable keeper. Sourcing tool: video-creation/skills/music-sourcing/ (renamed from music/ on 2026-06-13). LICENSING IS SOURCE-SPECIFIC: Soundstripe tracks carry a yt_license_code (16-char, bare code) that MUST be pasted into the YOUTUBE description ONLY (Soundstripe clearance is YouTube Content-ID; NOT needed on FB/IG) or the YT upload gets claimed; Envato Elements tracks have no per-video code, they use the Elements license certificate tied to the item/register. metadata_complete=false means the Soundstripe genre/mood/bpm fields still need backfilling via the sourcing tool (by soundstripe_id).",
- "$schema_note": "energy_measured is ffmpeg volumedetect mean/max dBFS (rough loudness proxy: higher mean = louder/fuller = more 'exciting'). Real Soundstripe 'energy'/'mood'/'genre' come from the API when enriched.",
+ "$schema_note": "energy_measured is ffmpeg volumedetect mean/max dBFS (rough loudness proxy: higher mean = louder/fuller = more 'exciting'). Real Soundstripe 'energy'/'mood'/'genre' come from the API when enriched. tags[] = human-set pick categories (e.g. \"elevator\" = elevator/lounge muzak beds Mike wants on programming / coding longform-presentation videos, added 2026-10-14); filter the catalog on tags before picking for such a video. use_case = the free-text intent behind the tag.",
  "$analysis_note": "analysis blocks are MACHINE-WRITTEN by skills/music-sourcing/scripts/analyze-music.py; never hand-edit them, re-run the script. env = RMS per 2s window quantized 0-9 on an absolute dBFS scale (digit d covers -36+3d to -33+3d; 0 = under -36, 9 = over -9), so digits are comparable across files and char_index*2 = seconds into the file. mean_db/max_db use ffmpeg volumedetect semantics (mean power across all channels, no downmix). aggression 0-100 = 35% loudness (mean_db -30..-8) + 65% transient density (onsets/sec 0..3, measured on the high-pass-differenced signal): punchy drums score high, loud smooth pads low. segments merge env into runs (level low 0-3 / mid 4-6 / high 7-9; kind intro|build|peak|bed|breakdown|outro). opening: cold_hot|build|ambient|steady. ending: epic_hit|hard_stop|fade|resolve. roles[] is derived by rule from the analysis (v1 measured-only: intro_hype, hype_peak, explainer_bed, epic_outro; reserved for later, mood-aware: tension). Manual role overrides go in roles_pinned[] which the script never touches. sections[] objects: mix = instrumental|bg_vocals, role = intro|verse|chorus|bridge|full|null (parsed from the Soundstripe filename; full = matches master duration).",
  "tracks": [
   {
@@ -51,7 +51,7 @@
      "len_sec": 18,
      "analysis": {
       "duration_sec": 18,
-      "mean_db": -14.0,
+      "mean_db": -14,
       "max_db": -1.6,
       "aggression": 72,
       "env": "777777777",
@@ -77,7 +77,7 @@
      "len_sec": 18,
      "analysis": {
       "duration_sec": 18,
-      "mean_db": -14.0,
+      "mean_db": -14,
       "max_db": -1.5,
       "aggression": 90,
       "env": "777777777",
@@ -207,7 +207,7 @@
      "len_sec": 149,
      "analysis": {
       "duration_sec": 149,
-      "mean_db": -11.0,
+      "mean_db": -11,
       "max_db": -0.1,
       "aggression": 90,
       "env": "776677777888888888767777777888888888888888888877777777788888888888888888870",
@@ -262,7 +262,7 @@
      "analysis": {
       "duration_sec": 71,
       "mean_db": -13.5,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 40,
       "env": "887878788787857767676676767667562700",
       "env_win_sec": 2,
@@ -288,7 +288,7 @@
      "analysis": {
       "duration_sec": 83,
       "mean_db": -10.5,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 36,
       "env": "888878888887888888898888879888887888888770",
       "env_win_sec": 2,
@@ -340,7 +340,7 @@
      "analysis": {
       "duration_sec": 71,
       "mean_db": -13.6,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 40,
       "env": "887878788787857767676676767667562700",
       "env_win_sec": 2,
@@ -366,7 +366,7 @@
      "analysis": {
       "duration_sec": 83,
       "mean_db": -10.6,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 36,
       "env": "888878888887888888798888879888887888888770",
       "env_win_sec": 2,
@@ -392,7 +392,7 @@
      "analysis": {
       "duration_sec": 210,
       "mean_db": -12.6,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 37,
       "env": "656647565664756666475665647788887888878788898888878888888978888787888878778787878876576777757677673756750",
       "env_win_sec": 2,
@@ -459,7 +459,7 @@
    "analysis": {
     "duration_sec": 210,
     "mean_db": -12.5,
-    "max_db": 0.0,
+    "max_db": 0,
     "aggression": 37,
     "env": "656647465664756666475666647788887888888788898888889888888978888787888878788787878876576777757677673756750",
     "env_win_sec": 2,
@@ -669,7 +669,7 @@
      "analysis": {
       "duration_sec": 15,
       "mean_db": -9.6,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 64,
       "env": "99888888",
       "env_win_sec": 2,
@@ -908,7 +908,7 @@
      "analysis": {
       "duration_sec": 29,
       "mean_db": -15.1,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 89,
       "env": "777677767776300",
       "env_win_sec": 2,
@@ -942,7 +942,7 @@
      "analysis": {
       "duration_sec": 27,
       "mean_db": -14.5,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 90,
       "env": "77767777776510",
       "env_win_sec": 2,
@@ -1310,7 +1310,7 @@
      "len_sec": 217,
      "analysis": {
       "duration_sec": 217,
-      "mean_db": -12.0,
+      "mean_db": -12,
       "max_db": 0.5,
       "aggression": 54,
       "env": "3420254546465777777888777877788898889630253546465777777888889888988898889644444448888889988898889888988898000",
@@ -1401,7 +1401,7 @@
      "analysis": {
       "duration_sec": 46,
       "mean_db": -15.9,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 45,
       "env": "34202545464657777778880",
       "env_win_sec": 2,
@@ -1630,7 +1630,7 @@
      "analysis": {
       "duration_sec": 21,
       "mean_db": -14.9,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 37,
       "env": "77777777520",
       "env_win_sec": 2,
@@ -1788,7 +1788,7 @@
      "analysis": {
       "duration_sec": 26,
       "mean_db": -20.4,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 80,
       "env": "0246555555410",
       "env_win_sec": 2,
@@ -1954,7 +1954,7 @@
      "len_sec": 17,
      "analysis": {
       "duration_sec": 17,
-      "mean_db": -24.0,
+      "mean_db": -24,
       "max_db": -3.7,
       "aggression": 51,
       "env": "333333350",
@@ -2157,8 +2157,8 @@
      "len_sec": 34,
      "analysis": {
       "duration_sec": 34,
-      "mean_db": -11.0,
-      "max_db": 0.0,
+      "mean_db": -11,
+      "max_db": 0,
       "aggression": 95,
       "env": "88888888888888886",
       "env_win_sec": 2,
@@ -2714,7 +2714,7 @@
    ],
    "analysis": {
     "duration_sec": 106,
-    "mean_db": -11.0,
+    "mean_db": -11,
     "max_db": 0.4,
     "aggression": 49,
     "env": "76556555766676668698888899888788899888988998989999810",
@@ -2819,7 +2819,7 @@
      "len_sec": 21,
      "analysis": {
       "duration_sec": 21,
-      "mean_db": -20.0,
+      "mean_db": -20,
       "max_db": -3.5,
       "aggression": 76,
       "env": "01244566653",
@@ -2881,7 +2881,7 @@
    "analysis": {
     "duration_sec": 93,
     "mean_db": -13.1,
-    "max_db": -0.0,
+    "max_db": 0,
     "aggression": 92,
     "env": "01234566667888888888777777777877888888888881000",
     "env_win_sec": 2,
@@ -3043,7 +3043,7 @@
      "len_sec": 60,
      "analysis": {
       "duration_sec": 60,
-      "mean_db": -12.0,
+      "mean_db": -12,
       "max_db": -0.1,
       "aggression": 50,
       "env": "888888888888888887777777788873",
@@ -3191,7 +3191,7 @@
      "analysis": {
       "duration_sec": 61,
       "mean_db": -13.4,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 53,
       "env": "5555555777777778778877878788750",
       "env_win_sec": 2,
@@ -3225,7 +3225,7 @@
      "analysis": {
       "duration_sec": 91,
       "mean_db": -10.6,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 44,
       "env": "9888888989898989898888888888988585878778786730",
       "env_win_sec": 2,
@@ -3353,7 +3353,7 @@
      "analysis": {
       "duration_sec": 61,
       "mean_db": -13.5,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 54,
       "env": "5555555777777778778877778788750",
       "env_win_sec": 2,
@@ -3387,7 +3387,7 @@
      "analysis": {
       "duration_sec": 91,
       "mean_db": -10.6,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 44,
       "env": "9888888989898989898888888888988585878778786730",
       "env_win_sec": 2,
@@ -3413,7 +3413,7 @@
    ],
    "analysis": {
     "duration_sec": 250,
-    "mean_db": -12.0,
+    "mean_db": -12,
     "max_db": 0.5,
     "aggression": 54,
     "env": "55555457777777777787777777877788878888888888898878888888888886868585868777778888888888888888888888888888876665666666566667600",
@@ -3658,7 +3658,7 @@
      "analysis": {
       "duration_sec": 17,
       "mean_db": -15.2,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 34,
       "env": "766666678",
       "env_win_sec": 2,
@@ -3736,7 +3736,7 @@
    "analysis": {
     "duration_sec": 123,
     "mean_db": -9.7,
-    "max_db": 2.0,
+    "max_db": 2,
     "aggression": 94,
     "env": "76666667899999998999999999877777778777777899999999899999999910",
     "env_win_sec": 2,
@@ -3818,8 +3818,8 @@
      "len_sec": 26,
      "analysis": {
       "duration_sec": 26,
-      "mean_db": -11.0,
-      "max_db": 0.0,
+      "mean_db": -11,
+      "max_db": 0,
       "aggression": 80,
       "env": "7666888888888",
       "env_win_sec": 2,
@@ -3852,7 +3852,7 @@
      "len_sec": 35,
      "analysis": {
       "duration_sec": 35,
-      "mean_db": -9.0,
+      "mean_db": -9,
       "max_db": 0.4,
       "aggression": 98,
       "env": "888898989888898999",
@@ -4158,7 +4158,7 @@
      "len_sec": 24,
      "analysis": {
       "duration_sec": 24,
-      "mean_db": -14.0,
+      "mean_db": -14,
       "max_db": 0.1,
       "aggression": 90,
       "env": "555547888886",
@@ -4192,7 +4192,7 @@
      "len_sec": 24,
      "analysis": {
       "duration_sec": 24,
-      "mean_db": -11.0,
+      "mean_db": -11,
       "max_db": 0.4,
       "aggression": 95,
       "env": "888888888887",
@@ -4244,7 +4244,7 @@
      "len_sec": 24,
      "analysis": {
       "duration_sec": 24,
-      "mean_db": -12.0,
+      "mean_db": -12,
       "max_db": 0.2,
       "aggression": 94,
       "env": "888888888886",
@@ -4621,7 +4621,7 @@
      "len_sec": 35,
      "analysis": {
       "duration_sec": 35,
-      "mean_db": -11.0,
+      "mean_db": -11,
       "max_db": 0.6,
       "aggression": 95,
       "env": "888888888888888871",
@@ -4673,7 +4673,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 166,
-    "mean_db": -13.0,
+    "mean_db": -13,
     "max_db": 0.5,
     "aggression": 92,
     "env": "77777777777777777788788888888888888777777776777777777888888888888888885555555550000",
@@ -4956,7 +4956,7 @@
      "len_sec": 11,
      "analysis": {
       "duration_sec": 11,
-      "mean_db": -12.0,
+      "mean_db": -12,
       "max_db": 0.8,
       "aggression": 83,
       "env": "878877",
@@ -4983,7 +4983,7 @@
      "analysis": {
       "duration_sec": 21,
       "mean_db": -11.7,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 94,
       "env": "87887887877",
       "env_win_sec": 2,
@@ -5035,7 +5035,7 @@
    "analysis": {
     "duration_sec": 157,
     "mean_db": -11.6,
-    "max_db": 1.0,
+    "max_db": 1,
     "aggression": 94,
     "env": "4444444444487787887878878888788888888888888877878878788888888888888888888888600",
     "env_win_sec": 2,
@@ -5171,7 +5171,7 @@
      "len_sec": 16,
      "analysis": {
       "duration_sec": 16,
-      "mean_db": -15.0,
+      "mean_db": -15,
       "max_db": 0.4,
       "aggression": 89,
       "env": "77777760",
@@ -5463,7 +5463,7 @@
      "analysis": {
       "duration_sec": 154,
       "mean_db": -10.4,
-      "max_db": 2.0,
+      "max_db": 2,
       "aggression": 63,
       "env": "55555598777789889889889899899889899876666666777777778879988989999989999997200",
       "env_win_sec": 2,
@@ -5647,7 +5647,7 @@
      "len_sec": 32,
      "analysis": {
       "duration_sec": 32,
-      "mean_db": -9.0,
+      "mean_db": -9,
       "max_db": 1.8,
       "aggression": 98,
       "env": "8888887899998999",
@@ -5820,7 +5820,7 @@
      "len_sec": 30,
      "analysis": {
       "duration_sec": 30,
-      "mean_db": -9.0,
+      "mean_db": -9,
       "max_db": 0.5,
       "aggression": 98,
       "env": "889999989889998",
@@ -5872,7 +5872,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 195,
-    "mean_db": -11.0,
+    "mean_db": -11,
     "max_db": 2.3,
     "aggression": 95,
     "env": "56676666766777777888898889888898888667767677777777778888988898889988887777777888888888988888888700",
@@ -6869,7 +6869,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 131,
-    "mean_db": -11.0,
+    "mean_db": -11,
     "max_db": 0.7,
     "aggression": 83,
     "env": "666888888877888888888888888888888888878888887888888888888888888880",
@@ -6976,7 +6976,7 @@
      "len_sec": 38,
      "analysis": {
       "duration_sec": 38,
-      "mean_db": -8.0,
+      "mean_db": -8,
       "max_db": 0.2,
       "aggression": 100,
       "env": "9999999999999999999",
@@ -7216,7 +7216,7 @@
      "len_sec": 11,
      "analysis": {
       "duration_sec": 11,
-      "mean_db": -14.0,
+      "mean_db": -14,
       "max_db": -1.5,
       "aggression": 90,
       "env": "777777",
@@ -7294,7 +7294,7 @@
      "len_sec": 11,
      "analysis": {
       "duration_sec": 11,
-      "mean_db": -14.0,
+      "mean_db": -14,
       "max_db": -1.5,
       "aggression": 90,
       "env": "777777",
@@ -7818,7 +7818,7 @@
      "len_sec": 18,
      "analysis": {
       "duration_sec": 18,
-      "mean_db": -22.0,
+      "mean_db": -22,
       "max_db": -2.4,
       "aggression": 78,
       "env": "545344542",
@@ -8041,7 +8041,7 @@
    "analysis": {
     "duration_sec": 163,
     "mean_db": -12.5,
-    "max_db": 1.0,
+    "max_db": 1,
     "aggression": 93,
     "env": "4453445456565666688888888888888888865556665566666665788888888888888888888888888000",
     "env_win_sec": 2,
@@ -8355,7 +8355,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 107,
-    "mean_db": -11.0,
+    "mean_db": -11,
     "max_db": 0.6,
     "aggression": 69,
     "env": "445454558888888888888888888888888888888888898998755300",
@@ -8504,7 +8504,7 @@
      "analysis": {
       "duration_sec": 40,
       "mean_db": -10.7,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 96,
       "env": "77777777778888899998",
       "env_win_sec": 2,
@@ -8616,7 +8616,7 @@
      "analysis": {
       "duration_sec": 16,
       "mean_db": -13.3,
-      "max_db": -2.0,
+      "max_db": -2,
       "aggression": 71,
       "env": "77777777",
       "env_win_sec": 2,
@@ -8702,7 +8702,7 @@
      "analysis": {
       "duration_sec": 16,
       "mean_db": -13.3,
-      "max_db": -2.0,
+      "max_db": -2,
       "aggression": 71,
       "env": "77777777",
       "env_win_sec": 2,
@@ -9296,7 +9296,7 @@
      "analysis": {
       "duration_sec": 15,
       "mean_db": -10.3,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 96,
       "env": "88888887",
       "env_win_sec": 2,
@@ -9374,7 +9374,7 @@
      "analysis": {
       "duration_sec": 15,
       "mean_db": -8.9,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 99,
       "env": "99899988",
       "env_win_sec": 2,
@@ -9426,7 +9426,7 @@
      "analysis": {
       "duration_sec": 126,
       "mean_db": -10.4,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 96,
       "env": "778777888888887998999887787777888888888888887999999889989999200",
       "env_win_sec": 2,
@@ -9686,7 +9686,7 @@
      "len_sec": 191,
      "analysis": {
       "duration_sec": 191,
-      "mean_db": -13.0,
+      "mean_db": -13,
       "max_db": 0.8,
       "aggression": 92,
       "env": "544457878878888787777777777777887887887765665777777788878778886554578788788787888877887887700000",
@@ -10037,7 +10037,7 @@
      "analysis": {
       "duration_sec": 24,
       "mean_db": -13.6,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 91,
       "env": "767767777778",
       "env_win_sec": 2,
@@ -10089,7 +10089,7 @@
      "analysis": {
       "duration_sec": 24,
       "mean_db": -13.7,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 91,
       "env": "766767777778",
       "env_win_sec": 2,
@@ -10187,8 +10187,8 @@
      "len_sec": 19,
      "analysis": {
       "duration_sec": 19,
-      "mean_db": -9.0,
-      "max_db": 1.0,
+      "mean_db": -9,
+      "max_db": 1,
       "aggression": 98,
       "env": "8998989888",
       "env_win_sec": 2,
@@ -10265,8 +10265,8 @@
      "len_sec": 19,
      "analysis": {
       "duration_sec": 19,
-      "mean_db": -9.0,
-      "max_db": 1.0,
+      "mean_db": -9,
+      "max_db": 1,
       "aggression": 98,
       "env": "8998989888",
       "env_win_sec": 2,
@@ -10636,7 +10636,7 @@
      "len_sec": 16,
      "analysis": {
       "duration_sec": 16,
-      "mean_db": -12.0,
+      "mean_db": -12,
       "max_db": 0.9,
       "aggression": 94,
       "env": "77777789",
@@ -10663,7 +10663,7 @@
      "analysis": {
       "duration_sec": 16,
       "mean_db": -11.9,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 94,
       "env": "77777789",
       "env_win_sec": 2,
@@ -10767,7 +10767,7 @@
      "analysis": {
       "duration_sec": 31,
       "mean_db": -8.4,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 99,
       "env": "9999999999999998",
       "env_win_sec": 2,
@@ -11146,7 +11146,7 @@
      "len_sec": 37,
      "analysis": {
       "duration_sec": 37,
-      "mean_db": -10.0,
+      "mean_db": -10,
       "max_db": 1.2,
       "aggression": 97,
       "env": "8888888989989898300",
@@ -11718,7 +11718,7 @@
      "len_sec": 40,
      "analysis": {
       "duration_sec": 40,
-      "mean_db": -12.0,
+      "mean_db": -12,
       "max_db": -1.8,
       "aggression": 48,
       "env": "88887877878888888874",
@@ -11849,7 +11849,7 @@
      "len_sec": 33,
      "analysis": {
       "duration_sec": 33,
-      "mean_db": -18.0,
+      "mean_db": -18,
       "max_db": -0.1,
       "aggression": 78,
       "env": "65666666666665200",
@@ -12280,7 +12280,7 @@
      "analysis": {
       "duration_sec": 9,
       "mean_db": -18.6,
-      "max_db": -1.0,
+      "max_db": -1,
       "aggression": 41,
       "env": "65653",
       "env_win_sec": 2,
@@ -12653,7 +12653,7 @@
      "analysis": {
       "duration_sec": 38,
       "mean_db": -13.7,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 64,
       "env": "7777777777777777762",
       "env_win_sec": 2,
@@ -12802,7 +12802,7 @@
      "analysis": {
       "duration_sec": 17,
       "mean_db": -12.4,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 58,
       "env": "787787873",
       "env_win_sec": 2,
@@ -12828,7 +12828,7 @@
      "analysis": {
       "duration_sec": 44,
       "mean_db": -16.3,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 48,
       "env": "4566666666666767666752",
       "env_win_sec": 2,
@@ -13276,7 +13276,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 206,
-    "mean_db": -11.0,
+    "mean_db": -11,
     "max_db": 1.4,
     "aggression": 86,
     "env": "5545565666789889989889888899798898888997988966666666767888898798898888988988998889989889766666556562000",
@@ -13387,7 +13387,7 @@
      "len_sec": 23,
      "analysis": {
       "duration_sec": 23,
-      "mean_db": -17.0,
+      "mean_db": -17,
       "max_db": 0.1,
       "aggression": 62,
       "env": "666655666620",
@@ -13414,7 +13414,7 @@
      "analysis": {
       "duration_sec": 23,
       "mean_db": -16.1,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 75,
       "env": "766666766630",
       "env_win_sec": 2,
@@ -13439,8 +13439,8 @@
      "len_sec": 34,
      "analysis": {
       "duration_sec": 34,
-      "mean_db": -21.0,
-      "max_db": -0.0,
+      "mean_db": -21,
+      "max_db": 0,
       "aggression": 60,
       "env": "34456455553555540",
       "env_win_sec": 2,
@@ -13554,7 +13554,7 @@
      "analysis": {
       "duration_sec": 41,
       "mean_db": -12.8,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 58,
       "env": "777787778778888880000",
       "env_win_sec": 2,
@@ -13588,7 +13588,7 @@
      "analysis": {
       "duration_sec": 34,
       "mean_db": -13.1,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 71,
       "env": "77777777877788760",
       "env_win_sec": 2,
@@ -13614,7 +13614,7 @@
      "analysis": {
       "duration_sec": 48,
       "mean_db": -14.2,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 83,
       "env": "777777777777776557777775",
       "env_win_sec": 2,
@@ -13751,7 +13751,7 @@
      "len_sec": 37,
      "analysis": {
       "duration_sec": 37,
-      "mean_db": -12.0,
+      "mean_db": -12,
       "max_db": -0.5,
       "aggression": 44,
       "env": "7888888878877777000",
@@ -14193,7 +14193,7 @@
      "len_sec": 24,
      "analysis": {
       "duration_sec": 24,
-      "mean_db": -10.0,
+      "mean_db": -10,
       "max_db": 0.7,
       "aggression": 97,
       "env": "988888988987",
@@ -14389,7 +14389,7 @@
      "len_sec": 31,
      "analysis": {
       "duration_sec": 31,
-      "mean_db": -8.0,
+      "mean_db": -8,
       "max_db": 0.8,
       "aggression": 100,
       "env": "9999999999999999",
@@ -14441,7 +14441,7 @@
      "len_sec": 15,
      "analysis": {
       "duration_sec": 15,
-      "mean_db": -13.0,
+      "mean_db": -13,
       "max_db": 0.6,
       "aggression": 92,
       "env": "87777777",
@@ -14754,7 +14754,7 @@
      "analysis": {
       "duration_sec": 39,
       "mean_db": -9.7,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 97,
       "env": "78889999999999995000",
       "env_win_sec": 2,
@@ -14855,7 +14855,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 212,
-    "mean_db": -11.0,
+    "mean_db": -11,
     "max_db": 1.8,
     "aggression": 94,
     "env": "8888888744444456677767788888888888888887767777878788877888898999989889844444579999999648888888889999997000",
@@ -14967,7 +14967,7 @@
      "analysis": {
       "duration_sec": 42,
       "mean_db": -13.1,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 92,
       "env": "777777787777778777762",
       "env_win_sec": 2,
@@ -14993,7 +14993,7 @@
      "analysis": {
       "duration_sec": 14,
       "mean_db": -20.6,
-      "max_db": -4.0,
+      "max_db": -4,
       "aggression": 37,
       "env": "5555553",
       "env_win_sec": 2,
@@ -15019,7 +15019,7 @@
      "analysis": {
       "duration_sec": 42,
       "mean_db": -13.9,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 91,
       "env": "777777787777777777762",
       "env_win_sec": 2,
@@ -15302,7 +15302,8 @@
     "intro_hype"
    ],
    "analysis_complete": true,
-   "analyzed_at": "2026-07-22T14:38:54Z"
+   "analyzed_at": "2026-07-22T14:38:54Z",
+   "mike_note": "Mike, 2026-10-10 (retire-early, after listening): too slow and a little sad for a crypto token chapter. It is soft underscore for something SERIOUS being explained that is LIFE-related, not crypto (a wonderful-mix, life-lesson kind of explainer). Pick it for that need; never as a token-chapter bed. Retired from retire-early CH5/CH6 for a-pirates-life."
   },
   {
    "id": "continuum",
@@ -15347,7 +15348,7 @@
      "analysis": {
       "duration_sec": 26,
       "mean_db": -15.6,
-      "max_db": -1.0,
+      "max_db": -1,
       "aggression": 27,
       "env": "7656657766666",
       "env_win_sec": 2,
@@ -15451,7 +15452,7 @@
      "analysis": {
       "duration_sec": 32,
       "mean_db": -20.7,
-      "max_db": -1.0,
+      "max_db": -1,
       "aggression": 26,
       "env": "6415526625542000",
       "env_win_sec": 2,
@@ -15822,7 +15823,7 @@
      "analysis": {
       "duration_sec": 37,
       "mean_db": -13.1,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 92,
       "env": "7777777788788876300",
       "env_win_sec": 2,
@@ -15993,7 +15994,7 @@
      "len_sec": 20,
      "analysis": {
       "duration_sec": 20,
-      "mean_db": -9.0,
+      "mean_db": -9,
       "max_db": 0.5,
       "aggression": 98,
       "env": "8999999998",
@@ -16019,7 +16020,7 @@
      "len_sec": 41,
      "analysis": {
       "duration_sec": 41,
-      "mean_db": -12.0,
+      "mean_db": -12,
       "max_db": 0.2,
       "aggression": 45,
       "env": "556666666678889888886",
@@ -16105,7 +16106,7 @@
      "len_sec": 41,
      "analysis": {
       "duration_sec": 41,
-      "mean_db": -12.0,
+      "mean_db": -12,
       "max_db": 0.2,
       "aggression": 44,
       "env": "556666666678889888886",
@@ -16504,7 +16505,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 186,
-    "mean_db": -14.0,
+    "mean_db": -14,
     "max_db": 1.3,
     "aggression": 90,
     "env": "544334444457667666777787778787888766666666666666666777787787777787776777777878778787878874000",
@@ -16610,7 +16611,7 @@
      "analysis": {
       "duration_sec": 49,
       "mean_db": -15.8,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 52,
       "env": "8777777777655566555554300",
       "env_win_sec": 2,
@@ -16704,7 +16705,7 @@
      "analysis": {
       "duration_sec": 52,
       "mean_db": -14.2,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 78,
       "env": "77777777787777777777754331",
       "env_win_sec": 2,
@@ -16737,7 +16738,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 185,
-    "mean_db": -14.0,
+    "mean_db": -14,
     "max_db": 0.3,
     "aggression": 65,
     "env": "133323334223244233345677776777876777666777543368888887888888888889887677766677655565555554300",
@@ -16865,7 +16866,7 @@
      "analysis": {
       "duration_sec": 60,
       "mean_db": -13.2,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 92,
       "env": "777777777777777777777777777765",
       "env_win_sec": 2,
@@ -16917,7 +16918,7 @@
      "analysis": {
       "duration_sec": 42,
       "mean_db": -14.8,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 85,
       "env": "767777767777777777761",
       "env_win_sec": 2,
@@ -17090,7 +17091,7 @@
      "analysis": {
       "duration_sec": 52,
       "mean_db": -13.4,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 42,
       "env": "87777777787777777877777776",
       "env_win_sec": 2,
@@ -17501,7 +17502,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 161,
-    "mean_db": -14.0,
+    "mean_db": -14,
     "max_db": 0.3,
     "aggression": 59,
     "env": "333336546456465465477777865555878788877876666678888788888888888666664444444464000",
@@ -17702,7 +17703,7 @@
      "analysis": {
       "duration_sec": 85,
       "mean_db": -13.7,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 72,
       "env": "7036431724654387777778888777777777788887752",
       "env_win_sec": 2,
@@ -18024,7 +18025,7 @@
      "len_sec": 34,
      "analysis": {
       "duration_sec": 34,
-      "mean_db": -8.0,
+      "mean_db": -8,
       "max_db": 0.9,
       "aggression": 100,
       "env": "99999999999999999",
@@ -18402,8 +18403,8 @@
      "len_sec": 31,
      "analysis": {
       "duration_sec": 31,
-      "mean_db": -12.0,
-      "max_db": -0.0,
+      "mean_db": -12,
+      "max_db": 0,
       "aggression": 78,
       "env": "8676779888888600",
       "env_win_sec": 2,
@@ -18528,7 +18529,7 @@
      "analysis": {
       "duration_sec": 65,
       "mean_db": -11.8,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 54,
       "env": "887887788787788888888888888885100",
       "env_win_sec": 2,
@@ -18595,7 +18596,7 @@
      "len_sec": 113,
      "analysis": {
       "duration_sec": 113,
-      "mean_db": -18.0,
+      "mean_db": -18,
       "max_db": -1.3,
       "aggression": 55,
       "env": "555555555555555433443433344366666667666666666656666666640",
@@ -18742,7 +18743,7 @@
      "analysis": {
       "duration_sec": 60,
       "mean_db": -11.7,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 48,
       "env": "878878787878888788788878788800",
       "env_win_sec": 2,
@@ -18794,7 +18795,7 @@
      "analysis": {
       "duration_sec": 28,
       "mean_db": -13.4,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 52,
       "env": "77777777777776",
       "env_win_sec": 2,
@@ -18820,7 +18821,7 @@
      "analysis": {
       "duration_sec": 60,
       "mean_db": -14.8,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 50,
       "env": "867767676766778677676767667600",
       "env_win_sec": 2,
@@ -18937,7 +18938,7 @@
      "len_sec": 28,
      "analysis": {
       "duration_sec": 28,
-      "mean_db": -16.0,
+      "mean_db": -16,
       "max_db": -2.3,
       "aggression": 22,
       "env": "66667766666665",
@@ -18964,7 +18965,7 @@
    "analysis": {
     "duration_sec": 227,
     "mean_db": -14.7,
-    "max_db": 0.0,
+    "max_db": 0,
     "aggression": 45,
     "env": "554555555555556555555666666677777777777777857667777767777556555666666555555645555557878777878888888788778787878600",
     "env_win_sec": 2,
@@ -19520,7 +19521,7 @@
      "analysis": {
       "duration_sec": 36,
       "mean_db": -21.8,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 78,
       "env": "003454333364456441",
       "env_win_sec": 2,
@@ -19743,7 +19744,7 @@
      "analysis": {
       "duration_sec": 24,
       "mean_db": -15.8,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 80,
       "env": "766666766663",
       "env_win_sec": 2,
@@ -19769,7 +19770,7 @@
      "analysis": {
       "duration_sec": 60,
       "mean_db": -17.7,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 51,
       "env": "654555755566655566755666665653",
       "env_win_sec": 2,
@@ -19873,7 +19874,7 @@
      "analysis": {
       "duration_sec": 23,
       "mean_db": -10.3,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 50,
       "env": "888888898800",
       "env_win_sec": 2,
@@ -20616,7 +20617,7 @@
      "len_sec": 14,
      "analysis": {
       "duration_sec": 14,
-      "mean_db": -19.0,
+      "mean_db": -19,
       "max_db": -1.8,
       "aggression": 83,
       "env": "6645554",
@@ -20825,7 +20826,7 @@
      "analysis": {
       "duration_sec": 19,
       "mean_db": -10.4,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 96,
       "env": "8888888884",
       "env_win_sec": 2,
@@ -20884,7 +20885,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 96,
-    "mean_db": -13.0,
+    "mean_db": -13,
     "max_db": 0.5,
     "aggression": 85,
     "env": "323456667887777778488888888888888888887544332222",
@@ -20989,7 +20990,7 @@
      "analysis": {
       "duration_sec": 26,
       "mean_db": -10.1,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 88,
       "env": "8888888888998",
       "env_win_sec": 2,
@@ -21067,7 +21068,7 @@
      "analysis": {
       "duration_sec": 26,
       "mean_db": -10.1,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 87,
       "env": "8888888888998",
       "env_win_sec": 2,
@@ -21171,7 +21172,7 @@
    "analysis": {
     "duration_sec": 98,
     "mean_db": -9.5,
-    "max_db": 2.0,
+    "max_db": 2,
     "aggression": 81,
     "env": "8668668888888888888888888888888899999999999998520",
     "env_win_sec": 2,
@@ -21611,7 +21612,7 @@
      "len_sec": 15,
      "analysis": {
       "duration_sec": 15,
-      "mean_db": -11.0,
+      "mean_db": -11,
       "max_db": -0.2,
       "aggression": 32,
       "env": "88888887",
@@ -21689,8 +21690,8 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 285,
-    "mean_db": -14.0,
-    "max_db": -0.0,
+    "mean_db": -14,
+    "max_db": 0,
     "aggression": 31,
     "env": "00254444444554655565566667777767643223233333477677788777676777888777888888888888888888888888788888888888888888888777666666668876543000000000000",
     "env_win_sec": 2,
@@ -21823,7 +21824,7 @@
      "len_sec": 36,
      "analysis": {
       "duration_sec": 36,
-      "mean_db": -13.0,
+      "mean_db": -13,
       "max_db": -0.9,
       "aggression": 27,
       "env": "678757867886878720",
@@ -22230,7 +22231,7 @@
      "len_sec": 26,
      "analysis": {
       "duration_sec": 26,
-      "mean_db": -11.0,
+      "mean_db": -11,
       "max_db": 1.2,
       "aggression": 95,
       "env": "8778878888894",
@@ -22290,7 +22291,7 @@
      "len_sec": 41,
      "analysis": {
       "duration_sec": 41,
-      "mean_db": -11.0,
+      "mean_db": -11,
       "max_db": 1.3,
       "aggression": 95,
       "env": "888888888888888888700",
@@ -22627,7 +22628,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 192,
-    "mean_db": -10.0,
+    "mean_db": -10,
     "max_db": 1.4,
     "aggression": 97,
     "env": "434444347988989889989988898988998898889988899889898985665656589898998998999998998998989988988765",
@@ -22782,7 +22783,7 @@
      "analysis": {
       "duration_sec": 41,
       "mean_db": -14.1,
-      "max_db": -2.0,
+      "max_db": -2,
       "aggression": 48,
       "env": "556666676677777778877",
       "env_win_sec": 2,
@@ -23360,7 +23361,7 @@
      "analysis": {
       "duration_sec": 184,
       "mean_db": -12.3,
-      "max_db": 1.0,
+      "max_db": 1,
       "aggression": 93,
       "env": "66566755556555556887888887887887888887888665566566567788788878878878888878888878888888885100",
       "env_win_sec": 2,
@@ -23601,7 +23602,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 181,
-    "mean_db": -10.0,
+    "mean_db": -10,
     "max_db": 2.5,
     "aggression": 97,
     "env": "5555567777889889999989999989999899998988998989987777877877878777899899999899998999998999830",
@@ -24362,7 +24363,7 @@
      "analysis": {
       "duration_sec": 62,
       "mean_db": -13.4,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 49,
       "env": "3338686878888888888555555565520",
       "env_win_sec": 2,
@@ -24403,8 +24404,8 @@
      "len_sec": 73,
      "analysis": {
       "duration_sec": 73,
-      "mean_db": -17.0,
-      "max_db": -2.0,
+      "mean_db": -17,
+      "max_db": -2,
       "aggression": 51,
       "env": "5566556666567777566766666665555565564",
       "env_win_sec": 2,
@@ -24445,7 +24446,7 @@
    "used_in": [],
    "analysis": {
     "duration_sec": 222,
-    "mean_db": -16.0,
+    "mean_db": -16,
     "max_db": 0.6,
     "aggression": 48,
     "env": "000132232232222322455555666566777765676665566555555555534466777766777786777775433337686878788888888555555565530",
@@ -24631,7 +24632,7 @@
      "len_sec": 24,
      "analysis": {
       "duration_sec": 24,
-      "mean_db": -10.0,
+      "mean_db": -10,
       "max_db": 0.4,
       "aggression": 66,
       "env": "888888888888",
@@ -24888,7 +24889,7 @@
      "analysis": {
       "duration_sec": 15,
       "mean_db": -12.4,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 66,
       "env": "77887777",
       "env_win_sec": 2,
@@ -24914,7 +24915,7 @@
      "analysis": {
       "duration_sec": 30,
       "mean_db": -12.2,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 68,
       "env": "778877778878777",
       "env_win_sec": 2,
@@ -24940,7 +24941,7 @@
      "analysis": {
       "duration_sec": 60,
       "mean_db": -12.3,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 60,
       "env": "778877778878778777777778877877",
       "env_win_sec": 2,
@@ -25127,7 +25128,7 @@
      "analysis": {
       "duration_sec": 26,
       "mean_db": -15.6,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 63,
       "env": "7667666775664",
       "env_win_sec": 2,
@@ -25299,7 +25300,7 @@
      "analysis": {
       "duration_sec": 58,
       "mean_db": -9.5,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 42,
       "env": "99899988989998998989888875100",
       "env_win_sec": 2,
@@ -25510,7 +25511,7 @@
      "len_sec": 30,
      "analysis": {
       "duration_sec": 30,
-      "mean_db": -17.0,
+      "mean_db": -17,
       "max_db": -0.6,
       "aggression": 38,
       "env": "666666666566763",
@@ -25629,7 +25630,7 @@
      "analysis": {
       "duration_sec": 19,
       "mean_db": -17.9,
-      "max_db": -1.0,
+      "max_db": -1,
       "aggression": 19,
       "env": "0025767751",
       "env_win_sec": 2,
@@ -25654,7 +25655,7 @@
      "len_sec": 30,
      "analysis": {
       "duration_sec": 30,
-      "mean_db": -17.0,
+      "mean_db": -17,
       "max_db": -0.7,
       "aggression": 39,
       "env": "666666666566763",
@@ -25853,7 +25854,7 @@
      "len_sec": 51,
      "analysis": {
       "duration_sec": 51,
-      "mean_db": -11.0,
+      "mean_db": -11,
       "max_db": -0.5,
       "aggression": 65,
       "env": "88888888888888888888720000",
@@ -25913,7 +25914,7 @@
      "len_sec": 46,
      "analysis": {
       "duration_sec": 46,
-      "mean_db": -17.0,
+      "mean_db": -17,
       "max_db": -0.5,
       "aggression": 34,
       "env": "56656566565666656656750",
@@ -26183,7 +26184,7 @@
      "len_sec": 21,
      "analysis": {
       "duration_sec": 21,
-      "mean_db": -11.0,
+      "mean_db": -11,
       "max_db": 0.8,
       "aggression": 82,
       "env": "88888888888",
@@ -26323,7 +26324,7 @@
      "analysis": {
       "duration_sec": 20,
       "mean_db": -15.7,
-      "max_db": -0.0,
+      "max_db": 0,
       "aggression": 65,
       "env": "7676566764",
       "env_win_sec": 2,
@@ -26357,7 +26358,7 @@
      "analysis": {
       "duration_sec": 39,
       "mean_db": -14.7,
-      "max_db": 0.0,
+      "max_db": 0,
       "aggression": 78,
       "env": "77776677766777666775",
       "env_win_sec": 2,
@@ -26417,7 +26418,7 @@
    "analysis": {
     "duration_sec": 240,
     "mean_db": -13.2,
-    "max_db": 0.0,
+    "max_db": 0,
     "aggression": 74,
     "env": "006666666666666666666677776677766777666777888888888888888888865555666656666566776677778888888888888888888755555555531100",
     "env_win_sec": 2,
@@ -27027,6 +27028,1664 @@
    ],
    "analysis_complete": true,
    "analyzed_at": "2026-07-22T14:41:19Z"
+  },
+  {
+   "id": "elevator-music-gold-tiger",
+   "title": "Elevator Music",
+   "artist": "Gold-Tiger",
+   "source": "envato_elements",
+   "soundstripe_id": null,
+   "url": "https://elements.envato.com/elevator-music-2LH64YC",
+   "envato_item_id": "2LH64YC",
+   "envato_license_code": "5KXG79M6TH",
+   "license_note": "ENVATO ELEMENTS, no Soundstripe yt code. Covered by the Elements license certificate in the folder (license_certificate_5KXG79M6TH.txt, licensed 2023-10-26, registered project \"removing elements from an array\"). For a Content-ID claim, clear via the Envato Elements license, never a per-video code.",
+   "yt_license_code": null,
+   "folder": "assets/music/Elevator Music Gold-Tiger",
+   "primary_file": "Main Version.wav",
+   "duration_sec": null,
+   "vibe": "ELEVATOR MUSIC: smooth lounge / muzak bed for programming and coding walkthrough videos (longform-presentation). Mike added it 2026-10-14 for exactly that use.",
+   "tags": [
+    "elevator"
+   ],
+   "use_case": "programming / coding longform-presentation videos",
+   "genre": [
+    "Lounge",
+    "Jazz",
+    "Easy Listening"
+   ],
+   "mood": [
+    "Calm",
+    "Chill",
+    "Quirky"
+   ],
+   "bpm": null,
+   "metadata_complete": true,
+   "variants_note": "Main Version (.wav + .mp3) and Short Version (.wav + .mp3); prefer the .wav masters.",
+   "sections": [
+    {
+     "file": "Short Version.wav",
+     "mix": null,
+     "role": null,
+     "len_sec": 91,
+     "analysis": {
+      "duration_sec": 91,
+      "mean_db": -14.6,
+      "max_db": 0.7,
+      "aggression": 89,
+      "env": "6767767777777777777777777777777767777676775100",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         12
+        ],
+        "level": "mid",
+        "kind": "build"
+       },
+       {
+        "t": [
+         12,
+         86
+        ],
+        "level": "high",
+        "kind": "peak"
+       },
+       {
+        "t": [
+         86,
+         92
+        ],
+        "level": "low",
+        "kind": "outro"
+       }
+      ],
+      "opening": "steady",
+      "ending": "epic_hit"
+     }
+    }
+   ],
+   "sections_note": "Short Version = the Envato short edit of the same cue. The .mp3 twins are duplicates of the .wav files, not separate cuts.",
+   "added_from": "Mike dropped the Envato folder in by hand, 2026-10-14",
+   "used_in": [],
+   "analysis": {
+    "duration_sec": 148,
+    "mean_db": -14.4,
+    "max_db": 0.7,
+    "aggression": 90,
+    "env": "67777777777777777777777777777777777777777777777777777777777777777676776300",
+    "env_win_sec": 2,
+    "segments": [
+     {
+      "t": [
+       0,
+       142
+      ],
+      "level": "high",
+      "kind": "peak"
+     },
+     {
+      "t": [
+       142,
+       148
+      ],
+      "level": "low",
+      "kind": "outro"
+     }
+    ],
+    "opening": "steady",
+    "ending": "epic_hit"
+   },
+   "roles": [
+    "hype_peak",
+    "intro_hype"
+   ],
+   "analysis_complete": true,
+   "analyzed_at": "2026-10-14T17:23:22Z",
+   "roles_pinned": [
+    "elevator_bed",
+    "explainer_bed"
+   ],
+   "roles_note": "Measured roles say hype (it is loud and steady, aggression ~90) but this is a smooth elevator/lounge cue; pinned as elevator_bed. Pick it by tags:[elevator], not by roles[]."
+  },
+  {
+   "id": "lounge-lover",
+   "title": "Lounge Lover",
+   "artist": "Dresden, The Flamingo",
+   "source": "soundstripe",
+   "soundstripe_id": "15847",
+   "url": "https://www.soundstripe.com/library/songs/15847",
+   "yt_license_code": "KK2RDEWTXSFFRGLT",
+   "folder": "assets/music/Lounge Lover",
+   "primary_file": "Dresden_The_Flamingo_Lounge_Lover_instrumental_full_3_13-5.wav",
+   "duration_sec": 193,
+   "vibe": "ELEVATOR MUSIC: low-energy - Jazz/World/Latin - fun/happy/calm/romantic/quirky. Lounge/jazz elevator bed Mike picked 2026-10-14 for programming / coding longform-presentation videos.",
+   "tags": [
+    "elevator"
+   ],
+   "use_case": "programming / coding longform-presentation videos",
+   "genre": [
+    "Jazz",
+    "World",
+    "Latin"
+   ],
+   "mood": [
+    "Fun",
+    "Happy",
+    "Calm",
+    "Romantic",
+    "Quirky"
+   ],
+   "bpm": 80,
+   "energy": "low",
+   "key": "D minor",
+   "instrument": [
+    "Guitar",
+    "Acoustic Guitar",
+    "Bass",
+    "Drums",
+    "Electronic Drums",
+    "Synth",
+    "Percussion",
+    "Xylophone / Mallets"
+   ],
+   "characteristic": [
+    "Soulful",
+    "Retro",
+    "Atmospheric",
+    "Cruising",
+    "Dreamy",
+    "Mellow"
+   ],
+   "has_vocal_version": false,
+   "metadata_complete": true,
+   "sections": [
+    {
+     "file": "Dresden_The_Flamingo_Lounge_Lover_background_vocals_3_13.mp3",
+     "mix": "bg_vocals",
+     "role": "full",
+     "len_sec": 193,
+     "analysis": {
+      "duration_sec": 193,
+      "mean_db": -11.5,
+      "max_db": 0.9,
+      "aggression": 94,
+      "env": "6667778888888888888888888888884444446666668888888888888888888888888888888888888888887767766666660",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         6
+        ],
+        "level": "mid",
+        "kind": "build"
+       },
+       {
+        "t": [
+         6,
+         60
+        ],
+        "level": "high",
+        "kind": "peak"
+       },
+       {
+        "t": [
+         60,
+         84
+        ],
+        "level": "mid",
+        "kind": "build"
+       },
+       {
+        "t": [
+         84,
+         178
+        ],
+        "level": "high",
+        "kind": "peak"
+       },
+       {
+        "t": [
+         178,
+         194
+        ],
+        "level": "mid",
+        "kind": "outro"
+       }
+      ],
+      "opening": "build",
+      "ending": "fade"
+     }
+    },
+    {
+     "file": "Dresden_The_Flamingo_Lounge_Lover_background_vocals_chorus_0_48-1.wav",
+     "mix": "bg_vocals",
+     "role": "chorus",
+     "len_sec": 48,
+     "analysis": {
+      "duration_sec": 48,
+      "mean_db": -9.9,
+      "max_db": 0.6,
+      "aggression": 97,
+      "env": "888888888888888888888887",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         48
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "hard_stop"
+     }
+    },
+    {
+     "file": "Dresden_The_Flamingo_Lounge_Lover_background_vocals_intro_0_12-2.wav",
+     "mix": "bg_vocals",
+     "role": "intro",
+     "len_sec": 12,
+     "analysis": {
+      "duration_sec": 12,
+      "mean_db": -15.7,
+      "max_db": 0.1,
+      "aggression": 88,
+      "env": "666776",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         6
+        ],
+        "level": "mid",
+        "kind": "build"
+       },
+       {
+        "t": [
+         6,
+         12
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "steady",
+      "ending": "epic_hit"
+     }
+    },
+    {
+     "file": "Dresden_The_Flamingo_Lounge_Lover_background_vocals_verse_0_36-3.wav",
+     "mix": "bg_vocals",
+     "role": "verse",
+     "len_sec": 36,
+     "analysis": {
+      "duration_sec": 36,
+      "mean_db": -14.0,
+      "max_db": 0.4,
+      "aggression": 90,
+      "env": "444444666666888887",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         24
+        ],
+        "level": "mid",
+        "kind": "build"
+       },
+       {
+        "t": [
+         24,
+         36
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "build",
+      "ending": "hard_stop"
+     }
+    },
+    {
+     "file": "Dresden_The_Flamingo_Lounge_Lover_instrumental_chorus_0_48-4.wav",
+     "mix": "instrumental",
+     "role": "chorus",
+     "len_sec": 48,
+     "analysis": {
+      "duration_sec": 48,
+      "mean_db": -9.9,
+      "max_db": 0.5,
+      "aggression": 97,
+      "env": "888888888888888888888886",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         48
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "epic_hit"
+     }
+    },
+    {
+     "file": "Dresden_The_Flamingo_Lounge_Lover_instrumental_intro_0_12-6.wav",
+     "mix": "instrumental",
+     "role": "intro",
+     "len_sec": 12,
+     "analysis": {
+      "duration_sec": 12,
+      "mean_db": -15.7,
+      "max_db": 0.1,
+      "aggression": 88,
+      "env": "666776",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         6
+        ],
+        "level": "mid",
+        "kind": "build"
+       },
+       {
+        "t": [
+         6,
+         12
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "steady",
+      "ending": "epic_hit"
+     }
+    },
+    {
+     "file": "Dresden_The_Flamingo_Lounge_Lover_instrumental_verse_0_36-7.wav",
+     "mix": "instrumental",
+     "role": "verse",
+     "len_sec": 36,
+     "analysis": {
+      "duration_sec": 36,
+      "mean_db": -14.1,
+      "max_db": 0.4,
+      "aggression": 90,
+      "env": "444444666666888887",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         24
+        ],
+        "level": "mid",
+        "kind": "build"
+       },
+       {
+        "t": [
+         24,
+         36
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "build",
+      "ending": "hard_stop"
+     }
+    }
+   ],
+   "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental / bg-vocal section mixes). Same yt_license_code covers them.",
+   "roles_pinned": [
+    "elevator_bed",
+    "explainer_bed"
+   ],
+   "roles_note": "Pinned elevator_bed: pick by tags:[elevator] for programming videos, not by measured roles[].",
+   "added_from": "Mike, 2026-10-14: seven Soundstripe elevator-music picks for programming videos",
+   "downloaded_at": "2026-10-14T17:36:15.826Z",
+   "used_in": [],
+   "analysis": {
+    "duration_sec": 193,
+    "mean_db": -11.1,
+    "max_db": 0.9,
+    "aggression": 95,
+    "env": "6667778888888888888888888888884444446666668888889888888888888888888888889888888888887767766666660",
+    "env_win_sec": 2,
+    "segments": [
+     {
+      "t": [
+       0,
+       6
+      ],
+      "level": "mid",
+      "kind": "build"
+     },
+     {
+      "t": [
+       6,
+       60
+      ],
+      "level": "high",
+      "kind": "peak"
+     },
+     {
+      "t": [
+       60,
+       84
+      ],
+      "level": "mid",
+      "kind": "build"
+     },
+     {
+      "t": [
+       84,
+       178
+      ],
+      "level": "high",
+      "kind": "peak"
+     },
+     {
+      "t": [
+       178,
+       194
+      ],
+      "level": "mid",
+      "kind": "outro"
+     }
+    ],
+    "opening": "build",
+    "ending": "fade"
+   },
+   "roles": [
+    "epic_outro",
+    "hype_peak",
+    "intro_hype"
+   ],
+   "analysis_complete": true,
+   "analyzed_at": "2026-10-14T17:46:54Z"
+  },
+  {
+   "id": "yellow-letter",
+   "title": "Yellow Letter",
+   "artist": "Sam Barsh",
+   "source": "soundstripe",
+   "soundstripe_id": "15717",
+   "url": "https://www.soundstripe.com/library/songs/15717",
+   "yt_license_code": "OHSCYSNWB3WOMYAD",
+   "folder": "assets/music/Yellow Letter",
+   "primary_file": "Sam_Barsh_Yellow_Letter_instrumental_3_19.mp3",
+   "duration_sec": 200,
+   "vibe": "ELEVATOR MUSIC: low-energy - R&B/Soul / Motown - fun/happy/romantic/chill. Lounge/jazz elevator bed Mike picked 2026-10-14 for programming / coding longform-presentation videos.",
+   "tags": [
+    "elevator"
+   ],
+   "use_case": "programming / coding longform-presentation videos",
+   "genre": [
+    "R&B",
+    "Soul / Motown"
+   ],
+   "mood": [
+    "Fun",
+    "Happy",
+    "Romantic",
+    "Chill"
+   ],
+   "bpm": 87,
+   "energy": "low",
+   "key": "G major",
+   "instrument": [
+    "Bass",
+    "Bass Guitar",
+    "Horns",
+    "Drums",
+    "Drum Kit",
+    "Piano",
+    "Synth"
+   ],
+   "characteristic": [
+    "Retro",
+    "Cruising",
+    "Dancey",
+    "Soulful",
+    "Dynamic",
+    "Atmospheric"
+   ],
+   "has_vocal_version": false,
+   "metadata_complete": true,
+   "sections": [
+    {
+     "file": "Sam_Barsh_Yellow_Letter_instrumental_chorus_0_45-1.wav",
+     "mix": "instrumental",
+     "role": "chorus",
+     "len_sec": 45,
+     "analysis": {
+      "duration_sec": 45,
+      "mean_db": -12.8,
+      "max_db": -0.0,
+      "aggression": 83,
+      "env": "77888788888878888765200",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         40
+        ],
+        "level": "high",
+        "kind": "peak"
+       },
+       {
+        "t": [
+         40,
+         46
+        ],
+        "level": "low",
+        "kind": "outro"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "fade"
+     }
+    },
+    {
+     "file": "Sam_Barsh_Yellow_Letter_instrumental_intro_0_39-2.wav",
+     "mix": "instrumental",
+     "role": "intro",
+     "len_sec": 39,
+     "analysis": {
+      "duration_sec": 39,
+      "mean_db": -14.3,
+      "max_db": -0.1,
+      "aggression": 67,
+      "env": "66665777777878777520",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         10
+        ],
+        "level": "mid",
+        "kind": "build"
+       },
+       {
+        "t": [
+         10,
+         40
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "steady",
+      "ending": "epic_hit"
+     }
+    },
+    {
+     "file": "Sam_Barsh_Yellow_Letter_instrumental_verse_0_31-3.wav",
+     "mix": "instrumental",
+     "role": "verse",
+     "len_sec": 31,
+     "analysis": {
+      "duration_sec": 31,
+      "mean_db": -12.6,
+      "max_db": -0.0,
+      "aggression": 77,
+      "env": "8788888888775300",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         26
+        ],
+        "level": "high",
+        "kind": "peak"
+       },
+       {
+        "t": [
+         26,
+         32
+        ],
+        "level": "low",
+        "kind": "outro"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "epic_hit"
+     }
+    }
+   ],
+   "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental / bg-vocal section mixes). Same yt_license_code covers them.",
+   "roles_pinned": [
+    "elevator_bed",
+    "explainer_bed"
+   ],
+   "roles_note": "Pinned elevator_bed: pick by tags:[elevator] for programming videos, not by measured roles[].",
+   "added_from": "Mike, 2026-10-14: seven Soundstripe elevator-music picks for programming videos",
+   "downloaded_at": "2026-10-14T17:37:29.027Z",
+   "used_in": [],
+   "analysis": {
+    "duration_sec": 200,
+    "mean_db": -13.2,
+    "max_db": 0.4,
+    "aggression": 77,
+    "env": "5555577777777877777777777778777787787777777777777777888888777778777778787777887777777777776654210000",
+    "env_win_sec": 2,
+    "segments": [
+     {
+      "t": [
+       0,
+       10
+      ],
+      "level": "mid",
+      "kind": "build"
+     },
+     {
+      "t": [
+       10,
+       180
+      ],
+      "level": "high",
+      "kind": "peak"
+     },
+     {
+      "t": [
+       180,
+       188
+      ],
+      "level": "mid",
+      "kind": "bed"
+     },
+     {
+      "t": [
+       188,
+       200
+      ],
+      "level": "low",
+      "kind": "outro"
+     }
+    ],
+    "opening": "build",
+    "ending": "resolve"
+   },
+   "roles": [
+    "epic_outro",
+    "hype_peak",
+    "intro_hype"
+   ],
+   "analysis_complete": true,
+   "analyzed_at": "2026-10-14T17:46:56Z"
+  },
+  {
+   "id": "duff-and-a-shot",
+   "title": "Duff And A Shot",
+   "artist": "Sam Barsh",
+   "source": "soundstripe",
+   "soundstripe_id": "15556",
+   "url": "https://www.soundstripe.com/library/songs/15556",
+   "yt_license_code": "LLYKDGEXMZFHZHHD",
+   "folder": "assets/music/Duff And A Shot",
+   "primary_file": "Sam_Barsh_Duff_And_A_Shot_instrumental_3_34.mp3",
+   "duration_sec": 214,
+   "vibe": "ELEVATOR MUSIC: low-energy - Jazz/R&B/Soul / Motown - calm/romantic/happy. Lounge/jazz elevator bed Mike picked 2026-10-14 for programming / coding longform-presentation videos.",
+   "tags": [
+    "elevator"
+   ],
+   "use_case": "programming / coding longform-presentation videos",
+   "genre": [
+    "Jazz",
+    "R&B",
+    "Soul / Motown"
+   ],
+   "mood": [
+    "Calm",
+    "Romantic",
+    "Happy"
+   ],
+   "bpm": 122,
+   "energy": "low",
+   "key": "C major",
+   "instrument": [
+    "Organ",
+    "Drums",
+    "Drum Kit",
+    "Bass",
+    "Bass Guitar"
+   ],
+   "characteristic": [
+    "Retro",
+    "Atmospheric",
+    "Cruising",
+    "Mellow",
+    "Soulful"
+   ],
+   "has_vocal_version": false,
+   "metadata_complete": true,
+   "sections": [
+    {
+     "file": "Sam_Barsh_Duff_And_A_Shot_instrumental_chorus_1_04-1.wav",
+     "mix": "instrumental",
+     "role": "chorus",
+     "len_sec": 65,
+     "analysis": {
+      "duration_sec": 65,
+      "mean_db": -12.4,
+      "max_db": 0.2,
+      "aggression": 68,
+      "env": "877788787877776777887868777888770",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         66
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "epic_hit"
+     }
+    },
+    {
+     "file": "Sam_Barsh_Duff_And_A_Shot_instrumental_intro_0_07-2.wav",
+     "mix": "instrumental",
+     "role": "intro",
+     "len_sec": 8,
+     "analysis": {
+      "duration_sec": 8,
+      "mean_db": -21.3,
+      "max_db": -0.1,
+      "aggression": 72,
+      "env": "5452",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         6
+        ],
+        "level": "mid",
+        "kind": "bed"
+       },
+       {
+        "t": [
+         6,
+         8
+        ],
+        "level": "low",
+        "kind": "outro"
+       }
+      ],
+      "opening": "steady",
+      "ending": "fade"
+     }
+    },
+    {
+     "file": "Sam_Barsh_Duff_And_A_Shot_instrumental_verse_0_47-3.wav",
+     "mix": "instrumental",
+     "role": "verse",
+     "len_sec": 47,
+     "analysis": {
+      "duration_sec": 47,
+      "mean_db": -13.2,
+      "max_db": 0.3,
+      "aggression": 66,
+      "env": "778777767777777777777874",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         48
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "epic_hit"
+     }
+    }
+   ],
+   "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental / bg-vocal section mixes). Same yt_license_code covers them.",
+   "roles_pinned": [
+    "elevator_bed",
+    "explainer_bed"
+   ],
+   "roles_note": "Pinned elevator_bed: pick by tags:[elevator] for programming videos, not by measured roles[].",
+   "added_from": "Mike, 2026-10-14: seven Soundstripe elevator-music picks for programming videos",
+   "downloaded_at": "2026-10-14T17:38:31.382Z",
+   "used_in": [],
+   "analysis": {
+    "duration_sec": 214,
+    "mean_db": -12.8,
+    "max_db": 0.4,
+    "aggression": 69,
+    "env": "53547777677677777777677778777777777877888778878888877777777887787778777777787787787786777677787777777788876",
+    "env_win_sec": 2,
+    "segments": [
+     {
+      "t": [
+       0,
+       8
+      ],
+      "level": "mid",
+      "kind": "build"
+     },
+     {
+      "t": [
+       8,
+       214
+      ],
+      "level": "high",
+      "kind": "peak"
+     }
+    ],
+    "opening": "build",
+    "ending": "epic_hit"
+   },
+   "roles": [
+    "epic_outro",
+    "hype_peak",
+    "intro_hype"
+   ],
+   "analysis_complete": true,
+   "analyzed_at": "2026-10-14T17:46:58Z"
+  },
+  {
+   "id": "sidestep",
+   "title": "Sidestep",
+   "artist": "Cast Of Characters",
+   "source": "soundstripe",
+   "soundstripe_id": "14757",
+   "url": "https://www.soundstripe.com/library/songs/14757",
+   "yt_license_code": "WR01WRIJUSGCAG26",
+   "folder": "assets/music/Sidestep",
+   "primary_file": "Cast_Of_Characters_Sidestep_instrumental_2_43.mp3",
+   "duration_sec": 164,
+   "vibe": "ELEVATOR MUSIC: high-energy - Jazz/Funk - quirky/fun. Lounge/jazz elevator bed Mike picked 2026-10-14 for programming / coding longform-presentation videos.",
+   "tags": [
+    "elevator"
+   ],
+   "use_case": "programming / coding longform-presentation videos",
+   "genre": [
+    "Jazz",
+    "Funk"
+   ],
+   "mood": [
+    "Quirky",
+    "Fun"
+   ],
+   "bpm": 120,
+   "energy": "high",
+   "key": "A minor",
+   "instrument": [
+    "Percussion",
+    "Big Drums",
+    "Drums",
+    "Synth",
+    "Rhodes",
+    "Bass Guitar",
+    "Bass"
+   ],
+   "characteristic": [
+    "Retro",
+    "Dynamic",
+    "Dancey"
+   ],
+   "has_vocal_version": false,
+   "metadata_complete": true,
+   "sections": [
+    {
+     "file": "Cast_Of_Characters_Sidestep_instrumental_chorus_0_51-1.wav",
+     "mix": "instrumental",
+     "role": "chorus",
+     "len_sec": 51,
+     "analysis": {
+      "duration_sec": 51,
+      "mean_db": -17.0,
+      "max_db": -0.1,
+      "aggression": 80,
+      "env": "76766776766776654110000000",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         26
+        ],
+        "level": "high",
+        "kind": "peak"
+       },
+       {
+        "t": [
+         26,
+         34
+        ],
+        "level": "mid",
+        "kind": "bed"
+       },
+       {
+        "t": [
+         34,
+         52
+        ],
+        "level": "low",
+        "kind": "outro"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "resolve"
+     }
+    },
+    {
+     "file": "Cast_Of_Characters_Sidestep_instrumental_intro_0_40-2.wav",
+     "mix": "instrumental",
+     "role": "intro",
+     "len_sec": 41,
+     "analysis": {
+      "duration_sec": 41,
+      "mean_db": -20.9,
+      "max_db": -0.1,
+      "aggression": 79,
+      "env": "000022234555757552100",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         16
+        ],
+        "level": "low",
+        "kind": "intro"
+       },
+       {
+        "t": [
+         16,
+         34
+        ],
+        "level": "mid",
+        "kind": "bed"
+       },
+       {
+        "t": [
+         34,
+         42
+        ],
+        "level": "low",
+        "kind": "outro"
+       }
+      ],
+      "opening": "build",
+      "ending": "fade"
+     }
+    },
+    {
+     "file": "Cast_Of_Characters_Sidestep_instrumental_verse_0_40-3.wav",
+     "mix": "instrumental",
+     "role": "verse",
+     "len_sec": 40,
+     "analysis": {
+      "duration_sec": 40,
+      "mean_db": -13.3,
+      "max_db": -0.1,
+      "aggression": 74,
+      "env": "577667777878888777100",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         10
+        ],
+        "level": "mid",
+        "kind": "build"
+       },
+       {
+        "t": [
+         10,
+         36
+        ],
+        "level": "high",
+        "kind": "peak"
+       },
+       {
+        "t": [
+         36,
+         42
+        ],
+        "level": "low",
+        "kind": "outro"
+       }
+      ],
+      "opening": "steady",
+      "ending": "epic_hit"
+     }
+    }
+   ],
+   "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental / bg-vocal section mixes). Same yt_license_code covers them.",
+   "roles_pinned": [
+    "elevator_bed",
+    "explainer_bed"
+   ],
+   "roles_note": "Pinned elevator_bed: pick by tags:[elevator] for programming videos, not by measured roles[].",
+   "added_from": "Mike, 2026-10-14: seven Soundstripe elevator-music picks for programming videos",
+   "downloaded_at": "2026-10-14T17:39:39.138Z",
+   "used_in": [],
+   "analysis": {
+    "duration_sec": 164,
+    "mean_db": -15.6,
+    "max_db": -0.3,
+    "aggression": 81,
+    "env": "0000222245557575757677788767767677667677776666777788887776767767776666754210000000",
+    "env_win_sec": 2,
+    "segments": [
+     {
+      "t": [
+       0,
+       16
+      ],
+      "level": "low",
+      "kind": "intro"
+     },
+     {
+      "t": [
+       16,
+       40
+      ],
+      "level": "mid",
+      "kind": "build"
+     },
+     {
+      "t": [
+       40,
+       84
+      ],
+      "level": "high",
+      "kind": "peak"
+     },
+     {
+      "t": [
+       84,
+       92
+      ],
+      "level": "mid",
+      "kind": "build"
+     },
+     {
+      "t": [
+       92,
+       132
+      ],
+      "level": "high",
+      "kind": "peak"
+     },
+     {
+      "t": [
+       132,
+       146
+      ],
+      "level": "mid",
+      "kind": "bed"
+     },
+     {
+      "t": [
+       146,
+       164
+      ],
+      "level": "low",
+      "kind": "outro"
+     }
+    ],
+    "opening": "build",
+    "ending": "resolve"
+   },
+   "roles": [
+    "hype_peak",
+    "intro_hype"
+   ],
+   "analysis_complete": true,
+   "analyzed_at": "2026-10-14T17:47:00Z"
+  },
+  {
+   "id": "tiki-time",
+   "title": "Tiki Time",
+   "artist": "Dresden, The Flamingo",
+   "source": "soundstripe",
+   "soundstripe_id": "17831",
+   "url": "https://www.soundstripe.com/library/songs/17831",
+   "yt_license_code": "RYNHMZSLJZ7GFHBH",
+   "folder": "assets/music/Tiki Time",
+   "primary_file": "Dresden_The_Flamingo_Tiki_Time_instrumental_3_26.mp3",
+   "duration_sec": 206,
+   "vibe": "ELEVATOR MUSIC: low-energy - Soundtrack / Cinematic/Jazz/Underscore/World/Latin - quirky/fun/happy/romantic. Lounge/jazz elevator bed Mike picked 2026-10-14 for programming / coding longform-presentation videos.",
+   "tags": [
+    "elevator"
+   ],
+   "use_case": "programming / coding longform-presentation videos",
+   "genre": [
+    "Soundtrack / Cinematic",
+    "Jazz",
+    "Underscore",
+    "World",
+    "Latin"
+   ],
+   "mood": [
+    "Quirky",
+    "Fun",
+    "Happy",
+    "Romantic"
+   ],
+   "bpm": 113,
+   "energy": "low",
+   "key": "C minor",
+   "instrument": [
+    "Organ",
+    "Percussion",
+    "Xylophone / Mallets",
+    "Bass",
+    "Bass Guitar",
+    "Drums",
+    "Piano"
+   ],
+   "characteristic": [
+    "Retro",
+    "Atmospheric",
+    "Mellow",
+    "Cruising"
+   ],
+   "has_vocal_version": false,
+   "metadata_complete": true,
+   "sections": [
+    {
+     "file": "Dresden_The_Flamingo_Tiki_Time_instrumental_chorus_0_36-1.wav",
+     "mix": "instrumental",
+     "role": "chorus",
+     "len_sec": 36,
+     "analysis": {
+      "duration_sec": 36,
+      "mean_db": -11.5,
+      "max_db": 0.1,
+      "aggression": 91,
+      "env": "888888878888888780",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         36
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "epic_hit"
+     }
+    },
+    {
+     "file": "Dresden_The_Flamingo_Tiki_Time_instrumental_intro_0_37-2.wav",
+     "mix": "instrumental",
+     "role": "intro",
+     "len_sec": 38,
+     "analysis": {
+      "duration_sec": 38,
+      "mean_db": -18.1,
+      "max_db": -0.6,
+      "aggression": 44,
+      "env": "5565666464646555661",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         38
+        ],
+        "level": "mid",
+        "kind": "bed"
+       }
+      ],
+      "opening": "ambient",
+      "ending": "fade"
+     }
+    },
+    {
+     "file": "Dresden_The_Flamingo_Tiki_Time_instrumental_verse_0_40-3.wav",
+     "mix": "instrumental",
+     "role": "verse",
+     "len_sec": 40,
+     "analysis": {
+      "duration_sec": 40,
+      "mean_db": -16.4,
+      "max_db": 0.0,
+      "aggression": 58,
+      "env": "66666665657676667740",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         40
+        ],
+        "level": "mid",
+        "kind": "bed"
+       }
+      ],
+      "opening": "steady",
+      "ending": "epic_hit"
+     }
+    }
+   ],
+   "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental / bg-vocal section mixes). Same yt_license_code covers them.",
+   "roles_pinned": [
+    "elevator_bed",
+    "explainer_bed"
+   ],
+   "roles_note": "Pinned elevator_bed: pick by tags:[elevator] for programming videos, not by measured roles[].",
+   "added_from": "Mike, 2026-10-14: seven Soundstripe elevator-music picks for programming videos",
+   "downloaded_at": "2026-10-14T17:40:46.919Z",
+   "used_in": [],
+   "analysis": {
+    "duration_sec": 206,
+    "mean_db": -13.3,
+    "max_db": 0.2,
+    "aggression": 77,
+    "env": "5565665454646555687777777778777777888788877787888776666666565756665788777887778778777888788877887887780",
+    "env_win_sec": 2,
+    "segments": [
+     {
+      "t": [
+       0,
+       34
+      ],
+      "level": "mid",
+      "kind": "build"
+     },
+     {
+      "t": [
+       34,
+       102
+      ],
+      "level": "high",
+      "kind": "peak"
+     },
+     {
+      "t": [
+       102,
+       134
+      ],
+      "level": "mid",
+      "kind": "build"
+     },
+     {
+      "t": [
+       134,
+       206
+      ],
+      "level": "high",
+      "kind": "peak"
+     }
+    ],
+    "opening": "build",
+    "ending": "epic_hit"
+   },
+   "roles": [
+    "epic_outro",
+    "explainer_bed",
+    "hype_peak",
+    "intro_hype"
+   ],
+   "analysis_complete": true,
+   "analyzed_at": "2026-10-14T17:47:02Z"
+  },
+  {
+   "id": "seaside-samba",
+   "title": "Seaside Samba",
+   "artist": "King Flamingo",
+   "source": "soundstripe",
+   "soundstripe_id": "7282",
+   "url": "https://www.soundstripe.com/library/songs/7282",
+   "yt_license_code": "EMT6MGEJPBHHMU9W",
+   "folder": "assets/music/Seaside Samba",
+   "primary_file": "King_Flamingo_Seaside_Samba_instrumental_1_44.mp3",
+   "duration_sec": 104,
+   "vibe": "ELEVATOR MUSIC: high-energy - Jazz/Latin/World/Caribbean - calm/fun/happy. Lounge/jazz elevator bed Mike picked 2026-10-14 for programming / coding longform-presentation videos.",
+   "tags": [
+    "elevator"
+   ],
+   "use_case": "programming / coding longform-presentation videos",
+   "genre": [
+    "Jazz",
+    "Latin",
+    "World",
+    "Caribbean"
+   ],
+   "mood": [
+    "Calm",
+    "Fun",
+    "Happy"
+   ],
+   "bpm": 190,
+   "energy": "high",
+   "key": "C major",
+   "instrument": [
+    "Acoustic Guitar",
+    "Rhodes",
+    "Organ",
+    "Guitar"
+   ],
+   "characteristic": [
+    "Dancey",
+    "Retro",
+    "Upbeat"
+   ],
+   "has_vocal_version": false,
+   "metadata_complete": true,
+   "sections": [
+    {
+     "file": "King_Flamingo_Seaside_Samba_instrumental_0_15-1.wav",
+     "mix": "instrumental",
+     "role": null,
+     "len_sec": 15,
+     "analysis": {
+      "duration_sec": 15,
+      "mean_db": -11.0,
+      "max_db": -0.3,
+      "aggression": 68,
+      "env": "88888787",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         16
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "hard_stop"
+     }
+    },
+    {
+     "file": "King_Flamingo_Seaside_Samba_instrumental_0_30-2.wav",
+     "mix": "instrumental",
+     "role": null,
+     "len_sec": 30,
+     "analysis": {
+      "duration_sec": 30,
+      "mean_db": -11.0,
+      "max_db": -0.2,
+      "aggression": 70,
+      "env": "888887888888888",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         30
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "hard_stop"
+     }
+    },
+    {
+     "file": "King_Flamingo_Seaside_Samba_instrumental_1_00-3.wav",
+     "mix": "instrumental",
+     "role": null,
+     "len_sec": 60,
+     "analysis": {
+      "duration_sec": 60,
+      "mean_db": -11.1,
+      "max_db": -0.1,
+      "aggression": 71,
+      "env": "888887888888888877887888888888",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         60
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "hard_stop"
+     }
+    }
+   ],
+   "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental / bg-vocal section mixes). Same yt_license_code covers them.",
+   "roles_pinned": [
+    "elevator_bed",
+    "explainer_bed"
+   ],
+   "roles_note": "Pinned elevator_bed: pick by tags:[elevator] for programming videos, not by measured roles[].",
+   "added_from": "Mike, 2026-10-14: seven Soundstripe elevator-music picks for programming videos",
+   "downloaded_at": "2026-10-14T17:44:49.419Z",
+   "used_in": [],
+   "analysis": {
+    "duration_sec": 104,
+    "mean_db": -12.1,
+    "max_db": -0.1,
+    "aggression": 68,
+    "env": "7777787787778778787888787878888877777788888888887770",
+    "env_win_sec": 2,
+    "segments": [
+     {
+      "t": [
+       0,
+       104
+      ],
+      "level": "high",
+      "kind": "peak"
+     }
+    ],
+    "opening": "cold_hot",
+    "ending": "epic_hit"
+   },
+   "roles": [
+    "epic_outro",
+    "hype_peak",
+    "intro_hype"
+   ],
+   "analysis_complete": true,
+   "analyzed_at": "2026-10-14T17:47:04Z"
+  },
+  {
+   "id": "sophistikitty",
+   "title": "Sophistikitty",
+   "artist": "Cast Of Characters",
+   "source": "soundstripe",
+   "soundstripe_id": "16131",
+   "url": "https://www.soundstripe.com/library/songs/16131",
+   "yt_license_code": "GLFMYLIKQV3OAU6R",
+   "folder": "assets/music/Sophistikitty",
+   "primary_file": "Cast_Of_Characters_Sophistikitty_instrumental_2_23.mp3",
+   "duration_sec": 144,
+   "vibe": "ELEVATOR MUSIC: low-energy - Funk/Jazz/R&B/Soul / Motown - fun/happy/quirky/chill. Lounge/jazz elevator bed Mike picked 2026-10-14 for programming / coding longform-presentation videos.",
+   "tags": [
+    "elevator"
+   ],
+   "use_case": "programming / coding longform-presentation videos",
+   "genre": [
+    "Funk",
+    "Jazz",
+    "R&B",
+    "Soul / Motown"
+   ],
+   "mood": [
+    "Fun",
+    "Happy",
+    "Quirky",
+    "Chill"
+   ],
+   "bpm": 108,
+   "energy": "low",
+   "key": "D minor",
+   "instrument": [
+    "Organ",
+    "Bass",
+    "Bass Guitar",
+    "Drums",
+    "Drum Kit",
+    "Guitar",
+    "Electric Guitar"
+   ],
+   "characteristic": [
+    "Soulful",
+    "Retro",
+    "Dancey",
+    "Cruising",
+    "Dynamic"
+   ],
+   "has_vocal_version": false,
+   "metadata_complete": true,
+   "sections": [
+    {
+     "file": "Cast_Of_Characters_Sophistikitty_instrumental_bridge_0_21-1.wav",
+     "mix": "instrumental",
+     "role": "bridge",
+     "len_sec": 21,
+     "analysis": {
+      "duration_sec": 21,
+      "mean_db": -12.0,
+      "max_db": 0.2,
+      "aggression": 94,
+      "env": "87888888760",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         22
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "epic_hit"
+     }
+    },
+    {
+     "file": "Cast_Of_Characters_Sophistikitty_instrumental_chorus_0_27-2.wav",
+     "mix": "instrumental",
+     "role": "chorus",
+     "len_sec": 27,
+     "analysis": {
+      "duration_sec": 27,
+      "mean_db": -12.2,
+      "max_db": 0.4,
+      "aggression": 91,
+      "env": "88888888884000",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         22
+        ],
+        "level": "high",
+        "kind": "peak"
+       },
+       {
+        "t": [
+         22,
+         28
+        ],
+        "level": "low",
+        "kind": "outro"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "epic_hit"
+     }
+    },
+    {
+     "file": "Cast_Of_Characters_Sophistikitty_instrumental_intro_0_24-3.wav",
+     "mix": "instrumental",
+     "role": "intro",
+     "len_sec": 25,
+     "analysis": {
+      "duration_sec": 25,
+      "mean_db": -13.4,
+      "max_db": 0.2,
+      "aggression": 91,
+      "env": "7777878787400",
+      "env_win_sec": 2,
+      "segments": [
+       {
+        "t": [
+         0,
+         26
+        ],
+        "level": "high",
+        "kind": "peak"
+       }
+      ],
+      "opening": "cold_hot",
+      "ending": "epic_hit"
+     }
+    }
+   ],
+   "sections_note": "WAV section cuts from Soundstripe's Alternate Versions bundle (instrumental / bg-vocal section mixes). Same yt_license_code covers them.",
+   "roles_pinned": [
+    "elevator_bed",
+    "explainer_bed"
+   ],
+   "roles_note": "Pinned elevator_bed: pick by tags:[elevator] for programming videos, not by measured roles[].",
+   "added_from": "Mike, 2026-10-14: seven Soundstripe elevator-music picks for programming videos",
+   "downloaded_at": "2026-10-14T17:45:28.859Z",
+   "used_in": [],
+   "analysis": {
+    "duration_sec": 144,
+    "mean_db": -12.4,
+    "max_db": 0.6,
+    "aggression": 93,
+    "env": "777787778777777878777777778888888888777877777777777877777888888787877756",
+    "env_win_sec": 2,
+    "segments": [
+     {
+      "t": [
+       0,
+       144
+      ],
+      "level": "high",
+      "kind": "peak"
+     }
+    ],
+    "opening": "cold_hot",
+    "ending": "epic_hit"
+   },
+   "roles": [
+    "epic_outro",
+    "hype_peak",
+    "intro_hype"
+   ],
+   "analysis_complete": true,
+   "analyzed_at": "2026-10-14T17:47:06Z"
   }
  ]
 }

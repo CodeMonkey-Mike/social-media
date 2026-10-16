@@ -41,6 +41,13 @@ Repo root: `C:\Users\mnede\Documents\Claude\social-media` (run every command fro
 3. **Map the transcript to the screenplay's chapters and beats.** For each beat: the timecode, the words AS
    SPOKEN (quote the transcript, only Whisper mishears corrected), and the verdict versus the screenplay:
    KEPT / CHANGED / AD-LIB / DROPPED. Flag on the row any `[!WARNING]` guard and whether it HELD on the take.
+3b. **Clip inserts** (the screenplay's 🎞️ `[INSERT]` beats and its `## CLIP-INSERTS` table; rule
+   `video-creation/longform-edited/skills/clip-inserts/clip-inserts.md`): one row per insert at the timecode where
+   its SET-UP line ENDS as spoken, text `(clip insert CLIP-n lands here; the set-up line ends "...")`, verdict
+   `KEPT · INSERT CLIP-n (<n> s, the speaker's own voice; the splice is the trough after "<last word>")`, or
+   `DROPPED` when the set-up line was not said (then the insert goes with it: OPEN for Mike to re-place or drop).
+   List them again under Divergences. The coverage-strategist takes `splice_at` from this row, so the words you
+   quote as the set-up's end must be the transcript's.
 4. **Mishears section, first-class**: every wrong -> right with its timecode (the transcriber's list plus any
    you catch), including ones that only matter for captions or on-screen text.
 5. **Divergences**: Dropped (scripted, not said), Added (ad-libs), and rulings already made (PROJECT-LOG)

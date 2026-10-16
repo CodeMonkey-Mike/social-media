@@ -82,10 +82,10 @@ do NOT render-then-explain-it-as-an-open-item.
 [--constraints-file <md>] [--face-max N]` owns the whole track as ONE LangGraph StateGraph
 (`graph/longform_graph.py`): pre-production (init · research → DATA.md · screenplay-strategist →
 SCREENPLAY.md · **gate screenplay**) → recording → spine (compress · defumble · cover_blackout ·
-desilence_coarse 700 ms · **gate spine_review: Mike listens, gives --bursts** · burst_removal ·
+desilence_coarse 700 ms · **gate spine_review: Mike listens, gives --bursts AND the final silence definition --sil-pre/--sil-post (asked for at this gate, never defaulted silently; Mike 2026-10-10)** · burst_removal ·
 desilence_final two-zone · transcribe · verify · **gate spine**) → plan (as_recorded · coverage · music_plan · **gate
 plan** · assets = the five builders IN PARALLEL + visual-qa · verify_assets reconcile · edit_plan · transitions · reconcile · lint_docset · **gate blueprint**)
-→ build (card_pauses · captions · comp_build · verify_comp · **gate draft**) → deliver (final render ·
+→ build (card_pauses (+ clip inserts) · captions · comp_build · verify_comp · **gate draft**) → deliver (final render ·
 verify · definition of done · stage). Exit 2 = waiting on Mike (the report prints the resume command);
 a step that is not automated yet interrupts with its how-to and passes on its own once its artifact
 exists (or `--done <node>`). Every node verifies FROM DISK against the §13 doc set / §13a layout;
@@ -100,6 +100,7 @@ repairs only. Background: `claudeisnaughty.md`; ledger: `ORCHESTRATOR-PLAN.md`.
 | **Editing / building the Phase-4 render** | **`longform-edited.md`** (this folder) + its **`skills/`** rules |
 | **Repurposing a finished 16:9 into a vertical (9:16) cut** | **`skills/vertical-repurpose/vertical-repurpose.md`** — run it with the slash command **`/vertical-repurpose <project folder>`** (`.claude/commands/vertical-repurpose.md`) |
 | **Condensing a finished VERTICAL cut into a ~40s short** | **`skills/longform-to-short/longform-to-short.md`** — run it with the slash command **`/longform-short <project folder> [seconds]`** (`.claude/commands/longform-short.md`) |
+| **Splicing a third-party clip (its OWN voice) into a video, or deciding whether one belongs** | **`skills/clip-inserts/clip-inserts.md`** (considered on EVERY video, NONE written down otherwise; `screenplay.md` Convention 6; comp recipe `skills/comp-build/comp-build.md` §3d) |
 | **Resuming a specific video** | that video's `media/<project>/SCREENPLAY.md` + `PROJECT-LOG.md` |
 
 `screenplay.md` governs the SCRIPT; `longform-edited.md` governs the EDIT. They are siblings.
@@ -121,6 +122,11 @@ reference files inside the same folder, no orphan files at the `skills/` level (
   (no project dependency). CUE-SHEET FACE spans come from `blackdetect` on the baked spine. `gen_editplan.py` SEEDS
   the event log pre-build (Python port of the retired JS generator, 2026-09-28); `lint_edit_plan.py` gates both files.
 - **`skills/video-qa/video-qa.md`** — the mandatory render-QA gate (see PRE-RENDER GATE above).
+- **`skills/clip-inserts/clip-inserts.md`** (2026-10-09, Mike) — CLIP INSERTS: a third-party clip spliced in WITH ITS OWN
+  VOICE while the spine pauses, CONSIDERED on every video (DATA.md `Clip candidates` -> SCREENPLAY `## CLIP-INSERTS`, lint-gated,
+  NONE + reason when none -> COVER-PLAN `clip_inserts` with the splice point dry-run against the silence trough -> capture with
+  audio via `capture_clip_insert.py` -> `scripts/bake_clip_insert.py` in `card_pauses` -> comp §3d -> automatic bed duck).
+  Never a muted cover.
 - **`skills/doc-reference/PROJECT-FOLDER.reference.md`** (2026-09-29) — the FULL per-video folder layout with the node that
   makes each file (documents, spine chain, assets, previews, deliverables, the vertical lane). Read it instead of any old project.
 - **`skills/doc-reference/`** (2026-09-17) — the canonical SHAPE of every per-video document, one lint-clean

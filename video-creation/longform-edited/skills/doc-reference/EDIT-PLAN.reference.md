@@ -306,3 +306,22 @@ comp-build.md §10.
 
 **BENCH:** ChatGPT slots 6-7 of the raised cap were never needed (IMG-3 released to bench when BR-12
 took that beat). No unplaced acquisitions remain.
+
+## Clip insert rows (exemplar from every-job, 2026-10-08; the shape whenever COVER-PLAN.json carries `clip_inserts`)
+
+One `[INSERT]` row per spliced clip at its `splice_at` (seeded by `gen_editplan.py`, required by `lint_edit_plan.py`), bracketed by a
+lead-in still row before it and a lead-out still row after it. The spine PAUSES for the clip's length and the clip plays with its OWN
+voice (`../clip-inserts/clip-inserts.md`; comp recipe `comp-build.md` §3d). Timecodes stay SOURCE seconds; the pause shifts the final
+timeline via `sh()` like a title card.
+```
+10:09.0 [RECEIPT] CLIP-1 LEAD-IN → 10:16.1: the clip's FIRST frame held as a still (Huang on the Sequoia stage, burned caption
+        'Jensen Huang, June 2026, repeating a warning made about 10 years earlier') under the set-up line 'you've probably seen the
+        clip of Jensen Huang, the CEO of Nvidia, the first job AI will destroy is radiology' → hand:fade (broll-fade, 0.50s)
+10:15.5 SAY:  "Radiology nobody should go into this field now. It hasn't happened yet"
+10:16.1 [INSERT] CLIP-1 SPLICED CLIP, 10.0 s: the spine PAUSES at the trough after 'radiology' (source 616.1, snapped 616.100,
+        gate guard -50.2 dB) and the clip plays FULL-FRAME with Huang's OWN voice (baked into the VO track by
+        scripts/bake_clip_insert.py, spine/ALL.f.paused.json pauses[].clip); the bed ducks -14 dB under him (mix_music.py);
+        transition IN and OUT on the insert edges → hand:fade (insert-in / insert-out, 0.50s)
+10:16.1 [RECEIPT] CLIP-1 LEAD-OUT → 10:18.0: the clip's LAST frame held as a still under the resume line 'nobody should go into
+        this field' → hand:fade (broll-fade, 0.50s) into the next cover
+```

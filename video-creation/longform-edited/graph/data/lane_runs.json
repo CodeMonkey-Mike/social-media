@@ -10510,5 +10510,5410 @@
       }
     },
     "error": "s_render: short render failed\ndisk: swept 0 stale remotion temp bundle(s); 5.1 GB free\nRENDER-START mode=final comp=GoldenKittyShort out=C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\_previews\\short\\golden-kitty-SHORT-30s-v3-video.mp4\nFATAL: render exit 1; log: C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\golden-kitty\\_previews\\short\\golden-kitty-SHORT-30s-v3-video-render.log\n"
+  },
+  {
+    "run_id": "longform-every-job-c@2026-10-06T21:44:41",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-every-job-c",
+    "started_at": "2026-10-06T21:44:41",
+    "ended_at": "2026-10-06T22:56:17",
+    "duration_s": 4295.8,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "desilence_coarse",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-06T21:44:42"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-06T21:44:42"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-06T21:44:42"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-06T21:44:42"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-06T21:44:42"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-06T21:44:42"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-06T21:44:42"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (2540.8s)",
+          "at": "2026-10-06T22:48:04"
+        },
+        "desilence_coarse": {
+          "status": "failed",
+          "detail": "ALL.c.desilenced.mp4 failed verification: A/V duration drift over 60 ms",
+          "at": "2026-10-06T22:56:17"
+        }
+      }
+    },
+    "error": "desilence_coarse: ALL.c.desilenced.mp4 failed verification: A/V duration drift over 60 ms\nThe coarse desilence pass finished. The swallowed-speech QA found no flags, and the render completed in the foreground.\n\n- **Output spine:** `C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\every-job\\spine\\ALL.c.desilenced.mp4`\n- **Map:** `C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\every-job\\spine\\ALL.c.desilenced.map.json`\n- **Min-silence used:** 0.700 s, one zone, with `--nvenc`.\n- **Removed:** 1399.1 s across 285 cuts. The spine went from 2540.80 s to 1143.12 s. The output duration was confirmed with ffprobe.\n- **QA:** I scanned all 285 cuts for 100 ms or more of speech-level audio. There were no flags.\n\n**Flag for the caller:** the pass removed about 55% of the runtime, which is a lot for a 700 ms threshold. The source has long dead air (probably the recording's gaps and pauses), so this is plausible. It's still worth listening to the spine before the tighter two-zone pass.\n"
+  },
+  {
+    "run_id": "longform-every-job-d@2026-10-06T22:59:57",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-every-job-d",
+    "started_at": "2026-10-06T22:59:57",
+    "ended_at": "2026-10-06T22:59:58",
+    "duration_s": 1.5,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "desilence_coarse",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-06T22:59:57"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-06T22:59:57"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-06T22:59:57"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-06T22:59:57"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-06T22:59:57"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-06T22:59:57"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-06T22:59:57"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-06T22:59:58"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-06T22:59:58"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-every-job-e@2026-10-07T07:21:22",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-every-job-e",
+    "started_at": "2026-10-07T07:21:22",
+    "ended_at": "2026-10-07T07:45:45",
+    "duration_s": 1463.2,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "verify_spine",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-07T07:21:22"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-07T07:21:22"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-07T07:21:22"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-07T07:21:22"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-07T07:21:22"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-07T07:21:22"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-07T07:21:22"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-07T07:21:23"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-07T07:21:23"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-07T07:21:23"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-07T07:21:23"
+        },
+        "desilence_final": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 (1120.8s)",
+          "at": "2026-10-07T07:26:00"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.medium-words.json (0.0s)",
+          "at": "2026-10-07T07:45:44"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1120.8s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-07T07:45:45"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-every-job-f@2026-10-07T09:19:21",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-every-job-f",
+    "started_at": "2026-10-07T09:19:21",
+    "ended_at": "2026-10-07T10:56:17",
+    "duration_s": 5816.8,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [
+        "spine"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "music_plan",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-07T09:19:21"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-07T09:19:21"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-07T09:19:21"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-07T09:19:21"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-07T09:19:21"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-07T09:19:21"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-07T09:19:21"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-07T09:19:22"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-07T09:19:22"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-07T09:19:22"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-07T09:19:22"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.mp4 present",
+          "at": "2026-10-07T09:19:22"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.medium-words.json present",
+          "at": "2026-10-07T09:19:22"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1121.0s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-07T09:19:23"
+        },
+        "gate_spine": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-07T09:19:23"
+        },
+        "as_recorded": {
+          "status": "ran",
+          "detail": "AS-RECORDED.md written, lint PASS (17 FACE windows)",
+          "at": "2026-10-07T09:32:49"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (225 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-07T10:10:47"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (8 beds over 8 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-07T10:56:17"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-every-job-g@2026-10-07T14:28:10",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-every-job-g",
+    "started_at": "2026-10-07T14:28:10",
+    "ended_at": "2026-10-07T15:12:11",
+    "duration_s": 2641.2,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-07T14:28:10"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-07T14:28:10"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-07T14:28:10"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-07T14:28:10"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-07T14:28:10"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-07T14:28:10"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-07T14:28:10"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-07T14:28:11"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-07T14:28:11"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-07T14:28:11"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-07T14:28:11"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.mp4 present",
+          "at": "2026-10-07T14:28:12"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.medium-words.json present",
+          "at": "2026-10-07T14:28:12"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1121.0s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-07T14:28:12"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T09:19:23",
+          "at": "2026-10-07T14:28:12"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (17 FACE windows)",
+          "at": "2026-10-07T14:28:12"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (225 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-07T14:28:13"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (8 beds over 8 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-07T14:28:14"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T11:10:22",
+          "at": "2026-10-07T14:28:14"
+        },
+        "assets": {
+          "status": "failed",
+          "detail": "assets still missing after the builders ran: envato-sourcer: BR-46 (read graph/data/agent-assets-<builder>-<project>.log; a re-drive dispatches only the missing ids)",
+          "at": "2026-10-07T15:12:11"
+        }
+      }
+    },
+    "error": "assets: assets still missing after the builders ran: envato-sourcer: BR-46 (read graph/data/agent-assets-<builder>-<project>.log; a re-drive dispatches only the missing ids)"
+  },
+  {
+    "run_id": "longform-every-job-h@2026-10-07T15:16:06",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-every-job-h",
+    "started_at": "2026-10-07T15:16:06",
+    "ended_at": "2026-10-07T16:21:37",
+    "duration_s": 3930.4,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-07T15:16:06"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-07T15:16:06"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-07T15:16:06"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-07T15:16:06"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-07T15:16:06"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-07T15:16:06"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-07T15:16:07"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-07T15:16:07"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-07T15:16:08"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-07T15:16:08"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-07T15:16:08"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.mp4 present",
+          "at": "2026-10-07T15:16:08"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.medium-words.json present",
+          "at": "2026-10-07T15:16:08"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1121.0s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-07T15:16:08"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T09:19:23",
+          "at": "2026-10-07T15:16:08"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (17 FACE windows)",
+          "at": "2026-10-07T15:16:09"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (224 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-07T15:16:09"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (8 beds over 8 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-07T15:16:10"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T11:10:22",
+          "at": "2026-10-07T15:16:10"
+        },
+        "assets": {
+          "status": "failed",
+          "detail": "visual-qa FAILED 29 asset(s): BR-16-1920s-city-street-rain.mid.png: BURNED-IN TEXT: neon marquee signs carry garbled AI pseudo-lettering, legible on screen (spec: no text / watermark), the clip reads as an AI; IMG-23-robot-hand-red-wrench-copper-pipe.png: TEXT IN AI IMAGE: the red pipe wrench handle carries embossed garbled pseudo-lettering, clearly legible at full frame (spec: no text); C20-hinton-plumber.mid.png: the C20 video slot (C20-hinton-plumber.mp4, 8.96 s) carries NO burned caption on any frame (6-frame contact sheet checked); spec = episode f; C20-hinton-plumber.png: uncaptioned twin of the receipt: the spec requires the burned caption of his words and this still has none (the captioned version is C20-hin; C21.png: capture defect: a white loading spinner is baked over the 'Recommended Video' player thumbnail directly above the quote, a Google 'Add Fortu; C34-top.png: CUT-OFF: the bottom edge slices through the receipt's date line 'Publication Date: Oct 01' (glyph bottoms clipped); the date is the reason t; C10.png: CUT-OFF: the bottom edge slices a body-text line in half below the chart caption ('and structure of the changes are suggestive but the data ; R18.png: CUT-OFF: the quoted post card (Konstantine Buhler, Jun 10) is sliced at the bottom edge mid-thumbnail, and the main post's timestamp row is  (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)",
+          "at": "2026-10-07T16:21:37"
+        }
+      }
+    },
+    "error": "assets: visual-qa FAILED 29 asset(s): BR-16-1920s-city-street-rain.mid.png: BURNED-IN TEXT: neon marquee signs carry garbled AI pseudo-lettering, legible on screen (spec: no text / watermark), the clip reads as an AI; IMG-23-robot-hand-red-wrench-copper-pipe.png: TEXT IN AI IMAGE: the red pipe wrench handle carries embossed garbled pseudo-lettering, clearly legible at full frame (spec: no text); C20-hinton-plumber.mid.png: the C20 video slot (C20-hinton-plumber.mp4, 8.96 s) carries NO burned caption on any frame (6-frame contact sheet checked); spec = episode f; C20-hinton-plumber.png: uncaptioned twin of the receipt: the spec requires the burned caption of his words and this still has none (the captioned version is C20-hin; C21.png: capture defect: a white loading spinner is baked over the 'Recommended Video' player thumbnail directly above the quote, a Google 'Add Fortu; C34-top.png: CUT-OFF: the bottom edge slices through the receipt's date line 'Publication Date: Oct 01' (glyph bottoms clipped); the date is the reason t; C10.png: CUT-OFF: the bottom edge slices a body-text line in half below the chart caption ('and structure of the changes are suggestive but the data ; R18.png: CUT-OFF: the quoted post card (Konstantine Buhler, Jun 10) is sliced at the bottom edge mid-thumbnail, and the main post's timestamp row is  (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)"
+  },
+  {
+    "run_id": "longform-every-job-i@2026-10-07T16:23:43",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-every-job-i",
+    "started_at": "2026-10-07T16:23:43",
+    "ended_at": "2026-10-07T17:10:02",
+    "duration_s": 2778.9,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-07T16:23:44"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-07T16:23:44"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-07T16:23:44"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-07T16:23:44"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-07T16:23:44"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-07T16:23:44"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-07T16:23:44"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-07T16:23:45"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-07T16:23:45"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-07T16:23:45"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-07T16:23:45"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.mp4 present",
+          "at": "2026-10-07T16:23:45"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.medium-words.json present",
+          "at": "2026-10-07T16:23:45"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1121.0s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-07T16:23:46"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T09:19:23",
+          "at": "2026-10-07T16:23:46"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (17 FACE windows)",
+          "at": "2026-10-07T16:23:46"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (224 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-07T16:23:46"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (8 beds over 8 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-07T16:23:47"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T11:10:22",
+          "at": "2026-10-07T16:23:47"
+        },
+        "assets": {
+          "status": "failed",
+          "detail": "visual-qa FAILED 5 asset(s): C20-hinton-plumber.mid.png: FLASH FRAME at the head of assets/receipts/C20-hinton-plumber.mp4: frames 0-3 (0.00 to 0.16 s, scene cut at 0.16) are a close-up of the HOST; C34-top.png: PURPOSE OFF-SCREEN at the house receipt framing: in a 3840x2992 capture the article title (rows 2350-2521), 'Publication Date: Oct 01' (rows; C12.png: NO SAFE MARGIN at the TOP edge: the BLS headline 'Labor share at its lowest level, 52.8 percent, in second quarter 2026' starts at row 28 of; R22.png: NOT CROPPED TO THE SUPPLY PANEL (spec: crop to circulating / max supply): a 1936x2666 mobile-view portrait whose top 70 percent is the live ; C4-radiologists-note.png: DUPLICATE, DIVERGENT second state: it covers the same beat (CH4@628.24-633.52) as the approved animated chart state charts/C4-radiologists-n (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)",
+          "at": "2026-10-07T17:10:02"
+        }
+      }
+    },
+    "error": "assets: visual-qa FAILED 5 asset(s): C20-hinton-plumber.mid.png: FLASH FRAME at the head of assets/receipts/C20-hinton-plumber.mp4: frames 0-3 (0.00 to 0.16 s, scene cut at 0.16) are a close-up of the HOST; C34-top.png: PURPOSE OFF-SCREEN at the house receipt framing: in a 3840x2992 capture the article title (rows 2350-2521), 'Publication Date: Oct 01' (rows; C12.png: NO SAFE MARGIN at the TOP edge: the BLS headline 'Labor share at its lowest level, 52.8 percent, in second quarter 2026' starts at row 28 of; R22.png: NOT CROPPED TO THE SUPPLY PANEL (spec: crop to circulating / max supply): a 1936x2666 mobile-view portrait whose top 70 percent is the live ; C4-radiologists-note.png: DUPLICATE, DIVERGENT second state: it covers the same beat (CH4@628.24-633.52) as the approved animated chart state charts/C4-radiologists-n (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)"
+  },
+  {
+    "run_id": "longform-every-job-j@2026-10-07T17:12:38",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-every-job-j",
+    "started_at": "2026-10-07T17:12:38",
+    "ended_at": "2026-10-07T17:27:39",
+    "duration_s": 900.6,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-07T17:12:39"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-07T17:12:39"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-07T17:12:39"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-07T17:12:39"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-07T17:12:39"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-07T17:12:39"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-07T17:12:39"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-07T17:12:40"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-07T17:12:40"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-07T17:12:40"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-07T17:12:40"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.mp4 present",
+          "at": "2026-10-07T17:12:40"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.medium-words.json present",
+          "at": "2026-10-07T17:12:40"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1121.0s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-07T17:12:41"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T09:19:23",
+          "at": "2026-10-07T17:12:41"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (17 FACE windows)",
+          "at": "2026-10-07T17:12:41"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (224 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-07T17:12:41"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (8 beds over 8 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-07T17:12:42"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T11:10:22",
+          "at": "2026-10-07T17:12:42"
+        },
+        "assets": {
+          "status": "failed",
+          "detail": "visual-qa FAILED 1 asset(s): C34-top.png: CUT-OFF at the TOP edge: the site's yellow search bar (rows 0-67, x about 2546-3684 of 3840) is sliced by the top of the frame. The 'Search' (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)",
+          "at": "2026-10-07T17:27:39"
+        }
+      }
+    },
+    "error": "assets: visual-qa FAILED 1 asset(s): C34-top.png: CUT-OFF at the TOP edge: the site's yellow search bar (rows 0-67, x about 2546-3684 of 3840) is sliced by the top of the frame. The 'Search' (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)"
+  },
+  {
+    "run_id": "longform-every-job-k@2026-10-07T17:28:34",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-every-job-k",
+    "started_at": "2026-10-07T17:28:34",
+    "ended_at": "2026-10-07T18:40:52",
+    "duration_s": 4339.4,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "lint_docset",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-07T17:28:35"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-07T17:28:35"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-07T17:28:35"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-07T17:28:35"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-07T17:28:35"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-07T17:28:35"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-07T17:28:35"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-07T17:28:36"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-07T17:28:36"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-07T17:28:36"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-07T17:28:36"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.mp4 present",
+          "at": "2026-10-07T17:28:36"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.medium-words.json present",
+          "at": "2026-10-07T17:28:36"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1121.0s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-07T17:28:37"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T09:19:23",
+          "at": "2026-10-07T17:28:37"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (17 FACE windows)",
+          "at": "2026-10-07T17:28:37"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (224 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-07T17:28:37"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (8 beds over 8 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-07T17:28:38"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T11:10:22",
+          "at": "2026-10-07T17:28:38"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "224 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 390 file(s)",
+          "at": "2026-10-07T17:32:07"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "224 ids / 390 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-07T17:32:14"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (800 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-07T18:02:01"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (268 scene changes), variety PASS (0 fails, 1 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-07T18:40:51"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "268 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-07T18:40:52"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-07T18:40:52"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-every-job-l@2026-10-07T20:54:44",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-every-job-l",
+    "started_at": "2026-10-07T20:54:44",
+    "ended_at": "2026-10-07T21:34:38",
+    "duration_s": 2394.1,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "lint_docset",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-07T20:54:44"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-07T20:54:44"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-07T20:54:44"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-07T20:54:44"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-07T20:54:44"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-07T20:54:44"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-07T20:54:45"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-07T20:54:45"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-07T20:54:46"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-07T20:54:46"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-07T20:54:46"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.mp4 present",
+          "at": "2026-10-07T20:54:46"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.medium-words.json present",
+          "at": "2026-10-07T20:54:46"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1121.0s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-07T20:54:47"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T09:19:23",
+          "at": "2026-10-07T20:54:47"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (17 FACE windows)",
+          "at": "2026-10-07T20:54:47"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (224 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-07T20:54:48"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (8 beds over 8 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-07T20:54:50"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T11:10:22",
+          "at": "2026-10-07T20:54:50"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "224 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 390 file(s)",
+          "at": "2026-10-07T20:55:52"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "224 ids / 390 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-07T20:56:04"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (822 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-07T21:09:28"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (271 scene changes), variety PASS (0 fails, 1 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-07T21:34:37"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "269 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-07T21:34:37"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-07T21:34:38"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-every-job-l@2026-10-07T21:48:40",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "longform-every-job-l",
+    "started_at": "2026-10-07T21:48:40",
+    "ended_at": "2026-10-08T00:43:57",
+    "duration_s": 10516.2,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [
+        "blueprint"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": null,
+      "last_node": null,
+      "steps": null
+    },
+    "error": "graph crashed: AttributeError(\"'NoneType' object has no attribute 'group'\")"
+  },
+  {
+    "run_id": "longform-every-job-m@2026-10-08T00:45:36",
+    "lane": 4,
+    "lane_name": "longform",
+    "thread": "longform-every-job-m",
+    "started_at": "2026-10-08T00:45:36",
+    "ended_at": "2026-10-08T00:48:29",
+    "duration_s": 172.8,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "mix_audio",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-08T00:45:36"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-08T00:45:36"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-08T00:45:37"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-08T00:45:37"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-08T00:45:37"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-08T00:45:37"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-08T00:45:37"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-08T00:45:37"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-08T00:45:38"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-08T00:45:38"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-08T00:45:38"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.mp4 present",
+          "at": "2026-10-08T00:45:38"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.medium-words.json present",
+          "at": "2026-10-08T00:45:38"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1121.0s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-08T00:45:39"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T09:19:23",
+          "at": "2026-10-08T00:45:39"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (17 FACE windows)",
+          "at": "2026-10-08T00:45:39"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (224 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-08T00:45:39"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (8 beds over 8 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-08T00:45:40"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T11:10:22",
+          "at": "2026-10-08T00:45:40"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "224 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 390 file(s)",
+          "at": "2026-10-08T00:46:25"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "224 ids / 390 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-08T00:46:33"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (822 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-08T00:46:33"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (271 scene changes), variety PASS (0 fails, 1 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-08T00:46:34"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-08T00:46:35"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-08T00:46:35"
+        },
+        "gate_blueprint": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T21:48:40",
+          "at": "2026-10-08T00:46:35"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "5 card pause(s) x 1.5s baked -> ALL.e.paused.mp4 (1128.53s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-10-08T00:46:37"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "103 caption groups over 6 FACE window(s) -> EveryJobCaptions.ts",
+          "at": "2026-10-08T00:46:37"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "EveryJob.tsx registered, draft every-job-draft-v1.mp4 (1128.50s, audio ok)",
+          "at": "2026-10-08T00:46:37"
+        },
+        "verify_comp": {
+          "status": "ran",
+          "detail": "8 gate(s) PASS on EveryJob.tsx, draft every-job-draft-v1.mp4 matches the spine",
+          "at": "2026-10-08T00:46:40"
+        },
+        "mix_audio": {
+          "status": "ran",
+          "detail": "every-job-draft-v1-mix.mp4 (1128.55s, peak -3.1 dBFS) from MUSIC-PLAN + event-log SFX",
+          "at": "2026-10-08T00:48:29"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-every-job-n@2026-10-08T08:46:35",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-every-job-n",
+    "started_at": "2026-10-08T08:46:35",
+    "ended_at": "2026-10-08T09:48:01",
+    "duration_s": 3685.7,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [
+        "draft"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "final_render",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-08T08:46:35"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-08T08:46:35"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-08T08:46:35"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-08T08:46:35"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-08T08:46:35"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-08T08:46:35"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-08T08:46:36"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-08T08:46:36"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-08T08:46:37"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-08T08:46:37"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-08T08:46:37"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.mp4 present",
+          "at": "2026-10-08T08:46:37"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.medium-words.json present",
+          "at": "2026-10-08T08:46:37"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1121.0s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-08T08:46:37"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T09:19:23",
+          "at": "2026-10-08T08:46:37"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (17 FACE windows)",
+          "at": "2026-10-08T08:46:38"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (224 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-08T08:46:38"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (8 beds over 8 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-08T08:46:39"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T11:10:22",
+          "at": "2026-10-08T08:46:39"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "224 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 390 file(s)",
+          "at": "2026-10-08T08:47:24"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "224 ids / 390 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-08T08:47:31"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (825 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-08T08:47:32"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (273 scene changes), variety PASS (0 fails, 1 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-08T08:47:32"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "1 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-08T08:47:33"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-08T08:47:33"
+        },
+        "gate_blueprint": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T21:48:40",
+          "at": "2026-10-08T08:47:33"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "5 card pause(s) x 1.5s baked -> ALL.f.paused.mp4 (1138.54s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-10-08T08:47:36"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "102 caption groups over 6 FACE window(s) -> EveryJobCaptions.ts",
+          "at": "2026-10-08T08:47:36"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "EveryJob.tsx registered, draft every-job-draft-v2.mp4 (1138.57s, audio ok)",
+          "at": "2026-10-08T08:47:36"
+        },
+        "verify_comp": {
+          "status": "ran",
+          "detail": "9 gate(s) PASS on EveryJob.tsx, draft every-job-draft-v2.mp4 matches the spine",
+          "at": "2026-10-08T08:47:40"
+        },
+        "mix_audio": {
+          "status": "ran",
+          "detail": "every-job-draft-v2-mix.mp4 (1138.57s, peak -3.1 dBFS) from MUSIC-PLAN + event-log SFX",
+          "at": "2026-10-08T08:49:25"
+        },
+        "gate_draft": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-08T08:49:25"
+        },
+        "final_render": {
+          "status": "failed",
+          "detail": "render_comp.py --mode final failed (read the render log in _previews/)",
+          "at": "2026-10-08T09:48:00"
+        }
+      }
+    },
+    "error": "final_render: render_comp.py --mode final failed (read the render log in _previews/)\nOGRESS 15%\nPROGRESS 16%\nPROGRESS 17%\nPROGRESS 18%\nPROGRESS 19%\nPROGRESS 20%\nPROGRESS 21%\nPROGRESS 22%\nPROGRESS 23%\nPROGRESS 24%\nPROGRESS 25%\nPROGRESS 26%\nPROGRESS 27%\nPROGRESS 28%\nPROGRESS 29%\nPROGRESS 30%\nPROGRESS 31%\nPROGRESS 32%\nPROGRESS 33%\nPROGRESS 34%\nPROGRESS 35%\nPROGRESS 36%\nPROGRESS 37%\nPROGRESS 38%\nPROGRESS 39%\nPROGRESS 40%\nPROGRESS 41%\nPROGRESS 42%\nPROGRESS 43%\nPROGRESS 44%\nPROGRESS 45%\nPROGRESS 46%\nPROGRESS 47%\nPROGRESS 48%\nPROGRESS 49%\nPROGRESS 50%\nPROGRESS 51%\nPROGRESS 52%\nPROGRESS 53%\nPROGRESS 54%\nPROGRESS 55%\nPROGRESS 56%\nPROGRESS 57%\nPROGRESS 58%\nPROGRESS 59%\nPROGRESS 60%\nPROGRESS 61%\nPROGRESS 62%\nPROGRESS 63%\nPROGRESS 64%\nPROGRESS 65%\nPROGRESS 66%\nPROGRESS 67%\nPROGRESS 68%\nPROGRESS 69%\nPROGRESS 70%\nPROGRESS 71%\nPROGRESS 72%\nPROGRESS 73%\nPROGRESS 74%\nPROGRESS 75%\nPROGRESS 76%\nPROGRESS 77%\nPROGRESS 78%\nPROGRESS 79%\nPROGRESS 80%\nPROGRESS 81%\nPROGRESS 82%\nPROGRESS 83%\nPROGRESS 84%\nPROGRESS 85%\nPROGRESS 86%\nPROGRESS 87%\nPROGRESS 88%\nPROGRESS 89%\nPROGRESS 90%\nPROGRESS 91%\nPROGRESS 92%\nPROGRESS 93%\nPROGRESS 94%\nPROGRESS 95%\nPROGRESS 96%\nPROGRESS 97%\nPROGRESS 98%\nPROGRESS 99%\nRENDER-DONE mode=final out=C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\every-job\\_previews\\every-job-final-v1.mp4 dur=1138.859 spine=1138.543 fps=30 audio=yes log=C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\every-job\\_previews\\every-job-final-v1-render.log\nFATAL: render does not match the spine (duration / fps / audio)\n"
+  },
+  {
+    "run_id": "longform-every-job-o@2026-10-08T09:51:43",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-every-job-o",
+    "started_at": "2026-10-08T09:51:43",
+    "ended_at": "2026-10-08T09:57:14",
+    "duration_s": 331.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "every-job",
+      "until": "",
+      "approve": [
+        "draft"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "every-job: folder + PROJECT-LOG ready",
+          "at": "2026-10-08T09:51:43"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-08T09:51:43"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (18 FACE beat(s))",
+          "at": "2026-10-08T09:51:44"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-06T20:23:31",
+          "at": "2026-10-08T09:51:44"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-08T09:51:44"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-08T09:51:44"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-08T09:51:44"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-08T09:51:45"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-08T09:51:45"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T07:12:51",
+          "at": "2026-10-08T09:51:45"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "no bursts given at the spine review",
+          "at": "2026-10-08T09:51:45"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.mp4 present",
+          "at": "2026-10-08T09:51:45"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.d.desilenced.medium-words.json present",
+          "at": "2026-10-08T09:51:45"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.d.desilenced.mp4 ok (1121.0s), 3327 words, fps 30, chain lowbps+a+b+c+d",
+          "at": "2026-10-08T09:51:46"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T09:19:23",
+          "at": "2026-10-08T09:51:46"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (17 FACE windows)",
+          "at": "2026-10-08T09:51:46"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (224 cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-08T09:51:47"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (8 beds over 8 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-08T09:51:48"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T11:10:22",
+          "at": "2026-10-08T09:51:48"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "224 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 390 file(s)",
+          "at": "2026-10-08T09:52:32"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "224 ids / 390 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-08T09:52:39"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (825 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-08T09:52:40"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (273 scene changes), variety PASS (0 fails, 1 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-08T09:52:40"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-08T09:52:41"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-08T09:52:41"
+        },
+        "gate_blueprint": {
+          "status": "skipped",
+          "detail": "approved 2026-10-07T21:48:40",
+          "at": "2026-10-08T09:52:41"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "5 card pause(s) x 1.5s baked -> ALL.f.paused.mp4 (1138.54s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-10-08T09:52:43"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "102 caption groups over 6 FACE window(s) -> EveryJobCaptions.ts",
+          "at": "2026-10-08T09:52:43"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "EveryJob.tsx registered, draft every-job-draft-v2.mp4 (1138.57s, audio ok)",
+          "at": "2026-10-08T09:52:44"
+        },
+        "verify_comp": {
+          "status": "ran",
+          "detail": "9 gate(s) PASS on EveryJob.tsx, draft every-job-draft-v2.mp4 matches the spine",
+          "at": "2026-10-08T09:52:51"
+        },
+        "mix_audio": {
+          "status": "ran",
+          "detail": "every-job-draft-v2-mix.mp4 (1138.57s, peak -3.1 dBFS) from MUSIC-PLAN + event-log SFX",
+          "at": "2026-10-08T09:52:51"
+        },
+        "gate_draft": {
+          "status": "skipped",
+          "detail": "approved 2026-10-08T08:49:25",
+          "at": "2026-10-08T09:52:51"
+        },
+        "final_render": {
+          "status": "ran",
+          "detail": "every-job-final-v1.mp4 (crf 18) + music/SFX -> every-job-final-v1-mix.mp4 (1138.57s)",
+          "at": "2026-10-08T09:55:00"
+        },
+        "verify_final": {
+          "status": "ran",
+          "detail": "every-job-final-v1-mix.mp4 verified (1138.57s, -18.6 LUFS, peak -3.1 dBFS)",
+          "at": "2026-10-08T09:55:55"
+        },
+        "definition_of_done": {
+          "status": "ran",
+          "detail": "promoted every-job-final-v1-mix.mp4 -> every-job-FINAL.mp4 (1037 MB)",
+          "at": "2026-10-08T09:55:56"
+        },
+        "stage_longform": {
+          "status": "ran",
+          "detail": "staged longform\\every-job\\every-job.mp4 + longs.json entry 'Literally Every Job Is at Risk. Here's How to Prot', usage ledger recorded, _previews recycled",
+          "at": "2026-10-08T09:57:14"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-every-job-a@2026-10-08T10:57:57",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-every-job-a",
+    "started_at": "2026-10-08T10:57:57",
+    "ended_at": "2026-10-08T11:18:13",
+    "duration_s": 1215.8,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "every-job",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "s_cut_plan",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 1138.53s == spine 1138.54s; FINAL-TIME transcript written (215 segments)",
+          "at": "2026-10-08T10:57:58"
+        },
+        "s_cut_plan": {
+          "status": "failed",
+          "detail": "SHORT-CUT-PLAN.json failed verification: span 304.6-308.82 lacks `sourced: FACE|COVER` (the hook-face check and the caption windows depend on it) (fix the plan and re-drive; --redo s_cut_plan re-runs the strategist)",
+          "at": "2026-10-08T11:18:13"
+        }
+      }
+    },
+    "error": "s_cut_plan: SHORT-CUT-PLAN.json failed verification: span 304.6-308.82 lacks `sourced: FACE|COVER` (the hook-face check and the caption windows depend on it) (fix the plan and re-drive; --redo s_cut_plan re-runs the strategist)"
+  },
+  {
+    "run_id": "short-every-job-b@2026-10-08T11:19:20",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-every-job-b",
+    "started_at": "2026-10-08T11:19:20",
+    "ended_at": "2026-10-08T11:19:22",
+    "duration_s": 2.7,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "every-job",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "s_cut_plan",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 1138.53s == spine 1138.54s; FINAL-TIME transcript written (215 segments)",
+          "at": "2026-10-08T11:19:20"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "5 spans, 26.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-08T11:19:22"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-every-job-b@2026-10-08T11:28:59",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-every-job-b",
+    "started_at": "2026-10-08T11:28:59",
+    "ended_at": "2026-10-08T11:55:24",
+    "duration_s": 1585.0,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "every-job",
+      "seconds": 30.0,
+      "approve": [
+        "short_plan"
+      ],
+      "redo": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "s_verify_final",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 1138.53s == spine 1138.54s; FINAL-TIME transcript written (215 segments)",
+          "at": "2026-10-08T11:19:20"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "5 spans, 26.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-08T11:19:22"
+        },
+        "gate_short_plan": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-08T11:28:59"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "2 variant asset(s) ready: BR-27, BR-7",
+          "at": "2026-10-08T11:42:56"
+        },
+        "s_extract": {
+          "status": "ran",
+          "detail": "5 intermediates, 26.767s of spans",
+          "at": "2026-10-08T11:43:13"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "35 caption groups over 5 COVER-sourced window(s) -> EveryJobShortCaptions.ts",
+          "at": "2026-10-08T11:43:28"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "EveryJobShort.tsx registered (30.0s)",
+          "at": "2026-10-08T11:53:09"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on EveryJobShort.tsx",
+          "at": "2026-10-08T11:53:09"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v1-video.mp4 (30.00s)",
+          "at": "2026-10-08T11:54:52"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v1.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-08T11:54:55"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v1.mp4: 30.00s, -18.5 LUFS, peak -6.1 dBFS, hook face 49%",
+          "at": "2026-10-08T11:55:24"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-every-job-c@2026-10-08T12:07:46",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-every-job-c",
+    "started_at": "2026-10-08T12:07:46",
+    "ended_at": "2026-10-08T12:10:21",
+    "duration_s": 155.0,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "every-job",
+      "seconds": 30.0,
+      "approve": [
+        "short_plan"
+      ],
+      "redo": [
+        "s_captions",
+        "s_render",
+        "s_mix",
+        "s_verify_final"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "s_verify_final",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 1138.53s == spine 1138.54s; FINAL-TIME transcript written (215 segments)",
+          "at": "2026-10-08T12:07:47"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "5 spans, 26.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-08T12:07:49"
+        },
+        "gate_short_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-08T11:28:59",
+          "at": "2026-10-08T12:07:49"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "2 variant asset(s) ready: BR-27, BR-7",
+          "at": "2026-10-08T12:07:51"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-10-08T12:07:51"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "36 caption groups over 5 COVER-sourced window(s) -> EveryJobShortCaptions.ts",
+          "at": "2026-10-08T12:07:51"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "EveryJobShort.tsx registered (30.0s)",
+          "at": "2026-10-08T12:07:51"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on EveryJobShort.tsx",
+          "at": "2026-10-08T12:07:51"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v2-video.mp4 (30.00s)",
+          "at": "2026-10-08T12:09:57"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v2.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-08T12:10:01"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v2.mp4: 30.00s, -18.5 LUFS, peak -6.1 dBFS, hook face 49%",
+          "at": "2026-10-08T12:10:21"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-every-job-d@2026-10-08T12:11:31",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-every-job-d",
+    "started_at": "2026-10-08T12:11:31",
+    "ended_at": "2026-10-08T12:14:07",
+    "duration_s": 155.7,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "every-job",
+      "seconds": 30.0,
+      "approve": [
+        "short_plan"
+      ],
+      "redo": [
+        "s_captions",
+        "s_render",
+        "s_mix",
+        "s_verify_final"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "s_verify_final",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 1138.53s == spine 1138.54s; FINAL-TIME transcript written (215 segments)",
+          "at": "2026-10-08T12:11:31"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "5 spans, 26.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-08T12:11:34"
+        },
+        "gate_short_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-08T11:28:59",
+          "at": "2026-10-08T12:11:34"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "2 variant asset(s) ready: BR-27, BR-7",
+          "at": "2026-10-08T12:11:35"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-10-08T12:11:35"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "35 caption groups over 5 COVER-sourced window(s) -> EveryJobShortCaptions.ts",
+          "at": "2026-10-08T12:11:35"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "EveryJobShort.tsx registered (30.0s)",
+          "at": "2026-10-08T12:11:35"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on EveryJobShort.tsx",
+          "at": "2026-10-08T12:11:36"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v3-video.mp4 (30.00s)",
+          "at": "2026-10-08T12:13:42"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v3.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-08T12:13:46"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v3.mp4: 30.00s, -18.5 LUFS, peak -6.1 dBFS, hook face 49%",
+          "at": "2026-10-08T12:14:07"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-every-job-d@2026-10-08T12:20:16",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-every-job-d",
+    "started_at": "2026-10-08T12:20:16",
+    "ended_at": "2026-10-08T12:20:19",
+    "duration_s": 2.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "every-job",
+      "seconds": 30.0,
+      "approve": [
+        "short"
+      ],
+      "redo": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "every-job",
+      "last_node": "s_deliver",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 1138.53s == spine 1138.54s; FINAL-TIME transcript written (215 segments)",
+          "at": "2026-10-08T12:11:31"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "5 spans, 26.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-08T12:11:34"
+        },
+        "gate_short_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-08T11:28:59",
+          "at": "2026-10-08T12:11:34"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "2 variant asset(s) ready: BR-27, BR-7",
+          "at": "2026-10-08T12:11:35"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-10-08T12:11:35"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "35 caption groups over 5 COVER-sourced window(s) -> EveryJobShortCaptions.ts",
+          "at": "2026-10-08T12:11:35"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "EveryJobShort.tsx registered (30.0s)",
+          "at": "2026-10-08T12:11:35"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on EveryJobShort.tsx",
+          "at": "2026-10-08T12:11:36"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v3-video.mp4 (30.00s)",
+          "at": "2026-10-08T12:13:42"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v3.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-08T12:13:46"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "every-job-SHORT-30s-v3.mp4: 30.00s, -18.5 LUFS, peak -6.1 dBFS, hook face 49%",
+          "at": "2026-10-08T12:14:07"
+        },
+        "gate_short": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-08T12:20:16"
+        },
+        "s_deliver": {
+          "status": "ran",
+          "detail": "promoted -> every-job-SHORT-30s.mp4 (29 MB); not queued",
+          "at": "2026-10-08T12:20:19"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "stub-clip-inserts@2026-10-09T17:28:25",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "stub-clip-inserts",
+    "started_at": "2026-10-09T17:28:25",
+    "ended_at": "2026-10-09T17:28:25",
+    "duration_s": 0.2,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": {
+      "project": "stub-project",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "stub-project",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "research": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "gate_screenplay": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "await_recording": {
+          "status": "stub",
+          "detail": "placeholder",
+          "at": "2026-10-09T17:28:25"
+        },
+        "compress": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "defumble": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "cover_blackout": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "desilence_coarse": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "gate_spine_review": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "burst_removal": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "desilence_final": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "transcribe": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "verify_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "gate_spine": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "as_recorded": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "coverage": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "music_plan": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "gate_plan": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "assets": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "verify_assets": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "edit_plan": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "transitions": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "reconcile_docs": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "lint_docset": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "gate_blueprint": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "card_pauses": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "captions": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "comp_build": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "verify_comp": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "mix_audio": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "gate_draft": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "final_render": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "verify_final": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "definition_of_done": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        },
+        "stage_longform": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-09T17:28:25"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-retire-early-a@2026-10-09T17:53:25",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-a",
+    "started_at": "2026-10-09T17:53:25",
+    "ended_at": "2026-10-09T19:15:53",
+    "duration_s": 4948.7,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "screenplay",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-09T17:53:25"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (105 source links)",
+          "at": "2026-10-09T18:34:48"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (12 FACE beat(s))",
+          "at": "2026-10-09T19:15:53"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-retire-early-a@2026-10-10T11:04:43",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-a",
+    "started_at": "2026-10-10T11:04:43",
+    "ended_at": "2026-10-10T11:49:14",
+    "duration_s": 2671.5,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [
+        "screenplay"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "desilence_coarse",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-09T17:53:25"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (105 source links)",
+          "at": "2026-10-09T18:34:48"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (12 FACE beat(s))",
+          "at": "2026-10-09T19:15:53"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-10T11:04:43"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-10T11:04:43"
+        },
+        "compress": {
+          "status": "ran",
+          "detail": "ALL.lowbps.mp4 (2787.8s)",
+          "at": "2026-10-10T11:08:24"
+        },
+        "defumble": {
+          "status": "ran",
+          "detail": "ALL.a.defumbled.mp4 (1686.4s)",
+          "at": "2026-10-10T11:28:54"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (1686.4s)",
+          "at": "2026-10-10T11:43:11"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (665.3s)",
+          "at": "2026-10-10T11:49:14"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-retire-early-a@2026-10-10T13:13:08",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-a",
+    "started_at": "2026-10-10T13:13:08",
+    "ended_at": "2026-10-10T13:21:28",
+    "duration_s": 499.9,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [
+        "spine_review"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "verify_spine",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-09T17:53:25"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (105 source links)",
+          "at": "2026-10-09T18:34:48"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (12 FACE beat(s))",
+          "at": "2026-10-09T19:15:53"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-10T11:04:43"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-10T11:04:43"
+        },
+        "compress": {
+          "status": "ran",
+          "detail": "ALL.lowbps.mp4 (2787.8s)",
+          "at": "2026-10-10T11:08:24"
+        },
+        "defumble": {
+          "status": "ran",
+          "detail": "ALL.a.defumbled.mp4 (1686.4s)",
+          "at": "2026-10-10T11:28:54"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (1686.4s)",
+          "at": "2026-10-10T11:43:11"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (665.3s)",
+          "at": "2026-10-10T11:49:14"
+        },
+        "gate_spine_review": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-10T13:13:08"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-10T13:13:09"
+        },
+        "desilence_final": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 (632.7s)",
+          "at": "2026-10-10T13:17:11"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.medium-words.json (0.0s)",
+          "at": "2026-10-10T13:21:28"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (632.7s), 2009 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-10T13:21:28"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-retire-early-b@2026-10-10T14:29:30",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-b",
+    "started_at": "2026-10-10T14:29:30",
+    "ended_at": "2026-10-10T14:45:36",
+    "duration_s": 965.8,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "verify_spine",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-10T14:29:30"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-10T14:29:30"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-10T14:29:30"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-10T14:29:30"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-10T14:29:30"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-10T14:29:30"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-10T14:29:31"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-10T14:29:31"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-10T14:29:31"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-10T14:29:31"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-10T14:29:32"
+        },
+        "desilence_final": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 (648.3s)",
+          "at": "2026-10-10T14:32:39"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.medium-words.json (0.0s)",
+          "at": "2026-10-10T14:45:35"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-10T14:45:36"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-retire-early-b@2026-10-10T16:16:41",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-b",
+    "started_at": "2026-10-10T16:16:41",
+    "ended_at": "2026-10-10T17:53:44",
+    "duration_s": 5823.2,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [
+        "spine"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "music_plan",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-10T14:29:30"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-10T14:29:30"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-10T14:29:30"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-10T14:29:30"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-10T14:29:30"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-10T14:29:30"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-10T14:29:31"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-10T14:29:31"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-10T14:29:31"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-10T14:29:31"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-10T14:29:32"
+        },
+        "desilence_final": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 (648.3s)",
+          "at": "2026-10-10T14:32:39"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.medium-words.json (0.0s)",
+          "at": "2026-10-10T14:45:35"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-10T14:45:36"
+        },
+        "gate_spine": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-10T16:16:41"
+        },
+        "as_recorded": {
+          "status": "ran",
+          "detail": "AS-RECORDED.md written, lint PASS (11 FACE windows)",
+          "at": "2026-10-10T16:26:56"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-10T17:28:31"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-10T17:53:44"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-retire-early-b@2026-10-10T18:16:45",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-b",
+    "started_at": "2026-10-10T18:16:45",
+    "ended_at": "2026-10-10T19:46:30",
+    "duration_s": 5385.6,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [
+        "plan"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-10T14:29:30"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-10T14:29:30"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-10T14:29:30"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-10T14:29:30"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-10T14:29:30"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-10T14:29:30"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-10T14:29:31"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-10T14:29:31"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-10T14:29:31"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-10T14:29:31"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-10T14:29:32"
+        },
+        "desilence_final": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 (648.3s)",
+          "at": "2026-10-10T14:32:39"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.medium-words.json (0.0s)",
+          "at": "2026-10-10T14:45:35"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-10T14:45:36"
+        },
+        "gate_spine": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-10T16:16:41"
+        },
+        "as_recorded": {
+          "status": "ran",
+          "detail": "AS-RECORDED.md written, lint PASS (11 FACE windows)",
+          "at": "2026-10-10T16:26:56"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-10T17:28:31"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-10T17:53:44"
+        },
+        "gate_plan": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-10T18:16:45"
+        },
+        "assets": {
+          "status": "failed",
+          "detail": "assets still missing after the builders ran: image-gen: IMG-22 (read graph/data/agent-assets-<builder>-<project>.log; a re-drive dispatches only the missing ids)",
+          "at": "2026-10-10T19:46:30"
+        }
+      }
+    },
+    "error": "assets: assets still missing after the builders ran: image-gen: IMG-22 (read graph/data/agent-assets-<builder>-<project>.log; a re-drive dispatches only the missing ids)"
+  },
+  {
+    "run_id": "longform-retire-early-d@2026-10-10T22:05:49",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-d",
+    "started_at": "2026-10-10T22:05:49",
+    "ended_at": "2026-10-10T22:32:56",
+    "duration_s": 1627.7,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-10T22:05:49"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-10T22:05:49"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-10T22:05:49"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-10T22:05:49"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-10T22:05:49"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-10T22:05:49"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-10T22:05:50"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-10T22:05:51"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-10T22:05:51"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-10T22:05:51"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-10T22:05:51"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-10T22:05:52"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-10T22:05:52"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-10T22:05:52"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-10T22:05:52"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-10T22:05:52"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-10T22:05:57"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-10T22:05:58"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T18:16:45",
+          "at": "2026-10-10T22:05:58"
+        },
+        "assets": {
+          "status": "failed",
+          "detail": "visual-qa FAILED 74 asset(s): BR-6-hazard-triangle.mid.png: brightest daylight clip after BR-8 (mean luma 144, pastel overcast sky ~19% near-white): not a dark grade, a bright flash in a dark video; BR-7-ballot-box.mid.png: flat pale-grey frame (mean luma 124): not a dark grade, the middle frame is after the drop (empty hand); the ballot only enters the slot at ; BR-8-calculator-statements.mid.png: legible in-scene text and figures fill the frame: an upside-down printed statement reading 'Separate financial statements', 'Unit : Baht', '; BR-10-turnstile-denied.mid.png: bright daylight frame (mean luma 122, flat orange wall): not a dark grade, a small 'PERCo' maker mark under the red X (barely legible); IMG-9-meme-coins-toppling.png: the green frog coin reads as Pepe the Frog (the PEPE token's own mark and a third-party character) and the shiba coin reads as the DOGE/SHIB; C34-challenger-ai-cuts.png: bottom ~30% of the 16:9 frame is an unrelated Challenger chart (ANNOUNCED HIRING PLANS: 90.8K / 117.3K / 66,557) cut off by the bottom edge:; C36-stanford-19-percent.png: bottom edge slices a body line ('workers, employment is flat or rising ...') inside the 16:9 frame; CLIP-2-in.png: Tenev is frozen mid-blink (eyes half shut) in the lead-in still, held about 7.2 s (87.45-94.66), the burned context-caption band sits on top (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)",
+          "at": "2026-10-10T22:32:56"
+        }
+      }
+    },
+    "error": "assets: visual-qa FAILED 74 asset(s): BR-6-hazard-triangle.mid.png: brightest daylight clip after BR-8 (mean luma 144, pastel overcast sky ~19% near-white): not a dark grade, a bright flash in a dark video; BR-7-ballot-box.mid.png: flat pale-grey frame (mean luma 124): not a dark grade, the middle frame is after the drop (empty hand); the ballot only enters the slot at ; BR-8-calculator-statements.mid.png: legible in-scene text and figures fill the frame: an upside-down printed statement reading 'Separate financial statements', 'Unit : Baht', '; BR-10-turnstile-denied.mid.png: bright daylight frame (mean luma 122, flat orange wall): not a dark grade, a small 'PERCo' maker mark under the red X (barely legible); IMG-9-meme-coins-toppling.png: the green frog coin reads as Pepe the Frog (the PEPE token's own mark and a third-party character) and the shiba coin reads as the DOGE/SHIB; C34-challenger-ai-cuts.png: bottom ~30% of the 16:9 frame is an unrelated Challenger chart (ANNOUNCED HIRING PLANS: 90.8K / 117.3K / 66,557) cut off by the bottom edge:; C36-stanford-19-percent.png: bottom edge slices a body line ('workers, employment is flat or rising ...') inside the 16:9 frame; CLIP-2-in.png: Tenev is frozen mid-blink (eyes half shut) in the lead-in still, held about 7.2 s (87.45-94.66), the burned context-caption band sits on top (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)"
+  },
+  {
+    "run_id": "longform-retire-early-e@2026-10-10T22:36:03",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-e",
+    "started_at": "2026-10-10T22:36:03",
+    "ended_at": "2026-10-10T23:45:04",
+    "duration_s": 4140.7,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "assets",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-10T22:36:04"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-10T22:36:04"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-10T22:36:04"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-10T22:36:04"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-10T22:36:04"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-10T22:36:04"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-10T22:36:04"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-10T22:36:05"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-10T22:36:05"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-10T22:36:05"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-10T22:36:05"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-10T22:36:06"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-10T22:36:06"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-10T22:36:06"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-10T22:36:06"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-10T22:36:07"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-10T22:36:11"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-10T22:36:12"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T18:16:45",
+          "at": "2026-10-10T22:36:12"
+        },
+        "assets": {
+          "status": "failed",
+          "detail": "visual-qa FAILED 2 asset(s): R5-coingecko-market-cap.png: OVERFLOW: the file is 2790x1975 (1.41:1). At the canonical receipt placement (comp-build.md section 4: full video WIDTH, top-aligned) it sca; R7-defillama-ton-stablecoins.png: FONT: the added provenance band ('defillama.com/stablecoins/TON | all stablecoins on TON, market cap | read 2026-10-11 03:16:16 UTC') is set (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)",
+          "at": "2026-10-10T23:45:04"
+        }
+      }
+    },
+    "error": "assets: visual-qa FAILED 2 asset(s): R5-coingecko-market-cap.png: OVERFLOW: the file is 2790x1975 (1.41:1). At the canonical receipt placement (comp-build.md section 4: full video WIDTH, top-aligned) it sca; R7-defillama-ton-stablecoins.png: FONT: the added provenance band ('defillama.com/stablecoins/TON | all stablecoins on TON, market cap | read 2026-10-11 03:16:16 UTC') is set (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)"
+  },
+  {
+    "run_id": "longform-retire-early-f@2026-10-10T23:46:31",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-f",
+    "started_at": "2026-10-10T23:46:31",
+    "ended_at": "2026-10-11T00:04:46",
+    "duration_s": 1094.7,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "edit_plan",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-10T23:46:32"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-10T23:46:32"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-10T23:46:32"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-10T23:46:32"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-10T23:46:32"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-10T23:46:32"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-10T23:46:32"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-10T23:46:33"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-10T23:46:33"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-10T23:46:33"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-10T23:46:34"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-10T23:46:34"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-10T23:46:34"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-10T23:46:34"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-10T23:46:34"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-10T23:46:35"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-10T23:46:39"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-10T23:46:40"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T18:16:45",
+          "at": "2026-10-10T23:46:40"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "111 asset id(s) built (1 builder(s) dispatched), visual-qa PASS on 161 file(s)",
+          "at": "2026-10-11T00:04:43"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "111 ids / 161 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-11T00:04:46"
+        },
+        "edit_plan": {
+          "status": "failed",
+          "detail": "list_face_joins.py failed to write spine/jumpcuts-final.json",
+          "at": "2026-10-11T00:04:46"
+        }
+      }
+    },
+    "error": "edit_plan: list_face_joins.py failed to write spine/jumpcuts-final.json\nTraceback (most recent call last):\n  File \"C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\scripts\\list_face_joins.py\", line 104, in <module>\n    main()\n  File \"C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\scripts\\list_face_joins.py\", line 44, in main\n    d_map = json.loads((S / f\"{sc}.d.desilenced.map.json\").read_text(encoding=\"utf-8\"))\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mnede\\AppData\\Local\\Programs\\Python\\Python312\\Lib\\pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\mnede\\\\Documents\\\\Claude\\\\social-media\\\\video-creation\\\\longform-edited\\\\media\\\\retire-early\\\\spine\\\\ALL.d.desilenced.map.json'\n"
+  },
+  {
+    "run_id": "longform-retire-early-g@2026-10-11T00:05:50",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-g",
+    "started_at": "2026-10-11T00:05:50",
+    "ended_at": "2026-10-11T00:56:50",
+    "duration_s": 3059.7,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "reconcile_docs",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-11T00:05:50"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-11T00:05:50"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-11T00:05:51"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-11T00:05:51"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-11T00:05:51"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-11T00:05:51"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-11T00:05:51"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-11T00:05:51"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-11T00:05:52"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-11T00:05:52"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-11T00:05:52"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-11T00:05:53"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-11T00:05:53"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-11T00:05:53"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-11T00:05:53"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-11T00:05:53"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-11T00:05:57"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-11T00:05:58"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T18:16:45",
+          "at": "2026-10-11T00:05:58"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "111 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 161 file(s)",
+          "at": "2026-10-11T00:06:14"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "111 ids / 161 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-11T00:06:17"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (514 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-11T00:26:40"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (146 scene changes), variety PASS (0 fails, 2 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-11T00:56:49"
+        },
+        "reconcile_docs": {
+          "status": "failed",
+          "detail": "blueprint set does not reconcile (see FAIL lines above; fix the named rows by hand, then re-drive)",
+          "at": "2026-10-11T00:56:50"
+        }
+      }
+    },
+    "error": "reconcile_docs: blueprint set does not reconcile (see FAIL lines above; fix the named rows by hand, then re-drive)\nder at 5:52.4: no event line to carry lib:spin-corner-ease-lt (SPIN-newfacet)\n  warn  no plan row matches the placeholder at 7:13.4: no event line to carry lib:melt-equidistant-2 (MELT-transform)\n  warn  no plan row matches the placeholder at 7:41.2: no event line to carry lib:spin-corner-ease-lt (SPIN-newfacet)\n  warn  no plan row matches the placeholder at 9:15.6: no event line to carry lib:spin-corner-ease-lt (SPIN-newfacet)\n  warn  no plan row matches the placeholder at 10:48.3: no event line to carry hand:cut (face-cut)\n  note  resolved 137 placeholder(s) in EDIT-PLAN.md; CUE-SHEET TRANSITIONS section rewritten\n\nreconcile_docs — retire-early\n----------------------------------------------------------------\n  FAIL  plan id lib:melt-equidistant-1 (MELT-transform at 163.90s) never appears in EDIT-PLAN.md\n  FAIL  plan id lib:spin-corner-ease-lt (SPIN-newfacet at 235.20s) never appears in EDIT-PLAN.md\n  FAIL  plan id lib:spin-corner-ease-lt (SPIN-newfacet at 352.40s) never appears in EDIT-PLAN.md\n  FAIL  plan id lib:melt-equidistant-2 (MELT-transform at 433.40s) never appears in EDIT-PLAN.md\n  FAIL  plan id lib:spin-corner-ease-lt (SPIN-newfacet at 461.25s) never appears in EDIT-PLAN.md\n  FAIL  plan id lib:spin-corner-ease-lt (SPIN-newfacet at 555.60s) never appears in EDIT-PLAN.md\n  FAIL  plan id hand:cut (face-cut at 648.27s) never appears in EDIT-PLAN.md\n----------------------------------------------------------------\nRECONCILE FAIL resolved=137 placeholders_left=0 fails=7\n"
+  },
+  {
+    "run_id": "longform-retire-early-h@2026-10-11T01:01:23",
+    "lane": 4,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-h",
+    "started_at": "2026-10-11T01:01:23",
+    "ended_at": "2026-10-11T01:05:25",
+    "duration_s": 242.5,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [
+        "blueprint"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "card_pauses",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-11T01:01:23"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-11T01:01:23"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-11T01:01:23"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-11T01:01:23"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-11T01:01:23"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-11T01:01:23"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-11T01:01:23"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-11T01:01:24"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-11T01:01:24"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-11T01:01:24"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-11T01:01:25"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-11T01:01:25"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-11T01:01:25"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-11T01:01:25"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-11T01:01:25"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-11T01:01:26"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-11T01:01:30"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-11T01:01:31"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T18:16:45",
+          "at": "2026-10-11T01:01:31"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "111 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 161 file(s)",
+          "at": "2026-10-11T01:01:47"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "111 ids / 161 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-11T01:01:50"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (514 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-11T01:01:51"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (146 scene changes), variety PASS (0 fails, 2 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-11T01:01:52"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-11T01:01:52"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-11T01:01:52"
+        },
+        "gate_blueprint": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-11T01:01:52"
+        },
+        "card_pauses": {
+          "status": "failed",
+          "detail": "bake_clip_insert.py failed (a splice point with no silence trough, or a clip without its own audio: see above; move splice_at in COVER-PLAN.json or recapture the clip, then re-drive)",
+          "at": "2026-10-11T01:05:25"
+        }
+      }
+    },
+    "error": "card_pauses: bake_clip_insert.py failed (a splice point with no silence trough, or a clip without its own audio: see above; move splice_at in COVER-PLAN.json or recapture the clip, then re-drive)\nINSERT-SNAP CLIP-2 planned=94.66 at=94.675 dur=12.250 trough 94.660-94.690, gate guard -49.5 dB\nINSERT-SNAP CLIP-3 planned=184.12 at=184.13 dur=7.550 trough 184.110-184.150, gate guard -49.7 dB\nBAKED C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\retire-early\\spine\\ALL.g.paused.mp4 dur=674.216 (expected 674.109 = 648.309 + pauses 25.800)\nFAIL  output duration off by +0.107s\n"
+  },
+  {
+    "run_id": "longform-retire-early-i@2026-10-11T01:07:15",
+    "lane": 4,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-i",
+    "started_at": "2026-10-11T01:07:15",
+    "ended_at": "2026-10-11T01:11:18",
+    "duration_s": 243.9,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "card_pauses",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-11T01:07:15"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-11T01:07:15"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-11T01:07:15"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-11T01:07:15"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-11T01:07:15"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-11T01:07:15"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-11T01:07:15"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-11T01:07:16"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-11T01:07:16"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-11T01:07:16"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-11T01:07:17"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-11T01:07:17"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-11T01:07:17"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-11T01:07:17"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-11T01:07:17"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-11T01:07:18"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-11T01:07:22"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-11T01:07:23"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T18:16:45",
+          "at": "2026-10-11T01:07:23"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "111 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 161 file(s)",
+          "at": "2026-10-11T01:07:39"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "111 ids / 161 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-11T01:07:43"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (514 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-11T01:07:43"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (146 scene changes), variety PASS (0 fails, 2 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-11T01:07:44"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-11T01:07:44"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-11T01:07:45"
+        },
+        "gate_blueprint": {
+          "status": "skipped",
+          "detail": "approved 2026-10-11T01:01:52",
+          "at": "2026-10-11T01:07:45"
+        },
+        "card_pauses": {
+          "status": "failed",
+          "detail": "bake_clip_insert.py failed (a splice point with no silence trough, or a clip without its own audio: see above; move splice_at in COVER-PLAN.json or recapture the clip, then re-drive)",
+          "at": "2026-10-11T01:11:18"
+        }
+      }
+    },
+    "error": "card_pauses: bake_clip_insert.py failed (a splice point with no silence trough, or a clip without its own audio: see above; move splice_at in COVER-PLAN.json or recapture the clip, then re-drive)\nINSERT-SNAP CLIP-2 planned=94.66 at=94.675 dur=12.250 trough 94.660-94.690, gate guard -49.5 dB\nINSERT-SNAP CLIP-3 planned=184.12 at=184.13 dur=7.550 trough 184.110-184.150, gate guard -49.7 dB\nBAKED C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\retire-early\\spine\\ALL.g.paused.mp4 dur=674.272 (expected 674.142 = 648.309 + pauses 25.833; video 674.133 audio 674.272, frame-exact pauses)\nFAIL  output duration off by +0.130s\n"
+  },
+  {
+    "run_id": "longform-retire-early-j@2026-10-11T01:20:22",
+    "lane": 4,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-j",
+    "started_at": "2026-10-11T01:20:22",
+    "ended_at": "2026-10-11T03:21:29",
+    "duration_s": 7267.1,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "mix_audio",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-11T01:20:22"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-11T01:20:22"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-11T01:20:23"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-11T01:20:23"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-11T01:20:23"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-11T01:20:23"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-11T01:20:23"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-11T01:20:23"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-11T01:20:24"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-11T01:20:24"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-11T01:20:24"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-11T01:20:25"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-11T01:20:25"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-11T01:20:25"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-11T01:20:25"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-11T01:20:25"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-11T01:20:29"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-11T01:20:30"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T18:16:45",
+          "at": "2026-10-11T01:20:30"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "111 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 161 file(s)",
+          "at": "2026-10-11T01:20:47"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "111 ids / 161 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-11T01:20:50"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (514 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-11T01:20:50"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (146 scene changes), variety PASS (0 fails, 2 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-11T01:20:51"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-11T01:20:52"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-11T01:20:52"
+        },
+        "gate_blueprint": {
+          "status": "skipped",
+          "detail": "approved 2026-10-11T01:01:52",
+          "at": "2026-10-11T01:20:52"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "4 card pause(s) x 1.5s + 2 clip insert(s) baked -> ALL.g.paused.mp4 (674.25s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-10-11T01:20:54"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "175 caption groups over 9 FACE window(s) -> RetireEarlyCaptions.ts",
+          "at": "2026-10-11T01:21:03"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "RetireEarly.tsx registered, draft retire-early-draft-v1.mp4 (674.27s, audio ok)",
+          "at": "2026-10-11T03:20:26"
+        },
+        "verify_comp": {
+          "status": "ran",
+          "detail": "9 gate(s) PASS on RetireEarly.tsx, draft retire-early-draft-v1.mp4 matches the spine",
+          "at": "2026-10-11T03:20:31"
+        },
+        "mix_audio": {
+          "status": "ran",
+          "detail": "retire-early-draft-v1-mix.mp4 (674.27s, peak -0.9 dBFS) from MUSIC-PLAN + event-log SFX",
+          "at": "2026-10-11T03:21:29"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-retire-early-k@2026-10-11T08:15:28",
+    "lane": 3,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-k",
+    "started_at": "2026-10-11T08:15:28",
+    "ended_at": "2026-10-11T08:15:31",
+    "duration_s": 3.2,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "coverage",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-11T08:15:28"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-11T08:15:28"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-11T08:15:28"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-11T08:15:28"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-11T08:15:28"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-11T08:15:28"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-11T08:15:29"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-11T08:15:29"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-11T08:15:29"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-11T08:15:29"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-11T08:15:30"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-11T08:15:30"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-11T08:15:30"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-11T08:15:31"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-11T08:15:31"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-11T08:15:31"
+        },
+        "coverage": {
+          "status": "failed",
+          "detail": "COVER-PLAN.json failed verification: 23.53s uncovered between 244.53s and 268.06s (not a FACE window) (fix COVER-PLAN.json and resume; --redo coverage re-runs the strategist instead)",
+          "at": "2026-10-11T08:15:31"
+        }
+      }
+    },
+    "error": "coverage: COVER-PLAN.json failed verification: 23.53s uncovered between 244.53s and 268.06s (not a FACE window) (fix COVER-PLAN.json and resume; --redo coverage re-runs the strategist instead)"
+  },
+  {
+    "run_id": "longform-retire-early-l@2026-10-11T08:16:27",
+    "lane": 4,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-l",
+    "started_at": "2026-10-11T08:16:27",
+    "ended_at": "2026-10-11T08:21:59",
+    "duration_s": 332.7,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "verify_comp",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-11T08:16:27"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-11T08:16:27"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-11T08:16:27"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-11T08:16:27"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-11T08:16:27"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-11T08:16:27"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-11T08:16:28"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-11T08:16:28"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-11T08:16:28"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-11T08:16:28"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-11T08:16:29"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-11T08:16:29"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-11T08:16:29"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-11T08:16:29"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-11T08:16:29"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-11T08:16:30"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-11T08:16:34"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-11T08:16:35"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T18:16:45",
+          "at": "2026-10-11T08:16:35"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "111 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 161 file(s)",
+          "at": "2026-10-11T08:16:48"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "111 ids / 161 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-11T08:16:51"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (514 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-11T08:16:51"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (146 scene changes), variety PASS (0 fails, 2 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-11T08:16:52"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-11T08:16:53"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-11T08:16:53"
+        },
+        "gate_blueprint": {
+          "status": "skipped",
+          "detail": "approved 2026-10-11T01:01:52",
+          "at": "2026-10-11T08:16:53"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "4 card pause(s) x 1.5s + 2 clip insert(s) baked -> ALL.g.paused.mp4 (674.25s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-10-11T08:21:45"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "175 caption groups over 9 FACE window(s) -> RetireEarlyCaptions.ts",
+          "at": "2026-10-11T08:21:54"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "RetireEarly.tsx registered, draft retire-early-draft-v1.mp4 (674.27s, audio ok)",
+          "at": "2026-10-11T08:21:55"
+        },
+        "verify_comp": {
+          "status": "failed",
+          "detail": "comp gates failed: lint_covers.py (see the gate output above; fix the comp, re-render the draft, re-drive)",
+          "at": "2026-10-11T08:21:59"
+        }
+      }
+    },
+    "error": "verify_comp: comp gates failed: lint_covers.py (see the gate output above; fix the comp, re-render the draft, re-drive)"
+  },
+  {
+    "run_id": "longform-retire-early-m@2026-10-11T08:33:35",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-m",
+    "started_at": "2026-10-11T08:33:35",
+    "ended_at": "2026-10-11T09:19:01",
+    "duration_s": 2725.5,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [
+        "draft"
+      ],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-11T08:33:35"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-11T08:33:35"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-11T08:33:35"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-11T08:33:35"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-11T08:33:35"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-11T08:33:35"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-11T08:33:37"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-11T08:33:37"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-11T08:33:37"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-11T08:33:37"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-11T08:33:38"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-11T08:33:38"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-11T08:33:38"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-11T08:33:39"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-11T08:33:39"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-11T08:33:39"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-11T08:33:43"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-11T08:33:44"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T18:16:45",
+          "at": "2026-10-11T08:33:44"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "111 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 161 file(s)",
+          "at": "2026-10-11T08:34:01"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "111 ids / 161 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-11T08:34:04"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (514 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-11T08:34:05"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (146 scene changes), variety PASS (0 fails, 2 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-11T08:34:05"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-11T08:34:06"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-11T08:34:06"
+        },
+        "gate_blueprint": {
+          "status": "skipped",
+          "detail": "approved 2026-10-11T01:01:52",
+          "at": "2026-10-11T08:34:06"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "4 card pause(s) x 1.5s + 2 clip insert(s) baked -> ALL.g.paused.mp4 (674.25s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-10-11T08:35:21"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "175 caption groups over 9 FACE window(s) -> RetireEarlyCaptions.ts",
+          "at": "2026-10-11T08:35:21"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "RetireEarly.tsx registered, draft retire-early-draft-v1.mp4 (674.27s, audio ok)",
+          "at": "2026-10-11T08:35:21"
+        },
+        "verify_comp": {
+          "status": "ran",
+          "detail": "9 gate(s) PASS on RetireEarly.tsx, draft retire-early-draft-v1.mp4 matches the spine",
+          "at": "2026-10-11T08:35:27"
+        },
+        "mix_audio": {
+          "status": "ran",
+          "detail": "retire-early-draft-v1-mix.mp4 (674.27s, peak -0.9 dBFS) from MUSIC-PLAN + event-log SFX",
+          "at": "2026-10-11T08:35:27"
+        },
+        "gate_draft": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-11T08:35:27"
+        },
+        "final_render": {
+          "status": "ran",
+          "detail": "retire-early-final-v1.mp4 (crf 18) + music/SFX -> retire-early-final-v1-mix.mp4 (674.27s)",
+          "at": "2026-10-11T09:16:01"
+        },
+        "verify_final": {
+          "status": "ran",
+          "detail": "retire-early-final-v1-mix.mp4 verified (674.27s, -19.2 LUFS, peak -0.9 dBFS)",
+          "at": "2026-10-11T09:16:35"
+        },
+        "definition_of_done": {
+          "status": "ran",
+          "detail": "promoted retire-early-final-v1-mix.mp4 -> retire-early-FINAL.mp4 (651 MB)",
+          "at": "2026-10-11T09:16:36"
+        },
+        "stage_longform": {
+          "status": "failed",
+          "detail": "staged, but the _previews/_tmp recycle failed: ception calling \"DeleteDirectory\" with \"3\" argument(s): \"This function is not supported on this system\"\nAt line:1 char:47\n+ ... isualBasic; [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirector ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException\n    + FullyQualifiedErrorId : IOException\n \n",
+          "at": "2026-10-11T09:19:01"
+        }
+      }
+    },
+    "error": "stage_longform: staged, but the _previews/_tmp recycle failed: ception calling \"DeleteDirectory\" with \"3\" argument(s): \"This function is not supported on this system\"\nAt line:1 char:47\n+ ... isualBasic; [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirector ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException\n    + FullyQualifiedErrorId : IOException\n \n"
+  },
+  {
+    "run_id": "longform-retire-early-n@2026-10-11T09:21:13",
+    "lane": 5,
+    "lane_name": "longform",
+    "thread": "longform-retire-early-n",
+    "started_at": "2026-10-11T09:21:13",
+    "ended_at": "2026-10-11T09:23:40",
+    "duration_s": 147.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "retire-early",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "stage_longform",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "retire-early: folder + PROJECT-LOG ready",
+          "at": "2026-10-11T09:21:13"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-11T09:21:13"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (15 FACE beat(s))",
+          "at": "2026-10-11T09:21:13"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T11:04:43",
+          "at": "2026-10-11T09:21:13"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-11T09:21:13"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-11T09:21:13"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-11T09:21:13"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-11T09:21:14"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-11T09:21:14"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T13:13:08",
+          "at": "2026-10-11T09:21:14"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-11T09:21:15"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-11T09:21:15"
+        },
+        "transcribe": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.medium-words.json present",
+          "at": "2026-10-11T09:21:15"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (648.3s), 2008 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-11T09:21:15"
+        },
+        "gate_spine": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T16:16:41",
+          "at": "2026-10-11T09:21:15"
+        },
+        "as_recorded": {
+          "status": "skipped",
+          "detail": "AS-RECORDED.md present, lint PASS (11 FACE windows)",
+          "at": "2026-10-11T09:21:16"
+        },
+        "coverage": {
+          "status": "ran",
+          "detail": "COVER-PLAN.json ok (111 cover beats, 2 clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered",
+          "at": "2026-10-11T09:21:20"
+        },
+        "music_plan": {
+          "status": "ran",
+          "detail": "MUSIC-PLAN.json ok (6 beds over 6 chapters), variety PASS (0 fails, 0 warns), plan-stage docset PASS",
+          "at": "2026-10-11T09:21:21"
+        },
+        "gate_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-10T18:16:45",
+          "at": "2026-10-11T09:21:21"
+        },
+        "assets": {
+          "status": "ran",
+          "detail": "111 asset id(s) built (0 builder(s) dispatched), visual-qa PASS on 161 file(s)",
+          "at": "2026-10-11T09:21:37"
+        },
+        "verify_assets": {
+          "status": "ran",
+          "detail": "111 ids / 161 files reconciled, zero orphans, visual-qa clean",
+          "at": "2026-10-11T09:21:40"
+        },
+        "edit_plan": {
+          "status": "ran",
+          "detail": "EDIT-PLAN.md (514 events) + CUE-SHEET.md written, lint PASS (0 warning(s))",
+          "at": "2026-10-11T09:21:41"
+        },
+        "transitions": {
+          "status": "ran",
+          "detail": "TRANSITION-PLAN.json ok (146 scene changes), variety PASS (0 fails, 2 warns), TRANSITIONS.md rendered, lint PASS",
+          "at": "2026-10-11T09:21:41"
+        },
+        "reconcile_docs": {
+          "status": "ran",
+          "detail": "0 transition pick(s) fanned into the event log, cross-check PASS, both lints PASS",
+          "at": "2026-10-11T09:21:42"
+        },
+        "lint_docset": {
+          "status": "ran",
+          "detail": "docset PASS (0 warning(s) to review)",
+          "at": "2026-10-11T09:21:42"
+        },
+        "gate_blueprint": {
+          "status": "skipped",
+          "detail": "approved 2026-10-11T01:01:52",
+          "at": "2026-10-11T09:21:42"
+        },
+        "card_pauses": {
+          "status": "ran",
+          "detail": "4 card pause(s) x 1.5s + 2 clip insert(s) baked -> ALL.g.paused.mp4 (674.25s), gate PASS, copied to assets/spine.mp4",
+          "at": "2026-10-11T09:22:57"
+        },
+        "captions": {
+          "status": "ran",
+          "detail": "175 caption groups over 9 FACE window(s) -> RetireEarlyCaptions.ts",
+          "at": "2026-10-11T09:22:57"
+        },
+        "comp_build": {
+          "status": "ran",
+          "detail": "RetireEarly.tsx registered, draft retire-early-draft-v1.mp4 (674.27s, audio ok)",
+          "at": "2026-10-11T09:22:58"
+        },
+        "verify_comp": {
+          "status": "ran",
+          "detail": "9 gate(s) PASS on RetireEarly.tsx, draft retire-early-draft-v1.mp4 matches the spine",
+          "at": "2026-10-11T09:23:03"
+        },
+        "mix_audio": {
+          "status": "ran",
+          "detail": "retire-early-draft-v1-mix.mp4 (674.27s, peak -0.9 dBFS) from MUSIC-PLAN + event-log SFX",
+          "at": "2026-10-11T09:23:03"
+        },
+        "gate_draft": {
+          "status": "skipped",
+          "detail": "approved 2026-10-11T08:35:27",
+          "at": "2026-10-11T09:23:03"
+        },
+        "final_render": {
+          "status": "ran",
+          "detail": "retire-early-final-v1.mp4 (crf 18) + music/SFX -> retire-early-final-v1-mix.mp4 (674.27s)",
+          "at": "2026-10-11T09:23:03"
+        },
+        "verify_final": {
+          "status": "ran",
+          "detail": "retire-early-final-v1-mix.mp4 verified (674.27s, -19.2 LUFS, peak -0.9 dBFS)",
+          "at": "2026-10-11T09:23:37"
+        },
+        "definition_of_done": {
+          "status": "ran",
+          "detail": "promoted retire-early-final-v1-mix.mp4 -> retire-early-FINAL.mp4 (651 MB)",
+          "at": "2026-10-11T09:23:37"
+        },
+        "stage_longform": {
+          "status": "ran",
+          "detail": "staged longform\\retire-early\\retire-early.mp4 + longs.json entry 'Best Cryptos to Help Beat the AI Job Takeover in 2', usage ledger recorded, _previews recycled",
+          "at": "2026-10-11T09:23:40"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-retire-early@2026-10-11T10:47:38",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-retire-early",
+    "started_at": "2026-10-11T10:47:38",
+    "ended_at": "2026-10-11T11:06:08",
+    "duration_s": 1109.5,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "retire-early",
+      "seconds": 30.0,
+      "approve": [],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "s_cut_plan",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 674.27s == spine 674.25s; FINAL-TIME transcript written (226 segments)",
+          "at": "2026-10-11T10:47:38"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 27.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-11T11:06:08"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-retire-early-b@2026-10-11T12:23:09",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-retire-early-b",
+    "started_at": "2026-10-11T12:23:09",
+    "ended_at": "2026-10-11T12:50:52",
+    "duration_s": 1662.9,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "retire-early",
+      "seconds": 30.0,
+      "approve": [
+        "short_plan"
+      ],
+      "redo": [
+        "s_preflight"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "s_verify_final",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 674.27s == spine 674.25s; FINAL-TIME transcript written (226 segments)",
+          "at": "2026-10-11T12:23:09"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 27.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-11T12:23:11"
+        },
+        "gate_short_plan": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-11T12:23:11"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "1 variant asset(s) ready: IMG-2",
+          "at": "2026-10-11T12:33:58"
+        },
+        "s_extract": {
+          "status": "ran",
+          "detail": "4 intermediates, 27.8s of spans",
+          "at": "2026-10-11T12:34:14"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "42 caption groups over 4 COVER-sourced window(s) -> RetireEarlyShortCaptions.ts",
+          "at": "2026-10-11T12:34:14"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "RetireEarlyShort.tsx registered (30.8s)",
+          "at": "2026-10-11T12:49:01"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on RetireEarlyShort.tsx",
+          "at": "2026-10-11T12:49:01"
+        },
+        "s_render": {
+          "status": "ran",
+          "detail": "retire-early-SHORT-30s-v1-video.mp4 (30.85s)",
+          "at": "2026-10-11T12:50:28"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "retire-early-SHORT-30s-v1.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-11T12:50:31"
+        },
+        "s_verify_final": {
+          "status": "failed",
+          "detail": "short does not verify: runtime 30.85s vs target 30.0s",
+          "at": "2026-10-11T12:50:51"
+        }
+      }
+    },
+    "error": "s_verify_final: short does not verify: runtime 30.85s vs target 30.0s"
+  },
+  {
+    "run_id": "short-retire-early-c@2026-10-11T12:51:51",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-retire-early-c",
+    "started_at": "2026-10-11T12:51:51",
+    "ended_at": "2026-10-11T12:52:05",
+    "duration_s": 13.8,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "retire-early",
+      "seconds": 30.0,
+      "approve": [
+        "short_plan"
+      ],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "s_verify_final",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 674.27s == spine 674.25s; FINAL-TIME transcript written (226 segments)",
+          "at": "2026-10-11T12:51:52"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 27.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-11T12:51:53"
+        },
+        "gate_short_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-11T12:23:11",
+          "at": "2026-10-11T12:51:53"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "1 variant asset(s) ready: IMG-2",
+          "at": "2026-10-11T12:51:53"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-10-11T12:51:53"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "42 caption groups over 4 COVER-sourced window(s) -> RetireEarlyShortCaptions.ts",
+          "at": "2026-10-11T12:51:54"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "RetireEarlyShort.tsx registered (30.8s)",
+          "at": "2026-10-11T12:51:54"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on RetireEarlyShort.tsx",
+          "at": "2026-10-11T12:51:54"
+        },
+        "s_render": {
+          "status": "skipped",
+          "detail": "retire-early-SHORT-30s-v1-video.mp4 present",
+          "at": "2026-10-11T12:51:54"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "retire-early-SHORT-30s-v1.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-11T12:51:54"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "retire-early-SHORT-30s-v1.mp4: 30.85s, -19.0 LUFS, peak -6.0 dBFS, hook face 42%",
+          "at": "2026-10-11T12:52:05"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "short-retire-early-c@2026-10-11T12:55:14",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-retire-early-c",
+    "started_at": "2026-10-11T12:55:14",
+    "ended_at": "2026-10-11T12:55:17",
+    "duration_s": 2.5,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "retire-early",
+      "seconds": 30.0,
+      "approve": [
+        "short"
+      ],
+      "redo": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "s_deliver",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 674.27s == spine 674.25s; FINAL-TIME transcript written (226 segments)",
+          "at": "2026-10-11T12:51:52"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 27.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-11T12:51:53"
+        },
+        "gate_short_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-11T12:23:11",
+          "at": "2026-10-11T12:51:53"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "1 variant asset(s) ready: IMG-2",
+          "at": "2026-10-11T12:51:53"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-10-11T12:51:53"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "42 caption groups over 4 COVER-sourced window(s) -> RetireEarlyShortCaptions.ts",
+          "at": "2026-10-11T12:51:54"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "RetireEarlyShort.tsx registered (30.8s)",
+          "at": "2026-10-11T12:51:54"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on RetireEarlyShort.tsx",
+          "at": "2026-10-11T12:51:54"
+        },
+        "s_render": {
+          "status": "skipped",
+          "detail": "retire-early-SHORT-30s-v1-video.mp4 present",
+          "at": "2026-10-11T12:51:54"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "retire-early-SHORT-30s-v1.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-11T12:51:54"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "retire-early-SHORT-30s-v1.mp4: 30.85s, -19.0 LUFS, peak -6.0 dBFS, hook face 42%",
+          "at": "2026-10-11T12:52:05"
+        },
+        "gate_short": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-11T12:55:14"
+        },
+        "s_deliver": {
+          "status": "failed",
+          "detail": "promoted, but recycling _previews/short failed: with \"3\" argument(s): \"The process cannot access the file because it is being used \nby another process\"\nAt line:1 char:47\n+ ... isualBasic; [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirector ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException\n    + FullyQualifiedErrorId : IOException\n \n",
+          "at": "2026-10-11T12:55:17"
+        }
+      }
+    },
+    "error": "s_deliver: promoted, but recycling _previews/short failed: with \"3\" argument(s): \"The process cannot access the file because it is being used \nby another process\"\nAt line:1 char:47\n+ ... isualBasic; [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirector ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException\n    + FullyQualifiedErrorId : IOException\n \n"
+  },
+  {
+    "run_id": "short-retire-early-d@2026-10-11T12:55:47",
+    "lane": 7,
+    "lane_name": "longform",
+    "thread": "short-retire-early-d",
+    "started_at": "2026-10-11T12:55:47",
+    "ended_at": "2026-10-11T12:56:04",
+    "duration_s": 16.1,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "lane": "short",
+      "project": "retire-early",
+      "seconds": 30.0,
+      "approve": [
+        "short_plan",
+        "short"
+      ],
+      "redo": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "retire-early",
+      "last_node": "s_deliver",
+      "steps": {
+        "s_preflight": {
+          "status": "ran",
+          "detail": "vertical 674.27s == spine 674.25s; FINAL-TIME transcript written (226 segments)",
+          "at": "2026-10-11T12:55:48"
+        },
+        "s_cut_plan": {
+          "status": "ran",
+          "detail": "4 spans, 27.8s + 3s outro; boundaries snapped to troughs",
+          "at": "2026-10-11T12:55:49"
+        },
+        "gate_short_plan": {
+          "status": "skipped",
+          "detail": "approved 2026-10-11T12:23:11",
+          "at": "2026-10-11T12:55:49"
+        },
+        "s_variants": {
+          "status": "ran",
+          "detail": "1 variant asset(s) ready: IMG-2",
+          "at": "2026-10-11T12:55:49"
+        },
+        "s_extract": {
+          "status": "skipped",
+          "detail": "spans.json present",
+          "at": "2026-10-11T12:55:49"
+        },
+        "s_captions": {
+          "status": "ran",
+          "detail": "42 caption groups over 4 COVER-sourced window(s) -> RetireEarlyShortCaptions.ts",
+          "at": "2026-10-11T12:55:50"
+        },
+        "s_comp": {
+          "status": "ran",
+          "detail": "RetireEarlyShort.tsx registered (30.8s)",
+          "at": "2026-10-11T12:55:50"
+        },
+        "s_verify_comp": {
+          "status": "ran",
+          "detail": "gates PASS on RetireEarlyShort.tsx",
+          "at": "2026-10-11T12:55:50"
+        },
+        "s_render": {
+          "status": "skipped",
+          "detail": "retire-early-SHORT-30s-v1-video.mp4 present",
+          "at": "2026-10-11T12:55:50"
+        },
+        "s_mix": {
+          "status": "ran",
+          "detail": "retire-early-SHORT-30s-v1.mp4: VO spans crossfaded + shared CTA + bed",
+          "at": "2026-10-11T12:55:50"
+        },
+        "s_verify_final": {
+          "status": "ran",
+          "detail": "retire-early-SHORT-30s-v1.mp4: 30.85s, -19.0 LUFS, peak -6.0 dBFS, hook face 42%",
+          "at": "2026-10-11T12:56:01"
+        },
+        "gate_short": {
+          "status": "skipped",
+          "detail": "approved 2026-10-11T12:55:14",
+          "at": "2026-10-11T12:56:01"
+        },
+        "s_deliver": {
+          "status": "failed",
+          "detail": "promoted, but recycling _previews/short failed: with \"3\" argument(s): \"The process cannot access the file because it is being used \nby another process\"\nAt line:1 char:47\n+ ... isualBasic; [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirector ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException\n    + FullyQualifiedErrorId : IOException\n \n",
+          "at": "2026-10-11T12:56:04"
+        }
+      }
+    },
+    "error": "s_deliver: promoted, but recycling _previews/short failed: with \"3\" argument(s): \"The process cannot access the file because it is being used \nby another process\"\nAt line:1 char:47\n+ ... isualBasic; [Microsoft.VisualBasic.FileIO.FileSystem]::DeleteDirector ...\n+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (:) [], MethodInvocationException\n    + FullyQualifiedErrorId : IOException\n \n"
+  },
+  {
+    "run_id": "longform-tao-detailed@2026-10-14T21:41:34",
+    "lane": 1,
+    "lane_name": "longform",
+    "thread": "longform-tao-detailed",
+    "started_at": "2026-10-14T21:41:34",
+    "ended_at": "2026-10-14T22:32:16",
+    "duration_s": 3042.1,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "tao-detailed",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "tao-detailed",
+      "last_node": "screenplay",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "tao-detailed: folder + PROJECT-LOG ready",
+          "at": "2026-10-14T21:41:34"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (95 source links)",
+          "at": "2026-10-14T22:04:40"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (11 FACE beat(s))",
+          "at": "2026-10-14T22:32:16"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-tao-detailed@2026-10-16T09:54:09",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-tao-detailed",
+    "started_at": "2026-10-16T09:54:09",
+    "ended_at": "2026-10-16T10:47:37",
+    "duration_s": 3208.7,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "tao-detailed",
+      "until": "",
+      "approve": [
+        "screenplay"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "tao-detailed",
+      "last_node": "desilence_coarse",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "tao-detailed: folder + PROJECT-LOG ready",
+          "at": "2026-10-14T21:41:34"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (95 source links)",
+          "at": "2026-10-14T22:04:40"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (11 FACE beat(s))",
+          "at": "2026-10-14T22:32:16"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-16T09:54:09"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-16T09:54:09"
+        },
+        "compress": {
+          "status": "ran",
+          "detail": "ALL.lowbps.mp4 (2636.3s)",
+          "at": "2026-10-16T09:57:39"
+        },
+        "defumble": {
+          "status": "ran",
+          "detail": "ALL.a.defumbled.mp4 (1508.2s)",
+          "at": "2026-10-16T10:25:30"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (1508.2s)",
+          "at": "2026-10-16T10:42:07"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (774.5s)",
+          "at": "2026-10-16T10:47:37"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-tao-detailed@2026-10-16T11:18:44",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-tao-detailed",
+    "started_at": "2026-10-16T11:18:44",
+    "ended_at": "2026-10-16T11:36:04",
+    "duration_s": 1040.2,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "tao-detailed",
+      "until": "",
+      "approve": [
+        "spine_review"
+      ],
+      "done": [],
+      "resume": true
+    },
+    "summary": {
+      "batch": "tao-detailed",
+      "last_node": "verify_spine",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "tao-detailed: folder + PROJECT-LOG ready",
+          "at": "2026-10-14T21:41:34"
+        },
+        "research": {
+          "status": "ran",
+          "detail": "DATA.md written (95 source links)",
+          "at": "2026-10-14T22:04:40"
+        },
+        "screenplay": {
+          "status": "ran",
+          "detail": "SCREENPLAY.md written, lint PASS (11 FACE beat(s))",
+          "at": "2026-10-14T22:32:16"
+        },
+        "gate_screenplay": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-16T09:54:09"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-16T09:54:09"
+        },
+        "compress": {
+          "status": "ran",
+          "detail": "ALL.lowbps.mp4 (2636.3s)",
+          "at": "2026-10-16T09:57:39"
+        },
+        "defumble": {
+          "status": "ran",
+          "detail": "ALL.a.defumbled.mp4 (1508.2s)",
+          "at": "2026-10-16T10:25:30"
+        },
+        "cover_blackout": {
+          "status": "ran",
+          "detail": "ALL.b.blackout.mp4 (1508.2s)",
+          "at": "2026-10-16T10:42:07"
+        },
+        "desilence_coarse": {
+          "status": "ran",
+          "detail": "ALL.c.desilenced.mp4 (774.5s)",
+          "at": "2026-10-16T10:47:37"
+        },
+        "gate_spine_review": {
+          "status": "ran",
+          "detail": "approved via flag",
+          "at": "2026-10-16T11:18:44"
+        },
+        "burst_removal": {
+          "status": "ran",
+          "detail": "ALL.d.cleaned.mp4 (774.5s)",
+          "at": "2026-10-16T11:25:13"
+        },
+        "desilence_final": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 (758.4s)",
+          "at": "2026-10-16T11:28:09"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.medium-words.json (0.0s)",
+          "at": "2026-10-16T11:36:04"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.e.desilenced.mp4 ok (758.4s), 2198 words, fps 30, chain lowbps+a+b+c+e",
+          "at": "2026-10-16T11:36:04"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "longform-tao-detailed@2026-10-16T13:18:26",
+    "lane": 2,
+    "lane_name": "longform",
+    "thread": "longform-tao-detailed",
+    "started_at": "2026-10-16T13:18:26",
+    "ended_at": "2026-10-16T13:25:34",
+    "duration_s": 428.5,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "project": "tao-detailed",
+      "until": "",
+      "approve": [],
+      "done": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "tao-detailed",
+      "last_node": "verify_spine",
+      "steps": {
+        "init_project": {
+          "status": "ran",
+          "detail": "tao-detailed: folder + PROJECT-LOG ready",
+          "at": "2026-10-16T13:18:26"
+        },
+        "research": {
+          "status": "skipped",
+          "detail": "DATA.md present",
+          "at": "2026-10-16T13:18:26"
+        },
+        "screenplay": {
+          "status": "skipped",
+          "detail": "SCREENPLAY.md present, lint PASS (11 FACE beat(s))",
+          "at": "2026-10-16T13:18:26"
+        },
+        "gate_screenplay": {
+          "status": "skipped",
+          "detail": "approved 2026-10-16T09:54:09",
+          "at": "2026-10-16T13:18:26"
+        },
+        "await_recording": {
+          "status": "ran",
+          "detail": "artifact present: a master in raw/",
+          "at": "2026-10-16T13:18:26"
+        },
+        "compress": {
+          "status": "skipped",
+          "detail": "ALL.lowbps.mp4 present",
+          "at": "2026-10-16T13:18:26"
+        },
+        "defumble": {
+          "status": "skipped",
+          "detail": "ALL.a.defumbled.mp4 present",
+          "at": "2026-10-16T13:18:27"
+        },
+        "cover_blackout": {
+          "status": "skipped",
+          "detail": "ALL.b.blackout.mp4 present",
+          "at": "2026-10-16T13:18:27"
+        },
+        "desilence_coarse": {
+          "status": "skipped",
+          "detail": "ALL.c.desilenced.mp4 present",
+          "at": "2026-10-16T13:18:28"
+        },
+        "gate_spine_review": {
+          "status": "skipped",
+          "detail": "approved 2026-10-16T11:18:44",
+          "at": "2026-10-16T13:18:28"
+        },
+        "burst_removal": {
+          "status": "skipped",
+          "detail": "ALL.d.cleaned.mp4 present",
+          "at": "2026-10-16T13:18:28"
+        },
+        "desilence_final": {
+          "status": "skipped",
+          "detail": "ALL.e.desilenced.mp4 present",
+          "at": "2026-10-16T13:18:28"
+        },
+        "transcribe": {
+          "status": "ran",
+          "detail": "ALL.f.pickup.medium-words.json (0.0s)",
+          "at": "2026-10-16T13:25:34"
+        },
+        "verify_spine": {
+          "status": "ran",
+          "detail": "ALL.f.pickup.mp4 ok (758.4s), 2204 words, fps 30, chain lowbps+a+b+c+f",
+          "at": "2026-10-16T13:25:34"
+        }
+      }
+    },
+    "error": null
   }
 ]

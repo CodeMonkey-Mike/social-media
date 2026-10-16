@@ -102,14 +102,29 @@ def composer_loaded(page, ms=12000) -> bool:
 
 
 def upload_ref(page, ref) -> bool:
+    """Attach every reference before the prompt is typed. ChatGPT's first file input is NOT `multiple`
+    (2026-10-10, retire-early IMG-22: "Non-multiple file input can only accept single file" on a four-logo
+    row, and the prompt went out with no references): attach them ONE AT A TIME, re-finding the input each
+    time because the composer re-renders, unless a `multiple` input exists. True only if all attached."""
     refs = ref_list(ref)
     if not refs:
         return False
     try:
-        fi = page.locator('input[type="file"]').first
-        fi.wait_for(state="attached", timeout=8000)
-        fi.set_input_files(refs, timeout=8000)
-        page.wait_for_timeout(4000 * len(refs))
+        multi = page.locator('input[type="file"][multiple]')
+        if len(refs) > 1 and multi.count() > 0:
+            fi = multi.first
+            fi.wait_for(state="attached", timeout=8000)
+            fi.set_input_files(refs, timeout=8000)
+            page.wait_for_timeout(4000 * len(refs))
+            print(f"   attached {len(refs)} references (one multi-file input)")
+            return True
+        for i, r in enumerate(refs, 1):
+            fi = page.locator('input[type="file"]').first
+            fi.wait_for(state="attached", timeout=8000)
+            fi.set_input_files(r, timeout=8000)
+            page.wait_for_timeout(4000)
+            if len(refs) > 1:
+                print(f"   attached reference {i}/{len(refs)}: {Path(r).name}")
         return True
     except Exception as e:
         print("   ref upload failed:", str(e).splitlines()[0])
@@ -173,6 +188,14 @@ async (fileId) => {
 """
 
 
+def is_real_conv(url):
+    """A /c/<id> URL of a SERVER conversation. A fresh chat first shows a client-side
+    placeholder /c/local-chatgpt:<uuid> (seen 2026-10-05, batch grapes): it contains "/c/"
+    but the backend API 400s on it and a reload of it lands on the home page, so the
+    capture loop spun on it. Treat it as unresolved."""
+    return bool(url) and "/c/" in url and "/c/local-" not in url
+
+
 def conv_id_of(conv_url):
     if conv_url and "/c/" in conv_url:
         return conv_url.split("/c/")[1].split("?")[0].strip("/")
@@ -233,9 +256,9 @@ def resolve_conv_url(page, conv_url):
     """The /c/<id> URL of the conversation that is generating. A reload that lands
     anywhere else abandons the render, so never guess: current URL, else the backend
     API's newest just-created conversation, else None (caller must NOT navigate)."""
-    if conv_url and "/c/" in conv_url:
+    if is_real_conv(conv_url):
         return conv_url
-    if "/c/" in page.url:
+    if is_real_conv(page.url):
         return page.url
     try:
         r = page.evaluate(_NEWEST_CONV_JS)
@@ -380,7 +403,11 @@ class Generator:
         # Upload the ref FIRST, THEN snapshot: the ref must be part of the `before`
         # baseline or it looks like a brand-new file_id and gets captured as the result.
         if item.get("ref"):
-            upload_ref(page, item["ref"])
+            if not upload_ref(page, item["ref"]):
+                # never send a prompt whose references did not attach: ChatGPT either asks for them (no image)
+                # or invents the marks. False = the caller's one retry, then the row fails loudly.
+                print(f"FAIL (reference upload) {item['slug']}: prompt NOT sent")
+                return False
             # let the editor finish re-rendering the attachment chip before typing: a
             # re-render mid-typing swallows the rest of the keystrokes (seen live 2026-09-10)
             page.wait_for_timeout(5000)
@@ -442,11 +469,12 @@ class Generator:
         # capture that url so a reload targets the generating chat.
         conv_url = page.url
         for _ in range(45):
-            if "/c/" in conv_url:
+            if is_real_conv(conv_url):
                 break
             page.wait_for_timeout(1000)
             conv_url = page.url
-        if "/c/" not in conv_url:
+        if not is_real_conv(conv_url):
+            conv_url = None
             print("   fresh chat has not published its /c/ URL yet; will resolve via the "
                   "backend API before any reload")
 
@@ -477,12 +505,20 @@ class Generator:
 
         def finish(src) -> bool:
             buf = None
-            try:
-                r = page.request.get(src)
-                if r.ok:
-                    buf = r.body()
-            except Exception:
-                pass
+            # The render's download URL is intermittently not fetchable on the first try
+            # (2026-10-05, batch grapes: 3 renders "found via the backend API" then silently
+            # dropped, each costing a re-sent duplicate generation). Retry the fetch briefly.
+            for _attempt in range(4):
+                try:
+                    r = page.request.get(src)
+                    if r.ok:
+                        buf = r.body()
+                except Exception:
+                    pass
+                if buf and len(buf) >= 5000:
+                    break
+                print(f"   fetch of the render failed (attempt {_attempt + 1}/4) - retrying")
+                page.wait_for_timeout(4000)
             if not buf or len(buf) < 5000:
                 return False
             # Never accept our own uploaded reference as the output: identical bytes
@@ -524,7 +560,7 @@ class Generator:
         print(f"   >80s no new image in live DOM (hung) -> reloading to capture "
               f"{item['slug']}")
         reload_url = resolve_conv_url(page, conv_url)
-        if reload_url and "/c/" in reload_url:
+        if is_real_conv(reload_url):
             conv_url = reload_url
         # PHASE 2a (2026-09-10): the render exists server-side even when the DOM never
         # shows it. Read it through the backend API first (up to ~3 min), no reload.

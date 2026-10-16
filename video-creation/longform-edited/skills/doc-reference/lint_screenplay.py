@@ -34,6 +34,21 @@ no-cold-open rule; the format owner wins on conflict):
      ("four million" -> "4 million"). Scale words and "dollars" / "percent" stay words (persona
      `whole_number_format`, Mike 2026-10-01: spelled-out numbers make him fumble the read).
      `--voice-clone` skips 9 and 11: a script for the ElevenLabs voice clone spells numbers out.
+ 12. CLIP INSERTS ARE CONSIDERED (Mike, 2026-10-09; screenplay.md Convention 6, skills/clip-inserts/):
+     a `## CLIP-INSERTS` section is REQUIRED, holding `| CLIP-<n> | ...` rows (each with a status) or the
+     word NONE with the reason. The 🎞️ `[INSERT]` tag (a third-party clip with its OWN voice while the
+     spine pauses) is a direction line that names its CLIP-<n>.
+ 14. NO 'HONEST' LEAD-IN on a spoken line ('the honest side', 'to be honest', 'honestly'): Mike reads it
+     as deceitful (persona spoken_voice.word_choice_rules.no_honest_side_say_heres_the_thing, 2026-10-10);
+     his lead-in is "Here's the thing".
+ 13. INSERT CROSS-CHECK: every `[INSERT]` line names a CLIP-<n> that the section lists; every listed row
+     that is not REJECTED / HELD / DROPPED lands as an `[INSERT]` line in a chapter; a NONE section has
+     no `[INSERT]` lines. WARN when the spoken line before an insert does not end its sentence (the
+     set-up line's end is the splice point).
+ 15. NO PARENTHESES ON A SPOKEN LINE (Mike, 2026-10-15, tao-detailed GATE 1): a `[FACE]` / `[COVER]` /
+     `[SAY-EXACT]` line is only the words Mike says, so a parenthesis on one is a FAIL. A direction, aside,
+     word-swap or pronunciation goes on its own 💬 `[NOTE]` / 🎬 `[SHOW]` line; a placeholder spoken line
+     ("🗣️ `[COVER]` (CH2 follows)") is never written (screenplay.md Conventions 3 and 5).
 
 Usage:
   python video-creation/longform-edited/skills/doc-reference/lint_screenplay.py <SCREENPLAY.md> [--face-max N] [--fix] [--voice-clone]
@@ -49,14 +64,14 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-EMOJI = {"FACE": "👤", "COVER": "🗣️", "SAY-EXACT": "🔒", "SHOW": "🎬", "NOTE": "💬", "VERIFY": "🔍"}
-EMO = r"(?:👤|🗣️|🗣|🔒|🎬|💬|🔍)"
-TAGNAME = r"(?:FACE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY)"
+EMOJI = {"FACE": "👤", "COVER": "🗣️", "SAY-EXACT": "🔒", "SHOW": "🎬", "NOTE": "💬", "VERIFY": "🔍", "INSERT": "🎞️"}
+EMO = r"(?:👤|🗣️|🗣|🔒|🎬|💬|🔍|🎞️|🎞)"
+TAGNAME = r"(?:FACE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY|INSERT)"
 HOLD = r"(?: HOLD)?"
 # A canonical line HEAD: emoji + backticked tag, then any further backticked tags, each with or
 # without its own emoji (the exemplars write a locked line as 🔒 `[SAY-EXACT]` `[FACE]`).
 TAGGED_LINE = re.compile(r"^\s*" + EMO + r"\s*`\[" + TAGNAME + r"\]" + HOLD + r"`(?:\s*" + EMO + r"?\s*`\[" + TAGNAME + r"\]" + HOLD + r"`)*")
-STARTS_WITH_TAGISH = re.compile(r"^\s*(?:" + EMO + r"\s*)?`?\[(?:FACE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY)")
+STARTS_WITH_TAGISH = re.compile(r"^\s*(?:" + EMO + r"\s*)?`?\[(?:FACE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY|INSERT)")
 BARE_TAG = re.compile(r"(?<!`)\[(" + TAGNAME + r")\](?! HOLD`)(?!`)")
 UNIT_RE = re.compile(EMO + r"?\s*`\[" + TAGNAME + r"\]" + HOLD + r"`")
 SPOKEN = {"FACE", "COVER", "SAY-EXACT"}
@@ -76,6 +91,7 @@ REQUIRED = [
     (r"^##\s+CH\s*1\b", "## CH1 section"),
     (r"^##\s+MUSIC-MOOD-PLAN", "## MUSIC-MOOD-PLAN"),
     (r"^##\s+VISUAL-PLAN", "## VISUAL-PLAN"),
+    (r"^##\s+CLIP-INSERTS", "## CLIP-INSERTS (clip inserts are CONSIDERED on every video: CLIP-<n> rows with a status, or NONE with the reason; Convention 6)"),
     (r"^##\s+OPEN QUESTIONS", "## OPEN QUESTIONS"),
 ]
 
@@ -108,7 +124,7 @@ def fix_text(text: str) -> str:
         if STARTS_WITH_TAGISH.match(line):
             fixed = _backtick_outside_code(line)
             # a line that starts with a backticked tag but no emoji: add the emoji
-            fixed = re.sub(r"^(\s*)`\[(FACE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY)\]( HOLD)?`",
+            fixed = re.sub(r"^(\s*)`\[(FACE|COVER|SAY-EXACT|SHOW|NOTE|VERIFY|INSERT)\]( HOLD)?`",
                            lambda m: f"{m.group(1)}{EMOJI[m.group(2)]} `[{m.group(2)}]{m.group(3) or ''}`", fixed)
             # locked lines: 🔒 `[SAY-EXACT]` FIRST, then the gate (exemplar order)
             head = TAGGED_LINE.match(fixed)
@@ -157,14 +173,19 @@ def lint(text: str, face_max=None, voice_clone=False):
             if "FACE" in tags:
                 faces += 1
             rest = l[TAGGED_LINE.match(l).end():]
-            if (set(tags) & SPOKEN) and (BARE_TAG.search(rest) or re.search(r"`\[(SHOW|NOTE|VERIFY)\]`", rest)):
+            if (set(tags) & SPOKEN) and (BARE_TAG.search(rest) or re.search(r"`\[(SHOW|NOTE|VERIFY|INSERT)\]`", rest)):
                 fails.append(f"line {i + 1}: a spoken line carries a direction tag mid-line (one job per line)")
-            spoken_text = re.sub(r"\([^)]*\)", "", rest)             # (parens) = a note, not spoken
+            if (set(tags) & SPOKEN) and re.search(r"[()]", re.sub(r"`[^`]*`", "", rest)):   # 15
+                fails.append(f"line {i + 1}: parentheses on a spoken line; a `[FACE]` / `[COVER]` / `[SAY-EXACT]` line is only "
+                             f"the words Mike says, so put the direction on its own 💬 `[NOTE]` or 🎬 `[SHOW]` line: {s[:70]}")
+            spoken_text = re.sub(r"\([^)]*\)", "", rest)             # parens are a FAIL above (15); keep 11/14 from double-reporting them
             m11 = SPELLED_NUMBER.search(spoken_text)
             if (set(tags) & SPOKEN) and m11 and not voice_clone and not SPELLED_YEAR.search(rest):   # 11
                 fails.append(f"line {i + 1}: a number spelled out as words ('{m11.group(0)}'); numbers are digits on a line Mike reads (persona whole_number_format)")
             if (set(tags) & SPOKEN) and SPELLED_YEAR.search(rest) and not voice_clone:    # 9
                 fails.append(f"line {i + 1}: a year spelled out as words ('{SPELLED_YEAR.search(rest).group(0)}'); years and dates are digits (persona year_and_date_format)")
+            if (set(tags) & SPOKEN) and re.search(r"\bhonest(?:ly)?\b", spoken_text, re.I):   # 14
+                fails.append(f"line {i + 1}: an 'honest' lead-in on a spoken line (Mike reads it as deceitful); say \"Here's the thing\" (persona word_choice_rules)")
             if "SAY-EXACT" in tags and not (set(tags) & {"FACE", "COVER"}):
                 fails.append(f"line {i + 1}: a locked `[SAY-EXACT]` line must carry its gate (`[FACE]` or `[COVER]`) written out")
             elif "SAY-EXACT" in tags and tags[0] != "SAY-EXACT":
@@ -175,7 +196,40 @@ def lint(text: str, face_max=None, voice_clone=False):
         fails.append(f"{ch_name}: no bold `**Beat N ...**` signpost (Convention 5)")
     if face_max is not None and faces > face_max:                 # 8
         fails.append(f"{faces} `[FACE]` lines; this video allows at most {face_max}")
-    return fails, warns, faces
+    # 12 + 13: clip inserts are CONSIDERED (section) and consistent (ids both ways)
+    sec = re.search(r"^##\s+CLIP-INSERTS.*?(?=^##\s|\Z)", text, re.M | re.S)
+    sec_txt = sec.group(0) if sec else ""
+    listed = {}
+    for row in sec_txt.splitlines():
+        m = re.match(r"^\|\s*(CLIP-\d+)\b", row)
+        if m:
+            listed[m.group(1)] = row
+    none_declared = bool(re.search(r"\bNONE\b", sec_txt)) and not listed
+    tagged = {}
+    for i, l in enumerate(lines):
+        if "INSERT" not in line_tags(l):
+            continue
+        ids = re.findall(r"\bCLIP-\d+\b", l)
+        if not ids:
+            fails.append(f"line {i + 1}: an `[INSERT]` line names no CLIP-<n> id (the `## CLIP-INSERTS` row it plays)")
+        for cid in ids:
+            tagged.setdefault(cid, i + 1)
+        prev = next((lines[j] for j in range(i - 1, -1, -1) if set(line_tags(lines[j])) & SPOKEN), None)
+        if prev is not None and not re.search(r"[.!?][\"”'’)*_>]*\s*$", prev.rstrip()):
+            warns.append(f"line {i + 1}: the spoken line before this `[INSERT]` does not end its sentence; the set-up line's end is the splice point (Convention 6)")
+    if sec and not listed and not none_declared:
+        fails.append("## CLIP-INSERTS must list `| CLIP-<n> | ...` rows (each with a status) or say NONE with the reason")
+    for cid, ln in tagged.items():
+        if cid not in listed:
+            fails.append(f"line {ln}: `[INSERT]` {cid} is not a row of `## CLIP-INSERTS`")
+    for cid, row in listed.items():
+        if re.search(r"\b(REJECTED|HELD|DROPPED|DECLINED)\b", row, re.I):
+            continue
+        if cid not in tagged:
+            fails.append(f"## CLIP-INSERTS lists {cid} as proposed but no chapter carries a 🎞️ `[INSERT]` {cid} line (add it, or mark the row REJECTED / HELD)")
+    if none_declared and tagged:
+        fails.append("## CLIP-INSERTS says NONE but the chapters carry `[INSERT]` lines")
+    return fails, warns, faces, len(tagged)
 
 
 def main():
@@ -197,12 +251,12 @@ def main():
             p.write_text(fixed, encoding="utf-8", newline="\n")
             print(f"--fix: rewrote {p.name} (tags backticked / locked-line order / em dashes)")
             text = fixed
-    fails, warns, faces = lint(text, args.face_max, args.voice_clone)
+    fails, warns, faces, inserts = lint(text, args.face_max, args.voice_clone)
     for w in warns:
         print(f"WARN  {w}")
     for f in fails:
         print(f"FAIL  {f}")
-    print(f"SCREENPLAY-LINT {'FAIL' if fails else 'PASS'} faces={faces} fails={len(fails)} warns={len(warns)} file={p}")
+    print(f"SCREENPLAY-LINT {'FAIL' if fails else 'PASS'} faces={faces} fails={len(fails)} warns={len(warns)} inserts={inserts} file={p}")
     sys.exit(1 if fails else 0)
 
 

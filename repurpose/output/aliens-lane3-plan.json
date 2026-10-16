@@ -1,0 +1,476 @@
+{
+  "batch": "aliens",
+  "date": "2026-10-09",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/aliens LOW BPS VERTICAL/aliens LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-10-09",
+  "brief": "No longform video this batch. Default Lane 3 mix otherwise.",
+  "fact_check": [
+    {
+      "claim": "'Kaspa hasn't really retraced too much... it's up nine percent on a 24 hour chart, that's amazing... could it go down? Yeah, of course, if Bitcoin goes down everything else goes down... just yesterday it was down 3.7 which isn't too low all things considered compared to how it was over the last few months' (transcript)",
+      "verdict": "numbers UPDATED. $KAS $0.0413, about a $1.14B cap, rank 73, +4.4% 24h, -0.5% 7d, -1.2% 14d, +15.2% 30d; ATH $0.2074 on July 31, 2024, so about 80% under it. Over the same 7 days: $BTC -2.4%, $TAO -5.8%, $TON -2.7%, Cash Cat -33%, so 'flat on the week while everything else bled' holds. Copy uses 'about 4.1 cents', 'flat on the week', 'up about 15% on the month' and never the on-stream 9% (it was +4.4% at drafting time). The 'if Bitcoin dumps, could it? Of course' line is Mike's own.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=kaspa,bitcoin,bittensor,the-open-network,cash-cat (fetched 2026-10-09 20:49 UTC); transcript"
+    },
+    {
+      "claim": "'I think TAO is on a steal right now... long term I think TAO is going to be absolutely insanely high... AI is a whole narrative and there's no better play than TAO when it comes to AI'; the $326 sell, the $290 target and the $302 buy-back (transcript)",
+      "verdict": "price UPDATED and the trade history NOT repeated. $TAO $272.02, about a $3.08B cap, rank 38, -5.8% 7d, -11.5% 14d, +3.9% 30d; ATH $757.60 on March 7, 2024, so about 64% under it. 'A steal' and 'no better AI play' are Mike's own conviction, written in first person. The $326 / $302 bull-trap story already shipped on 2026-10-03 (the bull-trap batch tweet, poll and thread) and would read as a timing regret, so it is left out; the tweet is forward-looking only. persona project_handles tao = null, so no Follow line. Whisper's lowercase Greek-letter mishear of TAO corrected everywhere.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=bittensor (fetched 2026-10-09); repurpose/output/bull-trap-lane3-plan.json; schedule-tweets/data/x-tweets.json; persona.json avoid_in_drafts, tao_spelling"
+    },
+    {
+      "claim": "'Meme coin dominance in the market has dropped considerably since 2024, falling off a cliff... it's us trading against ourselves, no new market participants... a lot of these memes don't even last a week'; 'I was meme coins only in 2024 and then moved on to utility projects and we did a huge amount of multipliers' (transcript)",
+      "verdict": "verified. CryptoQuant analyst Darkfost (Oct 5, 2026): meme coins are roughly 3% of total altcoin market cap, versus above 10% during the November 2024 meme season (3.7% in July 2026, about 3.2% in late 2025); meme coin holder counts at multi-year lows. CryptoRank: the sector fell 81.9% from its November 2024 peak of $135.06B to $24.48B on June 15, 2026; CoinDCX had it near $31.2B in September 2026, so copy says 'roughly 80% below its $135B peak'. New centralized-exchange meme listings fell from 196 in Q4 2024 to 41 in Q2 2026. 'Us trading against ourselves', 'dead by day five' and the 2024 meme-only to utility pivot are Mike's own reads; copy writes 'altcoin market' (the CryptoQuant ratio is a share of altcoins, not of total crypto).",
+      "source": "cryptobriefing.com/meme-coins-record-low-altcoin-share (CryptoQuant, Oct 5, 2026); cryptorank.io/news/feed/9df40-meme-coin-market-cap-crash-2026; finance.yahoo.com/markets/crypto/articles/4-reasons-why-meme-coin-075018623.html; coindcx.com/blog/crypto-highlights/top-memes-coins; transcript"
+    },
+    {
+      "claim": "'Look what happened with Dynamite, it just rugged out of nowhere after a few days... really well built out website... the Twitter is already dead, everything is deleted' (transcript)",
+      "verdict": "UNVERIFIED: no coverage of a 'Dynamite' meme rug could be found, so the token is NOT named and no specific event is claimed. Copy keeps the general form only ('some come with a fully built-out website and a real content push, and still rug within days: site gone, X account gone, everything deleted'), which depends on nothing but the pattern Mike described.",
+      "source": "web search (no result for the token); transcript"
+    },
+    {
+      "claim": "'Ledger users getting drained, reported losses reaching 90 million dollars'; 'it wasn't Ledger's fault, all those Ledgers were bought from another site, not directly from Ledger... a long con... whenever you buy a hardware wallet buy directly from the actual vendor... same thing with phones' (transcript)",
+      "verdict": "verified with the figure CORRECTED. Oct 9, 2026: Ledger is investigating wallet drains involving customers of CryptoBilis, an official reseller in Indonesia, Malaysia and the Philippines; on-chain estimates run from about $72M to $86.9M across 98 addresses, and Ledger has not confirmed a total, so copy says 'about $86M', never $90M. Ledger said its own infrastructure was not compromised, asked CryptoBilis to pause all sales and shipments, and advised anyone who bought in the past 90 days not to start setup and to consider moving assets to a new signer. Changpeng Zhao suggested a supply-chain attack with tampered or counterfeit devices; copy calls that 'the working theory'. 'A long con' and the buy-direct rule are Mike's own. OPERATOR FLAG: a developing story; re-check the loss figure before the Ledger tweet goes out.",
+      "source": "theblock.co/news/business/2026-10-09-ledger-cryptobilis-fund-losses-418163; protos.com/ledger-says-southeast-asia-reseller-linked-to-86m-draining; news.bitcoin.com/security/ledger-investigating-86m-drained-crypto-hardware-wallets; coinpedia.org/news/ledger-crypto-theft-86-9-million-reportedly-drained-across-98-wallet-addresses; transcript"
+    },
+    {
+      "claim": "'I'm saying we're going down to 74, complete this M pattern, maybe in a couple days and probably quickly recover... we're below the 50-week moving average and we'll quickly come above it and use it as support'; 'I would like to speak to the CEO of October... it's not really happening yet, it happened in the last week of September, we got to get down first before we can go back up'; 'Bitcoin could go down another 8K at least' (transcript)",
+      "verdict": "Mike's own call, with the moving-average read CORRECTED and the September run verified. $BTC $82,407 on 2026-10-09 (-2.4% 7d, +4.9% 30d, ATH $126,080 on Oct 6, 2025). Coinbase daily closes: Sept 15 $75,584 to Sept 21 $86,595, a +14.6% run in six days, which is the 'Uptober printed in the last week of September' line; October opened at $83,556 and sits about 1.4% red month-to-date. The 50-week SMA computed from the last 50 completed weekly closes is about $77.7K, so Bitcoin is ABOVE it, not below as read on stream; copy therefore never says 'below the 50-week SMA' and does not use the moving average at all. The $74K dip target, the M pattern and 'gets gobbled up fast' are Mike's own and are written in first person. The bull-trap and 'maybe toward $75K' versions shipped on 2026-10-03 and 2026-10-05, so this batch carries the call only as one single-line tweet with the new $74K level and the CEO-of-October joke.",
+      "source": "api.exchange.coinbase.com/products/BTC-USD/candles (daily, 600 rows to 2026-10-09; 50-week SMA computed from weekly closes); api.coingecko.com/api/v3/coins/markets?ids=bitcoin; repurpose/output/bull-trap-lane3-plan.json and grapes-lane3-plan.json; transcript"
+    },
+    {
+      "claim": "'There's more QE, there's more injections of dollars into the economy today, and as we know one of that flows first into crypto' (transcript)",
+      "verdict": "CORRECTED and NOT used. The Oct 8, 2026 New York Fed operation was a scheduled reinvestment purchase of about $3.9B in Treasury bills already on the desk's published calendar, not new quantitative easing; the Fed had paused additional reserve-management purchases through the period ending Oct 14, and net liquidity was pressured by a $47.4B rise in the Treasury General Account. No copy mentions QE or a liquidity injection.",
+      "source": "coincentral.com/bitcoin-holds-near-82k-as-fed-bill-purchase-sparks-liquidity-debate; bloomberg.com/news/articles/2026-09-14/fed-prolongs-pause-on-reserve-management-purchases-to-mid-oct; cryptobriefing.com/fed-reinvestment-purchases-not-liquidity-injection; martyau79.substack.com/p/08oct2026-traditional-markets-and"
+    },
+    {
+      "claim": "'Turbo is one of them, a little bit bigger cult meme, 66 million'; 'another one of my favorites is Housecoin, I haven't checked it recently but I would imagine very active team, non-stop content'; cult memes named: lo-fi, Wojak, Rage Guy, Troll, Pepe, Toshi, Doginme, Keycat; 'Bitty: 17 million is all time high and one million right now, even 10 million would be a 10x' (transcript)",
+      "verdict": "Turbo verified and featured: $TURBO about a $66.7M cap (matches the on-stream 66M), rank 389, -5% 7d, about 93% under its December 2024 ATH, a 2023 launch; persona says engage in-tribe, Follow: @TurboToadToken is the closing line (mention-triggered handle). Housecoin DROPPED from copy: $HOUSE sits at about a $738K cap, 99.4% under its April 2025 ATH (past Mike's own 97% rug line) and the 'active team' remark was hedged on stream ('I haven't checked it recently'), so it fails verified-claims-only as a featured subject (OPERATOR FLAG: Housecoin is in the persona stacking lineup; Mike may want to speak to it himself). Pepe, Toshi and Doginme are named in the YT post body only, with cashtags, as Mike's own list of cult memes; no handle lines there. Bitty (The Bitcoin Mascot, $BITTY) checks out roughly ($1.3M cap, about 94% under its Sept 2025 ATH) but is not named; the 10x-without-a-new-ATH math is written in general form ('a cult meme at 5% of its old high').",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=turbo,housecoin-2,the-bitcoin-mascot (fetched 2026-10-09); persona.json stacking_lineup, project_handles, always_name_the_ticker; transcript"
+    },
+    {
+      "claim": "Mike's AI-and-robots video thesis repeated on stream: 'everybody's job is at risk... the combined knowledge of every expert electrician in the world in your robot... self-driving trucks... it could be illegal for humans to drive... you gotta own assets: water, energy, compute power, real estate, food, recreation, health and biotech... technology is deflationary, the money supply is inflationary, crypto helps answer that... a few years ago it would have cost you like two thousand Bitcoin to buy a house, now a couple'; a viewer: 'they told you to learn to code, then AI learned to code' (transcript)",
+      "verdict": "Mike's own thesis (persona core_theses: the AI buildout, and TAO as the AI inference layer with KAS as the PoW money layer, which the post uses as its crypto beat). The house math is ANCHORED: NAR's 2013 annual median existing-home price was $197,100 and Bitcoin first crossed $100 in the spring of 2013 (late March / April 1), so about 2,000 BTC; NAR's August 2026 median was $429,100 and $BTC was $82,407 on 2026-10-09, so about 5.2 BTC, written 'about five'. 'Human driving could end up illegal' softens the on-stream 'it's going to be illegal' to Mike's conditional. The video's view counts (574 vs 4,300) are self-undermining and NOT used; the YT post points to 'my latest video' and 'the full breakdown on the channel' with cta_target subscribe_youtube (the brief's 'no longform video' means Lane 1 is skipped for this batch, not that the existing video cannot be referenced).",
+      "source": "nar.realtor/newsroom (2013 annual median $197,100, Jan 23, 2014 release) via mortgagenewsdaily.com/news/01232014-existing-home-sales; nar.realtor/newsroom/nar-existing-home-sales-report-shows-2-0-decrease-in-august (Aug 2026 median $429,100); coinpedia.org (13 years since Bitcoin first hit $100) and siliconangle.com (April 3, 2013); api.coingecko.com (bitcoin); persona.json core_theses; transcript"
+    },
+    {
+      "claim": "'That actually happened with zcash, I was bashing zcash before all those pumps because it really has horrible tokenomics in terms of a pre-mine, you would have had to hold the thing eight years to make a profit' (transcript)",
+      "verdict": "UNRESOLVED: possible zKAS mishear, ask Mike; no content drafted. Per the 2026-10-01 rule, nothing is built on Zcash / $ZEC and it was not researched. (Context for the operator: the line sits inside a list of large caps and mentions an eight-year chart and a premine, which would fit the real Zcash, but the rule requires Mike's confirmation in the Lane 3 brief and this batch's brief does not give it.)",
+      "source": "transcript; persona.json ticker_corrections.zkas_not_zcash"
+    },
+    {
+      "claim": "Dropped from the batch: the AI-generated Susan Dell / Megan Fox / Obama videos going around X; Trump's 'big announcement' on diesel prices, the AI-to-SI rename, the Iran attack timing, the 28 million barrels of oil and the 'Don-Zoo: wars are only fought on the weekend' meme; Eliza's dead-cat bounce; Golden Kitty 'hanging in there below the 886' and Swole 'should be higher'; SPON at a tiny cap with the devs quiet for 48 hours; the Michigan consumer sentiment print; CPI on Oct 14 and PPI on Oct 15; the SUI higher-low lesson (64 cents never came back, the 0.618 at 72 cents); LCX, Arbitrum, Canton, Bitcoin Cash, Near, BNB under 800; Uncle's missing CoinMarketCap listing; We Love Cats versus the cat memes; Plumber on Base; the viewer's Handle fumble; the Pippin 89x story; PerpsPad 114x; the crypto community pitch; the Cash Cat / Swole Cat origin lore",
+      "verdict": "not drafted. The deepfake videos and every Trump line are political and personal tangents that persona reserves for Mike to post himself. Eliza is banned content. Golden Kitty and Swole are Mike's own calls now deep underwater (CoinGecko on 2026-10-09: $GOLDEN about a $492K cap, -86% on the week, 92% under its Sept 27 ATH; $SWOLE about a $70K cap, -80% on the week) and SPON already shipped, so all three stay out (OPERATOR FLAG: Golden Kitty fell hard after the Oct 5 batch; Mike may want to address it himself). The Michigan print (Oct 9: 46.3 headline, a five-month low; current conditions 44.7, expectations 47.3 beating the 45.5 forecast; 1-year inflation expectations 4.7%) and the CPI / PPI dates are verified but stale by post time and were left out. The SUI walk-through is trader-portfolio framing. LCX, Arbitrum, Canton, BCH, Near and BNB were lukewarm passing takes, Uncle and We Love Cats are negative reads on named tokens that could not be verified, Plumber and Handle are chat throwaways, Pippin ($PIPPIN now 98% under its Feb 2026 ATH) and PerpsPad ride with the community pitch (membership pitch; the Pippin story also opens on a missed first leg). The Cash Cat origin story is VERIFIED (Vlad Tenev's April 14, 2021 post said the app was almost called Cash Cat, with the buff-cat meme attached; $CASHCAT launched on Robinhood Chain in July 2026) but was cut for space behind the six default tweet slots; it is a ready-made optional item if Mike wants it (Vlad-Tenev.webp, cash-cat.jpg and swole.png exist as references).",
+      "source": "persona.json avoid_in_drafts, no_rotation_framing; api.coingecko.com (golden-kitty, swole-cat, pippin, lcx, arbitrum, sui, fetched 2026-10-09); fxstreet.com and bloomberg.com (Michigan, Oct 9, 2026); x.com/vladtenev/status/1382390320663560197; phemex.com/blogs/robinhood-first-name-token-chain; transcript"
+    },
+    {
+      "claim": "Brief: 'No longform video this batch. Default Lane 3 mix otherwise.'",
+      "verdict": "honored: Lane 1 is the orchestrator's concern (pipelines.longform = skip); Lane 3 ships the defaults: 4 multi-line X tweets, 2 single-line X tweets, IG companions for the two Kaspa-subject tweets, 2 YT polls with X polls for both (TAO and Kaspa are eligible topics), 2 YT posts with 5-slide carousels, 2 X threads of 7 tweets built from the two posts.",
+      "source": "batches.json briefs.lane3"
+    },
+    {
+      "claim": "Topic weighting (Kaspa first, then TAO, Toncoin, Housecoin, Pengu)",
+      "verdict": "Kaspa was discussed once (the 'hasn't retraced' passage) and carries 2 of 6 tweets (both with IG companions), a YT poll and an X poll; TAO carries a tweet, a YT poll and an X poll and the crypto beat of YT post 2; Toncoin and Pengu were not discussed; Housecoin was named but dropped for the verified-claims reason above, with Turbo taking the cult-meme slot. The rest follows the stream: the meme-dominance collapse (1 tweet, YT post 1, thread 1), the Ledger drain (1 tweet), the Bitcoin dip call (1 single-line tweet) and the AI-jobs / own-assets thesis (YT post 2, thread 2). Five of six tweets are crypto-project or crypto-market items.",
+      "source": "transcript; repurpose/SKILL.md topic filters"
+    },
+    {
+      "claim": "Whisper corrections applied: the lowercase Greek-letter mishear -> TAO; 'spawn' -> SPON; 'suey' -> SUI; 'perp's pad' -> PerpsPad; 'pipping' -> Pippin; 'Arbatron' -> Arbitrum; 'eith' -> ETH; 'golden cake' / 'golden katie' -> Golden Kitty; 'Michael Mire's' -> Michael Myers; the wrong-chain spelling of Kaspa did not occur; '50-way moving average' -> 50-week SMA (not used in copy)",
+      "verdict": "applied throughout; none of the persona-listed mishears (the wrong-chain spelling of Kaspa, the car-brand mishear of cyan, the lowercase Greek-letter mishear of TAO, the wrong What If ticker, the abbreviated moving-average form) appear in the copy.",
+      "source": "persona.json terminology_rules, ticker_corrections"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-10-09-meme-dominance-fell-off-a-cliff-cult-memes-only": "version2 (analytical / editorial: the post is a data-led thesis with a numbered argument, 3% vs 10%, a $135B peak, 196 vs 41 listings, holder counts, and a filter, which is the V2 use case. V4 was weighed first per the extra-weight rule, but no usable topic PHOTO exists in images/reference/ for the meme-dominance subject (housecoin.webp, toshi.png and DogInMe.png are logos, not scenes, and the V4 hook needs a full-bleed photo), so V4 cannot be anchored; V1 was rejected because the tone is sober, not news-flash. Slides cite the role-matched V2 exemplars: 01-hook -> yt-posts-9611992a-01-hook.png, 02 -> yt-posts-4a9a572c-02-btc-failure.png, 03 -> yt-posts-44d02f9a-03-the-problem.png, 04 -> yt-posts-074be0dc-04-the-solution.png, 05-question -> yt-posts-81abb2d9-06-question.png. Each prompt carries 'no em dashes' because the V2 hook exemplar contains one. Five slides: hook, three beats, question.)",
+    "yt-post-2026-10-09-ai-is-coming-for-every-job-own-assets": "version1 (high-energy news-flash: 'AI is coming for every job' is a hammer-line post with one bold claim per slide, and the V1 near-black / neon green look fits the robot and asset iconography. V4 was weighed first but no topic photo exists for the AI-jobs subject (no robot, factory or scene reference; the public-figure files, Vlad-Tenev.webp, michael-saylor.png and Benjamin-Cowen.png, are unrelated), so V4 cannot be anchored; V2 was already used for post 1 and the tone here is louder. Per the V1 contamination note every slide is pinned to version1/yt-posts-828eee71-01-hook.png and states its counter text explicitly ('N OF 5', exactly once); the prompts tell the model not to reproduce the exemplar's Bitcoin or Kaspa coins except on slide 4, where the Kaspa coin is wanted and is cited from that same exemplar. Five slides: hook, three beats, question.)"
+  },
+  "missing_references": [
+    "Turbo ($TURBO) mascot / logo: no reference file; not rendered (image 1505bf80 shows only plain unmarked coins in an empty stadium), Turbo is named only in copy",
+    "Ledger logo and device design: no reference file; not rendered (image 283878b5 shows a generic unbranded hardware-wallet device and blank boxes), Ledger is named only in copy",
+    "Bitcoin logo / coin: no bitcoin reference file; not rendered (image 3f0a0b63 and carousel slide 97fe47a7 use plain unmarked gold coins), Bitcoin is named only in copy",
+    "Bittensor TAO coin on carousel slide 9cb3d6d4: the slide's reference slot is the pinned V1 style exemplar, so TAO is carried as text in the headline only and no TAO coin is rendered there (bittensor-tao.png is used on the TAO tweet image 0931da5c)",
+    "Pepe, Toshi and Doginme: named in YT post 1 body only; no image renders them (toshi.png and DogInMe.png exist but were deliberately not used, as the post's featured cult meme is Turbo)"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "08b352c8",
+      "slug": "kaspa-did-not-flinch-while-everything-bled",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A calm, confident anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands perfectly still and upright on a flat dark stone slab in the middle of a howling storm, arms folded, a small knowing smile, completely unbothered. All around it a dozen small plain coin characters in dull grey, dull gold and faded pink are being blown sideways off their feet by the wind, tumbling through the air with wide panicked eyes, some clinging to the edges of the slab. Streaks of rain and loose leaves whip past horizontally. Every small coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background with storm clouds. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, a single calm spotlight from above on it, cold blue-grey light on the tumbling coins. Mood: calm, unbothered, strength while everything else gets blown away. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "08b352c8",
+      "slug": "kaspa-did-not-flinch-while-everything-bled",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The storm fills the tall portrait frame, with the Kaspa coin in the lower centre and the tumbling coins above and around it. A calm, confident anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands perfectly still and upright on a flat dark stone slab in the middle of a howling storm, arms folded, a small knowing smile, completely unbothered. All around it a dozen small plain coin characters in dull grey, dull gold and faded pink are being blown sideways off their feet by the wind, tumbling through the air with wide panicked eyes, some clinging to the edges of the slab. Streaks of rain and loose leaves whip past horizontally. Every small coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background with storm clouds. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, a single calm spotlight from above on it, cold blue-grey light on the tumbling coins. Mood: calm, unbothered, strength while everything else gets blown away. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "0931da5c",
+      "slug": "tao-at-272-is-a-steal-no-better-ai-play",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A calm, confident anthropomorphized Bittensor TAO coin character, a white coin whose face carries the single black TAO glyph exactly as shown in the attached reference image (the Greek-letter-shaped mark, one horizontal bar over one curved stem), with little arms and legs, sits on a plush dark velvet cushion inside a glass display case in a dark, elegant jewelry shop, lit by a single warm spotlight. A large blank paper price tag hangs from the case by a string with one bold red diagonal slash across it (no letters and no numbers on the tag). Pressed against the outside of the glass, seen from behind, a crowd of small plain coin characters in dull grey and dull gold stare in with wide hungry eyes and hands flat on the glass. The TAO coin looks back at them with a small knowing smile, arms folded. The TAO coin carries no other symbol, lettering or marking; every small coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting: clean white rim light on the TAO coin, a warm gold spotlight inside the case, cool blue fill on the crowd outside. Mood: hungry, a bargain in plain sight. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text, letters or numbers anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "1505bf80",
+      "slug": "meme-dominance-3-percent-cult-memes-only",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A vast dark stadium at night seen from the field, its tiers of seats almost completely empty and fading into shadow, a few crumpled cups and one loose drooping banner (completely blank, no lettering) left in the stands. Down on the floor, under a single harsh spotlight, a small huddle of six plain coin characters in faded pink, dull purple and dull gold stand in a tight circle passing one single small coin around and around to each other with forced grins and nervous eyes, each one handing it to the next. The entrance tunnels around the stadium are dark and empty; nobody is walking in. Every coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the seats, cups and banner carry no lettering and no numbers. Deep navy near-black background. Dramatic cinematic lighting: one hard white spotlight on the huddle, cold dim blue light on the empty stands. Mood: hollow, us trading against ourselves. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "283878b5",
+      "slug": "ledger-drain-buy-hardware-wallet-direct",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. On a dark workbench a small generic black-and-silver hardware wallet device shaped like a plain slim USB stick with a tiny blank screen lies cracked open, its casing split like a clamshell, and a tiny glowing red chip with thin red wires spills out of it like a hidden parasite. Behind the bench a shadowy gloved figure seen only from the elbows down is sealing an identical device into a crisp plain white retail box with a blank label, a stack of identical sealed boxes waiting beside it. In the foreground a friendly plain gold coin character with little arms and legs peers at the cracked device through a magnifying glass, eyes wide in alarm. The device, the boxes and the labels carry no brand mark, no logo, no lettering and no numbers of any kind; the screen is blank; the coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black background. Dramatic cinematic lighting: a cold white desk lamp on the bench, a sinister red glow from the hidden chip, deep shadow on the figure. Mood: ominous, a warning. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "2b72506f",
+      "slug": "everything-looks-like-hell-except-kaspa",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A relaxed anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, lounges on a wooden deck chair on a small calm rooftop terrace, sunglasses pushed up on its head, one arm behind its head, sipping a drink through a straw with a satisfied grin. Beyond a low glass railing behind it the whole city skyline is in chaos: a flaming red-orange sky, plain coin characters in faded pink and dull gold tumbling past in the air outside the glass with panicked faces, smoke and sparks drifting up from below. Nothing on the terrace is disturbed; a potted plant sits perfectly still beside the chair. Every tumbling coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the glass and the chair carry no lettering. Deep navy near-black sky above the red glow. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, warm red-orange glow from the chaos behind the glass, calm cool light on the terrace. Mood: cool, unbothered, refusing to retrace. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "2b72506f",
+      "slug": "everything-looks-like-hell-except-kaspa",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The terrace and deck chair sit in the lower half of the tall portrait frame and the chaotic red skyline rises behind the glass railing to fill the upper half. A relaxed anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, lounges on a wooden deck chair on a small calm rooftop terrace, sunglasses pushed up on its head, one arm behind its head, sipping a drink through a straw with a satisfied grin. Beyond a low glass railing behind it the whole city skyline is in chaos: a flaming red-orange sky, plain coin characters in faded pink and dull gold tumbling past in the air outside the glass with panicked faces, smoke and sparks drifting up from below. Nothing on the terrace is disturbed; a potted plant sits perfectly still beside the chair. Every tumbling coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the glass and the chair carry no lettering. Deep navy near-black sky above the red glow. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa coin, warm red-orange glow from the chaos behind the glass, calm cool light on the terrace. Mood: cool, unbothered, refusing to retrace. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "3f0a0b63",
+      "slug": "speak-to-the-ceo-of-october-dip-to-74k",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A determined little plain gold coin character with little arms and legs, wearing a tiny loosened necktie, stands on tiptoe at the front of an enormous towering reception desk in a dark marble corporate lobby, one hand slapping a small silver call bell, the other hand on its hip, chin up, impatient and unimpressed. The desk is unattended; behind it a wall of tall frosted-glass office doors stands closed with every nameplate completely blank, and a huge empty leather executive chair sits turned away. At the coin's feet a small red carpet lies still rolled up. The coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the desk, doors, nameplates and bell carry no lettering, letters or numbers. Deep navy near-black background. Dramatic cinematic lighting: warm gold rim light on the coin, a cold white spotlight on the empty desk, deep shadows across the lobby. Mood: defiant, impatient, demanding to see the manager. No greenish cyan anywhere in the image. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "43d6c9a7",
+      "slug": "01-hook",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-9611992a-01-hook.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '1 OF 5'. Large bold white title: 'Meme coins are 3% of the altcoin market. They were over 10% in 2024.'. Below, a teal accent line: 'The sector is down roughly 80% from its $135B peak. The crowd left.'. At the bottom a dark rounded box with teal label 'THE EYE OPENER' and white body text: 'I pulled up the meme coin dominance chart on stream this week. Here is how it changed the way I pick memes.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '1 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "69ecbbbb",
+      "slug": "02-the-hole",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-4a9a572c-02-btc-failure.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '2 OF 5'. Large bold white title: 'From a $135B peak to a fraction of it. Holders at multi-year lows.'. Below, a teal accent line: 'New meme listings on exchanges: 196 in late 2024, 41 in the second quarter of 2026'. At the bottom a dark rounded box with teal label 'THE DATA' and white body text: 'Peak of about $135B in November 2024. Down roughly 80% since. Meme coin holder counts at multi-year lows. That is not a dip, that is the crowd leaving.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '2 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "7398db3d",
+      "slug": "03-trading-against-ourselves",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-44d02f9a-03-the-problem.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '3 OF 5'. Large bold white title: 'No new money. It is us trading against ourselves.'. Below, a teal accent line: 'A new launch pumps for a day or two and is dead by day five'. At the bottom a dark rounded box with teal label 'WHAT I SEE' and white body text: 'The same wallets buying from each other, nobody new walking in. Polished websites that rug within days. Most new memes do not even last a week.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '3 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "7668acf6",
+      "slug": "04-cult-memes-only",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-074be0dc-04-the-solution.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '4 OF 5'. Large bold white title: 'The only memes I touch now: cult memes that survived a full cycle.'. Below, a teal accent line: 'Turbo: a 2023 meme still sitting at about a $67M cap'. At the bottom a dark rounded box with teal label 'THE FILTER' and white body text: 'Survived a full cycle. Team still shipping. Real exchange listings. At 5% of its old high, a cult meme does not need a new all-time high to 10x.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '4 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "76807bd4",
+      "slug": "05-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-81abb2d9-06-question.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '5 OF 5'. Large bold white title: 'Which meme is still alive when the new money shows up?'. Below, a teal accent line: 'Name ONE and tell me why that one'. At the bottom a dark rounded box with teal label 'TELL ME IN THE COMMENTS' and white body text: 'Cult meme or brand-new launch: which one do you actually trust in this market, and why?'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. Render the counter text '5 OF 5' exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "892f5a65",
+      "slug": "01-hook",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '1 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'AI IS COMING FOR EVERY JOB. THE ONLY PROTECTION IS TO OWN ASSETS.'. Behind the headline, a sleek glowing humanoid robot silhouette rendered in dark chrome with neon green circuit lines stands towering over a dark city skyline panel, its eyes two points of neon green light, with a dark chart panel at the bottom whose green bars climb steeply from left to right. every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and do not reproduce the Bitcoin coin or the Kaspa coin from the attached reference; use the reference for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "9708e942",
+      "slug": "02-every-job",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '2 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'EVERY EXPERT ELECTRICIAN ON EARTH, LOADED INTO ONE ROBOT. NOW DO PLUMBERS. ROOFERS. CODERS.'. Behind the headline, a dark chrome robot hand holds up a glowing neon green brain made of circuit traces, and thin green light lines fan out from it to a ring of simple glowing tool icons (a wrench, a hammer, a hard hat, a steering wheel, a laptop) drawn as plain glowing outlines with no letters. every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and do not reproduce the Bitcoin coin or the Kaspa coin from the attached reference; use the reference for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "97fe47a7",
+      "slug": "03-deflation-vs-money",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '3 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'TECH IS DEFLATIONARY. MONEY IS NOT. IN 2013 A HOME COST ABOUT 2,000 BITCOIN. THIS WEEK: ABOUT 5.'. Behind the headline, a split dark panel: on the left a towering stack of hundreds of dull plain gold coins looms beside a small glowing house icon, on the right the same small glowing house icon sits beside a short neat stack of just five brightly glowing gold coins, with a neon green arrow pointing from left to right. every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and do not reproduce the Bitcoin coin or the Kaspa coin from the attached reference; use the reference for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "9cb3d6d4",
+      "slug": "04-own-assets",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '4 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'OWN ASSETS: WATER, ENERGY, COMPUTE, REAL ESTATE, FOOD, BIOTECH. AND THE TWO NEUTRAL LAYERS: $TAO AND $KAS.'. Behind the headline, a row of simple glowing neon green icons on dark pedestals (a water drop, a lightning bolt, a server rack, a house, a wheat stalk, a DNA helix) drawn as plain glowing outlines with no letters, and on the right a large glowing greenish cyan Kaspa coin rises beside a glowing green lattice of interconnected nodes shaped like a neural network. The Kaspa coin is a glowing greenish cyan coin with the backwards-K (mirrored K) Kaspa logo exactly like the Kaspa coin in the attached reference image; do not reproduce the Bitcoin coin from the reference, and every other coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "bc7a0079",
+      "slug": "05-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version1\\yt-posts-828eee71-01-hook.png",
+      "prompt": "Bold crypto news graphic, 1:1 square. Near-black background, dramatic lighting, bold all-caps white and NEON GREEN typography (a pure vivid green, NOT chartreuse, NOT yellow-green), glowing crypto coin icons and chart panel elements. No human faces. Match the layout, typography, color and overall styling of the attached reference image. Small white all-caps counter label top-left reading '5 OF 5', exactly once and nowhere else. No em dashes anywhere; use colons or commas. Headline text, rendered exactly: 'IF AI TAKES THE PAYCHECK, WHICH ASSET HOLDS UP BEST? REAL ESTATE, ENERGY, COMPUTE, OR CRYPTO?'. Behind the headline, four dark pedestals in a row each holding one glowing icon (a house, a lightning bolt, a server rack, a plain glowing gold coin), with one large glowing neon green question mark symbol floating above them; the question mark symbol is the only extra mark allowed. every coin face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind, and do not reproduce the Bitcoin coin or the Kaspa coin from the attached reference; use the reference for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Kaspa did not flinch this week.\n\nBitcoin ($BTC) red on the week, $TAO down about 6%, the meme coin sector roughly 80% below its 2024 peak... and Kaspa ($KAS) sits flat on the week at about 4.1 cents, up about 15% on the month.\n\nKaspa has not retraced. Could it, if Bitcoin dumps? Of course. But compared to the last few months, holding flat through a red week is strength 💪\n\n#kaspa #KAS",
+      "hook": "Kaspa did not flinch this week.",
+      "image_id": "08b352c8"
+    },
+    {
+      "tweet": "$TAO at about $272 is a steal.\n\nBittensor is about 64% under its all-time high of $757 at about a $3.1B market cap, and AI is the whole narrative of this decade. There is no better pure AI play in crypto than $TAO. Not an AI meme, not an agent token... the network itself.\n\nLong term I think Bittensor goes insanely high. What am I missing?\n\n#Bittensor #TAO",
+      "hook": "$TAO at about $272 is a steal.",
+      "image_id": "0931da5c",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #1 (a strong, defensible-but-debatable take: no better pure AI play in crypto than TAO) plus technique #3 (the 'What am I missing?' closer). No fact is manufactured: the price, the market cap and the distance from the all-time high are verified, and the take is Mike's own on-stream conviction."
+    },
+    {
+      "tweet": "Meme coins are about 3% of the altcoin market now. In November 2024 they were over 10%.\n\nThe whole meme sector is roughly 80% below its $135B peak, holder counts are at multi-year lows, and the new launches do not even last a week. There is no new money in memes right now; it is us trading against ourselves.\n\nSo I am done with brand-new launches. The only memes I touch are the cult memes that already survived a full cycle with the team still shipping, like Turbo ($TURBO), a 2023 meme still sitting at about a $67M cap.\n\nFollow: @TurboToadToken\n\n#memecoins #TURBO",
+      "hook": "Meme coins are about 3% of the altcoin market now. In November 2024 they were over 10%.",
+      "image_id": "1505bf80"
+    },
+    {
+      "tweet": "About $86M has been drained from Ledger users this week, and Ledger's own systems were not hacked.\n\nThe drains are linked to one reseller in Southeast Asia. The working theory is a supply-chain attack: devices tampered with before they ever reached the buyer, then drained all at once. Ledger has told that reseller to stop shipping and is telling anyone who bought in the last 90 days not to set the device up.\n\nA long con. Buy your hardware wallet directly from the manufacturer, never from a reseller or a marketplace. Same rule for your phone.\n\n#Ledger #crypto",
+      "hook": "About $86M has been drained from Ledger users this week, and Ledger's own systems were not hacked.",
+      "image_id": "283878b5"
+    },
+    {
+      "tweet": "Everything looks like hell this week, especially the memes, and Kaspa ($KAS) just sits there at about 4.1 cents, flat on the week and up about 15% on the month, refusing to retrace 😎\n\n#kaspa #KAS",
+      "hook": "Everything looks like hell this week, especially the memes, and Kaspa ($KAS) just sits there at about 4.1 cents, flat on the week and up about 15% on the month, refusing to retrace 😎",
+      "image_id": "2b72506f"
+    },
+    {
+      "tweet": "I would like to speak to the CEO of October... Uptober printed in the last week of September (Bitcoin ($BTC) ran from $75.6K to $86.6K in six days), and I still think we complete the dip toward $74K before the next leg. That dip gets gobbled up fast.\n\n#bitcoin #uptober",
+      "hook": "I would like to speak to the CEO of October... Uptober printed in the last week of September (Bitcoin ($BTC) ran from $75.6K to $86.6K in six days), and I still think we complete the dip toward $74K before the next leg. That dip gets gobbled up fast.",
+      "image_id": "3f0a0b63"
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-10-09-meme-dominance-fell-off-a-cliff-cult-memes-only",
+      "topic": "Meme coin dominance fell off a cliff: about 3% of the altcoin market versus over 10% in November 2024, the sector roughly 80% below its $135B peak, holders at multi-year lows, 196 to 41 listings, no new money ('us trading against ourselves'), new launches dead within a week, and the cult-meme filter with Turbo as the example (built from YT post 1)",
+      "variation_label": "A (stat-stack-and-conclusion)",
+      "tweets": [
+        {
+          "text": "Meme coins are about 3% of the altcoin market right now.\n\nIn November 2024 they were over 10%.\n\nI pulled up the meme coin dominance chart on stream this week and it changed how I pick memes. Here is the whole thing...",
+          "hook": "Meme coins are about 3% of the altcoin market right now."
+        },
+        {
+          "text": "The hole first.\n\nThe entire meme sector peaked at about $135B in November 2024 and has lost roughly 80% of it.\n\nHolder counts are at multi-year lows. New meme listings on exchanges: 196 in the last quarter of 2024, 41 in the second quarter of this year.\n\nThe crowd left."
+        },
+        {
+          "text": "Which explains what I see on the charts every week.\n\nThere is no new money in memes. It is us trading against ourselves: the same wallets buying from each other, nobody new walking in.\n\nA new launch pumps for a day or two and is dead by day five."
+        },
+        {
+          "text": "Some come with a fully built-out website and a real content push... and still rug within days. Site gone, X account gone, everything deleted.\n\nMost new memes do not even last a week. So I am done with brand-new launches in this market."
+        },
+        {
+          "text": "The only memes I touch are the cult memes: survived a full cycle, team still shipping, real exchange listings.\n\nTurbo ($TURBO) is one of them: a 2023 meme still sitting at about a $67M cap.\n\nFollow: @TurboToadToken"
+        },
+        {
+          "text": "And the math is different. A cult meme at 5% of its old high does not need a new all-time high to pay you; half way back is a 10x.\n\nA brand-new launch under a $1M cap is a shot in the dark. When new money comes back to crypto, it is not coming back for the launch of the week."
+        },
+        {
+          "text": "If this changed how you look at the meme board...\n\nFollow me for the macro and meme reads that ignore the echo chamber.\n\n🔥"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-10-09-ai-is-coming-for-every-job-own-assets",
+      "topic": "AI and robots are coming for every job, so own assets: the one-robot-with-every-electrician's-knowledge picture, muscle first then knowledge work and the trades, self-driving trucks, the assets-or-paycheck divide, deflationary tech versus inflationary money, a home at about 2,000 Bitcoin in 2013 versus about five this week, the asset list, and $TAO plus $KAS as the two neutral layers (built from YT post 2)",
+      "variation_label": "B (hook-and-thesis-first)",
+      "tweets": [
+        {
+          "text": "AI and robots are coming for every job. Not the factory jobs; those went first. Every job.\n\nThe only real protection I see is to own assets. Here is why, and which ones...",
+          "hook": "AI and robots are coming for every job. Not the factory jobs; those went first. Every job."
+        },
+        {
+          "text": "Imagine every expert electrician on Earth, their combined knowledge loaded into one robot.\n\nNow do plumbers, carpenters, roofers, truck drivers, accountants, coders.\n\nThe first wave of automation went after muscle. This one goes after knowledge work and the trades at once."
+        },
+        {
+          "text": "They told you to learn to code; then AI learned to code.\n\nSelf-driving trucks are coming for the truckers in my chat. The day self-driving cars stop crashing, human driving could end up illegal.\n\nI do not know what the world looks like in five years. I know who it is rough for."
+        },
+        {
+          "text": "The line is simple: do you own assets, or do you only own a paycheck?\n\nTechnology is deflationary. Everything a robot makes gets cheaper. Money is not deflationary: there is no free market in the money supply, it only inflates.\n\nCrypto is the answer to that half of the problem."
+        },
+        {
+          "text": "In the spring of 2013 a median American home cost about 2,000 Bitcoin ($BTC).\n\nThis week it costs about five.\n\nThat is what owning a deflationary asset through an inflationary decade looks like."
+        },
+        {
+          "text": "So own assets: water, energy, compute, real estate, food, biotech.\n\nIn crypto I stay with the two neutral layers nobody owns: $TAO, the AI inference layer, and $KAS, the proof-of-work money layer.\n\nGet in while you still have the paycheck. Never financial advice."
+        },
+        {
+          "text": "If this made you think about what you actually own...\n\nFollow me for the macro and crypto read that ignores the echo chamber.\n\n🧠"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-10-09-tao-best-ai-play",
+      "topic": "TAO at about $272 as the best pure AI play in crypto",
+      "eligible_topic": "tao",
+      "tweet_text": "$TAO at about $272 is a steal: 64% under its all-time high, and AI is the whole narrative of this decade.\n\nIf you had to park your AI money in ONE place for the next five years, where does it go?",
+      "hook": "$TAO at about $272 is a steal: 64% under its all-time high, and AI is the whole narrative of this decade.",
+      "options": [
+        "$TAO, nothing is close",
+        "AI agent or AI meme coin",
+        "Nvidia stock, not crypto",
+        "No AI exposure"
+      ],
+      "duration": "1d"
+    },
+    {
+      "id": "poll-2026-10-09-kaspa-flat-decoupling-or-waiting",
+      "topic": "Kaspa flat on a red week: decoupling, waiting on Bitcoin, or next to drop",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Kaspa did not flinch this week.\n\n$KAS flat at about 4.1 cents while Bitcoin went red, $TAO dropped about 6% and the memes got wiped. Up about 15% on the month.\n\nWhat is Kaspa doing here?",
+      "hook": "Kaspa did not flinch this week.",
+      "options": [
+        "Decoupling, strength",
+        "Waiting on Bitcoin",
+        "Last one to drop"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-10-09-tao-best-ai-play",
+      "topic": "TAO at about $272 as the best pure AI play in crypto",
+      "question_text": "$TAO is about $272 this week, about 64% under its all-time high, and I called it a steal on stream. AI is the whole narrative of this decade. If you had to put your AI money in ONE place for the next five years, where does it go?",
+      "options": [
+        "Bittensor ($TAO), nothing else is close",
+        "An AI agent token or an AI meme coin",
+        "Nvidia stock, not crypto",
+        "I am not touching the AI trade"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-10-09-kaspa-flat-decoupling-or-waiting",
+      "topic": "Kaspa flat on a red week: decoupling, waiting on Bitcoin, or next to drop",
+      "question_text": "Kaspa did not flinch this week. $KAS sat flat at about 4.1 cents while Bitcoin went red, $TAO dropped about 6% and the memes got wiped. Up about 15% on the month and still about 80% under its all-time high. So what is Kaspa doing here?",
+      "options": [
+        "Decoupling: this is strength, it leads the next leg",
+        "Waiting on Bitcoin: it goes wherever $BTC goes",
+        "Last one to drop: the dip comes for Kaspa too"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-10-09-meme-dominance-fell-off-a-cliff-cult-memes-only",
+      "topic": "Meme coin dominance fell off a cliff (about 3% of the altcoin market versus over 10% in November 2024; the sector roughly 80% below its $135B peak; holders at multi-year lows; 196 to 41 new listings): no new money, us trading against ourselves, new launches dead within a week, and the cult-meme filter (survived a full cycle, team shipping, real listings) with Turbo as the example",
+      "variation_label": "A + CTA1",
+      "body_style": "stat-stack arc: the 3% versus 10% shock and the 'eye opener' promise in the pre-fold hook with the filter withheld, the size of the hole in numbers, the no-new-money read and the week-long half-life of a new launch (general form, no token named), the decision to drop brand-new launches, the cult-meme filter with Turbo and the cult-meme math, the 2024 meme-only to utility pivot, a personal-stake name-ONE-meme question and a like/subscribe ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Meme coins are about 3% of the altcoin market right now. In November 2024 they were over 10%.\n\nI pulled up the meme coin dominance chart on stream this week and it was an eye opener: the whole sector is falling off a cliff. Here is what that number changes about how I pick memes, and the one filter I still trust.\n\nStart with the size of the hole. The entire meme sector peaked at about $135B in November 2024 and has lost roughly 80% of that. Meme coin holder counts are at multi-year lows. New exchange listings for memes went from 196 in the last quarter of 2024 to 41 in the second quarter of this year. That is not a dip, that is the crowd leaving.\n\nAnd it explains what I see on the charts every week. There is no new money in memes right now. It is us trading against ourselves: the same wallets buying from each other, with nobody new walking through the door. A new launch pumps for a day or two and dies by day five. Some of them come with a fully built-out website and a real content push, and still rug within days: site gone, X account gone, everything deleted. A lot of these do not even last a week.\n\nSo here is where I landed. I am done with brand-new launches in this market. The only memes I touch are the cult memes: the ones that already survived a full cycle, still have a team shipping and still have real exchange listings. Turbo ($TURBO) is one of them, a 2023 meme still sitting at about a $67M cap. Pepe ($PEPE), Toshi ($TOSHI), Doginme ($DOGINME): that whole class has already been through the fire.\n\nAnd the math on cult memes is different. A cult meme sitting at 5% of its old high does not need a new all-time high to pay you; half way back to the old high is a 10x. A brand-new launch under a $1M cap is a shot in the dark. The odds it ever sees $5M are tiny, and $50M or $100M is rarer still.\n\nOne more thing. In 2024 I was meme-only, and I am glad I moved on to utility plays too, because that is where a lot of our biggest multipliers came from. A meme-only mentality in a market where memes are 3% of alts is fighting over a shrinking pie.\n\nWhen new money finally comes back into crypto, it is not coming back for the launch of the week. Never financial advice.\n\nTell me in the comments: name the ONE meme you think is still alive when the new money shows up next year, and why that one.\n\nClick that like button and click the subscribe button if you want the meme reads before the crowd shows up.",
+      "engagement_question": "Name the ONE meme you think is still alive when the new money shows up next year, and why that one.",
+      "images": [
+        {
+          "image_id": "43d6c9a7",
+          "slide_text": "Meme coins are 3% of the altcoin market. They were over 10% in 2024."
+        },
+        {
+          "image_id": "69ecbbbb",
+          "slide_text": "From a $135B peak to a fraction of it. Holders at multi-year lows."
+        },
+        {
+          "image_id": "7398db3d",
+          "slide_text": "No new money. It is us trading against ourselves."
+        },
+        {
+          "image_id": "7668acf6",
+          "slide_text": "The only memes I touch now: cult memes that survived a full cycle."
+        },
+        {
+          "image_id": "76807bd4",
+          "slide_text": "Which meme is still alive when the new money shows up?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-10-09-ai-is-coming-for-every-job-own-assets",
+      "topic": "AI and robots are coming for every job, so own assets: one robot with every expert electrician's knowledge, muscle first then knowledge work and the trades, self-driving trucks, the assets-or-paycheck divide, deflationary tech versus inflationary money, a median home at about 2,000 Bitcoin in 2013 versus about five this week, the asset list (water, energy, compute, real estate, food, biotech) and $TAO plus $KAS as the two neutral layers",
+      "variation_label": "B + CTA2",
+      "body_style": "hook-and-thesis-first arc: the every-job claim and the one-robot picture in the pre-fold hook with the asset list withheld, the muscle-then-knowledge-work wave and the trucker line, the assets-or-paycheck divide, deflationary tech versus inflationary money with the Bitcoin-buys-a-house math, the asset list closing on the two neutral layers, the get-in-while-you-have-a-paycheck push, a forked asset-class question and a watch / like / subscribe ask",
+      "cta_target": "subscribe_youtube",
+      "body": "AI and robots are coming for every job. Not the factory jobs; those went first. Every job.\n\nImagine the combined knowledge of every expert electrician on Earth loaded into one robot. Now do that for plumbers, carpenters, roofers, truck drivers, accountants, coders. Here is why I think the only real protection is to own assets, and which ones.\n\nIn my latest video I went down the list and I could not find a job that is safe. The first wave of automation went after muscle: the factory floor, the assembly line. This wave goes after knowledge work and the skilled trades at the same time. They told you to learn to code; then AI learned to code. Self-driving trucks are coming for the truckers in my chat, and the day self-driving cars stop crashing, human driving could end up illegal.\n\nI do not know what the world looks like in five years. It might be rough for some people and not for others, and the line between the two is going to be simple: do you own assets, or do you only own a paycheck?\n\nBecause here is the good news hiding inside this. Technology is deflationary. Everything a robot makes gets cheaper, so if you own less, you can do more with less. The problem is that money is not deflationary. There is no free market in the money supply; it only ever inflates, and that is what makes life harder every year. Crypto is the answer to that half of the problem. In the spring of 2013 a median American home cost about 2,000 Bitcoin. This week it costs about five.\n\nSo own assets, and choose them wisely. Anything to do with water, energy and compute power. Real estate. Food. Health and biotech. And crypto, where I stay with the two neutral layers nobody owns: $TAO as the AI inference layer and $KAS as the proof-of-work money layer. The more governments and corporations race to control compute, money and AI, the more those two are worth.\n\nGet in while you still have the paycheck. Dollar-cost average into the big ones, learn to time the tops and bottoms along the way, and build the size of your bag. Never financial advice.\n\nTell me in the comments: if AI takes the paycheck, which asset class holds up best: real estate, energy, compute, or crypto?\n\nWatch the full breakdown on the channel, then click that like button and click the subscribe button if you want more of this.",
+      "engagement_question": "If AI takes the paycheck, which asset class holds up best: real estate, energy, compute, or crypto?",
+      "images": [
+        {
+          "image_id": "892f5a65",
+          "slide_text": "AI is coming for every job. The only protection is to own assets."
+        },
+        {
+          "image_id": "9708e942",
+          "slide_text": "Every expert electrician on Earth, loaded into one robot. Now do plumbers, roofers, coders."
+        },
+        {
+          "image_id": "97fe47a7",
+          "slide_text": "Tech is deflationary. Money is not. 2013: a home cost 2,000 Bitcoin. Now: about 5."
+        },
+        {
+          "image_id": "9cb3d6d4",
+          "slide_text": "Own assets: water, energy, compute, real estate, food, biotech, $TAO and $KAS."
+        },
+        {
+          "image_id": "bc7a0079",
+          "slide_text": "If AI takes the paycheck, which asset holds up best?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-10-09-kaspa-did-not-flinch-while-everything-bled",
+      "kaspa_subject": true,
+      "image_id": "08b352c8",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa did not flinch this week.",
+      "caption": "Kaspa did not flinch this week.\n\nBitcoin ($BTC) went red on the week, $TAO dropped about 6%, and the meme coin sector sits roughly 80% below its 2024 peak with holder counts at multi-year lows. And Kaspa ($KAS)? Flat on the week at about 4.1 cents, up about 15% on the month, at about a $1.1B market cap.\n\nCould it retrace if Bitcoin dumps? Of course; when Bitcoin goes down, everything goes down. But compared to how Kaspa traded over the last few months, holding flat through a red week while everything else bled is strength.\n\nFair launch, no premine, proof of work, and still about 80% under its all-time high of 20.7 cents.\n\nStrength, or just waiting on Bitcoin? Tell me in the comments.\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #ghostdag #crypto #cryptocurrency #altcoins #blockchain #bitcoin #cryptoinvesting #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#bitcoin",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Kaspa did not flinch this week."
+    },
+    {
+      "id": "ig-2026-10-09-everything-looks-like-hell-except-kaspa",
+      "kaspa_subject": true,
+      "image_id": "2b72506f",
+      "aspect_ratio": "4:5",
+      "hook": "Everything looks like hell this week, especially the memes... except Kaspa ($KAS) 😎",
+      "caption": "Everything looks like hell this week, especially the memes... except Kaspa ($KAS) 😎\n\nMeme coins are about 3% of the altcoin market now, down from over 10% in November 2024. Bitcoin is red on the week. And Kaspa just sits there at about 4.1 cents, flat on the week and up about 15% on the month, refusing to retrace.\n\nIt is still about 80% under its all-time high, on a fair-launch proof-of-work chain with no premine. That is the kind of chart I want to be holding when new money finally comes back into crypto.\n\nAre you stacking $KAS on the red weeks, or waiting for the Bitcoin dip first?\n\n#kaspa #kas #krc20 #proofofwork #fairlaunch #crypto #cryptocurrency #altcoins #blockchain #bitcoin #memecoins #cryptoinvesting #cryptotrading",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#bitcoin",
+        "#memecoins",
+        "#cryptoinvesting",
+        "#cryptotrading"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Everything looks like hell this week, especially the memes, and Kaspa ($KAS) just sits there at about 4.1 cents, flat on the week and up about 15% on the month, refusing to retrace 😎"
+    }
+  ]
+}

@@ -99,6 +99,23 @@ def type_human(page, text):
         page.wait_for_timeout(random_between(CHAR_DELAY_MIN, CHAR_DELAY_MAX))
 
 
+def close_typeahead(page):
+    # A tweet that ENDS in an @handle or $cashtag leaves X's suggestion dropdown open
+    # after keystroke typing, and that dropdown replaces the composer toolbar, so
+    # addButton vanishes from the DOM (tweet 5 = "...Follow: @TurboToadToken",
+    # 2026-10-10 diag). Moving the caret off the token closes it without touching the
+    # text; Escape is avoided because it can trigger X's discard-draft prompt.
+    sel = '[id^="typeaheadDropdown"][role=listbox], [data-testid="typeaheadResult"]'
+    if page.locator(sel).count() == 0:
+        return
+    page.keyboard.press("Control+Home")
+    page.wait_for_timeout(800)
+    if page.locator(sel).count():
+        print("  typeahead still open after Control+Home", flush=True)
+    else:
+        print("  closed mention/cashtag typeahead", flush=True)
+
+
 def wait_for_home_or_login(page, timeout_ms=30000):
     # Sync-API stand-in for the JS `Promise.race` between two waitForSelector calls:
     # polls both selectors for visibility (matching waitForSelector's default
@@ -231,6 +248,7 @@ def main():
                     f"Tweet 1 verification failed.\n"
                     f"Expected: {json.dumps(tweets[0]['text'])}\nGot:      {json.dumps(got0)}")
             print("Tweet 1 verified \u2713")
+            close_typeahead(page)
 
             # Tweets 2-N
             for i in range(1, len(tweets)):
@@ -238,15 +256,29 @@ def main():
 
                 # Target only the <BUTTON> with addButton testid — the nav link is an <A>, so
                 # the `button` tag selector naturally excludes it without needing ancestor scoping.
-                add_btn = page.locator('button[data-testid="addButton"]')
-                mouse_click(page, add_btn)
+                add_btn = page.locator('button[data-testid="addButton"]').last
+                new_ta_sel = f'[data-testid="tweetTextarea_{i}"]'
 
-                # Past ~5 tweets the composer modal grows taller than the viewport, so the new
-                # textarea EXISTS but is scrolled out of view and never satisfies a visibility
-                # wait (deterministic `tweetTextarea_5` timeout, 2026-07-30). Wait on attachment,
-                # scroll it in, and fall back to a native JS click if the pointer click is blocked.
-                page.wait_for_selector(f'[data-testid="tweetTextarea_{i}"]',
-                                       state="attached", timeout=30000)
+                # Past ~5 tweets the composer modal is taller than the viewport and addButton
+                # sits BELOW it. The old raw-coordinate mouse_click landed off-screen and did
+                # nothing, so tweetTextarea_5 was never created (2026-07-30, 08-25, 10-05,
+                # 10-09). Scroll the button in, click via the locator, JS-click as fallback,
+                # and re-click once only if the new textarea still is not attached.
+                def click_add():
+                    try:
+                        add_btn.scroll_into_view_if_needed(timeout=10000)
+                        add_btn.click(timeout=5000)
+                    except Exception as e:
+                        print(f"  addButton click blocked ({e.__class__.__name__}), using JS click", flush=True)
+                        add_btn.evaluate("el => el.click()")
+
+                click_add()
+                try:
+                    page.wait_for_selector(new_ta_sel, state="attached", timeout=15000)
+                except Exception:
+                    print(f"  tweetTextarea_{i} not attached after addButton; clicking it once more", flush=True)
+                    click_add()
+                    page.wait_for_selector(new_ta_sel, state="attached", timeout=30000)
                 ta = page.locator(f'[data-testid="tweetTextarea_{i}"]')
                 try:
                     ta.scroll_into_view_if_needed(timeout=10000)
@@ -271,6 +303,7 @@ def main():
                         f"Tweet {i + 1} verification failed.\n"
                         f"Expected: {json.dumps(tweets[i]['text'])}\nGot:      {json.dumps(got)}")
                 print(f"Tweet {i + 1} verified \u2713")
+                close_typeahead(page)
 
             # Post
             print("Pre-post wait (60\u2013180s)...")

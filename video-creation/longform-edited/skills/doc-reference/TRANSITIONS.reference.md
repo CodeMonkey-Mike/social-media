@@ -58,6 +58,9 @@ ChatGPT stills ingress on **Cinematic Bad Signal**, rotating so no adjacent repe
   · 376.50 · 382.38 (comparison BOARD but TEXT container → stays quiet) · 397.36 · 405.00 · 436.30.
 - All internal reveals (C1 rungs/stamps/re-lights, C4 sub-spotlights, H1 slam @29.82, finality collapse
   @223.34, C2 pulses, C3 bars) are component ANIMATION, not transitions.
+- **CLIP INSERT in / out → `hand:fade` 0.50 s (bucket `insert`, roles insert-in / insert-out)**, one pair per
+  COVER-PLAN clip insert at its splice point (a clip with its OWN voice at a spine pause, `../clip-inserts/clip-inserts.md`;
+  `lint_transitions.py` requires both rows). None in this video.
 
 ## 4. DIAGRAM / CHART MARQUEES → reserved MELT (transform) + SPIN (new facet)
 ONE melt look (`lib:melt-rgb-1`, 0.76s) + ONE spin look (`lib:spin-3d-side-ease`, short 0.44s / full

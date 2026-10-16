@@ -24,7 +24,9 @@ const pool = require('./chat-pool');
 const PROFILE_DIR = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\chatgpt-profile';
 const IMG_BASE = 'C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images';
 const IMAGE_URL_PATTERN = 'estuary/content';
-const SEL = { composer: '#prompt-textarea, div[contenteditable="true"][data-id]' };
+// 2026-10-08: chatgpt.com's composer lost #prompt-textarea/[data-id]; it is now a bare ProseMirror
+// textbox (same change gen_images.py absorbed 2026-09-27).
+const SEL = { composer: '#prompt-textarea, div[contenteditable="true"][data-id], div.ProseMirror[contenteditable="true"][role="textbox"]' };
 
 function args() { const a = {}; for (const x of process.argv.slice(2)) { const m = x.match(/^--([^=]+)=(.*)$/); if (m) a[m[1]] = m[2]; } return a; }
 const A = args();
@@ -114,6 +116,13 @@ async function genOne(page, allSeen, urlTs, bufs, item) {
   for (const ch of item.prompt) { await page.keyboard.type(ch); await page.waitForTimeout(Math.floor(Math.random() * 25) + 45); }
   await page.waitForTimeout(Math.floor(Math.random() * 6000) + 8000);
   await page.keyboard.press('Enter');
+  // In a fresh chat with an attachment Enter no longer submits: if the prompt is still in the
+  // composer, click Send (the gen_images.py fallback).
+  await page.waitForTimeout(2500);
+  if ((await composer.innerText().catch(() => '')).trim()) {
+    console.log('   Enter did not submit, clicking Send');
+    await page.locator('button[data-testid="send-button"], button[aria-label*="Send"]').first().click({ timeout: 8000 }).catch(e => console.log('   send click failed:', e.message.split('\n')[0]));
+  }
   const sentAt = Date.now();
   const MIN_DELAY = 10000, MAXW = 5 * 60 * 1000, t0 = Date.now();
   let last = 0, stable = null, imgUrl = null;

@@ -1273,7 +1273,7 @@
     {
       "batch": "uptober",
       "track": "livestream-repurpose",
-      "status": "active",
+      "status": "completed",
       "date": "2026-09-30",
       "livestream_title": "uptober LOW BPS VERTICAL",
       "title": null,
@@ -1299,7 +1299,7 @@
     {
       "batch": "bull-trap",
       "track": "livestream-repurpose",
-      "status": "active",
+      "status": "completed",
       "date": "2026-10-03",
       "livestream_title": "bull-trap LOW BPS VERTICAL",
       "title": "I Got Caught In A Bull Trap On TAO, And The Whole Market Could Be Setting One Up For October",
@@ -1321,6 +1321,87 @@
       "briefs": {
         "lane3": "Half the usual volume this run: 2 multi-line X tweets (instead of 4) and 1 single-line X tweet (instead of 2); 1 long YouTube community post with its carousel (instead of 2); 1 X thread built from that one YT post (instead of 2). Everything else at the defaults (2 YT polls plus eligible X polls, IG single-image companions for Kaspa-subject tweets).",
         "clips": "Half the usual amount of clips: no more than 4 clips total (instead of 8), best topics only."
+      }
+    },
+    {
+      "batch": "grapes",
+      "track": "livestream-repurpose",
+      "status": "completed",
+      "date": "2026-10-05",
+      "livestream_title": "grapes LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/grapes/grapes LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/grapes LOW BPS VERTICAL/grapes LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/grapes LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/grapes/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/grapes",
+        "video-creation/shorts/grapes"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-10-05.",
+      "briefs": {
+        "lane3": "Mike override for this batch: produce exactly ONE YouTube community post (one carousel). Do NOT draft any YouTube poll (yt-text-polls) and do NOT draft any X poll. All other Lane 3 content at defaults.",
+        "clips": "Mike override for this batch: select exactly THREE clips total, the three strongest. No more."
+      }
+    },
+    {
+      "batch": "aliens",
+      "track": "livestream-repurpose",
+      "status": "completed",
+      "date": "2026-10-09",
+      "livestream_title": "aliens LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/aliens/aliens LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/aliens LOW BPS VERTICAL/aliens LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/aliens LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/aliens/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/aliens",
+        "video-creation/shorts/aliens"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-10-09.",
+      "briefs": {
+        "lane3": "No longform video this batch. Default Lane 3 mix otherwise.",
+        "clips": "Every draft clip must be UNDER 45 seconds (hard cap)."
+      }
+    },
+    {
+      "batch": "downtober",
+      "track": "livestream-repurpose",
+      "status": "active",
+      "date": "2026-10-14",
+      "livestream_title": "downtober LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/downtober/downtober LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/downtober LOW BPS VERTICAL/downtober LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/downtober LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/downtober/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/downtober",
+        "video-creation/shorts/downtober"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-10-14.",
+      "briefs": {
+        "lane3": "Make EXTRA X tweets about Kaspa: more standalone Kaspa tweets than the default mix. No longform this batch.",
+        "clips": "HARD CAP: at most 4 clips. Every clip must be UNDER 40 seconds final duration (after tighten)."
       }
     }
   ]

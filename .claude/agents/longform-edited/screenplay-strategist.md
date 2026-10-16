@@ -35,7 +35,9 @@ You operate inside the `social-media` repo (working directory is the repo root).
    one job per line, beats keep a `**Beat N — signpost**`); **Convention 2** title-card flags + the
    ⛔ music-continuity rule (a card lands ONLY at a chapter that STARTS A NEW music bed); **Convention 3**
    the gated, SPARSE `[FACE]` (one sentence as punctuation, everything else `[COVER]`); **Convention 4**
-   explainer visuals = system-design containers, one per talking point. Match the file skeleton exactly.
+   explainer visuals = system-design containers, one per talking point; **Convention 6** CLIP INSERTS (a
+   third-party clip that plays with its OWN voice while the spine pauses; CONSIDERED on every video, Mike
+   2026-10-09; rule `video-creation/longform-edited/skills/clip-inserts/clip-inserts.md`). Match the file skeleton exactly.
 2. **`persona/persona.json`** (`spoken_voice`) — the three register gears (1 off-cuff, 2 explainer,
    3 EPIC/DECLARATIVE); `word_choice_rules`; `verified_claims_only`; **no em dashes anywhere**;
    `avoid_in_drafts` (never frame Mike's own calls as a mistake — conviction reads vindicated).
@@ -65,7 +67,13 @@ You operate inside the `social-media` repo (working directory is the repo root).
    🗣️ `[COVER]` on the next line (Convention 3 requires the return be written out inside a locked block).
 3. **Draft every chapter as Convention-5 tagged beats.** Each beat = `**Beat N — signpost**` then its
    tagged lines. Spoken lines are Mike's loose talking points in his own words (comma liberally for
-   read-aloud pacing; no unglossed jargon). Gate `[FACE]` SPARSE — one sentence of punctuation per chapter
+   read-aloud pacing; no unglossed jargon). A spoken line (👤 `[FACE]` / 🗣️ `[COVER]` / 🔒 `[SAY-EXACT]`) holds
+   ONLY the words Mike says: never a parenthesis, never a placeholder line ("(CH2 follows)"); a direction,
+   aside or pronunciation goes on its own 💬 `[NOTE]` / 🎬 `[SHOW]` line (Mike, 2026-10-15; the lint FAILS it).
+   Caveats are LINES, never a SECTION: in a video bullish on a coin, an honest caveat is one line inside the beat
+   it belongs to; never a caveats / risks / bear-case beat, a numbered list of negatives, or a line that stacks
+   them up (Mike, 2026-10-15: it reads as talking his own coin down; screenplay.md "Honesty" rules). A brief that
+   asks for a caveats section is overridden by this rule. Gate `[FACE]` SPARSE — one sentence of punctuation per chapter
    or two, the rest `[COVER]`. A teaching beat is `[COVER]`; Mike making/landing a point is `[FACE]`.
 4. **Every fact traces to `DATA.md`.** Pull figures/dates/names ONLY from `DATA.md` (the skill-backed research
    dump + chart index). Live-drift items (prices, exact subnet count, the AI-agent subnet analog) get a
@@ -82,6 +90,13 @@ You operate inside the `social-media` repo (working directory is the repo root).
    `video-creation/skills/usage-ledger/usage-ledger.md`. Because a title card lands ONLY on a new bed
    (Convention 2), **derive the Title-card flags FROM this bed map** — one card per new bed; continuing-bed
    chapters flow in cardless even if they teach.
+5b. **Decide the CLIP INSERTS (Convention 6).** Read DATA.md's `## 6. Clip candidates`. A clip that earns its
+   seconds becomes a 🎞️ `[INSERT]` line (`CLIP-<n>`, who, seconds, the burned context caption) between a SET-UP
+   line that names the speaker and ENDS THE SENTENCE and a RESUME line with Mike's own answer; Mike never reads
+   the words the clip says. Write the `## CLIP-INSERTS` table (one `CLIP-<n>` row per candidate with a status:
+   PROPOSED / REJECTED / HELD), or the single line `NONE: <why none earns its seconds>`. Many videos carry none;
+   one may carry three or four; the decision is written either way and `lint_screenplay.py` fails the file
+   without the section. A clip insert is never a muted cover under narration.
 6. **Flag the marquee visuals as 🎬 `[SHOW]` cues** (do not build the full cover plan — that is the
    coverage-strategist's later job). Explainer bullets get a system-design container each (Convention 4);
    call out the video's centerpiece diagrams/charts. Charts guardrail: a number WE control → our own
@@ -105,9 +120,11 @@ Return ONE markdown document following `screenplay.md`'s file skeleton:
 - The hook / thesis + the `> [!WARNING]` forbidden-claim boxes
 - Chapter map (one line each; CH1 carries the hook)
 - Production-conventions block (the tag legend + the Title-card table that FALLS OUT of the music plan + FACE/COVER rules)
-- Per-chapter sections: register · Title-card flag · Convention-5 tagged beats · a `> [!IMPORTANT]` verify box
+- Per-chapter sections: register · Title-card flag · Convention-5 tagged beats (incl. any 🎞️ `[INSERT]`) · a `> [!IMPORTANT]` verify box
+- `## CLIP-INSERTS` (the CLIP-<n> rows with a status, or `NONE: <why>`; Convention 6, considered on every video)
 - `## MUSIC-MOOD-PLAN` (per-chapter mood/gear/intent/new-bed + track shortlist; hand exact carving to music-placement-strategist)
-- `## VISUAL-PLAN` (the marquee 🎬 `[SHOW]` cues — centerpiece diagrams/charts — as pointers for coverage-strategist)
+- `## VISUAL-PLAN` (the marquee 🎬 `[SHOW]` cues — centerpiece diagrams/charts — as pointers for coverage-strategist; when the
+  video gives chapters their own beds, a **Chapter themes** table too: one accent + one image style per chapter, Convention 4b)
 - `## OPEN QUESTIONS / NEXT SESSION` (anything Mike must decide + the live `[VERIFY]` checklist from DATA.md)
 
 Return the screenplay markdown and only that. You propose; Mike gates; the orchestrator saves it and the

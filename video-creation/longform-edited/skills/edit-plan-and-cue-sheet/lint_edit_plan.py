@@ -16,6 +16,8 @@ EDIT-PLAN.md
      card-slides) appears in the log, or the log marks it BENCH / REJECTED
   6. Every MUSIC-PLAN hard hit has an [IMPACT] / [RISER...] / [MUSIC] / [DUCK] event within +-0.6 s, and
      every chapter card ON (AS-RECORDED header) has a [CARD] event carrying an [IMPACT]
+  6b. Every COVER-PLAN clip insert (`clip_inserts[]`, skills/clip-inserts) has an [INSERT] event carrying its
+     id within +-0.6 s of its splice_at (the spine pauses there and the clip plays with its own voice)
   7. No leftover `pick by MEASURED tail` seed placeholders, no `<!-- SEED` marker, no em dashes
 CUE-SHEET.md
   8. Required sections: FACE spans · TRANSITIONS · CHAPTER cards · CONTAINER / DIAGRAM / CHART ·
@@ -36,7 +38,7 @@ EVENT_RE = re.compile(r"^(\d+):(\d{2}\.\d)\s+(\[([A-Z][A-Z0-9→ /-]*)\]|SAY:)\s
 TAG_RE = re.compile(r"\[([A-Z][A-Z0-9→ /-]*)\]")
 CH_RE = re.compile(r"^###\s+(CH\s*\d+)\s*[-:]\s*([^(\n]+?)\s*\((\d+(?:\.\d+)?)-(\d+(?:\.\d+)?)\)([^\n]*)", re.M)
 FACE_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*\|", re.M)
-ASSET_DIRS = ("vid", "img", "receipts", "charts", "diagrams", "title-slides", "card-slides")
+ASSET_DIRS = ("vid", "img", "receipts", "clip-inserts", "charts", "diagrams", "title-slides", "card-slides")
 CUE_SECTIONS = ["FACE spans", "TRANSITIONS", "CHAPTER cards", "CONTAINER / DIAGRAM / CHART", "RECEIPTS",
                 "VIDEO b-roll", "IMAGE b-roll", "IMPACTS + RISERS", "MUSIC beds", "CAPTIONS"]
 
@@ -50,7 +52,7 @@ def asset_ids(proj: Path):
         for f in p.iterdir():
             if f.is_file() and f.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp", ".mp4", ".mov", ".webm"):
                 stem = f.stem
-                m = re.match(r"^((?:BR|IMG|R)-?\d+[a-z]?)", stem)
+                m = re.match(r"^((?:BR|IMG|R|CLIP)-?\d+[a-z]?)", stem)
                 if m:
                     ids.add(m.group(1))
                 else:
@@ -132,6 +134,24 @@ def lint(proj: Path, duration=None, say_min=0.8):
                 continue
             if not any(abs(t - x) <= 0.6 for x in times):
                 fails.append(f"EDIT-PLAN.md: MUSIC-PLAN hard hit at {t:.2f}s ({str(h.get('beat', ''))[:50]}) has no IMPACT/RISER/MUSIC/DUCK event within 0.6 s")
+    # clip inserts: one [INSERT] event per planned insert (skills/clip-inserts/clip-inserts.md)
+    cp = proj / "COVER-PLAN.json"
+    if cp.is_file():
+        try:
+            ins = json.loads(cp.read_text(encoding="utf-8")).get("clip_inserts") or []
+        except Exception:
+            ins = []
+        for ci in ins:
+            t, cid = float(ci.get("splice_at") or 0), str(ci.get("id"))
+            found = False
+            for ln in text.splitlines():
+                e = EVENT_RE.match(ln)
+                if e and "[INSERT]" in ln and cid in ln and abs(int(e.group(1)) * 60 + float(e.group(2)) - t) <= 0.6:
+                    found = True
+                    break
+            if not found:
+                fails.append(f"EDIT-PLAN.md: clip insert {cid} at {t:.2f}s has no [INSERT] event carrying its id "
+                             "(the spine pauses there and the clip plays with its own voice; clip-inserts.md)")
     for m in CH_RE.finditer(ar_text):
         if re.search(r'card\s+ON', m.group(5)):
             ta = float(m.group(3))

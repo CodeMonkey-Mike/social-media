@@ -328,7 +328,12 @@ def spawn_agent(state: BatchState, node: str, agent: str, prompt: str, log_name:
     return rc, out
 
 
-FABLE_LIMIT_RE = re.compile(r"reached your Fable limit", re.I)
+# The CLI's message when the weekly Fable allowance is out (seen live 2026-09-14, batch perpspad):
+#   "You've reached your Fable limit. Switch to another model, or manage usage credits at claude.ai/settings/usage..."
+# Matched loosely ("Fable" and "limit" on one line, either order) so a CLI rewording ("weekly limit for Fable",
+# "Fable usage limit reached") still triggers the ONE Opus respawn; only checked when the agent exited non-zero.
+# Keep this pattern IDENTICAL in every headless spawner (longform common.py, batch_graph.py, find_jobs.py).
+FABLE_LIMIT_RE = re.compile(r"\bFable\b[^\n]{0,40}\blimit\b|\blimit\b[^\n]{0,40}\bFable\b", re.I)
 FABLE_FALLBACK_MODEL = "opus"
 
 
@@ -769,7 +774,9 @@ def _build_prompt(state: BatchState, c: dict) -> str:
         f"Build vertical short clip {c['n']} `{c['slug']}` of batch `{batch}` end to end to the "
         f"FINALIZED-SHORT contract (`video-creation/livestream-repurpose/skills/remotion-shorts-build/SKILL.md`): "
         f"BROLL-PLAN, ChatGPT b-roll (house style, budget rules), Remotion composition, SFX, captions "
-        f"(captions skill), frame-0 thumbnail, render, then run the mechanical gate "
+        f"(captions skill), frame-0 thumbnail, ONE full-quality render via `render_short.py full` (NO "
+        f"low-bitrate draft; fix any defect with `render_short.py splice` / `audio`, never a second full "
+        f"render unless it is clip-wide), then run the mechanical gate "
         f"(`finalized_short_gate.py --clip {c['n']}`) and self-QA. Project folder: `{SHORTS / batch}`; "
         f"progress: `{prog_path(batch)}`. Respect the chatgpt/render stage locks (stage_lock.py). "
         f"Done means progress.json shows this clip phase 7-built with a PASS gate."

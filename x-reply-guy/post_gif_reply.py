@@ -50,6 +50,12 @@ def human_pause(label=""):
 
 
 def mouse_click(page, locator):
+    # A raw mouse click at the bbox center misses anything below the fold (a tall
+    # tweet image pushes the Reply button off-screen), so scroll it into view first.
+    try:
+        locator.scroll_into_view_if_needed(timeout=5000)
+    except Exception:
+        pass
     bbox = locator.bounding_box()
     if bbox and bbox["width"] > 0:
         page.mouse.click(bbox["x"] + bbox["width"] / 2, bbox["y"] + bbox["height"] / 2)

@@ -108,6 +108,18 @@ def main():
                     continue
                 if not any(abs(tc - edge) <= 0.6 and role == "face-cut" for tc, role, _ in tcs):
                     fails.append(f"FACE {label} at {edge:.2f}s has no `face-cut` row in the plan")
+    # clip inserts (COVER-PLAN clip_inserts, skills/clip-inserts): an insert-in AND an insert-out row at every splice_at
+    cp = proj / "COVER-PLAN.json"
+    if plan and cp.is_file():
+        try:
+            ins = json.loads(cp.read_text(encoding="utf-8")).get("clip_inserts") or []
+        except Exception:
+            ins = []
+        for ci in ins:
+            t = float(ci.get("splice_at") or 0)
+            for role in ("insert-in", "insert-out"):
+                if not any(abs(tc - t) <= 0.6 and r == role for tc, r, _ in tcs):
+                    fails.append(f"clip insert {ci.get('id')} at {t:.2f}s has no `{role}` row in the plan (bucket insert; clip-inserts.md)")
     print(f"\nlint_transitions — {proj.name}\n{'-' * 64}")
     for w in warns:
         print(f"  warn  {w}")

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C22 | retire-early</title>
+<!--
+C22: Type 1 ANIMATED chart (design states), retire-early, chapter CH4 (accent #a855f7). Labels in TAO, never dollars.
+States: C22-start / C22-mid / C22-payoff = the design spec. What moves when: C22.spec.md beside this file.
+Render: open in headless Chromium at viewport 1920x1080 (device scale 2), wait for document.fonts, then
+screenshot each .frame by its id -> <id>.png (the screenshot driver used: _previews/chart-build/shoot.py).
+-->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+:root{--acc:#a855f7;--acc-rgb:168,85,247;--accent-red:#ff4060}
+
+/* ===== chart-builder layer (adds classes; tokens above untouched; --acc = the CHAPTER accent) ===== */
+.frame.dg{padding:0;display:block}
+.stage{width:1920px;height:1080px}
+.stage>*{position:absolute}
+.k{color:var(--acc)}
+.hdr{left:140px;top:76px;width:1640px}
+.hdr .ey{margin-bottom:16px}
+.hdr h1{font-size:62px;line-height:1.08;max-width:1640px}
+.hdr .divider{margin:24px 0 0} /* the LOCKED green->cyan gradient stays: the chapter accent re-colours only lit elements */
+.src{left:140px;bottom:38px;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--text-muted);letter-spacing:.01em;white-space:nowrap}
+svg.edges{left:0;top:0;width:1920px;height:1080px;overflow:visible}
+.num{font-family:'JetBrains Mono',monospace;font-weight:600}
+
+/* nodes: ghost (map preview) < dim (stepped back) < built (neutral) < on (accent edge) < lit (spotlight) */
+.node{box-sizing:border-box;border-radius:16px;background:var(--bg-card);border:2px solid rgba(136,146,164,.26);padding:18px 26px}
+.node .tag{font-family:'DM Sans';font-weight:700;font-size:16px;line-height:1.2;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.node .ttl{font-family:'DM Sans';font-weight:700;font-size:31px;line-height:1.15;color:var(--text-primary)}
+.node .sub{font-family:'DM Sans';font-weight:400;font-size:22px;line-height:1.38;color:var(--text-secondary);margin-top:6px}
+.node.on{border-color:rgba(var(--acc-rgb),.85)}
+.node.on .tag,.node.lit .tag{color:var(--acc)}
+.node.lit{border-color:var(--acc);box-shadow:0 0 0 1px rgba(var(--acc-rgb),.35),0 0 56px rgba(var(--acc-rgb),.30);
+  background:linear-gradient(180deg,rgba(var(--acc-rgb),.13),rgba(18,21,28,.97) 64%)}
+.node.lit .sub{color:#b4bccb}
+.node.ghost{opacity:.14}
+.node.dim{opacity:.40;filter:saturate(.25)}
+.node.dashed{border-style:dashed;background:transparent}
+.node.risk{border-color:rgba(255,64,96,.42)}
+.node.risk .tag{color:rgba(255,64,96,.85)}
+.node.risk.lit{border-color:var(--accent-red);box-shadow:0 0 0 1px rgba(255,64,96,.35),0 0 56px rgba(255,64,96,.30);
+  background:linear-gradient(180deg,rgba(255,64,96,.12),rgba(18,21,28,.97) 64%)}
+.node.risk.lit .tag{color:var(--accent-red)}
+.row{display:flex;justify-content:space-between;align-items:center;height:100%;gap:24px}
+.vc{display:flex;flex-direction:column;justify-content:center;height:100%}
+.ctr{text-align:center;align-items:center}
+.chip{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:21px;padding:8px 18px;border-radius:100px;white-space:nowrap;
+  border:1.5px solid rgba(136,146,164,.4);color:var(--text-primary)}
+.node.on .chip,.node.lit .chip{border-color:var(--acc);color:var(--acc);background:rgba(var(--acc-rgb),.12)}
+
+/* labels on edges */
+.lbl{font-family:'DM Sans';font-weight:500;font-size:21px;line-height:1.25;color:var(--text-secondary);white-space:nowrap}
+.lbl.ghost{opacity:.14}
+.lbl.dim{opacity:.4}
+.lbl.on{color:rgba(var(--acc-rgb),.95)}
+.lbl.lit{color:var(--acc);font-weight:700;text-shadow:0 0 18px rgba(var(--acc-rgb),.55)}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;padding:5px 16px;border-radius:100px;
+  border:1.5px solid rgba(136,146,164,.45);background:var(--bg-deep);color:var(--text-primary)}
+.lbl.on .pill{border-color:rgba(var(--acc-rgb),.8);color:var(--acc)}
+.lbl.lit .pill{border-color:var(--acc);color:#fff;background:rgba(var(--acc-rgb),.30);box-shadow:0 0 26px rgba(var(--acc-rgb),.55);text-shadow:none}
+
+/* edges + arrowheads */
+.e{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.e.ghost{stroke:rgba(136,146,164,.55);stroke-width:2.5;opacity:.22}
+.e.dim{stroke:rgba(136,146,164,.5);stroke-width:2.5;opacity:.45}
+.e.built{stroke:rgba(136,146,164,.6);stroke-width:2.5}
+.e.on{stroke:rgba(var(--acc-rgb),.9);stroke-width:3}
+.e.lit{stroke:var(--acc);stroke-width:4;filter:drop-shadow(0 0 7px rgba(var(--acc-rgb),.85))}
+.e.dash{stroke-dasharray:9 10}
+.ah{stroke:none}
+.ah.ghost{fill:rgba(136,146,164,.55);opacity:.22}
+.ah.dim{fill:rgba(136,146,164,.5);opacity:.45}
+.ah.built{fill:rgba(136,146,164,.75)}
+.ah.on{fill:rgba(var(--acc-rgb),.95)}
+.ah.lit{fill:var(--acc);filter:drop-shadow(0 0 7px rgba(var(--acc-rgb),.85))}
+
+
+.hdr h1 .mono{line-height:0} /* the mono 21M must not grow the headline line box: the divider stays where every other header has it */
+.plot{left:0;top:0;width:1920px;height:1080px}
+.ax{font-family:'JetBrains Mono',monospace;font-size:19px;fill:var(--text-muted)}
+.axt{font-family:'DM Sans';font-weight:700;font-size:16px;letter-spacing:.16em;text-transform:uppercase;fill:var(--text-muted)}
+.grid{stroke:rgba(136,146,164,.16);stroke-width:1.5;stroke-dasharray:4 7}
+.base{stroke:rgba(136,146,164,.45);stroke-width:2}
+.s1{fill:none;stroke:rgba(136,146,164,.75);stroke-width:4;stroke-linecap:round}
+.s2{fill:none;stroke:var(--acc);stroke-width:5;stroke-linecap:round;filter:drop-shadow(0 0 7px rgba(var(--acc-rgb),.7))}
+.drop{stroke:rgba(var(--acc-rgb),.6);stroke-width:2.5;stroke-dasharray:5 6}
+.hv{stroke:rgba(232,234,240,.35);stroke-width:2;stroke-dasharray:6 7}
+.l1{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:26px;fill:var(--text-secondary)}
+.l2{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:30px;fill:var(--acc)}
+.hvl{font-family:'DM Sans';font-size:21px;fill:var(--text-secondary)}
+.hvd{font-family:'DM Sans';font-weight:700;font-size:21px;fill:var(--text-primary)}
+.tank{fill:rgba(18,21,28,.9);stroke:rgba(136,146,164,.5);stroke-width:2.5}
+.tk{stroke:rgba(232,234,240,.55);stroke-width:2}
+.tkl{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;fill:var(--text-primary)}
+.tkd{font-family:'DM Sans';font-size:20px;fill:var(--text-secondary)}
+.tk.hot{stroke:var(--acc);stroke-width:3}
+.tkl.hot,.tkd.hot{fill:var(--acc)}
+.ro{left:1420px;top:640px;width:380px}
+.ro .about{font-family:'DM Sans';font-size:30px;color:var(--text-secondary)}
+.ro .big{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:120px;line-height:1;color:var(--acc);text-shadow:0 0 40px rgba(var(--acc-rgb),.45)}
+.ro .s{font-family:'DM Sans';font-weight:700;font-size:28px;color:var(--text-primary);margin-top:8px}
+.ro .r{font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--text-muted);margin-top:10px}
+
+</style></head>
+<body>
+<div class="frame dg" id="C22-start"><div class="orb" style="width:600px;height:600px;right:-300px;top:-320px;background:var(--acc)"></div></div>
+<div class="frame dg" id="C22-mid"><div class="orb" style="width:600px;height:600px;right:-300px;top:-320px;background:var(--acc)"></div></div>
+<div class="frame dg" id="C22-payoff"><div class="orb" style="width:600px;height:600px;right:-300px;top:-320px;background:var(--acc)"></div></div>
+<script>
+const DAYS=495;
+const DH=197;
+const TICKS=[[0, "2025-06"], [92, "2025-09"], [183, "2025-12"], [273, "2026-03"], [365, "2026-06"], [457, "2026-09"]];
+const ACCRGB='168,85,247';
+const HEADER="<div class=\"hdr \"><div class=\"ey\">TAO &middot; NEW SUPPLY</div><h1>Halved emission, a <span class=\"k mono\">21M</span> cap</h1><div class=\"divider\"></div></div>";
+const SRC="Sources: Bittensor docs, emissions (0.5 TAO a block, about 3,600 a day; first halving December 2025; 21M max; halvings at 10.5M, 15.75M) &middot; CoinGecko";
+const PARAMS={"C22-start": {"fill": 0.0, "pct": null}, "C22-mid": {"fill": 0.5, "pct": null, "hl": 1}, "C22-payoff": {"fill": 0.5399831428571429, "pct": 54}};
+
+const X0=230,X1=1060,YB=820,YT=330,VM=8000;
+const xd=d=>X0+(X1-X0)*d/DAYS, yv=v=>YB-(YB-YT)*v/VM;
+const TX=1240,TW=130,TB=820,TT=330,CAP=21e6, ys=s=>TB-(TB-TT)*s/CAP;
+function render(frame,P){
+  const st=document.createElement('div');st.className='stage';st.innerHTML=HEADER+`<div class="src">${SRC}</div>`;
+  let s=`<svg class="plot" width="1920" height="1080"><defs><linearGradient id="tf" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="rgba(${ACCRGB},.55)"/><stop offset="1" stop-color="rgba(${ACCRGB},.95)"/></linearGradient></defs>`;
+  s+=`<text class="axt" x="140" y="${YT-34}">TAO issued per day</text>`;
+  for(const v of [2000,4000,6000,8000])s+=`<line class="grid" x1="${X0}" x2="${X1}" y1="${yv(v)}" y2="${yv(v)}"/><text class="ax" x="${X0-14}" y="${yv(v)+7}" text-anchor="end">${v.toLocaleString('en-US')}</text>`;
+  s+=`<line class="base" x1="${X0}" x2="${X1}" y1="${YB}" y2="${YB}"/><text class="ax" x="${X0-14}" y="${YB+7}" text-anchor="end">0</text>`;
+  for(const [d,l] of TICKS)s+=`<line class="base" x1="${xd(d)}" x2="${xd(d)}" y1="${YB}" y2="${YB+8}"/><text class="ax" x="${xd(d)}" y="${YB+36}" text-anchor="middle">${l}</text>`;
+  const xh=xd(DH);
+  s+=`<line class="hv" x1="${xh}" x2="${xh}" y1="${YB}" y2="${YT-6}"/><text class="hvl" x="${xh+16}" y="${YT+18}">first halving</text><text class="hvd" x="${xh+16}" y="${YT+46}">December 2025</text>`;
+  s+=`<path class="s1" d="M${X0} ${yv(7200)} L${xh} ${yv(7200)}"/><line class="drop" x1="${xh}" x2="${xh}" y1="${yv(7200)}" y2="${yv(3600)}"/>`;
+  s+=`<path class="s2" d="M${xh} ${yv(3600)} L${X1} ${yv(3600)}"/><circle cx="${X1}" cy="${yv(3600)}" r="8" fill="var(--acc)"/>`;
+  s+=`<text class="l1" x="${X0+12}" y="${yv(7200)-20}">7,200 a day</text><text class="l2" x="${xh+24}" y="${yv(3600)-22}">3,600 TAO a day</text>`;
+  s+=`<rect class="tank" x="${TX}" y="${TT}" width="${TW}" height="${TB-TT}" rx="16"/>`;
+  if(P.fill>0){const yf=ys(CAP*P.fill);s+=`<clipPath id="tc"><rect x="${TX}" y="${TT}" width="${TW}" height="${TB-TT}" rx="16"/></clipPath><rect x="${TX}" y="${yf}" width="${TW}" height="${TB-yf}" fill="url(#tf)" clip-path="url(#tc)"/><line x1="${TX}" x2="${TX+TW}" y1="${yf}" y2="${yf}" stroke="#fff" stroke-opacity=".85" stroke-width="3"/>`;}
+  for(const [v,lab,d] of [[21e6,'21M','the cap'],[15.75e6,'15.75M','next halving'],[10.5e6,'10.5M','first halving']]){const y=ys(v),h=(P.hl&&v===10.5e6)?' hot':'';
+    s+=`<line class="tk${h}" x1="${TX+TW-22}" x2="${TX+TW+14}" y1="${y}" y2="${y}"/><text class="tkl${h}" x="${TX+TW+26}" y="${y+2}">${lab}</text><text class="tkd${h}" x="${TX+TW+26}" y="${y+28}">${d}</text>`;}
+  s+=`<text class="ax" x="${TX+TW/2}" y="${TB+36}" text-anchor="middle">0</text>`;
+  s+='</svg>';st.insertAdjacentHTML('beforeend',s);
+  if(P.pct!==null)st.insertAdjacentHTML('beforeend',`<div class="ro"><div class="about">about</div><div class="big">${P.pct}%</div><div class="s">of the 21M cap issued</div><div class="r">11,339,646 of 21,000,000 TAO<br>CoinGecko, read 2026-10-09</div></div>`);
+  frame.appendChild(st);}
+document.querySelectorAll('.frame').forEach(f=>render(f,PARAMS[f.id]));
+
+</script>
+</body></html>

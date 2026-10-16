@@ -219,7 +219,7 @@ folder's `DESIGN.html` + PROJECT-LOG entry); everything else below is still dire
   the existing :8766 dashboard, hard rules encoded as topology (single posting node, zero-retry
   policies, idempotency guards: record "attempted" → act → verify → record "complete").
 - **Strangler-fig order: LinkedIn first** (smallest, lowest blast radius — see
-  `linkedin-automation/PROJECT-LOG.md` 2026-07-23), then repurpose, then longform as a subgraph,
+  `linkedin-automation/private/PROJECT-LOG.md` (gitignored since 2026-10-08) 2026-07-23), then repurpose, then longform as a subgraph,
   then the full batch orchestrator; the posting layer, where the hardest rules live, migrates last.
 - **Partial-lane migration works by design.** Steps communicate through files on disk +
   `batches.json` stamps, so a lane keeps functioning with only its first N steps graphed — the
@@ -323,7 +323,8 @@ Decisions locked with Mike 2026-08-02; do not re-litigate:_
      POSTING stays Mike-gated and sequential.
   6. **render slice** (Ph 7) — DELIBERATELY NOT a graph (2026-08-07): the render is inside the
      remotion-builder's iterative QA loop (draft → chunk QA → render → whisper-verify → SFX
-     retimes → re-render); a one-shot graph would fight the loop. The mechanical pieces are
+     retimes → re-render); a one-shot graph would fight the loop. (2026-10-05, Mike: the loop is now ONE full render
+     → QA → splice/audio fixes via `render_short.py`; the draft + chunk-QA steps are gone from shorts.) The mechanical pieces are
      already gates in code (`finalized_short_gate.py`, `stage_lock.py`, and now the staged +
      GOP-verified spine from Wave 4). ChatGPT b-roll generation stays in the builder — the
      browser stack ports LAST (Mike, 2026-08-02; reaffirmed by his Wave 4/5 ask, 2026-08-07).
@@ -674,3 +675,37 @@ ported to Python at the moment its node is built, JS frozen as rollback; Remotio
   `init_project` + `lint_docset`; dead gates (#14-16) = `verify_comp` runs every lint on every path;
   disk / temp (#9, #17) = render node preflight + teardown; serial I/O (#11) = the `assets` fan-out;
   "claimed work" (#6) = a node shows `running → artifact` on the dashboard or halts.
+- **2026-10-06 (every-job, the second video through the graph): the A/V-drift gate measured the wrong thing.** `_av_ok`
+  compared the two streams' raw `duration` fields; an NVENC encode with B-frames gives the video an edit-list start offset
+  (~23 ms) and the re-encoded 44.1 kHz AAC carries ~40 ms of end padding, so a perfectly synced coarse desilence failed
+  by 3 ms (63 vs the 60 ms tolerance) and the run died at `desilence_coarse`. Fixed to compare stream END times
+  (start_time + duration). Same run: the headless `cover-blackout` agent hit the 10-minute foreground cap twice on a
+  42-minute NVENC paint (~22 min), then rendered four segments and joined them (seams inside black); the desilencer agent
+  finished in 8 min. Also: two tracked background runs were reaped by Claude Code's memory watchdog; the fix that held was
+  launching `run.py` in a detached console window (the LinkedIn pattern) and tailing its log.
+- **2026-10-07 (every-job): b-roll and image budgets now SCALE WITH RUNTIME.** Mike: "a default of 5 for a 5-minute video,
+  but for a 20-minute video it should be much more." The flat 10 Envato + 5 ChatGPT (set on the 3-minute kaspa-vprogs) is now
+  the FLOOR; the default is 3 Envato + 1 ChatGPT per minute of the final spine (Envato calibrated on golden-kitty, 26 clips in 7:50;
+  images set to a flat 1 a minute by Mike, to be raised per video, e.g. every-job runs at double). `_default_budgets()` in longform_graph.py; `--envato-max` / `--chatgpt-max`
+  still override; the coverage prompt states the computed numbers and only calls a budget "raised" when a flag exceeds them.
+- **2026-10-07: REMIX LOOPS implemented in the mixer.** `mix_music.py` gained `bed_chain()`: a bed with `loop_in_sec` /
+  `loop_out_sec` repeats that bar-aligned region with ffmpeg `aloop` (N extra passes computed from the span) and keeps the
+  file's real ending; the last bed (or `align_end`) sheds the surplus from the head so the ending lands. Golden-kitty's
+  `--dry-run` resolves identically (no regions = old behaviour); a synthetic 275 s bed on Continuum (region 86-182 s) came out
+  at 275.0 s with 2 passes. The music_plan verifier refuses a loop bed without a region. Docs: music.md LOOP section,
+  music-placement-strategist schema (`align_end`).
+
+- **2026-10-09: CLIP INSERTS are a standing step of the longform-edited track (Mike).** After every-job's Huang clip
+  (ruled "splice this clip in", read as a muted cover at the plan gate, rebuilt after the draft), the consideration is built
+  into every stage and gated in code: DATA.md `## 6. Clip candidates` (the research node requires it on a fresh file) ->
+  SCREENPLAY.md 🎞️ `[INSERT]` lines + `## CLIP-INSERTS` (`lint_screenplay.py` FAILS without the section; ids cross-checked
+  both ways; `NONE: <why>` is the explicit no) -> AS-RECORDED `KEPT · INSERT CLIP-n` rows -> COVER-PLAN.json `clip_inserts[]`
+  + zero-length `clip-insert` beats (`_cover_plan_check` requires the key and `_insert_troughs` dry-runs every `splice_at`
+  against the silence-trough snapper so a bad boundary fails at the PLAN gate) -> BROLL-PLAN CLIP INSERTS worklist (rendered
+  on every video, with the NONE reason) -> `receipt-capturer` captures WITH audio via the new
+  `skills/clip-inserts/capture_clip_insert.py` (yt-dlp section pull with fallbacks, 1080p30, burned context caption,
+  Whisper-verified words; `verify_assets` FAILS a silent clip or a wrong length) -> `gen_editplan.py` seeds `[INSERT]` rows
+  (`lint_edit_plan.py` requires one per insert) -> transition bucket `insert` (`lint_transitions.py` requires insert-in +
+  insert-out) -> `card_pauses` bakes cards then inserts (`bake_clip_insert.py`, the clip's voice in the VO gap) ->
+  comp-build.md §3d (the 3c duplicate label fixed) -> automatic bed duck in `mix_music.py`. Skill:
+  `video-creation/longform-edited/skills/clip-inserts/clip-inserts.md`; `screenplay.md` Convention 6; house rule #14.

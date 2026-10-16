@@ -6,6 +6,9 @@ its grouping) and adds the track's rules (skills/captions/captions.md):
   - WINDOWS = every FACE hold longer than --min-hold seconds (default 5.0) from AS-RECORDED.md's FACE windows
     (the same > 5 s trigger as the light leak); never over a cover, never over short face punctuation.
     `--window a-b` adds a window by hand (the cold-open exception); `--all-faces` captions every face hold.
+  - CAPTIONS OFF (Mike, 2026-10-10): a line `Captions OFF: a-b (why)` inside AS-RECORDED's `## FACE windows` section
+    SUBTRACTS a-b from every caption window (e.g. a screen share that ships as filmed: still a FACE window for the
+    cover track, but its captions would sit over what Mike is showing). Repeatable; OFF wins over --window.
   - GROUPING = montserrat, 2 words per line, up to 4 if every word is <= 4 chars (the longform numbers).
   - CORRECTIONS = the tool's brand dict PLUS the project's AS-RECORDED "wrong" -> "right" mishear list.
 Writes:
@@ -31,6 +34,7 @@ BUILD = REPO / "video-creation" / "skills" / "captions" / "build_captions.py"
 REMOTION_SRC = REPO / "video-creation" / "remotion" / "src"
 FACE_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*\|", re.M)
 MISHEAR_RE = re.compile(r'"([^"]+)"\s*->\s*"([^"]+)"')
+OFF_RE = re.compile(r"Captions OFF\W{0,6}(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)", re.I)
 ROW_RE = re.compile(r"\{\s*t:\s*([\d.]+)\s*,\s*h:\s*'((?:[^'\\]|\\.)*)'\s*\}")
 STYLE = {"fontFamily": "Montserrat,'Arial Black','Segoe UI',sans-serif", "fontWeight": 900, "textTransform": "lowercase",
          "WebkitTextStroke": "12px #000", "paintOrder": "stroke fill", "pop": "scale 0.7 -> 1.12 -> 1 over ~9f",
@@ -40,6 +44,26 @@ STYLE = {"fontFamily": "Montserrat,'Arial Black','Segoe UI',sans-serif", "fontWe
 
 def pascal(slug: str) -> str:
     return "".join(p[:1].upper() + p[1:] for p in re.split(r"[^A-Za-z0-9]+", slug) if p)
+
+
+def subtract(windows, offs):
+    """windows minus every OFF span (a window split by a span keeps both sides; slivers under 50 ms dropped)."""
+    out = []
+    for a, b in windows:
+        pieces = [(a, b)]
+        for x, y in offs:
+            nxt = []
+            for p, q in pieces:
+                if y <= p or x >= q:
+                    nxt.append((p, q))
+                    continue
+                if p < x:
+                    nxt.append((p, x))
+                if y < q:
+                    nxt.append((y, q))
+            pieces = nxt
+        out += [(p, q) for p, q in pieces if q - p > 0.05]
+    return out
 
 
 def words_json(proj: Path, scope: str):
@@ -73,6 +97,11 @@ def main():
     for w in a.window:
         x, _, y = w.partition("-")
         windows.append((float(x), float(y)))
+    offs = [(float(x), float(y)) for x, y in OFF_RE.findall(sec.group(0) if sec else "")]
+    if offs:
+        windows = subtract(windows, offs)
+        for x, y in offs:
+            print(f"CAPTIONS-OFF {x:.3f}-{y:.3f} (AS-RECORDED FACE windows section)")
     windows.sort()
     if not windows:
         print("FATAL: no caption window (no FACE hold over the minimum and no --window given)", file=sys.stderr)
@@ -85,7 +114,9 @@ def main():
     if r.returncode != 0 or not tmp.is_file():
         print("FATAL: build_captions.py failed\n" + (r.stderr or r.stdout)[-800:], file=sys.stderr)
         sys.exit(1)
-    rows = [(float(t), h) for t, h in ROW_RE.findall(tmp.read_text(encoding="utf-8"))]
+    # ROW_RE captures the JS-escaped literal (`you\'ll`); UNESCAPE it before the corrections + the re-escape below,
+    # or every apostrophe ships as a visible backslash (`you\'ll` on screen; retire-early comp_build, 2026-10-11).
+    rows = [(float(t), re.sub(r"\\(.)", r"\1", h)) for t, h in ROW_RE.findall(tmp.read_text(encoding="utf-8"))]
     kept = []
     for t, h in rows:
         if any(fa - 0.05 <= t <= fz for fa, fz in windows):
@@ -99,7 +130,8 @@ def main():
     dest = REMOTION_SRC / name
     body = [f"// {name}: GENERATED {date.today().isoformat()} by longform-edited/scripts/build_project_captions.py",
             f"// (build_captions.py --style montserrat --max-words {a.max_words} --max-short {a.max_short} on {wj.name}; "
-            f"filtered to the FACE holds > {a.min_hold}s). NEVER hand-edit; re-run the graph's captions node.",
+            f"filtered to the FACE holds > {a.min_hold}s" + (", minus the AS-RECORDED Captions OFF spans" if offs else "")
+            + "). NEVER hand-edit; re-run the graph's captions node.",
             "// Times are SOURCE-spine seconds: the comp routes every t through sh() (card pauses).",
             "export const CAPTION_WINDOWS: [number, number][] = [" + ", ".join(f"[{fa:.3f}, {fz:.3f}]" for fa, fz in windows) + "];",
             "export const ZCAPTIONS: { t: number; h: string }[] = ["]
@@ -108,7 +140,8 @@ def main():
     dest.write_text("\n".join(body), encoding="utf-8", newline="\n")
     side = proj / "assets" / "captions.json"
     side.parent.mkdir(parents=True, exist_ok=True)
-    side.write_text(json.dumps({"file": str(dest), "words": str(wj), "windows": windows, "skipped_short_faces": skipped,
+    side.write_text(json.dumps({"file": str(dest), "words": str(wj), "windows": windows, "captions_off": offs,
+                                "skipped_short_faces": skipped,
                                 "min_hold_s": a.min_hold, "groups": len(kept), "grouping": {"max_words": a.max_words, "max_short": a.max_short},
                                 "corrections_applied": len(fixes), "style": STYLE, "first_groups": kept[:6]}, indent=2), encoding="utf-8")
     print(f"CAPTIONS-BUILT groups={len(kept)} windows={len(windows)} file={dest}")

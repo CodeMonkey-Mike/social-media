@@ -46,6 +46,7 @@ video-creation/longform-edited/media/<project>/          <- created by `run.py l
 │    vid/     BR-n-<slug>.mp4            envato-sourcer (audio stripped)
 │    img/     IMG-n-<slug>.png           image-gen (ChatGPT browser pipeline, references honoured)
 │    receipts/ R<n>-<slug>.png           receipt-capturer (R5-a / R5-b = one receipt split in two crops)
+│    clip-inserts/ CLIP-<n>-<slug>.mp4   receipt-capturer via skills/clip-inserts/capture_clip_insert.py (audio KEPT, caption burned; only when COVER-PLAN carries clip_inserts)
 │    charts/   <id>-<state>.png + <id>.html + <id>.spec.md      chart-builder, Type 1 ANIMATED (the comp animates it for real)
 │    diagrams/ <id>-<state>.png + <id>.html + _state-cues.md    chart-builder, Type 2 SYSTEM-DESIGN stills
 │    title-slides/ title-card-chN.png                            slide-builder

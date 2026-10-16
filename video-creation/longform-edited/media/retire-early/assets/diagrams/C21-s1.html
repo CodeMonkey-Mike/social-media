@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C21-s1 | retire-early</title>
+<!--
+C21-s1: Type 2 SYSTEM-DESIGN diagram, retire-early, chapter CH4 (accent #a855f7).
+States (one PNG each, shared elements pixel-identical): C21-s1-network, C21-s1-compute, C21-s1-inference, C21-s1-storage, C21-s1-prediction.
+Word cues for every state: assets/diagrams/_state-cues.md. Labels and numbers: DATA.md only.
+Render: open in headless Chromium at viewport 1920x1080 (device scale 2), wait for document.fonts, then
+screenshot each .frame by its id -> <id>.png (the screenshot driver used: _previews/chart-build/shoot.py).
+-->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+:root{--acc:#a855f7;--acc-rgb:168,85,247;--accent-red:#ff4060}
+
+/* ===== chart-builder layer (adds classes; tokens above untouched; --acc = the CHAPTER accent) ===== */
+.frame.dg{padding:0;display:block}
+.stage{width:1920px;height:1080px}
+.stage>*{position:absolute}
+.k{color:var(--acc)}
+.hdr{left:140px;top:76px;width:1640px}
+.hdr .ey{margin-bottom:16px}
+.hdr h1{font-size:62px;line-height:1.08;max-width:1640px}
+.hdr .divider{margin:24px 0 0} /* the LOCKED green->cyan gradient stays: the chapter accent re-colours only lit elements */
+.src{left:140px;bottom:38px;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--text-muted);letter-spacing:.01em;white-space:nowrap}
+svg.edges{left:0;top:0;width:1920px;height:1080px;overflow:visible}
+.num{font-family:'JetBrains Mono',monospace;font-weight:600}
+
+/* nodes: ghost (map preview) < dim (stepped back) < built (neutral) < on (accent edge) < lit (spotlight) */
+.node{box-sizing:border-box;border-radius:16px;background:var(--bg-card);border:2px solid rgba(136,146,164,.26);padding:18px 26px}
+.node .tag{font-family:'DM Sans';font-weight:700;font-size:16px;line-height:1.2;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.node .ttl{font-family:'DM Sans';font-weight:700;font-size:31px;line-height:1.15;color:var(--text-primary)}
+.node .sub{font-family:'DM Sans';font-weight:400;font-size:22px;line-height:1.38;color:var(--text-secondary);margin-top:6px}
+.node.on{border-color:rgba(var(--acc-rgb),.85)}
+.node.on .tag,.node.lit .tag{color:var(--acc)}
+.node.lit{border-color:var(--acc);box-shadow:0 0 0 1px rgba(var(--acc-rgb),.35),0 0 56px rgba(var(--acc-rgb),.30);
+  background:linear-gradient(180deg,rgba(var(--acc-rgb),.13),rgba(18,21,28,.97) 64%)}
+.node.lit .sub{color:#b4bccb}
+.node.ghost{opacity:.14}
+.node.dim{opacity:.40;filter:saturate(.25)}
+.node.dashed{border-style:dashed;background:transparent}
+.node.risk{border-color:rgba(255,64,96,.42)}
+.node.risk .tag{color:rgba(255,64,96,.85)}
+.node.risk.lit{border-color:var(--accent-red);box-shadow:0 0 0 1px rgba(255,64,96,.35),0 0 56px rgba(255,64,96,.30);
+  background:linear-gradient(180deg,rgba(255,64,96,.12),rgba(18,21,28,.97) 64%)}
+.node.risk.lit .tag{color:var(--accent-red)}
+.row{display:flex;justify-content:space-between;align-items:center;height:100%;gap:24px}
+.vc{display:flex;flex-direction:column;justify-content:center;height:100%}
+.ctr{text-align:center;align-items:center}
+.chip{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:21px;padding:8px 18px;border-radius:100px;white-space:nowrap;
+  border:1.5px solid rgba(136,146,164,.4);color:var(--text-primary)}
+.node.on .chip,.node.lit .chip{border-color:var(--acc);color:var(--acc);background:rgba(var(--acc-rgb),.12)}
+
+/* labels on edges */
+.lbl{font-family:'DM Sans';font-weight:500;font-size:21px;line-height:1.25;color:var(--text-secondary);white-space:nowrap}
+.lbl.ghost{opacity:.14}
+.lbl.dim{opacity:.4}
+.lbl.on{color:rgba(var(--acc-rgb),.95)}
+.lbl.lit{color:var(--acc);font-weight:700;text-shadow:0 0 18px rgba(var(--acc-rgb),.55)}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:24px;padding:5px 16px;border-radius:100px;
+  border:1.5px solid rgba(136,146,164,.45);background:var(--bg-deep);color:var(--text-primary)}
+.lbl.on .pill{border-color:rgba(var(--acc-rgb),.8);color:var(--acc)}
+.lbl.lit .pill{border-color:var(--acc);color:#fff;background:rgba(var(--acc-rgb),.30);box-shadow:0 0 26px rgba(var(--acc-rgb),.55);text-shadow:none}
+
+/* edges + arrowheads */
+.e{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.e.ghost{stroke:rgba(136,146,164,.55);stroke-width:2.5;opacity:.22}
+.e.dim{stroke:rgba(136,146,164,.5);stroke-width:2.5;opacity:.45}
+.e.built{stroke:rgba(136,146,164,.6);stroke-width:2.5}
+.e.on{stroke:rgba(var(--acc-rgb),.9);stroke-width:3}
+.e.lit{stroke:var(--acc);stroke-width:4;filter:drop-shadow(0 0 7px rgba(var(--acc-rgb),.85))}
+.e.dash{stroke-dasharray:9 10}
+.ah{stroke:none}
+.ah.ghost{fill:rgba(136,146,164,.55);opacity:.22}
+.ah.dim{fill:rgba(136,146,164,.5);opacity:.45}
+.ah.built{fill:rgba(136,146,164,.75)}
+.ah.on{fill:rgba(var(--acc-rgb),.95)}
+.ah.lit{fill:var(--acc);filter:drop-shadow(0 0 7px rgba(var(--acc-rgb),.85))}
+
+
+.grid{position:absolute;left:28px;top:112px;width:504px;height:248px}
+.sq{position:absolute;width:24px;height:24px;border-radius:5px;background:rgba(136,146,164,.20)}
+.node.lit .sq,.node.on .sq{background:rgba(var(--acc-rgb),.32)}
+.node.built .sq{background:rgba(136,146,164,.22)}
+.sq.hot{background:var(--acc)!important;box-shadow:0 0 18px rgba(var(--acc-rgb),.95)}
+.node.box{background:rgba(18,21,28,.72);border-radius:22px}
+.node.box.lit{background:linear-gradient(180deg,rgba(var(--acc-rgb),.10),rgba(18,21,28,.80) 40%)}
+.bxh{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.cmd{font-family:'DM Sans';font-weight:700;font-size:32px;padding:10px 30px;border-radius:100px;min-width:10px;
+  border:2px solid rgba(var(--acc-rgb),.85);color:var(--acc);background:rgba(var(--acc-rgb),.12)}
+.cmd:empty{display:none}
+.node.role .ttl{font-size:30px}
+.node.note{background:transparent;border-color:transparent;padding:0 4px}
+.node.note .ttl{font-size:28px}
+.node.note .sub{font-size:20px}
+.node.note.lit{background:transparent;box-shadow:none;border-color:transparent}
+.node.note.lit .ttl{color:var(--acc)}
+.e.zoom{stroke-width:2!important;stroke-dasharray:6 8}
+.lbl .pill{font-size:23px}
+.lbl.sm{font-size:19px}
+
+</style></head>
+<body>
+<div class="frame dg" id="C21-s1-network"><div class="orb" style="width:600px;height:600px;left:-330px;bottom:-330px;background:var(--acc)"></div></div>
+<div class="frame dg" id="C21-s1-compute"><div class="orb" style="width:600px;height:600px;left:-330px;bottom:-330px;background:var(--acc)"></div></div>
+<div class="frame dg" id="C21-s1-inference"><div class="orb" style="width:600px;height:600px;left:-330px;bottom:-330px;background:var(--acc)"></div></div>
+<div class="frame dg" id="C21-s1-storage"><div class="orb" style="width:600px;height:600px;left:-330px;bottom:-330px;background:var(--acc)"></div></div>
+<div class="frame dg" id="C21-s1-prediction"><div class="orb" style="width:600px;height:600px;left:-330px;bottom:-330px;background:var(--acc)"></div></div>
+<script>
+const HEADER="<div class=\"hdr \"><div class=\"ey\">TAO &middot; HOW BITTENSOR WORKS</div><h1>An open network of <span class=\"k\">markets</span></h1><div class=\"divider\"></div></div>";
+const SRC="Source: bittensor.com/docs (intro, network, emissions); 128 is the subnet limit";
+
+const GRID=(()=>{let h='<div class="grid">';for(let r=0;r<8;r++)for(let c=0;c<16;c++)h+=`<i class="sq${(r===2&&c===15)?' {{hot}}':''}" style="left:${c*32}px;top:${r*32}px"></i>`;return h+'</div>';})();
+const ROLE=(k,x,y,ttl,sub)=>({k,x,y,w:400,h:130,cls:'role',html:`<div class="vc"><div class="ttl">${ttl}</div><div class="sub">${sub}</div></div>`});
+const MODEL={nodes:[
+ {k:'chain',x:140,y:290,w:560,h:130,html:`<div class="vc"><div class="tag">The chain</div><div class="ttl">Subtensor</div><div class="sub">a block every 12 s &middot; pays in TAO</div></div>`},
+ {k:'slots',x:140,y:470,w:560,h:400,html:`<div class="tag">128 subnet slots</div><div class="sub" style="margin-top:0">each one a market</div>${GRID}`},
+ {k:'box',x:820,y:290,w:960,h:640,cls:'box',html:`<div class="bxh"><div><div class="tag">One subnet</div><div class="ttl">produces one digital commodity</div></div><div class="cmd">{{chip}}</div></div>`},
+ ROLE('miners',860,440,'Miners','produce the commodity'),
+ ROLE('validators',1340,440,'Validators','score the miners'),
+ ROLE('owner',860,640,'Subnet owner','designs the rules'),
+ ROLE('stakers',1340,640,'Stakers','back validators with TAO'),
+ {k:'note',x:860,y:806,w:880,h:104,cls:'note',html:`<div class="vc"><div class="ttl">Everybody gets paid in TAO</div><div class="sub">each subnet's emission splits every tempo, paid as its alpha token, traded against TAO</div></div>`},
+],
+edges:[
+ {k:'c2s',pts:[[420,420],[420,470]],arrow:true},
+ {k:'c2b',pts:[[700,355],[820,355]],arrow:true},
+ {k:'z1',pts:[[672,646],[820,420]],dash:true,top:true,cls:'zoom'},
+ {k:'z2',pts:[[672,670],[820,930]],dash:true,top:true,cls:'zoom'},
+ {k:'m2v',pts:[[1260,505],[1340,505]],arrow:true},
+ {k:'s2v',pts:[[1376,640],[1376,570]],arrow:true},
+ {k:'o2m',pts:[[1060,640],[1060,570]],arrow:true,dash:true},
+],
+labels:[
+ {k:'l_tao',x:760,y:331,a:'m',html:'<span class="num">TAO</span>'},
+ {k:'l_rules',x:1076,y:605,html:'rules'},
+ {k:'pm',x:1242,y:505,a:'e',html:'<span class="pill">41%</span>'},
+ {k:'po',x:1242,y:705,a:'e',html:'<span class="pill">18%</span>'},
+ {k:'pvs',x:1742,y:605,a:'e',cls:'sm',html:'validators and their stakers <span class="pill">41%</span>'},
+]};
+
+const STATES={
+ "C21-s1-network": {
+  "on": [
+   "chain",
+   "c2s"
+  ],
+  "lit": [
+   "slots"
+  ],
+  "vars": {
+   "chip": "",
+   "hot": ""
+  }
+ },
+ "C21-s1-compute": {
+  "built": [
+   "chain",
+   "c2s"
+  ],
+  "on": [
+   "slots"
+  ],
+  "lit": [
+   "box",
+   "z1",
+   "z2"
+  ],
+  "vars": {
+   "chip": "compute",
+   "hot": "hot"
+  }
+ },
+ "C21-s1-inference": {
+  "built": [
+   "chain",
+   "c2s"
+  ],
+  "on": [
+   "slots"
+  ],
+  "lit": [
+   "box",
+   "z1",
+   "z2"
+  ],
+  "vars": {
+   "chip": "inference",
+   "hot": "hot"
+  }
+ },
+ "C21-s1-storage": {
+  "built": [
+   "chain",
+   "c2s"
+  ],
+  "on": [
+   "slots"
+  ],
+  "lit": [
+   "box",
+   "z1",
+   "z2"
+  ],
+  "vars": {
+   "chip": "storage",
+   "hot": "hot"
+  }
+ },
+ "C21-s1-prediction": {
+  "built": [
+   "chain",
+   "c2s"
+  ],
+  "on": [
+   "slots"
+  ],
+  "lit": [
+   "box",
+   "z1",
+   "z2"
+  ],
+  "vars": {
+   "chip": "prediction",
+   "hot": "hot"
+  }
+ }
+};
+
+const NS='http://www.w3.org/2000/svg';
+function lv(st,k){for(const L of ['lit','on','built','dim','hide','ghost']){if((st[L]||[]).includes(k))return L;}return st.base||'ghost';}
+function fill(s,v){return s.replace(/\{\{(\w+)\}\}/g,(m,k)=>(v&&k in v)?v[k]:'');}
+function pathD(p,r){r=(r===undefined)?16:r;let d=`M${p[0][0]} ${p[0][1]}`;
+  for(let i=1;i<p.length;i++){const [x,y]=p[i];
+    if(i<p.length-1&&r>0){const [px,py]=p[i-1],[nx,ny]=p[i+1];const l1=Math.hypot(x-px,y-py),l2=Math.hypot(nx-x,ny-y);
+      const q=Math.min(r,l1/2,l2/2);d+=` L${x-(x-px)/l1*q} ${y-(y-py)/l1*q} Q${x} ${y} ${x+(nx-x)/l2*q} ${y+(ny-y)/l2*q}`;}
+    else d+=` L${x} ${y}`;}
+  return d;}
+function trimEnd(p,len){const q=p.map(a=>a.slice());const n=q.length;const [x1,y1]=q[n-2],[x2,y2]=q[n-1];const L=Math.hypot(x2-x1,y2-y1);
+  q[n-1]=[x2-(x2-x1)/L*len,y2-(y2-y1)/L*len];return q;}
+function head(p,s){const n=p.length;const [x1,y1]=p[n-2],[x2,y2]=p[n-1];const L=Math.hypot(x2-x1,y2-y1);const ux=(x2-x1)/L,uy=(y2-y1)/L;
+  s=s||18;const w=s*0.6;const bx=x2-ux*s,by=y2-uy*s;return `M${x2} ${y2} L${bx-uy*w} ${by+ux*w} L${bx+uy*w} ${by-ux*w} Z`;}
+function buildDiagram(frame){
+  const st=STATES[frame.id];const v=st.vars||{};
+  const stage=document.createElement('div');stage.className='stage';
+  stage.innerHTML=HEADER+(SRC?`<div class="src">${SRC}</div>`:'');
+  const svg=document.createElementNS(NS,'svg');svg.setAttribute('class','edges');svg.setAttribute('width','1920');svg.setAttribute('height','1080');
+  const top=document.createElementNS(NS,'svg');top.setAttribute('class','edges');top.setAttribute('width','1920');top.setAttribute('height','1080');
+  for(const e of MODEL.edges){const L=lv(st,e.k);if(L==='hide')continue;const host=e.top?top:svg;
+    const p=document.createElementNS(NS,'path');p.setAttribute('d',pathD(e.arrow?trimEnd(e.pts,14):e.pts,e.r));
+    p.setAttribute('class',`e ${L}${e.dash?' dash':''}${e.cls?' '+e.cls:''}`);host.appendChild(p);
+    if(e.arrow){const a=document.createElementNS(NS,'path');a.setAttribute('d',head(e.pts));a.setAttribute('class',`ah ${L}${e.cls?' '+e.cls:''}`);host.appendChild(a);}}
+  stage.appendChild(svg);
+  for(const n of MODEL.nodes){const L=lv(st,n.k);if(L==='hide')continue;const d=document.createElement('div');
+    d.className=`node ${n.cls||''} ${L}`;d.dataset.k=n.k;
+    d.style.cssText=`left:${n.x}px;top:${n.y}px;width:${n.w}px;height:${n.h}px;${n.css||''}`;d.innerHTML=fill(n.html,v);stage.appendChild(d);}
+  stage.appendChild(top);
+  for(const l of (MODEL.labels||[])){const L=lv(st,l.k);if(L==='hide')continue;const d=document.createElement('div');
+    d.className=`lbl ${l.cls||''} ${L}`;d.dataset.k=l.k;const tx=l.a==='m'?'-50%':(l.a==='e'?'-100%':'0');
+    d.style.cssText=`left:${l.x}px;top:${l.y}px;transform:translate(${tx},-50%);${l.css||''}`;d.innerHTML=fill(l.html,v);stage.appendChild(d);}
+  frame.appendChild(stage);}
+
+document.querySelectorAll('.frame').forEach(buildDiagram);
+</script>
+</body></html>

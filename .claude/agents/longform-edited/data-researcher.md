@@ -52,6 +52,14 @@ Repo root: `C:\Users\mnede\Documents\Claude\social-media` (run every command fro
    listed with WHY, so the screenplay carries it as a WARNING box instead of airing it.
 5. **Write the CHART-SOURCE INDEX.** Every graphic the video will plausibly show gets an ID (C1, C2 ...),
    its source (a URL for a screencap, a section reference for code-built), and the build mode.
+5b. **Hunt CLIP CANDIDATES** (clip inserts are CONSIDERED on every video, Mike 2026-10-09; rule:
+   `video-creation/longform-edited/skills/clip-inserts/clip-inserts.md`). For every named person whose words
+   carry a pillar, look for the VIDEO of them saying it (keynotes, podcasts, interviews, hearings, the company's
+   own channel, the clip that circulates on X). Open it, quote the words VERBATIM from the audio, record the URL
+   and the exact window (M:SS.s-M:SS.s) and its length, and check the FULL context so a circulating cut cannot
+   misrepresent the speaker (every-job: the Huang "radiology" clip was him repeating a 10-year-old warning he
+   went on to call wrong; that context is what the screenplay's caption and resume line carry). Write the
+   `## 6. Clip candidates` table (CLIP-1, CLIP-2 ...); "none found" + what was searched is a valid section.
 6. **Write the file** (Write tool, the exact path the caller gives you). No em dashes (use commas, colons,
    periods). Then print exactly one line: `DATA-OK path=<the file>`.
 
@@ -65,12 +73,15 @@ _Read dates are YYYY-MM-DD. [VERIFY] = live-drift, re-pull before recording/rend
 ## 3. People, orgs, dates         (who/what/when the video may name, spelled per persona)
 ## 4. Do-not-air numbers          (popular-but-wrong / unverifiable / stale claims, with WHY)
 ## 5. Market snapshot             (timestamped: every [VERIFY] figure at read time)
+## 6. Clip candidates             (real VIDEO clips of people saying it: verbatim words, URL + window, context check; or none found + what was searched)
 ## CHART-SOURCE INDEX             (| ID | Chart / graphic | Seen in / source | Build mode |)
 ## Open questions for Mike        (anything the brief needs that no primary source settles)
 ```
 
 ## Hard rules
 - **Never invent a figure, a date, a quote, or a name.** Not found = say so under Open questions.
+- **A clip candidate's words come from the VIDEO's audio**, never from an article's paraphrase; its window is
+  the quoted seconds only, and its context check is written before anyone decides to use it.
 - **Never write any file but DATA.md.** No DOSSIER.md, no notes files (claudeisnaughty #2).
 - Keep speculative upside CONDITIONAL. Never frame Mike's own past calls as mistakes.
 - The brief is locked: if your research contradicts it, record the contradiction under Open questions

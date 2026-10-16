@@ -116,9 +116,13 @@ def main_longform():
     ap.add_argument("--split", type=float, default=None, help="spine: hook-end second for the two-zone pass")
     ap.add_argument("--bursts", default=None, help="spine: burst spans on the coarse spine, e.g. 262.6-262.8,296.7-296.95")
     ap.add_argument("--card-pause", type=float, default=None, help="build: title-card pause seconds baked per carded chapter (default 1.5)")
+    ap.add_argument("--face-style", choices=C.FACE_STYLES, default=None,
+                    help="per-video FACE transition style, persisted in GRAPH-PROGRESS.json: leak (default: face pick + "
+                         "light leak on every punch-in) | glitch (random split swinging offset cut-in, random glitch "
+                         "offset/blocks on every punch-in; Mike 2026-10-16)")
     ap.add_argument("--caption-windows", default=None, help="build: extra caption windows a-b,a-b in source seconds (the cold-open exception)")
-    ap.add_argument("--envato-max", type=int, default=None, help="plan: Envato video budget (default 10)")
-    ap.add_argument("--chatgpt-max", type=int, default=None, help="plan: ChatGPT image budget (default 5)")
+    ap.add_argument("--envato-max", type=int, default=None, help="plan: Envato video budget (default: 3 per minute of final spine, floor 10)")
+    ap.add_argument("--chatgpt-max", type=int, default=None, help="plan: ChatGPT image budget (default: 1 per minute of final spine, floor 5; raise it per video)")
     ap.add_argument("--until", choices=["", *C.GATES], default="", help="stop after this gate is approved")
     ap.add_argument("--approve", default="", help="gates to approve: screenplay,spine_review,spine,plan,blueprint,draft")
     ap.add_argument("--done", default="", help="placeholder nodes done by hand, e.g. defumble,transcribe")
@@ -167,6 +171,9 @@ def main_longform():
               + (f" | approve {approve}" if approve else "")
               + (f" | done {done}" if done else ""))
         C.set_current_project(project)
+        if args.face_style:
+            C.set_setting(proj, "face_style", args.face_style)
+            print(f"face style for {project}: {args.face_style} (saved in GRAPH-PROGRESS.json)")
 
     C.DATA.mkdir(parents=True, exist_ok=True)
     from langgraph.checkpoint.sqlite import SqliteSaver

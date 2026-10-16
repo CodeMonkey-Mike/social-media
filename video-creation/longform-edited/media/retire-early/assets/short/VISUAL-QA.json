@@ -1,0 +1,26 @@
+{
+ "assets": [
+  {
+   "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/retire-early/assets/short/img/IMG-2-glass-door-closing-vert.png",
+   "verdict": "PASS",
+   "defects": [],
+   "checks": {
+    "cut_off_overflow": "clean: the graduate's cap, tassel and head sit fully in frame at about 47% across and 43-55% down. The doors are centred (x 330-640 of 941). The gown runs off the bottom edge, which is an ordinary photographic crop of the figure, not a clip. No text exists that could be clipped.",
+    "blank_failed_capture": "clean: a full photoreal scene. Mean luma 46.7, which suits the dark video, and only 0.05% of pixels are blown out (luma >235). It is not a white or empty frame.",
+    "font": "n/a, an AI still with no text (as specified)",
+    "palette_style": "matches the CH1 style row: photoreal cinematic, warm amber/gold light from the room beyond, a deep charcoal marble corridor, documentary-real, no cartoon look. It agrees with the 16:9 IMG-2's grade.",
+    "captions": "none burned in (correct). The caption zone at the short's bottom-centre (about 70-80% down) falls over the black gown. White fill with a black stroke will stay readable there.",
+    "content_concept": "matches 'The entry level door is closing first': a pair of heavy glass office doors at the end of an empty marble corridor, nearly shut. About 18% of the doorway is still open, a bright sliver with light spilling down the floor toward the viewer. A young graduate in cap and gown watches from outside in the corridor, seen from behind. The corridor is empty.",
+    "text_watermark": "none: I zoomed into all four corners and the wall panels beside the doors. The two small wall plates are blank access/switch plates with no glyphs. There is no ChatGPT or other watermark.",
+    "composition": "native 9:16. It is a symmetric one-point-perspective corridor with one focal subject (the graduate) centred on the vanishing line toward the door. Nothing sits under the right-edge or bottom platform UI zones. It is a clearly different composition from the 16:9 IMG-2 (an over-the-shoulder shot with the graduate in the left third and the doors on the right), which satisfies the variety rule. There is no assets/vertical/img/IMG-2 to compare against because the full vertical was skipped. The file is unique (md5 4c8bd302... differs from every assets/img still).",
+    "ai_artifacts": "none found at 2x zoom: the cap board, tassel, hair and ear look right, the visible hands at the sleeve ends are not deformed, the door handles and hinges are consistent, and the floor reflections line up with the light gap"
+   },
+   "notes": [
+    "NON-BLOCKING: the pixel size is 941x1672, not 1080x1920. The aspect is exact 9:16 (0.5628 vs 0.5625, a 1 px rounding). The comp's full-frame cover-fit will upscale it 1.148x, the same factor every 1672x941 ChatGPT still in this project's 16:9 already shipped with, so at phone size it reads as clean. If the comp's slow drift adds more than about 10% zoom, check that the door detail is not visibly soft in the rendered chunk."
+   ],
+   "fix": "none required"
+  }
+ ],
+ "summary": { "checked": 1, "passed": 1, "failed": 0 },
+ "must_fix": []
+}

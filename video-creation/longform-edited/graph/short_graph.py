@@ -82,10 +82,14 @@ def _comp_id(proj: Path) -> str:
 
 
 def _sh_fn(proj: Path, scope: str):
+    """source -> final seconds through EVERY pause's OWN `dur` (the comp's sh()). A clip insert's pause is the clip's length,
+    not pause_s: retire-early 2026-10-11 mapped CLIP-2 / CLIP-3 as 1.5 s each and put every word after 94.7 s up to 17.8 s
+    early (caught by the short-cut-strategist). card_t lists the chapter CARDS only (clip inserts are not card freezes)."""
     meta, _ = G._paused_meta(proj, scope)
-    card_t = [float(p["at"]) for p in meta.get("pauses") or []]
     pause = float(meta.get("pause_s") or 0)
-    return (lambda t: t + pause * sum(1 for c in card_t if c <= t + 1e-6)), card_t, pause
+    pauses = [(float(p["at"]), float(p.get("dur") or pause)) for p in meta.get("pauses") or []]
+    card_t = [float(p["at"]) for p in meta.get("pauses") or [] if not p.get("clip")]
+    return (lambda t: t + sum(d for at, d in pauses if at <= t + 1e-6)), card_t, pause
 
 
 FACE_ROW_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*\|", re.M)
@@ -98,6 +102,10 @@ def _burned_final(proj: Path, scope: str):
     the short's caption track. NOT every FACE window: the house rule burns captions on face holds over 5 s only, so a
     short face beat (golden-kitty F9, the kicker, 4.4 s) arrives bare (caught at the short gate, 2026-10-02)."""
     sh, _, _ = _sh_fn(proj, scope)
+    # 16:9-SOURCED mode (every-job, 2026-10-08: Mike skipped the full vertical): the span pictures are re-framed from the 16:9
+    # comp WITHOUT its burned captions, so nothing is exempt and every span gets the short's caption track.
+    if (proj / "assets" / "short" / "from-16x9.json").is_file():
+        return []
     cj = proj / "assets" / "captions.json"
     if cj.is_file():
         try:
@@ -357,7 +365,22 @@ def s_captions(state: ShortState) -> ShortState:
     table = json.loads((work / "spans.json").read_text(encoding="utf-8"))
     faces = _burned_final(proj, scope)            # the frames that already carry burned captions (not every FACE window)
     raw = work / "captions.raw.ts"
-    r = subprocess.run([sys.executable, str(BUILD_CAPTIONS), "--words", str(proj / "spine" / "FINAL-TIME-words.json"), "--style", "montserrat",
+    # Group ONLY the words the short keeps: the builder groups 2 words at a time, and a group formed on the full transcript can
+    # weld a span's last word to the longform's NEXT word, which the short never says ("fast i" at a span end, every-job
+    # 2026-10-08: "coming fast" + "I think we're only..."). So the words JSON handed to the builder holds just the words whose
+    # onset lies inside a span; groups then end where the span ends.
+    full = json.loads((proj / "spine" / "FINAL-TIME-words.json").read_text(encoding="utf-8"))
+    keep_ranges = [(float(s["src_start"]) - 0.05, float(s["src_end"])) for s in table["spans"]]
+    segs = []
+    for sg in full.get("segments", []):
+        # a word belongs to a span when its MIDPOINT lies inside it: Whisper onsets run early (the next sentence's "I" was
+        # stamped 65 ms before the snapped span end), so an onset test still welded "fast" + "i"
+        ws = [w for w in sg.get("words", []) if any(a <= (float(w["start"]) + float(w.get("end", w["start"]))) / 2 < b for a, b in keep_ranges)]
+        if ws:
+            segs.append({**sg, "words": ws, "text": " ".join(w["word"].strip() for w in ws), "start": ws[0]["start"], "end": ws[-1]["end"]})
+    span_words = work / "FINAL-TIME-words.spans.json"
+    span_words.write_text(json.dumps({**full, "segments": segs}, ensure_ascii=False), encoding="utf-8")
+    r = subprocess.run([sys.executable, str(BUILD_CAPTIONS), "--words", str(span_words), "--style", "montserrat",
                         "--max-words", "2", "--max-short", "4", "--var", "ZCAPTIONS", "--out", str(raw)], capture_output=True, text=True)
     if r.returncode != 0 or not raw.is_file():
         return C._fail(state, node, "build_captions.py failed on the FINAL-TIME words", (r.stderr or r.stdout)[-600:])
@@ -519,8 +542,14 @@ def s_verify_final(state: ShortState) -> ShortState:
         return C._fail(state, node, "mixed short missing")
     probs = []
     d = G._duration(mixed) or 0.0
-    if abs(d - _target(state)) > 0.25:
-        probs.append(f"runtime {d:.2f}s vs target {_target(state):.1f}s")
+    # The runtime must be what was BUILT (spans + the outro s_comp sized), inside the window the approved plan was allowed
+    # (_plan_check: spans within target - outro -3 / +1 s). A flat +-0.25 s around the target failed every plan with more
+    # than target - 3 s of spans by construction (retire-early 2026-10-11: 27.8 s of spans + the 3 s CTA = 30.85 s); the
+    # target is a soft planning number (Mike), the plan gate is where its length is approved.
+    spans_s = float(json.loads((_work(proj) / "spans.json").read_text(encoding="utf-8"))["spans_total_seconds"])
+    built = spans_s + max(OUTRO_S, round(_target(state) - spans_s, 3))
+    if abs(d - built) > 0.25 or d > _target(state) + 1.25:
+        probs.append(f"runtime {d:.2f}s vs built {built:.2f}s (target {_target(state):.1f}s, plan window up to {_target(state) + 1:.1f}s)")
     if V._dims(mixed) != (1080, 1920):
         probs.append(f"dims {V._dims(mixed)}")
     if not G._has_audio_stream(mixed):

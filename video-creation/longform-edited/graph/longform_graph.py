@@ -52,8 +52,8 @@ class LongformState(TypedDict, total=False):
     face_max: Optional[int]  # mechanical gate: max [FACE] beats the screenplay may carry
     card_pause: Optional[float]  # build: title-card pause seconds (default 1.5)
     caption_windows: Optional[str]  # build: extra caption windows a-b,a-b (cold-open exception)
-    envato_max: Optional[int]   # plan: Envato video budget (default 10)
-    chatgpt_max: Optional[int]  # plan: ChatGPT image budget (default 5)
+    envato_max: Optional[int]   # plan: Envato video budget (default scales with runtime, see _default_budgets)
+    chatgpt_max: Optional[int]  # plan: ChatGPT image budget (default scales with runtime, see _default_budgets)
     coarse_sil: Optional[float]  # spine: the COARSE one-zone min-silence (default 0.7)
     sil_pre: Optional[float]     # spine: FINAL two-zone intro min-silence (default 0.25)
     sil_post: Optional[float]    # spine: FINAL two-zone body min-silence (default 0.5)
@@ -74,6 +74,22 @@ class LongformState(TypedDict, total=False):
 
 def _proj(state) -> Path:
     return Path(state["project_dir"])
+
+
+# B-roll / image budgets scale with RUNTIME (Mike, 2026-10-07: "a default of 5 for a 5-minute video, much more for a
+# 20-minute one"). Rates calibrated on golden-kitty (7:50, approved with 30 Envato + 15 ChatGPT, about 3.8 + 1.9 a
+# minute, after Mike tripled the old flat 10 + 5); Mike then set the image default to a flat 1 a minute (2026-10-07),
+# to be raised video by video with --chatgpt-max; the old flat numbers stay as FLOORS so a
+# short video keeps what it had. `--envato-max` / `--chatgpt-max` override both.
+ENVATO_PER_MIN, CHATGPT_PER_MIN = 3.0, 1.0   # Mike, 2026-10-07: images 1 a minute by default, raised per video
+ENVATO_FLOOR, CHATGPT_FLOOR = 10, 5
+
+
+def _default_budgets(duration_s: float):
+    import math
+    minutes = max(0.0, float(duration_s or 0.0)) / 60.0
+    return (max(ENVATO_FLOOR, math.ceil(minutes * ENVATO_PER_MIN)),
+            max(CHATGPT_FLOOR, math.ceil(minutes * CHATGPT_PER_MIN)))
 
 
 def _redo(state, node) -> bool:
@@ -132,6 +148,7 @@ Requirements (the graph verifies these FROM DISK and halts otherwise):
 - a `## Do-not-air numbers` section: claims that are wrong, unverifiable, or too stale to air, each with why
 - a `## CHART-SOURCE INDEX` table: ID | chart / graphic | seen in / source | build mode (code | screencap | restyle)
 - a `## Market snapshot` block, timestamped, for every live-drift number ([VERIFY] items)
+- a `## 6. Clip candidates` table (clip inserts are CONSIDERED on every video, Mike 2026-10-09; rule video-creation/longform-edited/skills/clip-inserts/clip-inserts.md): every real VIDEO clip of someone saying a thing this video could splice in with their own voice, words quoted VERBATIM from the audio, URL + exact window, length, the full-context check; or "none found" + what was searched
 - primary sources first (official docs, GitHub, KIPs, the founders' and core devs' own posts and talks, reputable coverage second); anything you could not confirm from a primary source is tagged [VERIFY]
 When the file is written, print exactly one line: DATA-OK path={dest}
 """
@@ -152,7 +169,7 @@ def research(state: LongformState) -> LongformState:
     if state.get("stub"):
         return ({"steps": C._step(state, node, "stub")} if rc == 0
                 else C._fail(state, node, "stub agent failure", out))
-    ok, missing = C.doc_check(dest, 1500, checks)
+    ok, missing = C.doc_check(dest, 1500, checks + [r"clip candidates"])   # a fresh DATA.md must carry the clip-candidates section
     if not ok:
         return C._fail(state, node, f"DATA.md not acceptable ({', '.join(missing)}); agent rc {rc}", out)
     n_links = len(re.findall(r"https?://", dest.read_text(encoding="utf-8", errors="replace")))
@@ -163,8 +180,9 @@ SCREENPLAY_PROMPT = """Author the pre-production SCREENPLAY.md for the longform-
 Read first, all of them: video-creation/longform-edited/skills/doc-reference/SCREENPLAY.reference.md (the canonical SHAPE: copy it exactly), `{log}` (the LOCKED concept brief + Mike's hard constraints), `{data}` (the fact source: every on-screen number, date and name comes from here, never invented), video-creation/longform-edited/screenplay.md (the canonical format, Convention 5 tagged lines), persona/persona.json.
 Mike's hard constraints for THIS video, obey them exactly: {constraints}
 VARIETY (the MUSIC-MOOD-PLAN track shortlist): before you shortlist, run `python video-creation/skills/usage-ledger/usage_ledger.py report --what music --exclude-project "{project}"`. Never shortlist a track it marks BLOCKED (the previous video used it); avoid the last three videos' tracks; among tracks that fit the mood prefer `fresh`, then the least recently used.
-Output: return the COMPLETE SCREENPLAY.md per your definition AND save it to EXACTLY `{dest}` using Bash with a quoted heredoc (cat > "{dest}" <<'EOF' ... EOF). FORMAT: Convention 5 exactly as the exemplars write it. Every tagged line starts with its emoji and a BACKTICKED tag (the gray chip in the VS Code preview): 👤 `[FACE]` · 🗣️ `[COVER]` · 🔒 `[SAY-EXACT]` · 🎬 `[SHOW]` · 💬 `[NOTE]` · 🔍 `[VERIFY]`; a locked line is 🔒 `[SAY-EXACT]` 👤 `[FACE]` (or 🗣️ `[COVER]`); the legend table cells are backticked too; one job per line; no em dashes. The graph runs video-creation/longform-edited/skills/doc-reference/lint_screenplay.py on the file and HALTS on a format failure.
-The graph also verifies the file from disk and halts if it is missing its sections (the chapter map, the tagged beats, per-chapter sections, ## MUSIC-MOOD-PLAN, ## VISUAL-PLAN, ## OPEN QUESTIONS).
+CLIP INSERTS are CONSIDERED on every video (Mike, 2026-10-09; rule video-creation/longform-edited/skills/clip-inserts/clip-inserts.md, screenplay.md Convention 6): read DATA.md's `## 6. Clip candidates`; a clip that earns its seconds becomes a 🎞️ `[INSERT]` line (CLIP-<n>, who, seconds, the burned context caption) between a SET-UP line that names the speaker and ENDS THE SENTENCE and a RESUME line with Mike's own answer (he never reads the words the clip says); write the `## CLIP-INSERTS` table (one CLIP-<n> row per candidate with a status: PROPOSED / REJECTED / HELD) or the single line `NONE: <why none earns its seconds>`. A clip insert plays with its OWN voice while the spine pauses, never as a muted cover.
+Output: return the COMPLETE SCREENPLAY.md per your definition AND save it to EXACTLY `{dest}` using Bash with a quoted heredoc (cat > "{dest}" <<'EOF' ... EOF). FORMAT: Convention 5 exactly as the exemplars write it. Every tagged line starts with its emoji and a BACKTICKED tag (the gray chip in the VS Code preview): 👤 `[FACE]` · 🗣️ `[COVER]` · 🔒 `[SAY-EXACT]` · 🎬 `[SHOW]` · 💬 `[NOTE]` · 🔍 `[VERIFY]` · 🎞️ `[INSERT]`; a locked line is 🔒 `[SAY-EXACT]` 👤 `[FACE]` (or 🗣️ `[COVER]`); the legend table cells are backticked too; one job per line; a spoken line (👤 `[FACE]` / 🗣️ `[COVER]` / 🔒 `[SAY-EXACT]`) is ONLY the words Mike says, never a parenthesis and never a placeholder line: a direction, aside or pronunciation goes on its own 💬 `[NOTE]` / 🎬 `[SHOW]` line (Mike, 2026-10-15); no em dashes. The graph runs video-creation/longform-edited/skills/doc-reference/lint_screenplay.py on the file and HALTS on a format failure.
+The graph also verifies the file from disk and halts if it is missing its sections (the chapter map, the tagged beats, per-chapter sections, ## CLIP-INSERTS, ## MUSIC-MOOD-PLAN, ## VISUAL-PLAN, ## OPEN QUESTIONS).
 """
 
 LINT_SCREENPLAY = C.SKILLS / "doc-reference" / "lint_screenplay.py"
@@ -254,9 +272,18 @@ def _pick_raw(proj: Path, scope: str) -> Optional[Path]:
 
 
 def _av_ok(path: Path, tol=0.06):
-    v = _ffprobe(path, "stream=duration")
+    """A/V drift = do the two streams END together (start_time + duration per stream), not "are the two
+    duration fields equal". An NVENC encode with B-frames gives the video an edit-list start offset of about
+    one frame while the AAC audio starts at 0 and carries up to a frame of end padding; comparing raw
+    durations adds those two artifacts and failed a perfectly synced spine by 3 ms (every-job coarse
+    desilence, 2026-10-06: video 0.023 + 1143.058, audio 0 + 1143.122, ends 40 ms apart, durations 63 ms)."""
+    v = _ffprobe(path, "stream=start_time,duration")
     try:
-        return abs(float(v[0]) - float(v[1])) <= tol
+        nums = [float(x) if x not in ("N/A", "") else 0.0 for x in v]
+        if len(nums) >= 4:
+            end_a, end_b = nums[0] + nums[1], nums[2] + nums[3]
+            return abs(end_a - end_b) <= tol
+        return abs(nums[0] - nums[1]) <= tol
     except Exception:
         return True
 
@@ -385,8 +412,10 @@ def gate_spine_review(state: LongformState) -> LongformState:
     proj, scope = _proj(state), state.get("scope", "ALL")
     sp = C.spine_paths(proj, scope)
     return C.gate(state, "spine_review",
-                  "the COARSE spine: listen for bursts (give timestamps with --bursts a-b,c-d on the resume) "
-                  "and flag content; then the cleanup + the tight two-zone pass run",
+                  "the COARSE spine: listen for bursts (give timestamps with --bursts a-b,c-d on the resume), flag content, "
+                  "AND give the FINAL silence definition on the same resume (--sil-pre <intro s> --sil-post <body s>, "
+                  "defaults 0.25 / 0.5): the cleanup + the tight two-zone pass + the transcription run right after this gate, "
+                  "so a silently defaulted value costs a full redo (Mike, 2026-10-10)",
                   [sp["c"], C.doc(proj, "project_log")])
 
 
@@ -572,9 +601,9 @@ RENDER_COVER_PLAN = C.SCRIPTS / "render_cover_plan.py"
 def _cover_plan_check(plan: dict, face_windows, duration: float):
     """COVER-PLAN.json verified from disk: schema, consecutive beats, every non-FACE second assigned
     (no gap over 0.5 s, nothing past the spine), the budget honoured. Returns a reason or None."""
-    for k in ("cover_beats", "receipts", "envato_list", "chatgpt_list", "containers", "budget", "budget_check"):
+    for k in ("cover_beats", "receipts", "envato_list", "chatgpt_list", "containers", "budget", "budget_check", "clip_inserts"):
         if k not in plan:
-            return f"missing key {k}"
+            return f"missing key {k}" + (" (clip inserts are considered on every video: [] plus clip_inserts_note when none)" if k == "clip_inserts" else "")
     beats = plan["cover_beats"]
     if not isinstance(beats, list) or not beats:
         return "cover_beats is empty"
@@ -584,12 +613,12 @@ def _cover_plan_check(plan: dict, face_windows, duration: float):
     except Exception as e:
         return f"cover_beats rows malformed: {e}"
     for b in seq:
-        if b["tOut"] < b["tIn"] or (b["tOut"] == b["tIn"] and b["type"] not in ("title", "card", "container")):
-            return f"beat {b['tIn']}-{b['tOut']} has no length"  # zero-length is legal ONLY for a title-card insert
+        if b["tOut"] < b["tIn"] or (b["tOut"] == b["tIn"] and b["type"] not in ("title", "card", "container", "clip-insert")):
+            return f"beat {b['tIn']}-{b['tOut']} has no length"  # zero-length is legal ONLY for a title-card / clip-insert pause
         if b["tOut"] > duration + 0.6:
             return f"beat {b['tIn']}-{b['tOut']} runs past the spine ({duration:.2f}s)"
         if b["type"] not in ("receipt", "real-chart", "animated-chart", "container", "diagram", "timeline",
-                             "envato-video", "chatgpt-image", "card", "title"):
+                             "envato-video", "chatgpt-image", "card", "title", "clip-insert"):
             return f"beat {b['tIn']}: unknown cover_type {b['type']!r}"
     # the non-FACE timeline must be covered: walk it and find any gap > 0.5 s outside a face window
     faces = sorted((float(a), float(z)) for a, z in (face_windows or []))
@@ -602,7 +631,7 @@ def _cover_plan_check(plan: dict, face_windows, duration: float):
             covered_by_face = any(a - 0.05 <= cursor and b["tIn"] <= z + 0.05 for a, z in faces)
             if not covered_by_face:
                 return f"{b['tIn'] - cursor:.2f}s uncovered between {cursor:.2f}s and {b['tIn']:.2f}s (not a FACE window)"
-        if b["tIn"] < cursor - 0.05:
+        if b["tIn"] < cursor - 0.05 and b["tOut"] > b["tIn"]:   # a zero-length pause marker (title / clip-insert) covers no time
             return f"beats overlap near {b['tIn']:.2f}s"
         cursor = max(cursor, b["tOut"])
     if duration - cursor > 0.5 and not any(a - 0.05 <= cursor and duration <= z + 0.6 for a, z in faces):
@@ -618,7 +647,72 @@ def _cover_plan_check(plan: dict, face_windows, duration: float):
                 return f"{what} budget exceeded ({bud.get(used)}/{bud.get(cap)})"
         except Exception:
             return "budget fields are not numbers"
+    # CLIP INSERTS (skills/clip-inserts/clip-inserts.md, Mike 2026-10-09): considered on every video, so the key is
+    # required; each row is a real clip with its own voice at a spine pause, cued off the transcript.
+    ins = plan.get("clip_inserts")
+    if not isinstance(ins, list):
+        return "clip_inserts must be a list (empty when the video has none, with clip_inserts_note saying why)"
+    seen_ids = set()
+    for r in ins:
+        rid = str(r.get("id", ""))
+        if not re.match(r"^CLIP-\d+$", rid):
+            return f"clip_inserts row with a bad id {rid!r} (CLIP-<n>)"
+        if rid in seen_ids:
+            return f"clip_inserts id {rid} listed twice"
+        seen_ids.add(rid)
+        for k in ("source", "caption", "splice_at", "seconds"):
+            if r.get(k) in (None, ""):
+                return f"clip_inserts {rid} is missing `{k}`"
+        try:
+            sa, sec = float(r["splice_at"]), float(r["seconds"])
+        except (TypeError, ValueError):
+            return f"clip_inserts {rid}: splice_at / seconds must be numbers"
+        if not 0 < sa <= duration + 0.05:
+            return f"clip_inserts {rid}: splice_at {sa} is outside the spine ({duration:.2f}s)"
+        if sec <= 0.2:
+            return f"clip_inserts {rid}: seconds must be the clip's length"
+        if not any(b["type"] == "clip-insert" and abs(b["tIn"] - sa) <= 0.05 for b in seq):
+            return f"clip_inserts {rid}: no zero-length cover_beats row (cover_type clip-insert, tIn == tOut) at {sa}"
+    for b in seq:
+        if b["type"] == "clip-insert" and not any(abs(float(r.get("splice_at") or -1) - b["tIn"]) <= 0.05 for r in ins):
+            return f"cover_beats clip-insert at {b['tIn']} has no clip_inserts row"
+    if not ins and not str(plan.get("clip_inserts_note", "")).strip():
+        return "clip_inserts is empty and clip_inserts_note does not say why (clip inserts are considered on every video)"
+    # CHAPTER THEMES (optional, Mike 2026-10-10): the per-chapter visual differential that mirrors the per-chapter beds.
+    # {"CH1": {"accent": "#ffd700", "accent_name": "gold", "image_style": "...", "note": "..."}, ...}
+    themes = plan.get("chapter_themes")
+    if themes is not None:
+        if not isinstance(themes, dict):
+            return "chapter_themes must be an object keyed by chapter id (CH1, CH2 ...)"
+        for ch, th in themes.items():
+            if not re.match(r"^CH\d+$", str(ch)) or not isinstance(th, dict):
+                return f"chapter_themes: bad entry {ch!r}"
+            if not re.match(r"^#[0-9a-fA-F]{6}$", str(th.get("accent", ""))):
+                return f"chapter_themes {ch}: accent must be a #rrggbb colour"
+            if not str(th.get("image_style", "")).strip():
+                return f"chapter_themes {ch}: image_style is required (the chapter's ChatGPT image look; 'house' for the persona default)"
     return None
+
+
+def _insert_troughs(plan: dict, spine: Path):
+    """Every clip insert's splice_at must snap into a silence trough on the SOURCE spine (bake_card_pauses.snap, the
+    lint's own containment guard), checked at the PLAN gate so a bad boundary never reaches the build (every-job,
+    2026-10-08: the point after 'Nvidia' had no 30 ms trough and was only found at bake time). Returns the bad ones."""
+    ins = plan.get("clip_inserts") or []
+    if not ins:
+        return []
+    if str(C.SCRIPTS) not in sys.path:
+        sys.path.insert(0, str(C.SCRIPTS))
+    from bake_card_pauses import snap  # noqa: E402
+    bad = []
+    for r in ins:
+        t = float(r["splice_at"])
+        at, where = snap(spine, t)
+        if at is None:
+            bad.append(f"{r.get('id')} @{t:.2f}s: {where}")
+        else:
+            print(f"[longform] coverage: {r.get('id')} splice {t:.2f}s -> trough {at:.3f}s ({where})", flush=True)
+    return bad
 
 
 def coverage(state: LongformState) -> LongformState:
@@ -643,8 +737,9 @@ def coverage(state: LongformState) -> LongformState:
         for m in re.finditer(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*\|", ar.read_text(encoding="utf-8"), re.M):
             faces.append((float(m.group(1)), float(m.group(2))))
     if not (dest.is_file() and not _redo(state, node)):
-        envato_max = int(state.get("envato_max") or 10)
-        chatgpt_max = int(state.get("chatgpt_max") or 5)
+        env_default, gpt_default = _default_budgets(duration)
+        envato_max = int(state.get("envato_max") or env_default)
+        chatgpt_max = int(state.get("chatgpt_max") or gpt_default)
         prompt = (f"Propose the COVER plan for the longform-edited project `{proj.name}` (folder `{proj}`).\n"
                   f"FINAL spine: `{fs}` ({duration:.2f}s, 30 fps). Word-level transcript (cue source): `{wj}`. "
                   f"AS-RECORDED (the as-built script; build to THIS): `{ar}`. DATA.md (every number + the CHART-SOURCE INDEX): "
@@ -655,13 +750,27 @@ def coverage(state: LongformState) -> LongformState:
                   f"Budget: Envato video max {envato_max}, ChatGPT images max {chatgpt_max} for this {duration / 60:.1f}-minute video "
                   "(no asset used twice; each b-roll item is short punctuation, 4 s or less; receipts + code charts are budget-exempt and "
                   "still come first wherever the script needs a receipt or a chart). "
-                  + ("Mike RAISED the b-roll budget for this video above the default 10 + 5: he wants MORE b-roll than usual, so place "
-                     "close to the max wherever a beat suits a clip or an image, and break long container holds with b-roll cutaways. "
-                     if (envato_max > 10 or chatgpt_max > 5) else "Containers dominate; b-roll is sparse. ")
+                  + (f"Mike RAISED the b-roll budget for this video above the runtime default ({env_default} + {gpt_default}): he wants "
+                     "MORE b-roll than usual, so place close to the max wherever a beat suits a clip or an image, and break long "
+                     "container holds with b-roll cutaways. "
+                     if (envato_max > env_default or chatgpt_max > gpt_default) else
+                     (f"Mike LOWERED the b-roll budget for this video below the runtime default ({env_default} + {gpt_default}): "
+                      "b-roll is sparse punctuation here, so containers, receipts, real charts and the FACE carry the video; a clip or "
+                      "an image only where it earns its seconds, and the caps above are ceilings, not targets. "
+                      if (envato_max < env_default or chatgpt_max < gpt_default) else
+                      f"The budget is sized to the runtime ({ENVATO_PER_MIN:g} Envato + {CHATGPT_PER_MIN:g} ChatGPT a minute): use it "
+                      "wherever a beat suits a clip or an image; containers still carry the explainer beats. "))
                   + "\n"
+                  "CLIP INSERTS (considered on EVERY video, Mike 2026-10-09; rule video-creation/longform-edited/skills/clip-inserts/clip-inserts.md): "
+                  "for every screenplay `[INSERT]` beat that AS-RECORDED marks `KEPT · INSERT CLIP-n`, emit a `clip_inserts[]` row (id CLIP-<n>, who, "
+                  "says, source URL, start/end in the source as M:SS.s, seconds, `splice_at` = the END of the set-up line's LAST WORD on the final spine "
+                  "from the word JSON, after_words, caption, expect, verify, beats) AND a zero-length cover_beats row at that point (tIn == tOut == "
+                  "splice_at, cover_type 'clip-insert'); the clip plays with its OWN voice at a spine pause, never as a muted cover. The key is REQUIRED: "
+                  "`[]` plus a one-line `clip_inserts_note` when the video has none. The graph dry-runs every splice_at against the silence-trough "
+                  "snapper and halts the plan on a boundary with no trough.\n"
                   "cover_type must be one of: receipt | real-chart | animated-chart | container | diagram | timeline | envato-video | "
-                  "chatgpt-image (a chapter title card is a zero-length beat tIn == tOut with cover_type 'title'; the pause is an "
-                  "edit-time insert). EVERY chatgpt_list row carries a `reference` key: a path under "
+                  "chatgpt-image | clip-insert (a chapter title card is a zero-length beat tIn == tOut with cover_type 'title', a clip insert a "
+                  "zero-length beat with cover_type 'clip-insert'; both pauses are edit-time inserts). EVERY chatgpt_list row carries a `reference` key: a path under "
                   "schedule-tweets/images/reference/ when the image shows a real thing (token, logo, company, person, product), "
                   "else the exact string 'none exists (generic approved)'. Chart IDs (C1, C2, C3 ...) and "
                   "receipt IDs come from DATA.md's CHART-SOURCE INDEX. No em dashes in any text.\n"
@@ -678,6 +787,11 @@ def coverage(state: LongformState) -> LongformState:
     if why:
         return C._fail(state, node, f"COVER-PLAN.json failed verification: {why} (fix COVER-PLAN.json and resume; "
                                     "--redo coverage re-runs the strategist instead)")
+    bad = _insert_troughs(plan, fs)
+    if bad:
+        return C._fail(state, node, "clip insert splice point(s) have no silence trough on the final spine: " + "; ".join(bad)
+                       + " (move splice_at to a different sentence boundary in COVER-PLAN.json, e.g. the end of the previous or next "
+                         "spoken line, and resume; never mid-word)")
     args = [sys.executable, "-u", str(RENDER_COVER_PLAN), str(proj)] + (["--force"] if _redo(state, node) else [])
     rc, out = C.run_streaming(args, state, node)
     if rc != 0:
@@ -687,7 +801,8 @@ def coverage(state: LongformState) -> LongformState:
         if not ok:
             return C._fail(state, node, f"{C.DOCS[k]} not rendered acceptably ({', '.join(missing)})")
     n = len(plan.get("cover_beats") or [])
-    return {"steps": C._step(state, node, "ran", f"COVER-PLAN.json ok ({n} cover beats), BROLL-PLAN + EDIT-PLAN-prep rendered")}
+    n_ins = len(plan.get("clip_inserts") or [])
+    return {"steps": C._step(state, node, "ran", f"COVER-PLAN.json ok ({n} cover beats, {n_ins} clip insert(s)), BROLL-PLAN + EDIT-PLAN-prep rendered")}
 
 
 LINT_DOCSET = C.SKILLS / "doc-reference" / "lint_docset.py"
@@ -787,6 +902,16 @@ def _music_plan_check(plan: dict, chapters, duration: float):
         if cover != "loop" and avail + 0.25 < (z - a):
             return (f"{cid} bed: {src.name} has {avail:.1f}s from its in-point but the span is {z - a:.1f}s and cover is "
                     f"'{cover}' (a bed shorter than its span MUST loop, music.md)")
+        if cover == "loop" and avail + 0.25 < (z - a):
+            # REMIX LOOP (Mike, 2026-10-06): a looping bed names a bar-aligned region; the mixer repeats it with aloop.
+            li, lo = b.get("loop_in_sec", b.get("loop_point_sec")), b.get("loop_out_sec")
+            try:
+                li, lo = float(li), float(lo)
+            except (TypeError, ValueError):
+                return (f"{cid} bed loops but names no loop region: give loop_in_sec and loop_out_sec on the beat grid, inside one "
+                        "steady section (music.md section LOOP, Mike 2026-10-06); a whole-file restart is not a loop")
+            if not (0.0 <= li < lo <= file_len + 0.05) or (lo - li) < 1.0:
+                return f"{cid} bed loop region {li:.3f}-{lo:.3f}s is not inside {src.name} ({file_len:.1f}s) or is under 1 s"
         try:
             lvl = float(b.get("level_db_under_vo"))
         except Exception:
@@ -831,7 +956,9 @@ def music_plan(state: LongformState) -> LongformState:
                   "Hard rules the graph verifies from disk: EVERY chapter above appears in `beds`; the beds cover the whole spine "
                   f"0-{duration:.2f}s with at most a {MAX_BREATH_S}s breath between them (no silent stretch); every `source_file` "
                   "is an existing file path (absolute, or relative to the repo root); a bed whose file is shorter than its span "
-                  "MUST have cover 'loop' with a loop_point_sec; `level_db_under_vo` between -24 and -12; no em dashes anywhere. "
+                  "MUST have cover 'loop' with a REMIX loop region: `loop_in_sec` and `loop_out_sec` on the beat grid, a whole "
+                  "number of bars apart inside one steady section, never a whole-file restart (music.md section LOOP); "
+                  "`level_db_under_vo` between -24 and -12; no em dashes anywhere. "
                   "Prefer the instrumental variant under VO. Right-align the final bed so its ending lands on the last spoken word "
                   "when the screenplay asks for it, and state the exact source_in that achieves it.\n"
                   + _usage_prompt(proj, "music") +
@@ -876,11 +1003,11 @@ def gate_plan(state):
 # reconcile (zero orphans, no byte-duplicate b-roll, audio stripped, visual-qa clean).
 
 ASSET_FOLDERS = {
-    "envato": "vid", "chatgpt": "img", "receipt": "receipts",
+    "envato": "vid", "chatgpt": "img", "receipt": "receipts", "clip-insert": "clip-inserts",
     "chart": "charts", "diagram": "diagrams", "title": "title-slides", "card": "card-slides",
 }
 BUILDER_OF = {
-    "envato": "envato-sourcer", "chatgpt": "image-gen", "receipt": "receipt-capturer",
+    "envato": "envato-sourcer", "chatgpt": "image-gen", "receipt": "receipt-capturer", "clip-insert": "receipt-capturer",
     "chart": "chart-builder", "diagram": "chart-builder", "title": "slide-builder", "card": "slide-builder",
 }
 VIDEO_EXT = (".mp4", ".mov", ".webm")
@@ -913,10 +1040,33 @@ def _asset_expectations(plan: dict):
         exp.append({"id": str(r.get("id")), "kind": "receipt", "folder": ASSET_FOLDERS["receipt"],
                     "spec": f"Receipt proving: {r.get('claim')}; capture: {r.get('capture')}"
                             f"{'; VERIFY the claim at capture' if r.get('verify') else ''}"})
+    for ci in plan.get("clip_inserts") or []:   # a third-party clip with its OWN voice (skills/clip-inserts)
+        exp.append({"id": str(ci.get("id")), "kind": "clip-insert", "folder": ASSET_FOLDERS["clip-insert"],
+                    "spec": f"CLIP INSERT (own voice, audio KEPT, caption burned): {ci.get('who', '')} says "
+                            f"{str(ci.get('says', ''))[:160]}; source {ci.get('source')} {ci.get('start')}-{ci.get('end')} "
+                            f"({ci.get('seconds')}s); caption: {ci.get('caption')}"
+                            f"{'; expect: ' + str(ci.get('expect')) if ci.get('expect') else ''}"})
     for c in plan.get("containers") or []:
         k = _container_kind(c)
         exp.append({"id": str(c.get("id")), "kind": k, "folder": ASSET_FOLDERS[k],
                     "spec": f"{c.get('kind')} container: {c.get('shows')}; beats {', '.join(c.get('beats') or [])}"})
+    # A planned chapter TITLE beat is a renderable even when no container row names it (retire-early, 2026-10-10: four
+    # title beats, no title containers, and the factory never built the cards). Deduped by id AND by chapter.
+    have_ids = {e["id"] for e in exp}
+    have_ch = {str(bt).split("@")[0].replace(" ", "") for c in plan.get("containers") or [] if _container_kind(c) == "title"
+               for bt in (c.get("beats") or [])}
+    for b in plan.get("cover_beats") or []:
+        if str(b.get("cover_type", "")).lower() != "title":
+            continue
+        ch = str(b.get("chapter", "")).replace(" ", "")
+        cid = str(b.get("asset") or f"title-{ch}")
+        if cid in have_ids or ch in have_ch:
+            continue
+        have_ids.add(cid)
+        have_ch.add(ch)
+        exp.append({"id": cid, "kind": "title", "folder": ASSET_FOLDERS["title"],
+                    "spec": f"{b.get('what') or 'TITLE CARD'} (chapter title slide, the locked title-slide style, the chapter accent "
+                            f"per chapter_themes when present); beat {ch}@{b.get('tIn')}"})
     return exp
 
 
@@ -934,7 +1084,7 @@ def _asset_files(proj: Path, e: dict, base: Optional[Path] = None):
     d = (base or (proj / "assets")) / e["folder"]
     if not d.is_dir():
         return []
-    exts = VIDEO_EXT if e["kind"] == "envato" else (VIDEO_EXT + IMAGE_EXT if e["kind"] == "receipt" else IMAGE_EXT)
+    exts = VIDEO_EXT if e["kind"] in ("envato", "clip-insert") else (VIDEO_EXT + IMAGE_EXT if e["kind"] == "receipt" else IMAGE_EXT)
     out = []
     for f in sorted(d.iterdir()):
         if not f.is_file() or f.suffix.lower() not in exts:
@@ -960,10 +1110,21 @@ def _qa_feedback(prev: dict, todo: list) -> str:
 
 def _builder_prompt(builder: str, proj: Path, fs: Path, todo: list, done: list, prev: Optional[dict] = None) -> str:
     plan_p, broll_p = C.doc(proj, "cover_plan"), C.doc(proj, "broll_plan")
+    themes = {}
+    try:
+        themes = json.loads(plan_p.read_text(encoding="utf-8")).get("chapter_themes") or {}
+    except Exception:
+        themes = {}
     common = (f"Project `{proj.name}`, folder `{proj}`. Worklists: `{broll_p}` (your table) and the source of truth "
               f"`{plan_p}` (per-slot notes, spoken lines, bench). Numbers + phrasing guards: `{C.doc(proj, 'data')}`. "
               f"As-built script with timecodes: `{C.doc(proj, 'as_recorded')}`. FINAL spine: `{fs}`.\n"
-              f"Build ONLY these ids (everything else on disk is done, leave it alone): "
+              + (("CHAPTER THEMES (Mike, 2026-10-10: every chapter has its own visual differential, mirroring its music bed; "
+                  "COVER-PLAN.json `chapter_themes`, printed at the top of the BROLL-PLAN): " + json.dumps(themes, ensure_ascii=False)
+                  + ". A chart / slide / container built for a chapter uses THAT chapter's accent as its lit colour (the locked stylesheet "
+                  "otherwise unchanged; receipts and real marks keep their real pixels); a ChatGPT image built for a chapter uses THAT "
+                  "chapter's image_style ('house' = the persona look). Read the row's beat (CHn@...) to know its chapter.\n")
+                 if themes else "")
+              + f"Build ONLY these ids (everything else on disk is done, leave it alone): "
               + ", ".join(f"{e['id']} -> assets/{e['folder']}/" for e in todo)
               + (f".\nAlready present, do NOT rebuild: {', '.join(done)}." if done else ".")
               + "\nName every output `<id>.<ext>` or `<id>-<slug>.<ext>` (state variants `<id>-<state>.png`) INSIDE the folder "
@@ -984,10 +1145,21 @@ def _builder_prompt(builder: str, proj: Path, fs: Path, todo: list, done: list, 
                           "trim to slot + ~1s handles, 1080p H.264, STRIP AUDIO (-an), no two slots alike, no watermark/text. A slot "
                           "with no clean match is FLAGGED, not filled off-tone.",
         "image-gen": "\nBrowser pipeline only (repurpose/gen_batch.py --fresh on the chatgpt-profile, sequential, one attempt). House "
-                     "style from persona.json image_generation. A row with a Reference path is generated FROM that reference image "
+                     "style from persona.json image_generation, UNLESS COVER-PLAN.json carries an `image_style` (a per-video ruling by Mike, "
+                     "printed at the top of the BROLL-PLAN ChatGPT table): then that style replaces the house look for every row. "
+                     "A row with a Reference path is generated FROM that reference image "
                      "(the real mark, e.g. the Kaspa backwards-K in greenish cyan, never gold); a row with 'none exists (generic "
                      "approved)' is generic. Every image unique.",
     }
+    if builder == "receipt-capturer" and any(e["kind"] == "clip-insert" for e in todo):
+        extra["receipt-capturer"] += (
+            "\nCLIP INSERTS (the CLIP-<n> ids above -> assets/clip-inserts/; rule video-creation/longform-edited/skills/clip-inserts/"
+            "clip-inserts.md): a third-party clip that plays with its OWN VOICE while Mike's spine pauses. Capture each with the canonical tool, "
+            "never by hand: `python video-creation/longform-edited/skills/clip-inserts/capture_clip_insert.py --url <source> --start <M:SS.s> "
+            "--end <M:SS.s> --out <project>/assets/clip-inserts/<id>-<slug>.mp4 --caption \"<the plan's caption>\" --expect \"<the plan's expect "
+            "phrase>\"`. The AUDIO IS KEPT (a muted clip insert is a FAIL; the strip-audio rule is for screen recordings only), the caption is "
+            "burned on every frame, 1920x1080 at 30 fps, and Whisper must hear the expected words (the tool prints them: quote them in your "
+            "report). FLAG a clip whose heard words differ from the plan or whose source is gone; never trim a clip into a different meaning.")
     return common + extra.get(builder, "") + _qa_feedback(prev or {}, todo)
 
 
@@ -1143,6 +1315,16 @@ def verify_assets(state: LongformState) -> LongformState:
             seen[h] = f.name
             if f.suffix.lower() in VIDEO_EXT and _has_audio(f):
                 problems.append(f"{f.name} still carries an audio stream (strip it: ffmpeg -c copy -an)")
+    # clip inserts are the opposite case: they MUST carry their own voice, at the planned length (skills/clip-inserts)
+    want_len = {str(ci.get("id")): float(ci.get("seconds") or 0) for ci in plan.get("clip_inserts") or []}
+    for e in exp:
+        if e["kind"] != "clip-insert":
+            continue
+        for f in _asset_files(proj, e):
+            if not _has_audio(f):
+                problems.append(f"{f.name} has NO audio stream (a clip insert plays with its own voice; recapture with capture_clip_insert.py)")
+            elif want_len.get(e["id"]) and abs((_duration(f) or 0) - want_len[e["id"]]) > 0.3:
+                problems.append(f"{f.name} is {(_duration(f) or 0):.2f}s, the plan says {want_len[e['id']]:.2f}s")
     qa_p = proj / "assets" / "VISUAL-QA.json"
     if not qa_p.is_file():
         problems.append("assets/VISUAL-QA.json missing (visual-qa never ran)")
@@ -1162,6 +1344,7 @@ def verify_assets(state: LongformState) -> LongformState:
 
 EP_SKILL = C.SKILLS / "edit-plan-and-cue-sheet"
 GEN_EDITPLAN = EP_SKILL / "gen_editplan.py"
+LIST_FACE_JOINS = EP_SKILL.parents[1] / "scripts" / "list_face_joins.py"   # spine/jumpcuts-final.json (overlays.md 1)
 LINT_EDIT_PLAN = EP_SKILL / "lint_edit_plan.py"
 EP_LINT_RE = re.compile(r"^EDIT-PLAN-LINT (PASS|FAIL) events=(\d+) say=(\d+) fails=(\d+) warns=(\d+)", re.M)
 
@@ -1188,6 +1371,10 @@ def edit_plan(state: LongformState) -> LongformState:
     fs = C.final_spine(proj, scope)
     duration = (_duration(fs) or 0.0) if fs else 0.0
     if not (ep.is_file() and cs.is_file() and not _redo(state, node)):
+        # the joins inside every FACE window (frame-exact): the punch-in + library light leak land ON them (overlays.md 1)
+        rc, out = C.run_streaming([sys.executable, "-u", str(LIST_FACE_JOINS), str(proj), "--scope", scope], state, node)
+        if rc != 0:
+            return C._fail(state, node, "list_face_joins.py failed to write spine/jumpcuts-final.json", out)
         rc, out = C.run_streaming([sys.executable, "-u", str(GEN_EDITPLAN), str(proj), "--scope", scope], state, node)
         if rc != 0:
             return C._fail(state, node, "gen_editplan.py failed to seed the event log", out)
@@ -1199,6 +1386,13 @@ def edit_plan(state: LongformState) -> LongformState:
                   f"`{C.doc(proj, 'music_plan')}` (beds, automation, hard hits, the ONE vibe-cut duck), `{C.doc(proj, 'project_log')}` "
                   f"(Mike's rulings for THIS video: read its `Open flags` section, every flag is load-bearing, e.g. face background-swap "
                   f"clips in assets/face-swap/, image slots that play a motion clip from assets/img-motion/, on-screen figure rules).\n"
+                  f"FACE joins: `{proj / 'spine' / 'jumpcuts-final.json'}` (every desilencer/defumbler jump cut inside each FACE window, frame-exact). "
+                  + ("The seed already carries `[PUNCH-IN]` + `[GLITCH]` on each punch point (FACE STYLE glitch, Mike 2026-10-16: a random "
+                     "glitch offset / glitch blocks hit across the join, a random split swinging offset on every cover->face cut-in, NO light "
+                     "leaks): keep them ON those joins (never a fixed +2 s punch); a window with no interior join gets neither.\n"
+                     if C.face_style(proj) == "glitch" else
+                     "The seed already carries `[PUNCH-IN]` + `[LIGHTLEAK]` on each punch point: keep them ON those joins (never a fixed +2 s punch, "
+                     "never a mid-hold leak pulse); a window with no interior join gets neither (overlays.md section 1, Mike 2026-10-07).\n") +
                   f"Built assets + their word-cued states: `{proj / 'assets'}` (read assets/diagrams/_state-cues.md and "
                   "assets/charts/*.spec.md; card states are the -sN files).\n"
                   "SFX kit: video-creation/assets/sfx/ (Impacts/library.json + WHEN-TO-USE-IMPACTS.md, risers/). Pick every impact by "
@@ -1287,6 +1481,42 @@ def _transition_plan_check(plan: dict, duration: float):
     return None
 
 
+def _face_style_prompt(proj: Path) -> str:
+    """The FACE PUNCH POINTS paragraph of the transition-strategist prompt, per the video's face style
+    (common.FACE_STYLES; `run.py --face-style`, persisted in GRAPH-PROGRESS.json)."""
+    joins = (f"FACE PUNCH POINTS: `{proj / 'spine' / 'jumpcuts-final.json'}` lists every desilencer/defumbler join inside each FACE window "
+             "(`punch_candidates_s`). ")
+    if C.face_style(proj) == "glitch":
+        return (joins + "FACE STYLE = glitch (Mike 2026-10-16, this video's setting; it overrides the light-leak default and the face-pick "
+                "rule for CUT-INS): (1) every cover->face CUT-IN `face-cut` row takes a RANDOM `lib:split-swinging-offset-*` id (long or short; "
+                "vary them, never the same id twice in a row); the face->cover CUT-OUT rows keep the face_glitch_pick. (2) At EVERY punch point "
+                "write one bucket `face` row with role `punch-glitch`, source `lib`, id a RANDOM `lib:glitchoffset-*` or `lib:blocks-*` id (mix "
+                "both families; vary, never the same id twice in a row), `duration_s` = that id's library durationSeconds, `why` naming the "
+                "join: the comp steps the ~15-20% punch-in and plays the glitch ACROSS the join (the continuous spine is both A and B). No "
+                "light leaks on face punch-ins in this video: no `punch-leak` rows, no synthetic light leak.\n")
+    return (joins + "At EVERY punch point write one bucket `face` row with role `punch-leak`, source `lib`, id one of the "
+            "video's 3-4 chosen LIGHT LEAKS ids (`lib:lightleaks-*`, cycle them, the previous video's ids are BLOCKED), `why` naming the "
+            "join: the comp steps the ~15-20% punch-in and peaks the leak on that frame (overlays.md section 1, Mike 2026-10-07). "
+            "No other punch-in rows, no synthetic light leak.\n")
+
+
+def _face_style_check(plan: dict, proj: Path):
+    """glitch face style (Mike 2026-10-16): the cut-ins are split swinging offsets, the punch rows are glitch
+    offset / glitch blocks, and no light leak rides a punch."""
+    if C.face_style(proj) != "glitch":
+        return None
+    rows = plan.get("transitions") or []
+    if any(str(r.get("role")) == "punch-leak" for r in rows):
+        return "face style is glitch (Mike 2026-10-16) but the plan carries punch-leak rows"
+    for r in rows:
+        tid = str(r.get("id", ""))
+        if str(r.get("role")) == "punch-glitch" and not re.match(r"^lib:(glitchoffset-|blocks-)", tid):
+            return f"punch-glitch at {r.get('tc')}s must be lib:glitchoffset-* or lib:blocks-*, got {tid!r}"
+    if not any(str(r.get("role")) == "face-cut" and str(r.get("id", "")).startswith("lib:split-swinging-offset-") for r in rows):
+        return "face style is glitch but no face-cut row uses a lib:split-swinging-offset-* id (every cover->face cut-in must)"
+    return None
+
+
 def transitions(state: LongformState) -> LongformState:
     """Wave D node 4 (2026-09-28): the transition-strategist (Fable/max, read-only) assigns every scene change
     in the cue sheet across the three buckets and reserves MELT/SPIN for the marquees; the node persists
@@ -1313,8 +1543,9 @@ def transitions(state: LongformState) -> LongformState:
                   "every title card; every row source-tagged (rmn:/lib:/hand:) with a numeric tc on the spine; melt/spin rows set "
                   "sfx_duck true and justify TRANSFORM vs NEW FACET; melt_spin_budget equals the rows; no em dashes anywhere.\n"
                   + _usage_prompt(proj, "transitions") +
-                  "The gated slots are the card move, the melt look and the spin look; the face pick and the AI-still glitch are "
-                  "reported for your judgment; fade / cross-fade / cross-warp / punch stay the constant house style.\n"
+                  "The gated slots are the card move, the melt look, the spin look and the FACE LIGHT-LEAK SET (ledger slot face_leak); the face "
+                  "pick and the AI-still glitch are reported for your judgment; fade / cross-fade / cross-warp stay the constant house style.\n"
+                  + _face_style_prompt(proj) +
                   f"Return the JSON per your definition AND also save it to EXACTLY `{dest}` with Bash (a quoted heredoc).")
         rc, out = C.spawn_agent(state, node, "transition-strategist", prompt, f"agent-transitions-{proj.name}.log")
         if not C.persist_agent_json(out, dest, want_key="transitions"):
@@ -1327,7 +1558,7 @@ def transitions(state: LongformState) -> LongformState:
     plan = _normalize_transition_ids(plan)
     if json.dumps(plan, sort_keys=True) != before:
         C._write_json_atomic(dest, plan)
-    why = _transition_plan_check(plan, duration)
+    why = _transition_plan_check(plan, duration) or _face_style_check(plan, proj)
     if why:
         return C._fail(state, node, f"TRANSITION-PLAN.json failed verification: {why} (fix the plan and re-drive; --redo transitions re-runs the strategist)")
     v_ok, v_msg = _usage_check(state, node, proj, "transitions")
@@ -1395,18 +1626,40 @@ def gate_blueprint(state):
 # ── BUILD ────────────────────────────────────────────────────────────────────
 
 BAKE_CARD_PAUSES = C.SCRIPTS / "bake_card_pauses.py"
+BAKE_CLIP_INSERT = C.SCRIPTS / "bake_clip_insert.py"
+CHECK_CARD_WORDS = C.SCRIPTS / "check_card_words.py"   # no card splits a word (Mike 2026-10-11, retire-early "Kas|pa")   # clip inserts: freeze + THE CLIP'S AUDIO in the VO gap (2026-10-08)
 LINT_PAUSE_SILENCE = C.SKILLS / "comp-build" / "lint-pause-silence.py"
 CHECK_SPINE_FPS = C.SKILLS / "comp-build" / "check_spine_fps.py"
 DEFAULT_CARD_PAUSE = 1.5   # Mike's ruling on kaspa-vprogs (>= the 1 s readable minimum)
 
 
+def _plan_inserts(proj: Path):
+    """[(splice_at, clip file or None, id)] for every COVER-PLAN clip insert, the file resolved in assets/clip-inserts/."""
+    plan_p = C.doc(proj, "cover_plan")
+    if not plan_p.is_file():
+        return []
+    try:
+        plan = json.loads(plan_p.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    out = []
+    for ci in plan.get("clip_inserts") or []:
+        e = {"id": str(ci.get("id")), "kind": "clip-insert", "folder": ASSET_FOLDERS["clip-insert"]}
+        files = _asset_files(proj, e)
+        out.append((float(ci.get("splice_at") or 0), files[0] if files else None, e["id"]))
+    return sorted(out, key=lambda x: x[0])
+
+
 def card_pauses(state: LongformState) -> LongformState:
-    """Wave E node 1 (2026-09-28): bake the title-card pauses into the FINAL spine. Cards ON come from
-    AS-RECORDED's chapter headers; bake_card_pauses.py SNAPS each insert to the silence trough at the
-    chapter boundary (RMS scan, the lint's method) and inserts freeze + silence (sync-safe filter_complex);
-    lint-pause-silence.py then gates the SNAPPED points on the SOURCE spine; check_spine_fps + duration are
-    verified on the output, which becomes spine/<scope>.<next letter>.paused.mp4 (+ .json with CARD_T and
-    PAUSE for the comp) and is copied to assets/spine.mp4 (comp-build §10/§13a)."""
+    """Wave E node 1 (2026-09-28; clip inserts 2026-10-09): bake the title-card pauses AND the clip inserts into the
+    FINAL spine. Cards ON come from AS-RECORDED's chapter headers; bake_card_pauses.py SNAPS each to the silence
+    trough at the chapter boundary (RMS scan, the lint's method) and inserts freeze + silence (sync-safe
+    filter_complex). Clip inserts come from COVER-PLAN.json `clip_inserts` (skills/clip-inserts): bake_clip_insert.py
+    reuses the snapped cards, snaps each splice point and inserts freeze + THE CLIP'S OWN AUDIO for the clip's
+    length, so the spliced voice is in the VO track. lint-pause-silence.py then gates every SNAPPED point on the
+    SOURCE spine; check_spine_fps + duration (source + every pause's own dur) are verified on the output, which
+    becomes spine/<scope>.<next letter>.paused.mp4 (+ .json: pauses[].at/dur/clip, the comp's time map) and is
+    copied to assets/spine.mp4 (comp-build §10/§13a/§3d)."""
     node = "card_pauses"
     proj, scope = _proj(state), state.get("scope", "ALL")
     if state.get("stub"):
@@ -1415,25 +1668,56 @@ def card_pauses(state: LongformState) -> LongformState:
     if not fs:
         return C._fail(state, node, "final spine missing")
     source = fs
-    existing = C.paused_spine(proj, scope)
-    if existing and existing.with_suffix(".json").is_file() and not _redo(state, node):
-        paused = existing   # already baked (re-drive)
-    else:
-        letter = re.search(rf"^{re.escape(scope)}\.([a-z])\.", fs.name)
-        nxt = chr(ord(letter.group(1)) + 1) if letter else "g"
-        paused = fs.with_name(f"{scope}.{nxt}.paused.mp4")
-    side = paused.with_suffix(".json")
     pause_s = float(state.get("card_pause") or DEFAULT_CARD_PAUSE)
     cards = [(ta, re.search(r'card\s+ON\s*"([^"]+)"', tail).group(1))
              for cid, title, ta, tz, tail in _chapters(proj) if re.search(r'card\s+ON\s*"', tail)]
-    if not cards:
-        return C._fail(state, node, "AS-RECORDED.md names no chapter with `card ON` (nothing to bake; if that is intended, --done card_pauses)")
-    if not (paused.is_file() and side.is_file() and not _redo(state, node)):
-        args = [sys.executable, "-u", str(BAKE_CARD_PAUSES), str(source), "--cards", ",".join(f"{t}:{lbl}" for t, lbl in cards),
-                "--pause", f"{pause_s}", "--out", str(paused), "--json", str(side)]
-        rc, out = C.run_streaming(args, state, node)
-        if rc != 0:
-            return C._fail(state, node, "bake_card_pauses.py failed (a boundary with no silence trough: move that card per comp-build §5, as kaspa 30bps did)", out)
+    inserts = _plan_inserts(proj)
+    if not cards and not inserts:
+        return C._fail(state, node, "AS-RECORDED.md names no chapter with `card ON` and COVER-PLAN.json has no clip_inserts "
+                                    "(nothing to bake; if that is intended, --done card_pauses)")
+    missing = [cid for _, f, cid in inserts if f is None]
+    if missing:
+        return C._fail(state, node, f"clip insert file(s) missing in assets/clip-inserts/: {', '.join(missing)} "
+                                    "(the assets node captures them with capture_clip_insert.py; re-drive from assets)")
+    letter = re.search(rf"^{re.escape(scope)}\.([a-z])\.", fs.name)
+    nxt = chr(ord(letter.group(1)) + 1) if letter else "g"
+    cards_out = fs.with_name(f"{scope}.{nxt}.paused.mp4")                  # the cards-only bake
+    final_out = fs.with_name(f"{scope}.{chr(ord(nxt) + 1)}.paused.mp4") if (cards and inserts) else cards_out
+    # re-drive: reuse the latest paused spine only if it was baked from THIS source with exactly these inserts
+    existing = C.paused_spine(proj, scope)
+    reuse = False
+    if existing and existing.with_suffix(".json").is_file() and not _redo(state, node):
+        try:
+            em = json.loads(existing.with_suffix(".json").read_text(encoding="utf-8"))
+            have = sorted(str(p.get("label") or "") for p in em.get("pauses") or [] if p.get("clip"))
+            reuse = have == sorted(cid for _, _, cid in inserts) and Path(str(em.get("source") or "")).name == fs.name
+        except Exception:
+            reuse = False
+    if reuse:
+        paused = existing
+    else:
+        paused = final_out
+        cards_side = cards_out.with_suffix(".json")
+        if cards:
+            args = [sys.executable, "-u", str(BAKE_CARD_PAUSES), str(source), "--cards", ",".join(f"{t}:{lbl}" for t, lbl in cards),
+                    "--pause", f"{pause_s}", "--out", str(cards_out), "--json", str(cards_side)]
+            rc, out = C.run_streaming(args, state, node)
+            if rc != 0:
+                return C._fail(state, node, "bake_card_pauses.py failed (a boundary with no silence trough: move that card per comp-build §5, as kaspa 30bps did)", out)
+        else:
+            cards_side = fs.with_name(f"{scope}.{nxt}.cards.json")   # no title cards: an empty card sidecar for the insert baker
+            C._write_json_atomic(cards_side, {"pauses": [], "pause_s": pause_s, "source": str(source),
+                                              "note": "no chapter card ON; written so bake_clip_insert.py can bake the clip inserts"})
+        if inserts:
+            args = [sys.executable, "-u", str(BAKE_CLIP_INSERT), str(source), "--cards-json", str(cards_side),
+                    "--out", str(final_out), "--json", str(final_out.with_suffix(".json"))]
+            for t, f, cid in inserts:
+                args += ["--insert", f"{t}:{f}:{cid}"]
+            rc, out = C.run_streaming(args, state, node)
+            if rc != 0:
+                return C._fail(state, node, "bake_clip_insert.py failed (a splice point with no silence trough, or a clip without its own "
+                                            "audio: see above; move splice_at in COVER-PLAN.json or recapture the clip, then re-drive)", out)
+    side = paused.with_suffix(".json")
     meta = json.loads(side.read_text(encoding="utf-8"))
     inserts = ",".join(f"{p['at']}:{p['dur']}" for p in meta.get("pauses") or [])
     src_for_gate = Path(meta.get("source") or (source or fs))
@@ -1443,16 +1727,26 @@ def card_pauses(state: LongformState) -> LongformState:
     rc, out = C.run_streaming([sys.executable, "-u", str(CHECK_SPINE_FPS), str(paused), "30"], state, node)
     if rc != 0:
         return C._fail(state, node, "paused spine fps != 30 (check_spine_fps.py)", out)
-    expect = (_duration(src_for_gate) or 0.0) + len(meta.get("pauses") or []) * float(meta.get("pause_s") or pause_s)
+    # every pause's own length: title cards = pause_s, a spliced clip insert = the clip's length (bake_clip_insert.py, 2026-10-08)
+    expect = (_duration(src_for_gate) or 0.0) + sum(float(pz.get("dur") or meta.get("pause_s") or pause_s) for pz in meta.get("pauses") or [])
     got = _duration(paused) or 0.0
     if abs(got - expect) > 0.15:
         return C._fail(state, node, f"paused spine is {got:.3f}s, expected {expect:.3f}s")
+    # LISTEN, not just measure silence: a plosive closure inside a word is real silence and passes every silence gate.
+    # The first word heard after each card must start like the chapter's first word in AS-RECORDED.md.
+    rc, out = C.run_streaming([sys.executable, "-u", str(CHECK_CARD_WORDS), str(proj), "--paused", str(paused), "--sidecar", str(side)],
+                              state, node)
+    if rc != 0:
+        return C._fail(state, node, "a chapter card splits a word or sits after the voice (check_card_words.py): set that chapter's "
+                                    "AS-RECORDED header start to the first word's TRUE onset (RMS, not Whisper) and re-drive with "
+                                    "--redo card_pauses", out)
     dest = proj / "assets" / "spine.mp4"
     dest.parent.mkdir(parents=True, exist_ok=True)
     if not dest.is_file() or dest.stat().st_size != paused.stat().st_size:
         shutil.copyfile(paused, dest)
     C.mark_manual(proj, node)  # the spine letter advanced; downstream nodes read assets/spine.mp4
-    return {"steps": C._step(state, node, "ran", f"{len(cards)} card pause(s) x {pause_s}s baked -> {paused.name} ({got:.2f}s), gate PASS, copied to assets/spine.mp4")}
+    n_ins = sum(1 for p in meta.get("pauses") or [] if p.get("clip"))
+    return {"steps": C._step(state, node, "ran", f"{len(cards)} card pause(s) x {pause_s}s + {n_ins} clip insert(s) baked -> {paused.name} ({got:.2f}s), gate PASS, copied to assets/spine.mp4")}
 
 
 BUILD_CAPTIONS = C.SCRIPTS / "build_project_captions.py"
@@ -1551,9 +1845,16 @@ def comp_build(state: LongformState) -> LongformState:
         prompt = (f"Build the Remotion composition for the longform-edited project `{proj.name}` (folder `{proj}`) TO its approved "
                   f"blueprint, and render the full draft.\nComposition id + file: `{comp_id}` -> `{comp}` (register in `{REMOTION / 'src' / 'Root.tsx'}`).\n"
                   f"Paused spine: `{proj / 'assets' / 'spine.mp4'}` (= `{paused}`); its sidecar `{paused.with_suffix('.json')}` gives "
-                  f"CARD_T = pauses[].at = {[p['at'] for p in meta.get('pauses', [])]} and PAUSE = {meta.get('pause_s')} s; SPINE_SECS = the "
+                  f"CARD_T = pauses[].at = {[p['at'] for p in meta.get('pauses', []) if not p.get('clip')]} and PAUSE = {meta.get('pause_s')} s; SPINE_SECS = the "
                   f"SOURCE spine `{meta.get('source')}` = {src_secs or 0:.3f} s.\n"
-                  f"Blueprint: `{C.doc(proj, 'edit_plan')}` · `{C.doc(proj, 'cue_sheet')}` · `{C.doc(proj, 'transitions')}` + "
+                  + (("CLIP INSERTS in this spine (comp-build.md section 3d; rule skills/clip-inserts/clip-inserts.md): the sidecar's pauses[] is the "
+                      "TIME MAP, sh(t) = t + the sum of every pause's own `dur` with at <= t, and INSERTS = [{at, dur}] is exported for EVERY pause. "
+                      "Clip rows: " + "; ".join(f"{p.get('label')} at {p['at']} s for {p.get('dur')} s ({Path(str(p.get('clip'))).name})" for p in meta.get('pauses', []) if p.get('clip'))
+                      + ". Over each clip's paused window play assets/clip-inserts/<id>-*.mp4 FULL-FRAME and MUTED (its voice is already in the VO "
+                      "track), with the plan's insert-in / insert-out transitions and the EDIT-PLAN's lead-in / lead-out stills (the clip's first frame "
+                      "held under the set-up line, its last frame under the resume line). Captions stay gated to the FACE windows.\n")
+                     if any(p.get("clip") for p in meta.get("pauses", [])) else "")
+                  + f"Blueprint: `{C.doc(proj, 'edit_plan')}` · `{C.doc(proj, 'cue_sheet')}` · `{C.doc(proj, 'transitions')}` + "
                   f"`{C.doc(proj, 'transition_plan')}` · `{C.doc(proj, 'cover_plan')}` · `{C.doc(proj, 'as_recorded')}`.\n"
                   f"Mike's rulings for THIS video: `{C.doc(proj, 'project_log')}`, its `Open flags` section is load-bearing (read it before "
                   "you write a line). An image slot whose flag or cover-plan note names a clip in assets/img-motion/ plays THAT clip as a "
@@ -1667,8 +1968,10 @@ def mix_audio(state: LongformState) -> LongformState:
     if state.get("stub"):
         return {"steps": C._step(state, node, "stub")}
     prev = proj / "_previews"
-    drafts = sorted([p for p in prev.glob(f"{proj.name}-draft-v*.mp4") if not p.stem.endswith("-mix")],
-                    key=lambda p: int(re.search(r"-v(\d+)\.mp4$", p.name).group(1))) if prev.is_dir() else []
+    # ONLY the stitched drafts <project>-draft-vN.mp4: the split-render parts (-v1.part2.mp4) and the -mix outputs do not count
+    _vn = re.compile(r"-v(\d+)\.mp4$")
+    drafts = sorted([p for p in prev.glob(f"{proj.name}-draft-v*.mp4") if _vn.search(p.name) and not p.stem.endswith("-mix")],
+                    key=lambda p: int(_vn.search(p.name).group(1))) if prev.is_dir() else []
     if not drafts:
         return C._fail(state, node, "no draft render to mix")
     draft = drafts[-1]

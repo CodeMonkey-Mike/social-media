@@ -2,7 +2,7 @@
 
 _Running history for the livestream-repurpose pipeline + its LangGraph migration.
 Newest entry first. Update after every significant run. (Pattern borrowed from
-linkedin-automation/PROJECT-LOG.md.)_
+linkedin-automation/private/PROJECT-LOG.md.)_
 
 ---
 

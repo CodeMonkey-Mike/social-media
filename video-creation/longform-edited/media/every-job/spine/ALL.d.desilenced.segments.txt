@@ -1,0 +1,485 @@
+every-job | FINAL spine transcript breakdown (transcriber, 2026-10-07)
+==============================================================================
+Spine  : spine/ALL.d.desilenced.mp4   1121.003 s = 18:41.0 (after the freeze fix of 2026-10-07: timecodes in this breakdown after 17:55.3 read 0.167 s early; the word JSON is shifted and is the cue source)
+         (desilence_final at 400 ms intro / 600 ms body per Mike 2026-10-07; NOT the set-aside
+          ALL.d.desilenced.bak-250-500.mp4, 18:20.80)
+JSON   : spine/ALL.d.desilenced.medium-words.json   Whisper MEDIUM, cuda, word_timestamps=True, language=en
+         (video-creation/longform-edited/scripts/transcribe.py). 215 segments, 3,327 words. NEVER hand-edited:
+         it is the cue source.
+Lines  : 264 = the 215 Whisper segments, split at chapter/beat openers and at FACE/COVER picture
+         edges. '~' marks a split piece: its times are its first word's start and last word's end from the JSON.
+         An unsplit line keeps its Whisper segment [start-end]. All times are seconds on the FINAL spine.
+Gate   : 'FACE n' = Mike is on screen (non-black picture), window n; 'COVER' = blacked-out picture.
+         Measured with ffmpeg blackdetect on THIS file (not read off the screenplay).
+Text   : corrected for Whisper mishears (every substitution listed below); times untouched.
+         [[word]] = spoken, heard by a large-v3 second pass, DROPPED by medium: it is NOT in the JSON.
+Map    : chapters and beats follow SCREENPLAY.md's beat signposts. No beat is listed that is not in the audio.
+
+CORRECTIONS APPLIED (text only, the JSON is untouched)
+------------------------------------------------------------------------------
+   2 x  Casper -> Kaspa                                            [persona]  @ 947.54, 1040.16
+   1 x  but tensor -> Bittensor                                    [project mishear]  @ 959.66
+   2 x  tau -> TAO                                                 [persona]  @ 959.66, 1040.16
+   1 x  x4o2 -> x402                                               [project mishear]  @ 919.08
+   1 x  Massacart -> Mastercard                                    [project mishear]  @ 925.56
+   1 x  car printers -> Carpenters                                 [project mishear]  @ 525.48
+   1 x  old neo -> called NEO                                      [mishear (large-v3 confirms)]  @ 270.84
+   1 x  freeze up money -> frees up money                          [homophone]  @ 129.86
+   1 x  all for -> all four                                        [homophone]  @ 206.74
+   1 x  medium plumber -> median plumber                           [mishear]  @ 394.78
+   1 x  figure two? -> Figure 02                                   [name]  @ 240.98
+   1 x  in his own in -> on his own. In                            [mishear (large-v3 confirms)]  @ 651.24
+   1 x  John Hopkins -> Johns Hopkins                              [name spelling]  @ 653.54
+   1 x  gold-bladder -> gallbladder                                [mishear]  @ 653.54
+   1 x  unpicked tissue -> on pig tissue                           [mishear (large-v3 confirms)]  @ 659.86
+   1 x  Anthropics -> Anthropic                                    [name spelling]  @ 214.64
+   1 x  trained to be a plumber -> train to be a plumber           [homophone (large-v3 confirms)]  @ 10.40
+   1 x  deliveries promise -> deliveries promised                  [homophone (large-v3 confirms)]  @ 278.40
+   1 x  Well that paycheck -> while that paycheck                  [mishear (large-v3 confirms)]  @ 1060.10
+   1 x  RESTORED dropped word: software in [[stablecoins]]         [dropped by medium, heard by large-v3]  @ 919.08
+   1 x  RESTORED dropped word: 19 [[percent]] behind               [dropped by medium, heard by large-v3]  @ 98.84
+   1 x  for you to noobs -> for you too. Noobs                     [homophone]  @ 1102.20
+   2 x  stable coin(s) -> stablecoin(s)                            [spelling]  @ 862.74, 939.68
+   1 x  pre mine -> premine                                        [spelling]  @ 947.54
+   1 x  robots brain -> robot's brain                              [spelling]  @ 550.90
+   1 x  3d printed -> 3D-printed                                   [spelling]  @ 529.94
+   1 x  chat bot -> chatbot                                        [spelling]  @ 7.72
+   1 x  13 000 -> 13,000                                           [number format]  @ 31.30
+   1 x  1600 AI enabled -> 1,600 AI-enabled                        [number format]  @ 604.08
+   1 x  1x -> 1X                                                   [casing]  @ 270.84
+   1 x  ceo -> CEO                                                 [casing]  @ 10.40
+   1 x  nvidia -> Nvidia                                           [casing]  @ 10.40
+   2 x  ai -> AI                                                   [casing]  @ 84.54, 98.84
+   1 x  stanford -> Stanford                                       [casing]  @ 88.86
+   1 x  coinbase -> Coinbase                                       [casing]  @ 911.18
+   1 x  the matrix -> The Matrix                                   [casing]  @ 335.44
+   1 x  Da Vinci -> da Vinci                                       [casing]  @ 638.96
+   1 x  crypto rich VIP -> Crypto Rich VIP                         [casing]  @ 1114.08
+   1 x  spurious '?' (a human electrician?)                        [punctuation]  @ 362.86
+   1 x  spurious '?' (contractor to do?)                           [punctuation]  @ 416.00
+   1 x  spurious '?' (cashiers?)                                   [punctuation]  @ 454.50
+  total 45 substitutions. Plus a mechanical pass: a segment-initial capital that only marks Whisper's
+  segment start mid-sentence is lowercased (names/acronyms protected), and each beat's first word is capitalized.
+  Persona rules with NO occurrence in this take: Caspie/Cassie/Cappy (KRC20), Kasper-the-Ghost, 50WMA/200WMA,
+  'ghost' for GhostDAG, 'scion'. Numbers Whisper spelled out ('fifty two point eight percent',
+  'eight hundred and thirty thousand dollars', 'four hundred and twenty thousand dollars') are left as heard.
+
+CHAPTER OPENERS (first word start, final spine)
+------------------------------------------------------------------------------
+  CH1 THE SAFE JOB                     0.00  (0:00.00)   "First they told you learn to code, but ..."
+  CH2 THE BRAIN WENT FIRST            62.94  (1:02.94)   "So before the robot the brain went first ..."
+  CH3 THEN IT GOT A BODY             232.66  (3:52.66)   "So where are the robots right now? I'm ..."
+  CH4 THE LIST                       445.96  (7:25.96)   "So here's a list same pattern every time ..."
+  CH5 WHAT IT DOES TO THE ECONOMY    704.04  (11:44.04)   "So what does all this do to the ..."
+  CH6 WHO HOLDS THE CARDS            809.76  (13:29.76)   "Now we get to the part that actually ..."
+  CH7 HOW TO PROTECT YOURSELF        879.56  (14:39.56)   "So then how do you protect yourself? ..."
+  CH8 THE CLOSE                     1062.48  (17:42.48)   "So that's a whole picture ..."
+
+FACE WINDOWS (17, picture-measured; windows F1-F10 = the background-swap set per PROJECT-LOG 2026-10-07)
+------------------------------------------------------------------------------
+  F1      0.17-   10.40  (0:00.17-0:10.40)  10.23s  CH1 B1, both LOCKED opening lines (one continuous shot)
+       "First they told you learn to code, but then AI learned to code. So then they told you scratch that go learn a trade because a chatbot can't fix a toilet"
+  F2     28.30-   31.23  (0:28.30-0:31.23)   2.93s  CH1 B3, LOCKED landing
+       "And the humanoid robots are showing up"
+  F3    138.33-  141.70  (2:18.33-2:21.70)   3.37s  CH2 B3
+       "but what happens when the machines can do the new jobs too?"
+  F4    206.70-  212.13  (3:26.70-3:32.13)   5.43s  CH2 B5
+       "once the machine is all four. There is no economic reason to keep the human"
+  F5    303.47-  305.80  (5:03.47-5:05.80)   2.33s  CH3 B4
+       "but they're coming and they're coming fast"
+  F6    321.93-  325.30  (5:21.93-5:25.30)   3.37s  CH3 B5
+       "it's one robot for every trade in your house"
+  F7    452.20-  454.40  (7:32.20-7:34.40)   2.20s  CH4 B1
+       "and for most of these the machine is already there"
+  F8    550.77-  556.53  (9:10.77-9:16.53)   5.77s  CH4 B9
+       "but those data centers are where the robot's brain gets trained. So that one is coming"
+  F9    574.03-  577.37  (9:34.03-9:37.37)   3.33s  CH4 B11, the climb
+       "And believe it or not it climbs all the way up the pay ladder"
+  F10   592.00-  596.77  (9:52.00-9:56.77)   4.77s  CH4 B11, "Trust me. I'm a programmer."
+       "and trust me. I'm a programmer. I know what AI can do"
+  F11   676.07-  683.00  (11:16.07-11:23.00)   6.93s  CH4 B13
+       "the day that machine exists no hospital pays eight hundred and thirty thousand dollars a year pay for hands to get tired"
+  F12   740.53-  743.03  (12:20.53-12:23.03)   2.50s  CH5 B3
+       "if nobody has a paycheck who buys anything"
+  F13   785.83-  788.60  (13:05.83-13:08.60)   2.77s  CH5 B5
+       "the industry survives the job inside of it doesn't"
+  F14   883.97-  887.03  (14:43.97-14:47.03)   3.07s  CH7 B1
+       "you stop being a worker and you start being an owner"
+  F15  1057.63- 1062.27  (17:37.63-17:42.27)   4.63s  CH7 B6
+       "and you can turn that paycheck into ownership while that paycheck still exists."
+  F16  1069.40- 1075.10  (17:49.40-17:55.10)   5.70s  CH8 B2, LOCKED closing line
+       "The robots are coming for the paycheck so own something that nobody can print nobody can free"
+  F17  1077.47- 1120.84  (17:57.47-18:40.84)  43.37s  CH8 B3, the close / community pitch (ad-lib, FACE per Mike)
+       "And with that said I do have one of the most successful crypto groups out there by many many metrics whether you're an advanced trader and you're looking for a community with a lot of software to help you a lot of insider alerts and bots and so on stuff that normal communities don't typically have right like I said I'm a programmer or if you're a newbie and you want to get into the crypto space my group would be good for you too. Noobs are welcome and we have a lot of courses and you can ask the question to a group of like-minded people and myself will be happy to help click the link in the description below ask for Crypto Rich VIP and hit the like and subscribe button. I'll catch you guys later"
+  17 windows carry the screenplay's 18 FACE lines (F1 holds the two opening lines as one shot); every scripted
+  FACE beat is present. Spine opens on 5 frames (0.167 s) of black before F1; Whisper clamps 'First' to 0.00.
+  Word-to-window assignment is by word start (-50 ms / +30 ms guard). Four Whisper word boxes straddle a picture
+  edge and are assigned by the cover-blackout plan's face text (spine/ALL.b.blackout.mp4.cover.json):
+  'First' 0.00 -> F1, 'But' 138.14 -> F3, 'free' 1075.06 -> F16, 'with' 1077.54 -> COVER.
+
+FLAGS (for the caller; NOT corrected in the text)
+------------------------------------------------------------------------------
+  1. LOCKED closing line, CH8 B2 @1074.74-1075.28: the audio says "nobody can FREE", not "freeze". Medium, large-v3 and the
+     defumble chunk-map pass all hear "free". Spectral check: no z frication after the vowel (his "freeze it" @871.9
+     shows it clearly), and no desilence_final join at that gap. Captions built off the JSON will read "free". Mike's ear decides.
+  2. Two words DROPPED by medium, restored in the text only and NOT in the JSON (a captions build must add them):
+     "19 [[percent]] behind" (CH2 B2, token '19' @~101) and "software pays software in [[stablecoins]]" (CH7 B2,
+     inside the long 'in'/'In' tokens @925.06-926.36).
+  3. Heard the same by medium AND large-v3, left as said, but they differ from the script:
+     - @286.04 "turn ON lights" (script and 1X's claim: "turn off the lights")
+     - @890.52 "Bill Gates can ORDER a quarter of a million acres" (script: "own"; could be "afford")
+     - @424.22 "they only wanted to do it DOING a nine-to-five schedule" (likely "during")
+     - @957.12 "every coin MINTED out in the open" (script and kaspa.org: "mined")
+     - @1053.44 "PAYMENT MACHINES measured in cents" (script: "machine payments")
+     - @651.24 "what the robot has done on HIS own" (script: "its")
+  4. What was said that changes the beats (for the as-recorded author; not a mishear):
+     - CH3 B3 @289.04: "and IT claims that one AI brain runs every behavior". The Figure/Helix claim is said as "it" right
+       after the 1X NEO lines, so it reads as 1X's claim.
+     - CH4 B12 @615.50-619.54: the screenplay's required context sentence ("he was repeating a warning from about 10 years
+       ago... the number of radiologists went up") is NOT in the take; only "It hasn't happened yet" remains. The burned-in
+       context caption is now the only context for the Huang clip.
+     - CH4 B14 @689.68-700.60 AD-LIB: "if humans cause tens of thousands of accidents per year, but a self-driving car doesn't
+       cause any accidents at all. It's really a no-brainer" (an absolute safety line).
+     - CH7 B5 @1040.16 AD-LIB: "well below their all-time highs WHICH IMPLIES A GOOD TIME TO GET IN, do your own research"
+       (screenplay: no promised outcome).
+     - CH3 B7 @416.00-442.70 AD-LIB: the contractor / weekends story (not in the screenplay).
+     - CH8 B3 @1077.68-1121.02: the off-script community pitch (FACE, per Mike's ruling); the screenplay's comment ask
+       ("name one job a robot can never do") is not said.
+     - CH6 has no FACE (as ruled). CH3 opens on "So where are the robots right now?", not on the alternate spoken line
+       "And then it got a body." (that only matters if the CH3 title card is dropped).
+  5. JSON tail: the last word 'later' ends at 1121.02, 0.18 s past the end of the file (1120.84). Clamp when cueing.
+  6. Spellings chosen for names Mike pronounces differently: "John Hopkins" -> Johns Hopkins; "Anthropics" -> Anthropic
+     (both models hear an extra s); "figure two" -> Figure 02. Community name written "Crypto Rich VIP" (domain
+     cryptorich.vip; the persona has no spoken-name spelling).
+
+BREAKDOWN
+==============================================================================
+
+## CH1 - THE SAFE JOB   [opens 0.00 = 0:00.00]
+   -- B1  the hook (LOCKED opening)
+[   0.00-   7.72] FACE 1    First they told you learn to code, but then AI learned to code. So then they told you scratch that go learn a trade
+[   7.72-  10.40] FACE 1    because a chatbot can't fix a toilet
+[  10.40-  17.90] COVER     the godfather of AI said it train to be a plumber and the CEO of Nvidia said we're going to need hundreds of thousands of
+[  17.90-  20.40] COVER   ~ electricians plumbers and carpenters
+   -- B2  his own last clause
+[  20.40-  22.66] COVER   ~ But listen to how the godfather of AI
+[  22.66-  28.36] COVER   ~ finished that sentence a good bet would be to be a plumber until the humanoid robots show up
+   -- B3  the landing (LOCKED)
+[  28.36-  29.86] FACE 2  ~ And the humanoid robots
+[  30.00-  31.30] FACE 2  ~ are showing up
+[  31.30-  33.58] COVER   ~ about 13,000 of them shipped in
+[  33.58-  36.78] COVER     2025 and one of them held a job at a
+[  36.78-  39.20] COVER   ~ BMW factory for 11 months
+   -- B4  the stakes + open loop + handoff
+[  39.20-  42.48] COVER   ~ And the day that one of those work inside of your house
+[  42.48-  46.34] COVER     you don't need to call a plumber. You don't need to call an electrician
+[  46.34-  51.02] COVER     you don't need to call a roofer and it just doesn't stop with people who work with their hands
+[  51.02-  56.60] COVER     it goes all the way up even to brain surgeons now. There's a way to protect yourself from all this
+[  56.60-  60.14] COVER     we're going to get to that but first you need to see how deep this goes
+[  60.14-  62.94] COVER     so let's go through it all piece by piece
+
+## CH2 - THE BRAIN WENT FIRST   [opens 62.94 = 1:02.94]
+   -- B1  labor substitution
+[  62.94-  69.26] COVER     So before the robot the brain went first every wave of automation before this one went after muscle
+[  69.26-  75.54] COVER     the factory the assembly line this one went after knowledge work the office. It's called labor
+[  75.54-  79.76] COVER   ~ substitution the machine doesn't help the worker it replaces the worker
+   -- B2  the receipts so far
+[  79.76-  83.74] COVER   ~ And it's already showing up in the first nine months of 2026
+[  84.54-  88.32] COVER     companies blamed AI for more than a hundred and twenty thousand
+[  88.86-  97.38] COVER     announced job cuts that's about seven times the same stretch a year earlier and Stanford looked up real payroll data workers aged from
+[  97.38-  98.84] COVER     22 to 25
+[  98.84- 106.78] COVER     and the jobs most exposed to AI are running about 19 [[percent]] behind the people the same age in less exposed jobs now, but
+[ 107.38- 111.76] COVER     unemployment is still 4.2 percent. So this is not mass unemployment
+[ 112.28- 116.10] COVER   ~ not yet, at least it's starting at the door with the entry-level job
+   -- B3  "technology always creates new jobs"
+[ 116.10- 119.22] COVER   ~ And every time I say this somebody's like relax
+[ 119.22- 124.12] COVER     technology always creates new jobs. But what if we try to dissect the meaning of that phrase?
+[ 124.46- 129.28] COVER     Technology creates new jobs. The truth is it isn't like that at all
+[ 129.86- 138.14] COVER     technology makes things cheaper cheaper frees up money that money builds new markets and the new markets need workers
+[ 138.14- 141.66] FACE 3    but what happens when the machines can do the new jobs too?
+[ 141.86- 144.88] COVER   ~ Then the chain breaks at the very last link
+   -- B4  the operators and the horses
+[ 144.88- 147.32] COVER   ~ And we've seen what that looks like in the early
+[ 147.32- 152.98] COVER     1900s the telephone operator was one of the most common jobs for American women then came
+[ 152.98- 155.66] COVER     automatic switching and most of those jobs were gone
+[ 155.66- 162.84] COVER     the next generation found other work but the women already in that job often ended up in lower paying work or out of work
+[ 162.84- 165.58] COVER     and then there's the horse around 1915
+[ 166.22- 169.68] COVER     America had more than 20 million horses by
+[ 169.68- 175.06] COVER     1960 a few million the car didn't create a new job for the horses now
+[ 175.06- 182.44] COVER     don't get me wrong there back then the new jobs did show up and it boosted the economy tremendously
+[ 182.44- 184.66] COVER     somebody had to install those new switchboards
+[ 185.42- 191.20] COVER     somebody had to assemble the new cars and build all the parts that went along with those cars
+[ 191.20- 198.84] COVER     but what if every one of those car parts is built by a machine and nobody needs to hire anybody to make them
+   -- B5  the four-part test + the dates
+[ 198.84- 202.68] COVER     So, how do you know when a job is in trouble? It comes down to four words
+[ 204.02- 205.28] COVER     better faster cheaper
+[ 206.18- 206.74] COVER   ~ safer
+[ 206.74- 210.16] FACE 4  ~ once the machine is all four. There is no
+[ 210.16- 212.14] FACE 4  ~ economic reason to keep the human
+[ 212.14- 214.64] COVER   ~ and people building this are putting dates on it
+[ 214.64- 220.84] COVER     the CEO of Anthropic says the AI could displace half of all entry-level white-collar jobs
+[ 220.84- 226.80] COVER     in the next one to five years, but all of that AI is stuck inside a screen
+[ 226.80- 232.66] COVER     it's a brain with no body and that's exactly why they told you to go pick up a wrench
+
+## CH3 - THEN IT GOT A BODY   [opens 232.66 = 3:52.66]
+   -- B1  the frame: three tiers
+[ 232.66- 236.78] COVER     So where are the robots right now? I'm gonna split it three ways
+[ 236.78- 240.98] COVER   ~ what's already deployed what's being claimed and what's coming
+   -- B2  T1 DEPLOYED
+[ 240.98- 244.38] COVER   ~ Deployed a humanoid robot called Figure 02
+[ 244.38- 249.98] COVER     worked at a BMW plant in Spartanburg for 11 months 10-hour shifts
+[ 249.98- 256.56] COVER     Monday through Friday and loaded more than 90,000 parts and helped build more than 30,000 cars
+[ 256.56- 259.80] COVER     that's one robot model doing one task
+[ 259.80- 264.42] COVER     loading sheet metal but it held a job and you can buy a humanoid body for
+[ 264.42- 270.06] COVER   ~ $5,900 the company says that one is remote control. So the body is cheap worker isn't there yet
+   -- B3  T2 CLAIMED
+[ 270.06- 270.84] COVER   ~ Claimed a
+[ 270.84- 275.68] COVER     company called 1X put a home humanoid on sale called NEO
+[ 275.68- 277.82] COVER     $20,000 or
+[ 278.40- 281.56] COVER     $499 a month with deliveries promised for 2026
+[ 281.56- 289.04] COVER     the company says it shows up able to open doors fetch things and turn on lights and for anything it doesn't know a
+[ 289.04- 294.20] COVER     remote human expert guides it through and it claims that one AI brain runs every behavior
+[ 294.76- 299.14] COVER     across its robots and that skill can be picked up just by talking to it
+   -- B4  said once, upfront: not yet, and coming
+[ 299.14- 303.50] COVER   ~ Now there's no robot plumber right now. There's no robot electrician,
+[ 303.52- 305.78] FACE 5  ~ but they're coming and they're coming fast
+[ 305.78- 308.02] COVER     I think we're only just a few years away
+[ 308.02- 308.94] COVER   ~ and here's why
+   -- B5  T3 the house is built for a human body
+[ 308.94- 314.48] COVER   ~ The house is built for a humanoid body the doorways the stairs the ladder the crawlspace
+[ 314.86- 319.30] COVER     every tool in your garage so a machine with a human body can use all of it
+[ 319.30- 321.92] COVER     and that means is not just one robot per trade
+[ 321.92- 325.32] FACE 6  ~ it's one robot for every trade in your house
+[ 325.32- 329.12] COVER   ~ the plumber the electrician the roofer the HVAC tech
+[ 329.14- 335.44] COVER   ~ the carpenter that's about 2.8 million jobs in America in just those five trades
+   -- B6  T3 the upload + the security guard
+[ 335.44- 337.46] COVER   ~ And imagine like in The Matrix
+[ 337.46- 340.94] COVER     you're jacked in you can upload a program to your brain
+[ 340.94- 348.16] COVER     to learn a whole new skill just like how to be a helicopter pilot or to be a kung fu master or in this case
+[ 348.16- 354.58] COVER     how to be an expert electrician and not only that you'd have the combined knowledge of every single expert
+[ 354.58- 362.86] COVER     electrician on the entire planet instantly basically anything that every expert electrician could have ever known that
+[ 362.86- 367.18] COVER     is going to be the power of a robot in your own house a human electrician
+[ 368.22- 375.20] COVER     needs a four or five year apprenticeship a robot needs a download and it's not just repairs that same robot is going to be your
+[ 375.20- 379.88] COVER     security guard it doesn't sleep and it could be standing in your hallway at 3 in the morning
+[ 379.88- 385.86] COVER     so when somebody tries to break into your house and torture you for your crypto private keys
+[ 385.86- 388.42] COVER     it'll function better than a guard dog
+[ 388.42- 392.94] COVER     and you don't even have to feed it you just plug it in and make sure it's charged
+[ 392.94- 394.78] COVER     and you don't even have to clean up its poop
+   -- B7  the math (+ AD-LIB contractor story) + handoff
+[ 394.78- 398.34] COVER     And then there's the math the median plumber in America makes about
+[ 398.34- 401.96] COVER     $64,000 a year that home robot rents for
+[ 402.64- 409.42] COVER     $499 a month and that's under $6,000 a year so right now that robot can't do a plumber's job
+[ 409.42- 416.00] COVER     not yet, but the day a machine at that price can the math is brutal and the machine doesn't need weekends
+[ 416.00- 421.16] COVER     how many times throughout my life I wanted to schedule something with a contractor to do
+[ 422.04- 428.20] COVER     something and they only wanted to do it doing a nine-to-five schedule when it was the most difficult time period for me
+[ 428.20- 432.88] COVER     I remember there's been points in my life when I asked somebody if they could do it on the weekend
+[ 432.88- 436.62] COVER     and I pay them I'd even pay them extra and I didn't they didn't want to do it
+[ 436.62- 442.70] COVER     so there could be a little bit of a convenience factor there, okay, so that's the house now
+[ 442.70- 445.96] COVER     let's go job by job and see if yours is on the list
+
+## CH4 - THE LIST   [opens 445.96 = 7:25.96]
+   -- B1  the pattern
+[ 445.96- 449.56] COVER     So here's a list same pattern every time the job
+[ 449.56- 452.26] COVER   ~ how many people do it and why it's at risk
+[ 452.26- 454.50] FACE 7  ~ and for most of these the machine is already there
+   -- B2  cashiers
+[ 454.50- 455.40] COVER   ~ Cashiers.
+[ 455.76- 461.22] COVER     3.1 million jobs at risk because of self-checkout and online shopping and the government's own
+[ 461.22- 464.32] COVER   ~ forecast already has this job shrinking at 6%
+   -- B3  taxi drivers
+[ 464.32- 465.16] COVER   ~ Taxi drivers
+[ 465.16- 469.66] COVER     456,000 jobs at risk because Waymo has driven
+[ 470.36- 474.58] COVER     271 million miles with nobody behind the wheel and by its own numbers
+[ 474.58- 478.80] COVER   ~ 95% fewer serious injury crashes than human drivers
+   -- B4  warehouse workers
+[ 478.80- 479.86] COVER   ~ Warehouse workers
+[ 480.28- 485.84] COVER   ~ 6.9 million jobs at risk because Amazon has already deployed a million robots
+   -- B5  customer service reps
+[ 485.84- 487.28] COVER   ~ Customer service reps
+[ 487.28- 493.68] COVER     2.7 million jobs at risk because the CEO of Salesforce said he cut his support team from
+[ 493.68- 500.56] COVER   ~ 9,000 people to about 5,000 because in his own words he needs less heads
+   -- B6  roofers
+[ 500.56- 501.04] COVER   ~ Roofers
+[ 502.20- 508.24] COVER     167,000 jobs at risk because of a robot called Rufus gets winched across the roof
+[ 508.92- 512.04] COVER   ~ nailing down shingles. This one is still a pilot for now
+   -- B7  truck drivers
+[ 512.04- 512.72] COVER   ~ Truck drivers
+[ 513.24- 519.58] COVER     2.2 million jobs at risk because driverless trucks have already logged nearly
+[ 520.16- 525.48] COVER   ~ 440,000 miles and the company reports zero collisions caused by its driver
+   -- B8  carpenters
+[ 525.48- 526.24] COVER   ~ Carpenters
+[ 527.10- 529.94] COVER     890,000 jobs at risk because a company in Texas
+[ 529.94- 537.24] COVER     3D-printed the walls for about a hundred homes and went from five building crews down to one crew and one printer
+   -- B9  electricians
+[ 538.00- 538.68] COVER     Electricians
+[ 539.90- 542.98] COVER     821,000 jobs. There's no robot electrician right now
+[ 542.98- 547.20] COVER     the government even has this job growing 9% and guess why?
+[ 547.20- 550.90] COVER     Because somebody has to wire all those AI data center
+[ 550.90- 556.66] FACE 8  ~ but those data centers are where the robot's brain gets trained. So that one is coming
+   -- B10  plumbers
+[ 556.66- 557.26] COVER   ~ Plumbers
+[ 558.20- 563.30] COVER     511,000 job the job they told you was safe and right now it is
+[ 563.30- 565.20] COVER     there's no robot plumber
+[ 565.20- 571.54] COVER     but every pipe in your house was built for human hands and a machine with human hands doesn't need a few years of apprenticeship
+[ 571.54- 574.14] COVER   ~ it needs a download. I give it just a few years
+   -- B11  the climb + computer programmers
+[ 574.14- 575.12] FACE 9  ~ And believe it or not
+[ 575.12- 577.42] FACE 9  ~ it climbs all the way up the pay ladder
+[ 577.42- 580.30] COVER   ~ computer programmers. Remember learn to code
+[ 581.00- 584.20] COVER     111,000 jobs at risk because Google says
+[ 584.76- 592.16] COVER     75% of its new code is now generated by AI and the government already projects this job to shrink by 7%
+[ 592.16- 596.94] FACE 10 ~ and trust me. I'm a programmer. I know what AI can do
+   -- B12  radiologists
+[ 596.94- 597.90] COVER   ~ Radiologists
+[ 598.44- 604.08] COVER     29,000 jobs at about four hundred and twenty thousand dollars a year at risk because the FDA
+[ 604.08- 612.24] COVER     has already authorized more than 1,600 AI-enabled medical devices and you've probably seen the clip of Jensen Huang the CEO of
+[ 612.24- 615.50] COVER     Nvidia the first job AI will destroy is
+[ 615.50- 619.54] COVER     radiology nobody should go into this field now. It hasn't happened yet
+[ 619.54- 624.24] COVER     but he also says that every radiology platform today is driven by AI
+[ 624.24- 629.40] COVER     so right now the AI is a tool in the doctor's hands right now
+[ 629.40- 631.54] COVER     and if I was picking a career right now
+[ 631.54- 633.52] COVER   ~ I would not be choosing radiology
+   -- B13  the brain surgeon
+[ 633.52- 636.94] COVER   ~ And at the very top of the ladder the brain surgeon the average
+[ 636.94- 638.96] COVER     neurosurgeon in America makes about
+[ 638.96- 647.32] COVER     $830,000 a year the highest-paid specialty in medicine more than 3 million surgeries were done with a da Vinci robot in
+[ 647.32- 651.24] COVER     2025 but every one of them had a surgeon at their control. It's a tool
+[ 651.24- 653.54] COVER     so here's what the robot has done on his own. In
+[ 653.54- 657.80] COVER     2025 at Johns Hopkins a robot did the hardest part of a gallbladder removal
+[ 658.02- 659.86] COVER     17 steps in a row
+[ 659.86- 666.72] COVER     no human hand on pig tissue this time there may be no robot surgeon for sale right now
+[ 666.72- 673.10] COVER     but the day there is it costs a whole lot less than that surgeon and it never takes a day off
+[ 673.10- 676.08] COVER   ~ it never goes home and never sleeps
+[ 676.08- 677.66] FACE 11 ~ the day that machine exists
+[ 677.66- 683.08] FACE 11 ~ no hospital pays eight hundred and thirty thousand dollars a year pay for hands to get tired
+   -- B14  "unethical, maybe illegal"
+[ 683.08- 684.06] COVER   ~ And then it flips
+[ 684.06- 686.26] COVER     once the machine is safer
+[ 686.26- 689.68] COVER     letting a human hold a knife could start to look unethical
+[ 689.68- 695.50] COVER     maybe even illegal the same thing with driving if humans cause tens of thousands of accidents per year
+[ 695.50- 700.60] COVER     but a self-driving car doesn't cause any accidents at all. It's really a no-brainer
+[ 700.60- 704.04] COVER     there's no law like that now, but look at where safer leads
+
+## CH5 - WHAT IT DOES TO THE ECONOMY   [opens 704.04 = 11:44.04]
+   -- B1  two forces
+[ 704.04- 708.38] COVER     So what does all this do to the economy two things and they pull in opposite directions
+   -- B2  price collapse
+[ 708.60- 715.08] COVER     The first one is price collapse and it's already happened to the things the machine makes the cost of running AI
+[ 715.08- 720.46] COVER     at the same level of quality has dropped more than 280 times in about two years
+[ 720.46- 726.16] COVER     but your rent didn't since late 2023 consumer prices have gone up about 9%
+[ 726.16- 732.46] COVER     now picture a machine doing most of the work the optimists say the cost of living could fall by as much as 10 times
+[ 732.46- 733.32] COVER     I hope they're right
+[ 733.32- 734.94] COVER     but it's a hope that hasn't shown up yet
+   -- B3  demand collapse
+[ 734.94- 740.62] COVER   ~ The second one is a scary one about two-thirds of the entire US economy is regular people spending money
+[ 740.62- 742.24] FACE 12 ~ if nobody has a paycheck
+[ 742.24- 743.10] FACE 12 ~ who buys anything
+[ 743.10- 747.84] COVER   ~ a business doesn't make things for people with no money and that's one of the biggest risks of all it hasn't
+[ 747.84- 749.76] COVER   ~ happened yet. Well, this is where I think it's heading
+   -- B4  the survivor + extinct lists
+[ 749.76- 752.96] COVER   ~ So which industries make it. Here's how I see it the survivors
+[ 752.96- 761.28] COVER     raw materials and energy chips robotics because in a gold rush you sell the pickaxes water farming solar and nuclear
+[ 761.28- 762.54] COVER     and experiences
+[ 762.54- 769.02] COVER     restaurants travel vacations and the ones I'd expect to go extinct or change so much that you won't recognize them
+[ 769.02- 776.72] COVER     probably health care as we know it definitely universities insurance and thin margin finance and of course, Hollywood
+[ 776.72- 778.32] COVER   ~ now they don't even need actors,
+   -- B5  the industry survives; what stays scarce
+[ 778.32- 780.16] COVER   ~ But look at that survivor list again
+[ 780.16- 783.52] COVER     we're still gonna need steel and food and power
+[ 783.52- 785.92] COVER   ~ even if every bit of it is made by machines
+[ 785.92- 788.80] FACE 13 ~ the industry survives the job inside of it doesn't
+[ 788.80- 790.64] COVER   ~ so if labor gets cheap and
+[ 790.64- 796.18] COVER     services get cheap what holds its value the things you can't make more of land energy
+[ 796.18- 797.90] COVER     computing power and that's one fact
+[ 797.90- 805.60] COVER     I'm gonna drop right here the largest private owner of farmland in America is a software billionaire Bill Gates almost
+[ 805.60- 809.76] COVER   ~ 250,000 acres of it most of us can't buy land like that
+
+## CH6 - WHO HOLDS THE CARDS   [opens 809.76 = 13:29.76]
+   -- B1  the three-way deal
+[ 809.76- 813.38] COVER   ~ Now we get to the part that actually worries me a society runs on a
+[ 813.38- 814.30] COVER     three-way deal
+[ 814.30- 819.16] COVER     government business and working people and the reason working people get a seat at the table is
+[ 819.42- 821.34] COVER   ~ that the other two need our labor
+   -- B2  the seat is already shrinking
+[ 821.34- 824.90] COVER   ~ That seat is already shrinking in the second quarter of 2026
+[ 825.80- 830.76] COVER     the share of the economy's output that goes to the workers hit fifty two point eight percent
+[ 830.76- 834.74] COVER     that's the lowest ever recorded in data going back to the year
+[ 835.34- 840.08] COVER     1947 labor was your leverage take away the need for labor and
+[ 840.08- 842.90] COVER   ~ government and businesses are holding all the cards
+   -- B3  the check, and who controls it
+[ 842.90- 845.82] COVER   ~ And the fix everybody reaches for is a check
+[ 845.82- 852.96] COVER     Elon Musk the guy building robots posted himself universal high income via checks issued by federal government
+[ 852.96- 855.70] COVER     maybe that check comes I call it what it is
+[ 855.70- 862.74] COVER     it's an allowance and whoever sends the allowance sets the rules and this isn't just theory under a US law
+[ 862.74- 867.64] COVER     signed in July of 2025 every company that issues a stablecoin
+[ 867.64- 875.18] COVER     that's a private digital dollar has to be able to seize it freeze it or burn it when legally required
+[ 875.18- 879.56] COVER   ~ so some digital money can be frozen by design and some can't
+
+## CH7 - HOW TO PROTECT YOURSELF   [opens 879.56 = 14:39.56]
+   -- B1  the answer: ownership
+[ 879.56- 881.66] COVER   ~ So then how do you protect yourself?
+[ 881.90- 884.08] COVER     You stop depending on selling your time
+[ 884.08- 887.18] FACE 14 ~ you stop being a worker and you start being an owner
+[ 887.18- 890.52] COVER   ~ own what stays scarce and own what nobody controls
+[ 890.52- 897.08] COVER     Bill Gates can order a quarter of a million acres of farmland you and I maybe we can't but anybody with a phone can own
+[ 897.08- 899.64] COVER     A digital asset that's provably scarce
+[ 899.64- 904.90] COVER   ~ there will only ever be 21 million Bitcoin and almost 96% of them already exist
+   -- B2  machines need money
+[ 904.90- 906.52] COVER   ~ And here is why I think
+[ 906.52- 911.18] COVER     crypto doesn't just survive in an AI world it flourishes first
+[ 911.18- 919.08] COVER     machines need money an AI agent can't walk into a bank and open an account the CEO of Coinbase makes that case and his product
+[ 919.08- 925.56] COVER     is already live. There's an open standard called x402 where software pays software in [[stablecoins]].
+[ 925.56- 933.82] COVER     In one 30-day stretch about 75 million payments averaging 32 cents each and Visa and Mastercard have joined a foundation behind it
+[ 933.82- 939.12] COVER   ~ now I know that sounds tiny about 24 million dollars a month, but that's really what early looks like
+   -- B3  neutral layers nobody owns
+[ 939.12- 939.68] COVER   ~ Second
+[ 939.68- 942.84] COVER     those stablecoins are the ones that can be frozen
+[ 942.84- 947.54] COVER     so the money I care about is the money with no issuer and no gatekeeper
+[ 947.54- 954.22] COVER     Bitcoin is that and Kaspa is that proof of work fair launched in November of 2021 with no premine
+[ 954.22- 959.66] COVER     and no insider allocation every coin minted out in the open and on the AI side
+[ 959.66- 964.38] COVER     there's Bittensor, TAO an open AI network with a hard cap of 21 million
+[ 964.38- 971.02] COVER     the same as Bitcoin the more governments and corporations race to control compute money and AI
+[ 971.02- 974.66] COVER   ~ the more valuable the open source versions get that's my thesis
+   -- B4  the catch: they come to your house
+[ 974.66- 974.94] COVER   ~ Now
+[ 974.94- 977.58] COVER     there's a catch if nobody can freeze your money
+[ 977.58- 983.98] COVER     the only way to take it is to come to your house and that has been happening in the first six months of
+[ 983.98- 988.10] COVER     2026 a security firm counted 52 verified attacks on
+[ 988.80- 996.22] COVER     crypto holders kidnappings torture and home invasions went from 1 to 20 in a year. So remember that robot
+[ 996.22- 998.74] COVER     standing in your hallway at 3 a.m
+[ 998.74-1001.18] COVER   ~ that's a security guard that you might want to get
+   -- B5  deflation meets printing
+[1001.18-1004.90] COVER   ~ Third machines make things cheaper and that's deflation
+[1004.90-1010.42] COVER     Jeff Booth wrote a book on this and his line is the natural state of a free market is deflation
+[1010.42-1014.42] COVER     but the US money supply is already at an all-time high about
+[1015.10-1021.22] COVER     23.3 trillion dollars and I think when people lose their paychecks the government starts sending out those checks
+[1021.22-1029.44] COVER     just like Elon said and to pay for them. It prints money. So that number gets a lot higher cheaper goods more dollars
+[1029.44-1035.10] COVER     I believe the scarce assets soak up that difference over the long run. That's my conviction
+[1035.10-1040.16] COVER     it's not a promise and nothing here is financial advice and as I'm recording this Bitcoin
+[1040.16-1047.70] COVER     Kaspa and TAO are trading well below their all-time highs which implies a good time to get in do your own research
+   -- B6  why now
+[1047.70-1053.44] COVER     So why now because I think that we're in a 1992 of the AI build out. It's early
+[1053.44-1057.76] COVER   ~ 13,000 humanoid robots shipped in a year payment machines measured in cents
+[1057.76-1060.10] FACE 15 ~ and you can turn that paycheck into ownership
+[1060.10-1062.44] FACE 15 ~ while that paycheck still exists.
+
+## CH8 - THE CLOSE   [opens 1062.48 = 17:42.48]
+   -- B1  the nutshell
+[1062.48-1063.90] COVER   ~ So that's a whole picture
+[1063.90-1069.56] COVER     the brain went first then it got a body and the list of safe jobs keeps getting shorter
+   -- B2  the closing line (LOCKED)
+[1069.56-1071.74] FACE 16   The robots are coming for the paycheck
+[1071.74-1075.28] FACE 16 ~ so own something that nobody can print nobody can free
+[1075.28-1077.68] COVER   ~ and do it while you still have a paycheck to do it with
+   -- B3  close (AD-LIB community pitch, FACE)
+[1077.68-1078.00] FACE 17 ~ And with
+[1078.00-1080.66] FACE 17   that said I do have one of the most successful
+[1081.42-1087.40] FACE 17   crypto groups out there by many many metrics whether you're an advanced trader and you're looking for a
+[1087.40-1094.66] FACE 17   community with a lot of software to help you a lot of insider alerts and bots and so on stuff that normal communities
+[1094.66-1097.00] FACE 17   don't typically have right like I said
+[1097.00-1102.20] FACE 17   I'm a programmer or if you're a newbie and you want to get into the crypto space
+[1102.20-1107.28] FACE 17   my group would be good for you too. Noobs are welcome and we have a lot of courses and
+[1108.12-1114.08] FACE 17   you can ask the question to a group of like-minded people and myself will be happy to help
+[1114.08-1121.02] FACE 17   click the link in the description below ask for Crypto Rich VIP and hit the like and subscribe button. I'll catch you guys later
+
+-- end: 264 lines, last word ends 1121.02 (file 1120.84) --

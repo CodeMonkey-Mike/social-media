@@ -38,16 +38,174 @@ import { UptoberOctoberCoins, OC6_FPS, OC6_DURATION } from './UptoberOctoberCoin
 // UptoberNoJobSafeImpact / NJ7_ / captionsUptoberNoJobSafeImpact / broll-nj7 / thumb-nj7 / ovl-nj7.
 import { UptoberNoJobSafeImpact, NJ7_FPS, NJ7_DURATION } from './UptoberNoJobSafeImpact';
 
+// batch grapes / clip #3 golden-kitty-one-of-five-impact IMPACT (2026-10-05). Flat-namespace check: no existing
+// GrapesGoldenKittyOneOfFiveImpact / GK3_ / captionsGrapesGoldenKittyOneOfFiveImpact / broll-gk3 / thumb-gk3.
+import { GrapesGoldenKittyOneOfFiveImpact, GK3_FPS, GK3_DURATION } from './GrapesGoldenKittyOneOfFiveImpact';
+
 import { KaspaVprogs, DUR as KVP_DUR, FPS as KVP_FPS } from './KaspaVprogs';
 import { KaspaVprogsVertical, DUR as KVPV_DUR, FPS as KVPV_FPS } from './KaspaVprogsVertical';
 import { KaspaVprogsShort, DUR as KVPS_DUR, FPS as KVPS_FPS } from './KaspaVprogsShort';
 import { GoldenKitty, DUR as GK_DUR, FPS as GK_FPS } from './GoldenKitty';
 import { GoldenKittyVertical, DUR as GKV_DUR, FPS as GKV_FPS } from './GoldenKittyVertical';
 import { GoldenKittyShort, DUR as GKS_DUR, FPS as GKS_FPS } from './GoldenKittyShort';
+// batch bull-trap / clip #3 - spon-didnt-sell-holding-the-line FULL (2026-10-03). Flat-namespace check: no existing
+// BullTrapSponDidntSell / BT3_ / captionsBullTrapSponDidntSell / broll-bt3 / thumb-bt3 / ovl-bt3.
+import { BullTrapSponDidntSell, BT3_FPS, BT3_DURATION } from './BullTrapSponDidntSell';
+// batch bull-trap / clip #2 - golden-kitty-10-million-while-everything-bleeds FULL (2026-10-03). Flat-namespace check: no
+// existing BullTrapGoldenKitty10M / BT2_ / captionsBullTrapGoldenKitty10M / broll-bt2 / thumb-bt2 / ovl-bt2.
+import { BullTrapGoldenKitty10M, BT2_FPS, BT2_DURATION } from './BullTrapGoldenKitty10M';
+// batch bull-trap / clip #4 - october-bottom-talk-is-gone FULL (2026-10-03). Flat-namespace check: no existing
+// BullTrapOctoberBottomGone / BT4_ / captionsBullTrapOctoberBottomGone / broll-bt4 / thumb-bt4.
+import { BullTrapOctoberBottomGone, BT4_FPS, BT4_DURATION } from './BullTrapOctoberBottomGone';
+// longform-edited every-job (2026-10-07): Literally Every Job Is at Risk, 16:9 draft build (comp-builder).
+import { EveryJob, DUR as EJ_DUR, FPS as EJ_FPS } from './EveryJob';
+import { RetireEarly, DUR as RE_DUR, FPS as RE_FPS } from './RetireEarly';
+import { RetireEarlyShort, DUR as RES_DUR, FPS as RES_FPS } from './RetireEarlyShort';
+// batch aliens / clip #1 every-job-at-risk-own-assets FULL.
+import { AliensEveryJobOwnAssets, EJ1_FPS, EJ1_DURATION } from './AliensEveryJobOwnAssets';
+// batch aliens / clip #6 every-job-at-risk-own-assets-impact IMPACT. Flat-namespace check: no existing AliensEveryJobImpact / EJ6_ / broll-ej6 / thumb-ej6.
+import { AliensEveryJobImpact, EJ6_FPS, EJ6_DURATION } from './AliensEveryJobImpact';
+import { EveryJobShort, DUR as EJS_DUR, FPS as EJS_FPS } from './EveryJobShort';
+// batch aliens / clip #2 tao-no-better-ai-play FULL. Flat-namespace check: no existing AliensTaoNoBetterAiPlay / AL2_ / broll-al2 / thumb-al2.
+import { AliensTaoNoBetterAiPlay, AL2_FPS, AL2_DURATION } from './AliensTaoNoBetterAiPlay';
+// batch aliens / clip #3 meme-dominance-off-a-cliff FULL. Flat-namespace check: no existing AliensMemeDominanceCliff / AL3_ / broll-al3 / thumb-al3.
+import { AliensMemeDominanceCliff, AL3_FPS, AL3_DURATION } from './AliensMemeDominanceCliff';
+// batch aliens / clip #4 pippin-89x-held-a-year FULL. Flat-namespace check: no existing AliensPippin89xHeldAYear / AL4_ / broll-al4 / thumb-al4.
+import { AliensPippin89xHeldAYear, AL4_FPS, AL4_DURATION } from './AliensPippin89xHeldAYear';
+// batch aliens / clip #5 ledger-reseller-long-con FULL. Flat-namespace check: no existing AliensLedgerResellerLongCon / AL5_ / broll-al5 / thumb-al5.
+import { AliensLedgerResellerLongCon, AL5_FPS, AL5_DURATION } from './AliensLedgerResellerLongCon';
+// longform-presentation history-of-crypto (2026-10-13): spotlight middle window of the EDIT, 1920x1080 @30 (skills/spotlight).
+import { HistoryOfCryptoSpotlight, HOC_DUR, HOC_FPS } from './HistoryOfCryptoSpotlight';
+
+// batch downtober / clip #1 zombies-cant-see-the-bottom FULL. Flat-namespace check: no existing DowntoberZombiesBottom / DT1_ / broll-dt1 / thumb-dt1.
+import { DowntoberZombiesBottom, DT1_FPS, DT1_DURATION } from './DowntoberZombiesBottom';
+// batch downtober / clip #2 tao-3000-is-not-the-ceiling FULL. Flat-namespace check: no existing DowntoberTao3000NotCeiling / DT2_ / broll-dt2 / thumb-dt2 / ovl-dt2.
+import { DowntoberTao3000NotCeiling, DT2_FPS, DT2_DURATION } from './DowntoberTao3000NotCeiling';
+// batch downtober / clip #3 long-term-plays-58x-350x FULL. Flat-namespace check: no existing DowntoberLongTermPlays / DT3_ / broll-dt3 / thumb-dt3 / ovl-dt3.
+import { DowntoberLongTermPlays, DT3_FPS, DT3_DURATION } from './DowntoberLongTermPlays';
+// batch downtober / clip #4 get-in-make-money-get-out FULL. Flat-namespace check: no existing DowntoberGetInGetOut / DT4_ / broll-dt4 / thumb-dt4 / ovl-dt4.
+import { DowntoberGetInGetOut, DT4_FPS, DT4_DURATION } from './DowntoberGetInGetOut';
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* batch downtober / clip #4 - get-in-make-money-get-out FULL (video 27.36 s @25; comp 820 fr @30 = 27.333 s) */}
+      <Composition
+        id="DowntoberGetInGetOut"
+        component={DowntoberGetInGetOut}
+        durationInFrames={DT4_DURATION}
+        fps={DT4_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch downtober / clip #3 - long-term-plays-58x-350x FULL (video 17.80 s @25; comp 534 fr @30 = 17.800 s) */}
+      <Composition
+        id="DowntoberLongTermPlays"
+        component={DowntoberLongTermPlays}
+        durationInFrames={DT3_DURATION}
+        fps={DT3_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch downtober / clip #2 - tao-3000-is-not-the-ceiling FULL (video 19.28 s @25; comp 578 fr @30 = 19.267 s) */}
+      <Composition
+        id="DowntoberTao3000NotCeiling"
+        component={DowntoberTao3000NotCeiling}
+        durationInFrames={DT2_DURATION}
+        fps={DT2_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch downtober / clip #1 - zombies-cant-see-the-bottom FULL (675 fr @25 = 27.20 s; comp 816 fr @30) */}
+      <Composition
+        id="DowntoberZombiesBottom"
+        component={DowntoberZombiesBottom}
+        durationInFrames={DT1_DURATION}
+        fps={DT1_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch aliens / clip #5 - ledger-reseller-long-con FULL (739 fr @25 = 29.56 s; comp 886 fr @30) */}
+      <Composition
+        id="AliensLedgerResellerLongCon"
+        component={AliensLedgerResellerLongCon}
+        durationInFrames={AL5_DURATION}
+        fps={AL5_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch aliens / clip #4 - pippin-89x-held-a-year FULL (814 fr @25 = 32.56 s; comp 976 fr @30) */}
+      <Composition
+        id="AliensPippin89xHeldAYear"
+        component={AliensPippin89xHeldAYear}
+        durationInFrames={AL4_DURATION}
+        fps={AL4_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch aliens / clip #3 - meme-dominance-off-a-cliff FULL (644 fr @25 = 25.76 s; comp 772 fr @30) */}
+      <Composition
+        id="AliensMemeDominanceCliff"
+        component={AliensMemeDominanceCliff}
+        durationInFrames={AL3_DURATION}
+        fps={AL3_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch aliens / clip #2 - tao-no-better-ai-play FULL (355 fr @25 = 14.20 s; comp 426 fr @30) */}
+      <Composition
+        id="AliensTaoNoBetterAiPlay"
+        component={AliensTaoNoBetterAiPlay}
+        durationInFrames={AL2_DURATION}
+        fps={AL2_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch aliens / clip #6 - every-job-at-risk-own-assets-impact IMPACT (18.64 s; comp 559 fr @30) */}
+      <Composition
+        id="AliensEveryJobImpact"
+        component={AliensEveryJobImpact}
+        durationInFrames={EJ6_DURATION}
+        fps={EJ6_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch aliens / clip #1 - every-job-at-risk-own-assets FULL (805 fr @25 = 32.20 s; comp 966 fr @30) */}
+      <Composition
+        id="AliensEveryJobOwnAssets"
+        component={AliensEveryJobOwnAssets}
+        durationInFrames={EJ1_DURATION}
+        fps={EJ1_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch bull-trap / clip #2 - golden-kitty-10-million-while-everything-bleeds FULL (1214 fr @25 = 48.56 s; comp 1456 fr @30) */}
+      <Composition
+        id="BullTrapGoldenKitty10M"
+        component={BullTrapGoldenKitty10M}
+        durationInFrames={BT2_DURATION}
+        fps={BT2_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch bull-trap / clip #4 - october-bottom-talk-is-gone FULL (559 fr @25 = 22.36 s; comp 671 fr @30) */}
+      <Composition
+        id="BullTrapOctoberBottomGone"
+        component={BullTrapOctoberBottomGone}
+        durationInFrames={BT4_DURATION}
+        fps={BT4_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* batch bull-trap / clip #3 - spon-didnt-sell-holding-the-line FULL (930 fr @25 = 37.20 s; comp 1116 fr @30) */}
+      <Composition
+        id="BullTrapSponDidntSell"
+        component={BullTrapSponDidntSell}
+        durationInFrames={BT3_DURATION}
+        fps={BT3_FPS}
+        width={1080}
+        height={1920}
+      />
 
       <Composition
         id="TransitionDemo"
@@ -197,6 +355,25 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
       />
+      {/* batch grapes / clip #3 - golden-kitty-one-of-five-impact IMPACT (591 fr @25 = 23.64 s; comp 709 fr @30) */}
+      <Composition
+        id="GrapesGoldenKittyOneOfFiveImpact"
+        component={GrapesGoldenKittyOneOfFiveImpact}
+        durationInFrames={GK3_DURATION}
+        fps={GK3_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* longform-edited every-job: 1920x1080 @30, DUR = (SOURCE spine 1121.003 s + 5 x 1.5 s card pauses) x 30 */}
+      <Composition id="EveryJob" component={EveryJob} durationInFrames={EJ_DUR} fps={EJ_FPS} width={1920} height={1080} />
+      {/* longform-edited every-job SHORT (16:9-sourced mode): 1080x1920 @30, DUR = 26.767 s spans + 3.233 s outro = 900 */}
+      <Composition id="EveryJobShort" component={EveryJobShort} durationInFrames={EJS_DUR} fps={EJS_FPS} width={1080} height={1920} />
+      {/* longform-edited retire-early: 1920x1080 @30, time map = (SOURCE spine 648.309 s + the sidecar pauses: 4 cards x 1.5 s + CLIP-2 12.266667 s + CLIP-3 7.566667 s) x 30 = 20224; DUR = ceil(paused spine 674.254 s x 30) = 20228 (check_spine_fps) */}
+      <Composition id="RetireEarly" component={RetireEarly} durationInFrames={RE_DUR} fps={RE_FPS} width={1920} height={1080} defaultProps={{ noLib: false, captions: true }} />
+      {/* longform-edited retire-early SHORT (16:9-sourced mode): 1080x1920 @30, DUR = round((27.800 s spans + 3.000 s outro) x 30) = 924 */}
+      <Composition id="RetireEarlyShort" component={RetireEarlyShort} durationInFrames={RES_DUR} fps={RES_FPS} width={1080} height={1920} />
+      {/* longform-presentation history-of-crypto SPOTLIGHT: DUR = round((TAIL_FROM - HEAD_UNTIL) x 30) from HistoryOfCryptoSpotlightData.ts */}
+      <Composition id="HistoryOfCryptoSpotlight" component={HistoryOfCryptoSpotlight} durationInFrames={HOC_DUR} fps={HOC_FPS} width={1920} height={1080} />
     </>
   );
 };

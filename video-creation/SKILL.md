@@ -526,6 +526,9 @@ export const RemotionRoot = () => (
 ```
 
 ### Render commands
+> **Livestream shorts do NOT use the raw commands below.** They render ONCE at full quality through
+> `livestream-repurpose/skills/remotion-shorts-build/scripts/render_short.py full` (no draft, no test render) and are
+> fixed by `render_short.py splice` / `audio` (remotion-shorts-build/SKILL.md row 7; Mike, 2026-10-05).
 ```bash
 # Quick test — 3 seconds (90 frames), fast feedback loop
 npx remotion render src/index.ts MikeTysonKaspa out/test-3s.mp4 --frames=0-89 --codec=h264

@@ -19,7 +19,7 @@ OPPS_PATH        = os.path.join(REPLY_GUY_DIR, "data", "reply_opportunities.json
 # history, and the page needs exactly these two files. Keep it that way — a new
 # automation gets a folder entry, never a wildcard.
 GRAPH_FEED_DIRS = {
-    "linkedin": os.path.join(os.path.dirname(BASE_DIR), "linkedin-automation", "data"),
+    "linkedin": os.path.join(os.path.dirname(BASE_DIR), "linkedin-automation", "private", "data"),
     "livestream": os.path.join(os.path.dirname(BASE_DIR), "video-creation",
                                "livestream-repurpose", "graph", "data"),
     # longform-edited LangGraph (2026-09-17): one StateGraph per video, five stage cards.

@@ -29,8 +29,44 @@ const ALGOLIA = {
 };
 
 const PROFILE = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe-profile';
+// Soundstripe's login cookie (_soundstripe_session) became a SESSION cookie (no expiry) in 2026-10,
+// so Chrome drops it every time the automated browser closes and the next run is logged out.
+// `login` saves the cookies once (after Mike signs in); every browser run re-injects them.
+const SESSION = path.join(MUSIC_DIR, '_recon', 'session-cookies.json');
 
 // ── helpers ──────────────────────────────────────────────────────────────────
+async function injectSession(ctx) {
+  if (!fs.existsSync(SESSION)) { console.log('  (no saved session; run `node soundstripe.js login` if the run turns out logged out)'); return false; }
+  try { const ck = JSON.parse(fs.readFileSync(SESSION, 'utf8')); await ctx.addCookies(ck); return true; }
+  catch (e) { console.log('  session inject failed:', e.message); return false; }
+}
+async function saveSession(ctx) {
+  try { const ck = await ctx.cookies(); fs.mkdirSync(path.dirname(SESSION), { recursive: true }); fs.writeFileSync(SESSION, JSON.stringify(ck)); }
+  catch (e) { console.log('  session save failed:', e.message); }
+}
+// Is the page rendered for a signed-in member? (every download control carries this flag)
+async function signedIn(page) {
+  return page.evaluate(() => {
+    const el = document.querySelector('[data-download-handoff-signed-in-value]');
+    return el ? el.getAttribute('data-download-handoff-signed-in-value') === 'true' : null;
+  }).catch(() => null);
+}
+// The song page's download control for THIS objectID (markup changed 2026-10: the controls are
+// <a data-controller="download-handoff"> anchors; the old button[data-testid="song-license-btn"] is gone).
+function downloadControl(page, objectID) {
+  return page.locator([
+    `a[data-song-detail-row-action="download"][data-download-handoff-media-id-value="${objectID}"]`,
+    `a[data-song-detail-action="download"][data-download-handoff-media-id-value="${objectID}"]`,
+    'button[data-testid="song-license-btn"]',
+  ].join(', ')).first();
+}
+// A Download-Song modal row ("Full Track" / "Alternate Versions" / "Stems"): the heading text's nearest
+// ancestor that contains a WAV button. Markup-agnostic (the rows stopped being <li> in 2026-10).
+function modalRow(page, heading) {
+  return page.getByText(heading, { exact: true }).first()
+    .locator('xpath=ancestor::*[.//button[contains(normalize-space(.), "WAV")]][1]');
+}
+const NOT_SIGNED_IN = 'NOT SIGNED IN: the soundstripe-profile session is gone. Run `node soundstripe.js login`, sign in, then retry.';
 function mmss(sec) { sec = Math.round(sec || 0); return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); }
 function arg(flag, def) { const i = process.argv.indexOf(flag); return i > -1 ? process.argv[i + 1] : def; }
 function has(flag) { return process.argv.includes(flag); }
@@ -142,6 +178,7 @@ async function cmdDownload() {
     ignoreDefaultArgs: ['--enable-automation'], args: ['--disable-blink-features=AutomationControlled'], viewport: null,
   });
   await browser.addInitScript(() => Object.defineProperty(navigator, 'webdriver', { get: () => undefined }));
+  await injectSession(browser);
   const page = browser.pages()[0] || await browser.newPage();
 
   const SHOT = path.join(MUSIC_DIR, '_recon', 'shots'); fs.mkdirSync(SHOT, { recursive: true });
@@ -180,8 +217,9 @@ async function cmdDownload() {
     await page.goto(`https://www.soundstripe.com/library/songs/${objectID}`, { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(7000);
     await page.screenshot({ path: path.join(SHOT, 'd1-results.png') }).catch(() => {});
+    if (await signedIn(page) === false) throw new Error(NOT_SIGNED_IN);
 
-    const btn = page.locator('button[data-testid="song-license-btn"]').first();
+    const btn = downloadControl(page, objectID);
     await btn.waitFor({ timeout: 15000 });
 
     // robust mouse click on the button center (matches the repo's posting scripts)
@@ -202,6 +240,19 @@ async function cmdDownload() {
     await page.waitForTimeout(6000); // allow download + license calls to settle
     await page.screenshot({ path: path.join(SHOT, 'd3-final.png') }).catch(() => {});
 
+    // Fallback (2026-10-14): some downloads fire NO api.soundstripe.com request at all (served from
+    // cache), so no auth token is sniffed and the code cannot be minted below. The modal's own
+    // "Generate YouTube Code" control POSTs /app/content_id_licenses for this song; the response
+    // listener above captures the code (and the request sniffer captures the token).
+    if (!licenseCode && !authToken) {
+      const gen = page.getByText('Generate YouTube Code', { exact: true }).first();
+      if (await gen.count() && await gen.isVisible().catch(() => false)) {
+        console.log('  no API traffic seen; clicking "Generate YouTube Code" in the modal');
+        await gen.click().catch((e) => console.log('  generate-code click err:', e.message));
+        await page.waitForTimeout(5000);
+      }
+    }
+
     // Fetch the YouTube/Content-ID license code directly (the download modal never
     // fires it). POST /app/content_id_licenses {"song_id":"<objectID>"} with the
     // captured x-soundstripe-auth-token -> {"code":"<16 chars>"}. (Mapped 2026-06-04
@@ -218,6 +269,7 @@ async function cmdDownload() {
       } catch (e) { console.log('  license fetch failed:', e.message); }
     }
     console.log('  auth token captured?', !!authToken, '| download/license POSTs seen:', posts.length);
+    await saveSession(browser);
   } catch (e) {
     console.error('  download error:', e.message);
   }
@@ -260,6 +312,7 @@ async function cmdDownloadAlt() {
     ignoreDefaultArgs: ['--enable-automation'], args: ['--disable-blink-features=AutomationControlled'], viewport: null,
   });
   await browser.addInitScript(() => Object.defineProperty(navigator, 'webdriver', { get: () => undefined }));
+  await injectSession(browser);
   const page = browser.pages()[0] || await browser.newPage();
   const SHOT = path.join(MUSIC_DIR, '_recon', 'shots'); fs.mkdirSync(SHOT, { recursive: true });
   const saved = [];
@@ -282,7 +335,8 @@ async function cmdDownloadAlt() {
     await page.waitForTimeout(7000);
 
     // open the Download-Song modal (same control the full-track download uses)
-    const lic = page.locator('button[data-testid="song-license-btn"]').first();
+    if (await signedIn(page) === false) throw new Error(NOT_SIGNED_IN);
+    const lic = downloadControl(page, objectID);
     await lic.waitFor({ timeout: 15000 });
     const bb = await lic.boundingBox();
     if (bb) await page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2); else await lic.click();
@@ -292,7 +346,8 @@ async function cmdDownloadAlt() {
     // Alternate Versions zip: the "Alternate Versions" header <li> has its own
     // WAV button that bundles every section cut into <Title>_alternate_tracks_wav.zip
     if (wantAlt) {
-      const altRow = page.locator('li', { hasText: 'Alternate Versions' }).first();
+      // 2026-10 modal: the rows are no longer <li>; find the heading text, then the nearest ancestor that holds a WAV button (= the row)
+      const altRow = modalRow(page, 'Alternate Versions');
       if (await altRow.count()) {
         const wav = altRow.locator('button:has-text("WAV")').first();
         if (await wav.count()) {
@@ -305,13 +360,14 @@ async function cmdDownloadAlt() {
 
     // Stems zip (optional): the "Stems" <li> has a WAV button -> <Title>_stems_wav.zip
     if (wantStems) {
-      const stemRow = page.locator('li', { hasText: 'Stems' }).first();
+      const stemRow = modalRow(page, 'Stems');
       if (await stemRow.count()) {
         const swav = stemRow.locator('button:has-text("WAV")').first();
         if (await swav.count()) { await swav.scrollIntoViewIfNeeded().catch(() => {}); await swav.click().catch((e) => console.log('  stems WAV click err:', e.message)); await page.waitForTimeout(8000); }
       } else console.log('  NO "Stems" section for this track.');
     }
     await page.screenshot({ path: path.join(SHOT, 'alt2-final.png') }).catch(() => {});
+    await saveSession(browser);
   } catch (e) {
     console.error('  download-alt error:', e.message);
   }
@@ -321,6 +377,41 @@ async function cmdDownloadAlt() {
 
   if (saved.length) console.log(`\nDONE. ${saved.length} file(s):\n  ` + saved.map((s) => path.basename(s)).join('\n  '));
   else { console.error('\nNo file downloaded (no alternate versions, or the click flow needs adjustment — see _recon/shots/alt*.png).'); process.exit(2); }
+}
+
+// login — open the soundstripe-profile Chrome on the sign-in page, wait (up to --wait minutes,
+// default 10) for Mike to sign in, then persist the cookies to _recon/session-cookies.json so
+// every later download/download-alt run can re-inject them (the login cookie is session-only).
+async function cmdLogin() {
+  const waitMin = parseFloat(arg('--wait', '10'));
+  const { chromium } = require(path.join('C:\\Users\\mnede\\Documents\\Claude\\social-media', 'schedule-tweets', 'node_modules', 'playwright'));
+  const browser = await chromium.launchPersistentContext(PROFILE, {
+    channel: 'chrome', headless: false, ignoreDefaultArgs: ['--enable-automation'], args: ['--disable-blink-features=AutomationControlled'], viewport: null,
+  });
+  await injectSession(browser);
+  const page = browser.pages()[0] || await browser.newPage();
+  await page.goto('https://www.soundstripe.com/library/songs/15847', { waitUntil: 'domcontentloaded' });
+  await page.waitForTimeout(5000);
+  if (await signedIn(page) === true) { await saveSession(browser); console.log('Already signed in; session saved to', SESSION); await browser.close(); return; }
+  await page.goto('https://app.soundstripe.com/login', { waitUntil: 'domcontentloaded' });
+  console.log(`Sign in to Soundstripe in the Chrome window that just opened. Waiting up to ${waitMin} min...`);
+  const deadline = Date.now() + waitMin * 60000;
+  let ok = false;
+  while (Date.now() < deadline) {
+    await page.waitForTimeout(5000);
+    const probe = await browser.newPage();
+    try {
+      await probe.goto('https://www.soundstripe.com/library/songs/15847', { waitUntil: 'domcontentloaded' });
+      await probe.waitForTimeout(3000);
+      if (await signedIn(probe) === true) ok = true;
+    } catch {}
+    await probe.close().catch(() => {});
+    if (ok) break;
+  }
+  if (ok) { await saveSession(browser); console.log('Signed in. Session saved to', SESSION); }
+  else console.error('Timed out waiting for sign-in; nothing saved.');
+  await browser.close();
+  if (!ok) process.exit(2);
 }
 
 function upsertLibrary(entry) {
@@ -337,6 +428,7 @@ function upsertLibrary(entry) {
   if (cmd === 'search') return cmdSearch();
   if (cmd === 'download') return cmdDownload();
   if (cmd === 'download-alt') return cmdDownloadAlt();
-  console.error('Usage:\n  node soundstripe.js search "<query>" [--limit N] [--all-partners]\n  node soundstripe.js download <objectID> [--query "text"] [--dest dir]\n  node soundstripe.js download-alt <objectID> [--query "text"] [--dest dir] [--stems]');
+  if (cmd === 'login') return cmdLogin();
+  console.error('Usage:\n  node soundstripe.js login [--wait 10]\n  node soundstripe.js search "<query>" [--limit N] [--all-partners]\n  node soundstripe.js download <objectID> [--query "text"] [--dest dir]\n  node soundstripe.js download-alt <objectID> [--query "text"] [--dest dir] [--stems]');
   process.exit(1);
 })();

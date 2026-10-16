@@ -1,0 +1,8 @@
+{
+ "why": "the coarse desilence collapsed the 7.2 s pause after the locked closing line's 'freeze' to zero (pad 0), so the word ran into 'and do it while' and sounded clipped (Mike, 2026-10-07)",
+ "fix": "coarse keep extended by 5 frames of the recorded tail (b 2461.520 -> 2461.687); c re-rendered from b with the canonical desilencer renderer; d re-rendered from the APPROVED final-pass cut list (36 cuts) shifted +0.1667 s after c 1095.44 (a fresh detection flipped one borderline pause and was discarded to _previews/spine-bak/ALL.redetected-35cuts.*); word JSON shifted +0.1667 s after d 1075.28",
+ "d_duration_before": 1120.836,
+ "d_duration_after": 1121.002993,
+ "delta_s": 0.166667,
+ "backups": "_previews/spine-bak/"
+}

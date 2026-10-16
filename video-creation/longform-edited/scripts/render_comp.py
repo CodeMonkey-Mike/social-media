@@ -65,6 +65,7 @@ def main():
     ap.add_argument("--comp", default=None, help="composition id override (default <Project>; the vertical lane passes <Project>Vertical)")
     ap.add_argument("--public-dir", default=None, help="public dir override (default <project>/assets; the vertical lane passes assets/vertical)")
     ap.add_argument("--video-only", action="store_true", help="the comp carries no audio and its own duration (the short lane); skip the spine/audio checks")
+    ap.add_argument("--props", default=None, help="path to a JSON file passed to Remotion as --props (input props, e.g. {\"captions\": false})")
     a = ap.parse_args()
     proj = Path(a.project_dir).resolve()
     comp_id = a.comp or pascal(proj.name)
@@ -96,6 +97,8 @@ def main():
            f"--concurrency={a.concurrency}", "--offthreadvideo-cache-size-in-bytes=419430400", "--timeout=120000", "--log=verbose"]
     if a.frames:
         cmd.append(f"--frames={a.frames}")
+    if a.props:
+        cmd.append(f"--props={Path(a.props).resolve()}")
     print(f"RENDER-START mode={a.mode} comp={comp_id} out={out}")
     with open(log, "w", encoding="utf-8", errors="replace") as lf:
         p = subprocess.Popen(cmd, cwd=str(REMOTION), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
@@ -114,6 +117,24 @@ def main():
     if p.returncode != 0 or not out.is_file():
         print(f"FATAL: render exit {p.returncode}; log: {log}", file=sys.stderr)
         sys.exit(1)
+    # Remotion's AAC encode can leave a trailing audio pad (every-job final v1: audio 1138.859 s vs picture 1138.567 s,
+    # 0.3 s over the spine, 2026-10-08). Trim the AUDIO tail to the picture length, video stream copied (sync-safe), so the
+    # container length is the picture's and the spine check below measures the render, not the pad.
+    try:
+        v_dur = float((probe(out, "stream=duration", "v:0").splitlines() or ["0"])[0].strip().strip(",").split(",")[0] or 0)
+        a_dur = float((probe(out, "stream=duration", "a:0").splitlines() or ["0"])[0].strip().strip(",").split(",")[0] or 0)
+    except ValueError:
+        v_dur = a_dur = 0.0
+    if v_dur and a_dur and a_dur - v_dur > 0.05:
+        trimmed = out.with_name(out.stem + ".audiotrim.tmp.mp4")
+        r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(out), "-map", "0:v", "-map", "0:a", "-c:v", "copy",
+                            "-c:a", "aac", "-b:a", "192k", "-af", f"atrim=0:{v_dur:.6f},asetpts=PTS-STARTPTS", "-movflags", "+faststart", str(trimmed)],
+                           capture_output=True, text=True)
+        if r.returncode == 0 and trimmed.is_file():
+            out.unlink(); trimmed.rename(out)
+            print(f"AUDIO-TRIM audio {a_dur:.3f}s -> picture {v_dur:.3f}s (trailing encoder pad removed, video copied)")
+        else:
+            print(f"WARN: audio tail trim failed, keeping the render as rendered: {r.stderr[-300:]}", file=sys.stderr)
     d_out, d_spine = duration(out), (duration(assets / "spine.mp4") if (assets / "spine.mp4").is_file() else 0.0)
     fps_raw = probe(out, "stream=r_frame_rate", "v:0").splitlines()[0].strip().strip(",").split(",")[0]  # ffprobe csv can trail a comma
     num, den = fps_raw.split("/")

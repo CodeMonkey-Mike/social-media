@@ -89,17 +89,27 @@ def dismiss_shortcuts_nag(page):
     dialog on top of the composer, which becomes the last [role="dialog"] in DOM
     order and blocks snapshot()/click_by_label_in_dialog() from seeing the real
     composer buttons. Dismiss it (keep existing behavior) so the wizard loop can
-    see the composer dialog again."""
-    try:
-        btn = page.get_by_role("button", name=re.compile(r"^Keep Turned On$", re.I)).first
-        if btn.is_visible(timeout=500):
+    see the composer dialog again.
+
+    FB can STACK several copies (2026-10-09: three, after typing a 1218-char
+    caption). Dismissing one per call left the last copy on top, the wizard saw
+    no Next/Post and gave up with nothing published. So keep dismissing, topmost
+    copy first, until none is visible."""
+    dismissed = False
+    for _ in range(6):
+        try:
+            btns = page.get_by_role("button", name=re.compile(r"^Keep Turned On$", re.I))
+            btn = next((btns.nth(i) for i in range(btns.count() - 1, -1, -1)
+                        if btns.nth(i).is_visible()), None)
+            if btn is None:
+                break
             print("  Dismissing 'keep shortcuts on?' nag (Keep Turned On)")
             btn.click(timeout=5000)
             page.wait_for_timeout(rnd(1200, 2200))
-            return True
-    except Exception:
-        pass
-    return False
+            dismissed = True
+        except Exception:
+            break
+    return dismissed
 
 
 def mouse_click(page, locator):

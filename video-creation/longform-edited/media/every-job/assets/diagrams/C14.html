@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>every-job C14</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ===== LOCKED CANONICAL STYLESHEET (verbatim copy of skills/container-reference/container-canonical.css) ===== */
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+
+/* ===================== every-job CHART LAYER (chart-builder, 2026-10-07) =====================
+   Sits on top of the locked canonical stylesheet above (tokens untouched). Adds: absolute-positioned
+   chart geometry, the per-video role tokens (tier badges, Halloween palette for CH2 + CH3), and the
+   shared components every chart uses. */
+:root{
+  /* tier roles (SCREENPLAY VISUAL-PLAN Palette): DEPLOYED white, CLAIMED muted gray, FORECAST amber (= house gold) */
+  --tier-deployed:#e8eaf0; --tier-claimed:#8892a4; --tier-forecast:#ffd700;
+  /* HALLOWEEN look, CH2 + CH3 only (black, blood red, pumpkin orange, bone white, on grunge) */
+  --hw-bg:#090707; --hw-card:#150f0d; --hw-card-2:#1c1411; --hw-border:#3a2620;
+  --blood:#e3232f; --blood-deep:#8e0f17; --pumpkin:#ff7518; --bone:#efe6d2; --bone-2:#b9ac94; --ash:#6f6358;
+  --sepia:#c99c5c;
+  /* brand marks (ticker tiles only) */
+  --btc:#f7931a;
+}
+html,body{background:#04060d}
+.frame{display:block;padding:0;margin:0 0 40px 0}
+/* the canonical `.frame>*:not(.orb){position:relative;z-index:1}` would flatten chart geometry: re-assert absolute
+   positioning at the same specificity (declared later, so it wins) */
+.frame>.abs,.frame>.hdr,.frame>.src,.frame>.take,.frame>.badge,.frame>.stamp,.frame>.stag,.frame>.cardx{position:absolute}
+.frame>.grunge{position:absolute;z-index:0}
+.frame>.badge,.frame>.stamp{z-index:5}
+.frame>.stag{z-index:60}
+.frame::after{z-index:50}
+
+/* header block */
+.hdr{position:absolute;left:140px;top:64px;z-index:2}
+.hdr .ey{margin-bottom:18px}
+.hdr h1{font-size:68px;line-height:1.06;max-width:1500px}
+.hdr h1.xl{font-size:84px}
+.hdr .divider{margin:26px 0 0 0}
+
+/* source line + takeaway */
+.src{position:absolute;left:140px;bottom:38px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:19px;
+  color:var(--text-muted);letter-spacing:.01em;z-index:2}
+.take{position:absolute;left:140px;right:140px;bottom:92px;padding:24px 36px;border-radius:14px;z-index:2;
+  background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.05));border:1px solid rgba(0,230,138,.24);
+  font-family:'DM Sans';font-weight:700;font-size:38px;line-height:1.3;color:var(--text-primary)}
+.take.red{background:linear-gradient(135deg,rgba(255,64,96,.10),rgba(255,64,96,.03));border-color:rgba(255,64,96,.30)}
+.take.gold{background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,215,0,.02));border-color:rgba(255,215,0,.30)}
+
+/* tier badge (the C3 corner badge, used identically on every chart and as the comp's overlay) */
+.badge{position:absolute;top:58px;right:80px;height:58px;display:flex;align-items:center;gap:14px;padding:0 26px 0 22px;
+  border-radius:29px;border:2.5px solid currentColor;background:rgba(6,7,10,.80);z-index:5;white-space:nowrap;
+  font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.16em;text-transform:uppercase}
+.badge .ic{width:18px;height:18px;border-radius:50%;flex:none;box-sizing:border-box}
+.badge .q{font-weight:500;letter-spacing:.10em;opacity:.78}
+.badge.dep{color:var(--tier-deployed)} .badge.dep .ic{background:currentColor}
+.badge.cla{color:var(--tier-claimed)} .badge.cla .ic{border:2.5px solid currentColor;background:linear-gradient(90deg,currentColor 50%,transparent 50%)}
+.badge.for{color:var(--tier-forecast);border-style:dashed} .badge.for .ic{border:2.5px dashed currentColor}
+.badge.inline{position:relative;top:auto;right:auto}
+
+/* design-state tag (start / mid frames of ANIMATED charts only; never on a payoff, never rendered by the comp) */
+.stag{position:absolute;right:24px;top:14px;z-index:60;font-family:'JetBrains Mono';font-size:15px;color:#6b7488;
+  border:1px dashed #3a4256;border-radius:8px;padding:5px 10px;background:rgba(4,6,13,.85);letter-spacing:.04em}
+
+/* mono numbers everywhere */
+.num{font-family:'JetBrains Mono',monospace;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.lbl{font-family:'DM Sans';font-weight:600;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted)}
+.dim{opacity:.32}
+
+/* generic card */
+.cardx{position:absolute;background:var(--bg-card);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.cardx .top-accent{position:absolute;top:0;left:0;right:0;height:3px}
+
+/* stamp */
+.stamp{position:absolute;z-index:6;padding:14px 26px;border:5px solid currentColor;border-radius:12px;
+  font-family:'DM Sans';font-weight:700;font-size:34px;letter-spacing:.08em;text-transform:uppercase;line-height:1.1;
+  background:rgba(10,12,16,.55);transform:rotate(-6deg);white-space:nowrap}
+.stamp.red{color:var(--accent-red)} .stamp.gold{color:var(--tier-forecast);border-style:dashed}
+.stamp.gray{color:var(--tier-claimed)} .stamp.bone{color:var(--text-primary)}
+
+/* ---------- HALLOWEEN variant (.frame.hw) ---------- */
+.frame.hw{background-color:var(--hw-bg);color:var(--bone)}
+.frame.hw .ey{color:var(--ash)}
+.frame.hw h1{color:var(--bone)}
+.frame.hw p,.frame.hw .body{color:var(--bone-2)}
+.frame.hw b{color:var(--bone)}
+.frame.hw .divider{background:linear-gradient(90deg,var(--blood),var(--pumpkin))}
+.frame.hw .src{color:var(--ash)}
+.frame.hw .lbl{color:var(--ash)}
+.frame.hw::after{opacity:.075}
+.frame.hw .cardx{background:var(--hw-card);border-color:var(--hw-border)}
+.frame.hw .take{background:linear-gradient(135deg,rgba(227,35,47,.12),rgba(255,117,24,.05));border-color:rgba(227,35,47,.34);color:var(--bone)}
+.bl{color:var(--blood)} .pk{color:var(--pumpkin)} .bn{color:var(--bone)}
+.grunge{position:absolute;inset:0;z-index:0;pointer-events:none}
+
+
+</style></head>
+<body>
+<div class="frame" id="s1"><div class="orb" style="width:540px;height:540px;left:1500px;top:-240px;background:#a855f7;opacity:0.14"></div><div class="orb" style="width:420px;height:420px;left:-180px;top:760px;background:#00e68a;opacity:0.1"></div><div class="hdr" style="top:64px"><div class="ey">WHO HOLDS THE CARDS</div><h1 style="font-size:72px;max-width:1500px">A three-way deal</h1><div class="divider"></div></div><svg class="abs" style="position:absolute;left:0;top:0;z-index:1;" width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gl--s1" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter></defs><circle cx="960" cy="650" r="330" fill="rgba(255,255,255,.015)" stroke="#2a3242" stroke-width="3" stroke-dasharray="4 10"/></svg><div class="abs lbl" style="left:810px;width:300px;text-align:center;top:664px;font-size:20px;color:#3a4256">THE TABLE</div></div>
+<div class="frame" id="s2"><div class="orb" style="width:540px;height:540px;left:1500px;top:-240px;background:#a855f7;opacity:0.14"></div><div class="orb" style="width:420px;height:420px;left:-180px;top:760px;background:#00e68a;opacity:0.1"></div><div class="hdr" style="top:64px"><div class="ey">WHO HOLDS THE CARDS</div><h1 style="font-size:72px;max-width:1500px">A three-way deal</h1><div class="divider"></div></div><svg class="abs" style="position:absolute;left:0;top:0;z-index:1;" width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gl--s2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter></defs><circle cx="960" cy="650" r="330" fill="rgba(255,255,255,.015)" stroke="#2a3242" stroke-width="3" stroke-dasharray="4 10"/><circle cx="960" cy="320" r="146" fill="#a855f7" opacity="0.10" filter="url(#gl--s2)"/><circle cx="960" cy="320" r="140" fill="#12151c" stroke="#a855f7" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(960 292.0) scale(1.0) translate(-960 -292.0)"><g transform="translate(930 262.0)"><path d="M4 22 L30 6 L56 22 Z" fill="#a855f7"/><rect x="8" y="24" width="44" height="4" fill="#a855f7"/><rect x="11" y="30" width="6" height="18" fill="#a855f7"/><rect x="22" y="30" width="6" height="18" fill="#a855f7"/><rect x="33" y="30" width="6" height="18" fill="#a855f7"/><rect x="44" y="30" width="6" height="18" fill="#a855f7"/><rect x="4" y="50" width="52" height="6" fill="#a855f7"/></g></g></svg><div class="abs lbl" style="left:810px;width:300px;text-align:center;top:664px;font-size:20px;color:#3a4256">THE TABLE</div><div class="abs" style="left:820px;width:280px;top:340px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.05;letter-spacing:.08em;color:#a855f7;opacity:1">GOVERNMENT</div></div>
+<div class="frame" id="s3"><div class="orb" style="width:540px;height:540px;left:1500px;top:-240px;background:#a855f7;opacity:0.14"></div><div class="orb" style="width:420px;height:420px;left:-180px;top:760px;background:#00e68a;opacity:0.1"></div><div class="hdr" style="top:64px"><div class="ey">WHO HOLDS THE CARDS</div><h1 style="font-size:72px;max-width:1500px">A three-way deal</h1><div class="divider"></div></div><svg class="abs" style="position:absolute;left:0;top:0;z-index:1;" width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gl--s3" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter></defs><circle cx="960" cy="650" r="330" fill="rgba(255,255,255,.015)" stroke="#2a3242" stroke-width="3" stroke-dasharray="4 10"/><circle cx="960" cy="320" r="146" fill="#a855f7" opacity="0.10" filter="url(#gl--s3)"/><circle cx="960" cy="320" r="140" fill="#12151c" stroke="#a855f7" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(960 292.0) scale(1.0) translate(-960 -292.0)"><g transform="translate(930 262.0)"><path d="M4 22 L30 6 L56 22 Z" fill="#a855f7"/><rect x="8" y="24" width="44" height="4" fill="#a855f7"/><rect x="11" y="30" width="6" height="18" fill="#a855f7"/><rect x="22" y="30" width="6" height="18" fill="#a855f7"/><rect x="33" y="30" width="6" height="18" fill="#a855f7"/><rect x="44" y="30" width="6" height="18" fill="#a855f7"/><rect x="4" y="50" width="52" height="6" fill="#a855f7"/></g></g><circle cx="674.2" cy="815" r="146" fill="#00c2ff" opacity="0.10" filter="url(#gl--s3)"/><circle cx="674.2" cy="815" r="140" fill="#12151c" stroke="#00c2ff" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(674.2 787.0) scale(1.0) translate(-674.2 -787.0)"><g transform="translate(644.2 757.0)"><rect x="6" y="18" width="48" height="36" rx="6" fill="#00c2ff"/><path d="M22 18 V10 H38 V18" fill="none" stroke="#00c2ff" stroke-width="5"/><rect x="6" y="32" width="48" height="4" fill="#12151c"/></g></g></svg><div class="abs lbl" style="left:810px;width:300px;text-align:center;top:664px;font-size:20px;color:#3a4256">THE TABLE</div><div class="abs" style="left:820px;width:280px;top:340px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.05;letter-spacing:.08em;color:#a855f7;opacity:1">GOVERNMENT</div><div class="abs" style="left:534.2px;width:280px;top:835px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.05;letter-spacing:.08em;color:#00c2ff;opacity:1">BUSINESS</div></div>
+<div class="frame" id="s4"><div class="orb" style="width:540px;height:540px;left:1500px;top:-240px;background:#a855f7;opacity:0.14"></div><div class="orb" style="width:420px;height:420px;left:-180px;top:760px;background:#00e68a;opacity:0.1"></div><div class="hdr" style="top:64px"><div class="ey">WHO HOLDS THE CARDS</div><h1 style="font-size:72px;max-width:1500px">A three-way deal</h1><div class="divider"></div></div><svg class="abs" style="position:absolute;left:0;top:0;z-index:1;" width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gl--s4" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter></defs><circle cx="960" cy="650" r="330" fill="rgba(255,255,255,.015)" stroke="#2a3242" stroke-width="3" stroke-dasharray="4 10"/><line x1="960" y1="320" x2="674.2" y2="815" stroke="#3a4256" stroke-width="5"/><line x1="1245.8" y1="815" x2="960" y2="320" stroke="#3a4256" stroke-width="5"/><line x1="1245.8" y1="815" x2="674.2" y2="815" stroke="#3a4256" stroke-width="5"/><circle cx="960" cy="320" r="146" fill="#a855f7" opacity="0.10" filter="url(#gl--s4)"/><circle cx="960" cy="320" r="140" fill="#12151c" stroke="#a855f7" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(960 292.0) scale(1.0) translate(-960 -292.0)"><g transform="translate(930 262.0)"><path d="M4 22 L30 6 L56 22 Z" fill="#a855f7"/><rect x="8" y="24" width="44" height="4" fill="#a855f7"/><rect x="11" y="30" width="6" height="18" fill="#a855f7"/><rect x="22" y="30" width="6" height="18" fill="#a855f7"/><rect x="33" y="30" width="6" height="18" fill="#a855f7"/><rect x="44" y="30" width="6" height="18" fill="#a855f7"/><rect x="4" y="50" width="52" height="6" fill="#a855f7"/></g></g><circle cx="674.2" cy="815" r="146" fill="#00c2ff" opacity="0.10" filter="url(#gl--s4)"/><circle cx="674.2" cy="815" r="140" fill="#12151c" stroke="#00c2ff" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(674.2 787.0) scale(1.0) translate(-674.2 -787.0)"><g transform="translate(644.2 757.0)"><rect x="6" y="18" width="48" height="36" rx="6" fill="#00c2ff"/><path d="M22 18 V10 H38 V18" fill="none" stroke="#00c2ff" stroke-width="5"/><rect x="6" y="32" width="48" height="4" fill="#12151c"/></g></g><circle cx="1245.8" cy="815" r="146" fill="#00e68a" opacity="0.10" filter="url(#gl--s4)"/><circle cx="1245.8" cy="815" r="140" fill="#12151c" stroke="#00e68a" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(1245.8 787.0) scale(1.0) translate(-1245.8 -787.0)"><g transform="translate(1211.8 757.0)"><circle cx="22" cy="14" r="10" fill="#00e68a"/><path d="M4 56 Q4 30 22 28 Q40 30 40 56 Z" fill="#00e68a"/><circle cx="48" cy="18" r="9" fill="#00e68a" opacity=".75"/><path d="M34 56 Q34 34 48 32 Q64 34 64 56 Z" fill="#00e68a" opacity=".75"/></g></g></svg><div class="abs lbl" style="left:810px;width:300px;text-align:center;top:664px;font-size:20px;color:#3a4256">THE TABLE</div><div class="abs" style="left:820px;width:280px;top:340px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.05;letter-spacing:.08em;color:#a855f7;opacity:1">GOVERNMENT</div><div class="abs" style="left:534.2px;width:280px;top:835px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.05;letter-spacing:.08em;color:#00c2ff;opacity:1">BUSINESS</div><div class="abs" style="left:1105.8px;width:280px;top:835px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:29px;line-height:1.05;letter-spacing:.08em;color:#00e68a;opacity:1">WORKING<br>PEOPLE</div></div>
+<div class="frame" id="s5"><div class="orb" style="width:540px;height:540px;left:1500px;top:-240px;background:#a855f7;opacity:0.14"></div><div class="orb" style="width:420px;height:420px;left:-180px;top:760px;background:#00e68a;opacity:0.1"></div><div class="hdr" style="top:64px"><div class="ey">WHO HOLDS THE CARDS</div><h1 style="font-size:72px;max-width:1500px">A three-way deal</h1><div class="divider"></div></div><svg class="abs" style="position:absolute;left:0;top:0;z-index:1;" width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gl--s5" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter></defs><circle cx="960" cy="650" r="330" fill="rgba(255,255,255,.015)" stroke="#2a3242" stroke-width="3" stroke-dasharray="4 10"/><line x1="960" y1="320" x2="674.2" y2="815" stroke="#3a4256" stroke-width="5"/><line x1="1245.8" y1="815" x2="960" y2="320" stroke="#00e68a" stroke-width="6"/><line x1="1245.8" y1="815" x2="674.2" y2="815" stroke="#00e68a" stroke-width="6"/><circle cx="960" cy="320" r="146" fill="#a855f7" opacity="0.10" filter="url(#gl--s5)"/><circle cx="960" cy="320" r="140" fill="#12151c" stroke="#a855f7" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(960 292.0) scale(1.0) translate(-960 -292.0)"><g transform="translate(930 262.0)"><path d="M4 22 L30 6 L56 22 Z" fill="#a855f7"/><rect x="8" y="24" width="44" height="4" fill="#a855f7"/><rect x="11" y="30" width="6" height="18" fill="#a855f7"/><rect x="22" y="30" width="6" height="18" fill="#a855f7"/><rect x="33" y="30" width="6" height="18" fill="#a855f7"/><rect x="44" y="30" width="6" height="18" fill="#a855f7"/><rect x="4" y="50" width="52" height="6" fill="#a855f7"/></g></g><circle cx="674.2" cy="815" r="146" fill="#00c2ff" opacity="0.10" filter="url(#gl--s5)"/><circle cx="674.2" cy="815" r="140" fill="#12151c" stroke="#00c2ff" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(674.2 787.0) scale(1.0) translate(-674.2 -787.0)"><g transform="translate(644.2 757.0)"><rect x="6" y="18" width="48" height="36" rx="6" fill="#00c2ff"/><path d="M22 18 V10 H38 V18" fill="none" stroke="#00c2ff" stroke-width="5"/><rect x="6" y="32" width="48" height="4" fill="#12151c"/></g></g><circle cx="1245.8" cy="815" r="146" fill="#00e68a" opacity="0.10" filter="url(#gl--s5)"/><circle cx="1245.8" cy="815" r="140" fill="#12151c" stroke="#00e68a" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(1245.8 787.0) scale(1.0) translate(-1245.8 -787.0)"><g transform="translate(1211.8 757.0)"><circle cx="22" cy="14" r="10" fill="#00e68a"/><path d="M4 56 Q4 30 22 28 Q40 30 40 56 Z" fill="#00e68a"/><circle cx="48" cy="18" r="9" fill="#00e68a" opacity=".75"/><path d="M34 56 Q34 34 48 32 Q64 34 64 56 Z" fill="#00e68a" opacity=".75"/></g></g></svg><div class="abs lbl" style="left:810px;width:300px;text-align:center;top:664px;font-size:20px;color:#3a4256">THE TABLE</div><div class="abs" style="left:983px;top:520px;width:124px;text-align:center;padding:6px 0;border-radius:24px;background:#0a0c10;border:2.5px solid #00e68a;font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.14em;color:#00e68a">LABOR</div><div class="abs" style="left:898px;top:829px;width:124px;text-align:center;padding:6px 0;border-radius:24px;background:#0a0c10;border:2.5px solid #00e68a;font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.14em;color:#00e68a">LABOR</div><div class="abs" style="left:820px;width:280px;top:340px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.05;letter-spacing:.08em;color:#a855f7;opacity:1">GOVERNMENT</div><div class="abs" style="left:534.2px;width:280px;top:835px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.05;letter-spacing:.08em;color:#00c2ff;opacity:1">BUSINESS</div><div class="abs" style="left:1105.8px;width:280px;top:835px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:29px;line-height:1.05;letter-spacing:.08em;color:#00e68a;opacity:1">WORKING<br>PEOPLE</div></div>
+<div class="frame" id="s6"><div class="orb" style="width:540px;height:540px;left:1500px;top:-240px;background:#a855f7;opacity:0.14"></div><div class="orb" style="width:420px;height:420px;left:-180px;top:760px;background:#00e68a;opacity:0.1"></div><div class="hdr" style="top:64px"><div class="ey">WHO HOLDS THE CARDS</div><h1 style="font-size:72px;max-width:1500px">A three-way deal</h1><div class="divider"></div></div><svg class="abs" style="position:absolute;left:0;top:0;z-index:1;" width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg"><defs><filter id="gl--s6" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter></defs><circle cx="960" cy="650" r="330" fill="rgba(255,255,255,.015)" stroke="#2a3242" stroke-width="3" stroke-dasharray="4 10"/><line x1="960" y1="320" x2="674.2" y2="815" stroke="#3a4256" stroke-width="5"/><line x1="1245.8" y1="815" x2="960" y2="320" stroke="#00e68a" stroke-width="6"/><line x1="1245.8" y1="815" x2="674.2" y2="815" stroke="#00e68a" stroke-width="6"/><circle cx="960" cy="320" r="146" fill="#a855f7" opacity="0.10" filter="url(#gl--s6)"/><circle cx="960" cy="320" r="140" fill="#12151c" stroke="#a855f7" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(960 292.0) scale(1.0) translate(-960 -292.0)"><g transform="translate(930 262.0)"><path d="M4 22 L30 6 L56 22 Z" fill="#a855f7"/><rect x="8" y="24" width="44" height="4" fill="#a855f7"/><rect x="11" y="30" width="6" height="18" fill="#a855f7"/><rect x="22" y="30" width="6" height="18" fill="#a855f7"/><rect x="33" y="30" width="6" height="18" fill="#a855f7"/><rect x="44" y="30" width="6" height="18" fill="#a855f7"/><rect x="4" y="50" width="52" height="6" fill="#a855f7"/></g></g><circle cx="674.2" cy="815" r="146" fill="#00c2ff" opacity="0.10" filter="url(#gl--s6)"/><circle cx="674.2" cy="815" r="140" fill="#12151c" stroke="#00c2ff" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(674.2 787.0) scale(1.0) translate(-674.2 -787.0)"><g transform="translate(644.2 757.0)"><rect x="6" y="18" width="48" height="36" rx="6" fill="#00c2ff"/><path d="M22 18 V10 H38 V18" fill="none" stroke="#00c2ff" stroke-width="5"/><rect x="6" y="32" width="48" height="4" fill="#12151c"/></g></g><circle cx="1245.8" cy="815" r="98" fill="#00e68a" opacity="0.10" filter="url(#gl--s6)"/><circle cx="1245.8" cy="815" r="92" fill="#12151c" stroke="#00e68a" stroke-width="4" opacity="1"/><g opacity="1" transform="translate(1245.8 796.6) scale(0.6571428571428571) translate(-1245.8 -796.6)"><g transform="translate(1211.8 766.6)"><circle cx="22" cy="14" r="10" fill="#00e68a"/><path d="M4 56 Q4 30 22 28 Q40 30 40 56 Z" fill="#00e68a"/><circle cx="48" cy="18" r="9" fill="#00e68a" opacity=".75"/><path d="M34 56 Q34 34 48 32 Q64 34 64 56 Z" fill="#00e68a" opacity=".75"/></g></g></svg><div class="abs lbl" style="left:810px;width:300px;text-align:center;top:664px;font-size:20px;color:#3a4256">THE TABLE</div><div class="abs" style="left:983px;top:520px;width:124px;text-align:center;padding:6px 0;border-radius:24px;background:#0a0c10;border:2.5px solid #00e68a;font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.14em;color:#00e68a">LABOR</div><div class="abs" style="left:898px;top:829px;width:124px;text-align:center;padding:6px 0;border-radius:24px;background:#0a0c10;border:2.5px solid #00e68a;font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.14em;color:#00e68a">LABOR</div><div class="abs" style="left:820px;width:280px;top:340px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.05;letter-spacing:.08em;color:#a855f7;opacity:1">GOVERNMENT</div><div class="abs" style="left:534.2px;width:280px;top:835px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:30px;line-height:1.05;letter-spacing:.08em;color:#00c2ff;opacity:1">BUSINESS</div><div class="abs" style="left:1153.8px;width:184px;top:828px;text-align:center;font-family:'DM Sans';font-weight:700;font-size:20px;line-height:1.05;letter-spacing:.08em;color:#00e68a;opacity:1">WORKING<br>PEOPLE</div></div>
+</body></html>

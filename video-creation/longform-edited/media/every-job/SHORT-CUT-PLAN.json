@@ -1,0 +1,220 @@
+{
+  "source_video": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/every-job/every-job-VERTICAL.mp4",
+  "source_video_16x9": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/every-job/every-job-FINAL.mp4",
+  "source_video_note": "16:9-SOURCED SHORT (Mike, 2026-10-08): every-job-VERTICAL.mp4 is a 1.3 MB 1080x1920 stub (Mike skipped the full vertical). The picture of every span is re-framed per span from every-job-FINAL.mp4 (1920x1080, 1138.567 s). FACE spans can take their picture straight from the pre-framed swap clips named per span (assets/face-swap/F<n>-higgsfield-bg-swap.mp4, sidecar window_starts_at_clip_s), which carry no baked edge glitch.",
+  "source_audio": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/every-job/spine/ALL.f.paused.mp4",
+  "clock": "final-video seconds",
+  "clock_check": "FINAL 1138.567 s, spine ALL.f.paused 1138.543 s, VERTICAL stub 1138.533 s: one clock, within 0.03 s. No chapter-card freeze (62.94 / 234.18 / 448.94 / 620.6 / 709.96 / 886.86) falls inside any span.",
+  "target_seconds": 30.0,
+  "outro_seconds": 3.0,
+  "spans_budget_seconds": 27.0,
+  "claim": "The learn-a-trade escape hatch is closing: the humanoid robots are showing up, and the day one works inside your house it is one robot for every trade.",
+  "why_this_claim": "It is the hook's own turn (learn to code failed, learn a trade is failing next) landed on Mike's own angle, the robot-in-your-house argument that CH3 calls the heart of the video. It needs no number, no chart, no receipt and no coin to stand up cold, so it survives without the other 18 minutes, and it is the one claim whose proof sits almost entirely on FACE windows 1 to 10 (the clean background swap) plus two Envato/AI-still covers that re-frame to 9:16. The answer (ownership, crypto) is deliberately withheld: the kicker is the longform's own open loop (there is a way to protect yourself, first you need to see how deep this goes), so the CTA closes on a question instead of giving the payoff away.",
+  "spans": [
+    {
+      "role": "hook",
+      "order": 1,
+      "sourced": "FACE",
+      "face_window": "F1 (0.167-10.400)",
+      "start": 0.167,
+      "end": 10.415,
+      "seconds": 10.248,
+      "says": "First they told you learn to code, but then AI learned to code. So then they told you scratch that go learn a trade. Because a chat bot can't fix a toilet",
+      "on_screen": "FACE F1, full frame, airing as assets/face-swap/F1-higgsfield-bg-swap.mp4 (clean white wall with the blue light carried across it; door, light fixture and greeting card erased; pre-framed on the measured face centre, scale 1.478, face at 62 percent). Two subtle punch-ins with library light leaks on the footage joins at 1.1 s (lib:lightleaks-5) and 3.9 s (lib:lightleaks-2). Burned house captions (chatbot and train corrections apply). No cover, no receipt pop (Mike's plan-gate ruling 2).",
+      "why": "The locked opening, engineered as the hook: the safe-job advice has already failed once, so the viewer expects the second piece of advice to fail too. It is the only three-sentence span in the short, so it carries the whole set-up on its own.",
+      "self_contained": "Reads cold by design (it is frame one of the longform). No pronoun points outside the span.",
+      "in_gap": 0.075,
+      "out_gap": 0.04,
+      "in_trough": "0.140-0.215 s, -62 dBFS (after 0.11 s of digital silence under the 5-frame black lead; Whisper's First at 0.000 is the file head, the voice starts about 0.22)",
+      "out_trough": "10.395-10.435 s, -93 dBFS between toilet and The",
+      "clear_of_transitions": false,
+      "boundary_transitions": "IN 0.167 = hand:cut (black lead to F1), clean. OUT 10.415 sits at the centre of the F1 face-out glitch lib:blocks-max-1 (0.96 s, about 9.92-10.88) on the FINAL's picture; unavoidable for any face span (the glitch straddles the cut). Clean if the picture is taken from the swap clip (window_starts_at_clip_s 0.4); otherwise the short's own ~0.3 s seam hit sits on top of the half-glitch."
+    },
+    {
+      "role": "body",
+      "order": 2,
+      "sourced": "FACE",
+      "face_window": "F2 (28.300-31.233)",
+      "start": 28.315,
+      "end": 31.245,
+      "seconds": 2.93,
+      "says": "and the humanoid robots are showing up",
+      "on_screen": "FACE F2, full frame, airing as assets/face-swap/F2-higgsfield-bg-swap.mp4 (same regenerated room as F1; no interior join, so no punch and no leak). Burned captions. In the master this is the hook landing (riser into card-impact-hit01-3-short, Bed A to full level); that SFX lives in the master mix only, the short's VO comes from the spine.",
+      "why": "The locked landing line, the pivot of the whole hook: Hinton's own until-the-humanoid-robots-show-up clause answered. It is what makes the chatbot-can't-fix-a-toilet line a threat instead of reassurance.",
+      "self_contained": "Opens on and, but it is a complete declarative that follows the hook directly (...can't fix a toilet. And the humanoid robots are showing up.); the referent is the hook itself, 1 s earlier.",
+      "in_gap": 0.03,
+      "out_gap": 0.04,
+      "in_trough": "28.300-28.330 s, -72 dBFS between up (Hinton's clause, cover) and and",
+      "out_trough": "31.225-31.265 s, -108 dBFS between up and about",
+      "clear_of_transitions": false,
+      "boundary_transitions": "IN 28.315 and OUT 31.245 both sit on the F2 face-cut glitches (lib:blocks-max-2 in at 28.3, lib:blocks-short-1 out at 31.233, 0.96 s each) on the FINAL's picture: face-edge, unavoidable; clean from the swap clip (window_starts_at_clip_s 0.4). No chart, card or cover window is touched (H0 starts at 31.233, after the span)."
+    },
+    {
+      "role": "body",
+      "order": 3,
+      "sourced": "COVER",
+      "face_window": "F5 (306.467-308.800)",
+      "start": 304.6,
+      "end": 308.82,
+      "seconds": 4.22,
+      "says": "There's no robot electrician, but they're coming and they're coming fast",
+      "on_screen": "304.60-304.80: BR-26-tradesman-tightens-pipe (Envato: a plumber tightening a pipe with a wrench in a basement), then BR-27-ceiling-light-install (Envato: an electrician installing a ceiling light fixture) fades in at 304.8 and holds to 306.47 under the words There's no robot electrician. 306.47-308.82: FACE F5, airing as assets/face-swap/F5-higgsfield-bg-swap.mp4 (window_starts_at_clip_s 0.9, no interior join), burned captions on the face part only. The Envato clips are 16:9 and make this span a variety-rule carrier (ONE alternate native-vertical asset overlaid). No tier badge (Mike removed all of them at draft v1).",
+      "why": "The honesty line Mike insisted on: say ONCE, upfront, that no robot does the trade right now, then conviction in the future tense. Without it, span 4 would read as a present-tense claim that a robot already does every trade, which the screenplay bans. They're coming fast is also the short's fear beat.",
+      "self_contained": "They = the humanoid robots named 4 s earlier in span 2. There's no robot electrician is a full statement with no setup needed.",
+      "in_gap": 0.235,
+      "out_gap": 0.045,
+      "in_trough": "304.580-304.815 s, -120 dBFS: a real pause after right now (the one genuine silence in the plan); the cut at 304.60 leaves about 0.2 s of air before There's",
+      "out_trough": "308.800-308.845 s, -89 dBFS between fast and I think",
+      "clear_of_transitions": true,
+      "boundary_transitions": "IN 304.60: the nearest window is BR-27's hand:fade at 304.8 (0.27 s per TRANSITIONS.md row 5:01.8): clear by 0.20 s if the fade ramps from the clip's in-point (comp-build: Envato b-roll = fade, opacity ~0.5s), by 0.065 s if it were centred. The BR-26/BR-27 fade and the F5 face-in glitch (lib:blocks-short-2 at 306.47) both fall INSIDE the span, which is fine. OUT 308.82 sits on the F5 face-out glitch (lib:blocks-short-3 at 308.8): face-edge, clean from the swap clip.",
+      "sourced_detail": "MIXED: COVER 304.60-306.47, FACE 306.47-308.82",
+      "note": "sourced normalized to COVER for the lane's schema (mixed cover->face span; in the 16:9-sourced mode every span is captioned and the re-frame follows the face window it overlaps)."
+    },
+    {
+      "role": "body",
+      "order": 4,
+      "sourced": "FACE",
+      "face_window": "F6 (324.933-328.300)",
+      "start": 324.95,
+      "end": 328.31,
+      "seconds": 3.36,
+      "says": "It's one robot for every trade in your house",
+      "on_screen": "FACE F6, full frame, airing as assets/face-swap/F6-higgsfield-bg-swap.mp4 (same regenerated room; no interior join, no punch, no leak). Burned captions. In the master, riser Tension_Rise_Logo_Reveal_2 builds under this line into the C1 reveal at 328.3 (master mix only; not in the spine VO).",
+      "why": "The thesis of the heart of the video in one hammer sentence: a house is built for a human body, so one machine with that body covers the plumber, the electrician, the roofer. It is the claim the short lands.",
+      "self_contained": "A complete sentence; It's = the robot the previous span just said is coming. Spoken after the not-yet caveat, so it reads as the forecast, not as a present-tense capability (the screenplay's T3 rule).",
+      "in_gap": 0.055,
+      "out_gap": 0.085,
+      "in_trough": "324.920-324.975 s, -63 dBFS between trade (the C1-pre line) and It's",
+      "out_trough": "328.265-328.350 s, -69 dBFS between house and the plumber",
+      "clear_of_transitions": false,
+      "boundary_transitions": "IN 324.95 and OUT 328.31 sit on the F6 face-cut glitches (lib:blocks-max-1 in at 324.93, lib:blocks-max-2 out at 328.3): face-edge, unavoidable on the FINAL, clean from the swap clip (window_starts_at_clip_s 0.4). The C1 diagram starts after the span."
+    },
+    {
+      "role": "kicker",
+      "order": 5,
+      "sourced": "COVER",
+      "face_window": null,
+      "start": 54.2,
+      "end": 60.215,
+      "seconds": 6.015,
+      "says": "There's a way to protect yourself from all this. We're going to get to that but first you need to see how deep this goes",
+      "on_screen": "54.20-57.7: IMG-2-man-kitchen-table-paycheck (ChatGPT photoreal still: a man at a kitchen table with a paycheck; no ILLUSTRATION tag on this one, it is not a robot), already settled (its lib:tvsat-min-1 ingress ended at 53.96). 57.7-60.1: BR-7-descending-dark-stairwell (Envato, camera descending a dark stairwell, slow dolly, the CUE-SHEET's LEADING-motion shot) fading in over 0.5 s at 57.7 then holding. 60.1-60.215: BR-8-hands-assembling-puzzle begins its 0.5 s fade-in (the last ~0.1 s of the span). No captions burned here (COVER): the house caption track is added over this span. Variety-rule carrier (AI still + Envato): ONE alternate native-vertical asset overlaid.",
+      "why": "The longform's own open loop, which is exactly what a short needs before the CTA: it names that there is an answer, withholds it, and tells the viewer the threat runs deeper than what they just heard. Ending on the answer (F16) would close the loop and kill the click.",
+      "self_contained": "All this = the robots-take-your-trade threat the four spans before it just stated. We're going to get to that points at the full video, which the CTA immediately offers. Nothing refers to the brain-surgeon line that precedes it in the longform.",
+      "in_gap": 0.22,
+      "out_gap": 0.05,
+      "in_trough": "54.105-54.325 s, -114 dBFS: a real pause after brain surgeons now (the second genuine silence in the plan)",
+      "out_trough": "60.190-60.240 s, -72 dBFS between goes and So. The shallower dip at 60.010-60.040 (-50 dBFS) was NOT taken: the level between 60.04 and 60.19 reads as the trailing fricative of goes, so a cut there risks clipping the word.",
+      "clear_of_transitions": false,
+      "boundary_transitions": "IN 54.20: clear; the IMG-2 glitch ingress (lib:tvsat-min-1, 53.64-53.96) ends 0.24 s before the cut. OUT 60.215: the ONE non-face boundary inside a window: BR-8's hand:fade at 60.1 (0.5 s), so the final frame is BR-7 with BR-8 at roughly a quarter opacity. It is the last span, so the outro card lands on this frame: back the card with a clean hold (see outro.note), never with the blending frame. The only clean audio end before it is 56.60 (after from all this, trough 56.585-56.625, -59 dBFS), which drops the short to 23.4 s and loses the see-how-deep-this-goes line."
+    }
+  ],
+  "assembled_read": "First they told you learn to code, but then AI learned to code. So then they told you scratch that, go learn a trade, because a chatbot can't fix a toilet. And the humanoid robots are showing up. There's no robot electrician, but they're coming, and they're coming fast. It's one robot for every trade in your house. There's a way to protect yourself from all this. We're going to get to that, but first you need to see how deep this goes. [CTA] Click below to watch the full video.",
+  "spans_total_seconds": 26.773,
+  "delivered_seconds": 29.773,
+  "outro": {
+    "line": "Click below to WATCH the full video.",
+    "card_text": "WATCH THE FULL VIDEO",
+    "cta_take": "C:/Users/mnede/Documents/Claude/social-media/video-creation/assets/vo/cta-watch-full.mp3 (the shared approved take; never re-voiced)",
+    "note": "Hold a CLEAN frame behind the card: BR-7-descending-dark-stairwell at about 60.0 s (before BR-8's fade-in starts at 60.1), or the IMG-2 kitchen-table still from 54.2-57.7. Do not hold the span's last frame (60.215), which is the BR-7/BR-8 blend. Bed per longform-to-short.md section 6: one continuous bed; the hook's chapter bed is Bed A sleeper-cell (MUSIC-PLAN.json, 2RLAUUM5GBKNGP30); the CTA line sits at VO level."
+  },
+  "sequence_check": {
+    "order_is_chronological_except": "the kicker (54.2-60.2, CH1) is placed after the CH3 spans (304-328) on purpose: it is the open loop that leads into the CTA, and nothing in it depends on what the CH3 spans say",
+    "audio_contradiction": "none: hook, landing, not-yet-but-coming-fast, the forecast, the withheld answer; the caveat precedes the conviction line, as Mike's honesty ruling requires",
+    "visual_variety": "F1 swap face, F2 swap face, Envato plumber/electrician + F5 swap face, F6 swap face, AI still + Envato stairwell. No two spans share a cover asset; four of five carry face (Mike's stated preference for windows 1-10). Covers are Envato clips and a ChatGPT still only: no chart, diagram, receipt or text card anywhere in the short.",
+    "nothing_retimed": true
+  },
+  "rejected": [
+    {
+      "span": "0.000-0.167",
+      "reason": "the spine's 5-frame black lead with digital silence under it; the face opens at 0.167 and the voice at about 0.22"
+    },
+    {
+      "span": "10.415-28.3",
+      "reason": "Hinton receipt clip C20, the Huang two-card receipt stack R14/C21 and the hinton-quote-full text card: receipts and a text card cannot be re-laid for 9:16 (Mike's brief)"
+    },
+    {
+      "span": "31.245-35.2 (about 13 000 of them shipped in 2025)",
+      "reason": "sits on H0, an animated count-up chart (avoid charts); cutting it also means landing inside its count-up"
+    },
+    {
+      "span": "34.26-39.2 (and one of them held a job at a BMW factory for 11 months)",
+      "reason": "BR-2 (humanoid on a car line) is good 9:16 material, but the sentence starts on the H0 chart (0.9 s of it) and ends inside the IMG-1 tvsat-max glitch (38.72-39.68): no clean edge pair"
+    },
+    {
+      "span": "39.2-48.0 (and the day that one of those work inside of your house, you don't need to call a plumber / an electrician / a roofer)",
+      "reason": "the best-matching cover run (IMG-1 robot in a sunlit entryway, BR-3 plumber, BR-4 electrician, BR-5 roofer), but every sentence boundary in it is cued ON a b-roll fade (42.5, 44.4, 46.3, 48.0) and the only clean start, that one of those, breaks the sentence; the idea is carried instead by F6 plus the CH3 honesty line, which cut clean"
+    },
+    {
+      "span": "48.0-54.2 (it just doesn't stop with people who work with their hands. It goes all the way up even to brain surgeons)",
+      "reason": "C5-tease, an animated pay-ladder chart, under goes all the way up; it also widens the short to a second claim"
+    },
+    {
+      "span": "302.14-304.60 (Now there's no robot plumber right now.)",
+      "reason": "wanted for the plumber echo of the hook, but its start sits inside BR-26's fade-in over the R3 receipt (Figure's Helix post, 302.1-302.6): a receipt peeks for the first frames, and it pushes the total to about 29 s. Taking it over the electrician line is the first swap if Mike prefers the plumber wording and accepts a ~29 s short"
+    },
+    {
+      "span": "308.82-311.02 (I think we're only just a few years away)",
+      "reason": "sits on the C3-forecast honesty-ladder diagram (avoid diagrams)"
+    },
+    {
+      "span": "311.02-322.3 (And here's why, the house is built for a humanoid body, the doorways, the stairs, the ladder, the crawlspace, every tool in your garage...)",
+      "reason": "the three robot stills (doorway/staircase, attic ladder, garage pegboard) plus BR-28 are ideal 9:16 covers, but the house starts inside the IMG-10 glitch (311.74-312.06) and the clean start before it sits on the C3-forecast diagram; and it would add 10 s. Second add-back candidate if Mike wants a longer short"
+    },
+    {
+      "span": "328.31-338.4 (the plumber the electrician the roofer the HVAC tech the carpenter, that's about 2.8 million jobs)",
+      "reason": "the C1 system-design diagram (the marquee), a diagram: avoid; also a number that needs its chart"
+    },
+    {
+      "span": "578.53-581.87 F9 (And believe it or not it climbs all the way up the pay ladder)",
+      "reason": "fits the arc (swap-face window 9) but takes the total to 30.1 s of spans; first add-back if Mike wants a 33-35 s short"
+    },
+    {
+      "span": "1078.4-1086.6 F16 (The robots are coming for the paycheck, so own something nobody can print, nobody can freeze...)",
+      "reason": "the thesis and the answer: ending on it closes the open loop the CTA depends on; it is also an as-recorded face (no background swap), so the room would change behind him against F1-F6; and it is 8.2 s"
+    },
+    {
+      "span": "682.07-689.0 F11 (the day that machine exists no hospital pays 830,000 dollars a year...)",
+      "reason": "needs the surgeon setup (number, da Vinci, Johns Hopkins) to make sense; as-recorded face, no swap"
+    },
+    {
+      "span": "139.83-143.2 F3 / 208.2-213.63 F4 (CH2: the new-jobs chain, the four-word test)",
+      "reason": "a different claim (why technology-creates-new-jobs fails); F4 also depends on better-faster-cheaper-safer said just before it"
+    },
+    {
+      "span": "54.2-56.6 only (There's a way to protect yourself from all this)",
+      "reason": "the one kicker end that is clear of every transition window, but it leaves 23.4 s of spans (below the 26-28 s window) and drops first you need to see how deep this goes, the line that sells the click"
+    }
+  ],
+  "risks": [
+    "FACE EDGES: on the 16:9 FINAL every face window is wrapped in the video's Blocks face-cut glitch (0.96 s, straddling the cut), so the in/out boundaries of spans 1, 2, 4 and the out of span 3 land mid-glitch on the FINAL's picture. Inherent to any face span in this lane. Recommended (what Mike's brief points at with face windows 1 to 10 carrying the clean background swap): take the FACE picture from assets/face-swap/F1, F2, F5, F6-higgsfield-bg-swap.mp4 at the sidecar's window_starts_at_clip_s (0.4 / 0.4 / 0.9 / 0.4), pre-framed on the measured face centre, no glitch. If the builder stays on the FINAL, the ~0.3 s seam hit from the same Blocks family masks the half-glitch; Mike should know the choice was made.",
+    "KICKER OUT at 60.215 is inside BR-8's 0.5 s fade-in (60.1-60.6): the span's last ~4 frames blend the stairwell with the puzzle clip. The outro card covers it; back the card with a clean hold (outro.note). The alternative clean end (56.60) is in rejected.",
+    "FADE SEMANTICS inferred, not verified: comp-build.md says Envato b-roll = fade (opacity ~0.5s), read here as the incoming clip ramping from its in-point. If the comp centres the ramp on the cut instead, span 3's in-boundary (304.60) is 0.065 s clear of BR-27's 0.27 s fade rather than 0.20 s; still clear, but thin. Frame-check the first frame of span 3.",
+    "WORD GAPS: the spine is desilenced, so Whisper's word list abuts (gap 0.000 almost everywhere). in_gap/out_gap are the measured widths of the real audio troughs on spine/ALL.f.paused.mp4 (5 ms windows), not transcript gaps; only two boundaries (304.60, 54.20) sit in genuine pauses (0.235 s and 0.22 s). The lane's gate (lint-short-spans.py) was run read-only on this file; its result is in the hand-off. The builder still owes the ~12 ms crossfade at every splice.",
+    "PLUMBER vs ELECTRICIAN: the hook is about plumbers (train to be a plumber, a chatbot can't fix a toilet) and the honesty line used says There's no robot electrician. The plumber sentence (Now there's no robot plumber right now) is the better echo but starts under a receipt fade and adds 2.2 s (rejected list). Mike may prefer it anyway at ~29 s.",
+    "LENGTH: spans 26.77 s + 3.0 s outro = 29.77 s delivered, inside 30 +/- 1. The hook alone is 10.2 s (a third of the short) because the locked opening is three sentences; Mike ruled it is the hook, so it is not trimmed.",
+    "CAPTIONS: FACE parts carry burned captions (F1 includes the chatbot/train corrections); the COVER frames (304.60-306.47 in span 3, all of span 5) have none and need the house caption track over exactly those frames, never over the face frames (the burned-caption trap, longform-to-short.md section 5).",
+    "DELIVERY not heard: energy, pace and how There's no robot electrician sits right after the humanoid robots are showing up are inferred from the transcript and the screenplay's register map (CH1 gear 3, CH3 gear 2 rising to 3). Mike can overrule the order of spans 3 and 4.",
+    "9:16 RE-FRAME of the covers (IMG-2 man at a kitchen table; BR-7 dark stairwell; BR-26/27 plumber and electrician) is assumed to survive a centre crop; the variety rule overlays one native-vertical alternate on spans 3 and 5 anyway. Not verified by eye.",
+    "The master-only SFX that make these lines land in the longform (the hook-landing impact at 28.3, the riser under F6) do not travel with the spine VO; the short's bed and seam hits are the builder's per sections 5 and 6."
+  ],
+  "gate": {
+    "tool": "skills/longform-to-short/lint-short-spans.py (run read-only by the strategist, no --write-snapped; the builder re-runs it and BUILDS FROM THE SNAPPED PLAN)",
+    "exit": 0,
+    "verdict": "GATE OK, every boundary sits in silence (floor -45 dBFS, hard -30 dBFS)",
+    "snapped_boundaries": {
+      "span1_start": "0.167 -> 0.165 (-0.002 s, trough -50.2 dBFS)",
+      "span1_end": "10.415 OK (-57.6 dBFS)",
+      "span2_start": "28.315 OK (-53.5 dBFS)",
+      "span2_end": "31.245 OK (-80.8 dBFS)",
+      "span3_start": "304.600 -> 304.615 (+0.015 s, trough -48.9 dBFS)",
+      "span3_end": "308.820 -> 308.845 (+0.025 s, trough -46.6 dBFS)",
+      "span4_start": "324.950 -> 324.975 (+0.025 s, trough -45.1 dBFS)",
+      "span4_end": "328.310 -> 328.315 (+0.005 s, trough -45.4 dBFS)",
+      "span5_start": "54.200 OK (-90.3 dBFS)",
+      "span5_end": "60.215 OK (-58.5 dBFS)"
+    },
+    "spans_total_after_snapping": 26.76,
+    "delivered_after_snapping": 29.76
+  }
+}

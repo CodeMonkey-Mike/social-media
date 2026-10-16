@@ -1,0 +1,335 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>retire-early containers - canonical build (slide-builder)</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* ============================================================================
+   ===== END OF THE LOCKED STYLESHEET. Everything below only ADDS components;
+   ===== no locked token above is changed.
+   CHAPTER THEMES (Mike, 2026-10-10; COVER-PLAN.json chapter_themes): a slide built
+   for a chapter uses THAT chapter's accent for the top-accent line, the key words
+   (.k) and the lit row, in place of the default accent. Eyebrow stays muted, the
+   divider stays the locked gradient, fonts and palette unchanged.
+     CH1 gold #ffd700 · CH2 Arbitrum sky blue #12aaff · CH3 Kaspa teal #49e0c8
+     CH4 purple #a855f7 · CH5 TON azure #0098ea · CH6 gold #ffd700
+   ============================================================================ */
+.ch1,.ch6{--ch:#ffd700} .ch2{--ch:#12aaff} .ch3{--ch:#49e0c8} .ch4{--ch:#a855f7} .ch5{--ch:#0098ea}
+.k{color:var(--ch)}
+
+/* CARD SLIDE: one rounded card, top-accent line, eyebrow + title + date + body INSIDE it (banks-card-*) */
+.card{position:relative;background:var(--bg-card);border:1px solid var(--border);border-radius:24px;
+  padding:72px 92px 78px;box-shadow:0 50px 140px rgba(0,0,0,.55)}
+.card::before{content:"";position:absolute;left:22px;right:22px;top:-1px;height:3px;border-radius:3px;
+  background:linear-gradient(90deg,transparent 0%,var(--ch) 9%,var(--ch) 58%,transparent 100%)}
+.card .divider{margin:30px 0 34px}
+.card h1,.quote{text-wrap:balance}
+.date{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:40px;color:var(--ch);margin-top:24px;letter-spacing:.01em}
+
+/* spotlight rows: RESTING = muted-but-READABLE (title text-secondary, desc full-opacity muted, icon 75%);
+   LIT = primary title + chapter accent bar/number/key words. The spotlight adds emphasis, never visibility. */
+.rows{display:flex;flex-direction:column;gap:12px}
+.row{display:grid;grid-template-columns:84px 1fr;align-items:center;padding:20px 30px 20px 30px;border-radius:14px;
+  border:1px solid transparent;position:relative}
+.row .n{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:26px;color:var(--text-muted)}
+.row .t{font-family:'DM Sans';font-weight:600;font-size:36px;line-height:1.3;color:var(--text-secondary)}
+.row .d{font-family:'DM Sans';font-weight:400;font-size:28px;line-height:1.45;color:var(--text-muted);margin-top:6px}
+.row .mk{opacity:.75}
+.row.on{background:var(--bg-card-hover);border-color:var(--border)}
+.row.on::before{content:"";position:absolute;left:-1px;top:16px;bottom:16px;width:5px;border-radius:3px;background:var(--rc,var(--ch))}
+.row.on .n{color:var(--rc,var(--ch))}
+.row.on .t{color:var(--text-primary)}
+.row.on .kw{color:var(--rc,var(--ch))}
+.row.on .d{color:var(--text-secondary)}
+.row.on .mk{opacity:1}
+
+/* real marks (pixels from schedule-tweets/images/reference/, never redrawn) */
+.mk{display:block;flex:none;border-radius:50%}
+.mk-arb{background:url("../../../../../../schedule-tweets/images/reference/arbitrum-arb.png") center/contain no-repeat;border-radius:0}
+.mk-ton{background:url("../../../../../../schedule-tweets/images/reference/toncoin-ton.png") center/contain no-repeat}
+.mk-kas{background:#000 url("../../../../../../schedule-tweets/images/reference/kaspa-logo.png") 50% 50%/150% no-repeat;
+  box-shadow:0 0 0 2px rgba(73,224,200,.35)}
+.mk-tao{background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.mk-tao img{height:54%;width:auto;display:block}
+
+/* ---------- H0: motion-type card, two words ---------- */
+#H0 .card{padding:96px 110px 104px}
+.h0w{font-family:'Playfair Display',serif;font-weight:900;font-size:184px;line-height:1;letter-spacing:-.01em;text-transform:uppercase}
+.h0w.w1{color:var(--text-primary)}
+.h0w.w2{color:var(--text-muted)}
+#H0 .divider{margin:44px 0 40px}
+#H0.st2 .h0w.w1{color:var(--text-muted);opacity:.55}
+#H0.st2 .h0w.w2{color:var(--ch)}
+
+/* ---------- N2: four-slot list ---------- */
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.slot{height:268px;border:2px dashed #283044;border-radius:18px;position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+.slot .sn{position:absolute;top:16px;left:22px;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;color:var(--text-muted)}
+.slot .ring{width:124px;height:124px;border-radius:50%;border:2px dashed #283044}
+.slot .mk{width:124px;height:124px;display:none}
+.slot .nm{font-family:'DM Sans';font-weight:700;font-size:34px;color:var(--text-primary);display:none}
+.slot.on{border:2px solid var(--border);background:var(--bg-card-hover)}
+.slot.on .sn{color:var(--ch)}
+.slot.on .ring{display:none}
+.slot.on .mk{display:block}
+.slot.on .mk-tao{display:flex}
+.slot.on .nm{display:block}
+
+/* ---------- quote card ---------- */
+.qmark{font-family:'Playfair Display',serif;font-weight:900;font-size:200px;line-height:.6;color:var(--ch);height:84px;margin-bottom:6px}
+.quote{font-family:'Playfair Display',serif;font-weight:900;font-size:78px;line-height:1.12;letter-spacing:-.02em;color:var(--text-primary);max-width:1420px}
+.attr{font-family:'DM Sans';font-size:34px;line-height:1.5;color:var(--text-secondary)}
+.attr .src{display:block;font-size:28px;color:var(--text-secondary)}
+
+/* ---------- source line burned into a card ---------- */
+.srcline{margin-top:30px;padding-top:24px;border-top:1px solid var(--border);font-family:'DM Sans';font-size:27px;color:var(--text-secondary)}
+
+/* ---------- C38: rows with real marks, each row lit in ITS chapter accent ---------- */
+.mrow{grid-template-columns:96px 128px 1fr;padding:18px 30px}
+.mrow .mk{width:76px;height:76px}
+.mrow .tk{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:34px;color:var(--text-secondary);letter-spacing:.04em}
+.mrow .t{font-size:42px}
+.mrow.on .tk{color:var(--text-primary)}
+.r-arb{--rc:#12aaff} .r-kas{--rc:#49e0c8} .r-tao{--rc:#a855f7} .r-ton{--rc:#0098ea}
+
+/* ---------- TITLE SLIDE (no box): the chapter title cards. Card text = the token name (Mike, SCREENPLAY
+   Convention 2). Bittensor-text anatomy: muted eyebrow -> Playfair headline (the key word = the token name,
+   lit in the chapter accent) -> the locked gradient divider. Nothing else on the card. ---------- */
+.tframe .ey{margin-bottom:34px}
+.tt{font-family:'Playfair Display',serif;font-weight:900;font-size:230px;line-height:.92;letter-spacing:-.01em;
+  text-transform:uppercase;color:var(--ch)}
+.tframe .divider{margin:54px 0 0}
+</style></head>
+<body>
+
+<!-- =========================================================== H0 · CH1 gold · CARD SLIDE · 35.13-41.30
+     "Wages are what the AI takeover takes away. Ownership is what's left standing. So this video is about what to own."
+     STATES: s1 = WAGES lit (OWNERSHIP resting, readable) · s2 (on "Ownership", 37.94) = WAGES dimmed, OWNERSHIP lit gold.
+     Atmosphere is code-rendered (drifting orbs), never a stock clip behind a card (rule #13). -->
+<div class="frame ch1" id="H0">
+  <div class="orb" style="width:900px;height:900px;right:-260px;top:-320px;background:#ffd700;opacity:.15"></div>
+  <div class="orb" style="width:760px;height:760px;left:-300px;bottom:-360px;background:#c77a12;opacity:.22"></div>
+  <div class="orb" style="width:520px;height:520px;left:780px;top:640px;background:#ffb000;opacity:.10"></div>
+  <div class="card">
+    <div class="h0w w1">Wages</div>
+    <div class="divider"></div>
+    <div class="h0w w2">Ownership</div>
+  </div>
+</div>
+
+<!-- =========================================================== N2 · CH1 gold · CARD SLIDE · 97.70-103.65
+     "So four cryptos and for each one the same question, why does owning this help you when the jobs go away?"
+     STATES (marks land one per slot, Mike's order): s1 Arbitrum · s2 +Kaspa · s3 +TAO · s4 +TON (complete). -->
+<div class="frame ch1" id="N2">
+  <div class="orb" style="width:820px;height:820px;right:-240px;top:-300px;background:#ffd700;opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-320px;background:#c77a12;opacity:.16"></div>
+  <div class="card">
+    <div class="ey">Four cryptos / One question</div>
+    <h1 class="sm">Why does <span class="k">owning this</span> help when the jobs go away?</h1>
+    <div class="divider"></div>
+    <div class="slots">
+      <div class="slot" id="n2-1"><span class="sn">01</span><div class="ring"></div><div class="mk mk-arb"></div><div class="nm">Arbitrum</div></div>
+      <div class="slot" id="n2-2"><span class="sn">02</span><div class="ring"></div><div class="mk mk-kas"></div><div class="nm">Kaspa</div></div>
+      <div class="slot" id="n2-3"><span class="sn">03</span><div class="ring"></div><div class="mk mk-tao"><img src="mark-tao.png" alt=""></div><div class="nm">TAO</div></div>
+      <div class="slot" id="n2-4"><span class="sn">04</span><div class="ring"></div><div class="mk mk-ton"></div><div class="nm">TON</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================== C5 · CH2 Arbitrum blue · CARD SLIDE · 186.25-195.15
+     "Tokenized US stocks can trade on a public blockchain. If the token carries a real share's rights, participants are
+     permissioned and the volume is capped."  Guard: a five-year, capped, permissioned sandbox; never "legalized".
+     STATES (one row lit at a time): s1 ledger (186.32) · s2 rights (189.30) · s3 permissioned (192.68) · s4 volume (194.08). -->
+<div class="frame ch2" id="C5">
+  <div class="orb" style="width:820px;height:820px;right:-260px;top:-300px;background:#12aaff;opacity:.16"></div>
+  <div class="orb" style="width:600px;height:600px;left:-260px;bottom:-320px;background:#0b5e9c;opacity:.18"></div>
+  <div class="card">
+    <div class="ey">SEC / Innovation Exemption</div>
+    <h1 class="sm">A <span class="k">five-year sandbox</span>, with conditions</h1>
+    <div class="date">2026-09-17 to 2031-09-17</div>
+    <div class="divider"></div>
+    <div class="rows">
+      <div class="row" id="c5-1"><span class="n">01</span><div class="t">Tokenized US stocks on a <span class="kw">public, permissionless ledger</span></div></div>
+      <div class="row" id="c5-2"><span class="n">02</span><div class="t">The token must carry the <span class="kw">real share&rsquo;s</span> dividend, voting and liquidation rights</div></div>
+      <div class="row" id="c5-3"><span class="n">03</span><div class="t">Participants <span class="kw">permissioned</span></div></div>
+      <div class="row" id="c5-4"><span class="n">04</span><div><div class="t"><span class="kw">Volume capped</span></div>
+        <div class="d">Tier <span class="mono">1</span>: up to <span class="mono">75</span> symbols at <span class="mono">0.25%</span> of volume. Tier <span class="mono">2</span>: up to <span class="mono">250</span> at <span class="mono">2.5%</span>.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================== kas-question · CH3 Kaspa teal · CARD SLIDE · 272.00-277.00
+     "So I'm only answering one question. Why does it fit in the world where AI takes the job?" -->
+<div class="frame ch3" id="kas-question">
+  <div class="orb" style="width:860px;height:860px;right:-260px;top:-300px;background:#49e0c8;opacity:.15"></div>
+  <div class="orb" style="width:620px;height:620px;left:-260px;bottom:-320px;background:#0f6b5e;opacity:.18"></div>
+  <div class="card" style="padding:96px 110px 104px">
+    <div class="ey">Kaspa / One question</div>
+    <h1 style="font-size:96px;max-width:1480px">Why does it fit a world where <span class="k">AI&nbsp;takes the&nbsp;jobs</span>?</h1>
+    <div class="divider" style="margin-bottom:0"></div>
+  </div>
+</div>
+
+<!-- =========================================================== toccata-zk · CH3 Kaspa teal · CARD SLIDE · 344.95-349.40
+     "So the chain can verify zero-knowledge proofs and carry application state." (gloss lives on the card, not in the VO) -->
+<div class="frame ch3" id="toccata-zk">
+  <div class="orb" style="width:860px;height:860px;right:-260px;top:-300px;background:#49e0c8;opacity:.15"></div>
+  <div class="orb" style="width:620px;height:620px;left:-260px;bottom:-320px;background:#0f6b5e;opacity:.18"></div>
+  <div class="card" style="padding:88px 104px 96px">
+    <div class="ey">Toccata / Live on mainnet</div>
+    <h1 class="sm" style="max-width:1460px">The chain can verify <span class="k">zero-knowledge&nbsp;proofs</span> and carry <span class="k">application&nbsp;state</span></h1>
+    <div class="divider"></div>
+    <p style="font-size:34px;max-width:1400px"><b>Zero-knowledge proof:</b> math that proves a computation happened without redoing it.</p>
+  </div>
+</div>
+
+<!-- =========================================================== steeves-quote · CH4 purple · CARD SLIDE · 397.55-401.45
+     "The founder, Jacob Steeves, calls the goal a market for intelligence."  Words: VirtualBacon 10:07.6-10:15.9
+     (YouTube auto-captions, VERIFY BY EAR). Carries the founder's words while CLIP-5 is HELD. -->
+<div class="frame ch4" id="steeves-quote">
+  <div class="orb" style="width:860px;height:860px;right:-260px;top:-300px;background:#a855f7;opacity:.17"></div>
+  <div class="orb" style="width:620px;height:620px;left:-260px;bottom:-320px;background:#5b21b6;opacity:.20"></div>
+  <div class="card" style="padding:84px 104px 92px">
+    <div class="ey">Bittensor / The founder&rsquo;s goal</div>
+    <div class="qmark">&ldquo;</div>
+    <div class="quote">Bittensor&rsquo;s ultimate goal is building the <span class="k">market for intelligence</span>.&rdquo;</div>
+    <div class="divider"></div>
+    <div class="attr"><b>Jacob Steeves</b>, Bittensor co-founder
+      <span class="src">VirtualBacon interview, <span class="mono">2026-03-26</span></span></div>
+  </div>
+</div>
+
+<!-- =========================================================== N4 · CH4 purple · CARD SLIDE (stat card, attributed)
+     N4-s1 456.60-461.25 "And a couple of them reportedly earn more from customers than they get in emissions."  -> row 1 lit
+     N4-s2 475.85-482.25 "Control still sits with a few people, the founder included." -> row 2 lit
+           N4-s2-handover (on "handover") "But his handover is targeted at December of 2027." -> rows 2 + 3 lit
+     Source burned into the card (Crypto Briefing 2026-09-29), never a footnote. -->
+<div class="frame ch4" id="N4">
+  <div class="orb" style="width:860px;height:860px;right:-260px;top:-300px;background:#a855f7;opacity:.17"></div>
+  <div class="orb" style="width:620px;height:620px;left:-260px;bottom:-320px;background:#5b21b6;opacity:.20"></div>
+  <div class="card" style="padding:72px 92px 64px">
+    <div class="ey">Bittensor / As reported</div>
+    <h1 class="sm"><span id="n4-h1">Customers</span> and <span id="n4-h2">control</span></h1>
+    <div class="divider"></div>
+    <div class="rows">
+      <div class="row" id="n4-1"><span class="n">01</span><div>
+        <div class="t">A couple reportedly <span class="kw">earn more from customers than from emissions</span></div>
+        <div class="d">Lium <span class="mono">SN51</span>, Chutes <span class="mono">SN64</span></div></div></div>
+      <div class="row" id="n4-2"><span class="n">02</span><div>
+        <div class="t"><span class="kw">Control:</span> still with a few people, the founder included</div></div></div>
+      <div class="row" id="n4-3"><span class="n">03</span><div>
+        <div class="t">Decentralization handover target: <span class="kw">December <span class="mono">2027</span></span></div>
+        <div class="d">Steeves, as reported</div></div></div>
+    </div>
+    <div class="srcline">As reported, Crypto Briefing on the Exploit Summit keynote, <span class="mono">2026-09-29</span></div>
+  </div>
+</div>
+
+<!-- =========================================================== C38 · CH6 gold · CARD SLIDE · 571.77-580.70
+     "So that's the list. Rails that charge rent, money nobody controls, a piece of the AI production and distribution
+     to a billion people. Four different bets on the same idea."
+     STATES: C38 = all rows resting (lead-in, "So that's the list") · s1 ARB 573.54 · s2 +KAS 575.24 · s3 +TAO 576.86
+     · s4 +TON 578.56 (accumulating; each row lit in ITS chapter accent). No prices, no number cells, no drawdown row. -->
+<div class="frame ch6" id="C38">
+  <div class="orb" style="width:860px;height:860px;right:-260px;top:-320px;background:#ffd700;opacity:.16"></div>
+  <div class="orb" style="width:640px;height:640px;left:-260px;bottom:-330px;background:#c77a12;opacity:.18"></div>
+  <div class="card" style="padding:70px 92px 70px">
+    <div class="ey">Four cryptos / The list</div>
+    <h1 class="sm">Four different bets on the <span class="k">same idea</span></h1>
+    <div class="divider"></div>
+    <div class="rows">
+      <div class="row mrow r-arb" id="c38-1"><div class="mk mk-arb"></div><span class="tk">ARB</span><div class="t kw">Rails that charge rent</div></div>
+      <div class="row mrow r-kas" id="c38-2"><div class="mk mk-kas"></div><span class="tk">KAS</span><div class="t kw">Money nobody controls</div></div>
+      <div class="row mrow r-tao" id="c38-3"><div class="mk mk-tao"><img src="mark-tao.png" alt=""></div><span class="tk">TAO</span><div class="t kw">A piece of the AI production</div></div>
+      <div class="row mrow r-ton" id="c38-4"><div class="mk mk-ton"></div><span class="tk">TON</span><div class="t kw">Distribution to a billion people</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================== TITLE SLIDES (no box) · the four chapter title cards
+     Card text = the token name (SCREENPLAY Convention 2; CH5 reads TON, RULED by Mike at GATE 3, never "TON (GRAM)").
+     Eyebrow numbers the token in Mike's order, matching N2's slots 01-04. One frame per card, each in ITS chapter accent.
+     title-CH2 @105.00 · title-CH3 @268.06 · title-CH4 @371.78 (pause at 371.80) · title-CH5 @494.93 -->
+<div class="frame tframe ch2" id="title-CH2">
+  <div class="orb" style="width:900px;height:900px;right:-260px;top:-320px;background:#12aaff;opacity:.17"></div>
+  <div class="orb" style="width:640px;height:640px;left:-280px;bottom:-340px;background:#0b5e9c;opacity:.20"></div>
+  <div class="ey">Crypto <span class="mono">01</span> / <span class="mono">04</span></div>
+  <div class="tt">Arbitrum</div>
+  <div class="divider"></div>
+</div>
+
+<div class="frame tframe ch3" id="title-CH3">
+  <div class="orb" style="width:900px;height:900px;right:-260px;top:-320px;background:#49e0c8;opacity:.15"></div>
+  <div class="orb" style="width:640px;height:640px;left:-280px;bottom:-340px;background:#0f6b5e;opacity:.20"></div>
+  <div class="ey">Crypto <span class="mono">02</span> / <span class="mono">04</span></div>
+  <div class="tt">Kaspa</div>
+  <div class="divider"></div>
+</div>
+
+<div class="frame tframe ch4" id="title-CH4">
+  <div class="orb" style="width:900px;height:900px;right:-260px;top:-320px;background:#a855f7;opacity:.18"></div>
+  <div class="orb" style="width:640px;height:640px;left:-280px;bottom:-340px;background:#5b21b6;opacity:.22"></div>
+  <div class="ey">Crypto <span class="mono">03</span> / <span class="mono">04</span></div>
+  <div class="tt">TAO</div>
+  <div class="divider"></div>
+</div>
+
+<div class="frame tframe ch5" id="title-CH5">
+  <div class="orb" style="width:900px;height:900px;right:-260px;top:-320px;background:#0098ea;opacity:.17"></div>
+  <div class="orb" style="width:640px;height:640px;left:-280px;bottom:-340px;background:#00527e;opacity:.22"></div>
+  <div class="ey">Crypto <span class="mono">04</span> / <span class="mono">04</span></div>
+  <div class="tt">TON</div>
+  <div class="divider"></div>
+</div>
+
+</body></html>

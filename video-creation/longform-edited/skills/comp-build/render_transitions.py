@@ -51,9 +51,19 @@ def render(plan: dict, proj: Path) -> str:
           "ChatGPT stills + AI clips get a Cinematic Bad Signal ingress from the library:"]
     L += [f"- {mmss(r['tc'])}  {tag(r.get('id'))}  {r.get('change', '')}" for r in stills] or ["- (none in this video)"]
     L.append("")
+    glitch_style = any(str(r.get("role")) == "punch-glitch" for r in rows)   # face style glitch (Mike 2026-10-16)
     L += ["## 3. Face + b-roll + TEXT-containers → hand-rolled overlays on the spine (house rule #5)",
-          f"- FACE cut in/out → **{tag(face.get('id'))}** (the per-video pick; {face.get('why', '')}) + ~15-20% punch-in on face beats > 2 s.",
-          "- Envato VIDEO b-roll → fade (~0.5 s).   TEXT-container swap → cross-fade + 0.93→1 scale-in (the quiet default).", ""]
+          f"- FACE cut in/out → **{tag(face.get('id'))}** (the per-video pick; {face.get('why', '')}) + a ~15-20% punch-in ON every desilencer join inside a face window, each with its `punch-leak` library light leak (rows below)."
+          if not glitch_style else
+          f"- FACE cut in/out → **{tag(face.get('id'))}** (the per-video pick, on the cut-OUTS; {face.get('why', '')}). FACE STYLE glitch "
+          "(Mike 2026-10-16): every cover→face cut-IN is a random split swinging offset (`lib:split-swinging-offset-*`), and every "
+          "desilencer join inside a face window gets a ~15-20% punch-in with a random glitch offset / glitch blocks hit across it "
+          "(`punch-glitch` rows below). No light leaks on the punches.",
+          "- Envato VIDEO b-roll → fade (~0.5 s).   TEXT-container swap → cross-fade + 0.93→1 scale-in (the quiet default)."]
+    ins_rows = [r for r in rows if str(r.get("role")) in ("insert-in", "insert-out")]
+    L += ["- CLIP INSERTS (a clip with its OWN voice at a spine pause, bucket `insert`, skills/clip-inserts): "
+          + " · ".join(f"{mmss(r['tc'])} {r.get('role')} {tag(r.get('id'))}" for r in ins_rows)] if ins_rows else []
+    L += [""]
     L += ["## 4. DIAGRAM / CHART MARQUEES → reserved MELT (transform) + SPIN (new facet)",
           f"ONE melt look (`lib:{melt.get('family', '')}-*`, {melt.get('why', '')}) + ONE spin look (`lib:{spin.get('family', '')}-*`, "
           f"{spin.get('why', '')}), deployed ONLY on the marquee diagram/chart beats. Budget: melt {budget.get('melt_used', 0)} · "

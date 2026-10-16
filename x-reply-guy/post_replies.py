@@ -24,8 +24,9 @@ from pathlib import Path
 def parse_limit() -> int | None:
     """Return --limit N value, or None if not provided."""
     for i, arg in enumerate(sys.argv[1:], 1):
-        if arg == "--limit" and i < len(sys.argv) and sys.argv[i].lstrip("-").isdigit():
-            val = int(sys.argv[i])
+        # i is the argv index of "--limit" itself, so N is at i + 1.
+        if arg == "--limit" and i + 1 < len(sys.argv) and sys.argv[i + 1].isdigit():
+            val = int(sys.argv[i + 1])
             if val > 0:
                 return val
     return None
