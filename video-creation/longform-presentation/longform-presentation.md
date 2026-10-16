@@ -1,349 +1,207 @@
-# longform-presentation — skill
+# longform-presentation — the track
 
-Pipeline for turning a raw screen/talking-head recording (slide deck + presenter PiP) into a
-finished longform 16:9 presentation video. Mirrors the livestream-repurpose *starting* process
-(compress first, work off the lighter file), but tuned for presentations: pacing is more fragile
-than a tight short, so the bitrate floor is higher (slide text/code must stay readable) and
-silence cutting is gentler: one zone, 800 ms min-silence, 200 ms left between sentences, pinned in
-code in `skills/desilence/` (the track's own skills folder, index `skills/README.md`).
+Record-and-edit pipeline for a 16:9 presentation video: Mike records himself over a slide deck (or over a live
+screen share with no deck: crypto charts, or VS Code while coding), the recording is cleaned into a spine (except
+the coding format, which ships as recorded with music under it), and, when there is a deck, the deck is
+re-rendered as a **spotlight presentation** (one container at a time, cued to his words) with the as-filmed intro
+and close kept. Track-specific policy lives in `skills/` (one folder per skill, index `skills/README.md`), on top of
+the shared `video-creation/skills/` (defumbler, desilencer, gaze, captions, ...).
 
-For the parked production vision (clone PiP intro + voice-first Remotion timeline) see `TODO.md`.
-Slide-deck style reference: `kaspa_toccata_hardfork_deck.html`.
+## The three formats (Mike, 2026-10-16: these are the typical ones, anything else is rare)
 
-**Two production modes:** (a) **record-and-edit**, where Mike records himself over the deck (or over a
-live screen share with no deck at all, the what-to-buy shape), then Phases 1-4 below clean it up (a
-no-deck recording needs only Phase 3); (b) **AI-narrated, script-first**, where Mike films only a short
-on-camera intro and an ElevenLabs voice clone narrates the rest over the deck (see "AI-narrated
-presentation mode" near the bottom). Phases 1-4 are the record-and-edit path.
+Identify the format FIRST, from the folder contents and Mike's ask; it decides which phases run at all. The track
+exists because these are much less effort than longform-edited, so never run a phase the format does not list.
+
+| Format | Example | Phases | Audio | Goes to |
+|---|---|---|---|---|
+| **1. Slide-deck lecture** (a deck `.html` in the folder, "Section N · Lecture M" eyebrow) | history-of-crypto 2026-10-13, QE 2026-06-06 | 1 defumble -> 2 desilence -> 3 transcribe -> 4 spotlight | the EDIT's own track; Mike runs his own Enhance Speech pass after acceptance | his Whop course (`whop.com/cryptorich`), uploaded by him |
+| **2. Crypto-chart screen share** (TradingView / DexScreener, webcam PiP, no deck) | what-to-buy 2026-10-13 | 1 (only if the take has retakes) -> 2 desilence; the EDIT is the deliverable, crf 18 | the EDIT's own track | his public uploads, by him |
+| **3. VS Code coding screen share** (single take, coding live while talking) | print-function 2026-10-16 | **NO edit at all**: no defumble, no desilence, no transcribe. Music only: `skills/music-bed/` + a series thumbnail `skills/thumbnail/` | intro sting + elevator bed mixed under the untouched voice; no Enhance Speech | the **AI Engineering Simplified** YouTube channel ("Learning Python" series), uploaded by him |
+
+Format 3 is expected to be the MOST common (many Python coding videos). Why no edit: it is one deliberate take,
+fumbles are fine, and the silences are content: Mike may be typing code without speaking and the viewer must not
+miss it. The deliverable is the master with music under it, the picture stream-copied (frame count = master's).
+
+Either way the deliverable is an absolute path and MIKE uploads it himself: nothing on this track is staged to
+`longs.json` or `batches.json`, ever.
 
 ## Folder convention
 
-Each recording is its own project folder under `media/<project name>/`, holding the master, the
-working files, transcripts, and the project's slide-deck HTML. Example: `media/QE before bitcoin/`.
-Scripts in `scripts/` all take paths as arguments — point them at the project folder. Track-specific
-POLICY and processing customizations live in `skills/` (one folder per skill, index `skills/README.md`),
-on top of the shared `video-creation/skills/`.
+```
+media/<project>/                   the FOLDER name is the project name (OBS names the master by timestamp)
+  <timestamp>.mkv                  master raw (OBS, ~6 Mbps 1080p30) — never edit, never delete
+  <deck>.html                      the slide deck used in the recording (deck recordings) + the script (.docx/.txt)
+  <project> DEFUMBLED.mp4          Phase 1 (only when the take has retakes), libx264 crf 18
+  <project> EDIT.mp4               Phase 2 deliverable spine + <project> EDIT.map.json (its cut/keep map)
+  <project> EDIT.medium-words.json Phase 3 word-level transcript of the FINAL spine
+  <project>.scenes.json            Phase 4 scene spec (+ .resolved.json, generated)
+  render-assets/ _previews/ _qa/   Phase 4 render public-dir, parts + logs, QA frames
+  <project> FINAL-vN.mp4           Phase 4 deliverable (format 1), or the music-bed output (format 3)
+  raw/<timestamp>.mkv              format 3: Mike drops the master in a raw/ subfolder (either place works)
+  thumbnail/                       <project>-thumb.jpg (the winner, alone at this level) + reference-<id>.jpg + takes/
+```
+There is no LOW BPS working copy on this track any more: every tool here reads the master (chunk map, Whisper,
+desilencer) and the one lossy generation is the crf 18 spine, which keeps on-screen text sharp (decided
+2026-10-13; the old `to_low_bps.py` was recycled).
+
+## Recording notes (what the next recording should get right)
+
+- **No noise gate and no noise suppression in the mic chain** (OBS mic filters, NVIDIA Broadcast, Krisp, the
+  mic's own DSP). The history-of-crypto master was gated: 47% of it exact digital zero, word-final fricatives
+  20 dB under the vowels, so quiet endings ("banks", "age") were chopped in the RAW file and no edit pass could
+  restore them (`skills/desilence/desilence.md` has the measurements). The desilencer removes the dead air
+  anyway and the 300 ms residual needs no gate.
+- **Read every slide title aloud, or none.** The chapter card cues on the spoken title (spotlight skill); where
+  a title is skipped the card falls back to the first scripted line. Both work; the mixed case (history-of-
+  crypto: 6 of 8 titles read) costs a transcript check per chapter.
+- **A webcam PiP only when face cutaways are wanted.** A deck-only capture has no face to cut to, and its
+  as-filmed head is the title slide.
+- 1080p30 OBS at ~6 Mbps; the deck HTML and the script (.docx + .txt) go into `media/<project>/` next to the
+  master, the folder name is the project name.
+
+## Phase 1 — defumble (only when the take needs it)
+
+A scripted read has retakes and false starts; a clean on-the-fly recording does not. Defumble ONLY via
+`video-creation/skills/defumbler/defumbler.md` (the `defumbler` agent in `.claude/agents/shared/` runs it): chunk
+map -> keep the LAST clean take -> cut only inside silence -> render -> QA by re-running the chunk map on the
+output. Be aggressive about what counts as a fumble (Mike would rather over-detect than catch misses himself),
+but the METHOD is the defumbler's: never cut from a whole-file Whisper transcript or word timestamps.
+
+Render with **`remove_spans.py ... --crf 18`** (libx264; added 2026-10-13): on this track the defumbled file is the
+master the spotlight takes its head/tail footage from, so the NVENC proxy default is not enough. Output
+`media/<project>/<project> DEFUMBLED.mp4`. A 48-minute 1080p30 deck capture encodes to ~80 MB at crf 18 (static
+slides), in 10 to 20 minutes: launch it detached with a log and poll, never as a tracked background task.
+
+## Phase 2 — desilence with the track preset
+
+`skills/desilence/desilence.md`: the standing definition is **800 ms min-silence, 300 ms left between sentences
+(200 ms after the sentence so word-final releases survive, 100 ms before the next), one zone**, pinned in code; it
+wraps the canonical desilencer (`video-creation/skills/desilencer/`, the -57/-52 dB RMS method, declick,
+frame-locked render; nothing re-implemented). When word endings still sound clipped, check the MASTER first: a
+noise-gated mic chain chops them at the source (history-of-crypto, 2026-10-14).
+```
+python skills/desilence/desilence_preset.py "media/<project>/<project> DEFUMBLED.mp4" --dry-run   # plan + QA
+python skills/desilence/desilence_preset.py "media/<project>/<project> DEFUMBLED.mp4"             # -> <project> EDIT.mp4 + .map.json
+```
+Input = the DEFUMBLED file, or the master `.mkv` when Phase 1 was skipped. Defumble and desilence are two
+separate sync-safe passes, in this order, never combined. QA (the preset prints the first two): swallowed-speech
+scan, A/V drift < 50 ms, a frame either side of the biggest join.
+
+### The cutting method (non-negotiable — the desync fix)
+Every cut on this track is **`filter_complex` `trim`+`atrim`+`concat` in a single pass** (what `desilence.py`,
+`remove_spans.py` and the spotlight stitcher all do): audio and video lose the identical window, so lip-sync is
+preserved by construction. **Never the concat-demuxer** method (it re-stamps the streams independently and drifts:
+"mouth moving, no sound", hit and diagnosed 2026-06-06).
+
+## Phase 3 — transcribe the FINAL spine (word-level)
 
 ```
-media/<project>/
-  <master>.mkv                   master raw (OBS, ~6 Mbps 1080p30; OBS names it by timestamp, the FOLDER
-                                 name is the project name) — never edit, never delete
-  <project> LOW BPS.mp4          2 Mbps working master (Phase 1; only when a deck / Remotion step needs it)
-  <project> LOW BPS.medium-words.json   canonical transcript (Phase 2)
-  <project> DEFUMBLED.mp4        after the defumbler (Phase 3 step 1; only when the take needs it)
-  <project> EDIT.mp4             deliverable (Phase 3) + <project> EDIT.map.json (its cut/keep map)
-  <project>.html                 the slide deck used in the recording (deck recordings only)
+python scripts/transcribe.py "media/<project>/<project> EDIT.mp4"     # medium model, GPU auto
 ```
+Medium, not base (base "cleans up" disfluencies). Writes `<project> EDIT.medium-words.json`: the cue source for
+Phase 4 (and for any captions). Transcribe the file the comp is cued to, never an earlier derivative.
 
----
+## Phase 4 — spotlight presentation (deck recordings)
 
-## Phase 1 — compress to a LOW BPS mp4
+**`skills/spotlight/spotlight.md`** (canonical, read it): author the scene spec from the deck + script, resolve the
+cues against the Phase 3 word timings (`cue_scenes.py`), a ~30-line project comp over the shared renderer
+`remotion/src/SpotlightPresentation.tsx`, probe, render the middle window in parts (`render_spotlight.py`), stitch
+the as-filmed head and tail back with the EDIT's own audio (`stitch.py`). Rules that live there: spotlight not
+slideshow; render only the replaced window and stitch with ffmpeg; the deliverable's audio is the EDIT's; keep the
+deck's own look; a breath before every chapter (`chapter_pause`, the title alone on screen for ~1 s, silence
+inserted at stitch time, the EDIT never re-encoded for it).
 
-Transcode the heavy raw `.mkv` down to a lighter mp4 for the steps that need a working copy
-(transcribe, deck-sync, Remotion). Single-pass NVENC, **no silence cutting**.
+Face cutaways during the spotlight (the QE build had three, at Mike's strongest camera glances) need a webcam PiP in
+the recording; find the glances with **`video-creation/skills/gaze/SKILL.md`** (run it as a checklist, the refine
+step is mandatory, and when the PiP is too low-res to tell reading from looking, get the spans from Mike). A
+deck-only capture has no face to cut to.
 
-**Skip this phase when the deliverable is the recording itself** (no deck, no Remotion, screen share +
-PiP as filmed): run Phase 3 straight on the master `.mkv`. Master to 2 Mbps to 2 Mbps would soften the
-on-screen text twice; one crf 18 generation off the master keeps it sharp (what-to-buy, 2026-10-13).
+## Format 3 — music under the untouched master (VS Code coding videos)
 
+**`skills/music-bed/music-bed.md`** (canonical): the channel's musical intro from 0:00 at clip gain 0 dB -> -40 dB
+over its 11.9 s, then a random elevator bed from the library starting right after Mike's cue line ("...stick around
+because this is a cool course" on print-function, ~0:55), -32 dB clip gain, remix-looped on a bar-aligned region,
+end-aligned to the last frame. One command, ~2 min, no video encode:
 ```
-python scripts/to_low_bps.py "media/<project>/<project>.mkv"
+python skills/music-bed/music_bed.py "media/<p>/raw/<timestamp>.mkv" --cue-phrase "<his cue words>" --out "media/<p>/<p> FINAL-v1.mp4"
 ```
-
-- Default target **2 Mbps** video + AAC 128k (maxrate/bufsize auto-scale off `--bps`). Output is
-  written beside the source as `<name> LOW BPS.mp4`. Override with `--bps 2.5M` / `--out <path>`.
-- **2 Mbps is the floor** for presentations. Do NOT drop to the livestream flow's 0.7M — too soft
-  for on-screen text/code.
-- Typical result: a 10-min 1080p30 recording goes ~460MB → ~165MB.
-
----
-
-## Phase 2 — transcribe (word-level)
-
-```
-python scripts/transcribe.py "media/<project>/<project> LOW BPS.mp4"   # --model medium (default), GPU auto
-```
-
-- Defaults to the **`medium`** model on GPU. **Use medium, not base:** base "cleans up"
-  disfluencies (stammers, false starts) — exactly what we need to SEE when hunting fumbles. On an
-  RTX-class GPU a 10-min file is ~1 min.
-- Writes `<name>.medium-words.json` (full result with word timestamps) and prints segments with
-  `[start-end]` timestamps. This transcript is the source of truth for fumble locations and any
-  later caption/slide-sync work.
-
----
-
-## Phase 3 — edit: defumble (only if the take needs it), THEN desilence with the track preset
-
-Two separate, sync-safe passes, in this order. Never combine them (the old combined script did, and it
-is gone).
-
-1. **Defumble**, only when the recording has retakes / false starts / abandoned fragments:
-   `video-creation/skills/defumbler/defumbler.md` (chunk-map, cut only inside silence, Mike approves the
-   text cut-plan BEFORE rendering) -> `media/<project>/<project> DEFUMBLED.mp4`. Be aggressive about what
-   counts as a fumble (Mike would rather over-detect than catch misses himself), but the METHOD is the
-   defumbler's: never cut from a whole-file Whisper transcript or word timestamps (the repo-wide hard rule;
-   it hides retakes and drifts). Skip this step for a clean on-the-fly recording.
-2. **Desilence** via the track's own skill, **`skills/desilence/desilence.md`**, which pins the presentation
-   silence definition IN CODE (800 ms min-silence, 200 ms residual between sentences, one zone; Mike,
-   2026-10-13) and wraps the canonical desilencer (`video-creation/skills/desilencer/`: the -57/-52 dB RMS
-   method, declick, frame-lock; nothing is re-implemented):
-   ```
-   python skills/desilence/desilence_preset.py "media/<project>/<master>.mkv" --dry-run   # plan + QA, no render
-   python skills/desilence/desilence_preset.py "media/<project>/<master>.mkv"             # -> <project> EDIT.mp4 + .map.json
-   ```
-   Input = the master `.mkv` (no-deck deliverable, see Phase 1) or the DEFUMBLED / LOW BPS file.
-   `--min-sil` / `--pad` are Mike-only deviations and the script banners them; the thresholds are not knobs.
-   Default encode is libx264 crf 18 (deliverable quality for screen text); an encode longer than 10 min is
-   launched detached with a log, never as a tracked background task.
-
-### The cutting method (non-negotiable — this is the desync fix)
-
-Cut with **`filter_complex` `trim`+`atrim`+`concat` in a single pass** (what the desilencer's `desilence.py`
-and `remove_spans.py` both do). This re-times audio and video **together**,
-so lip-sync is preserved *by construction* — both streams lose the identical time window.
-
-Do **NOT** use the livestream `longform_desilence_fast.py` concat-**demuxer** approach here: it
-re-stamps audio and video independently and they drift, producing the "mouth moving, no sound"
-desync bug. (Hit and diagnosed 2026-06-06: a 90s test had audio sliding against video at the
-start.) The demuxer is "acceptable at long-form scale" for a livestream, not for a talking head.
-
-### Mandatory QA before declaring done
-
-1. **Swallowed speech:** the preset prints the desilencer skill's scan (no cut may hold 100 ms or more of
-   speech-level audio; a flag peaking at -45 to -52 dB is a breath, fine). After a defumble pass, also
-   re-transcribe the output (`scripts/transcribe.py --model medium`) and read every join.
-2. **A/V drift:** the preset prints video vs audio stream duration; expect < ~50 ms (end-of-file
-   sample-vs-frame rounding, not progressive slippage).
-3. **Visual splice check:** extract a frame either side of the biggest cut; confirm live footage, no
-   black/frozen frame.
-
----
+Mike speaks levels as **Premiere clip gain** (keyframe dB on the clip), never absolute dBFS. Ask for the cue line if
+he has not named it. Thumbnail: **`skills/thumbnail/thumbnail.md`** (edit the previous episode's published
+thumbnail with nano_banana_2, three takes, he picks).
 
 ## Supporting scripts
 
-- `scripts/to_low_bps.py`: Phase 1 working copy (skipped for a no-deck deliverable).
-- `scripts/transcribe.py`: Phase 2 word-level Whisper (medium, GPU).
-- `scripts/remove_spans.py`: remove arbitrary `--cut a-b` spans only (no silence detection), sync-safe. Use
-  for pure section excision; fumble removal proper = `defumbler/defumbler.md`.
-- `scripts/generate_narration.py`: the AI-narrated mode's ElevenLabs generation (below).
-- **Silence removal = `skills/desilence/`** (the track preset) on top of the canonical
-  `video-creation/skills/desilencer/`. The three old per-track silence scripts (`desilence_audio.py`,
-  `desilence_synced.py`, `build_two_zone.py`: single-threshold `silencedetect`, which clips words) were
-  deprecated on 2026-06-14 and recycled on 2026-10-13; never recreate them.
+- `scripts/transcribe.py`: Phase 3 word-level Whisper (medium, GPU).
+- Cutting: `video-creation/skills/defumbler/scripts/remove_spans.py` (explicit `--cut a-b` spans, `--crf 18` here);
+  silence: `skills/desilence/`. The track's own copies (`remove_spans.py`, the three `silencedetect` scripts,
+  `to_low_bps.py`) were recycled on 2026-06-14 / 2026-10-13; never recreate them.
+- `scripts/generate_narration.py` (the 2026-06 AI-narrated mode's ElevenLabs generator, zcash-only paths) was
+  recycled 2026-10-13 with that mode; the clone settings it encoded are kept below.
 
-## Gaze / camera-look analysis → see `video-creation/skills/gaze/SKILL.md`
+## Reference: Mike's ElevenLabs voice clone (from the retired AI-narrated mode, 2026-06-08)
 
-Finding when the presenter looks **into the camera** vs **reads the screen** (to drive the face
-cutaways) now lives in its own skill: **`video-creation/skills/gaze/SKILL.md`**. Run it as a checklist;
-the **refine step is mandatory**.
+Kept because the settings were A/B-tested and are not written anywhere else. Voice = PVC "Clone of Mike"
+(`w5hJEzvYpyioFoEAv8tO`), key in env `ELEVENLABS_API_KEY` only. **Model `eleven_multilingual_v2`, NOT `eleven_v3`**
+(v3 invents emotion, reads "a bit happy"; v2 reproduces his timbre). Locked settings **stability 0.3, similarity
+0.75, style 0.6** (high style + low stability is what gives v2 its emphasis; 0.4/0.35 tested flatter than 0.5/0,
+always A/B a short line first). On v2: ellipses/commas = the main emphasis lever (a beat before the stressed
+word); `<break time="0.4s"/>` = the only supported tag; CAPS and stretched spellings do nothing or misread;
+`[tags]` are v3-only. Spell numbers/dates/symbols as words; no em dashes. PVC training: clean, single-speaker,
+same-mic, UNPROCESSED audio (never Adobe Enhance, it bakes in a synthetic artifact); ~30 min consistent source
+beats hours of mixed ones. Script in `persona.json` `spoken_voice` (gear 2), phrasing verified against the
+transcript corpus, never inferred.
 
-Two things that bit us and are baked into that skill:
-- **Two recording styles.** QE was **deck-reading-dominant** (presenter turns away to a side-screen;
-  camera-looks short + infrequent). The Zcash slide-8 recording was **frontal-dominant** (presenter
-  reads a script right at the webcam; frontal almost the whole time, eyes only slightly down). The
-  per-recording assumption is opposite — don't carry QE's "looks are rare" prior into a frontal recording.
-- **When the PiP is too low-res to tell reading-at-script from looking-at-lens, get the spans from
-  Mike** (burn a timecode on the final clip, he marks them). Don't guess repeatedly. The skill's
-  Step 3 has the exact command. The renderer notes (`startFrom` for sync, visible wings) live there too.
+## Delivery, review rounds, and what Mike does after
 
-## Phase 4 — dynamic spotlight presentation (Remotion)
-
-The voice-first payoff: re-render the deck as a **dynamic video where one element at a time is
-blown up to fill the screen while it's narrated**, then clears for the next — synced to the
-narration via the Whisper word-timings. This is the approved look (NOT a slide that builds up /
-accumulates — that was rejected; it's spotlight, one container full-screen at a time).
-
-Lives in the repo's Remotion project (`video-creation/remotion/`). Render entry `src/index.ts`,
-command `npx remotion render src/index.ts <CompId> out/<file>.mp4 --codec=h264`. `remotion.config.ts`
-sets `publicDir` to `../assets`, so `staticFile()` assets (audio, the EDIT mp4) go in
-`video-creation/assets/`, NOT a local `public/`.
-
-**Build recipe:**
-1. **Reuse the deck's CSS** — port the exact colors/fonts/card styling from the deck HTML into the
-   Remotion component (inline styles / a `<style>` block). Load the deck fonts with
-   `@remotion/google-fonts` (`loadFont('normal', { weights: [...], subsets: ['latin'] })` — **limit
-   weights**, or you trigger hundreds of font requests and the render crawls).
-2. **One scene per container.** A scene = a single element (title, intro line, a Layer card, a
-   timeline item, the closing statement) rendered **large and centered, dominating the frame**.
-   Use the deck's card chrome (top accent bar, eyebrow tag, big mono number, description) scaled up.
-3. **Cue each scene to narration.** `tIn` = the EDIT-timeline timestamp of the phrase that
-   introduces it (from the medium word-timings). Scene `i` is visible `[tIn_i, tIn_{i+1})`.
-   Cross-fade ~0.35s + a slight scale-in (0.92→1) on entrance reads well.
-4. **Face cutaways at the strongest camera-glances** (from the gaze analysis): cut to a centered
-   **vertical crop of the PiP** with **blurred "wings"** (a scaled, `blur()`-ed copy of the same
-   video filling the sides — echo-pillarbox). One Remotion comp does deck + audio + cutaways.
-5. Composition is **1920×1080** (deck is landscape; note the repo's shorts comps are 1080×1920).
-   Audio track = the EDIT narration; duration = narration length.
-
-### Partial-replacement videos — render ONLY the replaced window, stitch with ffmpeg
-
-When the brief is "keep the original footage at the head/tail, replace only the middle"
-(e.g. QE: original face 0:00–0:31, animated presentation 0:31–5:30, original recap/CTA 5:30–end),
-**do NOT bundle the original intro/outro into the Remotion comp and re-render the whole file.**
-Passing untouched original footage back through `OffthreadVideo` just to re-encode it is wasteful
-(re-encodes pristine footage, and balloons the render — QE was 12,270 frames / 15 min instead of
-~9,000). Mike's instruction (2026-06-06): *"all you needed to do was piece the original file
-together with ffmpeg."*
-
-Correct method:
-1. Remotion renders **only the replaced window** (its own audio = that slice of the EDIT narration;
-   scene `tIn`s expressed relative to that window's start).
-2. `ffmpeg` cuts the original EDIT into the head and tail pieces (`-ss`/`-to`, sync-safe re-encode).
-3. Concat the three pieces with **`filter_complex` `concat` (NOT the concat demuxer)** — same
-   desync rule as Phase 3. One pass, streams stay locked:
-   ```
-   ffmpeg -i head.mp4 -i middle.mp4 -i tail.mp4 -filter_complex \
-     "[0:v][0:a][1:v][1:a][2:v][2:a]concat=n=3:v=1:a=1[v][a]" \
-     -map "[v]" -map "[a]" -c:v h264_nvenc -b:v 2M out.mp4
-   ```
-   The head/tail keep the original footage; only the middle is the new render.
-
-Validate on **one slide first** (POC) before wiring all ~20+ containers — confirm the sync feel,
-size, and transition with Mike, then build the full timeline.
-
-## AI-narrated presentation mode (script-first, voiced by an ElevenLabs clone)
-
-A second production path, distinct from the record-and-edit pipeline above. Mike films only a short
-on-camera intro (~30s of his own thoughts, ending on his real handoff line "so let's dive into it"),
-and an **ElevenLabs voice clone narrates the rest** over a scroll-deck of slides. Script-first:
-finalize the narration BEFORE recording or rendering anything. First built for the "AI Can Now Hack
-Blockchains" / Zcash-exploit video (`media/zcash exploit/`, 2026-06-07).
-
-### Write the narration in Mike's SPOKEN voice
-- Source of truth = `persona/persona.json` -> **`spoken_voice`** (NOT the typed-tweet `writing_style`).
-  Default to gear 2 (polished longform): keep his tics, smooth the stutters.
-- A clone reproduces Mike's timbre, NOT his word choice. If the script isn't written the way he
-  actually talks, the clone just reads someone else's words in his voice. Phrasing is the whole game.
-- **Verify, don't infer.** Before attributing a phrase or tic to Mike, grep the transcript corpus:
-  `video-creation/shorts/**/whisper-words.json`, the longform `*.medium-words.json`, the dated
-  livestreams in `repurpose/transcripts-ad-hoc/*.txt`, and the `watch` skill for any YouTube URL he
-  gives. Mark verified vs inferred; when Mike corrects a phrasing, fix it in `persona.json`
-  `spoken_voice` that same turn. (Caught this session: "smash that like button" and "And get this"
-  were inferred and WRONG; "catch you guys, later", "Now,", "over and over again", "it's like" 80
-  hits, are verified.)
-
-### Two-file workflow (keep them in lockstep)
-- `narration-script.md`: the **clean reading copy**, one block per slide. For judging wording/flow.
-- `narration-emphasis-v3.md`: the **same text with emphasis markup** for v3, plus a per-slide
-  "Marked:" list so Mike can veto fast. Apply Mike's line edits to the clean script FIRST, then
-  re-sync the emphasis file to match.
-
-### ElevenLabs: model choice + generation (API path)
-Generate via the **API, not the UI** (Mike's preference): `scripts/generate_narration.py` parses the
-per-slide blockquotes out of the emphasis file and writes `audio/slide-N.mp3`. Key lives in env
-`ELEVENLABS_API_KEY` only (never committed). Voice = Mike's PVC "Clone of Mike"
-(`w5hJEzvYpyioFoEAv8tO`).
-
-**MODEL: use `eleven_multilingual_v2`, NOT `eleven_v3`** (decided 2026-06-08 for Mike's clone). v3 is
-more expressive and honors `[drawn out]` audio tags, but it invents emotion and reads "weird / a bit
-happy", wrong for a serious register. v2 reproduces Mike's real timbre. Locked settings:
-**stability 0.3, similarity 0.75, style 0.6** (the high-style + low-stability combo is what gives v2 its
-emphasis; note 0.4/0.35 tested FLATTER than 0.5/0, prosody is not linear in these params, so always A/B
-on a short line first).
-
-Markdown does NOTHING in ElevenLabs (italics/bold ignored). On **v2**, what actually works:
-
-| Mark | v2 effect |
-|---|---|
-| `…` ellipsis / commas | Pause beat. **The main emphasis lever on v2.** Set up a stressed word with a beat before it. |
-| `<break time="0.4s"/>` | Hard pause. The ONLY angle-bracket tag ElevenLabs supports (self-closing). `<emphasis>`/`<prosody>` are NOT supported. |
-| `WORD` (caps) | **No effect on v2** (it ignores capitalization). Harmless as a human annotation, but it will NOT punch the word. |
-| `woooord` (stretched) | **Do NOT use on v2**: it misreads ("fouuur" came out rhyming with "sour"). Spell normally; draw out via delivery/pauses. |
-| `[drawn out]` / any `[tag]` | v3-only; on v2 read literally, so `generate_narration.py` auto-strips `[...]` for non-v3 models. |
-
-The emphasis file is still authored v3-style (CAPS + the odd tag) for human readability; the script
-strips what v2 can't use and v2 ignores the caps. If you ever switch back to v3 the marks come alive,
-but expect the over-acted tone.
-- Keep emphasis sparse: the peaks only land if the valleys stay calm.
-- A single deliberate "Um..." / "Ah..." may be added on request for a natural-reading feel (used on
-  the Zcash slide 7). Default is still to strip unintentional uh/um.
-
-### TTS hygiene
-Spell out numbers, dates, version numbers, and symbols as words ("Claude Opus four point eight",
-"May twenty ninth", "three hundred and fifty three X", "over three billion dollars"). Strip
-mid-sentence false starts. No em dashes anywhere (persona `terminology_rules.no_em_dashes`); clean
-header labels too.
-
-### Professional Voice Clone (PVC)
-Feed **clean / single-speaker / same-mic / no music bed**, and crucially **NATURAL / unprocessed**
-audio; ~30 min clean is a solid floor, and **consistency beats raw hours** (one consistent source
-clones cleaner than a blend of differently-recorded ones). **Do NOT run the training audio through
-Adobe Podcast Enhancer (or any speech-enhancement tool)** — it re-synthesizes the voice, and the clone
-inherits a synthetic "AI version of me" artifact (hit 2026-06-08; fixed by retraining on ONLY the
-original un-enhanced presentation and dropping the SFX-contaminated livestreams). If a source has
-Stream Deck SFX/music, hand-trim those moments rather than enhancing. Timbre (clean originals) comes
-first; emphasis is a separate model/settings problem, not a clone-quality one.
-
-### The slide deck (HTML)
-Reuse the proven scroll-deck framework from `media/QE before bitcoin/money-printer-1971-v2.html`
-(scroll-snap sections, Playfair Display / DM Sans / JetBrains Mono, blurred orbs, nav dots,
-IntersectionObserver fade-ins). Keep **slide count == script slide count == number of nav dots**: if
-you add a slide to the script, add the matching deck slide AND nav dot. A per-section color strip /
-act pill is a cheap way to signal a multi-act emotional arc.
-
-### CTA
-Close like the QE video: quick recap, then the track-record plug (use his CURRENT best call + number
-at posting time), then "click that like button and click the subscribe button", then "I'm gonna catch
-you guys, later." NEVER "smash that like button." Full detail in persona `spoken_voice.cta_style`.
-
----
+- Deliver the absolute path of `<project> FINAL-vN.mp4`, a new `-vN` per delivery; keep every previous FINAL
+  and copy its `.scenes.resolved.json` to `.resolved.vN.json` at delivery time (A/B, and the splice base for
+  the next round). Mike reviews in parts and in rounds (history-of-crypto: v1 half watched -> v2 to slide 5 ->
+  v3 accepted), and a round is a fix round (`skills/spotlight/spotlight.md` step 8, `splice.py`), never a full
+  re-render for a few moved cues.
+- **The pipeline leaves the audio alone**: the deliverable carries the EDIT's own track, no normalization and
+  no enhancement, because Mike runs his own pass after acceptance. On history-of-crypto a copy named
+  `FINAL-v3-esv2-50p-bg-10p-music-10p.mp4` appeared 1.5 h after the v3 delivery: the video stream copied
+  untouched (same 35723 frames, same bitrate), the audio replaced by an enhance-speech v2 pass (50% strength,
+  background 10%, music 10%, by its name) at 48 kHz AAC, -22.5 LUFS integrated against the raw -20.6. Do not
+  add an audio pass to the pipeline unprompted; deliver the raw track he expects. The one exception is format 3,
+  where Mike ASKED for the music bed (`skills/music-bed/`): the voice is still never re-levelled or enhanced, and
+  he skips Enhance Speech on it (2026-10-16: it needs an mp4 round trip through Adobe Podcast Studio and the voice
+  is fine as recorded), so that FINAL is the upload.
+- Not queued and not committed unless asked. Once he has uploaded, the project folder is recycled the usual
+  way (`node cleanup/cleanup.js --target video-creation --dry-run` first); the per-project Remotion comp comes
+  out by hand (spotlight skill, step 3).
 
 ## Hard rules
 
-- Sync-safe `filter_complex` only — never the concat-demuxer method (see desync bug above).
-- Never edit or delete the master `.mkv`. Deletions go to the **Recycle Bin** (recoverable), not
-  permanent (`Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile/Directory ... SendToRecycleBin`).
-- Locate fumbles in the file you're about to cut; don't reuse timestamps across timelines.
+- Sync-safe `filter_complex` only; never the concat demuxer.
+- Never edit or delete the master `.mkv`. Deletions go to the **Recycle Bin**
+  (`Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile/Directory ... SendToRecycleBin`), never permanent.
+- Locate fumbles in the file you are about to cut; never reuse timestamps across timelines.
+- Defumble ONLY via the defumbler skill; desilence ONLY via the track preset over the canonical desilencer.
+- A long encode or render (> 10 min) is launched detached with a log and polled; never as a tracked background task.
 
----
+## History
 
-## Worked example — "QE before bitcoin" (2026-06-06)
-
-10:01 OBS recording, "The Money Printer Has Been Running Since 1971" deck with presenter PiP.
-Project folder: `media/QE before bitcoin/`.
-- **Phase 1:** `.mkv` 460MB → `LOW BPS.mp4` 164MB @ 2.18 Mbps.
-- **Phase 2:** medium transcript, 1059 words → `QE before bitcoin LOW BPS.medium-words.json`.
-- **Phase 3 — two passes** (Whisper is non-deterministic, so the second batch was cut on the
-  already-edited timeline, see the gotcha above):
-  - Pass A (`build_two_zone`, split 90, pre 0.5 / post 1.0): 601s → 428s. 5 fumbles:
-    `97.5-107.06` ("begins to silent" + 6s pause), `148.9-149.9` (mumbled false start),
-    `242.2-265.42` ("Layer 4… I'm messing up here" whole take), `443.4-451.1` (doubled "years
-    before Bitcoin"), `460.5-465.1` ("point" → "endpoint" correction).
-  - Pass B (`remove_spans.py` on the Pass-A file, after Mike caught more + asked for aggressive
-    detection): 7 more fumbles (4:20–4:36 ×2, 4:49, 5:31, 5:46, plus systematic-detector hits).
-  - **Deliverable: `QE before bitcoin EDIT2.mp4` — 409.15s (6:49), 12 fumbles removed total.**
-    QA passed (re-transcribe + join read + drift < 50ms).
-
-### Phase 4 build state (spotlight presentation) — DONE, rendered, awaiting Mike's review
-
-The animated presentation replaces **only 0:31–5:30**; the head (0:00–0:31, on-camera intro) and
-tail (5:30–end, recap + 353X CTA) keep EDIT2's original footage.
-
-- **Composition:** `QeMoneyPrinter` (comp file since deleted; 1920×1080, `QE_FPS=30`,
-  `QE_DURATION=12270` frames ≈ 409s). Was registered in `src/Root.tsx` alongside the validated POC
-  `QeMoneyPrinterPoc`. Spotlight = one container full-screen at a time, 0.35s cross-fade +
-  0.93→1 scale-in; cued to narration via `SCENES[]` (`t` = EDIT2-timeline seconds). Card chrome,
-  colors (gold/cyan/red/purple/green), fonts (Playfair/DM Sans/JetBrains Mono) ported from the deck.
-- **`PRES_IN=31`, `PRES_OUT=330`**: intro.mp4 plays `[0,31]`, SCENES play `[31,330]`, outro.mp4
-  plays `[330,end]`, all via `<Sequence>` + `OffthreadVideo`.
-- **3 face cutaways** (`CUTAWAYS[]`, the top gaze glances) at t=131.0 / 141.8 / 283.0s — centered
-  vertical PiP strip + blurred echo-pillarbox wings (`FaceCutaway`).
-- **Assets in `video-creation/assets/`** (NOT `public/` — config `publicDir` is `../assets`):
-  `qe-full.m4a` (EDIT2 narration), `intro.mp4` (EDIT2 0–31s), `outro.mp4` (EDIT2 330s–end),
-  `face1/2/3.mp4` (glance clips, cut to start on the glance).
-- **Render:** `npx remotion render src/index.ts QeMoneyPrinter out/qe-money-printer.mp4 --codec=h264`
-  (renders to a loose `out/` file). 52 MB, 409.0s. Boundaries spot-checked: original footage at
-  0:15 and 5:40, spotlight in the middle. Correct, **approved by Mike 2026-06-06.**
-- **KNOWN INEFFICIENCY in this build:** it embeds intro.mp4/outro.mp4 in the comp and re-renders
-  all 12,270 frames. The deliverable is correct, but per Mike the right method is the ffmpeg-concat
-  recipe above (render only the [31,330] middle, stitch 3 pieces). Use that for any re-cut.
-- **Where the render lives now:** moved to **`video-creation/remotion/out/qe-history/qe-money-printer.mp4`**
-  (loose files in `out/` are recycled by cleanup unconditionally; a per-batch subfolder listed in
-  `batches.json` is protected). Registered as batch `qe-history` (track `longform-presentation`).
-- **Published:** staged to `schedule-tweets/longform/history-of-qe-before-bitcoin.mp4` (+ thumbnail
-  `.png`) and queued **pending** in `schedule-tweets/data/longs.json`
-  (id `lf-20260606-history-of-qe-before-bitcoin`, title "History of QE before Bitcoin"), ready for
-  the rumble/bitchute/facebook longform uploaders.
-
-**Done:** rendered, approved, registered for cleanup-protection, and queued for upload.
+- **2026-06-06 "QE before bitcoin"** (`media/QE before bitcoin/`, deleted after publish): 10:01 recording with PiP,
+  12 fumbles removed over two passes (back when the track had its own `silencedetect` scripts), spotlight render
+  of 0:31-5:30 with three face cutaways, approved and queued as `lf-20260606-history-of-qe-before-bitcoin`.
+- **2026-06-08 "zcash exploit"**: the AI-narrated, script-first mode (ElevenLabs clone over a scroll deck). Retired
+  2026-10-13; settings kept above.
+- **2026-10-13 "what-to-buy"**: track revived; no deck, desilenced straight off the master at crf 18 with the new
+  preset (9:51.79 from 11:41, 74 cuts), delivered and accepted, not queued by choice.
+- **2026-10-13 "history-of-crypto"** (Section 2 · Lecture 3, 48:38, deck-only capture): first video through the
+  spotlight skill; defumble (`--crf 18`) -> preset desilence -> transcribe -> 49-scene spec -> parts render -> stitch.
+  2026-10-14 v2 after Mike's review: word endings clipped -> desilence tail pad 100 -> 200 ms (and the finding that
+  the master itself was noise-gated); a breath at every chapter -> `chapter_pause` 1.0 s in the spotlight skill.
+  v3 the same morning: the chapter cards moved onto the spoken titles via `splice.py` (28 s re-rendered).
+  ACCEPTED and uploaded to the Whop course 2026-10-14, after Mike's own audio pass. Numbers for planning the
+  next lecture: 48:38 master -> 30:18 defumbled (118 cuts) -> 19:43 EDIT (273 cuts, 637 s removed) -> 19:51
+  FINAL (8 x 1 s pauses); wall-clock: chunk map 16 min, defumble render 9 min, QA chunk map 8 min, desilence
+  5 min, transcribe 5 min, 49-scene spec + cue resolve about an hour, parts render 34 min (4 x 9000 frames),
+  stitch 4 min, a splice round 8 min.
+- **2026-10-16 "print-function"** (format 3, the first VS Code coding video; AI Engineering Simplified, "Learning
+  Python": "10 Uses of the Python print Function", 15:55 single take, OBS 1080p30 ~6 Mbps): no edit. Thumbnail
+  first (edit of `lgZNH_F3Iuo`'s thumbnail, take B of three). Music v1 intro -5 -> -40 / bed -27 dB; Mike: intro
+  too low, bed slightly loud -> v2 intro 0 -> -40 / bed -32 dB (Lounge Lover, loop 88.000-160.019 s x9, bed from
+  54.70 s) APPROVED and uploaded by him. The hand-built recipe became `skills/music-bed/` the same day (its output
+  verified sample-identical to the approved v2).
