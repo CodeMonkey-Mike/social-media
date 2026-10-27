@@ -51,7 +51,8 @@ You operate inside the `social-media` repo (working directory is the repo root).
    `> [!WARNING]` do-not-air box near the thesis.
 5. **`video-creation/assets/music/library.json`** — track metadata (bpm/key/mood/sections/license) + the
    per-file `analysis` blocks (aggression, opening/ending — `epic_hit` = the ends-big closer). Read the
-   `$analysis_note` key for semantics. This is where you PICK the mood-fitting tracks. (You pick + set
+   `$analysis_note` key for semantics. A track's `mike_note` is Mike's own after-listening verdict and BINDS
+   the shortlist (never shortlist a track for a use its note rules out). This is where you PICK the mood-fitting tracks. (You pick + set
    intent; you do NOT carve exact placement — see The Seam below.)
 6. **`video-creation/longform-edited/longform-edited.md` #10** (music covers EVERY chapter) and
    **`video-creation/skills/music-sourcing/SKILL.md` §2c** (music is PICKED from the analyzed catalog, no
@@ -101,6 +102,13 @@ You operate inside the `social-media` repo (working directory is the repo root).
    coverage-strategist's later job). Explainer bullets get a system-design container each (Convention 4);
    call out the video's centerpiece diagrams/charts. Charts guardrail: a number WE control → our own
    animated chart; real market/price data → a real-site receipt; NEVER an AI image as the source of a number.
+
+6b. **Decide the "go back and rewatch" lines (screenplay.md Register, Mike 2026-10-24).** After each GENUINELY
+   complex beat (dense mechanism, marquee diagram/chart), consider one 🗣️ `[COVER]` line inviting a replay, using
+   ONE of the three device wordings (J key on a computer / double tap the left side on a phone / back button on a
+   TV remote) and rotating the wording between uses. Zero to two per video, hard cap one per 5 minutes of
+   runtime, never after a plain claim or the hook. Add a 💬 `[NOTE]` naming the beat it points back to. Most
+   videos earn one or none.
 
 ## The Seam — you set the sonic identity, the placement agent carves it
 - **YOU (pre-production):** pick the tracks, set mood + subtle/aggressive intent per chapter, decide the

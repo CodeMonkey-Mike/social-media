@@ -8,7 +8,7 @@ and their comps are recycled after publish, so a cross-project import is a time 
   python video-creation/longform-edited/skills/comp-build/lint_comp_imports.py <comp.tsx>
 
 Walks every relative import starting at <comp.tsx>. ALLOWED targets: package imports (react, remotion,
-@remotion/*, ...), `./transitions/*` and `./captions/*` (the shared engines and caption infra under
+@remotion/*, ...), `./transitions/*`, `./captions/*` and `./effects/*` (the shared engines, caption infra and effect engines under
 remotion/src/), and the comp's OWN files (same PascalCase prefix as the comp: `<Project>*.ts[x]`).
 FAILS on any relative import outside that set (e.g. `./Kaspa40Charts`, `./EthereumRwa`, `./SmkFull`).
 Exit 0 = PASS · 1 = FAIL · 2 = usage. Machine line: COMP-IMPORTS-LINT PASS|FAIL files=N fails=N
@@ -19,7 +19,7 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 IMPORT_RE = re.compile(r"""(?:import|export)\s+(?:[^'";]*?\s+from\s+)?['"]([^'"]+)['"]|require\(\s*['"]([^'"]+)['"]\s*\)""")
-SHARED_DIRS = ("transitions", "captions")
+SHARED_DIRS = ("transitions", "captions", "effects")
 
 
 def resolve(base: Path, spec: str):
@@ -67,7 +67,7 @@ def main():
             own = len(rel.parts) == 1 and (rel.stem.startswith(prefix) or common >= 6)
             shared = top in SHARED_DIRS
             if not (own or shared):
-                fails.append(f"{f.name}: imports another project's file `{spec}` -> {rel.as_posix()} (only ./transitions/*, ./captions/* and {prefix}* are allowed)")
+                fails.append(f"{f.name}: imports another project's file `{spec}` -> {rel.as_posix()} (only ./transitions/*, ./captions/*, ./effects/* and {prefix}* are allowed)")
                 continue
             if target.is_file() and own:
                 queue.append(target)

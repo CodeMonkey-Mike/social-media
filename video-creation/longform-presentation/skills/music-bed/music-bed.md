@@ -1,6 +1,6 @@
 # music-bed: intro sting + elevator bed for a single-take screen-share
 
-**What it is:** the ONE audio step of the **VS Code coding format** (track doc, "The three formats"). The master is
+**What it is:** the ONE audio step of the **VS Code coding format** (track doc, "The four formats"). The master is
 delivered as recorded: no defumble, no desilence, picture stream-copied, the voice untouched. This skill only lays
 music under it:
 

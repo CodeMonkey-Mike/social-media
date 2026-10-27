@@ -285,8 +285,20 @@ def run_segment(state: BatchState, node: str, args: List[str]):
     return ig._run_streaming(cmd, lane=LANE_BATCH, node=node)
 
 
+def _claude_exe_fallback() -> Optional[str]:
+    """The real claude.exe when `claude` is not on PATH (2026-10-22: an npm self-update with sessions open left its
+    launchers as `.claude-XXXX` temp files, so every headless spawner died with FileNotFoundError; a Git Bash alias
+    does not reach a Python subprocess). Keep IDENTICAL in common.py, batch_graph.py and find_jobs.py."""
+    home = Path(os.environ.get("USERPROFILE") or Path.home())
+    for p in (Path(os.environ.get("APPDATA") or home / "AppData" / "Roaming") / "npm" / "node_modules" / "@anthropic-ai" / "claude-code" / "bin" / "claude.exe",
+              home / ".local" / "bin" / "claude.exe"):
+        if p.is_file():
+            return str(p)
+    return None
+
+
 def claude_cmd() -> List[str]:
-    exe = shutil.which("claude") or "claude"
+    exe = shutil.which("claude") or _claude_exe_fallback() or "claude"
     if exe.lower().endswith((".cmd", ".bat")):
         # npm's claude.CMD shim runs under cmd.exe, and cmd.exe CUTS a multi-line argument at its first newline:
         # every headless agent received only LINE ONE of its prompt (found 2026-10-01 on the longform graph, when

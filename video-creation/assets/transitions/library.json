@@ -1,5 +1,5 @@
 {
-  "$doc": "Reusable TRANSITION catalog — Remotion re-creations of the Swiftly Studio 850 pack. This JSON is the catalog (data); rendering code is in remotion/src/transitions/ (engine + registry). Blocks displacement amounts are the real per-clip Offset 'Shift Center To' vectors (extracted via _extract-blocks-clips.js, per-clip not a global closure). Block PATTERN source by family: Max/Medium use the pack's real `Gth - Disp Blocks Max.mp4`, Short uses `Gth - Disp Blocks Small.mp4` (converted to alpha masks in lib/masks/, white=show; fidelity near-1:1). STRIPS have NO source mask file, so their strip masks are reverse-engineered from each density's PREVIEW render (diff vs clean frame -> per-row bands -> alpha; fidelity approximate). Browse demos via browse/<CAT>/<VARIANT>/gallery.html. SCOPE: GLITCH/Blocks all 15 (Max/Medium/Short x3 + Strips 1x-6x).",
+  "$doc": "Reusable TRANSITION catalog — Remotion re-creations of the Swiftly Studio 850 pack. This JSON is the catalog (data); rendering code is in remotion/src/transitions/ (engine + registry). Blocks displacement amounts are the real per-clip Offset 'Shift Center To' vectors (extracted via _extract-blocks-clips.js, per-clip not a global closure). Block PATTERN source by family: Max/Medium use the pack's real `Gth - Disp Blocks Max.mp4`, Short uses `Gth - Disp Blocks Small.mp4` (converted to alpha masks in lib/masks/, white=show; fidelity near-1:1). STRIPS have NO source mask file, so their strip masks are reverse-engineered from each density's PREVIEW render (diff vs clean frame -> per-row bands -> alpha; fidelity approximate). Browse demos via browse/<CAT>/<VARIANT>/gallery.html. SCOPE: GLITCH/Blocks all 15 (Max/Medium/Short x3 + Strips 1x-6x). SCARY/Stinger 15 (scary-1..15, added 2026-10-25): third-party horror stinger plates from Mike's own assets folder, NOT Swiftly (no .prproj, origin and licence undocumented); the plate IS the effect, engine StingerPlate, built by _build-scary-rows.py. BEAR MARKETS 5 (added 2026-10-25, _build-bearmarkets-rows.py, the transitions Mike's 2022 video '044 Bear Markets' used): motion-shake-optics-2x-long / -3x-long (MotionShake + the full 60 s Corner Pin masters in lib/shake/), zoom-mirror-punch-in (MirrorZoomPunch, the Finzar Nice Camera Shake preset), scary-pumpkin-fire (AlphaPlate, the transparent jack-o-lantern fire plate lib/scary/scary-pumpkin-fire.webm), scary-6-normal75 (StingerPlate blend normal 0.6, the Bear Markets look of scary-6).",
   "$schema_note": "params.offsets = real Shift Center To deltas (count = intensity: Max 6 / Medium 4 / Short 2); opacityPeak 0.333; maskDir = the alpha-mask PNG sequence from the real Gth-Disp file; maskCount = frames; scaleH = Geometry2 vertical Scale Height (150). Engine: footage shown through the real moving block mask, wrap-shifted by each offset, faded by the Opacity envelope 0->100->0 with the A->B cut at the peak. meta: per-object info for PICKING a transition when editing — aspectRatios (which aspect it is authored for; add \"9:16\" when a vertical version exists), resolution, family, engineFile, description (plain language), energy (low|medium|high), durationSeconds, hasSound, fidelity, tags[], useWhen. Scan meta to choose a fitting transition for a given cut/aspect.",
   "transitions": [
     {
@@ -91370,6 +91370,102 @@
           "6x"
         ],
         "useWhen": "Showcasing a single still (receipt/article/chart) with an impact shake (~2s). Use over one image, not across a cut."
+      }
+    },
+    {
+      "id": "motion-shake-optics-2x-long",
+      "category": "MOTION",
+      "variant": "Shake Optics",
+      "intensity": "2x long",
+      "label": "Motion · Shake Optics · 2x long",
+      "engine": "MotionShake",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 6,
+      "params": {
+        "mode": "corner",
+        "track": "transitions/lib/shake/motion-shake-optics-2x-60s.json",
+        "trackStart": 0,
+        "trackSeconds": 59.96,
+        "lensK": -10
+      },
+      "sfx": null,
+      "demoSameScene": true,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Motion Shake Optics",
+        "engineFile": "remotion/src/transitions/engines/MotionShake.tsx",
+        "description": "Projective camera shake through a slight barrel lens (curvature -10) over ONE scene, intensity 2x, running the WHOLE baked 60 s handheld master (the 2 s row motion-shake-optics-2x stops at 2.08 s and freezes): a slow floaty sway with perspective breathing, never a jitter, up to 91 px side to side, 57 px up and down and 1.1 deg of roll over the full master. The corner pin's 3.4 % overscan plus the lens bulge keep every edge covered for all 60 s (checked key by key, tightest 38 px). It starts dead on the shot's first frame and stops dead on its last, no ease. Bear Markets held it on Mike's seated face 5.4 s at 0:23.8 and 2.7 s at 0:47.8, right after a montage / photo cut-away.",
+        "energy": "medium",
+        "durationSeconds": 6,
+        "hasSound": false,
+        "fidelity": "approximate",
+        "tags": [
+          "motion",
+          "shake",
+          "handheld",
+          "shake-optics",
+          "2x",
+          "long",
+          "face",
+          "sway",
+          "unsettling",
+          "horror",
+          "bear-markets"
+        ],
+        "useWhen": "A FACE hold that should feel unsettled (tension / horror register, the Bear Markets look): the shake wraps the whole face shot, typically 2.5 to 6 s, any hold up to 59.96 s (params.trackSeconds). Not a cut: no A/B swap, no SFX. Mount the engine for the shot (<Sequence from={shotStart} durationInFrames={hold}>; its clock IS the master time, so no ping-pong) with the face as outClip: hard on at the shot's first frame (Bear Markets hid that start under a Glass Blocks split), hard off at its last. durationSeconds (6 s) is only the demo / default hold. Copy lib/shake/motion-shake-optics-2x-60s.json into the project's public dir (lint_transition_assets.py checks it). params.trackStart offsets into the master (default 0, as the source) to vary repeated holds."
+      }
+    },
+    {
+      "id": "motion-shake-optics-3x-long",
+      "category": "MOTION",
+      "variant": "Shake Optics",
+      "intensity": "3x long",
+      "label": "Motion · Shake Optics · 3x long",
+      "engine": "MotionShake",
+      "kind": "geometric",
+      "fidelity": "approximate",
+      "durationSeconds": 6,
+      "params": {
+        "mode": "corner",
+        "track": "transitions/lib/shake/motion-shake-optics-3x-60s.json",
+        "trackStart": 0,
+        "trackSeconds": 59.96,
+        "lensK": -12
+      },
+      "sfx": null,
+      "demoSameScene": true,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Motion Shake Optics",
+        "engineFile": "remotion/src/transitions/engines/MotionShake.tsx",
+        "description": "Projective camera shake through a slight barrel lens (curvature -12) over ONE scene, intensity 3x, running the WHOLE baked 60 s handheld master (the 2 s row motion-shake-optics-3x stops at 2.08 s and freezes): a slow floaty sway with perspective breathing, never a jitter, up to 154 px side to side, 110 px up and down and 2.0 deg of roll over the full master. The corner pin's 3.2 % overscan plus the lens bulge keep every edge covered for all 60 s (checked key by key, tightest 22 px). It starts dead on the shot's first frame and stops dead on its last, no ease. Bear Markets held it on Mike's seated face 3.3 s at 1:01.4, right after a montage / photo cut-away.",
+        "energy": "medium",
+        "durationSeconds": 6,
+        "hasSound": false,
+        "fidelity": "approximate",
+        "tags": [
+          "motion",
+          "shake",
+          "handheld",
+          "shake-optics",
+          "3x",
+          "long",
+          "face",
+          "sway",
+          "unsettling",
+          "horror",
+          "bear-markets"
+        ],
+        "useWhen": "A FACE hold that should feel unsettled (tension / horror register, the Bear Markets look): the shake wraps the whole face shot, typically 2.5 to 6 s, any hold up to 59.96 s (params.trackSeconds). Not a cut: no A/B swap, no SFX. Mount the engine for the shot (<Sequence from={shotStart} durationInFrames={hold}>; its clock IS the master time, so no ping-pong) with the face as outClip: hard on at the shot's first frame (Bear Markets hid that start under a Glass Blocks split), hard off at its last. durationSeconds (6 s) is only the demo / default hold. Copy lib/shake/motion-shake-optics-3x-60s.json into the project's public dir (lint_transition_assets.py checks it). params.trackStart offsets into the master (default 0, as the source) to vary repeated holds."
       }
     },
     {
@@ -216639,6 +216735,970 @@
           "short"
         ],
         "useWhen": "Center-punch scene change (~0.44s): a playful bouncy zoom that overshoots to rest. Snappy version."
+      }
+    },
+    {
+      "id": "zoom-mirror-punch-in",
+      "category": "ZOOM",
+      "variant": "Mirror Punch",
+      "intensity": "In",
+      "label": "Zoom · Mirror Punch · In",
+      "engine": "MirrorZoomPunch",
+      "kind": "geometric",
+      "fidelity": "near-1:1",
+      "durationSeconds": 0.8667,
+      "params": {
+        "cut": 0.5,
+        "innerScale": 33.333333,
+        "scale": [
+          {
+            "t": 0,
+            "v": 100,
+            "ov": -227.272727,
+            "oi": 0.0001
+          },
+          {
+            "t": 0.333333,
+            "v": 300,
+            "iv": 5.827505,
+            "ii": 1
+          }
+        ],
+        "skew": [
+          {
+            "t": 0,
+            "v": 10,
+            "ov": -53.702493,
+            "oi": 0.0001
+          },
+          {
+            "t": 0.333333,
+            "v": 0,
+            "iv": -1.568856,
+            "ii": 1
+          }
+        ],
+        "skewAxis": 135,
+        "posY": [
+          {
+            "t": 0,
+            "v": 0.481481,
+            "ov": 0,
+            "oi": 0.769326
+          },
+          {
+            "t": 0.083333,
+            "v": 0.574074,
+            "iv": 0,
+            "ii": 0.488475,
+            "ov": 0,
+            "oi": 0.541135
+          },
+          {
+            "t": 0.15,
+            "v": 0.462963,
+            "iv": 0,
+            "ii": 0.634752,
+            "ov": 0,
+            "oi": 0.509929
+          },
+          {
+            "t": 0.233333,
+            "v": 0.485566,
+            "iv": 0,
+            "ii": 0.489362,
+            "ov": 0,
+            "oi": 0.335562
+          },
+          {
+            "t": 0.416667,
+            "v": 0.5,
+            "iv": 0,
+            "ii": 1
+          }
+        ],
+        "shutter": 360,
+        "shutterPhase": 0,
+        "samples": 16
+      },
+      "sfx": null,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Zoom Mirror Punch",
+        "engineFile": "remotion/src/transitions/engines/MirrorZoomPunch.tsx",
+        "description": "Mirror zoom punch on a cut TO the face (Finzar 'Nice Camera Shake' preset): the incoming shot lands as a 3x3 mirror-tiled kaleidoscope grid (a 1/3-size copy in the centre, true mirror copies around it), skewed 10 deg on the 135 deg diagonal and lifted 20 px, then slams to full frame (100 -> 300 %, a launch-fast long-landing ease, 0.333 s) while the skew settles to 0 and a vertical bounce (+80 / -40 / -16 px) settles by 0.417 s, all under a 360 deg motion-blur smear. The outgoing shot is untouched: a hard cut into the punch.",
+        "energy": "high",
+        "durationSeconds": 0.8667,
+        "hasSound": false,
+        "fidelity": "near-1:1",
+        "tags": [
+          "zoom",
+          "punch",
+          "mirror",
+          "kaleidoscope",
+          "tile",
+          "skew",
+          "bounce",
+          "face",
+          "cut-in",
+          "motion-blur",
+          "finzar",
+          "bear-markets"
+        ],
+        "useWhen": "A cover (b-roll / still) -> FACE cut-in with impact, as Bear Markets did at 0:54.3 (masked-man b-roll -> Mike): role face-cut. The window is centred on the cut: the outgoing shot plays untouched for 0.43 s, the face appears EXACTLY on the TransitionClip cut frame and punches for 0.42 s. A deliberate accent: a few per video, never on every face cut, never on a text container, chart or card. No SFX (none in the source); pair a catalog impact only if the plan wants one. Over live video the engine draws the face 9 times per motion-blur sample (16) for the 13 punch frames: heavier than a still, fine for one beat."
+      }
+    },
+    {
+      "id": "scary-1",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "1",
+      "label": "Scary · Stinger · 1",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 2.44,
+      "params": {
+        "plate": "transitions/lib/scary/scary-1.mp4",
+        "plateFps": 25,
+        "cut": 0.3819,
+        "blend": "screen",
+        "visible": [
+          11,
+          47
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-1.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (ghost): a pale long-haired ghost woman rushes in black-and-white, a cold white blow-out, an orange fire flash, a second white-out, then her hollow-eyed face. The hidden cut sits in the white-out at 0.93 s of the 2.44 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 2.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "ghost",
+          "black-and-white",
+          "cold-white",
+          "orange",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix ghost with another subject). The flash fires -0.30 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-2",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "2",
+      "label": "Scary · Stinger · 2",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 2.88,
+      "params": {
+        "plate": "transitions/lib/scary/scary-2.mp4",
+        "plateFps": 25,
+        "cut": 0.4059,
+        "blend": "screen",
+        "visible": [
+          2,
+          52
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-2.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (ghost): a hooded nun with a pale mask face rushes in, a warm lens flare, a white flash, her face lit orange-red with glowing white eyes, a second white-out, an orange glow. The hidden cut sits in the white-out at 1.17 s of the 2.88 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 2.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "ghost",
+          "dark-grey",
+          "orange",
+          "red",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix ghost with another subject). The flash fires -0.27 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-3",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "3",
+      "label": "Scary · Stinger · 3",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 2.36,
+      "params": {
+        "plate": "transitions/lib/scary/scary-3.mp4",
+        "plateFps": 25,
+        "cut": 0.65,
+        "blend": "screen",
+        "visible": [
+          7,
+          48
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-3.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (clown): an evil clown in fire orange and red: a red smear, a white blow-out, a close-up of the red-nosed grin, a second white-out, the clown in flames. The hidden cut sits in the white-out at 1.53 s of the 2.36 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 2.36,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "clown",
+          "fire-orange",
+          "red",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix clown with another subject). The flash fires +0.33 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-4",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "4",
+      "label": "Scary · Stinger · 4",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1.88,
+      "params": {
+        "plate": "transitions/lib/scary/scary-4.mp4",
+        "plateFps": 25,
+        "cut": 0.5545,
+        "blend": "screen",
+        "visible": [
+          5,
+          41
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-4.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (mask): a Scream ghostface mask rushes in black-and-white, a hard white blow-out, a pink-orange flare, then a black-and-white close-up of the mask. The hidden cut sits in the white-out at 1.03 s of the 1.88 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 1.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "mask",
+          "black-and-white",
+          "pink-orange",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix mask with another subject). The flash fires +0.10 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-5",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "5",
+      "label": "Scary · Stinger · 5",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 2.2,
+      "params": {
+        "plate": "transitions/lib/scary/scary-5.mp4",
+        "plateFps": 25,
+        "cut": 0.2846,
+        "blend": "screen",
+        "visible": [
+          7,
+          42
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-5.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (ghoul): a cold blue-white blow-out, an old white-haired hag with hollow eyes, a red-eyed warm flare, then a fire-orange flare fading to red. The hidden cut sits in the white-out at 0.63 s of the 2.2 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 2.2,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "ghoul",
+          "blue-white",
+          "red",
+          "orange",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix ghoul with another subject). The flash fires -0.47 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-6",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "6",
+      "label": "Scary · Stinger · 6",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1.24,
+      "params": {
+        "plate": "transitions/lib/scary/scary-6.mp4",
+        "plateFps": 25,
+        "cut": 0.4583,
+        "blend": "screen",
+        "visible": [
+          2,
+          24
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-6.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (pumpkin): a carved jack-o-lantern pumpkin rushes in grey, lit fire orange, a single white flash, a close-up of the grin, fire streaks (the shortest plate). The hidden cut sits in the white-out at 0.57 s of the 1.24 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 1.24,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "pumpkin",
+          "fire-orange",
+          "grey",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix pumpkin with another subject). The flash fires -0.07 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-6-normal75",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "6 normal75",
+      "label": "Scary · Stinger · 6 normal 75",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "approximate",
+      "durationSeconds": 1.24,
+      "params": {
+        "plate": "transitions/lib/scary/scary-6.mp4",
+        "plateFps": 25,
+        "cut": 0.4583,
+        "blend": "normal",
+        "opacity": 0.6,
+        "visible": [
+          2,
+          24
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-6.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "The Bear Markets look of scary-6 (pumpkin): the same carved jack-o-lantern stinger plate and baked sound, laid over the cut with a NORMAL blend at 60 % (the gamma-space stand-in for Premiere's linear-light Normal 75 %): the plate's black head and tail DIM the footage for the whole 1.24 s, the grey grin rushes in over it, the white flash blows the frame out with the scene still faintly showing through. The swap sits in the white-out at 0.57 s.",
+        "energy": "high",
+        "durationSeconds": 1.24,
+        "hasSound": true,
+        "fidelity": "approximate",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "pumpkin",
+          "fire-orange",
+          "grey",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "normal-blend",
+          "dim",
+          "bear-markets"
+        ],
+        "useWhen": "Halloween / horror register ONLY. Pick it over scary-6 (screen, the face haunts the footage) when the footage should DARKEN under the stinger: a FACE-TO-FACE cut (same speaker, new set) on a held punch-in, exactly Bear Markets 1:44.6 (Mike zoomed 100 -> 200 % first by the effects theme's hw-zoom-punch, then this over the cut). The scene stays about 40 % visible through the flash, so a cover cut whose change must vanish wants scary-6. Same timing as scary-6: the flash fires -0.07 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds). One subject per video (pumpkin)."
+      }
+    },
+    {
+      "id": "scary-7",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "7",
+      "label": "Scary · Stinger · 7",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 2.48,
+      "params": {
+        "plate": "transitions/lib/scary/scary-7.mp4",
+        "plateFps": 25,
+        "cut": 0.7603,
+        "blend": "screen",
+        "visible": [
+          2,
+          53
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-7.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (clown): a sharp-toothed clown with a red nose, a cyan-white flash, a white blow-out, red and pink smears, a yellow-white close-up, then a long white-out. The hidden cut sits in the white-out at 1.87 s of the 2.48 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 2.48,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "clown",
+          "red",
+          "white",
+          "yellow",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix clown with another subject). The flash fires +0.63 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-8",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "8",
+      "label": "Scary · Stinger · 8",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1.44,
+      "params": {
+        "plate": "transitions/lib/scary/scary-8.mp4",
+        "plateFps": 25,
+        "cut": 0.5119,
+        "blend": "screen",
+        "visible": [
+          6,
+          31
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-8.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (skull): a skull rushes in grey, lit fire orange, a white blow-out, a white-hot skull, a red smear, then a grey skull blur. The hidden cut sits in the white-out at 0.73 s of the 1.44 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 1.44,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "skull",
+          "fire-orange",
+          "red",
+          "grey",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix skull with another subject). The flash fires +0.00 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-9",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "9",
+      "label": "Scary · Stinger · 9",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1.88,
+      "params": {
+        "plate": "transitions/lib/scary/scary-9.mp4",
+        "plateFps": 25,
+        "cut": 0.3364,
+        "blend": "screen",
+        "visible": [
+          7,
+          38
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-9.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (ghoul): a skull in cold blue-white, a white blow-out, a warm skull, a second white-out, a rotting zombie face with bared teeth in fire, then grey. The hidden cut sits in the white-out at 0.63 s of the 1.88 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 1.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "ghoul",
+          "blue-white",
+          "fire-orange",
+          "grey",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix ghoul with another subject). The flash fires -0.30 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-10",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "10",
+      "label": "Scary · Stinger · 10",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1.88,
+      "params": {
+        "plate": "transitions/lib/scary/scary-10.mp4",
+        "plateFps": 25,
+        "cut": 0.5,
+        "blend": "screen",
+        "visible": [
+          9,
+          36
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-10.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (demon): a screaming demon woman with sharp teeth: a grey face, a white blow-out, orange glowing eyes, a second white-out, a red close-up, fire. The hidden cut sits in the white-out at 0.93 s of the 1.88 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 1.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "demon",
+          "red",
+          "fire-orange",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix demon with another subject). The flash fires +0.00 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-11",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "11",
+      "label": "Scary · Stinger · 11",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1.56,
+      "params": {
+        "plate": "transitions/lib/scary/scary-11.mp4",
+        "plateFps": 25,
+        "cut": 0.5109,
+        "blend": "screen",
+        "visible": [
+          3,
+          30
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-11.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (ghoul): a gaunt hollow-eyed corpse face in black-and-white, pink on red, a fire flash, a white skull face, a white blow-out, orange eyes on red. The hidden cut sits in the white-out at 0.80 s of the 1.56 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 1.56,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "ghoul",
+          "black-and-white",
+          "red",
+          "orange",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix ghoul with another subject). The flash fires +0.00 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-12",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "12",
+      "label": "Scary · Stinger · 12",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 2.2,
+      "params": {
+        "plate": "transitions/lib/scary/scary-12.mp4",
+        "plateFps": 25,
+        "cut": 0.3308,
+        "blend": "screen",
+        "visible": [
+          4,
+          50
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-12.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (skull): a skull in a fire flash, a white blow-out, a white skull, red streaks, a red-orange skull close-up, then a black-and-white skull close-up. The hidden cut sits in the white-out at 0.73 s of the 2.2 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 2.2,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "skull",
+          "fire-orange",
+          "red",
+          "black-and-white",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix skull with another subject). The flash fires -0.37 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-13",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "13",
+      "label": "Scary · Stinger · 13",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1.64,
+      "params": {
+        "plate": "transitions/lib/scary/scary-13.mp4",
+        "plateFps": 25,
+        "cut": 0.5312,
+        "blend": "screen",
+        "visible": [
+          2,
+          31
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-13.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (skull): grey motion streaks, a white skull close-up, an orange skull, a white blow-out, the skull again, grey blur. The hidden cut sits in the white-out at 0.87 s of the 1.64 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 1.64,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "skull",
+          "white",
+          "orange",
+          "grey",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix skull with another subject). The flash fires +0.03 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-14",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "14",
+      "label": "Scary · Stinger · 14",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1.88,
+      "params": {
+        "plate": "transitions/lib/scary/scary-14.mp4",
+        "plateFps": 25,
+        "cut": 0.1545,
+        "blend": "screen",
+        "visible": [
+          1,
+          40
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-14.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (demon): a FLASH-IN plate, white within its first frames: a demon woman with glowing orange-red eyes and long dark hair, a second white-out, an orange streak. The hidden cut sits in the white-out at 0.30 s of the 1.88 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 1.88,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "demon",
+          "red",
+          "orange",
+          "white",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix demon with another subject). The flash fires -0.63 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-15",
+      "category": "SCARY",
+      "variant": "Stinger",
+      "intensity": "15",
+      "label": "Scary · Stinger · 15",
+      "engine": "StingerPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 1.4,
+      "params": {
+        "plate": "transitions/lib/scary/scary-15.mp4",
+        "plateFps": 25,
+        "cut": 0.5488,
+        "blend": "screen",
+        "visible": [
+          6,
+          31
+        ]
+      },
+      "sfx": "transitions/lib/sfx-scary-15.mp3",
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Stinger",
+        "engineFile": "remotion/src/transitions/engines/StingerPlate.tsx",
+        "description": "Horror stinger plate (skull): a pink-red fanged skull lit fire yellow, a white blow-out, the fanged skull in fire, a pink skull, grey. The hidden cut sits in the white-out at 0.77 s of the 1.4 s plate, then it fades to black. Real third-party footage screen-composited over the cut (black is see-through, the face haunts the footage), with its own baked stinger sound.",
+        "energy": "high",
+        "durationSeconds": 1.4,
+        "hasSound": true,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "skull",
+          "pink",
+          "red",
+          "fire-orange",
+          "jump-scare",
+          "stinger",
+          "flash",
+          "white-out"
+        ],
+        "useWhen": "Halloween / horror register ONLY, never in a normal video: a jump-scare scene change or an AI-still hit in a scary video, never on a text container. One subject per video (do not mix skull with another subject). The flash fires +0.07 s from the TransitionClip cut frame; the baked sound starts at the window start (the post-mix puts it at tc - duration_s / 2, so duration_s must equal durationSeconds)."
+      }
+    },
+    {
+      "id": "scary-pumpkin-fire",
+      "category": "SCARY",
+      "variant": "Fire Plate",
+      "intensity": "pumpkin",
+      "label": "Scary · Fire Plate · Pumpkin",
+      "engine": "AlphaPlate",
+      "kind": "footage",
+      "fidelity": "near-1:1",
+      "durationSeconds": 10.1667,
+      "params": {
+        "plate": "transitions/lib/scary/scary-pumpkin-fire.webm",
+        "plateFps": 30,
+        "cut": 0.903,
+        "fadeIn": 1,
+        "fadeOut": 1,
+        "opacity": 1,
+        "scale": 1.13,
+        "offsetX": 0,
+        "offsetY": 15
+      },
+      "sfx": null,
+      "used_in": [],
+      "meta": {
+        "aspectRatios": [
+          "16:9"
+        ],
+        "resolution": "1920x1080",
+        "family": "Scary Fire Plate",
+        "engineFile": "remotion/src/transitions/engines/AlphaPlate.tsx",
+        "description": "Horror act-break plate (pumpkin): real transparent footage of a carved jack-o-lantern whose face glows, then bursts into fire (from +0.7 s) that spreads over the frame (90 % opaque at +1.9 s, 99 % at the swap), laid over the cut at 113 % (y +15 px) after a 1.0 s dissolve in from nothing. The scene underneath keeps playing around the pumpkin until the fire takes the frame; the A->B swap hides in the fire at +9.1667 s, then the plate dissolves away over the incoming scene in 1.0 s. The source has NO sound.",
+        "energy": "high",
+        "durationSeconds": 10.1667,
+        "hasSound": false,
+        "fidelity": "near-1:1",
+        "tags": [
+          "scary",
+          "halloween",
+          "horror",
+          "pumpkin",
+          "fire-orange",
+          "fire",
+          "alpha",
+          "plate",
+          "act-break",
+          "chapter-break",
+          "bear-markets"
+        ],
+        "useWhen": "Halloween / horror register ONLY: the ACT BREAK into a new chapter, once per video (Bear Markets ran it into its 1929-crash chapter at 1:16.4 while Mike kept talking under it). It is LONG (10.1667 s): it fades in over the end of the outgoing chapter (the VO keeps running) and the chapter change happens at its fade-out, +4.07 s from the TransitionClip cut frame (the plate starts -5.10 s from it): pass cutFrame = chapter change -4.07 s, or mount it in its own Sequence starting 9.1667 s before the change. Role scene-cut, bucket = the cut's own (face when it starts over Mike); never a card, container, chart or clip insert. Subject pumpkin (one subject per video: it pairs with scary-6 / scary-6-normal75). No sound in the source (sfx null): pair a catalog fire whoosh or impact in the plan if wanted."
       }
     }
   ]

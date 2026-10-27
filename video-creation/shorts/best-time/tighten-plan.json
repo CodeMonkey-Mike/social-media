@@ -1,0 +1,96 @@
+{
+  "batch": "best-time",
+  "authored_by": "tighten-strategist agents via batch orchestrator 2026-10-27",
+  "clips": [
+    {
+      "id": "ton-billion-users-at-1-26",
+      "n": 2,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_end": 885.08
+        },
+        {
+          "segment_index": 1,
+          "new_end": 1073.4
+        },
+        {
+          "segment_index": 2,
+          "new_start": 1083.78
+        }
+      ],
+      "boundary_relock_note": "seg0: 'play.' ends 885.02, old end 885.0 clipped it; new end 885.08 (next word 885.14). seg1: 'high' is Whisper-garbled 'Hi a' ending 1073.18, old end 1073.1 clipped it; new end 1073.4 (2 s of silence follows). seg2: start trim drops the 'Yeah, I mean,' tic so the close opens on 'I don't know if you can get better than this' (relock, not a removal).",
+      "removals": [
+        {
+          "start": 862.06,
+          "end": 865.56,
+          "why": "false start + stall: 'so telegram is [pause]' before 'telegram is the one that started The Open Network'",
+          "reason": "false start + stall: 'so telegram is [pause]' before 'telegram is the one that started The Open Network'"
+        },
+        {
+          "start": 879.78,
+          "end": 880.78,
+          "why": "restart: 'So I mean, they have,' before 'they have the distribution'",
+          "reason": "restart: 'So I mean, they have,' before 'they have the distribution'"
+        },
+        {
+          "start": 882.78,
+          "end": 883.3,
+          "why": "hesitation stall: 'It's just,' before 'I think it's a really good play'",
+          "reason": "hesitation stall: 'It's just,' before 'I think it's a really good play'"
+        },
+        {
+          "start": 855.8,
+          "end": 856.68,
+          "why": "filler tics: 'right, I mean' between 'a number of reasons' and 'especially the distribution' (most dispensable, drop first if the gate trips)",
+          "reason": "filler tics: 'right, I mean' between 'a number of reasons' and 'especially the distribution'"
+        }
+      ],
+      "removed_seconds_est": 5.58,
+      "removed_pct_est": 11.7,
+      "notes": "Peak beat 1057.3-1073.1 untouched (its 'you know, like up here, like' and the 'is probably gonna' restart stay in: protected). The 3 s pause inside Whisper's 'for' (851.70-854.78) is left to desilence. Caption fixes: 'beat us all time. Hi' = 'beat its all-time high'; '$1 .26 / $7 .88' = '$1.26 / $7.88'; 'the open network to UN' = 'The Open Network, TON'; 'a built and grand wallet is roll out' = 'the built-in Gram wallet is rolled out'; ton/gram = TON/Gram."
+    },
+    {
+      "id": "last-chance-to-get-ahead-buy-assets-now",
+      "n": 3,
+      "variant": "full",
+      "boundary_relock": [
+        {
+          "segment_index": 0,
+          "new_start": 296.46
+        }
+      ],
+      "boundary_relock_note": "seg0: old start 296.4 fell inside the dangling 'But' (296.00-296.46); new start 296.46 opens on 'I do think this is going to be one of the last opportunities'. seg1 unchanged ('Just' 695.86, 'now.' ends 719.68, next word 720.46).",
+      "removals": [
+        {
+          "start": 297.68,
+          "end": 297.9,
+          "why": "filler: 'like' in 'going to be like one of the last opportunities'",
+          "reason": "filler: 'like' in 'going to be like one of the last opportunities'"
+        },
+        {
+          "start": 696.5,
+          "end": 699.1,
+          "why": "restatement: first 'one year ago,' (said again at 705.70 after 'in October 2026'); includes the 696.5-698.2 pause",
+          "reason": "restatement: first 'one year ago,' (said again at 705.70 after 'in October 2026')"
+        },
+        {
+          "start": 712.46,
+          "end": 714.36,
+          "why": "restatement: 'It was like, one year ago, that's how we were talking' repeats the 'maybe that'll happen a year or two or three years from now' beat",
+          "reason": "restatement: 'It was like, one year ago, that's how we were talking' repeats the previous beat"
+        },
+        {
+          "start": 702.12,
+          "end": 702.96,
+          "why": "restatement: 'right now,' after 'currently happening' doubles 'talking about now' (most dispensable, drop first if the gate trips)",
+          "reason": "restatement: 'right now,' after 'currently happening' doubles 'talking about now'"
+        }
+      ],
+      "removed_seconds_est": 5.16,
+      "removed_pct_est": 10.7,
+      "notes": "Both peak beats untouched: 313.6-330.52 (so the 'So like you got to, you got to' restart stays, protected) and 715.22-719.9. The Whisper-stretched pauses 301.9-305.2, 308.4-309.5 are left to desilence. Result reads: 'I do think this is going to be one of the last opportunities... Just think, the things that I'm talking about now that are currently happening, in October 2026, one year ago, it wasn't like this. This was like, oh, maybe that'll happen a year or two or three years from now. This wasn't like this. And now it's changed. Imagine what it's going to be like one year from now.'"
+    }
+  ]
+}

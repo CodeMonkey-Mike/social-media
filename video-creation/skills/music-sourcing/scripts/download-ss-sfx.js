@@ -81,7 +81,9 @@ function arg(flag, def) { const i = process.argv.indexOf(flag); return i > -1 ? 
     await page.screenshot({ path: path.join(SHOT, `${id}-2-afterclick.png`) }).catch(() => {});
 
     // format / confirm modal — prefer WAV, else MP3, else generic Download
-    for (const sel of ['[role="dialog"] button:has-text("WAV")', 'button:has-text("Download WAV")',
+    // 2026-10-16: the confirm modal is NOT role=dialog; its button reads "Download Sound Effect". The generic
+    // 'button:has-text("Download")' below matched the page's own Download button behind the modal first.
+    for (const sel of ['button:has-text("Download Sound Effect")', '[role="dialog"] button:has-text("WAV")', 'button:has-text("Download WAV")',
                        '[role="menuitem"]:has-text("WAV")', '[role="dialog"] button:has-text("MP3")',
                        'button:has-text("Download MP3")', '[role="menuitem"]:has-text("MP3")',
                        '[role="dialog"] button:has-text("Download")', 'button:has-text("Download")']) {

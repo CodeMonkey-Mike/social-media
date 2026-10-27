@@ -34,5 +34,11 @@ canonical caption skill `video-creation/skills/captions/captions.md`; THIS file 
   with these rules (windows = FACE holds > 5 s from AS-RECORDED, montserrat 2/4, the project's mishear list applied)
   and writes `remotion/src/<Project>Captions.ts` + `assets/captions.json`. `--caption-windows a-b` on the invocation
   adds the cold-open exception. The comp gates rendering by `CAPTION_WINDOWS` and routes every `t` through `sh()`.
+- **Wider caption scope, a per-video Mike call (2026-10-19, evals):** `run.py longform --project <p> --caption-scope
+  all-faces,envato` (persisted in GRAPH-PROGRESS.json `settings.caption_scope`; `--caption-scope default` clears it).
+  `all-faces` captions EVERY face hold, the < 5 s ones too; `envato` also captions every `envato-video` beat of
+  COVER-PLAN.json (the sidecar lists them as `cover_windows`, and the comp flags exactly those covers `cap: true` so
+  `lint_covers.py` passes). Containers, diagrams, charts, receipts and AI stills stay caption-free either way. Set it
+  before the `captions` node runs; changing it after means `--redo captions`.
 - **History of this number** (so we don't churn blindly): 3/5 (shorts default) -> 2/4 -> 1/3 -> **1/2**.
   Update the number HERE and re-run the builder; do not hard-code it in the comp.

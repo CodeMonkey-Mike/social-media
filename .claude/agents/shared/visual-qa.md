@@ -45,6 +45,11 @@ You operate inside the `social-media` repo (working directory is the repo root).
    **Montserrat** (rounded — the 's'/'i' are the tell; Arial Black is WRONG). Wrong font = FAIL.
 4. **PALETTE / STYLE DRIFT.** Green #00e68a + cyan #00c2ff (distinct, not one teal), gold #ffd700, red #ff4060,
    muted #505a6e eyebrow (NOT colored), green→cyan gradient divider present. Any drift = FAIL.
+   **CONTAINER THEME = LIGHT (only when the dispatch says so; README section "LIGHT THEME"):** judge containers,
+   diagrams and chart states against `container-canonical-light.css` instead: page #F6F4EE, white cards with a
+   hairline border, text #14161A, accents #007A55 / #006A9E / #8F6500 / #C41E3A, glows replaced by tinted rings. A
+   light frame is then the intended look (rule 2 "white screen = FAIL" applies to RECEIPTS and b-roll only); a DARK
+   container in a light video, or a glow smear on white, is the drift that FAILS.
 5. **CAPTIONS.** Lowercase, phrase-grouped (2 words normally, up to 4 if all ≤4 chars — not single words),
    bottom-center, thick black stroke, readable over the underlying image.
 6. **CONTENT.** Does the on-screen text match the intended text (spelling, tickers: ZBCN/TAO/Kaspa, numbers)?

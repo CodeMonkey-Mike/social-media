@@ -1,14 +1,20 @@
 ---
 name: x-post-thread
-description: Post the next pending thread atomically from data/x-threads.json via the Playwright script.
+description: Post the next pending thread atomically from data/x-threads.json via the Python Playwright script.
 ---
 
 ## Invocation
 
 ```powershell
 cd C:\Users\mnede\Documents\Claude\social-media\schedule-tweets
-node scripts/post-thread.js
+python -u scripts/post_thread.py
 ```
+
+`post_thread.py` is the ONLY thread poster. The JavaScript twin (`post-thread.js`) was deleted
+2026-10-21 (Python-only repo rule, `CLAUDE.md` "Python-first"): the port was live-blessed
+2026-08-12 and carried every fix since (the `tweetTextarea_5` typeahead fix, 2026-10-10), so the
+JS had been dead rollback code for two months. Historical notes below that name `post-thread.js`
+describe behavior the port reproduces 1:1.
 
 Picks up the first thread with `status === "pending"`, posts the entire chain atomically using X's native thread composer, and writes `status: "posted"`, `posted_at`, `thread_root_url`, and per-tweet `posted_url` back to `data/x-threads.json`.
 

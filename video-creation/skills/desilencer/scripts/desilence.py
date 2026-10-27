@@ -116,7 +116,25 @@ def regions(lv):
     return coalesce(regs)
 
 
-def zone_cuts(regs, split, sil_pre, sil_post, pad, pad_head=None):
+def face_windows(src, total):
+    """The NON-black picture spans = the FACE windows of a cover-blacked spine (cover-blackout paints every
+    COVER beat black, so black = cover). ffmpeg blackdetect (>= 0.1 s black, pixel threshold 0.10); a face
+    sliver under 0.1 s is ignored. Used by --pad-cover-only."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-i", src, "-an", "-vf", "blackdetect=d=0.1:pix_th=0.10",
+                        "-f", "null", "-"], capture_output=True, text=True)
+    black = [(float(a), float(b)) for a, b in
+             re.findall(r"black_start:([\d.]+)\s+black_end:([\d.]+)", r.stderr)]
+    face, cur = [], 0.0
+    for a, b in sorted(black):
+        if a - cur > 0.1:
+            face.append((cur, a))
+        cur = max(cur, b)
+    if total - cur > 0.1:
+        face.append((cur, total))
+    return face
+
+
+def zone_cuts(regs, split, sil_pre, sil_post, pad, pad_head=None, face=None):
     """For each SILENCE region, cut it if it is >= the zone's min-silence. Keep shorter gaps
     (natural cadence). pad leaves a sliver of silence AFTER the word that ends the region (the tail
     pad); pad_head leaves one BEFORE the word that starts the next (default = pad, symmetric).
@@ -124,17 +142,21 @@ def zone_cuts(regs, split, sil_pre, sil_post, pad, pad_head=None):
     never cuts into a word tail, but a word-final release after a closure (the k+s of "banks", the
     j of "age") is a < 80 ms island that MIN_AUD folds into the silence: measured on
     history-of-crypto (2026-10-14) such releases spill up to 55 ms past a 100 ms tail pad, so a
-    track that cares about word endings runs a 200 ms tail pad (longform-presentation preset)."""
+    track that cares about word endings runs a 200 ms tail pad (longform-presentation preset).
+    face = FACE windows (--pad-cover-only, Mike 2026-10-19): a pad is kept only on COVER picture, so the tail
+    pad is dropped when the cut starts inside a face window and the head pad when it ends inside one (a face
+    scene gets the plain cut, exactly as with pad 0)."""
     if pad_head is None:
         pad_head = pad
+    in_face = (lambda t: any(fa <= t < fz for fa, fz in face)) if face else (lambda t: False)
     cuts = []
     for typ, s, e in regs:
         if typ != 'sil':
             continue
         zmin = sil_pre if s < split else sil_post
         if (e - s) >= zmin:
-            a = s + pad
-            b = max(a, e - pad_head)
+            a = s + (0.0 if in_face(s) else pad)
+            b = max(a, e - (0.0 if in_face(e) else pad_head))
             if b - a > 0.02:
                 cuts.append((a, b))
     return cuts
@@ -259,6 +281,9 @@ def main():
                          "unless --pad-head); default 0")
     ap.add_argument("--pad-head", type=float, default=None,
                     help="silence to leave BEFORE the word after each cut (sec); default = --pad")
+    ap.add_argument("--pad-cover-only", action="store_true",
+                    help="keep --pad/--pad-head only on COVER (black) picture; a cut edge inside a FACE window "
+                         "(non-black, blackdetect) gets no pad. For cover-blacked longform-edited spines.")
     ap.add_argument("--no-declick", action="store_true", help="disable 8 ms join fades (NOT advised)")
     ap.add_argument("--nvenc", action="store_true", help="use h264_nvenc --bps instead of libx264 crf18")
     ap.add_argument("--bps", default="2M")
@@ -281,7 +306,14 @@ def main():
     total = dur(args.src)
     vid = has_video(args.src)
     regs = regions(levels(args.src))
-    cuts = zone_cuts(regs, split, pre, post, args.pad, args.pad_head)
+    face = None
+    if args.pad_cover_only and (args.pad or args.pad_head):
+        if not vid:
+            print("--pad-cover-only needs a video stream (black = cover)"); sys.exit(1)
+        face = face_windows(args.src, total)
+        print(f"pad-cover-only: {len(face)} FACE window(s) get no pad: "
+              + ", ".join(f"{a:.2f}-{b:.2f}" for a, b in face))
+    cuts = zone_cuts(regs, split, pre, post, args.pad, args.pad_head, face)
     keeps, removed = complement(cuts, total)
 
     zinfo = (f"zones: <{split}s>={pre*1000:.0f}ms / >={post*1000:.0f}ms"
@@ -293,6 +325,8 @@ def main():
         with open(args.map_out, "w", encoding="utf-8") as f:
             json.dump({"src_total": total, "removed": removed, "out_total": total - removed,
                        "cuts": [[round(a, 3), round(b, 3)] for a, b in sorted(cuts)],
+                       **({"pad_cover_only": True, "face_windows": [[round(a, 3), round(b, 3)] for a, b in face]}
+                          if face is not None else {}),
                        "keeps": [[round(a, 3), round(b, 3)] for a, b in keeps]}, f, indent=1)
         print("map ->", args.map_out)
 

@@ -1,0 +1,260 @@
+{
+  "project": "inference",
+  "authored": "2026-10-26 by music-placement-strategist against spine/ALL.d.desilenced.mp4 (190.40 s, 30 fps, Adobe Enhance audio swapped in place). Every time is a FINAL-spine second, pre-pause; mix_music.py routes them through sh(). The only pause is CLIP-3 (5.1 s at 171.32), so the paused video is 195.50 s. Chapter map + FACE windows from AS-RECORDED.md; the one-track ruling of Mike (2026-10-25) from PROJECT-LOG.md and SCREENPLAY.md MUSIC-MOOD-PLAN.",
+  "vo_measured": {
+    "file": "video-creation/longform-edited/media/inference/spine/ALL.d.desilenced.mp4",
+    "integrated_lufs": -22.1,
+    "lra_lu": 2.0,
+    "method": "ffmpeg -filter_complex ebur128=peak=true"
+  },
+  "level_rule": "seat = VO LUFS (-22.1) minus the bed LUFS measured on the exact file region each chapter plays (ffmpeg -ss/-t ebur128) plus level_db_under_vo; volume = 10**(dB/20). Measured regions: CH1 file 2.53-30.13 = -11.4 LUFS; CH2 30.13-69.61 = -10.2; CH3 69.61-115.73 = -10.3; CH4 115.73-141.47 + 121.26-130.43 = about -8.8; CH5 130.43-141.47 + 141.47-177.84 = about -7.45. Seats: CH1 -27.7 dB (-17 under), CH2/CH3 -29.9 dB (-18 under), CH4 -31.3 dB (-18 under), CH5 -31.7 dB (-17 under). The track gets about 4 LU hotter across its length, so ONE constant gain would drift the close to -13 under; the seats hold it level. Every row carries the SAME remotion_gain_db (-27.7, the CH1 seat) so mix_music.py merges the five rows into ONE placement without inserting its own overlapping step windows; the chapter seats are cumulative relative automation windows that run past the end of the video (no ramp back up at the end).",
+  "variety_gate": {
+    "report": "usage_ledger.py report --what music --exclude-project inference, run 2026-10-26. Previous video growth-vs-product: BLOCKED innovation, proton-streams, up-in-the-atmos. Avoid (last three videos): born-every-minute, future-trip, going-shopping-again, it-comes-to-this, lights-out, searching-for-signs-of-life, underworlds, wonderworld.",
+    "pick": "story-of-my-life: NOT blocked and NOT in the last three videos. The ledger shows it used ONCE before, on every-job (2026-10-08, subtle_bed + epic_close, CH7-CH8), five videos back, so it is in the least-recently-used tier, not fresh. It is the explicit pick of Mike (PROJECT-LOG 2026-10-25: the exact track of the 2023 video, the only one for the whole video), so fit and the ruling decide. No usage_waivers entry is needed: it is not the previous video track, so the check has nothing to fail.",
+    "mike_notes_read": "story-of-my-life carries no mike_note in library.json. The catalog mike_notes (old-moon, lights-out) are on tracks this plan does not use."
+  },
+  "track": {
+    "title": "Story Of My Life",
+    "artist": "Bobo Renthlei",
+    "id": "story-of-my-life",
+    "file": "video-creation/assets/music/Story Of My Life/Bobo_Renthlei_Story_Of_My_Life_instrumental_3_02.mp3",
+    "duration_sec": 182.84,
+    "bpm": 95,
+    "bar_sec": 2.526316,
+    "key": "E major",
+    "license_code": "JHUOMEAL020BQT7K",
+    "role": "Bed A, the ONLY bed, frame 0 to the last frame (Mike, 2026-10-25). Instrumental mix, the catalog primary_file whose analysis block this plan carves by."
+  },
+  "energy_profile": {
+    "video-creation/assets/music/Story Of My Life/Bobo_Renthlei_Story_Of_My_Life_instrumental_3_02.mp3": {
+      "low_energy_regions": [
+        [
+          0,
+          10
+        ],
+        [
+          176,
+          182.84
+        ]
+      ],
+      "high_energy_regions": [
+        [
+          10,
+          176
+        ]
+      ],
+      "steady_plateaus": [
+        [
+          120,
+          174
+        ]
+      ],
+      "notes": "Catalog analysis (env 45666888888778788888887888878777787888888878888888877878888888888888888888888888888888876400, 2 s per char): segments build 0-10 (mid, env 4-6) then ONE peak 10-184 (env 7-8); aggression 52 (driving rock kit, not punchy-electronic); opening build, ending epic_hit. The tail decays 174-176 (7), 176-178 (6), 178-180 (4), and 180-182.84 is near silence (0, under -36 dBFS). 120-160 is a 40 s unbroken env-8 plateau (ebur128 -8.4 LUFS on the loop region), the cleanest place for the remix loop. Loudness rises across the file: -11.4 LUFS in the first 30 s, -7.4 LUFS in 141-178, so the seats step down by chapter."
+    }
+  },
+  "loop_and_alignment": {
+    "why_a_loop": "The paused video is 195.50 s and the end-pinned placement needs 200.50 s of bed (see end_card_hold); the file is 182.84 s. A bed shorter than its span loops (music.md LOOP). No breath, no restart.",
+    "region": "loop_in 121.2632 s = bar 48, loop_out 141.4737 s = bar 56: 8 bars (20.2105 s), inside the env-8 plateau 120-160 of the single peak segment, so the exit matches the entry. aloop repeats it ONCE (extra_passes 1).",
+    "resolved_math": "src_in 2.526 (bar 1), avail 180.316 s, total with one extra pass 200.527 s, span 200.50 s (sh of 195.40), head_trim 0.027 s from the head (align_end). First audible file sample 2.553. File position f vs paused time p: f = p + 2.553 until p 138.92 (loop_out); the 8-bar region plays again p 138.92-159.13; then f = p - 17.658 into the real ending.",
+    "seams": "Loop seams at spine 138.92 (CH4, cover) and 159.13 (CH5, inside FACE window 7 158.03-164.63; bar-aligned on a plateau, so it should be inaudible). Neither is near a chapter join or inside the CLIP-3 window.",
+    "chapter_joins_file_positions": "CH2 starts at file 30.15, CH3 at 69.63, CH4 at 115.75, CH5 at 130.46 (inside the second pass of the loop region). The source_in values of the rows below are the LINEAR continuation (CH1 source_in + chapter offset) that mix_music.py checks to merge cardless continuations into one placement; the real file positions are these.",
+    "ending": "The last env-8 window (file 172-174) ends at spine 186.56 (this playlist); the 7 and 6 decay (file 174-178) carries the final line (spine 186.56-190.40); the last word ends at spine 190.26 = file 177.70; the mix is cut at spine 190.40 (file 177.84) with the 0.2 s fade of mix_music.py. The energy of the song ends ON the close. The near-silent file tail 180-182.84 is never heard, so the last frame never sits on silence."
+  },
+  "end_card_hold": {
+    "after_last_word_sec": 0.14,
+    "hold_until_sec": 195.4,
+    "trim": true,
+    "why": "POSITIONS the end-pinned bed only (kcc20 pattern, music.md: the video ends on the last word, never on a held still). Pinning the raw file end to the video end would put the decay at spine 184.6-187.6 and leave about 2.8 s of the near-silent file tail under the final line. Pinning it 5.0 s later (195.40 spine, 2 bars minus the 0.027 s head trim) lands the decay on the last words and keeps the bar-1 in-point. trim:true means the comp renders to the spine end (190.40 + 5.1 pause = 195.50 s); no frame is added."
+  },
+  "beds": [
+    {
+      "chapter": "CH1",
+      "span": [
+        0.0,
+        27.6
+      ],
+      "register": "gear-3-epic",
+      "source_file": "video-creation/assets/music/Story Of My Life/Bobo_Renthlei_Story_Of_My_Life_instrumental_3_02.mp3",
+      "source_in": 2.526,
+      "cover": "loop",
+      "intensity": "aggressive",
+      "level_db_under_vo": -17,
+      "remotion_gain_db": -27.7,
+      "fade_in_sec": 0.0,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": 121.2632,
+      "loop_in_sec": 121.2632,
+      "loop_out_sec": 141.4737,
+      "align_end": true,
+      "automation": [],
+      "why": "The ONE placement starts here; mix_music.py merges CH2-CH5 into it, so this row carries the loop region, align_end and the end-pinned position. In-point = bar 1 (2.526 s): the mid-level build of the file (env 5-6, file 4-10) rides the signature open and the first FACE line (spine 0-6.47), and the peak segment arrives at file 10 = spine 7.45, right on the first cover (TRAINED ONCE b-roll whip at 6.47). Gear-3 hook: -17 under on the CH1 region measured at -11.4 LUFS. No fade-in: the build opens at env 4, not a hot entry, and the frame-0 whip should land on a sounding bed.",
+      "track_id": "story-of-my-life"
+    },
+    {
+      "chapter": "CH2",
+      "span": [
+        27.6,
+        67.08
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Story Of My Life/Bobo_Renthlei_Story_Of_My_Life_instrumental_3_02.mp3",
+      "source_in": 30.126,
+      "cover": "loop",
+      "intensity": "subtle",
+      "level_db_under_vo": -18,
+      "remotion_gain_db": -27.7,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": 121.2632,
+      "loop_in_sec": 121.2632,
+      "loop_out_sec": 141.4737,
+      "align_end": true,
+      "automation": [
+        {
+          "window": [
+            27.3,
+            200.0
+          ],
+          "gain_db": -2.2,
+          "relative": true,
+          "ramp_sec": 0.5,
+          "why": "CH2 seat -29.9 dB = -18 under on file 30.13-69.61 (-10.2 LUFS); the ramp starts in the last 0.3 s of CH1 so the first CH2 word (Your, 27.60) is already seated. Runs past the video end on purpose (cumulative with the CH4/CH5 windows, no ramp back up)."
+        }
+      ],
+      "why": "Continues Bed A with no breath or change (the ruling of Mike). The peak plateau of the file (env 7-8) is high energy by measure, so it is seated 1 dB deeper than the hook to read as pace under the teaching VO and the C1 prefill/decode diagram, not as hype. FACE window 3 (61.30-66.93, the two latency numbers) stays at the seat.",
+      "track_id": "story-of-my-life"
+    },
+    {
+      "chapter": "CH3",
+      "span": [
+        67.08,
+        113.2
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Story Of My Life/Bobo_Renthlei_Story_Of_My_Life_instrumental_3_02.mp3",
+      "source_in": 69.606,
+      "cover": "loop",
+      "intensity": "subtle",
+      "level_db_under_vo": -18,
+      "remotion_gain_db": -27.7,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": 121.2632,
+      "loop_in_sec": 121.2632,
+      "loop_out_sec": 141.4737,
+      "align_end": true,
+      "automation": [],
+      "why": "Continues Bed A. File 69.63-115.75 measures -10.3 LUFS, the same as CH2 within 0.1 dB, so the -29.9 dB seat from the CH2 window holds (-18 under) with no new step. The ting per list-card item and the pops ride the drums; the bed is never stopped for a pop. FACE windows 4 and 5 stay at the seat.",
+      "track_id": "story-of-my-life"
+    },
+    {
+      "chapter": "CH4",
+      "span": [
+        113.2,
+        148.12
+      ],
+      "register": "gear-2-explainer",
+      "source_file": "video-creation/assets/music/Story Of My Life/Bobo_Renthlei_Story_Of_My_Life_instrumental_3_02.mp3",
+      "source_in": 115.726,
+      "cover": "loop",
+      "intensity": "subtle",
+      "level_db_under_vo": -18,
+      "remotion_gain_db": -27.7,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": 121.2632,
+      "loop_in_sec": 121.2632,
+      "loop_out_sec": 141.4737,
+      "align_end": true,
+      "automation": [
+        {
+          "window": [
+            113.0,
+            200.0
+          ],
+          "gain_db": -1.4,
+          "relative": true,
+          "ramp_sec": 0.5,
+          "why": "CH4 seat -31.3 dB = -18 under: the file is hotter here (115.73-141.47 at -8.5 LUFS, the second loop pass 121.26-130.43 at -9.5, about -8.8 combined)."
+        },
+        {
+          "window": [
+            141.93,
+            147.7
+          ],
+          "gain_db": 1.5,
+          "relative": true,
+          "ramp_sec": 0.3,
+          "why": "FACE window 6, the punch landing (I have never trained a model. Everything my pipeline does is AI inference; punch white NEVER TRAINED ANYTHING): the bed comes up 1.5 dB (-16.5 under) as the screenplay asks, back down before the first CH5 word at 148.12."
+        }
+      ],
+      "why": "Continues Bed A through the own-code receipts. The first loop seam lands at spine 138.92 (bar 56 back to bar 48 on the env-8 plateau), on a cover, away from the chapter join and the FACE lift.",
+      "track_id": "story-of-my-life"
+    },
+    {
+      "chapter": "CH5",
+      "span": [
+        148.12,
+        190.4
+      ],
+      "register": "gear-3-epic",
+      "source_file": "video-creation/assets/music/Story Of My Life/Bobo_Renthlei_Story_Of_My_Life_instrumental_3_02.mp3",
+      "source_in": 150.646,
+      "cover": "loop",
+      "intensity": "aggressive",
+      "level_db_under_vo": -17,
+      "remotion_gain_db": -27.7,
+      "breath_before_sec": 0.0,
+      "loop_point_sec": 121.2632,
+      "loop_in_sec": 121.2632,
+      "loop_out_sec": 141.4737,
+      "align_end": true,
+      "automation": [
+        {
+          "window": [
+            148.0,
+            200.0
+          ],
+          "gain_db": -0.4,
+          "relative": true,
+          "ramp_sec": 0.5,
+          "why": "CH5 seat -31.7 dB = -17 under on the hottest stretch of the file (130.43-177.84, about -7.45 LUFS)."
+        }
+      ],
+      "why": "Continues Bed A to the last frame and carries the end-pinned ending. CLIP-3 (Jensen Huang, own voice) splices at 171.32 for 5.1 s: mix_music.py ducks the bed -14 dB with a 0.3 s ramp from the paused-spine sidecar, so there is no automation row for it here. Under the clip the bed plays file 153.66-158.76, inside the env-8 plateau, with no loop seam, no bed change and no hit in that window (the second seam is at spine 159.13, before the splice). The energy then runs into the subscribe close (FACE window 8, 176.37-190.40): the last env-8 bar ends at 186.56, the decay carries the final line, and the cut at 190.40 is 0.14 s after the last word.",
+      "track_id": "story-of-my-life"
+    }
+  ],
+  "hard_hits": [
+    {
+      "t": 0.0,
+      "beat": "signature open, frame-0 whip onto the face",
+      "music_move": "the bed is already sounding at bar 1 (file 2.553) on the mid-level build; the whip lands on that downbeat"
+    },
+    {
+      "t": 7.45,
+      "beat": "first cover, TRAINED ONCE over b-roll (whip at 6.47)",
+      "music_move": "the build turns into the peak segment (file 10.0) about 1 s after the whip, so the hook line stays clear and the energy arrives with the first b-roll"
+    },
+    {
+      "t": 141.93,
+      "beat": "CH4 punch landing, NEVER TRAINED ANYTHING on the face",
+      "music_move": "bed comes up 1.5 dB for the FACE window, back to the seat at 147.70"
+    },
+    {
+      "t": 171.32,
+      "beat": "CLIP-3 splice (Jensen Huang: it is called inference)",
+      "music_move": "automatic -14 dB duck by mix_music.py; plateau audio, no seam, no hit inside the insert"
+    },
+    {
+      "t": 186.56,
+      "beat": "subscribe close, click into this playlist",
+      "music_move": "last full-energy bar of the track ends; the epic_hit decay (env 7 then 6) rides the final line, cut 0.14 s after the last word with a 0.2 s fade"
+    }
+  ],
+  "notes": "ONE bed, five schema rows on the same file at the same gain with a sample-continuous linear source_in, so mix_music.py merges them into a single placement (no restart, no breath, no bed change at any chapter join, per Mike 2026-10-25). Clip insert CLIP-3 (171.32, 5.1 s) is carried by the CH5 portion of Bed A and ducked automatically. Pops, bands, tings and whips sit over the bed with no ducks written here; per house rule 10 every SFX and impact over speech sits under the VO, which the comp/SFX pass owns.",
+  "open_questions": [
+    "story-of-my-life is NOT fresh: the ledger shows it on every-job (2026-10-08), five videos back. That is legal (not blocked, not in the last three) and it is the explicit one-track ruling of Mike, so no waiver was written. After inference it becomes the previous video track and is BLOCKED for the next one.",
+    "The ending is placed from the 2 s catalog envelope (last env-8 window at file 172-174, decay 174-178). At the draft gate, listen to the last 6 s: if the final chord or hit sits earlier or later than the envelope suggests, move end_card_hold.hold_until_sec by whole bars (2.526 s) to land it on the last word (each bar later pushes the head trim one bar into the build; each bar earlier leaves more decay under the close).",
+    "The loop and bar math assume the beat grid of the file starts at 0.0 s (catalog bpm 95, not measured on this file). If the 8-bar seam at spine 138.92 or 159.13 is audible on the draft, shift loop_in/loop_out together by the measured grid offset; the region length stays 8 bars.",
+    "The seats step the bed down 4 dB from CH1 to CH5 to offset the track getting hotter; if Mike wants the close to feel bigger than the explainer middle, raise only the CH5 window (for example from -0.4 to +1.0 relative, about -15.6 under).",
+    "The subtle_bed pool reports 37 fresh, but this video draws nothing from it (one rock bed for the whole video), so the health of the pool is unchanged by this pick."
+  ]
+}

@@ -26,10 +26,21 @@ CH_RE = re.compile(r"^###\s+(CH\s*\d+)\s*[-:]\s*([^(\n]+?)\s*\((\d+(?:\.\d+)?)-(
 FACE_RE = re.compile(r"^\|\s*\d+\s*\|\s*(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)\s*\|", re.M)
 
 
-def lib_ids():
+def lib_rows():
     raw = json.loads(LIB.read_text(encoding="utf-8"))
     rows = raw if isinstance(raw, list) else (raw.get("rows") or raw.get("transitions") or next(iter(raw.values())))
-    return {r["id"] for r in rows if isinstance(r, dict) and r.get("id")}
+    return [r for r in rows if isinstance(r, dict) and r.get("id")]
+
+
+def lib_ids():
+    return {r["id"] for r in lib_rows()}
+
+
+def lib_looks():
+    """id -> LOOK = library CATEGORY/Variant with ' Short' folded, the SAME key the usage ledger rotates on
+    (usage_ledger.py) and the transition-strategist is told: melt-rgb-1 and melt-rgb-short-3 are both MELT/RGB,
+    spin-center-ease-cw and -ccw are both SPIN/Center Ease (2026-10-16: the old id regex split those into two looks)."""
+    return {r["id"]: f"{r.get('category')}/{re.sub(r' Short$', '', str(r.get('variant') or ''))}" for r in lib_rows()}
 
 
 def main():
@@ -68,8 +79,9 @@ def main():
         fails.append(f"§3 must name exactly ONE face pick (found {sorted(face_picks)})")
     sec4 = re.search(r"^##\s+4\..*?(?=^##\s|\Z)", doc, re.M | re.S)
     if sec4:
-        melt_fams = {re.sub(r"-\d+$", "", m) for m in re.findall(r"\|\s*MELT\s*\|\s*lib:([a-z0-9-]+)", sec4.group(0))}
-        spin_fams = {re.sub(r"-(short-)?(left|right|up|down)$", "", m) for m in re.findall(r"\|\s*SPIN\s*\|\s*lib:([a-z0-9-]+)", sec4.group(0))}
+        looks = lib_looks()
+        melt_fams = {looks.get(m, m) for m in re.findall(r"\|\s*MELT\s*\|\s*lib:([a-z0-9-]+)", sec4.group(0))}
+        spin_fams = {looks.get(m, m) for m in re.findall(r"\|\s*SPIN\s*\|\s*lib:([a-z0-9-]+)", sec4.group(0))}
         if len(melt_fams) > 1:
             fails.append(f"§4 uses more than one MELT look: {sorted(melt_fams)}")
         if len(spin_fams) > 1:

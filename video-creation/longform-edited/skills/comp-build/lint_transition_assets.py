@@ -13,7 +13,11 @@ effect is just missing. This gate makes both fail LOUDLY before ~50 minutes of f
 Asserts:
   A. every library id the comp references resolves in assets/transitions/library.json
   B. every asset that id needs EXISTS under <public-dir>: maskDir / plateDir / tileDir (checked BOTH
-     on the row and inside row.params) plus its sfx file, and each dir holds its declared *Count
+     on the row and inside row.params) plus its sfx file, and each dir holds its declared *Count; plus the
+     SINGLE-FILE footage plates (2026-10-25): params.plate when it is a path string (StingerPlate / SCARY;
+     GlitchVHS's object-valued `plate` is a dir spec and is not checked here) and every params.layers[].src
+     (LightLeaks); and (2026-10-25, the Bear Markets rows) params.track, the data file a long MotionShake row
+     fetches at render time (lib/shake/*-60s.json), and AlphaPlate's alpha plate (params.plate, a .webm)
   C. every `lib:<id>` named in TRANSITIONS.md is actually referenced by the comp
 Escape hatch for C: `// TRANSITIONS_WAIVED: <id> — reason` in the comp.
 Exit 0 = PASS (warnings allowed), 1 = FAIL, 2 = usage.
@@ -26,7 +30,10 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 HERE = Path(__file__).resolve().parent
 LIB = HERE.parents[2] / "assets" / "transitions" / "library.json"  # skills/comp-build/ -> video-creation/
-FAMILY = re.compile(r"^(blocks|badsignal|melt|spin|glitch|film|strips|perspective|zoom|expand|glass|invert|roughly|turbulent|deviation|monitor)[-_]")
+# a literal that LOOKS like a library id but is not one fails loudly (a typo'd id renders a plain cut). SCARY is
+# matched only as `scary-<digit>` so a comp's own 'scary-orange' / 'scary-theme' keys are not mistaken for ids.
+# 2026-10-25: + `scary-pumpkin` (scary-pumpkin-fire) and `motion-shake-` (the 2 s and the long shake rows).
+FAMILY = re.compile(r"^(?:(blocks|badsignal|melt|spin|glitch|film|strips|perspective|zoom|expand|glass|invert|roughly|turbulent|deviation|monitor)[-_]|scary-\d|scary-pumpkin|motion-shake-)")
 COUNT = {"maskDir": "maskCount", "plateDir": "plateCount", "tileDir": "tileCount"}
 
 
@@ -73,6 +80,15 @@ def main():
                 have = sum(1 for f in dp.iterdir() if re.search(r"\.(png|jpe?g|webp)$", f.name, re.I))
                 if have < want:
                     fails.append(f"{tid} ({r.get('engine')}): {key} has {have} frames, needs {want}: {d}")
+        # single-file footage plates: an engine that plays ONE video file renders a plain cut (or dies mid-render)
+        # when it is missing from the lean public dir, exactly like a missing frame dir; the same for a data file
+        # an engine fetches at render time (params.track: the long MotionShake rows' 60 s Corner Pin master)
+        files = [(key, p[key]) for key in ("plate", "track") if isinstance(p.get(key), str)]
+        files += [(f"layers[{i}].src", layer["src"]) for i, layer in enumerate(p.get("layers") or [])
+                  if isinstance(layer, dict) and isinstance(layer.get("src"), str)]
+        for key, f in files:
+            if not (public / f).is_file():
+                fails.append(f"{tid} ({r.get('engine')}): {key} MISSING: {f}")
         sfx = r.get("sfx") or p.get("sfx")
         if sfx and not (public / sfx).is_file():
             fails.append(f"{tid} ({r.get('engine')}): sfx MISSING: {sfx}")

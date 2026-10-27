@@ -119,31 +119,23 @@ npx remotion still build-<slug> <Comp> out.png --frame=N     # repeat per beat, 
 `remotion still src/index.ts` re-bundles on every invocation; against a prebuilt bundle a still is seconds.
 Cover every content type AND every face window here, so §5's mandatory checks confirm rather than discover.
 
-## 3. Render — MIND THE STITCH CEILING (this is the load-bearing gotcha)
+## 3. Render — ONE chunked render (the stitch ceiling is retired, 2026-10-27)
 
-A full-length vertical render (18045 frames at `--concurrency 4`) renders every frame but then **crashes in
-the final FFmpeg stitch at ~frame 14436** with `FFmpeg quit with code 3221225794` (0xC0000142) — Windows
-handle exhaustion from the Chrome workers, NOT a resource or comp bug, deterministic even with 15GB RAM free.
-**Full root cause + the fix are in memory `reference_remotion_stitch_handle_ceiling` and the carry-trade
-PROJECT-LOG.** Short version:
+The graph's `v_render` makes ONE `scripts/render_comp.py --mode final --comp <Project>Vertical --public-dir assets/vertical`
+call. render_comp.py renders through `video-creation/skills/chunked-render/` (1-minute chunks from one bundle, joined
+sample-exact, a watchdog that kills + retries a stalled chunk, resume on a re-run), so a long vertical never reaches the
+old ~frame-14436 FFmpeg stitch ceiling (each chunk's stitch is 1800 frames) and the old two-halves split + its
+re-encoding picture-only join (`vertical_graph._concat`) are gone. `v_render` then proves the joined file has exactly the
+comp's frame count.
 
-```
-# render two halves, each well under the ~14000-frame ceiling:
-npx remotion render src/index.ts <Comp> _partA.mp4 --frames=0-9021    --video-bitrate=3M --concurrency=4 --public-dir <render-assets>
-npx remotion render src/index.ts <Comp> _partB.mp4 --frames=9022-18044 --video-bitrate=3M --concurrency=4 --public-dir <render-assets>
-# join with a STANDALONE ffmpeg (no Chrome workers -> no ceiling): PICTURE ONLY, frame-exact, and the VO taken WHOLE
-# from the paused spine. NEVER concat the parts' audio: each part's AAC track runs ~0.05-0.1 s longer than its picture,
-# so an audio+video concat holds the last frame of every part and pushes everything after the seam late (golden-kitty
-# 2026-10-02: a 3-frame hold at frame 12000 and the VO +57 ms late for the last 77 s). `vertical_graph._concat` does this:
-ffmpeg -y -i _partA.mp4 -i _partB.mp4 -i assets/spine.mp4 -filter_complex "[0:v:0][1:v:0]concat=n=2:v=1:a=0,setpts=N/30/TB[v]" \
-  -map "[v]" -map 2:a:0 -r 30 -c:v libx264 -crf 18 -pix_fmt yuv420p -preset medium -c:a aac -b:a 192k <Comp>-VERTICAL-v1-video.mp4
-# then PROVE it: the joined file has exactly the comp's frame count, and the VO cross-correlates at 0 ms against
-# assets/spine.mp4 before AND after every seam.
-```
+History (why the parts existed): a full-length vertical (18045 frames) crashed in Remotion's final FFmpeg stitch at
+~frame 14436 (`0xC0000142`, Windows handle exhaustion from the Chrome workers; memory
+`reference_remotion_stitch_handle_ceiling`), and joining parts WITH their AAC audio held a frame at every seam and
+pushed the VO late (golden-kitty 2026-10-02). Chunked rendering removes both by construction: pcm audio in h264-mkv
+chunks, picture stream-copied, AAC encoded once.
 
-Match `--video-bitrate` to the 16:9 FINAL (carry-trade = 3M ≈ 3.0 Mbps). Process note: the harness may report
-a background render task as "killed" while the orphaned Remotion process keeps running to completion — verify
-via the log/PID, watch the OUTPUT FILE (persistent Monitor) as the real done-signal, do NOT relaunch.
+Never hand-run `npx remotion render` for a vertical (`scripts/check-remotion-render.py` fails on it). Watch the
+OUTPUT FILE as the done-signal, never a harness "killed" status; a re-run of `run.py vertical` resumes the render.
 
 ## 4. Mix — reuse the 16:9 mix verbatim
 

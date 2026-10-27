@@ -1032,6 +1032,1047 @@
      "count": 4
     }
    ]
+  },
+  {
+   "project": "faithful-crypto-intro",
+   "track": "yuli-y-ana",
+   "date": "2026-10-17",
+   "source": "backfill",
+   "transitions_from": null,
+   "music": [
+    {
+     "id": "seabreeze",
+     "pools": [
+      "intro_hype",
+      "epic_close"
+     ],
+     "chapters": [
+      "intro"
+     ]
+    }
+   ],
+   "transitions": []
+  },
+  {
+   "project": "tao-detailed",
+   "track": "longform-edited",
+   "date": "2026-10-17",
+   "source": "graph",
+   "transitions_from": "plan",
+   "music": [
+    {
+     "id": "future-trip",
+     "pools": [
+      "intro_hype"
+     ],
+     "chapters": [
+      "CH1"
+     ]
+    },
+    {
+     "id": "lights-out",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH2"
+     ]
+    },
+    {
+     "id": "wonderworld",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH3"
+     ]
+    },
+    {
+     "id": "searching-for-signs-of-life",
+     "pools": [
+      "subtle_bed",
+      "epic_close"
+     ],
+     "chapters": [
+      "CH4",
+      "CH5"
+     ]
+    }
+   ],
+   "transitions": [
+    {
+     "slot": "ai_still",
+     "id": "lib:monitor-max-1",
+     "key": "GLITCH/Cinematic Monitor",
+     "count": 2
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:monitor-max-2",
+     "key": "GLITCH/Cinematic Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:monitor-max-3",
+     "key": "GLITCH/Cinematic Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:monitor-min-1",
+     "key": "GLITCH/Cinematic Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:monitor-min-2",
+     "key": "GLITCH/Cinematic Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:monitor-min-3",
+     "key": "GLITCH/Cinematic Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:monitor-short-1",
+     "key": "GLITCH/Cinematic Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:monitor-short-2",
+     "key": "GLITCH/Cinematic Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:monitor-short-3",
+     "key": "GLITCH/Cinematic Monitor",
+     "count": 1
+    },
+    {
+     "slot": "broll",
+     "id": "hand:fade",
+     "key": "fade",
+     "count": 25
+    },
+    {
+     "slot": "card",
+     "id": "rmn:cube",
+     "key": "cube",
+     "count": 3
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade-scale",
+     "key": "xfade-scale",
+     "count": 68
+    },
+    {
+     "slot": "face_cut",
+     "id": "hand:cut",
+     "key": "cut",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-max-2",
+     "key": "GLITCH/Blocks",
+     "count": 10
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-combs-2",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-combs-3",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-layout-1x2-2",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-layout-2x1-1",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-layout-2x1-2",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-short-combs-1",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-short-layout-1x2-1",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-short-layout-2x1-2",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-rgb-3",
+     "key": "MELT/RGB",
+     "count": 2
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-rgb-short-3",
+     "key": "MELT/RGB",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-center-ease-ccw",
+     "key": "SPIN/Center Ease",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-center-ease-cw",
+     "key": "SPIN/Center Ease",
+     "count": 2
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:blocks-medium-2",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:blocks-medium-3",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:blocks-strips-2x",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:blocks-strips-3x",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:blocks-strips-4x",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:glitchoffset-1x",
+     "key": "GLITCH/Offset",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:glitchoffset-2x",
+     "key": "GLITCH/Offset",
+     "count": 2
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:glitchoffset-3x",
+     "key": "GLITCH/Offset",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:glitchoffset-4x",
+     "key": "GLITCH/Offset",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:glitchoffset-7x",
+     "key": "GLITCH/Offset",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "project": "kcc20",
+   "track": "longform-edited",
+   "date": "2026-10-22",
+   "source": "graph",
+   "transitions_from": "plan",
+   "music": [
+    {
+     "id": "born-every-minute",
+     "pools": [
+      "intro_hype"
+     ],
+     "chapters": [
+      "CH1"
+     ]
+    },
+    {
+     "id": "it-comes-to-this",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH2",
+      "CH3"
+     ]
+    },
+    {
+     "id": "going-shopping-again",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH4"
+     ]
+    },
+    {
+     "id": "underworlds",
+     "pools": [
+      "epic_close"
+     ],
+     "chapters": [
+      "CH5"
+     ]
+    }
+   ],
+   "transitions": [
+    {
+     "slot": "ai_still",
+     "id": "lib:blocks-max-2",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:blocks-short-1",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "broll",
+     "id": "hand:fade",
+     "key": "fade",
+     "count": 13
+    },
+    {
+     "slot": "card",
+     "id": "rmn:slide",
+     "key": "slide",
+     "count": 3
+    },
+    {
+     "slot": "container",
+     "id": "hand:cut",
+     "key": "cut",
+     "count": 1
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade-scale",
+     "key": "xfade-scale",
+     "count": 24
+    },
+    {
+     "slot": "face_cut",
+     "id": "hand:cut",
+     "key": "cut",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "hand:film-burn",
+     "key": "film-burn",
+     "count": 4
+    },
+    {
+     "slot": "face_leak",
+     "id": "lib:lightleaks-1",
+     "key": "lib:lightleaks-1",
+     "count": 3
+    },
+    {
+     "slot": "face_leak",
+     "id": "lib:lightleaks-4",
+     "key": "lib:lightleaks-4",
+     "count": 3
+    },
+    {
+     "slot": "face_leak",
+     "id": "lib:lightleaks-short-1",
+     "key": "lib:lightleaks-short-1",
+     "count": 2
+    },
+    {
+     "slot": "face_leak",
+     "id": "lib:lightleaks-short-4",
+     "key": "lib:lightleaks-short-4",
+     "count": 1
+    },
+    {
+     "slot": "image_broll",
+     "id": "hand:cross-warp",
+     "key": "cross-warp",
+     "count": 5
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-equidistant-short-2",
+     "key": "MELT/Equidistant",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-center-swinging-cw",
+     "key": "SPIN/Center Swinging",
+     "count": 1
+    },
+    {
+     "slot": "receipt",
+     "id": "lib:motion-3d-offset-2-left-up",
+     "key": "MOTION/3D Offset",
+     "count": 1
+    },
+    {
+     "slot": "receipt",
+     "id": "lib:motion-3d-orbit-2-right-down",
+     "key": "MOTION/3D Orbit",
+     "count": 1
+    },
+    {
+     "slot": "receipt",
+     "id": "lib:motion-3d-pan-1-right",
+     "key": "MOTION/3D Pan",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "project": "growth-vs-product",
+   "track": "longform-edited",
+   "date": "2026-10-23",
+   "source": "graph",
+   "transitions_from": "plan",
+   "music": [
+    {
+     "id": "proton-streams",
+     "pools": [
+      "intro_hype"
+     ],
+     "chapters": [
+      "CH1"
+     ]
+    },
+    {
+     "id": "innovation",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH2",
+      "CH3",
+      "CH4"
+     ]
+    },
+    {
+     "id": "up-in-the-atmos",
+     "pools": [
+      "hype_body",
+      "epic_close"
+     ],
+     "chapters": [
+      "CH5",
+      "CH6"
+     ]
+    }
+   ],
+   "transitions": [
+    {
+     "slot": "ai_still",
+     "id": "lib:glitchmonitor-1",
+     "key": "GLITCH/Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:glitchmonitor-2",
+     "key": "GLITCH/Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:glitchmonitor-3",
+     "key": "GLITCH/Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:glitchmonitor-4",
+     "key": "GLITCH/Monitor",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:glitchmonitor-5",
+     "key": "GLITCH/Monitor",
+     "count": 1
+    },
+    {
+     "slot": "broll",
+     "id": "hand:fade",
+     "key": "fade",
+     "count": 7
+    },
+    {
+     "slot": "card",
+     "id": "rmn:flip",
+     "key": "flip",
+     "count": 2
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade",
+     "key": "xfade",
+     "count": 4
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade-scale",
+     "key": "xfade-scale",
+     "count": 17
+    },
+    {
+     "slot": "container",
+     "id": "lib:motion-3d-orbit-1-t-left",
+     "key": "MOTION/3D Orbit",
+     "count": 1
+    },
+    {
+     "slot": "container",
+     "id": "lib:motion-3d-pan-1-left",
+     "key": "MOTION/3D Pan",
+     "count": 1
+    },
+    {
+     "slot": "container",
+     "id": "lib:motion-3d-pan-2-right",
+     "key": "MOTION/3D Pan",
+     "count": 1
+    },
+    {
+     "slot": "face",
+     "id": "hand:kt-whip-cut",
+     "key": "kt-whip-cut",
+     "count": 3
+    },
+    {
+     "slot": "face_cut",
+     "id": "hand:cut",
+     "key": "cut",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "hand:film-burn",
+     "key": "film-burn",
+     "count": 11
+    },
+    {
+     "slot": "face_cut",
+     "id": "hand:kt-whip-cut",
+     "key": "kt-whip-cut",
+     "count": 2
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-rgb-short-4",
+     "key": "MELT/RGB",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-twirl-ccw",
+     "key": "SPIN/Twirl",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-twirl-cw",
+     "key": "SPIN/Twirl",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "project": "inference",
+   "track": "longform-edited",
+   "date": "2026-10-27",
+   "source": "graph",
+   "transitions_from": "plan",
+   "music": [
+    {
+     "id": "story-of-my-life",
+     "pools": [
+      "intro_hype",
+      "subtle_bed",
+      "epic_close"
+     ],
+     "chapters": [
+      "CH1",
+      "CH2",
+      "CH3",
+      "CH4",
+      "CH5"
+     ]
+    }
+   ],
+   "transitions": [
+    {
+     "slot": "ai_still",
+     "id": "lib:roughly-2x",
+     "key": "GLITCH/Roughly",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:roughly-4x",
+     "key": "GLITCH/Roughly",
+     "count": 1
+    },
+    {
+     "slot": "broll",
+     "id": "hand:fade",
+     "key": "fade",
+     "count": 3
+    },
+    {
+     "slot": "broll",
+     "id": "hand:kt-whip-cut",
+     "key": "kt-whip-cut",
+     "count": 6
+    },
+    {
+     "slot": "container",
+     "id": "hand:kt-whip-cut",
+     "key": "kt-whip-cut",
+     "count": 1
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade-scale",
+     "key": "xfade-scale",
+     "count": 23
+    },
+    {
+     "slot": "container",
+     "id": "lib:motion-3d-pan-1-left",
+     "key": "MOTION/3D Pan",
+     "count": 1
+    },
+    {
+     "slot": "container",
+     "id": "lib:motion-3d-pan-2-right",
+     "key": "MOTION/3D Pan",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "hand:cut",
+     "key": "cut",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "hand:kt-list-card",
+     "key": "kt-list-card",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "hand:kt-whip-cut",
+     "key": "kt-whip-cut",
+     "count": 14
+    },
+    {
+     "slot": "face_leak",
+     "id": "lib:lightleaks-7",
+     "key": "lib:lightleaks-7",
+     "count": 1
+    },
+    {
+     "slot": "face_leak",
+     "id": "lib:lightleaks-short-6",
+     "key": "lib:lightleaks-short-6",
+     "count": 2
+    },
+    {
+     "slot": "face_leak",
+     "id": "lib:lightleaks-short-7",
+     "key": "lib:lightleaks-short-7",
+     "count": 1
+    },
+    {
+     "slot": "face_leak",
+     "id": "lib:lightleaks-soft-short-3",
+     "key": "lib:lightleaks-soft-short-3",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-equidistant-short-1",
+     "key": "MELT/Equidistant",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-equidistant-short-3",
+     "key": "MELT/Equidistant",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-corner-bounce-rb",
+     "key": "SPIN/Corner Bounce",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-corner-bounce-short-lb",
+     "key": "SPIN/Corner Bounce",
+     "count": 1
+    }
+   ]
+  },
+  {
+   "project": "only-18-months-left",
+   "track": "longform-edited",
+   "date": "2026-10-27",
+   "source": "graph",
+   "transitions_from": "plan",
+   "music": [
+    {
+     "id": "harvester",
+     "pools": [
+      "intro_hype",
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH1",
+      "CH2"
+     ]
+    },
+    {
+     "id": "leatherface",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH3",
+      "CH4",
+      "CH5",
+      "CH6"
+     ]
+    },
+    {
+     "id": "a-most-unusual-discovery",
+     "pools": [
+      "subtle_bed"
+     ],
+     "chapters": [
+      "CH7"
+     ]
+    },
+    {
+     "id": "deceptive-cadence",
+     "pools": [
+      "epic_close"
+     ],
+     "chapters": [
+      "CH8"
+     ]
+    }
+   ],
+   "transitions": [
+    {
+     "slot": "ai_still",
+     "id": "lib:scary-6",
+     "key": "SCARY/Stinger",
+     "count": 1
+    },
+    {
+     "slot": "ai_still",
+     "id": "lib:scary-6-normal75",
+     "key": "SCARY/Stinger",
+     "count": 2
+    },
+    {
+     "slot": "broll",
+     "id": "hand:fade",
+     "key": "fade",
+     "count": 34
+    },
+    {
+     "slot": "broll",
+     "id": "lib:glass-blocks-2-horizontal",
+     "key": "GLASS/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "card",
+     "id": "rmn:cube",
+     "key": "cube",
+     "count": 4
+    },
+    {
+     "slot": "chapter",
+     "id": "lib:glass-blocks-2-horizontal",
+     "key": "GLASS/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "container",
+     "id": "hand:xfade-scale",
+     "key": "xfade-scale",
+     "count": 55
+    },
+    {
+     "slot": "container",
+     "id": "lib:scary-6",
+     "key": "SCARY/Stinger",
+     "count": 2
+    },
+    {
+     "slot": "container",
+     "id": "lib:scary-pumpkin-fire",
+     "key": "SCARY/Fire Plate",
+     "count": 1
+    },
+    {
+     "slot": "face",
+     "id": "lib:motion-shake-optics-2x-long",
+     "key": "MOTION/Shake Optics",
+     "count": 1
+    },
+    {
+     "slot": "face",
+     "id": "lib:motion-shake-optics-3x-long",
+     "key": "MOTION/Shake Optics",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:blocks-max-2",
+     "key": "GLITCH/Blocks",
+     "count": 7
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:glass-blocks-2-horizontal",
+     "key": "GLASS/Blocks",
+     "count": 4
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-combs-1",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-combs-3",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-layout-1x2-1",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-layout-1x2-2",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-layout-2x1-1",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-short-combs-2",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-short-combs-4",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-short-layout-1x2-2",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-short-layout-2x1-1",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "face_cut",
+     "id": "lib:split-swinging-offset-short-layout-2x1-2",
+     "key": "SPLIT/Swinging Offset",
+     "count": 1
+    },
+    {
+     "slot": "glitch-still",
+     "id": "lib:glass-blocks-2-horizontal",
+     "key": "GLASS/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-equidistant-1",
+     "key": "MELT/Equidistant",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-equidistant-2",
+     "key": "MELT/Equidistant",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-equidistant-3",
+     "key": "MELT/Equidistant",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-equidistant-short-1",
+     "key": "MELT/Equidistant",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-equidistant-short-3",
+     "key": "MELT/Equidistant",
+     "count": 1
+    },
+    {
+     "slot": "marquee_melt",
+     "id": "lib:melt-equidistant-short-4",
+     "key": "MELT/Equidistant",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-shake-1x-ccw",
+     "key": "SPIN/Shake",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-shake-1x-cw",
+     "key": "SPIN/Shake",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-shake-2x-ccw",
+     "key": "SPIN/Shake",
+     "count": 1
+    },
+    {
+     "slot": "marquee_spin",
+     "id": "lib:spin-shake-short-1x-cw",
+     "key": "SPIN/Shake",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:blocks-medium-2",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:blocks-strips-2x",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:blocks-strips-4x",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:blocks-strips-6x",
+     "key": "GLITCH/Blocks",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:glitchoffset-1x",
+     "key": "GLITCH/Offset",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:glitchoffset-2x",
+     "key": "GLITCH/Offset",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:glitchoffset-3x",
+     "key": "GLITCH/Offset",
+     "count": 1
+    },
+    {
+     "slot": "punch_in",
+     "id": "lib:glitchoffset-5x",
+     "key": "GLITCH/Offset",
+     "count": 1
+    }
+   ]
   }
  ]
 }

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AbsoluteFill,
   Img,
+  cancelRender,
+  continueRender,
+  delayRender,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
@@ -26,6 +29,18 @@ import { LENS_MAP, LENS_OVERSCAN, LENS_SCALE_PER_K } from './lensMap';
  * fidelity: near-1:1 for 3D/Simple (baked curves + exact homography); Optics
  * approximate (lens via the calibrated displacement pipeline).
  * NO SFX (verified: empty audio groups, silent previews, no Sound file).
+ *
+ * LONG mode (`params.track`, 2026-10-25, motion-shake-optics-2x-long / -3x-long): the corners come from the
+ * FULL 60 s Corner Pin master stored as a data file in the library lib layout
+ * (assets/transitions/lib/shake/<id>-60s.json, 1500 keys every 0.04 s, read from the "044 Bear Markets"
+ * Premiere project by _build-bearmarkets-rows.py) instead of the inline 2.08 s slice, so a FACE hold can shake
+ * for up to 60 s. Same homography, same lens, same linear key-to-key sampling as the inline rows (whose 53
+ * keys are the first 2.08 s of the same master). The engine's own clock IS the track time: mount it for the
+ * shot (hard on at the shot's first frame, hard off at its last, no ease, exactly how the preset ran in
+ * Bear Markets). `trackStart` (s, default 0 = the source) offsets into the master; past 59.96 s the clock
+ * ping-pongs instead of freezing. The data file is fetched once per tab (delayRender until loaded) and is a
+ * public-dir asset like a plate: lint_transition_assets.py checks it. Rows without `track` take the
+ * untouched inline path (byte-identical renders, verified 2026-10-25).
  */
 type KF2 = { t: number; x: number; y: number };
 type KF = { t: number; v: number };
@@ -33,8 +48,13 @@ type KF = { t: number; v: number };
 export type MotionShakeParams =
   | {
       mode: 'corner';
-      ul: KF2[]; ur: KF2[]; ll: KF2[]; lr: KF2[];
+      /** Inline baked keys (the 2 s rows). Absent when `track` is given. */
+      ul?: KF2[]; ur?: KF2[]; ll?: KF2[]; lr?: KF2[];
       lensK?: number; // Shake Optics: static Lens Distortion curvature
+      /** staticFile() path of a full Corner Pin master (lib/shake/*.json); overrides the inline keys. */
+      track?: string;
+      /** Seconds into the master at the engine's frame 0 (default 0, what the source did). */
+      trackStart?: number;
     }
   | {
       mode: 'simple';
@@ -61,6 +81,63 @@ const at1 = (kfs: KF[], t: number) => {
   const i = Math.floor(f), r = f - i;
   const a = kfs[i], b = kfs[Math.min(kfs.length - 1, i + 1)];
   return a.v + (b.v - a.v) * r;
+};
+
+/** A full Corner Pin master (lib/shake/*.json): key i sits at t = i * keyStep; corners as [x, y] frame fractions. */
+type ShakeTrack = {
+  keyStep: number;
+  keys: number;
+  ul: [number, number][]; ur: [number, number][]; ll: [number, number][]; lr: [number, number][];
+};
+const trackCache = new Map<string, ShakeTrack>();
+const trackLoads = new Map<string, Promise<ShakeTrack>>();
+const loadTrack = (src: string) => {
+  let p = trackLoads.get(src);
+  if (!p) {
+    p = fetch(staticFile(src))
+      .then((r) => {
+        if (!r.ok) throw new Error(`MotionShake: track ${src} answered HTTP ${r.status} (copy it into the public dir)`);
+        return r.json() as Promise<ShakeTrack>;
+      })
+      .then((t) => {
+        const n = t.keys;
+        if (!(t.keyStep > 0) || n < 2 || [t.ul, t.ur, t.ll, t.lr].some((c) => !Array.isArray(c) || c.length !== n)) {
+          throw new Error(`MotionShake: track ${src} is malformed (keyStep ${t.keyStep}, keys ${n})`);
+        }
+        trackCache.set(src, t);
+        return t;
+      });
+    trackLoads.set(src, p);
+  }
+  return p;
+};
+/** Loads a track once per tab; holds the frame (delayRender) until it is in. No-op (and no hook-visible
+ * difference) for the inline rows. */
+const useShakeTrack = (src: string | undefined): ShakeTrack | null => {
+  const [track, setTrack] = useState<ShakeTrack | null>(() => (src ? trackCache.get(src) ?? null : null));
+  const [handle] = useState(() => (src && !trackCache.has(src) ? delayRender(`MotionShake track ${src}`) : null));
+  useEffect(() => {
+    if (!src || track) return;
+    loadTrack(src)
+      .then((t) => {
+        setTrack(t);
+        if (handle !== null) continueRender(handle);
+      })
+      .catch((e) => cancelRender(e));
+  }, [src, track, handle]);
+  return track;
+};
+/** Corner at master time t: linear between neighbouring keys (the inline rows' rule); past the last key
+ * the clock ping-pongs so a hold longer than the master never freezes. */
+const trackAt = (tr: ShakeTrack, c: 'ul' | 'ur' | 'll' | 'lr', t: number) => {
+  const end = (tr.keys - 1) * tr.keyStep;
+  const ph = ((t % (2 * end)) + 2 * end) % (2 * end);
+  const tt = ph <= end ? ph : 2 * end - ph;
+  const f = tt / tr.keyStep;
+  const i = Math.min(tr.keys - 2, Math.max(0, Math.floor(f)));
+  const r = Math.min(1, Math.max(0, f - i));
+  const a = tr[c][i], b = tr[c][i + 1];
+  return { x: a[0] + (b[0] - a[0]) * r, y: a[1] + (b[1] - a[1]) * r };
 };
 
 /** Homography mapping the unit square corners to 4 target points (px), as a
@@ -103,6 +180,7 @@ export const MotionShake: React.FC<TransitionProps & { params: MotionShakeParams
   const frame = useCurrentFrame();
   const { width: W, height: H, fps } = useVideoConfig();
   const tSec = frame / fps;
+  const track = useShakeTrack(params.mode === 'corner' ? params.track : undefined);
 
   const scene = () =>
     outClip ? outClip() : fromSrc ? (
@@ -124,8 +202,17 @@ export const MotionShake: React.FC<TransitionProps & { params: MotionShakeParams
         {scene()}
       </AbsoluteFill>
     );
+  } else if (params.track && !track) {
+    // the master is still loading: this frame is held by delayRender and never captured
+    node = <AbsoluteFill>{scene()}</AbsoluteFill>;
   } else {
-    const m = cornerPinMatrix(W, H, at2(params.ul, tSec), at2(params.ur, tSec), at2(params.ll, tSec), at2(params.lr, tSec));
+    let m: string;
+    if (params.track && track) {
+      const tm = (params.trackStart ?? 0) + tSec;
+      m = cornerPinMatrix(W, H, trackAt(track, 'ul', tm), trackAt(track, 'ur', tm), trackAt(track, 'll', tm), trackAt(track, 'lr', tm));
+    } else {
+      m = cornerPinMatrix(W, H, at2(params.ul!, tSec), at2(params.ur!, tSec), at2(params.ll!, tSec), at2(params.lr!, tSec));
+    }
     node = (
       <AbsoluteFill style={{ transform: m, transformOrigin: '0 0' }}>
         {scene()}

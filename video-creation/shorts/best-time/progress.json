@@ -1,0 +1,87 @@
+{
+  "batch": "best-time",
+  "track": "livestream-repurpose",
+  "source_livestream": "best-time",
+  "livestream_date": "2026-10-27",
+  "last_updated": "2026-10-27T10:24:04",
+  "dashboard": "video-creation/shorts/best-time/dashboard.html",
+  "dashboard_status": "Clips 2 + 3 phase 7-built with gate PASS (clip 1 deleted at 4b). Next: publish (8).",
+  "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
+  "clips": [
+    {
+      "n": 1,
+      "slug": "nobody-writes-code-anymore-every-job-next",
+      "title": "Nobody Is Writing Code Anymore. Every Job Is Next",
+      "variant": "full",
+      "duration_seconds": 57.551,
+      "phase": "cut",
+      "gate": "deleted-4b"
+    },
+    {
+      "n": 2,
+      "slug": "ton-billion-users-at-1-26",
+      "title": "A Billion Users and $TON Is at $1.26?",
+      "variant": "full",
+      "duration_seconds": 37.4,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 2)",
+      "output_mp4": "ton-billion-users-at-1-26/ton-billion-users-at-1-26-final.mp4",
+      "whisper_words": "ton-billion-users-at-1-26/whisper-words.json",
+      "composition": "BestTimeTonBillionUsers",
+      "comp_files": [
+        "video-creation/remotion/src/BestTimeTonBillionUsers.tsx",
+        "video-creation/remotion/src/constants-best-time-ton-billion-users-at-1-26.ts",
+        "video-creation/remotion/src/captionsBestTimeTonBillionUsers.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/best-time/2-ton-billion-users-at-1-26.mp4",
+      "render_duration_s": 37.4,
+      "render_frames": 1122,
+      "broll_plan": "ton-billion-users-at-1-26/BROLL-PLAN.md",
+      "whisper_words_verified": "ton-billion-users-at-1-26/whisper-words-verified.json",
+      "built_at": "2026-10-27T09:29:29",
+      "build_notes": "5 b-roll beats (2 full-screen: hook + climax) = 33.0% coverage, all TON beats generated WITH schedule-tweets/images/reference/toncoin-ton.png; 2 code badges ($1.26 / ATH $7.88); 8 SFX events; frame-0 cover 'A BILLION USERS. $TON AT $1.26?'. Full render attempt 1 died at frame ~594 (temp bundle public dir deleted mid-render, no output), attempt 2 completed. Then 2 audio-only fixes: the distribution-ingress whoosh @19.82 masked 'So' at vol 0.45 and 0.2 -> cue deleted. STT fixes: Graham->Gram, time->TON, to yo->TON, a dollar 26->$1.26, seven dollars eighty eight cents->$7.88, beat us->beat its, place->play, 'man' inserted after Wow (medium.en). Captions spell Gram/TON per clip-plan reviewer note. Integrated loudness -19.1 LUFS (spine -19.4), peak -4.4 dBFS."
+    },
+    {
+      "n": 3,
+      "slug": "last-chance-to-get-ahead-buy-assets-now",
+      "title": "One of the Last Chances Any of Us Have to Get Ahead",
+      "variant": "full",
+      "duration_seconds": 42.21,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 3)",
+      "output_mp4": "last-chance-to-get-ahead-buy-assets-now/last-chance-to-get-ahead-buy-assets-now-final.mp4",
+      "whisper_words": "last-chance-to-get-ahead-buy-assets-now/whisper-words.json",
+      "composition": "BestTimeLastChanceAssets",
+      "comp_files": [
+        "video-creation/remotion/src/BestTimeLastChanceAssets.tsx",
+        "video-creation/remotion/src/constants-best-time-last-chance-to-get-ahead-buy-assets-now.ts",
+        "video-creation/remotion/src/captionsBestTimeLastChanceAssets.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/best-time/3-last-chance-to-get-ahead-buy-assets-now.mp4",
+      "render_duration_s": 42.2,
+      "render_frames": 1266,
+      "broll_plan": "last-chance-to-get-ahead-buy-assets-now/BROLL-PLAN.md",
+      "whisper_words_verified": "last-chance-to-get-ahead-buy-assets-now/whisper-words-verified.json",
+      "built_at": "2026-10-27T10:24:04",
+      "build_notes": "6 b-roll beats (3 full-screen: hook 1.82, assets turn 24.10, close 40.20) = 32.2% coverage; no named project in the clip (reference gate: nothing to attach, coins specced blank); 3 code badges (SO. DAMN. CHEAP. / BUY ASSETS / OCTOBER 2026); 11 SFX events; frame-0 cover 'THE LAST CHANCE TO GET AHEAD' chip 'BUY ASSETS NOW'. ONE full render (128 s) + ONE audio-only fix: closing sting sudden-shock-tight read as a phantom 'so' before 'imagine' 3/3 -> swapped for Boom short vol 0.20 dur 0.6 (offline sweep, control-matched 3/3). Words verified with medium.en: inserted 'that' (jobs that are), 'Just think the' for 'The' @27.04, 'It' for 'This' @38.36; captions restore 'this was like' that the stutter-collapse ate. Clip opens on the dangling 'But' (as cut). Loudness -19.6 LUFS (spine -19.9), peak -5.0 dBFS."
+    }
+  ],
+  "resume_protocol": "Phase 4b: Mike reviews dashboard.html and names clips to delete by number. Then per surviving clip: tighten-strategist -> tighten -> 2nd review -> desilence (5B) -> filler pass (5C, optional) -> captions (6) -> remotion-builder (7) -> publish-shorts (8). STT garble fixes for captions are listed in clip-plan.json stt_garble_flags (verify each against the clip's OWN whisper-words.json before applying).",
+  "gates": {
+    "4b": {
+      "approved_at": "2026-10-27T08:32:58",
+      "deleted": [
+        1
+      ]
+    },
+    "2nd": {
+      "approved_at": "2026-10-27T08:37:19",
+      "deleted": []
+    }
+  },
+  "phase": "6-transcribed",
+  "status": "ready-for-build",
+  "tighten_log": "video-creation/shorts/best-time/tighten_log.json",
+  "tighten_plan": "video-creation/shorts/best-time/tighten-plan.json",
+  "filler_log": "video-creation/shorts/best-time/filler_log.json"
+}

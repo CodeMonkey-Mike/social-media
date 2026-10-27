@@ -1,0 +1,1041 @@
+{
+ "$doc": "THE EFFECTS LIBRARY (Mike, 2026-10-25: 'they are just effects, regardless of sound or not'). An EFFECT = a DEVICE = one MOTION recipe + the SOUND(s) that fire with it + the GRAPHICS it needs (texture, icon, button), grabbed as a unit; never the motion silent, never the sound on a static card, one sound per event. Devices are grouped into THEMES: a theme is the set of devices + palette + textures + sounds that belong to one look, and a VIDEO (or a CHAPTER of a longer video) picks ONE theme and declares which of its devices it uses in the SCREENPLAY [SHOW] lines (device id + sound id). Icons and similar flourishes are a per-video choice inside the theme, never added to every video by default. The SOUND FILES stay in the SFX catalog (video-creation/assets/sfx/, one row per file, picked by id); this library references them by id. The MOTION engines are Remotion code in video-creation/remotion/src/effects/<theme>/ (shared infra, import-whitelisted like ./transitions/*); the longform-edited placement rules (layer order, captions off under a pop, overlay vs transition) are video-creation/longform-edited/skills/overlays/overlays.md section 2. Skill + check tool: video-creation/skills/effects-library/effects-library.md (effects_catalog.py check = every device's sounds exist in the SFX catalog, every graphic exists on disk, every engine file exists). Themes live in themes/<theme>/ (CUE-SHEET.md = the time-ordered map of the source video, textures/, graphics/).",
+ "$schema_note": "`devices` keyed by device id (kt-* = the 2023 kinetic-text theme). Row: name - trigger (the on-screen EVENT, the field to pick by) - motion {sub-steps with 1080p px / percent-of-frame / seconds / easing} - text_look_2023 or look_2023 (the SOURCE look; a house video keeps motion + sound and uses the house font + chapter accent) - assets {role: path under this folder} - sound [{id (an SFX catalog id), when (offset to the motion)}] or sound_by_meaning - reference_cues_main_sequence (seconds in the theme's source video) - used_in (frozen history; live usage = the usage ledger). `themes` keyed by theme id: source - look - devices (the ids) - sfx_folder.",
+ "themes": {
+  "kinetic-text-2023": {
+   "name": "The 2023 head-to-head look (GrowthMarketingMike 004, Growth Marketer vs Growth Hacker)",
+   "source": "D:\\Dropbox\\mikeneder.me\\videos\\GrowthMarketingMike\\004 Differences between Growth Marketer and Hacker\\main-sequence.mp4 (2:05) + its Premiere project differences revision_1.prproj",
+   "cue_sheet": "themes/kinetic-text-2023/CUE-SHEET.md",
+   "look_2023": "Montserrat ExtraBold Italic, ALL CAPS, key words yellow #FCFE40 over white, accent red #E0151A, payoff green #20F91A, Mike keyed over a turquoise suede texture (textures/suede-turquoise.jpg), dark bands and panels #003C33 textured; bright explainer, every line lands with a device. A house video keeps the MOTION + SOUND pairing and uses the house display font + the chapter accent.",
+   "sfx_folder": "video-creation/assets/sfx/kinetic-text/ (23 sounds, every row carries `device`)",
+   "textures": {
+    "paper-crumpled": "themes/kinetic-text-2023/textures/paper-crumpled.mp4 (1280x720, 32 s loop; the list card and the paper side panel)",
+    "suede-turquoise": "themes/kinetic-text-2023/textures/suede-turquoise.jpg (the 2023 backdrop behind the keyed face)",
+    "animated-texture": "themes/kinetic-text-2023/textures/animated-texture.mp4 (the 2023 project's animated texture loop)"
+   },
+   "graphics": {
+    "arrow-red": "themes/kinetic-text-2023/graphics/arrow-red.png",
+    "subscribe-button": "themes/kinetic-text-2023/graphics/subscribe-button.mp4",
+    "subscribe-button-alt": "themes/kinetic-text-2023/graphics/subscribe-button-alt.mp4"
+   },
+   "devices": [
+    "kt-side-panel",
+    "kt-keyword-pop",
+    "kt-headline-over-broll",
+    "kt-word-by-word",
+    "kt-lower-third-band",
+    "kt-whip-cut",
+    "kt-list-card",
+    "kt-icon-pop",
+    "kt-subscribe-close",
+    "kt-scatter-words"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023, every device)",
+    "growth-vs-product (2026-10-23: kt-signature-open + kt-side-panel dark)",
+    "kcc20 (2026-10: kt-side-panel + kt-keyword-pop)"
+   ],
+   "rule": "a head-to-head or straight-to-the-point explainer picks this theme whole: the signature open on the hook, pops on the verdict words, bands for the 4 s statements, the list card for enumerations, headline pops over b-roll, the subscribe close. Longer house videos may pick it for ONE chapter.",
+   "textures_decoded": {
+    "name": "2023 TEXTURES (backdrop and dark band / panel)",
+    "trigger": "backdrop behind every face shot; the dark band and dark side panel",
+    "motion": {
+     "backdrop": "'turquoise-matt-suede-fabric-background-velvet-texture.jpg' (5616x3744 still) on the bottom track of each face shot (nested sequences + V0), DEFAULT Motion (100 percent in the 4K sequence = the centre 3840x2160 crop, 68 x 58 percent of the photo), no effect, no grade, never moves. Mike = green screen keyed with Ultra Key (key #1DCA1C, defaults) and auto-panned with linear Motion position keyframes. On-screen avg #55AC9C matches the photo's centre-crop avg #53ABA5",
+     "dark_band_and_panel": "'No Copyright Video ... Animated Texture Background.mp4' (1280x720, 30 fps, 60 s, dark teal grunge, source avg #003738) used RAW: Motion scale 402.35 percent (2575x1448 px), Normal blend, 100 percent opacity, no tint, no solid under it. Band = clip centred (1043, 1430) so its top edge is y 706 (65.4 percent); side panel = clip centred (2346, 692) so its left edge is x 1058 (45 percent panel). On-screen band avg #043E38",
+     "paper": "'Free Stock Video Crumpled Paper Background.mp4' (1280x720, 29.97 fps), raw, 306 percent full-frame (list card) or 309 percent right half (paper panel); on-screen avg ~#E1DFE1"
+    },
+    "text_look_2023": "n/a",
+    "sound": [],
+    "reference_cues_main_sequence": [
+     "every face shot (backdrop)",
+     "26.57 / 36.83 / 102.97 bands, 4.70 / 8.10 side panels (dark texture)",
+     "33.30 / 75.27 / 92.43 / 95.67 (paper)"
+    ],
+    "used_in": [
+     "GrowthMarketingMike 004 (2023)"
+    ],
+    "confidence": "read from keyframes",
+    "unknowns": []
+   },
+   "decode_doc": "Decoded 2026-10-25 from differences revision_1.prproj (main sequence 'grammar1-greenscreen-audio-color', 3840x2160 @30) + frame reads of main-sequence.mp4. All px are at 1920x1080 (4K / 2), all times are seconds in main-sequence.mp4. Keyframe times = item start + (kf - clip in-point). Easing read from the bezier rows (time, value, interp, ?, inSpeed, inInfluence, outSpeed, outInfluence); speed 0 + influence 100% = full ease. Transform-EFFECT translations are applied before the clip's Motion scale, so their on-screen travel = normalized offset x clip footprint (given here already converted). Sound timing: 'file start' = where sample 0 of the untrimmed library file sits; onset / peak measured on the source files (onset = first sample above 10% of peak).",
+   "icons_note": "no 2023 icon artwork survives (the .aegraphic files are AE shape layers only); render flat SVG icons per video",
+   "approved": "2026-10-25 Mike approved the full demo set (assets/effects/_demo/gallery.html, 16 clips): every engine's motion + sound placement is the reference; sound rule = attack (loudest sample) ON the frame"
+  },
+  "halloween-2022": {
+   "name": "The 2022 horror explainer look (CodeMonkey 044 'Bear Markets', studied 0:00-1:50 only)",
+   "source": "D:\\Dropbox\\mikeneder.me\\videos\\CodeMonkey\\044 Bear Markets\\main-sequence.mp4 (rendered 2022-10-31, 3840x2160 30 fps) + its Premiere project Bear markets explained.prproj (0-110 s identical to the auto-save taken 30 min before the render) + the two After Effects templates it rendered (Zooming Dynamic SlideShow, Halloween Party Promo) + the Scene_19 MOGRT. 0:00-1:50 ONLY: Mike's hard rule, nothing after 1:50 of that video is reviewed, extracted or imitated",
+   "cue_sheet": "themes/halloween-2022/CUE-SHEET.md",
+   "broll_bench": "themes/halloween-2022/BROLL-BENCH.md (18 shots, bears excluded; 15-17 DO NOT REUSE unless Mike clears them; 18, the alamy photo, NEVER)",
+   "look_2022": "dark, fast horror explainer: the hook keyed over full-frame b-roll (documented, never rebuilt: house rule), then Mike seated on a dark set (wood ceiling, blue / purple light, the Cinema Grade look baked into the a-roll); ONE-word captions in Showcard Gothic, flat bright green #27FF14, no stroke or shadow; montages titled in Lato-Heavy (white / red #E00000) and Montserrat Black (red #E60003, red glow) with a white serif subtitle; red Tint + grid panels, blood splats, light leaks; a slow handheld camera shake held on the face after a montage; music Harvester (Wicked Cinema, catalogued `harvester`) carries it, almost no sound effects. These fonts and colours ARE the theme's look: a halloween-2022 video keeps them (unlike kinetic-text-2023, whose look a house video swaps for its own palette).",
+   "sfx_folder": "video-creation/assets/sfx/halloween-2022/ (1 sound: woosh9; every row carries `device`). Every other device was SILENT in the source: the screenplay may pair a catalog sound on the [SHOW] line, the engines' sound helpers take it as `pair`",
+   "textures": {
+    "leak-1": "themes/halloween-2022/textures/leak-1.mp4 (Dynamic Slideshow 'Overlay 1', bokeh light leak, 1 s, screen)",
+    "leak-2": "themes/halloween-2022/textures/leak-2.mp4 (Overlay 2, bokeh / lens flare, 1 s, screen)",
+    "leak-3": "themes/halloween-2022/textures/leak-3.mp4 (Overlay 3, bokeh + pink bars, 1 s at 25 fps, screen)",
+    "leak-4": "themes/halloween-2022/textures/leak-4.mp4 (Overlay 4, film burn / film strip, 1 s, screen)",
+    "leak-5": "themes/halloween-2022/textures/leak-5.mp4 (Overlay 5, orange film burn, 1 s at 25 fps, screen)",
+    "leak-6": "themes/halloween-2022/textures/leak-6.mp4 (Overlay 6, dark dust + scratches, 1 s at 25 fps, screen)",
+    "particles": "themes/halloween-2022/textures/particles.mp4 (Halloween Party Promo 'Particles Motion', dust, 10.9 s, screen)",
+    "square-motion": "themes/halloween-2022/textures/square-motion.mp4 (Halloween Party Promo 'Square Motion', halftone / grid squares, 4.1 s, screen)"
+   },
+   "graphics": {
+    "blood-1-fill": "themes/halloween-2022/graphics/blood-1-fill.mp4 (Halloween Party Promo Blood_1.mov, drips + splats growing, 1920x1080 29.97 fps 10.9 s: the premultiplied colour over black; the CineForm RGBA source was premultiplied)",
+    "blood-1-key": "themes/halloween-2022/graphics/blood-1-key.mp4 (Blood_1's ALPHA as a luma key; coverage matches the source alpha second by second, within 0.03 percent of the frame)",
+    "blood-2-fill": "themes/halloween-2022/graphics/blood-2-fill.mp4 (Blood_2.mov: a splat growing to ~12 percent of the frame by 10 s, premultiplied colour)",
+    "blood-2-key": "themes/halloween-2022/graphics/blood-2-key.mp4 (Blood_2's ALPHA as a luma key, verified per second against the source)",
+    "matte-t1": "themes/halloween-2022/graphics/matte-t1.mp4 (luma matte t_1: a '\\' band leaving left, 4.6 s)",
+    "matte-t2": "themes/halloween-2022/graphics/matte-t2.mp4 (t_2: a wide '\\' band entering from the right, settling)",
+    "matte-t3": "themes/halloween-2022/graphics/matte-t3.mp4 (t_3: a band entering at the right edge)",
+    "matte-t4": "themes/halloween-2022/graphics/matte-t4.mp4 (t_4: a '/' band leaving left)",
+    "matte-t5": "themes/halloween-2022/graphics/matte-t5.mp4 (t_5: a bottom-right triangle growing from 2 s)",
+    "matte-t6": "themes/halloween-2022/graphics/matte-t6.mp4 (t_6: a top-left corner flash on frame 0 only)",
+    "matte-t7": "themes/halloween-2022/graphics/matte-t7.mp4 (t_7: a vertical band sliding left, then narrowing, 7.8 s)",
+    "matte-t8": "themes/halloween-2022/graphics/matte-t8.mp4 (t_8: a block growing from the right edge, 7.9 s)",
+    "subscribe-like-bell-fill": "themes/halloween-2022/graphics/subscribe-like-bell-fill.mp4 (the Scene_19 MOGRT rendered with aerender from its own AE project, 4096x2304 ProRes 4444 premultiplied -> 1920x1080 30 fps 3.8 s, premultiplied colour)",
+    "subscribe-like-bell-key": "themes/halloween-2022/graphics/subscribe-like-bell-key.mp4 (its ALPHA as a luma key)"
+   },
+   "devices": [
+    "hw-word-pop",
+    "hw-zoom-slideshow",
+    "hw-blood-promo",
+    "hw-split-panels",
+    "hw-blood-title",
+    "hw-camera-shake",
+    "hw-drop-bounce",
+    "hw-zoom-punch",
+    "hw-subscribe-like-bell",
+    "hw-keyed-presenter"
+   ],
+   "transitions_of_the_look": [
+    "glass-blocks-2-horizontal / glass-blocks-3-horizontal / glass-blocks-corner-1-right-up: every b-roll change of the hook and the montage in / out (silent in the source; the 2022 Out half was trimmed to 0.333 s)",
+    "zoom-ease-in (69.0)",
+    "scary-6: the pumpkin stinger on a face-to-face cut (104.6; Normal 75 percent there, not the row's screen blend)",
+    "motion-shake-optics-2x-long / motion-shake-optics-3x-long: the data of hw-camera-shake",
+    "proposed, not rows yet: scary-pumpkin-fire (the fire jack-o-lantern act-break plate 76.4-85.6), zoom-mirror-punch-in (Finzar 'Nice Camera Shake' 54.3)"
+   ],
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022), the first 1:50 (every device)"
+   ],
+   "rule": "pick it for a horror / Halloween register; one theme per video or per chapter (never mixed with kinetic-text-2023 inside one chapter). A whole video picks it for a scary, high-stakes explainer: hw-word-pop on the hook, hw-zoom-slideshow as a chapter opener, hw-camera-shake held on the face after a montage, hw-drop-bounce / hw-zoom-punch on jump cuts, hw-blood-promo as the act break, hw-subscribe-like-bell at the close; the splits and the pumpkin stinger come from the transitions library. A longer house video may pick it for ONE chapter. hw-keyed-presenter is never built (house rule).",
+   "decode_doc": "Decoded 2026-10-25 from Bear markets explained.prproj (main-sequence 3840x2160 @30, linear-light compositing) + the two AE projects (fonts, comps, plates read from the binary .aep) + frame measurements of the AE renders. All px are at 1920x1080 (4K / 2), all times are seconds in main-sequence.mp4. Keyframe times = item start + (kf - clip in-point) / speed, StartKeyframe values (not the stale CurrentValue cache). Premiere audio level dB = 20 log10(level) + 15. The AE templates' keyframes live in the binary .aep, so their MOTION numbers were MEASURED on the renders by feature tracking (marked per row)."
+  }
+ },
+ "devices": {
+  "$doc": "MOTION + SOUND DEVICES (Mike, 2026-10-21: 'get the sound effect as well as the actual motion effect and associate them, so in future videos you grab the type of effect and use them together'). Each device = ONE motion recipe + the sound(s) that fired with it in 2023, with the sound-to-motion offset. The numbers are the 2023 Premiere keyframes converted to 1920x1080; the Remotion recipe lives in video-creation/longform-edited/skills/overlays/overlays.md section 2 (the Remotion recipe for every device below). Colours and typeface are the 2023 LOOK, kept for a 2023-style remake; a house video keeps the MOTION + SOUND and uses its own palette and display font. Keyed by device id; a sound row's `device` field points here.",
+  "kt-side-panel": {
+   "name": "SIDE PANEL with hovering text",
+   "engine": "kinetic-text/KtSidePanel.tsx",
+   "trigger": "a label / short statement that sits BESIDE the main picture for 2 to 3 s (2023: beside Mike's face; a role name, a 'X is more associated with Y' line)",
+   "motion": {
+    "frame_split": "the main picture shifts toward the free side (2023: face footage x -4 percent of the frame width = -80 px, scale 100 -> 120 percent, 0.47 s ease) so a panel can take 45 percent of the frame width (862 px)",
+    "panel_in": "a dark textured panel (2023: #003C33 texture, full frame height, 45 percent width) slides in from fully off-screen on its side to flush, 0.50 s, ease-out; RIGHT side first use, LEFT side the next use, alternating",
+    "text_in": "starts 0.23 s after the panel starts moving: the text block rises from 31 percent of the frame height below its rest (338 px) to rest over 0.33 s while scaling 80 -> 110 -> 100 percent (overshoot peak at 0.15 s), motion-blurred (360 degree shutter)",
+    "hover": "for the life of the panel: slow position drift inside a +-18 px x / +-13 px y box, a new eased target every ~0.7 s, plus a +-0.5 degree rock on a 3.0 s cycle (0 -> +0.5 -> 0 -> -0.5 -> 0); it never stops",
+    "exit": "none in 2023: the next whip / cut removes panel and text together (no slide-out)",
+    "hold_sec": "1.9 to 3.3"
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS, centred in the panel, 3 to 5 short lines (~80 px line pitch), the key words yellow #FCFE40 and the rest white, soft dark drop shadow",
+   "sound": [
+    {
+     "id": "swoosh-1",
+     "when": "RIGHT panel: starts 0.17 s BEFORE the panel starts moving"
+    },
+    {
+     "id": "swoosh-2",
+     "when": "LEFT panel: starts 0.07 s BEFORE the panel starts moving"
+    },
+    {
+     "id": null,
+     "when": "the text pop 0.23 s later is SILENT (one sound per device)"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "4.70 right panel 'GROWTH HACKER IS MORE ASSOCIATED WITH SPEED'",
+    "8.10 left panel 'GROWTH MARKETER IS MORE BRAND ORIENTED'"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023)"
+   ],
+   "texture_variants": {
+    "dark": "the default: the dark textured panel beside Mike's FACE (2023 #003C33 texture)",
+    "paper": {
+     "name": "SIDE PANEL, PAPER variant (b-roll split-screen card)",
+     "trigger": "a 2-word concept or a 'bias towards X' label beside a b-roll shot, optionally with an icon; 1.0 to 4.7 s",
+     "motion": {
+      "panel": "same crumpled-paper video as kt-list-card at Motion scale 309 percent (1978x1112 px), RIGHT side every time, covers x 947-1920 = 50.7 percent of the frame width (973 px) vs 45 percent for the dark panel",
+      "panel_in": "Motion position keyframes, LINEAR (not eased), 0.233 s: from fully off-screen (left edge x 1988) to rest (left edge x 947), 1041 px; vs the dark panel's 0.50 s ease-out",
+      "broll_reframe": "the full-frame b-roll only TRANSLATES left, no scale (vs the dark panel's -80 px + scale 100 -> 120): LINEAR, starting 0.033 s after the panel: -523 px over 0.20 s (interview, 75.30-75.50), -706 px over 0.267 s (VR kid, 92.433-92.70), -549 px over 0.267 s (hologram, 95.667-95.933); the subject ends centred in the left 49 percent",
+      "text_in_card_style_75s": "75.267 / 77.433: the 2-line label (a nested sequence) enters with the 'N.Hyper Zoom Decrease In' whip applied to the TEXT: scale 200 -> 100 over 0.40 s from 0.033 s before the cut (170 / 140 / 126 / 119 / 114 / 110 / 108 / 106 / 104 percent at frames 0-8, strong ease-out), lens-distortion curvature -100 -> 0 over 0.367 s, VR chromatic aberration R/G/B -80 -> 0 over 0.333 s. The pivot is the nested frame's centre placed at (1714, 73) px = upper right, so the words fly in from the lower left, huge, bent and colour-fringed (the 'horizontal smear' at 75.43). Starts on the panel's first frame",
+      "text_out_card_style_75s": "Transform 'Slide RIGHT (OUT)': 0.205 s off to the right (+1848 px at 100 percent, +1755 px at 95 percent), zero speed at both ends (influence 37 percent out, 100 percent in), 180-degree motion blur, ending exactly on the next card's first frame (77.228-77.433, 79.728-79.933). The panel stays between cards",
+      "text_in_label_style_92s": "92.600 / 95.800: the kt-keyword-pop pop (110 + jiggle) + hover wobble, 0.167 s / 0.133 s after the panel starts moving",
+      "icon": "one .aegraphic icon under the card text: EMPLOYEE COSTS centre (1420, 760) = 74.0 / 70.4 percent, art ~218x230 px; GLOBAL MARKETING centre (1436, 746) = 74.8 / 69.1 percent, ~240x220 px; art top 56-68 px below the text block. Entrances in kt-icon-pop",
+      "layout_1080": "75 s cards: 2 lines centred on the panel (x centre ~1440), caps 87-91 px, line pitch 117 px (106 px for the 95-percent SEO card), block y ~381-584 (35-54 percent). 92 / 95 s labels: caps 68-71 px, line pitch 88 px, block centre (1480-1490, 552) = 77 / 51 percent",
+      "exit": "panel + icon: hard cut (79.933, 94.000, 96.800); never slides out",
+      "hold_sec": "cards 2.17 and 2.50; labels 1.40 and 1.00"
+     },
+     "text_look_2023": "75 s cards: Arial Black (font 'Arial-Black'), ALL CAPS, black #000000 with a soft grey drop shadow, no hover. 92 / 95 s labels: Montserrat ExtraBold Italic, red #E70001 ('BIAS TOWARDS TECHNOLOGY') or blue #030AF4 ('BIAS TOWARDS BUSINESS AND PEOPLE') with a white stroke and a dark drop shadow, hovering",
+     "sound": [
+      {
+       "id": "whoosh-4",
+       "when": "one per panel entry: file start 0.267 s before the clip start (clip in 0.267), onset / peak lands -0.03 to +0.04 s from the panel's first frame (75.24 vs 75.267, 77.44 vs 77.433, 92.47 vs 92.433, 95.67 vs 95.667)"
+      },
+      {
+       "id": null,
+       "when": "the text whip-in, the text slide-out and the label pop are silent"
+      }
+     ],
+     "reference_cues_main_sequence": [
+      "75.267 'CUSTOMER INTERVIEW' + EMPLOYEE COSTS icon over the interview b-roll",
+      "77.433 'SEO STRATEGIES' + GLOBAL MARKETING icon (panel stays, text swaps)",
+      "92.433 paper + 92.60 'BIAS TOWARDS TECHNOLOGY' (red) beside the VR-kid b-roll (the b-roll itself was cut in full-frame at 90.80)",
+      "95.667 paper + 95.80 'BIAS TOWARDS BUSINESS AND PEOPLE' (blue) beside the hologram b-roll"
+     ],
+     "used_in": [
+      "GrowthMarketingMike 004 (2023)"
+     ],
+     "differs_from_dark_panel": [
+      "texture = crumpled-paper video, not the dark animated texture",
+      "50.7 percent wide, always right",
+      "panel in = 0.233 s LINEAR from fully off-screen, not 0.50 s ease-out",
+      "b-roll translates only (-523 to -706 px), no scale-up",
+      "card text = Arial Black black, whip-zoomed in and slid out right; label text = red / blue Montserrat with a white stroke",
+      "text starts on the panel's first frame (cards) or 0.13-0.17 s after (labels), vs 0.23 s"
+     ],
+     "confidence": "read from keyframes",
+     "unknowns": [
+      "the on-screen position of the whip pivot depends on the nested sequence's internal layout; on-screen text positions are frame measurements",
+      "shadow parameters of the black card text (frames only)"
+     ]
+    }
+   }
+  },
+  "kt-keyword-pop": {
+   "name": "KEYWORD POP on the face",
+   "engine": "kinetic-text/KtKeywordPop.tsx",
+   "trigger": "a 1 to 2 line keyword or verdict popping onto the lower part of the picture ON the spoken word, held 1.2 to 2.2 s, removed by the next cut",
+   "motion": {
+    "in": "appears at once (no fade) centred at ~79 percent of the frame height; scale 100 -> 110 percent over 0.20 s (ease) with a rotation jiggle 0 -> +2 -> -2 -> +1 -> -0.5 -> 0 degrees at 0 / 0.03 / 0.08 / 0.13 / 0.20 / 0.27 s, motion-blurred so the first 2 to 3 frames smear",
+    "hold": "still (no hover)",
+    "exit": "the next cut"
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS, yellow #FCFE40 with a dark drop shadow; the two-line verdict variant puts the key word in yellow over the rest in white ('POORLY' / 'ATTRIBUTABLE')",
+   "sound_by_meaning": [
+    {
+     "id": "knock-pop",
+     "meaning": "a neutral keyword / phrase",
+     "when": "ON the first frame of the text"
+    },
+    {
+     "id": "minecraft-damage",
+     "meaning": "a NEGATIVE verdict (something bad, not live, no date, poorly X); comedic, at most once per video",
+     "when": "ON the first frame of the text"
+    },
+    {
+     "id": "cash-register",
+     "meaning": "a MONEY / result word",
+     "when": "starts 0.17 s before the text so the bell lands on it"
+    },
+    {
+     "id": "twinkle",
+     "meaning": "a POSITIVE / discovery statement",
+     "when": "ON the first frame of the text"
+    },
+    {
+     "id": "punch-1-2023",
+     "meaning": "a single emphatic word in the accent red with a glow",
+     "when": "ON the first frame"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "12.23 'TACTICS THAT GUARANTEE ATTRIBUTION' (knock-pop)",
+    "25.17 'POORLY ATTRIBUTABLE' (minecraft-damage)",
+    "68.13 / 80.90 (knock-pop)"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023)"
+   ],
+   "punch": {
+    "name": "PUNCH WORD (keyword / headline pop on a punch sound)",
+    "trigger": "one emphatic word or a 2-line verdict over b-roll on a punch hit",
+    "motion": {
+     "conversions_53s": "the PAYOFF word of a kt-word-by-word run over the meeting b-roll (white caption phrases at y ~89 percent before it). NOT the 110 jiggle: 'Zoom Bounce IN (20 frames)' elastic, scale 0 -> 111 (0.047 s) -> 93 (0.070) -> 105 (0.086) -> 98 (0.106) -> 101 (0.125) -> 100 (0.155), opacity 0 -> 100 in 0.014 s, 180-degree motion blur; the first frame (53.533) renders at scale 0 (invisible), visible from 53.567; NO hover wobble. Centre (965, 560) = 50 / 51.9 percent; caps 150 px = 13.9 percent of frame height; width 1516 px = 79 percent of frame width (text-layer scale 390 vs 200 for the caption phrases). Held 0.633 s, hard cut 54.167",
+     "glow": "fill #E70001 + white stroke ~4-5 px + a RED outer glow: strongest just outside the stroke, fading to zero ~35-40 px from the glyph edge (no dark drop shadow visible)",
+     "headline_97_99s": "'TECHNICAL SKILLS' (spelled 'TEACHNICAL' in 2023) and 'CUSTOMER OBSESSED': identical to kt-headline-over-broll (110 + jiggle pop + hover wobble), white #FDFDFD, dark drop shadow, no glow; 2 lines, caps 151-156 px (14 percent of frame height), line pitch ~193 px, block centred x ~960, y ~545 (50.5 percent). Text 1.13 s / 0.63 s after the b-roll whip cut; held 1.13 s each, hard cut"
+    },
+    "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS; CONVERSIONS red #E70001 + white stroke + red glow; the two headlines white with a drop shadow",
+    "sound": [
+     {
+      "id": "punch-1-2023",
+      "when": "CONVERSIONS: file start 53.367 (clip in 0.100), onset 53.526 = ON the item's first frame, peak 53.611 = on the 111 percent overshoot (0.044 s after the first visible frame)"
+     },
+     {
+      "id": "punch-1-2023",
+      "when": "TECHNICAL SKILLS: file start 97.767, onset 97.924 / peak 97.933 = ON the text's first frame. Punch 2.mp3 is NOT punch-sound-effect: it is a 0.81 s punch with the same length and onset as Punch 1 (different encode / mix, peak at 0.166 s)",
+      "note": "as 'Punch 2.mp3'"
+     },
+     {
+      "id": "punch-sound-effect",
+      "when": "CUSTOMER OBSESSED: file start 98.767 (clip in 0.633), onset 99.679 = 0.021 s before the text, peak 99.756"
+     }
+    ],
+    "reference_cues_main_sequence": [
+     "53.533 'CONVERSIONS'",
+     "97.933 'TECHNICAL SKILLS' over the code b-roll",
+     "99.700 'CUSTOMER OBSESSED' over the cafe b-roll"
+    ],
+    "used_in": [
+     "GrowthMarketingMike 004 (2023)"
+    ],
+    "corrections": [
+     "2023-CUE-SHEET 97.77 'punch-sound-effect (as Punch 2)': the file is Punch 2.mp3, a punch-1 twin, not punch-sound-effect",
+     "library kt-keyword-pop implies punch-1 rides the 110 jiggle pop; on CONVERSIONS it rides the Zoom Bounce elastic"
+    ],
+    "confidence": "read from keyframes",
+    "unknowns": [
+     "the glow / stroke parameters live in the Essential Graphics text blob (not decoded): radius and colours are frame measurements"
+    ]
+   }
+  },
+  "kt-headline-over-broll": {
+   "name": "HEADLINE over b-roll",
+   "engine": "kinetic-text/KtHeadlineOverBroll.tsx",
+   "trigger": "one huge word or a two-line sentence centred over a b-roll shot; the b-roll itself enters with a whip-zoom",
+   "motion": {
+    "broll_in": "the b-roll cut lands with a whip-zoom: lens-distortion curvature -100 -> 0 and scale 200 -> 100 percent over 0.37 s (ease-out) (the open used 0.73 s with a 25 -> 0 degree roll)",
+    "text_in": "the kt-keyword-pop pop (scale 100 -> 110, the +-2 degree jiggle, motion blur) 0.8 s after the cut, centred mid-frame (y 43 to 50 percent)",
+    "hold": "still, 2.0 to 2.2 s; removed by the next cut"
+   },
+   "text_look_2023": "white, Montserrat ExtraBold Italic, ALL CAPS; a single word fills about a quarter of the frame height ('LEAD'), a sentence runs two lines",
+   "sound": [
+    {
+     "id": "ea-glitch-21",
+     "when": "ON the b-roll cut (tech / data b-roll only)"
+    },
+    {
+     "id": "swoosh-3",
+     "when": "ON the b-roll cut when the shot is a longer, calmer b-roll run"
+    },
+    {
+     "id": "cash-register",
+     "when": "a MONEY word: starts 0.17 s before the word appears"
+    },
+    {
+     "id": "twinkle",
+     "when": "a POSITIVE statement: ON the first frame of the text"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "14.37 cut + 15.17 'LEAD' over the data-transfer corridor (ea-glitch-21, then cash-register at 15.00)",
+    "16.97 cut + 18.47 'WHETHER OR NOT AN EXPERIMENT WAS SUCCESSFUL' over the hologram shot (swoosh-3, then twinkle)"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023)"
+   ]
+  },
+  "kt-word-by-word": {
+   "name": "WORD-BY-WORD caption pops with a payoff word",
+   "engine": "kinetic-text/KtWordByWord.tsx",
+   "trigger": "a sentence delivered as 2 to 4 short phrases at the lower third, each replacing the last on its spoken word, ending on ONE payoff word that goes big",
+   "motion": {
+    "phrase_in": "opacity 0 -> 100 on the first frame and scale 0 -> 111 -> 93 -> 105 -> 98 -> 101 -> 100 percent over 0.15 s (elastic), centred at ~85 percent of the frame height, white; each phrase replaces the previous one on a hard cut",
+    "payoff_word": "big, centred mid-frame, the accent colour with a glow (2023: green #20F91A), with the kt-keyword-pop jiggle; held 0.8 to 1.0 s, then the next cut"
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS; the phrases white at caption size, the payoff word at about 3x caption size in glowing green",
+   "sound": [
+    {
+     "id": null,
+     "when": "the ordinary phrases are SILENT"
+    },
+    {
+     "id": "cash-register-2",
+     "when": "ON the payoff word when it means money / scale ('SCALED UP')"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "21.27 'THE EXPERIMENT SHOULD BE' -> 22.13 'SCRAPED OR' -> 22.70 'OR SCALED UP' (cash-register-2) -> 22.93 'SCALED UP' small"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023)"
+   ]
+  },
+  "kt-lower-third-band": {
+   "name": "LOWER-THIRD BAND with hovering text",
+   "engine": "kinetic-text/KtLowerThirdBand.tsx",
+   "trigger": "a 2 to 3 line statement that needs 4 s on screen under the picture (a definition, a 'the ultimate goal is...' line)",
+   "motion": {
+    "band_in": "a dark textured band covering the bottom 35 percent of the frame (373 px) slides up from fully below to flush over 0.27 s (ease-out)",
+    "text_in": "0.13 s after the band starts: the kt-keyword-pop pop (scale 100 -> 110 + the +-2 degree jiggle), then the kt-side-panel HOVER (+-18 / +-13 px drift, +-0.5 degree rock, 3 s cycle) for the whole hold",
+    "hold_sec": "~4.0",
+    "exit": "NONE in 2023 (corrected 2026-10-25 from the keyframes): no band ever animates out; the band is cut under the next card / whip. The earlier '0.9 s slide-down' reading was the TEXT layer's Out-DOWN preset, never applied to the band."
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS, centred in the band, yellow key words and white body, drop shadow",
+   "sound": [
+    {
+     "id": "swoosh-4",
+     "when": "band in: starts 0.34 s BEFORE the band moves (the wav twin was used)"
+    },
+    {
+     "id": "knock-pop",
+     "when": "ON the first frame of the text"
+    },
+    {
+     "id": null,
+     "when": "the slide-out is SILENT"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "26.57 band + 26.70 'ULTIMATE GOAL IS TO BUILD A CONSISTENT EXPERIENCE...' (slides out 30.6 to 31.5)",
+    "30.83 'THEREFORE, THE BUSINESS IMPACT...' band",
+    "40.50 mirrored band"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023)"
+   ],
+   "text_swap": {
+    "name": "LOWER-THIRD BAND: second statement swaps in inside the same band",
+    "trigger": "a band statement too long for one 4 s card: the band stays, statement 2 replaces statement 1 on its spoken word",
+    "motion": {
+     "first_text_exit": "effectively a HARD CUT. Text 1 carries an 'Out DOWN' preset (text layer only: +707 px down in 0.10 s, S-curve from rest, then +403 px more over 0.83 s easing to a stop) whose first keyframe sits 2 frames before its clip ends, so exactly ONE visible frame (30.800) shows text 1 starting to drop as a 360-degree-shutter vertical streak (about 0 -> 32 -> 208 px across the shutter), then it is cut at 30.833",
+     "second_text_in": "30.833, same frame as the cut: the kt-keyword-pop pop exactly as text 1 (Transform '110': scale 100 -> 110 over 0.233 s, ease-out: 105 at 1 frame, 107 at 2, 109 at 4, 110 at 7; rotation 0 -> +2 -> -2 -> +1 -> -0.5 -> 0 deg at 0.033 / 0.083 / 0.133 / 0.200 / 0.267 s; 360-degree motion blur) and the same 'Smooth Camera Wobble' hover (identical keyframe set, restarted at the clip start)",
+     "text_position": "text 2 block centred x 960, caps y 842-991 (2 lines, ~78 px pitch, ~55 px caps); text-layer anchor y 848 px (78.6 percent) vs text 1 at 815 px (75.5 percent, 3 lines)",
+     "band": "does NOT move at the swap (no keyframes after its 0.267 s slide-up); only its texture video keeps playing",
+     "face": "the face shot behind cuts 1 frame later (30.867, new angle) with its Motion position lifted 85 px (y 455) so the head clears the band; on the band's first shot the face lifts 68 px linearly over 0.10 s at 26.70-26.80, 0.13 s after the band starts rising",
+     "band_exit_check": "the band clip (26.567-33.667) has an EMPTY 'Out DOWN' effect and no exit keyframes: it is covered by the crumpled-paper card sliding in at 33.30 and cut under it at 33.667. No band in the video ever animates out (the 36.833-42.367 and 102.967-113.233 bands also end on hard cuts / whips). The 'Out DOWN' preset sits on every band TEXT, but on all other texts its keyframes fall after the clip's out-point, so it never plays",
+     "hold_sec": "text 2: 2.83 (30.833-33.667)"
+    },
+    "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS, white, dark drop shadow (both statements white); band on-screen avg #043E38",
+    "sound": [
+     {
+      "id": "knock-pop",
+      "when": "ON the first frame of text 2 (file start 30.833, onset 30.836; clip trimmed to 0.167 s)"
+     },
+     {
+      "id": null,
+      "when": "text 1's one-frame drop is silent"
+     }
+    ],
+    "reference_cues_main_sequence": [
+     "30.800 text 1 drop frame",
+     "30.833 'THEREFORE, THE BUSINESS IMPACT OF A SINGLE TACTICS' pops (knock-pop)",
+     "33.30-33.80 paper card covers the band, band clip ends 33.667"
+    ],
+    "used_in": [
+     "GrowthMarketingMike 004 (2023)"
+    ],
+    "corrections": [
+     "library.json kt-lower-third-band.motion.exit ('band and text slide back down together over 0.9 s, the only 2023 device with an exit move') is not what the project does: 0.93 s is the text-only Out DOWN preset (0.10 s + 0.83 s); it shows for 1 frame at 30.80 and never on the band. The band leaves by being covered (33.30) or cut"
+    ],
+    "confidence": "read from keyframes",
+    "unknowns": [
+     "the exact look of the one-frame drop streak (one frame read)"
+    ]
+   }
+  },
+  "kt-whip-cut": {
+   "name": "WHIP-ZOOM cut (a transition, bucket 3, listed here only because its sounds live in this folder)",
+   "engine": "kinetic-text/KtWhipCut.tsx",
+   "trigger": "every angle change and every face <-> b-roll cut in the 2023 edit",
+   "motion": {
+    "whip_zoom": "the incoming shot lands from scale 200 -> 100 percent with lens-distortion curvature -100 -> 0 over 0.37 s (ease-out); the open's version runs 0.73 s with a 25 -> 0 degree roll",
+    "blur_in_variant": "0.17 s: gaussian blur 800 -> 0, chromatic aberration -60 -> 0, scale 120 -> 100, a vertical offset 0.5 -> 0 of the frame height (a vertical smear in)"
+   },
+   "sound": [
+    {
+     "id": "whoosh-4",
+     "when": "ON the cut (the default, 20+ uses)"
+    },
+    {
+     "id": "fast-reverse-1",
+     "when": "ON the cut, variety"
+    },
+    {
+     "id": "fast-reverse-5",
+     "when": "ON the cut, variety"
+    },
+    {
+     "id": "fast-reverse-2",
+     "when": "a whip that lands on a chapter's first band"
+    },
+    {
+     "id": "swoosh-8",
+     "when": "a chapter-level whip"
+    },
+    {
+     "id": "swoosh-4",
+     "when": "the opening whip onto the face at frame 0"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "0.00 open (0.73 s whip + 25 degree roll, swoosh-4)",
+    "3.27 blur-in variant (whoosh-4 at 3.13)",
+    "11.37, 14.37, 23.67, 26.37 (0.37 s whips)"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023)"
+   ]
+  },
+  "kt-list-card": {
+   "name": "LIST CARD on crumpled paper",
+   "engine": "kinetic-text/KtListCard.tsx",
+   "trigger": "a short list of 2 to 3 examples ('TWEET', 'PODCAST INTERVIEW') shown full-frame, one item per spoken word",
+   "motion": {
+    "card_in": "FULL-FRAME card: 'Free Stock Video Crumpled Paper Background.mp4' (1280x720, 29.97 fps, 32.3 s) at Motion scale 306 percent (1958x1102 px, 2 percent overscan) slides in from the RIGHT: Transform 'Slide LEFT', 0.50 s (33.300-33.800); first frame shows its left edge at 87.5 percent of the frame width (1714 px travel); easing out-speed 0 / influence 32.5 percent -> in-speed 0 / influence 100 percent = soft start, long ease-out (progress 2 / 11 / 33 / 55 / 69 / 78 / 89 / 95 / 99 percent at frames 1-14); 360-degree motion blur (33.433 is a horizontal smear). The paper video plays from its in-point 0",
+    "card_hold": "33.80-36.833 the card IS the whole picture (face and band gone: band clip cut at 33.667 under it); at 36.00 the paper continues on another track from source 2.80 s (an invisible 0.1 s jump)",
+    "item_pop": "each item = the kt-keyword-pop pop (scale 100 -> 110 over 0.233 s ease-out, rotation jiggle 0 -> +2 -> -2 -> +1 -> -0.5 -> 0 deg by 0.267 s, motion blur) + the side-panel hover wobble for the rest of the card; appears at once (no fade, no slide)",
+    "item_timing": "item 1 at 33.867 (0.067 s after the card lands), item 2 at 34.633 (+0.767 s); earlier items STAY PUT (keep hovering) when the next pops",
+    "layout_1080": "item 1 'TWEET': caps 176 px (16.3 percent of frame height), centred x 961, caps y 253-429 (centre 31.6 percent). Item 2 'PODCAST / INTERVIEW': 2 lines, caps 143-149 px, line pitch 200 px, block y 567-910 (centre 68.4 percent), centred x 931. Gap item 1 -> item 2 = 138 px. Text-layer scale 280 vs 239 (item 1 is 1.17x item 2)",
+    "exit": "none: hard cut at 36.833 to the next band shot (texts end 36.800)"
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS, flat fills with NO stroke and NO shadow: item 1 blue #0B81F6, item 2 red #E80101, on the light grey paper (avg #E1DFE1)",
+   "sound": [
+    {
+     "id": "fast-swoosh",
+     "when": "card in: file start 33.100 (clip in 0.133), onset 33.286 = 0.014 s before the card starts moving, peak 33.346"
+    },
+    {
+     "id": "ting",
+     "when": "each item: file start 0.800 s before the clip start so the onset lands 0.016 s after the item's first frame (33.883 vs 33.867, 34.650 vs 34.633); clips trimmed to 0.9-1.0 s"
+    },
+    {
+     "id": null,
+     "when": "card exit silent (hard cut); the fast-reverse-2 at 36.20 (peak 37.01) belongs to the NEXT band's slide-up (36.833-37.10), not to this card"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "33.30 card slides in (fast-swoosh)",
+    "33.867 'TWEET' blue (ting)",
+    "34.633 'PODCAST INTERVIEW' red (ting)",
+    "36.833 hard cut to the 'GROWTH HACKERS' band"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023)"
+   ],
+   "corrections": [
+    "2023-CUE-SHEET lists ting x3 at 33.90 / 34.40 / 34.67: there are only TWO tings (33.90, 34.667) for the two items"
+   ],
+   "confidence": "read from keyframes",
+   "unknowns": [
+    "the soft dark edge on the paper's leading (left) edge during the slide is visible but no shadow effect exists in the project: probably the stock video's own vignette"
+   ],
+   "assets": {
+    "texture": "themes/kinetic-text-2023/textures/paper-crumpled.mp4"
+   },
+   "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)"
+  },
+  "kt-icon-pop": {
+   "name": "ICON POP (flat red-and-white .aegraphic icon slides in beside or on Mike)",
+   "engine": "kinetic-text/KtIconPop.tsx",
+   "trigger": "a concept with an icon: 'startup' (rocket), 'analysis / data' (gauge), 'growth' (plant-and-money chart), cost / people, global marketing",
+   "motion": {
+    "entrance": "a Transform-effect slide on the icon, ALWAYS 0.50 s, ease (out-speed 0 / influence 32.5 percent -> in-speed 0 / influence 100 percent: progress 2 / 11 / 33 / 55 / 69 / 78 / 89 / 95 / 99 percent at frames 1-14), 360-degree motion blur (the smear frames), no scale, no rotation, no fade; direction = from the nearest frame edge",
+    "per_icon": {
+     "START UP (rocket) 45.367": "centre (332, 382) px = 17.3 / 35.4 percent, left of the head; Motion scale 40.6 percent; slides RIGHT in from the left edge, travel 779 px (starts fully off-screen); art incl. grey blob ~320x307 px (rocket glyph ~245x260); held 4.30 s, hard cut 49.667",
+     "ANALYSIS (gauge) 48.133": "centre (1538, 413) = 80.1 / 38.3 percent, right of the head; scale 39.7 percent; slides LEFT in from the right edge, travel 668 px; art ~216x228 px (~267 wide with its blob); held 1.53 s, hard cut 49.667. Re-used at 54.700, same place and slide, held 3.00 s, cut 57.700",
+     "GROWTH (chart) 57.700": "centre (960, 709) = 50.0 / 65.7 percent, ON the chest; scale 31.4 percent; slides UP from the bottom edge, travel 333 px (first frame shows only its top above the frame bottom); art ~190x264 px incl. blob; held 3.43 s, cut 61.133",
+     "EMPLOYEE COSTS 75.267": "in the paper side panel, centre (1420, 760) = 74.0 / 70.4 percent; scale 35.6 percent; slides LEFT, travel 598 px (from off the right edge); ~218x230 px; held 2.17 s, hard cut 77.433 while the card text slides out",
+     "GLOBAL MARKETING 77.433": "panel, centre (1436, 746) = 74.8 / 69.1 percent; scale 38.1 percent; slides UP from the bottom edge, travel 404 px; ~240x220 px; held 2.50 s, cut 79.933"
+    },
+    "internal_animation": "each template also animates by itself (a light-grey blob and small sparkle / dot accents grow in around the art, the art settles); that animation lives in the template's AE project and was not decoded",
+    "colours": "template Color controls: black outline, red #FF0000, white, light grey #E8EBEB (render on screen as red #E70001, white #FDFDFD)",
+    "exit": "always a hard cut (with the next cut or card), never animated",
+    "hold_sec": "1.5 to 4.3"
+   },
+   "text_look_2023": "no text in the icon; a caption-size kt-word-by-word phrase runs at the bottom meanwhile",
+   "sound": [
+    {
+     "id": "swoosh-1",
+     "when": "rocket (left entry): file start 45.133 = 0.233 s BEFORE the slide starts, peak 45.48 = 0.12 s into the slide (clip trimmed to 0.767 s)"
+    },
+    {
+     "id": "swoosh-2",
+     "when": "gauge (right entry): file start 47.867 = 0.267 s before the slide, peak 48.10 = 0.04 s before it (trimmed to 0.767 s)"
+    },
+    {
+     "id": "whoosh-4",
+     "when": "GROWTH and the panel icons: the icon enters on a cut that already carries whoosh-4 (peak within 0.03 s of the first frame); no sound of its own"
+    },
+    {
+     "id": null,
+     "when": "the second ANALYSIS (54.70) is silent"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "45.367 rocket",
+    "48.133 gauge",
+    "54.700 gauge again",
+    "57.700 growth chart on the chest",
+    "75.267 / 77.433 icons inside the paper cards"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023)"
+   ],
+   "artwork": "the five .aegraphic files are ZIPs holding only mogrt_TEMP.aep (RIFX After Effects project, 390-540 KB) + mogrt_TEMPReport.txt ('Number of collected files: 0'); no PNG / JPG / PSD / SVG / AI / PDF inside, the art is AE shape layers. Nothing extracted; no icon folders created",
+   "confidence": "read from keyframes",
+   "unknowns": [
+    "template comp size and the internal shape-layer animation (needs After Effects)",
+    "icon art sizes are frame measurements incl. the grey blob"
+   ],
+   "assets": {},
+   "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)",
+   "artwork_note": "NONE extractable from 2023: the five .aegraphic templates hold After Effects shape layers only (0 collected files). A house video renders its own flat SVG icons (lucide / own) in the chapter accent, to the sizes + slide recipe in this row."
+  },
+  "kt-subscribe-close": {
+   "name": "SUBSCRIBE button on the chest + playlist arrow (end card)",
+   "engine": "kinetic-text/KtSubscribeClose.tsx",
+   "trigger": "the spoken subscribe CTA, then 'check out this playlist' in the last 3 s",
+   "motion": {
+    "button_source": "'Subscribe - 51843.mp4' (1920x1080 green screen ~#44FF13, a red rounded SUBSCRIBE button that grows in on its own), in 1.867 -> out 4.033 s, on V2 over the face 120.667-122.833. Keyed with ULTRA KEY (key colour #39E30D, all defaults: transparency 45, highlight 10, shadow 50, tolerance 50, pedestal 10, spill 50, desaturate 25). The whole 1920x1080 clip is placed and keyed, not cropped. Subscribe.mp4 (an orange 'SUBSCRIBE AND PRESS THE BELL ICON' clip, 11 s) is NOT in the picture: only its audio is used",
+    "button_place": "Motion position (942, 906) px = 49.1 / 83.9 percent, scale 80 percent of a 4K frame (0.40 of the source at 1080); final button ~400x127 px, fill #BD0011, white label 367x50 px",
+    "button_pop": "no keyframes: the grow is the stock clip's own animation caught mid-way by the in-point: LINEAR growth from 23 percent (label 84 px wide) on the first frame 120.667 to 100 percent at 121.000 (10 frames, +28 px label width per frame, no overshoot, no ease), then still",
+    "button_exit": "hard cut at 122.833 (the arrow pops on the same frame); the face behind gets a 'D.Wave Blur Down In' cut at 121.833 while the button stays steady on top",
+    "arrow": "arrow.png (600x398 RGBA, red #FF0000 curved arrow with a black outline, head on the RIGHT) at 100 percent of 4K = 300x199 px, centre (1044, 231) = 54.4 / 21.4 percent (right of the head, above the shoulder), rotation -8.1 deg, NOT mirrored",
+    "arrow_pop": "'Zoom Bounce IN (20 frames)' preset scaled to its 0.233 s clip: scale 0 -> 111 (0.066 s) -> 93 (0.098) -> 105 (0.120) -> 98 (0.148) -> 101 (0.175) -> 100 (0.217), opacity 0 -> 100 in 0.020 s, 180-degree motion blur (122.867 is a red smear)",
+    "arrow_hold_exit": "held still 2.70 s to the last frame (125.533); no exit"
+   },
+   "text_look_2023": "stock button (white bold sans label on a #BD0011 rounded rectangle); flat red cartoon arrow",
+   "sound": [
+    {
+     "id": "cartoon-accent",
+     "when": "button: file start 120.166 (clip in 0.467, trimmed to 0.233 s), onset 120.656 = 0.011 s before the button's first frame, peak 120.72"
+    },
+    {
+     "id": "subscribe-button",
+     "when": "Subscribe.mp4 audio 5.800-6.767 s placed at 121.033 (file start 115.233): a click at 121.06, the main hit peaking 121.26 = 0.26 s after the button reaches full size"
+    },
+    {
+     "id": "cartoon-accent",
+     "when": "arrow: file start 122.366, onset 122.856 (+0.023 s), peak 122.92 = on the 111 percent overshoot"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "120.667 button starts growing",
+    "121.000 button full size",
+    "121.033 subscribe-button sound",
+    "122.833 button cut, arrow pops"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023)"
+   ],
+   "confidence": "read from keyframes",
+   "unknowns": [
+    "the button grow before the in-point (extrapolates to 0 at about 120.57)",
+    "button rectangle size is an edge scan against the red shirt, +-5 px"
+   ],
+   "assets": {
+    "button_anim": "themes/kinetic-text-2023/graphics/subscribe-button.mp4",
+    "button_anim_alt": "themes/kinetic-text-2023/graphics/subscribe-button-alt.mp4",
+    "arrow": "themes/kinetic-text-2023/graphics/arrow-red.png (600x398 RGBA, points right; mirror it to point left)"
+   },
+   "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)"
+  },
+  "kt-scatter-words": {
+   "name": "SCATTER WORDS around the head",
+   "engine": "kinetic-text/KtScatterWords.tsx",
+   "trigger": "a list of 2 to 3 activities said in one breath ('conducting ... analyzing ... using qualitative customer research'), each placed in free space around Mike",
+   "motion": {
+    "per_word": "the kt-keyword-pop pop (scale 100 -> 110 over 0.233 s ease-out + the +-2 deg jiggle, motion blur) + the hover wobble; appears at once",
+    "order_and_layout_1080": "1) 'CONDUCTING' 115.500, right of the head: caps y 398-458 (61 px, 5.6 percent of frame height), x 1288-1858, centre 81.9 / 39.6 percent. 2) 'ANALYZING' 115.900, left of the head: caps 385-442 (58 px), x 56-551, centre 15.8 / 38.3 percent. 3) 'USING QUALITATIVE / CUSTOMER RESEARCH' 117.000, on the chest: 2 lines, caps ~65-70 px, line pitch 73 px, block y 783-920, x 492-1439, centre 50.3 / 78.9 percent",
+    "stays": "all words stay (hovering) until the cut",
+    "background": "Mike's keyed face on the turquoise backdrop (no card); the shot itself entered at 113.267 with the 'D.Wave Blur Down In' transition",
+    "exit": "hard cut / whip at 118.867 (swoosh-8 at 118.667)",
+    "hold_sec": "3.4 / 3.0 / 1.9"
+   },
+   "text_look_2023": "Montserrat ExtraBold Italic, ALL CAPS, green #1EFF06 with a dark drop shadow, no stroke",
+   "sound": [
+    {
+     "id": "pop-1",
+     "when": "word 1: file start 115.167, onset 115.568 = 0.068 s after the word's first frame (clip 0.733 s)"
+    },
+    {
+     "id": "knock-pop",
+     "when": "word 2 (the middle one): onset ON its first frame (115.900)"
+    },
+    {
+     "id": "pop-1",
+     "when": "word 3: file start 116.567, onset 116.968 = 0.032 s before its first frame"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "115.50 'CONDUCTING'",
+    "115.90 'ANALYZING'",
+    "117.00 'USING QUALITATIVE CUSTOMER RESEARCH'"
+   ],
+   "used_in": [
+    "GrowthMarketingMike 004 (2023)"
+   ],
+   "corrections": [
+    "cue sheet 'scatter-card words ANALYZING ... CONDUCTING': the first word is CONDUCTING (right), the knock-pop word is ANALYZING (left), the second pop-1 is the chest line; there is no card"
+   ],
+   "confidence": "read from keyframes",
+   "unknowns": [
+    "shadow offset / blur (frames only)"
+   ],
+   "decoded": "2026-10-25 from differences revision_1.prproj keyframes + frame reads (confidence: read from keyframes)"
+  },
+  "hw-word-pop": {
+   "name": "WORD POP: one green Showcard Gothic word at a time",
+   "engine": "halloween-2022/HwWordPop.tsx",
+   "trigger": "the hook, or any line said word by word: ONE word (or a 2-3 word unit: 'BEAR MARKET', 'S&P 500', '21% BELOW') pops low in the frame ON its spoken word and is hard-cut by the next; gaps where the speaker pauses",
+   "motion": {
+    "appear": "at once (no fade) at 75 percent; 17 of the 24 source words held 75 percent for 2 frames (0.063 s) before the pop (graphic in-point 3599.933 vs the pop keys at 3600.000), the first 7 popped on their first frame, 'In January' waited 0.163 s. Engine default popDelay 0.067",
+    "pop": "Transform effect Scale Width 75 -> 115 -> 100 percent and Scale Height 75 -> 110 -> 100 percent at +0 / +0.067 / +0.117 s from the pop start, LINEAR keys, pivot (960, 940) px, Transform shutter angle 360 (the first pop frames smear)",
+    "hold": "still at 100 percent 0.27-0.93 s, then a HARD CUT to the next word; no exit move",
+    "layout_1080": "one line centred on x 960: font size 212 px (fits the measured 100 percent widths ESTABLISHED 1359 px, ALL-TIME 954, IN JANUARY 1191 -> 211.6-212.7 px), baseline y 989, glyph box y 825-990 (76.4-91.7 percent of the frame height, centre ~84 percent); the source's word centres sat 6-47 px left of 960 (per-word nudges, engine prop x); long units run nearly edge to edge ('US STOCK MARKET')",
+    "hold_sec": "0.27-0.93"
+   },
+   "text_look_2022": "Showcard Gothic (system font C:\\Windows\\Fonts\\SHOWG.TTF, PostScript ShowcardGothic-Reg), ALL CAPS, flat fill #27FF14, no stroke, no shadow, no glow. Part of THIS theme's look",
+   "assets": {},
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (music only), 0.77-19.57 s: no sound on any of the 24 pops. The screenplay may pair a catalog sound on the [SHOW] line; the engine's sound helper takes it as `pair` and lands its attack ON the event frame"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "0.767 World · 1.167 Experiencing · 1.700 Several · 2.233 Financial · 2.633 Crises · 3.600 Seems · 3.933 Another · 4.267 Bear Market · 4.833 Upon US",
+    "8.467 US Stock Market · 9.400 Entered · 9.900 Into · 10.367 Another · 10.833 BEAR Market",
+    "12.800 Happened · 13.300 after · 13.767 S&P 500 · 14.600 closed · 15.533 21% BELOW",
+    "16.933 All-time · 17.367 Record · 17.700 Close · 18.400 Established · 18.967 In January"
+   ],
+   "differs_from": "kt-word-by-word (same role, kinetic-text-2023): white Montserrat PHRASES on an elastic 0 -> 111 -> 93 -> 105 -> 98 -> 101 -> 100 bounce in 0.15 s ending on a big payoff word; this is ONE green Showcard word per beat on a 75 -> 115 x 110 -> 100 pop in 0.117 s, no payoff",
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022)"
+   ],
+   "confidence": "read from keyframes (scale keys, pivot, shutter, in-points, timing); size / position measured on the 100 percent frames and cross-checked with the font's own metrics",
+   "unknowns": [
+    "the per-word x nudges (centres 913-954 px) are frame measurements",
+    "the Essential Graphics text-box alignment is not decoded"
+   ],
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  },
+  "hw-zoom-slideshow": {
+   "name": "ZOOM SLIDESHOW montage (the 'Zooming Dynamic Slideshow' After Effects template)",
+   "engine": "halloween-2022/HwZoomSlideshow.tsx",
+   "trigger": "a chapter opener / topic intro: 3-6 photos of ~1 s, each with ONE title word or phrase, the narration running under it (Bear Markets 19.767: 'BEAR MARKETS', 'STOCK MARKET', 'DECLINE', 'RECENT PEAK')",
+   "motion": {
+    "template": "Envato Elements 'Dynamic Slideshow' (folder 'Zooming Dynamic SlideShow'; zip assets\\Split Screens\\dynamic-slideshow-2021-08-30-...-utc.zip), project ...\\044 Bear Markets\\AE\\Zooming Dynamic SlideShow\\Project\\Dynamic Slideshow (converted).aep: 51 'Shot N' comps, a Text Animator ('Tracking Amount'), Glitch 1-51 comps (Displacement Map from Cell Pattern + Motion Tile + Scatter + Posterize + Auto Levels), Overlay 1-6 light leaks; Mike filled Shots 1-4 and rendered 3.5 s",
+    "placement": "Dynamic Slideshow.mp4 on V3 19.767-23.833, in-point 0.133 s (skips the white first frames), speed 82.78 percent (3.367 s of render over 4.067 s), scale 200 percent in the 4K sequence; entered under a Glass Blocks Corner 1 split, left under a Glass Blocks 3 split",
+    "per_shot_timing": "render 0.133-1.067 / 1.067-1.933 / 1.933-2.600 / 2.600-3.433 s = timeline 19.77-20.89 / 20.89-21.94 / 21.94-22.75 / 22.75-23.75, glitch-out 3.433-3.500 (23.75-23.83). Engine: shot lengths (render s) 0.933 / 0.867 / 0.667 / 0.833 cycled for N photos, timeline = render / speed (speed 0.8278 default, 1 = the template's own pace)",
+    "shot_1_in_roll": "entry: GLITCH, 2 frames of mirror-tiled kaleidoscope + white wash, then displaced blocks (~0.2 s render); move: zoom in x1.54 measured after the glitch (per-frame scale 1.055 -> 1.003, tau ~0.23 s; ~x2.2 from the shot start) while a ROLL settles from ~24 deg to level (per-frame -1.6 -> -0.15 deg, tau ~0.31 s); title low (caps centre y ~902), white, tracking closing from ~0.55 em to ~0.06 em in ~0.3 s, rolling with the photo",
+    "shot_2_in_slide": "entry: radial WHIP (zoom streak, a near-white first frame); move: a 1767 px SLIDE to the left (per-frame -443 -> -4 px, tau ~0.16 s) while zooming in x1.57 (per-frame 1.19 -> 1.00, tau ~0.15 s); title centred, red, riding the slide and growing with the zoom",
+    "shot_3_out": "entry: SPLIT offset (the frame in quadrant panes offset 190-300 px horizontally, settling in ~0.27 s); move: zoom OUT from ~3.4x to 1x (per-frame 0.78 -> 0.99, tau ~0.16 s); title centred, red, tracking closing from very wide (~1.4 em) to ~0.12 em",
+    "shot_4_in_drift": "entry: LIGHT-LEAK flash (an Overlay plate screened, fading over ~0.3 s, a white flash first); move: zoom in x2.1 (per-frame 1.20 -> 1.00, tau ~0.17 s) with a 289 px drift right (+36 -> +2 px per frame); title centred, white, tracking slowly OPENING (~0.06 -> 0.24 em)",
+    "exit": "every shot but the last leaves on a ~0.1 s (render) horizontal smear, picture + title streaking left; the last ends on a 2-frame RGB-split slice glitch",
+    "fill": "uncovered edges show the photo mirror-tiled (the template's Motion Tile with mirror edges), so a roll or a slide never shows black",
+    "title_layout_1080": "Lato-Heavy caps ~138 px (font 192 px), centred on x 960; centred titles at y 540 (measured 470-609), the shot-1 title at y ~902 (832-972)"
+   },
+   "text_look_2022": "Lato-Heavy (read from the .aep; the engine loads Google Fonts Lato 900, the closest weight), ALL CAPS, white #FFFFFF or red #E00000 (measured #D00008-#E00000 on the render), no stroke / shadow",
+   "assets": {
+    "leak_1": "themes/halloween-2022/textures/leak-1.mp4",
+    "leak_2": "themes/halloween-2022/textures/leak-2.mp4",
+    "leak_3": "themes/halloween-2022/textures/leak-3.mp4",
+    "leak_4": "themes/halloween-2022/textures/leak-4.mp4",
+    "leak_5": "themes/halloween-2022/textures/leak-5.mp4",
+    "leak_6": "themes/halloween-2022/textures/leak-6.mp4"
+   },
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (music only): the montage's own audio is silent (-240 dBFS) and nothing was placed on it; the music restarted under it at 19.800, the chapter change. The screenplay may pair a catalog sound on the [SHOW] line; the engine's sound helper takes it as `pair` and lands its attack ON the event frame"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "19.767-23.833 Dynamic Slideshow.mp4 (4 photos; shot 1 is a bear photo, never reused)",
+    "19.800 Harvester restarts from its top (the chapter change)"
+   ],
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022)"
+   ],
+   "confidence": "placement, speed and timing read from the project; the MOTION is measured on the AE render by feature tracking (per-frame similarity transform of every render frame; the template's keyframes live in the binary .aep)",
+   "unknowns": [
+    "the glitch / kaleidoscope entry frames (AE displacement-map comps) are rebuilt from frames, not from data",
+    "the per-shot title start positions (Text Animator) are frame reads",
+    "exact alternative: re-render the AE project with new photos and words (project + plates on Dropbox)"
+   ],
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  },
+  "hw-blood-promo": {
+   "name": "BLOOD PROMO montage (the 'Halloween Party Promo' After Effects template)",
+   "engine": "halloween-2022/HwBloodPromo.tsx",
+   "composite_of": [
+    "hw-split-panels",
+    "hw-blood-title"
+   ],
+   "trigger": "an act break / a dramatic run of facts and numbers: 3-6 scenes, each a photo (or footage) + ONE red title (+ a white serif subtitle) with a blood splat, the narration under it (Bear Markets 85.6: 'Oct 29, 1929' · '16 MILLION SHARES / Just One Day' · 'THOUSANDS / Investors' · 'BEAR MARKET / 67 Days' · 'S&P 500' · 'DECLINE / 44.67%')",
+   "motion": {
+    "template": "Envato 'Halloween Party Promo' (zip assets\\Split Screens\\halloween-party-promo-2021-08-29-09-35-30-utc.zip), project ...\\Split Screens\\Hallow\\Halloween Party Promo\\After Effects\\Halloween Party Promo\\Halloween Party Promo (converted).aep: Scene 01-07 + Tagline; AE effects Tint, Transform, Offset, Drop Shadow, Fast Blur, Grid; fonts Montserrat-Black (titles), Montserrat-Medium, aAntaraDistance (serif subtitles), SocialMediaCircled",
+    "placement": "Final.mp4 (1920x1080 29.97 fps 18.42 s, silent) on V3 85.600-104.000, scale 200 percent in the 4K sequence, 100 percent speed, a 1.0 s Cross Dissolve in from the fire-pumpkin plate (85.6-86.6); music ducked -5 -> -8 dB (75.9-86.7) and -8 -> -12 dB (101.5-104.6) around it",
+    "scene_diagonal": "Scenes 01-02 (~4.3-4.6 s): fade in from black (~1.0 s), the diagonal panels slide in along ~40-42 degrees (hw-split-panels 'diagonal'), the title is there from the start (blur-in), Blood_1's drips ride it, the picture drains to B&W, then zooms back ~8 percent and fades to black (~0.8 s). BM 86.2-90.5 'Oct 29, 1929' (black / blood wipe ~90.0-90.8), 91.0-95.31",
+    "scene_panels": "Scenes 03-06 (2.1-2.3 s each, HARD CUTS at 95.31 / 97.61 / 99.81 / 101.92): ~1.1 s of 3-4 vertical panels (hw-split-panels 'vertical': colour / B&W + grid / colour of the same photo, Offset-sliding), then ~1.1 s B&W with a vignette, the red title + Blood_2 growing over it (hw-blood-title), the panels still at the sides; title events 96.51 / 98.68 / 100.85 / 103.02",
+    "overlays": "the template's dust plate (textures/particles.mp4) and halftone squares (textures/square-motion.mp4) screened over the panels",
+    "engine_defaults": "diagonal scene 4.6 s (title from its start, fade in 1.0 s, fade out 0.8 s, zoom-back 8 percent, Blood_1 from 7.0 s at 0.4x at the plate's own position, plate centre (960, 500)); panels scene 2.2 s (colour panels on t7 from 0.4 s / t8 from 1.5 s at 1.6x; at 1.1 s a hard re-cut to the title phase: narrow left grid band (t7 from 4.5 s, 0.5x) + narrow right dim block (t8 from 1.75 s, 0.35x) around the B&W vignetted main panel, the red title in it, Blood_2 from 5.5 s at 4x, 0.88 scale, plate centre (700, 500)); the title rides inside every panel (red in the main, a dark-red / grey ghost in the others); every scene carries its own photo + words"
+   },
+   "text_look_2022": "titles Montserrat Black, red #E60003 with a red outer glow and soft edges (case as typed: 'Oct 29, 1929' was mixed case); subtitles a white high-contrast serif (aAntaraDistance in the template, Times New Roman in the engine)",
+   "assets": {
+    "particles": "themes/halloween-2022/textures/particles.mp4",
+    "square_motion": "themes/halloween-2022/textures/square-motion.mp4",
+    "blood_1_fill": "themes/halloween-2022/graphics/blood-1-fill.mp4",
+    "blood_1_key": "themes/halloween-2022/graphics/blood-1-key.mp4",
+    "blood_2_fill": "themes/halloween-2022/graphics/blood-2-fill.mp4",
+    "blood_2_key": "themes/halloween-2022/graphics/blood-2-key.mp4"
+   },
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (music only): Final.mp4's audio is silent and nothing was placed on it; the music, ducked, carries it. The screenplay may pair a catalog sound on the [SHOW] line; the engine's sound helper takes it as `pair` and lands its attack ON the event frame"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "85.600-104.000 Final.mp4 (scene 3 is a teddy-bear horror mask and scene 4 a roaring bear: never reused; scene 2's main photo carries an alamy watermark: never reused)",
+    "86.2 'Oct 29, 1929' · 91.0 'MILLION SHARES' / 'Just One Day' · 96.51 'THOUSANDS' / 'Investors' · 98.68 'BEAR MARKET' / '67 Days' · 100.85 'S&P 500' · 103.02 'DECLINE' / '44.67%'"
+   ],
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022)"
+   ],
+   "confidence": "placement, timing and scene cuts read from the project; fonts and plates read from the .aep; panel stack, title look and blood timing APPROXIMATED from the render's frames (the template's comps live in the binary .aep)",
+   "unknowns": [
+    "the template's exact per-scene layer stack and Offset amounts",
+    "the title animators (blur-in, echo) are frame reads",
+    "exact alternative: re-render the AE project with new photos and words"
+   ],
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  },
+  "hw-split-panels": {
+   "name": "SPLIT PANELS cut by the template's luma mattes (diagonal / vertical)",
+   "engine": "halloween-2022/HwSplitPanels.tsx",
+   "part_of": "hw-blood-promo",
+   "trigger": "a photo or footage shown as several sliding panels of itself (colour / B&W / grid / red-tinted), for 1-5 s: a scene of the blood promo, or alone as a dramatic reveal of one image",
+   "motion": {
+    "mattes": "the template's t_1..t_8 luma mattes (graphics/matte-t1..t8.mp4, 1080p 29.97, white = panel): t1 a '\\' band leaving left (cover 43 -> 7 percent by 3.8 s), t2 a wide '\\' band entering from the right (0 -> 61 percent by 2.3 s, then drifting left), t3 a band entering at the right edge (0 -> 28 percent), t4 a '/' band leaving left (38 -> 22 percent), t5 a bottom-right triangle growing from 2 s, t6 a top-left flash on frame 0 only (4.6 s each, edges ~42 degrees); t7 a 755 px vertical band sliding from x 1063 to the left edge in 2.0 s, then narrowing to 343 px by 7 s; t8 a block from the right edge, its left edge 1692 at 1.67 s -> 434 by 7 s (7.8 s each, ease-out)",
+    "diagonal": "promo scene 1: the main photo / footage fills the frame (blur 2.5 px, pushing in 6 percent, draining from colour to B&W between 45 and 85 percent of the scene); a RED panel (the same scene through the Tint + red grid + halftone, drifting 60 px along the diagonal) grows into the upper-right corner through t3 at matte time = scene time - 0.3 s, and another leaves the lower-left corner through t1 at scene time + 0.9 s. Fitted to the 2022 frames at scene 0.4 / 1.4 / 2.9 s: lower-left edge (0,180)-(960,1080) -> (0,500)-(620,1080) -> (0,640)-(480,1080), upper-right edge none -> (1450,0)-(1920,420) -> (960,0)-(1920,870). Optional `scene2` (promo scene 2's look): a second image, red-tinted, rides the '/' band t4",
+    "vertical": "base = the scene, Offset-sliding +40 -> -60 px; a B&W + white-grid version through t7 (in-point 0.4 s, 1.6x, sliding -80 -> +40 px); a block through t8 (in-point 1.5 s, 1.6x, sliding +120 -> 0 px); the promo's title phase switches the treatments to B&W + vignette / B&W + grid / dim",
+    "treatments": "colour; B&W (grayscale, contrast 1.12); B&W + white grid (2 px lines, 170 x 135 px cells, 55 percent); dim (B&W at 42 percent); red = an AE Tint (black -> #1A0000, white -> #FF1A1A) + a red grid (2 px, 298 x 238 px cells) + halftone",
+    "compositing": "luma matte as blend modes: under x (1 - M) + over x M (two isolated groups multiplied by the matte and its inverse, added with plus-lighter), exact for opaque layers"
+   },
+   "text_look_2022": "n/a (a panel shows its scene; the promo's titles ride inside the scene, so a red panel shows a dark-red ghost of the title)",
+   "assets": {
+    "matte_t1": "themes/halloween-2022/graphics/matte-t1.mp4",
+    "matte_t2": "themes/halloween-2022/graphics/matte-t2.mp4",
+    "matte_t3": "themes/halloween-2022/graphics/matte-t3.mp4",
+    "matte_t4": "themes/halloween-2022/graphics/matte-t4.mp4",
+    "matte_t5": "themes/halloween-2022/graphics/matte-t5.mp4",
+    "matte_t6": "themes/halloween-2022/graphics/matte-t6.mp4",
+    "matte_t7": "themes/halloween-2022/graphics/matte-t7.mp4",
+    "matte_t8": "themes/halloween-2022/graphics/matte-t8.mp4",
+    "square_motion": "themes/halloween-2022/textures/square-motion.mp4"
+   },
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (music only). The screenplay may pair a catalog sound on the [SHOW] line; the engine's sound helper takes it as `pair` and lands its attack ON the event frame"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "86.2-95.3 diagonal panels (scenes 1-2)",
+    "95.31-97.4 / 97.61-99.6 / 99.81-101.7 / 101.92-103.0 vertical panels (scenes 3-6, the first ~1.1 s of each)"
+   ],
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022)"
+   ],
+   "confidence": "the mattes and their motion are the template's plates (exact); the diagonal corner panels' matte offsets FITTED to the render's frames at three moments; the treatments, Offset amounts and the vertical matte in-points / rates APPROXIMATED from the frames",
+   "unknowns": [
+    "which treatment rides which matte in the template, scene by scene (binary .aep)"
+   ],
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  },
+  "hw-blood-title": {
+   "name": "BLOOD TITLE: red glowing title + growing blood splat",
+   "engine": "halloween-2022/HwBloodTitle.tsx",
+   "part_of": "hw-blood-promo",
+   "trigger": "one number or keyword that must land as a threat ('S&P 500', 'DECLINE / 44.67%'), held ~1.1 s over a B&W photo (or over the comp's own footage) while a blood splat grows over it",
+   "motion": {
+    "title": "Montserrat Black caps ~105-135 px (S&P 500 105, DECLINE 110, 'Oct 29, 1929' 135; engine default 112 px caps = font 160 px), centred (960, 540); blurs in over 0.2 s (14 -> 0.35 px), opacity in 0.1 s, a red outer glow (blurred copy, 18 px, 60 percent, + a 6 / 16 px text glow), a left echo ghost closing from -64 to -16 px over 0.5 s at 25 percent (the '(S&P' ghost)",
+    "subtitle": "white serif ~104 px, overlapping the title centre-left (-40, +34 px), drawn OVER the blood",
+    "blood": "the template's Blood_2 (or Blood_1) plate (fill + key) OVER the title: Blood_2 from 5.5 s at 4x (the splat doubles in area over the ~1.1 s title phase), 0.88 scale, plate centre (760, 500) px by default (the source's per-scene placement varies: DECLINE ~(837, 452)); holds its last frame",
+    "under": "the photo B&W with a vignette (HwLookLayer 'bw', vignette 0.75), or nothing over the comp's footage",
+    "hold_sec": "~1.1 (the second half of a 2.2 s promo scene), then a hard cut"
+   },
+   "text_look_2022": "Montserrat Black, red #E60003, soft edges + red glow; subtitle white serif (Times New Roman for aAntaraDistance)",
+   "assets": {
+    "blood_1_fill": "themes/halloween-2022/graphics/blood-1-fill.mp4",
+    "blood_1_key": "themes/halloween-2022/graphics/blood-1-key.mp4",
+    "blood_2_fill": "themes/halloween-2022/graphics/blood-2-fill.mp4",
+    "blood_2_key": "themes/halloween-2022/graphics/blood-2-key.mp4"
+   },
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (music only). The screenplay may pair a catalog sound on the [SHOW] line; the engine's sound helper takes it as `pair` and lands its attack ON the event frame"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "96.51 THOUSANDS / Investors (bear-themed mask, never reused) · 98.68 BEAR MARKET / 67 Days (bear, never reused) · 100.85 S&P 500 (scarecrow) · 103.02 DECLINE / 44.67% (burning man)"
+   ],
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022)"
+   ],
+   "confidence": "fonts and plates read from the .aep; sizes, glow, echo, blood timing and placement measured / fitted on the render's frames",
+   "unknowns": [
+    "the template's text animators and the blood layers' time remap (binary .aep)"
+   ],
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  },
+  "hw-camera-shake": {
+   "name": "CAMERA SHAKE held on the face (Swiftly Motion Shake Optics 2x / 3x)",
+   "engine": "halloween-2022/HwCameraShake.tsx",
+   "trigger": "a FACE shot right after a montage or a cut-away, held 2.7-5.4 s: the picture sways like a slow handheld / earthquake camera with perspective breathing, starts and stops dead with the shot (Bear Markets 23.833 2x, 47.800 2x = Mike's 'camera shake ~0:48', 61.367 3x = '~1:02')",
+   "transitions_rows": [
+    "motion-shake-optics-2x-long",
+    "motion-shake-optics-3x-long"
+   ],
+   "transitions_engine": "MotionShake (video-creation/remotion/src/transitions/engines/MotionShake.tsx): per-frame homography of the 4 pinned corners + the static lens on the shared displacement pipeline",
+   "motion": {
+    "what": "a pack preset, not a Transform wiggle: an HST adjustment layer over the face clip with exactly two effects, Corner Pin with all four corners keyed every 0.04 s (1500 keys per corner = a 60 s baked real handheld wiggle at 25 fps, continuous Bezier) and a static Lens Distortion (curvature -10 for 2x, -12 for 3x, fill white); no Transform, so NO motion blur. Every instance starts the TRACK at t = 0 on the shot's first frame (both 2x instances show identical motion for their first 2.7 s); no ease in / out (the 23.833 / 47.800 starts hide under a Glass Blocks split)",
+    "data": "NOT in this row: the full 60 s Corner Pin tracks are the TRANSITIONS rows motion-shake-optics-2x-long / -3x-long (the short motion-shake-optics-2x / -3x rows hold only 2.08 s and freeze after it); this device places that data on a sustained face window",
+    "equivalent_1080": "2x @ 23.833 (5.4 s): translation X p2p 71 px (std 18), Y 34 px (8.5), rotation p2p 0.51 deg (0.10), overscan 103.43 percent, keystone H -0.8..+0.7 / V -3.0..+1.6 percent, 0.2-1.5 Hz, speed mean 2.1 / max 4.1 px per frame · 2x @ 47.800 (2.7 s): X 59 px (18), Y 27 px (7.8), rot 0.50 deg (0.11), 103.42 percent, mean 2.3 / max 4.0 px · 3x @ 61.367 (3.3 s): X 69 px (24), Y 98 px (29), rot 0.97 deg (0.28), 103.24 percent, keystone H -2.4..+2.1 / V -2.0..+2.4 percent, 0.3-1.2 Hz, mean 4.0 / max 7.1 px",
+    "render_check": "background features tracked in the render follow the XML (X corr 0.99 / 0.98 / 0.99, Y 0.83 / 0.99 / 0.82, lag 0-1 frame)",
+    "reads_as": "a slow, floaty handheld / earthquake sway with perspective breathing, never a jitter",
+    "hold_sec": "2.7-5.4"
+   },
+   "text_look_2022": "n/a",
+   "assets": {},
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (music only) (the pack ships no sound). The screenplay may pair a catalog sound on the [SHOW] line; the engine's sound helper takes it as `pair` and lands its attack ON the event frame"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "23.833-29.233 2x on the seated face after the slideshow",
+    "47.800-50.500 2x after the Depression photo",
+    "61.367-64.667 3x after the clown cut-away"
+   ],
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022)"
+   ],
+   "confidence": "read from keyframes (the Corner Pin tracks, lens curvature, windows) and cross-checked against the render by feature tracking",
+   "unknowns": [
+    "the lens is the transitions engine's calibrated displacement approximation (MotionShake fidelity 'approximate')"
+   ],
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  },
+  "hw-drop-bounce": {
+   "name": "DROP BOUNCE on a jump cut (Finzar 'Down')",
+   "engine": "halloween-2022/HwDropBounce.tsx",
+   "trigger": "a jump cut on the face (same shot, a beat later) that should land with weight: the whole picture drops and bounces back in a quarter second (Bear Markets 29.567)",
+   "motion": {
+    "bounce": "Finzar Ultimate Animation Preset 'Down' on the clip's Transform effect: Position y offset 0 -> +79 px (+0.083 s) -> -10 (+0.150) -> +8 (+0.200) -> 0 (+0.250), Bezier / continuous keys (engine: an ease per segment, zero speed at each key), shutter 360 (a vertical streak)",
+    "edge": "the source left the exposed top edge black for those ~3 frames (nothing under the clip); engine `overscan` hides it if wanted",
+    "hold_sec": "0.25"
+   },
+   "text_look_2022": "n/a",
+   "assets": {},
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (music only) (the jump cut's own dialogue only). The screenplay may pair a catalog sound on the [SHOW] line; the engine's sound helper takes it as `pair` and lands its attack ON the event frame"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "29.567 jump cut, V1 Transform Position keys (1.1765, 0.9926) -> (1.1765, 1.0662) -> (1.1765, 0.9835) -> (1.1765, 1.0000) -> (1.1765, 0.9926) at 29.567 / 29.650 / 29.717 / 29.767 / 29.817"
+   ],
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022)"
+   ],
+   "confidence": "read from keyframes (values and times); the in-between Bezier shape is an ease-per-segment approximation",
+   "unknowns": [
+    "the exact Bezier handles of the preset (the study kept the key values only)"
+   ],
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  },
+  "hw-zoom-punch": {
+   "name": "ZOOM PUNCH on the face (Finzar '1. Zoom IN')",
+   "engine": "halloween-2022/HwZoomPunch.tsx",
+   "trigger": "the last beat before a scare / stinger: the face punches in to 200 percent in under half a second and HOLDS there (Bear Markets 104.000, straight into the scary-6 pumpkin stinger at 104.600)",
+   "motion": {
+    "punch": "Finzar ULTIMATE PRESETS '1. Zoom IN': uniform scale 100 -> 200 percent over 0.443 s, Bezier with out-influence 59.8 percent and in-influence 69.7 percent, near-zero end speeds = CSS cubic-bezier(0.598, 0, 0.303, 1), centred, shutter 360 (a radial streak while it moves)",
+    "hold": "holds at 200 percent until the next cut (104.443 -> the face cut at 105.067 under the stinger)",
+    "hold_sec": "0.6 in the source"
+   },
+   "text_look_2022": "n/a",
+   "assets": {},
+   "sound": [
+    {
+     "id": null,
+     "when": "SILENT in the source (music only) (the pumpkin stinger that follows carries the sound). The screenplay may pair a catalog sound on the [SHOW] line; the engine's sound helper takes it as `pair` and lands its attack ON the event frame"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "104.000 V1 Transform Scale Height 100 -> 200 at 104.000 -> 104.443",
+    "104.600 scary-6 stinger over it (transitions library)"
+   ],
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022)"
+   ],
+   "confidence": "read from keyframes",
+   "unknowns": [],
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  },
+  "hw-subscribe-like-bell": {
+   "name": "SUBSCRIBE / LIKE / BELL button (the Scene_19 MOGRT)",
+   "engine": "halloween-2022/HwSubscribeLikeBell.tsx",
+   "trigger": "the spoken subscribe CTA at the end of the hook / the close: a coral SUBSCRIBE pill grows on the lower third, a cursor finger clicks it, it flips to SUBSCRIBED with a like + bell burst, then spins out (Bear Markets 108.900)",
+   "motion": {
+    "graphic": "Motion Graphics Template Scene_19.aegraphic (from CodeMonkey 034 A Case for Gold; AE project 'PP 2.aep', comp Scene_19 4096x2304 30 fps, Raleway ExtraBold), RENDERED with aerender from its own project (After Effects 2026) to an alpha plate kept as a FILL + KEY pair (graphics/subscribe-like-bell-fill.mp4 / -key.mp4, composited backdrop x (1 - key) + fill). Frame 0 empty; the pill grows from frame 1 and the label reveals (0-0.6 s); the cursor enters and clicks ~1.6 s; SUBSCRIBED + the like / bell burst ~1.8-2.6 s; the button spins out by 3.77 s",
+    "placement": "Premiere Motion position (960, 934) px; the 4096-wide comp at 100 percent in the 3840 sequence = 1.0667x the 1080 plate; the button centre lands at (960, 934) (86.5 percent of the frame height); the source item ran 108.900-113.133 (4.233 s, the last 0.47 s empty)",
+    "colours": "pill + Text_01 #FF5658 (rendered #FF5658 / #FC5458), Text_02 / YouTube icon / like white, bell #FDC846, finger black (the template's own colour controls; the BM instance used them unchanged)",
+    "hold_sec": "3.8"
+   },
+   "text_look_2022": "Raleway ExtraBold caps (baked into the plate), white on #FF5658",
+   "assets": {
+    "button_fill": "themes/halloween-2022/graphics/subscribe-like-bell-fill.mp4",
+    "button_key": "themes/halloween-2022/graphics/subscribe-like-bell-key.mp4"
+   },
+   "sound": [
+    {
+     "id": "woosh9",
+     "when": "FILE START 0.133 s after the button's first frame (109.033 for the MOGRT at 108.900), 0 dB, the whole 2.46 s file; its swell peaks 1.56 s into the file = 1.69 s after the button appears, on the cursor click"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "108.900 Scene_19 MOGRT starts at (960, 934) px (start only: it runs past 1:50)",
+    "109.033 woosh9 file start (A4)"
+   ],
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022)"
+   ],
+   "confidence": "placement, colours and the sound offset read from the project; the animation is the template's own (rendered from its project, not re-animated)",
+   "unknowns": [],
+   "differs_from": "kt-subscribe-close (kinetic-text-2023): a keyed green-screen stock button + a red arrow; this one is an alpha-plate MOGRT with a cursor click and a like / bell burst",
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  },
+  "hw-keyed-presenter": {
+   "name": "KEYED PRESENTER over full-frame b-roll (DOCUMENTATION ONLY: never built)",
+   "house_rule_conflict": "NEVER chroma-key or AI-matte Mike's face: it distorts his eyes and was rejected repeatedly. This row only records what the 2022 source did; it has NO engine and none may be built. A halloween-2022 video does NOT key Mike.",
+   "sanctioned_alternative": "Higgsfield video-to-video on a SHORT hero face moment only (Seedance 480p HARD RULE, video-creation/vertical-ai-persona/SKILL.md section 3; Mike's OK first), or keep Mike's real shot and let the b-roll come beside / after him: hw-word-pop over his own shot, a cut-away under a split from the transitions library",
+   "trigger": "(source only) the hook 0-19.767 s: Mike standing on green screen, keyed over full-frame b-roll that changes under the Glass Blocks splits",
+   "motion": {
+    "key": "Ultra Key Setting 3, key colour #14E50A then #2AD321; transparency 45, highlight 10, shadow 50, tolerance 50, pedestal 10, choke 33 -> 25, soften 17 -> 13, desaturate 25, range / spill / luma 50; 12.267-16.667 stacks two Ultra Keys",
+    "placements": "110 percent centred (0-5.6) · 150 percent at (830, 697) px (5.6-12.27) · 140 percent at (684, 675) (12.27-16.67) · 150 percent at (537, 686) (16.67-19.77); every re-placement lands under a Glass Blocks split",
+    "backdrops": "bench shots 1 (red trading screen), 2 (rotating newspapers), 3 (bearish chart); 5.6-12.27 a bear (excluded)"
+   },
+   "text_look_2022": "n/a",
+   "assets": {},
+   "sound": [
+    {
+     "id": null,
+     "when": "none in the source"
+    }
+   ],
+   "reference_cues_main_sequence": [
+    "0.000-19.767 (4 placements, 4 backdrops)"
+   ],
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022)"
+   ],
+   "confidence": "read from the project (Ultra Key parameters, Motion placements); documentation only",
+   "unknowns": [],
+   "decoded": "2026-10-25 from Bear markets explained.prproj (0-110 s, verified identical to the pre-render auto-save) + the study of the source 0:00-1:50"
+  }
+ }
+}

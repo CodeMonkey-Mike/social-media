@@ -7,7 +7,7 @@ re-rendered as a **spotlight presentation** (one container at a time, cued to hi
 and close kept. Track-specific policy lives in `skills/` (one folder per skill, index `skills/README.md`), on top of
 the shared `video-creation/skills/` (defumbler, desilencer, gaze, captions, ...).
 
-## The three formats (Mike, 2026-10-16: these are the typical ones, anything else is rare)
+## The four formats (Mike, 2026-10-16: these are the typical ones, anything else is rare; format 4 added 2026-10-24)
 
 Identify the format FIRST, from the folder contents and Mike's ask; it decides which phases run at all. The track
 exists because these are much less effort than longform-edited, so never run a phase the format does not list.
@@ -17,13 +17,18 @@ exists because these are much less effort than longform-edited, so never run a p
 | **1. Slide-deck lecture** (a deck `.html` in the folder, "Section N · Lecture M" eyebrow) | history-of-crypto 2026-10-13, QE 2026-06-06 | 1 defumble -> 2 desilence -> 3 transcribe -> 4 spotlight | the EDIT's own track; Mike runs his own Enhance Speech pass after acceptance | his Whop course (`whop.com/cryptorich`), uploaded by him |
 | **2. Crypto-chart screen share** (TradingView / DexScreener, webcam PiP, no deck) | what-to-buy 2026-10-13 | 1 (only if the take has retakes) -> 2 desilence; the EDIT is the deliverable, crf 18 | the EDIT's own track | his public uploads, by him |
 | **3. VS Code coding screen share** (single take, coding live while talking) | print-function 2026-10-16 | **NO edit at all**: no defumble, no desilence, no transcribe. Music only: `skills/music-bed/` + a series thumbnail `skills/thumbnail/` | intro sting + elevator bed mixed under the untouched voice; no Enhance Speech | the **AI Engineering Simplified** YouTube channel ("Learning Python" series), uploaded by him |
+| **4. Deck screen share with card overlays** (a deck `.html` + talking points in the folder, master in `raw/`, webcam PiP + the Premium Membership box, free talk) | near-vs-tao 2026-10-24 | 1 defumble -> 2 desilence -> **Mike's Enhance Speech pass** (he drops it in `spine/`) -> 3 transcribe it -> a few full-screen deck cards over the A-roll, ONE render, no draft, no Remotion: `skills/card-overlays/` | his enhanced track, stream-copied | YouTube by him + the longform queue (rumble / bitchute / facebook) |
 
 Format 3 is expected to be the MOST common (many Python coding videos). Why no edit: it is one deliberate take,
 fumbles are fine, and the silences are content: Mike may be typing code without speaking and the viewer must not
 miss it. The deliverable is the master with music under it, the picture stream-copied (frame count = master's).
 
 Either way the deliverable is an absolute path and MIKE uploads it himself: nothing on this track is staged to
-`longs.json` or `batches.json`, ever.
+`longs.json` or `batches.json` unless he asks. **Format 4 is the exception he asked for (2026-10-24, near-vs-tao):**
+he uploads to YouTube by hand, and the FINAL + his thumbnail go into the longform queue for rumble / bitchute /
+facebook (never youtube): copy to `schedule-tweets/longform/<p>/<p>.mp4` + `.png`, `publish-meta.json` in the project
+(title, description, tags in his voice; no em dashes, no source links), one `longs.json` entry with `batch: null`,
+edited with Node, then `python scripts/persona-lint.py --file schedule-tweets/data/longs.json`.
 
 ## Folder convention
 
@@ -40,6 +45,11 @@ media/<project>/                   the FOLDER name is the project name (OBS name
   raw/<timestamp>.mkv              format 3: Mike drops the master in a raw/ subfolder (either place works)
   thumbnail/                       <project>-thumb.jpg (the winner, alone at this level) + reference-<id>.jpg + takes/
 ```
+Format 4 keeps its spine in the longform-edited stage-letter layout instead (Mike asked for the spine "just like we
+do for the long-form edited videos"): `raw/<timestamp>.mkv` -> `spine/ALL.a.defumbled.mp4` (+ chunk maps, spans)
+-> `spine/ALL.c.desilenced.mp4` (+ `.map.json`; no `b`, there is no blackout on a screen share) -> Mike's enhanced
+copy beside it under his own name (`ALL.c.desilenced-esv2-...mp4`) + its `.medium-words.json` -> `overlays/`
+(`cards.json`, the card bodies, generated pages and PNGs) -> `<project> FINAL-vN.mp4` at the project root, `_qa/`.
 There is no LOW BPS working copy on this track any more: every tool here reads the master (chunk map, Whisper,
 desilencer) and the one lossy generation is the crf 18 spine, which keeps on-screen text sharp (decided
 2026-10-13; the old `to_low_bps.py` was recycled).
@@ -129,6 +139,24 @@ Mike speaks levels as **Premiere clip gain** (keyframe dB on the clip), never ab
 he has not named it. Thumbnail: **`skills/thumbnail/thumbnail.md`** (edit the previous episode's published
 thumbnail with nano_banana_2, three takes, he picks).
 
+## Format 4 — a few full-screen deck cards over the screen share
+
+**`skills/card-overlays/card-overlays.md`** (canonical). Mike screen-shares the deck with his webcam PiP and talks
+freely from talking points; the spine is made with the shared agents exactly as on longform-edited, minus the
+blackout (he is on screen the whole time): the **`defumbler` agent** on the master (`--crf 18`, output
+`spine/ALL.a.defumbled.mp4`), then the **`desilencer` agent** with this track's preset (`skills/desilence/`, output
+`spine/ALL.c.desilenced.mp4`). Mike runs Adobe Enhance Speech on that file and drops the result into `spine/`;
+verify it (video stream identical, audio offset), transcribe it, pick the moments, author one card per moment from
+the deck, and render once:
+```
+python skills/card-overlays/card_overlays.py "media/<p>/overlays/cards.json"
+```
+Mike's words for this format (2026-10-24): a single card or a single snippet of information over the entire screen,
+deck + webcam + the call to action all covered, for exactly as long as he talks about it; "no need for a draft
+render"; "this long-form presentation folder should be just a very simple version of the long-form editor". Where
+the time goes on a 17-minute master: defumbler agent ~80 min (most of it the agent's own judgment and re-renders,
+not compute), desilence ~6 min, transcribe ~5 min, card render ~3.5 min.
+
 ## Supporting scripts
 
 - `scripts/transcribe.py`: Phase 3 word-level Whisper (medium, GPU).
@@ -205,3 +233,8 @@ transcript corpus, never inferred.
   too low, bed slightly loud -> v2 intro 0 -> -40 / bed -32 dB (Lounge Lover, loop 88.000-160.019 s x9, bed from
   54.70 s) APPROVED and uploaded by him. The hand-built recipe became `skills/music-bed/` the same day (its output
   verified sample-identical to the approved v2).
+- **2026-10-24 "near-vs-tao"** (format 4, the first: NEAR vs TAO over a 4-slide yt-presentation deck, 17:28 master,
+  webcam PiP + Premium Membership box): defumbler agent 40 cuts -> 15:40, desilencer agent (preset) 104 cuts -> 14:08,
+  Mike's Enhance Speech v2 (50% / bg 18% / music 10%), five full-screen cards (quote 0:42, Illia 3:54, voting power
+  7:19, market cap 8:51, Q1-Q3 12:42), one ffmpeg render, FINAL-v1. The hand-built render became
+  `skills/card-overlays/` the same day (its picture verified identical to FINAL-v1).

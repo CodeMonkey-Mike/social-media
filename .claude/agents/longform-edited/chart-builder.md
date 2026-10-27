@@ -38,7 +38,10 @@ the row's beat (CHn@...). Receipts and real marks keep their real pixels.
 2. **`video-creation/longform-edited/skills/presentation/presentation.md`** — palette, fonts (Playfair/JetBrains
    Mono/DM Sans), the dark cinematic system. Charts must read as the same design system as the slides.
 3. `container-reference/README.md` §diagram archetypes + the `diagram-*.png` exemplars — the look for
-   system-design overviews.
+   system-design overviews. **If the dispatch says CONTAINER THEME = LIGHT** (README section "LIGHT THEME"), every
+   diagram and chart state loads `container-canonical-light.css` after the canonical stylesheet and uses its
+   `--grid` / `--axis` / `--wire` / `--ink` tokens for SVG strokes, drops the SVG glow filters, fills hollow points
+   white; the design system is otherwise unchanged. Never a light palette of your own.
 4. The video's **BROLL-PLAN.md CHARTS build worklist** + COVER-PLAN.json slot notes (roles/colors are
    often committed there) + **DATA.md** (every number + the do-not-air guards; on-screen wording obeys
    them exactly) + TRANSITIONS.md (marquee moves that constrain state design, e.g. a MELT between two

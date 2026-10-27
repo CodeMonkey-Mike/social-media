@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>chart-two-suites (illustrative)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+:root{--lit:#22c55e;--lit-rgb:34,197,94}
+
+/* ---- diagram/chart layer on top of the locked stylesheet (layout only; tokens unchanged) ---- */
+.frame.dg{display:block;padding:0;margin:0 0 40px 0}
+.frame.dg>*:not(.orb){position:absolute}
+.hdr{position:absolute;left:120px;top:60px;z-index:2;max-width:1680px}
+.hdr .ey{font-size:24px;margin-bottom:14px}
+.hdr h1{font-size:60px;line-height:1.08;max-width:1680px}
+.hdr .divider{margin:22px 0 0;background:linear-gradient(90deg,var(--lit),rgba(var(--lit-rgb),.22))}
+.lit{color:var(--lit)}
+.src{position:absolute;left:120px;bottom:30px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:18px;
+  color:var(--text-muted);z-index:2;letter-spacing:.01em}
+.k{transition:none}
+.off{opacity:0 !important}
+.dim{opacity:.28}
+.half{opacity:.55}
+.node{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:16px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:12px 16px}
+.node .t{font-family:'DM Sans';font-weight:700;font-size:29px;line-height:1.14;color:var(--text-primary)}
+.node .s{font-family:'DM Sans';font-size:21px;line-height:1.32;color:var(--text-secondary);margin-top:7px}
+.node .m{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:21px;color:var(--text-secondary);margin-top:8px}
+.node.on{border-color:var(--lit);
+  background:linear-gradient(180deg,rgba(var(--lit-rgb),.15),rgba(var(--lit-rgb),.04)),var(--bg-card);
+  box-shadow:0 0 0 1px rgba(var(--lit-rgb),.25),0 0 48px rgba(var(--lit-rgb),.22)}
+.node.on .t{color:var(--lit)}
+.node.bad{border-color:rgba(255,64,96,.85);
+  background:linear-gradient(180deg,rgba(255,64,96,.16),rgba(255,64,96,.05)),var(--bg-card);
+  box-shadow:0 0 0 1px rgba(255,64,96,.25),0 0 44px rgba(255,64,96,.22)}
+.node.bad .t{color:var(--accent-red)}
+.panel{position:absolute;z-index:1;border:2px solid var(--border);border-radius:22px;background:rgba(18,21,28,.55)}
+.panel.on{border-color:rgba(var(--lit-rgb),.75);background:linear-gradient(180deg,rgba(var(--lit-rgb),.07),rgba(18,21,28,.5));
+  box-shadow:0 0 70px rgba(var(--lit-rgb),.12)}
+.panel.dash{border-style:dashed}
+.plabel{position:absolute;z-index:2;font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-muted)}
+.plabel.on{color:var(--lit)}
+.pill{position:absolute;z-index:3;padding:7px 18px;border-radius:100px;font-family:'DM Sans';font-weight:700;font-size:19px;
+  letter-spacing:.12em;text-transform:uppercase;border:1.5px solid rgba(var(--lit-rgb),.55);
+  background:rgba(var(--lit-rgb),.12);color:var(--lit);white-space:nowrap}
+.pill.mut{border-color:var(--border);background:rgba(80,90,110,.12);color:var(--text-secondary)}
+.pill.ill{border:1.5px dashed rgba(136,146,164,.55);background:transparent;color:var(--text-secondary)}
+.pill.red{border-color:rgba(255,64,96,.6);background:rgba(255,64,96,.12);color:var(--accent-red)}
+.pill.grn{border-color:rgba(0,230,138,.6);background:rgba(0,230,138,.12);color:var(--accent-green)}
+.chip{display:inline-block;padding:6px 14px;border-radius:10px;font-family:'JetBrains Mono',monospace;font-weight:600;
+  font-size:20px;border:1.5px solid var(--border);background:rgba(255,255,255,.03);color:var(--text-primary)}
+.chip.on{border-color:rgba(var(--lit-rgb),.7);background:rgba(var(--lit-rgb),.13);color:var(--lit)}
+.txt{position:absolute;z-index:2;font-family:'DM Sans';color:var(--text-secondary);font-size:24px;line-height:1.35}
+.txt.on{color:var(--lit)}
+.wire{position:absolute;left:0;top:0;width:1920px;height:1080px;z-index:1;overflow:visible;pointer-events:none}
+.wire .ln{fill:none;stroke:#3a4357;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.wire .hd{fill:#3a4357}
+.wire.on .ln{stroke:var(--lit)} .wire.on .hd{fill:var(--lit)}
+.wire.bad .ln{stroke:var(--accent-red)} .wire.bad .hd{fill:var(--accent-red)}
+.wire.dash .ln{stroke-dasharray:9 9}
+.code pre,.chip,.node .m,.src,.mono,[style*="JetBrains"]{font-variant-ligatures:none;font-feature-settings:"calt" 0,"liga" 0}
+h1 .mono{font-family:'JetBrains Mono',monospace;font-weight:600;letter-spacing:-.02em;font-size:.86em}
+.yes{color:var(--accent-green)} .no{color:var(--accent-red)}
+/* code cards */
+.code{position:absolute;z-index:2;background:#0d1017;border:1.5px solid var(--border);border-radius:16px;overflow:hidden}
+.code .tab{height:48px;background:var(--bg-card);border-bottom:1px solid var(--border);display:flex;align-items:center;
+  gap:18px;padding:0 22px;font-family:'JetBrains Mono',monospace;font-weight:600;font-size:19px;color:var(--text-secondary)}
+.code .dots{display:flex;gap:8px}.code .dots i{width:12px;height:12px;border-radius:50%;background:#2a3142;display:block}
+.code pre{margin:0;padding:16px 0;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:22px;line-height:1.5;
+  color:#c9cfdb}
+.code .cl{display:block;padding:0 26px 0 22px;border-left:5px solid transparent;white-space:pre;min-height:1.5em}
+.code .cl.on{background:rgba(var(--lit-rgb),.13);border-left-color:var(--lit)}
+.code .cl.dim{opacity:.3}
+.code .kw{color:#8892a4;font-weight:600} .code .st{color:#b8c0cf} .code .cm{color:#5d6880;font-style:italic}
+.code .fn{color:#e8eaf0;font-weight:600} .code .lt{color:var(--lit);font-weight:600}
+.code .ok{color:var(--accent-green);font-weight:600}
+
+
+
+
+/* ---- CH5/CH6 additions (classes only; locked tokens untouched) ---- */
+.node.seen{border-color:rgba(var(--lit-rgb),.50)}
+.node.seen .t{color:var(--text-primary)}
+.node.fut{opacity:.42}
+.node .row{display:flex;gap:10px;justify-content:center;margin-top:10px}
+.hub .sec{fill:rgba(255,255,255,.03);stroke:#2a3142;stroke-width:2}
+.hub .sec.on{fill:rgba(var(--lit-rgb),.20);stroke:var(--lit)}
+.hub .sec.done{fill:rgba(var(--lit-rgb),.07);stroke:rgba(var(--lit-rgb),.45)}
+.hub .lab{font-family:'DM Sans';font-weight:700;font-size:19px;letter-spacing:.13em;fill:var(--text-muted)}
+.hub .lab.on{fill:var(--lit)} .hub .lab.done{fill:var(--text-secondary)}
+.box{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:16px;
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 26px}
+.box .t{font-family:'DM Sans';font-weight:700;font-size:33px;line-height:1.1;color:var(--text-primary)}
+.box .m{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:21px;color:var(--text-secondary);margin-top:10px;white-space:nowrap}
+.box .row{display:flex;gap:10px;margin-top:14px}
+.box.on{border-color:var(--lit);
+  background:linear-gradient(180deg,rgba(var(--lit-rgb),.15),rgba(var(--lit-rgb),.04)),var(--bg-card);
+  box-shadow:0 0 0 1px rgba(var(--lit-rgb),.25),0 0 48px rgba(var(--lit-rgb),.22)}
+.box.on .t{color:var(--lit)}
+.hchip{display:inline-block;padding:5px 14px;border-radius:100px;font-family:'DM Sans';font-weight:700;font-size:17px;
+  letter-spacing:.1em;text-transform:uppercase;border:1.5px solid #2a3142;color:var(--text-secondary);background:rgba(255,255,255,.03)}
+.panel .plabel{position:absolute}
+.code.big pre{font-size:27px;line-height:1.55;padding:20px 0}
+.code.mid pre{font-size:23px;line-height:1.5;padding:16px 0}
+.code.on{border-color:rgba(var(--lit-rgb),.55)}
+.code .cl.on .cm{color:#8a95ab}
+.code .rd{color:#ff6b81} .code .gn{color:var(--lit)}
+.ann{position:absolute;z-index:2;display:flex;align-items:center;gap:14px;font-family:'DM Sans';font-weight:700;font-size:21px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--text-muted)}
+.ann i{display:block;width:44px;height:3px;border-radius:2px;background:#2a3142}
+.ann.on{color:var(--lit)} .ann.on i{background:var(--lit)}
+.ann.done{color:var(--text-secondary)} .ann.done i{background:rgba(var(--lit-rgb),.45)}
+.ecard{position:absolute;z-index:2;background:var(--bg-card);border:2px solid var(--border);border-radius:18px;padding:22px 28px}
+.ecard .lb{display:flex;align-items:center;gap:14px;font-family:'DM Sans';font-weight:700;font-size:20px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--text-muted)}
+.ecard .lb .v{font-family:'JetBrains Mono',monospace;font-weight:600;letter-spacing:0;text-transform:none;font-size:20px;
+  padding:3px 10px;border-radius:8px;border:1.5px solid #2a3142;color:var(--text-secondary)}
+.ecard .tx{font-family:'DM Sans';font-weight:500;font-size:29px;line-height:1.3;color:var(--text-primary);margin-top:12px}
+.ecard .df{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:20px;line-height:1.55;margin-top:12px;white-space:pre}
+.ecard.on{border-color:var(--lit);
+  background:linear-gradient(180deg,rgba(var(--lit-rgb),.13),rgba(var(--lit-rgb),.03)),var(--bg-card);
+  box-shadow:0 0 0 1px rgba(var(--lit-rgb),.25),0 0 48px rgba(var(--lit-rgb),.18)}
+.ecard.on .lb{color:var(--lit)} .ecard.on .lb .v{border-color:rgba(var(--lit-rgb),.6);color:var(--lit)}
+.ecard.done{border-color:rgba(var(--lit-rgb),.40)}
+.ecard.fut{opacity:.32}
+.strike{position:relative}
+.strike:after{content:"";position:absolute;left:-6px;right:-6px;top:52%;height:3px;background:var(--accent-red);border-radius:2px}
+</style></head>
+<body>
+<!-- chart-two-suites · CH5 accent #22c55e · each .frame = one state PNG (chart-two-suites-<state>.png), 1920x1080 -->
+<div class="frame dg" id="start" data-state="start">
+<div class="orb" style="left:1440px;top:-320px;width:600px;height:600px;background:rgba(34,197,94,.50)"></div>
+<div class="hdr"><div class="ey">Two kinds of suite</div><h1>A <span class="lit">hill</span> to climb, a <span class="lit">floor</span> to hold</h1><div class="divider"></div></div>
+<div class="pill ill" style="left:1592px;top:74px;">ILLUSTRATIVE</div>
+<svg class="wire" viewBox="0 0 1920 1080" style="z-index:1"><line x1="310" y1="742.5" x2="1410" y2="742.5" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="625.0" x2="1410" y2="625.0" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="507.5" x2="1410" y2="507.5" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="390.0" x2="1410" y2="390.0" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="860" x2="1410" y2="860" stroke="#3a4357" stroke-width="2.5"/></svg>
+<div class="txt" style="left:180px;top:844px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">0%</div>
+<div class="txt" style="left:180px;top:609.0px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">50%</div>
+<div class="txt" style="left:180px;top:374px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">100%</div>
+<div class="txt" style="left:280px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v1</div>
+<div class="txt" style="left:430px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v2</div>
+<div class="txt" style="left:580px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v3</div>
+<div class="txt" style="left:730px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v4</div>
+<div class="txt" style="left:880px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v5</div>
+<div class="txt" style="left:1030px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v6</div>
+<div class="txt" style="left:1180px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v7</div>
+<div class="txt" style="left:1330px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v8</div>
+<div class="txt" style="left:180px;top:326px;width:200px;font-size:20px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--text-muted)">score</div>
+<div class="txt" style="left:1310px;top:916px;width:200px;text-align:right;font-size:20px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--text-muted)">version</div>
+<div class="panel off" style="left:310px;top:403.4px;width:1100px;height:26px;border:none;border-radius:4px;background:linear-gradient(180deg,rgba(232,234,240,.16),rgba(232,234,240,0))"></div>
+<svg class="wire" viewBox="0 0 1920 1080" style="z-index:2"><circle cx="330.0" cy="775.4" r="26" style="fill:rgba(34,197,94,.22)"/><circle cx="330.0" cy="775.4" r="10" style="fill:var(--lit)"/></svg>
+<div class="txt off" style="left:1440px;top:489.6px;width:380px;line-height:1.25"><span style="font-weight:700;font-size:24px;letter-spacing:.14em;color:var(--lit)">CAPABILITY</span><br><span style="font-size:25px;color:var(--text-secondary)">starts low, climbs</span></div>
+<div class="txt off" style="left:1440px;top:362.7px;width:380px;line-height:1.25"><span style="font-weight:700;font-size:24px;letter-spacing:.14em;color:var(--text-primary)">REGRESSION</span><br><span style="font-size:25px;color:var(--text-secondary)">stays near <span class="mono">100%</span></span></div>
+<div class="txt off" style="left:640px;top:549.8px;width:420px;font-size:30px;font-weight:700;color:var(--lit)">a hill you climb</div>
+<div class="txt off" style="left:330px;top:437.4px;width:600px;font-size:30px;font-weight:700;color:var(--text-primary)">the floor you never fall through</div>
+<div class="src">Capability and regression evals: Anthropic, &ldquo;Demystifying evals for AI agents&rdquo; (Jan 2026) &middot; values illustrative</div>
+</div>
+<div class="frame dg" id="mid" data-state="mid">
+<div class="orb" style="left:1440px;top:-320px;width:600px;height:600px;background:rgba(34,197,94,.50)"></div>
+<div class="hdr"><div class="ey">Two kinds of suite</div><h1>A <span class="lit">hill</span> to climb, a <span class="lit">floor</span> to hold</h1><div class="divider"></div></div>
+<div class="pill ill" style="left:1592px;top:74px;">ILLUSTRATIVE</div>
+<svg class="wire" viewBox="0 0 1920 1080" style="z-index:1"><line x1="310" y1="742.5" x2="1410" y2="742.5" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="625.0" x2="1410" y2="625.0" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="507.5" x2="1410" y2="507.5" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="390.0" x2="1410" y2="390.0" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="860" x2="1410" y2="860" stroke="#3a4357" stroke-width="2.5"/></svg>
+<div class="txt" style="left:180px;top:844px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">0%</div>
+<div class="txt" style="left:180px;top:609.0px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">50%</div>
+<div class="txt" style="left:180px;top:374px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">100%</div>
+<div class="txt" style="left:280px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v1</div>
+<div class="txt" style="left:430px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v2</div>
+<div class="txt" style="left:580px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v3</div>
+<div class="txt" style="left:730px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v4</div>
+<div class="txt" style="left:880px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v5</div>
+<div class="txt" style="left:1030px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v6</div>
+<div class="txt" style="left:1180px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v7</div>
+<div class="txt" style="left:1330px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v8</div>
+<div class="txt" style="left:180px;top:326px;width:200px;font-size:20px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--text-muted)">score</div>
+<div class="txt" style="left:1310px;top:916px;width:200px;text-align:right;font-size:20px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--text-muted)">version</div>
+<div class="panel off" style="left:310px;top:403.4px;width:1100px;height:26px;border:none;border-radius:4px;background:linear-gradient(180deg,rgba(232,234,240,.16),rgba(232,234,240,0))"></div>
+<svg class="wire" viewBox="0 0 1920 1080" style="z-index:2"><defs><linearGradient id="gcmid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:rgba(34,197,94,.20)"/><stop offset="1" style="stop-color:rgba(34,197,94,0)"/></linearGradient></defs><path d="M330.0,775.4 L480.0,737.8 L630.0,695.5 L780.0,657.9 L930.0,620.3 L1080.0,582.7 L1230.0,549.8 L1380.0,521.6 L1380.0,860 L330.0,860 Z" fill="url(#gcmid)"/><path d="M330.0,775.4 L480.0,737.8 L630.0,695.5 L780.0,657.9 L930.0,620.3 L1080.0,582.7 L1230.0,549.8 L1380.0,521.6" style="fill:none;stroke:var(--lit);stroke-width:6px" stroke-linecap="round" stroke-linejoin="round"/><circle cx="330.0" cy="775.4" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="480.0" cy="737.8" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="630.0" cy="695.5" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="780.0" cy="657.9" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="930.0" cy="620.3" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="1080.0" cy="582.7" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="1230.0" cy="549.8" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="1380.0" cy="521.6" r="26" style="fill:rgba(34,197,94,.22)"/><circle cx="1380.0" cy="521.6" r="10" style="fill:var(--lit)"/></svg>
+<div class="txt " style="left:1440px;top:489.6px;width:380px;line-height:1.25"><span style="font-weight:700;font-size:24px;letter-spacing:.14em;color:var(--lit)">CAPABILITY</span><br><span style="font-size:25px;color:var(--text-secondary)">starts low, climbs</span></div>
+<div class="txt off" style="left:1440px;top:362.7px;width:380px;line-height:1.25"><span style="font-weight:700;font-size:24px;letter-spacing:.14em;color:var(--text-primary)">REGRESSION</span><br><span style="font-size:25px;color:var(--text-secondary)">stays near <span class="mono">100%</span></span></div>
+<div class="txt " style="left:640px;top:549.8px;width:420px;font-size:30px;font-weight:700;color:var(--lit)">a hill you climb</div>
+<div class="txt off" style="left:330px;top:437.4px;width:600px;font-size:30px;font-weight:700;color:var(--text-primary)">the floor you never fall through</div>
+<div class="src">Capability and regression evals: Anthropic, &ldquo;Demystifying evals for AI agents&rdquo; (Jan 2026) &middot; values illustrative</div>
+</div>
+<div class="frame dg" id="regression" data-state="regression">
+<div class="orb" style="left:1440px;top:-320px;width:600px;height:600px;background:rgba(34,197,94,.50)"></div>
+<div class="hdr"><div class="ey">Two kinds of suite</div><h1>A <span class="lit">hill</span> to climb, a <span class="lit">floor</span> to hold</h1><div class="divider"></div></div>
+<div class="pill ill" style="left:1592px;top:74px;">ILLUSTRATIVE</div>
+<svg class="wire" viewBox="0 0 1920 1080" style="z-index:1"><line x1="310" y1="742.5" x2="1410" y2="742.5" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="625.0" x2="1410" y2="625.0" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="507.5" x2="1410" y2="507.5" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="390.0" x2="1410" y2="390.0" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="860" x2="1410" y2="860" stroke="#3a4357" stroke-width="2.5"/></svg>
+<div class="txt" style="left:180px;top:844px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">0%</div>
+<div class="txt" style="left:180px;top:609.0px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">50%</div>
+<div class="txt" style="left:180px;top:374px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">100%</div>
+<div class="txt" style="left:280px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v1</div>
+<div class="txt" style="left:430px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v2</div>
+<div class="txt" style="left:580px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v3</div>
+<div class="txt" style="left:730px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v4</div>
+<div class="txt" style="left:880px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v5</div>
+<div class="txt" style="left:1030px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v6</div>
+<div class="txt" style="left:1180px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v7</div>
+<div class="txt" style="left:1330px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v8</div>
+<div class="txt" style="left:180px;top:326px;width:200px;font-size:20px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--text-muted)">score</div>
+<div class="txt" style="left:1310px;top:916px;width:200px;text-align:right;font-size:20px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--text-muted)">version</div>
+<div class="panel off" style="left:310px;top:403.4px;width:1100px;height:26px;border:none;border-radius:4px;background:linear-gradient(180deg,rgba(232,234,240,.16),rgba(232,234,240,0))"></div>
+<svg class="wire" viewBox="0 0 1920 1080" style="z-index:2"><path d="M330.0,399.4 L480.0,394.7 L630.0,399.4 L780.0,394.7 L930.0,394.7 L1080.0,399.4 L1230.0,394.7 L1380.0,394.7" style="fill:none;stroke:#e8eaf0;stroke-width:5px" stroke-linecap="round" stroke-linejoin="round"/><circle cx="330.0" cy="399.4" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="480.0" cy="394.7" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="630.0" cy="399.4" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="780.0" cy="394.7" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="930.0" cy="394.7" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="1080.0" cy="399.4" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="1230.0" cy="394.7" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="1380.0" cy="394.7" r="26" style="fill:rgba(232,234,240,.22)"/><circle cx="1380.0" cy="394.7" r="10" style="fill:#e8eaf0"/></svg>
+<svg class="wire" viewBox="0 0 1920 1080" style="z-index:2"><defs><linearGradient id="gcregression" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:rgba(34,197,94,.20)"/><stop offset="1" style="stop-color:rgba(34,197,94,0)"/></linearGradient></defs><path d="M330.0,775.4 L480.0,737.8 L630.0,695.5 L780.0,657.9 L930.0,620.3 L1080.0,582.7 L1230.0,549.8 L1380.0,521.6 L1380.0,860 L330.0,860 Z" fill="url(#gcregression)"/><path d="M330.0,775.4 L480.0,737.8 L630.0,695.5 L780.0,657.9 L930.0,620.3 L1080.0,582.7 L1230.0,549.8 L1380.0,521.6" style="fill:none;stroke:var(--lit);stroke-width:6px" stroke-linecap="round" stroke-linejoin="round"/><circle cx="330.0" cy="775.4" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="480.0" cy="737.8" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="630.0" cy="695.5" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="780.0" cy="657.9" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="930.0" cy="620.3" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="1080.0" cy="582.7" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="1230.0" cy="549.8" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="1380.0" cy="521.6" r="26" style="fill:rgba(34,197,94,.22)"/><circle cx="1380.0" cy="521.6" r="10" style="fill:var(--lit)"/></svg>
+<div class="txt " style="left:1440px;top:489.6px;width:380px;line-height:1.25"><span style="font-weight:700;font-size:24px;letter-spacing:.14em;color:var(--lit)">CAPABILITY</span><br><span style="font-size:25px;color:var(--text-secondary)">starts low, climbs</span></div>
+<div class="txt " style="left:1440px;top:362.7px;width:380px;line-height:1.25"><span style="font-weight:700;font-size:24px;letter-spacing:.14em;color:var(--text-primary)">REGRESSION</span><br><span style="font-size:25px;color:var(--text-secondary)">stays near <span class="mono">100%</span></span></div>
+<div class="txt " style="left:640px;top:549.8px;width:420px;font-size:30px;font-weight:700;color:var(--lit)">a hill you climb</div>
+<div class="txt off" style="left:330px;top:437.4px;width:600px;font-size:30px;font-weight:700;color:var(--text-primary)">the floor you never fall through</div>
+<div class="src">Capability and regression evals: Anthropic, &ldquo;Demystifying evals for AI agents&rdquo; (Jan 2026) &middot; values illustrative</div>
+</div>
+<div class="frame dg" id="payoff" data-state="payoff">
+<div class="orb" style="left:1440px;top:-320px;width:600px;height:600px;background:rgba(34,197,94,.50)"></div>
+<div class="hdr"><div class="ey">Two kinds of suite</div><h1>A <span class="lit">hill</span> to climb, a <span class="lit">floor</span> to hold</h1><div class="divider"></div></div>
+<div class="pill ill" style="left:1592px;top:74px;">ILLUSTRATIVE</div>
+<svg class="wire" viewBox="0 0 1920 1080" style="z-index:1"><line x1="310" y1="742.5" x2="1410" y2="742.5" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="625.0" x2="1410" y2="625.0" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="507.5" x2="1410" y2="507.5" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="390.0" x2="1410" y2="390.0" stroke="#1e2330" stroke-width="1.5" stroke-dasharray="4 8"/><line x1="310" y1="860" x2="1410" y2="860" stroke="#3a4357" stroke-width="2.5"/></svg>
+<div class="txt" style="left:180px;top:844px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">0%</div>
+<div class="txt" style="left:180px;top:609.0px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">50%</div>
+<div class="txt" style="left:180px;top:374px;width:110px;text-align:right;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">100%</div>
+<div class="txt" style="left:280px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v1</div>
+<div class="txt" style="left:430px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v2</div>
+<div class="txt" style="left:580px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v3</div>
+<div class="txt" style="left:730px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v4</div>
+<div class="txt" style="left:880px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v5</div>
+<div class="txt" style="left:1030px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v6</div>
+<div class="txt" style="left:1180px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v7</div>
+<div class="txt" style="left:1330px;top:878px;width:100px;text-align:center;font-family:JetBrains Mono;font-weight:600;font-size:22px;color:var(--text-muted)">v8</div>
+<div class="txt" style="left:180px;top:326px;width:200px;font-size:20px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--text-muted)">score</div>
+<div class="txt" style="left:1310px;top:916px;width:200px;text-align:right;font-size:20px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--text-muted)">version</div>
+<div class="panel " style="left:310px;top:403.4px;width:1100px;height:26px;border:none;border-radius:4px;background:linear-gradient(180deg,rgba(232,234,240,.16),rgba(232,234,240,0))"></div>
+<svg class="wire" viewBox="0 0 1920 1080" style="z-index:2"><path d="M330.0,399.4 L480.0,394.7 L630.0,399.4 L780.0,394.7 L930.0,394.7 L1080.0,399.4 L1230.0,394.7 L1380.0,394.7" style="fill:none;stroke:#e8eaf0;stroke-width:5px" stroke-linecap="round" stroke-linejoin="round"/><circle cx="330.0" cy="399.4" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="480.0" cy="394.7" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="630.0" cy="399.4" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="780.0" cy="394.7" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="930.0" cy="394.7" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="1080.0" cy="399.4" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="1230.0" cy="394.7" r="7" style="fill:#0a0c10;stroke:#e8eaf0;stroke-width:4px"/><circle cx="1380.0" cy="394.7" r="26" style="fill:rgba(232,234,240,.22)"/><circle cx="1380.0" cy="394.7" r="10" style="fill:#e8eaf0"/></svg>
+<svg class="wire" viewBox="0 0 1920 1080" style="z-index:2"><defs><linearGradient id="gcpayoff" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:rgba(34,197,94,.20)"/><stop offset="1" style="stop-color:rgba(34,197,94,0)"/></linearGradient></defs><path d="M330.0,775.4 L480.0,737.8 L630.0,695.5 L780.0,657.9 L930.0,620.3 L1080.0,582.7 L1230.0,549.8 L1380.0,521.6 L1380.0,860 L330.0,860 Z" fill="url(#gcpayoff)"/><path d="M330.0,775.4 L480.0,737.8 L630.0,695.5 L780.0,657.9 L930.0,620.3 L1080.0,582.7 L1230.0,549.8 L1380.0,521.6" style="fill:none;stroke:var(--lit);stroke-width:6px" stroke-linecap="round" stroke-linejoin="round"/><circle cx="330.0" cy="775.4" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="480.0" cy="737.8" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="630.0" cy="695.5" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="780.0" cy="657.9" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="930.0" cy="620.3" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="1080.0" cy="582.7" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="1230.0" cy="549.8" r="7" style="fill:#0a0c10;stroke:var(--lit);stroke-width:4px"/><circle cx="1380.0" cy="521.6" r="26" style="fill:rgba(34,197,94,.22)"/><circle cx="1380.0" cy="521.6" r="10" style="fill:var(--lit)"/></svg>
+<div class="txt " style="left:1440px;top:489.6px;width:380px;line-height:1.25"><span style="font-weight:700;font-size:24px;letter-spacing:.14em;color:var(--lit)">CAPABILITY</span><br><span style="font-size:25px;color:var(--text-secondary)">starts low, climbs</span></div>
+<div class="txt " style="left:1440px;top:362.7px;width:380px;line-height:1.25"><span style="font-weight:700;font-size:24px;letter-spacing:.14em;color:var(--text-primary)">REGRESSION</span><br><span style="font-size:25px;color:var(--text-secondary)">stays near <span class="mono">100%</span></span></div>
+<div class="txt " style="left:640px;top:549.8px;width:420px;font-size:30px;font-weight:700;color:var(--lit)">a hill you climb</div>
+<div class="txt " style="left:330px;top:437.4px;width:600px;font-size:30px;font-weight:700;color:var(--text-primary)">the floor you never fall through</div>
+<div class="src">Capability and regression evals: Anthropic, &ldquo;Demystifying evals for AI agents&rdquo; (Jan 2026) &middot; values illustrative</div>
+</div>
+</body></html>

@@ -24,6 +24,14 @@ QA the wrong artifact. Two hard rules:
    draft, until they are built and present. Same for music, SFX, face transitions, b-roll: if the plan says it's
    in, the render has it, or QA FAILS. "I deferred it" is the violation, not an acceptable QA result. (Mike,
    2026-06-21: QA should have caught the missing captions itself, before handoff.)
+5. **⛔ B-ROLL MOTION IS CHECKED ON THE FULL RENDER, IN CODE (Mike, 2026-10-17: tao-detailed shipped with b-roll that
+   "looks like it is skipping frames"; "this is a big waste of time").** Over a LONG render a too-small OffthreadVideo
+   cache served stale frames: ~60% of b-roll frames repeated (3-5 held, then a jump), on every clip. Chunk renders and
+   still-frame checks CANNOT see it (a short render never fills the cache; a still has no motion), and the clip files
+   themselves were fine. Run `python skills/video-qa/check_broll_motion.py <render.mp4> <Comp.tsx> <assets>` on the
+   finished draft AND final (the graph's verify_final runs it and FAILS the final on it). It compares every vid slot's
+   frozen frames in the render against its source clip. Causes and fixes: comp-build.md section 11 (render with
+   `render_comp.py`, whose default cache is 3072 MB since 2026-10-20 (4096 if it fails this check); 24 / 25 fps clips play frame-for-frame via `VID_FPS`).
 
 ## ⛔ WHERE QA OUTPUTS GO — the project folder, never remotion/out/ (Mike, 2026-07-08)
 **Every QA artifact — chunk renders, extracted frames, frame-stacks, preflight stills, signal-check dumps —

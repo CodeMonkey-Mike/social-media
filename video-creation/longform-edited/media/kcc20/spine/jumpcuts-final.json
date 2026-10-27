@@ -1,0 +1,224 @@
+{
+ "fps": 30,
+ "final_spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kcc20\\spine\\ALL.e.desilenced.mp4",
+ "final_map": "ALL.e.desilenced.map.json",
+ "burst_cuts": "ALL.d.cleaned.mp4.cuts.json",
+ "note": "final-spine seconds, pre-card-pause; the comp routes every value through sh()",
+ "joins_s": [
+  0.0,
+  3.8,
+  4.967,
+  6.833,
+  10.7,
+  13.3,
+  16.367,
+  19.6,
+  22.567,
+  26.267,
+  28.067,
+  28.1,
+  28.2,
+  30.3,
+  34.7,
+  37.4,
+  43.767,
+  49.767,
+  53.033,
+  54.033,
+  56.367,
+  64.867,
+  68.733,
+  71.067,
+  75.2,
+  78.3,
+  79.233,
+  82.9,
+  83.2,
+  88.7,
+  91.433,
+  94.033,
+  94.833,
+  99.7,
+  104.7,
+  107.867,
+  107.9,
+  110.367,
+  113.7,
+  115.467,
+  125.067,
+  125.1,
+  129.433,
+  130.833,
+  141.067,
+  143.3,
+  149.333,
+  152.233,
+  154.067,
+  161.967,
+  164.067,
+  167.367,
+  171.267,
+  174.1,
+  181.9,
+  181.933,
+  188.1,
+  193.533,
+  201.967,
+  202.2,
+  206.933,
+  209.3,
+  209.367,
+  214.133,
+  218.2,
+  220.8,
+  224.767,
+  226.267,
+  226.533,
+  230.133,
+  230.267,
+  232.7,
+  233.033,
+  234.0,
+  242.7,
+  242.833,
+  246.2,
+  249.233,
+  252.333,
+  257.6,
+  261.7,
+  262.267,
+  285.667,
+  295.767,
+  308.567,
+  328.367
+ ],
+ "joins_total": 86,
+ "edge_margin_s": 0.5,
+ "min_gap_s": 1.5,
+ "face_windows": [
+  {
+   "n": 1,
+   "window_s": [
+    0.0,
+    6.833
+   ],
+   "length_s": 6.833,
+   "joins_s": [
+    3.8,
+    4.967
+   ],
+   "joins_frames": [
+    114,
+    149
+   ],
+   "punch_candidates_s": [
+    3.8
+   ],
+   "sources": {
+    "3.8": [
+     "desilence-final"
+    ],
+    "4.967": [
+     "desilence-final"
+    ]
+   }
+  },
+  {
+   "n": 2,
+   "window_s": [
+    19.633,
+    28.167
+   ],
+   "length_s": 8.534,
+   "joins_s": [
+    22.567,
+    26.267,
+    28.067,
+    28.1
+   ],
+   "joins_frames": [
+    677,
+    788,
+    842,
+    843
+   ],
+   "punch_candidates_s": [
+    22.567,
+    26.267
+   ],
+   "sources": {
+    "22.567": [
+     "desilence-final"
+    ],
+    "26.267": [
+     "desilence-final"
+    ],
+    "28.067": [
+     "desilence-coarse"
+    ],
+    "28.1": [
+     "burst-removal"
+    ]
+   }
+  },
+  {
+   "n": 3,
+   "window_s": [
+    252.9,
+    328.992
+   ],
+   "length_s": 76.092,
+   "joins_s": [
+    257.6,
+    261.7,
+    262.267,
+    285.667,
+    295.767,
+    308.567,
+    328.367
+   ],
+   "joins_frames": [
+    7728,
+    7851,
+    7868,
+    8570,
+    8873,
+    9257,
+    9851
+   ],
+   "punch_candidates_s": [
+    257.6,
+    261.7,
+    285.667,
+    295.767,
+    308.567,
+    328.367
+   ],
+   "sources": {
+    "257.6": [
+     "desilence-coarse"
+    ],
+    "261.7": [
+     "desilence-coarse"
+    ],
+    "262.267": [
+     "burst-removal"
+    ],
+    "285.667": [
+     "desilence-final"
+    ],
+    "295.767": [
+     "desilence-final"
+    ],
+    "308.567": [
+     "desilence-coarse"
+    ],
+    "328.367": [
+     "desilence-coarse"
+    ]
+   }
+  }
+ ],
+ "face_windows_with_joins": 3,
+ "punch_points_total": 9
+}

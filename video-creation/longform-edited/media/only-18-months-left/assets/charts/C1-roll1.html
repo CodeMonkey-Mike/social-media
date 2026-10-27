@@ -1,0 +1,136 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>C1-roll1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame hit" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+</style>
+<style>
+/* chart-builder additions (chapter accent = --lit; every canonical token above is untouched) */
+body{display:flex;flex-direction:column;gap:40px;padding:40px;align-items:flex-start}
+.frame{--lit:#ff4060;--lit-rgb:255,64,96}
+.L{color:var(--lit)}
+.frame>.abs{position:absolute}
+.src{left:140px;bottom:50px;font-family:'DM Sans';font-size:21px;color:var(--text-muted);letter-spacing:.02em}
+svg text{font-family:'DM Sans',sans-serif}
+svg .mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+svg .pf{font-family:'Playfair Display',serif;font-weight:900}
+
+
+.frame.hit{padding:0;justify-content:flex-start}
+.hit .vig{position:absolute;inset:0;z-index:0;
+  background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(20,24,34,.0) 0%,rgba(4,6,13,.75) 100%),
+   radial-gradient(ellipse 70% 40% at 50% 100%,rgba(var(--lit-rgb),.22) 0%,rgba(var(--lit-rgb),0) 70%),
+   radial-gradient(ellipse 40% 50% at 0% 50%,rgba(var(--lit-rgb),.10) 0%,rgba(var(--lit-rgb),0) 70%),
+   radial-gradient(ellipse 40% 50% at 100% 50%,rgba(var(--lit-rgb),.10) 0%,rgba(var(--lit-rgb),0) 70%)}
+.hit .fog{position:absolute;left:0;right:0;top:620px;height:300px;z-index:0;
+  background:linear-gradient(180deg,rgba(136,146,164,0) 0%,rgba(136,146,164,.05) 50%,rgba(136,146,164,0) 100%)}
+.hit .pict{position:absolute;left:780px;top:215px;width:360px;height:360px}
+.hit .pict g{fill:none;stroke:#6b7489;stroke-width:5.5;stroke-linecap:round;stroke-linejoin:round}
+.hit .pict .acc{stroke:var(--lit);filter:url(#g)}
+.hit .halo{position:absolute;left:710px;top:145px;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(var(--lit-rgb),.16) 0%,rgba(var(--lit-rgb),0) 65%)}
+.hit .lab{position:absolute;left:530px;width:860px;top:585px;height:98px;display:flex;align-items:flex-end;justify-content:center;
+  text-align:center;font-family:'DM Sans';font-weight:700;font-size:38px;line-height:1.18;letter-spacing:.1em;color:var(--text-primary)}
+.hit .num{position:absolute;left:530px;width:860px;top:690px;text-align:center;font-family:'JetBrains Mono';font-weight:600;
+  font-size:104px;line-height:1;color:var(--lit);text-shadow:0 0 34px rgba(var(--lit-rgb),.55)}
+.hit .sub{position:absolute;left:530px;width:860px;top:808px;text-align:center;font-family:'DM Sans';font-size:22px;
+  letter-spacing:.06em;color:var(--text-secondary)}
+.hit .sub .mono{color:var(--text-muted);font-size:19px;letter-spacing:.04em}
+.hit .cnt{position:absolute;left:530px;width:860px;top:168px;text-align:center;font-family:'JetBrains Mono';font-weight:400;
+  font-size:20px;letter-spacing:.3em;color:var(--text-muted)}
+
+</style>
+</head><body>
+<!-- C1-roll1: one full-frame 1920x1080 .frame per state; PNG = <cid>-<state>.png -->
+<div class="frame hit" id="01-customer-service-reps" data-state="01-customer-service-reps">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><path d="M50 112 V96 a50 50 0 0 1 100 0 V112"/><rect x="36" y="104" width="26" height="46" rx="11"/><rect x="138" y="104" width="26" height="46" rx="11"/><path d="M151 150 q0 26 -42 26 h-12"/><circle class="acc" cx="88" cy="176" r="8"/></g></svg><div class="cnt abs">01 / 12</div><div class="lab abs">CUSTOMER SERVICE REPS</div><div class="num abs">2.7M</div><div class="sub abs">employed, 2025 &nbsp;<span class="mono">BLS 2,666,000</span></div>
+</div>
+<div class="frame hit" id="02-roofers" data-state="02-roofers">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><path d="M16 112 L100 38 L184 112"/><path d="M40 96 V172 H160 V96"/><path d="M52 86 H148 M70 70 H130 M86 56 H114"/><path d="M84 172 V130 H116 V172"/><path class="acc" d="M100 38 L184 112"/></g></svg><div class="cnt abs">02 / 12</div><div class="lab abs">ROOFERS</div><div class="num abs">167K</div><div class="sub abs">employed, 2025 &nbsp;<span class="mono">BLS 166,900</span></div>
+</div>
+<div class="frame hit" id="03-carpenters" data-state="03-carpenters">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><path d="M62 150 L128 78"/><path d="M102 58 L150 92 L140 106 L92 72 Z"/><rect x="22" y="152" width="156" height="22" rx="3"/><path class="acc" d="M150 152 V124 M142 124 H158"/></g></svg><div class="cnt abs">03 / 12</div><div class="lab abs">CARPENTERS</div><div class="num abs">890K</div><div class="sub abs">employed, 2025 &nbsp;<span class="mono">BLS 889,700</span></div>
+</div>
+<div class="frame hit" id="04-cashiers" data-state="04-cashiers">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><path d="M34 112 H166 L176 168 H24 Z"/><rect class="acc" x="98" y="52" width="66" height="36" rx="5"/><path d="M131 88 V112"/><path d="M50 128 h14 M78 128 h14 M106 128 h14 M134 128 h14 M50 148 h14 M78 148 h14 M106 148 h14 M134 148 h14"/><path d="M24 168 V186 H176 V168"/></g></svg><div class="cnt abs">04 / 12</div><div class="lab abs">CASHIERS</div><div class="num abs">3.1M</div><div class="sub abs">employed, 2025 &nbsp;<span class="mono">BLS 3,106,300</span></div>
+</div>
+<div class="frame hit" id="05-heavy-truck-drivers" data-state="05-heavy-truck-drivers">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><rect x="16" y="66" width="114" height="84" rx="4"/><path d="M130 92 H162 L184 120 V150 H130 Z"/><path d="M140 100 H158 L172 120 H140 Z"/><circle cx="46" cy="160" r="15"/><circle cx="82" cy="160" r="15"/><circle cx="160" cy="160" r="15"/><path class="acc" d="M178 134 h6"/></g></svg><div class="cnt abs">05 / 12</div><div class="lab abs">HEAVY TRUCK DRIVERS</div><div class="num abs">2.2M</div><div class="sub abs">employed, 2025 &nbsp;<span class="mono">BLS 2,221,200</span></div>
+</div>
+<div class="frame hit" id="06-hand-laborers-material-movers" data-state="06-hand-laborers-material-movers">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><rect x="32" y="108" width="62" height="62" rx="3"/><rect x="106" y="108" width="62" height="62" rx="3"/><rect class="acc" x="69" y="46" width="62" height="62" rx="3"/><path d="M63 108 V126 M137 108 V126 M100 46 V64"/><path d="M20 170 H180 M20 186 H180 M32 170 V186 M100 170 V186 M168 170 V186"/></g></svg><div class="cnt abs">06 / 12</div><div class="lab abs">HAND LABORERS AND MATERIAL MOVERS</div><div class="num abs">6.9M</div><div class="sub abs">employed, 2025 &nbsp;<span class="mono">BLS 6,917,800</span></div>
+</div>
+<div class="frame hit" id="07-electricians" data-state="07-electricians">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><circle cx="100" cy="100" r="74"/><path class="acc" d="M112 42 L72 108 H100 L86 160 L132 90 H104 Z"/></g></svg><div class="cnt abs">07 / 12</div><div class="lab abs">ELECTRICIANS</div><div class="num abs">821K</div><div class="sub abs">employed, 2025 &nbsp;<span class="mono">BLS 821,000</span></div>
+</div>
+<div class="frame hit" id="08-plumbers-pipefitters" data-state="08-plumbers-pipefitters">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><path d="M18 62 H104 a38 38 0 0 1 38 38 V184"/><path d="M18 94 H104 a6 6 0 0 1 6 6 V184"/><path d="M60 56 V100 M136 140 H116"/><path class="acc" d="M150 52 L176 26 M176 26 a16 16 0 1 0 6 26 l-10 -2 l-4 -10 l10 -2 M150 52 L118 84"/></g></svg><div class="cnt abs">08 / 12</div><div class="lab abs">PLUMBERS AND PIPEFITTERS</div><div class="num abs">511K</div><div class="sub abs">employed, 2025 &nbsp;<span class="mono">BLS 510,600</span></div>
+</div>
+<div class="frame hit" id="09-taxi-shuttle-chauffeur" data-state="09-taxi-shuttle-chauffeur">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><path d="M20 142 V120 L46 112 L70 84 H130 L154 112 L180 120 V142 Z"/><path d="M78 92 H98 V112 H62 Z M104 92 H124 L140 112 H104 Z"/><circle cx="58" cy="146" r="16"/><circle cx="142" cy="146" r="16"/><rect class="acc" x="80" y="58" width="40" height="20" rx="4"/></g></svg><div class="cnt abs">09 / 12</div><div class="lab abs">TAXI, SHUTTLE AND CHAUFFEUR DRIVERS</div><div class="num abs">456K</div><div class="sub abs">employed, 2025 &nbsp;<span class="mono">BLS 455,700</span></div>
+</div>
+<div class="frame hit" id="10-computer-programmers" data-state="10-computer-programmers">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><rect x="22" y="32" width="156" height="108" rx="9"/><path d="M84 140 L78 170 H122 L116 140"/><path d="M62 170 H138"/><path class="acc" d="M76 66 L54 86 L76 106 M124 66 L146 86 L124 106 M110 60 L90 112"/></g></svg><div class="cnt abs">10 / 12</div><div class="lab abs">COMPUTER PROGRAMMERS</div><div class="num abs">111K</div><div class="sub abs">employed, 2025 &nbsp;<span class="mono">BLS 110,800</span></div>
+</div>
+<div class="frame hit" id="11-radiologists" data-state="11-radiologists">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><rect x="36" y="22" width="128" height="156" rx="9"/><path d="M100 38 V164"/><path d="M100 58 q-38 0 -46 18 M100 58 q38 0 46 18 M100 80 q-40 0 -48 20 M100 80 q40 0 48 20 M100 102 q-38 0 -46 20 M100 102 q38 0 46 20 M100 124 q-32 0 -40 18 M100 124 q32 0 40 18"/><path class="acc" d="M42 112 H158"/></g></svg><div class="cnt abs">11 / 12</div><div class="lab abs">RADIOLOGISTS</div><div class="num abs">27K</div><div class="sub abs">employed, May 2025 &nbsp;<span class="mono">BLS OEWS 26,770</span></div>
+</div>
+<div class="frame hit" id="12-neurosurgeons" data-state="12-neurosurgeons">
+<div class="vig abs"></div><div class="fog abs"></div><div class="halo abs"></div><svg class="pict abs" viewBox="0 0 200 200"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><g><path d="M100 40 C70 28 40 48 44 80 C24 90 26 126 50 134 C50 162 86 170 100 152 C114 170 150 162 150 134 C174 126 176 90 156 80 C160 48 130 28 100 40 Z"/><path d="M100 40 V152"/><path d="M80 50 q-12 14 2 26 q14 12 -2 26 q-14 12 2 28 M120 50 q12 14 -2 26 q-14 12 2 26 q14 12 -2 28 M50 98 q12 2 18 -8 M150 98 q-12 2 -18 -8"/><circle class="acc" cx="122" cy="66" r="8"/></g></svg><div class="cnt abs">12 / 12</div><div class="lab abs">NEUROSURGEONS</div><div class="num abs">$829K</div><div class="sub abs">average pay a year, the top-paid specialty &nbsp;<span class="mono">DOXIMITY 2026</span></div>
+</div>
+</body></html>

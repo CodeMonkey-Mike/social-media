@@ -89,6 +89,37 @@ def longform_gates(batch):
 # Batch ids are slugs. Anything else is refused rather than interpolated into a path.
 BATCH_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 
+# Where an automation's per-project folders live, so a heartbeat left behind by a project that was
+# since recycled (routine after publish) drops out of the In-flight strip instead of lingering.
+GRAPH_PROJECT_DIRS = {"longform": LONGFORM_MEDIA}
+
+
+def inflight_heartbeats(automation):
+    """Every `<data>/lane_progress/<project>.json` for the automation, newest update first."""
+    folder = os.path.join(GRAPH_FEED_DIRS[automation], "lane_progress")
+    if not os.path.isdir(folder):
+        return []
+    out = []
+    for fn in os.listdir(folder):
+        if not fn.endswith(".json"):
+            continue
+        project = fn[:-5]
+        if not BATCH_RE.match(project):
+            continue
+        tmpl = GRAPH_PROJECT_DIRS.get(automation)
+        if tmpl and not os.path.isdir(os.path.join(REPO_ROOT, *tmpl.format(batch=project).split("/"))):
+            continue
+        try:
+            with open(os.path.join(folder, fn), encoding="utf-8") as f:
+                hb = json.load(f)
+        except Exception:
+            continue
+        if isinstance(hb, dict):
+            hb.setdefault("batch", project)
+            out.append(hb)
+    out.sort(key=lambda h: str(h.get("updated_at") or ""), reverse=True)
+    return out
+
 class CORSHandler(http.server.SimpleHTTPRequestHandler):
     def _serve_file(self, full, no_store=False):
         if not os.path.isfile(full):
@@ -139,8 +170,22 @@ class CORSHandler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
             return
-        # /<automation>/<feed file> for any registered LangGraph automation.
+        # /<automation>/inflight.json — COMPUTED: every per-project heartbeat the graph keeps under
+        # its data/lane_progress/ folder (2026-10-16: two longform videos in flight at once; the
+        # single-slot lane_progress.json can only name ONE). Still an allowlist: the folder is read
+        # here, never mounted, and a heartbeat whose project folder was recycled is dropped.
         parts = self.path.lstrip("/").split("?")[0].split("/")
+        if len(parts) == 2 and parts[0] in GRAPH_FEED_DIRS and parts[1] == "inflight.json":
+            body = json.dumps({"projects": inflight_heartbeats(parts[0])}).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(body)
+            return
+        # /<automation>/<feed file> for any registered LangGraph automation.
         if len(parts) == 2 and parts[0] in GRAPH_FEED_DIRS:
             if parts[1] not in GRAPH_FEED_ALLOWED:   # allowlist, not a directory mount
                 self.send_error(404)

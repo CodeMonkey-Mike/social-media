@@ -12,7 +12,7 @@
 #   - The DOM has two button[aria-label="Post"]: a hidden placeholder (0x0, disabled) and the
 #     real visible Post button (61x36, lower-right of composer). Pick the one with non-zero rect.
 #
-# Timing mirrors scripts/post-thread.js — character-by-character typing for question AND options,
+# Timing mirrors scripts/post_thread.py — character-by-character typing for question AND options,
 # 30-90s pre-composer / pre-post pauses (halved 2026-06-14), 2-3.5s between UI actions.
 #
 # 1:1 port on playwright.sync_api. Same #poll-button dispatch-click, same real-input targeting
@@ -53,7 +53,7 @@ CHANNEL_HANDLE = "CodeMonkeyMike"
 POSTS_URL = f"https://www.youtube.com/@{CHANNEL_HANDLE}/posts"
 HOST_SEL = "tp-yt-paper-input.poll-option-input"
 
-# Timing constants — mirrored from scripts/post-thread.js
+# Timing constants — mirrored from scripts/post_thread.py
 CHAR_DELAY_MIN = 60  # ms per keystroke
 CHAR_DELAY_MAX = 150
 ACTION_MIN = int(os.environ.get("YTP_ACTION_MIN", 2000))  # ms between UI actions (halved 2026-06-14)

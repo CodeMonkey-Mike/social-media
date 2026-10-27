@@ -1,0 +1,148 @@
+{
+  "batch": "kcc20-live",
+  "track": "livestream-repurpose",
+  "source_livestream": "kcc20-live",
+  "livestream_date": "2026-10-21",
+  "last_updated": "2026-10-22T11:41:00",
+  "dashboard": "video-creation/shorts/kcc20-live/dashboard.html",
+  "dashboard_status": "5C + captions source done; spines final, render-assets staged. Next: remotion-builder (7) per clip (ChatGPT b-roll stays in the builder), then publish (8).",
+  "numbering_note": "clip numbers frozen at initial dashboard build; never renumber after deletes",
+  "clips": [
+    {
+      "n": 1,
+      "slug": "kcc20-final-kaspa-tokens-on-l1",
+      "title": "KCC20 Is Final: Kaspa Memes Are Just Kaspa Tokens Now",
+      "variant": "full",
+      "duration_seconds": 47.22,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 1)",
+      "output_mp4": "kcc20-final-kaspa-tokens-on-l1/kcc20-final-kaspa-tokens-on-l1-final.mp4",
+      "whisper_words": "kcc20-final-kaspa-tokens-on-l1/whisper-words.json",
+      "composition": "Kcc20LiveTokensOnL1",
+      "comp_files": [
+        "video-creation/remotion/src/Kcc20LiveTokensOnL1.tsx",
+        "video-creation/remotion/src/constants-kcc20-live-kcc20-final-kaspa-tokens-on-l1.ts",
+        "video-creation/remotion/src/captionsKcc20LiveTokensOnL1.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/kcc20-live/1-kcc20-final-kaspa-tokens-on-l1.mp4",
+      "render_duration_s": 47.2,
+      "render_frames": 1416,
+      "broll_plan": "kcc20-final-kaspa-tokens-on-l1/BROLL-PLAN.md",
+      "whisper_words_verified": "kcc20-final-kaspa-tokens-on-l1/whisper-words-verified.json",
+      "built_at": "2026-10-22T09:16:05",
+      "build_notes": "5 b-roll beats (2 full-screen: hook + climax) = 31.4% coverage, 1 alpha overlay (Kaspa coin), 2 code badges (Kasplex = code only, no reference), 11 SFX events, frame-0 cover 'KCC20 IS FINAL'. Viewer handle @basicforge redacted 26.50-41.20 s. One full render (first attempt died at frame 13 on RAM pressure, no output; retried at concurrency 4) + ONE splice 590-1240 (badge text wrap + redaction window off by one frame). Spine loudness -23.3 LUFS (as the spine). STT fixes: CasPlan->Kasplex / Kaspa tokens / Kaspa, Heath->ETH (full-stream in-context decode)."
+    },
+    {
+      "n": 2,
+      "slug": "last-chance-to-own-assets",
+      "title": "This Could Be Your Last Chance to Get In on Assets",
+      "variant": "full",
+      "duration_seconds": 31.52,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 2)",
+      "output_mp4": "last-chance-to-own-assets/last-chance-to-own-assets-final.mp4",
+      "whisper_words": "last-chance-to-own-assets/whisper-words.json",
+      "composition": "Kcc20LiveLastChance",
+      "comp_files": [
+        "video-creation/remotion/src/Kcc20LiveLastChance.tsx",
+        "video-creation/remotion/src/constants-kcc20-live-last-chance-to-own-assets.ts",
+        "video-creation/remotion/src/captionsKcc20LiveLastChance.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/kcc20-live/2-last-chance-to-own-assets.mp4",
+      "render_duration_s": 31.5,
+      "render_frames": 945,
+      "broll_plan": "last-chance-to-own-assets/BROLL-PLAN.md",
+      "whisper_words_verified": "last-chance-to-own-assets/whisper-words-verified.json",
+      "built_at": "2026-10-22T08:23:57",
+      "build_notes": "5 b-roll beats (2 full-screen) = 32.6% coverage, 1 alpha overlay, 3 badges, 10 SFX, frame-0 cover. Spine loudness is -26.4 LUFS (batch-wide quiet spines -23..-26); flagged for review."
+    },
+    {
+      "n": 3,
+      "slug": "ai-replaces-engineers-this-year",
+      "title": "Even Anthropic's Engineers Say AI Codes Better Than Them",
+      "variant": "full",
+      "duration_seconds": 33.42,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 3)",
+      "output_mp4": "ai-replaces-engineers-this-year/ai-replaces-engineers-this-year-final.mp4",
+      "whisper_words": "ai-replaces-engineers-this-year/whisper-words.json",
+      "composition": "Kcc20LiveAiEngineers",
+      "comp_files": [
+        "video-creation/remotion/src/Kcc20LiveAiEngineers.tsx",
+        "video-creation/remotion/src/constants-kcc20-live-ai-replaces-engineers-this-year.ts",
+        "video-creation/remotion/src/captionsKcc20LiveAiEngineers.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/kcc20-live/3-ai-replaces-engineers-this-year.mp4",
+      "render_duration_s": 33.4,
+      "render_frames": 1002,
+      "broll_plan": "ai-replaces-engineers-this-year/BROLL-PLAN.md",
+      "whisper_words_verified": "ai-replaces-engineers-this-year/whisper-words-verified.json",
+      "built_at": "2026-10-22T10:24:47",
+      "build_notes": "5 b-roll beats (2 full-screen: hook + climax) = 33.6% coverage, 4 code badges, 8 SFX (3 cues deleted after whisper sweep: Anthropic badge pop, climax riser, radiology hit), frame-0 cover. ONE full render + 2 audio-only fixes (video PSNR inf vs the full render). Spine loudness -25.4 LUFS (batch-wide quiet spines); flagged for review. 'radiology' (30.96-31.68) is decoder-fragile even on the bare spine."
+    },
+    {
+      "n": 4,
+      "slug": "asteroid-mining-crushes-gold",
+      "title": "Spaceships Mining Asteroids Will Plummet the Value of Gold",
+      "variant": "full",
+      "duration_seconds": 29.2,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 4)",
+      "output_mp4": "asteroid-mining-crushes-gold/asteroid-mining-crushes-gold-final.mp4",
+      "whisper_words": "asteroid-mining-crushes-gold/whisper-words.json",
+      "composition": "Kcc20LiveAsteroidGold",
+      "comp_files": [
+        "video-creation/remotion/src/Kcc20LiveAsteroidGold.tsx",
+        "video-creation/remotion/src/constants-kcc20-live-asteroid-mining-crushes-gold.ts",
+        "video-creation/remotion/src/captionsKcc20LiveAsteroidGold.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/kcc20-live/4-asteroid-mining-crushes-gold.mp4",
+      "render_duration_s": 29.2,
+      "render_frames": 876,
+      "broll_plan": "asteroid-mining-crushes-gold/BROLL-PLAN.md",
+      "whisper_words_verified": "asteroid-mining-crushes-gold/whisper-words-verified.json",
+      "built_at": "2026-10-22T10:41:14",
+      "build_notes": "5 b-roll beats (2 full-screen: hook + climax) = 34.1% coverage, 1 alpha overlay ($ stablecoin), 4 code badges, 11 SFX events, frame-0 cover 'SPACESHIPS WILL CRASH GOLD'. Viewer handle @basicforge (burned-in chat banner, whole clip) redacted x0-124 y688-725. One full render (first attempt died at frame 47 on C: ENOSPC, no output; retried at concurrency 4 after headroom returned) + 2 AUDIO-only fixes (render_short.py audio): PLUMMETS sting -> knock-pop 0.08, US DOLLAR timpani tail 0.35->0.15, STABLECOINS swoosh -> knock-pop 0.08, climax Impact_Hit -short -> -tight at the same 0.18 gain. Spine loudness -24.3 LUFS (as the spine). STT calls for review: 'spaceships' (medium 3/3), 'In other words, like, plummet the value of gold' (clip-plan quote; Whisper hears 'I'm at the value level'), 'hoard' (Whisper medium hears 'afford'), 'foreseeable future' (base; medium garbles)."
+    },
+    {
+      "n": 5,
+      "slug": "longevity-social-security-collapses",
+      "title": "Longevity Escape Velocity in 5 Years, Then Social Security Collapses",
+      "variant": "full",
+      "duration_seconds": 35.56,
+      "phase": "7-built",
+      "gate": "PASS (finalized_short_gate.py --clip 5)",
+      "output_mp4": "longevity-social-security-collapses/longevity-social-security-collapses-final.mp4",
+      "whisper_words": "longevity-social-security-collapses/whisper-words.json",
+      "composition": "Kcc20LiveLongevity",
+      "comp_files": [
+        "video-creation/remotion/src/Kcc20LiveLongevity.tsx",
+        "video-creation/remotion/src/constants-kcc20-live-longevity-social-security-collapses.ts",
+        "video-creation/remotion/src/captionsKcc20LiveLongevity.ts"
+      ],
+      "render_mp4": "video-creation/remotion/out/kcc20-live/5-longevity-social-security-collapses.mp4",
+      "render_duration_s": 35.57,
+      "render_frames": 1067,
+      "broll_plan": "longevity-social-security-collapses/BROLL-PLAN.md",
+      "whisper_words_verified": "longevity-social-security-collapses/whisper-words-verified.json",
+      "built_at": "2026-10-22T11:41:00",
+      "build_notes": "5 b-roll beats (3 full-screen: hook + the collapses transition + climax, at the firm cap) = 31.2% coverage, 1 alpha overlay (crystal ball), 4 code badges, 11 SFX events, frame-0 cover SOCIAL SECURITY WON'T SURVIVE. No viewer chat banner, no redaction. ONE full render + ONE splice (505-602, 697-754, 964-1030: badge line1 wrapped; first splice attempt died No-frame-found at concurrency 8, retried at 4) + ONE audio-only fix (timpani moved off the T of Trump, read pump). Climax hit moved off assets pre-render via offline sweep. Spine loudness -23.7 LUFS (render -23.6). Word JSON omitted assets. and sort of: patched into whisper-words-verified.json. STT calls for review: kids docs -> stocks (stream: kids getting uh stocks, tighten left kids stocks), foreseen -> foreseeing; assets is clipped short on the spine (Whisper large-v3 hears ass)."
+    }
+  ],
+  "resume_protocol": "Phase 4b: Mike reviews dashboard.html and names clips to delete by number. Then per surviving clip: tighten-strategist -> tighten -> 2nd review -> desilence (5B) -> filler pass (5C, optional) -> captions (6) -> remotion-builder (7) -> publish-shorts (8). STT garble fixes for captions are listed in clip-plan.json stt_garble_flags (verify each against the clip's OWN whisper-words.json before applying).",
+  "gates": {
+    "4b": {
+      "approved_at": "2026-10-22T06:49:07",
+      "deleted": []
+    },
+    "2nd": {
+      "approved_at": "2026-10-22T07:35:31",
+      "deleted": []
+    }
+  },
+  "phase": "6-transcribed",
+  "status": "ready-for-build",
+  "tighten_log": "video-creation/shorts/kcc20-live/tighten_log.json",
+  "tighten_plan": "video-creation/shorts/kcc20-live/tighten-plan.json",
+  "filler_log": "video-creation/shorts/kcc20-live/filler_log.json"
+}

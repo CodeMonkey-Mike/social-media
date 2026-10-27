@@ -18,7 +18,7 @@ cases we cannot show the entire slide like I had on the screen, but you can just
 |---|---|
 | `cue_scenes.py` | resolves the spec's cue phrases against the EDIT's word timings, plans the chapter pauses -> `<project>.scenes.resolved.json` + the comp data file |
 | `spot_common.py` | the timeline helpers shared by the render + stitch (head/tail, chapter pauses, `middle_frames`, the paused middle-audio graph) |
-| `render_spotlight.py` | renders the comp's middle window in frame-range parts (resume-safe, muted), or one audible probe chunk |
+| `render_spotlight.py` | renders the comp's middle window in frame-range parts (resume-safe, muted; each part is one chunked render via `video-creation/skills/chunked-render/`, watched + retried, and the run holds the run-queue turn), or one audible probe chunk |
 | `stitch.py` | EDIT head + parts + EDIT tail in ONE `filter_complex` pass, audio = the EDIT's own track (+ the pauses' silence), seam + pause frames for QA |
 | `splice.py` | a FIX ROUND: diffs the previous resolved spec against the current one, re-renders only the windows that moved and splices them into the previous FINAL (video + re-cut audio) in one pass |
 | `remotion/src/SpotlightPresentation.tsx` | the SHARED renderer (persisting infra like `LivestreamShort.tsx`; never recycled with a batch): scene kinds, entrance, timing |

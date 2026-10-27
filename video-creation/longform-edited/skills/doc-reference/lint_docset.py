@@ -40,7 +40,7 @@ REQUIRED_ALL = {
 }
 PLAN_STAGE = ["SCREENPLAY.md", "AS-RECORDED.md", "DATA.md", "BROLL-PLAN.md", "EDIT-PLAN-prep.md", "PROJECT-LOG.md"]
 JSON_ALL = {"MUSIC-PLAN.json": "music-placement-strategist output", "COVER-PLAN.json": "coverage-strategist output"}
-CANON_MD = set(REQUIRED_ALL) | {"GRAPH-PROGRESS.md"}
+CANON_MD = set(REQUIRED_ALL) | {"GRAPH-PROGRESS.md", "YT-DELIVERY.md"}   # YT-DELIVERY: the finalize hand-off (comp-build §12a.5)
 LOOSE_SPINE = re.compile(r"\.(defumbled|blackout|blacked|desilenced|cleaned|paused|cut)\.[^/]*\.(mp4|json|txt)$", re.I)
 OBS_NAME = re.compile(r"^\d{4}-\d\d-\d\d \d\d-\d\d-\d\d\.")
 

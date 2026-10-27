@@ -97,6 +97,11 @@ def main() -> int:
           f"search +/-{a.search}s\n")
     fails, moved = 0, 0
     for i, s in enumerate(spans, 1):
+        if s.get("silent"):
+            # a SILENT span (a held still, e.g. a dated status stamp) plays picture only: its VO is generated silence,
+            # so no word boundary is cut and there is nothing to snap
+            print(f"  SKIP span {i} {float(s['start']):8.3f}-{float(s['end']):8.3f}s  silent (picture only, no VO cut)")
+            continue
         for edge in ("start", "end"):
             t = float(s[edge])
             at = level_at(db, hz, t)

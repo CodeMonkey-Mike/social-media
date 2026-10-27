@@ -24,13 +24,17 @@ for i, h in enumerate(halves):
     if not clip.is_file():
         print(f"SWAP-JOIN FAIL missing {clip}"); sys.exit(1)
     w0, w1 = src["window_s"]; at = float(src["window_starts_at_clip_s"])
-    start = 0.0 if i == 0 else at
-    end = at + (w1 - w0)
+    # FRAME-exact (only-18-months-left 2026-10-26): cutting on rounded seconds kept one extra frame of the first half
+    # at the seam, so every later half played 1 frame (33 ms) behind the voice. Work in whole frames of the 30 fps clip.
+    at_f = round(at * FPS)
+    start_f = 0 if i == 0 else at_f
+    end_f = at_f + (round(w1 * FPS) - round(w0 * FPS))
+    start, end = start_f / FPS, end_f / FPS
     if i > 0 and abs(w0 - parts[-1]["window_s"][1]) > 0.02:
         print(f"SWAP-JOIN FAIL {h} starts at {w0} but the previous half ends at {parts[-1]['window_s'][1]}"); sys.exit(1)
     parts.append({"half": h, "clip": str(clip), "window_s": [w0, w1], "take_clip_s": [round(start, 3), round(end, 3)]})
     inputs += ["-i", str(clip)]
-    chain.append(f"[{i}:v]trim=start={start:.3f}:end={end:.3f},setpts=PTS-STARTPTS,fps={FPS},format=yuv420p[v{i}]")
+    chain.append(f"[{i}:v]fps={FPS},trim=start_frame={start_f}:end_frame={end_f},setpts=PTS-STARTPTS,format=yuv420p[v{i}]")
 fc = ";".join(chain) + ";" + "".join(f"[v{i}]" for i in range(len(halves))) + f"concat=n={len(halves)}:v=1:a=0[v]"
 out = D / f"{name}-higgsfield-bg-swap.mp4"
 r = subprocess.run(["ffmpeg", "-y", "-v", "error", *inputs, "-filter_complex", fc, "-map", "[v]", "-an",

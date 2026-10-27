@@ -1,0 +1,57 @@
+{
+  "pauses": [
+    {
+      "at": 30.355,
+      "planned": 30.36,
+      "dur": 1.5,
+      "card": "HOW KCC-20 WORKS",
+      "sits_in": "trough 30.180-30.390, gate guard -132.9 dB",
+      "dur_exact": 1.5,
+      "frames": 45
+    },
+    {
+      "at": 162.295,
+      "planned": 162.2,
+      "dur": 20.5,
+      "clip": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kcc20\\assets\\clip-inserts\\CLIP-1-helfer-real-assets.mp4",
+      "label": "CLIP-1",
+      "sits_in": "trough 162.150-162.340, gate guard -113.8 dB",
+      "dur_exact": 20.5,
+      "frames": 615
+    },
+    {
+      "at": 174.455,
+      "planned": 174.64,
+      "dur": 1.5,
+      "card": "WHERE IT STANDS",
+      "sits_in": "trough 174.340-174.500, gate guard -102.5 dB",
+      "dur_exact": 1.5,
+      "frames": 45
+    },
+    {
+      "at": 207.36,
+      "planned": 207.44,
+      "dur": 1.5,
+      "card": "THE BIGGER PICTURE",
+      "sits_in": "trough 207.190-207.420, gate guard -113.3 dB",
+      "dur_exact": 1.5,
+      "frames": 45
+    },
+    {
+      "at": 240.74,
+      "planned": 240.99,
+      "dur": 4.7,
+      "beat": "BRAAM-1",
+      "sits_in": "trough 240.390-240.950, gate guard -179.2 dB",
+      "dur_exact": 4.7,
+      "frames": 141
+    }
+  ],
+  "pause_s": 1.5,
+  "mixed_durations": true,
+  "source": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kcc20\\spine\\ALL.e.desilenced.mp4",
+  "output": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kcc20\\spine\\ALL.g.paused.mp4",
+  "output_duration_s": 358.71,
+  "fps": 30.0,
+  "note": "every comp cue is a SOURCE time; sh(t) adds each pause's `dur` whose `at` <= t (cards = pause_s, clip inserts = the clip length, their audio already in this VO track)"
+}

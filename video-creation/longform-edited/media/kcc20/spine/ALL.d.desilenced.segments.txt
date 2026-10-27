@@ -1,0 +1,216 @@
+kcc20 - FINAL spine transcript breakdown
+Source (the file the comp loads): spine/ALL.d.desilenced.mp4
+Word-time JSON (cue source, NEVER hand-edited): spine/ALL.d.desilenced.medium-words.json (Whisper medium, CUDA, word_timestamps)
+Duration 389.680 s (6:29.68) · 118 segments · 1030 words
+Text below has STT mishears corrected (TEXT ONLY); timecodes are the JSON's, unchanged. Substitution list at the bottom.
+FACE windows (blackdetect on the final spine, pix_th 0.10, d 0.1): 0:00.00-0:06.83 · 0:19.63-0:28.13 · 5:04.60-6:29.68 (end)
+Gate column: FACE/COVER = which side of the blackout the segment sits (>=50% overlap).
+
+
+==============================================================================
+CH1 - LAST CALL   (opens 0:00.00 = 0.00 s)
+==============================================================================
+  -- B1 hook (LOCKED, FACE)
+[   0.00-   5.90] FACE  Kaspa's core contributors just moved their first token standard KCC-20 into its final
+[   5.90-   6.80] FACE  review window.
+  -- B2 the receipt
+[   6.94-  13.84] COVER On October 7th, 2026, pull request 31 merges into Kaspa's own conventions repo and the
+[  13.84-  19.50] COVER status on the spec flips to last call, the final review window before standard goes final.
+  -- B3 thesis (LOCKED, FACE)
+[  19.74-  25.92] FACE  Real tokens on Kaspa's base layer with every transaction enforced by the chain's own script
+[  25.92-  28.22] FACE  rules, not by an off chain indexer.
+  -- B3 'Real. Close. And not finished.' (LOCKED COVER)
+[  28.22-  30.42] COVER Real, close, not yet finished.
+  -- B3 handoff (AD-LIB wording: scripted 'So, let's dive into all this.')
+[  30.54-  32.58] COVER So let's get into how this is all playing out.
+
+==============================================================================
+CH2 - HOW KCC-20 WORKS   (opens 0:32.78 = 32.78 s)
+==============================================================================
+  -- B1 the fork that made it possible
+[  32.78-  34.26] COVER Start with where this comes from.
+[  34.84-  39.66] COVER On June 30th, 2026, the Toccata hard fork gave Kaspa covenants.
+[  39.84-  45.44] COVER A covenant is a rule built into a coin that controls how it is spent and where it can
+[  45.44-  46.08] COVER go next.
+[  46.70-  52.08] COVER KCC-20 is the shared rulebook for a fungible token built from those covenants.
+[  52.22-  55.32] COVER Fungible meaning every unit is the same as every other.
+[  55.32-  56.32] COVER Four ideas.
+  -- B2 idea 01, a common interface
+[  56.64-  57.28] COVER Idea 1.
+[  57.48-  58.60] COVER A common interface.
+[  58.94-  65.52] COVER Every KCC-20 token carries the same state block, the amount, the owner, a few settings, and
+[  65.52-  67.00] COVER the same transfer entrypoint.
+[  67.14-  71.04] COVER So any wallet, indexer, or app reads it the same way.
+  -- B3 idea 02, extended state
+[  71.18-  72.10] COVER Idea 2.
+[  72.44-  73.36] COVER Extended state.
+[  73.50-  77.40] COVER A token can carry its own data and behavior behind one digest.
+[  77.70-  80.66] COVER And transfers pass that digest through, untouched.
+  -- B4 idea 03, flexible authority via KCC-2
+[  80.76-  81.54] COVER Idea 3.
+[  81.76-  82.76] COVER Flexible authority.
+[  82.76-  85.30] COVER And this comes from KCC-2.
+[  85.78-  91.00] COVER The owner of a token can be a public key, a key commitment, a script, or another covenant.
+[  91.24-  93.80] COVER So covenants can own tokens and govern them.
+  -- B5 idea 04, Borrowed Receive
+[  94.26-  95.16] COVER Idea 4.
+[  95.56-  96.36] COVER Borrowed receive.
+[  96.52-  97.20] COVER Here's the thing.
+[  97.38- 101.92] COVER Every UTXO, every unspent coin, has to be funded with KAS.
+[ 102.18- 106.94] COVER And a rule called storage mass makes tiny outputs expensive on purpose.
+[ 106.94- 112.70] COVER So instead of a UTXO for every incoming token, the sender tops up one you already hold.
+[ 112.94- 117.76] COVER Same owner, the KAS inside cannot go down, only the token amount grows.
+
+==============================================================================
+CH3 - KCC-20 VS KRC-20   (opens 1:58.16 = 118.16 s)
+==============================================================================
+  -- B1 Kaspa already has tokens
+[ 118.16- 125.88] COVER Now, Kaspa already has tokens, KRC-20, from Kasplex, a third-party control, live since
+[ 125.88- 127.38] COVER September 2024.
+[ 127.70- 131.84] COVER Around 2,160 tokens by Kasplex's own indexer count.
+[ 131.98- 133.22] COVER It proved the demand.
+  -- B2 where the token lives (C3 marquee)
+[ 133.44- 135.34] COVER The difference is where the token lives.
+[ 135.34- 142.50] COVER With KRC-20, token operations are written onto Kaspa as data, and the Kasplex indexer works
+[ 142.50- 143.52] COVER out who owns that.
+[ 143.68- 145.66] COVER Your balance is the indexer's answer.
+[ 145.88- 152.50] COVER With KCC-20, the token state sits inside a covenant UTXO on the base layer, and the chain
+[ 152.50- 154.30] COVER script enforces every transfer.
+[ 154.54- 156.58] COVER Your balance is what the chain enforces.
+  -- B3 CLIP-1 set-up line (splice after 'live.')
+[ 156.84- 163.40] COVER Sivan Helfer, the first listed author of KCC-20, put it plainly back in June, a week before
+[ 163.40- 164.44] COVER Toccata went live.
+  -- B3 resume line after CLIP-1
+[ 164.44- 166.64] COVER That is the whole difference.
+  -- B4 very early, Mike's framing
+[ 166.82- 169.84] COVER On the KCC-20 side, it is very early.
+[ 170.08- 173.42] COVER Roughly 150 tokens by one community tracker's count.
+[ 173.56- 176.62] COVER Think ERC-20, enforced by the base layer itself.
+
+==============================================================================
+CH4 - WHERE IT STANDS   (opens 2:56.88 = 176.88 s)
+==============================================================================
+  -- B1 the timeline
+[ 176.88- 178.76] COVER The timeline, straight from the repo.
+[ 179.32- 181.32] COVER June 30th, Toccata activates.
+[ 181.76- 184.46] COVER July 15th, the convention repo opens.
+[ 184.74- 190.72] COVER August 20th, KCC-1, KCC-2, and KCC-20 land as Drafts.
+[ 190.72- 196.08] COVER On September 22nd, the Last Call pull request for KCC-20 opens.
+[ 196.46- 201.04] COVER October 1st, KCC-1, KCC-2 move to Last Call.
+[ 201.62- 204.56] COVER October 7th, KCC-20 joins them.
+  -- B2 what Last Call means
+[ 204.72- 206.76] COVER Last Call is the final review window.
+[ 207.18- 211.76] COVER An editor sets a deadline, typically around 14 days out, but none of the three headers
+[ 211.76- 214.16] COVER carries one today, no official end date.
+  -- B3 the dependency, and the number zero
+[ 214.30- 216.98] COVER And KCC-20 cannot go final on its own.
+[ 216.98- 222.74] COVER It requires KCC-1, the covenant layout, and KCC-2, the authority schemes.
+[ 223.02- 224.62] COVER And those go final first.
+[ 225.24- 228.96] COVER KCC-1, and then KCC-2, then KCC-20.
+[ 229.20- 234.42] COVER It also needs published test vectors and a public implementation that passes them.
+[ 234.90- 239.16] COVER Today, the number of final technical standards in that repo is zero.
+  -- B3 caveat line (implementers, C20)
+[ 239.38- 244.22] COVER By late July, implementers were already reporting that their tokens only partly matched the draft.
+
+==============================================================================
+CH5 - THE BIGGER PICTURE   (opens 4:04.34 = 244.34 s)
+==============================================================================
+  -- B1 builders back on the main code (AD-LIB opener 'So what's the bigger picture?')
+[ 244.34- 245.56] COVER So what's the bigger picture?
+[ 245.86- 246.66] COVER Let's zoom out.
+[ 246.66- 251.42] COVER After the September 22nd release, the main node code went quiet for three weeks.
+[ 251.70- 255.70] COVER Then six commits landing in one week, October 13th to the 16th.
+[ 255.82- 258.10] COVER Maintenance and plumbing, not a new feature.
+[ 258.34- 262.10] COVER And DAGKnight, the next consensus upgrade, still has no date.
+  -- B2 a tiny base
+[ 262.44- 267.52] COVER Usage is a tiny base, around 82,000 standard transactions a day the week of October,
+[ 267.74- 270.00] COVER up around 22% on the week before.
+  -- B3 the conditional case
+[ 270.16- 271.74] COVER So here's the conditional case.
+[ 271.74- 281.04] COVER If KCC-1, KCC-2, then KCC-20 go final, every wallet, indexer, and app on Kaspa builds to one rulebook.
+[ 281.12- 282.52] COVER Tokens exist today.
+[ 282.90- 284.88] COVER That shared standard does not, yet.
+[ 285.06- 286.22] COVER And the supply is fixed.
+[ 286.42- 288.20] COVER Proof of work, no premine.
+[ 288.46- 291.98] COVER Around 96.7% of all Kaspa is already mined.
+[ 292.76- 294.98] COVER New demand meets very little new supply.
+[ 295.36- 298.24] COVER Conditional, and that's the asymmetry I'm watching.
+  -- B4 worth the wait (+ AD-LIB 'At least for me anyway.' / 'Nothing here is financial advice.')
+[ 298.50- 301.44] COVER And I'm telling you, this is going to be well worth the wait.
+[ 301.44- 302.92] COVER At least for me anyway.
+[ 303.14- 304.50] COVER Nothing here is financial advice.
+  -- B4 conviction lines (FACE run starts)
+[ 304.72- 308.28] FACE  But the high conviction holders, the ones who are in it for the long haul,
+[ 308.60- 309.92] FACE  are going to make it big time.
+[ 309.98- 313.98] FACE  Because the ones with the vision are the ones that will end up dominating the world.
+  -- B5 what to watch next
+[ 314.04- 315.16] FACE  So what to watch next?
+[ 316.00- 320.36] FACE  KCC-1, then KCC-2, go final, then KCC-20.
+[ 320.44- 322.80] FACE  Then the implementations that pass its vectors.
+  -- UNSCRIPTED AD-LIB: token-group pitch (NOT in SCREENPLAY, see FLAGS)
+[ 322.88- 327.30] FACE  But I can tell you, if you're interested in stacking Kaspa, while it's still cheap,
+[ 327.30- 333.06] FACE  the best way to do that is to get in on a bunch of good tokens that really are going to moon 100x,
+[ 334.24- 336.60] FACE  500x within like six months to a year.
+[ 336.92- 338.78] FACE  I'm not talking about degen plays.
+[ 338.82- 344.48] FACE  I'm talking about investor-backed insider tokens that me and my group get in on early.
+[ 344.62- 346.18] FACE  We have a whole bunch of plays.
+[ 346.30- 347.82] FACE  Click the link in the description below.
+[ 347.84- 355.12] FACE  You can see all the receipts, 550x on MYX, 350x on the Lab token, and many, many others.
+[ 355.30- 356.42] FACE  All investor-backed.
+[ 356.42- 357.40] FACE  It takes time.
+[ 357.58- 358.88] FACE  Sometimes it takes six months.
+[ 358.90- 361.26] FACE  Sometimes it takes a year before they pop.
+[ 361.40- 365.44] FACE  It's not like one of those like, I'm going to put in like 100 bucks on a degen play,
+[ 365.44- 366.64] FACE  and it's going to 100x tomorrow.
+[ 366.72- 368.32] FACE  No, there's nothing like that.
+[ 368.40- 369.90] FACE  It's just strategy involved.
+[ 369.98- 375.74] FACE  Make sure you're surrounded by some like-minded people in a group of people who can share ideas.
+[ 376.02- 379.14] FACE  And everybody's in it for the money to all together, right?
+[ 379.22- 382.08] FACE  So we're all willing to help each other out and grow together.
+[ 382.30- 383.82] FACE  So click the link in the description below.
+  -- B5 close / CTA
+[ 383.82- 386.96] FACE  Besides that, click that like button and that subscribe button.
+[ 387.34- 389.50] FACE  I'm going to catch you guys later.
+
+==============================================================================
+SUBSTITUTIONS APPLIED (from -> to : count : basis)
+  Caspa's                                    -> Kaspa's                      x3   persona kaspa_spelling (Casper/Caspa -> Kaspa)
+  KCC20                                      -> KCC-20                       x13  screenplay spelling
+  CASPA|Caspa                                -> Kaspa                        x6   persona kaspa_spelling (Casper/Caspa -> Kaspa)
+  Tokata                                     -> Toccata                      x3   screenplay spelling (Tokamak/Tokata -> Toccata)
+  rule book                                  -> rulebook                     x1   screenplay spelling
+  transfer or entry point                    -> transfer entrypoint          x1   phantom 'or', large-v3 hears 'transfer entry point'
+  KCC2                                       -> KCC-2                        x7   screenplay spelling
+  CAS                                        -> KAS                          x2   persona kaspa_spelling (ticker $KAS)
+  CASPLEX                                    -> Kasplex                      x2   screenplay spelling (Caspa Flex/Casplex -> Kasplex)
+  KRC20                                      -> KRC-20                       x2   screenplay spelling
+  CASPLEX's                                  -> Kasplex's                    x1   screenplay spelling (Caspa Flex/Casplex -> Kasplex)
+  indexer account                            -> indexer count                x1   mishear split ('indexer's count' heard as 'indexer account'); screenplay 'indexer count'
+  2160                                       -> 2,160                        x1   number formatting
+  community's tracker account                -> community tracker's count    x1   mishear split, confirmed by large-v3 ('tracker count')
+  ERC20                                      -> ERC-20                       x1   screenplay spelling
+  KCC1                                       -> KCC-1                        x6   screenplay spelling
+  drabs                                      -> Drafts                       x1   mishear, confirmed by large-v3 ('drafts')
+  Covenant layout                            -> covenant layout              x1   casing only
+  mashed a draft                             -> matched the draft            x1   mishear, confirmed by large-v3 ('matched the draft')
+  SIX                                        -> six                          x1   casing only
+  DagNight                                   -> DAGKnight                    x1   screenplay spelling (Dag Knight/Dagnite -> DAGKnight)
+  pre-mine                                   -> premine                      x1   screenplay spelling
+  DGEM                                       -> degen                        x2   mishear, large-v3 'D-Gen'/'dgen' (= degen)
+Persona rules checked with NO occurrence: tau->TAO, Casper (literal), Caspie/Cassie/Cappy, Kasper-the-Ghost, 50WMA/200WMA, GhostDAG/'ghost', scion->cyan.
+
+==============================================================================
+FLAGS FOR THE CALLER (left AS HEARD in the text above, not corrected)
+==============================================================================
+1. 124.30 "a third-party control": scripted "protocol". Medium AND large-v3 both hear "control". Left as heard; confirm by ear before captions.
+2. 266.72-267.52 "the week of October,": scripted "the week of October 12th". Both models hear no date, so he did not say "12th". The caption must not add it (the C15 chart can carry the dated week).
+3. 350.74 "MYX": token name (Mike confirmed 2026-10-21; medium wrote "NYX", large-v3 heard it right). Captions: MYX.
+4. 352.90 "the Lab token": low confidence (p=0.29). Both models agree on "Lab". Confirm the token name.
+5. 376.02 "in it for the money to all together": both models agree. It may be "money too, all together". Left as heard.
+6. 164.04-164.44 "live." -> 164.44 "That": the CLIP-1 splice point. Whisper shows NO gap between the two words, so lint-pause-silence must find the real trough. Do not cut at 164.44 blind.
+7. CONTENT WARNING (not a transcription issue): 322.88-383.82 is a ~61 s UNSCRIPTED ad-lib inside the FACE run.
+   It is a group/token pitch: "moon 100x, 500x within like six months to a year", "investor-backed insider tokens that me and my group get in on early", "550x on MYX, 350x on the Lab token", "in it for the money".
+   It goes against SCREENPLAY CH5 ("no price, no target, no multiplier", all upside conditional), the brief's hard constraint against price targets, and persona verified_claims_only.
+   There is also an ad-lib "Nothing here is financial advice." at 303.14. Transcribed verbatim; whether it airs is Mike's call at the spine/plan gate.
+8. Ad-lib wording vs script (transcribed as said): 30.54 handoff "So let's get into how this is all playing out." · 244.34 "So what's the bigger picture?" (new CH5 opener) · 301.44 "At least for me anyway." · 383.82 CTA "click that like button and that subscribe button" (scripted "comment which one you are watching...").
+9. Said differently from the script, so NOT corrected: 19.74 "every transaction enforced" (script "transfer") · 28.22 "not yet finished" (script "And not finished").

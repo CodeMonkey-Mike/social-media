@@ -8,7 +8,8 @@ on afterwards so an audio change never re-renders, and the mix lives as a re-run
 
 Sources (all SOURCE-spine seconds, routed through sh() with CARD_T/PAUSE from spine/<scope>.<x>.paused.json):
   MUSIC-PLAN.json      beds (source_file, source_in, span, cover, remotion_gain_db, fade_in_sec, automation windows)
-  EDIT-PLAN.md         [IMPACT] / [RISER] rows: `<file>.wav|.mp3` + `file start <t>` (else the row's own time)
+  EDIT-PLAN.md         every SFX row ([IMPACT] [RISER] [BRAAM] [DRONE] [ACCENT] [DOWNSHIFTER] [WHOOSH] [TEXTURE]):
+                       `<file>` + `file start <t>` (else the row's own time), `play A-B`, `X s fade-in/out`
   TRANSITION-PLAN.json lib:<id> rows -> the library row's sfx, placed at the engine-window start sh(tc) - dur/2
 Bed timing rules (music.md): a bed whose span starts at a title card fades IN so it is full on the chapter's
 first word (i.e. starts fade_in_sec before the pause ends); a bed ending at a card fades OUT over 0.4 s from
@@ -16,7 +17,7 @@ the card start; the last bed fades over 0.25 s to the last frame. Gains = the pl
 (measured LUFS-relative), automation = the plan's windows as dB-relative dips with their ramps.
 
 Usage: python mix_music.py <media/<project>> --video <draft.mp4> [--out <mp4>] [--scope ALL]
-         [--sfx-db -6] [--lib-sfx-db -9] [--sfx-max 1.8]
+         [--sfx-db -6] [--lib-sfx-peak -13 | --lib-sfx-db <fixed>] [--sfx-max 1.8]
 Machine lines: MIX-PLAN beds=N sfx=N lib_sfx=N · MIX-DONE out=<file> dur=X lufs_in=A lufs_out=B peak_out=P · PROGRESS 100%
 """
 import argparse
@@ -119,7 +120,11 @@ def main():
     ap.add_argument("--out", default=None)
     ap.add_argument("--scope", default="ALL")
     ap.add_argument("--sfx-db", type=float, default=-6.0)
-    ap.add_argument("--lib-sfx-db", type=float, default=-9.0)
+    ap.add_argument("--lib-sfx-db", type=float, default=None,
+                    help="a FIXED gain for every library transition SFX (default: measured, see --lib-sfx-peak)")
+    ap.add_argument("--lib-sfx-peak", type=float, default=-13.0,
+                    help="the library transition SFX are mastered quietly (peaks -17 to -22 dBFS): each is gained so its PEAK "
+                         "lands here (Mike 2026-10-17, tao-detailed: the fixed -9 dB made every transition whoosh inaudible)")
     ap.add_argument("--sfx-max", type=float, default=1.8)
     ap.add_argument("--dry-run", action="store_true", help="resolve and print the beds, render nothing")
     ap.add_argument("--vo", default=None,
@@ -139,17 +144,35 @@ def main():
     # every baked pause: title cards (dur = pause_s, a bed breathes at them) AND clip inserts (their own dur, e.g. a 10 s
     # spliced clip whose audio sits in the VO track; no card breath, the plan's automation ducks the bed). 2026-10-08.
     PAUSES = [(float(p["at"]), float(p.get("dur") or PAUSE), bool(p.get("card"))) for p in meta.get("pauses") or []]
+    # BEAT pauses (a braam between sentences, Mike 2026-10-17): silence in the VO for the braam, the bed plays on, no duck
+    BEATS = {round(float(p["at"]), 3): float(p["dur"]) for p in meta.get("pauses") or [] if p.get("beat")}
     CARD_T = [at for at, _, is_card in PAUSES if is_card]
     total = duration(video)
     vo = Path(a.vo).resolve() if a.vo else (proj / "assets" / "spine.mp4")
-    if not (vo.is_file() and abs(duration(vo) - total) <= 0.3):
+    # MUSIC-PLAN `end_card_hold` (Mike's plan-gate ruling, tao-detailed 2026-10-16): the comp holds an end card PAST the spine,
+    # so the spine is shorter than the video by that hold; it is still the VO (padded with silence), never the render's late audio
+    mp_p = proj / "MUSIC-PLAN.json"
+    hold = (json.loads(mp_p.read_text(encoding="utf-8")).get("end_card_hold") or {}) if mp_p.is_file() else {}
+    vo_pad = 0.0
+    if vo.is_file() and hold.get("hold_until_sec"):
+        gap = total - duration(vo)
+        if 0.3 < gap < 15.0:
+            vo_pad = gap
+    if not (vo.is_file() and abs(duration(vo) + vo_pad - total) <= 0.3):
         if a.vo:
             print(f"FATAL: --vo {vo} missing or not the video's length", file=sys.stderr)
             sys.exit(2)
-        vo = video                          # no matching spine: the video's own audio is the VO
+        vo, vo_pad = video, 0.0             # no matching spine: the video's own audio is the VO
 
     def sh(t):
         return t + sum(dur for at, dur, _ in PAUSES if at <= t + 1e-6)
+
+    # `end_card_hold.trim` (Mike 2026-10-22, kcc20: "cut off the video after I say later"): the video ends at the spine's end,
+    # but the music is still placed as if the hold existed (the end-pinned last bed keeps its chord on the last word), and the
+    # mix is cut at the video's end with a short fade after the word
+    mtotal = total
+    if hold.get("trim") and hold.get("hold_until_sec"):
+        mtotal = max(total, sh(float(hold["hold_until_sec"])))
 
     def card_start(t):  # paused-spine time where the card at source t begins
         return sh(t) - PAUSE
@@ -168,13 +191,13 @@ def main():
         # fade_out_sec (optional, golden-kitty 2026-10-02): a bed that hands over to another bed MID-chapter, with no card,
         # needs a real fade for the crossfade; the default 0.25 s is only right for the last bed's stop
         fo = float(b.get("fade_out_sec") or (0.4 if ends_at_card else 0.25))
-        t_end_full = card_start(card1) if ends_at_card else min(sh(s1), total)
-        t_end = min(total, t_end_full + (fo if ends_at_card else 0.0))
+        t_end_full = card_start(card1) if ends_at_card else min(sh(s1), mtotal)
+        t_end = min(mtotal, t_end_full + (fo if ends_at_card else 0.0))
         if not ends_at_card:
             # only the LAST bed runs to the end of the file. A mid-video bed that does not end on a card stops at
             # its own span end (golden-kitty 2026-10-01: CH2 and CH6 continue cardless into CH3 and CH7; the old
             # `t_end = total` kept those rows playing to the end of the video, doubled over the rows after them).
-            t_end = total if last else min(total, sh(s1))
+            t_end = mtotal if last else min(mtotal, sh(s1))
         gain_db = float(b.get("remotion_gain_db"))
         # A CARDLESS CONTINUATION: the same file, sample-continuous with the row before it, and no card (so no
         # pause) at the boundary. It is ONE physical placement: extend the previous bed through this row instead
@@ -221,7 +244,7 @@ def main():
     # a baked pause, so every bed that overlaps the insert's paused-time window dips INSERT_DUCK_DB with a short ramp.
     INSERT_DUCK_DB, INSERT_RAMP = -14.0, 0.3
     for at, dur, is_card in PAUSES:
-        if is_card:
+        if is_card or round(at, 3) in BEATS:
             continue
         ps = at + sum(d for a2, d, _ in PAUSES if a2 < at - 1e-6)       # paused time where the insert begins
         pe = ps + dur
@@ -237,41 +260,87 @@ def main():
     for r in tp_rows:
         if str(r.get("role")) == "card" and r.get("duration_s"):
             card_turn = float(r["duration_s"])
-    sfx, seen_rows = [], set()
-    for m in SFX_ROW_RE.finditer(ep):  # rows with an explicit `file start` / `starts at`
-        kind, fname, _, start = m.group(1), m.group(2).strip(), m.group(3), m.group(4)
-        path = find_sfx(fname)
-        if not path:
-            print(f"  warn  SFX file not found in assets/sfx: {fname}")
-            continue
-        t_src = tc(start)
-        seen_rows.add(ep.count("\n", 0, m.start()))
-        sfx.append({"kind": kind, "file": str(path), "t": round(sh(t_src), 3), "source_t": t_src, "gain_db": a.sfx_db})
-    # rows WITHOUT an explicit start (e.g. the card impacts "on the card's landing frame"): the row's own time;
-    # a [CARD] row lands at card start + the card turn
-    for i, ln in enumerate(ep_lines):
-        mm = re.search(r"\[(IMPACT|RISER)[^\]]*\]\s*(?:[^\n]{0,60}?)?([A-Za-z0-9_ .()-]+?\.(?:wav|mp3))", ln)
-        if not mm or i in seen_rows or any(abs(i - s) <= 1 for s in seen_rows):
-            continue
-        j = i
-        while j >= 0 and not EVENT_RE.match(ep_lines[j]):
-            j -= 1
-        if j < 0:
-            continue
-        e = EVENT_RE.match(ep_lines[j])
-        t_src = int(e.group(1)) * 60 + float(e.group(2))
-        path = find_sfx(mm.group(2).strip())
-        if not path:
-            print(f"  warn  SFX file not found in assets/sfx: {mm.group(2)}")
-            continue
-        is_card = "[CARD]" in ep_lines[j]
-        card = next((c for c in CARD_T if abs(c - t_src) < 0.35), None) if is_card else None
-        t_out = (card_start(card) + card_turn) if card is not None else sh(t_src)
-        sfx.append({"kind": mm.group(1), "file": str(path), "t": round(t_out, 3), "source_t": t_src, "gain_db": a.sfx_db,
-                    "placed": "card landing" if card is not None else "row time"})
+    # Every SFX row of the event log, ONE parser (2026-10-17, tao-detailed): an event BLOCK is the timecoded line plus its
+    # indented continuation lines; each SFX tag in it (IMPACT, RISER, BRAAM, DRONE, ACCENT, DOWNSHIFTER, WHOOSH, TEXTURE,
+    # longform-edited.md section 7) takes the first .wav/.mp3 after the tag in the block. Start = `file start <t>` if given,
+    # a [CARD] block's impact lands at card start + the card turn, else the event's own time. `play A-B` trims the file,
+    # `X s fade-in` / `Y s fade-out` fade it. The old two regexes only read IMPACT/RISER with the file on the SAME line,
+    # so the card hits (file on a continuation line) and every new SFX type were silently dropped.
+    KINDS = "IMPACT|RISER|BRAAM|DRONE|ACCENT|DOWNSHIFTER|WHOOSH|TEXTURE"
+    # the body runs to the NEXT SFX tag, not the next "[": a [CARD] row names its impact file after the [TRANSITION] text
+    tag_re = re.compile(r"\[(" + KINDS + r")(?:→IMPACT|->IMPACT)?\](.*?)(?=\[(?:" + KINDS + r")|$)")
+    file_re = re.compile(r"([A-Za-z0-9_/ .()-]+?\.(?:wav|mp3))")
+    paren_file_re = re.compile(r"\(\s*([A-Za-z0-9_/ .-]+?\.(?:wav|mp3))\s*[,)]")
+    blocks, cur = [], None
+    for ln in ep_lines:
+        e = EVENT_RE.match(ln)
+        if e:
+            cur = [int(e.group(1)) * 60 + float(e.group(2)), ln]
+            blocks.append(cur)
+        elif cur is not None and ln.startswith(" ") and ln.strip():
+            # a filename wrapped at its hyphen ("downshifter-slow-" / "downlifter-3.wav") rejoins WITHOUT a space
+            cur[1] += ("" if cur[1].endswith("-") else " ") + ln.strip()
+    vo_lufs = None
+    sfx = []
+    for t_row, text in blocks:
+        for m in tag_re.finditer(text):
+            kind, body = m.group(1), m.group(2)
+            if re.match(r"\s*layer:\s*none", body):
+                continue
+            # the event-log form is `name (dir/file.wav, mood_class ...)`: read the path inside the parentheses first;
+            # file_re alone swallowed the label too ("Boom 2 (Boom 2.wav") and the SFX was dropped as not found
+            fm = paren_file_re.search(body) or file_re.search(body)
+            if not fm:
+                continue
+            fname = fm.group(1).strip().split("(")[-1].strip().split("/")[-1]
+            path = find_sfx(fname)
+            if not path:
+                print(f"  warn  SFX file not found in assets/sfx: {fname}")
+                continue
+            # case-insensitive (2026-10-27): edit-plan-author writes `FILE START`, and the case-sensitive match silently
+            # placed every such row at its row time (only-18: a downlifter peaking 1.8 s after its music drop)
+            st = re.search(r"(?:file start|starts at)\s*(\d+:\d\d\.\d+|\d+(?:\.\d+)?)", body, re.I)
+            t_src = tc(st.group(1)) if st else t_row
+            card = None
+            if "[CARD]" in text and not st:
+                card = next((c for c in CARD_T if abs(c - t_row) < 0.35), None)
+            t_out = (card_start(card) + card_turn) if card is not None else sh(t_src)
+            placed = "card landing" if card is not None else ("file start" if st else "row time")
+            # a braam with a `spine pause`: it starts ON the first frame of its beat pause (the voice is silent until it ends)
+            beat = next((b for b in BEATS if abs(b - t_row) < 0.35), None) if (kind == "BRAAM" and "spine pause" in body) else None
+            if beat is not None:
+                t_out = beat + sum(d for a2, d, _ in PAUSES if a2 < beat - 1e-6)
+                placed = "beat pause start"
+            row = {"kind": kind, "file": str(path), "t": round(t_out, 3), "source_t": t_src, "gain_db": a.sfx_db, "placed": placed}
+            # a row-level `MIX GAIN -24 dB` overrides --sfx-db (Mike's draft note: one riser buried the VO)
+            mg = re.search(r"MIX GAIN\s*(-?\d+(?:\.\d+)?)\s*dB", body)
+            if mg:
+                row["gain_db"] = float(mg.group(1))
+            pm = re.search(r"play\s+(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)", body)
+            if pm:
+                row["play"] = [float(pm.group(1)), float(pm.group(2))]
+            elif kind == "RISER" and "CUT ON" in body:
+                pk = re.search(r"measured peak\s*(\d+(?:\.\d+)?)\s*s", body)
+                if pk:
+                    row["play"] = [0.0, float(pk.group(1)) + 0.05]   # the riser ENDS on its peak = the hit
+            fi = re.search(r"(\d+(?:\.\d+)?)\s*s fade-in", body)
+            fo = re.search(r"(\d+(?:\.\d+)?)\s*s fade-out", body)
+            if fi:
+                row["fade_in"] = float(fi.group(1))
+            if fo:
+                row["fade_out"] = float(fo.group(1))
+            if kind == "DRONE":   # a bed under the bed: seat it 8 dB under the music seat (-23 under the VO), by measurement
+                if vo_lufs is None:
+                    vo_lufs, _ = lufs_and_peak(vo)
+                fl, _ = lufs_and_peak(path)
+                try:
+                    row["gain_db"] = round(float(vo_lufs) - 23.0 - 8.0 - float(fl), 1)
+                except (TypeError, ValueError):
+                    row["gain_db"] = -30.0
+            sfx.append(row)
     sfx.sort(key=lambda s: s["t"])
     # library transition SFX
-    lib_sfx = []
+    lib_sfx, lib_peak = [], {}
     tp = proj / "TRANSITION-PLAN.json"
     if tp.is_file() and LIB.is_file():
         raw = json.loads(LIB.read_text(encoding="utf-8"))
@@ -294,7 +363,13 @@ def main():
                 print(f"  warn  library sfx missing on disk: {rel}")
                 continue
             dur = float(r.get("duration_s") or 0.5)
-            lib_sfx.append({"id": tid, "file": str(p), "t": round(max(0.0, sh(float(r["tc"])) - dur / 2), 3), "gain_db": a.lib_sfx_db})
+            if a.lib_sfx_db is not None:
+                g = a.lib_sfx_db
+            else:
+                if str(p) not in lib_peak:
+                    lib_peak[str(p)] = lufs_and_peak(p)[1]
+                g = round(a.lib_sfx_peak - lib_peak[str(p)], 1) if lib_peak[str(p)] is not None else -9.0
+            lib_sfx.append({"id": tid, "file": str(p), "t": round(max(0.0, sh(float(r["tc"])) - dur / 2), 3), "gain_db": g})
     print(f"MIX-PLAN beds={len(resolved_beds)} sfx={len(sfx)} lib_sfx={len(lib_sfx)}")
     if a.dry_run:      # resolve only: show where every bed starts and stops, render nothing, write nothing
         for b in resolved_beds:
@@ -307,6 +382,9 @@ def main():
                       f"tail trim {lr['tail_trim']}s, {'END-aligned' if b.get('align_end') else 'start-aligned'}")
             elif b["loop"]:
                 print("      LOOP: whole-file restart (no region given; music.md wants loop_in_sec/loop_out_sec)")
+        for x in sfx:
+            print(f"  SFX {x['kind']:11} {x['t']:8.3f}  src {x['source_t']:8.3f}  {x['gain_db']:6.1f} dB  {x.get('placed', ''):12} "
+                  f"play {x.get('play')} fi {x.get('fade_in')} fo {x.get('fade_out')}  {Path(x['file']).name}")
         print("DRY-RUN (nothing rendered)")
         return
 
@@ -329,14 +407,27 @@ def main():
         inputs += ["-i", s["file"]]
         d = duration(s["file"])
         trim = ""
-        if d > a.sfx_max:
+        if s.get("play"):
+            p0, p1 = s["play"]
+            ln_ = max(0.05, min(p1, d) - p0)
+            fo_ = min(s.get("fade_out") or 0.05, ln_)
+            trim = f"atrim=start={p0:.3f}:end={p0 + ln_:.3f},asetpts=PTS-STARTPTS,afade=t=out:st={ln_ - fo_:.3f}:d={fo_:.3f},"
+        elif s.get("kind", "LIB") in ("IMPACT", "ACCENT", "LIB") and d > a.sfx_max:   # only a tail is capped, never a build
             trim = f"atrim=end={a.sfx_max:.2f},afade=t=out:st={a.sfx_max - 0.5:.2f}:d=0.5,"
+        if s.get("fade_in"):
+            trim += f"afade=t=in:st=0:d={s['fade_in']:.3f},"
         chains.append(f"[{k}:a]{trim}aformat=sample_rates=48000:channel_layouts=stereo,volume={10 ** (s['gain_db'] / 20):.4f},"
                       f"adelay={int(round(s['t'] * 1000))}|{int(round(s['t'] * 1000))}[s{k}]")
         labels.append(f"[s{k}]")
         k += 1
     n = 1 + len(labels)
-    fc = ";".join(chains) + (";" if chains else "") + "[1:a]" + "".join(labels) + f"amix=inputs={n}:normalize=0:duration=first[ao]"
+    vo_in = "[1:a]"
+    if vo_pad:
+        chains.append(f"[1:a]apad=whole_dur={total:.3f}[vop]")
+        vo_in = "[vop]"
+    fc = ";".join(chains) + (";" if chains else "") + vo_in + "".join(labels) + f"amix=inputs={n}:normalize=0:duration=first[ao]"
+    if mtotal > total:   # trimmed hold: the music runs past the video's end, so fade the cut (0.2 s, after the last word)
+        fc = fc[:-len("[ao]")] + f"[am];[am]afade=t=out:st={max(0.0, total - 0.2):.3f}:d=0.2[ao]"
     cmd = ["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", fc, "-map", "0:v", "-c:v", "copy", "-map", "[ao]",
            "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)]
     r = subprocess.run(cmd, capture_output=True, text=True)

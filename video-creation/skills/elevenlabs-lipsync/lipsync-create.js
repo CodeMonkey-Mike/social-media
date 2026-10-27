@@ -42,7 +42,10 @@ async function humanClick(page, locator, lbl = '') {
   await locator.scrollIntoViewIfNeeded().catch(() => {});
   await locator.hover().catch(() => {});
   await page.waitForTimeout(rnd(450, 1300));
-  await locator.click();
+  // 2026-10-17: the hover can open a radix tooltip that sits over the control and intercepts the pointer
+  // (seen on the "Lip sync" modality radio) -> retry once with a forced click instead of timing out.
+  try { await locator.click({ timeout: 6000 }); }
+  catch (e) { await page.keyboard.press('Escape').catch(() => {}); await locator.click({ force: true, timeout: 6000 }); if (lbl) console.log(`  (forced) `); }
   if (lbl) console.log(`  clicked: ${lbl}`);
   await page.waitForTimeout(rnd(400, 900));
 }

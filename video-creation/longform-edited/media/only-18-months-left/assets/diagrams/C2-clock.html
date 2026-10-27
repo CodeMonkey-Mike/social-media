@@ -1,0 +1,83 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>C2-clock</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+</style>
+<style>
+/* chart-builder additions (chapter accent = --lit; every canonical token above is untouched) */
+body{display:flex;flex-direction:column;gap:40px;padding:40px;align-items:flex-start}
+.frame{--lit:#ff4060;--lit-rgb:255,64,96}
+.L{color:var(--lit)}
+.frame>.abs{position:absolute}
+.src{left:140px;bottom:50px;font-family:'DM Sans';font-size:21px;color:var(--text-muted);letter-spacing:.02em}
+svg text{font-family:'DM Sans',sans-serif}
+svg .mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+svg .pf{font-family:'Playfair Display',serif;font-weight:900}
+
+
+</style>
+</head><body>
+<!-- C2-clock: one full-frame 1920x1080 .frame per state; PNG = <cid>-<state>.png -->
+<div class="frame" id="his-window" data-state="his-window">
+<div class="orb" style="width:620px;height:620px;background:var(--lit);right:-180px;top:-200px"></div><div class="ey">THE CLOCK</div><h1>His clock runs out <span class="L">next year</span>.</h1><div class="divider"></div><svg width="1640" height="560" viewBox="0 0 1640 560"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><line x1="70" y1="300" x2="1600" y2="300" stroke="#2a3142" stroke-width="4" marker-end="url(#ah)"/><line x1="70.0" y1="286" x2="70.0" y2="314" stroke="#505a6e" stroke-width="3"/><line x1="120.0" y1="293" x2="120.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="170.0" y1="293" x2="170.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="220.0" y1="293" x2="220.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="270.0" y1="293" x2="270.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="320.0" y1="293" x2="320.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="370.0" y1="293" x2="370.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="420.0" y1="293" x2="420.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="470.0" y1="293" x2="470.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="520.0" y1="293" x2="520.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="570.0" y1="293" x2="570.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="620.0" y1="293" x2="620.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="670.0" y1="286" x2="670.0" y2="314" stroke="#505a6e" stroke-width="3"/><line x1="720.0" y1="293" x2="720.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="770.0" y1="293" x2="770.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="820.0" y1="293" x2="820.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="870.0" y1="293" x2="870.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="920.0" y1="293" x2="920.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="970.0" y1="293" x2="970.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1020.0" y1="293" x2="1020.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1070.0" y1="293" x2="1070.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1120.0" y1="293" x2="1120.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1170.0" y1="293" x2="1170.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1220.0" y1="293" x2="1220.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1270.0" y1="286" x2="1270.0" y2="314" stroke="#505a6e" stroke-width="3"/><line x1="1320.0" y1="293" x2="1320.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1370.0" y1="293" x2="1370.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1420.0" y1="293" x2="1420.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1470.0" y1="293" x2="1470.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1520.0" y1="293" x2="1520.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1570.0" y1="293" x2="1570.0" y2="307" stroke="#2a3142" stroke-width="2"/><text x="70.0" y="344" text-anchor="middle" class="mono" font-size="22" fill="#505a6e">2026</text><text x="670.0" y="344" text-anchor="middle" class="mono" font-size="22" fill="#505a6e">2027</text><text x="1270.0" y="344" text-anchor="middle" class="mono" font-size="22" fill="#505a6e">2028</text><rect x="720.0" y="274" width="300.0" height="52" rx="6" fill="rgba(255,64,96,.22)" stroke="var(--lit)" stroke-width="3" filter="url(#g)"/><text x="870.0" y="196" text-anchor="middle" font-size="20" font-weight="700" letter-spacing="3.5" fill="#8892a4">HIS WINDOW</text><text x="870.0" y="244" text-anchor="middle" class="mono" font-size="38" fill="var(--lit)">FEB TO AUG 2027</text><circle cx="120.0" cy="300" r="13" fill="#e8eaf0"/><text x="100.0" y="408" class="mono" font-size="34" fill="#e8eaf0">FEB 2026</text><text x="100.0" y="446" font-size="20" font-weight="700" letter-spacing="2.5" fill="#8892a4">SULEYMAN, MICROSOFT AI CEO</text><text x="100.0" y="492" class="mono" font-size="32" fill="#e8eaf0">12 TO 18 MONTHS</text><text x="100.0" y="526" font-size="21" fill="#8892a4">most desk tasks fully automated</text><path d="M120.0 284 C 240.0 130, 560.0 130, 726.0 268" fill="none" stroke="#505a6e" stroke-width="2.5" stroke-dasharray="7 8" marker-end="url(#ah)"/><line x1="520.0" y1="150" x2="520.0" y2="330" stroke="#e8eaf0" stroke-width="3"/><path d="M509.0 138 L531.0 138 L520.0 154 Z" fill="#e8eaf0"/><text x="520.0" y="120" text-anchor="middle" class="mono" font-size="26" fill="#e8eaf0">TODAY: OCT 2026</text></svg><div class="src abs">Mustafa Suleyman, CEO of Microsoft AI, FT interview, published Feb 12, 2026: "most of those tasks will be fully automated by an AI within the next 12 to 18 months"</div>
+</div>
+<div class="frame" id="mikes-call" data-state="mikes-call">
+<div class="orb" style="width:620px;height:620px;background:var(--lit);right:-180px;top:-200px"></div><div class="ey">THE CLOCK</div><h1>His clock runs out <span class="L">next year</span>.</h1><div class="divider"></div><svg width="1640" height="560" viewBox="0 0 1640 560"><defs><filter id="g" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="g2" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker></defs><line x1="70" y1="300" x2="1600" y2="300" stroke="#2a3142" stroke-width="4" marker-end="url(#ah)"/><line x1="70.0" y1="286" x2="70.0" y2="314" stroke="#505a6e" stroke-width="3"/><line x1="120.0" y1="293" x2="120.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="170.0" y1="293" x2="170.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="220.0" y1="293" x2="220.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="270.0" y1="293" x2="270.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="320.0" y1="293" x2="320.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="370.0" y1="293" x2="370.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="420.0" y1="293" x2="420.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="470.0" y1="293" x2="470.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="520.0" y1="293" x2="520.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="570.0" y1="293" x2="570.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="620.0" y1="293" x2="620.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="670.0" y1="286" x2="670.0" y2="314" stroke="#505a6e" stroke-width="3"/><line x1="720.0" y1="293" x2="720.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="770.0" y1="293" x2="770.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="820.0" y1="293" x2="820.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="870.0" y1="293" x2="870.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="920.0" y1="293" x2="920.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="970.0" y1="293" x2="970.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1020.0" y1="293" x2="1020.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1070.0" y1="293" x2="1070.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1120.0" y1="293" x2="1120.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1170.0" y1="293" x2="1170.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1220.0" y1="293" x2="1220.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1270.0" y1="286" x2="1270.0" y2="314" stroke="#505a6e" stroke-width="3"/><line x1="1320.0" y1="293" x2="1320.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1370.0" y1="293" x2="1370.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1420.0" y1="293" x2="1420.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1470.0" y1="293" x2="1470.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1520.0" y1="293" x2="1520.0" y2="307" stroke="#2a3142" stroke-width="2"/><line x1="1570.0" y1="293" x2="1570.0" y2="307" stroke="#2a3142" stroke-width="2"/><text x="70.0" y="344" text-anchor="middle" class="mono" font-size="22" fill="#505a6e">2026</text><text x="670.0" y="344" text-anchor="middle" class="mono" font-size="22" fill="#505a6e">2027</text><text x="1270.0" y="344" text-anchor="middle" class="mono" font-size="22" fill="#505a6e">2028</text><rect x="720.0" y="274" width="300.0" height="52" rx="6" fill="rgba(255,64,96,.22)" stroke="var(--lit)" stroke-width="3" filter="url(#g)"/><text x="870.0" y="196" text-anchor="middle" font-size="20" font-weight="700" letter-spacing="3.5" fill="#8892a4">HIS WINDOW</text><text x="870.0" y="244" text-anchor="middle" class="mono" font-size="38" fill="var(--lit)">FEB TO AUG 2027</text><circle cx="120.0" cy="300" r="13" fill="#e8eaf0"/><text x="100.0" y="408" class="mono" font-size="34" fill="#e8eaf0">FEB 2026</text><text x="100.0" y="446" font-size="20" font-weight="700" letter-spacing="2.5" fill="#8892a4">SULEYMAN, MICROSOFT AI CEO</text><text x="100.0" y="492" class="mono" font-size="32" fill="#e8eaf0">12 TO 18 MONTHS</text><text x="100.0" y="526" font-size="21" fill="#8892a4">most desk tasks fully automated</text><path d="M120.0 284 C 240.0 130, 560.0 130, 726.0 268" fill="none" stroke="#505a6e" stroke-width="2.5" stroke-dasharray="7 8" marker-end="url(#ah)"/><line x1="520.0" y1="150" x2="520.0" y2="330" stroke="#e8eaf0" stroke-width="3"/><path d="M509.0 138 L531.0 138 L520.0 154 Z" fill="#e8eaf0"/><text x="520.0" y="120" text-anchor="middle" class="mono" font-size="26" fill="#e8eaf0">TODAY: OCT 2026</text><line x1="1420.0" y1="150" x2="1420.0" y2="330" stroke="var(--lit)" stroke-width="5" filter="url(#g2)"/><circle cx="1420.0" cy="300" r="15" fill="var(--lit)" filter="url(#g2)"/><text x="1420.0" y="82" text-anchor="middle" font-size="22" font-weight="700" letter-spacing="3" fill="#8892a4">MY FORECAST</text><text x="1420.0" y="124" text-anchor="middle" class="mono" font-size="32" fill="var(--lit)">MIKE'S CALL: 18 MONTHS</text><path d="M520.0 386 V400 H1420.0 V386" fill="none" stroke="var(--lit)" stroke-width="2.5" opacity=".75"/><text x="970.0" y="440" text-anchor="middle" font-size="21" font-weight="700" letter-spacing="3" fill="#e8eaf0">18 MONTHS FROM TODAY</text></svg><div class="src abs">Mustafa Suleyman, CEO of Microsoft AI, FT interview, published Feb 12, 2026: "most of those tasks will be fully automated by an AI within the next 12 to 18 months"</div>
+</div>
+</body></html>

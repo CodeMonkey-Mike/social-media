@@ -77,6 +77,28 @@ looking at. Every automation is polled, not just the visible one:
 
 The active tab is remembered across reloads and is addressable as `langgraph.html#linkedin`.
 
+### Several projects in flight (the In-flight strip, 2026-10-16)
+
+The longform graph runs ONE video per invocation, and two videos are routinely in flight at once
+(tao-detailed parked at its plan gate while evals starts). The single-slot heartbeat
+`lane_progress.json` only ever names the LAST writer, so the page would silently switch to whichever
+video ran last and lose the other's gate. Fix, three parts:
+
+- **Per-project heartbeat.** `longform-edited/graph/common.py` `write_progress` ALSO writes
+  `graph/data/lane_progress/<project>.json` (gitignored), and `finish_progress` flips THAT file first,
+  so one graph ending can never mark another project's heartbeat. `run.py` sets `CURRENT_PROJECT`
+  for the longform, vertical and short lanes alike.
+- **`/<automation>/inflight.json`** (`serve_dashboard.py`, computed, no-store): every per-project
+  heartbeat, newest update first; a heartbeat whose `media/<project>/` folder was recycled is
+  dropped. Still an allowlist, the folder is read, never mounted.
+- **The strip.** An automation with `feed.inflight` renders one chip per project above the live card
+  (amber border + `needs you` = a `waiting` heartbeat parked on a `gate_*` node). Clicking a chip
+  FOCUSES that project: the live card, every pipeline card and the gates lookup then describe it. The
+  focus is remembered per automation (`localStorage lgFocus:<id>`); with no pick it follows the running
+  project, else the freshest heartbeat. `done` heartbeats drop off the strip after a day.
+
+The livestream and LinkedIn automations have no `inflight` feed and behave exactly as before.
+
 ### Adding an automation
 
 Two places, both one entry:

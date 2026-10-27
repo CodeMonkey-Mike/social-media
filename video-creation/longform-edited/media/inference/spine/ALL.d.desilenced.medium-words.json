@@ -1,0 +1,4481 @@
+{
+  "text": " So every AI model gets trained once and everything anyone does with it afterwards is inference. Training is the model leaning on its weights from data one time and it costs millions. Inference is those frozen weights running against brand new input on every single request. Training makes the headlines. Inference is the bill, the latency, and the part you actually operate. By some estimates, up to 90% of a model's life is inference. Your request never reaches the model as text. A tokenizer turns it into IDs and the tokens are what you get billed for. Step 1. Pre-fill. The GPU reads your whole prompt at once and stores the keys and the values in every token in memory. That's the KV cache. The chip is working flat out. Pre-fill is compute bound. Step 2. Decode. One token per step and every step reloads that whole cache. Within one request, you can skip ahead. Each token depends on the last. The chip is waiting on memory. Decode is memory bound. Those are the two numbers you feel. Time to first token is pre-fill. Time per output token is decode. The levers. Here are the four levers that make that fast and cheap. Continuous batching. Requests join and leave mid-flight so the GPU never idles. Caching. Pay his attention. Cut wasted cache memory to near zero and a shared prompt prefix is computed once. Quantization. 8 bit halves the weights, 4 bit quarters them so it fits a smaller card. Speculative decoding. A small model drafts. The big one verifies in one pass. Same output. All of that lives in the inference engine. VLLM, SG-LANG, TensorRT-LLM, on a laptop, LAMA, and LAMA-CPP. Hosted. You pay per token and the vendor runs the GPU. Self-hosted. You pay for the card and that pays off when the card stays busy. Now with me, I run an AI pipeline and edit videos just like this one. So here's what inference looks like in practice. Every clip I transcribe runs OpenAI Whisper on my own GPU. Self-hosted inference. Loading the model costs around 15 to 20 seconds. So my pipeline loads it once and runs every clip through it. Keep the weights hot, batch the work. And every agent in my pipeline spawns around 20 per video is a clause session billed per token. Hosted inference. I have never trained a model. Everything my pipeline does is AI inference. Now the 2026 twist. Reasoning models think before they answer and that thinking is extra tokens. Billed as output by OpenAI and Anthropic alike. So the cost of the request now depends on how hard the model thinks and that bill lands on inference. Jensen Wong, NVIDIA's CEO, stood out on a GTC stage in 2025 and named the hard problem. He sells the chips that run it, so keep that in mind. And on the engineering, he's right. Make sure you click that subscribe button and click into this playlist right here to learn more about AI engineering. And if you want to become an AI engineer, you want to learn Python too. So click into this playlist by Python and I'll catch you there.",
+  "segments": [
+    {
+      "id": 0,
+      "seek": 0,
+      "start": 0.0,
+      "end": 6.44,
+      "text": " So every AI model gets trained once and everything anyone does with it afterwards is inference.",
+      "tokens": [
+        50364,
+        407,
+        633,
+        7318,
+        2316,
+        2170,
+        8895,
+        1564,
+        293,
+        1203,
+        2878,
+        775,
+        365,
+        309,
+        10543,
+        307,
+        38253,
+        13,
+        50684
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12997221946716309,
+      "compression_ratio": 1.7323420074349443,
+      "no_speech_prob": 0.00805780477821827,
+      "words": [
+        {
+          "word": " So",
+          "start": 0.0,
+          "end": 0.28,
+          "probability": 0.7241014242172241
+        },
+        {
+          "word": " every",
+          "start": 0.28,
+          "end": 0.76,
+          "probability": 0.830473005771637
+        },
+        {
+          "word": " AI",
+          "start": 0.76,
+          "end": 1.18,
+          "probability": 0.9073424935340881
+        },
+        {
+          "word": " model",
+          "start": 1.18,
+          "end": 1.62,
+          "probability": 0.975753903388977
+        },
+        {
+          "word": " gets",
+          "start": 1.62,
+          "end": 1.98,
+          "probability": 0.9891701340675354
+        },
+        {
+          "word": " trained",
+          "start": 1.98,
+          "end": 2.26,
+          "probability": 0.9536572098731995
+        },
+        {
+          "word": " once",
+          "start": 2.26,
+          "end": 2.78,
+          "probability": 0.9902181029319763
+        },
+        {
+          "word": " and",
+          "start": 2.78,
+          "end": 3.12,
+          "probability": 0.5874303579330444
+        },
+        {
+          "word": " everything",
+          "start": 3.12,
+          "end": 3.58,
+          "probability": 0.9840068221092224
+        },
+        {
+          "word": " anyone",
+          "start": 3.58,
+          "end": 4.04,
+          "probability": 0.9618308544158936
+        },
+        {
+          "word": " does",
+          "start": 4.04,
+          "end": 4.36,
+          "probability": 0.9953206181526184
+        },
+        {
+          "word": " with",
+          "start": 4.36,
+          "end": 4.56,
+          "probability": 0.9847273826599121
+        },
+        {
+          "word": " it",
+          "start": 4.56,
+          "end": 4.82,
+          "probability": 0.995999813079834
+        },
+        {
+          "word": " afterwards",
+          "start": 4.82,
+          "end": 5.56,
+          "probability": 0.9183816313743591
+        },
+        {
+          "word": " is",
+          "start": 5.56,
+          "end": 6.1,
+          "probability": 0.9148823022842407
+        },
+        {
+          "word": " inference.",
+          "start": 6.1,
+          "end": 6.44,
+          "probability": 0.8737601637840271
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "seek": 0,
+      "start": 6.82,
+      "end": 11.86,
+      "text": " Training is the model leaning on its weights from data one time and it costs millions.",
+      "tokens": [
+        50684,
+        20620,
+        307,
+        264,
+        2316,
+        23390,
+        322,
+        1080,
+        17443,
+        490,
+        1412,
+        472,
+        565,
+        293,
+        309,
+        5497,
+        6803,
+        13,
+        50956
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12997221946716309,
+      "compression_ratio": 1.7323420074349443,
+      "no_speech_prob": 0.00805780477821827,
+      "words": [
+        {
+          "word": " Training",
+          "start": 6.82,
+          "end": 6.9,
+          "probability": 0.966343104839325
+        },
+        {
+          "word": " is",
+          "start": 6.9,
+          "end": 7.14,
+          "probability": 0.9919719696044922
+        },
+        {
+          "word": " the",
+          "start": 7.14,
+          "end": 7.34,
+          "probability": 0.9833406805992126
+        },
+        {
+          "word": " model",
+          "start": 7.34,
+          "end": 7.56,
+          "probability": 0.9977479577064514
+        },
+        {
+          "word": " leaning",
+          "start": 7.56,
+          "end": 7.88,
+          "probability": 0.9817933440208435
+        },
+        {
+          "word": " on",
+          "start": 7.88,
+          "end": 8.12,
+          "probability": 0.996846616268158
+        },
+        {
+          "word": " its",
+          "start": 8.12,
+          "end": 8.42,
+          "probability": 0.9772717952728271
+        },
+        {
+          "word": " weights",
+          "start": 8.42,
+          "end": 8.76,
+          "probability": 0.975681483745575
+        },
+        {
+          "word": " from",
+          "start": 8.76,
+          "end": 9.22,
+          "probability": 0.8375272154808044
+        },
+        {
+          "word": " data",
+          "start": 9.22,
+          "end": 9.68,
+          "probability": 0.9951332211494446
+        },
+        {
+          "word": " one",
+          "start": 9.68,
+          "end": 10.1,
+          "probability": 0.5149659514427185
+        },
+        {
+          "word": " time",
+          "start": 10.1,
+          "end": 10.56,
+          "probability": 0.9928054213523865
+        },
+        {
+          "word": " and",
+          "start": 10.56,
+          "end": 10.88,
+          "probability": 0.715835690498352
+        },
+        {
+          "word": " it",
+          "start": 10.88,
+          "end": 11.08,
+          "probability": 0.792380690574646
+        },
+        {
+          "word": " costs",
+          "start": 11.08,
+          "end": 11.3,
+          "probability": 0.8861163854598999
+        },
+        {
+          "word": " millions.",
+          "start": 11.3,
+          "end": 11.86,
+          "probability": 0.9946821331977844
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "seek": 0,
+      "start": 12.14,
+      "end": 16.9,
+      "text": " Inference is those frozen weights running against brand new input on every single request.",
+      "tokens": [
+        50956,
+        682,
+        5158,
+        307,
+        729,
+        12496,
+        17443,
+        2614,
+        1970,
+        3360,
+        777,
+        4846,
+        322,
+        633,
+        2167,
+        5308,
+        13,
+        51208
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12997221946716309,
+      "compression_ratio": 1.7323420074349443,
+      "no_speech_prob": 0.00805780477821827,
+      "words": [
+        {
+          "word": " Inference",
+          "start": 12.14,
+          "end": 12.5,
+          "probability": 0.9673220217227936
+        },
+        {
+          "word": " is",
+          "start": 12.5,
+          "end": 12.7,
+          "probability": 0.9450039267539978
+        },
+        {
+          "word": " those",
+          "start": 12.7,
+          "end": 13.0,
+          "probability": 0.9952203631401062
+        },
+        {
+          "word": " frozen",
+          "start": 13.0,
+          "end": 13.4,
+          "probability": 0.99349445104599
+        },
+        {
+          "word": " weights",
+          "start": 13.4,
+          "end": 13.8,
+          "probability": 0.9937804341316223
+        },
+        {
+          "word": " running",
+          "start": 13.8,
+          "end": 14.18,
+          "probability": 0.8535849452018738
+        },
+        {
+          "word": " against",
+          "start": 14.18,
+          "end": 14.52,
+          "probability": 0.9947569370269775
+        },
+        {
+          "word": " brand",
+          "start": 14.52,
+          "end": 14.88,
+          "probability": 0.997169554233551
+        },
+        {
+          "word": " new",
+          "start": 14.88,
+          "end": 15.14,
+          "probability": 0.9108819365501404
+        },
+        {
+          "word": " input",
+          "start": 15.14,
+          "end": 15.52,
+          "probability": 0.9327831268310547
+        },
+        {
+          "word": " on",
+          "start": 15.52,
+          "end": 15.8,
+          "probability": 0.9886928796768188
+        },
+        {
+          "word": " every",
+          "start": 15.8,
+          "end": 16.2,
+          "probability": 0.9979478716850281
+        },
+        {
+          "word": " single",
+          "start": 16.2,
+          "end": 16.52,
+          "probability": 0.9969327449798584
+        },
+        {
+          "word": " request.",
+          "start": 16.52,
+          "end": 16.9,
+          "probability": 0.9911863207817078
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "seek": 0,
+      "start": 17.04,
+      "end": 21.96,
+      "text": " Training makes the headlines. Inference is the bill, the latency, and the part you actually",
+      "tokens": [
+        51208,
+        20620,
+        1669,
+        264,
+        23867,
+        13,
+        682,
+        5158,
+        307,
+        264,
+        2961,
+        11,
+        264,
+        27043,
+        11,
+        293,
+        264,
+        644,
+        291,
+        767,
+        51456
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12997221946716309,
+      "compression_ratio": 1.7323420074349443,
+      "no_speech_prob": 0.00805780477821827,
+      "words": [
+        {
+          "word": " Training",
+          "start": 17.04,
+          "end": 17.4,
+          "probability": 0.9901358485221863
+        },
+        {
+          "word": " makes",
+          "start": 17.4,
+          "end": 17.72,
+          "probability": 0.99639493227005
+        },
+        {
+          "word": " the",
+          "start": 17.72,
+          "end": 17.94,
+          "probability": 0.8312858939170837
+        },
+        {
+          "word": " headlines.",
+          "start": 17.94,
+          "end": 18.5,
+          "probability": 0.9951964020729065
+        },
+        {
+          "word": " Inference",
+          "start": 18.68,
+          "end": 19.2,
+          "probability": 0.991408109664917
+        },
+        {
+          "word": " is",
+          "start": 19.2,
+          "end": 19.4,
+          "probability": 0.990958571434021
+        },
+        {
+          "word": " the",
+          "start": 19.4,
+          "end": 19.64,
+          "probability": 0.997426450252533
+        },
+        {
+          "word": " bill,",
+          "start": 19.64,
+          "end": 19.9,
+          "probability": 0.9108635783195496
+        },
+        {
+          "word": " the",
+          "start": 20.16,
+          "end": 20.34,
+          "probability": 0.972456693649292
+        },
+        {
+          "word": " latency,",
+          "start": 20.34,
+          "end": 20.8,
+          "probability": 0.9984423518180847
+        },
+        {
+          "word": " and",
+          "start": 20.8,
+          "end": 21.1,
+          "probability": 0.9964260458946228
+        },
+        {
+          "word": " the",
+          "start": 21.1,
+          "end": 21.3,
+          "probability": 0.9987488985061646
+        },
+        {
+          "word": " part",
+          "start": 21.3,
+          "end": 21.4,
+          "probability": 0.9968217611312866
+        },
+        {
+          "word": " you",
+          "start": 21.4,
+          "end": 21.64,
+          "probability": 0.9970500469207764
+        },
+        {
+          "word": " actually",
+          "start": 21.64,
+          "end": 21.96,
+          "probability": 0.9975354671478271
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "seek": 0,
+      "start": 21.96,
+      "end": 29.48,
+      "text": " operate. By some estimates, up to 90% of a model's life is inference. Your request never reaches the",
+      "tokens": [
+        51456,
+        9651,
+        13,
+        3146,
+        512,
+        20561,
+        11,
+        493,
+        281,
+        4289,
+        4,
+        295,
+        257,
+        2316,
+        311,
+        993,
+        307,
+        38253,
+        13,
+        2260,
+        5308,
+        1128,
+        14235,
+        264,
+        51824
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12997221946716309,
+      "compression_ratio": 1.7323420074349443,
+      "no_speech_prob": 0.00805780477821827,
+      "words": [
+        {
+          "word": " operate.",
+          "start": 21.96,
+          "end": 22.38,
+          "probability": 0.9979777932167053
+        },
+        {
+          "word": " By",
+          "start": 22.5,
+          "end": 22.8,
+          "probability": 0.9941273927688599
+        },
+        {
+          "word": " some",
+          "start": 22.8,
+          "end": 23.1,
+          "probability": 0.9984093308448792
+        },
+        {
+          "word": " estimates,",
+          "start": 23.1,
+          "end": 23.64,
+          "probability": 0.9976840019226074
+        },
+        {
+          "word": " up",
+          "start": 23.88,
+          "end": 24.0,
+          "probability": 0.998229444026947
+        },
+        {
+          "word": " to",
+          "start": 24.0,
+          "end": 24.36,
+          "probability": 0.9974132180213928
+        },
+        {
+          "word": " 90",
+          "start": 24.36,
+          "end": 24.78,
+          "probability": 0.9494022727012634
+        },
+        {
+          "word": "%",
+          "start": 24.78,
+          "end": 25.24,
+          "probability": 0.8176730871200562
+        },
+        {
+          "word": " of",
+          "start": 25.24,
+          "end": 25.4,
+          "probability": 0.9927414655685425
+        },
+        {
+          "word": " a",
+          "start": 25.4,
+          "end": 25.66,
+          "probability": 0.9801141619682312
+        },
+        {
+          "word": " model's",
+          "start": 25.66,
+          "end": 26.12,
+          "probability": 0.95517298579216
+        },
+        {
+          "word": " life",
+          "start": 26.12,
+          "end": 26.38,
+          "probability": 0.9975391626358032
+        },
+        {
+          "word": " is",
+          "start": 26.38,
+          "end": 26.92,
+          "probability": 0.9943392872810364
+        },
+        {
+          "word": " inference.",
+          "start": 26.92,
+          "end": 27.44,
+          "probability": 0.9872782230377197
+        },
+        {
+          "word": " Your",
+          "start": 27.6,
+          "end": 27.88,
+          "probability": 0.9914535284042358
+        },
+        {
+          "word": " request",
+          "start": 27.88,
+          "end": 28.32,
+          "probability": 0.9075189828872681
+        },
+        {
+          "word": " never",
+          "start": 28.32,
+          "end": 28.8,
+          "probability": 0.9976891279220581
+        },
+        {
+          "word": " reaches",
+          "start": 28.8,
+          "end": 29.16,
+          "probability": 0.9982274174690247
+        },
+        {
+          "word": " the",
+          "start": 29.16,
+          "end": 29.48,
+          "probability": 0.9938229322433472
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "seek": 2948,
+      "start": 29.48,
+      "end": 35.34,
+      "text": " model as text. A tokenizer turns it into IDs and the tokens are what you get billed for.",
+      "tokens": [
+        50364,
+        2316,
+        382,
+        2487,
+        13,
+        316,
+        14862,
+        6545,
+        4523,
+        309,
+        666,
+        48212,
+        293,
+        264,
+        22667,
+        366,
+        437,
+        291,
+        483,
+        2961,
+        292,
+        337,
+        13,
+        50656
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.14713566119854266,
+      "compression_ratio": 1.5743801652892562,
+      "no_speech_prob": 0.5541202425956726,
+      "words": [
+        {
+          "word": " model",
+          "start": 29.48,
+          "end": 29.72,
+          "probability": 0.011649099178612232
+        },
+        {
+          "word": " as",
+          "start": 29.72,
+          "end": 30.0,
+          "probability": 0.7609177827835083
+        },
+        {
+          "word": " text.",
+          "start": 30.0,
+          "end": 30.44,
+          "probability": 0.9590358734130859
+        },
+        {
+          "word": " A",
+          "start": 30.7,
+          "end": 30.82,
+          "probability": 0.8362878561019897
+        },
+        {
+          "word": " tokenizer",
+          "start": 30.82,
+          "end": 31.46,
+          "probability": 0.9631891846656799
+        },
+        {
+          "word": " turns",
+          "start": 31.46,
+          "end": 31.86,
+          "probability": 0.9680915474891663
+        },
+        {
+          "word": " it",
+          "start": 31.86,
+          "end": 32.02,
+          "probability": 0.9781370759010315
+        },
+        {
+          "word": " into",
+          "start": 32.02,
+          "end": 32.38,
+          "probability": 0.9876466989517212
+        },
+        {
+          "word": " IDs",
+          "start": 32.38,
+          "end": 32.9,
+          "probability": 0.8499117493629456
+        },
+        {
+          "word": " and",
+          "start": 32.9,
+          "end": 33.56,
+          "probability": 0.5326334238052368
+        },
+        {
+          "word": " the",
+          "start": 33.56,
+          "end": 33.76,
+          "probability": 0.9207538366317749
+        },
+        {
+          "word": " tokens",
+          "start": 33.76,
+          "end": 34.02,
+          "probability": 0.9847891330718994
+        },
+        {
+          "word": " are",
+          "start": 34.02,
+          "end": 34.18,
+          "probability": 0.974093496799469
+        },
+        {
+          "word": " what",
+          "start": 34.18,
+          "end": 34.3,
+          "probability": 0.9854059219360352
+        },
+        {
+          "word": " you",
+          "start": 34.3,
+          "end": 34.46,
+          "probability": 0.9917778968811035
+        },
+        {
+          "word": " get",
+          "start": 34.46,
+          "end": 34.64,
+          "probability": 0.9639706015586853
+        },
+        {
+          "word": " billed",
+          "start": 34.64,
+          "end": 34.94,
+          "probability": 0.9320276379585266
+        },
+        {
+          "word": " for.",
+          "start": 34.94,
+          "end": 35.34,
+          "probability": 0.9937019348144531
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "seek": 2948,
+      "start": 35.42,
+      "end": 42.2,
+      "text": " Step 1. Pre-fill. The GPU reads your whole prompt at once and stores the keys and the values in every",
+      "tokens": [
+        50656,
+        5470,
+        502,
+        13,
+        6001,
+        12,
+        31072,
+        13,
+        440,
+        18407,
+        15700,
+        428,
+        1379,
+        12391,
+        412,
+        1564,
+        293,
+        9512,
+        264,
+        9317,
+        293,
+        264,
+        4190,
+        294,
+        633,
+        51000
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.14713566119854266,
+      "compression_ratio": 1.5743801652892562,
+      "no_speech_prob": 0.5541202425956726,
+      "words": [
+        {
+          "word": " Step",
+          "start": 35.42,
+          "end": 35.68,
+          "probability": 0.6595110297203064
+        },
+        {
+          "word": " 1.",
+          "start": 35.68,
+          "end": 36.32,
+          "probability": 0.6111656427383423
+        },
+        {
+          "word": " Pre",
+          "start": 36.42,
+          "end": 36.78,
+          "probability": 0.9190329909324646
+        },
+        {
+          "word": "-fill.",
+          "start": 36.78,
+          "end": 36.98,
+          "probability": 0.7118835151195526
+        },
+        {
+          "word": " The",
+          "start": 37.16,
+          "end": 37.28,
+          "probability": 0.9715306162834167
+        },
+        {
+          "word": " GPU",
+          "start": 37.28,
+          "end": 37.76,
+          "probability": 0.9790059924125671
+        },
+        {
+          "word": " reads",
+          "start": 37.76,
+          "end": 38.14,
+          "probability": 0.9912567138671875
+        },
+        {
+          "word": " your",
+          "start": 38.14,
+          "end": 38.44,
+          "probability": 0.9740270376205444
+        },
+        {
+          "word": " whole",
+          "start": 38.44,
+          "end": 38.64,
+          "probability": 0.9953458905220032
+        },
+        {
+          "word": " prompt",
+          "start": 38.64,
+          "end": 38.94,
+          "probability": 0.9931499361991882
+        },
+        {
+          "word": " at",
+          "start": 38.94,
+          "end": 39.24,
+          "probability": 0.9916343688964844
+        },
+        {
+          "word": " once",
+          "start": 39.24,
+          "end": 39.56,
+          "probability": 0.9979971051216125
+        },
+        {
+          "word": " and",
+          "start": 39.56,
+          "end": 39.92,
+          "probability": 0.8736130595207214
+        },
+        {
+          "word": " stores",
+          "start": 39.92,
+          "end": 40.32,
+          "probability": 0.9903807044029236
+        },
+        {
+          "word": " the",
+          "start": 40.32,
+          "end": 40.62,
+          "probability": 0.9896323680877686
+        },
+        {
+          "word": " keys",
+          "start": 40.62,
+          "end": 40.94,
+          "probability": 0.9717246294021606
+        },
+        {
+          "word": " and",
+          "start": 40.94,
+          "end": 41.16,
+          "probability": 0.986171305179596
+        },
+        {
+          "word": " the",
+          "start": 41.16,
+          "end": 41.38,
+          "probability": 0.8225099444389343
+        },
+        {
+          "word": " values",
+          "start": 41.38,
+          "end": 41.7,
+          "probability": 0.9902278184890747
+        },
+        {
+          "word": " in",
+          "start": 41.7,
+          "end": 41.96,
+          "probability": 0.7938587069511414
+        },
+        {
+          "word": " every",
+          "start": 41.96,
+          "end": 42.2,
+          "probability": 0.9935635328292847
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "seek": 2948,
+      "start": 42.2,
+      "end": 48.02,
+      "text": " token in memory. That's the KV cache. The chip is working flat out. Pre-fill is compute bound.",
+      "tokens": [
+        51000,
+        14862,
+        294,
+        4675,
+        13,
+        663,
+        311,
+        264,
+        591,
+        53,
+        19459,
+        13,
+        440,
+        11409,
+        307,
+        1364,
+        4962,
+        484,
+        13,
+        6001,
+        12,
+        31072,
+        307,
+        14722,
+        5472,
+        13,
+        51300
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.14713566119854266,
+      "compression_ratio": 1.5743801652892562,
+      "no_speech_prob": 0.5541202425956726,
+      "words": [
+        {
+          "word": " token",
+          "start": 42.2,
+          "end": 42.48,
+          "probability": 0.9948152899742126
+        },
+        {
+          "word": " in",
+          "start": 42.48,
+          "end": 42.72,
+          "probability": 0.9499182105064392
+        },
+        {
+          "word": " memory.",
+          "start": 42.72,
+          "end": 43.06,
+          "probability": 0.9914872646331787
+        },
+        {
+          "word": " That's",
+          "start": 43.14,
+          "end": 43.44,
+          "probability": 0.9680060744285583
+        },
+        {
+          "word": " the",
+          "start": 43.44,
+          "end": 43.62,
+          "probability": 0.991692841053009
+        },
+        {
+          "word": " KV",
+          "start": 43.62,
+          "end": 44.08,
+          "probability": 0.781377911567688
+        },
+        {
+          "word": " cache.",
+          "start": 44.08,
+          "end": 44.38,
+          "probability": 0.9628080725669861
+        },
+        {
+          "word": " The",
+          "start": 44.5,
+          "end": 44.72,
+          "probability": 0.989122211933136
+        },
+        {
+          "word": " chip",
+          "start": 44.72,
+          "end": 44.94,
+          "probability": 0.9909735321998596
+        },
+        {
+          "word": " is",
+          "start": 44.94,
+          "end": 45.2,
+          "probability": 0.9935775399208069
+        },
+        {
+          "word": " working",
+          "start": 45.2,
+          "end": 45.52,
+          "probability": 0.9968869090080261
+        },
+        {
+          "word": " flat",
+          "start": 45.52,
+          "end": 45.94,
+          "probability": 0.9820435047149658
+        },
+        {
+          "word": " out.",
+          "start": 45.94,
+          "end": 46.52,
+          "probability": 0.8588997721672058
+        },
+        {
+          "word": " Pre",
+          "start": 46.62,
+          "end": 46.94,
+          "probability": 0.9891237020492554
+        },
+        {
+          "word": "-fill",
+          "start": 46.94,
+          "end": 47.1,
+          "probability": 0.9867264330387115
+        },
+        {
+          "word": " is",
+          "start": 47.1,
+          "end": 47.36,
+          "probability": 0.9958714842796326
+        },
+        {
+          "word": " compute",
+          "start": 47.36,
+          "end": 47.68,
+          "probability": 0.925940990447998
+        },
+        {
+          "word": " bound.",
+          "start": 47.68,
+          "end": 48.02,
+          "probability": 0.806338906288147
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "seek": 2948,
+      "start": 48.2,
+      "end": 54.74,
+      "text": " Step 2. Decode. One token per step and every step reloads that whole cache. Within one request,",
+      "tokens": [
+        51300,
+        5470,
+        568,
+        13,
+        12427,
+        1429,
+        13,
+        1485,
+        14862,
+        680,
+        1823,
+        293,
+        633,
+        1823,
+        25628,
+        82,
+        300,
+        1379,
+        19459,
+        13,
+        15996,
+        472,
+        5308,
+        11,
+        51632
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.14713566119854266,
+      "compression_ratio": 1.5743801652892562,
+      "no_speech_prob": 0.5541202425956726,
+      "words": [
+        {
+          "word": " Step",
+          "start": 48.2,
+          "end": 48.48,
+          "probability": 0.9964466691017151
+        },
+        {
+          "word": " 2.",
+          "start": 48.48,
+          "end": 48.86,
+          "probability": 0.9830436110496521
+        },
+        {
+          "word": " Decode.",
+          "start": 49.1,
+          "end": 49.6,
+          "probability": 0.9346109926700592
+        },
+        {
+          "word": " One",
+          "start": 49.74,
+          "end": 50.0,
+          "probability": 0.8331465721130371
+        },
+        {
+          "word": " token",
+          "start": 50.0,
+          "end": 50.36,
+          "probability": 0.9950608611106873
+        },
+        {
+          "word": " per",
+          "start": 50.36,
+          "end": 50.66,
+          "probability": 0.9945871829986572
+        },
+        {
+          "word": " step",
+          "start": 50.66,
+          "end": 50.96,
+          "probability": 0.9973573088645935
+        },
+        {
+          "word": " and",
+          "start": 50.96,
+          "end": 51.26,
+          "probability": 0.4921901226043701
+        },
+        {
+          "word": " every",
+          "start": 51.26,
+          "end": 51.62,
+          "probability": 0.9939690828323364
+        },
+        {
+          "word": " step",
+          "start": 51.62,
+          "end": 51.88,
+          "probability": 0.9984172582626343
+        },
+        {
+          "word": " reloads",
+          "start": 51.88,
+          "end": 52.44,
+          "probability": 0.9477542638778687
+        },
+        {
+          "word": " that",
+          "start": 52.44,
+          "end": 52.58,
+          "probability": 0.9792554974555969
+        },
+        {
+          "word": " whole",
+          "start": 52.58,
+          "end": 52.84,
+          "probability": 0.991188645362854
+        },
+        {
+          "word": " cache.",
+          "start": 52.84,
+          "end": 53.3,
+          "probability": 0.994300365447998
+        },
+        {
+          "word": " Within",
+          "start": 53.56,
+          "end": 53.86,
+          "probability": 0.9898926615715027
+        },
+        {
+          "word": " one",
+          "start": 53.86,
+          "end": 54.18,
+          "probability": 0.9701992869377136
+        },
+        {
+          "word": " request,",
+          "start": 54.18,
+          "end": 54.74,
+          "probability": 0.987170398235321
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "seek": 5474,
+      "start": 54.74,
+      "end": 60.56,
+      "text": " you can skip ahead. Each token depends on the last. The chip is waiting on memory. Decode is",
+      "tokens": [
+        50368,
+        291,
+        393,
+        10023,
+        2286,
+        13,
+        6947,
+        14862,
+        5946,
+        322,
+        264,
+        1036,
+        13,
+        440,
+        11409,
+        307,
+        3806,
+        322,
+        4675,
+        13,
+        12427,
+        1429,
+        307,
+        50648
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.10634407997131348,
+      "compression_ratio": 1.6583629893238434,
+      "no_speech_prob": 0.14030595123767853,
+      "words": [
+        {
+          "word": " you",
+          "start": 54.74,
+          "end": 54.9,
+          "probability": 0.4369109570980072
+        },
+        {
+          "word": " can",
+          "start": 54.9,
+          "end": 55.2,
+          "probability": 0.9809080362319946
+        },
+        {
+          "word": " skip",
+          "start": 55.2,
+          "end": 55.52,
+          "probability": 0.5011717677116394
+        },
+        {
+          "word": " ahead.",
+          "start": 55.52,
+          "end": 56.02,
+          "probability": 0.9890794157981873
+        },
+        {
+          "word": " Each",
+          "start": 56.16,
+          "end": 56.38,
+          "probability": 0.9548085331916809
+        },
+        {
+          "word": " token",
+          "start": 56.38,
+          "end": 56.66,
+          "probability": 0.9943366646766663
+        },
+        {
+          "word": " depends",
+          "start": 56.66,
+          "end": 57.1,
+          "probability": 0.9904797673225403
+        },
+        {
+          "word": " on",
+          "start": 57.1,
+          "end": 57.3,
+          "probability": 0.9969483017921448
+        },
+        {
+          "word": " the",
+          "start": 57.3,
+          "end": 57.5,
+          "probability": 0.9923186302185059
+        },
+        {
+          "word": " last.",
+          "start": 57.5,
+          "end": 57.88,
+          "probability": 0.9863900542259216
+        },
+        {
+          "word": " The",
+          "start": 58.16,
+          "end": 58.16,
+          "probability": 0.8896953463554382
+        },
+        {
+          "word": " chip",
+          "start": 58.16,
+          "end": 58.4,
+          "probability": 0.9916273355484009
+        },
+        {
+          "word": " is",
+          "start": 58.4,
+          "end": 58.68,
+          "probability": 0.9946021437644958
+        },
+        {
+          "word": " waiting",
+          "start": 58.68,
+          "end": 58.84,
+          "probability": 0.9389902353286743
+        },
+        {
+          "word": " on",
+          "start": 58.84,
+          "end": 59.08,
+          "probability": 0.995219886302948
+        },
+        {
+          "word": " memory.",
+          "start": 59.08,
+          "end": 59.52,
+          "probability": 0.9922879934310913
+        },
+        {
+          "word": " Decode",
+          "start": 59.9,
+          "end": 60.36,
+          "probability": 0.8095515072345734
+        },
+        {
+          "word": " is",
+          "start": 60.36,
+          "end": 60.56,
+          "probability": 0.9903609752655029
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "seek": 5474,
+      "start": 60.56,
+      "end": 65.74,
+      "text": " memory bound. Those are the two numbers you feel. Time to first token is pre-fill. Time per output",
+      "tokens": [
+        50648,
+        4675,
+        5472,
+        13,
+        3950,
+        366,
+        264,
+        732,
+        3547,
+        291,
+        841,
+        13,
+        6161,
+        281,
+        700,
+        14862,
+        307,
+        659,
+        12,
+        31072,
+        13,
+        6161,
+        680,
+        5598,
+        50912
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.10634407997131348,
+      "compression_ratio": 1.6583629893238434,
+      "no_speech_prob": 0.14030595123767853,
+      "words": [
+        {
+          "word": " memory",
+          "start": 60.56,
+          "end": 60.98,
+          "probability": 0.9937773942947388
+        },
+        {
+          "word": " bound.",
+          "start": 60.98,
+          "end": 61.22,
+          "probability": 0.7806726098060608
+        },
+        {
+          "word": " Those",
+          "start": 61.34,
+          "end": 61.54,
+          "probability": 0.9313446283340454
+        },
+        {
+          "word": " are",
+          "start": 61.54,
+          "end": 61.74,
+          "probability": 0.997079610824585
+        },
+        {
+          "word": " the",
+          "start": 61.74,
+          "end": 61.82,
+          "probability": 0.9717366695404053
+        },
+        {
+          "word": " two",
+          "start": 61.82,
+          "end": 61.94,
+          "probability": 0.9363073706626892
+        },
+        {
+          "word": " numbers",
+          "start": 61.94,
+          "end": 62.22,
+          "probability": 0.9968529343605042
+        },
+        {
+          "word": " you",
+          "start": 62.22,
+          "end": 62.5,
+          "probability": 0.985138475894928
+        },
+        {
+          "word": " feel.",
+          "start": 62.5,
+          "end": 62.74,
+          "probability": 0.9778474569320679
+        },
+        {
+          "word": " Time",
+          "start": 63.0,
+          "end": 63.08,
+          "probability": 0.9364021420478821
+        },
+        {
+          "word": " to",
+          "start": 63.08,
+          "end": 63.3,
+          "probability": 0.8840867877006531
+        },
+        {
+          "word": " first",
+          "start": 63.3,
+          "end": 63.46,
+          "probability": 0.940133273601532
+        },
+        {
+          "word": " token",
+          "start": 63.46,
+          "end": 63.8,
+          "probability": 0.989010751247406
+        },
+        {
+          "word": " is",
+          "start": 63.8,
+          "end": 64.08,
+          "probability": 0.989098310470581
+        },
+        {
+          "word": " pre",
+          "start": 64.08,
+          "end": 64.34,
+          "probability": 0.39880308508872986
+        },
+        {
+          "word": "-fill.",
+          "start": 64.34,
+          "end": 64.56,
+          "probability": 0.8964850008487701
+        },
+        {
+          "word": " Time",
+          "start": 64.88,
+          "end": 65.16,
+          "probability": 0.9971156120300293
+        },
+        {
+          "word": " per",
+          "start": 65.16,
+          "end": 65.46,
+          "probability": 0.9172264337539673
+        },
+        {
+          "word": " output",
+          "start": 65.46,
+          "end": 65.74,
+          "probability": 0.7804637551307678
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "seek": 5474,
+      "start": 65.74,
+      "end": 71.0,
+      "text": " token is decode. The levers. Here are the four levers that make that fast and cheap. Continuous",
+      "tokens": [
+        50912,
+        14862,
+        307,
+        979,
+        1429,
+        13,
+        440,
+        45571,
+        13,
+        1692,
+        366,
+        264,
+        1451,
+        45571,
+        300,
+        652,
+        300,
+        2370,
+        293,
+        7084,
+        13,
+        14674,
+        12549,
+        51172
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.10634407997131348,
+      "compression_ratio": 1.6583629893238434,
+      "no_speech_prob": 0.14030595123767853,
+      "words": [
+        {
+          "word": " token",
+          "start": 65.74,
+          "end": 66.18,
+          "probability": 0.9917952418327332
+        },
+        {
+          "word": " is",
+          "start": 66.18,
+          "end": 66.5,
+          "probability": 0.9952115416526794
+        },
+        {
+          "word": " decode.",
+          "start": 66.5,
+          "end": 66.96,
+          "probability": 0.9966202676296234
+        },
+        {
+          "word": " The",
+          "start": 67.08,
+          "end": 67.22,
+          "probability": 0.6234302520751953
+        },
+        {
+          "word": " levers.",
+          "start": 67.22,
+          "end": 67.66,
+          "probability": 0.9136301875114441
+        },
+        {
+          "word": " Here",
+          "start": 67.82,
+          "end": 67.94,
+          "probability": 0.9906479716300964
+        },
+        {
+          "word": " are",
+          "start": 67.94,
+          "end": 68.06,
+          "probability": 0.9070345163345337
+        },
+        {
+          "word": " the",
+          "start": 68.06,
+          "end": 68.26,
+          "probability": 0.9829061031341553
+        },
+        {
+          "word": " four",
+          "start": 68.26,
+          "end": 68.44,
+          "probability": 0.9709146022796631
+        },
+        {
+          "word": " levers",
+          "start": 68.44,
+          "end": 68.74,
+          "probability": 0.9761205315589905
+        },
+        {
+          "word": " that",
+          "start": 68.74,
+          "end": 68.96,
+          "probability": 0.6457791328430176
+        },
+        {
+          "word": " make",
+          "start": 68.96,
+          "end": 69.08,
+          "probability": 0.9865562915802002
+        },
+        {
+          "word": " that",
+          "start": 69.08,
+          "end": 69.34,
+          "probability": 0.9924418926239014
+        },
+        {
+          "word": " fast",
+          "start": 69.34,
+          "end": 69.76,
+          "probability": 0.99637371301651
+        },
+        {
+          "word": " and",
+          "start": 69.76,
+          "end": 70.16,
+          "probability": 0.9957784414291382
+        },
+        {
+          "word": " cheap.",
+          "start": 70.16,
+          "end": 70.26,
+          "probability": 0.9773153066635132
+        },
+        {
+          "word": " Continuous",
+          "start": 70.56,
+          "end": 71.0,
+          "probability": 0.9793819189071655
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "seek": 5474,
+      "start": 71.0,
+      "end": 77.48,
+      "text": " batching. Requests join and leave mid-flight so the GPU never idles. Caching. Pay his attention.",
+      "tokens": [
+        51172,
+        15245,
+        278,
+        13,
+        42029,
+        4409,
+        3917,
+        293,
+        1856,
+        2062,
+        12,
+        43636,
+        370,
+        264,
+        18407,
+        1128,
+        4496,
+        904,
+        13,
+        383,
+        2834,
+        13,
+        11431,
+        702,
+        3202,
+        13,
+        51508
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.10634407997131348,
+      "compression_ratio": 1.6583629893238434,
+      "no_speech_prob": 0.14030595123767853,
+      "words": [
+        {
+          "word": " batching.",
+          "start": 71.0,
+          "end": 71.96,
+          "probability": 0.9400462210178375
+        },
+        {
+          "word": " Requests",
+          "start": 72.02,
+          "end": 72.48,
+          "probability": 0.6714428514242172
+        },
+        {
+          "word": " join",
+          "start": 72.48,
+          "end": 72.88,
+          "probability": 0.9687182307243347
+        },
+        {
+          "word": " and",
+          "start": 72.88,
+          "end": 73.1,
+          "probability": 0.9882124066352844
+        },
+        {
+          "word": " leave",
+          "start": 73.1,
+          "end": 73.36,
+          "probability": 0.996927797794342
+        },
+        {
+          "word": " mid",
+          "start": 73.36,
+          "end": 73.68,
+          "probability": 0.9978590607643127
+        },
+        {
+          "word": "-flight",
+          "start": 73.68,
+          "end": 74.0,
+          "probability": 0.8811761736869812
+        },
+        {
+          "word": " so",
+          "start": 74.0,
+          "end": 74.28,
+          "probability": 0.5194519758224487
+        },
+        {
+          "word": " the",
+          "start": 74.28,
+          "end": 74.52,
+          "probability": 0.987480103969574
+        },
+        {
+          "word": " GPU",
+          "start": 74.52,
+          "end": 74.86,
+          "probability": 0.993755578994751
+        },
+        {
+          "word": " never",
+          "start": 74.86,
+          "end": 75.24,
+          "probability": 0.9985083937644958
+        },
+        {
+          "word": " idles.",
+          "start": 75.24,
+          "end": 75.78,
+          "probability": 0.7912128567695618
+        },
+        {
+          "word": " Caching.",
+          "start": 75.94,
+          "end": 76.34,
+          "probability": 0.9308686852455139
+        },
+        {
+          "word": " Pay",
+          "start": 76.64,
+          "end": 76.78,
+          "probability": 0.6623725295066833
+        },
+        {
+          "word": " his",
+          "start": 76.78,
+          "end": 76.96,
+          "probability": 0.5918781757354736
+        },
+        {
+          "word": " attention.",
+          "start": 76.96,
+          "end": 77.48,
+          "probability": 0.9993733763694763
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "seek": 5474,
+      "start": 77.8,
+      "end": 82.66,
+      "text": " Cut wasted cache memory to near zero and a shared prompt prefix is computed once.",
+      "tokens": [
+        51508,
+        9431,
+        19496,
+        19459,
+        4675,
+        281,
+        2651,
+        4018,
+        293,
+        257,
+        5507,
+        12391,
+        46969,
+        307,
+        40610,
+        1564,
+        13,
+        51764
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.10634407997131348,
+      "compression_ratio": 1.6583629893238434,
+      "no_speech_prob": 0.14030595123767853,
+      "words": [
+        {
+          "word": " Cut",
+          "start": 77.8,
+          "end": 78.02,
+          "probability": 0.9958534240722656
+        },
+        {
+          "word": " wasted",
+          "start": 78.02,
+          "end": 78.38,
+          "probability": 0.9347277879714966
+        },
+        {
+          "word": " cache",
+          "start": 78.38,
+          "end": 78.76,
+          "probability": 0.9902205467224121
+        },
+        {
+          "word": " memory",
+          "start": 78.76,
+          "end": 79.14,
+          "probability": 0.9983779191970825
+        },
+        {
+          "word": " to",
+          "start": 79.14,
+          "end": 79.3,
+          "probability": 0.9980022311210632
+        },
+        {
+          "word": " near",
+          "start": 79.3,
+          "end": 79.54,
+          "probability": 0.9887083768844604
+        },
+        {
+          "word": " zero",
+          "start": 79.54,
+          "end": 79.9,
+          "probability": 0.8962531685829163
+        },
+        {
+          "word": " and",
+          "start": 79.9,
+          "end": 80.26,
+          "probability": 0.351794570684433
+        },
+        {
+          "word": " a",
+          "start": 80.26,
+          "end": 80.52,
+          "probability": 0.9859709143638611
+        },
+        {
+          "word": " shared",
+          "start": 80.52,
+          "end": 80.74,
+          "probability": 0.9893223643302917
+        },
+        {
+          "word": " prompt",
+          "start": 80.74,
+          "end": 81.1,
+          "probability": 0.9712867140769958
+        },
+        {
+          "word": " prefix",
+          "start": 81.1,
+          "end": 81.58,
+          "probability": 0.9849193096160889
+        },
+        {
+          "word": " is",
+          "start": 81.58,
+          "end": 81.9,
+          "probability": 0.9956191182136536
+        },
+        {
+          "word": " computed",
+          "start": 81.9,
+          "end": 82.24,
+          "probability": 0.9975762963294983
+        },
+        {
+          "word": " once.",
+          "start": 82.24,
+          "end": 82.66,
+          "probability": 0.9977208971977234
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "seek": 8266,
+      "start": 83.34,
+      "end": 89.06,
+      "text": " Quantization. 8 bit halves the weights, 4 bit quarters them so it fits a smaller card. Speculative",
+      "tokens": [
+        50368,
+        26968,
+        2144,
+        13,
+        1649,
+        857,
+        38490,
+        264,
+        17443,
+        11,
+        1017,
+        857,
+        20612,
+        552,
+        370,
+        309,
+        9001,
+        257,
+        4356,
+        2920,
+        13,
+        3550,
+        2444,
+        1166,
+        50676
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16675219816320083,
+      "compression_ratio": 1.4728682170542635,
+      "no_speech_prob": 0.01065151859074831,
+      "words": [
+        {
+          "word": " Quantization.",
+          "start": 83.34,
+          "end": 83.86,
+          "probability": 0.6833635121583939
+        },
+        {
+          "word": " 8",
+          "start": 83.98,
+          "end": 84.2,
+          "probability": 0.8447402119636536
+        },
+        {
+          "word": " bit",
+          "start": 84.2,
+          "end": 84.42,
+          "probability": 0.42859703302383423
+        },
+        {
+          "word": " halves",
+          "start": 84.42,
+          "end": 84.76,
+          "probability": 0.6937493681907654
+        },
+        {
+          "word": " the",
+          "start": 84.76,
+          "end": 84.96,
+          "probability": 0.885236918926239
+        },
+        {
+          "word": " weights,",
+          "start": 84.96,
+          "end": 85.24,
+          "probability": 0.938722550868988
+        },
+        {
+          "word": " 4",
+          "start": 85.48,
+          "end": 85.74,
+          "probability": 0.9754671454429626
+        },
+        {
+          "word": " bit",
+          "start": 85.74,
+          "end": 85.96,
+          "probability": 0.975992739200592
+        },
+        {
+          "word": " quarters",
+          "start": 85.96,
+          "end": 86.3,
+          "probability": 0.9612690806388855
+        },
+        {
+          "word": " them",
+          "start": 86.3,
+          "end": 86.62,
+          "probability": 0.9690980911254883
+        },
+        {
+          "word": " so",
+          "start": 86.62,
+          "end": 86.96,
+          "probability": 0.2705782651901245
+        },
+        {
+          "word": " it",
+          "start": 86.96,
+          "end": 87.16,
+          "probability": 0.9686598777770996
+        },
+        {
+          "word": " fits",
+          "start": 87.16,
+          "end": 87.3,
+          "probability": 0.9730967879295349
+        },
+        {
+          "word": " a",
+          "start": 87.3,
+          "end": 87.62,
+          "probability": 0.9575034379959106
+        },
+        {
+          "word": " smaller",
+          "start": 87.62,
+          "end": 87.82,
+          "probability": 0.9815731048583984
+        },
+        {
+          "word": " card.",
+          "start": 87.82,
+          "end": 88.32,
+          "probability": 0.9904424548149109
+        },
+        {
+          "word": " Speculative",
+          "start": 88.68,
+          "end": 89.06,
+          "probability": 0.9896951119105021
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "seek": 8266,
+      "start": 89.06,
+      "end": 95.5,
+      "text": " decoding. A small model drafts. The big one verifies in one pass. Same output. All of that",
+      "tokens": [
+        50676,
+        979,
+        8616,
+        13,
+        316,
+        1359,
+        2316,
+        11206,
+        82,
+        13,
+        440,
+        955,
+        472,
+        1306,
+        11221,
+        294,
+        472,
+        1320,
+        13,
+        10635,
+        5598,
+        13,
+        1057,
+        295,
+        300,
+        51000
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16675219816320083,
+      "compression_ratio": 1.4728682170542635,
+      "no_speech_prob": 0.01065151859074831,
+      "words": [
+        {
+          "word": " decoding.",
+          "start": 89.06,
+          "end": 89.62,
+          "probability": 0.7665759027004242
+        },
+        {
+          "word": " A",
+          "start": 89.98,
+          "end": 90.2,
+          "probability": 0.9251435995101929
+        },
+        {
+          "word": " small",
+          "start": 90.2,
+          "end": 90.4,
+          "probability": 0.9831289649009705
+        },
+        {
+          "word": " model",
+          "start": 90.4,
+          "end": 90.76,
+          "probability": 0.9566050171852112
+        },
+        {
+          "word": " drafts.",
+          "start": 90.76,
+          "end": 91.54,
+          "probability": 0.9306326806545258
+        },
+        {
+          "word": " The",
+          "start": 91.58,
+          "end": 91.72,
+          "probability": 0.9131224751472473
+        },
+        {
+          "word": " big",
+          "start": 91.72,
+          "end": 91.92,
+          "probability": 0.9789322018623352
+        },
+        {
+          "word": " one",
+          "start": 91.92,
+          "end": 92.14,
+          "probability": 0.9832679629325867
+        },
+        {
+          "word": " verifies",
+          "start": 92.14,
+          "end": 92.74,
+          "probability": 0.9926546812057495
+        },
+        {
+          "word": " in",
+          "start": 92.74,
+          "end": 93.0,
+          "probability": 0.7402157783508301
+        },
+        {
+          "word": " one",
+          "start": 93.0,
+          "end": 93.22,
+          "probability": 0.869086742401123
+        },
+        {
+          "word": " pass.",
+          "start": 93.22,
+          "end": 93.66,
+          "probability": 0.9972394704818726
+        },
+        {
+          "word": " Same",
+          "start": 94.16,
+          "end": 94.36,
+          "probability": 0.978678286075592
+        },
+        {
+          "word": " output.",
+          "start": 94.36,
+          "end": 94.8,
+          "probability": 0.9900113940238953
+        },
+        {
+          "word": " All",
+          "start": 94.96,
+          "end": 95.16,
+          "probability": 0.9436350464820862
+        },
+        {
+          "word": " of",
+          "start": 95.16,
+          "end": 95.28,
+          "probability": 0.9455563426017761
+        },
+        {
+          "word": " that",
+          "start": 95.28,
+          "end": 95.5,
+          "probability": 0.9522075653076172
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "seek": 8266,
+      "start": 95.5,
+      "end": 104.9,
+      "text": " lives in the inference engine. VLLM, SG-LANG, TensorRT-LLM, on a laptop, LAMA, and LAMA-CPP.",
+      "tokens": [
+        51000,
+        2909,
+        294,
+        264,
+        38253,
+        2848,
+        13,
+        691,
+        24010,
+        44,
+        11,
+        34520,
+        12,
+        43,
+        12419,
+        11,
+        34306,
+        49,
+        51,
+        12,
+        24010,
+        44,
+        11,
+        322,
+        257,
+        10732,
+        11,
+        441,
+        38136,
+        11,
+        293,
+        441,
+        38136,
+        12,
+        34,
+        17755,
+        13,
+        51472
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16675219816320083,
+      "compression_ratio": 1.4728682170542635,
+      "no_speech_prob": 0.01065151859074831,
+      "words": [
+        {
+          "word": " lives",
+          "start": 95.5,
+          "end": 95.84,
+          "probability": 0.9764499068260193
+        },
+        {
+          "word": " in",
+          "start": 95.84,
+          "end": 96.06,
+          "probability": 0.9869530200958252
+        },
+        {
+          "word": " the",
+          "start": 96.06,
+          "end": 96.26,
+          "probability": 0.97589510679245
+        },
+        {
+          "word": " inference",
+          "start": 96.26,
+          "end": 96.68,
+          "probability": 0.9816657900810242
+        },
+        {
+          "word": " engine.",
+          "start": 96.68,
+          "end": 97.26,
+          "probability": 0.9876305460929871
+        },
+        {
+          "word": " VLLM,",
+          "start": 98.02,
+          "end": 98.54,
+          "probability": 0.6930442651112875
+        },
+        {
+          "word": " SG",
+          "start": 98.88,
+          "end": 99.18,
+          "probability": 0.8445088863372803
+        },
+        {
+          "word": "-LANG,",
+          "start": 99.18,
+          "end": 99.84,
+          "probability": 0.5700408418973287
+        },
+        {
+          "word": " TensorRT",
+          "start": 100.08,
+          "end": 100.92,
+          "probability": 0.743508110443751
+        },
+        {
+          "word": "-LLM,",
+          "start": 100.92,
+          "end": 101.62,
+          "probability": 0.8097923994064331
+        },
+        {
+          "word": " on",
+          "start": 101.9,
+          "end": 102.0,
+          "probability": 0.6098509430885315
+        },
+        {
+          "word": " a",
+          "start": 102.0,
+          "end": 102.16,
+          "probability": 0.9650110006332397
+        },
+        {
+          "word": " laptop,",
+          "start": 102.16,
+          "end": 102.62,
+          "probability": 0.894852340221405
+        },
+        {
+          "word": " LAMA,",
+          "start": 102.96,
+          "end": 103.52,
+          "probability": 0.45390915870666504
+        },
+        {
+          "word": " and",
+          "start": 103.84,
+          "end": 104.0,
+          "probability": 0.7900270819664001
+        },
+        {
+          "word": " LAMA",
+          "start": 104.0,
+          "end": 104.3,
+          "probability": 0.9528779089450836
+        },
+        {
+          "word": "-CPP.",
+          "start": 104.3,
+          "end": 104.9,
+          "probability": 0.8630188703536987
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "seek": 8266,
+      "start": 105.2,
+      "end": 111.46,
+      "text": " Hosted. You pay per token and the vendor runs the GPU. Self-hosted. You pay for the card and that",
+      "tokens": [
+        51472,
+        22047,
+        292,
+        13,
+        509,
+        1689,
+        680,
+        14862,
+        293,
+        264,
+        24321,
+        6676,
+        264,
+        18407,
+        13,
+        16348,
+        12,
+        6037,
+        292,
+        13,
+        509,
+        1689,
+        337,
+        264,
+        2920,
+        293,
+        300,
+        51796
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.16675219816320083,
+      "compression_ratio": 1.4728682170542635,
+      "no_speech_prob": 0.01065151859074831,
+      "words": [
+        {
+          "word": " Hosted.",
+          "start": 105.2,
+          "end": 105.7,
+          "probability": 0.989185094833374
+        },
+        {
+          "word": " You",
+          "start": 105.88,
+          "end": 106.06,
+          "probability": 0.9672223329544067
+        },
+        {
+          "word": " pay",
+          "start": 106.06,
+          "end": 106.26,
+          "probability": 0.9915295839309692
+        },
+        {
+          "word": " per",
+          "start": 106.26,
+          "end": 106.5,
+          "probability": 0.9419617056846619
+        },
+        {
+          "word": " token",
+          "start": 106.5,
+          "end": 106.98,
+          "probability": 0.994442880153656
+        },
+        {
+          "word": " and",
+          "start": 106.98,
+          "end": 107.42,
+          "probability": 0.6522092223167419
+        },
+        {
+          "word": " the",
+          "start": 107.42,
+          "end": 107.48,
+          "probability": 0.9107043743133545
+        },
+        {
+          "word": " vendor",
+          "start": 107.48,
+          "end": 107.74,
+          "probability": 0.9889810085296631
+        },
+        {
+          "word": " runs",
+          "start": 107.74,
+          "end": 108.06,
+          "probability": 0.9914324283599854
+        },
+        {
+          "word": " the",
+          "start": 108.06,
+          "end": 108.26,
+          "probability": 0.9647541642189026
+        },
+        {
+          "word": " GPU.",
+          "start": 108.26,
+          "end": 108.68,
+          "probability": 0.9881560802459717
+        },
+        {
+          "word": " Self",
+          "start": 108.9,
+          "end": 109.16,
+          "probability": 0.9934874773025513
+        },
+        {
+          "word": "-hosted.",
+          "start": 109.16,
+          "end": 109.62,
+          "probability": 0.839955468972524
+        },
+        {
+          "word": " You",
+          "start": 109.68,
+          "end": 109.82,
+          "probability": 0.9898176789283752
+        },
+        {
+          "word": " pay",
+          "start": 109.82,
+          "end": 110.02,
+          "probability": 0.9917334318161011
+        },
+        {
+          "word": " for",
+          "start": 110.02,
+          "end": 110.2,
+          "probability": 0.9934518337249756
+        },
+        {
+          "word": " the",
+          "start": 110.2,
+          "end": 110.38,
+          "probability": 0.9889724850654602
+        },
+        {
+          "word": " card",
+          "start": 110.38,
+          "end": 110.72,
+          "probability": 0.994743824005127
+        },
+        {
+          "word": " and",
+          "start": 110.72,
+          "end": 111.26,
+          "probability": 0.6844732165336609
+        },
+        {
+          "word": " that",
+          "start": 111.26,
+          "end": 111.46,
+          "probability": 0.9650225639343262
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "seek": 11146,
+      "start": 111.46,
+      "end": 116.92,
+      "text": " pays off when the card stays busy. Now with me, I run an AI pipeline and edit videos just like this",
+      "tokens": [
+        50364,
+        10604,
+        766,
+        562,
+        264,
+        2920,
+        10834,
+        5856,
+        13,
+        823,
+        365,
+        385,
+        11,
+        286,
+        1190,
+        364,
+        7318,
+        15517,
+        293,
+        8129,
+        2145,
+        445,
+        411,
+        341,
+        50632
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12030392005795339,
+      "compression_ratio": 1.6020066889632107,
+      "no_speech_prob": 0.023685423657298088,
+      "words": [
+        {
+          "word": " pays",
+          "start": 111.46,
+          "end": 111.7,
+          "probability": 0.5001712441444397
+        },
+        {
+          "word": " off",
+          "start": 111.7,
+          "end": 111.98,
+          "probability": 0.9802833199501038
+        },
+        {
+          "word": " when",
+          "start": 111.98,
+          "end": 112.12,
+          "probability": 0.975231945514679
+        },
+        {
+          "word": " the",
+          "start": 112.12,
+          "end": 112.3,
+          "probability": 0.9788005948066711
+        },
+        {
+          "word": " card",
+          "start": 112.3,
+          "end": 112.44,
+          "probability": 0.9548375606536865
+        },
+        {
+          "word": " stays",
+          "start": 112.44,
+          "end": 112.7,
+          "probability": 0.991212785243988
+        },
+        {
+          "word": " busy.",
+          "start": 112.7,
+          "end": 113.08,
+          "probability": 0.9948871731758118
+        },
+        {
+          "word": " Now",
+          "start": 113.2,
+          "end": 113.38,
+          "probability": 0.9396225214004517
+        },
+        {
+          "word": " with",
+          "start": 113.38,
+          "end": 113.56,
+          "probability": 0.8276669383049011
+        },
+        {
+          "word": " me,",
+          "start": 113.56,
+          "end": 113.88,
+          "probability": 0.9940004348754883
+        },
+        {
+          "word": " I",
+          "start": 114.0,
+          "end": 114.14,
+          "probability": 0.9936643838882446
+        },
+        {
+          "word": " run",
+          "start": 114.14,
+          "end": 114.32,
+          "probability": 0.99483722448349
+        },
+        {
+          "word": " an",
+          "start": 114.32,
+          "end": 114.54,
+          "probability": 0.9801841378211975
+        },
+        {
+          "word": " AI",
+          "start": 114.54,
+          "end": 114.82,
+          "probability": 0.9434827566146851
+        },
+        {
+          "word": " pipeline",
+          "start": 114.82,
+          "end": 115.36,
+          "probability": 0.9433531165122986
+        },
+        {
+          "word": " and",
+          "start": 115.36,
+          "end": 115.6,
+          "probability": 0.46437615156173706
+        },
+        {
+          "word": " edit",
+          "start": 115.6,
+          "end": 115.72,
+          "probability": 0.5590840578079224
+        },
+        {
+          "word": " videos",
+          "start": 115.72,
+          "end": 116.18,
+          "probability": 0.9828517436981201
+        },
+        {
+          "word": " just",
+          "start": 116.18,
+          "end": 116.48,
+          "probability": 0.9134036898612976
+        },
+        {
+          "word": " like",
+          "start": 116.48,
+          "end": 116.66,
+          "probability": 0.9981114864349365
+        },
+        {
+          "word": " this",
+          "start": 116.66,
+          "end": 116.92,
+          "probability": 0.9953124523162842
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "seek": 11146,
+      "start": 116.92,
+      "end": 122.46,
+      "text": " one. So here's what inference looks like in practice. Every clip I transcribe runs OpenAI",
+      "tokens": [
+        50632,
+        472,
+        13,
+        407,
+        510,
+        311,
+        437,
+        38253,
+        1542,
+        411,
+        294,
+        3124,
+        13,
+        2048,
+        7353,
+        286,
+        1145,
+        8056,
+        6676,
+        7238,
+        48698,
+        50908
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12030392005795339,
+      "compression_ratio": 1.6020066889632107,
+      "no_speech_prob": 0.023685423657298088,
+      "words": [
+        {
+          "word": " one.",
+          "start": 116.92,
+          "end": 117.16,
+          "probability": 0.9927599430084229
+        },
+        {
+          "word": " So",
+          "start": 117.44,
+          "end": 117.66,
+          "probability": 0.9642627835273743
+        },
+        {
+          "word": " here's",
+          "start": 117.66,
+          "end": 117.94,
+          "probability": 0.9656603634357452
+        },
+        {
+          "word": " what",
+          "start": 117.94,
+          "end": 118.12,
+          "probability": 0.9968289732933044
+        },
+        {
+          "word": " inference",
+          "start": 118.12,
+          "end": 118.4,
+          "probability": 0.9353295564651489
+        },
+        {
+          "word": " looks",
+          "start": 118.4,
+          "end": 118.66,
+          "probability": 0.9977598190307617
+        },
+        {
+          "word": " like",
+          "start": 118.66,
+          "end": 118.88,
+          "probability": 0.9981933236122131
+        },
+        {
+          "word": " in",
+          "start": 118.88,
+          "end": 119.12,
+          "probability": 0.9887224435806274
+        },
+        {
+          "word": " practice.",
+          "start": 119.12,
+          "end": 119.56,
+          "probability": 0.9934625625610352
+        },
+        {
+          "word": " Every",
+          "start": 119.88,
+          "end": 120.04,
+          "probability": 0.9094408750534058
+        },
+        {
+          "word": " clip",
+          "start": 120.04,
+          "end": 120.26,
+          "probability": 0.9877874255180359
+        },
+        {
+          "word": " I",
+          "start": 120.26,
+          "end": 120.6,
+          "probability": 0.9542821645736694
+        },
+        {
+          "word": " transcribe",
+          "start": 120.6,
+          "end": 121.36,
+          "probability": 0.9966903328895569
+        },
+        {
+          "word": " runs",
+          "start": 121.36,
+          "end": 121.76,
+          "probability": 0.8599042892456055
+        },
+        {
+          "word": " OpenAI",
+          "start": 121.76,
+          "end": 122.46,
+          "probability": 0.784230500459671
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "seek": 11146,
+      "start": 122.46,
+      "end": 129.24,
+      "text": " Whisper on my own GPU. Self-hosted inference. Loading the model costs around 15 to 20 seconds.",
+      "tokens": [
+        50908,
+        41132,
+        610,
+        322,
+        452,
+        1065,
+        18407,
+        13,
+        16348,
+        12,
+        6037,
+        292,
+        38253,
+        13,
+        6130,
+        8166,
+        264,
+        2316,
+        5497,
+        926,
+        2119,
+        281,
+        945,
+        3949,
+        13,
+        51256
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12030392005795339,
+      "compression_ratio": 1.6020066889632107,
+      "no_speech_prob": 0.023685423657298088,
+      "words": [
+        {
+          "word": " Whisper",
+          "start": 122.46,
+          "end": 122.86,
+          "probability": 0.7878695428371429
+        },
+        {
+          "word": " on",
+          "start": 122.86,
+          "end": 123.14,
+          "probability": 0.8988263607025146
+        },
+        {
+          "word": " my",
+          "start": 123.14,
+          "end": 123.38,
+          "probability": 0.9982252717018127
+        },
+        {
+          "word": " own",
+          "start": 123.38,
+          "end": 123.58,
+          "probability": 0.9952423572540283
+        },
+        {
+          "word": " GPU.",
+          "start": 123.58,
+          "end": 124.04,
+          "probability": 0.9923843741416931
+        },
+        {
+          "word": " Self",
+          "start": 124.64,
+          "end": 124.94,
+          "probability": 0.9511280655860901
+        },
+        {
+          "word": "-hosted",
+          "start": 124.94,
+          "end": 125.38,
+          "probability": 0.8161156177520752
+        },
+        {
+          "word": " inference.",
+          "start": 125.38,
+          "end": 125.84,
+          "probability": 0.9950351715087891
+        },
+        {
+          "word": " Loading",
+          "start": 126.08,
+          "end": 126.36,
+          "probability": 0.9966151118278503
+        },
+        {
+          "word": " the",
+          "start": 126.36,
+          "end": 126.58,
+          "probability": 0.9954472184181213
+        },
+        {
+          "word": " model",
+          "start": 126.58,
+          "end": 126.9,
+          "probability": 0.9926375150680542
+        },
+        {
+          "word": " costs",
+          "start": 126.9,
+          "end": 127.48,
+          "probability": 0.8841667175292969
+        },
+        {
+          "word": " around",
+          "start": 127.48,
+          "end": 127.8,
+          "probability": 0.95219886302948
+        },
+        {
+          "word": " 15",
+          "start": 127.8,
+          "end": 128.26,
+          "probability": 0.9754721522331238
+        },
+        {
+          "word": " to",
+          "start": 128.26,
+          "end": 128.44,
+          "probability": 0.8300245404243469
+        },
+        {
+          "word": " 20",
+          "start": 128.44,
+          "end": 128.76,
+          "probability": 0.9972781538963318
+        },
+        {
+          "word": " seconds.",
+          "start": 128.76,
+          "end": 129.24,
+          "probability": 0.9954076409339905
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "seek": 11146,
+      "start": 129.4,
+      "end": 134.7,
+      "text": " So my pipeline loads it once and runs every clip through it. Keep the weights hot, batch the work.",
+      "tokens": [
+        51256,
+        407,
+        452,
+        15517,
+        12668,
+        309,
+        1564,
+        293,
+        6676,
+        633,
+        7353,
+        807,
+        309,
+        13,
+        5527,
+        264,
+        17443,
+        2368,
+        11,
+        15245,
+        264,
+        589,
+        13,
+        51524
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12030392005795339,
+      "compression_ratio": 1.6020066889632107,
+      "no_speech_prob": 0.023685423657298088,
+      "words": [
+        {
+          "word": " So",
+          "start": 129.4,
+          "end": 129.62,
+          "probability": 0.979925274848938
+        },
+        {
+          "word": " my",
+          "start": 129.62,
+          "end": 129.86,
+          "probability": 0.9757007956504822
+        },
+        {
+          "word": " pipeline",
+          "start": 129.86,
+          "end": 130.26,
+          "probability": 0.9967323541641235
+        },
+        {
+          "word": " loads",
+          "start": 130.26,
+          "end": 130.54,
+          "probability": 0.9974230527877808
+        },
+        {
+          "word": " it",
+          "start": 130.54,
+          "end": 130.84,
+          "probability": 0.7854706048965454
+        },
+        {
+          "word": " once",
+          "start": 130.84,
+          "end": 131.16,
+          "probability": 0.9963564872741699
+        },
+        {
+          "word": " and",
+          "start": 131.16,
+          "end": 131.58,
+          "probability": 0.8924295902252197
+        },
+        {
+          "word": " runs",
+          "start": 131.58,
+          "end": 131.86,
+          "probability": 0.994490385055542
+        },
+        {
+          "word": " every",
+          "start": 131.86,
+          "end": 132.2,
+          "probability": 0.9971665740013123
+        },
+        {
+          "word": " clip",
+          "start": 132.2,
+          "end": 132.38,
+          "probability": 0.9930930137634277
+        },
+        {
+          "word": " through",
+          "start": 132.38,
+          "end": 132.66,
+          "probability": 0.9975578784942627
+        },
+        {
+          "word": " it.",
+          "start": 132.66,
+          "end": 132.84,
+          "probability": 0.9971331357955933
+        },
+        {
+          "word": " Keep",
+          "start": 132.9,
+          "end": 133.14,
+          "probability": 0.979728639125824
+        },
+        {
+          "word": " the",
+          "start": 133.14,
+          "end": 133.34,
+          "probability": 0.9814809560775757
+        },
+        {
+          "word": " weights",
+          "start": 133.34,
+          "end": 133.5,
+          "probability": 0.9524294137954712
+        },
+        {
+          "word": " hot,",
+          "start": 133.5,
+          "end": 133.9,
+          "probability": 0.9872790575027466
+        },
+        {
+          "word": " batch",
+          "start": 134.1,
+          "end": 134.26,
+          "probability": 0.9836514592170715
+        },
+        {
+          "word": " the",
+          "start": 134.26,
+          "end": 134.52,
+          "probability": 0.6061367988586426
+        },
+        {
+          "word": " work.",
+          "start": 134.52,
+          "end": 134.7,
+          "probability": 0.9891421794891357
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "seek": 11146,
+      "start": 134.78,
+      "end": 140.7,
+      "text": " And every agent in my pipeline spawns around 20 per video is a clause session billed per token.",
+      "tokens": [
+        51524,
+        400,
+        633,
+        9461,
+        294,
+        452,
+        15517,
+        17088,
+        82,
+        926,
+        945,
+        680,
+        960,
+        307,
+        257,
+        25925,
+        5481,
+        2961,
+        292,
+        680,
+        14862,
+        13,
+        51828
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.12030392005795339,
+      "compression_ratio": 1.6020066889632107,
+      "no_speech_prob": 0.023685423657298088,
+      "words": [
+        {
+          "word": " And",
+          "start": 134.78,
+          "end": 135.0,
+          "probability": 0.9602022171020508
+        },
+        {
+          "word": " every",
+          "start": 135.0,
+          "end": 135.3,
+          "probability": 0.99672532081604
+        },
+        {
+          "word": " agent",
+          "start": 135.3,
+          "end": 135.5,
+          "probability": 0.99189293384552
+        },
+        {
+          "word": " in",
+          "start": 135.5,
+          "end": 135.68,
+          "probability": 0.9779213070869446
+        },
+        {
+          "word": " my",
+          "start": 135.68,
+          "end": 135.92,
+          "probability": 0.9981404542922974
+        },
+        {
+          "word": " pipeline",
+          "start": 135.92,
+          "end": 136.3,
+          "probability": 0.9955110549926758
+        },
+        {
+          "word": " spawns",
+          "start": 136.3,
+          "end": 137.24,
+          "probability": 0.9851532280445099
+        },
+        {
+          "word": " around",
+          "start": 137.24,
+          "end": 137.44,
+          "probability": 0.706660270690918
+        },
+        {
+          "word": " 20",
+          "start": 137.44,
+          "end": 137.7,
+          "probability": 0.9876654148101807
+        },
+        {
+          "word": " per",
+          "start": 137.7,
+          "end": 137.88,
+          "probability": 0.9939340949058533
+        },
+        {
+          "word": " video",
+          "start": 137.88,
+          "end": 138.34,
+          "probability": 0.9975684285163879
+        },
+        {
+          "word": " is",
+          "start": 138.34,
+          "end": 138.66,
+          "probability": 0.5947882533073425
+        },
+        {
+          "word": " a",
+          "start": 138.66,
+          "end": 138.88,
+          "probability": 0.9944425225257874
+        },
+        {
+          "word": " clause",
+          "start": 138.88,
+          "end": 139.08,
+          "probability": 0.5369483828544617
+        },
+        {
+          "word": " session",
+          "start": 139.08,
+          "end": 139.68,
+          "probability": 0.9817002415657043
+        },
+        {
+          "word": " billed",
+          "start": 139.68,
+          "end": 140.16,
+          "probability": 0.7838421165943146
+        },
+        {
+          "word": " per",
+          "start": 140.16,
+          "end": 140.3,
+          "probability": 0.982030987739563
+        },
+        {
+          "word": " token.",
+          "start": 140.3,
+          "end": 140.7,
+          "probability": 0.9938310384750366
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "seek": 14070,
+      "start": 140.7,
+      "end": 147.62,
+      "text": " Hosted inference. I have never trained a model. Everything my pipeline does is AI inference.",
+      "tokens": [
+        50364,
+        22047,
+        292,
+        38253,
+        13,
+        286,
+        362,
+        1128,
+        8895,
+        257,
+        2316,
+        13,
+        5471,
+        452,
+        15517,
+        775,
+        307,
+        7318,
+        38253,
+        13,
+        50712
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.10165023803710938,
+      "compression_ratio": 1.5346938775510204,
+      "no_speech_prob": 0.0009110153187066317,
+      "words": [
+        {
+          "word": " Hosted",
+          "start": 140.7,
+          "end": 141.32,
+          "probability": 0.4973652504850179
+        },
+        {
+          "word": " inference.",
+          "start": 141.32,
+          "end": 141.8,
+          "probability": 0.8946041464805603
+        },
+        {
+          "word": " I",
+          "start": 142.1,
+          "end": 142.1,
+          "probability": 0.8190034031867981
+        },
+        {
+          "word": " have",
+          "start": 142.1,
+          "end": 142.42,
+          "probability": 0.9434094429016113
+        },
+        {
+          "word": " never",
+          "start": 142.42,
+          "end": 142.8,
+          "probability": 0.9685705900192261
+        },
+        {
+          "word": " trained",
+          "start": 142.8,
+          "end": 143.12,
+          "probability": 0.9947898387908936
+        },
+        {
+          "word": " a",
+          "start": 143.12,
+          "end": 143.4,
+          "probability": 0.9704135656356812
+        },
+        {
+          "word": " model.",
+          "start": 143.4,
+          "end": 143.56,
+          "probability": 0.9904560446739197
+        },
+        {
+          "word": " Everything",
+          "start": 144.16,
+          "end": 144.48,
+          "probability": 0.9862281084060669
+        },
+        {
+          "word": " my",
+          "start": 144.48,
+          "end": 144.86,
+          "probability": 0.9664251804351807
+        },
+        {
+          "word": " pipeline",
+          "start": 144.86,
+          "end": 145.22,
+          "probability": 0.9904099702835083
+        },
+        {
+          "word": " does",
+          "start": 145.22,
+          "end": 145.84,
+          "probability": 0.997083842754364
+        },
+        {
+          "word": " is",
+          "start": 145.84,
+          "end": 146.7,
+          "probability": 0.834194004535675
+        },
+        {
+          "word": " AI",
+          "start": 146.7,
+          "end": 147.08,
+          "probability": 0.8772555589675903
+        },
+        {
+          "word": " inference.",
+          "start": 147.08,
+          "end": 147.62,
+          "probability": 0.9925200939178467
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "seek": 14070,
+      "start": 148.12,
+      "end": 154.3,
+      "text": " Now the 2026 twist. Reasoning models think before they answer and that thinking is extra tokens.",
+      "tokens": [
+        50712,
+        823,
+        264,
+        945,
+        10880,
+        8203,
+        13,
+        39693,
+        278,
+        5245,
+        519,
+        949,
+        436,
+        1867,
+        293,
+        300,
+        1953,
+        307,
+        2857,
+        22667,
+        13,
+        51044
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.10165023803710938,
+      "compression_ratio": 1.5346938775510204,
+      "no_speech_prob": 0.0009110153187066317,
+      "words": [
+        {
+          "word": " Now",
+          "start": 148.12,
+          "end": 148.18,
+          "probability": 0.8793575763702393
+        },
+        {
+          "word": " the",
+          "start": 148.18,
+          "end": 148.56,
+          "probability": 0.3601949214935303
+        },
+        {
+          "word": " 2026",
+          "start": 148.56,
+          "end": 149.28,
+          "probability": 0.9354842007160187
+        },
+        {
+          "word": " twist.",
+          "start": 149.28,
+          "end": 149.88,
+          "probability": 0.9348872900009155
+        },
+        {
+          "word": " Reasoning",
+          "start": 150.14,
+          "end": 150.54,
+          "probability": 0.9451461434364319
+        },
+        {
+          "word": " models",
+          "start": 150.54,
+          "end": 150.76,
+          "probability": 0.9765763282775879
+        },
+        {
+          "word": " think",
+          "start": 150.76,
+          "end": 151.06,
+          "probability": 0.9831587076187134
+        },
+        {
+          "word": " before",
+          "start": 151.06,
+          "end": 151.4,
+          "probability": 0.9982699155807495
+        },
+        {
+          "word": " they",
+          "start": 151.4,
+          "end": 151.66,
+          "probability": 0.8573475480079651
+        },
+        {
+          "word": " answer",
+          "start": 151.66,
+          "end": 152.12,
+          "probability": 0.9986569881439209
+        },
+        {
+          "word": " and",
+          "start": 152.12,
+          "end": 152.68,
+          "probability": 0.37199342250823975
+        },
+        {
+          "word": " that",
+          "start": 152.68,
+          "end": 152.9,
+          "probability": 0.839531421661377
+        },
+        {
+          "word": " thinking",
+          "start": 152.9,
+          "end": 153.18,
+          "probability": 0.9919185042381287
+        },
+        {
+          "word": " is",
+          "start": 153.18,
+          "end": 153.46,
+          "probability": 0.9942078590393066
+        },
+        {
+          "word": " extra",
+          "start": 153.46,
+          "end": 153.74,
+          "probability": 0.9961878657341003
+        },
+        {
+          "word": " tokens.",
+          "start": 153.74,
+          "end": 154.3,
+          "probability": 0.9969509840011597
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "seek": 14070,
+      "start": 154.44,
+      "end": 160.98,
+      "text": " Billed as output by OpenAI and Anthropic alike. So the cost of the request now depends on how",
+      "tokens": [
+        51044,
+        5477,
+        292,
+        382,
+        5598,
+        538,
+        7238,
+        48698,
+        293,
+        12727,
+        39173,
+        20025,
+        13,
+        407,
+        264,
+        2063,
+        295,
+        264,
+        5308,
+        586,
+        5946,
+        322,
+        577,
+        51368
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.10165023803710938,
+      "compression_ratio": 1.5346938775510204,
+      "no_speech_prob": 0.0009110153187066317,
+      "words": [
+        {
+          "word": " Billed",
+          "start": 154.44,
+          "end": 154.82,
+          "probability": 0.5590388625860214
+        },
+        {
+          "word": " as",
+          "start": 154.82,
+          "end": 155.0,
+          "probability": 0.958600640296936
+        },
+        {
+          "word": " output",
+          "start": 155.0,
+          "end": 155.32,
+          "probability": 0.9930011034011841
+        },
+        {
+          "word": " by",
+          "start": 155.32,
+          "end": 155.58,
+          "probability": 0.9935592412948608
+        },
+        {
+          "word": " OpenAI",
+          "start": 155.58,
+          "end": 156.38,
+          "probability": 0.7869957089424133
+        },
+        {
+          "word": " and",
+          "start": 156.38,
+          "end": 157.1,
+          "probability": 0.9345353245735168
+        },
+        {
+          "word": " Anthropic",
+          "start": 157.1,
+          "end": 157.64,
+          "probability": 0.8848754465579987
+        },
+        {
+          "word": " alike.",
+          "start": 157.64,
+          "end": 157.98,
+          "probability": 0.7536739110946655
+        },
+        {
+          "word": " So",
+          "start": 158.06,
+          "end": 158.28,
+          "probability": 0.9718932509422302
+        },
+        {
+          "word": " the",
+          "start": 158.28,
+          "end": 158.5,
+          "probability": 0.968353807926178
+        },
+        {
+          "word": " cost",
+          "start": 158.5,
+          "end": 158.72,
+          "probability": 0.9287543892860413
+        },
+        {
+          "word": " of",
+          "start": 158.72,
+          "end": 158.92,
+          "probability": 0.9987499713897705
+        },
+        {
+          "word": " the",
+          "start": 158.92,
+          "end": 159.18,
+          "probability": 0.902468204498291
+        },
+        {
+          "word": " request",
+          "start": 159.18,
+          "end": 159.66,
+          "probability": 0.8541045188903809
+        },
+        {
+          "word": " now",
+          "start": 159.66,
+          "end": 160.18,
+          "probability": 0.9666836261749268
+        },
+        {
+          "word": " depends",
+          "start": 160.18,
+          "end": 160.54,
+          "probability": 0.9970006346702576
+        },
+        {
+          "word": " on",
+          "start": 160.54,
+          "end": 160.72,
+          "probability": 0.9968547821044922
+        },
+        {
+          "word": " how",
+          "start": 160.72,
+          "end": 160.98,
+          "probability": 0.9983048439025879
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "seek": 14070,
+      "start": 160.98,
+      "end": 167.54,
+      "text": " hard the model thinks and that bill lands on inference. Jensen Wong, NVIDIA's CEO, stood out",
+      "tokens": [
+        51368,
+        1152,
+        264,
+        2316,
+        7309,
+        293,
+        300,
+        2961,
+        5949,
+        322,
+        38253,
+        13,
+        508,
+        32934,
+        41638,
+        11,
+        426,
+        3958,
+        6914,
+        311,
+        9282,
+        11,
+        9371,
+        484,
+        51696
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.10165023803710938,
+      "compression_ratio": 1.5346938775510204,
+      "no_speech_prob": 0.0009110153187066317,
+      "words": [
+        {
+          "word": " hard",
+          "start": 160.98,
+          "end": 161.14,
+          "probability": 0.9934614896774292
+        },
+        {
+          "word": " the",
+          "start": 161.14,
+          "end": 161.42,
+          "probability": 0.9986685514450073
+        },
+        {
+          "word": " model",
+          "start": 161.42,
+          "end": 161.6,
+          "probability": 0.9983709454536438
+        },
+        {
+          "word": " thinks",
+          "start": 161.6,
+          "end": 162.06,
+          "probability": 0.998320996761322
+        },
+        {
+          "word": " and",
+          "start": 162.06,
+          "end": 162.4,
+          "probability": 0.571529746055603
+        },
+        {
+          "word": " that",
+          "start": 162.4,
+          "end": 162.7,
+          "probability": 0.9981018900871277
+        },
+        {
+          "word": " bill",
+          "start": 162.7,
+          "end": 163.18,
+          "probability": 0.9645841121673584
+        },
+        {
+          "word": " lands",
+          "start": 163.18,
+          "end": 163.76,
+          "probability": 0.9785808324813843
+        },
+        {
+          "word": " on",
+          "start": 163.76,
+          "end": 164.04,
+          "probability": 0.9991845488548279
+        },
+        {
+          "word": " inference.",
+          "start": 164.04,
+          "end": 164.54,
+          "probability": 0.9885531663894653
+        },
+        {
+          "word": " Jensen",
+          "start": 164.84,
+          "end": 165.1,
+          "probability": 0.9603334367275238
+        },
+        {
+          "word": " Wong,",
+          "start": 165.1,
+          "end": 165.5,
+          "probability": 0.8177444338798523
+        },
+        {
+          "word": " NVIDIA's",
+          "start": 165.8,
+          "end": 166.28,
+          "probability": 0.7635558396577835
+        },
+        {
+          "word": " CEO,",
+          "start": 166.28,
+          "end": 166.78,
+          "probability": 0.9953904151916504
+        },
+        {
+          "word": " stood",
+          "start": 167.16,
+          "end": 167.26,
+          "probability": 0.9980509281158447
+        },
+        {
+          "word": " out",
+          "start": 167.26,
+          "end": 167.54,
+          "probability": 0.9964187145233154
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "seek": 16754,
+      "start": 167.54,
+      "end": 173.18,
+      "text": " on a GTC stage in 2025 and named the hard problem. He sells the chips that run it,",
+      "tokens": [
+        50364,
+        322,
+        257,
+        17530,
+        34,
+        3233,
+        294,
+        39209,
+        293,
+        4926,
+        264,
+        1152,
+        1154,
+        13,
+        634,
+        20897,
+        264,
+        11583,
+        300,
+        1190,
+        309,
+        11,
+        50644
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.13196510738796657,
+      "compression_ratio": 1.6909871244635193,
+      "no_speech_prob": 0.5447182655334473,
+      "words": [
+        {
+          "word": " on",
+          "start": 167.54,
+          "end": 167.7,
+          "probability": 0.7608844637870789
+        },
+        {
+          "word": " a",
+          "start": 167.7,
+          "end": 167.88,
+          "probability": 0.8752075433731079
+        },
+        {
+          "word": " GTC",
+          "start": 167.88,
+          "end": 168.42,
+          "probability": 0.9174070656299591
+        },
+        {
+          "word": " stage",
+          "start": 168.42,
+          "end": 168.84,
+          "probability": 0.8844425082206726
+        },
+        {
+          "word": " in",
+          "start": 168.84,
+          "end": 169.22,
+          "probability": 0.9734746217727661
+        },
+        {
+          "word": " 2025",
+          "start": 169.22,
+          "end": 169.96,
+          "probability": 0.9890801310539246
+        },
+        {
+          "word": " and",
+          "start": 169.96,
+          "end": 170.4,
+          "probability": 0.7203472256660461
+        },
+        {
+          "word": " named",
+          "start": 170.4,
+          "end": 170.52,
+          "probability": 0.8288769125938416
+        },
+        {
+          "word": " the",
+          "start": 170.52,
+          "end": 170.74,
+          "probability": 0.8415539264678955
+        },
+        {
+          "word": " hard",
+          "start": 170.74,
+          "end": 170.86,
+          "probability": 0.8723145723342896
+        },
+        {
+          "word": " problem.",
+          "start": 170.86,
+          "end": 171.32,
+          "probability": 0.9960952401161194
+        },
+        {
+          "word": " He",
+          "start": 171.46,
+          "end": 171.7,
+          "probability": 0.9898561239242554
+        },
+        {
+          "word": " sells",
+          "start": 171.7,
+          "end": 171.9,
+          "probability": 0.9735297560691833
+        },
+        {
+          "word": " the",
+          "start": 171.9,
+          "end": 172.2,
+          "probability": 0.9922868013381958
+        },
+        {
+          "word": " chips",
+          "start": 172.2,
+          "end": 172.42,
+          "probability": 0.9945852160453796
+        },
+        {
+          "word": " that",
+          "start": 172.42,
+          "end": 172.68,
+          "probability": 0.9825009703636169
+        },
+        {
+          "word": " run",
+          "start": 172.68,
+          "end": 172.92,
+          "probability": 0.99744713306427
+        },
+        {
+          "word": " it,",
+          "start": 172.92,
+          "end": 173.18,
+          "probability": 0.9981542229652405
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "seek": 16754,
+      "start": 173.42,
+      "end": 178.46,
+      "text": " so keep that in mind. And on the engineering, he's right. Make sure you click that subscribe button",
+      "tokens": [
+        50644,
+        370,
+        1066,
+        300,
+        294,
+        1575,
+        13,
+        400,
+        322,
+        264,
+        7043,
+        11,
+        415,
+        311,
+        558,
+        13,
+        4387,
+        988,
+        291,
+        2052,
+        300,
+        3022,
+        2960,
+        50924
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.13196510738796657,
+      "compression_ratio": 1.6909871244635193,
+      "no_speech_prob": 0.5447182655334473,
+      "words": [
+        {
+          "word": " so",
+          "start": 173.42,
+          "end": 173.54,
+          "probability": 0.9958252906799316
+        },
+        {
+          "word": " keep",
+          "start": 173.54,
+          "end": 173.76,
+          "probability": 0.9957695007324219
+        },
+        {
+          "word": " that",
+          "start": 173.76,
+          "end": 173.9,
+          "probability": 0.9965742826461792
+        },
+        {
+          "word": " in",
+          "start": 173.9,
+          "end": 174.12,
+          "probability": 0.9981447458267212
+        },
+        {
+          "word": " mind.",
+          "start": 174.12,
+          "end": 174.42,
+          "probability": 0.9992780089378357
+        },
+        {
+          "word": " And",
+          "start": 174.56,
+          "end": 174.76,
+          "probability": 0.9800323843955994
+        },
+        {
+          "word": " on",
+          "start": 174.76,
+          "end": 174.92,
+          "probability": 0.7164070010185242
+        },
+        {
+          "word": " the",
+          "start": 174.92,
+          "end": 175.2,
+          "probability": 0.9919725656509399
+        },
+        {
+          "word": " engineering,",
+          "start": 175.2,
+          "end": 175.6,
+          "probability": 0.9457510113716125
+        },
+        {
+          "word": " he's",
+          "start": 175.74,
+          "end": 176.14,
+          "probability": 0.9893254935741425
+        },
+        {
+          "word": " right.",
+          "start": 176.14,
+          "end": 176.32,
+          "probability": 0.9987381100654602
+        },
+        {
+          "word": " Make",
+          "start": 176.48,
+          "end": 176.62,
+          "probability": 0.991215705871582
+        },
+        {
+          "word": " sure",
+          "start": 176.62,
+          "end": 176.82,
+          "probability": 0.9983731508255005
+        },
+        {
+          "word": " you",
+          "start": 176.82,
+          "end": 177.04,
+          "probability": 0.9949821829795837
+        },
+        {
+          "word": " click",
+          "start": 177.04,
+          "end": 177.2,
+          "probability": 0.9968410730361938
+        },
+        {
+          "word": " that",
+          "start": 177.2,
+          "end": 177.46,
+          "probability": 0.9946675300598145
+        },
+        {
+          "word": " subscribe",
+          "start": 177.46,
+          "end": 178.04,
+          "probability": 0.8131632804870605
+        },
+        {
+          "word": " button",
+          "start": 178.04,
+          "end": 178.46,
+          "probability": 0.9994450211524963
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "seek": 16754,
+      "start": 178.46,
+      "end": 183.96,
+      "text": " and click into this playlist right here to learn more about AI engineering. And if you want to",
+      "tokens": [
+        50924,
+        293,
+        2052,
+        666,
+        341,
+        16788,
+        558,
+        510,
+        281,
+        1466,
+        544,
+        466,
+        7318,
+        7043,
+        13,
+        400,
+        498,
+        291,
+        528,
+        281,
+        51172
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.13196510738796657,
+      "compression_ratio": 1.6909871244635193,
+      "no_speech_prob": 0.5447182655334473,
+      "words": [
+        {
+          "word": " and",
+          "start": 178.46,
+          "end": 179.14,
+          "probability": 0.8147867321968079
+        },
+        {
+          "word": " click",
+          "start": 179.14,
+          "end": 179.34,
+          "probability": 0.9961832165718079
+        },
+        {
+          "word": " into",
+          "start": 179.34,
+          "end": 179.56,
+          "probability": 0.9912475943565369
+        },
+        {
+          "word": " this",
+          "start": 179.56,
+          "end": 179.9,
+          "probability": 0.9971829652786255
+        },
+        {
+          "word": " playlist",
+          "start": 179.9,
+          "end": 180.24,
+          "probability": 0.9968321919441223
+        },
+        {
+          "word": " right",
+          "start": 180.24,
+          "end": 180.6,
+          "probability": 0.9902358651161194
+        },
+        {
+          "word": " here",
+          "start": 180.6,
+          "end": 180.84,
+          "probability": 0.9988847374916077
+        },
+        {
+          "word": " to",
+          "start": 180.84,
+          "end": 181.06,
+          "probability": 0.9784743189811707
+        },
+        {
+          "word": " learn",
+          "start": 181.06,
+          "end": 181.2,
+          "probability": 0.9992965459823608
+        },
+        {
+          "word": " more",
+          "start": 181.2,
+          "end": 181.48,
+          "probability": 0.9983080625534058
+        },
+        {
+          "word": " about",
+          "start": 181.48,
+          "end": 181.74,
+          "probability": 0.9988172054290771
+        },
+        {
+          "word": " AI",
+          "start": 181.74,
+          "end": 182.14,
+          "probability": 0.9958357810974121
+        },
+        {
+          "word": " engineering.",
+          "start": 182.14,
+          "end": 182.68,
+          "probability": 0.9379768967628479
+        },
+        {
+          "word": " And",
+          "start": 182.9,
+          "end": 183.32,
+          "probability": 0.9915397763252258
+        },
+        {
+          "word": " if",
+          "start": 183.32,
+          "end": 183.52,
+          "probability": 0.9390227794647217
+        },
+        {
+          "word": " you",
+          "start": 183.52,
+          "end": 183.7,
+          "probability": 0.9991917014122009
+        },
+        {
+          "word": " want",
+          "start": 183.7,
+          "end": 183.8,
+          "probability": 0.5460386276245117
+        },
+        {
+          "word": " to",
+          "start": 183.8,
+          "end": 183.96,
+          "probability": 0.9985525012016296
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "seek": 16754,
+      "start": 183.96,
+      "end": 188.72,
+      "text": " become an AI engineer, you want to learn Python too. So click into this playlist by Python",
+      "tokens": [
+        51172,
+        1813,
+        364,
+        7318,
+        11403,
+        11,
+        291,
+        528,
+        281,
+        1466,
+        15329,
+        886,
+        13,
+        407,
+        2052,
+        666,
+        341,
+        16788,
+        538,
+        15329,
+        51440
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.13196510738796657,
+      "compression_ratio": 1.6909871244635193,
+      "no_speech_prob": 0.5447182655334473,
+      "words": [
+        {
+          "word": " become",
+          "start": 183.96,
+          "end": 184.24,
+          "probability": 0.9984858632087708
+        },
+        {
+          "word": " an",
+          "start": 184.24,
+          "end": 184.52,
+          "probability": 0.9943397641181946
+        },
+        {
+          "word": " AI",
+          "start": 184.52,
+          "end": 184.86,
+          "probability": 0.9945043325424194
+        },
+        {
+          "word": " engineer,",
+          "start": 184.86,
+          "end": 185.28,
+          "probability": 0.9951472878456116
+        },
+        {
+          "word": " you",
+          "start": 185.4,
+          "end": 185.52,
+          "probability": 0.9969393014907837
+        },
+        {
+          "word": " want",
+          "start": 185.52,
+          "end": 185.7,
+          "probability": 0.8256224989891052
+        },
+        {
+          "word": " to",
+          "start": 185.7,
+          "end": 185.84,
+          "probability": 0.9990955591201782
+        },
+        {
+          "word": " learn",
+          "start": 185.84,
+          "end": 185.92,
+          "probability": 0.9986746311187744
+        },
+        {
+          "word": " Python",
+          "start": 185.92,
+          "end": 186.4,
+          "probability": 0.993648111820221
+        },
+        {
+          "word": " too.",
+          "start": 186.4,
+          "end": 186.66,
+          "probability": 0.7242215871810913
+        },
+        {
+          "word": " So",
+          "start": 186.78,
+          "end": 186.98,
+          "probability": 0.994318425655365
+        },
+        {
+          "word": " click",
+          "start": 186.98,
+          "end": 187.18,
+          "probability": 0.9659518599510193
+        },
+        {
+          "word": " into",
+          "start": 187.18,
+          "end": 187.36,
+          "probability": 0.9971242547035217
+        },
+        {
+          "word": " this",
+          "start": 187.36,
+          "end": 187.62,
+          "probability": 0.9971123933792114
+        },
+        {
+          "word": " playlist",
+          "start": 187.62,
+          "end": 187.9,
+          "probability": 0.9968517422676086
+        },
+        {
+          "word": " by",
+          "start": 187.9,
+          "end": 188.14,
+          "probability": 0.32849210500717163
+        },
+        {
+          "word": " Python",
+          "start": 188.14,
+          "end": 188.72,
+          "probability": 0.9812218546867371
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "seek": 16754,
+      "start": 188.72,
+      "end": 190.26,
+      "text": " and I'll catch you there.",
+      "tokens": [
+        51440,
+        293,
+        286,
+        603,
+        3745,
+        291,
+        456,
+        13,
+        51496
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.13196510738796657,
+      "compression_ratio": 1.6909871244635193,
+      "no_speech_prob": 0.5447182655334473,
+      "words": [
+        {
+          "word": " and",
+          "start": 188.72,
+          "end": 189.5,
+          "probability": 0.6650588512420654
+        },
+        {
+          "word": " I'll",
+          "start": 189.5,
+          "end": 189.78,
+          "probability": 0.9991773068904877
+        },
+        {
+          "word": " catch",
+          "start": 189.78,
+          "end": 189.96,
+          "probability": 0.9879705309867859
+        },
+        {
+          "word": " you",
+          "start": 189.96,
+          "end": 190.1,
+          "probability": 0.9983507394790649
+        },
+        {
+          "word": " there.",
+          "start": 190.1,
+          "end": 190.26,
+          "probability": 0.998881995677948
+        }
+      ]
+    }
+  ],
+  "language": "en"
+}

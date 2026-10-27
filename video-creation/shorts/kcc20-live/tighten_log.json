@@ -1,0 +1,256 @@
+[
+  {
+    "n": 1,
+    "slug": "kcc20-final-kaspa-tokens-on-l1",
+    "variant": "full",
+    "raw_s": 59.9,
+    "relocked_s": 61.6,
+    "tightened_s": 55.8,
+    "desilenced_s": 47.2,
+    "span_removed_pct": 9.4,
+    "voiced_content_removed_pct": 10.5,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 21.2,
+    "boundary_relock": [
+      {
+        "segment_index": 0,
+        "new_start": 85.7,
+        "new_end": 94.76
+      },
+      {
+        "segment_index": 1,
+        "new_start": 177.35
+      },
+      {
+        "segment_index": 2,
+        "new_start": 193.05,
+        "new_end": 210.5
+      },
+      {
+        "segment_index": 4,
+        "new_end": 217.95
+      }
+    ],
+    "removals": [
+      {
+        "start": 178.9,
+        "end": 183.43,
+        "why": "aside with a 1.3 s stall inside 'do': 'in case you do not know,' -> 'KCC20, it is the token standard built on covenants' (edges in the 178.82-179.23 trough and the 183.40-183.44 dip before 'it')",
+        "reason": "aside with a 1.3 s stall inside 'do': 'in case you do not know,' -> 'KCC20, it is the token standard built on covenants' (edges in the 178.82-179.23 trough and the 183.40-183.44 dip before 'it')"
+      },
+      {
+        "start": 206.3,
+        "end": 207.56,
+        "why": "false start 'it is now' after 'Kasplex, right? so' -> 'so, the tokens are now on an L1' (start in the 205.76-206.42 pause; end in digital silence, the next word physically starts after 207.8 although Whisper's 'the' span begins 207.36)",
+        "reason": "false start 'it is now' after 'Kasplex, right? so' -> 'so, the tokens are now on an L1' (start in the 205.76-206.42 pause; end in digital silence, the next word physically starts after 207.8 although Whisper's 'the' span begins 207.36)"
+      },
+      {
+        "start": 214.6,
+        "end": 214.95,
+        "why": "filler tic 'right' between 'pump it up again' and 'hell yeah' (quiet floor on both edges; 'hell yeah' physically at 216.85-217.72)",
+        "reason": "filler tic 'right' between 'pump it up again' and 'hell yeah' (quiet floor on both edges; 'hell yeah' physically at 216.85-217.72)"
+      }
+    ],
+    "notes": "Measured 10.5% of voiced content (validator math). Peak beats untouched: 85.85-94.6 hook and 1307.96-1319.4; the restart 'No? now it's just gonna' at 1315.62-1317.70 sits INSIDE the second peak beat so it was left per the guard (reviewer may drop it). The 'right,' tic at 1306.64 was left: no silent seam between 'now,' and 'right,' (continuous voicing), not worth a splice on a voiced sample. The aside 'which is your Kasplex, right?' (203.4-205.1) is spoken about 15 dB softer than the rest, flag for the 2nd review (not a cut matter); the Kasplex mention stays neutral (indexer contrast, not a knock). Caption STT fixes: CASPA/cast -> Kaspa, cast black -> Kasplex, KCC 20 -> KCC20, Heath tokens -> ETH tokens, call him Kaspa -> call them Kaspa. 5B dead air remains inside kept spans (e.g. 'through' 199.3-201.2, 'pump' 212.0-214.0)."
+  },
+  {
+    "n": 2,
+    "slug": "last-chance-to-own-assets",
+    "variant": "full",
+    "raw_s": 58.0,
+    "relocked_s": 58.2,
+    "tightened_s": 50.0,
+    "desilenced_s": 31.5,
+    "span_removed_pct": 14.0,
+    "voiced_content_removed_pct": 10.1,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 45.7,
+    "boundary_relock": [
+      {
+        "segment_index": 1,
+        "new_start": 3283.51,
+        "new_end": 3323.47
+      },
+      {
+        "segment_index": 2,
+        "new_end": 3331.28
+      }
+    ],
+    "removals": [
+      {
+        "start": 3312.3,
+        "end": 3319.38,
+        "why": "stall + false start 'work to uh ... to be able to' -> 'how does the average person invest in something that can grow into something like SpaceX or Tesla' (start in the trough after 'person'; end at the 25 dB dip between 'to' and 'invest' at 3319.36-3319.39; Whisper timings run about 0.2 s early here)",
+        "reason": "stall + false start 'work to uh ... to be able to' -> 'how does the average person invest in something that can grow into something like SpaceX or Tesla' (start in the trough after 'person'; end at the 25 dB dip between 'to' and 'invest' at 3319.36-3319.39; Whisper timings run about 0.2 s early here)"
+      },
+      {
+        "start": 3288.3,
+        "end": 3289.15,
+        "why": "false start 'when we could' (physically 3288.42-3288.99) -> 'going forward, we could return like for the most part...' (start in the 3287.39-3288.43 pause, end in digital silence 3289.0-3289.5; Whisper's second 'we' span is inflated)",
+        "reason": "false start 'when we could' (physically 3288.42-3288.99) -> 'going forward, we could return like for the most part...' (start in the 3287.39-3288.43 pause, end in digital silence 3289.0-3289.5; Whisper's second 'we' span is inflated)"
+      },
+      {
+        "start": 3329.04,
+        "end": 3329.54,
+        "why": "repeated word 'futuristic futuristic' -> keeps the second (3330.21+) which runs straight into 'feudalism' (edges in the 3329.01-3329.12 and 3329.48-3329.56 troughs)",
+        "reason": "repeated word 'futuristic futuristic' -> keeps the second (3330.21+) which runs straight into 'feudalism' (edges in the 3329.01-3329.12 and 3329.48-3329.56 troughs)"
+      }
+    ],
+    "notes": "Measured 10.1% of voiced content. Peak beats untouched: 3637.78-3650.4 hook and 3302.58-3310.52 ('goddamn cheap', incl. the 'because if everything everything' stumble). The trailing 'you know' at 3650.01-3650.24 (very quiet, -45 dB) sits inside the hook peak-beat span so it was left; a reviewer may relock s0 new_end to 3650.0 to end on 'markets'. Considered and left to stay under the ceiling: the hedge 'like for the most part in a similar fashion' (3290.84-3293.22) and the 2 s 'like' at 3296.1 (pause inside, 5B shrinks it). Caption STT fixes: Irish person -> average person, face x -> SpaceX, futuristic utilism -> futuristic feudalism, Insane bullhorn -> insane bull run, in general Marcus -> in general markets."
+  },
+  {
+    "n": 3,
+    "slug": "ai-replaces-engineers-this-year",
+    "variant": "full",
+    "raw_s": 62.2,
+    "relocked_s": 62.0,
+    "tightened_s": 56.9,
+    "desilenced_s": 33.4,
+    "span_removed_pct": 8.3,
+    "voiced_content_removed_pct": 8.2,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 46.3,
+    "boundary_relock": [
+      {
+        "segment_index": 0,
+        "new_start": 3535.3
+      },
+      {
+        "segment_index": 2,
+        "new_start": 3611.55
+      }
+    ],
+    "removals": [
+      {
+        "start": 3542.2,
+        "end": 3544.1,
+        "why": "wind-up 'Like, if you take a look at' -> 'software engineers. Some of the engineers that work for Anthropic, they're among the highest caliber...' (start in the 3542.16-3542.26 trough after 'engineers.', end at the 't' closure dip 3544.06-3544.13 before 'some')",
+        "reason": "wind-up 'Like, if you take a look at' -> 'software engineers. Some of the engineers that work for Anthropic, they're among the highest caliber...' (start in the 3542.16-3542.26 trough after 'engineers.', end at the 't' closure dip 3544.06-3544.13 before 'some')"
+      },
+      {
+        "start": 3555.67,
+        "end": 3557.25,
+        "why": "hedge that undercuts the number: 'Who knows what they get paid, right? it,' (start at the 'd' closure dip after 'thousand' 3555.65-3555.69; end in the 3556.73-3557.50 silence, before the peak beat at 3557.32)",
+        "reason": "hedge that undercuts the number: 'Who knows what they get paid, right? it,' (start at the 'd' closure dip after 'thousand' 3555.65-3555.69; end in the 3556.73-3557.50 silence, before the peak beat at 3557.32)"
+      },
+      {
+        "start": 3618.95,
+        "end": 3620.07,
+        "why": "restatement + tic 'radiology, right?' -> keeps the emphatic second 'Radiology.' (3620.11-3620.52) before the 1.6 s pause and 'One of those things is being completely wiped out as we speak' (edges in the 3618.81-3619.17 and 3620.03-3620.11 troughs)",
+        "reason": "restatement + tic 'radiology, right?' -> keeps the emphatic second 'Radiology.' (3620.11-3620.52) before the 1.6 s pause and 'One of those things is being completely wiped out as we speak' (edges in the 3618.81-3619.17 and 3620.03-3620.11 troughs)"
+      },
+      {
+        "start": 3552.41,
+        "end": 3552.75,
+        "why": "filler 'like' before '500,000' (7 dB step at the d|l seam 3552.40/41, end in the 3552.60-3552.90 silence; '500' physically starts after 3552.90)",
+        "reason": "filler 'like' before '500,000' (7 dB step at the d|l seam 3552.40/41, end in the 3552.60-3552.90 silence; '500' physically starts after 3552.90)"
+      },
+      {
+        "start": 3547.44,
+        "end": 3547.95,
+        "why": "self-correction 'the most highest' -> 'the highest caliber' (start at the 'm' onset dip 3547.42-3547.46, end in the 3547.76-3548.07 silence); most dispensable, drop first if the 2nd review hears the seam",
+        "reason": "self-correction 'the most highest' -> 'the highest caliber' (start at the 'm' onset dip 3547.42-3547.46, end in the 3547.76-3548.07 silence); most dispensable, drop first if the 2nd review hears the seam"
+      }
+    ],
+    "notes": "Measured 8.2% of voiced content, under the ~10% target on purpose: every remaining span is substance ('Now engineers are doing nothing but reviewing AI code... agents reviewing and testing the code', the Anthropic line, the radiology out) or a protected peak beat (3557.32-3563.3; 3611.6-3615.9 incl. the 'going to be being' stumble). The ~18 s the clip plan flagged is dead air inside stretched words ('any' 3539-3540, 'AI' 3558.8-3561.2, 'it's' 3574.4-3575.6, 'there's' 3577.7-3580.1) and belongs to 5B, not to a content cut; expected final well under 60 s. The trailing 'like' of 'in my video, like' was left (no silent seam between 'video' and 'like', the phrase is one soft decrescendo). Do not take 'probably' or 'in companies'. Whisper word timings run 0.2-0.4 s early across this clip; every edge above is RMS-verified. Caption STT fixes: log code -> Claude Code (confirm by ear), Entropiq -> Anthropic, highest Alibar -> highest caliber, 500 ,000 / 800 ,000 -> 500,000 / 800,000."
+  },
+  {
+    "n": 4,
+    "slug": "asteroid-mining-crushes-gold",
+    "variant": "full",
+    "raw_s": 55.8,
+    "relocked_s": 55.1,
+    "tightened_s": 48.4,
+    "desilenced_s": 29.2,
+    "span_removed_pct": 12.1,
+    "voiced_content_removed_pct": 11.4,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 47.7,
+    "boundary_relock": [
+      {
+        "segment_index": 1,
+        "new_start": 3066.72
+      }
+    ],
+    "removals": [
+      {
+        "start": 3082.4,
+        "end": 3087.2,
+        "why": "2.4 s stall + connector + stutter 'which is good because the, the, the' -> '...from oil to the stablecoin. Stablecoins are going to be the way to transfer money in the foreseeable future.' (start in the 3082.03-3083.09 pause after 'coin,', end in the 3.9 s digital silence that precedes 'stablecoins', physically 3090.98; Whisper's 'the'/'stable' spans are inflated)",
+        "reason": "2.4 s stall + connector + stutter 'which is good because the, the, the' -> '...from oil to the stablecoin. Stablecoins are going to be the way to transfer money in the foreseeable future.' (start in the 3082.03-3083.09 pause after 'coin,', end in the 3.9 s digital silence that precedes 'stablecoins', physically 3090.98; Whisper's 'the'/'stable' spans are inflated)"
+      },
+      {
+        "start": 3102.86,
+        "end": 3103.8,
+        "why": "dangling 'then' before a 1.4 s pause: 'devalued dramatically, then... Countries' -> 'devalued dramatically. Countries that are trying to hoard gold right now' (start in the 3102.82-3102.94 dip, end in the 3103.45-3104.94 silence)",
+        "reason": "dangling 'then' before a 1.4 s pause: 'devalued dramatically, then... Countries' -> 'devalued dramatically. Countries that are trying to hoard gold right now' (start in the 3102.82-3102.94 dip, end in the 3103.45-3104.94 silence)"
+      },
+      {
+        "start": 3070.08,
+        "end": 3070.6,
+        "why": "filler tic 'right?' after 'a whole bunch of gold' (troughs 3070.05-3070.14 and 3070.40-3071.70; stays clear of the peak beat at 3071.64)",
+        "reason": "filler tic 'right?' after 'a whole bunch of gold' (troughs 3070.05-3070.14 and 3070.40-3071.70; stays clear of the peak beat at 3071.64)"
+      },
+      {
+        "start": 3097.17,
+        "end": 3097.8,
+        "why": "filler tic 'right?' after 'foreseeable future' (troughs 3097.14-3097.21 and 3097.53-3099.0)",
+        "reason": "filler tic 'right?' after 'foreseeable future' (troughs 3097.14-3097.21 and 3097.53-3099.0)"
+      }
+    ],
+    "notes": "Measured 11.4% of voiced content. Peak beats untouched: 3052.8-3063.7 (the hook incl. the garbled 'So, they ships go into asteroids' phrasing, confirm by ear as the plan asks) and 3071.64-3082.0. Hard-out 'the ones that are gonna be out a lot' untouched. The three remaining 'like's (3092.62 'be like the way', 3105.56 'are like trying', 3109.36 'gonna be like out') were left: each is continuously voiced with the word before it (no seam), and the last sits inside the hard-out. Caption STT fixes: they ships go into -> ships going into, stable coin(s) -> stablecoin(s), afford gold (3107.2) -> hoard gold, than (3102.9) is 'then'."
+  },
+  {
+    "n": 5,
+    "slug": "longevity-social-security-collapses",
+    "variant": "full",
+    "raw_s": 59.6,
+    "relocked_s": 56.0,
+    "tightened_s": 50.1,
+    "desilenced_s": 35.6,
+    "span_removed_pct": 10.6,
+    "voiced_content_removed_pct": 12.2,
+    "voiced_gate": "measured against Whisper word spans; ceiling 15%",
+    "min_sil_5b": 0.25,
+    "total_reduction_pct": 40.4,
+    "boundary_relock": [
+      {
+        "segment_index": 0,
+        "new_end": 3378.85
+      },
+      {
+        "segment_index": 1,
+        "new_start": 3412.6
+      },
+      {
+        "segment_index": 2,
+        "new_end": 3467.87
+      }
+    ],
+    "removals": [
+      {
+        "start": 3432.62,
+        "end": 3436.06,
+        "reason": "hesitation stall: 'a ... [1.4 s dead air] uh ... maaaybe' between 'stocks and stuff like that' and 'maybe the powers that be'; cut ends in the 90 ms trough between the drawn-out first 'maybe' and the clean second one",
+        "why": "hesitation stall: 'a ... uh ... maaaybe' (dead air + drawn-out first maybe) before 'maybe the powers that be'"
+      },
+      {
+        "start": 3438.5,
+        "end": 3440.4,
+        "reason": "restatement: 'maybe they're actually foreseen' repeats 'maybe the powers that be are foreseen'; result reads 'the powers that be are foreseeing that people are going to be living longer'",
+        "why": "restatement: 'maybe they're actually foreseen' repeats 'the powers that be are foreseen'"
+      },
+      {
+        "start": 3430.06,
+        "end": 3430.88,
+        "reason": "filler tic: 0.75 s drawn 'uhhh' between 'kids getting' and 'stocks' (Whisper has it 0.3 s late; cut anchored to the audio trough at 3430.05-3430.07 and the silence after the uh). Most dispensable: drop first if the gate trips.",
+        "why": "filler tic: 0.75 s drawn 'uhhh' between 'kids getting' and 'stocks'"
+      }
+    ],
+    "notes": "Measured by tighten_clips.clip_measures: voiced_total 50.55 s, cut 6.17 s = 12.2% (ceiling 15%). Relocked span 56.0 s, tightened 49.8 s before 5B desilence (est ~44-46 s after). Peak beats protected: hook 3369.8-3378.62 untouched (seg0 relock only adds air after 'year'); 3412.86-3423.0 untouched. Whisper timings drift 0.1-0.4 s late across 3429-3441 (e.g. 'stocks' real onset 3431.30 vs Whisper 3430.84); every span above is anchored to RMS troughs in the master audio, not to the word JSON. Left in on purpose: 'and stuff like that' (fluent, costs budget), 'something like a, like' (3445.5-3446.5, narrow 60 ms trough at 'by|something', too risky to splice; would push to 14.3%), 'or other sort of investment' ('or' is glued to 'fund', no clean cut). Caption-time STT fixes: 'foreseen' = foreseeing (x2), '90 year old' / '50 year old' = 90-year-old / 50-year-old. The clip names Trump accounts as policy evidence only; nothing cut changes that framing."
+  }
+]

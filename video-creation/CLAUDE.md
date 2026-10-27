@@ -21,7 +21,7 @@ deleted on 2026-05-25.
 **ALL reusable, cross-cutting video-creation skills live in `skills/`** (canonical copies committed to
 the repo so they travel with a checkout; `skills/README.md` is the index): `captions`, `defumbler`,
 `desilencer`, `elevenlabs-lipsync`, `envato-broll`, `gaze`, `higgsfield-generate`, `higgsfield-soul-id`,
-`higgsfield-voice`, `music-sourcing`, `usage-ledger`. Skills with a `/command` (`/defumbler`, `/higgsfield-generate`,
+`higgsfield-voice`, `music-sourcing`, `sfx-library` (every SFX picked from `assets/sfx/library.json`, never by listening), `usage-ledger`. Skills with a `/command` (`/defumbler`, `/higgsfield-generate`,
 `/higgsfield-soul-id`) have a 3-line pointer under `.claude/skills/<name>/SKILL.md` that points back to
 `skills/`; the rest are read directly via this routing table or the track docs.
 
@@ -29,8 +29,23 @@ Some wrap **external tooling not in the repo** (e.g. the `higgsfield` CLI + logi
 install it first — see **`SKILLS-SETUP.md`** (this folder's root).
 
 What does NOT go in `skills/`: the master `SKILL.md`, the track *pipelines* (`longform-edited/`,
-`longform-presentation/`, `vertical-ai-persona/`, `livestream-repurpose/`), and infra (`assets/`,
+`longform-presentation/`, `vertical-ai-persona/`, `livestream-repurpose/`, the channel folders `ai-engineering/`,
+`yuli-y-ana/`), and infra (`assets/`,
 `remotion/`, `shorts/`, `style-guide/`) — those stay at the `video-creation/` root.
+
+## Track folders are split by HOW THE SPINE IS PRODUCED (Mike, 2026-10-17)
+
+A video's folder is decided by how its spoken spine is made, NOT by the channel it is published on
+and NOT by its aspect ratio:
+
+| Folder | The spine is… |
+|---|---|
+| `longform-edited/` | Mike ON CAMERA, a real recording (defumble -> desilence -> cover-blackout) |
+| `longform-presentation/` | Mike's real recording over a deck / screen share |
+| `livestream-repurpose/` | a real livestream recording |
+| `ai-engineering/` | Mike's CLONED VOICE over a deck, no camera (so its `evals` video, which Mike recorded himself, lives in `longform-edited/media/`) |
+| `vertical-ai-persona/` | Mike's AI LIKENESS (face + voice), vertical |
+| `yuli-y-ana/` | AI face + AI voice of Ana and Yuli, two people who are NOT Mike, in ANY format (vertical or longform); router `yuli-y-ana/CLAUDE.md` |
 
 ## Per-batch progress files (READ ONE EVERY SESSION)
 

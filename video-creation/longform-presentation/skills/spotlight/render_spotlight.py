@@ -8,6 +8,7 @@ well under it, joined afterwards by ONE standalone ffmpeg (stitch.py does that j
 head/tail, sync-safe filter_complex). Every part is verified by frame count; an existing good part is skipped,
 so a killed run is simply re-run.
 
+Parts render through the shared chunked renderer (watchdog, retry, resume inside a part) and hold the run-queue turn.
 Renders are --muted: the middle's audio comes from the EDIT at stitch time (no Remotion AAC lag in the
 deliverable). The render --public-dir is the project's small `render-assets/` folder (NOT video-creation/assets,
 which is multi-GB and gets copied into every bundle); --prep-audio fills it with the middle-window audio slice
@@ -29,6 +30,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REMOTION = os.path.normpath(os.path.join(HERE, "..", "..", "..", "remotion"))
 sys.path.insert(0, HERE)
 from spot_common import load_resolved, timeline, audio_format, middle_audio_graph, describe  # noqa: E402
+sys.path.insert(0, os.path.normpath(os.path.join(HERE, "..", "..", "..", "skills", "chunked-render")))
+import chunked_render as CR  # noqa: E402
 
 
 def nb_frames(p):
@@ -41,18 +44,18 @@ def nb_frames(p):
 
 
 def run_render(comp, out, frames, crf, public_dir, concurrency, muted, log):
-    cmd = ["npx", "remotion", "render", "src/index.ts", comp, out, f"--frames={frames[0]}-{frames[1]}",
-           f"--crf={crf}", "--public-dir", public_dir, f"--concurrency={concurrency}", "--log=verbose"]
-    if muted:
-        cmd.append("--muted")
-    print(" ".join(cmd), flush=True)
-    with open(log, "w", encoding="utf-8") as lf:
-        lf.write(" ".join(cmd) + "\n")
-        r = subprocess.run(cmd, cwd=REMOTION, stdout=lf, stderr=subprocess.STDOUT, shell=(os.name == "nt"))
-    return r.returncode
+    """One part = one chunked render (video-creation/skills/chunked-render, 2026-10-27): 1-minute chunks inside the part,
+    a watchdog that kills + retries a stalled chunk, resume from the last good chunk. `log` gets the chunk history."""
+    try:
+        CR.render(comp=comp, out=out, public_dir=public_dir, quality=[f"--crf={crf}"], frames=frames, audio=not muted,
+                  concurrency=concurrency, label=f"{comp} spotlight part", report=log)
+        return 0
+    except (CR.RenderFailed, CR.DeadlineReached) as e:
+        print(f"render failed: {e}", flush=True)
+        return 1
 
 
-def main():
+def _main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--project", required=True, help="media/<project> folder (holds <project>.scenes.resolved.json)")
     ap.add_argument("--comp", required=True, help="Remotion composition id")
@@ -118,6 +121,12 @@ def main():
     print(f"ALL PARTS DONE in {(time.time()-t0)/60:.1f} min:")
     for p in sorted(glob.glob(os.path.join(previews, f"{name}-middle-part*.mp4"))):
         print("  ", p)
+
+
+def main():
+    # the whole parts run holds ONE run-queue turn (video-creation/skills/run-queue): it never collides with another render
+    with CR.run_queue.turn("spotlight render " + " ".join(sys.argv[1:3]), kind="render"):
+        _main()
 
 
 if __name__ == "__main__":

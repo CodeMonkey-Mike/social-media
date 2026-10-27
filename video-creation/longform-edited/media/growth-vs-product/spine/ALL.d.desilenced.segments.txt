@@ -1,0 +1,128 @@
+growth-vs-product - FINAL SPINE TRANSCRIPT BREAKDOWN
+source : spine/ALL.d.desilenced.mp4  (219.66 s = 3:39.66, ffprobe 219.663)
+words  : spine/ALL.d.desilenced.medium-words.json  (Whisper medium, cuda, word_timestamps; NOT hand-edited, cue off it)
+text   : corrected for Whisper mishears in THIS file only; every substitution is listed at the bottom
+chapters mapped to SCREENPLAY.md; [FACE] = a screenplay FACE line as spoken, everything else = [COVER]
+
+
+## CH1 - TWO TITLES, ONE WORD   (opens 0:00.00)
+[   0.00-   4.26] [FACE] So what are the differences between an AI growth engineer and an AI product
+[   4.26-   4.66] [FACE] engineer?
+[   4.78-   7.98] Let's first take the AI off both titles for a second.
+[   8.16-  11.90] A growth engineer pushes the product out to customers, gets them onboarded,
+[  11.98-  14.56] or gets them to stay and grow the actual business.
+[  14.78-  18.92] A product engineer builds out the features of the actual product for the customer.
+[  18.92-  23.32] Builds it, does not market it. Now put AI in front of both of those titles.
+[  23.44-  28.30] The AI growth engineer moves that same number with AI as well as landing pages,
+[  28.30-  32.96] onboarding and retention personalized for every user and the experiments to prove
+[  32.96-  37.02] it. The AI product engineer builds the AI inside of the feature.
+[  37.10-  41.24] So the job is the model's answers grounded in real data. In my experience,
+[  41.24-  45.14] these two get used interchangeably even by people who are hiring for them.
+[  45.22-  48.82] [FACE] They're not the same job, same tools, different scoreboard.
+[  48.88-  50.38] So let's dissect this a bit.
+
+## CH2 - THE SCOREBOARD   (opens 0:50.50)
+[  50.50-  52.58] Difference number one, the scoreboard,
+[  52.68-  56.02] the growth engineer is scored on the business number, the signups,
+[  56.02-  60.54] conversion, retention, and revenue. The product engineer is scored on the feature itself.
+[  60.72-  64.84] The word for that scoreboard is called evals, short for evaluation.
+[  65.06-  69.54] Their feature's pass rate on a test set is the product engineer's conversion
+[  69.54-  74.26] rate. The growth engineer ships an AI personalized landing page as a split test.
+[  74.34-  77.44] The number moves or it doesn't kill it or scale it.
+[  77.52-  82.38] The product engineer ships a grounding fix and the number that moves is the pass
+[  82.38-  82.70] rate.
+[  82.70-  87.02] [FACE] One scoreboard counts what the business did and the other one counts what the model did.
+
+## CH3 - THE CLOCK   (opens 1:27.18)
+[  87.18-  88.88] Difference number two, the clock.
+[  89.04-  93.92] The growth engineer runs many cheap experiments and a failed one still counts because
+[  93.92-  97.14] the output is leaning. The product engineer builds a slow loop,
+[  97.28- 101.56] a test set known with good answers and a regression gate on every change.
+[ 101.84- 104.78] Nothing ships on a vibe check. Give both of them three weeks.
+[ 105.28- 109.90] The growth engineer adds an AI step to onboarding that sets up the product differently
+[ 109.90- 113.62] for every new signup. And within days, you know whether more of them activate.
+[ 113.90- 118.22] The product engineer spends those three weeks on an eval set and a retrieval fix.
+[ 118.50- 122.06] Nothing to show on day three. And that eval set outlives this model.
+[ 122.32- 126.14] [FACE] Rapid results on one side and compounding quality on the other side.
+
+## CH4 - THE BIAS   (opens 2:06.34)
+[ 126.34- 129.50] Difference number three, the bias. What each one reaches first.
+[ 129.64- 134.64] The growth engineer lives in the funnel. AI or not. Landing pages, analytics,
+[ 135.06- 139.48] market automation, the A/B testing framework, and now AI on top.
+[ 139.48- 143.72] The product engineer lives in the feature and now the model inside of it,
+[ 143.92- 146.18] prompting and retrieval, the eval harness,
+[ 146.52- 150.12] guardrails for when the model should abstain and an interface built for when a
+[ 150.12- 154.76] model is wrong sometimes. And the middle is shared. Model APIs, agents,
+[ 155.16- 159.48] evals, Python plus TypeScript. The growth engineer takes a business problem,
+[ 159.74- 161.84] a low conversion rate and ships the fix.
+[ 161.94- 166.70] The product engineer knows a convincing demo from a dependable product and when
+[ 166.70- 168.52] plain software beats AI,
+[ 168.70- 172.40] [FACE] one leans towards distribution and the other lean towards the model and the
+[ 172.40- 173.12] [FACE] person using it.
+
+## CH5 - WHICH ONE   (opens 2:53.14)
+[ 173.14- 174.98] So which one do you hire first?
+[ 175.16- 179.02] If users already touch your AI feature and it is wrong too often,
+[ 179.46- 180.68] the product engineer first.
+[ 180.80- 184.84] If the product works and you have a funnel to feed the growth engineer,
+[ 185.02- 186.28] which one should you become?
+[ 186.40- 190.34] If the business number moving lights you up and you're fine throwing away a
+[ 190.34- 193.62] week's work when the test said it lost, growth engineer.
+[ 193.62- 196.70] If a pass rate climbing lights you up, product engineer.
+[ 196.90- 200.72] And in my experience, a founding AI engineer ends up being both.
+[ 200.80- 202.92] [FACE] Either way you're an AI engineer.
+[ 203.28- 206.10] [FACE] The title just tells you which number you're accountable for.
+
+## CH6 - THE CLOSE   (opens 3:26.22)
+[ 206.22- 206.96] Three differences,
+[ 207.32- 211.66] the scoreboard, the clock and the bias. Same tools, different scoreboard.
+[ 211.78- 215.02] [FACE] And if that cleared it up, hit that like button and subscribe.
+[ 215.06- 216.44] [FACE] If you're not subscribed already,
+[ 216.58- 219.66] [FACE] there's a lot more AI engineering content to come on this channel.
+
+## FACE WINDOWS (word start of first word -> word end of last word)
+     0.00-   4.66  (4.66 s)  CH1 hook (LOCKED)
+    45.22-  48.82  (3.60 s)  CH1 thesis (LOCKED)
+    82.70-  87.02  (4.32 s)  CH2 payoff, side panels
+   122.32- 126.14  (3.82 s)  CH3 payoff, side panels
+   168.70- 173.12  (4.42 s)  CH4 payoff, side panels
+   200.80- 206.10  (5.30 s)  CH5 payoff
+   211.78- 219.66  (7.88 s)  CH6 CTA (HOLD)
+
+## CORRECTIONS APPLIED (text only; word JSON untouched)
+  "on board" -> "onboarded"  x1
+  "bills out" -> "builds out"  x1
+  "with a customer" -> "for the customer." (seg ending 18.92)  x1
+  "bills. It does" -> "Builds it, does" (seg starting 18.92)  x1
+  punctuation: "evals short" -> "evals, short"  x1
+  "features" -> "feature's"  x1
+  "engineers" -> "engineer's"  x1
+  "AB" -> "A/B"  x1
+  "guard rails" -> "guardrails"  x1
+  "the main software" -> "plain software"  x1
+  punctuation: "AI or not landing" -> "AI or not. Landing"  x1
+  persona terminology_rules (tau->TAO, Casper->Kaspa, KRC20 glossary, WMA->week SMA, GhostDAG, scion->cyan): 0 occurrences
+
+segments in this breakdown: 63 (Whisper emitted 58; split here at chapter openers + FACE edges)
+
+## BASIS FOR THE MISHEAR FIXES
+  The 11.4-19.3 s and 166.7 s fixes were each confirmed by a separate large-v3 pass over that audio window
+  ("gets them onboarded", "builds out ... for the customer, builds it, does not market it", "when plain software beats AI").
+  Medium's word confidence there was low: on 0.51, bills 0.51, with 0.51, bills. 0.10, the 0.02, main 0.15 (zero-length word).
+  The word JSON still says "on board / bills / with a / bills / the main" at the true times. A caption builder that reads
+  the JSON must apply these same substitutions.
+
+## FLAGS (left AS HEARD: both medium and large-v3 hear it this way, so nothing was changed)
+  93.92  "the output is leaning"       screenplay has "learning". Both models hear "leaning"; this is a caption decision for Mike.
+  135.06 "market automation"           screenplay has "marketing automation" (p=0.47). Both models hear "market".
+  65.06  "Their feature's pass rate"   screenplay has "The feature's" (p=0.50). Both models hear "Their".
+  170.92 "the other lean towards"      screenplay has "leans" (p=0.27), a possible dropped s.
+  183.54 "a funnel to feed the growth engineer"  large-v3 hears "the growth engineer would-" (a cut-off syllable at the 184.84 boundary).
+  97.28  "a test set known with good answers"  as spoken (screenplay: "with known good answers"). Word order, not a mishear.
+
+## AS-SPOKEN vs SCREENPLAY (for the as-recorded author; not corrections)
+  CH1  "Right, grounded in real data, fast, and worth what they cost" was spoken as "So the job is the model's answers grounded in real data." The fast / worth-what-they-cost clause is not in the audio.
+  CH1  The handoff "So, let's dive into all this." was spoken as "So let's dissect this a bit." (48.88-50.38).
+  CH4  "what each one reaches for first" was spoken as "What each one reaches first."
+  CH5  The CH5 opener "So which one do you hire first?" runs straight on from the CH4 face line (173.12 -> 173.14) with no breath, so the WHICH ONE? card pause needs a trough check (lint-pause-silence).
+  CH6  The CTA was spoken as "hit that like button and subscribe. If you're not subscribed already, there's a lot more AI engineering content to come on this channel." There is no "Comment below which one you are" and no "I'm gonna catch you guys, later." The spine ends at 219.66 on "channel." Bed C's epic_hit cue word "later." is not in the audio.

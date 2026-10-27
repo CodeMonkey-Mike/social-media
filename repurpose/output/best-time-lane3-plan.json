@@ -1,0 +1,239 @@
+{
+  "batch": "best-time",
+  "date": "2026-10-27",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/best-time LOW BPS VERTICAL/best-time LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-10-27",
+  "brief": "Exactly 3 X posts (single tweets), no more. NO YouTube community posts (no YT posts, no carousels). NO X threads. Everything else stays at the defaults: one-liners, IG companions, X polls, YT polls, YT quizzes.",
+  "brief_reading": "Read as: 3 multi-line X tweets (the default is 4) + the default 2 single-line one-liners = 5 x_tweets entries; 0 yt_posts, 0 x_threads; IG companions only for Kaspa-subject tweets (none this stream, so 0); 2 YT polls, X polls only for eligible topics (1: Gram/Toncoin); YT quizzes have no stated default count so 2 were written (the same rhythm as the polls). If Mike meant 3 X tweets TOTAL, delete the two one-liners (images b81ecc39 and c38a5846).",
+  "fact_check": [
+    {
+      "claim": "'originally called ton coin and now they call it gram' (transcript)",
+      "verdict": "verified: the TON Foundation renamed Toncoin to Gram on June 15, 2026 (ticker TON to GRAM at 20:00 UTC) after a community vote that passed with 81.22% support; only the token name, ticker and icon changed, the blockchain stays The Open Network, balances converted 1:1 with no claim or bridge. Gram was the 2018 name of Telegram's original token. Copy writes 'Gram ($GRAM, the old $TON)' so both cashtags ride. Image reference toncoin-ton.png is the TON network diamond (the chain mark, unchanged); the prompt describes it as the network logo, never as the new token icon.",
+      "source": "finance.yahoo.com/markets/crypto/articles/toncoin-ton-revives-gram-token-083816093.html; beincrypto.com/pavel-durov-rebrands-ton-coin-gram/; bitcoinworld.co.in/toncoin-rebrand-gram-june-15/ (searched 2026-10-27)"
+    },
+    {
+      "claim": "'it's $1.26 right now... I just saw like $1.19... all time high $7.88' (transcript, TON chart)",
+      "verdict": "updated to drafting-day values: TON/GRAM trades at about $1.19 on October 27, 2026 (MetaMask 04:23 UTC $1.19, Kraken $1.19, Coinbase $1.21), market cap about $3.39B, down about 47% year over year; the record high is $8.25 (MetaMask / CoinMarketCap basis), so copy says 'about $1.19' and 'more than 85% below its $8.25 all-time high' (1.19 / 8.25 = 14.4%). Mike's $7.88 was his exchange's chart; the aggregate ATH is used.",
+      "source": "metamask.io/price/toncoin; kraken.com/prices/toncoin; coinbase.com/price/toncoin (fetched 2026-10-27)"
+    },
+    {
+      "claim": "'over a billion monthly users on telegram... every crypto mini app in telegram has to run on ton... wallet is rolled out to the user base' (transcript)",
+      "verdict": "verified: Pavel Durov announced in March 2025 that Telegram passed 1 billion monthly active users; the TON Foundation made TON the exclusive blockchain for Telegram Mini Apps (non-TON apps had until February 21, 2025 to migrate); the self-custodial TON Wallet went live for US users in July 2025 alongside the in-app wallet. Copy: 'over a billion monthly users', 'every mini app inside Telegram has to run on TON', 'the wallet is built into the app'.",
+      "source": "techcrunch.com/2025/03/19/telegram-founder-pavel-durov-says-app-now-has-1b-users...; thedefiant.io (Telegram partners exclusively with TON for mini apps); blockeden.xyz/blog/2026/01/26/ton-telegram-web3-onramp-mini-apps-500-million-users/"
+    },
+    {
+      "claim": "'Ton is now on Pumpphone, so the Pumpphone app' (transcript)",
+      "verdict": "UNVERIFIED and dropped: no report of TON / Gram on Pump.fun, Pump Bridge (test chains Robinhood, BNB Chain, Base, Arc, Ink; Solana app) or Phantom (TON not in its network list). Likely a mishear of an app name; the Gram tweet carries no listing claim. Operator may ask Mike what app he meant.",
+      "source": "crypto.news/pump-fun-launches-pump-bridge-with-faster-crosschain-trades-and-fewer-errors/; watswallet.com/blog/best-phantom-wallet-alternatives-2026 (searched 2026-10-27)"
+    },
+    {
+      "claim": "'Tom Lee says... 99% of finance still runs on old rails and that's exactly why banks are underestimating how fast crypto could take over; banks without a crypto plan could get left behind' (transcript, Mike reading a post)",
+      "verdict": "verified as reported: Cointelegraph's X post (status 2114424458265935999, October 2026) carries that exact wording, repeated by KuCoin news. No primary interview transcript located, so the tweet attributes it as 'Tom Lee says' and quotes only the reported line.",
+      "source": "x.com/Cointelegraph/status/2114424458265935999; kucoin.com/news/insight/BTC/6ade6290b1e8a70007734423"
+    },
+    {
+      "claim": "'In five years... digital intelligence will exceed the sum of all human intelligence... at least a hundred million humanoid robots but maybe a billion... economy probably twice its current size in five to seven years' (transcript, Mike playing a clip)",
+      "verdict": "verified: Elon Musk's remarks (Forbes Innovator 250 event, May 19, 2026, recirculated on X in October 2026): 'In 5 years, digital intelligence will exceed the sum of all human intelligence', 100 million to possibly 1 billion humanoid robots within five years, the economy could double in 5 to 7 years. Copy attributes to Musk and uses those three figures.",
+      "source": "x.com/cb_doge/status/2068830509673882082; tokenpost.com/news/technology/41044; nasdaq.com/articles/elon-musk-predicts-age-abundance-ai-and-robotics-warns-about-risks-digital"
+    },
+    {
+      "claim": "'Jensen Wong of NVIDIA said... radiology, completely wiped out' (transcript)",
+      "verdict": "NOT verified, the opposite is on record: Huang has repeatedly said more radiologists are being hired because of AI (about 20% more) and called the early 'radiology will be automated' forecast harmful. The attribution is dropped; the AI tweet rests on Musk's quote and Mike's own first-hand software-engineering read.",
+      "source": "radiologybusiness.com/topics/artificial-intelligence/nvidia-ceo-discusses-ais-growing-prevalence-radiology; thenextweb.com/news/jensen-huang-ai-jobs-doom-nonsense-axios"
+    },
+    {
+      "claim": "'nobody's writing code anymore, it's just AI writing the code... now they have code review agents' (transcript, Mike's first-hand read as a software engineer)",
+      "verdict": "Mike's own professional observation, written in first person ('I am a code monkey, I am in the know') and not asserted as an industry statistic.",
+      "source": "transcript (Mike's own statement)"
+    },
+    {
+      "claim": "'pump fun... it's like two billion right now... conservatively eight billion or ten billion top of the bull run' (transcript)",
+      "verdict": "verified and current: PUMP about $0.0042 with a circulating market cap of about $1.93B on October 27, 2026 (OKX; MetaMask $1.97B on October 24), ATH about $0.0089. October product beats verified: perpetual futures via Hyperliquid (October 17), pre-IPO token pairs including OpenAI (October 19), Pump Bridge as the default cross-chain route (October 21-22), daily revenue-funded burns logged on pump.fun's token page. The $8B to $10B top is Mike's own call, written as his number. 'Higher lows' is Mike's chart read, written as 'on my chart'.",
+      "source": "okx.com/en-us/price/pump-fun-pump; metamask.io/price/pump-fun; crypto.news/pump-fun-launches-pump-bridge-with-faster-crosschain-trades-and-fewer-errors/; kucoin.com/news/flash/pump-fun-launches-pre-ipo-tokens-for-openai-polymarket-drives-8-pump-price-surge; pump.fun/pump-token"
+    },
+    {
+      "claim": "'we lost the 50-day moving average I guess four days ago... good final time to buy that dip... a market wide crash would be Bitcoin below the 50-week moving average' (transcript)",
+      "verdict": "verified and current: Bitcoin closed a daily candle below its 50-day moving average on Friday October 23, 2026, the first close below it since August; on October 27 BTC trades about $79,800 (Coinbase, CoinGecko) against a 50-day average near $81,700, still below it. The 50-week SMA is about $76,100 to $76,540 (Galaxy Research uses $76,540). Copy: 'closed below the 50-day for the first time since August'; the 50-week level is not quoted in any copy.",
+      "source": "news.bitcoin.com/finance/bitcoin-price-50-day-moving-average-trump-iran-liquidations/; cryptoticker.io/en/bitcoin-price-50-day-moving-average-24-october-2026/; theblock.co/news/markets/2026-10-26-galaxy-says-bitcoin-bear-market-is-over...; coinbase.com/price/bitcoin (fetched 2026-10-27)"
+    },
+    {
+      "claim": "'stonk is another launchpad and it does the whole meme pairing with the tokenized assets' (transcript)",
+      "verdict": "verified: StonkFun is a Solana launchpad whose tokens launch against tokenized equities and ETFs (Backed xStocks such as SPYx and NVDAx, PreStocks pre-IPO tokens, tokenized gold) instead of SOL; $STONK went live July 23, 2026 in a STONK/SPYx pool and became Raydium LaunchLab's first custom-quote partner on September 6, 2026. Price and market cap data for October 2026 conflict across trackers ($207M to $271M), so no number is used; Stonk appears only in a quiz on the pairing mechanic.",
+      "source": "theblock.co/news/defi/2026-09-06-stonk-surges-250-to-140-million-market-cap...; coinmarketcap.com/cmc-ai/stonk-fun/what-is/"
+    },
+    {
+      "claim": "'GTA six... launch 19th of November' (transcript)",
+      "verdict": "verified (Take-Two / Rockstar, November 19, 2026, reaffirmed in the Q3 FY2026 call) but not drafted: Mike's take was 'staying away, volume is dead', which is not a post.",
+      "source": "pcworld.com/article/3052217/gta-6s-release-date-confirmed-for-real-this-time-seriously.html"
+    },
+    {
+      "claim": "Pieverse ('good entry', x402 agent payments, '50 or 70x in the long run')",
+      "verdict": "verified (about $1.07 on the latest tracker snapshot, ATH $1.99 on September 21, 2026, x402 gasless agent payments) but not drafted: the kcc20-live batch shipped a Pieverse retracement tweet six days ago and the stream adds no new story.",
+      "source": "coingecko.com/en/coins/pieverse; coinmarketcap.com/cmc-ai/pieverse/what-is/"
+    },
+    {
+      "claim": "'pumpkin coins... it's 19k... I called it at 29k... went up to 149' (transcript)",
+      "verdict": "UNRESOLVED and dropped: the token is never named, so nothing can be checked.",
+      "source": "none"
+    },
+    {
+      "claim": "Russia diesel offer, Trump midterm strategy, 'everybody is controlled' theory, LAB 350x / Velvet 130x / Peak swing trade, membership and cryptorich.vip pitches, 'ElizaOS lawsuit' aside",
+      "verdict": "skipped by persona rules (political tangents, membership pitches, ElizaOS content, no URLs on X).",
+      "source": "persona/persona.json avoid_in_drafts; writing_style.x_no_urls"
+    },
+    {
+      "claim": "Kaspa / TAO / Housecoin / Pengu coverage",
+      "verdict": "not discussed on this stream beyond a passing 'Mike who's in the Kaspa' aside, so the topic weighting is dropped per the drafting instructions; no Kaspa item is invented, hence zero IG entries.",
+      "source": "transcript"
+    }
+  ],
+  "carousel_versions": {},
+  "missing_references": [
+    "Pump.fun / $PUMP logo: no reference file in images/reference/; image d7914aa7 renders plain unmarked green coins and no platform mark, Pump.fun is named only in copy",
+    "Bitcoin logo / coin: no bitcoin reference file in images/reference/; image b81ecc39 renders a plain unmarked gold coin, Bitcoin is named only in copy",
+    "Tom Lee likeness: no reference file; image c38a5846 renders no real person, Tom Lee is named only in copy",
+    "Elon Musk likeness / any humanoid robot brand: no reference file; image 081f88cb renders generic unbranded robots and no real person",
+    "Gram token icon (new icon after the June 15, 2026 rebrand): not in images/reference/; toncoin-ton.png is the TON NETWORK diamond and is used as the network mark only (the chain is still The Open Network)",
+    "Pump.fun official X handle is not in persona project_handles (no Follow line on tweet d7914aa7); operator may ask Mike to add it"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "b4aa7129",
+      "slug": "gram-telegram-billion-users",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\toncoin-ton.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A confident anthropomorphized sky-blue coin character with little arms and legs, its face the white diamond-shaped network logo shown in the attached reference image, stands triumphant on top of a colossal glowing smartphone that lies flat like a stage, arms spread wide. Below and around the phone, a vast sea of tiny glowing speech-bubble characters stretches to the horizon in every direction, millions of them, all turned toward the coin, their soft blue glow lighting the ground like a city at night. From the phone's screen a bright beam of sky-blue light rises into the dark sky. Deep navy near-black background. Dramatic cinematic lighting: strong sky-blue rim light on the coin, warm white glow from the phone screen, cool blue fill across the crowd. Mood: triumphant, hungry, the whole world in reach. The coin character carries the only logo in the image, taken exactly from the attached reference; the speech bubbles are completely blank with no symbols or lettering. Use the attached reference only for the diamond logo and its blue colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "081f88cb",
+      "slug": "last-window-before-the-robots",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A determined plain gold coin character with little arms and legs, carrying a small glowing sack of plain coins over its shoulder, climbs through a tall arched window in a dark stone wall just as the heavy glowing shutter above it is sliding down to close. Through the window behind the coin, a bright warm city of the future glows on the horizon. In the foreground on the near side of the wall, rows of sleek matte-white generic humanoid robots with featureless smooth faces march in perfect lines through a dark industrial street, carrying tools, boxes and ladders, filling every doorway and workbench. Deep navy near-black background. Dramatic cinematic lighting: warm golden light pouring through the closing window onto the coin, cold blue rim light on the robots, long shadows. Mood: urgent, determined, the last one through. The robots carry no brand marks, badges or lettering; the coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No real people and no real logos anywhere. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "d7914aa7",
+      "slug": "pump-fun-launchpad-higher-lows",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A hungry grinning plain neon-green coin character with little arms and legs stands on a floodlit rocket launch gantry at night, one hand on a big lever. In front of it, a row of launch pads is built on a staircase of stone platforms that climbs from left to right, each platform higher than the last, and on every platform a small chrome rocket is lifting off with a bright plume of green-white flame, the highest rocket already streaking into the stars. Around the base of the gantry, a crowd of tiny plain coin characters in many colours cheers with raised arms. Deep navy near-black background with a star field. Dramatic cinematic lighting: vivid neon-green rim light on the hero coin, warm orange-white glow from the rocket flames, cold blue fill on the platforms. Mood: hungry, confident, built to lead. The rockets carry no flags, badges or lettering; every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No real logos anywhere. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "b81ecc39",
+      "slug": "bitcoin-below-the-50-day-final-dip",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A calm, hungry-eyed plain gold coin character with little arms and legs has just dropped through a cracked glowing glass floor and landed in a crouch on a lower stone ledge inside a dark canyon, dust still settling; above it the broken floor hangs with jagged glowing edges. The coin is already grinning and pulling a big empty shopping basket toward a pile of discounted plain silver coins scattered across the ledge, scooping them in. Far above, tiny panicking plain grey coin characters are leaping off the broken floor and running away. Deep navy near-black background. Dramatic cinematic lighting: a single warm golden key light on the hero coin, cold blue light from the cracked floor above, soft glow from the silver coins. Mood: calm, hungry, defiant, buying while everyone runs. The coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; every other coin is also completely plain. No real logos anywhere. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "c38a5846",
+      "slug": "old-rails-new-rails",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Two railway lines run side by side into the distance across a dark misty plain at night. On the left, an ancient rusty steam locomotive hauling a long line of heavy iron vault-carriages crawls along cracked, weed-choked wooden tracks, belching slow grey smoke, with a few sleepy plain grey coin characters in tiny top hats dozing in its windows. On the right, a sleek glowing ribbon of light rail hovers above the ground and a streamlined train made of pale glowing light streaks past in a blur, and a small calm plain gold coin character with little arms and legs leans out of its window waving back at the steam train. Deep navy near-black background with low fog. Dramatic cinematic lighting: cold blue moonlight on the rusty tracks, bright warm white and pale cyan glow from the light rail, motion streaks. Mood: calm, inevitable, the future leaving the past behind. The trains carry no emblems, badges or lettering; every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No real people and no real logos anywhere. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Toncoin is Gram now ($GRAM, the old $TON) and it is sitting at about $1.19, more than 85% below its $8.25 all-time high.\n\nTelegram has over a billion monthly users, every mini app inside Telegram has to run on TON, and the wallet is built into the app. Nobody else in crypto has that distribution.\n\nI am very, very bullish on Gram at this price. One of my highest conviction holds, and I keep stacking it.\n\n#toncoin #gram #ton",
+      "hook": "Toncoin is Gram now ($GRAM, the old $TON) and it is sitting at about $1.19, more than 85% below its $8.25 all-time high.",
+      "image_id": "b4aa7129",
+      "notes": "Toncoin subject; no Follow line (persona project_handles.ton is null). No IG companion (not Kaspa). YT poll + X poll (eligible_topic toncoin) ride on this concept."
+    },
+    {
+      "tweet": "Elon Musk: in 5 years digital intelligence exceeds the sum of all human intelligence, and there will be 100 million to a billion humanoid robots.\n\nI am a code monkey, I am in the know: nobody at the companies I know is writing code anymore. AI writes it, and now AI agents review it. A year ago that was slop. Not anymore.\n\nEverything that requires labor is next, and once wages go, buying assets gets a whole lot harder. This bull run is one of the last windows for regular people to get ahead. Stop eating out, buy the assets. Am I wrong?\n\n#AI #crypto",
+      "hook": "Elon Musk: in 5 years digital intelligence exceeds the sum of all human intelligence, and there will be 100 million to a billion humanoid robots.",
+      "image_id": "081f88cb",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): the explicit 'Am I wrong?' invitation on Mike's strongest conviction take of the stream. Nothing is manufactured: Musk's three figures are verified and the code-review line is Mike's first-hand read. The Jensen Huang radiology attribution from the stream was dropped (fact_check)."
+    },
+    {
+      "tweet": "Pump.fun ($PUMP) is a $1.9B market cap launchpad that is still holding its higher lows on my chart while the rest of the market looks like hell.\n\nPerps through Hyperliquid, pre-IPO token pairs, its own bridge, and daily revenue buybacks. That is a leader, not a meme.\n\nMy conservative number for the top of this bull run is $8B to $10B. Could be a lot more, could get hit by some scandal nobody sees coming... that is crypto. I DCA, I do not buy it all at once. Never financial advice.\n\n#pumpfun #solana",
+      "hook": "Pump.fun ($PUMP) is a $1.9B market cap launchpad that is still holding its higher lows on my chart while the rest of the market looks like hell.",
+      "image_id": "d7914aa7",
+      "notes": "Pump.fun subject; no Follow line because persona project_handles has no pump.fun entry (flagged in missing_references). No IG companion (not Kaspa). Signature ellipsis used once in this batch."
+    },
+    {
+      "tweet": "Bitcoin ($BTC) closed below the 50-day for the first time since August and the whole market looks like hell. That is what the final dip-buying window of this bull run looks like 😎\n\n#bitcoin #BTC",
+      "hook": "Bitcoin ($BTC) closed below the 50-day for the first time since August and the whole market looks like hell. That is what the final dip-buying window of this bull run looks like 😎",
+      "image_id": "b81ecc39",
+      "notes": "Single-line image-first format. Macro subject: no X poll, no IG companion."
+    },
+    {
+      "tweet": "Tom Lee says 99% of finance still runs on old rails and banks without a crypto plan get left behind. Same thing applies to you: stay in the game, keep stacking, come out ahead 💪\n\n#crypto #TomLee",
+      "hook": "Tom Lee says 99% of finance still runs on old rails and banks without a crypto plan get left behind. Same thing applies to you: stay in the game, keep stacking, come out ahead 💪",
+      "image_id": "c38a5846",
+      "notes": "Single-line image-first format. The 'applies to you' turn is Mike's own on-stream extension of the quote ('people without a crypto plan can get left behind, this is why we have to stay in the game'). No IG companion (not Kaspa)."
+    }
+  ],
+  "x_threads": [],
+  "x_polls": [
+    {
+      "id": "poll-2026-10-27-does-gram-take-out-its-ath-this-bull-run",
+      "topic": "Gram / Toncoin: does the rebranded token take out its $8.25 all-time high this bull run",
+      "eligible_topic": "toncoin",
+      "tweet_text": "Toncoin is Gram now ($GRAM, the old $TON), it trades around $1.19, and Telegram puts it in front of over a billion users.\n\nDoes Gram take out its $8.25 all-time high this bull run?",
+      "hook": "Toncoin is Gram now ($GRAM, the old $TON), it trades around $1.19, and Telegram puts it in front of over a billion users.",
+      "options": [
+        "Yes, new ATH this run",
+        "No, not this run"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-10-27-does-gram-take-out-its-ath-this-bull-run",
+      "topic": "Gram / Toncoin: new ATH above $8.25, runs but tops between $3 and $8, or stays under $3 this cycle",
+      "question_text": "Toncoin is officially Gram now, and I am finally getting used to calling it that. It trades around $1.19, more than 85% below its $8.25 all-time high, and it has the one thing nobody else in crypto has: Telegram's billion-plus monthly users, every mini app forced onto TON, and a wallet built into the app. I am very bullish at this price. Where does Gram top out this bull run?",
+      "hook": "Toncoin is officially Gram now, and I am finally getting used to calling it that.",
+      "options": [
+        "New all-time high above $8.25 this bull run",
+        "It runs, but tops out between $3 and $8",
+        "It stays under $3 this cycle"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-10-27-last-window-before-ai-takes-the-jobs",
+      "topic": "AI / post-labor economy: is this bull run the last window for a regular person to get ahead before AI and humanoid robots take over labor",
+      "question_text": "Elon Musk says that within five years digital intelligence exceeds the sum of all human intelligence and there will be 100 million to a billion humanoid robots. I am a software engineer and I can tell you nobody I know is writing code anymore: AI writes it and AI agents review it. My take on stream: this bull run is one of the last windows for a regular person to buy assets and get ahead before all of that lands. Do you agree?",
+      "hook": "Elon Musk says that within five years digital intelligence exceeds the sum of all human intelligence.",
+      "options": [
+        "Yes, buy assets now or get left behind",
+        "No, AI grows the economy and creates more chances, not fewer",
+        "AI is overhyped, nothing changes that fast"
+      ]
+    }
+  ],
+  "yt_posts": [],
+  "ig_single": [],
+  "yt_quizzes": [
+    {
+      "id": "yt-quiz-2026-10-27-why-toncoin-became-gram",
+      "topic": "Gram: why Toncoin took that name",
+      "source_post": null,
+      "question_text": "Toncoin officially became Gram on June 15, 2026, and on stream I said I am finally getting used to calling it that, because the reason makes sense. Why Gram?",
+      "hook": "Why did Toncoin become Gram?",
+      "options": [
+        "Gram was the original 2018 name of Telegram's token",
+        "It is named after Telegram's founder",
+        "One Gram is backed by a gram of gold",
+        "Gram stands for Global Reserve Asset Model"
+      ],
+      "correct_option_index": 0,
+      "explanation": "Gram was the name of Telegram's 2018 token before the SEC fight shut it down. The community kept the chain alive as The Open Network, and in June 2026 an 81% community vote gave the token its original name back.",
+      "capture_results_after_days": 14
+    },
+    {
+      "id": "yt-quiz-2026-10-27-what-stonkfun-pairs-tokens-against",
+      "topic": "StonkFun: what new tokens launch against",
+      "source_post": null,
+      "question_text": "I called Stonk ($STONK) another strong launchpad play this week, right next to Pump.fun. What does StonkFun pair a new token against instead of SOL?",
+      "hook": "What does StonkFun pair new tokens against?",
+      "options": [
+        "Tokenized stocks and ETFs, like SPYx and NVDAx",
+        "Bitcoin only",
+        "USDC only",
+        "Nothing, the tokens launch unpaired"
+      ],
+      "correct_option_index": 0,
+      "explanation": "StonkFun launches tokens against tokenized equities and ETFs (xStocks like SPYx and NVDAx, pre-IPO tokens, tokenized gold). $STONK itself went live in a STONK/SPYx pool, which is why I call it the launchpad that pairs memes with tokenized assets.",
+      "capture_results_after_days": 14
+    }
+  ]
+}

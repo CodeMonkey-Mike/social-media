@@ -1,0 +1,1154 @@
+{
+  "_meta": "coverage-strategist proposal 2026-10-21 (re-authored) for kcc20 on the RE-CUT FINAL spine ALL.e.desilenced.mp4 (328.99 s, 30 fps), after Mike cut the five not-final-yet spans and KCC-1 / KCC-2 / KCC-20 went Final (kaspanet/kccs PR #41, 2026-10-21 14:50 UTC). SUPERSEDES the 2026-10-21 14:49 plan written on ALL.d.desilenced (389.68 s): every timecode in that file is stale. Receipts first, then the b-roll budget Mike raised (17 Envato + 15 ChatGPT), containers fill the rest; every tIn/tOut is a word boundary from ALL.e.desilenced.medium-words.json. Built, QA-passed assets in assets/ are REUSED wherever their line survived (PROJECT-LOG 2026-10-21); assets whose line was cut are BENCHED (open_questions 3). Three zero-length title beats (CH2 30.50, CH4 174.64, CH5 207.44) and one zero-length clip insert (CLIP-1 at 162.20) are edit-time pauses. Two further spine pauses are EDIT-PLAN rows, not cover beats: the BRAAM after 'mined.' (trough 240.92-241.06, C17 holds) and the FINAL STAMP after 'them.' (trough 202.32-202.56, c5-final-square holds). No em dashes anywhere.",
+  "spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kcc20\\spine\\ALL.e.desilenced.mp4",
+  "transcript_json": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\kcc20\\spine\\ALL.e.desilenced.medium-words.json",
+  "face_windows": [
+    [
+      0.0,
+      6.833
+    ],
+    [
+      19.633,
+      28.167
+    ],
+    [
+      252.9,
+      328.992
+    ]
+  ],
+  "budget": {
+    "envato_video_max": 17,
+    "chatgpt_image_max": 15,
+    "envato_used": 12,
+    "chatgpt_used": 8,
+    "note": "Mike raised the caps (17 + 15) and asked for b-roll close to the max wherever a beat suits one. Every atmospheric / conceptual beat on this 237.5 s cover now carries a clip or an image (20 items, one every 11.9 s, the same density Mike approved on the 14:49 plan); the remaining seconds are receipts, code charts and the CH2 kinetic-panel diagrams, which Mike ruled are the point of that chapter. 12 + 8 are all REUSED built assets (zero new generation). Five built b-roll items lost their line to the Oct 21 cuts and are benched. Four named swap-ins that would take the count toward the max are in open_questions 4, each with the receipt or kinetic hold it would fragment; the strategist recommends against them, Mike decides."
+  },
+  "cover_beats": [
+    {
+      "chapter": "CH1",
+      "tIn": 6.833,
+      "tOut": 9.36,
+      "spoken": "On October 7th, 2026,",
+      "cover_type": "envato-video",
+      "what": "BR-1 (REUSE assets/vid/BR-1-teal-particles.mp4): dark abstract Kaspa-teal atmosphere, slow light rays and drifting particles, with the H0 motion-type card riding on it: 'KCC-20 / LAST CALL / OCT 7, 2026' (the date chip is new: the card reads as the Oct 7 headline, never as today's status). 2.53 s.",
+      "source": "Envato query: 'dark abstract teal light rays particles slow motion background' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "BR-3 teal smoke (assets/vid/BR-3-teal-smoke.mp4), the other dark atmosphere clip",
+      "notes": "House rule #2 punctuation right off the hook face. Screenplay CH1 Beat 1: the H0 card lands here with the CH1 impact. The AS-RECORDED status flag applies: the hook is true history (Last Call on Oct 7), so the card carries the date. Captions OFF over a cover."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 9.36,
+      "tOut": 13.84,
+      "spoken": "pull request 31 merges into Kaspa's own conventions repo, and the",
+      "cover_type": "receipt",
+      "what": "C9 (REUSE assets/receipts/C9-pr31-merged.png): kaspanet/kccs PR #31 'KCC0 Compliance for KCC-20 + Last Call advancement', the title + the purple Merged badge + the 'michaelsutton merged ... on Oct 7' line, full video width, top-aligned. R(other). treatment: pan (a PR page shown as an object: it exists, it merged). 4.48 s.",
+      "source": "https://github.com/kaspanet/kccs/pull/31 (crop to title + Merged badge + merge line)",
+      "priority": "high",
+      "verify": false,
+      "bench": "the C10 commits-log crop focused on the '#31' row of Oct 7",
+      "notes": "Receipts-first on the dated claim (DATA.md T7). Lands as he says 'pull request 31'. A merged PR dated Oct 7 is pure history, so it is unaffected by the Oct 21 Final news. Budget-exempt."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 13.84,
+      "tOut": 16.98,
+      "spoken": "status on the spec flips to Last Call, the final",
+      "cover_type": "receipt",
+      "what": "RX4 (NEW receipt): the PR #31 'Files changed' diff of kcc-0020.md, the header hunk where the Status line changes to 'Last Call' (the red removed line and the green added line), cropped to that hunk, full width. R(other). treatment: highlight, the yellow wipe lands on the added 'Status: Last Call' line as he says 'flips to Last Call' (15.18). 3.14 s.",
+      "source": "https://github.com/kaspanet/kccs/pull/31/files (the kcc-0020.md diff, header hunk with the Status change; verify the hunk is in that PR's diff, else the PR's commit 3fbec52 diff)",
+      "priority": "high",
+      "verify": true,
+      "bench": "the existing C8 capture (assets/receipts/C8-kcc20-header.png, the kcc-0020.md header reading Status 'Last Call', captured 2026-10-21 before the Final merge) WITH a dated chip 'HEADER AS OF OCT 7, 2026' burned on it",
+      "notes": "Receipts-first on 'the status flips to Last Call'. Replaces C8 deliberately: a bare header crop reading 'Status: Last Call' is a current-status graphic, and the AS-RECORDED flag says no graphic may claim KCC-20 is still in Last Call today (the ONLY current-status graphic is the FINAL stamp at 202). A diff inside the Oct 7 PR literally shows the status FLIPPING on that date, so it is history by construction. Mike rules in open_questions 1."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 16.98,
+      "tOut": 19.633,
+      "spoken": "review window before standard goes final.",
+      "cover_type": "envato-video",
+      "what": "BR-2 (REUSE assets/vid/BR-2-server-corridor.mp4): dark server-room corridor, racks with blue-teal status LEDs, slow forward dolly (leading motion; 2.65 s, well under the 5 s lead cap). Dissolve out into FACE window 2 at 19.633 (film burn on the face cut).",
+      "source": "Envato query: 'dark server room corridor blue teal lights slow dolly' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "BR-3 teal smoke",
+      "notes": "CH1 theme: the base layer itself, no people, no coins. The leading dolly carries the viewer into the thesis face line. Ends exactly at the FACE window start (face-leak rule #6)."
+    },
+    {
+      "chapter": "CH1",
+      "tIn": 28.167,
+      "tOut": 30.5,
+      "spoken": "So let's get into how this is all playing out.",
+      "cover_type": "chatgpt-image",
+      "what": "IMG-1 (REUSE assets/img/IMG-1-circuit-k-macro.png, CH1 photoreal style): extreme macro of a dark silicon circuit board, a greenish-cyan backwards-K Kaspa mark glowing inside the copper traces, teal rim light. PLAYS ITS MOTION CLIP assets/img-motion/IMG-1-circuit-k-macro-motion.mp4 (Seedance 480p, 4.04 s, silent: light pulses along the traces, the K glow breathing) from 0, cut at the slot end, no Ken Burns on top (comp-build.md 3c, Mike 2026-10-21). 2.33 s.",
+      "source": "ChatGPT image (already generated + QA-passed); reference schedule-tweets/images/reference/kaspa-logo.png",
+      "priority": "med",
+      "verify": false,
+      "bench": "BR-3 teal smoke (assets/vid/BR-3-teal-smoke.mp4)",
+      "notes": "The handoff line into the CH2 card: the brand mark punches once before the chapter changes. Starts at the FACE window end 28.167 (face-leak rule). The cut 'Real, close, not yet finished.' line that BR-3 covered on the old spine is gone, so IMG-1 (Mike's motion-clip pick) takes the handoff and BR-3 is benched."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 30.5,
+      "tOut": 30.5,
+      "spoken": "(card pause before 'Start with where this comes from.')",
+      "cover_type": "title",
+      "what": "title-card-ch2 (REUSE assets/title-slides/title-card-ch2.png): 'HOW KCC-20 WORKS', CH2 cyan accent, the video's one chapter-card transition. Zero spine time: the ~1 s readable card pause is an edit-time insert in the breath between 'out.' (30.34) and 'Start' (30.50).",
+      "source": "AS-RECORDED chapter map (CH2 card ON, Bed B starts); house rule #11",
+      "priority": "high",
+      "verify": false,
+      "bench": "none (a card is mandatory where a new bed starts)",
+      "notes": "Known false alarm at card_pauses: check_card_words.py hears 'Let's start' after this card (Whisper adds 'Let's' on the abrupt onset); the card sits correctly between 'out.' and 'Start' (PROJECT-LOG)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 30.5,
+      "tOut": 32.6,
+      "spoken": "Start with where this comes from.",
+      "cover_type": "envato-video",
+      "what": "BR-4 (REUSE assets/vid/BR-4-network-nodes.mp4): glowing network nodes connecting across a dark field, lines drawing between them (the base layer as a network, cyan). 2.10 s, dissolve in off the card.",
+      "source": "Envato query: 'glowing network nodes connecting lines dark background abstract' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "BR-3 teal smoke",
+      "notes": "Conceptual opener of the teaching chapter, a clip rather than a container so the chapter does not open on text after the card. Same slot shape as the approved 14:49 plan."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 32.6,
+      "tOut": 37.62,
+      "spoken": "On June 30th, 2026, the Toccata hard fork gave Kaspa covenants.",
+      "cover_type": "receipt",
+      "what": "C12 (REUSE assets/receipts/C12-toccata-release-v2.0.0.png): rusty-kaspa 'Mainnet Toccata Release - v2.0.0' page, the header + the activation sentence 'roughly on June 30, 2026, at 16:15 UTC' + the KIP list (KIP-16, 17, 20, 21). R(article-ish release note). treatment: highlight, the wipe lands on 'June 30, 2026' as he says the date (32.60-34.60), then a settled push toward the KIP list on 'covenants' (36.74). 5.02 s.",
+      "source": "https://github.com/kaspanet/rusty-kaspa/releases/tag/v2.0.0 (crop to header + activation paragraph + KIP list)",
+      "priority": "high",
+      "verify": false,
+      "bench": "Kaspalytics issue 1 ('on June 30 Kaspa activated Toccata') https://buttondown.com/kaspalytics/archive/issue-1-toccata-live-covenant-usage-a-block/",
+      "notes": "Receipts-first on the dated fact (DATA.md Pillar 1). Not status-sensitive. Budget-exempt."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 37.62,
+      "tOut": 44.46,
+      "spoken": "A covenant is a rule built into a coin that controls how it is spent and where it can go next.",
+      "cover_type": "diagram",
+      "what": "diagram-covenant-stack (REUSE assets/diagrams/diagram-covenant-stack-{coin,spent,next}.png): a UTXO coin node with a RULE badge welded in, eyebrow 'TOCCATA, JUNE 30 2026: KIP-17 covenants + KIP-20 covenant IDs'; three spotlight states cued to the words: coin (37.62 'a rule built into a coin'), spent (40.50 'controls how it is spent'), next (42.70 'where it can go next'). 6.84 s.",
+      "source": "DATA.md T4 + Pillar 1 (KCC-1 covenant definition, KIP-17 'full covenant support', KIP-20 covenant IDs)",
+      "priority": "med",
+      "verify": false,
+      "bench": "card-rulebook held from 37.62 (one card for both lines)",
+      "notes": "Convention 4 system-design container, one point at a time (rule #3). A small 3-state diagram, so the ~7 s hold sits between the card floor (5 s) and the full-diagram floor; same slot the 14:49 plan carried. Cross-fade + scale-in."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 44.46,
+      "tOut": 50.74,
+      "spoken": "KCC-20 is the shared rulebook for a fungible token built from those covenants. Fungible meaning",
+      "cover_type": "container",
+      "what": "card-rulebook (REUSE assets/card-slides/card-rulebook.png): eyebrow 'KASPANET/KCCS / KCC-20', serif headline 'The shared RULEBOOK for a fungible token', body 'built from Toccata's covenants', the three-layer stack glyph Toccata -> covenants -> KCC-20. Single spotlight card, deck style, CH2 cyan. 6.28 s (above the 5 s card floor).",
+      "source": "DATA.md T1 (kcc-0020.md header 'Fungible Token Covenant Specification') + Pillar 1 plain-language summary",
+      "priority": "med",
+      "verify": false,
+      "bench": "C8-style header crop of kcc-0020.md Title line only (no Status line)",
+      "notes": "Rule #9 default container on an explainer line. Extended through 'Fungible meaning' (49.94-50.74) so IMG-2 stays under the 4 s cap on the rest of that sentence."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 50.74,
+      "tOut": 54.24,
+      "spoken": "every unit is the same as every other. Four ideas.",
+      "cover_type": "chatgpt-image",
+      "what": "IMG-2 (REUSE assets/img/IMG-2-identical-coin-grid.png, house Pixar look): a perfectly regular grid of identical greenish-cyan Kaspa coins (backwards-K logo), every one the same, deep navy near-black background, rim light. Literal 'every unit is the same as every other'. Cross-warp in/out. 3.50 s.",
+      "source": "ChatGPT image (already generated + QA-passed); reference schedule-tweets/images/reference/kaspa-logo.png",
+      "priority": "med",
+      "verify": false,
+      "bench": "a C1 overview state (four empty idea slots 01 to 04) as a container, not built",
+      "notes": "Literal-noun still on the fungible gloss; ends exactly on 'Idea' (54.24) so the first kinetic side panel lands on its word with c1-state-01."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 54.24,
+      "tOut": 65.02,
+      "spoken": "Idea 1. A common interface. Every KCC-20 token carries the same state block, the amount, the owner, a few settings, and the same transfer entrypoint.",
+      "cover_type": "diagram",
+      "what": "c1-state-01 (REUSE assets/diagrams/c1-state-01-{base,amount,owner,settings,entrypoint}.png): C1 (01) Common interface, index chip 'IDEA 01 / 04'; the KCC-20 state block (amount, owner, owner scheme, borrow scheme, borrow guard, extension commitment) with Wallet / Indexer / App arrows into 'transfer' / 'transfer_delegator'. Reframed into the LEFT 55 percent while the kt-side-panel RIGHT 'IDEA ONE / A COMMON INTERFACE' slides in on 'Idea' (54.24, swoosh-1 0.17 s early). Field spotlights on the words: amount 60.28, owner 61.16, settings 62.22, entrypoint 63.68 ('transfer entrypoint'). 10.78 s.",
+      "source": "DATA.md Pillar 2 (01): kcc-0020.md section 1 State + section 2 Transfer Interface; labels copied verbatim",
+      "priority": "high",
+      "verify": false,
+      "bench": "none (the kinetic experiment lives on this beat)",
+      "notes": "Convention 4 + the 2023 kinetic-text EXPERIMENT (Mike 2026-10-21; overlays.md section 2). Held unbroken on purpose: the five field states swap every ~2 s, and Mike ruled the panel sits beside the diagram. The 10.78 s hold is the one-diagram-explained case."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 65.02,
+      "tOut": 68.92,
+      "spoken": "So any wallet, indexer, or app reads it the same way.",
+      "cover_type": "envato-video",
+      "what": "BR-5 (REUSE assets/vid/BR-5-phone-hand-cyan.mp4): close-up of hands using a crypto wallet app on a smartphone, dark setting, cyan screen glow. Literal 'any wallet'. 3.90 s, dissolve.",
+      "source": "Envato query: 'person using crypto wallet app smartphone close up dark' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "hold c1-state-01-entrypoint through 68.92",
+      "notes": "The b-roll break after the first idea's diagram (break long holds with cutaways, Mike). Ends at 'way.' 68.92 so c1-state-02 is on screen before the next panel lands on 'Idea' 69.04."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 68.92,
+      "tOut": 75.48,
+      "spoken": "Idea 2. Extended state. A token can carry its own data and behavior behind one digest,",
+      "cover_type": "diagram",
+      "what": "c1-state-02 (REUSE assets/diagrams/c1-state-02-{base,digest}.png): C1 (02) Extended state, index chip 'IDEA 02 / 04'; the base state plus the opaque 'extension_commitment' digest box. Reframed into the RIGHT 55 percent while the kt-side-panel LEFT 'IDEA TWO / EXTENDED STATE' slides in on 'Idea' (69.04, swoosh-2 0.07 s early). Digest state lights on 'digest' (74.66). 6.56 s.",
+      "source": "DATA.md Pillar 2 (02): kcc-0020.md section 4 State Extendability; Sutton 2026-08-29 'implementation-specific state lives behind the extension digest'",
+      "priority": "high",
+      "verify": false,
+      "bench": "none",
+      "notes": "Convention 4 + kinetic panel LEFT. Handed to BR-6 on the transfer clause so the digest-pass-through is shown literally."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 75.48,
+      "tOut": 78.5,
+      "spoken": "and transfers pass that digest through untouched.",
+      "cover_type": "envato-video",
+      "what": "BR-6 (REUSE assets/vid/BR-6-envelope-handoff.mp4): a sealed envelope passed from hand to hand, close up, the seal never broken. Literal 'pass that digest through untouched'. 3.02 s, dissolve.",
+      "source": "Envato query: 'sealed envelope passed hand to hand close up' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "hold c1-state-02-digest through 78.50",
+      "notes": "Literal-noun b-roll (broll-and-containers.md device 4). Ends at 'untouched.' 78.44 / 'Idea' 78.50 so the third panel lands on its word."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 78.5,
+      "tOut": 91.9,
+      "spoken": "Idea 3. Flexible authority. And this comes from KCC-2. The owner of a token can be a public key, a key commitment, a script, or another covenant. So covenants can own tokens and govern them.",
+      "cover_type": "diagram",
+      "what": "c1-state-03 (REUSE assets/diagrams/c1-state-03-{base,s00,s01,s03,s04}.png): C1 (03) Flexible authority (KCC-2), index chip 'IDEA 03 / 04'; the owner field fanning to '0x00 public key', '0x01 / 0x02 key commitment', '0x03 script (P2SH)', '0x04 covenant ID'. Reframed into the LEFT 55 percent while the kt-side-panel RIGHT 'IDEA THREE / FLEXIBLE AUTHORITY / FROM KCC-2' (KCC-2 in the key colour) slides in on 'Idea' (78.50, swoosh-1). Node spotlights: s00 on 'public key' 84.92, s01 on 'key commitment' 86.06, s03 on 'script' 87.30, s04 on 'another covenant' 88.16. Then the kt-keyword-pop 'COVENANTS CAN OWN TOKENS' over the lower picture from 'covenants' 89.28 (twinkle on the first frame), held to 'them.' 91.56. 13.40 s.",
+      "source": "DATA.md Pillar 2 (03): kcc-0002.md scheme table 0x00 to 0x04; 'the owner field is defined by KCC-2' (kcc-0020.md)",
+      "priority": "high",
+      "verify": false,
+      "bench": "C22 receipt (kcc-0002.md scheme table, NOT the header) as a 2.1 s flash on 'And this comes from KCC-2.' 80.90-83.00, open_questions 4",
+      "notes": "Convention 4 + kinetic panel + keyword pop. Held unbroken: five node states + the pop swap every ~2.5 s, and the panel's hover would be cut short by any cutaway. Captions OFF during the pop (screenplay)."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 91.9,
+      "tOut": 104.92,
+      "spoken": "Idea 4. Borrowed Receive. Here's the thing. Every UTXO, every unspent coin, has to be funded with KAS. And a rule called storage mass makes tiny outputs expensive on purpose.",
+      "cover_type": "diagram",
+      "what": "c2-borrowed-receive state LEFT (REUSE assets/diagrams/c2-borrowed-receive-left-{base,kas,mass}.png): index chip 'IDEA 04 / 04 / BORROWED RECEIVE'; the 'new UTXO' path: sender creates a fresh token UTXO, must fund it with KAS, the STORAGE MASS meter climbing red for small outputs (KIP-9). Reframed into the RIGHT 55 percent while the kt-side-panel LEFT 'IDEA FOUR / BORROWED RECEIVE' slides in on 'Idea' (91.90, swoosh-2). States: kas on 'funded with KAS' 98.92, mass on 'storage mass' 100.88 together with the kt-keyword-pop 'STORAGE MASS' (knock-pop on the first frame), held to 'purpose.' 104.72. 13.02 s.",
+      "source": "DATA.md Pillar 2 (04): kcc-0020.md section 5 + the companion guide borrowed-receive-authorization.md; KIP-9 storage mass",
+      "priority": "high",
+      "verify": false,
+      "bench": "none",
+      "notes": "Convention 4 + kinetic panel + keyword pop. The one place a cutaway was weighed ('Every UTXO, every unspent coin' 95.14-98.28) and rejected: it would split the flow diagram into two sub-floor halves right after the panel lands. Captions OFF during the pop."
+    },
+    {
+      "chapter": "CH2",
+      "tIn": 104.92,
+      "tOut": 116.22,
+      "spoken": "So instead of a UTXO for every incoming token, the sender tops up one you already hold. Same owner. The KAS inside cannot go down. Only the token amount grows.",
+      "cover_type": "diagram",
+      "what": "c2-borrowed-receive state RIGHT (REUSE assets/diagrams/c2-borrowed-receive-right-{base,owner,floor,amount}.png): the 'borrowed receive' path: the recipient's existing token UTXO consumed and recreated, gated by borrow_scheme / borrow_guard. States on the words: owner on 'Same owner.' 110.66, floor ('KAS value cannot decrease') on 'cannot go down' 112.70, amount on 'grows' 115.04 together with the kt-keyword-pop 'ONLY THE TOKEN AMOUNT GROWS' (cash-register started 0.17 s early so the bell lands on 'grows'; THE money moment, the only cash register in the video). 11.30 s, then the CH3 line starts at 116.22 with no card.",
+      "source": "DATA.md Pillar 2 (04) + section 4 row 17 ('the KAS value cannot decrease, and the owner and extended state remain unchanged'; a floor, never 'stays put')",
+      "priority": "high",
+      "verify": false,
+      "bench": "none",
+      "notes": "Convention 4; the second state of the same C2 diagram (the LEFT/RIGHT pair is the declared A-vs-B exception). Captions OFF during the pop. CH3 flows in cardless (Bed B continues)."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 116.22,
+      "tOut": 120.14,
+      "spoken": "Now Kaspa already has tokens, KRC-20,",
+      "cover_type": "chatgpt-image",
+      "what": "IMG-3 (REUSE assets/img/IMG-3-krc20-token-crowd.png, house Pixar look, CH3 amber lane): a lively crowd of colourful generic cartoon token coins (no real marks, no text) streaming out of a glowing amber gateway on a dark field. Cross-warp. 3.92 s.",
+      "source": "ChatGPT image (already generated + QA-passed); no reference (generic approved)",
+      "priority": "med",
+      "verify": false,
+      "bench": "BR-7 stadium roar moved up to this line",
+      "notes": "The KRC-20 side opens on the amber lane colour (chapter theme: the contrast is the colour). Described, never disparaged."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 120.14,
+      "tOut": 125.46,
+      "spoken": "from Kasplex, a third-party control, live since September 2024.",
+      "cover_type": "receipt",
+      "what": "RX1 (REUSE assets/receipts/RX1-kasplex-org.png): the Kasplex GitHub organization page, org header 'The First Protocol For Kaspa Ecosystem' + the pinned go-krc20d repo 'KRC-20 node written in Go'. R(other). treatment: pan (an org page shown as an object: a separate, third-party organization exists). 5.32 s.",
+      "source": "https://github.com/kasplex (crop to the org header + the go-krc20d pinned repo)",
+      "priority": "high",
+      "verify": false,
+      "bench": "https://wiki.kaspa.org/en/Kasplex_KRC_20 ('designed by the 3rd party group'), R(article) with a push",
+      "notes": "Receipts-first on 'from Kasplex, a third-party ...' (DATA.md Pillar 3; Kasplex docs unreachable, Open question 2). The VO says 'control' (as heard); the graphic says nothing about protocol vs control. Budget-exempt."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 125.46,
+      "tOut": 129.74,
+      "spoken": "Around 2,160 tokens by Kasplex's own indexer count.",
+      "cover_type": "animated-chart",
+      "what": "C4 state 1 (REUSE assets/charts/c4-token-count.html + c4-token-count-{start,s1-mid,s1-payoff}.png as the design states): token-count bars, ours, REAL useCurrentFrame count-up: the amber KRC-20 bar GROWS and its value counts up to the dated Kasplex API tokenTotal (2,164 on 2026-10-18, re-pulled at render), '2024' under it; the KCC-20 bar stays empty with its '2026' label dim. Source line 'Kasplex API api.kasplex.org/v1/info, <date>'. 4.28 s.",
+      "source": "DATA.md section 5 + CHART-SOURCE INDEX C4 (code, Type 1 animated) [VERIFY tokenTotal at render]",
+      "priority": "high",
+      "verify": true,
+      "bench": "C19 receipt, the Kasplex API JSON with tokenTotal (raw JSON in a browser), as a flash if Mike wants the real-site number too",
+      "notes": "A number we pulled from a primary API, drawn by our code (charts.md: never an image model as the source of a number). Fact-framing trap (AS-RECORDED): the VO rounds to 2,160, the chart carries the exact dated figure, never the deck's 2,153. Budget-exempt."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 129.74,
+      "tOut": 131.22,
+      "spoken": "It proved the demand.",
+      "cover_type": "envato-video",
+      "what": "BR-7 (REUSE assets/vid/BR-7-stadium-roar.mp4): a packed stadium crowd roaring, arms up, slow motion. Literal 'demand'. 1.48 s flash, dissolve.",
+      "source": "Envato query: 'cheering crowd stadium roar slow motion' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "hold C4 state 1 payoff through 131.22",
+      "notes": "A one-line punctuation flash between the chart and the marquee diagram."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 131.22,
+      "tOut": 143.64,
+      "spoken": "The difference is where the token lives. With KRC-20, token operations are written onto Kaspa as data, and the Kasplex indexer works out who owns that. Your balance is the indexer's answer.",
+      "cover_type": "diagram",
+      "what": "C3 THE MARQUEE, KRC-20 lane (REUSE assets/diagrams/c3-marquee-{base,krc-1,krc-2,krc-3,krc-4}.png): ONE two-lane system-design diagram fills the frame on 'The difference is where the token lives' (131.22, the base state, accent-scifi-mystery-02 on the reveal). The amber KRC-20 lane lights node by node on the words: krc-1 'Kasplex (third party)' on 'With KRC-20' 133.48, krc-2 'token ops inserted as data on L1' on 'written onto Kaspa as data' 136.48, krc-3 'the Kasplex indexer reads and interprets' on 'the Kasplex indexer works out' 138.80, krc-4 'balance = the indexer's answer' on 'indexer's answer' 142.50. 12.42 s.",
+      "source": "DATA.md Pillar 3 + CHART-SOURCE INDEX C3 (code, Type 2, highlight states); wiki 'data insertion protocol, open-source indexer' + kasplex/go-krc20d",
+      "priority": "high",
+      "verify": false,
+      "bench": "none (this diagram replaces the deck's prose table, Convention 4)",
+      "notes": "THE BALANCE: the rich diagram appears ONCE here and is 'broken up' by its own per-node highlight states rather than re-shown as a full slide. Deliberately unbroken for 23.4 s across this beat and the next (open_questions 6): every spoken clause is one node of the diagram, so any cutaway would silence a node; a system-design diagram may hold while actively explained (broll-and-containers.md dwell section). Bracketed by BR-7 before and RX2 after."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 143.64,
+      "tOut": 154.62,
+      "spoken": "With KCC-20, the token state sits inside a covenant UTXO on the base layer, and the chain script enforces every transfer. Your balance is what the chain enforces.",
+      "cover_type": "diagram",
+      "what": "C3 KCC-20 lane (REUSE assets/diagrams/c3-marquee-{kcc-1,kcc-2,kcc-3,kcc-4,both}.png): the Kaspa-teal lane lights node by node: kcc-1 'kaspanet/kccs (core contributors)' on 'With KCC-20' 143.64, kcc-2 'token state in covenant UTXOs on L1' on 'covenant UTXO on the base layer' 147.14, kcc-3 'L1 script (KIP-17 covenants, KIP-20 IDs) enforces the transfer' on 'the chain script enforces' 150.06, kcc-4 'balance = what the chain enforces' on 'what the chain enforces' 153.08; both lanes hold side by side (c3-marquee-both) on 'enforces.' 153.66-154.62. 10.98 s.",
+      "source": "DATA.md T4 + Pillar 3; kcc-0020.md section 1, KCC-1, KIP-17, KIP-20",
+      "priority": "high",
+      "verify": false,
+      "bench": "none",
+      "notes": "Second lane of the same single diagram (not a repeat of a slide; the lint sees one declared DIAGRAM_REF with states). The 'both' state is the hand-off into the author's own words."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 154.62,
+      "tOut": 158.48,
+      "spoken": "Sivan Helfer, the first listed author of KCC-20,",
+      "cover_type": "receipt",
+      "what": "RX2 (REUSE assets/receipts/RX2-xxim-masterclass-watch.png): the XXIM YouTube watch page 'Kaspa Programmability MasterClass: Covenants + SilverScript with @manyfest', title + channel + upload date (Jun 22, 2026), the player paused on the guest, logged out. R(other). treatment: push (settling push onto the title + date). 3.86 s.",
+      "source": "https://www.youtube.com/watch?v=0kN7xYim3Mk (watch page crop: title + channel + upload date, player paused on the guest)",
+      "priority": "high",
+      "verify": false,
+      "bench": "the kcc-0020.md Authors line crop ('Sivan Helfer (@Manyfestation)' first), NOT the header's Status line",
+      "notes": "Receipts-first on who he is and when he said it (DATA.md section 3; the name is a Whisper mishear 'Savannah' in the JSON, captions say Sivan). Sets up the clip insert that follows."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 158.48,
+      "tOut": 162.2,
+      "spoken": "put it plainly back in June, a week before Toccata went live.",
+      "cover_type": "receipt",
+      "what": "CLIP-1 LEAD-IN: the clip's FIRST frame (Sivan Helfer on the masterclass, with the burned caption 'Sivan Helfer, KCC-20 author, June 2026, a week before Toccata') held as a STILL under the set-up line, the comp's lead-in to the insert (comp-build.md section 3d). Not a muted play of the clip. 3.72 s, then the insert-in transition (hand:fade 0.5 s) into the clip at the pause.",
+      "source": "CLIP-1 itself, frame 0 of assets/clip-inserts/CLIP-1-helfer-real-assets.mp4; skills/clip-inserts/clip-inserts.md",
+      "priority": "high",
+      "verify": false,
+      "bench": "RX2 held through 162.20",
+      "notes": "Clip-insert rule: the set-up line ENDS the sentence ('...went live.' 162.20); the clip's own frames never play muted under narration; its first frame is the still. The splice point is the end of 'live.' at 162.20."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 162.2,
+      "tOut": 162.2,
+      "spoken": "(spine pause: CLIP-1 plays with its own voice, 20.5 s)",
+      "cover_type": "clip-insert",
+      "what": "CLIP-1: Sivan Helfer, KCC-20 first-listed author, XXIM masterclass (uploaded 2026-06-22), source 30:05.0-30:25.5, 20.500 s, full-frame with its OWN voice while the spine pauses; burned caption on every frame; Bed B ducked -14 dB automatically from the sidecar. Zero spine time.",
+      "source": "https://www.youtube.com/watch?v=0kN7xYim3Mk 30:05.0-30:25.5 (already captured: assets/clip-inserts/CLIP-1-helfer-real-assets.mp4, 1920x1080 30 fps, audio present, 20.500 s, Whisper heard 'create real assets on CASPA')",
+      "priority": "high",
+      "verify": true,
+      "bench": "CLIP-2 (HELD in the screenplay, 29 s, same splice point) if Mike changes his mind; else no insert and the resume line stands alone",
+      "notes": "splice_at = the END of the set-up line's last word 'live.' (162.20 in the word JSON; 'That' starts 162.34). AS-RECORDED measured the trough 162.22-162.32 below -88 dB (digital silence 162.27-162.31): the snapper lands inside it. The old plan's 164.44 was an ALL.d coordinate and is dead. The clip's LAST frame is held under the resume line (next beat)."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 162.2,
+      "tOut": 164.44,
+      "spoken": "That is the whole difference.",
+      "cover_type": "receipt",
+      "what": "CLIP-1 LEAD-OUT: the clip's LAST frame held as a STILL under the resume line (insert-out transition hand:fade 0.5 s off the clip), the comp's lead-out (comp-build.md section 3d). 2.24 s.",
+      "source": "CLIP-1 itself, last frame of assets/clip-inserts/CLIP-1-helfer-real-assets.mp4",
+      "priority": "high",
+      "verify": false,
+      "bench": "c3-marquee-both (the two lanes side by side) as the resume cover",
+      "notes": "Mike's claim about the clip is said as his, in the resume line. The still, not the clip, sits under his voice."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 164.44,
+      "tOut": 169.54,
+      "spoken": "On the KCC-20 side, it is very early. Roughly 150 tokens",
+      "cover_type": "animated-chart",
+      "what": "C4 state 2 (REUSE c4-token-count.html + c4-token-count-s2-payoff.png as the design state): the teal KCC-20 bar GROWS and COUNTS UP (real useCurrentFrame) to the dated KasStacker figure (146 on 2026-10-21, re-read at render) next to the full KRC-20 bar; launch years '2024' vs '2026' under each; source line 'KasStacker, third-party count, <date>'. Count-up starts on 'Roughly' 167.58 so the bar is still rising as he says '150'. 5.10 s.",
+      "source": "DATA.md section 5 + Pillar 3 (KasStacker, third-party, citing kcc20.info + kascov.io) + CHART-SOURCE INDEX C4 [VERIFY]",
+      "priority": "high",
+      "verify": true,
+      "bench": "C18 receipt held from 164.44 instead of the chart",
+      "notes": "Fact-framing trap (AS-RECORDED 167.58): VO 'roughly 150', the chart carries the exact dated third-party count with 'third-party count' on the source line; never a hard 146 in captions. Guard [!WARNING 4] context held."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 169.54,
+      "tOut": 171.52,
+      "spoken": "by one community tracker's count.",
+      "cover_type": "receipt",
+      "what": "C18 (REUSE assets/receipts/C18-kasstacker-covenants.png, recaptured 2026-10-21): the KasStacker nav header + hero stats card with the covenant breakdown line 'KCC-20 146 tokens (3,621 live states)' and the 'from kcc20.info + kascov.io' source note. R(other). treatment: push onto the KCC-20 breakdown line. 1.98 s flash.",
+      "source": "https://kasstacker.org/ (crop = nav header + hero stats card with the breakdown line + source note)",
+      "priority": "high",
+      "verify": true,
+      "bench": "hold C4 state 2 payoff through 171.52",
+      "notes": "Receipts-first on the third-party count, the screenplay's '2 s flash of C18'. Live states (3,621) are shown, never spoken. [VERIFY] the page on render day; a changed count changes the chart and this crop together."
+    },
+    {
+      "chapter": "CH3",
+      "tIn": 171.52,
+      "tOut": 174.64,
+      "spoken": "Think ERC-20, enforced by the base layer itself.",
+      "cover_type": "chatgpt-image",
+      "what": "IMG-4 (REUSE assets/img/IMG-4-coin-fused-bedrock.png, house Pixar look): a greenish-cyan Kaspa coin (backwards-K logo) fused into solid glowing bedrock, roots of cyan light anchoring it into the stone. Literal 'enforced by the base layer itself'. Cross-warp out into the CH4 card. 3.12 s.",
+      "source": "ChatGPT image (already generated + QA-passed); reference schedule-tweets/images/reference/kaspa-logo.png",
+      "priority": "med",
+      "verify": false,
+      "bench": "c3-marquee-kcc-4 (balance = what the chain enforces) as a callback",
+      "notes": "Mike's own analogy, never a naming claim (guard [!WARNING 3] held). The chapter closes on the KCC-20 lane colour."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 174.64,
+      "tOut": 174.64,
+      "spoken": "(card pause before 'The timeline, straight from the repo.')",
+      "cover_type": "title",
+      "what": "title-card-ch4 (REUSE assets/title-slides/title-card-ch4.png): 'WHERE IT STANDS', CH4 gold accent, playful board-game look. Zero spine time: the readable card pause is an edit-time insert in the breath between 'itself.' (174.40) and 'The' (174.64).",
+      "source": "AS-RECORDED chapter map (CH4 card ON, Bed C starts: going-shopping-again verse, remix-looped)",
+      "priority": "high",
+      "verify": false,
+      "bench": "none",
+      "notes": "House rule #11; the card's wording is a chapter name, not a status claim."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 174.64,
+      "tOut": 177.06,
+      "spoken": "The timeline, straight from the repo.",
+      "cover_type": "receipt",
+      "what": "C10 (REUSE assets/receipts/C10-kccs-commits-log.png, re-check the crop): the kaspanet/kccs commits log cropped to the rows 'kcc-01: last call status (#32)' and 'kcc-02: last call status (#33)' on Oct 1, 2026 and 'KCC0 Compliance for KCC-20 + Last Call advancement (#31)' on Oct 7. R(other). treatment: push. 2.42 s.",
+      "source": "https://github.com/kaspanet/kccs/commits/main (crop to the Oct 1 and Oct 7 rows ONLY)",
+      "priority": "high",
+      "verify": true,
+      "bench": "C9 PR #31 page re-cropped to its commit list",
+      "notes": "Literal 'straight from the repo'. VERIFY the crop: the log now has the Oct 21 'advance to Final' rows (#39, #40, #41) above these; they MUST be cropped out, the FINAL stamp at 199.46-202.56 is the reveal and nothing before it may pre-empt it (AS-RECORDED status flag)."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 177.06,
+      "tOut": 190.52,
+      "spoken": "June 30th, Toccata activates. July 15th, the convention repo opens. August 20th, KCC-1, KCC-2, and KCC-20 land as Drafts. On September 22nd,",
+      "cover_type": "timeline",
+      "what": "C5 THE TIMELINE part 1 (REUSE assets/diagrams/c5-timeline.html + c5-timeline-01..05 states; ours, code, animated): a board-game path of date squares, a greenish-cyan K token piece hopping square to square as each date is spoken, gold accent: JUN 30 Toccata activates (177.06), JUL 15 conventions repo opens (179.54), AUG 20 (182.52) then the three Draft chips KCC-1 / KCC-2 / KCC-20 land one by one (183.84 / 184.90 / 186.32, c5-timeline-04-aug20-drafts), a small chart-only SEP 21 'KCC-0 Final' square (not spoken), SEP 22 'Last Call PR opens' lands on 'September 22nd' (188.78, c5-timeline-05-sep22). Timpani clicker taps as the rungs land (SFX intent). 13.46 s.",
+      "source": "DATA.md Pillar 4 table (never the deck's Jul 15 'merged' / Aug 22 / Sep 22 'still open'); CHART-SOURCE INDEX C5 (code, Type 1 animated)",
+      "priority": "high",
+      "verify": false,
+      "bench": "none (the dates are the chapter)",
+      "notes": "Guard [!WARNING 1] held: the repo OPENS Jul 15, the Drafts land Aug 20. Rich diagram shown once, animated as explained; broken right after by BR-8 so it does not hold past ~13.5 s."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 190.52,
+      "tOut": 193.78,
+      "spoken": "the Last Call pull request for KCC-20 opens.",
+      "cover_type": "envato-video",
+      "what": "BR-8 (REUSE assets/vid/BR-8-board-game-hop.mp4): a hand moving a game piece forward on a bright colourful board game, close up, soft light. Literal to the board-game timeline. 3.26 s, dissolve.",
+      "source": "Envato query: 'hand moving game piece on colorful board game close up' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "BR-9 dominoes (benched: tonal fit to CH4, but its own line was cut and placing it on 'land as Drafts' would flicker the timeline twice)",
+      "notes": "Breaks the C5 hold between the Sep 22 rung and the Oct 1 rung, on the clause with no date in it. Playful CH4 tone."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 193.78,
+      "tOut": 199.46,
+      "spoken": "October 1st, KCC-1, KCC-2 move to Last Call.",
+      "cover_type": "timeline",
+      "what": "C5 part 2 (REUSE c5-timeline-06-oct1.png state): the path returns, the OCT 1 square lands on 'October 1st' (193.78) with the KCC-1 and KCC-2 chips hopping onto it on their words (195.68 / 196.64). 5.68 s.",
+      "source": "DATA.md Pillar 4 table (PRs #32, #33, 2026-10-01); C5",
+      "priority": "high",
+      "verify": false,
+      "bench": "none",
+      "notes": "Same diagram, next state; hands straight to the Oct 7 rung and the FINAL stamp."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 199.46,
+      "tOut": 202.56,
+      "spoken": "October 7th, KCC-20 joins them.",
+      "cover_type": "timeline",
+      "what": "c5-final-square (NEW asset, the C5 path END STATE, CH4 playful look, gold accent): the OCT 7 square lands big on 'October 7th' (199.46, the c5-timeline-07-oct7 keyframe, the KCC-20 chip hops on at 'KCC-20' 200.90), then on 'joins them.' (201.64-202.32) the K piece hops ONE MORE square onto a gold FINAL square and a dated stamp slams down: 'UPDATE / KCC-20 IS FINAL / OCT 21, 2026' (kt-keyword-pop style hit, twinkle on the stamp frame). The stamp then HOLDS through a SPINE PAUSE of ~3.0 s at the trough after 'them.' (202.32-202.56, snap target 202.44) so it reads in silence for at least 2 s (Mike 2026-10-21). 3.10 s of spine (to the start of 'By' 202.56) + ~3 s pause.",
+      "source": "kaspanet/kccs PR #41 'KCC-20: advance to Final' merged 2026-10-21 14:50 UTC; PR #39 (KCC-1) 14:50 UTC; PR #40 (KCC-2) 11:32 UTC (PROJECT-LOG, verified on the GitHub API); DATA.md Pillar 4 for the Oct 7 rung",
+      "priority": "high",
+      "verify": true,
+      "bench": "RX3 held from 199.46 with the stamp text burned on it",
+      "notes": "Mike's FINAL STAMP directive (2026-10-21: 'make the cuts and add the Final stamp'): the ONLY current-status graphic in the video; everything before it is history. The pause is an EDIT-PLAN spine-pause row baked like the braam / card pauses (lint-pause-silence on the source spine; 'them.' ends 202.32, 'By' starts 202.56). Built as a new asset id so the asset node builds it. Stamp text is dated and true."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 202.56,
+      "tOut": 204.8,
+      "spoken": "By late July, implementers were",
+      "cover_type": "receipt",
+      "what": "RX3-kccs-readme-final (NEW receipt, captured LIVE): the kaspanet/kccs README index table with KCC-1, KCC-2 and KCC-20 all reading 'Final' (KCC-0 Final, KCC-23 Draft), the Status column highlighted. R(other). treatment: highlight, the wipe runs down the three Final cells. Receipt pixels kept real inside the CH4 gold frame. 2.24 s (plus the stamp pause it follows).",
+      "source": "https://github.com/kaspanet/kccs (crop to the README index table; Status column highlighted; must show the three Final rows)",
+      "priority": "high",
+      "verify": true,
+      "bench": "the PR #41 'KCC-20: advance to Final' merged page https://github.com/kaspanet/kccs/pull/41 (title + Merged badge + Oct 21 date)",
+      "notes": "Mike's directive: the stamp and this receipt 'shown back to back ... or the following By late July line if that slot is too short'. It takes the head of that line; C20 takes the rest. Option B (sequence RX3 inside a longer stamp pause, giving C20 the whole line) is open_questions 2. Replaces the benched C7 (its 'Last Call' rows are stale)."
+    },
+    {
+      "chapter": "CH4",
+      "tIn": 204.8,
+      "tOut": 207.44,
+      "spoken": "already reporting that their tokens only partly matched the draft.",
+      "cover_type": "receipt",
+      "what": "C20 (REUSE assets/receipts/C20-issue11-kaspacom.png): kaspanet/kccs issue #11 (opened Jul 26, 2026 by marciano147 / KaspaCom), the issue title + the quoted line 'partially aligned, not fully conforming.' with the open date visible. R(other). treatment: highlight on 'partially aligned, not fully conforming.' as he says 'only partly matched' (205.86). 2.64 s.",
+      "source": "https://github.com/kaspanet/kccs/issues/11 (crop to title + the quoted line + the open date)",
+      "priority": "high",
+      "verify": false,
+      "bench": "the kas-smiths thread page 2 ('Ross' 2026-07-19 four unclear areas), R(article)",
+      "notes": "Mike approved C20 on this line (GATE 1, 2026-10-21); the deck's Aug 22 is the issue's CLOSE date, never the flag date (DATA.md section 4). The VO airs as recorded ('mashed a draft' is a Whisper mishear for 'matched the draft')."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 207.44,
+      "tOut": 207.44,
+      "spoken": "(card pause before 'So what's the bigger picture?')",
+      "cover_type": "title",
+      "what": "title-card-ch5 (REUSE assets/title-slides/title-card-ch5.png): 'THE BIGGER PICTURE', CH5 greenish-cyan epic look. Zero spine time: the readable card pause is an edit-time insert in the breath between 'draft.' (207.30) and 'So' (207.44).",
+      "source": "AS-RECORDED chapter map (CH5 card ON, Bed D starts: underworlds, right-aligned to 'later.')",
+      "priority": "high",
+      "verify": false,
+      "bench": "none",
+      "notes": "House rule #11. A TOTAL visual change from CH4's playful gold to epic greenish cyan (Mike 2026-10-20)."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 207.44,
+      "tOut": 209.9,
+      "spoken": "So what's the bigger picture? Let's zoom out.",
+      "cover_type": "envato-video",
+      "what": "BR-11 (REUSE assets/vid/BR-11-earth-pullback.mp4): aerial pull-back over a glowing night city skyline, wide, continuous reverse dolly (leading motion; 2.46 s). Literal 'zoom out'. Dissolve in off the card.",
+      "source": "Envato query: 'aerial pull back night city skyline glowing wide' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "IMG-7 knight ridge moved up",
+      "notes": "The ad-libbed CH5 opener + 'Let's zoom out.' as one literal pull-back. Epic register begins."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 209.9,
+      "tOut": 214.72,
+      "spoken": "After the September 22nd release, the main node code went quiet for three weeks.",
+      "cover_type": "receipt",
+      "what": "C13 (REUSE assets/receipts/C13-rusty-kaspa-master-commits.png, re-check the crop): the rusty-kaspa master commits page cropped so BOTH 'Bump version to v2.1.0 (#1139)' on Sep 22, 2026 AND the Oct 13 to 16 block share one screen, the three-week gap visible as the empty stretch between the date headers. R(other). treatment: push, two-stage: settle on the Sep 22 row on 'September 22nd release' (210.36), then push onto the gap on 'went quiet for three weeks' (213.10). Receipt pixels real inside the CH5 cyan frame. 4.82 s.",
+      "source": "https://github.com/kaspanet/rusty-kaspa/commits/master (crop: Sep 22 row + the Oct 13 to 16 block on one screen)",
+      "priority": "high",
+      "verify": true,
+      "bench": "https://github.com/kaspanet/rusty-kaspa/releases (v2.1.0 dated Sep 22) + the commits page as two receipts",
+      "notes": "Receipts-first on a dated repo claim (DATA.md Pillar 5). [VERIFY] at render: commits after Oct 16 may now sit above the block; the crop must still show Sep 22 and the six-commit week, the VO is history either way."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 214.72,
+      "tOut": 218.2,
+      "spoken": "Then six commits landed in one week, October 13th to the 16th.",
+      "cover_type": "envato-video",
+      "what": "BR-12 (REUSE assets/vid/BR-12-coders-night.mp4): software developers coding late at night, dark office, screens glowing, hands on keyboards. Literal 'commits landed'. 3.48 s, dissolve.",
+      "source": "Envato query: 'software developers coding late night dark office screens' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "C13 extended over this line with a second push onto the six commits (the screenplay's single-receipt shape)",
+      "notes": "Cut at 218.20 (the start of '16th.', a word boundary) so BR-12 stays under 4 s and BR-13 is up for 'Maintenance' 218.84."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 218.2,
+      "tOut": 221.14,
+      "spoken": "Maintenance and plumbing, not a new feature.",
+      "cover_type": "envato-video",
+      "what": "BR-13 (REUSE assets/vid/BR-13-steam-night-teal.mp4): dark industrial pipes and valves, a wisp of steam, teal-lit, close up. Literal 'plumbing'. 2.94 s, dissolve.",
+      "source": "Envato query: 'industrial pipes steam valves dark close up' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "a system-design container off a 'rusty-kaspa master' hub with the four commit groups as nodes (consensus internals, wallet mass and fee math, lowio preset, paginated UTXO lookup by address); not built, and the line is 2.3 s, under any diagram floor",
+      "notes": "Literal-noun b-roll; two clips back to back is the punchy-cut rhythm of this chapter's opener."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 221.14,
+      "tOut": 223.44,
+      "spoken": "And DAGKnight, the next consensus upgrade,",
+      "cover_type": "chatgpt-image",
+      "what": "IMG-7 (REUSE assets/img/IMG-7-knight-ridge.png, CH5 epic photoreal): a lone armored knight silhouette on a mountain ridge at night under a greenish-cyan sky, generic plate armor, no heraldry, no text. PLAYS ITS MOTION CLIP assets/img-motion/IMG-7-knight-ridge-motion.mp4 (Seedance 480p, 4.04 s, silent: aurora rippling, cape stirring) from 0, cut at the slot end, no Ken Burns on top (comp-build.md 3c). 2.30 s.",
+      "source": "ChatGPT image (already generated + QA-passed); no reference (generic approved)",
+      "priority": "med",
+      "verify": false,
+      "bench": "C14 held from 221.14",
+      "notes": "Literal 'DAGKnight'. Serious, no oof (screenplay: CH5 stays epic). The cyan sky is the chapter theme."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 223.44,
+      "tOut": 225.48,
+      "spoken": "still has no date.",
+      "cover_type": "receipt",
+      "what": "C14 (REUSE assets/receipts/C14-branch-commits.png): the rusty-kaspa branches page cropped to the 'dagknight' row with its 'Sep 8, 2026' last-update label. R(other). treatment: push onto the date cell. Receipt pixels real inside the CH5 cyan frame. 2.04 s flash.",
+      "source": "https://github.com/kaspanet/rusty-kaspa/branches/all (crop to the dagknight row)",
+      "priority": "high",
+      "verify": true,
+      "bench": "https://raw.githubusercontent.com/kaspanet/kips/master/kip-0002.md header crop, Status 'Proposed'",
+      "notes": "Receipts-first on 'no date' (DATA.md Pillar 5). [VERIFY] the row at render; if the branch moved, the crop updates and the VO ('still has no date') stays true as long as KIP-2 is Proposed. The screenplay's '2 s flash of C14'."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 225.48,
+      "tOut": 233.28,
+      "spoken": "Usage is a tiny base, around 82,000 standard transactions a day the week of October. Up around 22% on the week before.",
+      "cover_type": "animated-chart",
+      "what": "C15 (REUSE assets/charts/c15-daily-transactions.html + c15-daily-transactions-{start,mid,payoff}.png as the design states; ours, code, useCurrentFrame, greenish cyan): daily STANDARD (non-coinbase) accepted transactions, Sep 1 to the latest full day, bars DRAWN left to right as he speaks; the September average line (108,952) marked; the Oct 12 to 15 week bracketed with its average chip (81,767) landing on '82,000' (227.42) and the '+21.5% vs prior week' delta chip landing on '22%' (231.40). Source line 'Kaspalytics, accepted transactions, Standard series, <date>'. 7.80 s.",
+      "source": "DATA.md section 5 + Pillar 5; CHART-SOURCE INDEX C15 (code from the pulled Kaspalytics series, Standard only) [VERIFY re-pull at render]",
+      "priority": "high",
+      "verify": true,
+      "bench": "a screencap of the real Kaspalytics chart https://www.kaspalytics.com/app/transactions/accepted/count (never restyled)",
+      "notes": "A market-usage series WE pulled from the primary endpoint and draw in code (charts.md). Fact-framing trap (AS-RECORDED 225.48): the VO says 'the week of October' with no '12th' and 'around 22%'; the chart carries the dated week and the exact delta. Never the Coinbase series, never the 'down 99%' headline."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 233.28,
+      "tOut": 236.78,
+      "spoken": "And the supply is fixed. Proof of work, no premine.",
+      "cover_type": "envato-video",
+      "what": "BR-14 (REUSE assets/vid/BR-14-asic-mining-rigs.mp4): a cryptocurrency mining farm, a dark aisle of ASIC rigs with blue-white LEDs, slow dolly (leading motion; 3.50 s). Literal 'proof of work'. Dissolve.",
+      "source": "Envato query: 'cryptocurrency mining farm asic rigs dark aisle blue lights dolly' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "kaspa.org 'No premine. No hidden allocation. Fair launch.' crop as a receipt",
+      "notes": "Persona wording held: 'no premine', never 'no pre-sale'. Leads into the supply ring."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 236.78,
+      "tOut": 241.06,
+      "spoken": "Around 96.7% of all Kaspa is already mined.",
+      "cover_type": "animated-chart",
+      "what": "C17 (REUSE assets/charts/c17-supply-ring.html + c17-supply-ring-{start,mid,payoff}.png as the design states; ours, code, useCurrentFrame): a glowing greenish-cyan supply ring FILLING to the dated mined share (96.72% on 2026-10-18, re-pulled at render) with the centre counting up to '96.72%', '27.76B of 28.70B KAS mined', chips 'PROOF OF WORK / NO PREMINE', source line 'api.kaspa.org/info/coinsupply, <date>'. The ring reaches its figure on 'mined.' (240.16). Then the BRAAM: a SPINE PAUSE of the braam's audible length (~4 s, braam-horn-stinger-02 take a) at the trough after 'mined.' (240.92-241.06, snap target ~240.99); the ring HOLDS through it with a slow eased push to ~2.4x on the 96.72% figure (longform-edited.md section 7, BRAAM + ZOOM). 4.28 s of spine + ~4 s pause.",
+      "source": "DATA.md section 5 (circulating 27,763,090,854.57 of max 28,704,035,605 KAS = 96.72%) + CHART-SOURCE INDEX C17 [VERIFY]",
+      "priority": "high",
+      "verify": true,
+      "bench": "https://api.kaspa.org/info/coinsupply raw JSON as a receipt (the two sompi figures)",
+      "notes": "A number we control from a primary endpoint, drawn in code (charts.md). The braam MOVED here from the cut 'yet.' line (Mike 2026-10-21): between sentences, never over a word, the figures on screen, Bed D plays on. Fact-framing trap: VO 'around 96.7%', the ring shows the exact dated figure. The pause is an EDIT-PLAN row, not a cover beat. No price chart anywhere."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 241.06,
+      "tOut": 243.64,
+      "spoken": "New demand meets very little new supply.",
+      "cover_type": "chatgpt-image",
+      "what": "IMG-8 (REUSE assets/img/IMG-8-crowd-narrow-pass.png, CH5 epic photoreal): a vast crowd of tiny glowing figures on a dark night plain pressing toward a narrow mountain pass lit greenish cyan, a single thin stream getting through. Literal 'new demand meets very little new supply'. Cross-warp. 2.58 s.",
+      "source": "ChatGPT image (already generated + QA-passed); no reference (generic approved)",
+      "priority": "med",
+      "verify": false,
+      "bench": "C17 payoff held through 243.64 (after the braam zoom)",
+      "notes": "Comes off the braam pause: the first cut after the hit. Epic greenish cyan."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 243.64,
+      "tOut": 246.8,
+      "spoken": "Conditional, and that's the asymmetry I'm watching.",
+      "cover_type": "chatgpt-image",
+      "what": "IMG-9 (REUSE assets/img/IMG-9-balance-scale-asymmetry.png, CH5 epic photoreal): an immense ancient stone balance scale on a night plateau under a star field, one pan low and heavy with glowing greenish-cyan Kaspa coins (backwards-K), the other pan high and nearly empty. Literal 'asymmetry'. Cross-warp. 3.16 s.",
+      "source": "ChatGPT image (already generated + QA-passed); reference schedule-tweets/images/reference/kaspa-logo.png",
+      "priority": "med",
+      "verify": false,
+      "bench": "BR-15 ridge flight moved up to this line",
+      "notes": "Conditional language only; no target, no multiplier, no price on screen (the amended constraint still governs every graphic)."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 246.8,
+      "tOut": 249.76,
+      "spoken": "And I'm telling you, this is going to be well worth the wait.",
+      "cover_type": "chatgpt-image",
+      "what": "IMG-10 = I1, THE marquee image (REUSE assets/img/IMG-10-summit-cyan-moon-k.png, CH5 epic photoreal): a lone figure standing on a mountain summit at night looking down at a vast glowing city, a HUGE greenish-cyan moon filling the sky behind them with the Kaspa K mark on its face (the only glyph in the image). Slow push-in over the slot; a riser (tension-logo-reveal-1) under the line builds INTO the reveal on 'And' 246.80 (SFX intent), optionally the video's second braam on the reveal frame. 2.96 s.",
+      "source": "SCREENPLAY VISUAL-PLAN I1 (Mike 2026-10-20); ChatGPT image (already generated + QA-passed); reference schedule-tweets/images/reference/kaspa-logo.png",
+      "priority": "high",
+      "verify": false,
+      "bench": "none (Mike's marquee pick)",
+      "notes": "Screenplay CH5 Beat 4: I1 covers exactly this one line now that the two conviction lines are FACE. Under the 4 s image cap; the push-in gives it the marquee weight. No number, no date attached."
+    },
+    {
+      "chapter": "CH5",
+      "tIn": 249.76,
+      "tOut": 252.9,
+      "spoken": "At least for me anyway, nothing here is financial advice.",
+      "cover_type": "envato-video",
+      "what": "BR-15 (REUSE assets/vid/BR-15-ridge-flight-twilight.mp4): a drone climbing a dark mountain ridge at night toward the summit, continuous rising flight (leading motion; 3.14 s, under the 5 s lead cap). Dissolve out into FACE window 3 at 252.90 (film burn on the face cut).",
+      "source": "Envato query: 'drone flying up mountain ridge night toward summit' (already downloaded + QA-passed)",
+      "priority": "med",
+      "verify": false,
+      "bench": "a new epic Envato 'night sky stars time-lapse over mountain silhouette' if Mike wants the ridge flight before the moon instead",
+      "notes": "The ad-libbed disclaimer line (kept, Mike spine gate). The climb continues the summit motif straight into his face for the conviction lines. Ends exactly at the FACE window start 252.90 (face-leak rule #6); FACE runs to 328.992, nothing covers it, no graphic over the pitch (AS-RECORDED 262.40-323.08 flag)."
+    }
+  ],
+  "receipts": [
+    {
+      "id": "C9",
+      "claim": "PR #31 'KCC0 Compliance for KCC-20 + Last Call advancement' merged Oct 7, 2026 by michaelsutton (the dated Last Call event)",
+      "capture": "https://github.com/kaspanet/kccs/pull/31, crop to title + Merged badge + merge line. REUSE assets/receipts/C9-pr31-merged.png. treatment: pan",
+      "beats": [
+        "CH1@9.36-13.84"
+      ],
+      "verify": false
+    },
+    {
+      "id": "RX4",
+      "claim": "The kcc-0020.md Status line flipped to 'Last Call' inside PR #31 (history by construction, dated Oct 7)",
+      "capture": "https://github.com/kaspanet/kccs/pull/31/files, the kcc-0020.md header hunk with the removed / added Status lines; fallback the commit 3fbec52 diff. NEW capture. treatment: highlight on the added 'Status: Last Call' line",
+      "beats": [
+        "CH1@13.84-16.98"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C12",
+      "claim": "Toccata activated on mainnet June 30, 2026 (rusty-kaspa v2.0.0: DAA 474,165,565, KIP-16 / 17 / 20 / 21)",
+      "capture": "https://github.com/kaspanet/rusty-kaspa/releases/tag/v2.0.0, crop to header + activation paragraph + KIP list. REUSE assets/receipts/C12-toccata-release-v2.0.0.png. treatment: highlight on 'June 30, 2026'",
+      "beats": [
+        "CH2@32.60-37.62"
+      ],
+      "verify": false
+    },
+    {
+      "id": "RX1",
+      "claim": "Kasplex is a separate third-party organization that runs the KRC-20 node / indexer (go-krc20d)",
+      "capture": "https://github.com/kasplex, crop to the org header ('The First Protocol For Kaspa Ecosystem') + the go-krc20d pinned repo. REUSE assets/receipts/RX1-kasplex-org.png. treatment: pan",
+      "beats": [
+        "CH3@120.14-125.46"
+      ],
+      "verify": false
+    },
+    {
+      "id": "RX2",
+      "claim": "Sivan Helfer spoke on the XXIM masterclass uploaded June 22, 2026, a week before Toccata",
+      "capture": "https://www.youtube.com/watch?v=0kN7xYim3Mk watch page, crop to title + channel + upload date, player paused on the guest, logged out. REUSE assets/receipts/RX2-xxim-masterclass-watch.png. treatment: push",
+      "beats": [
+        "CH3@154.62-158.48"
+      ],
+      "verify": false
+    },
+    {
+      "id": "C18",
+      "claim": "KasStacker (third-party) counts 146 KCC-20 tokens (3,621 live states, 2026-10-21)",
+      "capture": "https://kasstacker.org/, crop = nav header + hero stats card with the 'KCC-20 146 tokens' breakdown line + the kcc20.info / kascov.io source note. REUSE assets/receipts/C18-kasstacker-covenants.png, re-read on render day. treatment: push",
+      "beats": [
+        "CH3@169.54-171.52"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C10",
+      "claim": "KCC-1 and KCC-2 moved to Last Call Oct 1, 2026 (#32, #33) and KCC-20 Oct 7 (#31), in the kccs commits log",
+      "capture": "https://github.com/kaspanet/kccs/commits/main, crop to the Oct 1 and Oct 7 rows ONLY (the Oct 21 'advance to Final' rows above them cropped OUT). REUSE assets/receipts/C10-kccs-commits-log.png after checking the crop. treatment: push",
+      "beats": [
+        "CH4@174.64-177.06"
+      ],
+      "verify": true
+    },
+    {
+      "id": "RX3",
+      "claim": "KCC-1, KCC-2 and KCC-20 are Final (kaspanet/kccs README index, 2026-10-21; PRs #39 / #40 / #41 merged)",
+      "capture": "https://github.com/kaspanet/kccs, crop to the README index table with the Status column highlighted, the three rows reading Final. NEW live capture (id RX3-kccs-readme-final per PROJECT-LOG). treatment: highlight",
+      "beats": [
+        "CH4@202.56-204.80"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C20",
+      "claim": "KaspaCom's issue #11 (opened Jul 26, 2026): its deployed token was 'partially aligned, not fully conforming.'",
+      "capture": "https://github.com/kaspanet/kccs/issues/11, crop to title + the quoted line + the open date. REUSE assets/receipts/C20-issue11-kaspacom.png. treatment: highlight on the quoted line",
+      "beats": [
+        "CH4@204.80-207.44"
+      ],
+      "verify": false
+    },
+    {
+      "id": "C13",
+      "claim": "rusty-kaspa master: v2.1.0 bump Sep 22, 2026, no commits until Oct 13, then six commits Oct 13 to 16",
+      "capture": "https://github.com/kaspanet/rusty-kaspa/commits/master, crop so the Sep 22 row and the Oct 13 to 16 block share one screen. REUSE assets/receipts/C13-rusty-kaspa-master-commits.png after checking the crop still shows both. treatment: push (two-stage)",
+      "beats": [
+        "CH5@209.90-214.72"
+      ],
+      "verify": true
+    },
+    {
+      "id": "C14",
+      "claim": "The rusty-kaspa 'dagknight' branch was last updated Sep 8, 2026 (DAGKnight has no date)",
+      "capture": "https://github.com/kaspanet/rusty-kaspa/branches/all, crop to the dagknight row. REUSE assets/receipts/C14-branch-commits.png, re-read on render day. treatment: push",
+      "beats": [
+        "CH5@223.44-225.48"
+      ],
+      "verify": true
+    }
+  ],
+  "clip_inserts": [
+    {
+      "id": "CLIP-1",
+      "who": "Sivan Helfer, first-listed author of KCC-20 (GitHub @Manyfestation), guest on the XXIM Kaspa Programmability MasterClass",
+      "says": "We have KRC assets on Kaspa, but it's a bit tricky technically, but those assets are not really on Kaspa. They're just indexed somewhere else. And they... Yeah, so we have now the opportunity to be able to create real assets on Kaspa.",
+      "source": "https://www.youtube.com/watch?v=0kN7xYim3Mk",
+      "start": "30:05.0",
+      "end": "30:25.5",
+      "seconds": 20.5,
+      "splice_at": 162.2,
+      "after_words": "put it plainly back in June, a week before Toccata went live.",
+      "caption": "Sivan Helfer, KCC-20 author, June 2026, a week before Toccata",
+      "expect": "create real assets on",
+      "verify": true,
+      "beats": [
+        "CH3@162.20"
+      ],
+      "notes": "APPROVED by Mike at GATE 1 (2026-10-21), kept as proposed. ALREADY CAPTURED: assets/clip-inserts/CLIP-1-helfer-real-assets.mp4 (20.500 s, 1920x1080 30 fps, audio present, caption burned at the bottom, Whisper small.en heard the words above with 'CASPA' for Kaspa), so the capturer only re-verifies; the 'says' field quotes the capture's Whisper transcript (the auto-caption stutter 'We had we have' is not in the pulled audio). splice_at = END of 'live.' on ALL.e.desilenced (162.20; 'That' starts 162.34); AS-RECORDED measured the trough 162.22-162.32 below -88 dB. The OLD 164.44 is an ALL.d coordinate: never cut there. The clip's first frame is the still under the set-up line (158.48-162.20) and its last frame the still under the resume line (162.20-164.44); the clip never plays muted under narration."
+    }
+  ],
+  "clip_inserts_note": "One insert this video (CLIP-1, approved). CLIP-2 is HELD in the screenplay (same splice point, 29 s, credits Ori); CLIP-3 REJECTED (DAGKnight origin, no status). The cut what-to-watch line removed nothing clip-related.",
+  "chapter_themes": {
+    "CH1": {
+      "accent": "#70c7ba",
+      "accent_name": "Kaspa greenish cyan",
+      "image_style": "photoreal cinematic, dark server-room / circuit atmosphere, teal rim light, deep charcoal",
+      "note": "the hook: the base layer itself, no people, no coins (the two CH1 face scenes get the Higgsfield cyan background swap, a separate assets-stage item; the draft airs them as recorded)"
+    },
+    "CH2": {
+      "accent": "#00c2ff",
+      "accent_name": "cyan (house palette)",
+      "image_style": "house",
+      "note": "the teaching chapter is almost all code-rendered C1 / C2 with the kinetic side panels; one house-look image (IMG-2)"
+    },
+    "CH3": {
+      "accent": "#70c7ba",
+      "accent_name": "Kaspa teal (KCC-20 lane), with amber #ffb000 as the KRC-20 / Kasplex lane secondary",
+      "image_style": "house",
+      "note": "the contrast is the colour: two lanes, two accents on C3 and C4, no prose table"
+    },
+    "CH4": {
+      "accent": "#ffd700",
+      "accent_name": "gold",
+      "image_style": "PLAYFUL: bright toy-like 3D render, a board-game path where each date is a square the Kaspa-K piece hops onto, soft studio light",
+      "note": "Mike, 2026-10-20: slowly but surely, fun along the way; the gold square on October 7 and now the gold FINAL square with the dated stamp"
+    },
+    "CH5": {
+      "accent": "#70c7ba",
+      "accent_name": "Kaspa greenish cyan, everywhere",
+      "image_style": "EPIC photoreal cinematic, wide, glowing greenish cyan: summits, skylines, night skies, the cyan Kaspa moon",
+      "note": "a TOTAL change from CH4: every image, code chart, diagram and container renders in greenish-cyan tones; receipts keep real pixels inside a cyan frame / glow"
+    }
+  },
+  "envato_list": [
+    {
+      "n": 1,
+      "query": "dark abstract teal light rays particles slow motion background",
+      "beat": "CH1@6.833-9.36",
+      "seconds": 2.53,
+      "why": "REUSE assets/vid/BR-1-teal-particles.mp4 (QA-passed). The H0 'KCC-20 / LAST CALL / OCT 7, 2026' type rides over this dark Kaspa-teal atmosphere (screenplay CH1 Beat 1)"
+    },
+    {
+      "n": 2,
+      "query": "dark server room corridor blue teal lights slow dolly",
+      "beat": "CH1@16.98-19.633",
+      "seconds": 2.65,
+      "why": "REUSE assets/vid/BR-2-server-corridor.mp4. Leading corridor dolly into the thesis face line; CH1 theme, the base layer itself"
+    },
+    {
+      "n": 4,
+      "query": "glowing network nodes connecting lines dark background abstract",
+      "beat": "CH2@30.50-32.60",
+      "seconds": 2.1,
+      "why": "REUSE assets/vid/BR-4-network-nodes.mp4. 'Start with where this comes from' off the CH2 card"
+    },
+    {
+      "n": 5,
+      "query": "person using crypto wallet app smartphone close up dark",
+      "beat": "CH2@65.02-68.92",
+      "seconds": 3.9,
+      "why": "REUSE assets/vid/BR-5-phone-hand-cyan.mp4. Literal 'any wallet'; the cutaway after the idea-01 diagram"
+    },
+    {
+      "n": 6,
+      "query": "sealed envelope passed hand to hand close up",
+      "beat": "CH2@75.48-78.50",
+      "seconds": 3.02,
+      "why": "REUSE assets/vid/BR-6-envelope-handoff.mp4. Literal 'pass that digest through untouched'"
+    },
+    {
+      "n": 7,
+      "query": "cheering crowd stadium roar slow motion",
+      "beat": "CH3@129.74-131.22",
+      "seconds": 1.48,
+      "why": "REUSE assets/vid/BR-7-stadium-roar.mp4. Literal 'demand', a one-line flash"
+    },
+    {
+      "n": 8,
+      "query": "hand moving game piece on colorful board game close up",
+      "beat": "CH4@190.52-193.78",
+      "seconds": 3.26,
+      "why": "REUSE assets/vid/BR-8-board-game-hop.mp4. Literal to the board-game timeline; breaks the C5 hold"
+    },
+    {
+      "n": 11,
+      "query": "aerial pull back night city skyline glowing wide",
+      "beat": "CH5@207.44-209.90",
+      "seconds": 2.46,
+      "why": "REUSE assets/vid/BR-11-earth-pullback.mp4. Literal 'zoom out', leading reverse dolly off the CH5 card"
+    },
+    {
+      "n": 12,
+      "query": "software developers coding late night dark office screens",
+      "beat": "CH5@214.72-218.20",
+      "seconds": 3.48,
+      "why": "REUSE assets/vid/BR-12-coders-night.mp4. Literal 'six commits landed'"
+    },
+    {
+      "n": 13,
+      "query": "industrial pipes steam valves dark close up",
+      "beat": "CH5@218.20-221.14",
+      "seconds": 2.94,
+      "why": "REUSE assets/vid/BR-13-steam-night-teal.mp4. Literal 'plumbing'"
+    },
+    {
+      "n": 14,
+      "query": "cryptocurrency mining farm asic rigs dark aisle blue lights dolly",
+      "beat": "CH5@233.28-236.78",
+      "seconds": 3.5,
+      "why": "REUSE assets/vid/BR-14-asic-mining-rigs.mp4. Literal 'proof of work', leading dolly into the supply ring"
+    },
+    {
+      "n": 15,
+      "query": "drone flying up mountain ridge night toward summit",
+      "beat": "CH5@249.76-252.90",
+      "seconds": 3.14,
+      "why": "REUSE assets/vid/BR-15-ridge-flight-twilight.mp4. Leading climb off the summit moon into the FACE conviction lines"
+    }
+  ],
+  "chatgpt_list": [
+    {
+      "n": 1,
+      "prompt_concept": "Photoreal cinematic extreme macro of a dark silicon circuit board, a greenish-cyan backwards-K Kaspa mark glowing inside the copper traces, teal rim light, deep charcoal, 16:9, no text. REUSE assets/img/IMG-1-circuit-k-macro.png + its motion clip assets/img-motion/IMG-1-circuit-k-macro-motion.mp4 (plays from 0, cut at slot end)",
+      "beat": "CH1@28.167-30.50",
+      "why": "the handoff punch into the CH2 card; CH1 circuit atmosphere with the brand mark; Mike's motion-clip pick",
+      "reference": "schedule-tweets/images/reference/kaspa-logo.png"
+    },
+    {
+      "n": 2,
+      "prompt_concept": "Pixar-style 3D CGI: a perfectly regular grid of identical greenish-cyan Kaspa coins (backwards-K logo), every one the same, deep navy near-black background, dramatic rim lighting, 16:9, no text. REUSE assets/img/IMG-2-identical-coin-grid.png",
+      "beat": "CH2@50.74-54.24",
+      "why": "literal 'every unit is the same as every other'",
+      "reference": "schedule-tweets/images/reference/kaspa-logo.png"
+    },
+    {
+      "n": 3,
+      "prompt_concept": "Pixar-style 3D CGI: a lively crowd of colourful generic cartoon token coins (no real marks, no text) streaming out of a glowing amber gateway on a dark field, 16:9. REUSE assets/img/IMG-3-krc20-token-crowd.png",
+      "beat": "CH3@116.22-120.14",
+      "why": "the KRC-20 side opens on the amber lane colour; tokens already exist on Kaspa",
+      "reference": "none exists (generic approved)"
+    },
+    {
+      "n": 4,
+      "prompt_concept": "Pixar-style 3D CGI: a greenish-cyan Kaspa coin (backwards-K logo) fused into solid glowing bedrock, roots of cyan light anchoring it into the stone, deep navy background, 16:9, no text. REUSE assets/img/IMG-4-coin-fused-bedrock.png",
+      "beat": "CH3@171.52-174.64",
+      "why": "literal 'enforced by the base layer itself'",
+      "reference": "schedule-tweets/images/reference/kaspa-logo.png"
+    },
+    {
+      "n": 7,
+      "prompt_concept": "Epic photoreal cinematic: a lone armored knight silhouette on a mountain ridge at night under a greenish-cyan aurora sky, generic plate armor, no heraldry, no text, 16:9. REUSE assets/img/IMG-7-knight-ridge.png + its motion clip assets/img-motion/IMG-7-knight-ridge-motion.mp4 (plays from 0, cut at slot end)",
+      "beat": "CH5@221.14-223.44",
+      "why": "literal 'DAGKnight', serious epic register; Mike's motion-clip pick",
+      "reference": "none exists (generic approved)"
+    },
+    {
+      "n": 8,
+      "prompt_concept": "Epic photoreal cinematic: a vast crowd of tiny glowing figures on a dark night plain pressing toward a narrow mountain pass lit greenish cyan, a single thin stream getting through, 16:9, no text. REUSE assets/img/IMG-8-crowd-narrow-pass.png",
+      "beat": "CH5@241.06-243.64",
+      "why": "literal 'new demand meets very little new supply', the first cut off the braam",
+      "reference": "none exists (generic approved)"
+    },
+    {
+      "n": 9,
+      "prompt_concept": "Epic photoreal cinematic: an immense ancient stone balance scale on a night plateau under a star field, one pan low and heavy with glowing greenish-cyan Kaspa coins (backwards-K logo), the other pan high and nearly empty, 16:9, no text. REUSE assets/img/IMG-9-balance-scale-asymmetry.png",
+      "beat": "CH5@243.64-246.80",
+      "why": "literal 'asymmetry'; conditional, no number",
+      "reference": "schedule-tweets/images/reference/kaspa-logo.png"
+    },
+    {
+      "n": 10,
+      "prompt_concept": "I1, THE marquee: epic photoreal cinematic, a lone figure standing on a mountain summit at night looking down at a vast glowing city, a HUGE greenish-cyan moon filling the sky behind them with the Kaspa K mark on its face (the only glyph), 16:9, no other text. REUSE assets/img/IMG-10-summit-cyan-moon-k.png",
+      "beat": "CH5@246.80-249.76",
+      "why": "Mike's marquee image on 'well worth the wait' (screenplay CH5 Beat 4), riser into the reveal",
+      "reference": "schedule-tweets/images/reference/kaspa-logo.png"
+    }
+  ],
+  "containers": [
+    {
+      "id": "diagram-covenant-stack",
+      "kind": "diagram",
+      "shows": "A UTXO coin node with a RULE badge welded in; arrows 'how it is spent' and 'where it can go next'; eyebrow 'TOCCATA, JUNE 30 2026: KIP-17 covenants + KIP-20 covenant IDs'; three states coin / spent / next. REUSE assets/diagrams/diagram-covenant-stack-*.png. Source DATA.md T4 + Pillar 1.",
+      "beats": [
+        "CH2@37.62-44.46"
+      ]
+    },
+    {
+      "id": "card-rulebook",
+      "kind": "card",
+      "shows": "Eyebrow 'KASPANET/KCCS / KCC-20', headline 'The shared RULEBOOK for a fungible token', body 'built from Toccata's covenants', three-layer stack glyph Toccata -> covenants -> KCC-20. REUSE assets/card-slides/card-rulebook.png. Source DATA.md T1.",
+      "beats": [
+        "CH2@44.46-50.74"
+      ]
+    },
+    {
+      "id": "c1-state-01",
+      "kind": "diagram",
+      "shows": "C1 (01) Common interface: index chip 'IDEA 01 / 04'; the KCC-20 state block (amount, owner, owner scheme, borrow scheme, borrow guard, extension commitment) with Wallet / Indexer / App arrows into 'transfer' / 'transfer_delegator'; field spotlight states amount, owner, settings, entrypoint. Reframes into the LEFT 55 percent for the kt-side-panel RIGHT. REUSE assets/diagrams/c1-state-01-*.png. Labels from kcc-0020.md sections 1 and 2.",
+      "beats": [
+        "CH2@54.24-65.02"
+      ]
+    },
+    {
+      "id": "c1-state-02",
+      "kind": "diagram",
+      "shows": "C1 (02) Extended state: index chip 'IDEA 02 / 04'; the base state plus the opaque 'extension_commitment' digest box (kcc-0020.md section 4); digest spotlight state. Reframes into the RIGHT 55 percent for the kt-side-panel LEFT. REUSE assets/diagrams/c1-state-02-*.png.",
+      "beats": [
+        "CH2@68.92-75.48"
+      ]
+    },
+    {
+      "id": "c1-state-03",
+      "kind": "diagram",
+      "shows": "C1 (03) Flexible authority (KCC-2): index chip 'IDEA 03 / 04'; the owner field fanning to '0x00 public key', '0x01 / 0x02 key commitment', '0x03 script (P2SH)', '0x04 covenant ID' (kcc-0002.md scheme table); node states s00 / s01 / s03 / s04. Reframes into the LEFT 55 percent for the kt-side-panel RIGHT; the 'COVENANTS CAN OWN TOKENS' keyword pop rides the lower picture. REUSE assets/diagrams/c1-state-03-*.png.",
+      "beats": [
+        "CH2@78.50-91.90"
+      ]
+    },
+    {
+      "id": "c2-borrowed-receive",
+      "kind": "diagram",
+      "shows": "C2 Borrowed Receive, two states: LEFT 'new UTXO' path (fresh token UTXO funded with KAS, STORAGE MASS meter climbing red for small outputs, KIP-9; states base / kas / mass); RIGHT 'borrowed receive' path (recipient's existing token UTXO consumed and recreated, owner unchanged, KAS value floor, token amount up, gated by borrow_scheme / borrow_guard; states base / owner / floor / amount). Index chip 'IDEA 04 / 04'. REUSE assets/diagrams/c2-borrowed-receive-*.png. Source kcc-0020.md section 5 + the companion guide.",
+      "beats": [
+        "CH2@91.90-104.92",
+        "CH2@104.92-116.22"
+      ]
+    },
+    {
+      "id": "c4-token-count",
+      "kind": "animated-chart",
+      "shows": "C4 token-count bars, REAL useCurrentFrame count-up in two states: state 1 the amber KRC-20 bar grows to the dated Kasplex API tokenTotal (2,164 on 2026-10-18) with '2024' under it, KCC-20 bar empty; state 2 the teal KCC-20 bar grows to the dated KasStacker count (146 on 2026-10-21) with '2026'. Source line names both sources + dates + 'third-party count' for KasStacker. REUSE assets/charts/c4-token-count.html + the state PNGs as design states. [VERIFY] both counts at render.",
+      "beats": [
+        "CH3@125.46-129.74",
+        "CH3@164.44-169.54"
+      ]
+    },
+    {
+      "id": "c3-marquee",
+      "kind": "diagram",
+      "shows": "C3 THE MARQUEE contrast, one two-lane system-design diagram with per-node highlight states: KRC-20 lane (amber): 'Kasplex (third party)' -> 'token ops inserted as data on L1' -> 'the Kasplex indexer reads and interprets' -> 'balance = the indexer's answer'; KCC-20 lane (Kaspa teal): 'kaspanet/kccs (core contributors)' -> 'token state in covenant UTXOs on L1' -> 'L1 script (KIP-17 covenants, KIP-20 IDs) enforces the transfer' -> 'balance = what the chain enforces'; base, krc-1..4, kcc-1..4, both. No prose table. REUSE assets/diagrams/c3-marquee-*.png. Source DATA.md Pillar 3.",
+      "beats": [
+        "CH3@131.22-143.64",
+        "CH3@143.64-154.62"
+      ]
+    },
+    {
+      "id": "c5-timeline",
+      "kind": "timeline",
+      "shows": "C5 THE TIMELINE, animated board-game path (gold accent): squares JUN 30 Toccata activates / JUL 15 conventions repo opens / AUG 20 KCC-1, KCC-2, KCC-20 land as Drafts / SEP 21 KCC-0 Final (chart-only, small) / SEP 22 Last Call PR for KCC-20 opens / OCT 1 KCC-1 + KCC-2 move to Last Call; a greenish-cyan K piece hops square to square as each date is spoken. REUSE assets/diagrams/c5-timeline.html + c5-timeline-01..06 states. Source DATA.md Pillar 4 table.",
+      "beats": [
+        "CH4@177.06-190.52",
+        "CH4@193.78-199.46"
+      ]
+    },
+    {
+      "id": "c5-final-square",
+      "kind": "timeline",
+      "shows": "NEW: the C5 path END STATE in the CH4 playful look: the OCT 7 square lands ('KCC-20 joins them', the existing c5-timeline-07-oct7 keyframe), then the K piece hops ONE more square onto a gold FINAL square and a dated stamp slams down: 'UPDATE / KCC-20 IS FINAL / OCT 21, 2026' (twinkle on the stamp frame). Holds through a ~3 s spine pause at the trough after 'them.' (202.44). Source: kaspanet/kccs PR #41 merged 2026-10-21 14:50 UTC (PROJECT-LOG); the stamp text is dated and true.",
+      "beats": [
+        "CH4@199.46-202.56"
+      ]
+    },
+    {
+      "id": "c15-daily-transactions",
+      "kind": "animated-chart",
+      "shows": "C15 daily STANDARD (non-coinbase) accepted transactions, Sep 1 to the latest full day, bars DRAWN left to right (real useCurrentFrame); the September average line (108,952); the Oct 12 to 15 week bracketed with its average chip (81,767) and the '+21.5% vs prior week' delta chip; source line 'Kaspalytics accepted transactions, Standard series, <date>'. Greenish cyan, epic. REUSE assets/charts/c15-daily-transactions.html + state PNGs. [VERIFY] re-pull at render.",
+      "beats": [
+        "CH5@225.48-233.28"
+      ]
+    },
+    {
+      "id": "c17-supply-ring",
+      "kind": "animated-chart",
+      "shows": "C17 supply ring FILLING to the dated mined share (96.72% on 2026-10-18) with the centre counting up, '27.76B of 28.70B KAS mined', chips 'PROOF OF WORK / NO PREMINE', source line 'api.kaspa.org/info/coinsupply, <date>'. Holds through the ~4 s BRAAM spine pause with a slow push to ~2.4x on the figure. REUSE assets/charts/c17-supply-ring.html + state PNGs. [VERIFY] re-pull at render.",
+      "beats": [
+        "CH5@236.78-241.06"
+      ]
+    },
+    {
+      "id": "title-card-ch2",
+      "kind": "card",
+      "shows": "'HOW KCC-20 WORKS' chapter title slide, CH2 cyan accent. REUSE assets/title-slides/title-card-ch2.png.",
+      "beats": [
+        "CH2@30.50"
+      ]
+    },
+    {
+      "id": "title-card-ch4",
+      "kind": "card",
+      "shows": "'WHERE IT STANDS' chapter title slide, CH4 gold accent, playful board-game look. REUSE assets/title-slides/title-card-ch4.png.",
+      "beats": [
+        "CH4@174.64"
+      ]
+    },
+    {
+      "id": "title-card-ch5",
+      "kind": "card",
+      "shows": "'THE BIGGER PICTURE' chapter title slide, CH5 greenish-cyan epic look. REUSE assets/title-slides/title-card-ch5.png.",
+      "beats": [
+        "CH5@207.44"
+      ]
+    }
+  ],
+  "budget_check": "Envato 12/17 used (BR-1, 2, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15; every clip 1.48 to 3.90 s, all under the 4 s cap; the four leading-motion clips BR-2, BR-11, BR-14, BR-15 are under 4 s anyway). ChatGPT 8/15 used (IMG-1, 2, 3, 4, 7, 8, 9, 10; every still 2.30 to 3.92 s; 5 carry the kaspa-logo.png reference because they show the Kaspa mark, 3 are generic; IMG-1 and IMG-7 play their Seedance motion clips). All 20 b-roll items are REUSED built, QA-passed assets; benched: BR-3, BR-9, BR-10, IMG-5, IMG-6 (their lines were cut). Receipts (11: C9, C10, C12, C13, C14, C18, C20, RX1, RX2 + the new RX3 README-Final and RX4 PR #31 diff) and the code assets (diagram-covenant-stack, card-rulebook, C1 x3 states, C2 x2, C3 x2 lanes, C4 x2, C5 x2 + the new c5-final-square, C15, C17, 3 title cards) are budget-exempt and were placed FIRST on every data / claim beat. ZERO ORPHANS: 53 cover beats tile every non-FACE second of the 328.99 s spine, consecutive with no gap (6.833-19.633, 28.167-252.90; FACE 0-6.833, 19.633-28.167, 252.90-328.992 untouched; nothing past 328.992); the only zero-length beats are the three title cards (30.50, 174.64, 207.44) and the CLIP-1 insert (162.20), all edit-time pauses. No asset appears twice. Every tIn / tOut is a word boundary from ALL.e.desilenced.medium-words.json. Rule #13 honoured: every beat is one sequenced slot, containers yield their time to b-roll (never held underneath). THE BALANCE: the rich diagrams (C3 marquee, C5 timeline, C1 / C2 states) each appear once as animated / state-swapped spotlights, never re-shown as a full slide; CH2 is container-dominant by Mike's ruling, CH5 is image / clip-dominant with receipts and two code charts, CH1 / CH3 / CH4 mix all three. No em dashes anywhere in this file.",
+  "open_questions": [
+    "1. C8 vs RX4 on 'flips to Last Call' (13.84-16.98). The built C8 (kcc-0020.md header reading Status 'Last Call', captured before the Final merge) is benched because the AS-RECORDED flag forbids any graphic that reads as today's status; RX4 (the Status-line diff inside PR #31, dated Oct 7) is history by construction but is a NEW capture (verify the diff hunk shows the Status change). If Mike prefers the existing C8, swap it back WITH a burned dated chip 'HEADER AS OF OCT 7, 2026'.",
+    "2. The FINAL STAMP pause (199.46-202.56 + ~3 s pause at 202.44, inside that slot) and RX3. Planned: c5-final-square holds through the pause, RX3 (README index, three Final rows) takes the head of 'By late July' (202.56-204.80, 2.24 s), C20 the rest (2.64 s). Option B, if the comp can sequence two covers inside one pause (comp-build 3d style): lengthen the stamp pause to ~4.5 s, run the stamp 2.5 s then RX3 2 s inside it, and give C20 the whole 'By late July' line (5.0 s). The strategist prefers Option B for reading time; needs the orchestrator to confirm the pause mechanism (the braam / card-pause baker holds ONE cover).",
+    "3. BENCH list for verify_assets zero-orphans (move out of assets/ or mark BENCH): BR-3 teal smoke, BR-9 dominoes, BR-10 test tubes, IMG-5 gold hourglass, IMG-6 K-piece barrier gate (+ its motion clip assets/img-motion/IMG-6-k-piece-barrier-gate-motion.mp4: the piece stopped at a barrier contradicts the Final stamp), c6-last-call-ladder (all states), diagram-dependency (all states), diagram-one-rulebook (all states), card-not-yet (s1, s2), receipts C7 (README reading Last Call, stale) and C8 (see 1). Every one served a line Mike cut on 2026-10-21 or a status that is no longer true.",
+    "4. Going to the b-roll max. Four named swap-ins would take the plan toward 17 + 15, each at a cost: (a) C22 receipt flash (kcc-0002.md scheme table, NOT the header) at 80.90-83.00 'And this comes from KCC-2.' splits the idea-03 kinetic hold 2.4 s after the panel lands; (b) a new house-Pixar 'single greenish-cyan Kaspa sprout in dark soil' on 'it is very early' 164.44-167.58 shrinks the C4 state-2 count-up to 3.6 s or drops the C18 flash; (c) a new Envato 'empty dark office, monitors off' on 'went quiet for three weeks' 212.34-214.72 splits the C13 receipt before its gap is visible; (d) a new Envato 'calendar pages flipping' on 'live since September 2024' 123.08-125.46 splits RX1. Recommendation: none of them (each fragments a receipt or a kinetic beat); Mike decides.",
+    "5. Crop checks on two REUSED receipts (status leak): C10 (kccs commits log) and C13 (rusty-kaspa master commits) were captured on 2026-10-21 after new commits landed; C10's crop must EXCLUDE the Oct 21 'advance to Final' rows (#39 / #40 / #41), or the stamp at 202 is pre-empted; C13's crop must still show the Sep 22 row and the Oct 13 to 16 block on one screen.",
+    "6. The C3 marquee holds 23.4 s unbroken (131.22-154.62) with 8 node highlight states swapping every ~2.5 s. Mike asked for long holds to be broken, but every spoken clause here is one node of the diagram, so any cutaway silences a node; the hold is bracketed by BR-7 (before) and RX2 (after). Confirm or name the clause to cut away on.",
+    "7. H0 motion card text: 'KCC-20 / LAST CALL / OCT 7, 2026' (the date chip added so the hook card reads as the Oct 7 headline, not today's status). The cut 'Real, close, not finished' H1 card and its timpani taps are gone with their line.",
+    "8. Spine pauses carried as EDIT-PLAN rows (not cover beats): the BRAAM after 'mined.' (trough 240.92-241.06, ~4 s, C17 holds with the slow zoom) and the FINAL STAMP after 'them.' (trough 202.32-202.56, ~3 s, c5-final-square holds). Both troughs must pass lint-pause-silence on ALL.e.desilenced before baking.",
+    "9. Live [VERIFY] at render for the code charts and receipts: Kasplex tokenTotal (C4 s1), KasStacker count (C4 s2 + C18), Kaspalytics Standard series (C15), api.kaspa.org coinsupply (C17), rusty-kaspa master + dagknight branch (C13, C14), the kccs README index now reading Final (RX3). The VO's rounded figures stay; the graphics carry the dated exact ones.",
+    "10. CLIP-1 'expect' is 'create real assets on' (Whisper writes CASPA for Kaspa, so the phrase stops before the name); the existing capture already passed with those words, the capturer only re-verifies length (20.500 s) and audio."
+  ]
+}

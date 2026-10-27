@@ -1,0 +1,128 @@
+{
+ "source_video": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/kcc20/kcc20-VERTICAL.mp4",
+ "source_audio": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/kcc20/spine/ALL.g.paused.mp4",
+ "clock": "final-video seconds",
+ "target_seconds": 32.0,
+ "outro_seconds": 3.0,
+ "claim": "KCC-20 puts the token itself on Kaspa's base layer: with KRC-20 your balance is whatever the Kasplex indexer says, with KCC-20 your balance is what the chain enforces.",
+ "why_this_claim": "It is the video's marquee contrast (CH3, the C3 two-lane diagram) and it survives cold: no timeline, no status, no token counts, no price. Both sides of the comparison are stated inside the body span itself, so the viewer needs nothing from the other five minutes. Everything else in the video is either dated status (Last Call, superseded by Final on Oct 21), mechanics (the four ideas), drifting numbers (token counts, daily transactions), or Mike's unscripted pitch. The one line that still means the same thing in a month is where the token lives.",
+ "spans": [
+  {
+   "role": "hook",
+   "order": 1,
+   "sourced": "FACE",
+   "start": 0.0,
+   "end": 6.815,
+   "seconds": 6.8,
+   "says": "Kaspa's core contributors just moved their first token standard KCC-20 into its final review window.",
+   "says_whisper_raw": "Casper's core contributors just moved their first token standard KCC20 into its final review window.",
+   "on_screen": "F1 FACE window 0.000-6.833 (opens ON Mike's face, the recorded room; the Higgsfield cyan background swap was never built). Burned house captions. Punch-in ~15-20% at 3.80 with lib:lightleaks-1 (1.12 s) on the same frame. Bed A born-every-minute is in the master mix only (the short takes VO from the spine).",
+   "why": "The engineered hook: names Kaspa, names KCC-20, names the stakes (first token standard, final review) in one breath. It is the line Mike wrote to stop the scroll.",
+   "self_contained": "A complete headline sentence with every noun named; nothing refers back.",
+   "in_gap": 0.0,
+   "out_gap": 0.12,
+   "in_note": "file start, opens on face, no prior word",
+   "out_note": "'window.' ends 6.78, 'On' starts 6.90; the FACE edge is 6.833 and the hand:film-burn face-out sits on it (0.76 s)",
+   "clear_of_transitions": true
+  },
+  {
+   "role": "stamp",
+   "order": 2,
+   "sourced": "COVER",
+   "silent": true,
+   "start": 225.8,
+   "end": 227.75,
+   "seconds": 1.95,
+   "says": "(silent: the dated stamp UPDATE / KCC-20 IS FINAL / OCT 21, 2026 holds; no VO, the bed plays on)",
+   "on_screen": "c5-final-square-04-stamp, vertical: the gold 'UPDATE / KCC-20 IS FINAL / OCT 21, 2026' stamp slams over the timeline (kt-keyword-pop) and holds; the master's slow push continues.",
+   "why": "Mike, 2026-10-22, at the short_plan gate: the hook line is the Oct 7 Last Call status; KCC-20 went Final Oct 21. The stamp right after 'final review window' turns the stale line into 'then this happened'.",
+   "self_contained": "A dated status graphic; reads on its own.",
+   "in_note": "the stamp slams at final 225.82 (spine 202.32 + 23.5 s of pauses)",
+   "out_note": "ends before the RX3 receipt ingress (~227.86)",
+   "clear_of_transitions": true
+  },
+  {
+   "role": "body",
+   "order": 3,
+   "sourced": "COVER",
+   "start": 134.8,
+   "end": 155.9,
+   "seconds": 21.1,
+   "says": "With KRC-20, token operations are written onto Kaspa as data, and the Kasplex indexer works out who owns that. Your balance is the indexer's answer. With KCC-20, the token state sits inside a covenant UTXO on the base layer, and the chain script enforces every transfer. Your balance is what the chain enforces.",
+   "says_whisper_raw": "With KRC20, token operations are written onto CASPA as data, and the CASPLEX indexer works out who owns that. Your balance is the indexer's answer. With KCC20, the token state sits inside a covenant UTXO on the base layer, and the chain script enforces every transfer. Your balance is what the chain enforces.",
+   "on_screen": "C3, THE MARQUEE two-lane system-design diagram (already revealed by the SPIN at 132.72, well before this cut). It re-lights node by node on the words, per CUE-SHEET (+1.5 s card shift): krc-1 'Kasplex (third party)' 134.98 · krc-2 'token ops inserted as data on L1' 137.98 · krc-3 'the Kasplex indexer reads and interprets' 140.30 · krc-4 'balance = the indexer's answer' 143.00 · kcc-1 'kaspanet/kccs (core contributors)' 145.14 (teal lane begins) · kcc-2 'token state in covenant UTXOs on L1' 148.64 · kcc-3 'L1 script (KIP-17 covenants, KIP-20 IDs) enforces the transfer' 151.56 · kcc-4 'balance = what the chain enforces' 154.58 · both lanes side by side 155.16. Amber KRC-20 lane, Kaspa-teal KCC-20 lane. No burned captions (cover beat): the builder adds the house caption track here. How the vertical comp reframed the two lanes (stacked vs scaled) is not verified from the docs.",
+   "why": "The proof and the kicker in one verbatim slice. KRC-20 lane = the problem (balance is an indexer's opinion), KCC-20 lane = the claim (balance is what the chain enforces). The parallel 'Your balance is...' pair is the rhetorical spine of the whole video; the second one is the payoff line, so the kicker lives inside this span rather than as a separate cut. Deliberately NOT split at 145.14: any seam there would land the builder's seam hit on the middle of the marquee diagram and pop the kcc-1 node without its re-light.",
+   "self_contained": "Opens on 'With KRC-20,' and names Kaspa, Kasplex, KCC-20, UTXO, the chain. Both halves of the comparison are inside the span; 'who owns that' resolves to 'token operations' two clauses earlier. No 'as I said', no 'that's why', no dangling pronoun.",
+   "in_gap": 0.4,
+   "out_gap": 0.24,
+   "in_note": "'lives.' ends 134.58, 'With' starts 134.98; the SPIN window (lib:spin-center-swinging-cw 0.84 s on 132.72, ~132.30-133.14) is 1.7 s behind the cut",
+   "out_note": "'enforces.' ends 155.88, 'Savannah' (Sivan) starts 156.12; the RX2 receipt hand:xfade-scale (0.35 s) lands on 'Sivan' 156.12, so the cut must stay on the 'enforces.' side of the gap",
+   "clear_of_transitions": true
+  }
+ ],
+ "assembled_read": "Kaspa's core contributors just moved their first token standard KCC-20 into its final review window. [STAMP, silent: UPDATE / KCC-20 IS FINAL / OCT 21, 2026] With KRC-20, token operations are written onto Kaspa as data, and the Kasplex indexer works out who owns that. Your balance is the indexer's answer. With KCC-20, the token state sits inside a covenant UTXO on the base layer, and the chain script enforces every transfer. Your balance is what the chain enforces. [CTA] Click below to WATCH the full video.",
+ "spans_total_seconds": 27.9,
+ "delivered_seconds_estimate": 30.9,
+ "outro": {
+  "line": "Click below to WATCH the full video.",
+  "card_text": "WATCH THE FULL VIDEO",
+  "asset": "video-creation/assets/vo/cta-watch-full.mp3 (the shared take, never re-voiced)",
+  "note": "Hold the body span's last frame behind the card: the C3 board with both lanes lit and 'balance = what the chain enforces' as the last node the viewer read. It is static, on-brand teal, and it IS the claim; no new asset needed. If the builder prefers motion, the only other candidate from the kept spans is the F1 face frame, which would put Mike's silent face under his own cloned CTA voice, so the diagram is the better hold."
+ },
+ "seam_note": "ONE seam only (6.80 -> 134.80), FACE to the C3 cover. The video's own family for a face-to-cover move is hand:film-burn (TRANSITIONS.md section 3); keep it fast (~0.3 s), and check whether the master's burn on the 6.833 face-out already ramps into frames 6.45-6.83 so the short does not stack two flashes.",
+ "rejected": [
+  {
+   "span": "19.74-28.18",
+   "reason": "The CH1 thesis FACE line ('Real tokens on Kaspa's base layer ... not by an off-chain indexer'). Strong, but it has NO clean out: Whisper gives a 0.00 s gap between 'indexer.' 28.18 and 'So' 28.18, the F2 face-out film burn sits on 28.167, and the next line is the handoff 'So let's get into how this is all playing out.' It is also redundant with the KCC-20 lane, which says the same thing with the KRC-20 contrast that makes it land."
+  },
+  {
+   "span": "6.90-19.46",
+   "reason": "The Oct 7 receipt line ('pull request 31 merges ... flips to Last Call'). Best visual variety in the video (BR-1 + H0 card, C9 PR receipt, RX4 status diff, BR-2 corridor) but it is dated status, superseded when KCC-1/2/20 went Final on Oct 21, and it carries the news, not the claim. 12.56 s would also leave no room for the contrast."
+  },
+  {
+   "span": "132.72-134.58",
+   "reason": "'The difference is where the token lives.' would have been the ideal bridge into the body, but its onset 132.72 is INSIDE the SPIN marquee transition (lib:spin-center-swinging-cw, 0.84 s on 132.72). Rule 2."
+  },
+  {
+   "span": "117.72-126.64",
+   "reason": "'Now Kaspa already has tokens, KRC-20, from Kasplex, a third party control, live since September 2024.' Carries the misspeak 'control' (script: protocol) left as recorded, and its onset sits on the IMG-3 cross-warp (0.5 s at 117.72). A 30 s short would make the misspeak prominent."
+  },
+  {
+   "span": "184.34-186.38",
+   "reason": "'That is the whole difference.' reads perfectly after 'Your balance is what the chain enforces.' but on screen it is the CLIP-1 LEAD-OUT still (Sivan Helfer's frozen last frame with his burned caption), which means nothing cold, and its out-point 186.38 is inside the MELT window (lib:melt-equidistant-short-2, 0.44 s on 186.44)."
+  },
+  {
+   "span": "186.44-196.40",
+   "reason": "'On the KCC-20 side, it is very early ... Think ERC-20, enforced by the base layer itself.' In-point inside the MELT at 186.44; 'itself.' ends 196.40 inside the cross-warp into the CH4 card freeze at 196.46; and 'roughly 150 tokens' is a drifting number the short cannot re-pull."
+  },
+  {
+   "span": "106.42-117.02",
+   "reason": "Borrowed Receive ('the sender tops up one you already hold ... Only the token amount grows', the cash-register moment). Mike's favourite device in CH2, but it is a different claim (transfer mechanics), not where the token lives. Right for a second short, wrong for this one."
+  },
+  {
+   "span": "222.96-225.82",
+   "reason": "'October 7th, KCC-20 joins them.' with the FINAL stamp: the only place the current status appears, but the stamp pause was never baked ('them.' 225.82 -> 'By' 226.06 is a 0.24 s gap), the stamp reads ~2 s, and the line is a timeline fragment with no referent for 'them' cold."
+  },
+  {
+   "span": "276.50-279.46",
+   "reason": "'And I'm telling you, this is going to be well worth the wait.' over I1 (the summit under the cyan Kaspa moon). Onset 276.50 is inside the lib:blocks-max-2 glitch ingress (0.96 s on 276.50), and it is conviction without the proof the short is built on."
+  },
+  {
+   "span": "282.64-292.02",
+   "reason": "CH5 FACE conviction ('the high conviction holders ... dominating the world'). Onset 282.64 sits inside the F3 film-burn face-in on 282.60; the second sentence opens on 'Because' (a dependent opener, rule 3); and it leads straight into the unscripted 100x/500x pitch, which must not bleed into a short."
+  }
+ ],
+ "risks": [
+  "STALE HOOK: the hook says KCC-20 'just moved ... into its final review window'. True on Oct 7; KCC-20 went Final on Oct 21 (PROJECT-LOG). The longform corrects this with the dated FINAL stamp at 3:22, which this short does not carry, and the H0 date card (6.83-9.36) is outside the hook span, so the short has no date anchor at all. Mike's standing rule makes this the hook; he should rule whether the staleness is acceptable (it is still a true headline, and the body claim does not depend on status), or whether the builder should add a dated chip to the caption/card. I am not proposing a new asset.",
+  "The hook's out-gap is 0.12 s (under the 0.25 s preference) because the desilencer left no pad on face lines; the FACE edge at 6.833 and the hand:film-burn face-out share that spot. If the comp's burn ramps in before the cut frame (centred on 6.833), the last ~0.35 s of the hook already carries a warm flash. Builder: read frames 6.45-6.83 of the master and either let that ramp BE the seam or start the seam hit later; do not stack two flashes.",
+  "The body's out-gap is 0.24 s ('enforces.' 155.88 -> 'Sivan' 156.12) and the RX2 receipt cross-fade (0.35 s) lands on 156.12. The lint snaps to the nearest real trough, which could land at ~156.0; if that frame already shows the receipt fading in, snap to the EARLIER trough in the gap (closer to 155.90), never later.",
+  "Visual variety: 21.1 of the 27.9 s sit on one diagram (C3). It is not a dead frame (nine lit states land on the words, amber lane then teal lane, both at 155.16) and it is the argument itself, but it is still one board. Splitting it would put a seam hit inside the marquee, so I did not. Mike can overrule for a 3-span cut; the only clean candidates for a third visual were rejected above on transition windows.",
+  "The body is a COVER span: the longform burned no captions there, so the short's caption track must be added by the builder with the AS-RECORDED mishear list applied: Casper's -> Kaspa's, KCC20 -> KCC-20, KRC20 -> KRC-20, CASPA -> Kaspa, CASPLEX -> Kasplex. KCC-20 and KRC-20 are never swapped (the KRC lane comes first here, then KCC).",
+  "The body's two sci-fi accents (on the C3 reveal and on the kcc-1 lane at 145.14) live in the master's mix, not in the spine VO, so the short will not carry them. A bed from MUSIC-PLAN.json (Bed B it-comes-to-this scored this chapter; Bed A born-every-minute scored the hook) replaces them; the builder picks per section 6 of the lane.",
+  "I have not heard the delivery: the hook is the gear-3 take Mike approved, and the body is a gear-2 explainer read, so the short steps DOWN in energy at the seam. The bed choice can carry the energy across; I cannot verify that from text.",
+  "The seam hook -> 'With KRC-20,' assumes a Kaspa-aware viewer who knows KRC-20 exists. The ideal bridge ('The difference is where the token lives.') is inside the SPIN window and was rejected for that reason only.",
+  "Spans total 27.9 s, at the top of the 27 +-1 window; the trough snaps typically move boundaries 5-35 ms, so the delivered length should land ~30.9 s. If Mike wants it tighter, the only verbatim-safe trim is none: both spans are single breath-runs with no internal gap over 0.25 s that would not break a sentence.",
+  "The vertical comp's reframe of the two-lane C3 board (stacked lanes vs scaled board) is not described in the project docs I read; 'on_screen' lists the 16:9 cue states. The builder should eyeball one frame around 150 s of the VERTICAL before extracting."
+ ],
+ "stamp_note": "Mike chose option A at the short_plan gate (2026-10-22): a silent ~1.95 s FINAL-stamp beat between the hook and the body; the short runs ~32.8 s, so the lane resumes with --seconds 32."
+}

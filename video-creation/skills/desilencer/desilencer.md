@@ -88,7 +88,18 @@ between sentences instead of butting them together. The tail side also protects 
 stop/affricate release after its closure is a short island the 80 ms blip-absorb folds into the silence, and it
 measured up to 55 ms past a 100 ms tail pad (history-of-crypto, 2026-10-14). The longform-presentation track pins
 its shape (800 ms / `--pad 0.2 --pad-head 0.1`) in its own preset, `longform-presentation/skills/desilence/`;
-shorts and longform-edited run pad 0.
+shorts run pad 0. longform-edited runs pad 0 unless Mike asks for a residual: the longform graph takes
+`--pad-tail <s> --pad-head <s>` AT LAUNCH and passes them as `--pad` / `--pad-head` to BOTH desilence passes,
+the coarse one-zone pass and the final two-zone pass (added 2026-10-19 for `evals`, where Mike asked for the
+presentation track's 200 / 100 ms residual). The coarse pass MUST carry the pads: at pad 0 it cuts every pause
+>= the coarse min-silence to zero, and the final pass runs on the coarse output, so it can only remove silence,
+never put it back. A pad changed after the coarse pass means re-running the coarse pass. **In longform-edited the
+pads are COVER scenes only** (Mike, 2026-10-19: "we can't add an additional 100 ms of dead silence to the face
+scenes"): the graph always adds `--pad-cover-only`, which finds the FACE windows as the non-black picture
+(blackdetect; cover-blackout paints every cover beat black) and drops the tail pad on a cut that starts inside a face
+window and the head pad on one that ends inside it, so face scenes get the normal pad-0 cut. evals runs `--pad 0.1
+--pad-head 0` (100 ms kept after the sentence, cover only). In a zone whose min-silence is below the residual, a gap
+shorter than the residual stays whole and a longer one is cut down to it.
 
 **The map's keep-boundaries double as JUMP-CUT ANCHORS (Mike, 2026-07-06).** Every keep→keep join in the
 output is a cut that sat in silence, i.e. a natural sentence/phrase boundary. For longform-edited comps,

@@ -1380,7 +1380,7 @@
     {
       "batch": "downtober",
       "track": "livestream-repurpose",
-      "status": "active",
+      "status": "completed",
       "date": "2026-10-14",
       "livestream_title": "downtober LOW BPS VERTICAL",
       "title": null,
@@ -1402,6 +1402,113 @@
       "briefs": {
         "lane3": "Make EXTRA X tweets about Kaspa: more standalone Kaspa tweets than the default mix. No longform this batch.",
         "clips": "HARD CAP: at most 4 clips. Every clip must be UNDER 40 seconds final duration (after tighten)."
+      }
+    },
+    {
+      "batch": "was-i-right",
+      "track": "livestream-repurpose",
+      "status": "completed",
+      "date": "2026-10-17",
+      "livestream_title": "was-i-right LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/was-i-right/was-i-right LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/was-i-right LOW BPS VERTICAL/was-i-right LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/was-i-right LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/was-i-right/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/was-i-right",
+        "video-creation/shorts/was-i-right"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-10-17.",
+      "briefs": {
+        "lane3": "Limit threads to 1. NO YT community posts (no YT posts, no carousels). Add 3 YouTube community QUIZZES drawn from the stream (schema in schedule-tweets/data/yt-quizzes.json: question, 2-4 options each 65 chars max, exactly one correct, short explanation). Make 3 of the X tweets about Kaspa and/or KRC20 tokens.",
+        "clips": "At most 3 clips total, each under 40 seconds."
+      }
+    },
+    {
+      "batch": "ai-takeover",
+      "track": "livestream-repurpose",
+      "status": "completed",
+      "date": "2026-10-19",
+      "livestream_title": "ai-takeover LOW BPS VERTICAL",
+      "title": "AI Is Taking the Jobs. Invest While You Still Have a Paycheck",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/ai-takeover/ai-takeover LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/ai-takeover LOW BPS VERTICAL/ai-takeover LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/ai-takeover LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/ai-takeover/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/ai-takeover",
+        "video-creation/shorts/ai-takeover"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "done"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-10-19.",
+      "briefs": {
+        "clips": "Limit to exactly 3 clips maximum, each under 60 seconds."
+      }
+    },
+    {
+      "batch": "kcc20-live",
+      "track": "livestream-repurpose",
+      "status": "completed",
+      "date": "2026-10-21",
+      "livestream_title": "kcc20-live LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/kcc20-live/kcc20-live LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/kcc20-live LOW BPS VERTICAL/kcc20-live LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/kcc20-live LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/kcc20-live/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/kcc20-live",
+        "video-creation/shorts/kcc20-live"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-10-21.",
+      "briefs": {
+        "lane3": "Do not add any images to the Instagram post queue: no Instagram image posts or carousels, generate no images for Instagram. Add exactly 4 YT quizzes, each a different question on a different topic from the stream.",
+        "clips": "Limit to 5 clips maximum. Every clip must be under 60 seconds long (final runtime under 60 s, plan spans with tighten in mind)."
+      }
+    },
+    {
+      "batch": "best-time",
+      "track": "livestream-repurpose",
+      "status": "active",
+      "date": "2026-10-27",
+      "livestream_title": "best-time LOW BPS VERTICAL",
+      "title": null,
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/best-time/best-time LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/best-time LOW BPS VERTICAL/best-time LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/best-time LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/best-time/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/best-time",
+        "video-creation/shorts/best-time"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "skip"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-10-27.",
+      "briefs": {
+        "lane3": "Exactly 3 X posts (single tweets), no more. NO YouTube community posts (no YT posts, no carousels). NO X threads. Everything else stays at the defaults: one-liners, IG companions, X polls, YT polls, YT quizzes.",
+        "clips": "Select EXACTLY 3 clips, no more. Every clip must be UNDER 60 seconds final length after tighten, so pick raw spans that land under 60 s."
       }
     }
   ]

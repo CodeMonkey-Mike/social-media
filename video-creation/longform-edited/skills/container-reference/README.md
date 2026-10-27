@@ -14,6 +14,17 @@ full-frame `<div class="frame" id="<slug>">` per beat and screenshot each.** Pal
 folder are the worked example — never a sibling project's build (those folders get deleted after publish).
 Never swap the tokens.
 
+## LIGHT THEME, a per-video option (Mike, 2026-10-25: "I like the light mode version")
+The house default stays DARK. A video may be ruled LIGHT: `run.py longform --project <p> --container-theme light`
+(persisted as `settings.container_theme` in GRAPH-PROGRESS.json; `dark` or unset = the default). Light = the SAME
+stylesheet with ONE extra file loaded after it: **`container-canonical-light.css`** (this folder) replaces the palette
+tokens (warm off-white page #F6F4EE, white cards with a hairline border and a soft shadow, near-black text, every
+accent darkened to pass 4.5:1), turns every glow into a tinted ring, keeps the grain as paper tooth. Nothing else
+changes: anatomy, type, sizes, THE RULES, the balance. The graph passes the theme to slide-builder, chart-builder and
+visual-qa (which then judges palette drift against the light tokens, and a white frame is NOT a failed capture).
+Worked example + the dark/light pairs Mike judged: `_light-mode-experiment/` (index.html). First light video: `inference`.
+Watch at the draft gate: a full light frame between dark face shots flashes; the comp's container fade-in covers it.
+
 ## The reference frames — the THREE official type names (Mike, 2026-07-24)
 This folder carries exemplars of the three container types. Use these NAMES everywhere (BROLL-PLAN's
 CHARTS/SLIDES worklist sections, cue sheets, comps) — they were previously the unnamed "variants" and

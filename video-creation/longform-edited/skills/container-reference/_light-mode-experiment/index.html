@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Light Mode Look Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=DM+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ECEAE4;--fg:#14161A;--mut:#4A5263;--line:#D3CFC4;--card:#FFFFFF}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d0f13;--fg:#e8eaf0;--mut:#8892a4;--line:#262c3a;--card:#14171e}}
+:root[data-theme="dark"]{--bg:#0d0f13;--fg:#e8eaf0;--mut:#8892a4;--line:#262c3a;--card:#14171e}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font-family:'DM Sans',sans-serif;padding:40px 16px 80px}
+main{max-width:1600px;margin:0 auto}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(34px,5vw,56px);letter-spacing:-.02em}
+.lede{color:var(--mut);font-size:18px;line-height:1.55;margin:12px 0 40px;max-width:900px}
+section{margin:0 0 72px}
+h2{font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
+h3{font-family:'Playfair Display',serif;font-weight:900;font-size:30px;margin-bottom:16px}
+img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:6px}
+.meta{display:grid;grid-template-columns:1fr;gap:20px;margin-top:18px}
+@media (min-width:900px){.meta{grid-template-columns:1fr 1fr}}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:15px;line-height:1.5;overflow-x:auto}
+code,.mono{font-family:'JetBrains Mono',monospace;font-size:13px}
+table{border-collapse:collapse;width:100%}
+td,th{text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--line);font-size:13px;white-space:nowrap}
+th{color:var(--mut);font-weight:600}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px;border:1px solid rgba(0,0,0,.15)}
+</style></head>
+<body><main>
+<h1>Light mode, three containers</h1>
+<p class="lede">A look test only: each pair is the shipped dark render on top and a light re-render below, same HTML,
+same layout, words, data and fonts; only the palette changed (plus glow swapped for shadow or a tinted ring).
+Nothing in the skills or the locked stylesheet was touched.</p>
+
+<section>
+<h2>1 · System-design diagram · state <span class="mono">crm</span></h2>
+<h3>What each one reaches for first</h3>
+<img src="compare-C1-s1-crm.png" alt="C1-s1 crm state, dark over light">
+<div class="meta">
+<div class="box"><b>Source</b><br><code>video-creation/longform-edited/media/growth-vs-product/assets/diagrams/C1-s1.html</code> (frame <code>#C1-s1-crm</code>)<br>
+<b>Light HTML</b> <code>C1-s1-crm-light.html</code></div>
+<div class="box"><table>
+<tr><th>role</th><th>dark</th><th>light</th></tr>
+<tr><td>chapter accent (lit node, wire, key word)</td><td><span class="sw" style="background:#00c2ff"></span>#00c2ff</td><td><span class="sw" style="background:#006A9E"></span>#006A9E</td></tr>
+<tr><td>role A growth</td><td><span class="sw" style="background:#ffd700"></span>#ffd700</td><td><span class="sw" style="background:#8F6500"></span>#8F6500</td></tr>
+<tr><td>role B product</td><td><span class="sw" style="background:#22c55e"></span>#22c55e</td><td><span class="sw" style="background:#157A3A"></span>#157A3A</td></tr>
+<tr><td>resting wire</td><td><span class="sw" style="background:#2a3142"></span>#2a3142</td><td><span class="sw" style="background:#8A877E"></span>#8A877E</td></tr>
+<tr><td>hot node</td><td colspan="2">46 px cyan bloom &rarr; 6 px tinted ring + soft drop shadow</td></tr>
+</table></div></div>
+</section>
+
+<section>
+<h2>2 · Animated-chart design state · <span class="mono">payoff</span></h2>
+<h3>A hill to climb, a floor to hold</h3>
+<img src="compare-chart-two-suites-payoff.png" alt="chart-two-suites payoff state, dark over light">
+<div class="meta">
+<div class="box"><b>Source</b><br><code>video-creation/longform-edited/media/evals/assets/charts/chart-two-suites.html</code> (frame <code>#payoff</code>)<br>
+<b>Light HTML</b> <code>chart-two-suites-payoff-light.html</code></div>
+<div class="box"><table>
+<tr><th>role</th><th>dark</th><th>light</th></tr>
+<tr><td>lit series (capability)</td><td><span class="sw" style="background:#22c55e"></span>#22c55e</td><td><span class="sw" style="background:#157A3A"></span>#157A3A</td></tr>
+<tr><td>neutral series (regression)</td><td><span class="sw" style="background:#e8eaf0"></span>#e8eaf0</td><td><span class="sw" style="background:#14161A"></span>#14161A</td></tr>
+<tr><td>grid lines</td><td><span class="sw" style="background:#1e2330"></span>#1e2330</td><td><span class="sw" style="background:#D6D2C7"></span>#D6D2C7</td></tr>
+<tr><td>x axis</td><td><span class="sw" style="background:#3a4357"></span>#3a4357</td><td><span class="sw" style="background:#7A808B"></span>#7A808B</td></tr>
+<tr><td>hollow point centre</td><td><span class="sw" style="background:#0a0c10"></span>#0a0c10</td><td><span class="sw" style="background:#FFFFFF"></span>#FFFFFF</td></tr>
+</table></div></div>
+</section>
+
+<section>
+<h2>3 · Card slide · state <span class="mono">s4</span> (two done, one lit, one resting)</h2>
+<h3>Growth engineer: a business number</h3>
+<img src="compare-scoreboard-growth-s4.png" alt="scoreboard-growth s4 card, dark over light">
+<div class="meta">
+<div class="box"><b>Source</b><br><code>video-creation/longform-edited/media/growth-vs-product/assets/slide-sources/containers.html</code> (frame <code>#scoreboard-growth</code>, c1/c2 done, c3 on)<br>
+<b>Light HTML</b> <code>scoreboard-growth-s4-light.html</code></div>
+<div class="box"><table>
+<tr><th>role</th><th>dark</th><th>light</th></tr>
+<tr><td>card surface</td><td><span class="sw" style="background:#12151c"></span>#12151c</td><td><span class="sw" style="background:#FFFFFF"></span>#FFFFFF + hairline #DDD9CF</td></tr>
+<tr><td>chip fill</td><td><span class="sw" style="background:#181c26"></span>#181c26</td><td><span class="sw" style="background:#F1EFE9"></span>#F1EFE9</td></tr>
+<tr><td>CH2 accent</td><td><span class="sw" style="background:#00c2ff"></span>#00c2ff</td><td><span class="sw" style="background:#006A9E"></span>#006A9E</td></tr>
+<tr><td>card shadow</td><td colspan="2">0 40 120 black .45 &rarr; 0 24 60 ink .10</td></tr>
+<tr><td>lit chip</td><td colspan="2">34 px cyan bloom &rarr; 4 px tinted ring</td></tr>
+</table></div></div>
+</section>
+
+<section>
+<h2>Shared tokens (container-canonical.css &rarr; light)</h2>
+<div class="box"><table>
+<tr><th>token</th><th>dark</th><th>light</th><th>contrast on page #F6F4EE / white</th></tr>
+<tr><td>--bg-deep</td><td>#0a0c10</td><td><span class="sw" style="background:#F6F4EE"></span>#F6F4EE</td><td>page</td></tr>
+<tr><td>--bg-card</td><td>#12151c</td><td><span class="sw" style="background:#FFFFFF"></span>#FFFFFF</td><td>card</td></tr>
+<tr><td>--text-primary</td><td>#e8eaf0</td><td><span class="sw" style="background:#14161A"></span>#14161A</td><td>16.5 / 18.1</td></tr>
+<tr><td>--text-secondary</td><td>#8892a4</td><td><span class="sw" style="background:#4A5263"></span>#4A5263</td><td>7.1 / 7.8</td></tr>
+<tr><td>--text-muted</td><td>#505a6e</td><td><span class="sw" style="background:#5E6676"></span>#5E6676</td><td>5.3 / 5.8</td></tr>
+<tr><td>--accent-cyan</td><td>#00c2ff</td><td><span class="sw" style="background:#006A9E"></span>#006A9E</td><td>5.4 / 5.9</td></tr>
+<tr><td>--accent-green</td><td>#00e68a</td><td><span class="sw" style="background:#007A55"></span>#007A55</td><td>4.9 / 5.4</td></tr>
+<tr><td>--accent-gold</td><td>#ffd700</td><td><span class="sw" style="background:#8F6500"></span>#8F6500</td><td>4.7 / 5.2</td></tr>
+<tr><td>--accent-red</td><td>#ff4060</td><td><span class="sw" style="background:#C41E3A"></span>#C41E3A</td><td>5.3 / 5.8</td></tr>
+<tr><td>--accent-purple</td><td>#a855f7</td><td><span class="sw" style="background:#7C3AED"></span>#7C3AED</td><td>5.2 / 5.7</td></tr>
+<tr><td>--accent-teal</td><td>#49e0c8</td><td><span class="sw" style="background:#0E7A6C"></span>#0E7A6C</td><td>4.8 / 5.2</td></tr>
+<tr><td>--border</td><td>#1e2330</td><td><span class="sw" style="background:#DDD9CF"></span>#DDD9CF</td><td>hairline</td></tr>
+</table></div>
+</section>
+</main></body></html>

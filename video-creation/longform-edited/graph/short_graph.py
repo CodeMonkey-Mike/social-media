@@ -245,10 +245,12 @@ def _cover_windows_final(proj: Path, scope: str):
         if kind not in ("envato-video", "chatgpt-image"):
             continue
         what = str(b.get("what", ""))
-        m = re.search(r"\b([EG])(\d+)\b", what)
+        # the beat names its asset either by the coverage code (E3 / G2, kcc20) or by the on-disk id (BR-1 / IMG-5, growth-vs-product
+        # 2026-10-23: the E/G-only match found no variants for a plan that carried three)
+        m = re.search(r"\b(?:([EG])(\d+)|(BR|IMG)-(\d+))\b", what)
         if not m:
             continue
-        ident = ("BR-" if m.group(1) == "E" else "IMG-") + m.group(2)
+        ident = (("BR-" if m.group(1) == "E" else "IMG-") + m.group(2)) if m.group(1) else f"{m.group(3)}-{m.group(4)}"
         out.append({"id": ident, "kind": kind, "a": sh(float(b["tIn"])), "b": sh(float(b["tOut"])), "spoken": b.get("spoken", ""), "what": what})
     return out
 
@@ -281,6 +283,12 @@ def s_variants(state: ShortState) -> ShortState:
             seen.add(h["id"])
             uniq.append(h)
     hits = uniq
+    # a slot Mike (or the orchestrator, logged in PROJECT-LOG) waived keeps the longform's own asset in the short
+    wv = sdir / "variant-waivers.json"
+    waivers = json.loads(wv.read_text(encoding="utf-8")) if wv.is_file() else {}
+    for h in [h for h in hits if h["id"] in waivers]:
+        print(f"VARIANT-WAIVED {h['id']}: {waivers[h['id']]}", flush=True)
+    hits = [h for h in hits if h["id"] not in waivers]
     vjson = sdir / "variants.json"
     if not hits:
         vjson.write_text(json.dumps({"variants": []}, indent=1), encoding="utf-8")
@@ -290,6 +298,21 @@ def s_variants(state: ShortState) -> ShortState:
         c = sorted(d.glob(f"{h['id']}-*.*")) + sorted(d.glob(f"{h['id']}.*"))
         return c[0] if c else None
     todo = [h for h in hits if _redo(state, node) or not vfile(h)]
+    qa_dest = sdir / "VISUAL-QA.json"
+    def prior_fail(h):
+        """The prior visual-qa FAIL for this slot (the failing file was recycled; the verdict file is the builder's feedback)."""
+        if not qa_dest.is_file():
+            return ""
+        try:
+            assets = json.loads(qa_dest.read_text(encoding="utf-8")).get("assets", [])
+        except Exception:
+            return ""
+        for a in assets:
+            stem = Path(str(a.get("path", ""))).name.replace(".mid.png", "")
+            if (stem == h["id"] or stem.startswith(h["id"] + "-")) and str(a.get("verdict", "")).upper() != "PASS":
+                return (f" PREVIOUS ATTEMPT ({stem}) FAILED visual-qa: " + "; ".join(a.get("defects") or [])[:400]
+                        + f" -> FIX: {str(a.get('fix', ''))[:300]} (the failing file was deleted; source a different clip without that defect)")
+        return ""
     if todo:
         specs = []
         env = [h for h in todo if h["kind"] == "envato-video"]
@@ -300,15 +323,15 @@ def s_variants(state: ShortState) -> ShortState:
                           "(`search_envato.py --portrait`), same beat meaning and query family as the BROLL-PLAN row but a visibly different shot "
                           "(not the clip already in assets/vertical/vid/ or assets/vid/; open those to avoid a look-alike); 1080x1920, audio stripped, "
                           "trimmed to the window + 1 s handles. Output assets/short/vid/<id>-<slug>.mp4. Slots:\n"
-                          + "\n".join(f"- {h['id']}: window {h['overlay_short']} s of the short; beat: {h['what'][:160]}" for h in env)
+                          + "\n".join(f"- {h['id']}: window {h['overlay_short']} s of the short; beat: {h['what'][:160]}{prior_fail(h)}" for h in env)
                           + f"\nWorklist rows: `{C.doc(proj, 'broll_plan')}`. QA-open every clip; report per slot.", f"agent-short-env-{proj.name}.log"))
         if img:
             specs.append(("image-gen",
                           f"SHORT variant images for `{proj.name}` (folder `{proj}`): for EACH slot below generate ONE NEW 9:16 portrait image of the SAME "
-                          "concept but a different composition/angle than the existing vertical image (attach the existing assets/vertical/img/<id>-*.png as "
+                          "concept but a different composition/angle than the existing image (attach the existing assets/vertical/img/<id>-*.png, or assets/img/<id>-*.png when no vertical exists, as "
                           "a reference for palette + subject, and the row's real-mark reference when the BROLL-PLAN Reference column names one). Output "
                           "assets/short/img/<id>-<slug>.png. Slots:\n"
-                          + "\n".join(f"- {h['id']}: window {h['overlay_short']} s of the short; concept: {h['what'][:160]}" for h in img)
+                          + "\n".join(f"- {h['id']}: window {h['overlay_short']} s of the short; concept: {h['what'][:160]}{prior_fail(h)}" for h in img)
                           + f"\nWorklist rows: `{C.doc(proj, 'broll_plan')}`. Every image unique; QA-open; report per slot.", f"agent-short-img-{proj.name}.log"))
         C.spawn_agents_parallel(state, node, specs)
     missing = [h["id"] for h in hits if not vfile(h)]
@@ -320,15 +343,20 @@ def s_variants(state: ShortState) -> ShortState:
         f = vfile(h)
         shown = G._mid_frame(f, _sdir(proj) / "qa" / f"{f.stem}.mid.png") if f.suffix.lower() in G.VIDEO_EXT else f
         lines.append(f"- `{shown}`  [{h['kind']} variant for {h['id']}, portrait 1080x1920] concept: {h['what'][:140]}")
-    qa_dest = sdir / "VISUAL-QA.json"
-    if not (qa_dest.is_file() and not _redo(state, node)):
+    # a verdict older than any variant file is stale (a slot was re-sourced after a FAIL): judge again
+    qa_fresh = qa_dest.is_file() and all(vfile(h).stat().st_mtime <= qa_dest.stat().st_mtime for h in hits)
+    if not (qa_fresh and not _redo(state, node)):
         prompt = (f"Visual QA for the SHORT's variant assets of `{proj.name}`: open every file below and judge it (portrait, house style, the named "
                   "concept, nothing clipped, no text/watermark; a `.mid.png` is a clip's middle frame).\n" + "\n".join(lines)
                   + f"\nReturn your JSON verdict AND save it to EXACTLY `{qa_dest}` with Bash.")
         rc, out = C.spawn_agent(state, node, "visual-qa", prompt, f"agent-short-visual-qa-{proj.name}.log")
         if not C.persist_agent_json(out, qa_dest, want_key="assets"):
             return C._fail(state, node, "visual-qa returned no verdict on the variants", out)
-    bad = [a for a in json.loads(qa_dest.read_text(encoding="utf-8")).get("assets", []) if str(a.get("verdict", "")).upper() != "PASS"]
+    def in_play(a):   # a verdict on a slot that was since waived or re-sourced under a new name is not this round's
+        stem = Path(str(a.get("path", ""))).name.replace(".mid.png", "")
+        return any(stem == h["id"] or stem.startswith(h["id"] + "-") for h in hits) and any(
+            vfile(h) and Path(str(a.get("path", ""))).name.replace(".mid.png", "") == vfile(h).stem for h in hits)
+    bad = [a for a in json.loads(qa_dest.read_text(encoding="utf-8")).get("assets", []) if str(a.get("verdict", "")).upper() != "PASS" and in_play(a)]
     if bad:
         return C._fail(state, node, "variant assets failed visual-qa: " + "; ".join(f"{Path(a.get('path', '?')).name}: {', '.join(a.get('defects') or [])[:100]}" for a in bad))
     variants = [{"id": h["id"], "kind": h["kind"], "file": str(vfile(h)), "overlay_short": h["overlay_short"], "replaces_window_final": [round(h["a"], 3), round(h["b"], 3)]} for h in hits]
@@ -370,7 +398,8 @@ def s_captions(state: ShortState) -> ShortState:
     # 2026-10-08: "coming fast" + "I think we're only..."). So the words JSON handed to the builder holds just the words whose
     # onset lies inside a span; groups then end where the span ends.
     full = json.loads((proj / "spine" / "FINAL-TIME-words.json").read_text(encoding="utf-8"))
-    keep_ranges = [(float(s["src_start"]) - 0.05, float(s["src_end"])) for s in table["spans"]]
+    # a SILENT span (a held still; its VO is generated silence) says nothing, so it gets no words and no caption window
+    keep_ranges = [(float(s["src_start"]) - 0.05, float(s["src_end"])) for s in table["spans"] if not s.get("silent")]
     segs = []
     for sg in full.get("segments", []):
         # a word belongs to a span when its MIDPOINT lies inside it: Whisper onsets run early (the next sentence's "I" was
@@ -384,11 +413,15 @@ def s_captions(state: ShortState) -> ShortState:
                         "--max-words", "2", "--max-short", "4", "--var", "ZCAPTIONS", "--out", str(raw)], capture_output=True, text=True)
     if r.returncode != 0 or not raw.is_file():
         return C._fail(state, node, "build_captions.py failed on the FINAL-TIME words", (r.stderr or r.stdout)[-600:])
-    rows = [(float(t), h) for t, h in re.findall(r"\{\s*t:\s*([\d.]+)\s*,\s*h:\s*'((?:[^'\\]|\\.)*)'\s*\}", raw.read_text(encoding="utf-8"))]
+    # the captured h is still JS-escaped (they\'re): unescape it, or the re-escape at write time doubles it and the short
+    # shows a literal backslash (growth-vs-product 2026-10-23)
+    rows = [(float(t), re.sub(r"\\(.)", r"\1", h)) for t, h in re.findall(r"\{\s*t:\s*([\d.]+)\s*,\s*h:\s*'((?:[^'\\]|\\.)*)'\s*\}", raw.read_text(encoding="utf-8"))]
     ar = C.doc(proj, "as_recorded").read_text(encoding="utf-8")
     fixes = [(w, rr) for w, rr in MISHEAR_RE.findall(ar)]
     kept, windows = [], []
     for s in table["spans"]:
+        if s.get("silent"):
+            continue
         a, b, o = float(s["src_start"]), float(s["src_end"]), float(s["out_start"])
         # the part(s) of this span with NO burned captions = the span minus the burned-caption windows
         segs = [(a, b)]
@@ -408,7 +441,8 @@ def s_captions(state: ShortState) -> ShortState:
             for t, h in rows:
                 if x - 0.05 <= t < y:
                     for w, rr in fixes:
-                        h = re.sub(re.escape(w), rr, h, flags=re.I)
+                        # whole words only: a bare substring turned "accountABle" into "accounta/ble" via "AB" -> "A/B"
+                        h = re.sub(r"(?<!\w)" + re.escape(w) + r"(?!\w)", lambda m, rr=rr: rr, h, flags=re.I)
                     kept.append((round(o + (t - a), 3), h.lower()))
     kept.sort()
     name = _comp_id(proj) + "Captions.ts"

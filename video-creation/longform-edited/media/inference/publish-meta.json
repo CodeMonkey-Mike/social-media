@@ -1,0 +1,29 @@
+{
+  "title": "Every AI Model Does This Billions of Times a Day",
+  "description": "Every AI model gets trained once. Everything anyone does with it after that is inference: the frozen weights running against brand new input, on every single request. Training makes the headlines. Inference is the bill, the latency, and the part you actually operate.\n\nI break down what one request actually does. Tokens, prefill, the KV cache, decode, and the two numbers you feel: time to first token and time per output token. Then the four levers that make it fast and cheap, the inference engines that run it, and when self-hosted pays off over hosted.\n\nThen what inference looks like in my own AI pipeline, self-hosted and hosted. And the 2026 twist: reasoning models, where the cost of a request depends on how hard the model thinks.\n\n#AI #AIEngineering #inference #LLM #MachineLearning",
+  "tags": [
+    "ai inference",
+    "what is ai inference",
+    "inference vs training",
+    "llm inference",
+    "prefill and decode",
+    "kv cache",
+    "vllm",
+    "quantization",
+    "speculative decoding",
+    "continuous batching",
+    "reasoning models",
+    "ai engineering",
+    "ai engineering simplified",
+    "machine learning"
+  ],
+  "source_docs": [
+    "video-creation/longform-edited/media/inference/AS-RECORDED.md",
+    "video-creation/longform-edited/media/inference/DATA.md",
+    "video-creation/longform-edited/media/inference/PROJECT-LOG.md",
+    "video-creation/longform-edited/media/inference/yt-delivery.json",
+    "persona/persona.json",
+    "schedule-tweets/data/longs.json",
+    "schedule-tweets/longform/metadata.json"
+  ]
+}

@@ -4,7 +4,9 @@ description: >
   Judges a batch of job postings (LinkedIn and the other public boards: RemoteOK, We Work
   Remotely, HN Who is hiring, Greenhouse / Lever / Ashby) against Mike's find-jobs criteria (fully remote,
   AI engineer / AI automation / LangGraph-style agent work, founding engineer, growth
-  engineer, and manager / senior / director roles at companies under 200 people). Reads
+  engineer incl. AI growth engineer, AI product engineer, and manager / senior / director roles at
+  small companies; every role under 500 employees except growth engineers and health / fitness
+  companies). Reads
   the postings the find-jobs script hands it (title, company, size, description), returns
   ONE verdict + a one-line why per posting, written to the output JSON path it is given.
   Consult for the `review` stage of linkedin-automation/skills/find-jobs. Writes exactly
@@ -42,12 +44,16 @@ You operate inside the `social-media` repo (working directory is the repo root).
   workflows, Remotion video automation. Postings that want THAT are the center of the target.
   Classic ML research (model training, CV, forecasting) without an LLM/agent/automation angle is
   `weak` at best.
-- **Company size is a hard rule for the size-gated roles** (plain AI engineer at a small company,
-  senior engineer, engineering manager without a growth/AI-automation JD, director/head): a
-  known size above 200 = `no`. The size-independent roles are: AI engineer with an AI-automation /
-  agent stack, growth engineer, and any engineering manager whose JD is about growth or AI
-  automation. `company_size: "unknown"` means the script could not read it yet — judge on the
-  rest and add the flag `size unread`.
+- **Company size is a hard rule for EVERY role** (Mike, 2026-10-20): under 500 employees, except a
+  growth engineer role (incl. AI growth engineer) or a health / fitness / outdoors company (both
+  up to 2,000), and manager / director / head roles at 200 or fewer. The script already applied it
+  and only hands you postings that passed, so a `company_size` above the cap in your input means a
+  posting that qualifies by exemption: do not mark it down for size. `company_size: "unknown"` can
+  only reach you on an exempt posting (judge on the rest and add the flag `size unread`).
+- **AI product engineer** (a product engineer who ships AI features end to end: LLM-powered product
+  work, agents inside the app, full-stack with prompts / evals) is a target role like the AI
+  engineer. A "Product Engineer" whose JD is ordinary CRUD features with a token "AI" mention is
+  `weak` or `no`.
 - **Remote means fully remote.** A `workplace_chip` of Hybrid/On-site, or a JD that demands days
   in an office, caps the verdict at `weak` and gets a flag. "US-only" / time-zone overlap is NOT a
   problem (Mike is in the US) — mention it as a flag only if it names a specific state or city.

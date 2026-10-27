@@ -63,8 +63,9 @@ def main():
         print(f"FATAL: {spine} missing", file=sys.stderr); sys.exit(2)
     cards_meta = json.loads(Path(a.cards_json).read_text(encoding="utf-8"))
     pause_s = float(cards_meta.get("pause_s") or 1.5)
-    pauses = [{"at": float(p["at"]), "planned": p.get("planned"), "dur": float(p.get("dur") or pause_s), "card": p["card"],
-               "sits_in": p.get("sits_in")} for p in cards_meta.get("pauses") or []]
+    # a card pause carries {"card": label}, a beat pause (a braam between sentences) {"beat": label}: both pass through
+    pauses = [{"at": float(p["at"]), "planned": p.get("planned"), "dur": float(p.get("dur") or pause_s),
+               **{k: p[k] for k in ("card", "beat") if k in p}, "sits_in": p.get("sits_in")} for p in cards_meta.get("pauses") or []]
     bad = []
     for item in a.insert:
         # "t:clip:label"; the clip path may carry a Windows drive colon (C:/...), so the label is the LAST field and the
@@ -106,9 +107,20 @@ def main():
     src_v = float((probe(spine, "stream=duration", "v:0").splitlines() or ["0"])[0] or src_dur)
     src_a = float((probe(spine, "stream=duration", "a:0").splitlines() or ["0"])[0] or src_dur)
 
+    # the source's REAL frame timestamps: a desilencer join can hold one frame for two durations (tao-detailed 2026-10-17:
+    # 5 such holds), so a frame INDEX is not t * fps. Indexing by round(t * fps) cut the picture one frame late after
+    # every hold, concat padded the audio to match, and the VO drifted +0.17 s late by the end. Look the index up instead.
+    import bisect
+    pr = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "packet=pts_time", "-of", "csv=p=0",
+                         str(spine)], capture_output=True, text=True)
+    vts = sorted(float(x) for x in pr.stdout.split() if x.strip() and x.strip() != "N/A")
+
     def fr(t):
-        """the frame index nearest to source time t (video cuts land here; the audio cut stays at t)"""
-        return int(round(t * fps))
+        """the index of the source frame nearest to time t by its real timestamp (video cuts land here; the audio cut
+        stays at t). Past the last frame it returns the frame count, so fr(src_v) ends the last segment."""
+        if not vts:
+            return int(round(t * fps))
+        return bisect.bisect_left(vts, t - 0.5 / fps)
     sr = probe(spine, "stream=sample_rate", "a:0").splitlines()[0] or "48000"
     ch = probe(spine, "stream=channel_layout", "a:0").splitlines()[0] or "stereo"
     inputs = ["-i", str(spine)]
@@ -123,8 +135,11 @@ def main():
         fparts.append(f"[0:v]trim=start_frame={fr(prev)}:end_frame={fr(at)},setpts=PTS-STARTPTS[v{k}];"
                       f"[0:a]atrim=start={prev:.6f}:end={at:.6f},asetpts=PTS-STARTPTS[a{k}]")
         order += [f"[v{k}][a{k}]"]; k += 1
+        # the looped frame keeps its OWN duration: a desilencer-held frame (two frame lengths) looped p['frames'] times made a
+        # 1.5 s card pause 3.0 s (kcc20 2026-10-21, the CH5 card at 244.295 sat on the hold at 244.267). Re-time the loop to
+        # one frame per 1/fps before counting frames.
         fparts.append(f"[0:v]trim=start_frame={fr(at)}:end_frame={fr(at) + 2},setpts=PTS-STARTPTS,loop=loop=-1:size=1:start=0,"
-                      f"trim=end_frame={p['frames']},setpts=PTS-STARTPTS[v{k}]")
+                      f"setpts=N/({fps:g}*TB),trim=end_frame={p['frames']},setpts=PTS-STARTPTS[v{k}]")
         if p.get("clip"):
             ci = clip_index[p["clip"]]
             fparts.append(f"[{ci}:a]atrim=start=0:end={dur:.6f},asetpts=PTS-STARTPTS,aformat=sample_rates={sr}:channel_layouts={ch},"

@@ -19,7 +19,22 @@ painted in after the cut plan is approved. The span pictures come from the 16:9 
 span: FACE spans crop 608x1080 on the measured face centre (`assets/vertical/face-crop.json`, `measure_face_crop.py`),
 cover spans centre-crop (the variety rule overlays native-vertical alternates on Envato / AI-still spans anyway). The flag
 file `assets/short/from-16x9.json` tells `s_captions` that NOTHING is burned, so every span gets the short's captions.
-Brief the strategist to prefer FACE spans and croppable covers and to avoid charts, receipts and text cards. Everything
+Brief the strategist to prefer FACE spans and croppable covers and to avoid charts, receipts and text cards.
+**Face position per span (growth-vs-product, 2026-10-23):** the painter centre-crops comp renders (every-job's comp reframed the face
+to the centre). A comp that does NOT (kinetic signature open / side panels push the face left) halves the face in a centre crop, so
+pass `--face-from-render`: FACE spans are measured on the rendered 16:9 span (OpenCV Haar, median of sampled frames) and cropped on
+that centre; the measurements land in `assets/short/span-face-crop.json`. If the sampled centres spread more than 8 percent across
+the span (the signature open pushes the face while the labels pop), add `--track-face`: that span gets a per-frame TRACKED crop
+(Haar every frame, gaps interpolated, path smoothed over 0.7 s, window follows the face). Without it the hook-face check at the
+short gate (35-65 percent at 1.0 s) failed at 29 percent on growth-vs-product. Also brief the strategist that whatever sits beside the
+face (role labels, side panels) is OUT of the 9:16 frame, and to avoid frames where the face slides (panel push-ins).
+**A frame-filling text card inside a span (growth-vs-product span 3, the scoreboard card):** a 608 px centre slice clips its headline
+and outer chips, and the variety overlay only covers Envato / AI-still windows, never a card. Give the span `fit_windows`
+(`[{"a", "b", "box"}]`, final-video seconds) in SHORT-CUT-PLAN.snapped.json: inside the window the painter shows the card WHOLE,
+letterboxed on its own blurred, darkened frame; start it on the card's cross-fade and end it after the next ingress.
+**Waiving one variant slot:** `assets/short/variant-waivers.json` (`{"BR-1": "why"}`) drops that slot from the variety rule (the
+short keeps the longform's own asset there); `s_variants` prints VARIANT-WAIVED and ignores stale FAIL verdicts on slots no longer in
+play. Used on growth-vs-product (2026-10-23) after three Envato passes failed visual-qa and no clean portrait clip existed. Log it. Everything
 downstream (extract, variants, captions, comp, render, mix, verify, gates) is the normal lane.
 
 ### Captions never cross a span end (lane rule in code, 2026-10-08)
@@ -109,6 +124,13 @@ Budget the outro INSIDE the target length — a "40 second short" is 40 seconds 
 5. **Assembly order is a narrative choice**, not necessarily chronological, but the audio must not
    contradict itself (don't put a conclusion before the fact it depends on).
 6. **Nothing is re-timed inside a span.** No speed-ups, no internal trims. A span is a verbatim slice.
+7. **A SILENT span is a held still with no VO (Mike, 2026-10-22, kcc20).** `"silent": true` on a span takes the PICTURE from the
+   vertical and generates silence for its VO (the bed and the seam whoosh still play), because the spine under that picture is a
+   line the short does not say. Use it for a beat that must be SEEN, not heard: on kcc20 the hook says KCC-20 "just moved into
+   its final review window" (Oct 7), so the dated stamp "UPDATE / KCC-20 IS FINAL / OCT 21, 2026" holds ~1.9 s right after it.
+   The lint skips it (no word cut), the extractor writes an `anullsrc` wav, the captions step gives it no words and no window,
+   and the span still needs `sourced` + a parenthesized `says`. It adds to the runtime: re-size the target on resume
+   (`--resume --approve short_plan --seconds N`, which now updates the thread's target).
 
 ## 4. The CTA outro (Higgsfield MIKE-CLONE TTS)
 

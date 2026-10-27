@@ -22,6 +22,9 @@ const PROFILE   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe
     ignoreDefaultArgs: ['--enable-automation'], args: ['--disable-blink-features=AutomationControlled'], viewport: null,
   });
   await browser.addInitScript(() => Object.defineProperty(navigator, 'webdriver', { get: () => undefined }));
+  // The login cookie is session-only since 2026-10: re-inject the cookies `soundstripe.js login` saved.
+  const SESSION = path.join(RECON, 'session-cookies.json');
+  if (fs.existsSync(SESSION)) { try { await browser.addCookies(JSON.parse(fs.readFileSync(SESSION, 'utf8'))); } catch (e) { console.log('session inject failed:', e.message); } }
   const page = browser.pages()[0] || await browser.newPage();
 
   const apiHits = [];   // {url, status, json}
@@ -78,6 +81,33 @@ const PROFILE   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe
                      duration: s.attributes?.primary_audio_file_duration || s.attributes?.duration });
       }
       if (data.length < LIMIT) break; // last page
+    }
+  }
+
+  // DOM fallback (2026-10): the playlist page is server-rendered now and makes no api.soundstripe.com
+  // calls, so no token is sniffed. Read the song ids off the rows (song links + the download-handoff
+  // anchors, in page order), then resolve title/artists/duration from Algolia getObject.
+  if (!songs.length) {
+    const ids = await page.evaluate(() => {
+      const out = [];
+      document.querySelectorAll('a[href*="/library/songs/"], [data-download-handoff-media-id-value]').forEach((el) => {
+        const m = (el.getAttribute('href') || '').match(/\/library\/songs\/(\d+)/);
+        const id = m ? m[1] : el.getAttribute('data-download-handoff-media-id-value');
+        if (id && /^\d+$/.test(id) && !out.includes(id)) out.push(id);
+      });
+      return out;
+    }).catch(() => []);
+    for (const id of ids) {
+      let hit = null;
+      try {
+        const r = await fetch(`https://w1s5j3a2xp-dsn.algolia.net/1/indexes/prod_songs_all_partners_most_recent/${id}`, {
+          headers: { 'X-Algolia-Application-Id': 'W1S5J3A2XP', 'X-Algolia-API-Key': 'REDACTED_SOUNDSTRIPE_SEARCH_KEY' },
+        });
+        if (r.ok) hit = await r.json();
+      } catch (e) { console.log(`algolia getObject ${id} err:`, e.message); }
+      songs.push({ id, title: hit?.title || null,
+                   artists: (hit?.artists || []).map(a => (typeof a === 'string' ? a : a?.name)).filter(Boolean),
+                   duration: hit?.primary_audio_file_duration || null, source: 'dom' });
     }
   }
 

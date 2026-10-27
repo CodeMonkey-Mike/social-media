@@ -1,6 +1,7 @@
-# post_thread.py — CANONICAL Python port of post-thread.js (2026-08-11, posting-tail
-# migration; the JS twin is FROZEN rollback). Status: PORTED, BLESS-PENDING — invoke
-# the JS twin for production posts until this port is live-blessed with one real post.
+# post_thread.py — the ONE X thread poster (CANONICAL Python port of the former
+# post-thread.js, 2026-08-11 posting-tail migration). Status: LIVE-BLESSED 2026-08-12
+# (thread-2026-08-12-200-week-line, 7/7 verified). The JS twin was DELETED 2026-10-21
+# under the Python-only repo rule; there is no rollback script and none is needed.
 #
 # 1:1 port on playwright.sync_api: same xbot-profile Chrome, same selectors, same
 # stuck-in-'posting' manual-review bail, same char_count pre-flight validation, same

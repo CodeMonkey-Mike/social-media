@@ -11,6 +11,9 @@ nearest the planned time; a boundary with no trough FAILS (exit 1) and prints wh
 
 Usage: python bake_card_pauses.py <spine.mp4> --cards "40.22:CH2 NOT AN L2,137.58:CH3 WHERE IT STANDS"
          --out <spine/ALL.g.paused.mp4> [--pause 1.5] [--json <sidecar>]
+A BEAT PAUSE (Mike 2026-10-17, tao-detailed: a braam plays in the gap BETWEEN sentences, the voice silent until it ends) is
+an entry "t@dur:label": snapped and baked exactly like a card (freeze + silence) but for its own `dur`, and written to the
+sidecar as {"beat": label} instead of {"card": label}, so no card is drawn and no card check runs on it.
 Sidecar JSON (the comp reads CARD_T + PAUSE from it): {pauses:[{at, planned, dur, card, sits_in}], pause_s,
 source, output, output_duration_s}. Machine lines: PAUSE-SNAP <card> planned=t at=t trough=a-b ·
 BAKED <out> dur=X (+N*P) · PROGRESS 100%
@@ -101,27 +104,41 @@ def main():
     sr = probe(spine, "stream=sample_rate", "a:0").splitlines()[0] or "48000"
     ch = probe(spine, "stream=channel_layout", "a:0").splitlines()[0] or "stereo"
     cards = []
-    for item in a.cards.split(","):
+    # split only on a comma that starts a new "<t>[!|@dur]:" entry: a card title may carry its own comma
+    # (evals 2026-10-20 "FIVE PRODUCTS, FIVE EVAL SETS" crashed the plain split)
+    for item in re.split(r",\s*(?=\d+(?:\.\d+)?(?:!|@\d+(?:\.\d+)?)?:)", a.cards):
         t, _, label = item.partition(":")
-        cards.append((float(t), label.strip()))
-    cards.sort()
+        # "t!:label" = a WAIVED exact cut (Mike's per-video `card_cut_waivers`, GRAPH-PROGRESS.json settings): the boundary
+        # has no 30 ms trough, so the card is baked exactly at t, never snapped (tao-detailed CH3 2026-10-17)
+        # "t@dur:label" = a BEAT pause of its own length (a braam between sentences), not a card
+        t, _, bdur = t.strip().partition("@")
+        cards.append((t.strip(), label.strip(), float(bdur) if bdur else None))
+    cards.sort(key=lambda c: float(c[0].rstrip('!')))
     pauses, bad = [], []
-    for t, label in cards:
+    for t, label, bdur in cards:
+        kind = {"beat": label} if bdur else {"card": label}
+        dur = bdur or a.pause
+        if t.endswith("!"):
+            at = round(float(t[:-1]), 3)
+            pauses.append({"at": at, "planned": at, "dur": dur, **kind,
+                           "sits_in": f"WAIVED exact cut (guard {containment(spine, at):.1f} dB; card_cut_waivers)"})
+            print(f"PAUSE-WAIVED {label} at={at} (exact, no snap; guard {containment(spine, at):.1f} dB)")
+            continue
+        t = float(t)
         at, where = snap(spine, t)
         if at is None:
             bad.append(f"{label} @{t}: {where}")
             continue
-        pauses.append({"at": at, "planned": t, "dur": a.pause, "card": label, "sits_in": where})
-        print(f"PAUSE-SNAP {label} planned={t} at={at} {where}")
+        pauses.append({"at": at, "planned": t, "dur": dur, **kind, "sits_in": where})
+        print(f"PAUSE-SNAP {label} planned={t} at={at} dur={dur} {where}")
     if bad:
         for b in bad:
             print(f"FAIL  {b}")
         sys.exit(1)
     # sync-safe filter_complex: segments + (freeze frame + silence) per pause, one concat
-    P = a.pause
     fparts, order, prev, k = [], [], 0.0, 0
     for i, pz in enumerate(pauses):
-        at = pz["at"]
+        at, P = pz["at"], pz["dur"]
         fparts.append(f"[0:v]trim=start={prev:.3f}:end={at:.3f},setpts=PTS-STARTPTS[v{k}];"
                       f"[0:a]atrim=start={prev:.3f}:end={at:.3f},asetpts=PTS-STARTPTS[a{k}]")
         order += [f"[v{k}][a{k}]"]
@@ -144,13 +161,13 @@ def main():
         print("FATAL: ffmpeg failed\n" + r.stderr[-1500:], file=sys.stderr)
         sys.exit(1)
     out_dur = float(probe(out, "format=duration") or 0)
-    expect = src_dur + len(pauses) * P
-    print(f"BAKED {out} dur={out_dur:.3f} (expected {expect:.3f} = {src_dur:.3f} + {len(pauses)}*{P})")
+    expect = src_dur + sum(pz["dur"] for pz in pauses)
+    print(f"BAKED {out} dur={out_dur:.3f} (expected {expect:.3f} = {src_dur:.3f} + pauses {sum(pz['dur'] for pz in pauses):.3f})")
     if abs(out_dur - expect) > 0.1:
         print(f"FAIL  output duration off by {out_dur - expect:+.3f}s", file=sys.stderr)
         sys.exit(1)
     side = Path(a.json) if a.json else out.with_suffix(".json")
-    side.write_text(json.dumps({"pauses": pauses, "pause_s": P, "source": str(spine), "output": str(out),
+    side.write_text(json.dumps({"pauses": pauses, "pause_s": a.pause, "source": str(spine), "output": str(out),
                                 "output_duration_s": round(out_dur, 3), "fps": fps,
                                 "note": "every comp cue is a SOURCE time; sh() adds pause_s per pause whose `at` <= t"},
                                indent=2), encoding="utf-8")

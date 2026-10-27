@@ -36,6 +36,9 @@ function norm(s) {
     .replace(/frame[- ]?perfect/g, 'frameperfect')
     .replace(/b[- ]?roll/g, 'broll')
     .replace(/re[- ]?sent/g, 'resent')
+    .replace(/\bkan[- ]?ton\b/g, 'canton')          // "Kanton" (spoken spelling, Seed Speech mangled "Canton") -> canton
+    .replace(/\bjulie\b/g, 'yuli')                  // "Julie" (spoken spelling: Dominican Y- names are said with a J) -> yuli
+    .replace(/\[[^\]]*\]/g, ' ')                 // ElevenLabs v3 inline delivery tags ([excited], [laughs softly]) are not text
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
 }

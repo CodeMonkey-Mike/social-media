@@ -33,7 +33,6 @@ import longform_graph as G  # noqa: E402
 LANE = "vertical"
 VER_W, VER_H = 1080, 1920
 MEASURE_FACE = C.SCRIPTS / "measure_face_crop.py"
-STITCH_CEILING = 12000  # frames per render part (the ~14436-frame FFmpeg stitch ceiling, with margin)
 
 
 class VerticalState(TypedDict, total=False):
@@ -391,27 +390,9 @@ def v_verify_comp(state: VerticalState) -> VerticalState:
     return {"steps": C._step(state, node, "ran", f"{len(runs)} gate(s) PASS on {comp.name}")}
 
 
-def _concat(parts, out: Path, vo: Path):
-    """Join the render parts PICTURE-ONLY (frame-exact, constant 30 fps) and take the VO WHOLE from the paused spine.
-    Never concat the parts' audio: each part's AAC track runs ~0.05-0.1 s longer than its picture, so an audio+video
-    concat holds the last frame of every part and pushes everything after the seam late (golden-kitty 2026-10-02:
-    a 3-frame hold at frame 12000 and the VO +57 ms late for the last 77 s; vertical-repurpose.md section 3)."""
-    n = len(parts)
-    inputs = []
-    for p in parts:
-        inputs += ["-i", str(p)]
-    inputs += ["-i", str(vo)]
-    fc = "".join(f"[{i}:v:0]" for i in range(n)) + f"concat=n={n}:v=1:a=0,setpts=N/30/TB[v]"
-    r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", fc, "-map", "[v]", "-map", f"{n}:a:0",
-                        "-r", "30", "-c:v", "libx264", "-crf", "18", "-pix_fmt", "yuv420p", "-preset", "medium",
-                        "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)],
-                       capture_output=True, text=True)
-    return r.returncode == 0, r.stderr[-600:]
-
-
 def v_render(state: VerticalState) -> VerticalState:
-    """Phase 3: render_comp.py --mode final on the vertical comp with the lean public dir; over the stitch ceiling it
-    renders frame-range parts and joins them with a standalone sync-safe ffmpeg concat."""
+    """Phase 3: render_comp.py --mode final on the vertical comp with the lean public dir (chunked + watched inside
+    render_comp.py, so no parts here), then the frame count is verified."""
     node = "v_render"
     proj, scope = _proj(state), state.get("scope", "ALL")
     if state.get("stub"):
@@ -428,29 +409,17 @@ def v_render(state: VerticalState) -> VerticalState:
     paused = C.paused_spine(proj, scope)
     frames = int(round((G._duration(paused) or 0.0) * 30))
     base = [sys.executable, "-u", str(G.RENDER_COMP), str(proj), "--mode", "final", "--comp", comp_id, "--public-dir", str(_vdir(proj))]
-    if frames > STITCH_CEILING:
-        parts, a = [], 0
-        while a < frames:
-            b = min(frames - 1, a + STITCH_CEILING - 1)
-            part = vp / f"_part-{a}-{b}.mp4"
-            rc, res = C.run_streaming(base + ["--out", str(part), "--frames", f"{a}-{b}"], state, node)
-            if rc != 0:
-                return C._fail(state, node, f"part {a}-{b} failed", res)
-            parts.append(part)
-            a = b + 1
-        ok, err = _concat(parts, out, proj / "assets" / "spine.mp4")
-        if not ok:
-            return C._fail(state, node, "ffmpeg concat of the parts failed", err)
-        got = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-count_frames", "-show_entries", "stream=nb_read_frames",
-                              "-of", "csv=p=0", str(out)], capture_output=True, text=True).stdout.strip().strip(",")
-        if got != str(frames):
-            return C._fail(state, node, f"the joined picture has {got} frames, expected {frames} (a held or dropped frame at a seam)")
-    else:
-        rc, res = C.run_streaming(base + ["--out", str(out)], state, node)
-        if rc != 0:
-            return C._fail(state, node, "vertical render failed", res)
+    # ONE call: render_comp.py renders in 1-minute chunks itself (video-creation/skills/chunked-render, 2026-10-27), which
+    # also retires the old ~14436-frame stitch-ceiling parts + their re-encoding ffmpeg join (one generation less).
+    rc, res = C.run_streaming(base + ["--out", str(out)], state, node)
+    if rc != 0:
+        return C._fail(state, node, "vertical render failed", res)
+    got = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-count_packets", "-show_entries", "stream=nb_read_packets",
+                          "-of", "csv=p=0", str(out)], capture_output=True, text=True).stdout.strip().strip(",")
+    if got != str(frames):
+        return C._fail(state, node, f"the vertical picture has {got} frames, expected {frames}")
     d = G._duration(out) or 0.0
-    return {"steps": C._step(state, node, "ran", f"{out.name} ({d:.2f}s, {frames} frames{' in parts' if frames > STITCH_CEILING else ''})")}
+    return {"steps": C._step(state, node, "ran", f"{out.name} ({d:.2f}s, {frames} frames, chunked)")}
 
 
 def _latest_vertical_video(proj: Path):

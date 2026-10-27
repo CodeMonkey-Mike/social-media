@@ -41,6 +41,13 @@ it at the `music_plan` node and records the delivered video at `stage_longform`.
 - **Hot entry → fade-in:** if a bed hits ~0 dBFS in its first seconds, ramp it in (e.g. −50 → nominal over ~15s).
 - **End-align the FINAL bed** so the track's last beat lands on the video's last frame: start the `<Audio>` with
   `startFrom = track_duration − final_span_duration` (so the tail, not the head, plays under the close).
+- **⛔ The video ENDS on the last word, never on a held still (Mike, 2026-10-22, kcc20 draft v1: "after I say later we
+  should cut off the video... a still image of my last frame for 7 seconds, which is unnecessary").** A plan that wants
+  the closing chord ON the last word (an end-pinned bed whose chord sits a few seconds before the file's end) does NOT
+  extend the video to let it ring: MUSIC-PLAN `end_card_hold` = `{after_last_word_sec, hold_until_sec, trim: true}`.
+  `hold_until_sec` only POSITIONS the end-pinned bed (the chord still lands on the word); with `trim: true` the comp
+  renders to the spine's end, `mix_music.py` cuts the mix there with a 0.2 s fade, and the graph's length checks expect
+  no hold. A held end card past the spine (`trim` absent) is the tao-detailed exception, only when Mike asks for one.
 
 ## Ducking (vibe cuts)
 - On a vibe-cut / biggest conviction beat: duck the bed ~18% across the hit via a per-frame

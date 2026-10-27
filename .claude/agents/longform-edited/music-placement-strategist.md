@@ -33,6 +33,9 @@ You operate inside the `social-media` repo (working directory is the repo root).
 3. `video-creation/assets/music/library.json` — the track metadata (bpm, key, mood, sections, license)
    AND the machine-written per-file `analysis` blocks (env sparkline / aggression / segments /
    opening / ending / roles). Semantics are documented in that file's `$analysis_note` key — read it.
+   **A track's `mike_note` is Mike's own verdict after listening and it BINDS the pick** (e.g. old-moon:
+   never a token-chapter bed; lights-out: a slow, determined bed for a storytelling chapter, never a hook opener).
+   Read it for every track you consider; a pick that contradicts it is wrong even if the meta fits.
 4. `persona/persona.json` — brand/tone; and the memory rule that bed level ~16-18 dB under the VO
    (measure, don't guess), Remotion `volume = 10**(dB/20)`.
 

@@ -92,7 +92,10 @@ def apply_edit_plan(text, rows):
     # (e.g. the seed's `[PUNCH-IN]` rows carried no id); matched by time (±0.6 s) and role hint
     joined = "\n".join(lines)
     for row in rows:
-        if row["id"] in joined and any(row["id"] in ln and abs((line_time(lines, i) or -9) - row["tc"]) <= 0.6
+        # NOTE: a frame-0 event has line_time 0.0, which is falsy; test for None, never `or -9` (growth-vs-product 2026-10-23:
+        # the signature open's whip-in row was re-tagged on every --apply run)
+        if row["id"] in joined and any(row["id"] in ln and line_time(lines, i) is not None
+                                       and abs(line_time(lines, i) - row["tc"]) <= 0.6
                                        for i, ln in enumerate(lines)):
             continue
         best = None

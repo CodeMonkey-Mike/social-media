@@ -1,0 +1,150 @@
+[000]    6.87-  10.65 ( 3.8s) gap 6.9  Casper's core contributors just moved their first token standard.
+[001]   11.01-  12.15 ( 1.1s) gap 0.4  KCC20.
+[002]   12.49-  14.33 ( 1.8s) gap 0.3  into its final review window.
+[003]   19.69-  26.11 ( 6.4s) gap 5.4  On October 7th, 2026, pull request 31 merges into Casper's own conventions repo.
+[004]   32.64-  35.50 ( 2.9s) gap 6.5  and the status on the spec flips the last call.
+[005]   35.94-  39.03 ( 3.1s) gap 0.4  final review window before a standard goes final.
+[006]   53.50-  56.42 ( 2.9s) gap14.5  Real tokens on Caspa's base layer.
+[007]   56.81-  60.48 ( 3.7s) gap 0.4  with every transaction enforced by the chain's own script rules.
+[008]   60.83-  62.67 ( 1.8s) gap 0.3  not by an off-chain indexer.
+[009]   72.14-  73.40 ( 1.3s) gap 9.5  Real close.
+[010]   73.99-  74.75 ( 0.8s) gap 0.6  Not yet finished.
+[011]   82.27-  84.18 ( 1.9s) gap 7.5  So let's get into how this is all playing out.
+[012]   88.89-  90.44 ( 1.6s) gap 4.7  Start with where this comes from.
+[013]   90.86-  93.13 ( 2.3s) gap 0.4  on June 30th, 2026.
+[014]   94.17-  96.68 ( 2.5s) gap 1.0  The Tokata hardfork gave Casbah covenants.
+[015]   97.82- 100.31 ( 2.5s) gap 1.1  A covenant is a rule built into a coin.
+[016]  100.62- 102.21 ( 1.6s) gap 0.3  that controls how it is spent.
+[017]  102.70- 103.99 ( 1.3s) gap 0.5  and where I can go next.
+[018]  109.86- 112.35 ( 2.5s) gap 5.9  KCC 20 is the shared rule book.
+[019]  112.81- 115.67 ( 2.9s) gap 0.5  for a fungible token built from those covenants.
+[020]  118.67- 121.79 ( 3.1s) gap 3.0  Fungible meaning every unit is the same as every other.
+[021]  124.88- 125.70 ( 0.8s) gap 3.1  Four ideas.
+[022]  126.50- 128.68 ( 2.2s) gap 0.8  Idea one, a common interface.
+[023]  129.69- 132.75 ( 3.1s) gap 1.0  Every KCC20 token carries the same state block.
+[024]  133.14- 133.70 ( 0.6s) gap 0.4  the amount.
+[025]  134.04- 134.57 ( 0.5s) gap 0.3  owner.
+[026]  134.94- 137.82 ( 2.9s) gap 0.4  a few settings, and the same transfer entry point.
+[027]  138.47- 142.32 ( 3.9s) gap 0.6  So any wallet, indexer, or app reads it the same way.
+[028]  147.55- 149.71 ( 2.2s) gap 5.2  Idea two, extended state.
+[029]  150.68- 154.62 ( 3.9s) gap 1.0  A token can carry its own data and behavior behind one digest.
+[030]  156.80- 159.73 ( 2.9s) gap 2.2  and transfers past that digest through untouched.
+[031]  163.63- 164.39 ( 0.8s) gap 3.9  Idea 3
+[032]  165.17- 166.28 ( 1.1s) gap 0.8  Flexible Authority.
+[033]  166.62- 168.68 ( 2.1s) gap 0.3  And this comes from KCC2.
+[034]  172.24- 176.35 ( 4.1s) gap 3.6  The order of a token can be a public key, a key commitment, a script.
+[035]  176.77- 177.58 ( 0.8s) gap 0.4  or another covenant.
+[036]  178.43- 180.98 ( 2.5s) gap 0.9  So Coverners can own tokens and govern them.
+[037]  184.10- 184.90 ( 0.8s) gap 3.1  Idea four.
+[038]  185.43- 186.53 ( 1.1s) gap 0.5  Borrowed received.
+[039]  187.29- 187.92 ( 0.6s) gap 0.8  Here's the thing.
+[040]  189.40- 190.59 ( 1.2s) gap 1.5  Every UTXO.
+[041]  191.07- 194.06 ( 3.0s) gap 0.5  Every unspent coin has to be funded with cash.
+[042]  195.32- 200.12 ( 4.8s) gap 1.3  And a rule called storage mass makes tiny outputs expensive on purpose.
+[043]  203.28- 206.32 ( 3.0s) gap 3.2  So instead of a UTXO for every incoming token...
+[044]  208.80- 211.06 ( 2.3s) gap 2.5  The sender tops up one you already hold.
+[045]  213.31- 214.03 ( 0.7s) gap 2.2  Same owner.
+[046]  214.34- 216.46 ( 2.1s) gap 0.3  The cast inside cannot go down.
+[047]  219.63- 221.19 ( 1.6s) gap 3.2  Only the token amount grows.
+[048]  232.61- 233.01 ( 0.4s) gap11.4  Now.
+[049]  233.52- 235.22 ( 1.7s) gap 0.5  Casper already has tokens.
+[050]  235.64- 236.65 ( 1.0s) gap 0.4  KRC20.
+[051]  237.03- 239.47 ( 2.4s) gap 0.4  From Casplex, a third party control.
+[052]  239.94- 242.04 ( 2.1s) gap 0.5  Live since September 2024.
+[053]  243.34- 247.51 ( 4.2s) gap 1.3  Around 2160 tokens by Casplex's own indexer account.
+[054]  249.01- 250.24 ( 1.2s) gap 1.5  It proved the demand.
+[055]  261.13- 262.95 ( 1.8s) gap10.9  The difference is where the token lives.
+[056]  263.49- 264.77 ( 1.3s) gap 0.5  with KRC 20.
+[057]  265.28- 268.16 ( 2.9s) gap 0.5  token operations are written onto Casper as data.
+[058]  268.64- 271.22 ( 2.6s) gap 0.5  and the Casplex indexer works out who owns that.
+[059]  271.96- 274.00 ( 2.0s) gap 0.7  Your balance is the indexer's answer.
+[060]  277.25- 278.54 ( 1.3s) gap 3.2  with KCC20.
+[061]  278.99- 283.13 ( 4.1s) gap 0.4  The token state sits inside a Covenant UTXO on the base layer.
+[062]  284.08- 286.46 ( 2.4s) gap 0.9  and the changed script enforces every transfer.
+[063]  287.11- 289.09 ( 2.0s) gap 0.6  Your balance is what the chain enforces.
+[064]  295.30- 298.81 ( 3.5s) gap 6.2  Sivan Helfer, the first listed author of KCC20
+[065]  299.25- 300.91 ( 1.7s) gap 0.4  put it plainly back in June.
+[066]  301.33- 303.01 ( 1.7s) gap 0.4  a week before Tokata went live.
+[067]  306.83- 308.76 ( 1.9s) gap 3.8  That is the whole difference.
+[068]  314.24- 315.95 ( 1.7s) gap 5.5  On the KCC 20 side...
+[069]  316.28- 317.37 ( 1.1s) gap 0.3  It is very early.
+[070]  319.11- 322.47 ( 3.4s) gap 1.7  roughly 150 tokens by one community's tracker count.
+[071]  323.11- 324.23 ( 1.1s) gap 0.6  Think ERC-20.
+[072]  324.55- 326.18 ( 1.6s) gap 0.3  enforced by the base layer itself.
+[073]  334.55- 336.49 ( 1.9s) gap 8.4  The timeline straight from the repo.
+[074]  337.00- 337.73 ( 0.7s) gap 0.5  June 30th.
+[075]  338.11- 339.12 ( 1.0s) gap 0.4  Tokata activates.
+[076]  339.47- 340.36 ( 0.9s) gap 0.3  July 15th.
+[077]  340.80- 342.22 ( 1.4s) gap 0.4  The convention repo opens.
+[078]  344.25- 345.11 ( 0.9s) gap 2.0  August 20th.
+[079]  345.55- 350.24 ( 4.7s) gap 0.4  KCC-1, KCC-2, and KCC-20 land as draft.
+[080]  351.70- 353.07 ( 1.4s) gap 1.5  On September 22nd.
+[081]  353.65- 356.94 ( 3.3s) gap 0.6  The last call pull request for KCC20 opens.
+[082]  357.88- 358.78 ( 0.9s) gap 0.9  October 1st.
+[083]  359.38- 360.28 ( 0.9s) gap 0.6  KCC1.
+[084]  360.60- 362.67 ( 2.1s) gap 0.3  KCC2 moved to last call.
+[085]  363.19- 364.09 ( 0.9s) gap 0.5  October 7th.
+[086]  364.67- 366.15 ( 1.5s) gap 0.6  KCC20 joins them.
+[087]  368.68- 370.79 ( 2.1s) gap 2.5  Last call is the final review window.
+[088]  371.20- 374.49 ( 3.3s) gap 0.4  An editor sets a deadline, typically about 14 days out.
+[089]  376.65- 380.14 ( 3.5s) gap 2.2  But none of the three headers carries one today. No official end date.
+[090]  386.67- 391.07 ( 4.4s) gap 6.5  And KCC 20 cannot go fine alone on its own. It requires KCC 1.
+[091]  391.37- 393.74 ( 2.4s) gap 0.3  Covenant layout and KCC2.
+[092]  394.05- 395.11 ( 1.1s) gap 0.3  authority schemes.
+[093]  399.14- 400.65 ( 1.5s) gap 4.0  And those go final first.
+[094]  400.97- 403.53 ( 2.6s) gap 0.3  KCC1 and then KCC2.
+[095]  403.85- 405.12 ( 1.3s) gap 0.3  than KCC 20.
+[096]  413.10- 415.20 ( 2.1s) gap 8.0  It also needs published test vectors.
+[097]  415.52- 417.91 ( 2.4s) gap 0.3  and a public implementation that passes them.
+[098]  418.44- 418.94 ( 0.5s) gap 0.5  today.
+[099]  419.41- 422.72 ( 3.3s) gap 0.5  The number of final technical standards in that repo is zero.
+[100]  425.33- 430.16 ( 4.8s) gap 2.6  By late July, implementers were already reporting that their tokens only partly matched the draft.
+[101]  446.39- 447.61 ( 1.2s) gap16.2  So what's the bigger picture?
+[102]  447.95- 448.64 ( 0.7s) gap 0.3  Let's zoom out.
+[103]  451.51- 456.10 ( 4.6s) gap 2.9  After the September 22nd release, the main node code went quiet for three weeks.
+[104]  457.05- 460.96 ( 3.9s) gap 1.0  Then six commits landed in one week, October 13th to the 16th.
+[105]  465.03- 467.44 ( 2.4s) gap 4.1  Maintenance and plumbing, not a new feature.
+[106]  469.77- 473.55 ( 3.8s) gap 2.3  And Dagnyte, the next consensus upgrade still has no date.
+[107]  484.28- 485.89 ( 1.6s) gap10.7  Usage is a tiny base.
+[108]  488.38- 491.95 ( 3.6s) gap 2.5  Around 82,000 standard transactions a day the week of October.
+[109]  493.99- 496.25 ( 2.3s) gap 2.0  up around 22% on the week before.
+[110]  503.12- 504.71 ( 1.6s) gap 6.9  So here's the conditional case.
+[111]  505.94- 510.24 ( 4.3s) gap 1.2  If KCC1, KCC2, then KCC20 go final.
+[112]  510.68- 511.43 ( 0.8s) gap 0.4  every wallet.
+[113]  511.78- 514.92 ( 3.1s) gap 0.3  Indexer and app on Casper builds to one rule book.
+[114]  516.84- 518.31 ( 1.5s) gap 1.9  Tokens exist today.
+[115]  518.62- 520.09 ( 1.5s) gap 0.3  That shared standard does not.
+[116]  544.12- 545.38 ( 1.3s) gap24.0  and the supply is fixed.
+[117]  546.11- 546.68 ( 0.6s) gap 0.7  Proof of work.
+[118]  547.01- 551.96 ( 4.9s) gap 0.3  No pre-mine. Around 96.7% of all Caspa is already mined.
+[119]  552.52- 554.79 ( 2.3s) gap 0.6  New demand meets very little new supply.
+[120]  556.34- 557.11 ( 0.8s) gap 1.6  conditional.
+[121]  557.41- 559.48 ( 2.1s) gap 0.3  And that's the asymmetry I'm watching.
+[122]  609.32- 612.20 ( 2.9s) gap49.8  And I'm telling you, this is going to be well worth the wait.
+[123]  614.57- 617.44 ( 2.9s) gap 2.4  At least for me anyway, nothing here is financial advice.
+[124]  620.37- 625.62 ( 5.3s) gap 2.9  But the high conviction holders, the ones who are in it for the long haul, are going to make it big time.
+[125]  630.70- 634.78 ( 4.1s) gap 5.1  because the ones with the vision are the ones that will end up dominating the world.
+[126]  640.16- 641.21 ( 1.1s) gap 5.4  So what to watch next?
+[127]  641.63- 643.92 ( 2.3s) gap 0.4  KCC1 then KCC2.
+[128]  644.24- 644.91 ( 0.7s) gap 0.3  Pro Final
+[129]  645.22- 646.50 ( 1.3s) gap 0.3  than KCC 20.
+[130]  654.07- 656.48 ( 2.4s) gap 7.6  then the implementations that pass its vector.
+[131]  664.64- 669.00 ( 4.4s) gap 8.2  But I can tell you, if you're interested in stacking Casper, while it's still cheap
+[132]  669.59- 675.06 ( 5.5s) gap 0.6  The best way to do that is to get in on a bunch of good tokens that really are going to moon 100x.
+[133]  675.66- 678.36 ( 2.7s) gap 0.6  500X within like six months to a year.
+[134]  678.81- 681.45 ( 2.6s) gap 0.4  I'm not talking about DJ plays. I'm talking about
+[135]  681.80- 684.94 ( 3.1s) gap 0.3  investor back insider tokens that me and my group.
+[136]  685.39- 687.99 ( 2.6s) gap 0.4  getting it on early. We have a whole bunch of plays.
+[137]  688.65- 690.18 ( 1.5s) gap 0.7  Click the link in the description below.
+[138]  690.63- 695.88 ( 5.3s) gap 0.5  You can see all the receipts, 550X on NYX, 350X on the lab token.
+[139]  696.39- 698.71 ( 2.3s) gap 0.5  and many, many others, all investor backed.
+[140]  699.36- 700.18 ( 0.8s) gap 0.7  It takes time.
+[141]  700.55- 705.38 ( 4.8s) gap 0.4  Sometimes it takes six months, sometimes it takes a year before they pop. It's not like one of those like
+[142]  705.85- 709.67 ( 3.8s) gap 0.5  I'm gonna put in like a hundred bucks on a DJ plane. It's going to 100x tomorrow. No
+[143]  710.14- 712.83 ( 2.7s) gap 0.5  There's nothing like that. You know, it's a strategy involved.
+[144]  717.23- 719.19 ( 2.0s) gap 4.4  Make sure you're surrounded by some.
+[145]  719.56- 723.75 ( 4.2s) gap 0.4  like-minded people in a group of people who can share ideas and everybody
+[146]  724.17- 728.00 ( 3.8s) gap 0.4  Everybody's in it for the money to all together, right? So we're all willing to help each other out.
+[147]  728.59- 734.19 ( 5.6s) gap 0.6  and grow together. So click the link in the description below. And besides that, click that like button and that subscribe button.
+[148]  734.61- 735.74 ( 1.1s) gap 0.4  I'm gonna catch you guys.
+[149]  736.26- 737.10 ( 0.8s) gap 0.5  Laters!

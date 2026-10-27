@@ -1,0 +1,47 @@
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}

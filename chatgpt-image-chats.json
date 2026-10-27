@@ -1,1649 +1,373 @@
 {
-  "$doc": "Registry of the ChatGPT chats used for image generation, grouped by PURPOSE. Every image-gen script (repurpose/gen-images.js, gen-batch-freshchat.js, generate-broll-wlw.js, etc.) consults this via repurpose/chat-pool.js. A ChatGPT chat degrades past ~25 images (stops rendering OR returns off-prompt/style-contaminated images), so each chat is capped and auto-rotated. Chats are also keyed by purpose so different visual styles never share a chat and cross-contaminate. Flow: getActiveUrl(purpose) -> if a chat for that purpose has count<cap, reuse it; else the caller opens a fresh chatgpt.com/ chat, generates, captures the /c/<id> URL, and registerNewChat() replaces the full one. A replaced/dead chat is MOVED to the retired list and then DELETED in the ChatGPT UI (chats are disposable: every image is downloaded at generation time) -- the gen scripts sweep retired at end of run via chat-delete.js, and repurpose/delete-chats.js (spawned by cleanup/cleanup.js) sweeps leftovers. Optional per-chat batch = a batches.json id; when that batch is completed/archived, delete-chats.js retires+deletes the chat (no batch = evergreen purpose, rotation-only deletion; batch matching no batches.json entry = kept). recordImage(purpose) increments only on a SUCCESSFUL save. markDead(purpose) retires a chat that would not load (conversation-not-found) so a fresh one is made. TITLE CONVENTION (Mike 2026-07-22): confirmAndRegister() renames every automation chat at registration to start with \"b-roll\" (purposes containing broll) or \"social\" (all other image purposes); that live-title prefix is the ULTIMATE deletion gate — chat-delete.js refuses to delete any chat whose title does not start with b-roll/social (refusals recorded on title_gate_skipped). AUTO-TITLE RACE (2026-07-30): ChatGPT titles a new conversation asynchronously, and when that landed after the gated rename it silently overwrote it (chat showed e.g. 'Cinematic Trading Hall'); confirmAndRegister now waits out the auto-title before renaming, and sweepRetired first runs healTitles(), which re-renames any registry chat whose recorded gated `title` (verified-rename provenance = ours) no longer matches the live title, requeueing healed title_gate_skipped entries for deletion. Entries without that provenance are never touched. BIRTH REGISTRATION (Mike 2026-09-17): confirm_and_register runs right after a fresh chat's FIRST SEND lands (not after the first successful image), so a chat can never outlive a failed run unregistered; gen_images' end-of-run (in a finally) retires a chat born that run with ZERO images and sweeps. `runs` = the run journal (journal_start/journal_end windows, newest 100) that reconcile_chats uses for its REVIEW class (unregistered chat created inside a window -> reported for Mike's per-URL approval, never auto-deleted); `last_reconcile` = the latest reconcile counts + review list (cleanup --dry-run prints it); `manual_deletes` = audit trail of delete_chats.py --approved-file deletions. Registration is API-confirmed (real conversation id, never bare page.url()): the 2026-07 capture bug stored ids that 404d while real chats piled up unregistered; all dead entries were purged 2026-07-22 and every purpose re-seeds fresh on next use.",
   "cap": 25,
-  "purposes": [
-    "x-tweets",
-    "yt-posts",
-    "ig-single",
-    "ig-carousel",
-    "broll",
-    "longform-broll"
-  ],
   "chats": [
     {
-      "purpose": "ig-single",
-      "url": "https://chatgpt.com/c/6ab1f90c-bbd8-83ea-8d52-9f289ad01c30",
-      "count": 16,
-      "created_at": "2026-09-22T03:44:18.143Z",
-      "batch": "pieverse",
-      "title": "social: ig-single"
+      "purpose": "broll-growth-vs-product",
+      "url": "https://chatgpt.com/c/6adad0cf-b6a8-83e9-899d-afe519f2992c",
+      "count": 5,
+      "created_at": "2026-10-23T03:14:53.235Z",
+      "batch": "growth-vs-product",
+      "title": "b-roll: broll-growth-vs-product"
     },
     {
-      "purpose": "golden-kitty-vertical",
-      "url": "https://chatgpt.com/c/6ac002e6-21cc-83ea-b302-3147a80b7aba",
+      "purpose": "broll-growth-vs-product-short",
+      "url": "https://chatgpt.com/c/6adb6fc5-6dc0-83e9-adcb-dbd7b5f49a63",
+      "count": 2,
+      "created_at": "2026-10-23T14:32:14.494Z",
+      "batch": "growth-vs-product",
+      "title": "b-roll: broll-growth-vs-product-short"
+    },
+    {
+      "purpose": "broll-growth-vs-product-vertical",
+      "url": "https://chatgpt.com/c/6adb9992-eee4-83ea-8ed4-70ed745f2b0f",
       "count": 1,
-      "created_at": "2026-10-02T19:19:25.349Z",
-      "batch": "golden-kitty-vert",
-      "title": "social: golden-kitty-vertical"
+      "created_at": "2026-10-23T17:33:02.045Z",
+      "batch": "growth-vs-product",
+      "title": "b-roll: broll-growth-vs-product-vertical"
     },
     {
       "purpose": "x-tweets",
-      "url": "https://chatgpt.com/c/6ac38bf6-eaf8-83ea-94ef-11502958ce21",
-      "count": 20,
-      "created_at": "2026-10-05T11:41:06.980Z",
-      "batch": "grapes",
+      "url": "https://chatgpt.com/c/6ae05d70-7e54-83ea-88b5-bb56f4769f52",
+      "count": 5,
+      "created_at": "2026-10-27T08:17:30.534Z",
+      "batch": "best-time",
       "title": "social: x-tweets"
     },
     {
-      "purpose": "yt-posts",
-      "url": "https://chatgpt.com/c/6ac96bd3-79a8-83e8-9d85-b8f5b64d6320",
-      "count": 12,
-      "created_at": "2026-10-09T22:36:53.451Z",
-      "batch": "aliens",
-      "title": "social: yt-posts"
-    },
-    {
-      "purpose": "longform-broll",
-      "url": "https://chatgpt.com/c/6acbb86c-2528-83ea-b04f-95d6ce61a6b6",
-      "count": 1,
-      "created_at": "2026-10-11T16:28:53.027Z",
-      "title": "b-roll: longform-broll"
-    },
-    {
       "purpose": "broll",
-      "url": "https://chatgpt.com/c/6ad0b4f2-78f0-83ea-80e8-e372daa5ab49",
-      "count": 8,
-      "created_at": "2026-10-15T11:13:44.045Z",
-      "batch": "downtober",
+      "url": "https://chatgpt.com/c/6ae0ad0e-cb74-83e9-a124-b9199155f3be",
+      "count": 7,
+      "created_at": "2026-10-27T13:55:59.374Z",
+      "batch": "best-time",
       "title": "b-roll: broll"
     }
   ],
   "retired": [],
-  "title_gate_skipped": [],
+  "runs": [
+    {
+      "id": "2026-10-22T13:30:35.120Z|broll",
+      "purpose": "broll",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T13:30:35.120Z",
+      "ended": "2026-10-22T13:46:17.079Z",
+      "ok": 6,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ada1003-4808-83ea-9965-aafd6cdf4b85"
+    },
+    {
+      "id": "2026-10-22T14:52:44.580Z|broll",
+      "purpose": "broll",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T14:52:44.580Z",
+      "ended": "2026-10-22T15:10:51.077Z",
+      "ok": 7,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ada2343-ed10-83e9-9918-333049fff3c3"
+    },
+    {
+      "id": "2026-10-22T16:07:34.311Z|broll-kcc20-vertical",
+      "purpose": "broll-kcc20-vertical",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T16:07:34.311Z",
+      "ended": "2026-10-22T16:12:09.077Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ada34cd-c084-83ea-a533-c119e63e9677"
+    },
+    {
+      "id": "2026-10-22T16:12:20.727Z|broll-kcc20-vertical",
+      "purpose": "broll-kcc20-vertical",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T16:12:20.727Z",
+      "ended": "2026-10-22T16:15:58.318Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-22T16:16:05.868Z|broll-kcc20-vertical",
+      "purpose": "broll-kcc20-vertical",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T16:16:05.868Z",
+      "ended": "2026-10-22T16:19:44.293Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-22T16:19:53.230Z|broll-kcc20-vertical",
+      "purpose": "broll-kcc20-vertical",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T16:19:53.230Z",
+      "ended": "2026-10-22T16:24:01.477Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-22T16:24:09.817Z|broll-kcc20-vertical",
+      "purpose": "broll-kcc20-vertical",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T16:24:09.817Z",
+      "ended": "2026-10-22T16:28:24.985Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-22T16:28:33.678Z|broll-kcc20-vertical",
+      "purpose": "broll-kcc20-vertical",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T16:28:33.678Z",
+      "ended": "2026-10-22T16:32:45.095Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-22T16:32:53.047Z|broll-kcc20-vertical",
+      "purpose": "broll-kcc20-vertical",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T16:32:53.047Z",
+      "ended": "2026-10-22T16:37:02.450Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-22T16:37:11.681Z|broll-kcc20-vertical",
+      "purpose": "broll-kcc20-vertical",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T16:37:11.681Z",
+      "ended": "2026-10-22T16:41:26.330Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-22T16:41:48.189Z|broll-kcc20-vertical",
+      "purpose": "broll-kcc20-vertical",
+      "batch": "kcc20-live",
+      "started": "2026-10-22T16:41:48.189Z",
+      "ended": "2026-10-22T16:46:32.413Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-23T03:12:55.200Z|broll-growth-vs-product",
+      "purpose": "broll-growth-vs-product",
+      "batch": "growth-vs-product",
+      "started": "2026-10-23T03:12:55.200Z",
+      "ended": "2026-10-23T03:27:47.579Z",
+      "ok": 5,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6adad0cf-b6a8-83e9-899d-afe519f2992c"
+    },
+    {
+      "id": "2026-10-23T14:29:22.576Z|broll-growth-vs-product-short",
+      "purpose": "broll-growth-vs-product-short",
+      "batch": "growth-vs-product",
+      "started": "2026-10-23T14:29:22.576Z",
+      "ended": "2026-10-23T14:37:13.945Z",
+      "ok": 2,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6adb6fc5-6dc0-83e9-adcb-dbd7b5f49a63"
+    },
+    {
+      "id": "2026-10-23T17:03:19.495Z|broll-growth-vs-product-vertical",
+      "purpose": "broll-growth-vs-product-vertical",
+      "batch": "growth-vs-product",
+      "started": "2026-10-23T17:03:19.495Z",
+      "ended": "2026-10-23T17:07:56.734Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6adb935d-3218-83ea-ba45-83063cbbddfe"
+    },
+    {
+      "id": "2026-10-23T17:08:05.997Z|broll-growth-vs-product-vertical",
+      "purpose": "broll-growth-vs-product-vertical",
+      "batch": "growth-vs-product",
+      "started": "2026-10-23T17:08:05.997Z",
+      "ended": "2026-10-23T17:12:59.035Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6adb947b-4a24-83e9-b613-9e2686cb5d2a"
+    },
+    {
+      "id": "2026-10-23T17:13:08.867Z|broll-growth-vs-product-vertical",
+      "purpose": "broll-growth-vs-product-vertical",
+      "batch": "growth-vs-product",
+      "started": "2026-10-23T17:13:08.867Z",
+      "ended": "2026-10-23T17:18:18.199Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6adb95ab-97f8-83e9-a225-de4392a860b3"
+    },
+    {
+      "id": "2026-10-23T17:18:28.059Z|broll-growth-vs-product-vertical",
+      "purpose": "broll-growth-vs-product-vertical",
+      "batch": "growth-vs-product",
+      "started": "2026-10-23T17:18:28.059Z",
+      "ended": "2026-10-23T17:23:15.273Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6adb96eb-72a8-83ea-896c-b831914218c5"
+    },
+    {
+      "id": "2026-10-23T17:23:23.076Z|broll-growth-vs-product-vertical",
+      "purpose": "broll-growth-vs-product-vertical",
+      "batch": "growth-vs-product",
+      "started": "2026-10-23T17:23:23.076Z",
+      "ended": "2026-10-23T17:28:22.741Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6adb9812-295c-83e9-97d6-ddfec4c2dc1a"
+    },
+    {
+      "id": "2026-10-23T17:29:48.472Z|broll-growth-vs-product-vertical",
+      "purpose": "broll-growth-vs-product-vertical",
+      "batch": "growth-vs-product",
+      "started": "2026-10-23T17:29:48.472Z",
+      "ended": "2026-10-23T17:34:49.380Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6adb9992-eee4-83ea-8ed4-70ed745f2b0f"
+    },
+    {
+      "id": "2026-10-26T23:39:56.037Z|broll",
+      "purpose": "broll",
+      "batch": "inference",
+      "started": "2026-10-26T23:39:56.037Z",
+      "ended": "2026-10-26T23:49:40.199Z",
+      "ok": 4,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6adfe4d5-0ef8-83ea-adc0-77d73ce8f540"
+    },
+    {
+      "id": "2026-10-27T01:44:50.343Z|broll",
+      "purpose": "broll",
+      "batch": "only-18-months-left",
+      "started": "2026-10-27T01:44:50.343Z",
+      "ended": "2026-10-27T02:08:04.994Z",
+      "ok": 11,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ae0021b-e770-83ea-bc76-a4499b6230b0"
+    },
+    {
+      "id": "2026-10-27T08:14:30.298Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "best-time",
+      "started": "2026-10-27T08:14:30.298Z",
+      "ended": "2026-10-27T08:18:56.039Z",
+      "ok": 1,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ae05d70-7e54-83ea-88b5-bb56f4769f52"
+    },
+    {
+      "id": "2026-10-27T08:18:59.129Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "best-time",
+      "started": "2026-10-27T08:18:59.129Z",
+      "ended": "2026-10-27T08:22:34.008Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-27T08:22:37.428Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "best-time",
+      "started": "2026-10-27T08:22:37.428Z",
+      "ended": "2026-10-27T08:26:15.219Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-27T08:26:18.407Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "best-time",
+      "started": "2026-10-27T08:26:18.407Z",
+      "ended": "2026-10-27T08:30:07.069Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-27T08:30:11.265Z|x-tweets",
+      "purpose": "x-tweets",
+      "batch": "best-time",
+      "started": "2026-10-27T08:30:11.265Z",
+      "ended": "2026-10-27T08:34:03.496Z",
+      "ok": 1,
+      "fail": 0
+    },
+    {
+      "id": "2026-10-27T12:42:37.323Z|broll",
+      "purpose": "broll",
+      "batch": "best-time",
+      "started": "2026-10-27T12:42:37.323Z",
+      "ended": "2026-10-27T13:00:31.701Z",
+      "ok": 6,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ae09c44-f6fc-83e9-a233-68818531f2ef"
+    },
+    {
+      "id": "2026-10-27T13:54:12.934Z|broll",
+      "purpose": "broll",
+      "batch": "best-time",
+      "started": "2026-10-27T13:54:12.934Z",
+      "ended": "2026-10-27T14:13:19.175Z",
+      "ok": 7,
+      "fail": 0,
+      "born": "https://chatgpt.com/c/6ae0ad0e-cb74-83e9-a124-b9199155f3be"
+    }
+  ],
   "last_reconcile": {
-    "at": "2026-09-17T21:31:04.578Z",
+    "at": "2026-10-24T21:33:14.180Z",
     "live": 234,
     "dead": 0,
     "drifted": 0,
-    "orphans": 0,
-    "review": 57,
+    "orphans": 8,
+    "review": 0,
     "queued": 0,
-    "review_list": [
+    "review_list": [],
+    "orphan_list": [
       {
-        "id": "6aa4179f-9a20-83e9-9f6f-249f43997790",
-        "title": "Highlight POP Red",
-        "created": "2026-09-11T15:00:48",
-        "why": "created on/after --since 2026-08-04"
+        "id": "6ada0dc9-1eb0-83ea-9555-78e224e2aa47",
+        "title": "b-roll: broll",
+        "created": "2026-10-22T13:21:13"
       },
       {
-        "id": "6a833539-b9f4-83ea-a974-e643b3e88f37",
-        "title": "Poster Image Description",
-        "created": "2026-08-17T16:23:26",
-        "why": "created on/after --since 2026-08-04"
+        "id": "6ad6df7d-77b4-83e9-a488-8ab88bc4ad11",
+        "title": "social: yt-posts",
+        "created": "2026-10-20T03:26:54"
       },
       {
-        "id": "6a7b63d6-1534-83ea-8371-033018cf569c",
-        "title": "Artistic Image Description",
-        "created": "2026-08-11T18:03:15",
-        "why": "created on/after --since 2026-08-04"
+        "id": "6ad319a3-9b08-83e9-9dc9-181912def4b5",
+        "title": "social: x-tweets",
+        "created": "2026-10-17T06:45:56"
       },
       {
-        "id": "6a7b210c-cfb0-83ea-8855-b93e73647b16",
-        "title": "Render revision request",
-        "created": "2026-08-11T13:18:32",
-        "why": "created on/after --since 2026-08-04"
+        "id": "6ad8fa8b-50f8-83ea-a498-297288c000cd",
+        "title": "b-roll: kcc20-broll",
+        "created": "2026-10-21T17:46:51"
       },
       {
-        "id": "6a7b1fe5-6310-83ea-8ad9-402794e8a86d",
-        "title": "Rewrite Coin Scene",
-        "created": "2026-08-11T13:14:59",
-        "why": "created on/after --since 2026-08-04"
+        "id": "6ad796e2-ce18-83ea-8342-e125ff745e1b",
+        "title": "b-roll: evals-broll",
+        "created": "2026-10-20T16:29:23"
       },
       {
-        "id": "6a7b1ad9-d2bc-83ea-b099-7ffc82b84791",
-        "title": "Write crypto carousel slide",
-        "created": "2026-08-11T12:51:51",
-        "why": "created on/after --since 2026-08-04"
+        "id": "6ad31af8-3324-83ea-bd13-67bd04310945",
+        "title": "social: ig-single",
+        "created": "2026-10-17T06:51:36"
       },
       {
-        "id": "6a788e47-5a98-83ea-97dc-019c65f67cc8",
-        "title": "Editorial Carousel Design",
-        "created": "2026-08-09T14:28:30",
-        "why": "created on/after --since 2026-08-04"
+        "id": "6acbb86c-2528-83ea-b04f-95d6ce61a6b6",
+        "title": "b-roll: longform-broll",
+        "created": "2026-10-11T16:25:17"
       },
       {
-        "id": "6a788dea-22f0-83ea-99a0-e32e5e189f9a",
-        "title": "Editorial Carousel Design",
-        "created": "2026-08-09T14:26:17",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a788d35-0e74-83ea-96ca-9dd738932fc7",
-        "title": "Editorial Carousel Design",
-        "created": "2026-08-09T14:23:55",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a788ce7-7424-83ea-ad03-2e9ffadaa431",
-        "title": "Editorial Slide Design",
-        "created": "2026-08-09T14:21:43",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a788c37-2c80-83ea-85f5-0f4a5abba8c1",
-        "title": "Editorial Carousel Design",
-        "created": "2026-08-09T14:19:45",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a788bb1-da70-83ea-93e6-a981d2a1f5f1",
-        "title": "Crypto Graphic Design Request",
-        "created": "2026-08-09T14:17:27",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a788b0c-976c-83ea-ad1c-535e4274ab04",
-        "title": "Crypto News Graphic Design",
-        "created": "2026-08-09T14:15:02",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a775ed4-4d04-83ea-9dad-a8452f0b3ec8",
-        "title": "Epic Husky Fantasy Scene",
-        "created": "2026-08-08T16:54:35",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a76a1da-2dbc-83ea-b3c1-707d6212a9b7",
-        "title": "Crypto News Graphic Design",
-        "created": "2026-08-08T03:26:27",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a769cbc-e04c-83ea-9bfd-4561952c395d",
-        "title": "Product Photography Description",
-        "created": "2026-08-08T03:05:19",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a769b5a-e824-83ea-b1b8-393e419361b1",
-        "title": "3D Cartoon Coin Celebration",
-        "created": "2026-08-08T02:59:59",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a768db2-b1d8-83ea-a8c6-6b0facc7314b",
-        "title": "Editorial Carousel Design",
-        "created": "2026-08-08T02:01:18",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a768bd7-92ac-83ea-abba-291447e3a52d",
-        "title": "Crypto Graphic Design",
-        "created": "2026-08-08T01:53:41",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a768b72-07ec-83ea-8974-da3943440b96",
-        "title": "Crypto News Graphic Design",
-        "created": "2026-08-08T01:50:55",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a751ba2-c1b4-83ea-8535-7092ae1e4f02",
-        "title": "Crypto Slide Design",
-        "created": "2026-08-06T23:42:53",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a751b2c-06f0-83ea-b8b9-439cc10ac638",
-        "title": "Editorial carousel design",
-        "created": "2026-08-06T23:40:21",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a751a70-72a8-83ea-a845-382d602ef601",
-        "title": "VPN Security Slide Design",
-        "created": "2026-08-06T23:37:36",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a7519d3-63b0-83ea-a878-8e08351057cb",
-        "title": "Crypto Market Graphic Design",
-        "created": "2026-08-06T23:35:07",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a75194a-7500-83ea-951a-325f0e0d3945",
-        "title": "Crypto Lawsuit Graphic Design",
-        "created": "2026-08-06T23:32:36",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a7518bf-c694-83ea-aa3f-558e6afb3eaa",
-        "title": "Crypto Graphic Design",
-        "created": "2026-08-06T23:30:11",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a751840-c278-83ea-8615-01ef7cb16b9d",
-        "title": "3D Crypto Coin Scene",
-        "created": "2026-08-06T23:27:51",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a750e6c-76a8-83ea-addb-647926687aef",
-        "title": "Crypto Poll Design",
-        "created": "2026-08-06T22:46:27",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a750d42-56c4-83ea-a084-e7c7467d470a",
-        "title": "Slide design description",
-        "created": "2026-08-06T22:41:30",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a750caa-5520-83ea-8a28-7f12661e4310",
-        "title": "Design Description Request",
-        "created": "2026-08-06T22:38:58",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a750c1f-1ec8-83ea-8ace-abe4a6228e5c",
-        "title": "Editorial Slide Design",
-        "created": "2026-08-06T22:36:22",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a750baf-a444-83ea-b12c-92c949e2a176",
-        "title": "Crypto Graphic Design",
-        "created": "2026-08-06T22:33:55",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73e012-7460-83ea-92d0-7746bf1e51eb",
-        "title": "Luxury Yachts Night Scene",
-        "created": "2026-08-06T01:16:21",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73df68-9450-83ea-92bb-539cb1bb11f8",
-        "title": "Graphic Design Description",
-        "created": "2026-08-06T01:13:38",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73dcd3-db80-83ea-a5e2-9e241e2973d9",
-        "title": "Crypto Thumbnail Design",
-        "created": "2026-08-06T01:02:33",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73dc50-149c-83ea-b281-bf5b6a0b2d93",
-        "title": "Graphic Design Brief",
-        "created": "2026-08-06T01:00:05",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73dba7-d6ec-83ea-a9f4-96fead8ca121",
-        "title": "Crypto Promo Design Details",
-        "created": "2026-08-06T00:57:18",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73db16-8468-83ea-8552-0b4bb3087a55",
-        "title": "Crypto Poster Design",
-        "created": "2026-08-06T00:55:05",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73d771-b46c-83ea-9040-d6bc63c23d44",
-        "title": "Design Specifications Request",
-        "created": "2026-08-06T00:39:11",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73d6f3-0e6c-83ea-bf24-b3d7c8acf3bf",
-        "title": "Graphic Design Instructions",
-        "created": "2026-08-06T00:37:08",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73d681-b85c-83ea-86fa-7da164a0d35a",
-        "title": "Design Slide Instructions",
-        "created": "2026-08-06T00:35:13",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73d5f3-b720-83ea-850c-8a5a8191a85f",
-        "title": "Design Instructions Summary",
-        "created": "2026-08-06T00:33:02",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a73d56b-5698-83ea-a77c-f8e97aaee718",
-        "title": "Graphic Design Request",
-        "created": "2026-08-06T00:30:43",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a735f4b-1c90-83ea-87b5-8638e5862bd0",
-        "title": "Super yacht $IF design",
-        "created": "2026-08-05T16:06:47",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a727fb1-1158-83ea-804e-cab8a7272bf5",
-        "title": "Financial Data Slide",
-        "created": "2026-08-05T00:12:43",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a727ee4-70bc-83ea-8c00-30a6f4af2a4e",
-        "title": "Kaspa Coin CGI Concept",
-        "created": "2026-08-05T00:09:40",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a727a61-3300-83ea-a949-43fcaa302d7c",
-        "title": "Crypto Graphic Design",
-        "created": "2026-08-04T23:49:58",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a727a20-754c-83ea-8bda-3473470bc2a9",
-        "title": "Crypto Graphic Design",
-        "created": "2026-08-04T23:47:45",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a727953-dd54-83ea-bd7f-f87f0aaf1a2a",
-        "title": "Crypto Bear Market Graphic",
-        "created": "2026-08-04T23:45:35",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a7278dd-b100-83ea-90ea-b24db941479b",
-        "title": "Crypto Graphic Design",
-        "created": "2026-08-04T23:43:26",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a727851-f77c-83ea-8caa-fbe1bd8dc782",
-        "title": "Financial Data Slide Design",
-        "created": "2026-08-04T23:40:56",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a7277a8-32d4-83ea-92ac-427d655aa948",
-        "title": "3D Kaspa Coin Character",
-        "created": "2026-08-04T23:38:22",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a72771d-5e9c-83ea-b79c-0f71da68f64e",
-        "title": "Kaspa Coin Dive CGI",
-        "created": "2026-08-04T23:36:10",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a727156-15c8-83ea-a41c-d5dc5f262819",
-        "title": "Cinematic Vault Scene",
-        "created": "2026-08-04T23:11:12",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a726f71-8f7c-83ea-99fa-d6c3152ba09d",
-        "title": "Cinematic Coin Race",
-        "created": "2026-08-04T23:03:29",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a726ed6-3978-83ea-8593-ef33631e39e9",
-        "title": "Kaspa Coin Hero Shot",
-        "created": "2026-08-04T23:00:51",
-        "why": "created on/after --since 2026-08-04"
-      },
-      {
-        "id": "6a726561-03c0-83ea-9fc7-77212a792889",
-        "title": "Crypto Poster Design",
-        "created": "2026-08-04T22:20:13",
-        "why": "created on/after --since 2026-08-04"
+        "id": "6ac002e6-21cc-83ea-b302-3147a80b7aba",
+        "title": "social: golden-kitty-vertical",
+        "created": "2026-10-02T19:15:51"
       }
     ],
-    "orphan_list": [],
-    "review_file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\repurpose\\output\\chat-review-2026-09-17.json"
-  },
-  "manual_deletes": [
-    {
-      "url": "https://chatgpt.com/c/6aac0a97-9dd0-83ea-b0c8-a5b83e18b637",
-      "title": "Ok",
-      "at": "2026-09-17T17:02:34.882Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa6af22-0aec-83e9-9789-383bc11e0da8",
-      "title": "Generate gym picture",
-      "at": "2026-09-17T17:02:45.906Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa37a7b-919c-83ea-86b9-a60bc107eb55",
-      "title": "Create Financial Slide",
-      "at": "2026-09-17T17:02:56.414Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa3793b-f098-83ea-ac08-ee1c1795390e",
-      "title": "Write financial slide#+#+#+#+",
-      "at": "2026-09-17T17:03:07.188Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa3785c-6814-83ea-9109-4b0dfc7affe9",
-      "title": "Financial Slide Design",
-      "at": "2026-09-17T17:03:17.591Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa346cc-87e4-83ea-b45c-0905b4c41126",
-      "title": "Redact Private Gems",
-      "at": "2026-09-17T17:03:29.057Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa31ec1-28d4-83ea-86eb-70af92498e98",
-      "title": "Pixar Linea Coin Scene",
-      "at": "2026-09-17T17:03:39.588Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa2aa60-05d4-83ea-9d24-a811eaf22fde",
-      "title": "Render Flask Launch Scene",
-      "at": "2026-09-17T17:03:51.617Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa2a62c-157c-83ea-bfe0-9d9686b127ec",
-      "title": "Create Financial Slide",
-      "at": "2026-09-17T17:04:01.909Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa2a553-dd9c-83e9-9f0e-99e4d69b28b3",
-      "title": "Write Financial Slide Infographic",
-      "at": "2026-09-17T17:04:13.374Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa2a4f3-d294-83ea-b482-1c1ce9ad60e9",
-      "title": "Generate Carousel Image",
-      "at": "2026-09-17T17:04:23.901Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6aa29bfe-2b40-83ea-a529-9ce32dd8cb28",
-      "title": "Financial infographic design",
-      "at": "2026-09-17T17:04:35.310Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a9a268a-ad70-83ea-889a-f6c0ccb01df3",
-      "title": "Enhance Bitcoin Image",
-      "at": "2026-09-17T17:04:46.754Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a9244be-466c-83e9-907c-5b5f76e1bd53",
-      "title": "social: approved-delete 2026-09-17",
-      "at": "2026-09-17T17:43:49.715Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a92439b-5f5c-83ea-8557-36abba9b36c7",
-      "title": "social: approved-delete 2026-09-17",
-      "at": "2026-09-17T17:47:03.433Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a9217c0-e194-83ea-bae7-54acc077943e",
-      "title": "social: approved-delete 2026-09-17",
-      "at": "2026-09-17T17:49:48.970Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a921702-4b88-83ea-87db-6da918186f50",
-      "title": "social: approved-delete 2026-09-17",
-      "at": "2026-09-17T17:53:02.161Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a921676-8658-83ea-a6a2-6eaa79665d59",
-      "title": "social: approved-delete 2026-09-17",
-      "at": "2026-09-17T17:56:15.329Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a9215f4-8598-83ea-8905-33152ca18258",
-      "title": "Image Prompt Rewrite",
-      "at": "2026-09-17T20:26:26.885Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a920ecf-c9e0-83ea-aa1d-825bb588285b",
-      "title": "Financial Slide Design",
-      "at": "2026-09-17T20:26:41.141Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a920e34-c154-83ea-ba7a-f69d109d96f6",
-      "title": "Financial Data Slide",
-      "at": "2026-09-17T20:26:54.825Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a920d94-dbc0-83ea-8855-bbd3cfdad96a",
-      "title": "Financial Slide Design",
-      "at": "2026-09-17T20:27:06.028Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a901c8e-044c-83ea-9907-182cbe2ab442",
-      "title": "Cinematic Vault Render",
-      "at": "2026-09-17T20:27:19.992Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8e1581-6c4c-83e9-974f-8098e3d0765f",
-      "title": "Editorial slide design",
-      "at": "2026-09-17T20:27:33.131Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8e1098-b638-83ea-a9f3-f208bb7a1d51",
-      "title": "Cinematic landscape prompt",
-      "at": "2026-09-17T20:27:47.349Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8e0dc1-bc00-83ea-8dc5-82eee50f3ce5",
-      "title": "Cinematic mirror scene",
-      "at": "2026-09-17T20:27:59.793Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8e0427-65c4-83ea-ab76-cd92214a01fb",
-      "title": "Sci fi poster description",
-      "at": "2026-09-17T20:28:16.111Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8e00bd-e75c-83ea-be7b-1fe5086f12b1",
-      "title": "Write carousel slide text",
-      "at": "2026-09-17T20:28:30.918Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8e002e-b21c-83ea-a509-98a16118463d",
-      "title": "Editorial slide design",
-      "at": "2026-09-17T20:28:45.007Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8dff84-0870-83ea-a3bc-253876e7eca1",
-      "title": "Write editorial carousel slide",
-      "at": "2026-09-17T20:28:57.186Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8dfe29-8470-83ea-a4e8-1d78e4a146ba",
-      "title": "Create editorial carousel slide",
-      "at": "2026-09-17T20:29:11.694Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8dfc9e-28d8-83ea-8186-c6cb88c6cd6d",
-      "title": "Editorial carousel design",
-      "at": "2026-09-17T20:29:27.441Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8dfc0d-eb58-83ea-b186-3f321d3ed589",
-      "title": "Write editorial carousel slide",
-      "at": "2026-09-17T20:29:41.569Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8dfb78-a3c8-83e9-8138-73e0d12e5581",
-      "title": "Create editorial carousel slide",
-      "at": "2026-09-17T20:29:53.488Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8dfaef-9ad8-83ea-b4a5-812ba6329db8",
-      "title": "Editorial slide design",
-      "at": "2026-09-17T20:30:07.909Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8dfa4a-93a4-83ea-b4d5-06ce5526db7f",
-      "title": "Create editorial slide",
-      "at": "2026-09-17T20:30:19.923Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8de807-41f0-83ea-92c8-9f9a2a7e2ce6",
-      "title": "Kaspa canyon illustration",
-      "at": "2026-09-17T20:30:32.956Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8c6dca-ad08-83ea-a64a-a63de4543679",
-      "title": "Create Kaspa Superyacht",
-      "at": "2026-09-17T20:30:46.413Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a848c6b-045c-83ea-9046-eab1d8a6c2fc",
-      "title": "Financial Slide Design",
-      "at": "2026-09-17T20:30:58.638Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a848bc9-91e4-83ea-b867-00358401db2d",
-      "title": "Financial Slide Design",
-      "at": "2026-09-17T20:31:11.246Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a83397d-54a0-83ea-9ce7-a78836d736d4",
-      "title": "Kaspa Coin CGI Render",
-      "at": "2026-09-17T20:31:22.295Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8337f7-0b0c-83ea-85a6-c9fc83ce224c",
-      "title": "Perfect Square Image Request",
-      "at": "2026-09-17T20:31:35.141Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a833760-1980-83ea-8997-178f509aae7b",
-      "title": "Perfect Square Template",
-      "at": "2026-09-17T20:32:53.688Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8336b9-3d94-83ea-9ef9-a0e6f1f350da",
-      "title": "Kaspa Coin Rendering",
-      "at": "2026-09-17T20:36:57.209Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a832936-576c-83ea-af82-e0654dd34b26",
-      "title": "Futuristic neon candlestick scene",
-      "at": "2026-09-17T20:42:49.458Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a832785-f8f8-83ea-88c2-2a7fdd56c06e",
-      "title": "Perfect Square Image Request",
-      "at": "2026-09-17T20:46:56.343Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a832704-fe8c-83ea-8799-839bce9aff1c",
-      "title": "Square Graphic Design",
-      "at": "2026-09-17T20:51:16.283Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8323db-2d08-83ea-8154-1f1f57963a57",
-      "title": "Visual Template Request",
-      "at": "2026-09-17T20:54:50.931Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a832310-ca0c-83ea-835b-2beba7d576f3",
-      "title": "Visual Template Request",
-      "at": "2026-09-17T20:58:57.110Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a832190-0034-83ea-9d27-55e12e9a67ee",
-      "title": "Visual template request",
-      "at": "2026-09-17T21:02:49.081Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a807afc-d298-83ea-bd19-42c3f0851b84",
-      "title": "Bitcoin Price Infographic",
-      "at": "2026-09-17T21:06:56.132Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8078f9-9068-83ea-9992-43232886796d",
-      "title": "Financial Data Slide Design",
-      "at": "2026-09-17T21:11:18.873Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a807763-7914-83ea-854d-44c8ac492e88",
-      "title": "Financial Data Slide",
-      "at": "2026-09-17T21:14:53.163Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a8076a3-6f20-83ea-9b4c-2d6a3a7aa5ca",
-      "title": "Editorial Hook Design",
-      "at": "2026-09-17T21:18:57.277Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a7c81aa-aec8-83ea-87d6-25de42d31c0f",
-      "title": "Financial Slide Design",
-      "at": "2026-09-17T21:22:49.221Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a7c7fe2-8be4-83ea-b3b7-e7a7366bb88e",
-      "title": "Bitcoin Financial Data",
-      "at": "2026-09-17T21:26:54.330Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a7c7af0-0344-83ea-ab87-308c47157404",
-      "title": "Financial Slide Design",
-      "at": "2026-09-17T21:30:57.840Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a7b63d6-1534-83ea-8371-033018cf569c",
-      "title": "Artistic Image Description",
-      "at": "2026-09-17T21:35:15.067Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a7b210c-cfb0-83ea-8855-b93e73647b16",
-      "title": "Render revision request",
-      "at": "2026-09-17T21:39:18.395Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a7b1fe5-6310-83ea-8ad9-402794e8a86d",
-      "title": "Rewrite Coin Scene",
-      "at": "2026-09-17T21:42:50.937Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a7b1ad9-d2bc-83ea-b099-7ffc82b84791",
-      "title": "Write crypto carousel slide",
-      "at": "2026-09-17T21:50:07.309Z"
-    },
-    {
-      "url": "https://chatgpt.com/c/6a788e47-5a98-83ea-97dc-019c65f67cc8",
-      "title": "Editorial Carousel Design",
-      "at": "2026-09-17T21:54:12.145Z"
+    "fixed": {
+      "cleared_dead": 0,
+      "queued_orphans": 8,
+      "healed": 0
     }
-  ],
-  "runs": [
-    {
-      "id": "2026-10-02T23:49:11.576Z|broll",
-      "purpose": "broll",
-      "batch": null,
-      "started": "2026-10-02T23:49:11.576Z",
-      "ended": "2026-10-02T23:54:32.845Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac04396-50cc-83e9-9475-4af6b37e1c9c"
-    },
-    {
-      "id": "2026-10-03T12:55:29.420Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "bull-trap",
-      "started": "2026-10-03T12:55:29.420Z",
-      "ended": "2026-10-03T12:59:44.509Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-03T12:59:47.326Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "bull-trap",
-      "started": "2026-10-03T12:59:47.326Z",
-      "ended": "2026-10-03T13:04:22.035Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-03T13:04:25.091Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "bull-trap",
-      "started": "2026-10-03T13:04:25.091Z",
-      "ended": "2026-10-03T13:08:59.695Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-03T13:09:02.696Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "bull-trap",
-      "started": "2026-10-03T13:09:02.696Z",
-      "ended": "2026-10-03T13:14:27.134Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-03T13:14:30.062Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "bull-trap",
-      "started": "2026-10-03T13:14:30.062Z",
-      "ended": "2026-10-03T13:18:52.726Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-03T13:18:55.493Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "bull-trap",
-      "started": "2026-10-03T13:18:55.493Z",
-      "ended": "2026-10-03T13:23:13.979Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-03T13:23:16.830Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "bull-trap",
-      "started": "2026-10-03T13:23:16.830Z",
-      "ended": "2026-10-03T13:27:36.016Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-03T13:27:38.884Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "bull-trap",
-      "started": "2026-10-03T13:27:38.884Z",
-      "ended": "2026-10-03T13:32:01.455Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-03T13:32:04.123Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "bull-trap",
-      "started": "2026-10-03T13:32:04.123Z",
-      "ended": "2026-10-03T13:36:02.430Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-03T15:26:45.834Z|broll",
-      "purpose": "broll",
-      "batch": "bull-trap",
-      "started": "2026-10-03T15:26:45.834Z",
-      "ended": null
-    },
-    {
-      "id": "2026-10-03T15:43:52.157Z|broll",
-      "purpose": "broll",
-      "batch": "bull-trap",
-      "started": "2026-10-03T15:43:52.157Z",
-      "ended": "2026-10-03T16:01:17.395Z",
-      "ok": 5,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac122bf-2a00-83e9-a854-0b54b98acc31"
-    },
-    {
-      "id": "2026-10-03T16:06:09.212Z|broll",
-      "purpose": "broll",
-      "batch": "bull-trap",
-      "started": "2026-10-03T16:06:09.212Z",
-      "ended": "2026-10-03T16:54:22.305Z",
-      "ok": 13,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac127f9-cfa0-83ea-8754-5786a5688c74"
-    },
-    {
-      "id": "2026-10-03T16:55:08.034Z|broll",
-      "purpose": "broll",
-      "batch": "bull-trap",
-      "started": "2026-10-03T16:55:08.034Z",
-      "ended": "2026-10-03T17:10:23.068Z",
-      "ok": 5,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac13374-71b4-83ea-b77b-a7aedb9aff4b"
-    },
-    {
-      "id": "2026-10-05T11:24:42.590Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "grapes",
-      "started": "2026-10-05T11:24:42.590Z",
-      "ended": "2026-10-05T11:28:36.555Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T11:28:39.099Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "grapes",
-      "started": "2026-10-05T11:28:39.099Z",
-      "ended": "2026-10-05T11:32:34.646Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T11:32:37.166Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "grapes",
-      "started": "2026-10-05T11:32:37.166Z",
-      "ended": "2026-10-05T11:37:17.255Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T11:37:20.547Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "grapes",
-      "started": "2026-10-05T11:37:20.547Z",
-      "ended": "2026-10-05T11:42:56.131Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac38bf6-eaf8-83ea-94ef-11502958ce21"
-    },
-    {
-      "id": "2026-10-05T11:42:59.143Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "grapes",
-      "started": "2026-10-05T11:42:59.143Z",
-      "ended": "2026-10-05T11:47:15.539Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T11:47:18.438Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "grapes",
-      "started": "2026-10-05T11:47:18.438Z",
-      "ended": "2026-10-05T11:51:21.499Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T11:51:24.545Z|ig-single",
-      "purpose": "ig-single",
-      "batch": "grapes",
-      "started": "2026-10-05T11:51:24.545Z",
-      "ended": "2026-10-05T11:55:44.700Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T11:55:47.514Z|ig-single",
-      "purpose": "ig-single",
-      "batch": "grapes",
-      "started": "2026-10-05T11:55:47.514Z",
-      "ended": "2026-10-05T11:59:58.594Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T12:00:01.404Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "grapes",
-      "started": "2026-10-05T12:00:01.404Z",
-      "ended": "2026-10-05T12:05:28.633Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T12:05:31.398Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "grapes",
-      "started": "2026-10-05T12:05:31.398Z",
-      "ended": "2026-10-05T12:10:04.051Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T12:10:06.918Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "grapes",
-      "started": "2026-10-05T12:10:06.918Z",
-      "ended": "2026-10-05T12:24:13.157Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac393a4-6d6c-83ea-aa44-4b178b470e4f"
-    },
-    {
-      "id": "2026-10-05T12:24:16.024Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "grapes",
-      "started": "2026-10-05T12:24:16.024Z",
-      "ended": "2026-10-05T12:37:01.444Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T12:37:04.353Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "grapes",
-      "started": "2026-10-05T12:37:04.353Z",
-      "ended": "2026-10-05T12:41:01.075Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-05T12:42:11.970Z|broll",
-      "purpose": "broll",
-      "batch": "grapes",
-      "started": "2026-10-05T12:42:11.970Z",
-      "ended": null
-    },
-    {
-      "id": "2026-10-05T12:54:06.861Z|broll",
-      "purpose": "broll",
-      "batch": "grapes",
-      "started": "2026-10-05T12:54:06.861Z",
-      "ended": "2026-10-05T13:36:24.807Z",
-      "ok": 5,
-      "fail": 1
-    },
-    {
-      "id": "2026-10-05T13:36:40.885Z|broll",
-      "purpose": "broll",
-      "batch": "grapes",
-      "started": "2026-10-05T13:36:40.885Z",
-      "ended": "2026-10-05T13:40:31.727Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-07T15:12:24.710Z|broll",
-      "purpose": "broll",
-      "batch": "every-job",
-      "started": "2026-10-07T15:12:24.710Z",
-      "ended": "2026-10-07T15:26:19.564Z",
-      "ok": 4,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac6615f-ca4c-83e9-85d2-8d6198c8a376"
-    },
-    {
-      "id": "2026-10-07T15:26:31.190Z|broll",
-      "purpose": "broll",
-      "batch": "every-job",
-      "started": "2026-10-07T15:26:31.190Z",
-      "ended": "2026-10-07T16:12:16.823Z",
-      "ok": 17,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac664ae-1ea0-83e9-8dc6-9df913759283"
-    },
-    {
-      "id": "2026-10-07T16:12:33.966Z|broll",
-      "purpose": "broll",
-      "batch": "every-job",
-      "started": "2026-10-07T16:12:33.966Z",
-      "ended": "2026-10-07T16:16:58.596Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac66f7a-e2cc-83e9-837b-0c6a8a39b2ed"
-    },
-    {
-      "id": "2026-10-07T18:28:57.524Z|broll",
-      "purpose": "broll",
-      "batch": "every-job",
-      "started": "2026-10-07T18:28:57.524Z",
-      "ended": "2026-10-07T19:11:42.330Z",
-      "ok": 16,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac68f77-b5bc-83ea-bd2e-fb9cc15586bf"
-    },
-    {
-      "id": "2026-10-07T20:24:29.972Z|broll",
-      "purpose": "broll",
-      "batch": null,
-      "started": "2026-10-07T20:24:29.972Z",
-      "ended": "2026-10-07T20:28:35.857Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac6aa84-b660-83ea-a096-b037d1011b18"
-    },
-    {
-      "id": "2026-10-09T01:58:12.792Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": null,
-      "started": "2026-10-09T01:58:12.792Z",
-      "ended": "2026-10-09T02:07:24.487Z",
-      "ok": 3,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:10:59.984Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "aliens",
-      "started": "2026-10-09T21:10:59.984Z",
-      "ended": "2026-10-09T21:14:37.371Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:14:40.374Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "aliens",
-      "started": "2026-10-09T21:14:40.374Z",
-      "ended": "2026-10-09T21:18:23.903Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:18:27.266Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "aliens",
-      "started": "2026-10-09T21:18:27.266Z",
-      "ended": "2026-10-09T21:22:04.112Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:22:07.509Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "aliens",
-      "started": "2026-10-09T21:22:07.509Z",
-      "ended": "2026-10-09T21:26:04.460Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:26:07.692Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "aliens",
-      "started": "2026-10-09T21:26:07.692Z",
-      "ended": "2026-10-09T21:30:12.432Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:30:15.539Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "aliens",
-      "started": "2026-10-09T21:30:15.539Z",
-      "ended": "2026-10-09T21:34:20.860Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:34:24.081Z|ig-single",
-      "purpose": "ig-single",
-      "batch": "aliens",
-      "started": "2026-10-09T21:34:24.081Z",
-      "ended": "2026-10-09T21:38:30.837Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:38:33.634Z|ig-single",
-      "purpose": "ig-single",
-      "batch": "aliens",
-      "started": "2026-10-09T21:38:33.634Z",
-      "ended": "2026-10-09T21:42:48.483Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:42:51.741Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T21:42:51.741Z",
-      "ended": "2026-10-09T21:46:12.116Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:46:15.251Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T21:46:15.251Z",
-      "ended": "2026-10-09T21:49:41.620Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:49:44.513Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T21:49:44.513Z",
-      "ended": "2026-10-09T21:53:02.493Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:53:05.290Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T21:53:05.290Z",
-      "ended": "2026-10-09T21:56:24.550Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:56:27.358Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T21:56:27.358Z",
-      "ended": "2026-10-09T21:59:37.831Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T21:59:40.725Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T21:59:40.725Z",
-      "ended": "2026-10-09T22:03:25.518Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T22:03:28.619Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T22:03:28.619Z",
-      "ended": "2026-10-09T22:07:16.084Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T22:07:19.114Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T22:07:19.114Z",
-      "ended": "2026-10-09T22:11:10.140Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T22:11:12.908Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T22:11:12.908Z",
-      "ended": "2026-10-09T22:33:45.683Z",
-      "ok": 0,
-      "fail": 1
-    },
-    {
-      "id": "2026-10-09T22:33:48.830Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T22:33:48.830Z",
-      "ended": "2026-10-09T22:38:41.605Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac96bd3-79a8-83e8-9d85-b8f5b64d6320"
-    },
-    {
-      "id": "2026-10-09T22:38:44.573Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "aliens",
-      "started": "2026-10-09T22:38:44.573Z",
-      "ended": "2026-10-09T22:42:30.235Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-09T22:42:39.248Z|broll",
-      "purpose": "broll",
-      "batch": "aliens",
-      "started": "2026-10-09T22:42:39.248Z",
-      "ended": "2026-10-09T22:53:16.363Z",
-      "ok": 4,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac96de5-b7bc-83ea-b4d2-3d22894e3ee7"
-    },
-    {
-      "id": "2026-10-09T22:53:34.737Z|broll",
-      "purpose": "broll",
-      "batch": "aliens",
-      "started": "2026-10-09T22:53:34.737Z",
-      "ended": null
-    },
-    {
-      "id": "2026-10-09T23:03:41.678Z|broll",
-      "purpose": "broll",
-      "batch": "aliens",
-      "started": "2026-10-09T23:03:41.678Z",
-      "ended": "2026-10-09T23:19:10.654Z",
-      "ok": 3,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac972d4-cdf0-83e9-81a7-cc483e6b0bc3"
-    },
-    {
-      "id": "2026-10-09T23:19:23.138Z|broll",
-      "purpose": "broll",
-      "batch": "aliens-al3",
-      "started": "2026-10-09T23:19:23.138Z",
-      "ended": null
-    },
-    {
-      "id": "2026-10-09T23:39:39.906Z|broll",
-      "purpose": "broll",
-      "batch": "aliens-al4",
-      "started": "2026-10-09T23:39:39.906Z",
-      "ended": null
-    },
-    {
-      "id": "2026-10-10T00:03:36.340Z|broll",
-      "purpose": "broll",
-      "batch": "aliens-al5",
-      "started": "2026-10-10T00:03:36.340Z",
-      "ended": "2026-10-10T00:29:31.699Z",
-      "ok": 3,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-10T00:29:56.095Z|broll",
-      "purpose": "broll",
-      "batch": "aliens-al5",
-      "started": "2026-10-10T00:29:56.095Z",
-      "ended": "2026-10-10T00:45:09.406Z",
-      "ok": 3,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac9870b-fecc-83e9-ac3c-c8b6b575b482"
-    },
-    {
-      "id": "2026-10-10T00:45:24.808Z|broll",
-      "purpose": "broll",
-      "batch": "aliens",
-      "started": "2026-10-10T00:45:24.808Z",
-      "ended": "2026-10-10T01:04:04.446Z",
-      "ok": 5,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ac98aac-1544-83e9-9f95-0d1b4cd5b73c"
-    },
-    {
-      "id": "2026-10-10T22:19:36.278Z|longform-broll",
-      "purpose": "longform-broll",
-      "batch": null,
-      "started": "2026-10-10T22:19:36.278Z",
-      "ended": "2026-10-10T22:39:30.403Z",
-      "ok": 7,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6acaba02-fb64-83ea-bd1f-0f94dc691ad4"
-    },
-    {
-      "id": "2026-10-10T22:39:40.266Z|longform-broll",
-      "purpose": "longform-broll",
-      "batch": null,
-      "started": "2026-10-10T22:39:40.266Z",
-      "ended": "2026-10-10T23:00:19.656Z",
-      "ok": 8,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6acabeb6-a578-83e9-91cd-57e97427f3f8"
-    },
-    {
-      "id": "2026-10-10T23:00:42.250Z|longform-broll",
-      "purpose": "longform-broll",
-      "batch": null,
-      "started": "2026-10-10T23:00:42.250Z",
-      "ended": "2026-10-10T23:08:12.736Z",
-      "ok": 2,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6acac3a1-1218-83ea-94cf-53a036c2fc66"
-    },
-    {
-      "id": "2026-10-10T23:08:27.336Z|longform-broll",
-      "purpose": "longform-broll",
-      "batch": null,
-      "started": "2026-10-10T23:08:27.336Z",
-      "ended": "2026-10-10T23:12:27.609Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6acac572-bf50-83e9-9b03-48571b9206af"
-    },
-    {
-      "id": "2026-10-10T23:12:39.652Z|longform-broll",
-      "purpose": "longform-broll",
-      "batch": null,
-      "started": "2026-10-10T23:12:39.652Z",
-      "ended": "2026-10-10T23:16:47.423Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6acac66e-e0dc-83ea-9e81-b1771893b0aa"
-    },
-    {
-      "id": "2026-10-10T23:17:01.457Z|longform-broll",
-      "purpose": "longform-broll",
-      "batch": null,
-      "started": "2026-10-10T23:17:01.457Z",
-      "ended": "2026-10-10T23:24:13.047Z",
-      "ok": 2,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6acac774-af88-83ea-a004-c90ff5a7244e"
-    },
-    {
-      "id": "2026-10-10T23:24:30.158Z|longform-broll",
-      "purpose": "longform-broll",
-      "batch": null,
-      "started": "2026-10-10T23:24:30.158Z",
-      "ended": null
-    },
-    {
-      "id": "2026-10-10T23:49:53.584Z|longform-broll",
-      "purpose": "longform-broll",
-      "batch": null,
-      "started": "2026-10-10T23:49:53.584Z",
-      "ended": "2026-10-10T23:54:32.126Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6acacf29-ca70-83e8-93f9-03f990c05ee1"
-    },
-    {
-      "id": "2026-10-11T02:37:14.899Z|longform-broll",
-      "purpose": "longform-broll",
-      "batch": null,
-      "started": "2026-10-11T02:37:14.899Z",
-      "ended": "2026-10-11T02:41:20.548Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6acaf666-5aa0-83ea-8cc8-adffafcbc78c"
-    },
-    {
-      "id": "2026-10-11T16:25:08.580Z|longform-broll",
-      "purpose": "longform-broll",
-      "batch": null,
-      "started": "2026-10-11T16:25:08.580Z",
-      "ended": "2026-10-11T16:30:41.636Z",
-      "ok": 1,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6acbb86c-2528-83ea-b04f-95d6ce61a6b6"
-    },
-    {
-      "id": "2026-10-15T01:08:49.779Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "downtober",
-      "started": "2026-10-15T01:08:49.779Z",
-      "ended": "2026-10-15T01:12:16.316Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:12:19.448Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "downtober",
-      "started": "2026-10-15T01:12:19.448Z",
-      "ended": "2026-10-15T01:15:51.057Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:15:53.997Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "downtober",
-      "started": "2026-10-15T01:15:53.997Z",
-      "ended": "2026-10-15T01:19:52.852Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:19:57.363Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "downtober",
-      "started": "2026-10-15T01:19:57.363Z",
-      "ended": "2026-10-15T01:24:07.069Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:24:10.013Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "downtober",
-      "started": "2026-10-15T01:24:10.013Z",
-      "ended": "2026-10-15T01:28:00.301Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:28:03.414Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "downtober",
-      "started": "2026-10-15T01:28:03.414Z",
-      "ended": "2026-10-15T01:31:52.143Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:31:55.208Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "downtober",
-      "started": "2026-10-15T01:31:55.208Z",
-      "ended": "2026-10-15T01:35:41.299Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:35:44.306Z|x-tweets",
-      "purpose": "x-tweets",
-      "batch": "downtober",
-      "started": "2026-10-15T01:35:44.306Z",
-      "ended": "2026-10-15T01:39:30.476Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:39:33.398Z|ig-single",
-      "purpose": "ig-single",
-      "batch": "downtober",
-      "started": "2026-10-15T01:39:33.398Z",
-      "ended": "2026-10-15T01:43:43.822Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:43:46.734Z|ig-single",
-      "purpose": "ig-single",
-      "batch": "downtober",
-      "started": "2026-10-15T01:43:46.734Z",
-      "ended": "2026-10-15T01:48:04.410Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:48:07.840Z|ig-single",
-      "purpose": "ig-single",
-      "batch": "downtober",
-      "started": "2026-10-15T01:48:07.840Z",
-      "ended": "2026-10-15T01:52:11.254Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:52:14.458Z|ig-single",
-      "purpose": "ig-single",
-      "batch": "downtober",
-      "started": "2026-10-15T01:52:14.458Z",
-      "ended": "2026-10-15T01:56:07.180Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T01:56:10.604Z|ig-single",
-      "purpose": "ig-single",
-      "batch": "downtober",
-      "started": "2026-10-15T01:56:10.604Z",
-      "ended": "2026-10-15T02:00:02.514Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T02:00:05.404Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "downtober",
-      "started": "2026-10-15T02:00:05.404Z",
-      "ended": "2026-10-15T02:03:46.221Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T02:03:49.164Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "downtober",
-      "started": "2026-10-15T02:03:49.164Z",
-      "ended": "2026-10-15T02:07:27.455Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T02:07:30.358Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "downtober",
-      "started": "2026-10-15T02:07:30.358Z",
-      "ended": "2026-10-15T02:11:19.769Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T02:11:23.610Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "downtober",
-      "started": "2026-10-15T02:11:23.610Z",
-      "ended": "2026-10-15T02:15:11.808Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T02:15:15.315Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "downtober",
-      "started": "2026-10-15T02:15:15.315Z",
-      "ended": "2026-10-15T02:19:13.211Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T02:19:18.155Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "downtober",
-      "started": "2026-10-15T02:19:18.155Z",
-      "ended": "2026-10-15T02:23:57.146Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T02:24:00.572Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "downtober",
-      "started": "2026-10-15T02:24:00.572Z",
-      "ended": "2026-10-15T02:28:31.853Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T02:28:34.826Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "downtober",
-      "started": "2026-10-15T02:28:34.826Z",
-      "ended": "2026-10-15T02:33:13.836Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T02:33:17.480Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "downtober",
-      "started": "2026-10-15T02:33:17.480Z",
-      "ended": "2026-10-15T02:37:49.258Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T02:37:52.269Z|yt-posts",
-      "purpose": "yt-posts",
-      "batch": "downtober",
-      "started": "2026-10-15T02:37:52.269Z",
-      "ended": "2026-10-15T02:42:12.926Z",
-      "ok": 1,
-      "fail": 0
-    },
-    {
-      "id": "2026-10-15T10:05:27.933Z|broll",
-      "purpose": "broll",
-      "batch": "downtober",
-      "started": "2026-10-15T10:05:27.933Z",
-      "ended": "2026-10-15T10:23:53.392Z",
-      "ok": 7,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ad0a570-5188-83ea-bdcb-165ebad9609f"
-    },
-    {
-      "id": "2026-10-15T10:24:13.892Z|broll",
-      "purpose": "broll",
-      "batch": "downtober",
-      "started": "2026-10-15T10:24:13.892Z",
-      "ended": "2026-10-15T10:38:27.166Z",
-      "ok": 5,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ad0a9d5-8348-83ea-a822-f766bb66083b"
-    },
-    {
-      "id": "2026-10-15T10:54:13.686Z|broll",
-      "purpose": "broll",
-      "batch": "downtober",
-      "started": "2026-10-15T10:54:13.686Z",
-      "ended": "2026-10-15T11:11:04.482Z",
-      "ok": 6,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ad0b0dc-ecd0-83ea-bdff-be5d566abe04"
-    },
-    {
-      "id": "2026-10-15T11:11:34.833Z|broll",
-      "purpose": "broll",
-      "batch": "downtober",
-      "started": "2026-10-15T11:11:34.833Z",
-      "ended": "2026-10-15T11:33:08.111Z",
-      "ok": 8,
-      "fail": 0,
-      "born": "https://chatgpt.com/c/6ad0b4f2-78f0-83ea-80e8-e372daa5ab49"
-    }
-  ]
+  }
 }

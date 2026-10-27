@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>c5-timeline (vertical 1080x1920)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700;800&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+:root{--lit:#ffd700;--lit-rgb:255,215,0}
+
+/* ===== kcc20 diagram layer (chart-builder). Chapter accent = --lit (the spotlight / lit node / live bar). ===== */
+body{margin:0}
+#stage{display:flex;flex-direction:column;gap:40px;padding:0;align-items:flex-start}
+.frame.dg{display:block;padding:0;flex:none}
+.frame.dg>.abs{position:absolute;z-index:2}
+.frame.dg>svg.wires{position:absolute;left:0;top:0;z-index:1;overflow:visible}
+.frame.dg>.orb{position:absolute}
+.abs{box-sizing:border-box}
+/* chapter-accent divider (replaces the default green->cyan accent; geometry is the canonical token) */
+.divider{background:linear-gradient(90deg,var(--lit),rgba(var(--lit-rgb),.28))}
+.hdr .ey{margin-bottom:16px}
+.hdr h1.sm{white-space:nowrap}
+.hdr .divider{margin:26px 0 0}
+.ey .m,.src .m{font-family:'JetBrains Mono',monospace;font-weight:600}
+.lt{color:var(--lit)}
+.m{font-family:'JetBrains Mono',monospace;font-weight:600}
+.src{font-family:'JetBrains Mono',monospace;font-size:19px;color:var(--text-muted);letter-spacing:.01em;white-space:nowrap}
+
+/* colour channel: every lit-able element reads --c, default = chapter accent */
+.abs{--c:var(--lit);--c-rgb:var(--lit-rgb)}
+.amber{--c:#ffb000;--c-rgb:255,176,0}
+.teal{--c:#70c7ba;--c-rgb:112,199,186}
+.red{--c:#ff4060;--c-rgb:255,64,96}
+.gold{--c:#ffd700;--c-rgb:255,215,0}
+
+.chip{display:inline-flex;align-items:center;gap:10px;padding:7px 18px;border-radius:100px;
+  font-family:'JetBrains Mono',monospace;font-weight:600;font-size:22px;letter-spacing:.05em;white-space:nowrap;
+  border:1.5px solid rgba(var(--c-rgb),.55);color:var(--c);background:rgba(var(--c-rgb),.10)}
+.chip.idx{font-size:24px;padding:9px 22px;margin-bottom:22px;--c:var(--lit);--c-rgb:var(--lit-rgb)}
+.chip.mut{border-color:var(--border);color:var(--text-muted);background:rgba(255,255,255,.02)}
+
+.node{background:var(--bg-card);border:2px solid var(--border);border-radius:18px;display:flex;flex-direction:column;
+  justify-content:center;padding:0 28px;color:var(--text-primary)}
+.node .t{font-family:'DM Sans',sans-serif;font-weight:700;font-size:32px;line-height:1.2;color:var(--text-primary)}
+.node .s{font-family:'DM Sans',sans-serif;font-size:23px;line-height:1.3;color:var(--text-secondary);margin-top:6px}
+.node .m,.node .t.m,.node .t .m,.node .s .m{font-family:'JetBrains Mono',monospace;font-weight:600}
+.node.lit{border-color:var(--c);background:linear-gradient(135deg,rgba(var(--c-rgb),.17),rgba(var(--c-rgb),.05)),var(--bg-card);
+  box-shadow:0 0 50px rgba(var(--c-rgb),.32),inset 0 0 0 1px rgba(var(--c-rgb),.30)}
+.node.lit .k{color:var(--c)}
+.node.seen{border-color:rgba(var(--c-rgb),.50)}
+.node.seen .k{color:var(--c)}
+.dim{opacity:.36}
+.ghost{opacity:.18}
+.hide{visibility:hidden}
+
+/* KCC20State block */
+.blk{background:var(--bg-card);border:2px solid rgba(var(--lit-rgb),.42);border-radius:20px;padding:0}
+.blk .bh{height:96px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.blk .bh .m{font-size:32px;color:var(--text-primary)}
+.blk .bh .bs{font-family:'DM Sans';font-size:21px;color:var(--text-muted);letter-spacing:.04em}
+.blk .row{height:72px;margin:0 20px 10px;border-radius:12px;border:2px solid var(--border);background:rgba(255,255,255,.02);
+  display:flex;align-items:center;padding:0 24px;font-size:30px;color:var(--text-primary)}
+.blk .row.lit{border-color:var(--lit);background:rgba(var(--lit-rgb),.16);color:var(--lit);box-shadow:0 0 34px rgba(var(--lit-rgb),.35)}
+.grp{border:2px dashed rgba(var(--lit-rgb),.85);border-radius:16px}
+
+
+.sq{border-radius:30px;background:#171b25;border:3px solid #2a3142;box-shadow:0 14px 0 #0c0f15,0 22px 40px rgba(0,0,0,.45);
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.sq .mo{font-family:'JetBrains Mono';font-weight:800;font-size:30px;letter-spacing:.08em;color:var(--text-secondary)}
+.sq .dy{font-family:'JetBrains Mono';font-weight:800;font-size:70px;line-height:1;color:var(--text-primary)}
+.sq.blank{background:rgba(23,27,37,.55);border:3px dashed #2a3142;box-shadow:0 14px 0 rgba(12,15,21,.6)}
+.sq.past{border-color:rgba(255,215,0,.65);background:linear-gradient(160deg,#2a2610,#191a17)}
+.sq.past .mo{color:#e8c95a}
+.sq.cur{border-color:#ffd700;background:linear-gradient(160deg,#3a3210,#1d1c14);box-shadow:0 14px 0 #6b5a00,0 0 70px rgba(255,215,0,.45)}
+.sq.cur .mo{color:#ffd700}
+.sq.goldsq{background:linear-gradient(160deg,#ffe45c,#ffc400);border-color:#fff1a0;box-shadow:0 14px 0 #9a7a00,0 0 90px rgba(255,215,0,.6)}
+.sq.goldsq .mo,.sq.goldsq .dy{color:#1a1500}
+.sq.fin{background:rgba(23,27,37,.55);border:3px dashed rgba(255,215,0,.40);box-shadow:0 14px 0 rgba(12,15,21,.6)}
+.sq.fin .fw{font-family:'DM Sans';font-weight:800;font-size:34px;letter-spacing:.14em;color:rgba(255,215,0,.55)}
+.sq.fin .fs{font-family:'DM Sans';font-size:22px;color:var(--text-muted);margin-top:6px}
+.ev{font-family:'DM Sans';font-weight:700;font-size:27px;line-height:1.25;color:var(--text-primary);text-align:center}
+.ev.mut{color:var(--text-secondary);font-weight:500;font-size:24px}
+.ev .m{font-weight:600}
+.pip{border-radius:50%;background:#2a3142}
+.pip.on{background:#ffd700;box-shadow:0 0 14px rgba(255,215,0,.7)}
+.chipd{font-family:'JetBrains Mono';font-weight:800;font-size:21px;padding:6px 14px;border-radius:10px;border:2px solid rgba(255,215,0,.7);
+  color:#ffd700;background:rgba(255,215,0,.10);white-space:nowrap}
+.chipd.off{visibility:hidden}
+.piece{z-index:5}
+
+
+/* ===== VERTICAL 1080x1920 re-lay (vertical-repurpose.md section 1, chart-builder 2026-10-22) =====
+   Same locked tokens + chapter accent as the 16:9 twin; only the frame aspect and the layout change.
+   Safe zone: content 150..1600 px, source line under it; 1700..1920 left clear for the phone UI. */
+#stage{padding-top:0}
+.frame,.frame.dg{width:1080px;height:1920px;margin-bottom:0}
+.hdr h1.sm{white-space:normal;font-size:80px;line-height:1.06;max-width:920px}
+.src{white-space:nowrap;font-size:21px;line-height:1.55}  /* line breaks are placed by hand, never inside a token */
+
+.evb{display:flex;flex-direction:column;gap:12px}
+.evb.l{align-items:flex-end}.evb.l .ev{text-align:right}
+.evb.r{align-items:flex-start}.evb.r .ev{text-align:left}
+.chrow{display:flex;flex-wrap:wrap;gap:8px}
+.evb.l .chrow{justify-content:flex-end}
+.chipd{font-size:20px;padding:5px 12px}
+
+</style></head>
+<body><div id="stage"></div>
+<script>
+
+const W=1080,H=1920,NS='http://www.w3.org/2000/svg',MX=80,CW=920;
+function E(p,tag,cls,html,st){const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;if(st)Object.assign(e.style,st);p.appendChild(e);return e;}
+function B(p,x,y,w,h,cls,html){return E(p,'div','abs '+(cls||''),html,{left:x+'px',top:y+'px',width:w+'px',height:h+'px'});}
+function A(p,x,y,cls,html,st){return E(p,'div','abs '+(cls||''),html,Object.assign({left:x+'px',top:y+'px'},st||{}));}
+function S(p,tag,at){const e=document.createElementNS(NS,tag);for(const k in at)e.setAttribute(k,at[k]);p.appendChild(e);return e;}
+function frame(id){const f=E(document.getElementById('stage'),'div','frame dg');f.id=id;return f;}
+function wires(f){const s=S(f,'svg',{width:W,height:H,viewBox:'0 0 '+W+' '+H,class:'wires'});const d=S(s,'defs',{});
+  const fl=S(d,'filter',{id:f.id+'-bl'+(f.querySelectorAll('svg.wires').length),filterUnits:'userSpaceOnUse',x:'0',y:'0',width:''+W,height:''+H});
+  S(fl,'feGaussianBlur',{stdDeviation:'7'});s.bl='url(#'+fl.id+')';return s;}
+function orb(f,x,y,size,color,op){return E(f,'div','orb',null,{left:x+'px',top:y+'px',width:size+'px',height:size+'px',background:color,opacity:(op==null?.3:op)});}
+function header(f,o){const h=A(f,MX,o.top==null?150:o.top,'hdr',null,{width:CW+'px'});if(o.chip)E(h,'div','chip idx','<span>'+o.chip+'</span>');if(o.ey)E(h,'div','ey',o.ey);E(h,'h1','sm',o.h1);E(h,'div','divider');return h;}
+function src(f,t,y){return A(f,MX,y==null?1640:y,'src',t,{width:CW+'px'});}
+const DIMW='#3a4356';
+function arrow(svg,x1,y1,x2,y2,o){o=o||{};const col=o.color||DIMW,w=o.w||3,hl=(o.head==null?17:o.head);
+  const cv=(o.cx!=null);const bx=cv?o.cx:x1,by=cv?o.cy:y1;const dx=x2-bx,dy=y2-by,L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L;
+  const ex=x2-ux*hl*0.85,ey=y2-uy*hl*0.85;const d=cv?`M${x1} ${y1} Q${o.cx} ${o.cy} ${ex} ${ey}`:`M${x1} ${y1} L${ex} ${ey}`;
+  const g=S(svg,'g',{opacity:(o.op==null?1:o.op)});
+  if(o.glow)S(g,'path',{d,stroke:col,'stroke-width':w*5,fill:'none','stroke-linecap':'round',opacity:.35,filter:svg.bl});
+  S(g,'path',{d,stroke:col,'stroke-width':w,fill:'none','stroke-linecap':'round','stroke-dasharray':o.dash||'none'});
+  if(hl>0){const px=-uy,py=ux;S(g,'polygon',{points:`${x2},${y2} ${x2-ux*hl-px*hl*.62},${y2-uy*hl-py*hl*.62} ${x2-ux*hl+px*hl*.62},${y2-uy*hl+py*hl*.62}`,fill:col});}
+  return g;}
+function fmt(n){return Math.round(n).toLocaleString('en-US');}
+const FIELDS=['amount','owner','owner scheme','borrow scheme','borrow guard','extension commitment'];
+function stateBlock(f,x,y,w,litRows){const blk=B(f,x,y,w,96+82*6+24,'blk');
+  E(blk,'div','bh','<span class="m">KCC20State</span><span class="bs">FIXED-WIDTH FIELDS</span>');
+  FIELDS.forEach((n,i)=>E(blk,'div','row m'+(litRows&&litRows.includes(i)?' lit':''),n));
+  return {rowY:i=>y+96+14+i*82+36, x, w};}
+
+function piece(f,cx,cy,size){const s=size||110;const d=A(f,cx-s/2,cy-s/2,'piece','',{width:s+'px',height:(s+16)+'px'});
+  d.innerHTML=`<svg width="${s}" height="${s+16}" viewBox="0 0 110 126">
+   <ellipse cx="55" cy="112" rx="40" ry="10" fill="rgba(0,0,0,.45)"/>
+   <circle cx="55" cy="63" r="46" fill="#2b6c63"/>
+   <circle cx="55" cy="55" r="46" fill="#0f2422" stroke="#70c7ba" stroke-width="5"/>
+   <circle cx="55" cy="55" r="38" fill="none" stroke="rgba(112,199,186,.30)" stroke-width="2"/>
+   <g fill="#70c7ba"><rect x="62" y="31" width="11" height="48" rx="1.5"/>
+     <polygon points="64,49 64,61 38,34 38,26 44,26"/><polygon points="64,49 64,61 44,84 38,84 38,76"/></g>
+  </svg>`;d.style.filter='drop-shadow(0 0 18px rgba(112,199,186,.55))';return d;}
+function pips(f,x1,y1,x2,y2,n,on){for(let i=1;i<n;i++){const t=i/n;A(f,x1+(x2-x1)*t-7,y1+(y2-y1)*t-7,'pip'+(on?' on':''),'',{width:'14px',height:'14px'});}}
+// U-shaped board: DOWN the left column (JUN 30 .. SEP 21), U-turn under the board, UP the right column to FINAL (top right).
+// Labels sit on the OUTER side of each column; the piece rides the square's top INNER corner.
+const SQ=160, LXc=405, RXc=675, CY=[590,850,1110,1370];
+const T=[{k:'jun30',mo:'JUN',dy:'30',ev:'Toccata activates',x:LXc,y:CY[0]},
+         {k:'jul15',mo:'JUL',dy:'15',ev:'conventions repo opens',x:LXc,y:CY[1]},
+         {k:'aug20',mo:'AUG',dy:'20',ev:'land as Drafts',x:LXc,y:CY[2],chips:['KCC-1','KCC-2','KCC-20']},
+         {k:'sep21',mo:'SEP',dy:'21',ev:'KCC-<span class="m">0</span> Final',x:LXc,y:CY[3],small:true},
+         {k:'sep22',mo:'SEP',dy:'22',ev:'Last Call PR for<br>KCC-<span class="m">20</span> opens',x:RXc,y:CY[3]},
+         {k:'oct1',mo:'OCT',dy:'1',ev:'KCC-<span class="m">1</span> + KCC-<span class="m">2</span><br>to Last Call',x:RXc,y:CY[2]},
+         {k:'oct7',mo:'OCT',dy:'7',ev:'KCC-<span class="m">20</span> joins them',x:RXc,y:CY[1],gold:true},
+         {k:'final',fin:true,x:RXc,y:CY[0],ev:'go Final',chips:['KCC-1','KCC-2','KCC-20']}];
+const half=s=>(s.small?60:SQ/2);
+function evBox(p,s,cls,html,chips,chipsOn){const left=(s.x<540);
+  const bx=left?(s.x-half(s)-22-232):(s.x+half(s)+22);
+  const box=A(p,bx,s.y,'evb'+(left?' l':' r'),'',{width:'232px',transform:'translateY(-50%)'});
+  E(box,'div','ev'+(cls||''),html);
+  if(chips){const row=E(box,'div','chrow');chips.forEach((c,ci)=>E(row,'span','chipd'+(chipsOn==null||ci<chipsOn?'':' off'),c));}
+  return box;}
+function trackPips(f,cur,allOn){
+  for(let i=0;i<T.length-1;i++){const a=T[i],b=T[i+1];const on=allOn||(i<cur);
+    if(a.x===b.x){const dir=Math.sign(b.y-a.y);pips(f,a.x,a.y+dir*(half(a)+18),b.x,b.y-dir*(half(b)+18),4,on);}}
+  // U-turn from SEP 21 (bottom left) to SEP 22 (bottom right): pips on an arc under the board
+  for(let j=1;j<6;j++){const th=Math.PI-Math.PI*j/6;const on=allOn||(cur>=4);
+    A(f,540+Math.cos(th)*135-7,1400+Math.sin(th)*150-7,'pip'+(on?' on':''),'',{width:'14px',height:'14px'});}}
+function pieceAt(s){return {x:s.x+(s.x<540?70:-70), y:s.y-95};}
+
+// state -> index of the square the piece stands on, and how many draft chips are out
+const C5S=[['01-jun30',0,0],['02-jul15',1,0],['03-aug20',2,0],['04-aug20-drafts',2,3],['05-sep22',4,3],['06-oct1',5,3],['07-oct7',6,3]];
+C5S.forEach(([st,cur,chips])=>{
+  const f=frame('c5-timeline-'+st);
+  orb(f,560,-300,640,'var(--lit)',.12); orb(f,-320,1180,620,'#70c7ba',.08);
+  header(f,{ey:'kaspanet/kccs &middot; the timeline &middot; <span class="m">2026</span>',h1:'Square by square,<br>toward <span class="lt">Final</span>'});
+  trackPips(f,cur,false);
+  T.forEach((s,i)=>{
+    const sz=s.small?120:SQ;
+    if(s.fin){B(f,s.x-sz/2,s.y-sz/2,sz,sz,'sq fin','<div class="fw">FINAL</div><div class="fs">ahead</div>');return;}
+    const landed=(i<=cur)||(i===3&&cur>=4);
+    let cls='sq'+(landed?(i===cur?(s.gold?' goldsq':' cur'):' past'):' blank');
+    if(s.gold&&i===cur)cls='sq goldsq';
+    B(f,s.x-sz/2,s.y-sz/2,sz,sz,cls,landed?('<div class="mo"'+(s.small?' style="font-size:22px"':'')+'>'+s.mo+'</div><div class="dy"'+(s.small?' style="font-size:50px"':'')+'>'+s.dy+'</div>'):'');
+    if(landed)evBox(f,s,s.small?' mut':'',s.ev,s.chips,chips);
+  });
+  const P=pieceAt(T[cur]); piece(f,P.x,P.y,100);
+  src(f,'kaspanet/kccs commits + PRs #<span class="m">2</span>, #<span class="m">3</span>, #<span class="m">5</span>, #<span class="m">25</span>, #<span class="m">31</span>, #<span class="m">32</span>, #<span class="m">33</span><br>rusty-kaspa v<span class="m">2.0.0</span> release &middot; read <span class="m">2026-10-18</span>');
+});
+
+</script></body></html>

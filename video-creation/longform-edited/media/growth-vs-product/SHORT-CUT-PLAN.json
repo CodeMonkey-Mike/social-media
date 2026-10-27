@@ -1,0 +1,239 @@
+{
+ "source_video": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/growth-vs-product/growth-vs-product-VERTICAL.mp4",
+ "source_video_16x9": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/growth-vs-product/growth-vs-product-FINAL.mp4",
+ "source_video_note": "16:9-SOURCED SHORT (Mike, 2026-10-23: no vertical cut of this video). growth-vs-product-VERTICAL.mp4 is the black 1080x1920 adapter on the paused spine's clock (assets/short/from-16x9.json, burned_captions false). Every span's picture is re-framed from the GrowthVsProduct comp rendered with captions off: FACE spans take a 608x1080 crop measured PER SPAN on the comp render (assets/vertical/face-crop.json: the comp does not centre the face), COVER spans a centre crop. Anything near the left/right edges of the 16:9 frame is lost.",
+ "source_audio": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/growth-vs-product/spine/ALL.e.paused.mp4",
+ "clock": "final-video seconds",
+ "clock_check": "VERTICAL adapter 222.699 s, FINAL 222.702 s, spine ALL.e.paused 222.699 s: one clock within 0.01 s. Chapter-card freezes 50.36-51.86 and 174.59-176.09 (1.5 s each) fall inside no span; span 3 starts 0.025 s after the first freeze ends (the measured onset of Difference, see span 3).",
+ "target_seconds": 30.0,
+ "outro_seconds": 3.0,
+ "spans_budget_seconds": 27.0,
+ "claim": "An AI growth engineer and an AI product engineer are not the same job: same tools, different scoreboard. The growth engineer is scored on the business number, the product engineer on the feature itself, and the title only tells you which number you are accountable for.",
+ "why_this_claim": "It is the longform's own locked thesis (F2) answering the longform's own locked hook question (F1), proven by difference number one (the only one of the three differences whose two sides are each said in a single sentence) and closed by the CH5 payoff line that the screenplay wrote as the video's bookend. It needs no receipt, no chart, no diagram, no company name and no number to stand up cold, so it survives without the other three minutes. It is also the one claim whose proof sits on the panel-free FACE windows (F1, F2, F6) plus covers that survive a centre crop (BR-1, IMG-1, IMG-5), which is what this 16:9-sourced mode can frame; the clock and the bias each depend on a diagram, a chart or a side-panel face line.",
+ "spans": [
+  {
+   "role": "hook",
+   "order": 1,
+   "sourced": "FACE",
+   "face_window": "F1 (0.000-4.733)",
+   "start": 0.0,
+   "end": 4.71,
+   "seconds": 4.71,
+   "says": "So what are the differences between an AI growth engineer and an AI product engineer?",
+   "on_screen": "FACE F1 with the kt-signature-open: frame 0 kt-whip-cut IN onto Mike (0.73 s whip + 25 to 0 degree roll), a slow ~5 percent push through the line, ROLE LABEL A 'AI GROWTH / ENGINEER' (gold / white) pops on the RIGHT THIRD at 2.0, ROLE LABEL B 'AI PRODUCT / ENGINEER' (green / white) stacks below it at 3.6, both hold to the 4.73 whip-out. Under the 608x1080 face crop the right-third labels are outside the frame (Mike's brief), so the viewer sees the whip-in roll, Mike, and the push. No captions burned (16:9-sourced mode); the lane's captions carry the two role names. Master-only sounds (swoosh-4, cash-register, wooden-rattle-whoosh, the Bed A duck) do not travel with the spine VO.",
+   "why": "The locked opening, engineered as the hook, and the question the whole short answers: it names both titles in one breath so every later 'growth engineer' / 'product engineer' / 'both' has its referent.",
+   "self_contained": "Frame one of the longform; a complete question with no referent outside it.",
+   "in_gap": 0.0,
+   "out_gap": 0.12,
+   "in_trough": "file head: Whisper pins 'So' to 0.000, the voice onset is after the head; the lint snaps to the head trough",
+   "out_trough": "4.66-4.78 between engineer? and Let's; measured trough 4.710 (-47.5 dBFS), 0.023 s before the 4.733 face cut",
+   "clear_of_transitions": false,
+   "boundary_transitions": "IN 0.0 = the first frame of the kt-whip-cut IN (hand, 0.73 s): the signature open was built to be frame one and Mike named F1 the hook, so the whip IS the hook's picture. OUT 4.71 sits 0.023 s (under one frame) before the 4.733 kt-whip-cut OUT (blur-in variant, 0.17 s): clear if the blur ramps on the incoming card, 2-4 blurred frames if it ramps on the outgoing face. The lane's seam hit covers either."
+  },
+  {
+   "role": "body",
+   "order": 2,
+   "sourced": "FACE",
+   "face_window": "F2 (45.133-48.800)",
+   "start": 45.16,
+   "end": 48.84,
+   "seconds": 3.68,
+   "says": "They're not the same job, same tools, different scoreboard.",
+   "on_screen": "FACE F2 full frame, no side panels, no labels, no interior punch (its one join 48.733 sits inside the edge margin). Film-burn cut-in at 45.133 (the burn's clearing half under the first ~0.3 s of the span) and film-burn cut-out at 48.80 (the peak on the span's last frame). The C5a Citian receipt precedes it and the C2-s2 card follows it; neither is in the span. The Impact_Hit_01-2-18 on the cut and the -2 dB vibe duck live in the master mix only.",
+   "why": "The locked thesis, the claim in six words: not the same job, same tools, different scoreboard. Everything after it is the proof of 'different scoreboard'.",
+   "self_contained": "'They' = the two titles the hook just named 4.7 s earlier; otherwise a complete declarative.",
+   "in_gap": 0.08,
+   "out_gap": 0.06,
+   "in_trough": "measured trough 45.160 (-64.3 dBFS), the desilencer join 0.027 s after the 45.133 cut-in; Whisper's 45.14-45.22 gap already reads -37.5 dBFS at 45.18, so the onset of They're is earlier than Whisper says",
+   "out_trough": "48.82-48.88 between scoreboard. and So; the face window ends 48.80, so the last frame or two sit on the burn peak",
+   "clear_of_transitions": false,
+   "boundary_transitions": "IN 45.16 is 0.03 s after the F2 film-burn cut-in (hand:film-burn, 0.76 s, peak on 45.133): inside the burn's clearing half, unavoidable because the words start 0.09 s after the cut. OUT 48.84 is 0.04 s after the F2 film-burn cut-out (peak on 48.80): the last 1-2 frames are the flare. Face-edge, inherent to every FACE span in this lane (every-job precedent); the burn is an additive flare over a complete frame, so no half-frame."
+  },
+  {
+   "role": "body",
+   "order": 3,
+   "sourced": "COVER",
+   "face_window": null,
+   "start": 51.885,
+   "end": 62.06,
+   "seconds": 10.175,
+   "says": "Difference number one, the scoreboard, the growth engineer is scored on the business number, the signups, conversion, retention, and revenue. The product engineer is scored on the feature itself.",
+   "on_screen": "51.885-54.2: BR-1-data-dashboard (Envato: a live analytics dashboard, a conversion funnel filling; it entered through the CH2 card's exit flip at 51.86, done before the span). 54.2: cross-fade + 0.93 to 1 scale-in (0.35 s) to the scoreboard-growth card (eyebrow 'Difference 1 / The scoreboard', gold GROWTH ENGINEER label, headline 'A business number', four chips lighting on their words: SIGNUPS 57.12, CONVERSION 57.52, RETENTION 58.2, REVENUE 59.0), held to 59.5. 59.5: lib:glitchmonitor-2 ingress (0.52 s) to IMG-1-feature-module-gauge (ChatGPT 3D render: a glowing feature module under a precision gauge, cool blue light, comp-level slow push) to 62.2. Centre crop: BR-1 and IMG-1 survive (this span is a variety-rule carrier, one native-vertical alternate overlaid); the scoreboard card DOES NOT (a 608 px slice of a frame-filling card clips the headline and the outer chips), see risks: place the alternate over 54.2-59.5.",
+   "why": "The proof of 'different scoreboard', both sides in Mike's own words: the growth engineer is scored on the business number (signups, conversion, retention, revenue), the product engineer on the feature itself. The only place in the video where each scoreboard is one plain sentence.",
+   "self_contained": "'Difference number one' reads cold as the first of a list the short never has to finish; every noun is inside the span.",
+   "in_gap": 0.12,
+   "out_gap": 0.18,
+   "in_trough": "measured trough 51.885 (-45.2 dBFS), the tail of the 1.5 s card silence: Whisper puts 'Difference' at 52.00 but the voice already reads -14 dBFS at 51.98, so the real onset is about 51.89 and the only trough outside the 50.36-51.86 freeze sits 0.025 s after the freeze ends",
+   "out_trough": "62.04-62.22 between itself. and The (the evals line); the widest gap in the plan after the card pause",
+   "clear_of_transitions": false,
+   "boundary_transitions": "IN 51.885 is 0.025 s (under one frame) after the CH2 card freeze ends at 51.86: the span's first frame is the first frame after the card, BR-1's first frame if both halves of the rmn:flip sit inside the freeze ('the flip takes the pause', PROJECT-LOG: the card reads 1.3 s of 1.5), the card's last flip frame if the exit flip runs past 51.86. Frame-check 51.885. If it shows the card, the fix is picture-only (start the PICTURE one or two frames later, or let the seam hit cover that frame), never an audio move: the voice is on by 51.9. OUT 62.06 is 0.14 s before the C5b receipt cross-fade at 62.2 (0.35 s) if it ramps from the receipt's in-point, inside it by 1-2 frames if centred (62.03-62.38). The 54.2 card cross-fade and the 59.5 IMG-1 glitch fall INSIDE the span, which is fine. Frame-check 62.06 too.",
+   "fit_windows": [
+    {
+     "a": 54.18,
+     "b": 60.02,
+     "box": [
+      120,
+      250,
+      1680,
+      580
+     ],
+     "why": "the scoreboard-growth card fills the 16:9 frame (final 54.18-59.5); a 608 px slice clips its headline and outer chips, so it is shown whole, letterboxed on its own blurred frame, through the IMG-1 glitch ingress (59.5 + 0.52)"
+    }
+   ]
+  },
+  {
+   "role": "body",
+   "order": 4,
+   "sourced": "COVER",
+   "face_window": null,
+   "start": 199.81,
+   "end": 203.76,
+   "seconds": 3.95,
+   "says": "And in my experience, a founding AI engineer ends up being both.",
+   "on_screen": "IMG-5-founder-late-night-desk (ChatGPT photoreal: a lone founder at a desk late at night, warm rim light, CH5 violet block, comp-level slow push), entering at 199.9 through lib:glitchmonitor-5 (0.64 s) from the become-compare card (both labels lit). Role-label pops GROWTH (202.68) and PRODUCT (203.26) sit in the LOWER RIGHT, outside a centre crop (decorative, no meaning lost). Variety-rule carrier (one native-vertical alternate overlaid). Removed by the F6 cut-in at 203.77.",
+   "why": "The bridge from the two scoreboards to the kicker: in Mike's experience one person often carries both numbers, which is what makes 'either way you're an AI engineer' true instead of a slogan. It also keeps 'In my experience' as his observation, never a statistic (the screenplay's rule).",
+   "self_contained": "'both' = the two roles named in spans 1-3; 'founding AI engineer' is a plain title, no setup needed.",
+   "in_gap": 0.2,
+   "out_gap": 0.08,
+   "in_trough": "measured trough 199.810 (-73.4 dBFS) between engineer. (product engineer.) and And; one of the two widest gaps in the plan",
+   "out_trough": "203.72-203.80 between both. and Either; the F6 face edge, cut to zero residual",
+   "clear_of_transitions": false,
+   "boundary_transitions": "IN 199.81 is 0.09 s before the IMG-5 glitch ingress at 199.9 (lib:glitchmonitor-5, 0.64 s): if the glitch starts at the cut, the first 2 frames are the become-compare card (both labels lit) and the whole ingress plays inside the span; if centred (199.58-200.22) the first frame is mid-glitch. Either way the opening frames read as the seam hit (same family). OUT 203.76 is the F6 film-burn cut-in (peak 203.77): contiguous with span 5, the longform's own burn is the transition."
+  },
+  {
+   "role": "kicker",
+   "order": 5,
+   "sourced": "FACE",
+   "face_window": "F6 (203.767-209.100)",
+   "start": 203.76,
+   "end": 209.14,
+   "seconds": 5.38,
+   "says": "Either way you're an AI engineer. The title just tells you which number you're accountable for.",
+   "on_screen": "FACE F6 full frame, no side panels, no labels, no interior punch (its one join sits inside the edge margin). Film-burn cut-in at 203.77 (removes the IMG-5 labels) and film-burn cut-out at 209.10 into the C2-s4 recap card. Bed C up-in-the-atmos under it in the master (not in the spine VO). Face crop measured on this span's own frames (the comp does not centre the face).",
+   "why": "The payoff that makes the claim feel earned: the title is not a different job family, it is the number you answer for. It closes the loop the hook opened ('what are the differences') with the one sentence the screenplay wrote as the CH5 payoff, and leaves the three differences for the full video.",
+   "self_contained": "'Either way' = growth or product, both named in span 1 and span 3; two complete declaratives.",
+   "in_gap": 0.08,
+   "out_gap": 0.12,
+   "in_trough": "203.72-203.80 between both. and Either (shared with span 4's out)",
+   "out_trough": "209.10-209.22 between for. and Three (the recap line the short does not take)",
+   "clear_of_transitions": false,
+   "boundary_transitions": "IN 203.76 sits on the F6 film-burn cut-in (peak 203.77): face-edge, inherent; because spans 4 and 5 are contiguous, butt-join them with no added seam hit (the burn is the hit). OUT 209.14 is 0.04 s after the F6 film-burn cut-out (peak 209.10): the last 1-2 frames are the flare; the outro card lands after it, backed by a clean F6 hold (outro.note), never by the burn frame."
+  }
+ ],
+ "assembled_read": "30.9 s delivered (27.9 s of spans + 3 s outro). So what are the differences between an AI growth engineer and an AI product engineer? They're not the same job, same tools, different scoreboard. Difference number one, the scoreboard, the growth engineer is scored on the business number, the signups, conversion, retention, and revenue. The product engineer is scored on the feature itself. And in my experience, a founding AI engineer ends up being both. Either way you're an AI engineer. The title just tells you which number you're accountable for. [CTA] Click below to watch the full video.",
+ "spans_total_seconds": 27.895,
+ "delivered_seconds": 30.895,
+ "outro": {
+  "line": "Click below to WATCH the full video.",
+  "card_text": "WATCH THE FULL VIDEO",
+  "cta_take": "C:/Users/mnede/Documents/Claude/social-media/video-creation/assets/vo/cta-watch-full.mp3 (the shared approved take; never re-voiced)",
+  "note": "Hold a CLEAN F6 frame behind the card: Mike mid-line at about 208.5 (before the 209.10 burn), framed with span 5's measured face crop. Do not hold the span's last frame (the burn peak). Bed per longform-to-short.md section 6: one continuous bed, the hook's chapter bed Bed A proton-streams (MUSIC-PLAN, code B6VC93OXHYMOZO19), ~16-18 dB under the VO measured by LUFS; the CTA line at VO level, not under the bed."
+ },
+ "sequence_check": {
+  "order_is_chronological": true,
+  "audio_contradiction": "none: the question, the thesis, the two scoreboards, one person often carries both, the title is the number you answer for. No conclusion precedes the fact it depends on.",
+  "visual_variety": "F1 face with the whip-in roll and push; F2 face clean; Envato dashboard, the scoreboard card, the AI gauge still; the AI founder still; F6 face clean. No two spans share a cover asset; three of five are face (Mike's preference for this mode); the only 9:16-hostile stretch is the scoreboard card inside span 3 (risk 1).",
+  "nothing_retimed": true,
+  "em_dashes": "none anywhere in this plan"
+ },
+ "rejected": [
+  {
+   "span": "4.78-7.98 (Let's first take the AI off both titles for a second.)",
+   "reason": "sits on the C2-s1 two-column role card (a centre crop of a two-column card is its gutter) and promises a base-roles walk the short does not deliver"
+  },
+  {
+   "span": "8.16-20.64 (A growth engineer pushes the product out... Builds it, does not market it.)",
+   "reason": "the two base-role definitions are strong teaching lines, but every frame is the C2-s1 / C2-s1b two-column card or the C12 Pragmatic Engineer receipt (text), and they add 12.5 s to a 30 s short"
+  },
+  {
+   "span": "20.74-37.02 (Now put AI in front of both of those titles... builds the AI inside of the feature.)",
+   "reason": "16 s over one text card (C2-s2); the point is carried by the thesis plus difference number one"
+  },
+  {
+   "span": "40.32-45.14 (In my experience, these two get used interchangeably even by people who are hiring for them.)",
+   "reason": "the natural lead-in to the thesis, but it sits on the C4a / C5a LinkedIn title-block receipts (3D pan and orbit) and 40.32 is inside the C2-s2 to C4a cross-fade (40.3, 0.35 s); the thesis lands without it"
+  },
+  {
+   "span": "48.88-50.36 (So let's dissect this a bit.)",
+   "reason": "a handoff into a body the short does not have; ends on the CH2 card freeze"
+  },
+  {
+   "span": "62.22-71.32 (The word for that scoreboard is called evals... is the product engineers conversion rate.)",
+   "reason": "C5b Citian and C7a GovWell receipts (highlight wipes): receipts do not survive a centre crop, and defining evals would pull the short into teaching a term instead of landing the scoreboard claim"
+  },
+  {
+   "span": "71.5-84.2 (the split test / grounding fix worked contrast)",
+   "reason": "BR-2 for 2 s, then the split-test animated chart (73.5-79.0) and the pass-rate meter (79.0-84.1), both Type 1 animated charts: avoid charts, and any boundary inside them lands mid-animation"
+  },
+  {
+   "span": "84.2-88.52 F3 (One scoreboard counts what the business did and the other one counts what the model did.)",
+   "reason": "THE claim in one sentence and the first alternative if Mike wants it, rejected for this mode: a kt-side-panel line. The face is pushed left to the middle of the free 55 percent at 120 percent over the first 0.47 s ON 'One' (84.2), whip-cut right at 2x ON 'the' (86.82, a transition window mid-sentence), then holds right to 88.5. One crop per span (face-crop.json: measured per span on the comp render) cannot hold a face that sits near x 528 for the first half and near x 1392 for the second, and splitting the sentence at the whip means a cut inside a transition between 'and' and 'the'. If the builder can track the face per half, or Mike accepts a letterboxed full-width F3, swap it in for span 4 (adds 0.4 s)"
+  },
+  {
+   "span": "88.68-127.64 CH3 (Difference number two, the clock... compounding quality on the other side.)",
+   "reason": "a second claim (the clock); its croppable covers (BR-3 stopwatch, IMG-2 calendar + hourglass, BR-4 phone signup) carry only clause fragments, the rest is the ship-to-learn card, the slow-loop and AARRR diagrams, the C10 receipt, and F4 with side panels (same crop problem as F3)"
+  },
+  {
+   "span": "127.84-133.42 (Difference number three, the bias. What each one reaches first. The growth engineer lives in the funnel.)",
+   "reason": "BR-5 reach-for-tool + IMG-3 glass funnel are the cleanest croppable covers in the video, but it is the third difference (a second claim), and 'funnel.' ends at 133.42 inside the C1 spin-twirl window (133.28-134.0): no clean end before the marquee diagram"
+  },
+  {
+   "span": "133.64-174.57 (the rest of CH4: the C1 two-stack diagram, IMG-4, C4c / C5c receipts, F5 with side panels)",
+   "reason": "diagram (22 s, the marquee), receipts, a still under a half-sentence, and a panel face line that opens on 'one leans' (needs the preceding clause) and ends in the CH5 card freeze"
+  },
+  {
+   "span": "176.14-187.84 (So which one do you hire first?... a funnel to feed the growth engineer,)",
+   "reason": "BR-6 handshake for 2 s (croppable) then the C7b / C6 receipts for 9.6 s; 'So' at 176.14 sits 0.05 s after the CH5 card's exit; the hire rule is a second claim"
+  },
+  {
+   "span": "188.02-199.7 (which one should you become? If the business number moving lights you up... product engineer.)",
+   "reason": "the best audio pair for 'which number' after difference one, but BR-7 lasts 2.8 s and the rest (190.78-199.9) is the become-compare two-column card entered by spin-twirl-ccw (190.42-191.14): a two-column card centre-cropped is its gutter, both columns and the role labels are lost. First add-back if Mike accepts a letterboxed card or a native-vertical re-lay of it (adds 11.7 s, so span 3 would have to go to keep the 40 s cap)"
+  },
+  {
+   "span": "209.22-214.66 (Three differences, the scoreboard, the clock and the bias. Same tools, different scoreboard.)",
+   "reason": "the C2-s4 recap card (text, two labels + three chips); 'Three differences' recaps a body the short does not have, and 'Same tools, different scoreboard' is already said by span 2"
+  },
+  {
+   "span": "214.78-222.66 F7 (And if that cleared it up, hit that like button and subscribe...)",
+   "reason": "the longform's own CTA; the short has its own"
+  },
+  {
+   "span": "59.42-62.06 alone (The product engineer is scored on the feature itself.) in place of span 3",
+   "reason": "avoids the scoreboard text card, but the short would then name only the product engineer's scoreboard; the claim is 'different scoreboard', which needs both sides said"
+  }
+ ],
+ "risks": [
+  "SCOREBOARD CARD (span 3, 54.2-59.5): the one 9:16-hostile stretch, 5.3 s of a 10.1 s span, taken against Mike's 'avoid text cards' because it is the only place both scoreboards are said in plain sentences. The card fills the 16:9 frame (headline 'A business number', four chips in a row); a 608 px centre slice clips the headline and the outer chips. Recommended: the lane's variety-rule alternate for this span (it qualifies, it carries BR-1 and IMG-1) is placed over 54.2-59.5, the card stretch, not over BR-1 or IMG-1; a native-vertical 'business number' visual (a dashboard, a conversion counter) is what the words ask for. Mike can instead accept the slice, or swap F3 in (rejected list).",
+  "FACE EDGES: spans 2 and 5 start 0.01-0.05 s after a film-burn cut-in and end 0.04 s after a film-burn cut-out (hand:film-burn 0.76 s, peak on the cut). Inherent: the words begin 0.08-0.09 s after each cut-in and the face edges carry no pad. The burn is an additive flare over a complete frame (no half-frame); the lane's seam hit sits on top. Precedent: every-job accepted the same on its Blocks face cuts.",
+  "HOOK EDGES: 0.0 is the first frame of the kt-whip-cut IN (0.73 s); the signature open was built to be frame one and Mike named F1 the hook. 4.71 is 0.023 s (under one frame) before the 4.733 whip-out; if the blur-in variant ramps on the outgoing face, the last 2-4 frames carry motion blur. The right-third role labels (2.0 / 3.6) fall outside the face crop; the short's captions carry the role names.",
+  "FLIP / CARD EDGE at span 3's start (51.885): the gate moved this boundary from 51.98 to 51.885 because the voice is already on at 51.98 (Whisper's 52.00 onset is ~0.1 s late), and 51.885 is under one frame after the CH2 card freeze (50.36-51.86). PROJECT-LOG's 'the flip takes the pause' (the card reads 1.3 s of its 1.5 s) is read as both rmn:flip halves sitting inside the freeze, so the span's first frame is BR-1's first frame; if the exit flip runs past 51.86, that frame is the card flipping away. Frame-check 51.885; any fix is picture-only (shift the picture 1-2 frames or let the seam hit cover it), the audio cut cannot move later.",
+  "CROSS-FADE / GLITCH SEMANTICS inferred, not verified: span 3's end (62.06) is clear of the C5b cross-fade by 0.14 s if the 0.35 s fade ramps from the receipt's in-point, inside it by 1-2 frames if centred; span 4's start (199.81) is 0.09 s before the IMG-5 glitch ingress if it starts at the cut, mid-glitch if centred. Both read as the seam either way. Frame-check both.",
+  "CONTIGUOUS SPANS 4 and 5 (203.76): one time boundary, two framings (centre crop for the IMG-5 still, measured face crop for F6). The comp does not centre the face (face-crop.json), so if Mike sits off-centre in F6 the join carries a horizontal jump under the F6 burn peak. Butt-join without an added seam hit; the longform's own burn is the transition.",
+  "WORD GAPS: the spine is desilenced, so the Whisper gaps at the boundaries are 0.06-0.20 s and two Whisper onsets are late (They're ~45.17 not 45.22; Difference ~51.89 not 52.00). The plan now carries the MEASURED troughs from the read-only gate run (gate): 0.000 / 4.710 / 45.160 / 48.840 / 51.885 / 62.060 / 199.810 / 203.760 / 209.140, all at or below -45 dBFS. The builder re-runs the gate with --write-snapped (expect no further move) and owes the ~12 ms crossfade at every splice.",
+  "AUDIO FLOW inferred, not heard: 'And in my experience, a founding AI engineer ends up being both.' follows 'The product engineer is scored on the feature itself.' with 'both' = the two roles; the pivot is Mike's own 'And in my experience' (CH5, gear 2 rising to 3). If it reads as a jump on listen, drop span 4 and resume at --seconds 27 (spans 23.8 s), or take F3 per the rejected list.",
+  "LENGTH: 27.9 s of spans (after snapping) + 3.0 s outro = 30.9 s delivered, inside 30 +/- 1; Mike's 40 s allowance is not used.",
+  "CAPTIONS: from-16x9.json says burned_captions false, so every span gets the short's caption track (never doubled). The AS-RECORDED mishear list applies ('signups', 'conversion' in span 3; 'you're accountable' in span 5). No em dashes in any caption.",
+  "9:16 SURVIVAL of BR-1 (a dashboard with a funnel filling), IMG-1 (a feature module under a gauge) and IMG-5 (a founder at a desk) under a centre crop is assumed from the CUE-SHEET / EDIT-PLAN descriptions, not seen; the variety rule overlays one native-vertical alternate on these windows anyway. The IMG-5 role-label pops (lower right) and the signature-open labels (right third) fall outside the crops: decorative, no meaning lost.",
+  "MASTER-ONLY SOUND: the Impact_Hit on the F2 cut-in, the label sounds of the open, the Bed A duck and the Bed C step live in the master mix, not in the spine VO the short uses; the short's bed (Bed A proton-streams per section 6) and its seam hits are the builder's."
+ ],
+ "gate": {
+  "tool": "skills/longform-to-short/lint-short-spans.py (run read-only by the strategist on spine/ALL.e.paused.mp4, no --write-snapped; the builder re-runs it and BUILDS FROM THE SNAPPED PLAN)",
+  "exit": 0,
+  "verdict": "GATE OK, every boundary sits in silence (floor -45 dBFS, hard -30 dBFS)",
+  "snapped_boundaries": {
+   "span1_start": "0.000 OK (-53.7 dBFS, file head)",
+   "span1_end": "4.700 -> 4.710 (+0.010 s, trough -47.5 dBFS)",
+   "span2_start": "45.180 -> 45.160 (-0.020 s, trough -64.3 dBFS; 45.18 read -37.5, the onset of They're)",
+   "span2_end": "48.840 OK (-47.6 dBFS)",
+   "span3_start": "51.980 -> 51.885 (-0.095 s, trough -45.2 dBFS; 51.98 read -14.0, the onset of Difference)",
+   "span3_end": "62.060 OK (-58.5 dBFS)",
+   "span4_start": "199.820 -> 199.810 (-0.010 s, trough -73.4 dBFS)",
+   "span4_end": "203.760 OK (-61.1 dBFS)",
+   "span5_start": "203.760 OK (-61.1 dBFS, shared with span 4's end)",
+   "span5_end": "209.140 OK (-80.8 dBFS)"
+  },
+  "spans_total_after_snapping": 27.895,
+  "delivered_after_snapping": 30.895,
+  "plan_values": "the span start/end values above ARE the snapped values (written back so Mike reads the real boundaries)"
+ }
+}

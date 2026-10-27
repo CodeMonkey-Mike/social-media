@@ -61,6 +61,20 @@ left, source more (`../music-sourcing/SKILL.md`) instead of loosening the rule.
 | `ai_still` (the glitch on AI stills) | advisory | reported |
 | `punch_in` · `broll` (dissolve) · `container` (cross-fade + scale-in) · `image_broll` (cross-warp) | **CONSTANT** | house style, Mike's signature, never rotated |
 
+**SCARY (horror stingers, 2026-10-25):** the look key is `SCARY/Stinger`, ONE look for all 15 ids (like
+`LIGHT LEAKS/Light Leaks`). A scary row is filed by its role like any library id: `face-cut` -> `face_cut`,
+`glitch-still` -> `ai_still` (both advisory), a cover-to-cover `scene-cut` -> its bucket's constant slot; it never
+enters a gated slot, so it cannot fail the check (verified with `tkey` / `slot_of`). The one-subject-per-video rule
+is the strategist's (the subject is each row's 4th tag); the ledger keeps the ids, so a later scary video can see
+which subject the last one used.
+
+**BEAR MARKETS rows (2026-10-25):** `motion-shake-optics-2x-long` / `-3x-long` share the look `MOTION/Shake Optics`
+with the 2 s optics rows (same preset, the full master); `zoom-mirror-punch-in` = `ZOOM/Mirror Punch`;
+`scary-pumpkin-fire` = `SCARY/Fire Plate`; `scary-6-normal75` = `SCARY/Stinger` (the same look as scary-6). Filed by
+role like any row: `face-cut` -> `face_cut` (advisory); `face-shake` (the long shakes on a face hold) and `scene-cut`
+-> their bucket's slot (`face` / `broll` ..., not rotated). None enters a gated slot unless a plan files it in bucket
+`card`, so none can fail the check (verified with `tkey` / `slot_of`).
+
 A library look is `CATEGORY/Variant` with the "Short" variants folded in, so `melt-rgb-1`, `melt-rgb-3` and
 `melt-rgb-short-2` are all `MELT/RGB`. Rotating looks, not rows, is deliberate: the 853 rows are mostly
 direction / length variants of about 130 looks.

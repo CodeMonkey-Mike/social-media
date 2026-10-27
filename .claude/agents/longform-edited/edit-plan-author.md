@@ -42,7 +42,15 @@ it never discovers what is missing.
    row does not state it).
 7. `video-creation/longform-edited/skills/overlays/overlays.md` (a punch-in + a LIBRARY light leak land ON every
    desilencer join inside a face window, from `spine/jumpcuts-final.json`; no join = no punch, no leak) and
-   `longform-edited.md` house rules #5 (face transitions) and #10 (music).
+   `longform-edited.md` house rules #5 (face transitions) and #10 (music). **Section 2 = the kinetic-text devices
+   (2023 motion + sound pairs; the catalog of record is the EFFECTS library `video-creation/assets/effects/library.json`,
+   `devices` + `themes`, skill `video-creation/skills/effects-library/effects-library.md`):** read the project's `SCREENPLAY.md` for every 🎬 `[SHOW]` line that names a device id
+   (`kt-side-panel`, `kt-keyword-pop`, `kt-signature-open`, `kt-lower-third-band`, `kt-list-card`, `kt-headline-over-broll`, `kt-icon-pop`, `kt-subscribe-close`, ...) and write each as a row at the spoken word's onset from the
+   word JSON: `[KT-PANEL]` (side, panel text) / `[KT-POP]` (label text, where) plus its paired sound row `[WHOOSH]` /
+   `[ACCENT]` naming the SFX catalog id (the kinetic-text sounds live in `assets/sfx/kinetic-text/`) and its file start (onset minus the device's offset, read from the device row);
+   the signature open is its parts (whip-in `[TRANSITION]`, two `[KT-POP]` label rows, whip-out). The CUE-SHEET gets a
+   `## KINETIC TEXT` section listing them (kcc20 2026-10-21 is the shape). A device the screenplay names and the log does
+   not place is an orphan, exactly like an unplaced asset.
 8. `video-creation/longform-edited/skills/clip-inserts/clip-inserts.md` when COVER-PLAN.json carries `clip_inserts`
    (a third-party clip that plays with its OWN voice while the spine pauses): the seed already holds one `[INSERT]`
    row per insert at its `splice_at`.
@@ -53,6 +61,29 @@ it never discovers what is missing.
 - **The SFX layer**: every chapter card gets `[IMPACT]` with the kit file named; every MUSIC-PLAN hard hit
   becomes `[IMPACT]`, `[RISER→IMPACT]` or `[DUCK]` with the file (riser end == hit frame); the vibe-cut
   duck rides with a bigger impact. Fewer, bigger hits beat an impact on every edit.
+  **Use the WHOLE SFX palette where it fits, mood-matched (Mike, 2026-10-16;
+  `video-creation/longform-edited/longform-edited.md` §7):**
+  - Read every type folder's `library.json` under `video-creation/assets/sfx/` (impacts, booms, risers,
+    whooshes, braams, tension builders, downshifters, accents, drones, textures).
+  - Weigh each type against the beats and place one where a beat genuinely calls for it.
+  - Pick ONLY moods that fit the chapter's register and music bed: no `dark`/scary sound in an exciting or
+    hype chapter.
+  - Name the file and its `mood_class` on each SFX row. In your report, list the types you considered and left
+    unused, with one line on why each was left out.
+  - **A braam goes BETWEEN sentences, never over a word (Mike, 2026-10-17):** after an intense line, with the figures
+    on screen, in a SPINE PAUSE of its audible length: `[BRAAM] <file> (...) spine pause <dur> s at <trough s>`
+    (longform-edited.md section 7). The pause is baked by the graph; you only write the row. Through the pause the
+    picture SLOWLY ZOOMS IN on the figure (write `ZOOM to "<figure>"` on the row; Mike 2026-10-17).
+- **Per-chapter themes (Mike, 2026-10-17; longform-edited.md section 7):** in a chapter whose bed is `lights-out`, put a
+  library `[MOTION] lib:motion-shake-3d-*` (varied) on most receipts; tag a receipt quote the line reads out
+  `[HIGHLIGHT]` (a highlighter wipe on the word). Read every bed's `mike_note` for such themes.
+- **Receipt treatment, EVERY receipt, every video (Mike, 2026-10-21; longform-edited.md section 7):** each `[RECEIPT] ... IN`
+  row ends with `treatment: pan`, `treatment: highlight` or `treatment: push`, decided case by case by what the receipt is
+  FOR. `pan` = a library camera move (`[MOTION] lib:motion-3d-pan-*` mainly; orbit / offset for variety, never the same move
+  twice in a row) when the receipt is shown as an OBJECT: an article title / headline, a GitHub repo or PR page, a long
+  document (a bill, a whitepaper, a spec). `highlight` = NO pan: the line quotes words from it, so a settling push, then
+  `[HIGHLIGHT]` on the word. `push` = a figure panel read off screen, a flash under 2 s, or a recording. Not a quota; it
+  tends to land near 30 percent pans. The lint fails a receipt row with no `treatment:` and warns on zero pans.
 - **Face treatment**: `[TRANSITION]` at every face cut-in/out (`→TRANSITIONS.md`), `[PUNCH-IN]` on holds
   ON every desilencer join inside the window (the seed carries them from `spine/jumpcuts-final.json`), `[LIGHTLEAK]`
   on the SAME join (a library leak, `→TRANSITIONS.md (punch-leak)`), never a mid-hold pulse, `[CAPTION] ON` over FACE

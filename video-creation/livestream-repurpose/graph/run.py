@@ -135,6 +135,18 @@ from langgraph.checkpoint.sqlite import SqliteSaver  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 LSR_SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "skills" / "run-queue"))
+import run_queue as RQ  # noqa: E402  (the machine-wide run queue + supervisor, 2026-10-27)
+# the batch segments the supervisor may re-drive once on a failure (render/build work; never register, launch_lane3,
+# the gates, lane2_publish or verify_batch)
+RETRY_BATCH = {"intake", "lane2_select", "lane2_cut", "lane2_tighten_plan", "lane2_tighten", "lane2_finish", "lane2_build"}
+
+
+def _gate_of(final):
+    """The HITL gate a batch run stopped at ('4b' / '2nd'), for the desktop notification."""
+    intr = final.get("__interrupt__") or []
+    v = intr[0].value if intr and hasattr(intr[0], "value") else {}
+    return (v or {}).get("gate", "next") if isinstance(v, dict) else "next"
 
 VIDEO_EXTS = {".mp4", ".mkv", ".mov"}
 MIN_FREE_GB = 5   # LOW BPS + vertical + staged longform for a 1-2h stream, with margin
@@ -1583,6 +1595,7 @@ def main_batch():
     ap.add_argument("--thread", default=None)
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    ap.add_argument("--skip-queue", action="store_true", help="start NOW, overlapping the run queue (Mike's explicit ask only)")
     args = ap.parse_args()
 
     approve = _parse_list(args.approve)
@@ -1640,21 +1653,33 @@ def main_batch():
     config = {"configurable": {"thread_id": thread}, "recursion_limit": 200}
     started_at = _now_iso_run()
     t0 = time.monotonic()
-    try:
-        if args.resume:
-            update = {k: v for k, v in init.items()
-                      if k in ("approve", "delete_4b", "delete_2nd", "until", "publish_date",
-                               "shorts_min_sil", "max_builders", "lane3_brief", "clip_brief")}
-            payload = ({"approve": approve[0], "delete": deletes} if approve else None)
-            # A plain resume (no approval) must carry NO state update: the checkpoint's own
-            # pending writes + an update to the same key = InvalidUpdateError (caught live
-            # 2026-09-10). Per-run knobs ride on env (BATCH_MAX_BUILDERS) in that case.
-            final = app.invoke(Command(resume=payload, update=update) if payload else None,
-                               config)
-        else:
-            final = app.invoke(init, config)
-    except Exception as e:
-        final = {"status": "failed", "error": f"orchestrator crashed: {e!r}"}
+    if args.resume:
+        update = {k: v for k, v in init.items()
+                  if k in ("approve", "delete_4b", "delete_2nd", "until", "publish_date",
+                           "shorts_min_sil", "max_builders", "lane3_brief", "clip_brief")}
+        payload = ({"approve": approve[0], "delete": deletes} if approve else None)
+        # A plain resume (no approval) must carry NO state update: the checkpoint's own
+        # pending writes + an update to the same key = InvalidUpdateError (caught live
+        # 2026-09-10). Per-run knobs ride on env (BATCH_MAX_BUILDERS) in that case.
+        first = Command(resume=payload, update=update) if payload else None
+    else:
+        first = init
+
+    def invoke(retry):
+        try:
+            return app.invoke(init if retry else first, config)
+        except Exception as e:
+            return {"status": "failed", "error": f"orchestrator crashed: {e!r}"}
+
+    # the run queue + supervisor (video-creation/skills/run-queue, Mike 2026-10-27): the batch takes the machine-wide
+    # turn, releases it at a gate / done / failure, and a failed render/build segment is re-driven ONCE (a fresh
+    # `run.py batch`, the documented re-drive; nodes are redo-safe). register / launch_lane3 / publish / verify are never
+    # retried. Lane 3 runs as a child of this turn.
+    if args.stub:
+        final = invoke(False)
+    else:
+        final = RQ.supervise(f"livestream batch {batch}", "batch", batch, invoke, RETRY_BATCH,
+                             lambda f: bool(f.get("__interrupt__")), skip=args.skip_queue, describe_gate=_gate_of)
     ended_at = _now_iso_run()
     rc = report_batch(final, batch)
     status = "waiting" if rc == GATE_EXIT_CODE else final.get("status", "failed")

@@ -1,0 +1,466 @@
+{
+  "assets": [
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/BR-1-datacenter-aisle.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Server aisle with blue LEDs, dark grade, no watermark or text. Matches the query."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/BR-2-server-leds-bokeh.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Defocused green/blue server LED bokeh, dark, no text."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/BR-3-typing-laptop-dark.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Hands typing on a laptop, dark background. Screen text is out of focus and unreadable, no watermark."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/BR-4-gpu-fans.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "GPU fan macro with cyan rim light, unbranded, dark."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/BR-5-ram-macro.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "RAM macro, dark. Advisory: the chip markings (Elpida) are mirrored (flipped footage). Only noticeable if read, and the beat lasts 1.8 s."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/BR-6-server-cabinet-pushin.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Rack push-in, dark. The source already blurs the IBM logo and labels."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/BR-7-terminal-log-scroll.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Scrolling terminal log as queried. The log text is the subject, not an overlay or watermark."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/BR-8-edit-timeline.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Editing timeline at an angle, dark UI, no watermark."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/BR-9-data-stream.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Abstract blue data-stream lines on black, no text."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/BR-10-wafer-dies-macro.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Wafer die macro, no text or watermark. Advisory: mid-key and colorful, brighter than the rest of the b-roll set."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/img/IMG-1-press-flashes-server-cluster.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Press flashes at a glowing server cluster, dark, cyan light, no text or logos. Faces read slightly stylized."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/img/IMG-2-four-chrome-levers.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Exactly four chrome levers on a dark console with cyan accents, no text."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/img/IMG-3-gpu-forged-hot.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Unbranded GPU glowing hot on an anvil with sparks and a forge. No logos or text."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/img/IMG-4-distant-datacenter-night.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Distant hyperscale data center, cyan lighting, dark plain at night, no text or logos."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/C17-ibm-inference-90pct.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Verified: the up-to-90% inference-mode sentence is highlighted. Clean capture. Advisory: about 35% empty white on the left, so frame the highlight in the comp."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/C8-anthropic-pricing-tokens.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Real platform.claude.com pricing table, not blank and no banner. The live header is 'Base tokens' > Input / Output (the spec wording 'Base input tokens / Output tokens' is out of date; the meaning is the same). Two rows (Fable 5.1 $10/$50 per MTok, Opus 5.5 $4/$20 per MTok) shown whole, with the Base tokens column highlighted. Per-MTok pricing supports 'tokens are what you get billed for'. Nothing cut off at any edge; the table's bottom border sits at the crop line but every row is complete."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/C13-vllm-compute-memory-bound.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Verified: compute-bound (prefill) and memory-bound (decode) highlighted in the Chunked Prefill paragraph. Nothing clipped."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/C11-arxiv-pagedattention.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "arXiv 2309.06180 abstract page. Title, authors, and the 'near-zero waste in KV cache memory' phrase highlighted. Cropped above the 2-4x line as specified. Right-edge text ('Cody Hao Yu,') is tight but not clipped. The last line ends mid-sentence ('...improves the'), which is acceptable for a receipt crop."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/C4-whisper-jobs-editor.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Verified: line 1 docstring (load the model ONCE, run every window) + lines 122-133 ending in whisper.load_model; lines 3-6 skipped. Advisory: line 1 has an em dash from the real source; bottom 30% of the frame is empty."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/C5-sweep-log-model-load.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Clean light terminal render with no nvidia-smi. Line 1 checked on disk against video-creation/shorts/kcc20-live/ai-replaces-engineers-this-year/_qa/sweep.log: 'medium.en loaded on cuda in 14.2s (77 job(s))', with 14.2s and 77 jobs highlighted. The capture uses head -n 12 instead of cat line 1, which is harmless. Claim note: 14.2s is slightly under the narrated 'around 15 to 20 s'. It still holds as 'around', but Mike should know the receipt says 14.2s. Nothing clipped."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/C6-spawn-agent-editor.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Editor view of graph/common.py > spawn_agent. Lines 458-461 (docstring: 'claude -p --agent <name> as a supervised subprocess') and 496-499 (cmd = [*base, \"-p\", \"--agent\", agent, ...] + 'spawning headless agent'). The spec's line numbers (446-448 / 484-487) are out of date because the file has shifted. I checked the current file: def spawn_agent is at 458 and the cmd line is at 496, so the capture shows the right code. The claim is proven. Line 499 ends at x~1930 of 2000 and is not clipped. Nothing at any edge is cut."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/C7-agent-logs-listing.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Verified: ls data/ piped to grep growth-vs-product lists 20 longform-lane agent logs. Fills the frame, nothing clipped."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/C9-openai-reasoning-billed.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Verified: billed-as-output-tokens sentence highlighted in the info box. Advisory: busy full page; the diagram above is partly under the sticky header (no text cut). Zoom the comp onto the highlight."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/C10-anthropic-thinking-tokens.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Real extended-thinking docs page, not blank and no banner. The highlighted sentence reads 'monitor the usage.output_tokens_details.thinking_tokens field in the response, which reports how many of the billed output tokens were internal reasoning'. That directly proves thinking is billed as output tokens. Nothing clipped."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/CLIP-3-STILLS-lead-in.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "First frame: Blackwell System slide, Huang at right, burned caption inside the frame and matching the spec."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/receipts/CLIP-3-STILLS-lead-out.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Last frame: Inference At-Scale is Extreme Computing slide. Caption identical and inside the frame."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/_previews/qa/assets/CLIP-3-huang-inference.mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Clip insert mid frame, Huang on stage, caption burned bottom-center, legible and not clipped. Advisory: tiny grey artifact top-right corner, from the source."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/card-slides/c2-training.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Light card, Playfair headline with accent on once, DM Sans body, muted eyebrow, COSTS MILLIONS spotlit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/card-slides/c2-contrast-s1.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "TRAINING dimmed, INFERENCE lit, THE BILL spotlit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/card-slides/c2-contrast-s2.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "THE LATENCY spotlit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/card-slides/c2-contrast-s3.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "THE PART YOU OPERATE spotlit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/card-slides/c2-contrast.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Base state, clean."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/tokenizer-split-ids.png",
+      "verdict": "PASS",
+      "defects": [
+        "spec element missing: no TOKEN IDS / BILLED PER TOKEN paper panel (absent from the PNG and from tokenizer-split.html)",
+        "composition: the diagram fills only the left ~52% of the frame, the right ~45% is empty page"
+      ],
+      "fix": "Add the TOKEN IDS / BILLED PER TOKEN paper panel in the right column (light white card, hairline border, mono IDs, billed per token line). Token IDs verified correct vs tiktoken o200k_base: 9719 2616 3779 42373 290 2359 472 2201 13.",
+      "verdict_original": "FAIL",
+      "override": "2026-10-26 main loop: FALSE FAIL. The TOKEN IDS / BILLED PER TOKEN paper panel is NOT part of this PNG: COVER-PLAN.json places it as the kt-side-panel PAPER effect (a comp overlay, 50.7 percent width, right side) that slides in over exactly the empty right half; the token chain correctly fills the left. Token IDs verified by visual-qa itself (o200k_base)."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/tokenizer-split-split.png",
+      "verdict": "PASS",
+      "defects": [
+        "same missing TOKEN IDS / BILLED PER TOKEN panel",
+        "right ~45% of the frame empty"
+      ],
+      "fix": "Rebuild with the right-column panel slot (dim or not yet revealed) so the layout is stable across states.",
+      "verdict_original": "FAIL",
+      "override": "2026-10-26 main loop: FALSE FAIL. The TOKEN IDS / BILLED PER TOKEN paper panel is NOT part of this PNG: COVER-PLAN.json places it as the kt-side-panel PAPER effect (a comp overlay, 50.7 percent width, right side) that slides in over exactly the empty right half; the token chain correctly fills the left. Token IDs verified by visual-qa itself (o200k_base)."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/tokenizer-split-text.png",
+      "verdict": "PASS",
+      "defects": [
+        "same missing panel",
+        "right ~45% empty, lower half empty in this state"
+      ],
+      "fix": "Rebuild with the panel slot, same grid as the other two states.",
+      "verdict_original": "FAIL",
+      "override": "2026-10-26 main loop: FALSE FAIL. The TOKEN IDS / BILLED PER TOKEN paper panel is NOT part of this PNG: COVER-PLAN.json places it as the kt-side-panel PAPER effect (a comp overlay, 50.7 percent width, right side) that slides in over exactly the empty right half; the token chain correctly fills the left. Token IDs verified by visual-qa itself (o200k_base)."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/C1-kvcache.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Full C1 flow with TTFT/TPOT bar, KV CACHE lit with a tinted ring. Nothing clipped."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/C1-prefill.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "PREFILL lit, KV cache empty and dashed."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/C1-rest.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Rest state."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/card-slides/prefill-compute-bound.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Prefill is compute-bound, meter full, Source: vLLM docs."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/c1-decode-spotlight-reload.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Reload pulse KV CACHE to DECODE lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/c1-decode-spotlight-step.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "New K,V pair plus next output token lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/one-token-chain-mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Token 4 lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/one-token-chain-payoff.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Token 6 lit, ONE TOKEN AT A TIME, WITHIN ONE REQUEST pill lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/one-token-chain-start.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Token 2 lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/card-slides/C3.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "4 LEVERS overview, item 01 CONTINUOUS BATCHING lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/batching-lane-full.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "1 / 4, slots A-I, EVERY STEP, NEVER IDLE lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/batching-lane-lane.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Lane state."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/batching-lane-swap.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "A LEAVES, E JOINS."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/prefix-cache-rest.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "2 / 4 CACHING, request 2 prefix dimmed and dashed."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/charts/quantization-memory-mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "29.0 / 15.2 GB, 8-bit lit, source HF octocoder, memory only, no speed claim."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/charts/quantization-memory-payoff.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "4-bit 9.5 GB lit plus fits a smaller card chip."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/charts/quantization-memory-start.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "16-bit bar only."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/speculative-decoding-draft.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Small model plus 4 drafts lit, 4 / 4."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/speculative-decoding-rest.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Rest state."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/speculative-decoding-same.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "SAME OUTPUT lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/speculative-decoding-verify.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "BIG MODEL plus one pass lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/engines-datacenter-rest.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "REQUEST to ENGINE (vLLM, SGLang, TensorRT-LLM) to GPU."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/engines-datacenter-sglang.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "SGLang lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/engines-datacenter-trtllm.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "TensorRT-LLM lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/engines-datacenter-vllm.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "vLLM lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/engines-laptop-llamacpp.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "llama.cpp lit inside the laptop outline."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/engines-laptop-ollama.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Ollama localhost:11434 lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/engines-laptop-rest.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Rest state."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/my-pipeline-inference.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "WHISPER (SELF-HOSTED, MY OWN GPU) and AI AGENTS (HOSTED, CLAUDE) lit under BOTH ARE INFERENCE; no hardware named."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/my-pipeline-rest.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Rest state."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/load-once-load.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "LOAD ONCE lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/diagrams/load-once-run.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "RUN EVERY CLIP lit."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/charts/thinking-tokens-mid.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Prompt plus growing grey thinking run, no counts."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/charts/thinking-tokens-payoff.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Long thinking run, short ANSWER, THINKING TOKENS label, no numbers."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/charts/thinking-tokens-start.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "Prompt only, sparse by design."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/card-slides/huang-id-card.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "JENSEN HUANG / NVIDIA CEO / GTC KEYNOTE / MARCH 2025."
+    },
+    {
+      "path": "video-creation/longform-edited/media/inference/assets/card-slides/incentive-vs-engineering.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "He sells the chips dimmed; On the engineering: right lit, accent on right."
+    },
+    {
+      "path": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/inference/assets/diagrams/prefix-cache-shared.png",
+      "verdict": "PASS",
+      "defects": [],
+      "notes": "LIGHT theme correct (warm off-white page, white hairline cards, near-black text, darkened cyan #006A9E accent, tinted ring on the spotlit block, no glow smear). Eyebrow 'LEVER 2 / 4 - CACHING' muted grey, Playfair headline 'A shared prefix is computed once.' with accent on 'computed once', green-to-cyan divider present, DM Sans body, JetBrains Mono sources line. Two request rows share one SHARED PREFIX block, badge 'COMPUTED ONCE', arrow 'reused, not recomputed' to request 2 'read from the KV cache'; one spotlight. No clipping at any edge, no em dashes, spelling clean. Minor, non-blocking: faint cyan ambient wash top-right and some empty space between the divider and the diagram.",
+      "fix": ""
+    }
+  ],
+  "summary": {
+    "checked": 73,
+    "passed": 73,
+    "failed": 0,
+    "carried_over": 72,
+    "fresh": 1
+  },
+  "must_fix": []
+}

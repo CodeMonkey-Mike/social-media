@@ -106,3 +106,5 @@ Each video is `media/<Video Title>/` and carries:
 - **Defumble / desilence only via the canonical shared skills** (`../skills/defumbler/`, `../skills/desilencer/`).
 - **Higgsfield MIKE-CLONE voice:** ALL-CAPS emphasis only on 5+ letter content words (short-word caps clip —
   see `../skills/higgsfield-voice/`).
+
+- **Title bank:** unused open-loop titles Mike liked, by topic, in `TITLE-BANK.md` (check it before titling a video on a covered topic).

@@ -26,7 +26,9 @@ off the row's beat (CHn@...).
    three type names, the anatomy, THE RULES. The reference JPGs in that folder ARE the look; match them.
 2. **`container-reference/container-canonical.css`** — the LOCKED stylesheet. Paste it; NEVER re-derive
    CSS, never swap tokens (the recurring drift: wrong teal, Inter instead of Playfair/DM Sans, colored
-   eyebrows, missing divider).
+   eyebrows, missing divider). **If the dispatch says CONTAINER THEME = LIGHT** (a per-video ruling, README
+   section "LIGHT THEME"), paste `container-canonical-light.css` right after it and build on the light tokens;
+   never invent a light palette of your own, never apply it to a video whose dispatch does not say so.
 3. `video-creation/longform-edited/skills/broll-and-containers/broll-and-containers.md` "CSS CONTAINERS" section.
 4. The video's **BROLL-PLAN.md SLIDES build worklist** (your content source) + COVER-PLAN.json per-slot
    notes + DATA.md do-not-air/phrasing guards (on-screen wording must obey them exactly).

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEAR vs TAO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-deep:#0a0c10;
+  --bg-card:#12151c;
+  --bg-card-hover:#181c26;
+  --accent-green:#00e68a;   /* NEAR */
+  --accent-cyan:#00c2ff;    /* TAO */
+  --accent-gold:#ffd700;    /* the questions / callouts */
+  --accent-red:#ff4060;     /* caveats */
+  --accent-purple:#a855f7;  /* atmosphere */
+  --text-primary:#e8eaf0;
+  --text-secondary:#8892a4;
+  --text-muted:#505a6e;
+  --border:#1e2330;
+}
+
+/* ===== Foundation (presentation.md, verbatim) ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth;scroll-snap-type:y mandatory}
+body{background:var(--bg-deep);font-family:'DM Sans',sans-serif;color:var(--text-primary);overflow-x:hidden}
+
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.slide{
+  min-height:100vh;scroll-snap-align:start;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:60px 80px;position:relative;overflow:hidden;
+}
+@media(max-width:900px){ .slide{padding:40px 28px} }
+
+.orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.4;pointer-events:none}
+.slide>*:not(.orb){position:relative;z-index:1}
+
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.8rem,6vw,5.5rem);line-height:1.05;letter-spacing:-.02em}
+h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.8rem,3.5vw,3rem);line-height:1.15}
+h3{font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.15rem;text-transform:uppercase;letter-spacing:.12em}
+h3.mono{text-transform:none;letter-spacing:0}
+.ey{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);font-weight:600;margin-bottom:18px}
+p{font-size:clamp(.95rem,1.05vw,1.05rem);line-height:1.7;color:var(--text-secondary)}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600}
+.divider{width:60px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:24px 0}
+.center{text-align:center}
+
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.pu{color:var(--accent-purple)} .re{color:var(--accent-red)} .tl{color:var(--accent-teal)}
+
+/* ===== Components (presentation.md) ===== */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.card:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.card .top-accent{position:absolute;top:0;left:0;right:0;height:2px}
+.card h3{margin-bottom:6px}
+.card p{margin-top:12px}
+
+.tag{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.tag.green{background:rgba(0,230,138,.15);color:var(--accent-green)}
+.tag.cyan{background:rgba(0,194,255,.15);color:var(--accent-cyan)}
+.tag.gold{background:rgba(255,215,0,.15);color:var(--accent-gold)}
+.tag.red{background:rgba(255,64,96,.15);color:var(--accent-red)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){ .grid2,.grid3{grid-template-columns:1fr} }
+
+.impact{background:linear-gradient(135deg,rgba(0,230,138,.08),rgba(0,194,255,.06));border:1px solid rgba(0,230,138,.2);border-radius:12px;padding:24px 28px;margin-top:30px}
+
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
+.col{padding:32px;border-radius:16px}
+.col .ml{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px}
+.col .q{font-style:italic;color:var(--text-primary);margin-top:16px;padding-left:18px;border-left:3px solid var(--accent-green)}
+@media(max-width:900px){ .cmp{grid-template-columns:1fr} }
+
+.rules{list-style:none;margin-top:24px}
+.rules li{padding:16px 20px;margin-bottom:12px;border-radius:12px;background:rgba(255,255,255,.02);border-left:3px solid var(--accent-cyan);font-family:'JetBrains Mono',monospace;font-size:.95rem;color:var(--text-primary);line-height:1.5}
+.rules li .why{color:var(--text-muted);font-size:.8rem}
+
+table.mx{width:100%;border-collapse:separate;border-spacing:0 12px;margin-top:24px}
+table.mx th,table.mx td{padding:16px 22px;text-align:center;font-size:1rem}
+table.mx th{color:var(--text-secondary);font-weight:600;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+table.mx td.name{text-align:left;font-weight:700;font-size:1.1rem}
+table.mx tr.row td{background:var(--bg-card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+table.mx tr.row td:first-child{border-left:1px solid var(--border);border-radius:14px 0 0 14px}
+table.mx tr.row td:last-child{border-right:1px solid var(--border);border-radius:0 14px 14px 0}
+
+/* ===== Animation + navigation (presentation.md, verbatim) ===== */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:.15s}.delay-2{transition-delay:.3s}.delay-3{transition-delay:.45s}
+.delay-4{transition-delay:.6s}.delay-5{transition-delay:.75s}
+
+.nav-dots{position:fixed;right:28px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:100}
+.nav-dots button{width:8px;height:8px;border-radius:50%;border:none;background:var(--text-muted);cursor:pointer;padding:0;transition:transform .3s,background .3s}
+.nav-dots button.active{background:var(--accent-green);transform:scale(1.4)}
+@media(max-width:900px){ .nav-dots{right:14px} }
+
+.scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;z-index:2}
+.scroll-hint svg{animation:bounce 1.8s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* ===== This deck: screen-share recording with a webcam PiP bottom-right =====
+   Every slide's content sits in .wrap (the left 68vw), so the webcam corner (the right 25vw x bottom 25vh at
+   1080p) is never covered. G shows the webcam guide box, F toggles fullscreen. The scrollbar is hidden so it
+   never shows in the recording. */
+html{scrollbar-width:none} html::-webkit-scrollbar{display:none}
+.wrap{max-width:68vw}
+@media(max-width:900px){ .wrap{max-width:none} }
+.sub{font-size:clamp(1.05rem,1.4vw,1.35rem);line-height:1.6;color:var(--text-secondary);margin-top:18px;max-width:52vw}
+.quote{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1.15rem,1.6vw,1.6rem);line-height:1.45;color:var(--text-primary)}
+.quote-by{margin-top:14px;font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--text-muted);font-weight:600}
+.card .big{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.3rem,2vw,1.9rem);line-height:1.2;color:var(--text-primary)}
+.col.near{background:linear-gradient(135deg,rgba(0,230,138,.07),rgba(0,230,138,.02));border:1px solid rgba(0,230,138,.28)}
+.col.tao{background:linear-gradient(135deg,rgba(0,194,255,.07),rgba(0,194,255,.02));border:1px solid rgba(0,194,255,.28)}
+.col .rules{margin-top:16px}
+.col.near .rules li{border-left-color:var(--accent-green)}
+.col .rules li{font-family:'DM Sans',sans-serif;font-size:clamp(.95rem,1.05vw,1.05rem)}
+.col .rules li b{color:var(--text-primary)}
+.col .rules li{color:var(--text-secondary)}
+.col .q{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,1.4vw,1.35rem)}
+.col.tao .q{border-left-color:var(--accent-cyan)}
+/* the foundation's `.slide>*:not(.orb){position:relative}` outranks `.scroll-hint{position:absolute}`; restore it */
+.slide>.scroll-hint{position:absolute}
+table.mx td{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:1.3rem;padding:14px 22px}
+table.mx td.name{font-family:'DM Sans',sans-serif;font-size:1.15rem}
+table.mx td .note{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:.95rem;color:var(--text-secondary);margin-top:4px}
+table.mx{margin-top:8px}
+table.mx th.g{color:var(--accent-green)} table.mx th.c{color:var(--accent-cyan)}
+.qcard{padding:22px 26px}
+.qcard .qnum{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:.8rem;color:var(--accent-gold);margin-bottom:8px}
+.qcard .qtext{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(1.05rem,1.35vw,1.3rem);line-height:1.3;color:var(--text-primary)}
+.asof{margin-top:18px;font-size:.72rem;color:var(--text-muted);letter-spacing:.04em}
+.col.vote{background:linear-gradient(135deg,rgba(255,215,0,.06),rgba(255,215,0,.015));border:1px solid rgba(255,215,0,.26)}
+.col.vote .rules li{border-left-color:var(--accent-gold)}
+.col.vote .q{border-left-color:var(--accent-gold)}
+.col .stat{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:clamp(1.9rem,2.9vw,2.8rem);line-height:1.1;margin-top:14px}
+.col .stat-note{font-size:clamp(.9rem,1vw,1rem);color:var(--text-secondary);margin-top:6px}
+#vote .col{padding:26px 30px}
+#vote .rules li{padding:11px 16px;margin-bottom:8px}
+#vote .q{margin-top:12px}
+
+#pip-zone{position:fixed;right:2.08vw;bottom:3.7vh;width:25vw;height:25vh;border:3px dashed rgba(255,255,255,.35);border-radius:6px;
+  display:none;align-items:center;justify-content:center;color:rgba(255,255,255,.5);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;z-index:200}
+#pip-zone.show{display:flex}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE / THE CLAIM -->
+<section class="slide" id="claim">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-green);top:-220px;left:-160px"></div>
+  <div class="orb" style="width:480px;height:480px;background:var(--accent-cyan);top:-120px;right:-200px;opacity:.25"></div>
+  <div class="wrap">
+    <span class="ey fade-in">NEAR vs TAO</span>
+    <h1 class="fade-in delay-1">Which One Is <span class="g">Actually</span> AI?</h1>
+    <p class="sub fade-in delay-2">A viewer says one of these is real AI and the other one isn't. Let's check.</p>
+
+    <div class="impact fade-in delay-3" style="background:linear-gradient(135deg,rgba(255,215,0,.07),rgba(168,85,247,.05));border-color:rgba(255,215,0,.22)">
+      <div class="quote">"NEAR is truly AI. TAO aggregates crypto subnets, but isn't AI architecture crypto. NEAR is 100% AI protocol."</div>
+      <div class="quote-by">A viewer comment</div>
+    </div>
+
+    <div class="grid2 fade-in delay-4" style="margin-top:28px">
+      <div class="card">
+        <div class="top-accent" style="background:linear-gradient(90deg,var(--accent-green),transparent)"></div>
+        <span class="tag green">NEAR</span>
+        <div class="big">A blockchain that AI agents run on</div>
+        <p>The AI lives on top of the chain.</p>
+      </div>
+      <div class="card">
+        <div class="top-accent" style="background:linear-gradient(90deg,var(--accent-cyan),transparent)"></div>
+        <span class="tag cyan">TAO</span>
+        <div class="big">A network that produces AI</div>
+        <p>The AI is what the chain pays for.</p>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</section>
+
+<!-- SLIDE 2: WHAT THEY ACTUALLY ARE -->
+<section class="slide" id="what">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-purple);bottom:-260px;left:-180px;opacity:.3"></div>
+  <div class="orb" style="width:420px;height:420px;background:var(--accent-cyan);top:-180px;right:-120px;opacity:.22"></div>
+  <div class="wrap">
+    <span class="ey fade-in">What they actually are</span>
+    <h2 class="fade-in delay-1">Two Different Bets on AI</h2>
+    <div class="divider fade-in delay-1"></div>
+
+    <div class="cmp" style="margin-top:8px">
+      <div class="col near fade-in delay-2">
+        <div class="ml">Layer 1 blockchain · mainnet <span class="mono">2020</span></div>
+        <h3 class="g">NEAR Protocol</h3>
+        <ul class="rules">
+          <li><b>Started as NEAR.ai in <span class="mono">2017</span></b>, an AI company that pivoted to blockchain in <span class="mono">2018</span></li>
+          <li><b>Co-founder Illia Polosukhin</b> co-wrote "Attention Is All You Need", the Transformer paper behind ChatGPT</li>
+          <li><b>NEAR AI Cloud:</b> private AI inference inside secure hardware</li>
+          <li><b>NEAR Intents:</b> one-click swaps across chains, built for users and AI agents</li>
+        </ul>
+        <div class="q">AI runs on the chain.</div>
+      </div>
+      <div class="col tao fade-in delay-3">
+        <div class="ml"><span class="mono">128</span> subnets · "A Peer-to-Peer Intelligence Market"</div>
+        <h3 class="c">Bittensor (TAO)</h3>
+        <ul class="rules">
+          <li><b>Every subnet is a competition</b> that produces one AI commodity</li>
+          <li><b>Compute:</b> Lium (<span class="mono">SN51</span>) rents out GPUs</li>
+          <li><b>Inference:</b> Chutes (<span class="mono">SN64</span>) serves open-source models through an API</li>
+          <li><b>Training:</b> Covenant-72B, a <span class="mono">72B</span>-parameter model trained across the open internet on Templar (<span class="mono">SN3</span>)</li>
+        </ul>
+        <div class="q">AI is the product.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: NEAR RIGHT NOW (THE SUPPLY VOTE + THE ETF) -->
+<section class="slide" id="vote">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-gold);top:-240px;left:-180px;opacity:.16"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-green);bottom:-260px;left:40%;opacity:.2"></div>
+  <div class="wrap">
+    <span class="ey fade-in">NEAR right now</span>
+    <h2 class="fade-in delay-1">The Vote and the Fund</h2>
+    <div class="divider fade-in delay-1"></div>
+
+    <div class="cmp" style="margin-top:4px">
+      <div class="col vote fade-in delay-2">
+        <div class="ml">HSP-029 on House of Stake · closes Nov <span class="mono">2</span></div>
+        <h3 class="go">The Supply Vote</h3>
+        <div class="stat go">2.5% → 1.6%</div>
+        <div class="stat-note">new NEAR a year, phased in over <span class="mono">24</span> months</div>
+        <ul class="rules">
+          <li><b>Quorum hit on day <span class="mono">2</span>:</b> <span class="mono">2.23M</span> veNEAR voted, <span class="mono">1.85M</span> needed</li>
+          <li><b><span class="mono">21</span> for, <span class="mono">1</span> against:</b> the lone no is <span class="mono">94</span> veNEAR (<span class="mono">67%</span> yes needed)</li>
+          <li><b>All the voting power</b> is about <span class="mono">0.4%</span> of all NEAR</li>
+          <li><b>Then validators decide:</b> in <span class="mono">2025</span> they passed a cut the vote missed</li>
+        </ul>
+        <div class="q">A small group sets the supply for everyone.</div>
+      </div>
+      <div class="col near fade-in delay-3">
+        <div class="ml">Bitwise NEAR ETF (NRR) · trading since Sep <span class="mono">29</span></div>
+        <h3 class="g">The Fund</h3>
+        <div class="stat"><span class="g">+1.1M</span> <span style="color:var(--text-muted);font-size:.55em">then</span> <span class="re">-257K</span></div>
+        <div class="stat-note">NEAR in one session on Oct <span class="mono">19</span>, then its first outflow</div>
+        <ul class="rules">
+          <li><b>The +<span class="mono">1.1M</span> was <span class="mono">12</span> days</b> of new supply (about <span class="mono">90,000</span> NEAR is issued a day)</li>
+          <li><b>Now holds <span class="mono">17.35M</span> NEAR</b> after <span class="mono">50,000</span> shares were redeemed</li>
+          <li><b>Stakes <span class="mono">100%</span> of it,</b> so the cut lowers its own yield</li>
+          <li><b>Holds <span class="mono">3x+</span> the voting power</b> of House of Stake, but isn't voting</li>
+        </ul>
+        <div class="q">The biggest buyer doesn't vote on its own supply.</div>
+      </div>
+    </div>
+
+    <div class="impact fade-in delay-4" style="margin-top:18px;padding:16px 24px;background:linear-gradient(135deg,rgba(0,194,255,.08),rgba(168,85,247,.05));border-color:rgba(0,194,255,.24)">
+      <p style="color:var(--text-primary);font-size:clamp(1rem,1.15vw,1.15rem)"><span class="c" style="font-weight:700">TAO has no vote like this.</span> Its supply is set by code: a <span class="mono">21M</span> cap and Bitcoin-style halvings.</p>
+    </div>
+
+    <div class="asof fade-in delay-4">Vote as of October 23, 2026; fund holdings as of October 22, 2026. Sources: House of Stake (HSP-029), nrretf.com.</div>
+  </div>
+</section>
+
+<!-- SLIDE 4: BY THE NUMBERS + HOW TO JUDGE -->
+<section class="slide" id="numbers">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-gold);top:-260px;left:30%;opacity:.16"></div>
+  <div class="orb" style="width:460px;height:460px;background:var(--accent-green);bottom:-240px;left:-180px;opacity:.22"></div>
+  <div class="wrap">
+    <span class="ey fade-in">How to compare them</span>
+    <h2 class="fade-in delay-1">By the Numbers</h2>
+    <div class="divider fade-in delay-1"></div>
+
+    <table class="mx fade-in delay-2">
+      <thead><tr><th></th><th class="g">NEAR</th><th class="c">TAO</th></tr></thead>
+      <tbody>
+        <tr class="row"><td class="name">Market cap</td><td class="g">$6.2B<span class="note">about $4.73 a coin</span></td><td class="c">$2.9B<span class="note">about $257 a coin</span></td></tr>
+        <tr class="row"><td class="name">Supply</td><td>No hard cap<span class="note">2.5% max inflation, vote open to cut it to 1.6%</span></td><td>21M hard cap<span class="note">halved December 2025, 3,600 TAO a day</span></td></tr>
+        <tr class="row"><td class="name">Usage</td><td>$10.4B<span class="note">Intents volume in Q3 2026</span></td><td>128 subnets<span class="note">each one producing an AI commodity</span></td></tr>
+        <tr class="row"><td class="name">Money in</td><td>$52M+<span class="note">Intents fees all-time, $8M+ to NEAR buybacks</span></td><td>$28-35M<span class="note">a year of customer revenue across 24 subnets</span></td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid3 fade-in delay-3" style="margin-top:16px">
+      <div class="card qcard"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div><div class="qnum">Q1</div><div class="qtext">Does it produce intelligence, or host it?</div></div>
+      <div class="card qcard"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div><div class="qnum">Q2</div><div class="qtext">Who pays: real customers, or new tokens?</div></div>
+      <div class="card qcard"><div class="top-accent" style="background:linear-gradient(90deg,var(--accent-gold),transparent)"></div><div class="qnum">Q3</div><div class="qtext">What does the coin capture when usage grows?</div></div>
+    </div>
+
+    <div class="asof fade-in delay-4">Prices as of October 23, 2026. Sources: CoinGecko, Nansen NEAR Q3 2026 report, Bittensor docs, SubConnect Revenue Index.</div>
+  </div>
+</section>
+
+<div id="pip-zone">Webcam</div>
+
+<div class="nav-dots" id="navDots"></div>
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+
+/* fade-in on scroll */
+const fadeObserver = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+},{threshold:0.15});
+document.querySelectorAll('.fade-in').forEach(el=>fadeObserver.observe(el));
+
+/* nav dots */
+const dotsWrap = document.getElementById('navDots');
+slides.forEach((s,i)=>{
+  const b=document.createElement('button');
+  b.setAttribute('aria-label','Go to slide '+(i+1));
+  b.addEventListener('click',()=>s.scrollIntoView({behavior:'smooth'}));
+  dotsWrap.appendChild(b);
+});
+const dots = Array.from(dotsWrap.children);
+const dotObserver = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ const i=slides.indexOf(e.target); dots.forEach((d,j)=>d.classList.toggle('active',j===i)); } });
+},{threshold:0.5});
+slides.forEach(s=>dotObserver.observe(s));
+
+/* arrow-key / spacebar nav (handy when recording) */
+function currentIndex(){
+  const mid=window.innerHeight/2; let idx=0,best=Infinity;
+  slides.forEach((s,i)=>{ const r=s.getBoundingClientRect(); const d=Math.abs((r.top+r.bottom)/2-mid); if(d<best){best=d;idx=i;} });
+  return idx;
+}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' '].includes(e.key)){ e.preventDefault(); slides[Math.min(slides.length-1,currentIndex()+1)].scrollIntoView({behavior:'smooth'}); }
+  if(['ArrowLeft','ArrowUp'].includes(e.key)){ e.preventDefault(); slides[Math.max(0,currentIndex()-1)].scrollIntoView({behavior:'smooth'}); }
+});
+</script>
+<script>
+/* recording helpers: G = webcam guide box, F = fullscreen */
+document.addEventListener('keydown',e=>{
+  if(e.key==='g'||e.key==='G') document.getElementById('pip-zone').classList.toggle('show');
+  if(e.key==='f'||e.key==='F'){ if(!document.fullscreenElement) document.documentElement.requestFullscreen(); else document.exitFullscreen(); }
+});
+</script>
+</body>
+</html>

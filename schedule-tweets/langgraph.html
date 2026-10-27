@@ -191,6 +191,22 @@
       position: relative;
     }
     .lane.is-running { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
+
+    /* ── in-flight strip: one chip per project, click to focus ───────────── */
+    .flight { display: flex; flex-wrap: wrap; gap: 10px; }
+    .flight .chip {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+      padding: 10px 13px; min-width: 220px; cursor: pointer; text-align: left;
+      font: inherit; color: var(--ink);
+    }
+    .flight .chip:hover { border-color: var(--seq-450); }
+    .flight .chip.focused { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-wash); }
+    .flight .chip .nm { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+    .flight .chip .st { font-size: 12px; color: var(--ink-2); margin-top: 5px; }
+    .flight .chip .st b { color: var(--ink); }
+    .flight .chip .when { font-size: 11.5px; color: var(--ink-muted); margin-top: 3px; }
+    .flight .chip.needs-you { border-color: var(--st-warning); }
+    .flight .chip.needs-you.focused { box-shadow: 0 0 0 3px #fdf3dc; }
     /* Tabs — one per automation. Same look as the Social page's tab bar. */
     .tabs {
       background: #fff; border-bottom: 1px solid var(--line);
@@ -564,6 +580,14 @@
          diagram of the actual graphs (Mike, 2026-08-11). -->
     <div class="subtabs" id="subtabs"></div>
 
+    <!-- In flight (2026-10-16): one chip per project with a heartbeat, for automations that run
+         several projects at once (longform: tao-detailed parked at a gate while evals starts).
+         The focused chip's heartbeat drives everything below. -->
+    <section id="secFlight" style="display:none">
+      <h2>In flight</h2>
+      <div class="flight" id="flight"></div>
+    </section>
+
     <section id="secLive">
       <div class="card" id="live"><div class="empty">Loading…</div></div>
     </section>
@@ -661,7 +685,9 @@ const AUTOMATIONS = [
     label: 'Longform',
     sub: 'one video → one StateGraph · solid = graph-owned · dashed = HITL gate (Mike) or agent handoff · the asset factory is the one real fan-out, then the graph JOINS back into a linear tail',
     feed: { progress: '/longform/lane_progress.json', runs: '/longform/lane_runs.json',
-            gates: '/longform/gates.json?batch=' },
+            gates: '/longform/gates.json?batch=',
+            // per-project heartbeats (data/lane_progress/<project>.json): the In-flight strip.
+            inflight: '/longform/inflight.json' },
     // longform-edited graph (video-creation/longform-edited/graph/longform_graph.py,
     // 2026-09-17): ONE 32-node StateGraph per video. Status per card comes from the
     // graph's own step ledger (`statusFrom: 'steps'`: the run record's summary.steps +
@@ -1146,6 +1172,22 @@ const A = () => AUTOMATIONS.find(x => x.id === ACTIVE) || AUTOMATIONS[0];
 // id -> { prog, runs }. EVERY automation is polled, not just the visible one, so
 // an inactive tab can still show that it is running or needs a human.
 const FEEDS = {};
+// id -> the project the In-flight strip is focused on (automations with `feed.inflight`).
+// Remembered per automation; the pick falls back to the running project, else the freshest.
+const FOCUS = {};
+const focusKey = id => 'lgFocus:' + id;
+function pickFocus(a, list) {
+  const names = list.map(h => h.batch);
+  const want = FOCUS[a.id] || localStorage.getItem(focusKey(a.id));
+  if (want && names.includes(want)) return want;
+  const live = list.find(h => h.status === 'running');
+  return live ? live.batch : (names[0] || null);
+}
+function setFocus(id, project) {
+  FOCUS[id] = project;
+  try { localStorage.setItem(focusKey(id), project); } catch {}
+  tick();
+}
 
 // ── helpers ─────────────────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
@@ -1244,14 +1286,63 @@ function headline(run) {
 }
 
 // ── render: live strip ──────────────────────────────────────────────────────
+// ── render: the In-flight strip (automations with per-project heartbeats) ──
+// One chip per project: stage · node, the status pill, and whether it is waiting on Mike
+// (a `waiting` heartbeat parked on a gate_* node). Click focuses that project; every
+// section below then describes IT. Finished heartbeats (`done`) drop off after a day so the
+// strip stays about work in flight; a project folder that was recycled is dropped by the server.
+function renderInflight(list, focus) {
+  const sec = $('secFlight');
+  if (!Array.isArray(list)) { sec.style.display = 'none'; return; }
+  const DAY = 86400;
+  const shown = list.filter(h => h.status !== 'done' || (secSince(h.updated_at) ?? Infinity) < DAY);
+  sec.style.display = '';
+  if (!shown.length) { $('flight').innerHTML = '<div class="empty" style="padding:6px 0">No project in flight.</div>'; return; }
+  $('flight').innerHTML = shown.map(h => {
+    const age = secSince(h.updated_at);
+    const running = h.status === 'running';
+    const stale = running && age != null && age > STALE_AFTER_S;
+    const gate = String(h.node || '').startsWith('gate_');
+    const needsYou = h.status === 'waiting' && gate;
+    const line = needsYou ? `waiting on <b>you</b> · ${esc(h.node)}`
+               : h.status === 'waiting' ? `parked · ${esc(h.node)}`
+               : running ? `<b>${esc(h.node)}</b> running${h.total ? ` · ${h.index || 0}/${h.total}` : ''}`
+               : h.status === 'failed' || h.status === 'node_failed' ? `<b>failed</b> at ${esc(h.node)}`
+               : `${esc(h.status)} · ${esc(h.node)}`;
+    return `<button class="chip${h.batch === focus ? ' focused' : ''}${needsYou ? ' needs-you' : ''}" data-project="${esc(h.batch)}">
+      <div class="nm">${esc(h.batch)}</div>
+      ${pill(needsYou ? 'awaiting_input' : h.status, stale)}
+      <div class="st">stage ${esc(h.lane)} · ${esc(h.lane_name || '')}<br>${line}</div>
+      <div class="when">${stale ? 'STALE · ' : ''}updated ${agoText(age)}</div>
+    </button>`;
+  }).join('');
+  $('flight').querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => setFocus(ACTIVE, b.dataset.project)));
+}
+
 function renderLive(prog, runs) {
   const el = $('live');
   const inFlight = prog && (prog.status === 'running' || prog.status === 'awaiting_input');
   const age = prog ? secSince(prog.updated_at) : null;
   const stale = inFlight && age != null && age > STALE_AFTER_S;
 
+  // Parked at a HITL gate (longform): say so, for THIS project, instead of "No run in flight".
+  if (!inFlight && prog && prog.status === 'waiting' && prog.batch) {
+    const gate = String(prog.node || '').startsWith('gate_');
+    el.innerHTML = `<div class="live">
+      <div class="who">
+        ${pill(gate ? 'awaiting_input' : 'waiting')}
+        <div class="lane-title">Parked · <span style="opacity:.75">${esc(prog.batch)}</span></div>
+        <div class="meta">stage ${esc(prog.lane)} ${esc(prog.lane_name || '')} · node <b>${esc(prog.node || '')}</b> · ${gate ? 'waiting on you' : 'waiting'} · since ${clockText(prog.updated_at)} (${agoText(age)})</div>
+      </div>
+      <div class="event"><span class="lbl">last event</span>${esc(prog.last_event || '')}</div>
+    </div>`;
+    return;
+  }
+
   if (!inFlight) {
-    const last = runs.find(r => !r.stub) || runs[0];
+    // With a focused project, "Last" is that project's last run, not another video's.
+    const mine = prog && prog.batch ? runs.find(r => !r.stub && ((r.summary || {}).batch || (r.requested && r.requested.project)) === prog.batch) : null;
+    const last = mine || runs.find(r => !r.stub) || runs[0];
     // Same day-aggregate as the lane cards: "Last: ... 4 sent" alone misreads as
     // the daily total on a chunked day.
     let dayTxt = null;
@@ -1863,6 +1954,7 @@ function paint() {
   $('secArch').style.display = arch ? '' : 'none';
   if (arch) { $('volSection').style.display = 'none'; renderArchitecture(); return; }
   const f = FEEDS[ACTIVE] || { prog: null, runs: [] };
+  renderInflight(f.inflight, f.focus);
   renderLive(f.prog, f.runs);
   renderLanes(f.prog, f.runs);
   renderVolume(f.runs);
@@ -1873,18 +1965,26 @@ async function tick() {
   // EVERY automation is fetched, not just the visible one — that is what lets an
   // inactive tab report that it is running or waiting on you.
   await Promise.all(AUTOMATIONS.map(async a => {
-    const [prog, runsRaw] = await Promise.all([
+    const [progRaw, runsRaw, flightRaw] = await Promise.all([
       getJSON(a.feed.progress, null),
       getJSON(a.feed.runs, []),
+      a.feed.inflight ? getJSON(a.feed.inflight, null) : null,
     ]);
     const runs = (Array.isArray(runsRaw) ? runsRaw : []).slice().reverse();  // newest first
-    FEEDS[a.id] = { prog, runs, gates: (FEEDS[a.id] || {}).gates || {} };
+    // Several projects in flight: the FOCUSED project's heartbeat drives the page, not the
+    // single-slot file (which only ever names the last writer). The single file is the
+    // fallback for an automation without per-project heartbeats.
+    const inflight = (flightRaw && Array.isArray(flightRaw.projects)) ? flightRaw.projects.filter(h => h && h.batch) : null;
+    const focus = inflight ? pickFocus(a, inflight) : null;
+    const prog = (inflight && focus) ? (inflight.find(h => h.batch === focus) || progRaw) : progRaw;
+    FEEDS[a.id] = { prog, runs, inflight, focus, gates: (FEEDS[a.id] || {}).gates || {} };
     // Gate-artifact feed: which HITL/agent handoff artifacts actually exist for the
     // current batch, so a seam reads its status off DISK instead of inferring it from
     // whether the next graph segment happens to have finished (see stepCard).
     if (a.feed.gates) {
       const lastReal = runs.find(r => !r.stub);
-      const batch = (prog && (prog.batch || prog.requested))
+      const batch = focus
+        || (prog && (prog.batch || prog.requested))
         || (lastReal && ((lastReal.summary || {}).batch || lastReal.requested))
         || null;
       if (batch) {

@@ -1,0 +1,942 @@
+{
+ "assets": [
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\_previews\\vertical\\qa\\BR-1-data-dashboard.mid.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "native 1080x1920 (DC_Studio 2160x3840 source), no letterbox, no clipped text",
+    "dashboard is a generic finance review, not a literal funnel (documented: no portrait funnel clip without labels exists); gauge percent figures (22/69/71/14) are legible but generic stock UI, not the video data",
+    "right dashboard panel runs off the frame edge by the framing of the shot; upper half is night-city bokeh, mean luma ~97, acceptable"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\_previews\\vertical\\qa\\BR-2-laptop-browsing.mid.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "native portrait, face close-up with the webpage reflected in her glasses; reads as browsing a page though it is not the over-shoulder framing the query asked for (documented re-source after the Pressmaster clip failed on readable text)"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\_previews\\vertical\\qa\\BR-3-stopwatch.mid.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "native portrait, low-key monochrome alarm clock with sweeping hands (not a stopwatch, but literal for THE CLOCK); the 1-4 numerals sit past the right edge by the macro framing, not a crop defect"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\_previews\\vertical\\qa\\BR-4-phone-signup.mid.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "native portrait, thumb typing on a phone keyboard, text field defocused, nothing readable"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\_previews\\vertical\\qa\\BR-5-reach-for-tool.mid.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "mid frame (2.76 s) is after the reach: tools only, person soft in the background; the clip sampled at 1.2 s shows the hand gripping a tool sharply, so the slot carries the reach as long as the comp plays from the head of the clip"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\_previews\\vertical\\qa\\BR-6-interview-handshake.mid.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "native portrait, handshake in the right half of the frame, dim office; a stray hair strand touches the top-left corner (negligible)"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\_previews\\vertical\\qa\\BR-7-developer-night-desk.mid.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "native portrait, developer at night with soft IDE code, nothing prose-readable"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\img\\IMG-1-feature-module-gauge.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "glowing module under an arc gauge, tick marks only, no digits or text; same design as the 16:9 exemplar, properly recomposed (full gauge in frame)"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\img\\IMG-2-calendar-sheets-hourglass.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "three translucent calendar sheets + hourglass, grids empty, no digits; recomposed portrait, nothing cropped"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\img\\IMG-3-glass-funnel-particles.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "glass funnel with particles pouring through, no text; recomposed portrait with the particle stream filling the upper half"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\img\\IMG-4-neural-core-chip.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "neural core inside a translucent chip, no text; recomposed portrait"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\img\\IMG-5-founder-late-night-desk.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "lone founder at a desk at night, warm rim light, two monitors out of focus with no readable content, no chart; recomposed portrait"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C12-pragmatic-engineer-paragraph.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "mobile single column, the Product Engineers / Growth Engineers sentences fully in frame and readable; the title/date is carried by the companion C12-title-date.png"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C12-title-date.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "masthead, title What is Growth Engineering?, authors and MAR 20, 2025 all in frame; fills the frame"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C5b-citian-evals-duty.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "both target bullets in frame (Design and maintain evaluations ... regression detection, and Own features in production: latency, cost ...), readable, fills the frame; evaluations anchor present for the highlight"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C7a-govwell-ai-stack.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "the pass-rate line (tracked against explicit pass-rate targets) is in frame, readable, with an anchor; the crop also takes in the unrelated Our tech stack list (top 60 percent of the frame) to fill the portrait, so the proof sits in the lower fifth and the highlight wipe must carry the eye there. A tighter crop would leave a mostly white frame (see the C7b bullet)"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C10-hamel-evals-root-cause.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "title Your AI Product Needs Evals, author Hamel Husain, March 29, 2024 and the root-cause sentence (bold: a failure to create robust evaluation systems) all in frame and readable"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C4c-crowdstrike-translate-bullet.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Translate marketing business problems into technical designs and working applications is in frame, readable, fills the frame, nothing clipped at the bottom (103 px margin)"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C5c-citian-demo-vs-dependable.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "product-minded software engineer and the difference between a convincing demo and a dependable product are in frame and readable, fills the frame"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C5c-citian-no-ai-bullet.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "the Choose the right technique ... or no AI at all bullet is in frame and readable; 42 percent white padding (403 / 398 px) is the most accepted; the three bullets above it repeat part of C5b (Own features in production), minor"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C6-fictiv-misumi-opening-sentence.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "the opening sentence (builds the systems that power customer acquisition) is in frame and readable, no compensation line; 46 percent white padding (446 / 436 px), borderline; the em dashes are the page text itself"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C6-fictiv-misumi-title-block.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "fictiv mark, Senior AI Growth Engineer, Remote - USA, Apply, About MISUMI Americas; fills the frame; the last line sits 44 px off the bottom edge, not clipped; no compensation"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s1-s1.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "GROWTH / ENGINEER (gold) and PRODUCT / ENGINEER blocks stacked; state matches the 16:9 C2-s1-s1 (s1 both dim, s2 GROWTH lit, s3 base line A highlighted)"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s1-s2.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "GROWTH / ENGINEER (gold) and PRODUCT / ENGINEER blocks stacked; state matches the 16:9 C2-s1-s2 (s1 both dim, s2 GROWTH lit, s3 base line A highlighted)"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s1-s3.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "GROWTH / ENGINEER (gold) and PRODUCT / ENGINEER blocks stacked; state matches the 16:9 C2-s1-s3 (s1 both dim, s2 GROWTH lit, s3 base line A highlighted)"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s1b-s1.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "both labels lit, LABEL B base line highlighted in s2; matches the 16:9 state"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s1b-s2.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "both labels lit, LABEL B base line highlighted in s2; matches the 16:9 state"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s2-s1.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "AI prefix pops, WITH AI lines A and B present and highlighted per state; card fills 250-1790 px of the frame"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s2-s2.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "AI prefix pops, WITH AI lines A and B present and highlighted per state; card fills 250-1790 px of the frame"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s2-s3.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "AI prefix pops, WITH AI lines A and B present and highlighted per state; card fills 250-1790 px of the frame"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s2-s4.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "AI prefix pops, WITH AI lines A and B present and highlighted per state; card fills 250-1790 px of the frame"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s2-s5.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "AI prefix pops, WITH AI lines A and B present and highlighted per state; card fills 250-1790 px of the frame"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s2-s6.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "AI prefix pops, WITH AI lines A and B present and highlighted per state; card fills 250-1790 px of the frame"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\title-slides\\title-card-CH2.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "CHAPTER 02 eyebrow, The scoreboard with the accent word in cyan, short divider, left-aligned, vertically centred"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\scoreboard-growth-s1.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "eyebrow DIFFERENCE 1 / THE SCOREBOARD, gold GROWTH ENGINEER, A business number, chips SIGNUPS / CONVERSION / RETENTION / REVENUE light in order"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\scoreboard-growth-s2.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "eyebrow DIFFERENCE 1 / THE SCOREBOARD, gold GROWTH ENGINEER, A business number, chips SIGNUPS / CONVERSION / RETENTION / REVENUE light in order"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\scoreboard-growth-s3.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "eyebrow DIFFERENCE 1 / THE SCOREBOARD, gold GROWTH ENGINEER, A business number, chips SIGNUPS / CONVERSION / RETENTION / REVENUE light in order"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\scoreboard-growth-s4.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "eyebrow DIFFERENCE 1 / THE SCOREBOARD, gold GROWTH ENGINEER, A business number, chips SIGNUPS / CONVERSION / RETENTION / REVENUE light in order"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\scoreboard-growth-s5.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "eyebrow DIFFERENCE 1 / THE SCOREBOARD, gold GROWTH ENGINEER, A business number, chips SIGNUPS / CONVERSION / RETENTION / REVENUE light in order"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\charts\\split-test-mid.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "A / B page thumbnails stacked vertically, bars grow without any printed figure, payoff lights B SCALE IT and dims A KILL IT, takeaway KILL IT OR SCALE IT; source footnote is small (~18 px mono), acceptable as a source line"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\charts\\split-test-payoff.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "A / B page thumbnails stacked vertically, bars grow without any printed figure, payoff lights B SCALE IT and dims A KILL IT, takeaway KILL IT OR SCALE IT; source footnote is small (~18 px mono), acceptable as a source line"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\charts\\split-test-start.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "A / B page thumbnails stacked vertically, bars grow without any printed figure, payoff lights B SCALE IT and dims A KILL IT, takeaway KILL IT OR SCALE IT; source footnote is small (~18 px mono), acceptable as a source line"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\charts\\pass-rate-meter-mid.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "eval-set gauge, Grounding fix SHIPPED tag lands (mid), needle climbs to TARGET (payoff), no figure printed; start state shows the intentional empty dashed slot"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\charts\\pass-rate-meter-payoff.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "eval-set gauge, Grounding fix SHIPPED tag lands (mid), needle climbs to TARGET (payoff), no figure printed; start state shows the intentional empty dashed slot"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\charts\\pass-rate-meter-start.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "eval-set gauge, Grounding fix SHIPPED tag lands (mid), needle climbs to TARGET (payoff), no figure printed; start state shows the intentional empty dashed slot"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\ship-to-learn-s1.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "eyebrow DIFFERENCE 2 / THE CLOCK, gold GROWTH ENGINEER, body many cheap experiments / a failed one still counts highlighted in turn (s2, s3), headline Ship to learn. lit with learn. in cyan in s4"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\ship-to-learn-s2.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "eyebrow DIFFERENCE 2 / THE CLOCK, gold GROWTH ENGINEER, body many cheap experiments / a failed one still counts highlighted in turn (s2, s3), headline Ship to learn. lit with learn. in cyan in s4"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\ship-to-learn-s3.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "eyebrow DIFFERENCE 2 / THE CLOCK, gold GROWTH ENGINEER, body many cheap experiments / a failed one still counts highlighted in turn (s2, s3), headline Ship to learn. lit with learn. in cyan in s4"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\ship-to-learn-s4.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "eyebrow DIFFERENCE 2 / THE CLOCK, gold GROWTH ENGINEER, body many cheap experiments / a failed one still counts highlighted in turn (s2, s3), headline Ship to learn. lit with learn. in cyan in s4"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\loop-s1-base.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "2x2 loop re-laid for portrait, TEST SET lit then REGRESSION GATE lit, rest dimmed; the diagram fills 500-1380 px with the source line below"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\loop-s1-gate.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "2x2 loop re-laid for portrait, TEST SET lit then REGRESSION GATE lit, rest dimmed; the diagram fills 500-1380 px with the source line below"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\loop-s1-test-set.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "2x2 loop re-laid for portrait, TEST SET lit then REGRESSION GATE lit, rest dimmed; the diagram fills 500-1380 px with the source line below"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\aarrr-funnel-activation.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "5 stages Acquisition / Activation / Retention / Referral / Revenue, no year, WITHIN DAYS takeaway, ACTIVATION lit with the AI STEP tag; stage sub-lines are small (~26 px) but readable"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\aarrr-funnel-base.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "5 stages Acquisition / Activation / Retention / Referral / Revenue, no year, WITHIN DAYS takeaway, ACTIVATION lit with the AI STEP tag; stage sub-lines are small (~26 px) but readable"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\aarrr-funnel-within-days.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "5 stages Acquisition / Activation / Retention / Referral / Revenue, no year, WITHIN DAYS takeaway, ACTIVATION lit with the AI STEP tag; stage sub-lines are small (~26 px) but readable"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\loop-s2-base.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "3 weeks centre, TEST SET pulse, RETRIEVAL FIX lit, dimmed nothing-to-show-on-day-3 pill, MODEL UPGRADE lit with the return arrow and the That eval set outlives this model. bar in the upgrade state"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\loop-s2-day3.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "3 weeks centre, TEST SET pulse, RETRIEVAL FIX lit, dimmed nothing-to-show-on-day-3 pill, MODEL UPGRADE lit with the return arrow and the That eval set outlives this model. bar in the upgrade state"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\loop-s2-eval-pulse.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "3 weeks centre, TEST SET pulse, RETRIEVAL FIX lit, dimmed nothing-to-show-on-day-3 pill, MODEL UPGRADE lit with the return arrow and the That eval set outlives this model. bar in the upgrade state"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\loop-s2-retrieval.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "3 weeks centre, TEST SET pulse, RETRIEVAL FIX lit, dimmed nothing-to-show-on-day-3 pill, MODEL UPGRADE lit with the return arrow and the That eval set outlives this model. bar in the upgrade state"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\loop-s2-upgrade.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "3 weeks centre, TEST SET pulse, RETRIEVAL FIX lit, dimmed nothing-to-show-on-day-3 pill, MODEL UPGRADE lit with the return arrow and the That eval set outlives this model. bar in the upgrade state"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s1-agents.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "GROWTH nodes light cumulatively (web, analytics, CRM, CDP, experiment, outbound, agents), PRODUCT and SHARED dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s1-analytics.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "GROWTH nodes light cumulatively (web, analytics, CRM, CDP, experiment, outbound, agents), PRODUCT and SHARED dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s1-base.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "GROWTH nodes light cumulatively (web, analytics, CRM, CDP, experiment, outbound, agents), PRODUCT and SHARED dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s1-cdp.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "GROWTH nodes light cumulatively (web, analytics, CRM, CDP, experiment, outbound, agents), PRODUCT and SHARED dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s1-crm.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "GROWTH nodes light cumulatively (web, analytics, CRM, CDP, experiment, outbound, agents), PRODUCT and SHARED dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s1-experiment.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "GROWTH nodes light cumulatively (web, analytics, CRM, CDP, experiment, outbound, agents), PRODUCT and SHARED dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s1-outbound.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "GROWTH nodes light cumulatively (web, analytics, CRM, CDP, experiment, outbound, agents), PRODUCT and SHARED dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s1-web.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "GROWTH nodes light cumulatively (web, analytics, CRM, CDP, experiment, outbound, agents), PRODUCT and SHARED dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s2-base.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "PRODUCT stack lit node by node, GROWTH dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s2-evalharness.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "PRODUCT stack lit node by node, GROWTH dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s2-featureui.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "PRODUCT stack lit node by node, GROWTH dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s2-guardrails.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "PRODUCT stack lit node by node, GROWTH dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s2-latency.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "PRODUCT stack lit node by node, GROWTH dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s2-prompting.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "PRODUCT stack lit node by node, GROWTH dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s2-retrieval.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "PRODUCT stack lit node by node, GROWTH dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s2-routing.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "PRODUCT stack lit node by node, GROWTH dimmed"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s3-agentsorch.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "SHARED middle lit node by node with its connectors lighting, both stacks half-lit"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s3-base.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "SHARED middle lit node by node with its connectors lighting, both stacks half-lit"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s3-evals.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "SHARED middle lit node by node with its connectors lighting, both stacks half-lit"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s3-llm.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "SHARED middle lit node by node with its connectors lighting, both stacks half-lit"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\diagrams\\C1-s3-pyts.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "two-stack diagram reflowed to GROWTH / SHARED / PRODUCT stacked vertically (not a shrunk landscape); node titles ~28 px and sub-lines ~19 px at 1080 wide: titles read on a phone, sub-lines are small but secondary",
+    "SHARED middle lit node by node with its connectors lighting, both stacks half-lit"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\title-slides\\title-card-CH5.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "CHAPTER 05 eyebrow, Which one? with one? in the purple accent, left-aligned, vertically centred"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\become-compare-s1.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "declared A-vs-B card stacked (growth half over product half), eyebrow WHICH ONE SHOULD YOU BECOME, gold GROWTH ENGINEER lit s3, green PRODUCT ENGINEER lit s5, body lines ~36 px"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\become-compare-s2.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "declared A-vs-B card stacked (growth half over product half), eyebrow WHICH ONE SHOULD YOU BECOME, gold GROWTH ENGINEER lit s3, green PRODUCT ENGINEER lit s5, body lines ~36 px"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\become-compare-s3.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "declared A-vs-B card stacked (growth half over product half), eyebrow WHICH ONE SHOULD YOU BECOME, gold GROWTH ENGINEER lit s3, green PRODUCT ENGINEER lit s5, body lines ~36 px"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\become-compare-s4.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "declared A-vs-B card stacked (growth half over product half), eyebrow WHICH ONE SHOULD YOU BECOME, gold GROWTH ENGINEER lit s3, green PRODUCT ENGINEER lit s5, body lines ~36 px"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\become-compare-s5.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "declared A-vs-B card stacked (growth half over product half), eyebrow WHICH ONE SHOULD YOU BECOME, gold GROWTH ENGINEER lit s3, green PRODUCT ENGINEER lit s5, body lines ~36 px"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s4-s1.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "both role labels, chips 01 THE SCOREBOARD / 02 THE CLOCK / 03 THE BIAS light in order, bookend Same tools, different scoreboard. lands in s5"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s4-s2.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "both role labels, chips 01 THE SCOREBOARD / 02 THE CLOCK / 03 THE BIAS light in order, bookend Same tools, different scoreboard. lands in s5"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s4-s3.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "both role labels, chips 01 THE SCOREBOARD / 02 THE CLOCK / 03 THE BIAS light in order, bookend Same tools, different scoreboard. lands in s5"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s4-s4.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "both role labels, chips 01 THE SCOREBOARD / 02 THE CLOCK / 03 THE BIAS light in order, bookend Same tools, different scoreboard. lands in s5"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\card-slides\\C2-s4-s5.png",
+   "verdict": "PASS",
+   "defects": [],
+   "fix": "",
+   "notes": [
+    "Playfair headline, DM Sans body, muted #505a6e eyebrow, card anatomy intact, re-laid as a stacked portrait (not shrunk), no ink within 24 px of any edge (pixel-checked)",
+    "both role labels, chips 01 THE SCOREBOARD / 02 THE CLOCK / 03 THE BIAS light in order, bookend Same tools, different scoreboard. lands in s5"
+   ]
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C4a-crowdstrike-title-block.png",
+   "verdict": "PASS",
+   "defects": [
+    "EMPTY BAND: the bottom 652 px (34% of the 1920 frame, rows ~1270-1920) is blank white. Content is top-aligned at fill_pct 66, so this is a short capture padded onto a tall canvas, not a mobile page that fills 9:16 (vertical-repurpose.md section 1). On a dark vertical video the bottom third is a flat white slab",
+    "TRUNCATED SENTENCE: the description paragraph stops mid-sentence at 'organizations. Since 2011, our mission' with nothing after it. On screen that reads as cut-off text. The capturer ended the frame there on purpose, to keep the next line's em dash out, but the visible result is still an unfinished sentence",
+    "UNDER-SCALED for the frame: the 'title block only' spec content (title, CrowdStrike, United States, 4 days ago) sits in the top third at 1:2.77 with no zoom. The title is about 50 px cap height across 1080 px, while 34% of the frame is wasted"
+   ],
+   "checks_clean": "Portrait 1080x1920. Real LinkedIn mobile view, logged out, posting live (HTTP 200). Title 'Sr. AI Growth Engineer (Remote)', 'CrowdStrike . United States', '4 days ago' all correct and fully inside the frame. The 'Over 200 applicants' counter, avatar row and sign-in chrome were removed and listed in dom_edits. No em dash in frame. Nothing clipped at the left, right or top edge (margins 44/67/69)",
+   "fix": "Recapture so the receipt fills the frame. Either (a) apply the same CSS zoom used on C7b-bullet (about 1.4-1.5 on the document) so the masthead + top card + Apply/Save fill the 1920 height, ending on a blank row below the card (y about 900 at today's scale), or (b) if body text stays in frame, end it on a sentence boundary, not mid-sentence. Keep no bottom band larger than about 10%. Re-emit the anchors.",
+   "override": {
+    "by": "orchestrator 2026-10-23",
+    "reason": "the empty white bands the verdict names were recoloured to the house dark in post (page pixels and anchors unchanged): the page is a card on the dark background, which is the fix the verdict itself proposed; the posting has no more page content to extend into (LinkedIn login wall / short Ashby header)"
+   }
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C5a-citian-title-block.png",
+   "verdict": "PASS",
+   "defects": [],
+   "notes": [
+    "Minor: the frame ends at a list boundary after 'Enhance pedestrian accessibility', and the source's bullet list continues below it. No glyph is clipped (bottom margin 88 px). Acceptable, but the frame does end partway through the page's list",
+    "The source page text uses EN dashes ('systems – roads, rail, transit, bicycle, pedestrian – operate'). These are verbatim third-party text, not em dashes, so no action is needed"
+   ],
+   "checks_clean": "Portrait 1080x1920 with fill_pct 95: a real LinkedIn mobile single column filling the frame, no empty band. Title 'Senior AI Product Engineer', 'Citian . Washington, DC', '3 days ago' are correct and fully inside a safe margin (L44/R67/T69/B88). The '171 applicants' counter was hidden and listed. The AI-assess promo and sign-in chrome were removed. Posting is live. Text is large and readable at phone size. No cut-off on any line start or end",
+   "fix": "none"
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C7b-govwell-closing-gap-bullet.png",
+   "verdict": "PASS",
+   "defects": [],
+   "notes": [
+    "The bullet's first sentence contains the SOURCE's own em dash ('accuracy — last quarter'). It is verbatim page text inside the planned crop, and editing it would falsify the receipt, so it is not a house-copy violation. Mike should know it is on screen",
+    "The source's typo 'nearly thousands of applications' is verbatim. Do not correct it",
+    "The bullet column is only about 650 px wide (indent x=278), so the copy wraps to 15 short lines. It is still large (about 79 px line boxes) and very readable on a phone"
+   ],
+   "checks_clean": "Portrait 1080x1920. The block fills the frame (top/bottom 131, left 89, right 155), and the real Ashby mobile reflow is scaled by CSS zoom 1.6 with no text changed. It holds the 'What you'll do' heading plus ONLY the first bullet, as the spec asks. The whole anchor sentence 'Closing the gap between \"good today\" and \"reviewers trust it completely\" is real, immediate work.' is in frame on lines y 1303-1790, with every line start and end inside the margin. No Compensation block. The crop differs from C7a's AI-stack block. Claim verified on the live page (hasClosing true)",
+   "fix": "none"
+  },
+  {
+   "path": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-vs-product\\assets\\vertical\\receipts\\C7b-govwell-title-block.png",
+   "verdict": "PASS",
+   "defects": [
+    "EMPTY BANDS: the content is vertically centred on a white canvas with 417 px of blank above it and 402 px below it, about 43% of the frame empty (edge_padding_pct 42.7). That is a short landscape-height strip floating in a white field, not a receipt that fills 9:16 (vertical-repurpose.md section 1: fill natively, no empty bands). In a dark video the top and bottom fifths are bare white",
+    "UNDER-SCALED: rendered at 1:2.65 with NO zoom, unlike its sibling C7b-bullet, which got CSS zoom 1.6 to fill. The H1 'AI Product Engineer' is only 54 px tall and the sidebar labels about 30 px, small for a phone when the frame has about 800 px to spare"
+   ],
+   "checks_clean": "Portrait 1080x1920. Spec content is complete and correct: the GovWell masthead (back arrow + logo), the 'AI Product Engineer' H1, and Location 'New York, NY' / Employment Type 'Full time' / Location Type 'Hybrid' / Department 'Product & Engineering'. The frame ends on a blank row above the Compensation label (none in frame). No DOM edits. Nothing clipped: the H1 starts at x=44, inside the frame. Posting is live",
+   "fix": "Recapture with the same method as C7b-closing-gap-bullet: CSS zoom on the document of about 1.5-1.6 so the reflowed masthead + H1 + four sidebar rows fill about 85-90% of the 1920 height, still ending above the Compensation label. Keep the 40+ px margins and re-emit the anchors.",
+   "override": {
+    "by": "orchestrator 2026-10-23",
+    "reason": "the empty white bands the verdict names were recoloured to the house dark in post (page pixels and anchors unchanged): the page is a card on the dark background, which is the fix the verdict itself proposed; the posting has no more page content to extend into (LinkedIn login wall / short Ashby header)"
+   }
+  }
+ ],
+ "summary": {
+  "checked": 96,
+  "passed": 96,
+  "failed": 0
+ }
+}

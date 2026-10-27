@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>C1-s3</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+
+:root{--accent:#00c2ff;--role-a:#ffd700;--role-b:#22c55e;--wire:#2a3142}
+body{padding:40px 0;display:flex;flex-direction:column;align-items:center;gap:40px}
+.frame{justify-content:flex-start;padding:96px 140px 0}
+.frame .ey{margin-bottom:22px}
+.frame h1.sm{font-size:68px}
+.frame .divider{margin:28px 0 0}
+.frame>.abs{position:absolute}
+.ck{color:var(--accent)}
+.role{top:92px;right:140px;font-family:'DM Sans',sans-serif;font-style:italic;font-weight:700;font-size:34px;
+  letter-spacing:.02em;text-transform:uppercase;text-shadow:0 4px 18px rgba(0,0,0,.65);z-index:2;line-height:1}
+.ra{color:var(--role-a)} .rb{color:var(--role-b)} .rw{color:#fff}
+.src{left:140px;bottom:38px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:17px;color:var(--text-muted);z-index:2}
+.stage{inset:0;z-index:1}
+.stage>*{position:absolute}
+.impact{background:linear-gradient(135deg,rgba(0,194,255,.10),rgba(0,194,255,.03));border:1px solid rgba(0,194,255,.32);
+  border-radius:14px;display:flex;align-items:center;justify-content:center;gap:26px}
+.caps{font-family:'DM Sans',sans-serif;font-weight:700;text-transform:uppercase}
+
+
+.col{top:300px;height:672px;border-radius:20px;border:1px solid var(--border);background:rgba(18,21,28,.45)}
+.ch{position:absolute;left:0;right:0;top:18px;text-align:center}
+.ch .rl{font-family:'DM Sans';font-style:italic;font-weight:700;font-size:31px;letter-spacing:.02em;text-transform:uppercase;line-height:1;
+  text-shadow:0 4px 18px rgba(0,0,0,.6)}
+.ch .cs{margin-top:9px;font-family:'DM Sans';font-size:21px;color:var(--text-secondary)}
+.ch .sh{font-family:'DM Sans';font-weight:700;font-size:26px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-primary);line-height:1}
+.nd{height:70px;border-radius:12px;background:var(--bg-card);border:1px solid var(--border);padding:0 18px 0 28px;
+  display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.nd::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px}
+.nd.ga::before{background:var(--role-a)} .nd.pb::before{background:var(--role-b)}
+.nd.sh::before{background:linear-gradient(180deg,var(--role-a),var(--role-b))}
+.nd .t{font-family:'DM Sans';font-weight:700;font-size:25px;color:var(--text-primary);line-height:1.15;white-space:nowrap}
+.nd .s{margin-top:3px;font-family:'DM Sans';font-size:19px;color:var(--text-secondary);line-height:1.2;white-space:nowrap}
+.nd.big{height:104px;padding-left:30px} .nd.big .t{font-size:27px} .nd.big .s{font-size:20px;white-space:normal}
+.nd.lit{border:2px solid var(--accent);background:linear-gradient(135deg,rgba(0,194,255,.14),rgba(0,194,255,.03)),var(--bg-card)}
+.nd.lit .t{color:#fff}
+.nd.hot{box-shadow:0 0 0 6px rgba(0,194,255,.14),0 0 46px rgba(0,194,255,.45)}
+.o30{opacity:.30} .o62{opacity:.62} .o72{opacity:.72}
+
+</style></head>
+<body>
+<!-- C1-s3: Type 2 SYSTEM-DESIGN, C1 the two tool stacks; C1-s1/s2/s3 share one render (cues: _state-cues.md) -->
+<div id="frames"></div>
+<script>
+const ORB = '<div class="orb" style="width:760px;height:760px;right:-300px;top:-360px;background:#00c2ff"></div>'
+          + '<div class="orb" style="width:520px;height:520px;left:-260px;bottom:-320px;background:#0b3a66;opacity:.35"></div>';
+function head(ey, h1, role){
+  return ORB + `<div class="ey">${ey}</div><h1 class="sm">${h1}</h1><div class="divider"></div>`
+    + (role ? `<div class="abs role">${role}</div>` : '');
+}
+const ROLE_A = '<span class="ra">GROWTH</span> <span class="rw">ENGINEER</span>';
+const ROLE_B = '<span class="rb">PRODUCT</span> <span class="rw">ENGINEER</span>';
+const PREFIX = 'C1-s3';
+
+// columns: GROWTH x140 w540 · SHARED x750 w420 · PRODUCT x1240 w540 (boxes y300 h672). Stack nodes w504 h70 gap8 from y408; shared nodes w380 h104.
+// Node ORDER = lighting order (spoken nodes on their words, the unspoken ones in sequence between them).
+const GROWTH = [
+  ['web',     'Web + ad platforms',          'Webflow, forms, event tracking'],
+  ['analytics','Analytics + attribution',    'analytics dashboards, attribution'],
+  ['crm',     'CRM / marketing automation',  'Marketo, HubSpot'],
+  ['cdp',     'CDP',                         'customer data platform'],
+  ['experiment','Experiment framework',      'A/B testing'],
+  ['outbound','Outbound + content pipelines','Clay, n8n, email / PPTX generation'],
+  ['agents',  'Agent workflows into GTM',    'MCP servers, automation platforms'],
+];
+const PRODUCT = [
+  ['prompting','Prompting + tool use',       'text-to-SQL, fine-tuning or no AI at all'],
+  ['retrieval','Retrieval',                  'RAG, vector DB'],
+  ['routing', 'Model routing',               'multi-model orchestration, routed by task'],
+  ['evalharness','Eval harness',             'pass-rate targets, regression gates'],
+  ['latency', 'Latency + cost monitoring',   'reliability, failure modes'],
+  ['guardrails','Guardrails',                'abstention, prompt injection, permissions'],
+  ['featureui','The feature UI',             'built for a model that is wrong sometimes'],
+];
+const SHARED = [
+  ['llm',    'LLM APIs',               'Claude, GPT or similar models'],
+  ['agentsorch','Agents + orchestration','both stacks'],
+  ['evals',  'Evals',                  'evaluation-driven development'],
+  ['pyts',   'Python + TypeScript',    'the back ends'],
+];
+const cum = (list, n) => list.slice(0, n).map(x => x[0]);
+const STATES = [];
+// state 1: GROWTH lit node by node; PRODUCT + SHARED dimmed
+STATES.push({id:'C1-s1-base', g:'o72', p:'o30', sh:'o30', lit:[], hot:null, hdr:'g'});
+GROWTH.forEach((n,i) => STATES.push({id:`C1-s1-${n[0]}`, g:'o72', p:'o30', sh:'o30', lit:cum(GROWTH,i+1), hot:n[0], hdr:'g'}));
+// state 2: PRODUCT lit node by node; GROWTH + SHARED dimmed
+STATES.push({id:'C1-s2-base', g:'o30', p:'o72', sh:'o30', lit:[], hot:null, hdr:'p'});
+PRODUCT.forEach((n,i) => STATES.push({id:`C1-s2-${n[0]}`, g:'o30', p:'o72', sh:'o30', lit:cum(PRODUCT,i+1), hot:n[0], hdr:'p'}));
+// state 3: SHARED middle lit node by node; both stacks half-lit
+STATES.push({id:'C1-s3-base', g:'o62', p:'o62', sh:'o72', lit:[], hot:null, hdr:'s'});
+SHARED.forEach((n,i) => STATES.push({id:`C1-s3-${n[0]}`, g:'o62', p:'o62', sh:'o72', lit:cum(SHARED,i+1), hot:n[0], hdr:'s'}));
+const MINE = STATES.filter(s => s.id.startsWith(PREFIX + '-'));
+STATES.length = 0; MINE.forEach(s => STATES.push(s));
+
+const SH_Y = [436, 562, 688, 814];      // shared node tops (h104), centred on the stack zone
+function stack(list, x, w, cls, s, dimCls){
+  return list.map((n,i) => {
+    const on = s.lit.includes(n[0]);
+    return `<div class="nd ${cls} ${on?'lit':dimCls} ${s.hot===n[0]?'hot':''}" style="left:${x}px;top:${408+i*78}px;width:${w}px">
+      <div class="t">${n[1]}</div><div class="s">${n[2]}</div></div>`;
+  }).join('');
+}
+function render(s){
+  let wires = '';
+  SHARED.forEach((n,i) => {
+    const y = SH_Y[i] + 52, on = s.lit.includes(n[0]), c = on ? '#00c2ff' : '#2a3142';
+    wires += `<line x1="680" y1="${y}" x2="750" y2="${y}" stroke="${c}" stroke-width="${on?4:3}" stroke-dasharray="${on?'0':'7 7'}" ${on?'filter="url(#g)"':''}/>
+              <line x1="1170" y1="${y}" x2="1240" y2="${y}" stroke="${c}" stroke-width="${on?4:3}" stroke-dasharray="${on?'0':'7 7'}" ${on?'filter="url(#g)"':''}/>
+              <circle cx="680" cy="${y}" r="6" fill="${c}"/><circle cx="1240" cy="${y}" r="6" fill="${c}"/>`;
+  });
+  const svg = `<svg width="1920" height="1080" style="left:0;top:0"><defs><filter id="g" filterUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080">
+      <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>${wires}</svg>`;
+  const hdrOp = k => (s.hdr === k ? '' : (k === 's' ? s.sh : (k === 'g' ? s.g : s.p)));
+  return head('Difference 3 &middot; The bias', 'What each one <span class="ck">reaches for</span> first.', '')
+    + `<div class="abs stage">${svg}
+      <div class="col" style="left:140px;width:540px"><div class="ch ${hdrOp('g')}"><div class="rl">${ROLE_A}</div><div class="cs">lives in the funnel</div></div></div>
+      <div class="col" style="left:750px;width:420px"><div class="ch ${hdrOp('s')}" style="top:24px"><div class="sh">Shared</div><div class="cs" style="margin-top:12px">the middle</div></div></div>
+      <div class="col" style="left:1240px;width:540px"><div class="ch ${hdrOp('p')}"><div class="rl">${ROLE_B}</div><div class="cs">lives in the feature</div></div></div>
+      ${stack(GROWTH, 158, 504, 'ga', s, s.g)}
+      ${stack(PRODUCT, 1258, 504, 'pb', s, s.p)}
+      ${SHARED.map((n,i) => { const on = s.lit.includes(n[0]);
+        return `<div class="nd sh big ${on?'lit':s.sh} ${s.hot===n[0]?'hot':''}" style="left:770px;top:${SH_Y[i]}px;width:380px"><div class="t">${n[1]}</div><div class="s">${n[2]}</div></div>`; }).join('')}
+      </div>`
+    + '<div class="abs src">Every node is a job posting\'s own wording, postings read 2026-10-20</div>';
+}
+
+const host = document.getElementById('frames');
+for (const s of STATES){ const f = document.createElement('div'); f.className = 'frame'; f.id = s.id; f.innerHTML = render(s); host.appendChild(f); }
+</script>
+</body></html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KCC-20: Native Tokens on Kaspa L1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #0a0c10;
+  --bg-card: #12151c;
+  --bg-card-hover: #181c26;
+  --accent-green: #00e68a;   /* KCC-20 / native L1 */
+  --accent-cyan: #00c2ff;    /* mechanics / supporting */
+  --accent-gold: #ffd700;    /* status / in progress */
+  --accent-red: #ff4060;     /* risk / not yet */
+  --accent-purple: #a855f7;  /* KRC-20 / legacy */
+  --text-primary: #e8eaf0;
+  --text-secondary: #8892a4;
+  --text-muted: #505a6e;
+  --border: #1e2330;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Slides */
+.slide {
+  min-height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.inner { position: relative; z-index: 2; max-width: 1240px; width: 100%; margin: 0 auto; }
+
+/* Type */
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  line-height: 1.15;
+}
+h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 12px;
+}
+p { color: var(--text-secondary); font-size: 1rem; line-height: 1.7; }
+.lead { font-size: 1.15rem; max-width: 760px; margin-top: 24px; }
+.label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 18px;
+  display: block;
+}
+.mono { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+.g { color: var(--accent-green); }
+.c { color: var(--accent-cyan); }
+.y { color: var(--accent-gold); }
+.r { color: var(--accent-red); }
+.p { color: var(--accent-purple); }
+
+.divider {
+  width: 60px; height: 3px;
+  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+  border-radius: 2px;
+  margin: 24px 0;
+}
+
+/* Orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: 0;
+}
+
+/* Stats row */
+.stats { display: flex; gap: 56px; margin-top: 56px; flex-wrap: wrap; }
+.stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+/* Cards */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  background: var(--bg-card-hover);
+}
+.card .topline { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+.card p { font-size: 0.95rem; }
+.card .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  display: block;
+}
+
+/* Tags */
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.tag-green { background: rgba(0,230,138,0.15); color: var(--accent-green); }
+.tag-cyan { background: rgba(0,194,255,0.15); color: var(--accent-cyan); }
+.tag-gold { background: rgba(255,215,0,0.15); color: var(--accent-gold); }
+.tag-red { background: rgba(255,64,96,0.15); color: var(--accent-red); }
+.tag-purple { background: rgba(168,85,247,0.15); color: var(--accent-purple); }
+
+/* Impact box */
+.impact-box {
+  background: linear-gradient(135deg, rgba(0,230,138,0.08), rgba(0,194,255,0.06));
+  border: 1px solid rgba(0,230,138,0.2);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-top: 28px;
+}
+.impact-box p { color: var(--text-primary); }
+
+/* Table */
+.table-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  font-weight: 600;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  vertical-align: top;
+  line-height: 1.5;
+}
+td:first-child { color: var(--text-primary); font-weight: 500; white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+tbody tr { transition: background 0.2s; }
+tbody tr:hover { background: var(--bg-card-hover); }
+td.kcc { color: var(--accent-green); }
+td.krc { color: var(--accent-purple); }
+
+/* Timeline */
+.split { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: center; }
+.timeline {
+  position: relative;
+  padding-left: 36px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent-green), var(--accent-cyan), var(--accent-gold));
+  border-radius: 2px;
+}
+.t-item { position: relative; margin-bottom: 26px; }
+.t-item:last-child { margin-bottom: 0; }
+.t-item::before {
+  content: '';
+  position: absolute;
+  left: -36px; top: 4px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  border: 3px solid var(--accent-green);
+}
+.t-item:nth-child(2)::before { border-color: var(--accent-cyan); }
+.t-item:nth-child(3)::before { border-color: var(--accent-purple); }
+.t-item:nth-child(4)::before { border-color: var(--accent-gold); }
+.t-item:nth-child(5)::before { border-color: var(--accent-red); }
+.t-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+.t-item:nth-child(1) .t-date { color: var(--accent-green); }
+.t-item:nth-child(2) .t-date { color: var(--accent-cyan); }
+.t-item:nth-child(3) .t-date { color: var(--accent-purple); }
+.t-item:nth-child(4) .t-date { color: var(--accent-gold); }
+.t-item:nth-child(5) .t-date { color: var(--accent-red); }
+.t-title { font-weight: 700; color: var(--text-primary); margin: 4px 0 2px; }
+.t-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.55; }
+
+.closing { text-align: center; }
+.big-number {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 1;
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.closing p { margin: 18px auto 0; max-width: 420px; }
+
+/* Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: 0.15s; }
+.delay-2 { transition-delay: 0.3s; }
+.delay-3 { transition-delay: 0.45s; }
+.delay-4 { transition-delay: 0.6s; }
+.delay-5 { transition-delay: 0.75s; }
+
+/* Nav dots */
+.nav-dots {
+  position: fixed;
+  right: 32px; bottom: 32px;
+  display: flex; flex-direction: column; gap: 14px;
+  z-index: 100;
+}
+.nav-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s, transform 0.3s;
+}
+.nav-dot.active { background: var(--accent-green); transform: scale(1.4); }
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 36px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  z-index: 2;
+}
+.scroll-hint svg { animation: bounce 2s infinite; }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@media (max-width: 900px) {
+  .slide { padding: 40px 28px; }
+  .grid-2, .split { grid-template-columns: 1fr; gap: 20px; }
+  .split { gap: 40px; }
+  .stats { gap: 32px; }
+  .nav-dots { right: 14px; bottom: 20px; }
+  th, td { padding: 14px 14px; font-size: 0.85rem; }
+  td:first-child { white-space: normal; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ SLIDE 1: TITLE ============ -->
+<section class="slide" id="s1">
+  <div class="orb" style="width:560px;height:560px;background:var(--accent-green);top:-180px;right:-160px;"></div>
+  <div class="orb" style="width:420px;height:420px;background:var(--accent-cyan);bottom:-200px;left:-140px;opacity:0.25;"></div>
+  <div class="inner">
+    <span class="label fade-in">Kaspa Calls for Conventions · October 2026</span>
+    <h1 class="fade-in delay-1">KCC-20: Native Tokens<br>on Kaspa <span class="g">L1</span></h1>
+    <p class="lead fade-in delay-2">Kaspa's first covenant-based fungible token standard. Its name nods to ERC-20. Transfers are enforced by L1 script rules, not by an off-chain indexer.</p>
+    <div class="stats fade-in delay-3">
+      <div>
+        <div class="stat-value g">KCC-20</div>
+        <div class="stat-label">Fungible token spec</div>
+      </div>
+      <div>
+        <div class="stat-value c">Jun 30</div>
+        <div class="stat-label">Toccata enables covenants</div>
+      </div>
+      <div>
+        <div class="stat-value y">Draft</div>
+        <div class="stat-label">Current status</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2: HOW IT WORKS ============ -->
+<section class="slide" id="s2">
+  <div class="orb" style="width:500px;height:500px;background:var(--accent-cyan);top:-160px;left:-180px;opacity:0.3;"></div>
+  <div class="orb" style="width:380px;height:380px;background:var(--accent-green);bottom:-140px;right:-120px;opacity:0.25;"></div>
+  <div class="inner">
+    <span class="label fade-in">How it works</span>
+    <h2 class="fade-in delay-1">Four ideas carry the standard</h2>
+    <div class="divider fade-in delay-1"></div>
+    <div class="grid-2">
+      <div class="card fade-in delay-2">
+        <div class="topline" style="background:linear-gradient(90deg,var(--accent-green),transparent);"></div>
+        <span class="num">01</span>
+        <h3 class="g">Common interface</h3>
+        <p>Shared state and transfer conventions. Any wallet, indexer or app can recognize a KCC-20 token, read it and build transfers for it.</p>
+      </div>
+      <div class="card fade-in delay-3">
+        <div class="topline" style="background:linear-gradient(90deg,var(--accent-cyan),transparent);"></div>
+        <span class="num">02</span>
+        <h3 class="c">Extended state</h3>
+        <p>Each token can add its own data and behavior on top. The goal isn't identical tokens. It's one recognizable surface across different deployments.</p>
+      </div>
+      <div class="card fade-in delay-4">
+        <div class="topline" style="background:linear-gradient(90deg,var(--accent-purple),transparent);"></div>
+        <span class="num">03</span>
+        <h3 class="p">Flexible authority</h3>
+        <p>Through KCC-2, a token can be controlled by a public key, a key commitment, a script, or another covenant. Covenants can own or govern tokens.</p>
+      </div>
+      <div class="card fade-in delay-5">
+        <div class="topline" style="background:linear-gradient(90deg,var(--accent-gold),transparent);"></div>
+        <span class="num">04</span>
+        <h3 class="y">Borrowed Receive</h3>
+        <p>Every new token UTXO needs KAS under storage-mass rules. Borrowed Receive tops up an existing UTXO instead. Owner and KAS value stay put; only the token amount grows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3: KCC-20 vs KRC-20 ============ -->
+<section class="slide" id="s3">
+  <div class="orb" style="width:520px;height:520px;background:var(--accent-purple);top:-200px;right:-160px;opacity:0.3;"></div>
+  <div class="orb" style="width:400px;height:400px;background:var(--accent-green);bottom:-180px;left:-120px;opacity:0.22;"></div>
+  <div class="inner">
+    <span class="label fade-in">Not the same thing</span>
+    <h2 class="fade-in delay-1"><span class="g">KCC-20</span> vs <span class="p">KRC-20</span></h2>
+    <div class="divider fade-in delay-1"></div>
+    <div class="table-wrap fade-in delay-2">
+      <table>
+        <thead>
+          <tr><th></th><th>KCC-20</th><th>KRC-20</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Origin</td><td class="kcc">Kaspa core contributors, kaspanet/kccs</td><td class="krc">Kasplex, a third-party protocol</td></tr>
+          <tr><td>Where balances live</td><td class="kcc">Covenant-enforced UTXOs on L1</td><td class="krc">Data inscribed on L1, read by an indexer</td></tr>
+          <tr><td>Who validates</td><td class="kcc">L1 script rules</td><td class="krc">The indexer's interpretation</td></tr>
+          <tr><td>Status</td><td class="kcc">Draft spec, early adoption</td><td class="krc">Live since <span class="mono">2024</span>, <span class="mono">2,153</span> tokens by July 2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="impact-box fade-in delay-3">
+      <p>The short version: KRC-20 proved demand for tokens on Kaspa. KCC-20 is the attempt to make them first-class citizens of the base layer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4: STATUS + CLOSING ============ -->
+<section class="slide" id="s4">
+  <div class="orb" style="width:540px;height:540px;background:var(--accent-gold);top:-220px;left:-180px;opacity:0.22;"></div>
+  <div class="orb" style="width:440px;height:440px;background:var(--accent-green);bottom:-200px;right:-140px;opacity:0.3;"></div>
+  <div class="inner">
+    <span class="label fade-in">Where it stands</span>
+    <h2 class="fade-in delay-1">Real, but not finished</h2>
+    <div class="divider fade-in delay-1"></div>
+    <div class="split">
+      <div class="timeline fade-in delay-2">
+        <div class="t-item">
+          <div class="t-date">JUN 30, 2026</div>
+          <div class="t-title">Toccata activates</div>
+          <div class="t-desc">Brings ZK verification and the covenant machinery KCCs build on.</div>
+        </div>
+        <div class="t-item">
+          <div class="t-date">JUL 15, 2026</div>
+          <div class="t-title">KCC-20 merged as Draft</div>
+          <div class="t-desc">Alongside KCC-1 (covenant layout) and KCC-2 (authority schemes).</div>
+        </div>
+        <div class="t-item">
+          <div class="t-date">AUG 22, 2026</div>
+          <div class="t-title">First implementer flags gaps</div>
+          <div class="t-desc">Its deployed version is only partially aligned with the spec.</div>
+        </div>
+        <div class="t-item">
+          <div class="t-date">SEP 22, 2026</div>
+          <div class="t-title">Last Call proposed</div>
+          <div class="t-desc">Pull request opened to advance KCC-20. Still open.</div>
+        </div>
+        <div class="t-item">
+          <div class="t-date">OCT 1, 2026</div>
+          <div class="t-title">KCC-1 &amp; KCC-2 hit Last Call</div>
+          <div class="t-desc">Both are prerequisites. KCC-20 can't go Final until they do.</div>
+        </div>
+      </div>
+      <div class="closing fade-in delay-3">
+        <span class="label">Final technical KCCs today</span>
+        <div class="big-number">0</div>
+        <p>The foundation is being poured. Watch for KCC-1 and KCC-2 going Final, then a conforming implementation. That's when KCC-20 tokens become real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<nav class="nav-dots" id="navDots"></nav>
+
+<script>
+(function () {
+  const slides = document.querySelectorAll('.slide');
+  const nav = document.getElementById('navDots');
+
+  slides.forEach((slide, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    dot.addEventListener('click', () => slide.scrollIntoView({ behavior: 'smooth' }));
+    nav.appendChild(dot);
+  });
+  const dots = nav.querySelectorAll('.nav-dot');
+
+  const slideObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(slides).indexOf(entry.target);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.5 });
+  slides.forEach((s) => slideObserver.observe(s));
+
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach((el) => fadeObserver.observe(el));
+})();
+</script>
+</body>
+</html>

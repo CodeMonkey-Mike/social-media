@@ -10,7 +10,7 @@ Each capability has its own file in this folder. This file is the index and home
 
 ### Operational note: these scripts BUFFER stdout — an empty log is NOT a hang
 
-Most of these Node/Playwright scripts run 3-8 minutes (built-in 60-180s human-pacing waits before composer AND before Post) and several (`post-thread.js`, `upload-longform-*.js`) **flush their entire stdout only at exit** — so the background-task log file stays EMPTY for minutes while the script is working normally. Do not read an empty log as stuck. When a step is quiet longer than expected, confirm the process is alive with `ps -W | grep -iE "/node|chrome"` before doing anything — a live `node`/`chrome` pair means it is still driving the browser. **NEVER relaunch a posting script that appears stuck** (shared-profile Chrome collision kills the in-flight post — this is the standing one-attempt rule). Wait for the process to exit, then read the flushed log. `post-thread.js` (multi-tweet, ~175s pre-post wait) and the long-form uploads (large-file upload + server-side processing poll, up to ~12 min) are the slowest and the most likely to look silent.
+Most of these Node/Playwright scripts run 3-8 minutes (built-in 60-180s human-pacing waits before composer AND before Post) and several (`post_thread.py` unless run with `python -u`, `upload-longform-*.js`) **flush their entire stdout only at exit** — so the background-task log file stays EMPTY for minutes while the script is working normally. Do not read an empty log as stuck. When a step is quiet longer than expected, confirm the process is alive with `ps -W | grep -iE "/node|chrome"` before doing anything — a live `node`/`chrome` pair means it is still driving the browser. **NEVER relaunch a posting script that appears stuck** (shared-profile Chrome collision kills the in-flight post — this is the standing one-attempt rule). Wait for the process to exit, then read the flushed log. `post-thread.js` (multi-tweet, ~175s pre-post wait) and the long-form uploads (large-file upload + server-side processing poll, up to ~12 min) are the slowest and the most likely to look silent.
 
 ---
 
@@ -52,7 +52,10 @@ added before it can be swept.
 **Every posting/upload script now has a CANONICAL Python port** (`scripts/post_*.py`,
 `scripts/upload_longform_*.py`, `scripts/recapture_rumble_url.py`, libs
 `scripts/lib/longform_queue.py` + `scripts/lib/strip_hashtags.py`). The JS twins are
-**FROZEN rollback** — do not edit them; fixes land in the Python file.
+**FROZEN rollback** — do not edit them; fixes land in the Python file. **Once a port is
+LIVE-BLESSED its JS twin is DELETED, not kept** (Python-only repo rule, Mike 2026-10-21; first
+deletion: `post-thread.js` + its dead `setup.js`/`x-auth.json` helper that same day). A blessed
+port with a surviving JS twin in the table below is an open cleanup item, not a rollback option.
 
 **Blessed posters run through the POST graph (segment 7), one entry × one platform per
 invocation** — the invocation IS Mike's decision to post; verify-from-disk against the
@@ -71,7 +74,7 @@ through it; until then invoke the JS twin):
 | `upload_longform_bitchute.py` | ✅ LIVE-BLESSED 2026-08-11 (first pass; grab-frame thumbnail fallback exercised) |
 | `upload_longform_facebook.py` | ✅ LIVE-BLESSED 2026-08-11 (one diagnosed pre-action re-run: cold-profile nav timeout before any action — hardened to a 60s first-nav timeout) |
 | `post_bitchute_short.py` | ✅ LIVE-BLESSED 2026-08-11 (`t-20260810-freaking-early-not-degen` via `post --kind short`; one found-and-fixed sync-API timing gap: the popup URL is empty at domcontentloaded so `upload_code` missed → placeholder URL + posted_unverified. Port now re-reads the URL before Proceed; that run's real URL was recovered via the public beta API `POST api.bitchute.com/api/beta/channel/videos {channel_id}` — the SPA channel page has no server-side listing, but this API needs no auth and is the URL-recovery path of record) |
-| `post_thread.py` | ✅ LIVE-BLESSED 2026-08-12 (`thread-2026-08-12-200-week-line`, 7 tweets, 7/7 verified — the run that fixed the 2026-07-30 `tweetTextarea_5` defect: `state="attached"` + 30s timeout + `scroll_into_view_if_needed()` + JS-click fallback. The frozen JS twin still carries the defect, so **threads over 5 tweets must go through the Python port**) |
+| `post_thread.py` | ✅ LIVE-BLESSED 2026-08-12 (`thread-2026-08-12-200-week-line`, 7 tweets, 7/7 verified — the run that fixed the 2026-07-30 `tweetTextarea_5` defect: `state="attached"` + 30s timeout + `scroll_into_view_if_needed()` + JS-click fallback. **JS twin `post-thread.js` DELETED 2026-10-21**; `post_thread.py` is the only thread poster) |
 | `post_fb_short.py` | ✅ LIVE-BLESSED 2026-08-28 (`ewp-20260827-dead-memes-comeback-impact` → `reel/891047553840477`, verified live; 19s on the page vs 18.79s source, URL unique across the queue). The blessing run exercised the new baseline diff on the real failure path: round 1 reported "no new video yet (processing)" — the exact state where the JS twin grabs the PREVIOUS short's URL — and the diff refused it, waited one interval, then captured the true reel. **The frozen JS twin still has the neighbour-URL bug, so FB shorts go through the Python port.** |
 | `post_yt_quiz.py` | ✅ LIVE-BLESSED 2026-08-30 (`yt-quiz-2026-08-28-robinhood-chain-what-is-it` → `youtube.com/post/Ugkx88b83lVM2eUt1JET7Se78SJuFVSITajP`). **The JS twin is not a fallback here — it CANNOT post at all:** YouTube moved the quiz composer off the Polymer `ytd-backstage-quiz-editor-renderer` onto its `ytPostsCreation*ViewModel*` components, so the legacy widget is permanently `display:none` and `post-yt-quiz.js` throws `Quiz editor did not open (display=none)` before Post (clean pre-post fail, nothing published). The port carries the ViewModel selectors; full old→new map in `yt-post-quiz.md`. The bless run also closed the 4x-logged `aria-pressed=null` escalation (the selector is a `<button-view-model>` wrapper with no aria; state is a class on it) and fixed a latent port defect where `wait_for_function`'s `arg` was passed positionally, which crashed on the 3rd option. |
 | `post_ig_reel.py` | ✅ LIVE-BLESSED 2026-09-24 (`p-20260922-110x-in-8-days-community-wins` → `reel/DdrCMvfhA6L`, caption verified on IG). Blessed WITH a deliberate fix after the JS twin failed that row with `error after Share: Something went wrong` and left no evidence: Share-outcome text is matched only inside the composer dialog + `[role=alert/status]` (the JS reads the whole page incl. the home feed), an error saves a screenshot + dialog text to `tmp/ig-reel-debug/`, and a **Reels-grid baseline diff** (scraped from `/reels/` BEFORE upload) decides the outcome on every path. **The JS twin still has all of these defects, so IG Reels go through the Python port.** Detail: `ig-post-vertical.md`. |
@@ -124,7 +127,7 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 | Queue file | Platform | Script |
 |---|---|---|
 | `data/x-tweets.json` | X single tweet | `scripts/post-tweet.js` |
-| `data/x-threads.json` | X thread | `scripts/post-thread.js` |
+| `data/x-threads.json` | X thread | `python -u scripts/post_thread.py` ⭐ (JS twin deleted 2026-10-21) |
 | `data/x-polls.json` | X poll | `scripts/post-x-poll.js` |
 | `data/yt-posts.json` | YouTube community post | `scripts/post-yt-community.js` |
 | `data/yt-text-polls.json` | YouTube text poll | `scripts/post-yt-poll.js` |
@@ -144,7 +147,7 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 
 | Profile | Used by |
 |---|---|
-| `xbot-profile` | post-tweet, post-thread, post-x-poll, post-x-short |
+| `xbot-profile` | post-tweet, post_thread.py, post-x-poll, post-x-short |
 | `ytbot-profile` (CDP 9223) | post-yt-poll, post-yt-short (legacy) |
 | `igbot-profile` | post-ig-single, post-ig-reel |
 | `fbbot-profile` | post-fb-short |
@@ -160,7 +163,7 @@ relaunch** (a "failed" post may already be live), YT Shorts via API only.
 | Script | `CHAR_DELAY` | `ACTION` | `PRE_COMPOSE` | `PRE_POST` | URL verify |
 |---|---|---|---|---|---|
 | `post-tweet.js` | 60–150ms | 4–7s | 60–180s | 5–180s | toast nav |
-| `post-thread.js` | 60–150ms | 4–7s | 60–180s | 60–180s | ✓ HTTP + per-tweet text match |
+| `post_thread.py` | 60–150ms | 4–7s | 60–180s | 60–180s | ✓ HTTP + per-tweet text match |
 | `post-x-poll.js` | 60–150ms | 4–7s | 60–180s | 5–180s | toast nav |
 | `post-yt-poll.js` | 60–150ms | 2–3.5s | 30–90s | 30–90s | URL fetch (waits halved 2026-06-14) |
 | `post-ig-single.js` | 5–40ms | 1–5s | 1–15s | reused | URL fetch |

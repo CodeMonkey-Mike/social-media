@@ -57,6 +57,8 @@ class LongformState(TypedDict, total=False):
     coarse_sil: Optional[float]  # spine: the COARSE one-zone min-silence (default 0.7)
     sil_pre: Optional[float]     # spine: FINAL two-zone intro min-silence (default 0.25)
     sil_post: Optional[float]    # spine: FINAL two-zone body min-silence (default 0.5)
+    pad_tail: Optional[float]    # spine: BOTH desilence passes, silence kept after the sentence before a cut (default 0)
+    pad_head: Optional[float]    # spine: BOTH desilence passes, silence kept before the sentence after a cut (default = pad_tail)
     split: Optional[float]       # spine: the hook-end second for the two-zone pass
     bursts: Optional[str]        # spine: Mike's burst timestamps "a-b,c-d" (from the spine review)
     until: str              # stop after this gate is approved
@@ -271,21 +273,37 @@ def _pick_raw(proj: Path, scope: str) -> Optional[Path]:
     return takes[0] if len(takes) == 1 else None
 
 
-def _av_ok(path: Path, tol=0.06):
-    """A/V drift = do the two streams END together (start_time + duration per stream), not "are the two
-    duration fields equal". An NVENC encode with B-frames gives the video an edit-list start offset of about
-    one frame while the AAC audio starts at 0 and carries up to a frame of end padding; comparing raw
-    durations adds those two artifacts and failed a perfectly synced spine by 3 ms (every-job coarse
-    desilence, 2026-10-06: video 0.023 + 1143.058, audio 0 + 1143.122, ends 40 ms apart, durations 63 ms)."""
+def _av_end_drift(path: Path) -> Optional[float]:
+    """Signed A/V end drift in seconds (video end minus audio end, start_time + duration per stream)."""
     v = _ffprobe(path, "stream=start_time,duration")
     try:
         nums = [float(x) if x not in ("N/A", "") else 0.0 for x in v]
         if len(nums) >= 4:
-            end_a, end_b = nums[0] + nums[1], nums[2] + nums[3]
-            return abs(end_a - end_b) <= tol
-        return abs(nums[0] - nums[1]) <= tol
+            return (nums[0] + nums[1]) - (nums[2] + nums[3])
+        return nums[0] - nums[1]
     except Exception:
+        return None
+
+
+def _av_ok(path: Path, tol=0.06, ref: Optional[Path] = None):
+    """A/V drift = do the two streams END together (start_time + duration per stream), not "are the two
+    duration fields equal". An NVENC encode with B-frames gives the video an edit-list start offset of about
+    one frame while the AAC audio starts at 0 and carries up to a frame of end padding; comparing raw
+    durations adds those two artifacts and failed a perfectly synced spine by 3 ms (every-job coarse
+    desilence, 2026-10-06: video 0.023 + 1143.058, audio 0 + 1143.122, ends 40 ms apart, durations 63 ms).
+    With `ref` (the step's INPUT), only the drift the step ADDED is judged: a camera master whose audio already
+    ends 66 ms before its video passes that gap down every step, and failing the defumbler for it was a false
+    FAIL (inference 2026-10-26: source 66 ms, defumbled 72 ms, 63 joins added 6 ms).
+    A file whose OWN drift is within `tol` always passes: a step that RE-SYNCS an inherited offset is not drift
+    (only-18-months-left 2026-10-26: the proxy carried +56 ms, the defumbler re-synced it to +10 ms, the final
+    spine ended at -34 ms; judged against the proxy that read as 90 ms "added" and failed a synced spine)."""
+    d = _av_end_drift(path)
+    if d is None:
         return True
+    if abs(d) <= tol:
+        return True
+    base = _av_end_drift(ref) if ref is not None and Path(ref).is_file() else 0.0
+    return abs(d - (base or 0.0)) <= tol
 
 
 def compress(state: LongformState) -> LongformState:
@@ -335,15 +353,15 @@ def _agent_step(state, node, agent, prompt, out_path: Path, check, skip_detail):
 
 
 def _spine_check(out_path: Path, shorter_than: Optional[Path] = None, same_as: Optional[Path] = None,
-                 sidecars=()):
+                 sidecars=(), drift_ref: Optional[Path] = None):
     d = _duration(out_path)
     if not d:
         return "unreadable / zero duration"
     fps = _ffprobe(out_path, "stream=r_frame_rate")
     if fps and fps[0] not in ("30/1", "30000/1000"):
         return f"fps {fps[0]} (expected 30/1; comp-build.md section 1)"
-    if not _av_ok(out_path):
-        return "A/V duration drift over 60 ms"
+    if not _av_ok(out_path, ref=drift_ref or shorter_than or same_as):
+        return "A/V duration drift over 60 ms (beyond what its input already carried)"
     if shorter_than is not None:
         ref = _duration(shorter_than)
         if ref and d >= ref:
@@ -390,6 +408,22 @@ def cover_blackout(state: LongformState) -> LongformState:
                        f"{sp['b'].name} present")
 
 
+def _pad_clause(state: LongformState) -> str:
+    """The optional sentence residual (Mike, 2026-10-19, evals): BOTH desilence passes keep it. The coarse
+    pass must carry it too: at pad 0 it cuts every pause >= the coarse min-silence to zero, and the final
+    pass (which runs on the coarse output) can only remove silence, never put it back. COVER scenes only
+    (Mike, 2026-10-19: "we can't add an additional 100 ms of dead silence to the face scenes"): desilence.py
+    --pad-cover-only drops the pad on any cut edge inside a FACE window, so face scenes cut exactly as at pad 0."""
+    tail = state.get("pad_tail")
+    head = state.get("pad_head") if state.get("pad_head") is not None else tail
+    if not tail:
+        return ""
+    return (f"; PLUS the sentence residual on COVER scenes only, every cut runs with `--pad {float(tail)} --pad-head "
+            f"{float(head)} --pad-cover-only` ({float(tail)*1000:.0f} ms kept after the sentence before the cut, "
+            f"{float(head)*1000:.0f} ms before the next, on black/cover picture only; a cut edge inside a FACE window "
+            "gets no pad, exactly the normal pad-0 cut)")
+
+
 def desilence_coarse(state: LongformState) -> LongformState:
     node = "desilence_coarse"
     proj, scope = _proj(state), state.get("scope", "ALL")
@@ -399,7 +433,7 @@ def desilence_coarse(state: LongformState) -> LongformState:
     prompt = (f"Desilence (COARSE pass) the blacked spine for project `{proj.name}`.\n"
               f"INPUT: `{sp['b']}`\nOUTPUT (fixed 13a path): `{sp['c']}` with the cut map `{map_json}` (--map-out).\n"
               f"SILENCE DEFINITION for this pass, ONE zone, Mike's knob: min-silence {coarse:.3f} s "
-              f"(`--min-sil {coarse}`; no --split, no two-zone). This is the reviewable spine Mike listens to "
+              f"(`--min-sil {coarse}`; no --split, no two-zone){_pad_clause(state)}. This is the reviewable spine Mike listens to "
               "for bursts and content; a tighter two-zone pass runs later on the cleaned spine.\n"
               "Follow video-creation/skills/desilencer/desilencer.md exactly (desilence.py, dual-threshold RMS, "
               "--nvenc). Foreground only. Finish with the swallowed-speech QA and print the numbers.")
@@ -414,7 +448,9 @@ def gate_spine_review(state: LongformState) -> LongformState:
     return C.gate(state, "spine_review",
                   "the COARSE spine: listen for bursts (give timestamps with --bursts a-b,c-d on the resume), flag content, "
                   "AND give the FINAL silence definition on the same resume (--sil-pre <intro s> --sil-post <body s>, "
-                  "defaults 0.25 / 0.5): the cleanup + the tight two-zone pass + the transcription run right after this gate, "
+                  "defaults 0.25 / 0.5; the sentence residual --pad-tail/--pad-head is NOT given here: it is set at "
+                  "launch because the coarse pass already carries it, so changing it now needs --redo desilence_coarse "
+                  "and a fresh listen): the cleanup + the tight two-zone pass + the transcription run right after this gate, "
                   "so a silently defaulted value costs a full redo (Mike, 2026-10-10)",
                   [sp["c"], C.doc(proj, "project_log")])
 
@@ -445,7 +481,11 @@ def burst_removal(state: LongformState) -> LongformState:
               f"Mike located these bursts by ear (seconds on the INPUT's timeline, approximate): {', '.join(bursts)}. "
               "Follow video-creation/skills/burst-removal/burst-removal.md exactly: profile each, cut end-of-word-A "
               "to start-of-word-B inside the silence troughs, ONE sync-safe multi-segment pass, both tracks together; "
-              "VERIFY every join on the rendered output. Foreground only.")
+              "VERIFY every join on the rendered output. Foreground only.\n"
+              "A span may also be a REPEATED WORD or false start Mike heard (a word said twice: the span holds the FIRST "
+              "take; Mike, evals 2026-10-19): treat the speech island(s) inside the span exactly like a burst, cut from the "
+              "silence trough before the span to the trough after it, and keep the take that follows. Whisper naming the "
+              "island as a word is expected here, not a reason to stop.")
     return _agent_step(state, node, "burst-removal", prompt, cleaned,
                        lambda: _spine_check(cleaned, shorter_than=sp["c"], sidecars=[cuts_json]),
                        f"{cleaned.name} present")
@@ -466,8 +506,12 @@ def desilence_final(state: LongformState) -> LongformState:
     split = state.get("split")
     zone = (f"two-zone: `--split {split} --sil-pre {pre} --sil-post {post}` (intro {pre} s / body {post} s, "
             f"split at the measured hook end {split}s)") if split else \
-           (f"two-zone with the hook end measured by you from the chunk map: `--split <hook-end> --sil-pre {pre} "
-            f"--sil-post {post}`; if no clear hook boundary exists, ONE zone at `--min-sil {post}`")
+           (f"two-zone with the hook end measured by you: `--split <hook-end> --sil-pre {pre} --sil-post {post}`. The "
+            "hook = the WHOLE of CH1 (the intro chapter): find the last spoken line of CH1 in SCREENPLAY.md on the input "
+            "(a local Whisper pass over the first ~3 min), and split in the pause after it. NEVER a face-window or "
+            "black-picture boundary (evals 2026-10-19: a split at the first face line's end, 4.2 s, left the whole intro "
+            f"on the body setting). If no clear CH1 end exists, ONE zone at `--min-sil {post}`")
+    zone += _pad_clause(state)
     prompt = (f"Desilence (FINAL tight pass) for project `{proj.name}`.\n"
               f"INPUT: `{src}`\nOUTPUT (fixed 13a path): `{out}` with the cut map `{map_json}` (--map-out).\n"
               f"SILENCE DEFINITION, Mike's knob: {zone}.\n"
@@ -509,7 +553,7 @@ def verify_spine(state: LongformState) -> LongformState:
     wj = C.words_json(proj, scope)
     if not fs or not wj:
         return C._fail(state, node, "final spine or its .medium-words.json missing")
-    why = _spine_check(fs)
+    why = _spine_check(fs, drift_ref=C.spine_paths(proj, scope)["lowbps"])  # drift the whole chain ADDED over the proxy
     if why:
         return C._fail(state, node, f"{fs.name}: {why}")
     try:
@@ -640,6 +684,16 @@ def _cover_plan_check(plan: dict, face_windows, duration: float):
         if not isinstance(row.get("reference"), str) or not row["reference"].strip():
             return (f"chatgpt_list row {row.get('n')} has no `reference` (a path under schedule-tweets/images/reference/ "
                     "or the string 'none exists (generic approved)')")
+    # a REUSED file keeps its own number: ids are derived from `n` (BR-{n} / IMG-{n}), so a re-plan that renumbers 1..N
+    # while reusing assets/vid/BR-4-... claims the WRONG file for the slot (kcc20, Mike 2026-10-21)
+    for key, folder, pre in (("envato_list", "vid", "BR"), ("chatgpt_list", "img", "IMG")):
+        for row in plan.get(key) or []:
+            nums = set(re.findall(rf"assets/{folder}/{pre}-(\d+)-", json.dumps(row, ensure_ascii=False)))
+            if len(nums) > 1:
+                return f"{key} row n={row.get('n')} names more than one reused file ({pre}-{', '.join(sorted(nums))})"
+            if nums and str(row.get("n")) != next(iter(nums)):
+                return (f"{key} row n={row.get('n')} reuses assets/{folder}/{pre}-{next(iter(nums))}-...: set n to "
+                        f"{next(iter(nums))} (the id is {pre}-{{n}}, so a renumbered row claims another slot's file)")
     bud = plan.get("budget") or {}
     for used, cap, what in (("envato_used", "envato_video_max", "Envato"), ("chatgpt_used", "chatgpt_image_max", "ChatGPT")):
         try:
@@ -772,7 +826,9 @@ def coverage(state: LongformState) -> LongformState:
                   "chatgpt-image | clip-insert (a chapter title card is a zero-length beat tIn == tOut with cover_type 'title', a clip insert a "
                   "zero-length beat with cover_type 'clip-insert'; both pauses are edit-time inserts). EVERY chatgpt_list row carries a `reference` key: a path under "
                   "schedule-tweets/images/reference/ when the image shows a real thing (token, logo, company, person, product), "
-                  "else the exact string 'none exists (generic approved)'. Chart IDs (C1, C2, C3 ...) and "
+                  "else the exact string 'none exists (generic approved)'. An envato_list / chatgpt_list row that REUSES a file "
+                  "already in assets/vid/ or assets/img/ keeps that file's number as `n` (reuse BR-4-... = n 4; never renumber "
+                  "1..N, the id is BR-{n} / IMG-{n}). Chart IDs (C1, C2, C3 ...) and "
                   "receipt IDs come from DATA.md's CHART-SOURCE INDEX. No em dashes in any text.\n"
                   f"Return the JSON per your definition AND also save it to EXACTLY `{dest}` with Bash (a quoted heredoc). "
                   "The graph verifies the file from disk (schema, coverage of every second, budget) and halts otherwise.")
@@ -1084,7 +1140,9 @@ def _asset_files(proj: Path, e: dict, base: Optional[Path] = None):
     d = (base or (proj / "assets")) / e["folder"]
     if not d.is_dir():
         return []
-    exts = VIDEO_EXT if e["kind"] in ("envato", "clip-insert") else (VIDEO_EXT + IMAGE_EXT if e["kind"] == "receipt" else IMAGE_EXT)
+    # a ChatGPT still may also carry its MOTION version (Higgsfield/Seedance image-to-video, e.g. IMG-5-<slug>-slowmo.mp4,
+    # Mike 2026-10-16): it belongs to the same id, so it is claimed (and audio/duplicate-checked) instead of an orphan
+    exts = VIDEO_EXT if e["kind"] in ("envato", "clip-insert") else (VIDEO_EXT + IMAGE_EXT if e["kind"] in ("receipt", "chatgpt") else IMAGE_EXT)
     out = []
     for f in sorted(d.iterdir()):
         if not f.is_file() or f.suffix.lower() not in exts:
@@ -1108,6 +1166,19 @@ def _qa_feedback(prev: dict, todo: list) -> str:
             "fixed (this is the whole point of the rebuild):\n" + "\n".join(lines))
 
 
+def _container_theme_prompt(proj: Path) -> str:
+    """The per-video CONTAINER THEME clause for the builders and visual-qa (GRAPH-PROGRESS.json settings.container_theme)."""
+    if C.container_theme(proj) != "light":
+        return ""
+    return ("CONTAINER THEME = LIGHT (Mike's per-video ruling, GRAPH-PROGRESS.json settings.container_theme; README section "
+            "'LIGHT THEME'): every CSS container, system-design diagram and animated-chart state is built on the locked "
+            "stylesheet PLUS `video-creation/longform-edited/skills/container-reference/container-canonical-light.css` loaded "
+            "right after it (warm off-white page, white cards with a hairline border, near-black text, the darkened accents, "
+            "glows become tinted rings, SVG glow filters dropped, grid/axis/wire tokens from that file). Same anatomy, type, "
+            "sizes and rules; only the palette. A white / off-white frame is the INTENDED look for this video, not a failed "
+            "capture; palette drift is judged against the LIGHT tokens. Receipts and real marks keep their real pixels.\n")
+
+
 def _builder_prompt(builder: str, proj: Path, fs: Path, todo: list, done: list, prev: Optional[dict] = None) -> str:
     plan_p, broll_p = C.doc(proj, "cover_plan"), C.doc(proj, "broll_plan")
     themes = {}
@@ -1124,6 +1195,7 @@ def _builder_prompt(builder: str, proj: Path, fs: Path, todo: list, done: list, 
                   "otherwise unchanged; receipts and real marks keep their real pixels); a ChatGPT image built for a chapter uses THAT "
                   "chapter's image_style ('house' = the persona look). Read the row's beat (CHn@...) to know its chapter.\n")
                  if themes else "")
+              + _container_theme_prompt(proj)
               + f"Build ONLY these ids (everything else on disk is done, leave it alone): "
               + ", ".join(f"{e['id']} -> assets/{e['folder']}/" for e in todo)
               + (f".\nAlready present, do NOT rebuild: {', '.join(done)}." if done else ".")
@@ -1246,6 +1318,7 @@ def assets(state: LongformState) -> LongformState:
                   "b-roll frames -> no watermark/text, dark grade; ChatGPT images -> the named asset with the real mark and colors, "
                   "house style, no text). A `.mid.png` is the middle frame of the video slot it is named after. Check ONLY the "
                   "files listed here (the others already carry a verdict); do not re-open the rest of the folder.\n"
+                  + _container_theme_prompt(proj)
                   + "\n".join(lines)
                   + f"\nReturn your JSON verdict AND save it to EXACTLY `{new_dest}` with Bash (a quoted heredoc). "
                     "Every asset listed must appear in `assets` with PASS or FAIL.")
@@ -1650,6 +1723,53 @@ def _plan_inserts(proj: Path):
     return sorted(out, key=lambda x: x[0])
 
 
+def _end_hold_extra(proj: Path, scope: str) -> float:
+    """Seconds the comp legitimately runs PAST the paused spine: MUSIC-PLAN `end_card_hold.hold_until_sec` (a source-spine
+    second, Mike's plan-gate ruling, e.g. the closing chord ringing out on a held end card, tao-detailed 2026-10-16) minus
+    the source spine's own length. 0 when the plan holds nothing, or when `trim` is set (Mike 2026-10-22, kcc20: the video
+    ends after the last word; the hold only positions the end-pinned music, mix_music.py cuts it at the video's end)."""
+    try:
+        hold = json.loads(C.doc(proj, "music_plan").read_text(encoding="utf-8")).get("end_card_hold") or {}
+        until = 0.0 if hold.get("trim") else float(hold.get("hold_until_sec") or 0)
+    except Exception:
+        return 0.0
+    fs = C.final_spine(proj, scope)
+    return max(0.0, until - (_duration(fs) or until)) if (until and fs) else 0.0
+
+
+def _waived_cards(proj: Path) -> dict:
+    """Card cuts Mike waived (`card_cut_waivers` in GRAPH-PROGRESS.json settings): {round(at, 3): (label, why)}."""
+    return {round(float(w["at"]), 3): (lbl, w.get("why", "")) for lbl, w in (C.setting(proj, "card_cut_waivers", {}) or {}).items()}
+
+
+BEAT_PAUSE_RE = re.compile(r"spine pause\s+(\d+(?:\.\d+)?)\s*s(?:\s+at\s+(\d+(?:\.\d+)?))?", re.I)
+
+
+def _beat_pauses(proj: Path) -> list:
+    """BEAT PAUSES from the EDIT-PLAN event log: a `[BRAAM]` row that says `spine pause <dur> s [at <source s>]`
+    (Mike 2026-10-17, tao-detailed: a braam goes BETWEEN sentences, after the intense line, with the figures on screen,
+    and the voice stays silent until the braam ends; longform-edited.md section 7). [(planned source t, dur, label)]."""
+    ep = C.doc(proj, "edit_plan")
+    if not ep.is_file():
+        return []
+    blocks, cur = [], None
+    for ln in ep.read_text(encoding="utf-8").splitlines():
+        m = re.match(r"^(\d+):(\d{2}\.\d)\s+", ln)
+        if m:
+            cur = [int(m.group(1)) * 60 + float(m.group(2)), ln]
+            blocks.append(cur)
+        elif cur is not None and ln.startswith(" ") and ln.strip():
+            cur[1] += " " + ln.strip()
+    out = []
+    for t_row, text in blocks:
+        if "[BRAAM]" not in text:
+            continue
+        m = BEAT_PAUSE_RE.search(text.split("[BRAAM]", 1)[1])
+        if m:
+            out.append((float(m.group(2)) if m.group(2) else t_row, float(m.group(1)), f"BRAAM-{len(out) + 1}"))
+    return out
+
+
 def card_pauses(state: LongformState) -> LongformState:
     """Wave E node 1 (2026-09-28; clip inserts 2026-10-09): bake the title-card pauses AND the clip inserts into the
     FINAL spine. Cards ON come from AS-RECORDED's chapter headers; bake_card_pauses.py SNAPS each to the silence
@@ -1672,6 +1792,7 @@ def card_pauses(state: LongformState) -> LongformState:
     cards = [(ta, re.search(r'card\s+ON\s*"([^"]+)"', tail).group(1))
              for cid, title, ta, tz, tail in _chapters(proj) if re.search(r'card\s+ON\s*"', tail)]
     inserts = _plan_inserts(proj)
+    beats = _beat_pauses(proj)   # braam pauses between sentences (EDIT-PLAN `[BRAAM] ... spine pause <dur> s`), baked like cards
     if not cards and not inserts:
         return C._fail(state, node, "AS-RECORDED.md names no chapter with `card ON` and COVER-PLAN.json has no clip_inserts "
                                     "(nothing to bake; if that is intended, --done card_pauses)")
@@ -1690,7 +1811,9 @@ def card_pauses(state: LongformState) -> LongformState:
         try:
             em = json.loads(existing.with_suffix(".json").read_text(encoding="utf-8"))
             have = sorted(str(p.get("label") or "") for p in em.get("pauses") or [] if p.get("clip"))
-            reuse = have == sorted(cid for _, _, cid in inserts) and Path(str(em.get("source") or "")).name == fs.name
+            have_beats = sorted((round(float(p["dur"]), 2), str(p["beat"])) for p in em.get("pauses") or [] if p.get("beat"))
+            reuse = (have == sorted(cid for _, _, cid in inserts) and Path(str(em.get("source") or "")).name == fs.name
+                     and have_beats == sorted((round(d, 2), lbl) for _, d, lbl in beats))
         except Exception:
             reuse = False
     if reuse:
@@ -1698,8 +1821,11 @@ def card_pauses(state: LongformState) -> LongformState:
     else:
         paused = final_out
         cards_side = cards_out.with_suffix(".json")
-        if cards:
-            args = [sys.executable, "-u", str(BAKE_CARD_PAUSES), str(source), "--cards", ",".join(f"{t}:{lbl}" for t, lbl in cards),
+        if cards or beats:
+            waivers = C.setting(proj, "card_cut_waivers", {}) or {}
+            spec = ",".join([f"{waivers[lbl]['at']}!:{lbl}" if lbl in waivers else f"{t}:{lbl}" for t, lbl in cards]
+                            + [f"{t}@{d}:{lbl}" for t, d, lbl in beats])
+            args = [sys.executable, "-u", str(BAKE_CARD_PAUSES), str(source), "--cards", spec,
                     "--pause", f"{pause_s}", "--out", str(cards_out), "--json", str(cards_side)]
             rc, out = C.run_streaming(args, state, node)
             if rc != 0:
@@ -1719,7 +1845,13 @@ def card_pauses(state: LongformState) -> LongformState:
                                             "audio: see above; move splice_at in COVER-PLAN.json or recapture the clip, then re-drive)", out)
     side = paused.with_suffix(".json")
     meta = json.loads(side.read_text(encoding="utf-8"))
-    inserts = ",".join(f"{p['at']}:{p['dur']}" for p in meta.get("pauses") or [])
+    # a card Mike waived (`card_cut_waivers`: the boundary has no 30 ms trough, he accepted the exact cut) is the one point
+    # the silence gate does not judge; it is printed so the waiver is visible in every run (tao-detailed 2026-10-17)
+    waived = _waived_cards(proj)
+    for p in meta.get("pauses") or []:
+        if round(float(p["at"]), 3) in waived:
+            print(f"  WAIVED  card {waived[round(float(p['at']), 3)][0]} at {p['at']}: {waived[round(float(p['at']), 3)][1]}")
+    inserts = ",".join(f"{p['at']}:{p['dur']}" for p in meta.get("pauses") or [] if round(float(p["at"]), 3) not in waived)
     src_for_gate = Path(meta.get("source") or (source or fs))
     rc, out = C.run_streaming([sys.executable, "-u", str(LINT_PAUSE_SILENCE), "--inserts", inserts, str(src_for_gate)], state, node)
     if rc != 0:
@@ -1746,7 +1878,8 @@ def card_pauses(state: LongformState) -> LongformState:
         shutil.copyfile(paused, dest)
     C.mark_manual(proj, node)  # the spine letter advanced; downstream nodes read assets/spine.mp4
     n_ins = sum(1 for p in meta.get("pauses") or [] if p.get("clip"))
-    return {"steps": C._step(state, node, "ran", f"{len(cards)} card pause(s) x {pause_s}s + {n_ins} clip insert(s) baked -> {paused.name} ({got:.2f}s), gate PASS, copied to assets/spine.mp4")}
+    n_beat = sum(1 for p in meta.get("pauses") or [] if p.get("beat"))
+    return {"steps": C._step(state, node, "ran", f"{len(cards)} card pause(s) x {pause_s}s + {n_beat} beat pause(s) + {n_ins} clip insert(s) baked -> {paused.name} ({got:.2f}s), gate PASS, copied to assets/spine.mp4")}
 
 
 BUILD_CAPTIONS = C.SCRIPTS / "build_project_captions.py"
@@ -1770,6 +1903,11 @@ def captions(state: LongformState) -> LongformState:
         if state.get("caption_windows"):
             for w in str(state["caption_windows"]).split(","):
                 args += ["--window", w.strip()]
+        cscope = C.caption_scope(proj)
+        if "all-faces" in cscope:
+            args.append("--all-faces")
+        if "envato" in cscope:
+            args.append("--over-envato")
         rc, out = C.run_streaming(args, state, node)
         if rc != 0:
             return C._fail(state, node, "build_project_captions.py failed (no FACE hold over 5 s? pass --caption-windows a-b for a cold-open exception)", out)
@@ -1786,11 +1924,15 @@ def captions(state: LongformState) -> LongformState:
             return C._fail(state, node, f"caption group at {t}s lies outside every caption window")
         if re.search(r"\bcasper\b|\u2014", h, re.I):
             return C._fail(state, node, f"caption text still carries a brand mishear / em dash: {h!r}")
-    return {"steps": C._step(state, node, "ran", f"{len(rows)} caption groups over {len(wins)} FACE window(s) -> {ts.name}")}
+    covers = meta.get("cover_windows") or []
+    return {"steps": C._step(state, node, "ran", f"{len(rows)} caption groups over {len(wins)} window(s)"
+                             + (" (every FACE hold" if meta.get("all_faces") else " (FACE holds > 5 s")
+                             + (f" + {len(covers)} Envato beat(s))" if covers else ")") + f" -> {ts.name}")}
 
 
 REMOTION = C.REPO_ROOT / "video-creation" / "remotion"
 COMP_GATES = C.SKILLS / "comp-build"
+BROLL_MOTION = C.SKILLS / "video-qa" / "check_broll_motion.py"
 
 
 def _pascal(slug: str) -> str:
@@ -1862,6 +2004,10 @@ def comp_build(state: LongformState) -> LongformState:
                   f"Assets (the render's --public-dir): `{proj / 'assets'}` (state cues in assets/diagrams/_state-cues.md, chart spec in "
                   f"assets/charts/*.spec.md). Captions: `{proj / 'assets' / 'captions.json'}` -> import ZCAPTIONS + CAPTION_WINDOWS from "
                   f"`{REMOTION / 'src' / (comp_id + 'Captions.ts')}`.\n"
+                  + (("CAPTIONS OVER ENVATO B-ROLL (Mike's per-video caption scope, GRAPH-PROGRESS.json settings.caption_scope): the "
+                      "sidecar's `cover_windows` are the envato-video beats CAPTION_WINDOWS also covers; flag EXACTLY those Envato covers "
+                      "`cap: true` in COVERS (comp-build.md section 8, lint_covers.py), and no other cover. Captions stay topmost.\n")
+                     if "envato" in C.caption_scope(proj) else "") +
                   f"FACE REFRAME (comp-build.md section 3a, measured, do not hand-tune): `{reframe_p}` -> declare exactly "
                   f"`export const FACE_REFRAME = {{ scale: {reframe.get('scale')}, x: {reframe.get('x')}, y: {reframe.get('y')} }};` and apply it to the "
                   f"spine and to every SpineStill (a background-swap clip `assets/face-swap/F<n>-higgsfield-bg-swap.mp4`, if the project has one, is PRE-FRAMED: play it full-frame WITHOUT FACE_REFRAME from its JSON's window_starts_at_clip_s, comp-build.md section 3b); punch-ins scale about the face point "
@@ -1882,9 +2028,11 @@ def comp_build(state: LongformState) -> LongformState:
     if not draft:
         return C._fail(state, node, f"no draft render in {proj / '_previews'} ({proj.name}-draft-vN.mp4)")
     got = _duration(draft) or 0.0
-    want = _duration(paused) or 0.0
+    hold = _end_hold_extra(proj, scope)
+    want = (_duration(paused) or 0.0) + hold
     if abs(got - want) > 0.3:
-        return C._fail(state, node, f"draft {draft.name} is {got:.2f}s, the paused spine is {want:.2f}s (every cue must route through sh())")
+        return C._fail(state, node, f"draft {draft.name} is {got:.2f}s, the paused spine is {want:.2f}s"
+                                    + (f" (incl. the {hold:.2f}s end-card hold)" if hold else "") + " (every cue must route through sh())")
     if not _has_audio_stream(draft):
         return C._fail(state, node, f"draft {draft.name} has no audio stream")
     return {"steps": C._step(state, node, "ran", f"{comp.name} registered, draft {draft.name} ({got:.2f}s, audio ok)")}
@@ -1929,7 +2077,14 @@ def verify_comp(state: LongformState) -> LongformState:
     if re.search(r"INSERTS\s*=\s*\[", src_text):
         _, paused = _paused_meta(proj, scope)
         meta = json.loads(paused.with_suffix(".json").read_text(encoding="utf-8")) if paused else {}
-        runs.append(("lint-pause-silence.py", [str(comp), str(meta.get("source") or paused)]))
+        # the SAME points the card_pauses node gated: the sidecar's pauses minus any card cut Mike waived (card_cut_waivers)
+        waived = _waived_cards(proj)
+        pts = [p for p in meta.get("pauses") or [] if round(float(p["at"]), 3) not in waived]
+        for at, (lbl, why) in waived.items():
+            print(f"  WAIVED  card {lbl} at {at}: {why}")
+        if pts:
+            runs.append(("lint-pause-silence.py", ["--inserts", ",".join(f"{p['at']}:{p['dur']}" for p in pts),
+                                                   str(meta.get("source") or paused)]))
     for script, args in runs:
         rc, out = C.run_streaming([sys.executable, "-u", str(COMP_GATES / script), *args], state, node)
         pat = GATE_LINES.get(script)
@@ -1941,8 +2096,9 @@ def verify_comp(state: LongformState) -> LongformState:
             fails.append(script)
     draft = _latest_draft(proj)
     paused = C.paused_spine(proj, scope)
-    d_ok = bool(draft and paused and abs((_duration(draft) or 0) - (_duration(paused) or 0)) <= 0.3 and _has_audio_stream(draft))
-    results["draft"] = {"ok": d_ok, "file": str(draft) if draft else None,
+    hold = _end_hold_extra(proj, scope)   # the approved end-card hold runs the comp past the spine (MUSIC-PLAN end_card_hold)
+    d_ok = bool(draft and paused and abs((_duration(draft) or 0) - (_duration(paused) or 0) - hold) <= 0.3 and _has_audio_stream(draft))
+    results["draft"] = {"ok": d_ok, "file": str(draft) if draft else None, "end_card_hold_s": round(hold, 3),
                         "duration_s": _duration(draft) if draft else None, "spine_s": _duration(paused) if paused else None}
     if not d_ok:
         fails.append("draft")
@@ -2006,6 +2162,7 @@ def gate_draft(state):
 
 
 RENDER_COMP = C.SCRIPTS / "render_comp.py"
+YT_DELIVERY = C.SCRIPTS / "yt_delivery.py"   # the finalize hand-off block: chapters, music codes, keywords (Mike 2026-10-20)
 RENDER_RE = re.compile(r"^RENDER-DONE mode=final out=(.+?) dur=([\d.]+) spine=([\d.]+) fps=(\S+) audio=(\S+)", re.M)
 
 
@@ -2062,8 +2219,9 @@ def verify_final(state: LongformState) -> LongformState:
         return C._fail(state, node, "mixed final render or paused spine missing")
     probs = []
     d, ds = _duration(mixed) or 0.0, _duration(paused) or 0.0
-    if abs(d - ds) > 0.3:
-        probs.append(f"duration {d:.2f}s vs spine {ds:.2f}s")
+    hold = _end_hold_extra(proj, scope)   # MUSIC-PLAN end_card_hold: the comp legitimately runs past the spine
+    if abs(d - ds - hold) > 0.3:
+        probs.append(f"duration {d:.2f}s vs spine {ds:.2f}s" + (f" + {hold:.2f}s end-card hold" if hold else ""))
     r = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=r_frame_rate", "-of", "csv=p=0", str(mixed)], capture_output=True, text=True)
     num, den = (r.stdout.strip().splitlines()[0].strip().strip(",").split(",")[0] if r.stdout.strip() else "0/1").split("/")  # ffprobe csv may trail a comma
     if abs(float(num) / float(den) - 30) > 0.01:
@@ -2081,6 +2239,13 @@ def verify_final(state: LongformState) -> LongformState:
     comp = REMOTION / "src" / f"{_pascal(proj.name)}.tsx"
     if comp.is_file() and re.search(r"WIP|WATERMARK", comp.read_text(encoding="utf-8", errors="replace")):
         probs.append("comp still carries a WIP/WATERMARK marker (remove before a final)")
+    # B-ROLL MOTION on the FINISHED file (Mike 2026-10-17, tao-detailed shipped stuttering b-roll: a too-small OffthreadVideo
+    # cache over the long render served stale frames; chunk renders never show it). Every vid slot must move as its source.
+    if comp.is_file():
+        rc, out = C.run_streaming([sys.executable, "-u", str(BROLL_MOTION), str(final), str(comp), str(proj / "assets")], state, node)
+        if rc != 0 or not re.search(r"^BROLL-MOTION PASS", out or "", re.M):
+            probs.append("b-roll freezes / skips frames in the render (check_broll_motion.py): re-render with render_comp.py's default "
+                         "--ov-cache-mb (3072 since 2026-10-20; if 3072 froze it, pass --ov-cache-mb 4096), never the old 400 MB cap")
     C._write_json_atomic(proj / "_previews" / "verify-final.json", {"final": str(mixed), "duration_s": d, "spine_s": ds, "lufs": lf, "peak_dbfs": pk,
                                                                    "draft_lufs": ld, "problems": probs})
     if probs:
@@ -2105,7 +2270,14 @@ def definition_of_done(state: LongformState) -> LongformState:
         shutil.copyfile(mixed, dest)
     if (_duration(dest) or 0) < 1:
         return C._fail(state, node, f"{dest.name} did not copy cleanly")
-    return {"steps": C._step(state, node, "ran", f"promoted {mixed.name} -> {dest.name} ({dest.stat().st_size / 1e6:.0f} MB)")}
+    # the YouTube hand-off block (Mike 2026-10-20): chapters + timestamps, the music codes `|`-delimited, 10 keywords;
+    # the main loop writes the judgment half (yt-delivery.json) and hands Mike the printed block at every finalize
+    rc, out = C.run_streaming([sys.executable, "-u", str(YT_DELIVERY), str(proj)], state, node)
+    if rc != 0:
+        return C._fail(state, node, "YT-DELIVERY FAIL: write yt-delivery.json at the project root (names for the uncarded chapters + "
+                                    "exactly 10 keyword phrases, scripts/yt_delivery.py docstring), re-drive, then hand Mike the block", out)
+    return {"steps": C._step(state, node, "ran", f"promoted {mixed.name} -> {dest.name} ({dest.stat().st_size / 1e6:.0f} MB); "
+                                                 "YT-DELIVERY.md written (hand Mike the chapters, codes and keywords)")}
 
 
 def _recycle(paths):
@@ -2158,7 +2330,9 @@ def stage_longform(state: LongformState) -> LongformState:
     dest_mp4 = dest_dir / f"{slug}.mp4"
     if not dest_mp4.is_file() or dest_mp4.stat().st_size != final.stat().st_size:
         shutil.copyfile(final, dest_mp4)
-    thumbs = sorted((proj / "thumbnail").glob("*thumb*.png")) if (proj / "thumbnail").is_dir() else []
+    # the winner lives in <project>/thumbnail/ OR <project>/assets/thumbnail/ (recent videos keep it under assets; only-18
+    # 2026-10-27 was staged with no thumbnail because only the first was searched); takes/ subfolders are never searched
+    thumbs = sorted(p for d in (proj / "thumbnail", proj / "assets" / "thumbnail") if d.is_dir() for p in d.glob("*thumb*.png"))
     thumb_rel = None
     if thumbs:
         dest_png = dest_dir / f"{slug}.png"

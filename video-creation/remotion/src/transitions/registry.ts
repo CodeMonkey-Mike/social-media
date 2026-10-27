@@ -1,5 +1,6 @@
 import React from 'react';
 import library from '../../../assets/transitions/library.json';
+import { AlphaPlate } from './engines/AlphaPlate';
 import { GlitchBlocks } from './engines/GlitchBlocks';
 import { GlitchBadSignal } from './engines/GlitchBadSignal';
 import { GlitchCinematicMonitor } from './engines/GlitchCinematicMonitor';
@@ -18,6 +19,7 @@ import { GlassBeveled } from './engines/GlassBeveled';
 import { LightLeaks } from './engines/LightLeaks';
 import { MeltRGB } from './engines/MeltRGB';
 import { MeltEquidistant } from './engines/MeltEquidistant';
+import { MirrorZoomPunch } from './engines/MirrorZoomPunch';
 import { Motion3D } from './engines/Motion3D';
 import { MotionShake } from './engines/MotionShake';
 import { PerspectiveEase } from './engines/PerspectiveEase';
@@ -25,6 +27,7 @@ import { ShakeJolt } from './engines/ShakeJolt';
 import { SpinTwirl } from './engines/SpinTwirl';
 import { SplitPanes } from './engines/SplitPanes';
 import { SplitPerspective } from './engines/SplitPerspective';
+import { StingerPlate } from './engines/StingerPlate';
 import { TransformFly } from './engines/TransformFly';
 
 /**
@@ -68,6 +71,7 @@ export type TransitionRow = {
 
 // engine name (as written in library.json) -> rendering component
 export const ENGINES: Record<string, React.FC<any>> = {
+  AlphaPlate,
   GlitchBlocks,
   GlitchBadSignal,
   GlitchCinematicMonitor,
@@ -86,6 +90,7 @@ export const ENGINES: Record<string, React.FC<any>> = {
   LightLeaks,
   MeltRGB,
   MeltEquidistant,
+  MirrorZoomPunch,
   Motion3D,
   MotionShake,
   PerspectiveEase,
@@ -93,6 +98,7 @@ export const ENGINES: Record<string, React.FC<any>> = {
   SpinTwirl,
   SplitPanes,
   SplitPerspective,
+  StingerPlate,
   TransformFly,
 };
 

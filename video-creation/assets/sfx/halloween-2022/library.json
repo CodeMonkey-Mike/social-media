@@ -1,0 +1,33 @@
+{
+ "$doc": "HALLOWEEN-2022 sound set: the sounds of the EFFECTS theme `halloween-2022` (video-creation/assets/effects/library.json, themes.halloween-2022), the look of Mike's 2022 'Bear Markets' video (CodeMonkey 044, main-sequence.mp4, studied 0:00-1:50 ONLY). In that window the theme's devices fired almost no sound of their own: the word pops, the two After Effects montages, the camera shakes and the Finzar punches were all SILENT (music only); the one device sound is woosh9 under the subscribe / like / bell button. The pumpkin stinger's baked sound belongs to the transitions library (scary-6), the evil-eye clip's eerie audio is b-roll audio, neither is catalogued here. Every row carries `device` (the effects device id it fires with). The time-ordered map of the source is video-creation/assets/effects/themes/halloween-2022/CUE-SHEET.md.",
+ "$schema_note": "Same shape as ../kinetic-text/library.json. `trigger` = the on-screen event the sound was cut to in the source (the field to pick by). `reference_cues_main_sequence` = seconds in Bear Markets main-sequence.mp4 (0:00-1:50 only). `attack_sec` = seconds from file start to the loudest sample (filled by sfx_catalog.py build). `device` = the effects-library device id(s) the sound belongs to.",
+ "halloween_2022": [
+  {
+   "id": "woosh9",
+   "title": "woosh9",
+   "file": "woosh9.mp3",
+   "source": "Mike's own SFX folder: D:\\Dropbox\\mikeneder.me\\videos\\assets\\Sound Effects\\woosh\\woosh9.mp3 (byte-identical copy, md5 a3e260d3)",
+   "source_file": "woosh9.mp3",
+   "type": "whoosh",
+   "mood_class": "tense",
+   "mood_source": "measured+name",
+   "character": "rising airy whoosh (a riser-whoosh), ~2.5 s, swells to its peak about 1.56 s in, then passes",
+   "trigger": "the SUBSCRIBE / LIKE / BELL button (hw-subscribe-like-bell): file start 0.133 s after the button's first frame, so the swell peaks on the cursor click / 'SUBSCRIBED' flip of the button animation",
+   "best_for": "the subscribe close of a halloween-2022 video, under the hw-subscribe-like-bell button (its fixed pairing); a rising whoosh into any CTA graphic. Not an impact: for a hit on a frame use the Impacts / accents catalog",
+   "reference_cues_main_sequence": [
+    "109.033 file start under the Scene_19 subscribe MOGRT (MOGRT starts 108.900), 0 dB on A4"
+   ],
+   "license": "from Mike's own SFX folder (used in his 2022 Bear Markets video); origin per file unknown; short SFX, no Content-ID code; confirm origin before a new commercial use outside Mike's channels",
+   "used_in": [
+    "CodeMonkey 044 Bear Markets (2022) 109.033"
+   ],
+   "device": [
+    "hw-subscribe-like-bell"
+   ],
+   "duration_sec": 2.46,
+   "attack_sec": 1.56,
+   "peak_dbfs": -2.3,
+   "tail_sec": 0.48
+  }
+ ]
+}

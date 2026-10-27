@@ -72,9 +72,15 @@ def main() -> int:
         run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:.4f}", "-i", a.master,
              "-frames:v", str(n), "-an", "-c:v", "libx264", "-crf", str(a.crf),
              "-preset", "veryfast", "-pix_fmt", "yuv420p", str(vid)])
-        run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:.4f}", "-i", a.spine,
-             "-t", f"{dur:.4f}", "-vn", "-ac", "2", "-ar", "48000",
-             "-c:a", "pcm_s16le", str(wav)])
+        if s.get("silent"):
+            # a SILENT span (a held still such as a dated status stamp): the picture plays, the VO is silence,
+            # because the spine under that picture is the NEXT line the short does not say
+            run(["ffmpeg", "-y", "-v", "error", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
+                 "-t", f"{dur:.4f}", "-c:a", "pcm_s16le", str(wav)])
+        else:
+            run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:.4f}", "-i", a.spine,
+                 "-t", f"{dur:.4f}", "-vn", "-ac", "2", "-ar", "48000",
+                 "-c:a", "pcm_s16le", str(wav)])
 
         got = frames_of(vid)
         ok = got == n
@@ -89,7 +95,7 @@ def main() -> int:
             "src_start": start, "src_end": end,
             "out_start": round(t_out, 4), "frames": n,
             "role": s.get("role"), "sourced": s.get("sourced"),
-            "says": s.get("says"),
+            "says": s.get("says"), "silent": bool(s.get("silent")),
         })
         t_out += dur
 

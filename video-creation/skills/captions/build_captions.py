@@ -3570,6 +3570,11 @@ FILLER = {"uh", "um", "uhh", "umm", "mm", "hmm", "m"}
 # everything else still collapses exactly as before, so no past output can change. Key the run tightly
 # (include the words AROUND the doubling) so an unrelated stutter is never spared.
 PROTECTED_DOUBLES = [
+    # was-i-right/crypto-winter-called-to-the-day (clip 1), 2026-10-17. "we're going to get a REALLY,
+    # REALLY disappointing local top." An intensifier doubling, not a stutter: medium.en renders
+    # "a really, really disappointing" on the whole file; two full tokens (4.92-5.22 / 5.22-5.52).
+    # Keyed with the words on both sides so a genuine "really really" stutter elsewhere still collapses.
+    ("a", "really", "really", "disappointing"),
     # bull-trap/golden-kitty-10-million-while-everything-bleeds (clip 2), 2026-10-03. "I REALLY, REALLY
     # want to see some October pumps." An intensifier doubling, not a stutter: medium.en renders
     # "I really really want" on the 16-24 AND 20-28 windows, two full tokens (23.36 / 23.66). Keyed with

@@ -1,0 +1,1065 @@
+{
+ "spine": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/inference/spine/ALL.d.desilenced.mp4",
+ "transcript_json": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/inference/spine/ALL.d.desilenced.medium-words.json",
+ "face_windows": [
+  [
+   0.0,
+   6.467
+  ],
+  [
+   11.933,
+   16.9
+  ],
+  [
+   61.3,
+   66.933
+  ],
+  [
+   67.733,
+   70.267
+  ],
+  [
+   108.767,
+   113.067
+  ],
+  [
+   141.933,
+   147.7
+  ],
+  [
+   158.033,
+   164.633
+  ],
+  [
+   176.367,
+   190.4
+  ]
+ ],
+ "budget": {
+  "envato_video_max": 10,
+  "chatgpt_image_max": 5,
+  "envato_used": 10,
+  "chatgpt_used": 4
+ },
+ "cover_beats": [
+  {
+   "chapter": "CH1",
+   "tIn": 6.467,
+   "tOut": 9.68,
+   "spoken": "Training is the model learning on its weights from data one time",
+   "cover_type": "envato-video",
+   "what": "BR-1: GPU training cluster / data-center aisle, slow dolly; kt-headline-over-broll TRAINED ONCE pops 0.8 s after the cut (knock-pop)",
+   "source": "envato: data center server aisle GPU cluster dolly blue lights",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: GPU board close up macro lights",
+   "notes": "Rule #2 punctuation (3.2 s); whip in on ea-glitch-21 per SCREENPLAY CH1 Beat 2. Headline text code-rendered from C2."
+  },
+  {
+   "chapter": "CH1",
+   "tIn": 9.68,
+   "tOut": 11.933,
+   "spoken": "and it costs millions.",
+   "cover_type": "container",
+   "what": "C2 state 1 (asset c2-training), LIGHT: TRAINING column ONCE / LEARNS THE WEIGHTS / COSTS MILLIONS (no figure)",
+   "source": "DATA.md C2, pillar 1 (NVIDIA 2016; IBM Research: can cost millions)",
+   "priority": "med",
+   "verify": false,
+   "bench": "kt-keyword-pop MILLIONS on cash-register over the BR-1 tail",
+   "notes": "Sequenced after BR-1 (rule #13). C2 is rendered as two separate assets (c2-training, c2-contrast) so no file appears twice (rule #12)."
+  },
+  {
+   "chapter": "CH1",
+   "tIn": 16.9,
+   "tOut": 18.6,
+   "spoken": "Training makes the headlines.",
+   "cover_type": "chatgpt-image",
+   "what": "IMG-1: press camera flashes aimed at a glowing GPU training cluster, no text, no logos",
+   "source": "chatgpt: press camera flashes bursting at a towering glowing server cluster, cinematic, dark, cyan rim light, house style, no text",
+   "priority": "low",
+   "verify": false,
+   "bench": "envato: paparazzi camera flashes dark background",
+   "notes": "Atmospheric beat, no receipt fits; 1.7 s still."
+  },
+  {
+   "chapter": "CH1",
+   "tIn": 18.6,
+   "tOut": 22.45,
+   "spoken": "Inference is the bill, the latency, and the part you actually operate.",
+   "cover_type": "container",
+   "what": "C2 state 2 (asset c2-contrast): TRAINING dimmed vs INFERENCE lit: THE BILL / THE LATENCY / THE PART YOU OPERATE, each row lights on its word (19.64, 20.34, 21.30)",
+   "source": "DATA.md C2, T1/T2 (IBM Research: a one-time investment in compute while inferencing is ongoing)",
+   "priority": "high",
+   "verify": false,
+   "bench": "kt-list-card with the three items on ting",
+   "notes": "Spotlight one row at a time (rule #3). Never 'always costs more' (WARNING 2)."
+  },
+  {
+   "chapter": "CH1",
+   "tIn": 22.45,
+   "tOut": 25.3,
+   "spoken": "By some estimates, up to 90%",
+   "cover_type": "envato-video",
+   "what": "BR-2: calm plate, a chat UI streaming an answer on a monitor (or quiet rack LEDs); kt-headline-over-broll UP TO 90% pops ON '90' at 24.36 (knock-pop), code-rendered text",
+   "source": "envato: chat interface typing answer screen close up OR server rack blinking lights calm",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: cloud data center night exterior",
+   "notes": "swoosh-3 calm cut. 2.85 s. The number is text, never an image."
+  },
+  {
+   "chapter": "CH1",
+   "tIn": 25.3,
+   "tOut": 27.55,
+   "spoken": "of a model's life is inference.",
+   "cover_type": "receipt",
+   "what": "C17: IBM Research paragraph, 'up to 90% of an AI-model's life is spent in inference mode' highlighted, real pixels",
+   "source": "https://research.ibm.com/blog/AI-inference-explained (crop to the paragraph)",
+   "priority": "high",
+   "verify": true,
+   "bench": "AWS 2019 Inf1 post 'up to 90% of the cost' (COST, not LIFE; only if IBM fails)",
+   "notes": "Makes the estimate airable (do-not-air row 1). swoosh-8 chapter whip into CH2."
+  },
+  {
+   "chapter": "CH2",
+   "tIn": 27.55,
+   "tOut": 30.6,
+   "spoken": "Your request never reaches the model as text.",
+   "cover_type": "envato-video",
+   "what": "BR-3: hands typing a prompt into a chat box, shallow focus",
+   "source": "envato: typing prompt chatbot laptop close up keyboard",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: code editor scrolling dark screen",
+   "notes": "Chapter whip swoosh-8. 3.05 s."
+  },
+  {
+   "chapter": "CH2",
+   "tIn": 30.6,
+   "tOut": 33.6,
+   "spoken": "A tokenizer turns it into IDs",
+   "cover_type": "container",
+   "what": "tokenizer-split: the sentence 'Your request never reaches the model as text.' splits into coloured token chunks, each dropping its integer ID; kt-side-panel PAPER right TOKEN IDS / BILLED PER TOKEN + TOKEN icon",
+   "source": "real tokenizer output for that sentence (tiktoken o200k_base run at build, IDs copied from the run); HF guide tokenizer(prompt)[input_ids]",
+   "priority": "med",
+   "verify": true,
+   "bench": "terminal receipt of the tokenizer run on the sentence",
+   "notes": "Convention 4, pixel-accurate. verify: IDs from an actual run, never invented. TOKEN IDS, REAL (Mike 2026-10-26: real IDs, run on this machine with tiktoken 0.12.0, encoding o200k_base, the GPT-4o / o-series tokenizer): \"Your request never reaches the model as text.\" -> 9 tokens: 'Your'=9719 · ' request'=2616 · ' never'=3779 · ' reaches'=42373 · ' the'=290 · ' model'=2359 · ' as'=472 · ' text'=2201 · '.'=13. Show each chunk with its ID under it exactly as listed (leading spaces are part of the token, render them as a visible gap, not a character); the tokenizer named in small type: \"o200k_base tokenizer\". Never retype or round."
+  },
+  {
+   "chapter": "CH2",
+   "tIn": 33.6,
+   "tOut": 35.38,
+   "spoken": "and the tokens are what you get billed for.",
+   "cover_type": "receipt",
+   "what": "C8: Anthropic pricing table header 'Base input tokens' / 'Output tokens' + two $ / MTok rows, real pixels, no price spoken",
+   "source": "https://platform.claude.com/docs/en/about-claude/pricing (crop to header + two rows)",
+   "priority": "high",
+   "verify": true,
+   "bench": "OpenAI 'Prices per 1M tokens.' https://developers.openai.com/api/docs/pricing",
+   "notes": "Live-drift page, re-capture on capture day."
+  },
+  {
+   "chapter": "CH2",
+   "tIn": 35.38,
+   "tOut": 44.45,
+   "spoken": "Step 1. Prefill. The GPU reads your whole prompt at once and stores the keys and the values in every token in memory. That's the KV cache.",
+   "cover_type": "diagram",
+   "what": "C1 full frame, LIGHT: PROMPT -> TOKENIZER -> TOKEN IDS -> PREFILL -> KV CACHE -> DECODE loop -> NEXT TOKEN -> STOP, TTFT / TPOT brackets. PREFILL lights on 'Prefill' (36.42), prompt tokens enter at once (38.94), KV CACHE fills and lights on 'KV cache' (43.62)",
+   "source": "DATA.md C1, pillar 2 (NVIDIA 2023, HF guide, vLLM)",
+   "priority": "high",
+   "verify": false,
+   "bench": "kt-list-card PREFILL / DECODE on ting (SCREENPLAY fallback)",
+   "notes": "THE BALANCE: the rich diagram ONCE while explained, then broken into spotlight containers. No pop on the diagram."
+  },
+  {
+   "chapter": "CH2",
+   "tIn": 44.45,
+   "tOut": 46.55,
+   "spoken": "The chip is working flat out.",
+   "cover_type": "envato-video",
+   "what": "BR-4: graphics card fans spinning hard, close-up, no brand",
+   "source": "envato: graphics card fans spinning close up GPU under load",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: CPU chip macro glowing circuit",
+   "notes": "2.1 s cutaway, sequenced not stacked (rule #13)."
+  },
+  {
+   "chapter": "CH2",
+   "tIn": 46.55,
+   "tOut": 48.1,
+   "spoken": "Prefill is compute bound.",
+   "cover_type": "container",
+   "what": "prefill-compute-bound: PREFILL = COMPUTE-BOUND, compute meter pinned full, source line 'vLLM docs'",
+   "source": "DATA.md pillar 2, vLLM optimization page (C13 wording)",
+   "priority": "med",
+   "verify": false,
+   "bench": "kt-keyword-pop COMPUTE-BOUND over the BR-4 tail",
+   "notes": "Attribution vLLM, never NVIDIA (do-not-air row 15)."
+  },
+  {
+   "chapter": "CH2",
+   "tIn": 48.1,
+   "tOut": 53.45,
+   "spoken": "Step 2. Decode. One token per step and every step reloads that whole cache.",
+   "cover_type": "diagram",
+   "what": "c1-decode-spotlight: zoomed KV CACHE -> DECODE -> NEXT TOKEN loop, the cache-to-decode arrow pulses each step (the reload), one token appends per loop",
+   "source": "DATA.md C1 decode half, HF guide 3.2.2",
+   "priority": "high",
+   "verify": false,
+   "bench": "C1 state 2 on the full diagram (would be a second showing of C1)",
+   "notes": "Spotlight break-up of C1, its own asset so C1 is not shown twice."
+  },
+  {
+   "chapter": "CH2",
+   "tIn": 53.45,
+   "tOut": 58.05,
+   "spoken": "Within one request, you can['t] skip ahead. Each token depends on the last.",
+   "cover_type": "container",
+   "what": "one-token-chain: token chain growing one block at a time, each arrowed from the previous; ONE TOKEN AT A TIME, WITHIN ONE REQUEST",
+   "source": "DATA.md pillar 2 (HF: never depend on later tokens), do-not-air row 16",
+   "priority": "med",
+   "verify": true,
+   "bench": "kt-keyword-pop ONE AT A TIME over the decode spotlight tail",
+   "notes": "verify: the 54.90 can / can't is OPEN by ear; the label reads true either way."
+  },
+  {
+   "chapter": "CH2",
+   "tIn": 58.05,
+   "tOut": 59.85,
+   "spoken": "The chip is waiting on memory.",
+   "cover_type": "envato-video",
+   "what": "BR-5: RAM modules macro, slow rack focus, or data pulsing along a trace",
+   "source": "envato: memory RAM modules macro circuit board data flow",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: hourglass sand falling dark",
+   "notes": "1.8 s."
+  },
+  {
+   "chapter": "CH2",
+   "tIn": 59.85,
+   "tOut": 61.3,
+   "spoken": "Decode is memory bound.",
+   "cover_type": "receipt",
+   "what": "C13: vLLM docs, Chunked Prefill, 'compute-bound (prefill) and memory-bound (decode)' highlighted",
+   "source": "https://docs.vllm.ai/en/latest/configuration/optimization.html (crop to the sentence)",
+   "priority": "high",
+   "verify": true,
+   "bench": "C12 NVIDIA benchmarking post TTFT / TPOT definitions",
+   "notes": "Receipt for the pair with the correct attribution. Whip to FACE 3."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 66.933,
+   "tOut": 67.733,
+   "spoken": "The levers.",
+   "cover_type": "chatgpt-image",
+   "what": "IMG-2: an industrial control console with four big chrome levers, dramatic light, no text",
+   "source": "chatgpt: four large industrial chrome levers on a dark control console, cinematic, cyan accent light, house style, no text",
+   "priority": "low",
+   "verify": false,
+   "bench": "envato: hand pulling lever control panel",
+   "notes": "Fills the 0.8 s black gap (the ad-lib) under the swoosh-8 chapter whip."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 70.267,
+   "tOut": 72.0,
+   "spoken": "Continuous batching.",
+   "cover_type": "container",
+   "what": "C3 paper list card, shown ONCE as the overview: CONTINUOUS BATCHING / CACHING / QUANTIZATION / SPECULATIVE DECODING, item 1 lit on 'Continuous' (70.56, ting)",
+   "source": "DATA.md C3, pillar 3",
+   "priority": "high",
+   "verify": false,
+   "bench": "the 2023 full build (card held 24 s, items popping on their names)",
+   "notes": "THE BALANCE: the rich card once (fast-swoosh in), then each lever gets its own spotlight container."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 72.0,
+   "tOut": 75.9,
+   "spoken": "Requests join and leave mid-flight so the GPU never idles.",
+   "cover_type": "container",
+   "what": "batching-lane: animated GPU batch lane, request bars join and leave mid-flight, the lane never empty; label 1 / 4 CONTINUOUS BATCHING",
+   "source": "DATA.md pillar 3 (NVIDIA 2023 in-flight batching, Orca OSDI 2022)",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: highway merge time-lapse",
+   "notes": "No multiplier shown (no 36.9x)."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 75.9,
+   "tOut": 80.2,
+   "spoken": "Caching. PagedAttention. Cut wasted cache memory to near zero",
+   "cover_type": "receipt",
+   "what": "C11: arXiv 2309.06180 abstract page, title with PagedAttention visible on the word, then 'near-zero waste in KV cache memory' highlighted",
+   "source": "https://arxiv.org/abs/2309.06180 (title + abstract crop)",
+   "priority": "high",
+   "verify": true,
+   "bench": "vLLM docs home: Efficient management of attention key and value memory with PagedAttention",
+   "notes": "Receipt first. Crop above the 2-4x sentence (do-not-air row 7)."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 80.2,
+   "tOut": 83.3,
+   "spoken": "and a shared prompt prefix is computed once.",
+   "cover_type": "container",
+   "what": "prefix-cache: two requests share one PREFIX block (computed once, lit), each with its own short suffix; label 2 / 4 CACHING, prefix caching",
+   "source": "DATA.md pillar 3 (vLLM Automatic Prefix Caching)",
+   "priority": "med",
+   "verify": false,
+   "bench": "Anthropic prompt-caching page receipt: resuming from specific prefixes",
+   "notes": "No cache price shown (live-drift)."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 83.3,
+   "tOut": 88.6,
+   "spoken": "Quantization. 8 bit halves the weights, 4 bit quarters them so it fits a smaller card.",
+   "cover_type": "animated-chart",
+   "what": "quantization-memory: three bars: 16-bit 29.0 GB, 8-bit 15.2 GB (on '8-bit' 83.98), 4-bit 9.5 GB (on '4-bit' 85.48); a small-card outline the 4-bit bar fits under; source line Hugging Face, bigcode/octocoder example; label 3 / 4 QUANTIZATION",
+   "source": "DATA.md pillar 3, HF optimization guide section 1 worked example (29.0 / 15.2 / 9.5 GB), code-rendered, numbers copied from the doc",
+   "priority": "high",
+   "verify": false,
+   "bench": "HF guide receipt of the three numbers",
+   "notes": "Memory only, NO speed multiplier (do-not-air row 5). Code chart, never an image model."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 88.6,
+   "tOut": 94.9,
+   "spoken": "Speculative decoding. A small model drafts. The big one verifies in one pass. Same output.",
+   "cover_type": "container",
+   "what": "speculative-decoding: a small model writes 4 draft tokens (on 'drafts'), the big model checks all 4 in one pass (on 'verifies'), SAME OUTPUT stamps on 'Same output' (94.16); label 4 / 4 SPECULATIVE DECODING",
+   "source": "DATA.md pillar 3 (Leviathan et al. arXiv 2211.17192: without any changes to the outputs)",
+   "priority": "med",
+   "verify": false,
+   "bench": "arXiv 2211.17192 abstract receipt (crop above the 2X-3X line)",
+   "notes": "No 2-3x (do-not-air row 6)."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 94.9,
+   "tOut": 97.9,
+   "spoken": "All of that lives in the inference engine.",
+   "cover_type": "envato-video",
+   "what": "BR-6: GPU server rack push-in; kt-headline-over-broll THE INFERENCE ENGINE pops ON 'engine' (96.68, knock-pop), cut on ea-glitch-21",
+   "source": "envato: server room rack push in GPU servers lights",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: data center corridor drone",
+   "notes": "COVER per Mike 2026-10-26. 3.0 s. The engine names move to the next two containers."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 97.9,
+   "tOut": 101.85,
+   "spoken": "vLLM, SGLang, TensorRT-LLM,",
+   "cover_type": "diagram",
+   "what": "engines-datacenter: REQUEST -> INFERENCE ENGINE -> GPU, engine names light in turn: vLLM (98.02), SGLang (98.88), TensorRT-LLM (100.08)",
+   "source": "DATA.md pillar 3 + section 3 spellings (vLLM docs, SGLang GitHub, TensorRT-LLM GitHub)",
+   "priority": "med",
+   "verify": false,
+   "bench": "three GitHub repo-header receipts in a fast stack",
+   "notes": "Spellings exact: vLLM, SGLang, TensorRT-LLM."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 101.85,
+   "tOut": 105.1,
+   "spoken": "on a laptop, Ollama, and llama.cpp.",
+   "cover_type": "diagram",
+   "what": "engines-laptop: the flow on a LAPTOP outline: Ollama (102.96) on top of llama.cpp (104.00) as its backend, localhost:11434",
+   "source": "DATA.md pillar 3 (Ollama GitHub: llama.cpp backend, REST API at localhost:11434; llama.cpp GitHub)",
+   "priority": "med",
+   "verify": false,
+   "bench": "Ollama GitHub README receipt",
+   "notes": "Generic laptop line, not Mike's hardware (AS-RECORDED flag)."
+  },
+  {
+   "chapter": "CH3",
+   "tIn": 105.1,
+   "tOut": 108.767,
+   "spoken": "Hosted. You pay per token and the vendor runs the GPU.",
+   "cover_type": "envato-video",
+   "what": "BR-7: API request log scrolling on a monitor; C16 kt-side-panel PAPER right HOSTED / PAY PER TOKEN / THEIR GPU (whoosh-4), b-roll translates left",
+   "source": "envato: scrolling server log terminal screen API requests",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: cloud data center exterior night",
+   "notes": "3.67 s. Panel = C16 state 1 overlay; state 2 (SELF-HOSTED, dark, left) rides FACE 5."
+  },
+  {
+   "chapter": "CH4",
+   "tIn": 113.067,
+   "tOut": 116.9,
+   "spoken": "Now with me, I run an AI pipeline and edit videos just like this one.",
+   "cover_type": "envato-video",
+   "what": "BR-8: video editing timeline on a workstation monitor, playhead moving, no headline",
+   "source": "envato: video editing timeline screen editor workstation",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: editor hands on keyboard multiple monitors",
+   "notes": "swoosh-8 chapter whip. 3.83 s."
+  },
+  {
+   "chapter": "CH4",
+   "tIn": 116.9,
+   "tOut": 119.8,
+   "spoken": "So here's what inference looks like in practice.",
+   "cover_type": "diagram",
+   "what": "my-pipeline: RECORDING -> WHISPER (SELF-HOSTED, MY OWN GPU) -> AI AGENTS (HOSTED, CLAUDE) -> VIDEO; both inference nodes lit, no hardware named",
+   "source": "DATA.md pillar 4 (whisper_jobs.py, common.py spawn_agent)",
+   "priority": "med",
+   "verify": false,
+   "bench": "kt-headline-over-broll IN PRACTICE over the BR-8 tail",
+   "notes": "Overview once, then broken into the C4 / C5 / C6 / C7 receipts (THE BALANCE)."
+  },
+  {
+   "chapter": "CH4",
+   "tIn": 119.8,
+   "tOut": 126.0,
+   "spoken": "Every clip I transcribe runs OpenAI Whisper on my own GPU. Self-hosted inference.",
+   "cover_type": "receipt",
+   "what": "C4: editor view of video-creation/shorts/_tooling/whisper_jobs.py, line 1 (load the model ONCE, run every window) and lines 122 to 133 (device cuda, whisper.load_model); kt-side-panel PAPER SELF-HOSTED / WHISPER MEDIUM / MY OWN GPU + CHIP icon",
+   "source": "this repo, whisper_jobs.py line 1 + lines 122-133 (NOT lines 3-6)",
+   "priority": "high",
+   "verify": true,
+   "bench": "transcribe.py lines 16-31 (whisper.load_model, cuda)",
+   "notes": "verify: the crop skips the docstring lines naming the card and the 20.5 s (Mike 2026-10-26, do-not-air row 8)."
+  },
+  {
+   "chapter": "CH4",
+   "tIn": 126.0,
+   "tOut": 129.3,
+   "spoken": "Loading the model costs around 15 to 20 seconds.",
+   "cover_type": "receipt",
+   "what": "C5: real terminal showing '[whisper_jobs] medium.en loaded on cuda in 14.2s (77 job(s))', highlighted",
+   "source": "this repo, video-creation/shorts/kcc20-live/ai-replaces-engineers-this-year/_qa/sweep.log line 1 (cat in a terminal; no nvidia-smi)",
+   "priority": "high",
+   "verify": true,
+   "bench": "sweep2.log: loaded on cuda in 17.5s (49 job(s))",
+   "notes": "One number on screen, the log's own. verify the log still exists."
+  },
+  {
+   "chapter": "CH4",
+   "tIn": 129.3,
+   "tOut": 132.88,
+   "spoken": "So my pipeline loads it once and runs every clip through it.",
+   "cover_type": "container",
+   "what": "load-once: ONE model-load block, then clip jobs streaming through it; LOAD ONCE / RUN EVERY CLIP",
+   "source": "DATA.md pillar 4 (whisper_jobs.py line 1, remotion-shorts-build SKILL.md row 7a)",
+   "priority": "med",
+   "verify": false,
+   "bench": "C4 crop of line 1 alone",
+   "notes": "No job count invented; the 77 lives only in C5."
+  },
+  {
+   "chapter": "CH4",
+   "tIn": 132.88,
+   "tOut": 134.75,
+   "spoken": "Keep the weights hot, batch the work.",
+   "cover_type": "chatgpt-image",
+   "what": "IMG-3: an unbranded GPU glowing orange-hot like metal fresh from a forge, sparks",
+   "source": "chatgpt: an unbranded graphics card glowing orange hot like forged steel, sparks, dark forge, cinematic, house style, no text, no logos",
+   "priority": "low",
+   "verify": false,
+   "bench": "envato: molten metal forge sparks slow motion",
+   "notes": "1.87 s punchline still."
+  },
+  {
+   "chapter": "CH4",
+   "tIn": 134.75,
+   "tOut": 137.2,
+   "spoken": "And every agent in my pipeline spawns",
+   "cover_type": "receipt",
+   "what": "C6: video-creation/longform-edited/graph/common.py lines 446-448 and 484-487 (def spawn_agent, the claude -p --agent command, the spawning print)",
+   "source": "this repo, graph/common.py editor view (line numbers re-checked at capture)",
+   "priority": "high",
+   "verify": true,
+   "bench": "find_jobs.py spawn_reviewer lines 1187-1192",
+   "notes": "verify: line numbers drift as common.py is edited."
+  },
+  {
+   "chapter": "CH4",
+   "tIn": 137.2,
+   "tOut": 140.65,
+   "spoken": "around 20 per video is a Claude session billed per token.",
+   "cover_type": "receipt",
+   "what": "C7: terminal 'ls video-creation/longform-edited/graph/data/ | grep growth-vs-product' listing the 20 longform-lane agent logs; kt-side-panel PAPER HOSTED / CLAUDE, BILLED PER TOKEN + DOLLAR icon",
+   "source": "this repo, graph/data/ listing (re-list on capture day)",
+   "priority": "high",
+   "verify": true,
+   "bench": "the inference project's own agent-log listing",
+   "notes": "Cut ON 'around 20' (137.24). Never 'hundreds' (do-not-air row 9). Logs rotate when projects close."
+  },
+  {
+   "chapter": "CH4",
+   "tIn": 140.65,
+   "tOut": 141.933,
+   "spoken": "Hosted inference.",
+   "cover_type": "chatgpt-image",
+   "what": "IMG-4: a distant cloud data center glowing at night across a dark plain (someone else's GPUs), no text",
+   "source": "chatgpt: a remote hyperscale data center glowing at night seen from far away across a dark plain, cinematic, cyan accent, house style, no text, no logos",
+   "priority": "low",
+   "verify": false,
+   "bench": "envato: data center exterior night aerial",
+   "notes": "1.28 s, then fast-reverse-1 whip to FACE 6."
+  },
+  {
+   "chapter": "CH5",
+   "tIn": 147.7,
+   "tOut": 150.05,
+   "spoken": "Now the 2026 twist.",
+   "cover_type": "envato-video",
+   "what": "BR-9: abstract neural-network light streams, fast; kt-headline-over-broll 2026 pops ON '2026' (148.56)",
+   "source": "envato: abstract neural network data streams glowing lines",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: chat UI thinking dots loading screen",
+   "notes": "swoosh-8 chapter whip + ea-glitch-21. 2.35 s."
+  },
+  {
+   "chapter": "CH5",
+   "tIn": 150.05,
+   "tOut": 154.38,
+   "spoken": "Reasoning models think before they answer and that thinking is extra tokens.",
+   "cover_type": "animated-chart",
+   "what": "thinking-tokens: PROMPT, then a long run of grey THINKING tokens streaming (on 'think'), then a short ANSWER; THINKING TOKENS headline on 'extra tokens' (153.46)",
+   "source": "DATA.md pillar 5 (OpenAI reasoning guide: internal reasoning tokens before producing a response); illustrative block counts, no number shown",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: chat UI thinking state then streaming",
+   "notes": "No token count printed."
+  },
+  {
+   "chapter": "CH5",
+   "tIn": 154.38,
+   "tOut": 156.3,
+   "spoken": "Billed as output by OpenAI",
+   "cover_type": "receipt",
+   "what": "C9: OpenAI reasoning guide paragraph ending 'are billed as output tokens', highlighted",
+   "source": "https://developers.openai.com/api/docs/guides/reasoning (crop to the paragraph)",
+   "priority": "high",
+   "verify": true,
+   "bench": "OpenAI pricing page output-token row",
+   "notes": "Receipt on 'Billed as output'."
+  },
+  {
+   "chapter": "CH5",
+   "tIn": 156.3,
+   "tOut": 158.033,
+   "spoken": "and Anthropic alike.",
+   "cover_type": "receipt",
+   "what": "C10: Anthropic extended-thinking page, the usage.output_tokens_details.thinking_tokens sentence (how many of the billed output tokens were internal reasoning) highlighted",
+   "source": "https://platform.claude.com/docs/en/docs/build-with-claude/extended-thinking (crop to that sentence, below the deprecation Warning, no budget_tokens line)",
+   "priority": "high",
+   "verify": true,
+   "bench": "Anthropic pricing page Output tokens column",
+   "notes": "Billing, never 'hidden' (do-not-air row 12); never budget_tokens (Open question 4). Whip to FACE 7."
+  },
+  {
+   "chapter": "CH5",
+   "tIn": 164.633,
+   "tOut": 168.0,
+   "spoken": "Jensen Huang, NVIDIA's CEO, stood out on a GTC stage",
+   "cover_type": "container",
+   "what": "huang-id-card: JENSEN HUANG / NVIDIA CEO / GTC KEYNOTE, MARCH 2025 (never 'stood out')",
+   "source": "DATA.md sections 3 + 6 (GTC keynote 2025-03-18, YouTube _waPvOwL9Z8)",
+   "priority": "med",
+   "verify": false,
+   "bench": "receipt of the NVIDIA YouTube upload title: GTC March 2025 Keynote with NVIDIA CEO Jensen Huang",
+   "notes": "Text card names the moment; no AI image of a real person."
+  },
+  {
+   "chapter": "CH5",
+   "tIn": 168.0,
+   "tOut": 171.32,
+   "spoken": "in 2025 and named the hard problem.",
+   "cover_type": "receipt",
+   "what": "CLIP-3 lead-in: the clip's FIRST frame (NVIDIA upload, 54:18.9) held as a still, no restyle, caption-free",
+   "source": "https://www.youtube.com/watch?v=_waPvOwL9Z8 frame at 54:18.9 (captured with the clip by capture_clip_insert.py)",
+   "priority": "high",
+   "verify": true,
+   "bench": "a GTC 2025 stage frame from the same upload",
+   "notes": "The clip's FIRST frame is held as a still under the set-up line (comp lead-in); the clip then plays full-frame with its own voice at 171.32."
+  },
+  {
+   "chapter": "CH5",
+   "tIn": 171.32,
+   "tOut": 171.32,
+   "spoken": "(CLIP-3 plays, 5.1 s, Jensen Huang's own voice: it is the ultimate extreme computing problem and it's called inference)",
+   "cover_type": "clip-insert",
+   "what": "CLIP-3 full-frame with its own audio, burned caption, bed ducked -14 dB, hand:fade 0.5 s in and out",
+   "source": "https://www.youtube.com/watch?v=_waPvOwL9Z8 54:18.9-54:24.0",
+   "priority": "high",
+   "verify": true,
+   "bench": "none (drop the insert; set-up and resume lines still read)",
+   "notes": "Zero-length spine pause in the trough after 'problem' (171.32-171.46). Edit-time insert, never a muted cover."
+  },
+  {
+   "chapter": "CH5",
+   "tIn": 171.32,
+   "tOut": 172.4,
+   "spoken": "He sells the chips",
+   "cover_type": "receipt",
+   "what": "CLIP-3 lead-out: the clip's LAST frame (54:24.0) held as a still under the resume line",
+   "source": "https://www.youtube.com/watch?v=_waPvOwL9Z8 frame at 54:24.0 (captured with the clip)",
+   "priority": "high",
+   "verify": true,
+   "bench": "the lead-in frame",
+   "notes": "The clip's LAST frame is held under the resume line (comp lead-out)."
+  },
+  {
+   "chapter": "CH5",
+   "tIn": 172.4,
+   "tOut": 174.5,
+   "spoken": "that run it, so keep that in mind.",
+   "cover_type": "envato-video",
+   "what": "BR-10: silicon wafer / GPU dies under clean-room light, slow rotate, no brand",
+   "source": "envato: silicon wafer chips macro clean room",
+   "priority": "med",
+   "verify": false,
+   "bench": "envato: chip production line",
+   "notes": "2.1 s. The incentive line, unbranded."
+  },
+  {
+   "chapter": "CH5",
+   "tIn": 174.5,
+   "tOut": 176.367,
+   "spoken": "And on the engineering, he's right.",
+   "cover_type": "container",
+   "what": "incentive-vs-engineering: HE SELLS THE CHIPS (dimmed) / ON THE ENGINEERING: RIGHT (lit on 'right', 176.14)",
+   "source": "DATA.md section 6 context check + do-not-air row 11",
+   "priority": "med",
+   "verify": false,
+   "bench": "kt-keyword-pop HE'S RIGHT over the BR-10 tail",
+   "notes": "Then whoosh-4 to FACE 8 (subscribe close)."
+  }
+ ],
+ "receipts": [
+  {
+   "id": "C17",
+   "claim": "up to 90% of a model's life is inference (IBM estimate)",
+   "capture": "https://research.ibm.com/blog/AI-inference-explained, the 'up to 90% of an AI-model's life' paragraph, highlighted",
+   "beats": [
+    "CH1@25.3-27.55"
+   ],
+   "verify": true
+  },
+  {
+   "id": "C8",
+   "claim": "tokens are what you get billed for",
+   "capture": "https://platform.claude.com/docs/en/about-claude/pricing, pricing table header (Base input tokens / Output tokens) + two rows",
+   "beats": [
+    "CH2@33.6-35.38"
+   ],
+   "verify": true
+  },
+  {
+   "id": "C13",
+   "claim": "prefill compute-bound, decode memory-bound (vLLM's pair)",
+   "capture": "https://docs.vllm.ai/en/latest/configuration/optimization.html, Chunked Prefill sentence",
+   "beats": [
+    "CH2@59.85-61.3"
+   ],
+   "verify": true
+  },
+  {
+   "id": "C11",
+   "claim": "PagedAttention: near-zero KV cache waste",
+   "capture": "https://arxiv.org/abs/2309.06180, title + near-zero waste sentence, crop above the 2-4x line",
+   "beats": [
+    "CH3@75.9-80.2"
+   ],
+   "verify": true
+  },
+  {
+   "id": "C4",
+   "claim": "Whisper on my own GPU, model loaded once",
+   "capture": "whisper_jobs.py editor view, line 1 + lines 122-133 only (skip lines 3-6)",
+   "beats": [
+    "CH4@119.8-126.0"
+   ],
+   "verify": true
+  },
+  {
+   "id": "C5",
+   "claim": "the model load is around 15 to 20 s",
+   "capture": "terminal cat of kcc20-live/ai-replaces-engineers-this-year/_qa/sweep.log line 1 (14.2s, 77 jobs), no nvidia-smi",
+   "beats": [
+    "CH4@126.0-129.3"
+   ],
+   "verify": true
+  },
+  {
+   "id": "C6",
+   "claim": "every agent is a headless claude -p session",
+   "capture": "graph/common.py lines 446-448 + 484-487 editor view",
+   "beats": [
+    "CH4@134.75-137.2"
+   ],
+   "verify": true
+  },
+  {
+   "id": "C7",
+   "claim": "around 20 agents per longform video",
+   "capture": "terminal ls graph/data/ | grep growth-vs-product (20 longform-lane logs), re-listed on capture day",
+   "beats": [
+    "CH4@137.2-140.65"
+   ],
+   "verify": true
+  },
+  {
+   "id": "C9",
+   "claim": "OpenAI bills reasoning tokens as output",
+   "capture": "https://developers.openai.com/api/docs/guides/reasoning, the billed-as-output paragraph",
+   "beats": [
+    "CH5@154.38-156.3"
+   ],
+   "verify": true
+  },
+  {
+   "id": "C10",
+   "claim": "Anthropic bills thinking as output tokens",
+   "capture": "https://platform.claude.com/docs/en/docs/build-with-claude/extended-thinking, the thinking_tokens sentence, below the Warning box",
+   "beats": [
+    "CH5@156.3-158.033"
+   ],
+   "verify": true
+  },
+  {
+   "id": "CLIP-3-STILLS",
+   "claim": "the clip's own first / last frames as lead-in and lead-out stills (not a CHART-SOURCE INDEX row; captured with CLIP-3)",
+   "capture": "_waPvOwL9Z8 frames at 54:18.9 and 54:24.0",
+   "beats": [
+    "CH5@168.0-171.32",
+    "CH5@171.32-172.4"
+   ],
+   "verify": true
+  }
+ ],
+ "clip_inserts": [
+  {
+   "id": "CLIP-3",
+   "who": "Jensen Huang, NVIDIA CEO",
+   "says": "it is the ultimate extreme computing problem and it's called inference",
+   "source": "https://www.youtube.com/watch?v=_waPvOwL9Z8",
+   "start": "54:18.9",
+   "end": "54:24.0",
+   "seconds": 5.1,
+   "splice_at": 171.32,
+   "after_words": "and named the hard problem.",
+   "caption": "Jensen Huang, NVIDIA CEO, GTC keynote, March 2025, projecting demand for his own chips",
+   "expect": "it's called inference",
+   "verify": true,
+   "beats": [
+    "CH5@171.32"
+   ]
+  }
+ ],
+ "clip_inserts_note": "CLIP-3 only; CLIP-1 and CLIP-2 were REJECTED in the screenplay (length, and the 100x is a vendor projection the do-not-air table bars).",
+ "chapter_themes": {
+  "CH1": {
+   "accent": "#00c2ff",
+   "accent_name": "cyan",
+   "image_style": "house",
+   "note": "ONE bed, ONE look for the whole video (SCREENPLAY VISUAL-PLAN); containers LIGHT, the cyan darkens to #006A9E on containers"
+  },
+  "CH2": {
+   "accent": "#00c2ff",
+   "accent_name": "cyan",
+   "image_style": "house",
+   "note": "same continuous bed, no palette shift"
+  },
+  "CH3": {
+   "accent": "#00c2ff",
+   "accent_name": "cyan",
+   "image_style": "house",
+   "note": "same continuous bed, no palette shift"
+  },
+  "CH4": {
+   "accent": "#00c2ff",
+   "accent_name": "cyan",
+   "image_style": "house",
+   "note": "same continuous bed, no palette shift"
+  },
+  "CH5": {
+   "accent": "#00c2ff",
+   "accent_name": "cyan",
+   "image_style": "house",
+   "note": "same continuous bed, no palette shift"
+  }
+ },
+ "envato_list": [
+  {
+   "n": 1,
+   "query": "data center server aisle GPU cluster dolly blue lights",
+   "beat": "CH1@6.467-9.68",
+   "seconds": 3.2,
+   "why": "TRAINED ONCE headline plate"
+  },
+  {
+   "n": 2,
+   "query": "chat interface typing answer screen close up / server rack blinking lights calm",
+   "beat": "CH1@22.45-25.3",
+   "seconds": 2.85,
+   "why": "calm plate for the UP TO 90% pop"
+  },
+  {
+   "n": 3,
+   "query": "typing prompt chatbot laptop close up keyboard",
+   "beat": "CH2@27.55-30.6",
+   "seconds": 3.05,
+   "why": "your request, before tokens"
+  },
+  {
+   "n": 4,
+   "query": "graphics card fans spinning close up GPU under load",
+   "beat": "CH2@44.45-46.55",
+   "seconds": 2.1,
+   "why": "the chip working flat out"
+  },
+  {
+   "n": 5,
+   "query": "memory RAM modules macro circuit board data flow",
+   "beat": "CH2@58.05-59.85",
+   "seconds": 1.8,
+   "why": "the chip waiting on memory"
+  },
+  {
+   "n": 6,
+   "query": "server room rack push in GPU servers lights",
+   "beat": "CH3@94.9-97.9",
+   "seconds": 3.0,
+   "why": "THE INFERENCE ENGINE headline plate"
+  },
+  {
+   "n": 7,
+   "query": "scrolling server log terminal screen API requests",
+   "beat": "CH3@105.1-108.767",
+   "seconds": 3.67,
+   "why": "hosted, the vendor runs it; HOSTED paper panel"
+  },
+  {
+   "n": 8,
+   "query": "video editing timeline screen editor workstation",
+   "beat": "CH4@113.067-116.9",
+   "seconds": 3.83,
+   "why": "the pipeline that edits videos like this one"
+  },
+  {
+   "n": 9,
+   "query": "abstract neural network data streams glowing lines",
+   "beat": "CH5@147.7-150.05",
+   "seconds": 2.35,
+   "why": "the 2026 twist plate"
+  },
+  {
+   "n": 10,
+   "query": "silicon wafer chips macro clean room",
+   "beat": "CH5@172.4-174.5",
+   "seconds": 2.1,
+   "why": "he sells the chips"
+  }
+ ],
+ "chatgpt_list": [
+  {
+   "n": 1,
+   "prompt_concept": "press camera flashes bursting at a towering glowing server cluster, cinematic, dark, cyan rim light, house style, no text",
+   "reference": "none exists (generic approved)",
+   "beat": "CH1@16.9-18.6",
+   "why": "training makes the headlines"
+  },
+  {
+   "n": 2,
+   "prompt_concept": "four large industrial chrome levers on a dark control console, cinematic, cyan accent light, house style, no text",
+   "reference": "none exists (generic approved)",
+   "beat": "CH3@66.933-67.733",
+   "why": "the levers ad-lib in the black gap"
+  },
+  {
+   "n": 3,
+   "prompt_concept": "an unbranded graphics card glowing orange hot like forged steel, sparks, dark forge, cinematic, house style, no text, no logos",
+   "reference": "none exists (generic approved)",
+   "beat": "CH4@132.88-134.75",
+   "why": "keep the weights hot"
+  },
+  {
+   "n": 4,
+   "prompt_concept": "a remote hyperscale data center glowing at night seen from far away across a dark plain, cinematic, cyan accent, house style, no text, no logos",
+   "reference": "none exists (generic approved)",
+   "beat": "CH4@140.65-141.933",
+   "why": "hosted inference, GPUs that belong to someone else"
+  }
+ ],
+ "containers": [
+  {
+   "id": "c2-training",
+   "kind": "card",
+   "shows": "C2 state 1: TRAINING column ONCE / LEARNS THE WEIGHTS / COSTS MILLIONS (DATA pillar 1)",
+   "beats": [
+    "CH1@9.68-11.933"
+   ]
+  },
+  {
+   "id": "c2-contrast",
+   "kind": "card",
+   "shows": "C2 state 2: TRAINING dimmed vs INFERENCE lit, THE BILL / THE LATENCY / THE PART YOU OPERATE row by row (DATA T1, T2)",
+   "beats": [
+    "CH1@18.6-22.45"
+   ]
+  },
+  {
+   "id": "tokenizer-split",
+   "kind": "diagram",
+   "shows": "the spoken sentence split into tokens with real tokenizer IDs + TOKEN IDS / BILLED PER TOKEN paper panel",
+   "beats": [
+    "CH2@30.6-33.6"
+   ],
+   "notes": "TOKEN IDS, REAL (Mike 2026-10-26: real IDs, run on this machine with tiktoken 0.12.0, encoding o200k_base, the GPT-4o / o-series tokenizer): \"Your request never reaches the model as text.\" -> 9 tokens: 'Your'=9719 · ' request'=2616 · ' never'=3779 · ' reaches'=42373 · ' the'=290 · ' model'=2359 · ' as'=472 · ' text'=2201 · '.'=13. Show each chunk with its ID under it exactly as listed (leading spaces are part of the token, render them as a visible gap, not a character); the tokenizer named in small type: \"o200k_base tokenizer\". Never retype or round."
+  },
+  {
+   "id": "C1",
+   "kind": "diagram",
+   "shows": "C1 full: PROMPT -> TOKENIZER -> TOKEN IDS -> PREFILL -> KV CACHE -> DECODE loop -> NEXT TOKEN -> STOP, TTFT / TPOT brackets; prefill then KV cache light (DATA pillar 2)",
+   "beats": [
+    "CH2@35.38-44.45"
+   ]
+  },
+  {
+   "id": "prefill-compute-bound",
+   "kind": "card",
+   "shows": "PREFILL = COMPUTE-BOUND, meter full, source line vLLM docs",
+   "beats": [
+    "CH2@46.55-48.1"
+   ]
+  },
+  {
+   "id": "c1-decode-spotlight",
+   "kind": "diagram",
+   "shows": "zoomed KV CACHE -> DECODE -> NEXT TOKEN loop with the reload pulse per step",
+   "beats": [
+    "CH2@48.1-53.45"
+   ]
+  },
+  {
+   "id": "one-token-chain",
+   "kind": "diagram",
+   "shows": "token chain growing one block at a time; ONE TOKEN AT A TIME, WITHIN ONE REQUEST",
+   "beats": [
+    "CH2@53.45-58.05"
+   ]
+  },
+  {
+   "id": "C3",
+   "kind": "card",
+   "shows": "C3 paper list card overview: CONTINUOUS BATCHING / CACHING / QUANTIZATION / SPECULATIVE DECODING, item 1 lit",
+   "beats": [
+    "CH3@70.267-72.0"
+   ]
+  },
+  {
+   "id": "batching-lane",
+   "kind": "diagram",
+   "shows": "GPU batch lane, requests join and leave mid-flight, never idle; 1 / 4",
+   "beats": [
+    "CH3@72.0-75.9"
+   ]
+  },
+  {
+   "id": "prefix-cache",
+   "kind": "diagram",
+   "shows": "two requests sharing one PREFIX block computed once; 2 / 4 CACHING",
+   "beats": [
+    "CH3@80.2-83.3"
+   ]
+  },
+  {
+   "id": "quantization-memory",
+   "kind": "animated-chart",
+   "shows": "bars 16-bit 29.0 GB, 8-bit 15.2 GB, 4-bit 9.5 GB (HF octocoder example), fits a smaller card; 3 / 4; no speed claim",
+   "beats": [
+    "CH3@83.3-88.6"
+   ]
+  },
+  {
+   "id": "speculative-decoding",
+   "kind": "diagram",
+   "shows": "small model drafts 4 tokens, big model verifies in one pass, SAME OUTPUT; 4 / 4",
+   "beats": [
+    "CH3@88.6-94.9"
+   ]
+  },
+  {
+   "id": "engines-datacenter",
+   "kind": "diagram",
+   "shows": "REQUEST -> INFERENCE ENGINE (vLLM, SGLang, TensorRT-LLM lighting in turn) -> GPU",
+   "beats": [
+    "CH3@97.9-101.85"
+   ]
+  },
+  {
+   "id": "engines-laptop",
+   "kind": "diagram",
+   "shows": "laptop outline: Ollama on llama.cpp, localhost:11434",
+   "beats": [
+    "CH3@101.85-105.1"
+   ]
+  },
+  {
+   "id": "my-pipeline",
+   "kind": "diagram",
+   "shows": "RECORDING -> WHISPER (SELF-HOSTED, MY OWN GPU) -> AI AGENTS (HOSTED, CLAUDE) -> VIDEO, no hardware named",
+   "beats": [
+    "CH4@116.9-119.8"
+   ]
+  },
+  {
+   "id": "load-once",
+   "kind": "diagram",
+   "shows": "one model-load block then clip jobs streaming through; LOAD ONCE / RUN EVERY CLIP",
+   "beats": [
+    "CH4@129.3-132.88"
+   ]
+  },
+  {
+   "id": "thinking-tokens",
+   "kind": "animated-chart",
+   "shows": "PROMPT, a long run of grey THINKING tokens, a short ANSWER; THINKING TOKENS headline, no counts",
+   "beats": [
+    "CH5@150.05-154.38"
+   ]
+  },
+  {
+   "id": "huang-id-card",
+   "kind": "card",
+   "shows": "JENSEN HUANG / NVIDIA CEO / GTC KEYNOTE, MARCH 2025",
+   "beats": [
+    "CH5@164.633-168.0"
+   ]
+  },
+  {
+   "id": "incentive-vs-engineering",
+   "kind": "card",
+   "shows": "HE SELLS THE CHIPS (dim) / ON THE ENGINEERING: RIGHT (lit)",
+   "beats": [
+    "CH5@174.5-176.367"
+   ]
+  }
+ ],
+ "budget_check": "Envato 10/10, ChatGPT 4/5, every b-roll item 0.8 to 3.83 s (all 4 s or less). Receipts C17, C8, C13, C11, C4, C5, C6, C7, C9, C10 + the CLIP-3 stills and 19 code containers / charts are budget-exempt. Every non-FACE second is assigned by consecutive cover_beats with zero gaps across the 7 cover spans (6.467-11.933, 16.9-61.3, 66.933-67.733, 70.267-108.767, 113.067-141.933, 147.7-158.033, 164.633-176.367); nothing past 190.40; no asset appears twice.",
+ "open_questions": [
+  "C1 diagram: GATE 1 was approved by the recording, so this plan treats C1 as ruled IN (shown once, then broken into the decode spotlight and the token chain). Fallback is the PREFILL / DECODE list card.",
+  "C3 list card: shown ONCE as an overview (item 1 lit), then each lever gets its own spotlight container (1/4 to 4/4) plus the C11 arXiv receipt, instead of holding the card 24 s with items popping. Say if you want the 2023 build kept whole.",
+  "CLIP-3 in/out is not written in PROJECT-LOG (AS-RECORDED marks it OPEN). The set-up line was recorded, so it is planned; confirm at GATE plan.",
+  "54.90 can / can't is still OPEN by ear; the one-token-chain label reads the same either way.",
+  "The CLIP-3 lead-in / lead-out stills are listed as receipt id CLIP-3-STILLS, not a CHART-SOURCE INDEX row; they are captured with the clip.",
+  "C5 depends on kcc20-live/_qa/sweep.log still existing (shorts folders get recycled after publish); bench sweep2.log (17.5 s). C7 depends on the growth-vs-product agent logs still being listed.",
+  "tokenizer-split needs real IDs from an actual tokenizer run (tiktoken o200k_base suggested); confirm the tokenizer to cite, or drop the IDs to bare token chunks."
+ ]
+}

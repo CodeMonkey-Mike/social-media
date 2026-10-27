@@ -251,7 +251,7 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
   const LFP_MEDIA = path.join(ROOT, 'longform-presentation', 'media');
   const LFE_MEDIA = path.join(ROOT, 'longform-edited', 'media');
   const VAP_MEDIA = path.join(ROOT, 'vertical-ai-persona', 'media');
-  const YULI_MEDIA = path.join(ROOT, 'vertical-ai-persona', 'Yuli y Ana', 'media');
+  const YULI_MEDIA = path.join(ROOT, 'yuli-y-ana', 'media');
   const classifyMediaProjects = (mediaDir, relPrefix, label) => {
     if (!fs.existsSync(mediaDir)) return;
     for (const entry of fs.readdirSync(mediaDir, { withFileTypes: true })) {
@@ -275,7 +275,7 @@ function plan({ repoRoot, ageDays: maxAge = 30 }) {
   // Yuli y Ana is a SEPARATE persona channel NOT tracked in batches.json; with no batch match
   // every folder is "left alone" by design — these concept folders are a reusable library and
   // must never be auto-recycled (recycle them only on an explicit, per-folder instruction).
-  classifyMediaProjects(YULI_MEDIA, 'video-creation/vertical-ai-persona/Yuli y Ana/media', 'yuli-y-ana');
+  classifyMediaProjects(YULI_MEDIA, 'video-creation/yuli-y-ana/media', 'yuli-y-ana');
 
   // Empty folders left after a recycle pass are pruned by the engine across these roots, so a
   // cleaned-out <batch>/ or render folder never lingers. assets/ is NOT a prune root: the whole

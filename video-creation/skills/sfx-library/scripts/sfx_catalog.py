@@ -1,0 +1,176 @@
+"""sfx_catalog.py: the SFX library's one tool (video-creation/skills/sfx-library/sfx-library.md).
+
+  python video-creation/skills/sfx-library/scripts/sfx_catalog.py build   # rebuild assets/sfx/library.json `index` from every
+                                                                          # <folder>/library.json + the root `loose` section; measure
+                                                                          # any entry missing duration/attack/peak/tail
+  python video-creation/skills/sfx-library/scripts/sfx_catalog.py check   # orphans (files on disk no library knows) + broken entries
+  python video-creation/skills/sfx-library/scripts/sfx_catalog.py report [--type whoosh] [--mood hype] [--grep text]
+                                                                          # the picker's view: one line per sound, no listening
+
+The per-folder library.json files are the hand-edited SOURCE (descriptions, triggers, licences); the root
+`index` is GENERATED from them and never edited by hand. Loose files in the assets/sfx root are described in
+the root file's `loose` list (hand-edited) because comps and scripts reference them by that path.
+"""
+import argparse
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+import numpy as np
+
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[3]
+SFX = REPO / "video-creation" / "assets" / "sfx"
+ROOT_LIB = SFX / "library.json"
+AUDIO_EXT = {".wav", ".mp3", ".mp4", ".m4a", ".aac", ".ogg", ".flac", ".aif", ".aiff"}
+SKIP_DIRS = {"_source"}
+MEASURE_FIELDS = ("duration_sec", "attack_sec", "peak_dbfs", "tail_sec")
+PICK_FIELDS = ("type", "mood_class", "character", "trigger", "best_for", "used_in", "source", "license")
+
+
+def measure(path: Path) -> dict:
+    """duration, attack (s to the loudest sample), peak dBFS, tail (s the sound rings after the peak, 30 dB down)."""
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1", "-ar", "44100", "-f", "f32le", "-"],
+                         capture_output=True).stdout
+    a = np.frombuffer(raw, dtype=np.float32)
+    if a.size == 0:
+        return {}
+    env = np.abs(a)
+    peak = float(env.max() + 1e-9)
+    ipk = int(env.argmax())
+    after = np.where(env[ipk:] > peak * 10 ** (-30 / 20))[0]
+    return {"duration_sec": round(a.size / 44100, 2), "attack_sec": round(ipk / 44100, 2),
+            "peak_dbfs": round(20 * np.log10(peak), 1), "tail_sec": round((after[-1] / 44100) if after.size else 0.0, 2)}
+
+
+def load(p: Path) -> dict:
+    return json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
+
+
+def save(p: Path, d: dict):
+    p.write_text(json.dumps(d, indent=1, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n")
+
+
+def list_key(lib: dict):
+    for k, v in lib.items():
+        if not k.startswith("$") and isinstance(v, list):
+            return k
+    return None
+
+
+def folder_libraries():
+    """(folder name, library path, library dict, list key) for every <folder>/library.json."""
+    out = []
+    for d in sorted(p for p in SFX.iterdir() if p.is_dir() and p.name not in SKIP_DIRS):
+        lib = load(d / "library.json")
+        k = list_key(lib) if lib else None
+        if k:
+            out.append((d.name, d / "library.json", lib, k))
+    return out
+
+
+def ensure_measured(entry: dict, path: Path) -> bool:
+    if all(entry.get(f) is not None for f in MEASURE_FIELDS):
+        return False
+    if not path.is_file():
+        return False
+    entry.update({k: v for k, v in measure(path).items() if entry.get(k) is None})
+    return True
+
+
+def cmd_build(_args):
+    root = load(ROOT_LIB)
+    root.setdefault("loose", [])
+    index = []
+    # per-folder libraries are the source; measure what they lack and write them back
+    for folder, libpath, lib, key in folder_libraries():
+        changed = False
+        for e in lib[key]:
+            changed |= ensure_measured(e, SFX / folder / e.get("file", ""))
+            index.append({"id": e.get("id"), "folder": folder, "file": f"{folder}/{e.get('file')}", "title": e.get("title"),
+                          **{f: e.get(f) for f in MEASURE_FIELDS}, **{f: e.get(f) for f in PICK_FIELDS}})
+        if changed:
+            save(libpath, lib)
+            print(f"measured -> {libpath.relative_to(REPO)}")
+    for e in root["loose"]:
+        ensure_measured(e, SFX / e.get("file", ""))
+        index.append({"id": e.get("id"), "folder": ".", "file": e.get("file"), "title": e.get("title"),
+                      **{f: e.get(f) for f in MEASURE_FIELDS}, **{f: e.get(f) for f in PICK_FIELDS}})
+    ids = [e["id"] for e in index]
+    dupes = sorted({i for i in ids if ids.count(i) > 1})
+    if dupes:
+        print(f"WARNING duplicate ids across libraries: {dupes}")
+    root["index"] = sorted(index, key=lambda e: (e["folder"], str(e["id"])))
+    root["$index_note"] = ("GENERATED by skills/sfx-library/scripts/sfx_catalog.py build from every <folder>/library.json + the `loose` "
+                           "list above. Edit the per-folder files (or `loose`), then rebuild; never edit `index` by hand.")
+    save(ROOT_LIB, root)
+    print(f"index: {len(index)} sounds in {len(set(e['folder'] for e in index))} folders -> {ROOT_LIB.relative_to(REPO)}")
+    return 0
+
+
+def known_files():
+    known = set()
+    for folder, _p, lib, key in folder_libraries():
+        for e in lib[key]:
+            known.add((SFX / folder / e.get("file", "")).resolve())
+    for e in load(ROOT_LIB).get("loose", []):
+        known.add((SFX / e.get("file", "")).resolve())
+    return known
+
+
+def cmd_check(_args):
+    known = known_files()
+    orphans, missing = [], []
+    for p in SFX.rglob("*"):
+        if p.is_file() and p.suffix.lower() in AUDIO_EXT and not any(part in SKIP_DIRS for part in p.relative_to(SFX).parts):
+            if p.resolve() not in known:
+                orphans.append(p.relative_to(SFX))
+    for k in known:
+        if not Path(k).is_file():
+            missing.append(Path(k).relative_to(SFX))
+    for o in sorted(orphans):
+        print(f"ORPHAN  {o}   (on disk, in no library: add it to its folder's library.json or the root `loose` list)")
+    for m in sorted(missing):
+        print(f"MISSING {m}   (in a library, not on disk)")
+    print(f"SFX-CATALOG {'PASS' if not orphans and not missing else 'FAIL'} known={len(known)} orphans={len(orphans)} missing={len(missing)}")
+    return 0 if not orphans and not missing else 1
+
+
+def cmd_report(args):
+    idx = load(ROOT_LIB).get("index", [])
+    rows = []
+    for e in idx:
+        if args.type and (e.get("type") or "") != args.type:
+            continue
+        if args.mood and (e.get("mood_class") or "") != args.mood:
+            continue
+        blob = " ".join(str(e.get(f) or "") for f in ("id", "title", "character", "trigger", "best_for")).lower()
+        if args.grep and args.grep.lower() not in blob:
+            continue
+        rows.append(e)
+    for e in rows:
+        print(f"{str(e.get('id')):28s} {str(e.get('type')):12s} {str(e.get('mood_class')):8s} {e.get('duration_sec') or 0:5.2f}s "
+              f"atk {e.get('attack_sec') or 0:4.2f}s  {e.get('file')}\n    trigger: {e.get('trigger') or '-'}\n    best for: {e.get('best_for') or '-'}")
+    print(f"{len(rows)} sounds")
+    return 0
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    sub.add_parser("build")
+    sub.add_parser("check")
+    r = sub.add_parser("report")
+    r.add_argument("--type")
+    r.add_argument("--mood")
+    r.add_argument("--grep")
+    args = ap.parse_args()
+    return {"build": cmd_build, "check": cmd_check, "report": cmd_report}[args.cmd](args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

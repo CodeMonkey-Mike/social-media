@@ -539,8 +539,12 @@ def transcribe(state: IntakeState) -> IntakeState:
     # garbage transcript that would have passed verify_transcribe (which checks only
     # word count + coverage, not correctness). Every other whisper call in the repo pins
     # the language; this was the lone outlier. (ready-for-pumps, 2026-09-14)
+    # --condition_on_previous_text False: an opening "music" segment otherwise gets fed
+    # forward as context and the whole stream collapses into "music music ..." while the
+    # audio is fine. (kcc20-live, 2026-10-21)
     real = [sys.executable, "-u", "-m", "whisper", state["vertical"],
             "--model", "small", "--language", "en", "--word_timestamps", "True",
+            "--condition_on_previous_text", "False",
             "--output_format", "json", "--output_dir", state["tdir"]]
     cmd = _cmd_for(state, "transcribe", real)
     rc, output = _run_streaming(cmd, node="transcribe", stub=state.get("stub", ""),
@@ -569,6 +573,14 @@ def verify_transcribe(state: IntakeState) -> IntakeState:
         return {"status": "failed",
                 "error": f"transcript covers only {last_end:.0f}s of a {md:.0f}s stream "
                          "(whisper died early?)"}
+    toks = [w.get("word", "").strip().lower() for s in data["segments"]
+            for w in s.get("words", [])]
+    if toks:
+        top, n = max(((t, toks.count(t)) for t in set(toks)), key=lambda x: x[1])
+        if words > 50 and n / words > 0.5:
+            return {"status": "failed",
+                    "error": f"degenerate transcript: {top!r} is {n}/{words} words "
+                             "(whisper looped on one token)"}
     return {"transcribe_out": {**state.get("transcribe_out", {}), "words": words,
                                "segments": len(data["segments"]),
                                "covered_s": round(last_end, 1)},

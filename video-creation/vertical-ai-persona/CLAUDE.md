@@ -3,6 +3,10 @@
 **Canonical skill is `SKILL.md` (this folder) — read it for the Seedance/keyframe/edit/distribute
 pipeline.** This file routes + records cross-session lessons that aren't obvious from SKILL.md.
 
+**This folder = Mike's OWN AI likeness only.** The Yuli y Ana personas moved out on 2026-10-17 to
+`../yuli-y-ana/` (their own channel folder, vertical + longform); their router is `../yuli-y-ana/CLAUDE.md`.
+The Seedance mechanics in this SKILL.md still apply to their vertical videos (they inherit it, they do not copy it).
+
 ## Repurposing a longform into a vertical short (VALIDATED 2026-06-22, kaspa-covenants-short)
 
 When a vertical short is "the same as a longform we just did, shorter and vertical," reuse the

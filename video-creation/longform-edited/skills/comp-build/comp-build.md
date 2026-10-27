@@ -60,6 +60,7 @@ the card-pause form above.)
 ```
 - The paused spine (face baked, COVER beats black, card pauses inserted) lives at the assets/ root (§10).
 - A **punch-in** is a hard ~15-20% `scale` step on the spine that lands ON a desilencer join inside a face window (`spine/jumpcuts-final.json`), with a LIBRARY light leak (`lib:lightleaks-*`, engine `LightLeaks`) peaking on the same frame (overlays.md section 1, Mike 2026-10-07). No join in the hold = no punch, no leak.
+- **Kinetic-text devices** (`[KT-*]` rows in the EDIT-PLAN; the EFFECTS library `video-creation/assets/effects/library.json` is the catalog of record, each device = motion + sound + graphics, Mike 2026-10-25; overlays.md section 2 holds the longform-edited placement rules): built in the comp to the device row's numbers (panel slide 0.50 s ease-out, text rise 0.23 s later with the 80 -> 110 -> 100 overshoot, the hover; the pop's 0.20 s jiggle; the band, the list card, the icon pop, the subscribe close per their rows), above the cover layer and below the captions, with the video's palette and display font. Engines: the SHARED `src/effects/kinetic-text/` components (import them; `lint_comp_imports.py` whitelists `./effects/*`). A device with no shared engine yet is built in the project's own `<Project>Charts.tsx` to the row's numbers, never copied from another project's comp. On a face line the picture shifts toward the free side (`kt-side-panel`); on a cover the container is reframed into the free 55 percent. Their sounds (`[WHOOSH]` / `[ACCENT]` rows) are NOT in the comp: they ride the ffmpeg post-mix with the impacts (§9).
 
 ### 3a. ⛔ FACE REFRAME — STANDARD on every gated-face comp, MEASURED, never eyeballed (Mike, 2026-10-01)
 Mike rarely sits dead centre and the camera leaves empty room above his head (golden-kitty: face 59% across, hair
@@ -303,6 +304,17 @@ scale-in on each container/sub-point swap (hand-rolled `interpolate`, NOT `Trans
   card). Reserve them — a small deliberate count, never sprayed. Placed via `TransitionClip` (cover→cover,
   full-frame so the spine never peeks); both carry SFX that **must duck under the continuing VO**. The
   `transition-strategist` agent (`.claude/agents/longform-edited/`) authors the whole plan incl. this layer.
+- **MOTION moves on a still cover (receipts first; Mike, 2026-10-17, tao-detailed).** The library's MOTION category
+  (`motion-3d-pan-*` / `-offset-*` / `-orbit-*` 5 s camera moves, `motion-shake-3d-*` ~2.1 s baked wiggles; engines
+  `Motion3D` / `MotionShake`, no SFX) is NOT a cut: it wraps ONE cover for its whole slot. EDIT-PLAN tag
+  `[MOTION] lib:<id>` -> the COVERS row's `mo`. In the comp the engine (from `ENGINES[row.engine]`) gets the live cover
+  (receipt + its push + overlays) as `outClip`, and its clock is set with `<Freeze frame={...}>` around it: a pan is
+  fitted to the slot (`t * 5 / slot`), a shake PING-PONGS its baked wiggle so it never stops or jumps; rows of one
+  capture (`grp`) sharing a `mo` run one continuous move. Worked example: `src/TaoDetailed.tsx` `MotionWrap`. Per-chapter
+  theme: a `lights-out` chapter puts `motion-shake-3d-*` on most receipts (longform-edited.md section 7).
+- **HIGHLIGHT on a receipt** (`[HIGHLIGHT]`, same day): a `#ffe14d` rect wiping left to right over the quoted words,
+  drawn in CAPTURE coordinates inside the camera transform (so it rides the push) with `mixBlendMode: multiply`
+  (black text stays black), starting on the word's onset.
 
 ### 6a. Placing a LIBRARY transition over the spine — the traps (kaspa 30bps 2026-07-25; ethereum-rwa 2026-08-01)
 - **Give `TransitionClip` a Sequence of EXACTLY the engine window** (`from = F(cut) - win/2`,
@@ -397,6 +409,8 @@ const Captions: React.FC = () => {
 ```
 - A hook (0-31s over covers) or other over-cover caption window is a DELIBERATE per-video choice; the default is
   captions ONLY over the face spine (never over a cover). **The `captions-builder` agent runs this end to end.**
+  A video whose caption scope includes `envato` (`../captions/captions.md`, `run.py --caption-scope`) carries the
+  Envato beats in CAPTION_WINDOWS: flag exactly those Envato covers `cap: true` (the sidecar's `cover_windows`).
 
 ### 7a. A Type 2 (system-design) still must NEVER sit dead still
 It bakes no animation, so if the comp gives it no move it is a frozen frame for as long as it holds —
@@ -419,6 +433,17 @@ riser ENDS on the hit (`assets/sfx/.../WHEN-TO-USE-IMPACTS.md`). Beds ~16-18 dB 
   sure that we don't choose an impact with a long waveform"). File length is mostly trailing silence —
   measure where the envelope falls ~40 dB below peak. In this kit that is `Impacts/DSGNImpt-single_impact
   _sound_-Elevenlabs.mp3` at 1.15s, vs 2.3-3.8s for the rest.
+- **Library transition SFX are levelled by MEASURED PEAK, not a fixed gain (Mike, 2026-10-17, tao-detailed: "I see the
+  split transition, but I don't hear the sound").** The pack's SFX are mastered quietly (peaks -17 to -22 dBFS, means
+  near -36), so the old fixed `--lib-sfx-db -9` put every whoosh about 30 dB under the voice: inaudible. `mix_music.py`
+  now gains each so its peak lands at `--lib-sfx-peak` (default -13 dBFS); `--lib-sfx-db` stays as a fixed override.
+- **A BRAAM sits in a BEAT PAUSE** (longform-edited.md section 7): `card_pauses` bakes `[BRAAM] ... spine pause <dur> s at
+  <s>` as freeze + silence (`beat` in the sidecar, so INSERTS carries it and sh() shifts by it like any pause); the comp
+  keeps the cover with the figures on screen through it, draws no card; the mixer starts the braam on the pause's first
+  frame and does NOT duck the bed there. Through the pause the cover SLOWLY ZOOMS to the figure (Mike 2026-10-17): the
+  COVERS row carries `bz: { x, y, s }` (the figure's point on the slide PNG, target scale ~2.4); the view eases
+  (inOut sine) over exactly the pause's frames, moving that point to frame centre, and holds after. Worked example:
+  `src/TaoDetailed.tsx` SlideView `bz` on K9.
 
 ## 10. assets layout + asset loading (MERGED — Mike, 2026-07-24: no separate render-assets/)
 All comp assets load via `staticFile('<subdir>/<file>')`; the public dir is set PER-RENDER. Everything
@@ -472,9 +497,21 @@ npx remotion render src/index.ts <CompId> "$OUT/<project>-draft-vN.mp4" \
   2026-07-25: three renders died at `ENOSPC`). Every invocation copies the whole `--public-dir` to a fresh
   temp bundle (~370 MB there) AND Remotion's offthread video cache grows to whatever RAM allows (3.2 GB
   observed), which drags the pagefile with it. Before a long render: check free space, delete stale
-  `%TEMP%/remotion-*` bundles (they are never cleaned up — 2.8 GB of them had accumulated), and cap the cache:
-  `--concurrency=4 --offthreadvideo-cache-size-in-bytes=419430400`. Rendering in two `--frames=` halves also
-  bounds the damage and gives a checkpoint (and is the same workaround as the ~frame-14436 stitch ceiling).
+  `%TEMP%/remotion-*` bundles (they are never cleaned up — 2.8 GB of them had accumulated). Since 2026-10-27 every render
+  is CHUNKED (`video-creation/skills/chunked-render/`: 1-minute resumable chunks, a stall killed + retried, desktop
+  notifications), which bounds the damage, checkpoints every minute and retires the ~frame-14436 stitch ceiling.
+  When C: is short, point TEMP / TMP / TMPDIR and `--out` at D: (render_comp.py guards the drives it WRITES to).
+- **⛔ NEVER cap the OffthreadVideo cache at 400 MB again (tao-detailed 2026-10-17: the FINAL shipped with stuttering
+  b-roll).** The cap is split across the compositor's threads (400 MB = ~25 MB a thread = ~3 HD frames). Envato clips
+  carry ONE keyframe per clip, so over a long render the cache pruned non-stop (109,692 prunes) and the compositor
+  silently served the NEAREST cached frame: ~60% of b-roll frames were repeats (3-5 held, then a jump). A short test
+  render never fills the cache and looks clean, so chunk QA cannot catch it. `render_comp.py` now defaults to
+  `--ov-cache-mb 3072` (measured on frames 0-1200: 19-24 of 35 frames frozen at 400 MB, 0 at 4096 MB; lowered to 3072 on
+  2026-10-20 as a memory trial, Mike: about 1 GB back while renders share the machine; check_broll_motion on the full render
+  is the proof, and a FAIL at 3072 means back to 4096).
+- **24 / 25 fps clips in a 30 fps comp judder** (one repeated frame every 5-6 frames on every pan): play them
+  frame-for-frame (`playbackRate = 30 / clip fps`, 1.2x for 25, 1.25x for 24) when the clip covers slot x rate, or
+  conform them at sourcing.
 - **⛔ OUTPUT LOCATION IS MECHANICAL: the render mp4, any preflight still, AND the render log ALL go to
   `media/<project>/_previews/` (§10) — NEVER the bare `remotion/out/`.** `remotion/out/` is shared, cleanup-swept
   scratch: anything left there is an orphan with no project home (this is exactly how `_nlg_preflight.png` /
@@ -540,6 +577,16 @@ the root of the project directory?"*) — so run it unprompted, as the last acti
    On ethereum-rwa that was 2.0 GB + 66 MB for a 208 MB deliverable.
 4. **Confirm the queue copy is intact BEFORE recycling** (`schedule-tweets/longform/<slug>/`), so the deliverable
    always exists in two places at the moment of deletion.
+5. **Hand Mike the YOUTUBE BLOCK at every finalize, unprompted (Mike, 2026-10-20, evals):** the chapters with their
+   timestamps on the FINAL cut, the music Content-ID codes on ONE line delimited by `|` with nothing else on it
+   (e.g. `5WH8X4RII7CDAU05|BPXNBEIFIYKU8G88|...`), and 10 keyword phrases for the YouTube tags field.
+   `scripts/yt_delivery.py <media/<project>>` computes it (chapter times from the paused-spine sidecar, codes from
+   `assets/music/library.json` `yt_license_code`) and writes `YT-DELIVERY.md`; the graph's `definition_of_done` node
+   runs it and FAILS without it. The JUDGMENT half is `yt-delivery.json` at the project root, written by the main loop
+   before finalize: `{"chapters": {"CH1": "...", "CH6": "..."}, "keywords": [exactly 10]}`. Name the UNCARDED chapters
+   (the hook and the close) from what Mike actually says there (carded chapters take the card label); keywords are
+   search phrases a viewer would type, no hashtags, no em dashes. Paste the printed block into the finalize report
+   exactly as printed (chapters, then the `|` line, then the keywords comma-separated).
 Note the repo-wide `cleanup/cleanup.js` (still JavaScript, not part of this track's graph) will NOT do this for you: its
 `video-creation` policy is whole-project-folder and keyed to `batches.json`, so a project with no batch (a longform-edited
 build is not a shorts batch) is "left alone" forever. The completion sweep is the graph's `stage_longform` node.

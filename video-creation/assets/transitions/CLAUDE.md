@@ -3,6 +3,41 @@
 This folder re-creates the **Swiftly Studio 850** Premiere transition pack as a Remotion library.
 Overview + status: `PROJECT-LOG.md`. The pack itself: `./Swiftly Studio 850 .../`.
 
+## SCARY / Stinger: the one NON-Swiftly family (2026-10-25)
+`scary-1..15` are third-party horror stinger plates from Mike's own assets folder (`Scary Transitions 01..15.mp4`;
+no readme, licence or .prproj, so origin and licence are undocumented: Mike confirms before a public upload). Each
+plate IS the finished effect (black head, a face rushes in, white blow-out over the cut, fade), so the checklist and
+Rules 1-6 have nothing to extract, and Rule 7's lead-in trim does NOT apply: the sfx is the plate's OWN audio,
+untrimmed, in sync from the window start. Engine `StingerPlate` (`params.plate`, `cut` snapped onto a fully white
+frame, `blend` screen|opaque|normal (+ `opacity`; normal added for scary-6-normal75, section below), `visible`). Assets `lib/scary/scary-N.mp4` (video stream-copied, audio stripped) +
+`lib/sfx-scary-N.mp3`. Rows, cuts and meta come ONLY from `python _build-scary-rows.py` (measures every plate,
+merges by id, byte-safe): never hand-edit them. Horror / Halloween register only (transition-strategist rule).
+
+## BEAR MARKETS rows: what Mike's 2022 "044 Bear Markets" used (2026-10-25)
+Five rows built for the Halloween longform `only-18-months-left` from a study of that video's first 1:50 (read from
+its Premiere project, verified on the render; Mike's hard rule: nothing after 1:50 is reviewed or imitated). Rows,
+assets and meta come ONLY from `python _build-bearmarkets-rows.py` (ingests, measures, merges by id, byte-safe):
+- `motion-shake-optics-2x-long` / `-3x-long`: engine `MotionShake` with the backward-compatible `params.track` = the
+  FULL 60 s Corner Pin master (`lib/shake/motion-shake-optics-{2x,3x}-60s.json`, 1500 keys) instead of the inline
+  2.08 s slice, for FACE holds up to 59.96 s. The engine's clock is the master time: mount it for the shot (hard on,
+  hard off, no ease, as the preset ran). The data file is a public-dir asset (fetched once per tab, delayRender), so a
+  comp copies it like a plate; the lint checks it. `durationSeconds` 6 is only the demo / default hold. Rows without
+  `track` render byte-identical to before (proven: same md5 as the July gallery demo).
+- `zoom-mirror-punch-in`: new engine `MirrorZoomPunch` = the Finzar "Nice Camera Shake" preset (NOT Swiftly; values
+  identical in the `.prfpset` and the Bear Markets instance): a 1/3-size 3x3 mirror tile grid punched 100 -> 300 % in
+  0.333 s, skew 10 -> 0 on axis 135, a y bounce, 360-degree motion blur with a FORWARD shutter (frame-matched to the
+  render). The face appears exactly on the TransitionClip cut frame.
+- `scary-pumpkin-fire`: new engine `AlphaPlate` + `lib/scary/scary-pumpkin-fire.webm` (1920x1080 30 fps VP9 WITH
+  ALPHA, transcoded once from the 4K ProRes 4444 source, which is PREMULTIPLIED: the builder unpremultiplies, since
+  the browser composites straight alpha). 1.0 s dissolve in, 113 % / y +15, swap at 9.167 s under 99 % fire, 1.0 s
+  dissolve out. The source has NO sound: `sfx` null. OffthreadVideo needs `transparent` to keep the alpha.
+- `scary-6-normal75`: `StingerPlate` gains `blend: 'normal'` + `opacity` (existing screen / opaque rows unchanged,
+  byte-identical renders); the row = scary-6's plate, sound and cut at normal 0.6, the gamma stand-in for Premiere's
+  linear-light Normal 75 % (the black head and tail DIM the footage).
+Premiere composited Bear Markets in LINEAR light; Remotion is gamma space, so dims and semi-transparent edges sit a
+little darker than the source (documented per row). Gallery: `browse/MOTION/Shake Optics/`, `browse/ZOOM/Mirror
+Punch/`, `browse/SCARY/Fire Plate/`, `browse/SCARY/Stinger/`.
+
 ## BUILD CHECKLIST — run EVERY step for EVERY transition (no skipping)
 
 There are hundreds of these; follow the same sequence each time so we stop re-making the same
@@ -217,7 +252,8 @@ transition for a cut WITHOUT opening the engines:
 
 When helping Mike edit: read `meta` across rows, filter by the comp's aspect ratio + the mood/energy
 he wants, propose 2–3 by `id`, then drop them in via `TransitionClip`. Keep `meta` updated when you
-add transitions — `node _enrich-meta.js` refreshes it (safe, preserves rows). NOTE: `_build-lib.js`
+add transitions: each family's `_build-*` script writes its own rows' meta. Do NOT run `_enrich-meta.js`: it
+OVERWRITES every row's meta with the 2026-06 Glitch template (verified 2026-10-25). NOTE: `_build-lib.js`
 REGENERATES the Blocks rows only and would clobber hand-added rows (Strips/BadSignal) + meta — do
 NOT run it blindly; `library.json` is now the maintained source of truth.
 

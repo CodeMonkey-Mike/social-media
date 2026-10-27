@@ -82,6 +82,10 @@ TransitionClip: nothing is revealed, the frame itself moves. Sanctioned single-i
 - **DEVIATION** — the 5 shader optics/shift bursts = a single-frame distortion hit
 (The reveal-geometry families stay two-image transitions and are NOT for this: OFFSET, SPLIT, GLASS, SPIN,
 MELT, TRANSFORM — the last two are the reserved §4 marquee families.)
+**WHEN a receipt gets a camera move (Mike, 2026-10-21): case by case, by what the receipt is FOR** (`longform-edited.md`
+section 7, "RECEIPT TREATMENT"): a 3D pan / orbit / offset when it is shown as an OBJECT (an article title, a GitHub repo, a
+long document like a bill); NO pan when the line quotes text from it (settling push, then the highlight); a plain push on a
+figure panel, a short flash or a recording. Each EDIT-PLAN receipt row names its `treatment: pan | highlight | push`.
 Usage rules: mix-and-match zoom + pan across a video's articles so they don't all move the same way; **ONE
 move per article**; subtle families (Ease / Simple / 3D Pan / hand Ken-Burns push) on reading beats; Hit /
 Shake / Deviation variants only on punch moments. These are effects on a cover asset, not cuts — they do NOT

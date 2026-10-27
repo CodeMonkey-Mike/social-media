@@ -457,6 +457,62 @@ video on this track with music + SFX.) Follow `assets/sfx/Impacts/WHEN-TO-USE-IM
 - **Vibe cut = bigger impact + a momentary MUSIC DUCK** (1-2 biggest conviction beats per video,
   e.g. the close). Do the duck with the body `<Audio volume={(f) => ...}>` function dipping (~18%)
   across the hit window — not a separate edit.
+- **USE THE WHOLE SFX PALETTE where it fits, MOOD-MATCHED (Mike, 2026-10-16).** The kit in `assets/sfx/` is
+  more than impacts + risers: one folder per TYPE, each with a `library.json` catalog — impacts, booms, risers,
+  whooshes, braams, tension builders, downshifters, accents, drones, background textures (names from Flame
+  Sound's Inferno SFX reel; sourced from Soundstripe + Envato Elements). The edit-plan-author CONSIDERS every
+  type on every video and places one wherever a beat genuinely calls for it, for example:
+  - a **braam** under a heavy reveal or a stakes line
+  - a **tension builder** or **drone** under a slow-burn setup
+  - a **downshifter** on a deflation or a "but" turn
+  - an **accent** on a quick graphic pop
+  - a **whoosh** into a fast cover change
+
+  Not every type is in every video, and the "fewer, bigger hits" rule still holds; the point is that the
+  options are weighed, not skipped. **MOOD MATCH IS A HARD GATE:** every catalog entry carries `mood_class`
+  (`dark` = scary/ominous/horror · `tense` = suspense without dread · `epic` = big cinematic · `hype` =
+  bright/energetic · `neutral`). Pick only moods that fit the video's register (screenplay register/gear map +
+  the MUSIC-PLAN bed moods of that chapter). In a really exciting/hype video or chapter a `dark` sound is OUT
+  (a scary braam under an upbeat synthwave bed reads wrong); `dark` fits only a chapter that is actually
+  ominous (a hack, a crash, a threat). When no fitting mood exists for a beat, place nothing there.
+  The EDIT-PLAN names the file AND its `mood_class` on every SFX row so Mike can see the match.
+- **A BRAAM GOES BETWEEN SENTENCES, NEVER OVER A WORD (Mike, 2026-10-17, tao-detailed draft).** A braam is loud and long
+  (take a: full for ~3.3 s, gone by ~4 s); laid over speech it swallows the words (the tao draft's braam ran over "As long
+  as the customers keep showing up"). The shape: Mike says the intense line and FINISHES it, the figures land on screen,
+  the braam starts, and he says nothing until it ends; then the next sentence. Pick the beat where an intense line is
+  answered by numbers on screen (tao-detailed: "About 32,000 TAO gone, around eight million dollars." over the K9 card),
+  and give it a **SPINE PAUSE** of the braam's audible length: the EDIT-PLAN row reads
+  `[BRAAM] <file> (mood_class ...) ... spine pause <dur> s at <the trough after the line, source s>`. The graph's
+  `card_pauses` node bakes it like a card pause (freeze + silence, trough-snapped, `beat` in the sidecar, no card drawn),
+  the comp holds the cover with the figures through it, and mix_music.py starts the braam on the pause's first frame
+  with the bed playing on (no duck). A braam with no clean sentence gap and no figures beat is left out.
+  **During the braam the camera SLOWLY ZOOMS IN on the figure** (Mike, 2026-10-17: "while the braam is making its sound,
+  we're slowly zooming in to $8 million, because it shows the intensity"): an eased push over exactly the pause frames,
+  the figure drifting to frame centre at about 2.4x, held into the cut. EDIT-PLAN: `ZOOM to "<figure>"` on the [BRAAM]
+  row; comp: the cover's `bz: {x, y, s}` (comp-build.md section 6).
+- **PER-CHAPTER VISUAL THEMES (Mike, 2026-10-17).** Keep common themes across videos, and let a theme vary per chapter.
+  First one: in a chapter scored with **`lights-out`** (the storytelling bed, its `mike_note`), most RECEIPTS ride a
+  **library MOTION move, mainly `motion-shake-3d-*`** (one `motion-3d-pan-*` is fine as the opener), a different
+  variant per receipt; the shake goes with that music. Mostly receipts, though any still cover may take one. The
+  EDIT-PLAN tags it `[MOTION] lib:<id>` on the receipt row; the comp wraps the receipt (with its push) in the engine,
+  a pan fitted to the slot, a shake ping-ponged so it never stops (comp-build.md section 6, MOTION).
+- **RECEIPT TREATMENT is decided per receipt, by what the receipt is FOR (Mike, 2026-10-21; every video, every bed).**
+  Mike: "you never do it unless I tell you"; the 3D pan was only required in `lights-out` chapters, so it never happened
+  elsewhere. The decision is case by case, never a quota; it tends to land on about 30 percent of receipts:
+  - **`treatment: pan`** = a library camera move (`[MOTION] lib:motion-3d-pan-*` mainly, `-orbit-*` / `-offset-*` for
+    variety; never the same move twice in a row) when the receipt is shown as an OBJECT, to establish that it exists or
+    how big it is, not to read a line off it: an article's TITLE / headline as a whole, a GitHub repo or PR page, a long
+    DOCUMENT (a bill from Congress, a whitepaper, a spec) where the point is "this is real" or "look how much text".
+  - **`treatment: highlight`** = NO pan. When the line reads or quotes words from the receipt: the zoomed-in push with a
+    little motion that SETTLES and stops, then the `[HIGHLIGHT]` wipe lands on the word (the existing two-stage treatment).
+  - **`treatment: push`** = no pan, no highlight: a figure / stat panel read off the screen (push to the figure), a flash
+    under 2 s, or a screen recording that already moves.
+  - The `lights-out` chapter theme above (shake moves on most receipts) still applies on top in that bed.
+  Every `[RECEIPT] ... IN` row in EDIT-PLAN.md carries its `treatment:` word; `lint_edit_plan.py` FAILS a receipt row
+  without one and WARNS when a video with 3+ receipts has no `treatment: pan` at all (it was never considered).
+- **HIGHLIGHT the quoted text on a receipt** when the line reads it out (Mike, 2026-10-17: "safe mode" at 7:41, "the
+  decentralized ownership of intelligence"): a yellow highlighter wipe in capture coordinates, multiply-blended so the
+  text stays black, landing on the word. EDIT-PLAN tag `[HIGHLIGHT]`.
 
 **11. A title card PAUSES the A-roll — hold the spine frame + SILENCE ~1000ms while the card animates in and
 holds, THEN resume narration (Mike, 2026-06-25).** Never play a chapter title card OVER continuous narration —

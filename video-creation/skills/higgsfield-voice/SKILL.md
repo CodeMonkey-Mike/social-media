@@ -111,7 +111,7 @@ order (sync-safe). Re-roll only the chunk that hallucinated, not the whole track
    download button). Save into the project's `audio/` folder.
 
 ## Output
-An `.mp3` voice track in the consuming project (e.g. `vertical-ai-persona/Yuli y Ana/video1-crypto/audio/`).
+An `.mp3` voice track in the consuming project (e.g. `yuli-y-ana/video1-crypto/audio/`).
 Then lip-sync the Seedance clip to it (`seedance_2_0 --audio <track>` + a MINIMAL prompt — a verbose prompt
 makes Seedance ignore `--audio` and invent its own speech; see `YULI-SPEC.md` Production route).
 
@@ -130,7 +130,41 @@ before the browser is even touched):
 `verify-tts.js` is also a standalone check: `node verify-tts.js <SCRIPT.md> <tts-chunks.json>` → `ALL N MATCH`
 (exit 0) or a per-chunk drift report (exit 1). QA the finished audio against `SCRIPT.md`, not `tts-chunks.json`.
 
+## 2026-10-17 layout change: results are History cards, and the CLI lists them too
+- The Audio page no longer mounts an `<audio>` element for a fresh generation. The result appears as a NEW
+  **History card** (an `<li>` row, newest on top, with a `button[aria-label="Play"]`); its cloudfront mp3 only
+  loads when that Play is clicked. `_batch-generate.js` therefore reported `timeout` for every chunk even though
+  every generation succeeded (6/6 and 5/5 on the faithful-crypto-intro run). Capture paths that work:
+  1. **`higgsfield generate list`** (the CLI, already authenticated) lists the `Text to Speech V2` jobs WITH their
+     mp3 URLs, newest first: the simplest, no browser needed. Map by the `hf_<YYYYMMDD_HHMMSS>` timestamp in the
+     filename (generation order = chunk order).
+  2. `node _grab-history.js <voice> <N>` clicks Play on the N newest cards of that voice and captures the URLs.
+- Voice preset picking: the card reads **"Selected Voice" with a "Change" button** (no "Voice Preset" text), and the
+  custom presets are listed as lowercase cards `ana-2` / `yuli-1` / `MIKE-CLONE`: use **`node _pick-voice.js "yuli-1"`**
+  (opens the picker either way and clicks the card by exact text). `_set-voice.js` is the legacy twin.
+- The voice GATE in `_batch-generate.js` reads the selected voice from the LEFT composer panel now (x<480);
+  the old bottom-right geometry is kept as a fallback. Both compare case-insensitively.
+- A logged-out `hfbot-profile` shows "Login | Sign up" in the nav and ONLY stock voices in the picker: the Google
+  session had expired too (account chooser said "Signed out" and asked for the password), so this is a Mike action,
+  not a script fix. After he logs in once, everything above works again.
+- Pronunciation map additions: **Canton -> `Kanton`** (ANA-2 said "Hanten" for "Canton"; "Kanton" came out right,
+  verified by two Whisper models). `verify-tts.js` normalizes `kanton` -> `canton` so the gate still passes.
+
+## 2026-10-18: the Audio page has MORE TTS models, and the custom clones work on them
+The Model selector lists **Seed Speech** (default), **Seed Audio 1.0**, **ElevenLabs v4 / v4 Turbo / v3**, **Qwen Audio 3.0 TTS**,
+**MiniMax Speech 2.8 HD**. The custom clones (`ana-2`, `yuli-1`, `MIKE-CLONE`) stay selectable on all of them.
+Driver: **`node _gen-model.js "<model>" <chunks.json> <outDir> ["voice details"]`** (picks the model, fills the Script
+contenteditable + the optional Voice-details textarea, clicks Generate, then waits for the NEW completed job in
+`higgsfield generate list --json` and curls its mp3). Verdicts from the faithful-crypto-intro Ana lines:
+- **ElevenLabs v3 + the clone = the LIFELIKE route (Mike's "she sounds like a robot" fix).** Natural pace with NO atempo
+  (Seed Speech + ANA-2 needed 1.3x and still read robotic), takes **inline delivery tags** in the Script:
+  `[excited] [cheerfully] And welcome to Faithful Crypto!`, `[warmly] ... [laughs softly] ...`. 0.15 cr. `verify-tts.js`
+  strips `[...]` tags so the SCRIPT gate still passes. Whisper-verified every line.
+- **Seed Audio 1.0 = NOT for single lines**: it is a multi-speaker scene model (`@handle` script + "Voice details"); on
+  Ana's lines it repeated the hello 3x and stretched one line to 28 s with dropped words. Do not use it for VO chunks.
+- The Script box on this page is a **contenteditable**, not a textarea (the textarea is Seed Audio's Voice details).
+
 ## Notes
-- Voice clone references Mike provided live in `vertical-ai-persona/Yuli y Ana/voice-samples/` (short, ~10%
+- Voice clone references Mike provided live in `yuli-y-ana/voice-samples/` (short, ~10%
   music bed).
 - Do NOT generate Higgsfield voice without Mike's OK — it spends credits (root `CLAUDE.md` cost rule).

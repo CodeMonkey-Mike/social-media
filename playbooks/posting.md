@@ -11,7 +11,7 @@
 - Never re-post `posted`/`closed`. Save the queue file after every successful post.
 
 ## Queue → script (full table in SKILL.md)
-- Tweets `data/x-tweets.json` → `scripts/post-tweet.js` · threads → `post-thread.js` · X poll → `post-x-poll.js`
+- Tweets `data/x-tweets.json` → `scripts/post-tweet.js` · threads → `python scripts/post_thread.py` (Python only, JS twin deleted 2026-10-21) · X poll → `post-x-poll.js`
 - Shorts `data/shorts.json` (per `platforms.*`) → `post-{x-short, yt-short-api, ig-reel, fb-short, tiktok-short, rumble-short, bitchute-short}.js`
 - YT community `data/yt-posts.json` → `post-yt-community.js` · YT poll `data/yt-text-polls.json` → `post-yt-poll.js`
 - IG single/carousel → `post-ig-single.js` / `post-ig-carousel.js`

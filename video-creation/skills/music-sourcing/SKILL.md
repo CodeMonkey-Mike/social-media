@@ -92,9 +92,13 @@ node scripts/_playlist-enum.js     <playlistId>              # 1. enumerate the 
 node scripts/_playlist-download.js <playlistId> [--limit N] [--skip a,b]  # 2. batch download (resumable)
 node scripts/_register-playlist.js <playlistId> [--skip a,b] # 3. register all into assets/music/library.json
 ```
-- **enum** — opens the playlist with the authed profile, sniffs the app API
-  (`/app/playlists/<id>/songs?page[offset]=&page[limit]=`, offset/limit paged), and writes the song list
-  to `_recon/playlist-<id>.json`.
+- **enum** — opens the playlist with the authed profile (re-injecting `_recon/session-cookies.json`, same as
+  `download`), sniffs the app API (`/app/playlists/<id>/songs?page[offset]=&page[limit]=`, offset/limit paged),
+  and writes the song list to `_recon/playlist-<id>.json`. **Since 2026-10 the playlist page is server-rendered
+  and makes NO api.soundstripe.com call** (so no token, "auth token: MISSING" is normal): the script then falls
+  back to reading the song ids off the rows (song links + `data-download-handoff-media-id-value` anchors, page
+  order) and resolves title / artists / duration via Algolia getObject. If it prints `songs found: 0`, run
+  `node scripts/soundstripe.js login` first (the saved session may be gone), then retry.
 - **download** — for each not-yet-present track: `download` (full mp3 + license) THEN `download-alt`
   (instrumentals / section cuts), unzips into `assets/music/<Title>/`, deletes the zip. **Resumable** via
   `_recon/playlist-<id>-progress.json` — re-invoke to continue; SEQUENTIAL (shared Chrome profile), so
@@ -104,6 +108,9 @@ node scripts/_register-playlist.js <playlistId> [--skip a,b] # 3. register all i
 - **register** — upserts one full catalog entry per track (artist/bpm/energy/mood/genre/key from the
   stored Algolia meta, `yt_license_code`, `folder`, `primary_file`, `sections[]`), keyed by `soundstripe_id`.
 - Precedent run: private playlist **430508** → 39 songs, 2 already present (9141, 11370) → **37 added**.
+- 2026-10-26: private playlist **566873** ("explainer", Mike's explainer beds) → 8 songs, all new → **8 added**
+  (grains-of-hope, kitsune, deliverance, divine-land, soft-focus, beyond-the-veil, what-we-must, tidal-light),
+  each with its license code, section cuts and analysis; first run through the DOM fallback above.
 
 ## 2d. Pick categories: `tags[]` (added 2026-10-14)
 Catalog entries can carry a human-set `tags[]` + `use_case`. First tag: **`elevator`** = lounge / jazz /
@@ -112,6 +119,13 @@ Envato `Elevator Music Gold-Tiger` + Soundstripe Lounge Lover, Yellow Letter, Du
 Tiki Time, Seaside Samba, Sophistikitty). Those entries also pin `roles_pinned: [elevator_bed,
 explainer_bed]` because the measured `roles[]` call them hype (loud + steady). **For a programming video,
 filter `tags` for `elevator` first**, then apply the usage-ledger variety rule within that pool.
+
+**`mike_note`** = Mike's own verdict on a track after hearing it in a video, dated, in plain words (what it
+feels like, what it is for, what it must never be used for). It BINDS every picker (screenplay shortlist,
+music-placement-strategist): the measured meta can call a track `intro_hype`, the note wins. Current notes:
+old-moon (2026-10-10, life-lesson underscore, never a token-chapter bed), lights-out (2026-10-16, a slow
+"on a journey with determination" bed for a STORYTELLING chapter, never a hook opener). Add a note whenever Mike rules on
+a track's feel.
 
 ## 2c. Waveform analysis — the catalog is the picker's eyes (added 2026-07-17)
 > **Pick for VARIETY too (2026-10-01):** before choosing, read the usage ledger

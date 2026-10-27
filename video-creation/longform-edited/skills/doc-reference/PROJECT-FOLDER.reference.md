@@ -60,6 +60,8 @@ video-creation/longform-edited/media/<project>/          <- created by `run.py l
 │
 │  ── deliverables (project root) ──
 ├─ <project>-FINAL.mp4       definition_of_done: the mixed final (crf 18 + music/SFX); also copied to schedule-tweets/longform/<project>/
+├─ yt-delivery.json          main loop, before finalize: names for the uncarded chapters + exactly 10 keyword phrases (comp-build §12a.5)
+├─ YT-DELIVERY.md            definition_of_done (scripts/yt_delivery.py): YouTube chapters + timestamps, music codes `|`-delimited, keywords
 └─ <project>-VERTICAL.mp4    the optional vertical lane (v_deliver); NOT queued unless Mike says so
 
 remotion/src/ (outside the project, recycled with it):

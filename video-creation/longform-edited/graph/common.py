@@ -38,7 +38,8 @@ SKILLS = TRACK / "skills"
 DATA = HERE / "data"
 CHECKPOINT_DB = DATA / "graph_checkpoints.sqlite"
 LANE_RUNS = DATA / "lane_runs.json"                # committed history feed (dashboard)
-LANE_PROGRESS = DATA / "lane_progress.json"        # transient heartbeat, gitignored
+LANE_PROGRESS = DATA / "lane_progress.json"        # transient heartbeat, gitignored (last writer)
+LANE_PROGRESS_DIR = DATA / "lane_progress"         # per-project heartbeats <project>.json, gitignored
 LANE_RUNS_KEEP = 500
 LANE_NAME = "longform"
 GATE_EXIT_CODE = 2
@@ -109,6 +110,7 @@ _WRITE_LOCK = threading.Lock()   # parallel builders heartbeat from threads (ass
 def _write_json_atomic(path: Path, data):
     with _WRITE_LOCK:
         tmp = Path(f"{path}.{threading.get_ident()}.tmp")
+        tmp.parent.mkdir(parents=True, exist_ok=True)   # a per-video setting on a NEW project lands before init_project
         tmp.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
         os.replace(tmp, path)
 
@@ -225,6 +227,29 @@ def face_style(proj: Path) -> str:
     return v if v in FACE_STYLES else "leak"
 
 
+# CAPTION SCOPE (per video, `run.py --caption-scope`): the house default captions the FACE holds over 5 s only
+# (skills/captions/captions.md). Each listed item ADDS to that:
+#   all-faces = every FACE hold, the short ones too
+#   envato    = every envato-video b-roll beat in COVER-PLAN.json (the comp flags those covers `cap: true`)
+# Mike 2026-10-19 (evals): "not only face scenes, but all the face scenes, and ... the B-roll from envato".
+CAPTION_SCOPES = ("all-faces", "envato")
+
+
+def caption_scope(proj: Path) -> list:
+    return [x for x in (setting(proj, "caption_scope") or []) if x in CAPTION_SCOPES]
+
+
+# CONTAINER THEME (per video, `run.py --container-theme`): the palette every CSS container / diagram / animated chart is
+# built and QA'd in. dark = the house default (container-canonical.css alone); light = container-canonical-light.css
+# loaded after it (Mike 2026-10-25, inference: "I like the light mode version. let's use it for the inference video").
+CONTAINER_THEMES = ("dark", "light")
+
+
+def container_theme(proj: Path) -> str:
+    v = setting(proj, "container_theme", "dark")
+    return v if v in CONTAINER_THEMES else "dark"
+
+
 def manual_done(proj: Path, node: str) -> bool:
     return node in (prog(proj).get("manual_done") or {})
 
@@ -242,25 +267,53 @@ def set_current_project(project: str):
     CURRENT_PROJECT = project
 
 
+_PROJECT_SLUG_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
+
+
+def project_progress_path(project) -> Optional[Path]:
+    """The PER-PROJECT heartbeat `lane_progress/<project>.json` (2026-10-16, Mike: two videos in flight at
+    once, tao-detailed parked at its plan gate while evals starts). The single-slot `lane_progress.json`
+    stays as the last-writer feed; the dashboard's In-flight strip reads the per-project files."""
+    if not project or not _PROJECT_SLUG_RE.match(str(project)):
+        return None
+    return LANE_PROGRESS_DIR / f"{project}.json"
+
+
 def write_progress(p: dict):
     """Publish the live heartbeat. A dashboard feed must never fail a real run."""
     try:
         DATA.mkdir(parents=True, exist_ok=True)
         _write_json_atomic(LANE_PROGRESS, p)
+        pp = project_progress_path(p.get("batch") or CURRENT_PROJECT)
+        if pp:
+            LANE_PROGRESS_DIR.mkdir(parents=True, exist_ok=True)
+            _write_json_atomic(pp, p)
     except Exception:
         pass
 
 
 def finish_progress(status: str, error: Optional[str] = None):
+    """Flip THIS run's heartbeat to its end state. Reads the per-project file first: with two graphs
+    running, the single-slot file may hold the OTHER project's heartbeat, and flipping that one would
+    report a wrong state for a video this run never touched."""
     try:
-        p = _read_json(LANE_PROGRESS, None)
+        pp = project_progress_path(CURRENT_PROJECT)
+        p = _read_json(pp, None) if pp else None
         if not isinstance(p, dict):
-            return
+            p = _read_json(LANE_PROGRESS, None)
+            if not isinstance(p, dict) or (CURRENT_PROJECT and p.get("batch") not in (None, CURRENT_PROJECT)):
+                return
+            pp = project_progress_path(p.get("batch"))
         p["status"] = status
         p["updated_at"] = _now_iso()
         if error:
             p["error"] = error
-        _write_json_atomic(LANE_PROGRESS, p)
+        if pp:
+            LANE_PROGRESS_DIR.mkdir(parents=True, exist_ok=True)
+            _write_json_atomic(pp, p)
+        single = _read_json(LANE_PROGRESS, None)
+        if not isinstance(single, dict) or single.get("batch") == p.get("batch"):
+            _write_json_atomic(LANE_PROGRESS, p)
     except Exception:
         pass
 
@@ -375,8 +428,20 @@ def stub_cmd(node: str, kind: str, lines: List[str]) -> List[str]:
 
 # ── headless Claude agents (spawned like ffmpeg; the CALLER verifies the artifact) ──
 
+def _claude_exe_fallback() -> Optional[str]:
+    """The real claude.exe when `claude` is not on PATH (2026-10-22: an npm self-update with sessions open left its
+    launchers as `.claude-XXXX` temp files, so every headless spawner died with FileNotFoundError; a Git Bash alias
+    does not reach a Python subprocess). Keep IDENTICAL in common.py, batch_graph.py and find_jobs.py."""
+    home = Path(os.environ.get("USERPROFILE") or Path.home())
+    for p in (Path(os.environ.get("APPDATA") or home / "AppData" / "Roaming") / "npm" / "node_modules" / "@anthropic-ai" / "claude-code" / "bin" / "claude.exe",
+              home / ".local" / "bin" / "claude.exe"):
+        if p.is_file():
+            return str(p)
+    return None
+
+
 def claude_cmd() -> List[str]:
-    exe = shutil.which("claude") or "claude"
+    exe = shutil.which("claude") or _claude_exe_fallback() or "claude"
     if exe.lower().endswith((".cmd", ".bat")):
         # npm's claude.CMD shim runs under cmd.exe, and cmd.exe CUTS a multi-line argument at its first newline:
         # every headless agent received only LINE ONE of its prompt (found 2026-10-01 when the desilencer never got

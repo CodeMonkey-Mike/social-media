@@ -39,6 +39,43 @@ def _now_run():
     return datetime.now().isoformat(timespec="seconds")
 
 
+# ── the run queue + supervisor (video-creation/skills/run-queue, Mike 2026-10-27) ──────────────────────────────────
+# Every longform / vertical / short invocation takes the machine-wide TURN, releases it at a gate / done / failure, and
+# a failure of a render/build node is re-driven ONCE automatically (nodes are redo-safe), then ONE desktop notification.
+# Judgment-free deterministic gates (lints, verify_*) are not retried (a re-drive would fail the same way); stage_longform
+# is never retried (it appends to the posting queue).
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "skills" / "run-queue"))
+import run_queue as RQ  # noqa: E402
+
+RETRY_LONGFORM = {"compress", "transcribe", "as_recorded", "coverage", "music_plan", "assets", "edit_plan", "transitions",
+                  "card_pauses", "captions", "comp_build", "mix_audio", "final_render", "definition_of_done"}
+RETRY_VERTICAL = {"v_face_crop", "v_assets", "v_comp", "v_render", "v_mix"}
+RETRY_SHORT = {"s_variants", "s_extract", "s_captions", "s_comp", "s_render", "s_mix"}
+
+
+def _gate_name(final):
+    intr = final.get("__interrupt__")
+    if not intr:
+        return None
+    v = intr[0].value if hasattr(intr[0], "value") else intr[0]
+    v = v if isinstance(v, dict) else {}
+    return v.get("gate") or (f"'{v.get('placeholder')}' (a by-hand step)" if v.get("placeholder") else "next")
+
+
+def _supervised(label, kind, project, app, config, first_input, init, retry_nodes, stub, skip_queue):
+    """One graph invocation under the run queue + supervisor. The re-drive is a FRESH run on the same thread from
+    `init` (artifacts on disk skip; approvals live in GRAPH-PROGRESS.json), exactly the documented manual re-drive."""
+    def invoke(retry):
+        try:
+            return app.invoke(init if retry else first_input, config)
+        except Exception as e:  # noqa: BLE001
+            return {"status": "failed", "error": f"graph crashed: {e!r}", "steps": {}}
+    if stub:
+        return invoke(False)           # stub runs never queue or notify
+    return RQ.supervise(label, kind, project, invoke, retry_nodes, lambda f: bool(f.get("__interrupt__")),
+                        skip=skip_queue, describe_gate=_gate_name)
+
+
 # ── the footer: where THIS video stands (every report ends with it) ───────────
 
 def print_project_footer(proj: Path, scope: str = "ALL"):
@@ -113,6 +150,8 @@ def main_longform():
     ap.add_argument("--coarse-sil", type=float, default=None, help="spine: COARSE one-zone min-silence (s), default 0.7")
     ap.add_argument("--sil-pre", type=float, default=None, help="spine: FINAL intro min-silence (s), default 0.25")
     ap.add_argument("--sil-post", type=float, default=None, help="spine: FINAL body min-silence (s), default 0.5")
+    ap.add_argument("--pad-tail", type=float, default=None, help="spine: BOTH desilence passes, silence kept AFTER the sentence before each cut (s), default 0; set at launch, before the coarse pass")
+    ap.add_argument("--pad-head", type=float, default=None, help="spine: BOTH desilence passes, silence kept BEFORE the sentence after each cut (s), default = --pad-tail")
     ap.add_argument("--split", type=float, default=None, help="spine: hook-end second for the two-zone pass")
     ap.add_argument("--bursts", default=None, help="spine: burst spans on the coarse spine, e.g. 262.6-262.8,296.7-296.95")
     ap.add_argument("--card-pause", type=float, default=None, help="build: title-card pause seconds baked per carded chapter (default 1.5)")
@@ -120,6 +159,13 @@ def main_longform():
                     help="per-video FACE transition style, persisted in GRAPH-PROGRESS.json: leak (default: face pick + "
                          "light leak on every punch-in) | glitch (random split swinging offset cut-in, random glitch "
                          "offset/blocks on every punch-in; Mike 2026-10-16)")
+    ap.add_argument("--caption-scope", default=None,
+                    help="per-video caption scope, persisted in GRAPH-PROGRESS.json: a comma list of "
+                         f"{'|'.join(C.CAPTION_SCOPES)} added to the default FACE holds over 5 s (all-faces = every "
+                         "face hold, envato = every Envato b-roll beat), or 'default' to clear; Mike 2026-10-19")
+    ap.add_argument("--container-theme", choices=C.CONTAINER_THEMES, default=None,
+                    help="per-video palette for every CSS container / diagram / animated chart, persisted in GRAPH-PROGRESS.json: "
+                         "dark (default, container-canonical.css) | light (container-canonical-light.css loaded after it; Mike 2026-10-25)")
     ap.add_argument("--caption-windows", default=None, help="build: extra caption windows a-b,a-b in source seconds (the cold-open exception)")
     ap.add_argument("--envato-max", type=int, default=None, help="plan: Envato video budget (default: 3 per minute of final spine, floor 10)")
     ap.add_argument("--chatgpt-max", type=int, default=None, help="plan: ChatGPT image budget (default: 1 per minute of final spine, floor 5; raise it per video)")
@@ -130,6 +176,7 @@ def main_longform():
     ap.add_argument("--thread", default=None)
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    ap.add_argument("--skip-queue", action="store_true", help="start NOW, overlapping the run queue (Mike's explicit ask only)")
     args = ap.parse_args()
 
     approve, done, redo = _parse_list(args.approve), _parse_list(args.done), _parse_list(args.redo)
@@ -160,7 +207,8 @@ def main_longform():
         init = {"project": project, "project_dir": str(proj), "brief": args.brief,
                 "constraints": args.constraints, "title": args.title, "scope": args.scope,
                 "face_max": args.face_max, "coarse_sil": args.coarse_sil, "sil_pre": args.sil_pre,
-                "sil_post": args.sil_post, "split": args.split, "bursts": args.bursts,
+                "sil_post": args.sil_post, "pad_tail": args.pad_tail, "pad_head": args.pad_head,
+                "split": args.split, "bursts": args.bursts,
                 "envato_max": args.envato_max, "chatgpt_max": args.chatgpt_max, "card_pause": args.card_pause, "caption_windows": args.caption_windows,
                 "until": args.until, "approve": approve,
                 "done": done, "redo": redo, "stub": "", "steps": {}, "status": "running"}
@@ -174,6 +222,18 @@ def main_longform():
         if args.face_style:
             C.set_setting(proj, "face_style", args.face_style)
             print(f"face style for {project}: {args.face_style} (saved in GRAPH-PROGRESS.json)")
+        if args.container_theme:
+            C.set_setting(proj, "container_theme", args.container_theme)
+            print(f"container theme for {project}: {args.container_theme} (saved in GRAPH-PROGRESS.json)")
+        if args.caption_scope:
+            scope_items = [] if args.caption_scope.strip() == "default" else _parse_list(args.caption_scope)
+            bad = [x for x in scope_items if x not in C.CAPTION_SCOPES]
+            if bad:
+                print(f"unknown --caption-scope {bad}; choose from {', '.join(C.CAPTION_SCOPES)} or 'default'", file=sys.stderr)
+                sys.exit(1)
+            C.set_setting(proj, "caption_scope", scope_items)
+            print(f"caption scope for {project}: FACE holds > 5 s" + "".join(f" + {x}" for x in scope_items)
+                  + " (saved in GRAPH-PROGRESS.json)")
 
     C.DATA.mkdir(parents=True, exist_ok=True)
     from langgraph.checkpoint.sqlite import SqliteSaver
@@ -182,20 +242,20 @@ def main_longform():
     app = build_longform_graph(checkpointer=SqliteSaver(conn))
     config = {"configurable": {"thread_id": thread}, "recursion_limit": 150}
     started_at, t0 = _now_run(), time.monotonic()
-    try:
-        if args.resume:
-            payload = {"approve": approve, "done": done} if (approve or done) else None
-            update = {k: v for k, v in init.items()
-                      if k in ("approve", "done", "redo", "until", "face_max", "constraints",
-                               "coarse_sil", "sil_pre", "sil_post", "split", "bursts",
-                               "envato_max", "chatgpt_max", "card_pause", "caption_windows") and v}
-            # A plain resume (no decision) must carry NO state update: the checkpoint's own
-            # pending writes + an update to the same key = InvalidUpdateError (batch, 2026-09-10).
-            final = app.invoke(Command(resume=payload, update=update) if payload else None, config)
-        else:
-            final = app.invoke(init, config)
-    except Exception as e:
-        final = {"status": "failed", "error": f"graph crashed: {e!r}"}
+    if args.resume:
+        payload = {"approve": approve, "done": done} if (approve or done) else None
+        update = {k: v for k, v in init.items()
+                  if k in ("approve", "done", "redo", "until", "face_max", "constraints",
+                           "coarse_sil", "sil_pre", "sil_post", "pad_tail", "pad_head", "split", "bursts",
+                           "envato_max", "chatgpt_max", "card_pause", "caption_windows")
+                  and (v is not None if k in ("pad_tail", "pad_head") else v)}   # --pad-head 0 is a real value
+        # A plain resume (no decision) must carry NO state update: the checkpoint's own
+        # pending writes + an update to the same key = InvalidUpdateError (batch, 2026-09-10).
+        first = Command(resume=payload, update=update) if payload else None
+    else:
+        first = init
+    final = _supervised(f"longform {project}", "longform", project, app, config, first, init, RETRY_LONGFORM,
+                        args.stub, args.skip_queue)
     ended_at = _now_run()
     rc = report(final, proj, init["scope"])
     status = "waiting" if rc == C.GATE_EXIT_CODE else final.get("status", "failed")
@@ -225,6 +285,7 @@ def main_vertical():
     ap.add_argument("--thread", default=None)
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    ap.add_argument("--skip-queue", action="store_true", help="start NOW, overlapping the run queue (Mike's explicit ask only)")
     args = ap.parse_args()
     approve, redo = _parse_list(args.approve), _parse_list(args.redo)
     if args.stub:
@@ -235,6 +296,7 @@ def main_vertical():
         proj = p.resolve() if p.is_dir() else (C.MEDIA / args.project).resolve()
         project = proj.name
     thread = args.thread or (f"vertical-stub-{datetime.now():%Y%m%d-%H%M%S}" if args.stub else f"vertical-{project}")
+    C.set_current_project(project)   # keys the per-project heartbeat (lane_progress/<project>.json)
     init = {"project": project, "project_dir": str(proj), "scope": args.scope, "thread": thread, "lane": "vertical",
             "stub": args.stub, "approve": approve, "done": [], "redo": redo, "steps": {}, "status": "running"}
     print(f"Vertical graph | {project} | thread {thread}" + (" | STUB " + args.stub if args.stub else "")
@@ -245,15 +307,14 @@ def main_vertical():
     app = build_vertical_graph(checkpointer=SqliteSaver(conn))
     config = {"configurable": {"thread_id": thread}, "recursion_limit": 60}
     started_at, t0 = _now_run(), time.monotonic()
-    try:
-        if args.resume:
-            payload = {"approve": approve} if approve else None
-            update = {k: v for k, v in init.items() if k in ("approve", "redo") and v}
-            final = app.invoke(Command(resume=payload, update=update) if payload else None, config)
-        else:
-            final = app.invoke(init, config)
-    except Exception as e:  # noqa: BLE001
-        final = {"status": "failed", "error": f"graph crashed: {e!r}", "steps": {}}
+    if args.resume:
+        payload = {"approve": approve} if approve else None
+        update = {k: v for k, v in init.items() if k in ("approve", "redo") and v}
+        first = Command(resume=payload, update=update) if payload else None
+    else:
+        first = init
+    final = _supervised(f"vertical {project}", "vertical", project, app, config, first, init, RETRY_VERTICAL,
+                        args.stub, args.skip_queue)
     rc = report(final, proj, args.scope)
     status = "waiting" if rc == C.GATE_EXIT_CODE else final.get("status", "failed")
     C.finish_progress(status, None if rc == 0 else str(final.get("error") or "waiting"))   # the heartbeat ends with the run (was missing: the dashboard kept showing the gate as live)
@@ -277,6 +338,7 @@ def main_short():
     ap.add_argument("--thread", default=None)
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--stub", choices=["ok", "fail"], default="")
+    ap.add_argument("--skip-queue", action="store_true", help="start NOW, overlapping the run queue (Mike's explicit ask only)")
     args = ap.parse_args()
     approve, redo = _parse_list(args.approve), _parse_list(args.redo)
     if args.stub:
@@ -286,6 +348,7 @@ def main_short():
         proj = p.resolve() if p.is_dir() else (C.MEDIA / args.project).resolve()
         project = proj.name
     thread = args.thread or (f"short-stub-{datetime.now():%Y%m%d-%H%M%S}" if args.stub else f"short-{project}")
+    C.set_current_project(project)   # keys the per-project heartbeat (lane_progress/<project>.json)
     init = {"project": project, "project_dir": str(proj), "scope": args.scope, "thread": thread, "lane": "short", "seconds": args.seconds,
             "brief": args.brief, "stub": args.stub, "approve": approve, "done": [], "redo": redo, "steps": {}, "status": "running"}
     print(f"Short graph | {project} | {args.seconds:.0f}s | thread {thread}" + (" | STUB " + args.stub if args.stub else "")
@@ -296,15 +359,16 @@ def main_short():
     app = build_short_graph(checkpointer=SqliteSaver(conn))
     config = {"configurable": {"thread_id": thread}, "recursion_limit": 60}
     started_at, t0 = _now_run(), time.monotonic()
-    try:
-        if args.resume:
-            payload = {"approve": approve} if approve else None
-            update = {k: v for k, v in init.items() if k in ("approve", "redo", "brief") and v}
-            final = app.invoke(Command(resume=payload, update=update) if payload else None, config)
-        else:
-            final = app.invoke(init, config)
-    except Exception as e:  # noqa: BLE001
-        final = {"status": "failed", "error": f"graph crashed: {e!r}", "steps": {}}
+    if args.resume:
+        payload = {"approve": approve} if approve else None
+        update = {k: v for k, v in init.items() if k in ("approve", "redo", "brief") and v}
+        if any(x == "--seconds" or x.startswith("--seconds=") for x in sys.argv):
+            update["seconds"] = args.seconds   # a plan approved at a new length (e.g. a silent beat added at the gate)
+        first = Command(resume=payload, update=update) if payload else None
+    else:
+        first = init
+    final = _supervised(f"short {project}", "short", project, app, config, first, init, RETRY_SHORT,
+                        args.stub, args.skip_queue)
     rc = report(final, proj, args.scope)
     status = "waiting" if rc == C.GATE_EXIT_CODE else final.get("status", "failed")
     C.finish_progress(status, None if rc == 0 else str(final.get("error") or "waiting"))

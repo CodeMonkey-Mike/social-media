@@ -40,6 +40,16 @@ You operate inside the `social-media` repo (working directory is the repo root).
    - **SPIN** (`spin-3d-*`/`PerspectiveEase` 3D turn over mirrored padding · `spin-twirl-*` vortex ·
      `spin-corner/center-*` · `spin-shake-*`) — the "turn to a new facet / rotate the next thing in" move.
      `kind:geometric`, carries SFX.
+   - **SCARY** (`scary-1..15`, engine `StingerPlate`, `kind:footage`, each with its OWN loud baked stinger sound):
+     the HORROR-register family (third-party plates, 2026-10-25). A scary face rushes in, the frame blows out to
+     white over the cut, it fades out. Halloween / horror videos ONLY (rule below). Browse
+     `assets/transitions/browse/SCARY/Stinger/gallery.html`.
+   - **BEAR MARKETS rows** (2026-10-25, the moves of Mike's 2022 horror-look video "044 Bear Markets"; rule below):
+     `motion-shake-optics-2x-long` / `-3x-long` (MotionShake over the FULL 60 s handheld master: a FACE-HOLD move, not
+     a cut), `zoom-mirror-punch-in` (MirrorZoomPunch: a cover -> FACE cut-in, mirror-tiled zoom punch),
+     `scary-pumpkin-fire` (AlphaPlate: the transparent jack-o-lantern bursting into fire, a horror ACT BREAK) and
+     `scary-6-normal75` (scary-6 laid NORMAL at 60 %: the footage dims under the stinger). Browse
+     `browse/MOTION/Shake Optics/`, `browse/ZOOM/Mirror Punch/`, `browse/SCARY/Fire Plate/`, `browse/SCARY/Stinger/`.
 4. `video-creation/longform-edited/longform-edited.md` **#5** (face cut = the per-video FACE glitch +
    punch-in on holds > ~2s, never a plain cross-fade to the face) and the PRE-RENDER GATE.
 5. `video-creation/longform-edited/skills/comp-build/comp-build.md` **§14** — the `TRANSITIONS.md` skeleton your
@@ -86,6 +96,9 @@ NEVER the spine wrapped in `TransitionSeries`.
 **Bucket 2 — AI / atmosphere-still hits: the GLITCH library.** Each ChatGPT/AI still ingress gets one
 glitch id (rotate short/max variants; SFX rings from the wrapper). Envato VIDEO b-roll does NOT glitch —
 it fades. No glitch on any container/diagram/chart/receipt.
+A receipt may instead ride a library MOTION move (`motion-3d-pan-*`, `motion-shake-3d-*`: a single-scene camera move,
+not a cut, no SFX). In a chapter scored with `lights-out` most receipts take a `motion-shake-3d-*`, a different variant
+each (Mike, 2026-10-17; longform-edited.md section 7, the bed's `mike_note`).
 
 **Bucket 3 — FACE + b-roll + container overlays: hand-rolled on the continuous spine.**
 - FACE cut-in = the per-video FACE glitch (`lib:` pick that fits the register). Never a cross-fade to the face.
@@ -103,6 +116,46 @@ it fades. No glitch on any container/diagram/chart/receipt.
 - Envato b-roll ingress = `hand:fade` (~0.5s).
 - **Quiet TEXT containers** (spotlight sub-point cards) = `hand:` cross-fade + 0.93→1 scale-in. Keep these
   quiet — a melt/spin on every text card is exhausting and burns the move's specialness.
+
+**SCARY register: horror / Halloween videos ONLY (Mike, 2026-10-25).** Only when the project's PROJECT-LOG.md sets a
+horror / Halloween register; in any other video the family does not exist. There, the SCARY stingers (`lib:scary-*`)
+are the cut-covering move for scary SCENE CHANGES and AI-STILL hits:
+- Where: an AI-still hit (role `glitch-still`, instead of the bucket-2 glitch), a FACE cut-in / cut-out (role
+  `face-cut`), any other cover-to-cover scene change you make a scare (role `scene-cut`, bucket = the cut's own).
+  NEVER on a text container, a chart / diagram reveal (MELT / SPIN keep those), a card or a clip insert.
+- ONE subject per video (the 4th tag of every row): skull 8/12/13/15 · clown 3/7 · ghost 1/2 · demon 10/14 ·
+  ghoul 5/9/11 · mask 4 · pumpkin 6. Pick the one that fits, cycle only its ids (never the same id twice in a row),
+  never mix subjects.
+- Reserve, do not spray: a scare on every cut stops scaring; keep the quiet house moves between them.
+- `duration_s` = the row's `durationSeconds` EXACTLY: the post-mix starts the baked sound at tc - duration_s / 2,
+  the plate's first frame, where it is in sync with its picture. The sounds are loud (peaks -3 to -12 dBFS):
+  `sfx_duck: true` whenever VO runs through the hit.
+- Timing: the hidden cut is the plate's white-out, which fires OFF-centre; each row's `useWhen` gives its flash
+  offset from the cut frame (scary-14 -0.63 s ... scary-7 +0.63 s). For a cut synced to a word prefer an offset
+  near 0 (scary-6, -8, -10, -11, -13, -15 are within 0.07 s) or name the offset in `why` so the comp shifts the window.
+- Ledger: one look, `SCARY/Stinger`, filed in the advisory face_cut / ai_still slots (it never fails the check).
+
+**The Bear Markets look (horror / Halloween videos only, same gate as SCARY; Mike's 2022 reference, 2026-10-25).**
+Each row's `useWhen` carries the exact timing; the placement rules:
+- `lib:motion-shake-optics-2x-long` / `-3x-long`: a SHAKE ON A FACE HOLD, not a cut. One row on the face window: bucket
+  `face`, role `face-shake`, `duration_s` = the hold (2.5 to 6 s typical, up to 59.96 s), hard on at the face's first frame
+  (under its cut-in move, as Bear Markets hid it under a Glass Blocks split), hard off at its last. Use it on face scenes
+  right after a montage / photo cut-away (Bear Markets: 5.4, 2.7 and 3.3 s), a few per video, never on every hold; 2x is
+  the floaty default, 3x the stronger sway. No SFX. It does not replace the face-cut row at the window edge.
+- `lib:zoom-mirror-punch-in`: a cover -> FACE cut-in accent (role `face-cut`): the face appears exactly on the cut frame and
+  punches for 0.42 s. One or two per video, not the video's every face cut; never a container, chart or card. No SFX.
+- `lib:scary-pumpkin-fire`: the horror ACT BREAK, at ONE chapter change: role `scene-cut`, bucket = the cut's own (usually
+  `face`), `duration_s` 10.1667 exactly. The plate fades in over the end of the outgoing chapter (the VO keeps running) and
+  the chapter change is its fade-out, +4.07 s from the TransitionClip cut frame: say so in `why` so the comp shifts the
+  window. If that chapter also has a title card, the card follows the plate (the card pick stays the one card move).
+  Subject pumpkin (pairs with scary-6 / scary-6-normal75). No sound (`sfx` null): name a catalog fire / impact in `why`
+  only if the beat needs one.
+- `lib:scary-6-normal75`: scary-6 laid NORMAL at 60 %: the footage DIMS under it, the flash still blows out, the scene
+  stays about 40 % visible. Bear Markets used it on a FACE-TO-FACE cut (same speaker, new set) over a held punch-in; a
+  cover cut whose change must vanish takes scary-6 (screen). Same timing, sound, `duration_s` and `sfx_duck` rules as
+  scary-6; subject pumpkin.
+- Ledger looks: `MOTION/Shake Optics`, `ZOOM/Mirror Punch`, `SCARY/Fire Plate`, `SCARY/Stinger`; filed by role, none is a
+  gated slot.
 
 **The strategic layer Mike wants — MELT and SPIN for the DIAGRAM / CHART marquees (not b-roll, not stills):**
 - **MELT = TRANSFORM.** Use a melt when a diagram/chart reforms into a *related* state — same lineage,
@@ -146,7 +199,7 @@ melt). Point spins/melts in the direction the edit is already moving.
       "change": "<what cuts to what, from the CUE-SHEET>",
       "source": "lib | rmn | hand",
       "id": "melt-rgb-1 | spin-3d-side-ease-right | badsignal-max-1 | hand:fade | hand:punch | rmn:cube",
-      "role": "MELT-transform | SPIN-newfacet | glitch-still | face-cut | punch-in | broll-fade | container-xfade | card | insert-in | insert-out",
+      "role": "MELT-transform | SPIN-newfacet | glitch-still | face-cut | punch-in | broll-fade | container-xfade | card | insert-in | insert-out | scene-cut (SCARY only) | face-shake (the long shake rows on a face hold)",
       "duration_s": 0.76,
       "sfx_duck": true,
       "why": "<why THIS move for THIS beat — the transform/new-facet rationale for melt/spin>"

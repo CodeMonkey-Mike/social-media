@@ -56,6 +56,9 @@ sections (Mike, 2026-07-24: these assets were invisible when they lived only as 
 - The **RECEIPTS capture worklist** (when the plan has receipts) types every row **R(article) or R(other)**
   per `../broll-and-containers/broll-and-containers.md` "Cover STYLE devices" §1 — article receipts carry the mandatory
   reading/motion treatment (push-in / single-image camera-move), other receipts are treatment-per-capture.
+  **Every `[RECEIPT] ... IN` event row in EDIT-PLAN.md ends with `treatment: pan | highlight | push`** (Mike, 2026-10-21;
+  decided per receipt by what it is FOR, `../../longform-edited.md` section 7 "RECEIPT TREATMENT"): `pan` carries its
+  `[MOTION] lib:<id>`, `highlight` carries its `[HIGHLIGHT]`. `lint_edit_plan.py` fails a row without it.
 - The **CLIP INSERTS capture worklist** (rendered on EVERY video: the plan's `clip_inserts[]` rows, or one
   "(none this video)" row carrying the reason) — a third-party clip spliced in WITH ITS OWN VOICE at a spine pause,
   audio kept, context caption burned, words Whisper-verified (`../clip-inserts/clip-inserts.md`, Mike 2026-10-09). Not a
@@ -108,7 +111,12 @@ Format (one event per line, time-sorted):
 - **Layers:** `SAY` · `IMAGE` · `VIDEO` · `CONTAINER` · `DIAGRAM` · `CHART` · `RECEIPT` · `LOGO` ·
   `TRANSITION` · `LIGHTLEAK` · `FILMBURN`/`GLITCH` · `RISER` · `IMPACT` · `CTA` · `CAPTION` · `CUT` ·
   `INSERT` (a spliced third-party clip with its OWN voice: the spine PAUSES at the row's time for the clip's length;
-  one row per COVER-PLAN `clip_inserts` entry, bracketed by a lead-in and a lead-out still row; `../clip-inserts/clip-inserts.md`).
+  one row per COVER-PLAN `clip_inserts` entry, bracketed by a lead-in and a lead-out still row; `../clip-inserts/clip-inserts.md`) ·
+  `KT-PANEL` / `KT-POP` / `KT-BAND` / `KT-CARD` / `KT-ICON` / `KT-CLOSE` (the kinetic-text devices of the EFFECTS library `video-creation/assets/effects/library.json`, placement rules `../overlays/overlays.md` section 2, placed wherever the SCREENPLAY's
+  🎬 `[SHOW]` lines name a device id, at the spoken word's onset: side + panel text, or label text + where; each with its
+  paired sound row `[WHOOSH]` / `[ACCENT]` naming the SFX catalog id (folder `assets/sfx/kinetic-text/`) and its file start, the
+  kcc20 2026-10-21 shape; the signature open = whip-in `[TRANSITION]` + two `[KT-POP]` label rows + whip-out) ·
+  the other SFX rows `mix_music.py` reads: `BRAAM` · `DRONE` · `ACCENT` · `DOWNSHIFTER` · `WHOOSH` · `TEXTURE`.
 - **Zero orphans:** every IMAGE/VIDEO/IMPACT/RISER asset appears here PLACED (with timecode) or marked
   `REJECTED`/`BENCH`. A file in `render-assets/` that's in neither is a bug.
 - Header line names the watch file + what the log was authored from (the graph's seed + the plan set).
@@ -174,6 +182,10 @@ CONTAINER / CHART scene changes = cross-fade + 0.93→1 scale-in (see CONTAINER 
 
 ## LIGHT LEAKS (face holds > 5s — overlays.md, inset ~0.6s off the cut)
 - 6:22.7 → 6:43.5  PLUG    (a → b per leak; short <5s face beats = glitch/punch only, NO leak)
+
+## KINETIC TEXT (2023 motion + sound pairs; overlays.md section 2)   <N> panels + <N> pops   [only when the screenplay names devices]
+- side panels: 0:54.2 RIGHT 'IDEA ONE' (swoosh-1) · 1:09.0 LEFT 'IDEA TWO' (swoosh-2)
+- keyword pops / the signature-open labels: 0:01.8 'AI GROWTH / ENGINEER' (cash-register) · 0:02.4 'AI PRODUCT / ENGINEER' (wooden-rattle-whoosh)
 
 ## IMPACTS + RISERS (audio — mixed on with ffmpeg, NOT in comp)
 - 0:04.9 · 0:07.2 ...  hype-reel impacts  ;  3:18.7 RISER → IMPACT — <reveal>

@@ -1,7 +1,10 @@
 # Transition Library — Project Log
 
 _Re-creating the **Swiftly Studio 850 Seamless Transitions** Premiere pack as a browsable
-Remotion transition library. Last updated: 2026-07-14._
+Remotion transition library. Last updated: 2026-10-25 (+ SCARY/Stinger, the first non-Swiftly family; + the 5 BEAR MARKETS rows)._
+
+**2026-10-25: + SCARY / Stinger 15 (third-party horror plates, NOT Swiftly; section below) = 868 rows, 15 categories.**
+**2026-10-25: + BEAR MARKETS 5 (the moves of Mike's 2022 "044 Bear Markets"; section below) = 873 rows, 15 categories.**
 
 **STATUS (2026-07-14): ✅ PROJECT COMPLETE — 853 rows across ALL 14 categories, built, QA'd,
 and APPROVED by Mike (2026-07-14, full library).**
@@ -40,6 +43,144 @@ values, with a per-folder gallery to browse them.
 | Registry | `remotion/src/transitions/registry.ts` | binds row.engine → component. |
 | Demo | `remotion/src/TransitionDemo.tsx` | renders one row between two stills (passes image srcs). |
 | Browser | `browse/<CAT>/<VARIANT>/gallery.html` | per-folder video galleries. |
+
+---
+
+## BEAR MARKETS 5: built (2026-10-25, awaiting Mike's review), what "044 Bear Markets" used, for `only-18-months-left`
+
+Five rows for the Halloween longform, from the scout study of Mike's 2022 video "044 Bear Markets" 0:00-1:50 (read
+from its Premiere project, verified on the render; Mike's hard rule: nothing after 1:50 reviewed or imitated, and none
+was). Rows by `_build-bearmarkets-rows.py` (Python: ingests, measures, merges by id, idempotent, byte-identical JSON for
+every other row; the SCARY builder's re-merge keeps them, checked on a copy). Browse `browse/MOTION/Shake Optics/`,
+`browse/ZOOM/Mirror Punch/`, `browse/SCARY/Fire Plate/`, `browse/SCARY/Stinger/`.
+
+| id | engine | asset (lib/) | what |
+|---|---|---|---|
+| `motion-shake-optics-2x-long` | MotionShake + `params.track` | `shake/motion-shake-optics-2x-60s.json` (125 KB) | the full 60 s Corner Pin master, lens -10 |
+| `motion-shake-optics-3x-long` | MotionShake + `params.track` | `shake/motion-shake-optics-3x-60s.json` (124 KB) | the full 60 s master, lens -12 |
+| `zoom-mirror-punch-in` | **MirrorZoomPunch** (new) | none | Finzar "Nice Camera Shake": mirror-tiled zoom punch |
+| `scary-pumpkin-fire` | **AlphaPlate** (new) | `scary/scary-pumpkin-fire.webm` (15.1 MB, VP9 + alpha) | the jack-o-lantern bursting into fire, act break |
+| `scary-6-normal75` | StingerPlate + `blend: 'normal'`, `opacity` | scary-6's plate + sfx | the Bear Markets look of scary-6 |
+
+**Long shakes.** The 2 s optics rows carry the first 2.08 s (53 keys) and freeze after; Bear Markets held the preset 5.4 /
+2.7 / 3.3 s on Mike's face. The study's exports (1500 keys every 0.04 s) were checked against the inline rows (first 53 keys
+within 5e-5) and their lens curvature, then stored compact. MotionShake gained `params.track` (fetched once per tab under
+delayRender, a public-dir asset like a plate), `trackStart` (default 0, the source) and a ping-pong past 59.96 s; same
+homography, lens and linear key sampling. Over the whole master: 2x up to 91 px side / 57 px vertical / 1.1 deg roll, 3x
+154 / 110 / 2.0 deg; overscan 3.43 / 3.24 %. Edges: the corner pin alone leaves a frame corner open on 416 (2x) / 1187 (3x)
+of the 1500 keys (up to 23 / 50 px), but the lens' inward sampling covers every key (simulated through the engine's chained
+displacement: tightest 37.8 px at 42.08 s / 21.5 px at 14.48 s), and renders of those moments (plus 3x at 57.8 s) over a
+solid magenta still have ZERO dark pixels. The demos move at 4.0 s and 5.4 s (frame deltas 4-7, no identical consecutive
+frame in the 6 s window). `durationSeconds` 6 = demo / default hold; the comp mounts the engine for the face shot.
+
+**Mirror punch.** Values = the Finzar Ultimate Animation Preset `.prfpset` "Nice Camera Shake", identical to the Bear
+Markets instance (54.3 s). Render order (the XML lists it reversed, the bottom-up rule): inner Transform 33.4 % -> four
+Mirrors at 1/3 and 2/3 (true 3x3 mirror tiling) -> outer Transform Scale 100 -> 300 % in 0.333 s (out-influence 0,
+in-influence 100 %), Skew 10 -> 0 on axis 135 (AE / Lottie skew convention), Position y -20 / +80 / -40 / -16 / 0 px, Shutter
+360. Inner normalised to exactly 1/3 so the rest pose is the clean shot (the source rests at 100.2 %); spatial tangents of
+Position (a 1-2 px overshoot) dropped; tiles overlap 1 px so no seam opens. **QA (Rule 6) against the render**, with the
+real Bear Markets frames as the demo stills: every punch frame k = 0..6 matches the render best at offset 0 (frame-exact
+timing); the cut frame's radial smear, the wood-panel chevron and the stepped blur rings match. Shutter: FORWARD (exposure
+from the frame time); a centred shutter puts a half-sharp grid on the cut frame, which the render does not have.
+
+**Pumpkin fire plate.** Source `broll/evil-pumpkin-with-fire-...-utc.mov` (Envato, ProRes 4444 3840x2160 30 fps, NO audio).
+It is PREMULTIPLIED on black (RGB <= alpha everywhere, RGB 0 where alpha 0), and a fit against the render at 78.3 s (plate
+frame 56 at 113 % / y +15 over the pre-pumpkin frame) picked premultiplied + linear-light compositing (semi-transparent RMSE
+0.025 vs straight-linear 0.055, premult-gamma 0.099, straight-gamma 0.134). The builder scales in premultiplied space,
+unpremultiplies, encodes VP9 + alpha (crf 24, BT.709 tagged), frames 0-305 (the Bear Markets span 0-10.167 s + 1 frame).
+Opaque share at 113 % / y +15: 42 % at 0 s, 90 % at +1.9 s, 93 % at +2.1 s, 99 % at the swap (frame 275 = 9.167 s, where the
+clip ended in Bear Markets), max 99.5 % (the study: 42 / 91 / 94 / 98-99). AlphaPlate: 1.0 s dissolve in, plate in real
+time, swap, 1.0 s dissolve out; `sfx` null. Over solid colours the alpha survives in Remotion (OffthreadVideo `transparent`):
+magenta all around the pumpkin in the fade-in, 3 % at +1.9 s, 0 % at the swap, green as it fades out.
+
+**scary-6-normal75.** StingerPlate's new `blend: 'normal'` lays the plate at `opacity` for the whole window (nothing
+keyed). Against the study's probe frames 104.6-105.0 (render / underlay / plate): linear-light 0.75 reproduces the render
+(RMSE 0.01-0.03), gamma normal 0.6 gives 0.06-0.07 on the dim frames and 0.14-0.15 on the flash, screen (scary-6 as built)
+0.18-0.24. The single-opacity optimum is flat at 0.60-0.65 (mean RMSE 0.088 / 0.087), so 0.6. The black head dims the
+footage to 0.39x (the render: 0.56x, the linear-light gap); the scene stays ~40 % visible through the flash.
+
+**No regression (proven):** after the MotionShake + StingerPlate edits, `motion-shake-optics-2x` re-renders byte-identical
+(md5 b034004c..., also equal to the July gallery file), `scary-6` (screen) 7af37569... and `scary-4` opaque 8c365ef8...
+identical before / after. `lint_transition_assets.py`: identical output and exit codes before / after on Evals,
+GrowthVsProduct, Kcc20, RetireEarly, TaoDetailed (the graph's arguments: `src/<Comp>.tsx`, `media/<p>/assets`,
+`media/<p>/TRANSITIONS.md`); a probe comp proves the new checks (missing track JSON / webm / scary-6 plate + sfx FAIL, a
+full public dir PASS, `scary-pumpkin-fir` / `motion-shake-optics-2x-lng` FAIL as unknown ids).
+
+**Wiring:** registry += AlphaPlate, MirrorZoomPunch; lint checks `params.track` (and AlphaPlate's string `plate`), FAMILY +=
+`scary-pumpkin`, `motion-shake-`; strategist rules in `.claude/agents/longform-edited/transition-strategist.md` (new role
+`face-shake`); ledger looks in `skills/usage-ledger/usage-ledger.md` (`MOTION/Shake Optics`, `ZOOM/Mirror Punch`,
+`SCARY/Fire Plate`, `SCARY/Stinger`; none gated, verified with `tkey` / `slot_of`). Per video copy only the used assets
+into the project's lean `assets/transitions/lib/`: `shake/*-60s.json`, `scary/scary-pumpkin-fire.webm`, scary-6's plate +
+sfx. The `.webm` matches `video-creation/.gitignore` (`*.webm`): `git add -f` it when committing (the JSONs are tracked).
+
+**Gotchas (each cost a detour):**
+- ffmpeg `-ss 54.2667` on the 30 fps render returned frame 1629 (54.300), not 1628: a seek a hair past a frame boundary
+  takes the next frame. Seek with a margin for QA stills.
+- ffmpeg `select=eq(n,N)` into an image file with `-fps_mode passthrough` handed back frame N+1 here; for frame-exact QA
+  decode to rawvideo and index the array.
+- The Bear Markets render carries NO colour tags: decode it with `in_color_matrix=bt709:in_range=tv`, or the fire's
+  saturated colours come out wrong (the fit's opaque-region RMSE fell from 0.09 to 0.02).
+- ffmpeg's native vp9 decoder drops the alpha plane: decode alpha with `-c:v libvpx-vp9` (Remotion's compositor ships
+  libvpx and renders the alpha with OffthreadVideo `transparent`).
+- The long-shake demos are slow (the lens filter, ~2.6 s a frame at concurrency 8: 216 frames ~9.5 min each).
+
+---
+
+## SCARY / Stinger: 15 built (2026-10-25, awaiting Mike's blend pick), third-party plates, NOT Swiftly
+
+`scary-1..15` (category `SCARY`, variant `Stinger` = ONE ledger look `SCARY/Stinger`), NEW engine
+`remotion/src/transitions/engines/StingerPlate.tsx`, rows by `_build-scary-rows.py` (Python, merge by id,
+idempotent, writes byte-identical JSON for every other row), browse `browse/SCARY/Stinger/`. Asked for by Mike
+for the Halloween video (`only-18-months-left`).
+
+**Source + LICENCE (open):** `D:\Dropbox\mikeneder.me\videos\assets\transitions\scary transitions\` = 15 clips
+`Scary Transitions 01..15.mp4` (Oct 2022), NO readme, licence, preview or project file. Mike's own assets folder
+and his request, so used; the pack's origin and licence are UNDOCUMENTED there. **Mike to confirm before a public
+upload.** (His 2023 Premiere project "044 Bear Markets" appears to use the same 15 clips; a separate read of that
+project may settle the blend he used then.)
+
+**What they are:** every clip is one finished, fully opaque 1920x1080 25 fps h264 plate (no alpha) with its own
+baked stinger sound: black head -> a scary face rushes in -> full-frame white / fire-orange blow-out -> fade to
+black. The plate IS the effect, so nothing is extracted (Rules 1-6 have nothing to bite on) and Rule 7's lead-in
+trim does NOT apply (the sound is in sync with its own picture).
+- Assets: `lib/scary/scary-N.mp4` = the video stream COPIED, audio stripped (`-an -c:v copy`, 209 MB) · `lib/sfx-scary-N.mp3`
+  = the clip's own audio, untrimmed, 192k (cross-correlation vs the original: 0.0 ms lag, corr 1.000, all 15).
+- `cut` is MEASURED per plate: white-out runs = frames with YLOW >= 225 (limited range); the hiding run = the longest,
+  then the most frames with YMIN >= 220 (fully white), then the one nearest the plate's middle; the swap snaps to a
+  fully white frame at the run's middle on the 30 fps grid. `visible` = first/last frame with mean luma > 26.
+- **blend** param: `screen` (default: black is see-through, the face haunts the footage) or `opaque` (the plate covers
+  the frame, its own black included, for its `visible` span; black head/tail keyed out). Mike picks by watching
+  `browse/SCARY/Stinger/_blend-ab/scary-4-screen.mp4` vs `scary-4-opaque.mp4`; flipping the default =
+  `BLEND_DEFAULT` in `_build-scary-rows.py` + re-run (it also rewrites the meta wording).
+- Subjects (the one-subject-per-video key, 4th tag, checked on every-2nd-frame sheets): skull 8/12/13/15 · clown 3/7 ·
+  ghost 1/2 (long-haired ghost, hooded nun) · demon 10/14 · ghoul 5/9/11 (hag, rotting zombie, gaunt corpse) · mask 4
+  (Scream ghostface) · pumpkin 6. (The scout's "skull" for 6 is a carved jack-o-lantern.)
+- Double flashes, built on the longest run (Mike's call to move): scary-7 (13-17 vs 43-50, built late, +0.63 s from
+  the cut frame) · scary-14 (flash-IN 4-11 vs 34-37, built early, -0.63 s) · 1/2/3/9/10/13 have two shorter flashes.
+
+**Gotchas (each cost a fix):**
+- **OffthreadVideo shows the NEAREST source frame (x.5 rounds up), not floor()** (measured on the scary-4 opaque demo,
+  17 unambiguous frames). The first build's floor() model moved 7 cuts by a frame and put scary-13's swap on a
+  NON-white frame; builder + engine now share the rounding rule.
+- **`npx remotion bundle --help` does NOT print help in 4.0.462: it RUNS a bundle** with the default public dir
+  (`../assets`, 16 GB) into `remotion/build/`; it ate 12 GB of C: in a minute before it was killed and deleted.
+  Render demos with an explicit minimal `publicDir` (bundle once, render many).
+- `_enrich-meta.js` overwrites EVERY row's meta with the Glitch template; never run it (CLAUDE.md corrected).
+
+**QA (all 15 demos + the opaque twin, frames at the cut +/- 3 opened):** the swap frame is fully white on every row
+(YMIN 243-255; scary-14 239 with YAVG 254, visually pure white) · black lift under screen 0.00 (the plates' legal
+black decodes to 0) · the face reads over A before and over B after · `TransitionTest` (live clips through
+`TransitionClip`) hides the cut at comp frames 39-40. Demo audio sits +42.7 ms (2048 samples) behind the window start
+on ALL 15: the same constant every existing demo carries (lightleaks-1, zoom-ease-in), Remotion's AAC path, not the
+asset; the longform post-mix (ffmpeg) places the mp3 sample-exact at tc - duration_s / 2.
+
+**Wiring:** `lint_transition_assets.py` FAMILY += `scary-<digit>` (a typo'd `scary-16` fails; a comp's own
+`'scary-orange'` key does not) and assert B now checks single-file plates (`params.plate` string + LightLeaks'
+`params.layers[].src`); identical output + exit codes before/after on Evals, GrowthVsProduct, Kcc20, RetireEarly,
+TaoDetailed. Strategist rule in `.claude/agents/longform-edited/transition-strategist.md`; ledger look key in
+`skills/usage-ledger/usage-ledger.md`. Per video, copy only the used `lib/scary/scary-N.mp4` + `lib/sfx-scary-N.mp3`
+into the project's lean `assets/transitions/lib/`. The new media match `video-creation/.gitignore` (*.mp4 / *.mp3),
+like the force-added rest of `lib/`: `git add -f` them when committing.
 
 ---
 

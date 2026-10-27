@@ -165,6 +165,31 @@ def pull_full(url, tmp: Path):
     return files[0]
 
 
+CAPTION_SIZE = 44          # default caption size (px) on a 1080p frame
+CAPTION_SAFE_MARGIN = 96   # title-safe side margin (px): the burned text never gets closer to the frame edge than this
+CAPTION_MIN_SIZE = 30
+
+
+def fit_caption_size(caption: str, font: Path) -> int:
+    """The largest size <= CAPTION_SIZE at which the caption's widest line sits inside the title-safe width
+    (1920 - 2 x CAPTION_SAFE_MARGIN). A long context caption used to run ~29 px from each frame edge
+    (evals CLIP-2 visual-qa, 2026-10-20: the first and last glyphs nearly touched the frame)."""
+    try:
+        from PIL import ImageFont
+    except Exception:  # pragma: no cover
+        return CAPTION_SIZE
+    max_w = 1920 - 2 * CAPTION_SAFE_MARGIN
+    size = CAPTION_SIZE
+    while size > CAPTION_MIN_SIZE:
+        f = ImageFont.truetype(str(font), size)
+        if max(f.getlength(line) for line in caption.splitlines() or [caption]) <= max_w:
+            break
+        size -= 1
+    if size != CAPTION_SIZE:
+        print(f"  caption auto-fit: {CAPTION_SIZE}px -> {size}px (title-safe width {max_w}px)")
+    return size
+
+
 def normalise(video: Path, out: Path, dur: float, caption: str, font: Path, tmp: Path,
               audio: Path = None, video_offset: float = 0.0, audio_offset: float = 0.0, fps: int = 30,
               caption_pos: str = "bottom"):
@@ -174,10 +199,11 @@ def normalise(video: Path, out: Path, dur: float, caption: str, font: Path, tmp:
     textfile = tmp / "caption.txt"
     textfile.write_text(caption, encoding="utf-8")
     band_y, text_y = ("0", "26") if caption_pos == "top" else ("ih-96", "h-70")
+    fsize = fit_caption_size(caption, font)
     vf = ("scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,"
           f"fps={fps},format=yuv420p,"
           f"drawbox=x=0:y={band_y}:w=iw:h=96:color=black@0.55:t=fill,"
-          f"drawtext=fontfile='{ff_escape_path(font)}':textfile='{ff_escape_path(textfile)}':expansion=none:fontcolor=white:fontsize=44:"
+          f"drawtext=fontfile='{ff_escape_path(font)}':textfile='{ff_escape_path(textfile)}':expansion=none:fontcolor=white:fontsize={fsize}:"
           f"x=(w-text_w)/2:y={text_y}:shadowcolor=black@0.6:shadowx=2:shadowy=2")
     cmd = ["ffmpeg", "-y", "-loglevel", "error"]
     cmd += ["-ss", f"{video_offset:.3f}", "-i", str(video)]

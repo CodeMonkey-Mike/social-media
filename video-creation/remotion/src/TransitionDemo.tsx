@@ -28,6 +28,9 @@ export type TransitionDemoProps = {
    * previews demo the subtle accent families (Deviation): the effect reads
    * clearly instead of being masked by the content change at the cut. */
   sameScene?: boolean;
+  /** Override some of the row's params for THIS demo render only (never touches library.json), e.g. the
+   * StingerPlate blend A/B: --props='{"id":"scary-4","params":{"blend":"opaque"}}'. */
+  params?: Record<string, unknown>;
 };
 
 /**
@@ -36,7 +39,7 @@ export type TransitionDemoProps = {
  * composition + Remotion's calculateMetadata covers every row (the preview
  * generator renders each id to browse/<category>/<variant>/<id>.mp4).
  */
-export const TransitionDemo: React.FC<TransitionDemoProps> = ({ id, sameScene }) => {
+export const TransitionDemo: React.FC<TransitionDemoProps> = ({ id, sameScene, params }) => {
   const { fps } = useVideoConfig();
   const row = getTransition(id);
   // single-image demo: explicit prop OR the row's own demoSameScene flag
@@ -65,7 +68,7 @@ export const TransitionDemo: React.FC<TransitionDemoProps> = ({ id, sameScene })
           fromSrc={SCENE_A}
           toSrc={SCENE_B_EFF}
           durationInFrames={win}
-          params={row.params}
+          params={params ? { ...row.params, ...params } : row.params}
           sfxSrc={row.sfx}
         />
       </Sequence>

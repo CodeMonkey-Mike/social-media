@@ -1,0 +1,4527 @@
+{
+ "text": " So what are the differences between an AI growth engineer and an AI product engineer? Let's first take the AI off both titles for a second. A growth engineer pushes the product out to customers, gets them on board, or gets them to stay and grow the actual business. A product engineer bills out the features of the actual product with a customer bills. It does not market it. Now put AI in front of both of those titles. The AI growth engineer moves that same number with AI as well as landing pages, onboarding and retention personalized for every user and the experiments to prove it. The AI product engineer builds the AI inside of the feature. So the job is the model's answers grounded in real data. In my experience, these two get used interchangeably even by people who are hiring for them. They're not the same job, same tools, different scoreboard. So let's dissect this a bit. Difference number one, the scoreboard, the growth engineer is scored on the business number, the signups, conversion, retention, and revenue. The product engineer is scored on the feature itself. The word for that scoreboard is called evals short for evaluation. Their features pass rate on a test set is the product engineers conversion rate. The growth engineer ships an AI personalized landing page as a split test. The number moves or it doesn't kill it or scale it. The product engineer ships a grounding fix and the number that moves is the pass rate. One scoreboard counts what the business did and the other one counts what the model did. Difference number two, the clock. The growth engineer runs many cheap experiments and a failed one still counts because the output is leaning. The product engineer builds a slow loop, a test set known with good answers and a regression gate on every change. Nothing ships on a vibe check. Give both of them three weeks. The growth engineer adds an AI step to onboarding that sets up the product differently for every new signup. And within days, you know whether more of them activate. The product engineer spends those three weeks on an eval set and a retrieval fix. Nothing to show on day three. And that eval set outlives this model. Rapid results on one side and compounding quality on the other side. Difference number three, the bias. What each one reaches first. The growth engineer lives in the funnel. AI or not landing pages, analytics, market automation, the AB testing framework, and now AI on top. The product engineer lives in the feature and now the model inside of it, prompting and retrieval, the eval harness, guard rails for when the model should abstain and an interface built for when a model is wrong sometimes. And the middle is shared. Model APIs, agents, evals, Python plus TypeScript. The growth engineer takes a business problem, a low conversion rate and ships the fix. The product engineer knows a convincing demo from a dependable product and when the main software beats AI, one leans towards distribution and the other lean towards the model and the person using it. So which one do you hire first? If users already touch your AI feature and it is wrong too often, the product engineer first. If the product works and you have a funnel to feed the growth engineer, which one should you become? If the business number moving lights you up and you're fine throwing away a week's work when the test said it lost, growth engineer. If a pass rate climbing lights you up, product engineer. And in my experience, a founding AI engineer ends up being both. Either way you're an AI engineer. The title just tells you which number you're accountable for. Three differences, the scoreboard, the clock and the bias. Same tools, different scoreboard. And if that cleared it up, hit that like button and subscribe. If you're not subscribed already, there's a lot more AI engineering content to come on this channel.",
+ "segments": [
+  {
+   "id": 0,
+   "start": 0.0,
+   "end": 4.26,
+   "text": " So what are the differences between an AI growth engineer and an AI product",
+   "words": [
+    {
+     "word": " So",
+     "start": 0.0,
+     "end": 0.22,
+     "probability": 0.875167191028595
+    },
+    {
+     "word": " what",
+     "start": 0.22,
+     "end": 0.54,
+     "probability": 0.9430601000785828
+    },
+    {
+     "word": " are",
+     "start": 0.54,
+     "end": 0.8,
+     "probability": 0.9953910112380981
+    },
+    {
+     "word": " the",
+     "start": 0.8,
+     "end": 0.98,
+     "probability": 0.9969149827957153
+    },
+    {
+     "word": " differences",
+     "start": 0.98,
+     "end": 1.32,
+     "probability": 0.9766539931297302
+    },
+    {
+     "word": " between",
+     "start": 1.32,
+     "end": 1.68,
+     "probability": 0.8633265495300293
+    },
+    {
+     "word": " an",
+     "start": 1.68,
+     "end": 2.0,
+     "probability": 0.9855557680130005
+    },
+    {
+     "word": " AI",
+     "start": 2.0,
+     "end": 2.28,
+     "probability": 0.9371678233146667
+    },
+    {
+     "word": " growth",
+     "start": 2.28,
+     "end": 2.6,
+     "probability": 0.7584289312362671
+    },
+    {
+     "word": " engineer",
+     "start": 2.6,
+     "end": 3.06,
+     "probability": 0.9821199774742126
+    },
+    {
+     "word": " and",
+     "start": 3.06,
+     "end": 3.46,
+     "probability": 0.9618809223175049
+    },
+    {
+     "word": " an",
+     "start": 3.46,
+     "end": 3.64,
+     "probability": 0.9460687637329102
+    },
+    {
+     "word": " AI",
+     "start": 3.64,
+     "end": 3.9,
+     "probability": 0.9865825772285461
+    },
+    {
+     "word": " product",
+     "start": 3.9,
+     "end": 4.26,
+     "probability": 0.9815191030502319
+    }
+   ]
+  },
+  {
+   "id": 1,
+   "start": 4.26,
+   "end": 7.98,
+   "text": " engineer? Let's first take the AI off both titles for a second.",
+   "words": [
+    {
+     "word": " engineer?",
+     "start": 4.26,
+     "end": 4.66,
+     "probability": 0.9901711344718933
+    },
+    {
+     "word": " Let's",
+     "start": 4.78,
+     "end": 5.04,
+     "probability": 0.9717428982257843
+    },
+    {
+     "word": " first",
+     "start": 5.04,
+     "end": 5.34,
+     "probability": 0.991790771484375
+    },
+    {
+     "word": " take",
+     "start": 5.34,
+     "end": 5.56,
+     "probability": 0.9900246858596802
+    },
+    {
+     "word": " the",
+     "start": 5.56,
+     "end": 5.86,
+     "probability": 0.9950432777404785
+    },
+    {
+     "word": " AI",
+     "start": 5.86,
+     "end": 6.26,
+     "probability": 0.9809505939483643
+    },
+    {
+     "word": " off",
+     "start": 6.26,
+     "end": 6.58,
+     "probability": 0.9690358638763428
+    },
+    {
+     "word": " both",
+     "start": 6.58,
+     "end": 6.96,
+     "probability": 0.9640266299247742
+    },
+    {
+     "word": " titles",
+     "start": 6.96,
+     "end": 7.34,
+     "probability": 0.996035635471344
+    },
+    {
+     "word": " for",
+     "start": 7.34,
+     "end": 7.62,
+     "probability": 0.9678229093551636
+    },
+    {
+     "word": " a",
+     "start": 7.62,
+     "end": 7.74,
+     "probability": 0.993184506893158
+    },
+    {
+     "word": " second.",
+     "start": 7.74,
+     "end": 7.98,
+     "probability": 0.9977772831916809
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "start": 8.16,
+   "end": 11.9,
+   "text": " A growth engineer pushes the product out to customers, gets them on board,",
+   "words": [
+    {
+     "word": " A",
+     "start": 8.16,
+     "end": 8.24,
+     "probability": 0.9335324764251709
+    },
+    {
+     "word": " growth",
+     "start": 8.24,
+     "end": 8.46,
+     "probability": 0.9540783762931824
+    },
+    {
+     "word": " engineer",
+     "start": 8.46,
+     "end": 9.0,
+     "probability": 0.991341769695282
+    },
+    {
+     "word": " pushes",
+     "start": 9.0,
+     "end": 9.34,
+     "probability": 0.9410057663917542
+    },
+    {
+     "word": " the",
+     "start": 9.34,
+     "end": 9.7,
+     "probability": 0.9916747212409973
+    },
+    {
+     "word": " product",
+     "start": 9.7,
+     "end": 9.92,
+     "probability": 0.998285710811615
+    },
+    {
+     "word": " out",
+     "start": 9.92,
+     "end": 10.12,
+     "probability": 0.9965775609016418
+    },
+    {
+     "word": " to",
+     "start": 10.12,
+     "end": 10.36,
+     "probability": 0.9773910045623779
+    },
+    {
+     "word": " customers,",
+     "start": 10.36,
+     "end": 10.88,
+     "probability": 0.9900721311569214
+    },
+    {
+     "word": " gets",
+     "start": 11.08,
+     "end": 11.16,
+     "probability": 0.7711829543113708
+    },
+    {
+     "word": " them",
+     "start": 11.16,
+     "end": 11.42,
+     "probability": 0.8721867203712463
+    },
+    {
+     "word": " on",
+     "start": 11.42,
+     "end": 11.68,
+     "probability": 0.5051614046096802
+    },
+    {
+     "word": " board,",
+     "start": 11.68,
+     "end": 11.9,
+     "probability": 0.8103926181793213
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "start": 11.98,
+   "end": 14.56,
+   "text": " or gets them to stay and grow the actual business.",
+   "words": [
+    {
+     "word": " or",
+     "start": 11.98,
+     "end": 12.1,
+     "probability": 0.6403863430023193
+    },
+    {
+     "word": " gets",
+     "start": 12.1,
+     "end": 12.24,
+     "probability": 0.35559919476509094
+    },
+    {
+     "word": " them",
+     "start": 12.24,
+     "end": 12.44,
+     "probability": 0.8687609434127808
+    },
+    {
+     "word": " to",
+     "start": 12.44,
+     "end": 12.72,
+     "probability": 0.8277818560600281
+    },
+    {
+     "word": " stay",
+     "start": 12.72,
+     "end": 12.98,
+     "probability": 0.99835604429245
+    },
+    {
+     "word": " and",
+     "start": 12.98,
+     "end": 13.32,
+     "probability": 0.9343380928039551
+    },
+    {
+     "word": " grow",
+     "start": 13.32,
+     "end": 13.5,
+     "probability": 0.9943991303443909
+    },
+    {
+     "word": " the",
+     "start": 13.5,
+     "end": 13.78,
+     "probability": 0.9817498922348022
+    },
+    {
+     "word": " actual",
+     "start": 13.78,
+     "end": 14.0,
+     "probability": 0.9966661334037781
+    },
+    {
+     "word": " business.",
+     "start": 14.0,
+     "end": 14.56,
+     "probability": 0.9979103207588196
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "start": 14.78,
+   "end": 18.92,
+   "text": " A product engineer bills out the features of the actual product with a customer",
+   "words": [
+    {
+     "word": " A",
+     "start": 14.78,
+     "end": 15.0,
+     "probability": 0.9923382997512817
+    },
+    {
+     "word": " product",
+     "start": 15.0,
+     "end": 15.32,
+     "probability": 0.9894158840179443
+    },
+    {
+     "word": " engineer",
+     "start": 15.32,
+     "end": 15.78,
+     "probability": 0.9908626079559326
+    },
+    {
+     "word": " bills",
+     "start": 15.78,
+     "end": 16.12,
+     "probability": 0.512742817401886
+    },
+    {
+     "word": " out",
+     "start": 16.12,
+     "end": 16.4,
+     "probability": 0.996429979801178
+    },
+    {
+     "word": " the",
+     "start": 16.4,
+     "end": 16.66,
+     "probability": 0.9925508499145508
+    },
+    {
+     "word": " features",
+     "start": 16.66,
+     "end": 16.96,
+     "probability": 0.9988344311714172
+    },
+    {
+     "word": " of",
+     "start": 16.96,
+     "end": 17.2,
+     "probability": 0.9972851276397705
+    },
+    {
+     "word": " the",
+     "start": 17.2,
+     "end": 17.44,
+     "probability": 0.9996071457862854
+    },
+    {
+     "word": " actual",
+     "start": 17.44,
+     "end": 17.72,
+     "probability": 0.996660590171814
+    },
+    {
+     "word": " product",
+     "start": 17.72,
+     "end": 18.12,
+     "probability": 0.9976580142974854
+    },
+    {
+     "word": " with",
+     "start": 18.12,
+     "end": 18.3,
+     "probability": 0.5108642578125
+    },
+    {
+     "word": " a",
+     "start": 18.3,
+     "end": 18.54,
+     "probability": 0.9018992185592651
+    },
+    {
+     "word": " customer",
+     "start": 18.54,
+     "end": 18.92,
+     "probability": 0.9979414343833923
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "start": 18.92,
+   "end": 23.32,
+   "text": " bills. It does not market it. Now put AI in front of both of those titles.",
+   "words": [
+    {
+     "word": " bills.",
+     "start": 18.92,
+     "end": 19.26,
+     "probability": 0.10446032881736755
+    },
+    {
+     "word": " It",
+     "start": 19.5,
+     "end": 19.6,
+     "probability": 0.9741515517234802
+    },
+    {
+     "word": " does",
+     "start": 19.6,
+     "end": 19.8,
+     "probability": 0.982414186000824
+    },
+    {
+     "word": " not",
+     "start": 19.8,
+     "end": 20.04,
+     "probability": 0.9964779019355774
+    },
+    {
+     "word": " market",
+     "start": 20.04,
+     "end": 20.36,
+     "probability": 0.9904801249504089
+    },
+    {
+     "word": " it.",
+     "start": 20.36,
+     "end": 20.64,
+     "probability": 0.9675344824790955
+    },
+    {
+     "word": " Now",
+     "start": 20.74,
+     "end": 21.16,
+     "probability": 0.9922345876693726
+    },
+    {
+     "word": " put",
+     "start": 21.16,
+     "end": 21.4,
+     "probability": 0.9117028713226318
+    },
+    {
+     "word": " AI",
+     "start": 21.4,
+     "end": 21.94,
+     "probability": 0.9913619160652161
+    },
+    {
+     "word": " in",
+     "start": 21.94,
+     "end": 22.14,
+     "probability": 0.9684803485870361
+    },
+    {
+     "word": " front",
+     "start": 22.14,
+     "end": 22.22,
+     "probability": 0.9952661991119385
+    },
+    {
+     "word": " of",
+     "start": 22.22,
+     "end": 22.4,
+     "probability": 0.9983774423599243
+    },
+    {
+     "word": " both",
+     "start": 22.4,
+     "end": 22.56,
+     "probability": 0.9969125986099243
+    },
+    {
+     "word": " of",
+     "start": 22.56,
+     "end": 22.74,
+     "probability": 0.9975903034210205
+    },
+    {
+     "word": " those",
+     "start": 22.74,
+     "end": 22.96,
+     "probability": 0.9987671375274658
+    },
+    {
+     "word": " titles.",
+     "start": 22.96,
+     "end": 23.32,
+     "probability": 0.9953486323356628
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "start": 23.44,
+   "end": 28.3,
+   "text": " The AI growth engineer moves that same number with AI as well as landing pages,",
+   "words": [
+    {
+     "word": " The",
+     "start": 23.44,
+     "end": 23.66,
+     "probability": 0.9937926530838013
+    },
+    {
+     "word": " AI",
+     "start": 23.66,
+     "end": 23.94,
+     "probability": 0.9909387826919556
+    },
+    {
+     "word": " growth",
+     "start": 23.94,
+     "end": 24.26,
+     "probability": 0.9867365956306458
+    },
+    {
+     "word": " engineer",
+     "start": 24.26,
+     "end": 24.8,
+     "probability": 0.9817124009132385
+    },
+    {
+     "word": " moves",
+     "start": 24.8,
+     "end": 25.2,
+     "probability": 0.9852891564369202
+    },
+    {
+     "word": " that",
+     "start": 25.2,
+     "end": 25.46,
+     "probability": 0.9481690526008606
+    },
+    {
+     "word": " same",
+     "start": 25.46,
+     "end": 25.66,
+     "probability": 0.9992486834526062
+    },
+    {
+     "word": " number",
+     "start": 25.66,
+     "end": 25.98,
+     "probability": 0.9945114850997925
+    },
+    {
+     "word": " with",
+     "start": 25.98,
+     "end": 26.28,
+     "probability": 0.9972243309020996
+    },
+    {
+     "word": " AI",
+     "start": 26.28,
+     "end": 26.8,
+     "probability": 0.9943844079971313
+    },
+    {
+     "word": " as",
+     "start": 26.8,
+     "end": 27.06,
+     "probability": 0.720973789691925
+    },
+    {
+     "word": " well",
+     "start": 27.06,
+     "end": 27.24,
+     "probability": 0.9988191723823547
+    },
+    {
+     "word": " as",
+     "start": 27.24,
+     "end": 27.42,
+     "probability": 0.9937720894813538
+    },
+    {
+     "word": " landing",
+     "start": 27.42,
+     "end": 27.66,
+     "probability": 0.9652570486068726
+    },
+    {
+     "word": " pages,",
+     "start": 27.66,
+     "end": 28.3,
+     "probability": 0.9891409873962402
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "start": 28.3,
+   "end": 32.96,
+   "text": " onboarding and retention personalized for every user and the experiments to prove",
+   "words": [
+    {
+     "word": " onboarding",
+     "start": 28.3,
+     "end": 29.14,
+     "probability": 0.7694763839244843
+    },
+    {
+     "word": " and",
+     "start": 29.14,
+     "end": 29.28,
+     "probability": 0.8949494361877441
+    },
+    {
+     "word": " retention",
+     "start": 29.28,
+     "end": 29.82,
+     "probability": 0.9942538142204285
+    },
+    {
+     "word": " personalized",
+     "start": 29.82,
+     "end": 30.6,
+     "probability": 0.7187018990516663
+    },
+    {
+     "word": " for",
+     "start": 30.6,
+     "end": 30.86,
+     "probability": 0.9528324007987976
+    },
+    {
+     "word": " every",
+     "start": 30.86,
+     "end": 31.1,
+     "probability": 0.9893732666969299
+    },
+    {
+     "word": " user",
+     "start": 31.1,
+     "end": 31.56,
+     "probability": 0.9930219054222107
+    },
+    {
+     "word": " and",
+     "start": 31.56,
+     "end": 31.86,
+     "probability": 0.8212733864784241
+    },
+    {
+     "word": " the",
+     "start": 31.86,
+     "end": 32.14,
+     "probability": 0.9345361590385437
+    },
+    {
+     "word": " experiments",
+     "start": 32.14,
+     "end": 32.54,
+     "probability": 0.9427018761634827
+    },
+    {
+     "word": " to",
+     "start": 32.54,
+     "end": 32.82,
+     "probability": 0.9879512190818787
+    },
+    {
+     "word": " prove",
+     "start": 32.82,
+     "end": 32.96,
+     "probability": 0.9934712648391724
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "start": 32.96,
+   "end": 37.02,
+   "text": " it. The AI product engineer builds the AI inside of the feature.",
+   "words": [
+    {
+     "word": " it.",
+     "start": 32.96,
+     "end": 33.2,
+     "probability": 0.9818286895751953
+    },
+    {
+     "word": " The",
+     "start": 33.34,
+     "end": 33.4,
+     "probability": 0.841661274433136
+    },
+    {
+     "word": " AI",
+     "start": 33.4,
+     "end": 33.8,
+     "probability": 0.8938425779342651
+    },
+    {
+     "word": " product",
+     "start": 33.8,
+     "end": 34.14,
+     "probability": 0.8790441751480103
+    },
+    {
+     "word": " engineer",
+     "start": 34.14,
+     "end": 34.7,
+     "probability": 0.98841792345047
+    },
+    {
+     "word": " builds",
+     "start": 34.7,
+     "end": 35.06,
+     "probability": 0.932500958442688
+    },
+    {
+     "word": " the",
+     "start": 35.06,
+     "end": 35.36,
+     "probability": 0.9896913170814514
+    },
+    {
+     "word": " AI",
+     "start": 35.36,
+     "end": 35.88,
+     "probability": 0.9768909811973572
+    },
+    {
+     "word": " inside",
+     "start": 35.88,
+     "end": 36.4,
+     "probability": 0.9621438384056091
+    },
+    {
+     "word": " of",
+     "start": 36.4,
+     "end": 36.54,
+     "probability": 0.9766855835914612
+    },
+    {
+     "word": " the",
+     "start": 36.54,
+     "end": 36.7,
+     "probability": 0.9940150380134583
+    },
+    {
+     "word": " feature.",
+     "start": 36.7,
+     "end": 37.02,
+     "probability": 0.9896048307418823
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "start": 37.1,
+   "end": 41.24,
+   "text": " So the job is the model's answers grounded in real data. In my experience,",
+   "words": [
+    {
+     "word": " So",
+     "start": 37.1,
+     "end": 37.26,
+     "probability": 0.9461445808410645
+    },
+    {
+     "word": " the",
+     "start": 37.26,
+     "end": 37.38,
+     "probability": 0.964464008808136
+    },
+    {
+     "word": " job",
+     "start": 37.38,
+     "end": 37.64,
+     "probability": 0.9982118606567383
+    },
+    {
+     "word": " is",
+     "start": 37.64,
+     "end": 37.84,
+     "probability": 0.9956798553466797
+    },
+    {
+     "word": " the",
+     "start": 37.84,
+     "end": 38.06,
+     "probability": 0.9559868574142456
+    },
+    {
+     "word": " model's",
+     "start": 38.06,
+     "end": 38.56,
+     "probability": 0.8061220943927765
+    },
+    {
+     "word": " answers",
+     "start": 38.56,
+     "end": 38.8,
+     "probability": 0.9837608933448792
+    },
+    {
+     "word": " grounded",
+     "start": 38.8,
+     "end": 39.24,
+     "probability": 0.6831116676330566
+    },
+    {
+     "word": " in",
+     "start": 39.24,
+     "end": 39.58,
+     "probability": 0.9938641786575317
+    },
+    {
+     "word": " real",
+     "start": 39.58,
+     "end": 39.72,
+     "probability": 0.9959607720375061
+    },
+    {
+     "word": " data.",
+     "start": 39.72,
+     "end": 40.1,
+     "probability": 0.9964978098869324
+    },
+    {
+     "word": " In",
+     "start": 40.32,
+     "end": 40.32,
+     "probability": 0.9759973287582397
+    },
+    {
+     "word": " my",
+     "start": 40.32,
+     "end": 40.54,
+     "probability": 0.9984459280967712
+    },
+    {
+     "word": " experience,",
+     "start": 40.54,
+     "end": 41.24,
+     "probability": 0.9977832436561584
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "start": 41.24,
+   "end": 45.14,
+   "text": " these two get used interchangeably even by people who are hiring for them.",
+   "words": [
+    {
+     "word": " these",
+     "start": 41.24,
+     "end": 41.58,
+     "probability": 0.9929059743881226
+    },
+    {
+     "word": " two",
+     "start": 41.58,
+     "end": 41.82,
+     "probability": 0.9784371256828308
+    },
+    {
+     "word": " get",
+     "start": 41.82,
+     "end": 42.04,
+     "probability": 0.9868029952049255
+    },
+    {
+     "word": " used",
+     "start": 42.04,
+     "end": 42.4,
+     "probability": 0.9866613745689392
+    },
+    {
+     "word": " interchangeably",
+     "start": 42.4,
+     "end": 43.3,
+     "probability": 0.9949179589748383
+    },
+    {
+     "word": " even",
+     "start": 43.3,
+     "end": 43.62,
+     "probability": 0.5503513216972351
+    },
+    {
+     "word": " by",
+     "start": 43.62,
+     "end": 43.84,
+     "probability": 0.9970453381538391
+    },
+    {
+     "word": " people",
+     "start": 43.84,
+     "end": 44.1,
+     "probability": 0.9975979924201965
+    },
+    {
+     "word": " who",
+     "start": 44.1,
+     "end": 44.3,
+     "probability": 0.9833956956863403
+    },
+    {
+     "word": " are",
+     "start": 44.3,
+     "end": 44.44,
+     "probability": 0.8979548215866089
+    },
+    {
+     "word": " hiring",
+     "start": 44.44,
+     "end": 44.74,
+     "probability": 0.9988221526145935
+    },
+    {
+     "word": " for",
+     "start": 44.74,
+     "end": 45.02,
+     "probability": 0.7881630659103394
+    },
+    {
+     "word": " them.",
+     "start": 45.02,
+     "end": 45.14,
+     "probability": 0.9780426025390625
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "start": 45.22,
+   "end": 48.82,
+   "text": " They're not the same job, same tools, different scoreboard.",
+   "words": [
+    {
+     "word": " They're",
+     "start": 45.22,
+     "end": 45.46,
+     "probability": 0.9406372606754303
+    },
+    {
+     "word": " not",
+     "start": 45.46,
+     "end": 45.68,
+     "probability": 0.9963312745094299
+    },
+    {
+     "word": " the",
+     "start": 45.68,
+     "end": 45.92,
+     "probability": 0.9983296990394592
+    },
+    {
+     "word": " same",
+     "start": 45.92,
+     "end": 46.12,
+     "probability": 0.9992325305938721
+    },
+    {
+     "word": " job,",
+     "start": 46.12,
+     "end": 46.58,
+     "probability": 0.9942466616630554
+    },
+    {
+     "word": " same",
+     "start": 46.88,
+     "end": 47.12,
+     "probability": 0.990059494972229
+    },
+    {
+     "word": " tools,",
+     "start": 47.12,
+     "end": 47.64,
+     "probability": 0.9963811039924622
+    },
+    {
+     "word": " different",
+     "start": 47.98,
+     "end": 48.22,
+     "probability": 0.9837808609008789
+    },
+    {
+     "word": " scoreboard.",
+     "start": 48.22,
+     "end": 48.82,
+     "probability": 0.9411705136299133
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "start": 48.88,
+   "end": 54.08,
+   "text": " So let's dissect this a bit. Difference number one, the scoreboard,",
+   "words": [
+    {
+     "word": " So",
+     "start": 48.88,
+     "end": 49.0,
+     "probability": 0.9848249554634094
+    },
+    {
+     "word": " let's",
+     "start": 49.0,
+     "end": 49.34,
+     "probability": 0.9887894093990326
+    },
+    {
+     "word": " dissect",
+     "start": 49.34,
+     "end": 49.76,
+     "probability": 0.9938020706176758
+    },
+    {
+     "word": " this",
+     "start": 49.76,
+     "end": 50.06,
+     "probability": 0.9946578145027161
+    },
+    {
+     "word": " a",
+     "start": 50.06,
+     "end": 50.24,
+     "probability": 0.9819245338439941
+    },
+    {
+     "word": " bit.",
+     "start": 50.24,
+     "end": 51.88,
+     "probability": 0.9987836480140686
+    },
+    {
+     "word": " Difference",
+     "start": 52.0,
+     "end": 52.32,
+     "probability": 0.9386504590511322
+    },
+    {
+     "word": " number",
+     "start": 52.32,
+     "end": 52.68,
+     "probability": 0.7793306708335876
+    },
+    {
+     "word": " one,",
+     "start": 52.68,
+     "end": 52.96,
+     "probability": 0.9603140354156494
+    },
+    {
+     "word": " the",
+     "start": 53.3,
+     "end": 53.52,
+     "probability": 0.9460770487785339
+    },
+    {
+     "word": " scoreboard,",
+     "start": 53.52,
+     "end": 54.08,
+     "probability": 0.9678055942058563
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "start": 54.18,
+   "end": 57.52,
+   "text": " the growth engineer is scored on the business number, the signups,",
+   "words": [
+    {
+     "word": " the",
+     "start": 54.18,
+     "end": 54.38,
+     "probability": 0.9555512070655823
+    },
+    {
+     "word": " growth",
+     "start": 54.38,
+     "end": 54.6,
+     "probability": 0.9738984704017639
+    },
+    {
+     "word": " engineer",
+     "start": 54.6,
+     "end": 55.12,
+     "probability": 0.9865388870239258
+    },
+    {
+     "word": " is",
+     "start": 55.12,
+     "end": 55.54,
+     "probability": 0.9640349745750427
+    },
+    {
+     "word": " scored",
+     "start": 55.54,
+     "end": 55.7,
+     "probability": 0.9021782875061035
+    },
+    {
+     "word": " on",
+     "start": 55.7,
+     "end": 55.86,
+     "probability": 0.961331307888031
+    },
+    {
+     "word": " the",
+     "start": 55.86,
+     "end": 56.04,
+     "probability": 0.9650067687034607
+    },
+    {
+     "word": " business",
+     "start": 56.04,
+     "end": 56.32,
+     "probability": 0.9956998825073242
+    },
+    {
+     "word": " number,",
+     "start": 56.32,
+     "end": 56.74,
+     "probability": 0.9834696054458618
+    },
+    {
+     "word": " the",
+     "start": 56.88,
+     "end": 57.12,
+     "probability": 0.9943206310272217
+    },
+    {
+     "word": " signups,",
+     "start": 57.12,
+     "end": 57.52,
+     "probability": 0.8752935230731964
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "start": 57.52,
+   "end": 62.04,
+   "text": " conversion, retention, and revenue. The product engineer is scored on the feature itself.",
+   "words": [
+    {
+     "word": " conversion,",
+     "start": 57.52,
+     "end": 58.08,
+     "probability": 0.47678327560424805
+    },
+    {
+     "word": " retention,",
+     "start": 58.2,
+     "end": 58.64,
+     "probability": 0.9311392307281494
+    },
+    {
+     "word": " and",
+     "start": 58.84,
+     "end": 59.0,
+     "probability": 0.9694005846977234
+    },
+    {
+     "word": " revenue.",
+     "start": 59.0,
+     "end": 59.34,
+     "probability": 0.9912217855453491
+    },
+    {
+     "word": " The",
+     "start": 59.5,
+     "end": 59.68,
+     "probability": 0.9621659517288208
+    },
+    {
+     "word": " product",
+     "start": 59.68,
+     "end": 60.04,
+     "probability": 0.6644749641418457
+    },
+    {
+     "word": " engineer",
+     "start": 60.04,
+     "end": 60.52,
+     "probability": 0.9284813404083252
+    },
+    {
+     "word": " is",
+     "start": 60.52,
+     "end": 60.82,
+     "probability": 0.6266489028930664
+    },
+    {
+     "word": " scored",
+     "start": 60.82,
+     "end": 60.96,
+     "probability": 0.9833337664604187
+    },
+    {
+     "word": " on",
+     "start": 60.96,
+     "end": 61.16,
+     "probability": 0.9971128702163696
+    },
+    {
+     "word": " the",
+     "start": 61.16,
+     "end": 61.34,
+     "probability": 0.9841139316558838
+    },
+    {
+     "word": " feature",
+     "start": 61.34,
+     "end": 61.54,
+     "probability": 0.9965180158615112
+    },
+    {
+     "word": " itself.",
+     "start": 61.54,
+     "end": 62.04,
+     "probability": 0.9918513894081116
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "start": 62.22,
+   "end": 66.34,
+   "text": " The word for that scoreboard is called evals short for evaluation.",
+   "words": [
+    {
+     "word": " The",
+     "start": 62.22,
+     "end": 62.36,
+     "probability": 0.9822913408279419
+    },
+    {
+     "word": " word",
+     "start": 62.36,
+     "end": 62.56,
+     "probability": 0.9872157573699951
+    },
+    {
+     "word": " for",
+     "start": 62.56,
+     "end": 62.76,
+     "probability": 0.9974899291992188
+    },
+    {
+     "word": " that",
+     "start": 62.76,
+     "end": 63.08,
+     "probability": 0.9661375284194946
+    },
+    {
+     "word": " scoreboard",
+     "start": 63.08,
+     "end": 63.66,
+     "probability": 0.9595970511436462
+    },
+    {
+     "word": " is",
+     "start": 63.66,
+     "end": 63.9,
+     "probability": 0.9953938722610474
+    },
+    {
+     "word": " called",
+     "start": 63.9,
+     "end": 64.2,
+     "probability": 0.994203507900238
+    },
+    {
+     "word": " evals",
+     "start": 64.2,
+     "end": 64.9,
+     "probability": 0.6586605906486511
+    },
+    {
+     "word": " short",
+     "start": 64.9,
+     "end": 65.42,
+     "probability": 0.2809433937072754
+    },
+    {
+     "word": " for",
+     "start": 65.42,
+     "end": 65.7,
+     "probability": 0.9926174283027649
+    },
+    {
+     "word": " evaluation.",
+     "start": 65.7,
+     "end": 66.34,
+     "probability": 0.475852906703949
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "start": 66.56,
+   "end": 71.04,
+   "text": " Their features pass rate on a test set is the product engineers conversion",
+   "words": [
+    {
+     "word": " Their",
+     "start": 66.56,
+     "end": 66.8,
+     "probability": 0.4997450113296509
+    },
+    {
+     "word": " features",
+     "start": 66.8,
+     "end": 67.14,
+     "probability": 0.7841982841491699
+    },
+    {
+     "word": " pass",
+     "start": 67.14,
+     "end": 67.6,
+     "probability": 0.864339292049408
+    },
+    {
+     "word": " rate",
+     "start": 67.6,
+     "end": 67.86,
+     "probability": 0.9857300519943237
+    },
+    {
+     "word": " on",
+     "start": 67.86,
+     "end": 68.14,
+     "probability": 0.9867649078369141
+    },
+    {
+     "word": " a",
+     "start": 68.14,
+     "end": 68.38,
+     "probability": 0.9966537952423096
+    },
+    {
+     "word": " test",
+     "start": 68.38,
+     "end": 68.62,
+     "probability": 0.9983641505241394
+    },
+    {
+     "word": " set",
+     "start": 68.62,
+     "end": 68.92,
+     "probability": 0.9874554872512817
+    },
+    {
+     "word": " is",
+     "start": 68.92,
+     "end": 69.26,
+     "probability": 0.9444141983985901
+    },
+    {
+     "word": " the",
+     "start": 69.26,
+     "end": 69.54,
+     "probability": 0.8581637144088745
+    },
+    {
+     "word": " product",
+     "start": 69.54,
+     "end": 69.74,
+     "probability": 0.9836270809173584
+    },
+    {
+     "word": " engineers",
+     "start": 69.74,
+     "end": 70.28,
+     "probability": 0.8165046572685242
+    },
+    {
+     "word": " conversion",
+     "start": 70.28,
+     "end": 71.04,
+     "probability": 0.9095231890678406
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "start": 71.04,
+   "end": 75.76,
+   "text": " rate. The growth engineer ships an AI personalized landing page as a split test.",
+   "words": [
+    {
+     "word": " rate.",
+     "start": 71.04,
+     "end": 71.32,
+     "probability": 0.9908199906349182
+    },
+    {
+     "word": " The",
+     "start": 71.5,
+     "end": 71.66,
+     "probability": 0.8181654810905457
+    },
+    {
+     "word": " growth",
+     "start": 71.66,
+     "end": 71.9,
+     "probability": 0.9907106757164001
+    },
+    {
+     "word": " engineer",
+     "start": 71.9,
+     "end": 72.56,
+     "probability": 0.9938998222351074
+    },
+    {
+     "word": " ships",
+     "start": 72.56,
+     "end": 72.92,
+     "probability": 0.9410635232925415
+    },
+    {
+     "word": " an",
+     "start": 72.92,
+     "end": 73.2,
+     "probability": 0.9282200932502747
+    },
+    {
+     "word": " AI",
+     "start": 73.2,
+     "end": 73.5,
+     "probability": 0.9451806545257568
+    },
+    {
+     "word": " personalized",
+     "start": 73.5,
+     "end": 74.08,
+     "probability": 0.973211944103241
+    },
+    {
+     "word": " landing",
+     "start": 74.08,
+     "end": 74.4,
+     "probability": 0.9832960963249207
+    },
+    {
+     "word": " page",
+     "start": 74.4,
+     "end": 74.8,
+     "probability": 0.9956066012382507
+    },
+    {
+     "word": " as",
+     "start": 74.8,
+     "end": 75.14,
+     "probability": 0.9579670429229736
+    },
+    {
+     "word": " a",
+     "start": 75.14,
+     "end": 75.38,
+     "probability": 0.9969738721847534
+    },
+    {
+     "word": " split",
+     "start": 75.38,
+     "end": 75.54,
+     "probability": 0.9967526793479919
+    },
+    {
+     "word": " test.",
+     "start": 75.54,
+     "end": 75.76,
+     "probability": 0.9741909503936768
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "start": 75.84,
+   "end": 78.94,
+   "text": " The number moves or it doesn't kill it or scale it.",
+   "words": [
+    {
+     "word": " The",
+     "start": 75.84,
+     "end": 76.0,
+     "probability": 0.9932204484939575
+    },
+    {
+     "word": " number",
+     "start": 76.0,
+     "end": 76.2,
+     "probability": 0.9972142577171326
+    },
+    {
+     "word": " moves",
+     "start": 76.2,
+     "end": 76.64,
+     "probability": 0.9890204071998596
+    },
+    {
+     "word": " or",
+     "start": 76.64,
+     "end": 77.0,
+     "probability": 0.9072916507720947
+    },
+    {
+     "word": " it",
+     "start": 77.0,
+     "end": 77.18,
+     "probability": 0.49720004200935364
+    },
+    {
+     "word": " doesn't",
+     "start": 77.18,
+     "end": 77.72,
+     "probability": 0.9973929822444916
+    },
+    {
+     "word": " kill",
+     "start": 77.72,
+     "end": 77.96,
+     "probability": 0.785449206829071
+    },
+    {
+     "word": " it",
+     "start": 77.96,
+     "end": 78.32,
+     "probability": 0.9909970760345459
+    },
+    {
+     "word": " or",
+     "start": 78.32,
+     "end": 78.54,
+     "probability": 0.9537063241004944
+    },
+    {
+     "word": " scale",
+     "start": 78.54,
+     "end": 78.76,
+     "probability": 0.9810701608657837
+    },
+    {
+     "word": " it.",
+     "start": 78.76,
+     "end": 78.94,
+     "probability": 0.9808863997459412
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "start": 79.02,
+   "end": 83.88,
+   "text": " The product engineer ships a grounding fix and the number that moves is the pass",
+   "words": [
+    {
+     "word": " The",
+     "start": 79.02,
+     "end": 79.24,
+     "probability": 0.9946816563606262
+    },
+    {
+     "word": " product",
+     "start": 79.24,
+     "end": 79.56,
+     "probability": 0.9858171343803406
+    },
+    {
+     "word": " engineer",
+     "start": 79.56,
+     "end": 80.16,
+     "probability": 0.9954861998558044
+    },
+    {
+     "word": " ships",
+     "start": 80.16,
+     "end": 80.72,
+     "probability": 0.9538405537605286
+    },
+    {
+     "word": " a",
+     "start": 80.72,
+     "end": 81.0,
+     "probability": 0.9672739505767822
+    },
+    {
+     "word": " grounding",
+     "start": 81.0,
+     "end": 81.26,
+     "probability": 0.8761385679244995
+    },
+    {
+     "word": " fix",
+     "start": 81.26,
+     "end": 81.74,
+     "probability": 0.8502758145332336
+    },
+    {
+     "word": " and",
+     "start": 81.74,
+     "end": 82.18,
+     "probability": 0.7485666871070862
+    },
+    {
+     "word": " the",
+     "start": 82.18,
+     "end": 82.36,
+     "probability": 0.9980429410934448
+    },
+    {
+     "word": " number",
+     "start": 82.36,
+     "end": 82.54,
+     "probability": 0.9990231990814209
+    },
+    {
+     "word": " that",
+     "start": 82.54,
+     "end": 82.86,
+     "probability": 0.9977859258651733
+    },
+    {
+     "word": " moves",
+     "start": 82.86,
+     "end": 83.16,
+     "probability": 0.9968576431274414
+    },
+    {
+     "word": " is",
+     "start": 83.16,
+     "end": 83.4,
+     "probability": 0.9931119680404663
+    },
+    {
+     "word": " the",
+     "start": 83.4,
+     "end": 83.64,
+     "probability": 0.9982187151908875
+    },
+    {
+     "word": " pass",
+     "start": 83.64,
+     "end": 83.88,
+     "probability": 0.9841853976249695
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "start": 83.88,
+   "end": 88.52,
+   "text": " rate. One scoreboard counts what the business did and the other one counts what the model did.",
+   "words": [
+    {
+     "word": " rate.",
+     "start": 83.88,
+     "end": 84.2,
+     "probability": 0.002376436023041606
+    },
+    {
+     "word": " One",
+     "start": 84.2,
+     "end": 84.52,
+     "probability": 0.7151139974594116
+    },
+    {
+     "word": " scoreboard",
+     "start": 84.52,
+     "end": 85.08,
+     "probability": 0.918687641620636
+    },
+    {
+     "word": " counts",
+     "start": 85.08,
+     "end": 85.36,
+     "probability": 0.9806683659553528
+    },
+    {
+     "word": " what",
+     "start": 85.36,
+     "end": 85.58,
+     "probability": 0.9762078523635864
+    },
+    {
+     "word": " the",
+     "start": 85.58,
+     "end": 85.78,
+     "probability": 0.9800935387611389
+    },
+    {
+     "word": " business",
+     "start": 85.78,
+     "end": 86.06,
+     "probability": 0.9880361557006836
+    },
+    {
+     "word": " did",
+     "start": 86.06,
+     "end": 86.48,
+     "probability": 0.9843828082084656
+    },
+    {
+     "word": " and",
+     "start": 86.48,
+     "end": 86.82,
+     "probability": 0.6475514769554138
+    },
+    {
+     "word": " the",
+     "start": 86.82,
+     "end": 86.96,
+     "probability": 0.9448245763778687
+    },
+    {
+     "word": " other",
+     "start": 86.96,
+     "end": 87.22,
+     "probability": 0.9860511422157288
+    },
+    {
+     "word": " one",
+     "start": 87.22,
+     "end": 87.42,
+     "probability": 0.8787809014320374
+    },
+    {
+     "word": " counts",
+     "start": 87.42,
+     "end": 87.66,
+     "probability": 0.9472449421882629
+    },
+    {
+     "word": " what",
+     "start": 87.66,
+     "end": 87.88,
+     "probability": 0.9825897216796875
+    },
+    {
+     "word": " the",
+     "start": 87.88,
+     "end": 88.06,
+     "probability": 0.9886283278465271
+    },
+    {
+     "word": " model",
+     "start": 88.06,
+     "end": 88.28,
+     "probability": 0.9915328621864319
+    },
+    {
+     "word": " did.",
+     "start": 88.28,
+     "end": 88.52,
+     "probability": 0.9866129159927368
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "start": 88.68,
+   "end": 90.38,
+   "text": " Difference number two, the clock.",
+   "words": [
+    {
+     "word": " Difference",
+     "start": 88.68,
+     "end": 88.92,
+     "probability": 0.8245643079280853
+    },
+    {
+     "word": " number",
+     "start": 88.92,
+     "end": 89.3,
+     "probability": 0.4653760492801666
+    },
+    {
+     "word": " two,",
+     "start": 89.3,
+     "end": 89.8,
+     "probability": 0.5529398322105408
+    },
+    {
+     "word": " the",
+     "start": 89.9,
+     "end": 90.16,
+     "probability": 0.8836488127708435
+    },
+    {
+     "word": " clock.",
+     "start": 90.16,
+     "end": 90.38,
+     "probability": 0.9550268054008484
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "start": 90.54,
+   "end": 95.42,
+   "text": " The growth engineer runs many cheap experiments and a failed one still counts because",
+   "words": [
+    {
+     "word": " The",
+     "start": 90.54,
+     "end": 90.68,
+     "probability": 0.9684082865715027
+    },
+    {
+     "word": " growth",
+     "start": 90.68,
+     "end": 90.9,
+     "probability": 0.3975645899772644
+    },
+    {
+     "word": " engineer",
+     "start": 90.9,
+     "end": 91.38,
+     "probability": 0.9816436171531677
+    },
+    {
+     "word": " runs",
+     "start": 91.38,
+     "end": 91.7,
+     "probability": 0.9871604442596436
+    },
+    {
+     "word": " many",
+     "start": 91.7,
+     "end": 92.14,
+     "probability": 0.9930786490440369
+    },
+    {
+     "word": " cheap",
+     "start": 92.14,
+     "end": 92.4,
+     "probability": 0.988732099533081
+    },
+    {
+     "word": " experiments",
+     "start": 92.4,
+     "end": 93.08,
+     "probability": 0.9940913319587708
+    },
+    {
+     "word": " and",
+     "start": 93.08,
+     "end": 93.52,
+     "probability": 0.880571722984314
+    },
+    {
+     "word": " a",
+     "start": 93.52,
+     "end": 93.68,
+     "probability": 0.9821511507034302
+    },
+    {
+     "word": " failed",
+     "start": 93.68,
+     "end": 93.84,
+     "probability": 0.899636447429657
+    },
+    {
+     "word": " one",
+     "start": 93.84,
+     "end": 94.06,
+     "probability": 0.9918516278266907
+    },
+    {
+     "word": " still",
+     "start": 94.06,
+     "end": 94.42,
+     "probability": 0.9927915334701538
+    },
+    {
+     "word": " counts",
+     "start": 94.42,
+     "end": 94.84,
+     "probability": 0.9944931268692017
+    },
+    {
+     "word": " because",
+     "start": 94.84,
+     "end": 95.42,
+     "probability": 0.741061806678772
+    }
+   ]
+  },
+  {
+   "id": 23,
+   "start": 95.42,
+   "end": 98.64,
+   "text": " the output is leaning. The product engineer builds a slow loop,",
+   "words": [
+    {
+     "word": " the",
+     "start": 95.42,
+     "end": 95.7,
+     "probability": 0.9920608997344971
+    },
+    {
+     "word": " output",
+     "start": 95.7,
+     "end": 95.94,
+     "probability": 0.9973694086074829
+    },
+    {
+     "word": " is",
+     "start": 95.94,
+     "end": 96.22,
+     "probability": 0.9968020915985107
+    },
+    {
+     "word": " leaning.",
+     "start": 96.22,
+     "end": 96.48,
+     "probability": 0.9801948070526123
+    },
+    {
+     "word": " The",
+     "start": 96.68,
+     "end": 96.92,
+     "probability": 0.9882315993309021
+    },
+    {
+     "word": " product",
+     "start": 96.92,
+     "end": 97.18,
+     "probability": 0.9738675951957703
+    },
+    {
+     "word": " engineer",
+     "start": 97.18,
+     "end": 97.58,
+     "probability": 0.9893053770065308
+    },
+    {
+     "word": " builds",
+     "start": 97.58,
+     "end": 97.9,
+     "probability": 0.986868143081665
+    },
+    {
+     "word": " a",
+     "start": 97.9,
+     "end": 98.2,
+     "probability": 0.9846745729446411
+    },
+    {
+     "word": " slow",
+     "start": 98.2,
+     "end": 98.38,
+     "probability": 0.9985842704772949
+    },
+    {
+     "word": " loop,",
+     "start": 98.38,
+     "end": 98.64,
+     "probability": 0.9843406081199646
+    }
+   ]
+  },
+  {
+   "id": 24,
+   "start": 98.78,
+   "end": 103.06,
+   "text": " a test set known with good answers and a regression gate on every change.",
+   "words": [
+    {
+     "word": " a",
+     "start": 98.78,
+     "end": 99.0,
+     "probability": 0.9909731149673462
+    },
+    {
+     "word": " test",
+     "start": 99.0,
+     "end": 99.24,
+     "probability": 0.9976301193237305
+    },
+    {
+     "word": " set",
+     "start": 99.24,
+     "end": 99.6,
+     "probability": 0.992536187171936
+    },
+    {
+     "word": " known",
+     "start": 99.6,
+     "end": 99.88,
+     "probability": 0.9498710036277771
+    },
+    {
+     "word": " with",
+     "start": 99.88,
+     "end": 100.16,
+     "probability": 0.9960262775421143
+    },
+    {
+     "word": " good",
+     "start": 100.16,
+     "end": 100.36,
+     "probability": 0.9929947257041931
+    },
+    {
+     "word": " answers",
+     "start": 100.36,
+     "end": 100.86,
+     "probability": 0.9970853924751282
+    },
+    {
+     "word": " and",
+     "start": 100.86,
+     "end": 101.14,
+     "probability": 0.7202569246292114
+    },
+    {
+     "word": " a",
+     "start": 101.14,
+     "end": 101.32,
+     "probability": 0.9894376993179321
+    },
+    {
+     "word": " regression",
+     "start": 101.32,
+     "end": 101.68,
+     "probability": 0.9950845837593079
+    },
+    {
+     "word": " gate",
+     "start": 101.68,
+     "end": 102.04,
+     "probability": 0.9447860717773438
+    },
+    {
+     "word": " on",
+     "start": 102.04,
+     "end": 102.38,
+     "probability": 0.9917484521865845
+    },
+    {
+     "word": " every",
+     "start": 102.38,
+     "end": 102.66,
+     "probability": 0.9975199103355408
+    },
+    {
+     "word": " change.",
+     "start": 102.66,
+     "end": 103.06,
+     "probability": 0.9945110082626343
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "start": 103.34,
+   "end": 106.28,
+   "text": " Nothing ships on a vibe check. Give both of them three weeks.",
+   "words": [
+    {
+     "word": " Nothing",
+     "start": 103.34,
+     "end": 103.5,
+     "probability": 0.9702911972999573
+    },
+    {
+     "word": " ships",
+     "start": 103.5,
+     "end": 103.84,
+     "probability": 0.86890709400177
+    },
+    {
+     "word": " on",
+     "start": 103.84,
+     "end": 104.08,
+     "probability": 0.9740183353424072
+    },
+    {
+     "word": " a",
+     "start": 104.08,
+     "end": 104.2,
+     "probability": 0.9406965374946594
+    },
+    {
+     "word": " vibe",
+     "start": 104.2,
+     "end": 104.44,
+     "probability": 0.9548017978668213
+    },
+    {
+     "word": " check.",
+     "start": 104.44,
+     "end": 104.62,
+     "probability": 0.9666215777397156
+    },
+    {
+     "word": " Give",
+     "start": 104.72,
+     "end": 105.0,
+     "probability": 0.9876968264579773
+    },
+    {
+     "word": " both",
+     "start": 105.0,
+     "end": 105.3,
+     "probability": 0.9862387776374817
+    },
+    {
+     "word": " of",
+     "start": 105.3,
+     "end": 105.44,
+     "probability": 0.992643415927887
+    },
+    {
+     "word": " them",
+     "start": 105.44,
+     "end": 105.58,
+     "probability": 0.9973322153091431
+    },
+    {
+     "word": " three",
+     "start": 105.58,
+     "end": 105.84,
+     "probability": 0.9237337112426758
+    },
+    {
+     "word": " weeks.",
+     "start": 105.84,
+     "end": 106.28,
+     "probability": 0.9974083304405212
+    }
+   ]
+  },
+  {
+   "id": 26,
+   "start": 106.78,
+   "end": 111.4,
+   "text": " The growth engineer adds an AI step to onboarding that sets up the product differently",
+   "words": [
+    {
+     "word": " The",
+     "start": 106.78,
+     "end": 107.04,
+     "probability": 0.989346981048584
+    },
+    {
+     "word": " growth",
+     "start": 107.04,
+     "end": 107.26,
+     "probability": 0.9858487844467163
+    },
+    {
+     "word": " engineer",
+     "start": 107.26,
+     "end": 107.76,
+     "probability": 0.997227132320404
+    },
+    {
+     "word": " adds",
+     "start": 107.76,
+     "end": 108.08,
+     "probability": 0.9117642641067505
+    },
+    {
+     "word": " an",
+     "start": 108.08,
+     "end": 108.32,
+     "probability": 0.9851304292678833
+    },
+    {
+     "word": " AI",
+     "start": 108.32,
+     "end": 108.62,
+     "probability": 0.9640423655509949
+    },
+    {
+     "word": " step",
+     "start": 108.62,
+     "end": 108.92,
+     "probability": 0.9835730195045471
+    },
+    {
+     "word": " to",
+     "start": 108.92,
+     "end": 109.16,
+     "probability": 0.9936636686325073
+    },
+    {
+     "word": " onboarding",
+     "start": 109.16,
+     "end": 109.94,
+     "probability": 0.9742161333560944
+    },
+    {
+     "word": " that",
+     "start": 109.94,
+     "end": 110.2,
+     "probability": 0.9593870639801025
+    },
+    {
+     "word": " sets",
+     "start": 110.2,
+     "end": 110.38,
+     "probability": 0.9941492080688477
+    },
+    {
+     "word": " up",
+     "start": 110.38,
+     "end": 110.58,
+     "probability": 0.9948137998580933
+    },
+    {
+     "word": " the",
+     "start": 110.58,
+     "end": 110.82,
+     "probability": 0.9972250461578369
+    },
+    {
+     "word": " product",
+     "start": 110.82,
+     "end": 111.0,
+     "probability": 0.9965425133705139
+    },
+    {
+     "word": " differently",
+     "start": 111.0,
+     "end": 111.4,
+     "probability": 0.9960311055183411
+    }
+   ]
+  },
+  {
+   "id": 27,
+   "start": 111.4,
+   "end": 115.12,
+   "text": " for every new signup. And within days, you know whether more of them activate.",
+   "words": [
+    {
+     "word": " for",
+     "start": 111.4,
+     "end": 111.62,
+     "probability": 0.6724166870117188
+    },
+    {
+     "word": " every",
+     "start": 111.62,
+     "end": 111.86,
+     "probability": 0.9474008083343506
+    },
+    {
+     "word": " new",
+     "start": 111.86,
+     "end": 112.14,
+     "probability": 0.9797313809394836
+    },
+    {
+     "word": " signup.",
+     "start": 112.14,
+     "end": 112.48,
+     "probability": 0.6719573438167572
+    },
+    {
+     "word": " And",
+     "start": 112.68,
+     "end": 112.68,
+     "probability": 0.7578643560409546
+    },
+    {
+     "word": " within",
+     "start": 112.68,
+     "end": 112.98,
+     "probability": 0.9608862400054932
+    },
+    {
+     "word": " days,",
+     "start": 112.98,
+     "end": 113.46,
+     "probability": 0.9932811260223389
+    },
+    {
+     "word": " you",
+     "start": 113.48,
+     "end": 113.64,
+     "probability": 0.9871084094047546
+    },
+    {
+     "word": " know",
+     "start": 113.64,
+     "end": 113.8,
+     "probability": 0.9847752451896667
+    },
+    {
+     "word": " whether",
+     "start": 113.8,
+     "end": 114.12,
+     "probability": 0.8774583339691162
+    },
+    {
+     "word": " more",
+     "start": 114.12,
+     "end": 114.4,
+     "probability": 0.9657175540924072
+    },
+    {
+     "word": " of",
+     "start": 114.4,
+     "end": 114.52,
+     "probability": 0.9725353121757507
+    },
+    {
+     "word": " them",
+     "start": 114.52,
+     "end": 114.68,
+     "probability": 0.9946668148040771
+    },
+    {
+     "word": " activate.",
+     "start": 114.68,
+     "end": 115.12,
+     "probability": 0.989769458770752
+    }
+   ]
+  },
+  {
+   "id": 28,
+   "start": 115.4,
+   "end": 119.72,
+   "text": " The product engineer spends those three weeks on an eval set and a retrieval fix.",
+   "words": [
+    {
+     "word": " The",
+     "start": 115.4,
+     "end": 115.5,
+     "probability": 0.9314035773277283
+    },
+    {
+     "word": " product",
+     "start": 115.5,
+     "end": 115.84,
+     "probability": 0.6780726313591003
+    },
+    {
+     "word": " engineer",
+     "start": 115.84,
+     "end": 116.32,
+     "probability": 0.9800928831100464
+    },
+    {
+     "word": " spends",
+     "start": 116.32,
+     "end": 116.7,
+     "probability": 0.9862931966781616
+    },
+    {
+     "word": " those",
+     "start": 116.7,
+     "end": 117.04,
+     "probability": 0.9789148569107056
+    },
+    {
+     "word": " three",
+     "start": 117.04,
+     "end": 117.26,
+     "probability": 0.7977582812309265
+    },
+    {
+     "word": " weeks",
+     "start": 117.26,
+     "end": 117.5,
+     "probability": 0.9936540126800537
+    },
+    {
+     "word": " on",
+     "start": 117.5,
+     "end": 117.66,
+     "probability": 0.9939534068107605
+    },
+    {
+     "word": " an",
+     "start": 117.66,
+     "end": 117.94,
+     "probability": 0.8530439138412476
+    },
+    {
+     "word": " eval",
+     "start": 117.94,
+     "end": 118.22,
+     "probability": 0.9206159114837646
+    },
+    {
+     "word": " set",
+     "start": 118.22,
+     "end": 118.54,
+     "probability": 0.8905503153800964
+    },
+    {
+     "word": " and",
+     "start": 118.54,
+     "end": 118.96,
+     "probability": 0.8955621719360352
+    },
+    {
+     "word": " a",
+     "start": 118.96,
+     "end": 119.18,
+     "probability": 0.9575785398483276
+    },
+    {
+     "word": " retrieval",
+     "start": 119.18,
+     "end": 119.56,
+     "probability": 0.9937166571617126
+    },
+    {
+     "word": " fix.",
+     "start": 119.56,
+     "end": 119.72,
+     "probability": 0.6848080158233643
+    }
+   ]
+  },
+  {
+   "id": 29,
+   "start": 120.0,
+   "end": 123.56,
+   "text": " Nothing to show on day three. And that eval set outlives this model.",
+   "words": [
+    {
+     "word": " Nothing",
+     "start": 120.0,
+     "end": 120.1,
+     "probability": 0.962864339351654
+    },
+    {
+     "word": " to",
+     "start": 120.1,
+     "end": 120.4,
+     "probability": 0.9958761930465698
+    },
+    {
+     "word": " show",
+     "start": 120.4,
+     "end": 120.54,
+     "probability": 0.9972406625747681
+    },
+    {
+     "word": " on",
+     "start": 120.54,
+     "end": 120.72,
+     "probability": 0.5104116797447205
+    },
+    {
+     "word": " day",
+     "start": 120.72,
+     "end": 120.9,
+     "probability": 0.9058375954627991
+    },
+    {
+     "word": " three.",
+     "start": 120.9,
+     "end": 121.54,
+     "probability": 0.8739661574363708
+    },
+    {
+     "word": " And",
+     "start": 121.78,
+     "end": 121.78,
+     "probability": 0.9828517436981201
+    },
+    {
+     "word": " that",
+     "start": 121.78,
+     "end": 121.98,
+     "probability": 0.9411017298698425
+    },
+    {
+     "word": " eval",
+     "start": 121.98,
+     "end": 122.3,
+     "probability": 0.9609350264072418
+    },
+    {
+     "word": " set",
+     "start": 122.3,
+     "end": 122.54,
+     "probability": 0.9736343026161194
+    },
+    {
+     "word": " outlives",
+     "start": 122.54,
+     "end": 123.02,
+     "probability": 0.9867989619572958
+    },
+    {
+     "word": " this",
+     "start": 123.02,
+     "end": 123.34,
+     "probability": 0.9906162619590759
+    },
+    {
+     "word": " model.",
+     "start": 123.34,
+     "end": 123.56,
+     "probability": 0.9986622333526611
+    }
+   ]
+  },
+  {
+   "id": 30,
+   "start": 123.82,
+   "end": 127.64,
+   "text": " Rapid results on one side and compounding quality on the other side.",
+   "words": [
+    {
+     "word": " Rapid",
+     "start": 123.82,
+     "end": 124.12,
+     "probability": 0.9716815948486328
+    },
+    {
+     "word": " results",
+     "start": 124.12,
+     "end": 124.5,
+     "probability": 0.9919782876968384
+    },
+    {
+     "word": " on",
+     "start": 124.5,
+     "end": 124.76,
+     "probability": 0.9943906664848328
+    },
+    {
+     "word": " one",
+     "start": 124.76,
+     "end": 125.02,
+     "probability": 0.9976292252540588
+    },
+    {
+     "word": " side",
+     "start": 125.02,
+     "end": 125.36,
+     "probability": 0.9976835250854492
+    },
+    {
+     "word": " and",
+     "start": 125.36,
+     "end": 125.98,
+     "probability": 0.8525848388671875
+    },
+    {
+     "word": " compounding",
+     "start": 125.98,
+     "end": 126.52,
+     "probability": 0.9682865142822266
+    },
+    {
+     "word": " quality",
+     "start": 126.52,
+     "end": 126.82,
+     "probability": 0.9955348968505859
+    },
+    {
+     "word": " on",
+     "start": 126.82,
+     "end": 127.02,
+     "probability": 0.9950850605964661
+    },
+    {
+     "word": " the",
+     "start": 127.02,
+     "end": 127.18,
+     "probability": 0.9992639422416687
+    },
+    {
+     "word": " other",
+     "start": 127.18,
+     "end": 127.4,
+     "probability": 0.998999297618866
+    },
+    {
+     "word": " side.",
+     "start": 127.4,
+     "end": 127.64,
+     "probability": 0.9920201897621155
+    }
+   ]
+  },
+  {
+   "id": 31,
+   "start": 127.84,
+   "end": 131.0,
+   "text": " Difference number three, the bias. What each one reaches first.",
+   "words": [
+    {
+     "word": " Difference",
+     "start": 127.84,
+     "end": 128.08,
+     "probability": 0.7976778447628021
+    },
+    {
+     "word": " number",
+     "start": 128.08,
+     "end": 128.4,
+     "probability": 0.9239867925643921
+    },
+    {
+     "word": " three,",
+     "start": 128.4,
+     "end": 128.76,
+     "probability": 0.9751108884811401
+    },
+    {
+     "word": " the",
+     "start": 128.88,
+     "end": 129.12,
+     "probability": 0.9665191173553467
+    },
+    {
+     "word": " bias.",
+     "start": 129.12,
+     "end": 129.5,
+     "probability": 0.986065149307251
+    },
+    {
+     "word": " What",
+     "start": 129.6,
+     "end": 129.76,
+     "probability": 0.9842262864112854
+    },
+    {
+     "word": " each",
+     "start": 129.76,
+     "end": 130.08,
+     "probability": 0.9976084232330322
+    },
+    {
+     "word": " one",
+     "start": 130.08,
+     "end": 130.28,
+     "probability": 0.9969767332077026
+    },
+    {
+     "word": " reaches",
+     "start": 130.28,
+     "end": 130.62,
+     "probability": 0.997220516204834
+    },
+    {
+     "word": " first.",
+     "start": 130.62,
+     "end": 131.0,
+     "probability": 0.9885452389717102
+    }
+   ]
+  },
+  {
+   "id": 32,
+   "start": 131.14,
+   "end": 136.14,
+   "text": " The growth engineer lives in the funnel. AI or not landing pages, analytics,",
+   "words": [
+    {
+     "word": " The",
+     "start": 131.14,
+     "end": 131.32,
+     "probability": 0.9203099012374878
+    },
+    {
+     "word": " growth",
+     "start": 131.32,
+     "end": 131.52,
+     "probability": 0.989094078540802
+    },
+    {
+     "word": " engineer",
+     "start": 131.52,
+     "end": 132.18,
+     "probability": 0.9964642524719238
+    },
+    {
+     "word": " lives",
+     "start": 132.18,
+     "end": 132.68,
+     "probability": 0.9943655729293823
+    },
+    {
+     "word": " in",
+     "start": 132.68,
+     "end": 132.9,
+     "probability": 0.9992089867591858
+    },
+    {
+     "word": " the",
+     "start": 132.9,
+     "end": 133.1,
+     "probability": 0.9986806511878967
+    },
+    {
+     "word": " funnel.",
+     "start": 133.1,
+     "end": 133.42,
+     "probability": 0.9951802492141724
+    },
+    {
+     "word": " AI",
+     "start": 133.64,
+     "end": 133.96,
+     "probability": 0.8354550004005432
+    },
+    {
+     "word": " or",
+     "start": 133.96,
+     "end": 134.22,
+     "probability": 0.984904944896698
+    },
+    {
+     "word": " not",
+     "start": 134.22,
+     "end": 134.44,
+     "probability": 0.9962925314903259
+    },
+    {
+     "word": " landing",
+     "start": 134.44,
+     "end": 134.88,
+     "probability": 0.07528325915336609
+    },
+    {
+     "word": " pages,",
+     "start": 134.88,
+     "end": 135.4,
+     "probability": 0.9822351336479187
+    },
+    {
+     "word": " analytics,",
+     "start": 135.64,
+     "end": 136.14,
+     "probability": 0.9926079511642456
+    }
+   ]
+  },
+  {
+   "id": 33,
+   "start": 136.56,
+   "end": 140.98,
+   "text": " market automation, the AB testing framework, and now AI on top.",
+   "words": [
+    {
+     "word": " market",
+     "start": 136.56,
+     "end": 136.68,
+     "probability": 0.4735420048236847
+    },
+    {
+     "word": " automation,",
+     "start": 136.68,
+     "end": 137.34,
+     "probability": 0.9688385128974915
+    },
+    {
+     "word": " the",
+     "start": 137.98,
+     "end": 138.12,
+     "probability": 0.9945405125617981
+    },
+    {
+     "word": " AB",
+     "start": 138.12,
+     "end": 138.38,
+     "probability": 0.4275652766227722
+    },
+    {
+     "word": " testing",
+     "start": 138.38,
+     "end": 138.72,
+     "probability": 0.976966917514801
+    },
+    {
+     "word": " framework,",
+     "start": 138.72,
+     "end": 139.22,
+     "probability": 0.9964187145233154
+    },
+    {
+     "word": " and",
+     "start": 139.56,
+     "end": 139.9,
+     "probability": 0.9972473978996277
+    },
+    {
+     "word": " now",
+     "start": 139.9,
+     "end": 140.28,
+     "probability": 0.9979639053344727
+    },
+    {
+     "word": " AI",
+     "start": 140.28,
+     "end": 140.58,
+     "probability": 0.9740609526634216
+    },
+    {
+     "word": " on",
+     "start": 140.58,
+     "end": 140.84,
+     "probability": 0.961707353591919
+    },
+    {
+     "word": " top.",
+     "start": 140.84,
+     "end": 140.98,
+     "probability": 0.9983401298522949
+    }
+   ]
+  },
+  {
+   "id": 34,
+   "start": 140.98,
+   "end": 145.22,
+   "text": " The product engineer lives in the feature and now the model inside of it,",
+   "words": [
+    {
+     "word": " The",
+     "start": 140.98,
+     "end": 141.3,
+     "probability": 0.6556825041770935
+    },
+    {
+     "word": " product",
+     "start": 141.3,
+     "end": 141.7,
+     "probability": 0.6223345398902893
+    },
+    {
+     "word": " engineer",
+     "start": 141.7,
+     "end": 142.24,
+     "probability": 0.9835663437843323
+    },
+    {
+     "word": " lives",
+     "start": 142.24,
+     "end": 142.64,
+     "probability": 0.9510186910629272
+    },
+    {
+     "word": " in",
+     "start": 142.64,
+     "end": 142.82,
+     "probability": 0.9901251792907715
+    },
+    {
+     "word": " the",
+     "start": 142.82,
+     "end": 142.98,
+     "probability": 0.8171626925468445
+    },
+    {
+     "word": " feature",
+     "start": 142.98,
+     "end": 143.36,
+     "probability": 0.9662941098213196
+    },
+    {
+     "word": " and",
+     "start": 143.36,
+     "end": 143.82,
+     "probability": 0.7125722169876099
+    },
+    {
+     "word": " now",
+     "start": 143.82,
+     "end": 144.04,
+     "probability": 0.960921049118042
+    },
+    {
+     "word": " the",
+     "start": 144.04,
+     "end": 144.26,
+     "probability": 0.9789754748344421
+    },
+    {
+     "word": " model",
+     "start": 144.26,
+     "end": 144.54,
+     "probability": 0.9830529689788818
+    },
+    {
+     "word": " inside",
+     "start": 144.54,
+     "end": 144.9,
+     "probability": 0.9836771488189697
+    },
+    {
+     "word": " of",
+     "start": 144.9,
+     "end": 145.08,
+     "probability": 0.961238443851471
+    },
+    {
+     "word": " it,",
+     "start": 145.08,
+     "end": 145.22,
+     "probability": 0.9908989667892456
+    }
+   ]
+  },
+  {
+   "id": 35,
+   "start": 145.42,
+   "end": 147.68,
+   "text": " prompting and retrieval, the eval harness,",
+   "words": [
+    {
+     "word": " prompting",
+     "start": 145.42,
+     "end": 145.66,
+     "probability": 0.9359973073005676
+    },
+    {
+     "word": " and",
+     "start": 145.66,
+     "end": 145.82,
+     "probability": 0.7322477102279663
+    },
+    {
+     "word": " retrieval,",
+     "start": 145.82,
+     "end": 146.58,
+     "probability": 0.9956340789794922
+    },
+    {
+     "word": " the",
+     "start": 146.78,
+     "end": 146.96,
+     "probability": 0.9621284008026123
+    },
+    {
+     "word": " eval",
+     "start": 146.96,
+     "end": 147.22,
+     "probability": 0.9499001801013947
+    },
+    {
+     "word": " harness,",
+     "start": 147.22,
+     "end": 147.68,
+     "probability": 0.9565673470497131
+    }
+   ]
+  },
+  {
+   "id": 36,
+   "start": 148.02,
+   "end": 151.62,
+   "text": " guard rails for when the model should abstain and an interface built for when a",
+   "words": [
+    {
+     "word": " guard",
+     "start": 148.02,
+     "end": 148.2,
+     "probability": 0.9879676699638367
+    },
+    {
+     "word": " rails",
+     "start": 148.2,
+     "end": 148.44,
+     "probability": 0.53497713804245
+    },
+    {
+     "word": " for",
+     "start": 148.44,
+     "end": 148.6,
+     "probability": 0.9429324269294739
+    },
+    {
+     "word": " when",
+     "start": 148.6,
+     "end": 148.7,
+     "probability": 0.993649423122406
+    },
+    {
+     "word": " the",
+     "start": 148.7,
+     "end": 148.94,
+     "probability": 0.9911675453186035
+    },
+    {
+     "word": " model",
+     "start": 148.94,
+     "end": 149.06,
+     "probability": 0.9915777444839478
+    },
+    {
+     "word": " should",
+     "start": 149.06,
+     "end": 149.3,
+     "probability": 0.9826568961143494
+    },
+    {
+     "word": " abstain",
+     "start": 149.3,
+     "end": 149.96,
+     "probability": 0.9902340173721313
+    },
+    {
+     "word": " and",
+     "start": 149.96,
+     "end": 150.18,
+     "probability": 0.4553219676017761
+    },
+    {
+     "word": " an",
+     "start": 150.18,
+     "end": 150.46,
+     "probability": 0.9918361306190491
+    },
+    {
+     "word": " interface",
+     "start": 150.46,
+     "end": 150.76,
+     "probability": 0.9983408451080322
+    },
+    {
+     "word": " built",
+     "start": 150.76,
+     "end": 151.08,
+     "probability": 0.9724363088607788
+    },
+    {
+     "word": " for",
+     "start": 151.08,
+     "end": 151.26,
+     "probability": 0.9956158399581909
+    },
+    {
+     "word": " when",
+     "start": 151.26,
+     "end": 151.4,
+     "probability": 0.996473491191864
+    },
+    {
+     "word": " a",
+     "start": 151.4,
+     "end": 151.62,
+     "probability": 0.9720945358276367
+    }
+   ]
+  },
+  {
+   "id": 37,
+   "start": 151.62,
+   "end": 156.26,
+   "text": " model is wrong sometimes. And the middle is shared. Model APIs, agents,",
+   "words": [
+    {
+     "word": " model",
+     "start": 151.62,
+     "end": 151.72,
+     "probability": 0.9989336133003235
+    },
+    {
+     "word": " is",
+     "start": 151.72,
+     "end": 151.96,
+     "probability": 0.9978534579277039
+    },
+    {
+     "word": " wrong",
+     "start": 151.96,
+     "end": 152.14,
+     "probability": 0.9969974756240845
+    },
+    {
+     "word": " sometimes.",
+     "start": 152.14,
+     "end": 152.64,
+     "probability": 0.5742341876029968
+    },
+    {
+     "word": " And",
+     "start": 152.72,
+     "end": 152.86,
+     "probability": 0.93840491771698
+    },
+    {
+     "word": " the",
+     "start": 152.86,
+     "end": 153.08,
+     "probability": 0.9938989877700806
+    },
+    {
+     "word": " middle",
+     "start": 153.08,
+     "end": 153.24,
+     "probability": 0.9948630928993225
+    },
+    {
+     "word": " is",
+     "start": 153.24,
+     "end": 153.56,
+     "probability": 0.9912830591201782
+    },
+    {
+     "word": " shared.",
+     "start": 153.56,
+     "end": 153.96,
+     "probability": 0.9957488179206848
+    },
+    {
+     "word": " Model",
+     "start": 154.34,
+     "end": 154.68,
+     "probability": 0.9063019752502441
+    },
+    {
+     "word": " APIs,",
+     "start": 154.68,
+     "end": 155.46,
+     "probability": 0.6220635771751404
+    },
+    {
+     "word": " agents,",
+     "start": 155.84,
+     "end": 156.26,
+     "probability": 0.9540003538131714
+    }
+   ]
+  },
+  {
+   "id": 38,
+   "start": 156.66,
+   "end": 160.98,
+   "text": " evals, Python plus TypeScript. The growth engineer takes a business problem,",
+   "words": [
+    {
+     "word": " evals,",
+     "start": 156.66,
+     "end": 157.16,
+     "probability": 0.9632656872272491
+    },
+    {
+     "word": " Python",
+     "start": 157.4,
+     "end": 157.78,
+     "probability": 0.7610639333724976
+    },
+    {
+     "word": " plus",
+     "start": 157.78,
+     "end": 158.12,
+     "probability": 0.7145808935165405
+    },
+    {
+     "word": " TypeScript.",
+     "start": 158.12,
+     "end": 158.68,
+     "probability": 0.9408394992351532
+    },
+    {
+     "word": " The",
+     "start": 158.82,
+     "end": 158.98,
+     "probability": 0.987817108631134
+    },
+    {
+     "word": " growth",
+     "start": 158.98,
+     "end": 159.16,
+     "probability": 0.9806046485900879
+    },
+    {
+     "word": " engineer",
+     "start": 159.16,
+     "end": 159.68,
+     "probability": 0.9914678335189819
+    },
+    {
+     "word": " takes",
+     "start": 159.68,
+     "end": 159.96,
+     "probability": 0.9891589283943176
+    },
+    {
+     "word": " a",
+     "start": 159.96,
+     "end": 160.22,
+     "probability": 0.9867948889732361
+    },
+    {
+     "word": " business",
+     "start": 160.22,
+     "end": 160.48,
+     "probability": 0.9980722665786743
+    },
+    {
+     "word": " problem,",
+     "start": 160.48,
+     "end": 160.98,
+     "probability": 0.9959554672241211
+    }
+   ]
+  },
+  {
+   "id": 39,
+   "start": 161.24,
+   "end": 163.34,
+   "text": " a low conversion rate and ships the fix.",
+   "words": [
+    {
+     "word": " a",
+     "start": 161.24,
+     "end": 161.38,
+     "probability": 0.9939377307891846
+    },
+    {
+     "word": " low",
+     "start": 161.38,
+     "end": 161.54,
+     "probability": 0.9772933125495911
+    },
+    {
+     "word": " conversion",
+     "start": 161.54,
+     "end": 161.98,
+     "probability": 0.997765302658081
+    },
+    {
+     "word": " rate",
+     "start": 161.98,
+     "end": 162.34,
+     "probability": 0.998895525932312
+    },
+    {
+     "word": " and",
+     "start": 162.34,
+     "end": 162.74,
+     "probability": 0.7454309463500977
+    },
+    {
+     "word": " ships",
+     "start": 162.74,
+     "end": 162.94,
+     "probability": 0.913504421710968
+    },
+    {
+     "word": " the",
+     "start": 162.94,
+     "end": 163.22,
+     "probability": 0.7194755673408508
+    },
+    {
+     "word": " fix.",
+     "start": 163.22,
+     "end": 163.34,
+     "probability": 0.864835798740387
+    }
+   ]
+  },
+  {
+   "id": 40,
+   "start": 163.44,
+   "end": 168.02,
+   "text": " The product engineer knows a convincing demo from a dependable product and when",
+   "words": [
+    {
+     "word": " The",
+     "start": 163.44,
+     "end": 163.8,
+     "probability": 0.8335550427436829
+    },
+    {
+     "word": " product",
+     "start": 163.8,
+     "end": 163.96,
+     "probability": 0.9847895503044128
+    },
+    {
+     "word": " engineer",
+     "start": 163.96,
+     "end": 164.6,
+     "probability": 0.9895488023757935
+    },
+    {
+     "word": " knows",
+     "start": 164.6,
+     "end": 165.04,
+     "probability": 0.9598706364631653
+    },
+    {
+     "word": " a",
+     "start": 165.04,
+     "end": 165.38,
+     "probability": 0.9542576670646667
+    },
+    {
+     "word": " convincing",
+     "start": 165.38,
+     "end": 165.68,
+     "probability": 0.9840669631958008
+    },
+    {
+     "word": " demo",
+     "start": 165.68,
+     "end": 166.18,
+     "probability": 0.9968485236167908
+    },
+    {
+     "word": " from",
+     "start": 166.18,
+     "end": 166.56,
+     "probability": 0.9886748790740967
+    },
+    {
+     "word": " a",
+     "start": 166.56,
+     "end": 166.84,
+     "probability": 0.99815434217453
+    },
+    {
+     "word": " dependable",
+     "start": 166.84,
+     "end": 167.26,
+     "probability": 0.9931148290634155
+    },
+    {
+     "word": " product",
+     "start": 167.26,
+     "end": 167.7,
+     "probability": 0.9943360686302185
+    },
+    {
+     "word": " and",
+     "start": 167.7,
+     "end": 167.92,
+     "probability": 0.6307051181793213
+    },
+    {
+     "word": " when",
+     "start": 167.92,
+     "end": 168.2,
+     "probability": 0.9915779829025269
+    }
+   ]
+  },
+  {
+   "id": 41,
+   "start": 168.2,
+   "end": 170.02,
+   "text": " the main software beats AI,",
+   "words": [
+    {
+     "word": " the",
+     "start": 168.2,
+     "end": 168.4,
+     "probability": 0.015293953940272331
+    },
+    {
+     "word": " main",
+     "start": 168.4,
+     "end": 168.4,
+     "probability": 0.14609892666339874
+    },
+    {
+     "word": " software",
+     "start": 168.4,
+     "end": 168.98,
+     "probability": 0.7354618310928345
+    },
+    {
+     "word": " beats",
+     "start": 168.98,
+     "end": 169.52,
+     "probability": 0.9557875394821167
+    },
+    {
+     "word": " AI,",
+     "start": 169.52,
+     "end": 170.02,
+     "probability": 0.9066190719604492
+    }
+   ]
+  },
+  {
+   "id": 42,
+   "start": 170.2,
+   "end": 173.9,
+   "text": " one leans towards distribution and the other lean towards the model and the",
+   "words": [
+    {
+     "word": " one",
+     "start": 170.2,
+     "end": 170.44,
+     "probability": 0.853194534778595
+    },
+    {
+     "word": " leans",
+     "start": 170.44,
+     "end": 170.78,
+     "probability": 0.9479867517948151
+    },
+    {
+     "word": " towards",
+     "start": 170.78,
+     "end": 171.08,
+     "probability": 0.8056237697601318
+    },
+    {
+     "word": " distribution",
+     "start": 171.08,
+     "end": 171.74,
+     "probability": 0.9477765560150146
+    },
+    {
+     "word": " and",
+     "start": 171.74,
+     "end": 172.12,
+     "probability": 0.7752541303634644
+    },
+    {
+     "word": " the",
+     "start": 172.12,
+     "end": 172.22,
+     "probability": 0.9767152667045593
+    },
+    {
+     "word": " other",
+     "start": 172.22,
+     "end": 172.42,
+     "probability": 0.994102418422699
+    },
+    {
+     "word": " lean",
+     "start": 172.42,
+     "end": 172.68,
+     "probability": 0.2725442945957184
+    },
+    {
+     "word": " towards",
+     "start": 172.68,
+     "end": 173.02,
+     "probability": 0.9165967106819153
+    },
+    {
+     "word": " the",
+     "start": 173.02,
+     "end": 173.24,
+     "probability": 0.9612430930137634
+    },
+    {
+     "word": " model",
+     "start": 173.24,
+     "end": 173.5,
+     "probability": 0.9944043159484863
+    },
+    {
+     "word": " and",
+     "start": 173.5,
+     "end": 173.74,
+     "probability": 0.9504954218864441
+    },
+    {
+     "word": " the",
+     "start": 173.74,
+     "end": 173.9,
+     "probability": 0.9620554447174072
+    }
+   ]
+  },
+  {
+   "id": 43,
+   "start": 173.9,
+   "end": 177.98,
+   "text": " person using it. So which one do you hire first?",
+   "words": [
+    {
+     "word": " person",
+     "start": 173.9,
+     "end": 174.14,
+     "probability": 0.9884610176086426
+    },
+    {
+     "word": " using",
+     "start": 174.14,
+     "end": 174.44,
+     "probability": 0.9871860146522522
+    },
+    {
+     "word": " it.",
+     "start": 174.44,
+     "end": 176.12,
+     "probability": 0.9875917434692383
+    },
+    {
+     "word": " So",
+     "start": 176.14,
+     "end": 176.34,
+     "probability": 0.8830158114433289
+    },
+    {
+     "word": " which",
+     "start": 176.34,
+     "end": 176.64,
+     "probability": 0.9152388572692871
+    },
+    {
+     "word": " one",
+     "start": 176.64,
+     "end": 176.84,
+     "probability": 0.9610322117805481
+    },
+    {
+     "word": " do",
+     "start": 176.84,
+     "end": 177.02,
+     "probability": 0.9810345768928528
+    },
+    {
+     "word": " you",
+     "start": 177.02,
+     "end": 177.22,
+     "probability": 0.996335506439209
+    },
+    {
+     "word": " hire",
+     "start": 177.22,
+     "end": 177.5,
+     "probability": 0.9726075530052185
+    },
+    {
+     "word": " first?",
+     "start": 177.5,
+     "end": 177.98,
+     "probability": 0.9806007742881775
+    }
+   ]
+  },
+  {
+   "id": 44,
+   "start": 178.16,
+   "end": 182.02,
+   "text": " If users already touch your AI feature and it is wrong too often,",
+   "words": [
+    {
+     "word": " If",
+     "start": 178.16,
+     "end": 178.3,
+     "probability": 0.9249377250671387
+    },
+    {
+     "word": " users",
+     "start": 178.3,
+     "end": 178.64,
+     "probability": 0.9522039294242859
+    },
+    {
+     "word": " already",
+     "start": 178.64,
+     "end": 179.16,
+     "probability": 0.977381706237793
+    },
+    {
+     "word": " touch",
+     "start": 179.16,
+     "end": 179.42,
+     "probability": 0.9708684086799622
+    },
+    {
+     "word": " your",
+     "start": 179.42,
+     "end": 179.7,
+     "probability": 0.9847533702850342
+    },
+    {
+     "word": " AI",
+     "start": 179.7,
+     "end": 180.0,
+     "probability": 0.9844644665718079
+    },
+    {
+     "word": " feature",
+     "start": 180.0,
+     "end": 180.44,
+     "probability": 0.9817498922348022
+    },
+    {
+     "word": " and",
+     "start": 180.44,
+     "end": 180.64,
+     "probability": 0.8670168519020081
+    },
+    {
+     "word": " it",
+     "start": 180.64,
+     "end": 180.86,
+     "probability": 0.9277638792991638
+    },
+    {
+     "word": " is",
+     "start": 180.86,
+     "end": 181.04,
+     "probability": 0.9738677144050598
+    },
+    {
+     "word": " wrong",
+     "start": 181.04,
+     "end": 181.26,
+     "probability": 0.9972261786460876
+    },
+    {
+     "word": " too",
+     "start": 181.26,
+     "end": 181.6,
+     "probability": 0.9084269404411316
+    },
+    {
+     "word": " often,",
+     "start": 181.6,
+     "end": 182.02,
+     "probability": 0.9957210421562195
+    }
+   ]
+  },
+  {
+   "id": 45,
+   "start": 182.46,
+   "end": 183.68,
+   "text": " the product engineer first.",
+   "words": [
+    {
+     "word": " the",
+     "start": 182.46,
+     "end": 182.66,
+     "probability": 0.9749681949615479
+    },
+    {
+     "word": " product",
+     "start": 182.66,
+     "end": 182.86,
+     "probability": 0.8920944929122925
+    },
+    {
+     "word": " engineer",
+     "start": 182.86,
+     "end": 183.22,
+     "probability": 0.9844812154769897
+    },
+    {
+     "word": " first.",
+     "start": 183.22,
+     "end": 183.68,
+     "probability": 0.9802536964416504
+    }
+   ]
+  },
+  {
+   "id": 46,
+   "start": 183.8,
+   "end": 187.84,
+   "text": " If the product works and you have a funnel to feed the growth engineer,",
+   "words": [
+    {
+     "word": " If",
+     "start": 183.8,
+     "end": 183.94,
+     "probability": 0.9818265438079834
+    },
+    {
+     "word": " the",
+     "start": 183.94,
+     "end": 184.24,
+     "probability": 0.9928810596466064
+    },
+    {
+     "word": " product",
+     "start": 184.24,
+     "end": 184.46,
+     "probability": 0.9912307262420654
+    },
+    {
+     "word": " works",
+     "start": 184.46,
+     "end": 184.94,
+     "probability": 0.996757447719574
+    },
+    {
+     "word": " and",
+     "start": 184.94,
+     "end": 185.24,
+     "probability": 0.8127217888832092
+    },
+    {
+     "word": " you",
+     "start": 185.24,
+     "end": 185.4,
+     "probability": 0.9953806400299072
+    },
+    {
+     "word": " have",
+     "start": 185.4,
+     "end": 185.58,
+     "probability": 0.9970113039016724
+    },
+    {
+     "word": " a",
+     "start": 185.58,
+     "end": 185.8,
+     "probability": 0.9901796579360962
+    },
+    {
+     "word": " funnel",
+     "start": 185.8,
+     "end": 185.96,
+     "probability": 0.9972149133682251
+    },
+    {
+     "word": " to",
+     "start": 185.96,
+     "end": 186.26,
+     "probability": 0.9970988035202026
+    },
+    {
+     "word": " feed",
+     "start": 186.26,
+     "end": 186.54,
+     "probability": 0.9963699579238892
+    },
+    {
+     "word": " the",
+     "start": 186.54,
+     "end": 187.12,
+     "probability": 0.15559029579162598
+    },
+    {
+     "word": " growth",
+     "start": 187.12,
+     "end": 187.36,
+     "probability": 0.8573203682899475
+    },
+    {
+     "word": " engineer,",
+     "start": 187.36,
+     "end": 187.84,
+     "probability": 0.9899923205375671
+    }
+   ]
+  },
+  {
+   "id": 47,
+   "start": 188.02,
+   "end": 189.28,
+   "text": " which one should you become?",
+   "words": [
+    {
+     "word": " which",
+     "start": 188.02,
+     "end": 188.26,
+     "probability": 0.9934560656547546
+    },
+    {
+     "word": " one",
+     "start": 188.26,
+     "end": 188.46,
+     "probability": 0.993854820728302
+    },
+    {
+     "word": " should",
+     "start": 188.46,
+     "end": 188.66,
+     "probability": 0.9969834685325623
+    },
+    {
+     "word": " you",
+     "start": 188.66,
+     "end": 188.92,
+     "probability": 0.9982854723930359
+    },
+    {
+     "word": " become?",
+     "start": 188.92,
+     "end": 189.28,
+     "probability": 0.9960760474205017
+    }
+   ]
+  },
+  {
+   "id": 48,
+   "start": 189.4,
+   "end": 193.34,
+   "text": " If the business number moving lights you up and you're fine throwing away a",
+   "words": [
+    {
+     "word": " If",
+     "start": 189.4,
+     "end": 189.54,
+     "probability": 0.9848079681396484
+    },
+    {
+     "word": " the",
+     "start": 189.54,
+     "end": 189.82,
+     "probability": 0.9907258152961731
+    },
+    {
+     "word": " business",
+     "start": 189.82,
+     "end": 190.08,
+     "probability": 0.9958541393280029
+    },
+    {
+     "word": " number",
+     "start": 190.08,
+     "end": 190.4,
+     "probability": 0.9952431321144104
+    },
+    {
+     "word": " moving",
+     "start": 190.4,
+     "end": 190.78,
+     "probability": 0.9934304356575012
+    },
+    {
+     "word": " lights",
+     "start": 190.78,
+     "end": 191.06,
+     "probability": 0.9948158860206604
+    },
+    {
+     "word": " you",
+     "start": 191.06,
+     "end": 191.34,
+     "probability": 0.9885257482528687
+    },
+    {
+     "word": " up",
+     "start": 191.34,
+     "end": 191.6,
+     "probability": 0.9980546236038208
+    },
+    {
+     "word": " and",
+     "start": 191.6,
+     "end": 192.06,
+     "probability": 0.878380298614502
+    },
+    {
+     "word": " you're",
+     "start": 192.06,
+     "end": 192.38,
+     "probability": 0.9691703021526337
+    },
+    {
+     "word": " fine",
+     "start": 192.38,
+     "end": 192.66,
+     "probability": 0.9804165959358215
+    },
+    {
+     "word": " throwing",
+     "start": 192.66,
+     "end": 192.86,
+     "probability": 0.9140040874481201
+    },
+    {
+     "word": " away",
+     "start": 192.86,
+     "end": 193.22,
+     "probability": 0.9970431923866272
+    },
+    {
+     "word": " a",
+     "start": 193.22,
+     "end": 193.34,
+     "probability": 0.9926775693893433
+    }
+   ]
+  },
+  {
+   "id": 49,
+   "start": 193.34,
+   "end": 196.62,
+   "text": " week's work when the test said it lost, growth engineer.",
+   "words": [
+    {
+     "word": " week's",
+     "start": 193.34,
+     "end": 193.72,
+     "probability": 0.970946729183197
+    },
+    {
+     "word": " work",
+     "start": 193.72,
+     "end": 194.02,
+     "probability": 0.9955635070800781
+    },
+    {
+     "word": " when",
+     "start": 194.02,
+     "end": 194.56,
+     "probability": 0.7435879707336426
+    },
+    {
+     "word": " the",
+     "start": 194.56,
+     "end": 194.8,
+     "probability": 0.6407941579818726
+    },
+    {
+     "word": " test",
+     "start": 194.8,
+     "end": 194.96,
+     "probability": 0.9290128350257874
+    },
+    {
+     "word": " said",
+     "start": 194.96,
+     "end": 195.16,
+     "probability": 0.7308096885681152
+    },
+    {
+     "word": " it",
+     "start": 195.16,
+     "end": 195.42,
+     "probability": 0.9884395599365234
+    },
+    {
+     "word": " lost,",
+     "start": 195.42,
+     "end": 195.8,
+     "probability": 0.9749649167060852
+    },
+    {
+     "word": " growth",
+     "start": 195.86,
+     "end": 196.12,
+     "probability": 0.8403688669204712
+    },
+    {
+     "word": " engineer.",
+     "start": 196.12,
+     "end": 196.62,
+     "probability": 0.9915068745613098
+    }
+   ]
+  },
+  {
+   "id": 50,
+   "start": 196.62,
+   "end": 199.7,
+   "text": " If a pass rate climbing lights you up, product engineer.",
+   "words": [
+    {
+     "word": " If",
+     "start": 196.62,
+     "end": 196.96,
+     "probability": 0.6686955690383911
+    },
+    {
+     "word": " a",
+     "start": 196.96,
+     "end": 197.26,
+     "probability": 0.9873582124710083
+    },
+    {
+     "word": " pass",
+     "start": 197.26,
+     "end": 197.5,
+     "probability": 0.9663112759590149
+    },
+    {
+     "word": " rate",
+     "start": 197.5,
+     "end": 197.78,
+     "probability": 0.9612133502960205
+    },
+    {
+     "word": " climbing",
+     "start": 197.78,
+     "end": 198.2,
+     "probability": 0.9697021245956421
+    },
+    {
+     "word": " lights",
+     "start": 198.2,
+     "end": 198.52,
+     "probability": 0.9568611979484558
+    },
+    {
+     "word": " you",
+     "start": 198.52,
+     "end": 198.78,
+     "probability": 0.9468870759010315
+    },
+    {
+     "word": " up,",
+     "start": 198.78,
+     "end": 198.98,
+     "probability": 0.9753940105438232
+    },
+    {
+     "word": " product",
+     "start": 199.14,
+     "end": 199.34,
+     "probability": 0.7547247409820557
+    },
+    {
+     "word": " engineer.",
+     "start": 199.34,
+     "end": 199.7,
+     "probability": 0.9913157224655151
+    }
+   ]
+  },
+  {
+   "id": 51,
+   "start": 199.9,
+   "end": 203.72,
+   "text": " And in my experience, a founding AI engineer ends up being both.",
+   "words": [
+    {
+     "word": " And",
+     "start": 199.9,
+     "end": 200.02,
+     "probability": 0.9314579963684082
+    },
+    {
+     "word": " in",
+     "start": 200.02,
+     "end": 200.14,
+     "probability": 0.958519697189331
+    },
+    {
+     "word": " my",
+     "start": 200.14,
+     "end": 200.36,
+     "probability": 0.9988974332809448
+    },
+    {
+     "word": " experience,",
+     "start": 200.36,
+     "end": 201.02,
+     "probability": 0.9910945892333984
+    },
+    {
+     "word": " a",
+     "start": 201.2,
+     "end": 201.34,
+     "probability": 0.9322251081466675
+    },
+    {
+     "word": " founding",
+     "start": 201.34,
+     "end": 201.68,
+     "probability": 0.9751303791999817
+    },
+    {
+     "word": " AI",
+     "start": 201.68,
+     "end": 202.12,
+     "probability": 0.9091916084289551
+    },
+    {
+     "word": " engineer",
+     "start": 202.12,
+     "end": 202.68,
+     "probability": 0.9795541763305664
+    },
+    {
+     "word": " ends",
+     "start": 202.68,
+     "end": 203.02,
+     "probability": 0.9469225406646729
+    },
+    {
+     "word": " up",
+     "start": 203.02,
+     "end": 203.26,
+     "probability": 0.9978078007698059
+    },
+    {
+     "word": " being",
+     "start": 203.26,
+     "end": 203.42,
+     "probability": 0.9957426190376282
+    },
+    {
+     "word": " both.",
+     "start": 203.42,
+     "end": 203.72,
+     "probability": 0.9947420358657837
+    }
+   ]
+  },
+  {
+   "id": 52,
+   "start": 203.8,
+   "end": 205.92,
+   "text": " Either way you're an AI engineer.",
+   "words": [
+    {
+     "word": " Either",
+     "start": 203.8,
+     "end": 204.12,
+     "probability": 0.9927614331245422
+    },
+    {
+     "word": " way",
+     "start": 204.12,
+     "end": 204.54,
+     "probability": 0.9980207681655884
+    },
+    {
+     "word": " you're",
+     "start": 204.54,
+     "end": 204.92,
+     "probability": 0.573191449046135
+    },
+    {
+     "word": " an",
+     "start": 204.92,
+     "end": 205.08,
+     "probability": 0.9931166172027588
+    },
+    {
+     "word": " AI",
+     "start": 205.08,
+     "end": 205.44,
+     "probability": 0.9942314624786377
+    },
+    {
+     "word": " engineer.",
+     "start": 205.44,
+     "end": 205.92,
+     "probability": 0.9870233535766602
+    }
+   ]
+  },
+  {
+   "id": 53,
+   "start": 206.28,
+   "end": 209.96,
+   "text": " The title just tells you which number you're accountable for. Three differences,",
+   "words": [
+    {
+     "word": " The",
+     "start": 206.28,
+     "end": 206.46,
+     "probability": 0.9818921685218811
+    },
+    {
+     "word": " title",
+     "start": 206.46,
+     "end": 206.7,
+     "probability": 0.9976041913032532
+    },
+    {
+     "word": " just",
+     "start": 206.7,
+     "end": 207.0,
+     "probability": 0.9907668828964233
+    },
+    {
+     "word": " tells",
+     "start": 207.0,
+     "end": 207.2,
+     "probability": 0.9959996938705444
+    },
+    {
+     "word": " you",
+     "start": 207.2,
+     "end": 207.46,
+     "probability": 0.9981030225753784
+    },
+    {
+     "word": " which",
+     "start": 207.46,
+     "end": 207.82,
+     "probability": 0.9831446409225464
+    },
+    {
+     "word": " number",
+     "start": 207.82,
+     "end": 208.12,
+     "probability": 0.9931822419166565
+    },
+    {
+     "word": " you're",
+     "start": 208.12,
+     "end": 208.44,
+     "probability": 0.9796835780143738
+    },
+    {
+     "word": " accountable",
+     "start": 208.44,
+     "end": 208.78,
+     "probability": 0.9922477006912231
+    },
+    {
+     "word": " for.",
+     "start": 208.78,
+     "end": 209.1,
+     "probability": 0.9936808347702026
+    },
+    {
+     "word": " Three",
+     "start": 209.22,
+     "end": 209.36,
+     "probability": 0.9175661206245422
+    },
+    {
+     "word": " differences,",
+     "start": 209.36,
+     "end": 209.96,
+     "probability": 0.9721308946609497
+    }
+   ]
+  },
+  {
+   "id": 54,
+   "start": 210.32,
+   "end": 214.66,
+   "text": " the scoreboard, the clock and the bias. Same tools, different scoreboard.",
+   "words": [
+    {
+     "word": " the",
+     "start": 210.32,
+     "end": 210.5,
+     "probability": 0.975453794002533
+    },
+    {
+     "word": " scoreboard,",
+     "start": 210.5,
+     "end": 211.04,
+     "probability": 0.9675341546535492
+    },
+    {
+     "word": " the",
+     "start": 211.18,
+     "end": 211.38,
+     "probability": 0.9977376461029053
+    },
+    {
+     "word": " clock",
+     "start": 211.38,
+     "end": 211.66,
+     "probability": 0.9967488050460815
+    },
+    {
+     "word": " and",
+     "start": 211.66,
+     "end": 211.98,
+     "probability": 0.4283451735973358
+    },
+    {
+     "word": " the",
+     "start": 211.98,
+     "end": 212.16,
+     "probability": 0.996397852897644
+    },
+    {
+     "word": " bias.",
+     "start": 212.16,
+     "end": 212.52,
+     "probability": 0.9970197081565857
+    },
+    {
+     "word": " Same",
+     "start": 212.84,
+     "end": 213.08,
+     "probability": 0.9931029081344604
+    },
+    {
+     "word": " tools,",
+     "start": 213.08,
+     "end": 213.58,
+     "probability": 0.993126392364502
+    },
+    {
+     "word": " different",
+     "start": 213.9,
+     "end": 214.08,
+     "probability": 0.9955832362174988
+    },
+    {
+     "word": " scoreboard.",
+     "start": 214.08,
+     "end": 214.66,
+     "probability": 0.9830024838447571
+    }
+   ]
+  },
+  {
+   "id": 55,
+   "start": 214.78,
+   "end": 218.02,
+   "text": " And if that cleared it up, hit that like button and subscribe.",
+   "words": [
+    {
+     "word": " And",
+     "start": 214.78,
+     "end": 214.9,
+     "probability": 0.9822708964347839
+    },
+    {
+     "word": " if",
+     "start": 214.9,
+     "end": 214.98,
+     "probability": 0.984085202217102
+    },
+    {
+     "word": " that",
+     "start": 214.98,
+     "end": 215.24,
+     "probability": 0.9979058504104614
+    },
+    {
+     "word": " cleared",
+     "start": 215.24,
+     "end": 215.5,
+     "probability": 0.9924658536911011
+    },
+    {
+     "word": " it",
+     "start": 215.5,
+     "end": 215.72,
+     "probability": 0.9881453514099121
+    },
+    {
+     "word": " up,",
+     "start": 215.72,
+     "end": 215.96,
+     "probability": 0.9975396394729614
+    },
+    {
+     "word": " hit",
+     "start": 216.12,
+     "end": 216.18,
+     "probability": 0.9915797710418701
+    },
+    {
+     "word": " that",
+     "start": 216.18,
+     "end": 216.36,
+     "probability": 0.9762846827507019
+    },
+    {
+     "word": " like",
+     "start": 216.36,
+     "end": 216.64,
+     "probability": 0.9391806125640869
+    },
+    {
+     "word": " button",
+     "start": 216.64,
+     "end": 217.02,
+     "probability": 0.99825519323349
+    },
+    {
+     "word": " and",
+     "start": 217.02,
+     "end": 217.36,
+     "probability": 0.7270737886428833
+    },
+    {
+     "word": " subscribe.",
+     "start": 217.36,
+     "end": 218.02,
+     "probability": 0.9873398542404175
+    }
+   ]
+  },
+  {
+   "id": 56,
+   "start": 218.06,
+   "end": 219.44,
+   "text": " If you're not subscribed already,",
+   "words": [
+    {
+     "word": " If",
+     "start": 218.06,
+     "end": 218.22,
+     "probability": 0.9521065354347229
+    },
+    {
+     "word": " you're",
+     "start": 218.22,
+     "end": 218.42,
+     "probability": 0.9794374108314514
+    },
+    {
+     "word": " not",
+     "start": 218.42,
+     "end": 218.54,
+     "probability": 0.9987204074859619
+    },
+    {
+     "word": " subscribed",
+     "start": 218.54,
+     "end": 219.04,
+     "probability": 0.9945738911628723
+    },
+    {
+     "word": " already,",
+     "start": 219.04,
+     "end": 219.44,
+     "probability": 0.9632480144500732
+    }
+   ]
+  },
+  {
+   "id": 57,
+   "start": 219.58,
+   "end": 222.66,
+   "text": " there's a lot more AI engineering content to come on this channel.",
+   "words": [
+    {
+     "word": " there's",
+     "start": 219.58,
+     "end": 219.76,
+     "probability": 0.9884601533412933
+    },
+    {
+     "word": " a",
+     "start": 219.76,
+     "end": 219.9,
+     "probability": 0.9986172914505005
+    },
+    {
+     "word": " lot",
+     "start": 219.9,
+     "end": 220.04,
+     "probability": 0.9997014403343201
+    },
+    {
+     "word": " more",
+     "start": 220.04,
+     "end": 220.36,
+     "probability": 0.9986055493354797
+    },
+    {
+     "word": " AI",
+     "start": 220.36,
+     "end": 220.72,
+     "probability": 0.9864751696586609
+    },
+    {
+     "word": " engineering",
+     "start": 220.72,
+     "end": 221.06,
+     "probability": 0.9275251626968384
+    },
+    {
+     "word": " content",
+     "start": 221.06,
+     "end": 221.6,
+     "probability": 0.9924278855323792
+    },
+    {
+     "word": " to",
+     "start": 221.6,
+     "end": 221.9,
+     "probability": 0.9912416934967041
+    },
+    {
+     "word": " come",
+     "start": 221.9,
+     "end": 222.04,
+     "probability": 0.9983409643173218
+    },
+    {
+     "word": " on",
+     "start": 222.04,
+     "end": 222.16,
+     "probability": 0.6186032891273499
+    },
+    {
+     "word": " this",
+     "start": 222.16,
+     "end": 222.38,
+     "probability": 0.9980486631393433
+    },
+    {
+     "word": " channel.",
+     "start": 222.38,
+     "end": 222.66,
+     "probability": 0.997319757938385
+    }
+   ]
+  }
+ ],
+ "language": "en",
+ "clock": "final-video seconds (sh applied)"
+}

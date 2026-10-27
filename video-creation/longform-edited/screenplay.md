@@ -290,6 +290,18 @@ into all this.") must not be the same wording every video. The variant list and 
 is not the most recent in `recent_use`, and list 2-3 alternates (at least one `proposed`) in the screenplay's
 OPEN QUESTIONS so Mike picks at GATE 1. Record his pick back into that persona entry the same turn.
 
+**The "go back and rewatch" line, a watch-time device (Mike, 2026-10-24).** Right AFTER a genuinely complex
+beat (a dense mechanism, a system-design diagram or chart that took real explaining), Mike may invite the viewer
+to replay it. Three device-specific wordings, pick ONE per use and rotate across uses / videos:
+- "If that was a bit complex, feel free to push the J key on your computer to go back and watch that again."
+- "If that was a bit complex, feel free to double tap the left side of the video if you are on your phone to go back and watch that again."
+- "If that was a bit complex, feel free to push the back button on your remote if you are watching this on your TV."
+Rules: ZERO to TWO uses per video, never more; HARD CAP of one per 5 minutes of runtime; only after a beat that
+is actually complex (never after a plain claim, a hype beat, or the hook); never two in a row on the same
+device wording. Script it as its own 🗣️ `[COVER]` line (the diagram stays on screen while he says it), with a
+💬 `[NOTE]` naming the beat it refers back to. It goes in the screenplay at authoring time so the edit plan sees
+it; if no beat earns it, write none. The screenplay-strategist decides this in its method step 6b.
+
 ## Honesty / verified-claims rules (persona `verified_claims_only`)
 
 - Fact-check every named entity, date, stat, and call before it goes on screen; mark unverified ones

@@ -1,1897 +1,5 @@
 [
   {
-    "run_id": "cut-sandbox-cut-20260804@2026-08-04T13:03:15",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-sandbox-cut-20260804",
-    "started_at": "2026-08-04T13:03:15",
-    "ended_at": "2026-08-04T13:03:22",
-    "duration_s": 6.4,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "sandbox-cut",
-    "summary": {
-      "batch": "sandbox-cut",
-      "sandbox": true,
-      "clips": 2,
-      "total_s": 40.6,
-      "dashboard": "C:\\Users\\mnede\\AppData\\Local\\Temp\\claude\\C--Users-mnede-Documents-Claude-social-media\\7d61f7e1-6db7-473f-8c37-430cfd42d75c\\scratchpad\\cut-sandbox\\shorts\\sandbox-cut\\dashboard.html",
-      "registered": true,
-      "clip_durations": {
-        "sb-two-seg": 25.047,
-        "sb-one-seg": 15.543
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "intake-october-bottom-20260804@2026-08-04T12:54:11",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-october-bottom-20260804",
-    "started_at": "2026-08-04T12:54:11",
-    "ended_at": "2026-08-04T13:19:44",
-    "duration_s": 1532.8,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "october-bottom",
-    "summary": {
-      "slug": "october-bottom",
-      "sandbox": false,
-      "master_duration_s": 3320.7,
-      "master_mbps": 0.64,
-      "longform": {
-        "duration_s": 2144.8,
-        "removed_s": 1175.94,
-        "mbps": 0.82,
-        "thumb_staged": false,
-        "queued_id": "lf-20260804-october-bottom",
-        "already_present": false,
-        "queue_total": 39
-      },
-      "vertical": {
-        "geometry": "1080x1920 SAR 1:1",
-        "duration_s": 3320.7
-      },
-      "words": 7360,
-      "segments": 485,
-      "glossary": "Kaspa:3 TAO:7",
-      "flags": []
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-october-bottom-20260804@2026-08-04T13:35:53",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-october-bottom-20260804",
-    "started_at": "2026-08-04T13:35:53",
-    "ended_at": "2026-08-04T13:38:46",
-    "duration_s": 173.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "october-bottom",
-    "summary": {
-      "batch": "october-bottom",
-      "sandbox": false,
-      "clips": 7,
-      "total_s": 684.5,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\october-bottom\\dashboard.html",
-      "registered": true,
-      "clip_durations": {
-        "october-mandela-myth": 171.983,
-        "kaspa-dip-bought-more": 95.591,
-        "whatif-organic-dogecoin": 149.335,
-        "ring-of-fire-meme-judgment": 98.295,
-        "cooper-robinhood-real-dog": 124.679,
-        "october-myth-impact": 24.871,
-        "kaspa-dip-impact": 19.767
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "tighten-stub-20260805-193235@2026-08-05T19:32:35",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-stub-20260805-193235",
-    "started_at": "2026-08-05T19:32:35",
-    "ended_at": "2026-08-05T19:32:35",
-    "duration_s": 0.5,
-    "status": "done",
-    "stub": "ok",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": {
-      "batch": "stub-batch",
-      "stub": true,
-      "clips": 2
-    },
-    "error": null
-  },
-  {
-    "run_id": "tighten-stub-20260805-193242@2026-08-05T19:32:43",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-stub-20260805-193242",
-    "started_at": "2026-08-05T19:32:43",
-    "ended_at": "2026-08-05T19:32:43",
-    "duration_s": 0.2,
-    "status": "failed",
-    "stub": "fail",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": null,
-    "error": "tighten_clips.py --stage tighten exit code 3; output tail:\nstub: pretending to tighten\nFATAL: stub failure\n"
-  },
-  {
-    "run_id": "tighten-sandbox-tighten-20260805@2026-08-05T19:36:16",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-sandbox-tighten-20260805",
-    "started_at": "2026-08-05T19:36:16",
-    "ended_at": "2026-08-05T19:37:13",
-    "duration_s": 57.2,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "sandbox-tighten",
-    "summary": null,
-    "error": "sbx-scatter: desilenced 35.57s is shorter than the clip's kept voiced content 41.90s — the desilencer ate speech (swallowed-speech guard)"
-  },
-  {
-    "run_id": "tighten-sandbox-tighten-20260805@2026-08-05T19:38:09",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-sandbox-tighten-20260805",
-    "started_at": "2026-08-05T19:38:09",
-    "ended_at": "2026-08-05T19:38:56",
-    "duration_s": 46.1,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "sandbox-tighten",
-    "summary": {
-      "batch": "sandbox-tighten",
-      "sandbox": true,
-      "clips": 2,
-      "total_s": 49.5,
-      "min_sil": 0.25,
-      "dashboard": "C:\\Users\\mnede\\AppData\\Local\\Temp\\claude\\C--Users-mnede-Documents-Claude-social-media\\78d3e775-7c5c-4007-92bc-4538e84dc433\\scratchpad\\wave3-sandbox\\shorts\\sandbox-tighten\\dashboard.html",
-      "clip_durations": {
-        "sbx-scatter": 35.568,
-        "sbx-relock": 13.908
-      }
-    },
-    "error": "sbx-scatter: desilenced 35.57s is shorter than the clip's kept voiced content 41.90s — the desilencer ate speech (swallowed-speech guard)"
-  },
-  {
-    "run_id": "intake-if-yacht-20260805@2026-08-05T19:24:27",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-if-yacht-20260805",
-    "started_at": "2026-08-05T19:24:27",
-    "ended_at": "2026-08-05T19:48:46",
-    "duration_s": 1458.6,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "if-yacht",
-    "summary": {
-      "slug": "if-yacht",
-      "sandbox": false,
-      "master_duration_s": 2859.133008,
-      "master_mbps": 0.65,
-      "longform": {
-        "duration_s": 2014.0,
-        "removed_s": 845.11,
-        "mbps": 0.81,
-        "thumb_staged": false,
-        "queued_id": "lf-20260805-if-yacht",
-        "already_present": false,
-        "queue_total": 40
-      },
-      "vertical": {
-        "geometry": "1080x1920 SAR 1:1",
-        "duration_s": 2859.2
-      },
-      "words": 7276,
-      "segments": 452,
-      "glossary": "Kaspa:1",
-      "flags": []
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-if-yacht-20260805@2026-08-05T20:03:32",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-if-yacht-20260805",
-    "started_at": "2026-08-05T20:03:32",
-    "ended_at": "2026-08-05T20:04:36",
-    "duration_s": 64.5,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "if-yacht",
-    "summary": {
-      "batch": "if-yacht",
-      "sandbox": false,
-      "clips": 2,
-      "total_s": 254.0,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\if-yacht\\dashboard.html",
-      "registered": true,
-      "clip_durations": {
-        "if-robinhood-2b": 129.871,
-        "dead-coins-disagree": 124.119
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "intake-eliza-20260806@2026-08-06T17:25:12",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-eliza-20260806",
-    "started_at": "2026-08-06T17:25:12",
-    "ended_at": "2026-08-06T17:52:01",
-    "duration_s": 1608.7,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "eliza",
-    "summary": {
-      "slug": "eliza",
-      "sandbox": false,
-      "master_duration_s": 3474.633333,
-      "master_mbps": 0.64,
-      "longform": {
-        "duration_s": 2155.8,
-        "removed_s": 1318.82,
-        "mbps": 0.81,
-        "thumb_staged": false,
-        "queued_id": "lf-20260806-eliza",
-        "already_present": false,
-        "queue_total": 41
-      },
-      "vertical": {
-        "geometry": "1080x1920 SAR 1:1",
-        "duration_s": 3474.7
-      },
-      "words": 7482,
-      "segments": 529,
-      "glossary": "Kaspa:1",
-      "flags": []
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-eliza-20260806@2026-08-06T18:14:29",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-eliza-20260806",
-    "started_at": "2026-08-06T18:14:29",
-    "ended_at": "2026-08-06T18:16:57",
-    "duration_s": 147.3,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "eliza",
-    "summary": {
-      "batch": "eliza",
-      "sandbox": false,
-      "clips": 6,
-      "total_s": 553.0,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\eliza\\dashboard.html",
-      "registered": true,
-      "clip_durations": {
-        "eliza-collapse": 157.631,
-        "phantom-hack": 126.167,
-        "trading-against-ourselves": 143.455,
-        "trump-coin-investigation": 71.447,
-        "eliza-collapse-impact": 25.727,
-        "phantom-hack-impact": 28.583
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "tighten-eliza-20260806@2026-08-06T19:17:33",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-eliza-20260806",
-    "started_at": "2026-08-06T19:17:33",
-    "ended_at": "2026-08-06T19:19:59",
-    "duration_s": 146.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "eliza",
-    "summary": {
-      "batch": "eliza",
-      "sandbox": false,
-      "clips": 2,
-      "total_s": 180.4,
-      "min_sil": 0.25,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\eliza\\dashboard.html",
-      "clip_durations": {
-        "phantom-hack": 85.16,
-        "trading-against-ourselves": 95.26
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "finish-stub-20260807-185823@2026-08-07T18:58:23",
-    "lane": 4,
-    "lane_name": "finish",
-    "thread": "finish-stub-20260807-185823",
-    "started_at": "2026-08-07T18:58:23",
-    "ended_at": "2026-08-07T18:58:23",
-    "duration_s": 0.3,
-    "status": "done",
-    "stub": "ok",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": {
-      "batch": "stub-batch",
-      "stub": true,
-      "clips": 2
-    },
-    "error": null
-  },
-  {
-    "run_id": "finish-stub-20260807-185832@2026-08-07T18:58:33",
-    "lane": 4,
-    "lane_name": "finish",
-    "thread": "finish-stub-20260807-185832",
-    "started_at": "2026-08-07T18:58:33",
-    "ended_at": "2026-08-07T18:58:33",
-    "duration_s": 0.1,
-    "status": "failed",
-    "stub": "fail",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": null,
-    "error": "finish_batch.py --stage fillers exit code 3; output tail:\nstub: pretending to finish\nFATAL: stub failure\n"
-  },
-  {
-    "run_id": "publish-stub-20260807-185835@2026-08-07T18:58:35",
-    "lane": 5,
-    "lane_name": "publish",
-    "thread": "publish-stub-20260807-185835",
-    "started_at": "2026-08-07T18:58:35",
-    "ended_at": "2026-08-07T18:58:35",
-    "duration_s": 0.2,
-    "status": "done",
-    "stub": "ok",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": {
-      "batch": "stub-batch",
-      "stub": true,
-      "added": 1
-    },
-    "error": null
-  },
-  {
-    "run_id": "publish-stub-20260807-185838@2026-08-07T18:58:38",
-    "lane": 5,
-    "lane_name": "publish",
-    "thread": "publish-stub-20260807-185838",
-    "started_at": "2026-08-07T18:58:38",
-    "ended_at": "2026-08-07T18:58:38",
-    "duration_s": 0.1,
-    "status": "failed",
-    "stub": "fail",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": null,
-    "error": "publish-shorts.py exit code 3; output tail:\nstub: pretending to publish\nFATAL: stub failure\n"
-  },
-  {
-    "run_id": "publish-sbx-batch-20260807@2026-08-07T18:59:38",
-    "lane": 5,
-    "lane_name": "publish",
-    "thread": "publish-sbx-batch-20260807",
-    "started_at": "2026-08-07T18:59:38",
-    "ended_at": "2026-08-07T18:59:39",
-    "duration_s": 0.9,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "sbx-batch",
-    "summary": null,
-    "error": "persona-lint.py (queue violations — fix them, then re-run) exit code 1; output tail:\n=== shorts.json ===\n  [em/en dash] shorts.json.$note\n      ...TEST SANDBOX shorts.json — not production...\n\nDone. 1 violation(s).\n(Voice/tone isn't lintable — write captions in Mike's persona; this only catches the deterministic AI-tells.)\n"
-  },
-  {
-    "run_id": "publish-sbx-rerun@2026-08-07T19:00:01",
-    "lane": 5,
-    "lane_name": "publish",
-    "thread": "publish-sbx-rerun",
-    "started_at": "2026-08-07T19:00:01",
-    "ended_at": "2026-08-07T19:00:01",
-    "duration_s": 0.6,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "sbx-batch",
-    "summary": {
-      "batch": "sbx-batch",
-      "sandbox": true,
-      "date": "2026-08-07",
-      "clips": 2,
-      "added": 0,
-      "skipped": 2,
-      "dest_dir": "C:\\Users\\mnede\\AppData\\Local\\Temp\\claude\\C--Users-mnede-Documents-Claude-social-media\\a6082b88-4374-465f-ac94-f88676d23768\\scratchpad\\sbx-publish\\shorts-dest\\sbx-batch-2026-08-07",
-      "queue_total": 2,
-      "lint": "clean"
-    },
-    "error": null
-  },
-  {
-    "run_id": "publish-sbx-drill1@2026-08-07T19:00:21",
-    "lane": 5,
-    "lane_name": "publish",
-    "thread": "publish-sbx-drill1",
-    "started_at": "2026-08-07T19:00:21",
-    "ended_at": "2026-08-07T19:00:21",
-    "duration_s": 0.3,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "sbx-batch",
-    "summary": null,
-    "error": "clip-a: staged md5 f45842343f14af2225a14290b64447d6 != render md5 78fe837689174f0530d686870b8d950e — the render changed after staging (post-QA re-render?); re-copy and re-run"
-  },
-  {
-    "run_id": "intake-early-crash-20260807@2026-08-07T18:46:17",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-early-crash-20260807",
-    "started_at": "2026-08-07T18:46:17",
-    "ended_at": "2026-08-07T19:04:36",
-    "duration_s": 1098.7,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "early-crash",
-    "summary": {
-      "slug": "early-crash",
-      "sandbox": false,
-      "master_duration_s": 1818.566667,
-      "master_mbps": 0.67,
-      "longform": {
-        "duration_s": 1335.9,
-        "removed_s": 482.64,
-        "mbps": 0.81,
-        "thumb_staged": false,
-        "queued_id": "lf-20260807-early-crash",
-        "already_present": false,
-        "queue_total": 42
-      },
-      "vertical": {
-        "geometry": "1080x1920 SAR 1:1",
-        "duration_s": 1818.6
-      },
-      "words": 4317,
-      "segments": 270,
-      "glossary": "none",
-      "flags": []
-    },
-    "error": null
-  },
-  {
-    "run_id": "finish-sbx-batch-20260807@2026-08-07T19:06:17",
-    "lane": 4,
-    "lane_name": "finish",
-    "thread": "finish-sbx-batch-20260807",
-    "started_at": "2026-08-07T19:06:17",
-    "ended_at": "2026-08-07T19:07:45",
-    "duration_s": 87.6,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "sbx-batch",
-    "summary": {
-      "batch": "sbx-batch",
-      "sandbox": true,
-      "clips": 2,
-      "total_s": 49.7,
-      "filler_cuts": 1,
-      "words": {
-        "clip-a": 125,
-        "clip-b": 67
-      },
-      "dashboard": "C:\\Users\\mnede\\AppData\\Local\\Temp\\claude\\C--Users-mnede-Documents-Claude-social-media\\a6082b88-4374-465f-ac94-f88676d23768\\scratchpad\\sbx-finish\\shorts\\sbx-batch\\dashboard.html",
-      "clip_durations": {
-        "clip-a": 29.7,
-        "clip-b": 20.0
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-early-crash-20260807@2026-08-07T19:26:40",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-early-crash-20260807",
-    "started_at": "2026-08-07T19:26:40",
-    "ended_at": "2026-08-07T19:28:50",
-    "duration_s": 130.4,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "early-crash",
-    "summary": {
-      "batch": "early-crash",
-      "sandbox": false,
-      "clips": 7,
-      "total_s": 516.9,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\early-crash\\dashboard.html",
-      "registered": true,
-      "clip_durations": {
-        "akita-3b-robinhood": 187.799,
-        "jobs-shock-october-green": 125.623,
-        "way-off-moon-calls": 44.487,
-        "tendies-funny-stupid": 48.807,
-        "endure-the-pain": 47.647,
-        "akita-3b-robinhood-impact": 43.063,
-        "jobs-shock-october-green-impact": 19.503
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "tighten-early-crash-20260807@2026-08-07T21:49:50",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-early-crash-20260807",
-    "started_at": "2026-08-07T21:49:50",
-    "ended_at": "2026-08-07T21:53:48",
-    "duration_s": 237.3,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "early-crash",
-    "summary": {
-      "batch": "early-crash",
-      "sandbox": false,
-      "clips": 5,
-      "total_s": 257.7,
-      "min_sil": 0.25,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\early-crash\\dashboard.html",
-      "clip_durations": {
-        "akita-3b-robinhood": 128.137,
-        "way-off-moon-calls": 32.24,
-        "tendies-funny-stupid": 34.509,
-        "endure-the-pain": 32.032,
-        "akita-3b-robinhood-impact": 30.77
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "finish-early-crash-20260807@2026-08-07T22:04:13",
-    "lane": 4,
-    "lane_name": "finish",
-    "thread": "finish-early-crash-20260807",
-    "started_at": "2026-08-07T22:04:13",
-    "ended_at": "2026-08-07T22:07:25",
-    "duration_s": 191.7,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "early-crash",
-    "summary": {
-      "batch": "early-crash",
-      "sandbox": false,
-      "clips": 5,
-      "total_s": 257.7,
-      "filler_cuts": 0,
-      "words": {
-        "akita-3b-robinhood": 402,
-        "way-off-moon-calls": 126,
-        "tendies-funny-stupid": 140,
-        "endure-the-pain": 146,
-        "akita-3b-robinhood-impact": 76
-      },
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\early-crash\\dashboard.html",
-      "clip_durations": {
-        "akita-3b-robinhood": 128.14,
-        "way-off-moon-calls": 32.24,
-        "tendies-funny-stupid": 34.51,
-        "endure-the-pain": 32.03,
-        "akita-3b-robinhood-impact": 30.77
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "publish-early-crash-20260808@2026-08-08T14:33:50",
-    "lane": 5,
-    "lane_name": "publish",
-    "thread": "publish-early-crash-20260808",
-    "started_at": "2026-08-08T14:33:50",
-    "ended_at": "2026-08-08T14:33:51",
-    "duration_s": 0.8,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "early-crash",
-    "summary": null,
-    "error": "ec-20260808-akita-3b-robinhood: em/en dash in the queue entry"
-  },
-  {
-    "run_id": "publish-early-crash-20260808@2026-08-08T14:34:47",
-    "lane": 5,
-    "lane_name": "publish",
-    "thread": "publish-early-crash-20260808",
-    "started_at": "2026-08-08T14:34:47",
-    "ended_at": "2026-08-08T14:34:48",
-    "duration_s": 0.8,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "early-crash",
-    "summary": null,
-    "error": "ec-20260808-akita-3b-robinhood: platform block(s) not pending: ['yt_shorts', 'ig_reels', 'x', 'tiktok', 'facebook', 'rumble', 'bitchute']"
-  },
-  {
-    "run_id": "repurpose-stub-20260809-092251@2026-08-09T09:22:51",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-stub-20260809-092251",
-    "started_at": "2026-08-09T09:22:51",
-    "ended_at": "2026-08-09T09:22:52",
-    "duration_s": 0.4,
-    "status": "done",
-    "stub": "ok",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": {
-      "batch": "stub-batch",
-      "stub": true,
-      "images_ok": 1
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-stub-20260809-092321@2026-08-09T09:23:21",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-stub-20260809-092321",
-    "started_at": "2026-08-09T09:23:21",
-    "ended_at": "2026-08-09T09:23:22",
-    "duration_s": 0.2,
-    "status": "failed",
-    "stub": "fail",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": null,
-    "error": "lane3_batch.py --stage generate exit code 3; output tail:\nstub: pretending to repurpose\nFATAL: stub failure\n"
-  },
-  {
-    "run_id": "repurpose-sbx-lane3-20260809@2026-08-09T09:23:54",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-sbx-lane3-20260809",
-    "started_at": "2026-08-09T09:23:54",
-    "ended_at": "2026-08-09T09:23:56",
-    "duration_s": 2.2,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "sbx-lane3",
-    "summary": {
-      "batch": "sbx-lane3",
-      "sandbox": true,
-      "fake_gen": true,
-      "date": "2026-08-09",
-      "images": {
-        "planned": 3,
-        "generated": 3,
-        "skipped": 0,
-        "verified": 3
-      },
-      "entries_added": 6,
-      "entries_skipped": 0,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "x-threads.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "yt-posts.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "yt-text-polls.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "ig-single-image.json": {
-          "planned": 1,
-          "queue_total": 1
-        }
-      },
-      "lint": "clean",
-      "registered": "sbx-lane3"
-    },
-    "error": null
-  },
-  {
-    "run_id": "sbx-rerun@2026-08-09T09:25:21",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "sbx-rerun",
-    "started_at": "2026-08-09T09:25:21",
-    "ended_at": "2026-08-09T09:25:23",
-    "duration_s": 1.8,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "sbx-lane3",
-    "summary": {
-      "batch": "sbx-lane3",
-      "sandbox": true,
-      "fake_gen": true,
-      "date": "2026-08-09",
-      "images": {
-        "planned": 3,
-        "generated": 0,
-        "skipped": 3,
-        "verified": 3
-      },
-      "entries_added": 0,
-      "entries_skipped": 6,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "x-threads.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "yt-posts.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "yt-text-polls.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "ig-single-image.json": {
-          "planned": 1,
-          "queue_total": 1
-        }
-      },
-      "lint": "clean",
-      "registered": "sbx-lane3"
-    },
-    "error": null
-  },
-  {
-    "run_id": "sbx-perle@2026-08-09T09:28:18",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "sbx-perle",
-    "started_at": "2026-08-09T09:28:18",
-    "ended_at": "2026-08-09T09:28:20",
-    "duration_s": 2.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "sbx-lane3",
-    "summary": {
-      "batch": "sbx-lane3",
-      "sandbox": true,
-      "fake_gen": true,
-      "date": "2026-08-09",
-      "images": {
-        "planned": 3,
-        "generated": 3,
-        "skipped": 0,
-        "verified": 3
-      },
-      "entries_added": 6,
-      "entries_skipped": 0,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "x-threads.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "yt-posts.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "yt-text-polls.json": {
-          "planned": 1,
-          "queue_total": 1
-        },
-        "ig-single-image.json": {
-          "planned": 1,
-          "queue_total": 1
-        }
-      },
-      "lint": "clean",
-      "registered": "sbx-lane3"
-    },
-    "error": null
-  },
-  {
-    "run_id": "intake-tutorial-20260809@2026-08-09T09:06:31",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-tutorial-20260809",
-    "started_at": "2026-08-09T09:06:31",
-    "ended_at": "2026-08-09T09:40:53",
-    "duration_s": 2062.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "tutorial",
-    "summary": {
-      "slug": "tutorial",
-      "sandbox": false,
-      "master_duration_s": 4597.266667,
-      "master_mbps": 0.65,
-      "longform": {
-        "duration_s": 3034.8,
-        "removed_s": 1562.47,
-        "mbps": 0.83,
-        "thumb_staged": false,
-        "queued_id": "lf-20260809-tutorial",
-        "already_present": false,
-        "queue_total": 43
-      },
-      "vertical": {
-        "geometry": "1080x1920 SAR 1:1",
-        "duration_s": 4597.3
-      },
-      "words": 10132,
-      "segments": 1214,
-      "glossary": "Kaspa:15",
-      "flags": []
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-tutorial-20260809@2026-08-09T09:50:25",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-tutorial-20260809",
-    "started_at": "2026-08-09T09:50:25",
-    "ended_at": "2026-08-09T10:29:29",
-    "duration_s": 2343.5,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "tutorial",
-    "summary": {
-      "batch": "tutorial",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-09",
-      "images": {
-        "planned": 17,
-        "generated": 17,
-        "skipped": 0,
-        "verified": 17
-      },
-      "entries_added": 14,
-      "entries_skipped": 0,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 318
-        },
-        "x-threads.json": {
-          "planned": 2,
-          "queue_total": 81
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 67
-        },
-        "yt-posts.json": {
-          "planned": 2,
-          "queue_total": 146
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 96
-        },
-        "ig-single-image.json": {
-          "planned": 1,
-          "queue_total": 122
-        }
-      },
-      "lint": "clean",
-      "registered": "tutorial"
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-tutorial-20260809-fix1@2026-08-09T11:15:57",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-tutorial-20260809-fix1",
-    "started_at": "2026-08-09T11:15:57",
-    "ended_at": "2026-08-09T11:24:22",
-    "duration_s": 504.9,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "tutorial",
-    "summary": {
-      "batch": "tutorial",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-09",
-      "images": {
-        "planned": 17,
-        "generated": 2,
-        "skipped": 15,
-        "verified": 17
-      },
-      "entries_added": 0,
-      "entries_skipped": 14,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 318
-        },
-        "x-threads.json": {
-          "planned": 2,
-          "queue_total": 81
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 67
-        },
-        "yt-posts.json": {
-          "planned": 2,
-          "queue_total": 146
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 96
-        },
-        "ig-single-image.json": {
-          "planned": 1,
-          "queue_total": 122
-        }
-      },
-      "lint": "clean",
-      "registered": "tutorial"
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-tutorial-20260809@2026-08-09T11:39:29",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-tutorial-20260809",
-    "started_at": "2026-08-09T11:39:29",
-    "ended_at": "2026-08-09T11:41:16",
-    "duration_s": 107.3,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "tutorial",
-    "summary": {
-      "batch": "tutorial",
-      "sandbox": false,
-      "clips": 8,
-      "total_s": 431.2,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\tutorial\\dashboard.html",
-      "registered": true,
-      "clip_durations": {
-        "tut-94x-euphoria": 87.255,
-        "robinhood-meme-rankings": 98.783,
-        "binance-kaspa-catch22": 38.095,
-        "freaking-early-not-degen": 52.087,
-        "doginme-100x-if-500x": 81.791,
-        "tut-94x-euphoria-impact": 28.143,
-        "binance-kaspa-catch22-impact": 23.247,
-        "freaking-early-not-degen-impact": 21.783
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-tutorial-20260809-4b@2026-08-09T12:03:38",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-tutorial-20260809-4b",
-    "started_at": "2026-08-09T12:03:38",
-    "ended_at": "2026-08-09T12:05:17",
-    "duration_s": 98.6,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "tutorial",
-    "summary": {
-      "batch": "tutorial",
-      "sandbox": false,
-      "clips": 8,
-      "total_s": 400.9,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\tutorial\\dashboard.html",
-      "registered": true,
-      "clip_durations": {
-        "tut-94x-euphoria": 87.255,
-        "robinhood-meme-rankings": 98.783,
-        "binance-kaspa-catch22": 38.095,
-        "freaking-early-not-degen": 52.087,
-        "doginme-100x-if-500x": 51.535,
-        "tut-94x-euphoria-impact": 28.143,
-        "binance-kaspa-catch22-impact": 23.247,
-        "freaking-early-not-degen-impact": 21.783
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "tighten-tutorial-20260809@2026-08-09T14:40:59",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-tutorial-20260809",
-    "started_at": "2026-08-09T14:40:59",
-    "ended_at": "2026-08-09T14:45:32",
-    "duration_s": 273.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "tutorial",
-    "summary": {
-      "batch": "tutorial",
-      "sandbox": false,
-      "clips": 8,
-      "total_s": 340.6,
-      "min_sil": 0.95,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\tutorial\\dashboard.html",
-      "clip_durations": {
-        "tut-94x-euphoria": 78.831,
-        "robinhood-meme-rankings": 79.463,
-        "binance-kaspa-catch22": 31.96,
-        "freaking-early-not-degen": 43.328,
-        "doginme-100x-if-500x": 39.613,
-        "tut-94x-euphoria-impact": 28.223,
-        "binance-kaspa-catch22-impact": 19.018,
-        "freaking-early-not-degen-impact": 20.122
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "finish-tutorial-20260809@2026-08-09T15:42:54",
-    "lane": 4,
-    "lane_name": "finish",
-    "thread": "finish-tutorial-20260809",
-    "started_at": "2026-08-09T15:42:54",
-    "ended_at": "2026-08-09T15:46:20",
-    "duration_s": 205.4,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "tutorial",
-    "summary": {
-      "batch": "tutorial",
-      "sandbox": false,
-      "clips": 8,
-      "total_s": 340.6,
-      "filler_cuts": 0,
-      "words": {
-        "tut-94x-euphoria": 198,
-        "robinhood-meme-rankings": 251,
-        "binance-kaspa-catch22": 105,
-        "freaking-early-not-degen": 165,
-        "doginme-100x-if-500x": 126,
-        "tut-94x-euphoria-impact": 63,
-        "binance-kaspa-catch22-impact": 62,
-        "freaking-early-not-degen-impact": 73
-      },
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\tutorial\\dashboard.html",
-      "clip_durations": {
-        "tut-94x-euphoria": 78.83,
-        "robinhood-meme-rankings": 79.46,
-        "binance-kaspa-catch22": 31.96,
-        "freaking-early-not-degen": 43.33,
-        "doginme-100x-if-500x": 39.61,
-        "tut-94x-euphoria-impact": 28.22,
-        "binance-kaspa-catch22-impact": 19.02,
-        "freaking-early-not-degen-impact": 20.12
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "publish-tutorial-20260810@2026-08-10T11:39:40",
-    "lane": 5,
-    "lane_name": "publish",
-    "thread": "publish-tutorial-20260810",
-    "started_at": "2026-08-10T11:39:40",
-    "ended_at": "2026-08-10T11:39:43",
-    "duration_s": 3.8,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "tutorial",
-    "summary": {
-      "batch": "tutorial",
-      "sandbox": false,
-      "date": "2026-08-10",
-      "clips": 8,
-      "added": 8,
-      "skipped": 0,
-      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\tutorial-2026-08-10",
-      "queue_total": 163,
-      "lint": "clean"
-    },
-    "error": null
-  },
-  {
-    "run_id": "intake-last-year-20260811@2026-08-11T07:33:18",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-last-year-20260811",
-    "started_at": "2026-08-11T07:33:18",
-    "ended_at": "2026-08-11T08:08:50",
-    "duration_s": 2132.4,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "last-year",
-    "summary": {
-      "slug": "last-year",
-      "sandbox": false,
-      "master_duration_s": 4010.433008,
-      "master_mbps": 0.65,
-      "longform": {
-        "duration_s": 2734.6,
-        "removed_s": 1275.84,
-        "mbps": 0.82,
-        "thumb_staged": false,
-        "queued_id": "lf-20260811-last-year",
-        "already_present": false,
-        "queue_total": 44
-      },
-      "vertical": {
-        "geometry": "1080x1920 SAR 1:1",
-        "duration_s": 4010.4
-      },
-      "words": 9508,
-      "segments": 572,
-      "glossary": "Kaspa:26",
-      "flags": []
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-last-year-20260811@2026-08-11T08:24:25",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-last-year-20260811",
-    "started_at": "2026-08-11T08:24:25",
-    "ended_at": "2026-08-11T08:26:39",
-    "duration_s": 134.5,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "last-year",
-    "summary": {
-      "batch": "last-year",
-      "sandbox": false,
-      "clips": 4,
-      "total_s": 500.4,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\last-year\\dashboard.html",
-      "registered": true,
-      "clip_durations": {
-        "meme-fud-130x": 133.391,
-        "lab-353x-underestimate": 104.087,
-        "kitsu-vlads-dog": 159.071,
-        "kaspa-excavator": 103.895
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-last-year-20260811@2026-08-11T08:17:36",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-last-year-20260811",
-    "started_at": "2026-08-11T08:17:36",
-    "ended_at": "2026-08-11T08:53:23",
-    "duration_s": 2146.7,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "last-year",
-    "summary": {
-      "batch": "last-year",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-11",
-      "images": {
-        "planned": 12,
-        "generated": 12,
-        "skipped": 0,
-        "verified": 12
-      },
-      "entries_added": 12,
-      "entries_skipped": 0,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 324
-        },
-        "x-threads.json": {
-          "planned": 1,
-          "queue_total": 82
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 68
-        },
-        "yt-posts.json": {
-          "planned": 1,
-          "queue_total": 149
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 98
-        },
-        "ig-single-image.json": {
-          "planned": 1,
-          "queue_total": 123
-        }
-      },
-      "lint": "clean",
-      "registered": "last-year"
-    },
-    "error": null
-  },
-  {
-    "run_id": "tighten-last-year-20260811@2026-08-11T09:23:28",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-last-year-20260811",
-    "started_at": "2026-08-11T09:23:28",
-    "ended_at": "2026-08-11T09:28:31",
-    "duration_s": 303.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "last-year",
-    "summary": {
-      "batch": "last-year",
-      "sandbox": false,
-      "clips": 4,
-      "total_s": 357.5,
-      "min_sil": 0.95,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\last-year\\dashboard.html",
-      "clip_durations": {
-        "meme-fud-130x": 96.959,
-        "lab-353x-underestimate": 78.388,
-        "kitsu-vlads-dog": 105.496,
-        "kaspa-excavator": 76.635
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-last-year-20260811-v2@2026-08-11T09:09:21",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-last-year-20260811-v2",
-    "started_at": "2026-08-11T09:09:21",
-    "ended_at": "2026-08-11T09:49:31",
-    "duration_s": 2410.3,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "last-year",
-    "summary": {
-      "batch": "last-year",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-11",
-      "images": {
-        "planned": 12,
-        "generated": 10,
-        "skipped": 2,
-        "verified": 12
-      },
-      "entries_added": 0,
-      "entries_skipped": 12,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 324
-        },
-        "x-threads.json": {
-          "planned": 1,
-          "queue_total": 82
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 68
-        },
-        "yt-posts.json": {
-          "planned": 1,
-          "queue_total": 149
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 98
-        },
-        "ig-single-image.json": {
-          "planned": 1,
-          "queue_total": 123
-        }
-      },
-      "lint": "clean",
-      "registered": "last-year"
-    },
-    "error": null
-  },
-  {
-    "run_id": "tighten-last-year-20260811-ms025@2026-08-11T10:03:15",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-last-year-20260811-ms025",
-    "started_at": "2026-08-11T10:03:15",
-    "ended_at": "2026-08-11T10:08:06",
-    "duration_s": 290.8,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "last-year",
-    "summary": {
-      "batch": "last-year",
-      "sandbox": false,
-      "clips": 4,
-      "total_s": 312.3,
-      "min_sil": 0.25,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\last-year\\dashboard.html",
-      "clip_durations": {
-        "meme-fud-130x": 86.337,
-        "lab-353x-underestimate": 71.36,
-        "kitsu-vlads-dog": 87.52,
-        "kaspa-excavator": 67.06
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-last-year-20260811-v3@2026-08-11T10:11:00",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-last-year-20260811-v3",
-    "started_at": "2026-08-11T10:11:00",
-    "ended_at": "2026-08-11T10:26:54",
-    "duration_s": 953.5,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "last-year",
-    "summary": {
-      "batch": "last-year",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-11",
-      "images": {
-        "planned": 12,
-        "generated": 4,
-        "skipped": 8,
-        "verified": 12
-      },
-      "entries_added": 0,
-      "entries_skipped": 12,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 324
-        },
-        "x-threads.json": {
-          "planned": 1,
-          "queue_total": 82
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 68
-        },
-        "yt-posts.json": {
-          "planned": 1,
-          "queue_total": 149
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 98
-        },
-        "ig-single-image.json": {
-          "planned": 1,
-          "queue_total": 123
-        }
-      },
-      "lint": "clean",
-      "registered": "last-year"
-    },
-    "error": null
-  },
-  {
-    "run_id": "finish-last-year-20260811@2026-08-11T11:24:29",
-    "lane": 4,
-    "lane_name": "finish",
-    "thread": "finish-last-year-20260811",
-    "started_at": "2026-08-11T11:24:29",
-    "ended_at": "2026-08-11T11:28:49",
-    "duration_s": 259.6,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "last-year",
-    "summary": {
-      "batch": "last-year",
-      "sandbox": false,
-      "clips": 4,
-      "total_s": 312.3,
-      "filler_cuts": 0,
-      "words": {
-        "meme-fud-130x": 287,
-        "lab-353x-underestimate": 241,
-        "kitsu-vlads-dog": 288,
-        "kaspa-excavator": 264
-      },
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\last-year\\dashboard.html",
-      "clip_durations": {
-        "meme-fud-130x": 86.34,
-        "lab-353x-underestimate": 71.36,
-        "kitsu-vlads-dog": 87.52,
-        "kaspa-excavator": 67.06
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "publish-last-year-20260811@2026-08-11T14:48:00",
-    "lane": 5,
-    "lane_name": "publish",
-    "thread": "publish-last-year-20260811",
-    "started_at": "2026-08-11T14:48:00",
-    "ended_at": "2026-08-11T14:48:04",
-    "duration_s": 4.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "last-year",
-    "summary": {
-      "batch": "last-year",
-      "sandbox": false,
-      "date": "2026-08-11",
-      "clips": 4,
-      "added": 4,
-      "skipped": 0,
-      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\last-year-2026-08-11",
-      "queue_total": 167,
-      "lint": "clean"
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-last-year-20260811-v4@2026-08-11T14:52:02",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-last-year-20260811-v4",
-    "started_at": "2026-08-11T14:52:02",
-    "ended_at": "2026-08-11T14:57:52",
-    "duration_s": 349.8,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "last-year",
-    "summary": {
-      "batch": "last-year",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-11",
-      "images": {
-        "planned": 12,
-        "generated": 1,
-        "skipped": 11,
-        "verified": 12
-      },
-      "entries_added": 0,
-      "entries_skipped": 12,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 324
-        },
-        "x-threads.json": {
-          "planned": 1,
-          "queue_total": 82
-        },
-        "x-polls.json": {
-          "planned": 1,
-          "queue_total": 68
-        },
-        "yt-posts.json": {
-          "planned": 1,
-          "queue_total": 150
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 98
-        },
-        "ig-single-image.json": {
-          "planned": 1,
-          "queue_total": 123
-        }
-      },
-      "lint": "clean",
-      "registered": "last-year"
-    },
-    "error": null
-  },
-  {
-    "run_id": "post-stub-20260811-172832@2026-08-11T17:28:32",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-stub-20260811-172832",
-    "started_at": "2026-08-11T17:28:32",
-    "ended_at": "2026-08-11T17:28:32",
-    "duration_s": 0.0,
-    "status": "done",
-    "stub": "ok",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": {
-      "platform": "rumble",
-      "status": "posted",
-      "url": "stub://ok",
-      "title": "stub"
-    },
-    "error": null
-  },
-  {
-    "run_id": "post-stub-20260811-172835@2026-08-11T17:28:35",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-stub-20260811-172835",
-    "started_at": "2026-08-11T17:28:35",
-    "ended_at": "2026-08-11T17:28:35",
-    "duration_s": 0.0,
-    "status": "failed",
-    "stub": "fail",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": null,
-    "error": "stub fail"
-  },
-  {
-    "run_id": "post-lf-20260811-last-year-rumble@2026-08-11T17:29:24",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-lf-20260811-last-year-rumble",
-    "started_at": "2026-08-11T17:29:24",
-    "ended_at": "2026-08-11T17:34:49",
-    "duration_s": 324.2,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "lf-20260811-last-year:rumble",
-    "summary": {
-      "platform": "rumble",
-      "status": "posted",
-      "url": "https://rumble.com/v7e1gw8-last-years-meme-coins-were-supposed-to-be-dead-then-we-94xd-tut.html",
-      "title": "Last Year's Meme Coins Were Supposed to Be Dead: Then We 94X'd TUT",
-      "posted_at": "2026-08-11T21:33:48.089Z"
-    },
-    "error": null
-  },
-  {
-    "run_id": "post-lf-20260811-last-year-bitchute@2026-08-11T17:36:06",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-lf-20260811-last-year-bitchute",
-    "started_at": "2026-08-11T17:36:06",
-    "ended_at": "2026-08-11T17:41:16",
-    "duration_s": 309.8,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "lf-20260811-last-year:bitchute",
-    "summary": {
-      "platform": "bitchute",
-      "status": "posted",
-      "url": "https://www.bitchute.com/video/1QMRxnsPCxyu/",
-      "title": "Last Year's Meme Coins Were Supposed to Be Dead: Then We 94X'd TUT",
-      "posted_at": "2026-08-11T21:40:15.535Z"
-    },
-    "error": null
-  },
-  {
-    "run_id": "post-lf-20260811-last-year-facebook@2026-08-11T17:41:53",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-lf-20260811-last-year-facebook",
-    "started_at": "2026-08-11T17:41:53",
-    "ended_at": "2026-08-11T17:42:26",
-    "duration_s": 33.5,
-    "status": "failed",
-    "stub": "",
-    "dry_run": false,
-    "requested": "lf-20260811-last-year:facebook",
-    "summary": null,
-    "error": "upload_longform_facebook.py exited 1 — READ THE LOG before any re-run: the post may have landed (check longs.json + the platform page)."
-  },
-  {
-    "run_id": "post-stub-20260811-175135@2026-08-11T17:51:35",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-stub-20260811-175135",
-    "started_at": "2026-08-11T17:51:35",
-    "ended_at": "2026-08-11T17:51:35",
-    "duration_s": 0.0,
-    "status": "done",
-    "stub": "ok",
-    "dry_run": false,
-    "requested": "stub",
-    "summary": {
-      "platform": "rumble",
-      "status": "posted",
-      "url": "stub://ok",
-      "title": "stub"
-    },
-    "error": null
-  },
-  {
-    "run_id": "post-lf-20260811-last-year-facebook-2@2026-08-11T17:45:24",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-lf-20260811-last-year-facebook-2",
-    "started_at": "2026-08-11T17:45:24",
-    "ended_at": "2026-08-11T18:10:16",
-    "duration_s": 1491.9,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "lf-20260811-last-year:facebook",
-    "summary": {
-      "platform": "facebook",
-      "status": "posted",
-      "url": "https://www.facebook.com/reel/1061963633187163/",
-      "title": "Last Year's Meme Coins Were Supposed to Be Dead: Then We 94X'd TUT",
-      "posted_at": "2026-08-11T22:10:15.322Z"
-    },
-    "error": null
-  },
-  {
-    "run_id": "post-t-20260810-freaking-early-not-degen-bitchute@2026-08-11T18:10:39",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-t-20260810-freaking-early-not-degen-bitchute",
-    "started_at": "2026-08-11T18:10:39",
-    "ended_at": "2026-08-11T18:13:45",
-    "duration_s": 186.0,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "t-20260810-freaking-early-not-degen:bitchute",
-    "summary": {
-      "platform": "bitchute",
-      "status": "posted_unverified",
-      "url": "https://www.bitchute.com/content",
-      "title": "That's the Degen Mindset. I Don't Trade Like That.",
-      "posted_at": "2026-08-11T22:13:44.703Z"
-    },
-    "error": null
-  },
-  {
-    "run_id": "intake-johnny-20260812@2026-08-12T08:48:25",
-    "lane": 1,
-    "lane_name": "intake",
-    "thread": "intake-johnny-20260812",
-    "started_at": "2026-08-12T08:48:25",
-    "ended_at": "2026-08-12T09:20:30",
-    "duration_s": 1925.2,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "johnny",
-    "summary": {
-      "slug": "johnny",
-      "sandbox": false,
-      "master_duration_s": 3858.233008,
-      "master_mbps": 0.65,
-      "longform": {
-        "duration_s": 2611.5,
-        "removed_s": 1246.69,
-        "mbps": 0.8,
-        "thumb_staged": false,
-        "queued_id": "lf-20260812-johnny",
-        "already_present": false,
-        "queue_total": 45
-      },
-      "vertical": {
-        "geometry": "1080x1920 SAR 1:1",
-        "duration_s": 3858.2
-      },
-      "words": 8748,
-      "segments": 560,
-      "glossary": "none",
-      "flags": []
-    },
-    "error": null
-  },
-  {
-    "run_id": "post-lf-20260812-johnny-bitchute@2026-08-12T09:22:24",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-lf-20260812-johnny-bitchute",
-    "started_at": "2026-08-12T09:22:24",
-    "ended_at": "2026-08-12T09:29:05",
-    "duration_s": 401.7,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "lf-20260812-johnny:bitchute",
-    "summary": {
-      "platform": "bitchute",
-      "status": "posted",
-      "url": "https://www.bitchute.com/video/mkw5jWIq6hdI/",
-      "title": "I Pushed The Johnny Cash Button: Get Your Dry Powder Ready",
-      "posted_at": "2026-08-12T13:28:04.344Z"
-    },
-    "error": null
-  },
-  {
-    "run_id": "post-lf-20260812-johnny-rumble@2026-08-12T09:29:15",
-    "lane": 7,
-    "lane_name": "post",
-    "thread": "post-lf-20260812-johnny-rumble",
-    "started_at": "2026-08-12T09:29:15",
-    "ended_at": "2026-08-12T09:36:04",
-    "duration_s": 409.8,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "lf-20260812-johnny:rumble",
-    "summary": {
-      "platform": "rumble",
-      "status": "posted",
-      "url": "https://rumble.com/v7e2hco-i-pushed-the-johnny-cash-button-get-your-dry-powder-ready.html",
-      "title": "I Pushed The Johnny Cash Button: Get Your Dry Powder Ready",
-      "posted_at": "2026-08-12T13:35:03.510Z"
-    },
-    "error": null
-  },
-  {
-    "run_id": "repurpose-johnny-20260812@2026-08-12T09:22:09",
-    "lane": 6,
-    "lane_name": "repurpose",
-    "thread": "repurpose-johnny-20260812",
-    "started_at": "2026-08-12T09:22:09",
-    "ended_at": "2026-08-12T09:57:31",
-    "duration_s": 2122.3,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "johnny",
-    "summary": {
-      "batch": "johnny",
-      "sandbox": false,
-      "fake_gen": false,
-      "date": "2026-08-12",
-      "images": {
-        "planned": 11,
-        "generated": 11,
-        "skipped": 0,
-        "verified": 11
-      },
-      "entries_added": 10,
-      "entries_skipped": 0,
-      "queues": {
-        "x-tweets.json": {
-          "planned": 6,
-          "queue_total": 330
-        },
-        "x-threads.json": {
-          "planned": 1,
-          "queue_total": 83
-        },
-        "yt-posts.json": {
-          "planned": 1,
-          "queue_total": 151
-        },
-        "yt-text-polls.json": {
-          "planned": 2,
-          "queue_total": 100
-        }
-      },
-      "lint": "clean",
-      "registered": "johnny"
-    },
-    "error": null
-  },
-  {
-    "run_id": "cut-johnny-20260812@2026-08-12T09:57:54",
-    "lane": 2,
-    "lane_name": "cut",
-    "thread": "cut-johnny-20260812",
-    "started_at": "2026-08-12T09:57:54",
-    "ended_at": "2026-08-12T09:58:49",
-    "duration_s": 54.4,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "johnny",
-    "summary": {
-      "batch": "johnny",
-      "sandbox": false,
-      "clips": 2,
-      "total_s": 176.6,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\johnny\\dashboard.html",
-      "registered": true,
-      "clip_durations": {
-        "johnny-cash-button": 89.407,
-        "duck-vs-peanut": 87.191
-      }
-    },
-    "error": null
-  },
-  {
-    "run_id": "tighten-johnny-20260812@2026-08-12T11:16:20",
-    "lane": 3,
-    "lane_name": "tighten",
-    "thread": "tighten-johnny-20260812",
-    "started_at": "2026-08-12T11:16:20",
-    "ended_at": "2026-08-12T11:18:17",
-    "duration_s": 116.3,
-    "status": "done",
-    "stub": "",
-    "dry_run": false,
-    "requested": "johnny",
-    "summary": {
-      "batch": "johnny",
-      "sandbox": false,
-      "clips": 2,
-      "total_s": 118.1,
-      "min_sil": 0.25,
-      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\johnny\\dashboard.html",
-      "clip_durations": {
-        "johnny-cash-button": 62.8,
-        "duck-vs-peanut": 55.331
-      }
-    },
-    "error": null
-  },
-  {
     "run_id": "finish-johnny-20260812@2026-08-12T12:00:32",
     "lane": 4,
     "lane_name": "finish",
@@ -17455,6 +15563,2671 @@
       "url": "https://www.bitchute.com/video/ffBYyh5mc6wy/",
       "title": "You Took a 10x. Then Everybody Called It a Scam.",
       "posted_at": "2026-10-16T04:32:59.752Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-was-i-right-20261017@2026-10-17T00:07:54",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-was-i-right-20261017",
+    "started_at": "2026-10-17T00:07:54",
+    "ended_at": "2026-10-17T00:27:44",
+    "duration_s": 1190.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "was-i-right",
+    "summary": {
+      "slug": "was-i-right",
+      "sandbox": false,
+      "master_duration_s": 2874.466667,
+      "master_mbps": 0.64,
+      "longform": "skipped",
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 2874.5
+      },
+      "words": 5826,
+      "segments": 744,
+      "glossary": "Kaspa:8",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-was-i-right-20261017@2026-10-17T00:37:14",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-was-i-right-20261017",
+    "started_at": "2026-10-17T00:37:14",
+    "ended_at": "2026-10-17T00:37:42",
+    "duration_s": 28.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "was-i-right",
+    "summary": {
+      "batch": "was-i-right",
+      "sandbox": false,
+      "clips": 3,
+      "total_s": 106.6,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\was-i-right\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "crypto-winter-called-to-the-day": 35.695,
+        "turbo-toshi-easy-10x": 34.071,
+        "zombies-wont-let-october-go-red": 36.815
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-was-i-right@2026-10-17T00:07:50",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-was-i-right",
+    "started_at": "2026-10-17T00:07:50",
+    "ended_at": "2026-10-17T00:37:42",
+    "duration_s": 1791.9,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "was-i-right",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "was-i-right",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-17T00:27:45"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-17T00:27:46"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 43168",
+          "at": "2026-10-17T00:27:46"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "3 clips planned",
+          "at": "2026-10-17T00:37:11"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "3 clips cut",
+          "at": "2026-10-17T00:37:42"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-was-i-right-20261017@2026-10-17T01:09:59",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-was-i-right-20261017",
+    "started_at": "2026-10-17T01:09:59",
+    "ended_at": "2026-10-17T01:11:02",
+    "duration_s": 63.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "was-i-right",
+    "summary": {
+      "batch": "was-i-right",
+      "sandbox": false,
+      "clips": 3,
+      "total_s": 71.5,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\was-i-right\\dashboard.html",
+      "clip_durations": {
+        "crypto-winter-called-to-the-day": 22.979,
+        "turbo-toshi-easy-10x": 22.207,
+        "zombies-wont-let-october-go-red": 26.271
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-was-i-right-20261017@2026-10-17T01:11:06",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-was-i-right-20261017",
+    "started_at": "2026-10-17T01:11:06",
+    "ended_at": "2026-10-17T01:12:28",
+    "duration_s": 82.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "was-i-right",
+    "summary": {
+      "batch": "was-i-right",
+      "sandbox": false,
+      "clips": 3,
+      "total_s": 71.5,
+      "filler_cuts": 0,
+      "words": {
+        "crypto-winter-called-to-the-day": 69,
+        "turbo-toshi-easy-10x": 85,
+        "zombies-wont-let-october-go-red": 96
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\was-i-right\\dashboard.html",
+      "clip_durations": {
+        "crypto-winter-called-to-the-day": 22.98,
+        "turbo-toshi-easy-10x": 22.21,
+        "zombies-wont-let-october-go-red": 26.27
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-was-i-right-20261017@2026-10-17T00:42:28",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-was-i-right-20261017",
+    "started_at": "2026-10-17T00:42:28",
+    "ended_at": "2026-10-17T01:20:06",
+    "duration_s": 2257.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "was-i-right",
+    "summary": {
+      "batch": "was-i-right",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-10-17",
+      "images": {
+        "planned": 9,
+        "generated": 9,
+        "skipped": 0,
+        "verified": 9
+      },
+      "entries_added": 13,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 485
+        },
+        "x-threads.json": {
+          "planned": 1,
+          "queue_total": 121
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 91
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 144
+        },
+        "ig-single-image.json": {
+          "planned": 3,
+          "queue_total": 164
+        }
+      },
+      "lint": "clean",
+      "registered": "was-i-right",
+      "partial": false,
+      "held": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "lane3-was-i-right@2026-10-17T00:27:49",
+    "lane": 8,
+    "lane_name": "lane3",
+    "thread": "lane3-was-i-right",
+    "started_at": "2026-10-17T00:27:49",
+    "ended_at": "2026-10-17T01:25:39",
+    "duration_s": 3470.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "was-i-right",
+      "resume": true
+    },
+    "summary": {
+      "batch": "was-i-right",
+      "steps": {
+        "draft": {
+          "status": "ran",
+          "detail": "plan validated",
+          "at": "2026-10-17T00:42:25"
+        },
+        "repurpose": {
+          "status": "ran",
+          "detail": "{\"x-tweets\": 0, \"x-threads\": 0, \"x-polls\": 0, \"yt-posts\": 0, \"yt-text-polls\": 0, \"ig-single-image\": 0}",
+          "at": "2026-10-17T01:20:06"
+        },
+        "visual_qa": {
+          "status": "ran",
+          "detail": "report written",
+          "at": "2026-10-17T01:25:39"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-was-i-right@2026-10-17T01:01:38",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-was-i-right",
+    "started_at": "2026-10-17T01:01:38",
+    "ended_at": "2026-10-17T03:09:07",
+    "duration_s": 7649.0,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "was-i-right",
+      "until": "",
+      "approve": [
+        "4b",
+        "2nd"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "was-i-right",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-17T00:27:45"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-17T00:27:46"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 43168",
+          "at": "2026-10-17T00:27:46"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "3 clips planned",
+          "at": "2026-10-17T00:37:11"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "3 clips cut",
+          "at": "2026-10-17T00:37:42"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-17T01:01:38"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "3 clips planned from 1 part(s)",
+          "at": "2026-10-17T01:09:56"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-17T01:11:03"
+        },
+        "gate_2nd": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-17T01:11:03"
+        },
+        "lane2_finish": {
+          "status": "ran",
+          "detail": "6-transcribed, render-assets staged",
+          "at": "2026-10-17T01:12:29"
+        },
+        "lane2_build": {
+          "status": "failed",
+          "detail": "clips not 7-built PASS after the builders: ['turbo-toshi-easy-10x']",
+          "at": "2026-10-17T03:09:06"
+        }
+      },
+      "summary": null
+    },
+    "error": "clips not 7-built PASS after the builders: ['turbo-toshi-easy-10x']"
+  },
+  {
+    "run_id": "publish-was-i-right-20261017@2026-10-17T03:59:56",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-was-i-right-20261017",
+    "started_at": "2026-10-17T03:59:56",
+    "ended_at": "2026-10-17T03:59:58",
+    "duration_s": 1.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "was-i-right",
+    "summary": {
+      "batch": "was-i-right",
+      "sandbox": false,
+      "date": "2026-10-17",
+      "clips": 3,
+      "added": 3,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\was-i-right-2026-10-17",
+      "queue_total": 275,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-was-i-right@2026-10-17T03:09:30",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-was-i-right",
+    "started_at": "2026-10-17T03:09:30",
+    "ended_at": "2026-10-17T03:59:58",
+    "duration_s": 3028.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "was-i-right",
+      "until": "",
+      "approve": [
+        "4b",
+        "2nd"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "was-i-right",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-10-17T03:09:30"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-17T03:09:30"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already done",
+          "at": "2026-10-17T03:09:30"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-10-17T03:09:30"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-10-17T03:09:30"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-10-17T01:01:38",
+          "at": "2026-10-17T03:09:30"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-10-17T03:09:30"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-17T03:09:30"
+        },
+        "gate_2nd": {
+          "status": "skipped",
+          "detail": "approved 2026-10-17T01:11:03",
+          "at": "2026-10-17T03:09:30"
+        },
+        "lane2_finish": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-17T03:09:30"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "1 built here, 0 awaited; all 3 7-built PASS",
+          "at": "2026-10-17T03:58:06"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 3 clip(s) under date 2026-10-17; 3 queued total",
+          "at": "2026-10-17T03:59:58"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-17T03:59:58"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-17T03:59:58"
+        }
+      },
+      "summary": {
+        "batch": "was-i-right",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "published",
+        "lane2_clips": 3,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": ""
+      }
+    },
+    "error": "clips not 7-built PASS after the builders: ['turbo-toshi-easy-10x']"
+  },
+  {
+    "run_id": "intake-ai-takeover-20261019@2026-10-19T22:15:15",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-ai-takeover-20261019",
+    "started_at": "2026-10-19T22:15:15",
+    "ended_at": "2026-10-19T22:39:43",
+    "duration_s": 1468.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "ai-takeover",
+    "summary": {
+      "slug": "ai-takeover",
+      "sandbox": false,
+      "master_duration_s": 3014.666667,
+      "master_mbps": 0.64,
+      "longform": {
+        "duration_s": 2005.2,
+        "removed_s": 1009.49,
+        "mbps": 0.8,
+        "thumb_staged": false,
+        "queued_id": "lf-20261019-ai-takeover",
+        "already_present": false,
+        "queue_total": 63
+      },
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 3014.7
+      },
+      "words": 6518,
+      "segments": 417,
+      "glossary": "Kaspa:8 TAO:4",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-ai-takeover-20261019@2026-10-19T22:52:02",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-ai-takeover-20261019",
+    "started_at": "2026-10-19T22:52:02",
+    "ended_at": "2026-10-19T22:52:38",
+    "duration_s": 36.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "ai-takeover",
+    "summary": {
+      "batch": "ai-takeover",
+      "sandbox": false,
+      "clips": 3,
+      "total_s": 138.0,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\ai-takeover\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "robots-wont-need-the-people": 57.711,
+        "no-cycle-top-kaspa-tao-multipliers": 56.239,
+        "zombies-front-ran-october-bottom": 24.063
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-ai-takeover@2026-10-19T22:15:12",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-ai-takeover",
+    "started_at": "2026-10-19T22:15:12",
+    "ended_at": "2026-10-19T22:52:38",
+    "duration_s": 2246.3,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "ai-takeover",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "ai-takeover",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-19T22:39:44"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-19T22:39:44"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 15876",
+          "at": "2026-10-19T22:39:44"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "3 clips planned",
+          "at": "2026-10-19T22:51:58"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "3 clips cut",
+          "at": "2026-10-19T22:52:38"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-ai-takeover-scream-restore@2026-10-19T22:58:10",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-ai-takeover-scream-restore",
+    "started_at": "2026-10-19T22:58:10",
+    "ended_at": "2026-10-19T22:58:50",
+    "duration_s": 40.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "ai-takeover",
+    "summary": {
+      "batch": "ai-takeover",
+      "sandbox": false,
+      "clips": 3,
+      "total_s": 148.2,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\ai-takeover\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "robots-wont-need-the-people": 57.711,
+        "no-cycle-top-kaspa-tao-multipliers": 66.391,
+        "zombies-front-ran-october-bottom": 24.063
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-ai-takeover-20261019@2026-10-19T23:06:40",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-ai-takeover-20261019",
+    "started_at": "2026-10-19T23:06:40",
+    "ended_at": "2026-10-19T23:07:48",
+    "duration_s": 68.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "ai-takeover",
+    "summary": {
+      "batch": "ai-takeover",
+      "sandbox": false,
+      "clips": 2,
+      "total_s": 79.0,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\ai-takeover\\dashboard.html",
+      "clip_durations": {
+        "robots-wont-need-the-people": 31.755,
+        "no-cycle-top-kaspa-tao-multipliers": 47.24
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-ai-takeover@2026-10-19T22:59:22",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-ai-takeover",
+    "started_at": "2026-10-19T22:59:22",
+    "ended_at": "2026-10-19T23:07:49",
+    "duration_s": 506.4,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "ai-takeover",
+      "until": "",
+      "approve": [
+        "4b"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "ai-takeover",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-19T22:39:44"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-19T22:39:44"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 15876",
+          "at": "2026-10-19T22:39:44"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "3 clips planned",
+          "at": "2026-10-19T22:51:58"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "3 clips cut",
+          "at": "2026-10-19T22:52:38"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [3]",
+          "at": "2026-10-19T22:59:22"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "2 clips planned from 1 part(s)",
+          "at": "2026-10-19T23:06:37"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-19T23:07:49"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-ai-takeover-20261019@2026-10-19T23:09:00",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-ai-takeover-20261019",
+    "started_at": "2026-10-19T23:09:00",
+    "ended_at": "2026-10-19T23:10:29",
+    "duration_s": 89.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "ai-takeover",
+    "summary": {
+      "batch": "ai-takeover",
+      "sandbox": false,
+      "clips": 2,
+      "total_s": 79.0,
+      "filler_cuts": 0,
+      "words": {
+        "robots-wont-need-the-people": 125,
+        "no-cycle-top-kaspa-tao-multipliers": 127
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\ai-takeover\\dashboard.html",
+      "clip_durations": {
+        "robots-wont-need-the-people": 31.76,
+        "no-cycle-top-kaspa-tao-multipliers": 47.24
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-ai-takeover-20261019@2026-10-19T22:54:07",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-ai-takeover-20261019",
+    "started_at": "2026-10-19T22:54:07",
+    "ended_at": "2026-10-20T00:15:40",
+    "duration_s": 4892.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "ai-takeover",
+    "summary": {
+      "batch": "ai-takeover",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-10-19",
+      "images": {
+        "planned": 18,
+        "generated": 18,
+        "skipped": 0,
+        "verified": 18
+      },
+      "entries_added": 15,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 491
+        },
+        "x-threads.json": {
+          "planned": 2,
+          "queue_total": 123
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 92
+        },
+        "yt-posts.json": {
+          "planned": 2,
+          "queue_total": 225
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 146
+        },
+        "ig-single-image.json": {
+          "planned": 2,
+          "queue_total": 166
+        }
+      },
+      "lint": "clean",
+      "registered": "ai-takeover",
+      "partial": false,
+      "held": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "lane3-ai-takeover@2026-10-19T22:39:47",
+    "lane": 8,
+    "lane_name": "lane3",
+    "thread": "lane3-ai-takeover",
+    "started_at": "2026-10-19T22:39:47",
+    "ended_at": "2026-10-20T00:24:53",
+    "duration_s": 6305.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "ai-takeover",
+      "resume": true
+    },
+    "summary": {
+      "batch": "ai-takeover",
+      "steps": {
+        "draft": {
+          "status": "ran",
+          "detail": "plan validated",
+          "at": "2026-10-19T22:54:02"
+        },
+        "repurpose": {
+          "status": "ran",
+          "detail": "{\"x-tweets\": 0, \"x-threads\": 0, \"x-polls\": 0, \"yt-posts\": 0, \"yt-text-polls\": 0, \"ig-single-image\": 0}",
+          "at": "2026-10-20T00:15:40"
+        },
+        "visual_qa": {
+          "status": "ran",
+          "detail": "report written",
+          "at": "2026-10-20T00:24:53"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-ai-takeover-20261019@2026-10-20T00:56:05",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-ai-takeover-20261019",
+    "started_at": "2026-10-20T00:56:05",
+    "ended_at": "2026-10-20T00:56:06",
+    "duration_s": 1.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "ai-takeover",
+    "summary": {
+      "batch": "ai-takeover",
+      "sandbox": false,
+      "date": "2026-10-19",
+      "clips": 1,
+      "added": 1,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\ai-takeover-2026-10-19",
+      "queue_total": 276,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "publish-ai-takeover-20261019@2026-10-20T07:25:46",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-ai-takeover-20261019",
+    "started_at": "2026-10-20T07:25:46",
+    "ended_at": "2026-10-20T07:25:48",
+    "duration_s": 1.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "ai-takeover",
+    "summary": {
+      "batch": "ai-takeover",
+      "sandbox": false,
+      "date": "2026-10-19",
+      "clips": 2,
+      "added": 1,
+      "skipped": 1,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\ai-takeover-2026-10-19",
+      "queue_total": 277,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-ai-takeover@2026-10-20T06:29:35",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-ai-takeover",
+    "started_at": "2026-10-20T06:29:35",
+    "ended_at": "2026-10-20T07:25:48",
+    "duration_s": 3373.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "ai-takeover",
+      "until": "",
+      "approve": [
+        "2nd"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "ai-takeover",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-19T22:39:44"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-19T22:39:44"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 15876",
+          "at": "2026-10-19T22:39:44"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "3 clips planned",
+          "at": "2026-10-19T22:51:58"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "3 clips cut",
+          "at": "2026-10-19T22:52:38"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [3]",
+          "at": "2026-10-19T22:59:22"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "2 clips planned from 1 part(s)",
+          "at": "2026-10-19T23:06:37"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-19T23:07:49"
+        },
+        "gate_2nd": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-20T06:29:35"
+        },
+        "lane2_finish": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-20T06:29:35"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "1 built here, 0 awaited; all 2 7-built PASS",
+          "at": "2026-10-20T07:24:50"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 1 clip(s) under date 2026-10-19; 2 queued total",
+          "at": "2026-10-20T07:25:48"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-20T07:25:48"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-20T07:25:48"
+        }
+      },
+      "summary": {
+        "batch": "ai-takeover",
+        "lane1_longform": "queued",
+        "lane2_shorts": "published",
+        "lane2_clips": 2,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": ""
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-at-20261019-robots-wont-need-the-people-bitchute@2026-10-20T08:00:07",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-at-20261019-robots-wont-need-the-people-bitchute",
+    "started_at": "2026-10-20T08:00:07",
+    "ended_at": "2026-10-20T08:02:59",
+    "duration_s": 172.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "at-20261019-robots-wont-need-the-people:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/lnIpruZptjaj/",
+      "title": "They Always Needed the People. Now They Won't Need Anybody.",
+      "posted_at": "2026-10-20T12:02:58.216Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261019-ai-takeover-bitchute@2026-10-20T09:41:11",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261019-ai-takeover-bitchute",
+    "started_at": "2026-10-20T09:41:11",
+    "ended_at": "2026-10-20T09:46:19",
+    "duration_s": 307.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261019-ai-takeover:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/r28Z51ep6SmG/",
+      "title": "AI Is Taking the Jobs. Invest While You Still Have a Paycheck",
+      "posted_at": "2026-10-20T13:45:18.130Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261019-ai-takeover-rumble@2026-10-20T09:46:27",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261019-ai-takeover-rumble",
+    "started_at": "2026-10-20T09:46:27",
+    "ended_at": "2026-10-20T09:52:00",
+    "duration_s": 332.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261019-ai-takeover:rumble",
+    "summary": {
+      "platform": "rumble",
+      "status": "posted",
+      "url": "https://rumble.com/v7h4tga-ai-is-taking-the-jobs.-invest-while-you-still-have-a-paycheck.html",
+      "title": "AI Is Taking the Jobs. Invest While You Still Have a Paycheck",
+      "posted_at": "2026-10-20T13:50:59.428Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261019-ai-takeover-facebook@2026-10-20T09:52:14",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261019-ai-takeover-facebook",
+    "started_at": "2026-10-20T09:52:14",
+    "ended_at": "2026-10-20T10:22:04",
+    "duration_s": 1789.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261019-ai-takeover:facebook",
+    "summary": {
+      "platform": "facebook",
+      "status": "posted",
+      "url": "https://www.facebook.com/reel/1660811865675475/",
+      "title": "AI Is Taking the Jobs. Invest While You Still Have a Paycheck",
+      "posted_at": "2026-10-20T14:22:03.307Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-at-20261019-no-cycle-top-kaspa-tao-multipliers-bitchute@2026-10-20T10:25:50",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-at-20261019-no-cycle-top-kaspa-tao-multipliers-bitchute",
+    "started_at": "2026-10-20T10:25:50",
+    "ended_at": "2026-10-20T10:29:42",
+    "duration_s": 232.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "at-20261019-no-cycle-top-kaspa-tao-multipliers:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/ZlGVtphxmKuu/",
+      "title": "No Cycle Top in 2025. The Multipliers Are in Just Two Coins.",
+      "posted_at": "2026-10-20T14:29:41.484Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-kcc20-live-20261021@2026-10-21T21:16:26",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-kcc20-live-20261021",
+    "started_at": "2026-10-21T21:16:26",
+    "ended_at": "2026-10-21T21:29:31",
+    "duration_s": 785.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kcc20-live",
+    "summary": {
+      "slug": "kcc20-live",
+      "sandbox": false,
+      "master_duration_s": 3938.866667,
+      "master_mbps": 0.63,
+      "longform": "skipped",
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 3938.9
+      },
+      "words": 704,
+      "segments": 1063,
+      "glossary": "none",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-kcc20-live@2026-10-21T22:07:53",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kcc20-live",
+    "started_at": "2026-10-21T22:07:53",
+    "ended_at": "2026-10-21T22:07:53",
+    "duration_s": 0.1,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kcc20-live",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kcc20-live",
+      "steps": {
+        "intake": {
+          "status": "failed",
+          "detail": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph",
+          "at": "2026-10-21T22:07:53"
+        }
+      },
+      "summary": null
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "intake-kcc20-live-20261021@2026-10-21T22:08:46",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-kcc20-live-20261021",
+    "started_at": "2026-10-21T22:08:46",
+    "ended_at": "2026-10-21T22:28:30",
+    "duration_s": 1183.5,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kcc20-live",
+    "summary": {
+      "slug": "kcc20-live",
+      "sandbox": false,
+      "master_duration_s": 3938.866667,
+      "master_mbps": 0.63,
+      "longform": "skipped",
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 3938.9
+      },
+      "words": 7271,
+      "segments": 623,
+      "glossary": "Kaspa:16",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-kcc20-live-20261021@2026-10-21T22:44:13",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-kcc20-live-20261021",
+    "started_at": "2026-10-21T22:44:13",
+    "ended_at": "2026-10-21T22:45:29",
+    "duration_s": 75.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kcc20-live",
+    "summary": {
+      "batch": "kcc20-live",
+      "sandbox": false,
+      "clips": 5,
+      "total_s": 296.5,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\kcc20-live\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "kcc20-final-kaspa-tokens-on-l1": 60.239,
+        "last-chance-to-own-assets": 58.255,
+        "ai-replaces-engineers-this-year": 62.351,
+        "asteroid-mining-crushes-gold": 55.887,
+        "longevity-social-security-collapses": 59.751
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-kcc20-live@2026-10-21T22:08:44",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kcc20-live",
+    "started_at": "2026-10-21T22:08:44",
+    "ended_at": "2026-10-21T22:45:30",
+    "duration_s": 2205.9,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kcc20-live",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kcc20-live",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-21T22:28:30"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-21T22:28:30"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 38920",
+          "at": "2026-10-21T22:28:31"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "5 clips planned",
+          "at": "2026-10-21T22:44:10"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "5 clips cut",
+          "at": "2026-10-21T22:45:30"
+        }
+      },
+      "summary": null
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "repurpose-kcc20-live-20261021@2026-10-21T22:50:50",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-kcc20-live-20261021",
+    "started_at": "2026-10-21T22:50:50",
+    "ended_at": "2026-10-21T23:54:11",
+    "duration_s": 3801.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kcc20-live",
+    "summary": {
+      "batch": "kcc20-live",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-10-21",
+      "images": {
+        "planned": 16,
+        "generated": 16,
+        "skipped": 0,
+        "verified": 16
+      },
+      "entries_added": 13,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 6,
+          "queue_total": 497
+        },
+        "x-threads.json": {
+          "planned": 2,
+          "queue_total": 125
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 93
+        },
+        "yt-posts.json": {
+          "planned": 2,
+          "queue_total": 232
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 148
+        }
+      },
+      "lint": "clean",
+      "registered": "kcc20-live",
+      "partial": false,
+      "held": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "lane3-kcc20-live@2026-10-21T22:28:35",
+    "lane": 8,
+    "lane_name": "lane3",
+    "thread": "lane3-kcc20-live",
+    "started_at": "2026-10-21T22:28:35",
+    "ended_at": "2026-10-22T00:01:47",
+    "duration_s": 5592.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kcc20-live",
+      "resume": true
+    },
+    "summary": {
+      "batch": "kcc20-live",
+      "steps": {
+        "draft": {
+          "status": "ran",
+          "detail": "plan validated",
+          "at": "2026-10-21T22:50:47"
+        },
+        "repurpose": {
+          "status": "ran",
+          "detail": "{\"x-tweets\": 0, \"x-threads\": 0, \"x-polls\": 0, \"yt-posts\": 0, \"yt-text-polls\": 0, \"ig-single-image\": 0}",
+          "at": "2026-10-21T23:54:11"
+        },
+        "visual_qa": {
+          "status": "ran",
+          "detail": "report written",
+          "at": "2026-10-22T00:01:47"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-kcc20-live-20261022@2026-10-22T07:25:38",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-kcc20-live-20261022",
+    "started_at": "2026-10-22T07:25:38",
+    "ended_at": "2026-10-22T07:28:05",
+    "duration_s": 146.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kcc20-live",
+    "summary": {
+      "batch": "kcc20-live",
+      "sandbox": false,
+      "clips": 5,
+      "total_s": 176.9,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\kcc20-live\\dashboard.html",
+      "clip_durations": {
+        "kcc20-final-kaspa-tokens-on-l1": 47.224,
+        "last-chance-to-own-assets": 31.516,
+        "ai-replaces-engineers-this-year": 33.423,
+        "asteroid-mining-crushes-gold": 29.2,
+        "longevity-social-security-collapses": 35.563
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-kcc20-live@2026-10-22T06:49:07",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kcc20-live",
+    "started_at": "2026-10-22T06:49:07",
+    "ended_at": "2026-10-22T07:28:05",
+    "duration_s": 2338.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kcc20-live",
+      "until": "2nd",
+      "approve": [
+        "4b"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "kcc20-live",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-21T22:28:30"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-21T22:28:30"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 38920",
+          "at": "2026-10-21T22:28:31"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "5 clips planned",
+          "at": "2026-10-21T22:44:10"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "5 clips cut",
+          "at": "2026-10-21T22:45:30"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-22T06:49:07"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "5 clips planned from 2 part(s)",
+          "at": "2026-10-22T07:25:33"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-22T07:28:05"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-22T07:28:05"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-22T07:28:05"
+        }
+      },
+      "summary": {
+        "batch": "kcc20-live",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "5B-desilenced",
+        "lane2_clips": 5,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "2nd"
+      }
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "batch-kcc20-live@2026-10-22T07:33:12",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kcc20-live",
+    "started_at": "2026-10-22T07:33:12",
+    "ended_at": "2026-10-22T07:33:12",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kcc20-live",
+      "until": "",
+      "approve": [
+        "2nd"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "kcc20-live",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-21T22:28:30"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-21T22:28:30"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 38920",
+          "at": "2026-10-21T22:28:31"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "5 clips planned",
+          "at": "2026-10-21T22:44:10"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "5 clips cut",
+          "at": "2026-10-21T22:45:30"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-22T06:49:07"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "5 clips planned from 2 part(s)",
+          "at": "2026-10-22T07:25:33"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-22T07:28:05"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-22T07:28:05"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-22T07:28:05"
+        }
+      },
+      "summary": {
+        "batch": "kcc20-live",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "5B-desilenced",
+        "lane2_clips": 5,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "2nd"
+      }
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "finish-kcc20-live-20261022@2026-10-22T07:35:34",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-kcc20-live-20261022",
+    "started_at": "2026-10-22T07:35:34",
+    "ended_at": "2026-10-22T07:37:30",
+    "duration_s": 116.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kcc20-live",
+    "summary": {
+      "batch": "kcc20-live",
+      "sandbox": false,
+      "clips": 5,
+      "total_s": 176.9,
+      "filler_cuts": 0,
+      "words": {
+        "kcc20-final-kaspa-tokens-on-l1": 122,
+        "last-chance-to-own-assets": 124,
+        "ai-replaces-engineers-this-year": 119,
+        "asteroid-mining-crushes-gold": 100,
+        "longevity-social-security-collapses": 132
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\kcc20-live\\dashboard.html",
+      "clip_durations": {
+        "kcc20-final-kaspa-tokens-on-l1": 47.22,
+        "last-chance-to-own-assets": 31.52,
+        "ai-replaces-engineers-this-year": 33.42,
+        "asteroid-mining-crushes-gold": 29.2,
+        "longevity-social-security-collapses": 35.56
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-kcc20-live@2026-10-22T07:35:31",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kcc20-live",
+    "started_at": "2026-10-22T07:35:31",
+    "ended_at": "2026-10-22T10:42:04",
+    "duration_s": 11192.5,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kcc20-live",
+      "until": "publish",
+      "approve": [
+        "4b",
+        "2nd"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kcc20-live",
+      "steps": null,
+      "summary": null
+    },
+    "error": "orchestrator crashed: FileNotFoundError(2, 'The system cannot find the file specified', None, 2, None)"
+  },
+  {
+    "run_id": "batch-kcc20-live@2026-10-22T10:43:07",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kcc20-live",
+    "started_at": "2026-10-22T10:43:07",
+    "ended_at": "2026-10-22T10:43:07",
+    "duration_s": 0.3,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kcc20-live",
+      "until": "publish",
+      "approve": [
+        "4b",
+        "2nd"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kcc20-live",
+      "steps": null,
+      "summary": null
+    },
+    "error": "orchestrator crashed: FileNotFoundError(2, 'The system cannot find the file specified', None, 2, None)"
+  },
+  {
+    "run_id": "publish-kcc20-live-20261022@2026-10-22T11:45:01",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-kcc20-live-20261022",
+    "started_at": "2026-10-22T11:45:01",
+    "ended_at": "2026-10-22T11:45:05",
+    "duration_s": 3.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kcc20-live",
+    "summary": {
+      "batch": "kcc20-live",
+      "sandbox": false,
+      "date": "2026-10-22",
+      "clips": 5,
+      "added": 5,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\kcc20-live-2026-10-22",
+      "queue_total": 282,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-kcc20-live@2026-10-22T10:45:07",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-kcc20-live",
+    "started_at": "2026-10-22T10:45:07",
+    "ended_at": "2026-10-22T11:45:05",
+    "duration_s": 3598.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "kcc20-live",
+      "until": "publish",
+      "approve": [
+        "4b",
+        "2nd"
+      ],
+      "resume": false
+    },
+    "summary": {
+      "batch": "kcc20-live",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-10-22T10:45:07"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-22T10:45:07"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already done",
+          "at": "2026-10-22T10:45:07"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-10-22T10:45:07"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-10-22T10:45:07"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-10-22T06:49:07",
+          "at": "2026-10-22T10:45:07"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-10-22T10:45:07"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-22T10:45:07"
+        },
+        "gate_2nd": {
+          "status": "skipped",
+          "detail": "approved 2026-10-22T07:35:31",
+          "at": "2026-10-22T10:45:07"
+        },
+        "lane2_finish": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-22T10:45:07"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "1 built here, 0 awaited; all 5 7-built PASS",
+          "at": "2026-10-22T11:42:44"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 5 clip(s) under date 2026-10-22; 5 queued total",
+          "at": "2026-10-22T11:45:05"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-22T11:45:05"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-22T11:45:05"
+        }
+      },
+      "summary": {
+        "batch": "kcc20-live",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "published",
+        "lane2_clips": 5,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "publish"
+      }
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "post-kl-20261022-kcc20-final-kaspa-tokens-on-l1-bitchute@2026-10-22T12:25:29",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-kl-20261022-kcc20-final-kaspa-tokens-on-l1-bitchute",
+    "started_at": "2026-10-22T12:25:29",
+    "ended_at": "2026-10-22T12:29:21",
+    "duration_s": 232.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kl-20261022-kcc20-final-kaspa-tokens-on-l1:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/kwJbfghHR9Li/",
+      "title": "KCC20 Is Final. Time to Stop Saying KCC20.",
+      "posted_at": "2026-10-22T16:29:20.276Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261022-kcc20-bitchute@2026-10-22T13:23:52",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261022-kcc20-bitchute",
+    "started_at": "2026-10-22T13:23:52",
+    "ended_at": "2026-10-22T13:28:42",
+    "duration_s": 289.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261022-kcc20:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/yata3G0HGGBa/",
+      "title": "FINALLY! Kaspa Is Becoming Unstoppable!",
+      "posted_at": "2026-10-22T17:27:41.201Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261022-kcc20-rumble@2026-10-22T13:28:58",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261022-kcc20-rumble",
+    "started_at": "2026-10-22T13:28:58",
+    "ended_at": "2026-10-22T13:34:18",
+    "duration_s": 319.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261022-kcc20:rumble",
+    "summary": {
+      "platform": "rumble",
+      "status": "posted",
+      "url": "https://rumble.com/v7h8oly-finally-kaspa-is-becoming-unstoppable.html",
+      "title": "FINALLY! Kaspa Is Becoming Unstoppable!",
+      "posted_at": "2026-10-22T17:33:17.052Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-lf-20261022-kcc20-facebook@2026-10-22T13:34:34",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-lf-20261022-kcc20-facebook",
+    "started_at": "2026-10-22T13:34:34",
+    "ended_at": "2026-10-22T13:47:09",
+    "duration_s": 754.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "lf-20261022-kcc20:facebook",
+    "summary": {
+      "platform": "facebook",
+      "status": "posted",
+      "url": "https://www.facebook.com/reel/1880528599705637/",
+      "title": "FINALLY! Kaspa Is Becoming Unstoppable!",
+      "posted_at": "2026-10-22T17:47:08.657Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-kl-20261022-last-chance-to-own-assets-bitchute@2026-10-22T13:51:04",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-kl-20261022-last-chance-to-own-assets-bitchute",
+    "started_at": "2026-10-22T13:51:04",
+    "ended_at": "2026-10-22T13:55:52",
+    "duration_s": 287.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kl-20261022-last-chance-to-own-assets:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted_unverified",
+      "url": "https://www.bitchute.com/video/JbKpe4XwOzTY/",
+      "title": "Why This Could Be Your Last Chance to Own Assets",
+      "posted_at": "2026-10-22T17:55:50.948Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-kl-20261022-ai-replaces-engineers-this-year-bitchute@2026-10-23T09:59:49",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-kl-20261022-ai-replaces-engineers-this-year-bitchute",
+    "started_at": "2026-10-23T09:59:49",
+    "ended_at": "2026-10-23T10:04:59",
+    "duration_s": 309.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kl-20261022-ai-replaces-engineers-this-year:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted_unverified",
+      "url": "https://www.bitchute.com/video/usmZhYnkVw6E/",
+      "title": "If Anthropic's Engineers Say AI Codes Better Than Them... What About You?",
+      "posted_at": "2026-10-23T14:04:58.546Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-kl-20261022-asteroid-mining-crushes-gold-bitchute@2026-10-23T11:09:40",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-kl-20261022-asteroid-mining-crushes-gold-bitchute",
+    "started_at": "2026-10-23T11:09:40",
+    "ended_at": "2026-10-23T11:12:27",
+    "duration_s": 167.3,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kl-20261022-asteroid-mining-crushes-gold:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/CXjxiQ7C7mUD/",
+      "title": "Asteroid Mining Is Coming for Gold. Guess Who's Out of Luck.",
+      "posted_at": "2026-10-23T15:12:26.150Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "post-kl-20261022-longevity-social-security-collapses-bitchute@2026-10-24T08:26:03",
+    "lane": 7,
+    "lane_name": "post",
+    "thread": "post-kl-20261022-longevity-social-security-collapses-bitchute",
+    "started_at": "2026-10-24T08:26:03",
+    "ended_at": "2026-10-24T08:28:59",
+    "duration_s": 176.1,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "kl-20261022-longevity-social-security-collapses:bitchute",
+    "summary": {
+      "platform": "bitchute",
+      "status": "posted",
+      "url": "https://www.bitchute.com/video/F5O5Ixi7S0tk/",
+      "title": "Longevity Escape Velocity in 5 Years... Then What Happens to Social Security?",
+      "posted_at": "2026-10-24T12:28:58.178Z"
+    },
+    "error": null
+  },
+  {
+    "run_id": "intake-best-time-20261027@2026-10-27T03:47:41",
+    "lane": 1,
+    "lane_name": "intake",
+    "thread": "intake-best-time-20261027",
+    "started_at": "2026-10-27T03:47:41",
+    "ended_at": "2026-10-27T04:02:40",
+    "duration_s": 899.0,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "best-time",
+    "summary": {
+      "slug": "best-time",
+      "sandbox": false,
+      "master_duration_s": 2664.466667,
+      "master_mbps": 0.65,
+      "longform": "skipped",
+      "vertical": {
+        "geometry": "1080x1920 SAR 1:1",
+        "duration_s": 2664.5
+      },
+      "words": 6239,
+      "segments": 411,
+      "glossary": "Kaspa:1",
+      "flags": []
+    },
+    "error": null
+  },
+  {
+    "run_id": "cut-best-time-20261027@2026-10-27T04:13:27",
+    "lane": 2,
+    "lane_name": "cut",
+    "thread": "cut-best-time-20261027",
+    "started_at": "2026-10-27T04:13:27",
+    "ended_at": "2026-10-27T04:14:13",
+    "duration_s": 46.7,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "best-time",
+    "summary": {
+      "batch": "best-time",
+      "sandbox": false,
+      "clips": 3,
+      "total_s": 171.5,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\best-time\\dashboard.html",
+      "registered": true,
+      "clip_durations": {
+        "nobody-writes-code-anymore-every-job-next": 57.551,
+        "ton-billion-users-at-1-26": 55.671,
+        "last-chance-to-get-ahead-buy-assets-now": 58.327
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-best-time@2026-10-27T03:47:39",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-best-time",
+    "started_at": "2026-10-27T03:47:39",
+    "ended_at": "2026-10-27T04:14:14",
+    "duration_s": 1595.2,
+    "status": "waiting",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "best-time",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "best-time",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-27T04:02:41"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-27T04:02:41"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 50108",
+          "at": "2026-10-27T04:02:41"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "3 clips planned",
+          "at": "2026-10-27T04:13:22"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "3 clips cut",
+          "at": "2026-10-27T04:14:14"
+        }
+      },
+      "summary": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "repurpose-best-time-20261027@2026-10-27T04:14:14",
+    "lane": 6,
+    "lane_name": "repurpose",
+    "thread": "repurpose-best-time-20261027",
+    "started_at": "2026-10-27T04:14:14",
+    "ended_at": "2026-10-27T04:34:08",
+    "duration_s": 1193.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "best-time",
+    "summary": {
+      "batch": "best-time",
+      "sandbox": false,
+      "fake_gen": false,
+      "date": "2026-10-27",
+      "images": {
+        "planned": 5,
+        "generated": 5,
+        "skipped": 0,
+        "verified": 5
+      },
+      "entries_added": 8,
+      "entries_skipped": 0,
+      "queues": {
+        "x-tweets.json": {
+          "planned": 5,
+          "queue_total": 502
+        },
+        "x-polls.json": {
+          "planned": 1,
+          "queue_total": 94
+        },
+        "yt-text-polls.json": {
+          "planned": 2,
+          "queue_total": 150
+        }
+      },
+      "lint": "clean",
+      "registered": "best-time",
+      "partial": false,
+      "held": null
+    },
+    "error": null
+  },
+  {
+    "run_id": "lane3-best-time@2026-10-27T04:02:44",
+    "lane": 8,
+    "lane_name": "lane3",
+    "thread": "lane3-best-time",
+    "started_at": "2026-10-27T04:02:44",
+    "ended_at": "2026-10-27T04:36:38",
+    "duration_s": 2034.9,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "best-time",
+      "resume": true
+    },
+    "summary": {
+      "batch": "best-time",
+      "steps": {
+        "draft": {
+          "status": "ran",
+          "detail": "plan validated",
+          "at": "2026-10-27T04:14:06"
+        },
+        "repurpose": {
+          "status": "ran",
+          "detail": "{\"x-tweets\": 0, \"x-threads\": 0, \"x-polls\": 0, \"yt-posts\": 0, \"yt-text-polls\": 0, \"ig-single-image\": 0}",
+          "at": "2026-10-27T04:34:08"
+        },
+        "visual_qa": {
+          "status": "ran",
+          "detail": "report written",
+          "at": "2026-10-27T04:36:38"
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "tighten-best-time-20261027@2026-10-27T08:36:28",
+    "lane": 3,
+    "lane_name": "tighten",
+    "thread": "tighten-best-time-20261027",
+    "started_at": "2026-10-27T08:36:28",
+    "ended_at": "2026-10-27T08:37:19",
+    "duration_s": 51.2,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "best-time",
+    "summary": {
+      "batch": "best-time",
+      "sandbox": false,
+      "clips": 2,
+      "total_s": 79.6,
+      "min_sil": 0.25,
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\best-time\\dashboard.html",
+      "clip_durations": {
+        "ton-billion-users-at-1-26": 37.4,
+        "last-chance-to-get-ahead-buy-assets-now": 42.211
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "finish-best-time-20261027@2026-10-27T08:37:22",
+    "lane": 4,
+    "lane_name": "finish",
+    "thread": "finish-best-time-20261027",
+    "started_at": "2026-10-27T08:37:22",
+    "ended_at": "2026-10-27T08:38:59",
+    "duration_s": 96.8,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "best-time",
+    "summary": {
+      "batch": "best-time",
+      "sandbox": false,
+      "clips": 2,
+      "total_s": 79.6,
+      "filler_cuts": 0,
+      "words": {
+        "ton-billion-users-at-1-26": 132,
+        "last-chance-to-get-ahead-buy-assets-now": 151
+      },
+      "dashboard": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\shorts\\best-time\\dashboard.html",
+      "clip_durations": {
+        "ton-billion-users-at-1-26": 37.4,
+        "last-chance-to-get-ahead-buy-assets-now": 42.21
+      }
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-best-time@2026-10-27T08:32:58",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-best-time",
+    "started_at": "2026-10-27T08:32:58",
+    "ended_at": "2026-10-27T09:29:58",
+    "duration_s": 3420.2,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "best-time",
+      "until": "build",
+      "approve": [
+        "4b",
+        "2nd"
+      ],
+      "resume": true
+    },
+    "summary": {
+      "batch": "best-time",
+      "steps": {
+        "intake": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-27T04:02:41"
+        },
+        "register": {
+          "status": "ran",
+          "detail": "batches.json entry created (+briefs)",
+          "at": "2026-10-27T04:02:41"
+        },
+        "launch_lane3": {
+          "status": "ran",
+          "detail": "pid 50108",
+          "at": "2026-10-27T04:02:41"
+        },
+        "lane2_select": {
+          "status": "ran",
+          "detail": "3 clips planned",
+          "at": "2026-10-27T04:13:22"
+        },
+        "lane2_cut": {
+          "status": "ran",
+          "detail": "3 clips cut",
+          "at": "2026-10-27T04:14:14"
+        },
+        "gate_4b": {
+          "status": "ran",
+          "detail": "approved via flag; deleted [1]",
+          "at": "2026-10-27T08:32:58"
+        },
+        "lane2_tighten_plan": {
+          "status": "ran",
+          "detail": "2 clips planned from 1 part(s)",
+          "at": "2026-10-27T08:36:24"
+        },
+        "lane2_tighten": {
+          "status": "ran",
+          "detail": "5B-desilenced",
+          "at": "2026-10-27T08:37:19"
+        },
+        "gate_2nd": {
+          "status": "ran",
+          "detail": "approved via flag; deleted []",
+          "at": "2026-10-27T08:37:19"
+        },
+        "lane2_finish": {
+          "status": "ran",
+          "detail": "6-transcribed, render-assets staged",
+          "at": "2026-10-27T08:39:00"
+        },
+        "lane2_build": {
+          "status": "failed",
+          "detail": "clips not 7-built PASS after the builders: ['last-chance-to-get-ahead-buy-assets-now']",
+          "at": "2026-10-27T09:29:58"
+        }
+      },
+      "summary": null
+    },
+    "error": "clips not 7-built PASS after the builders: ['last-chance-to-get-ahead-buy-assets-now']"
+  },
+  {
+    "run_id": "batch-best-time@2026-10-27T09:30:14",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-best-time",
+    "started_at": "2026-10-27T09:30:14",
+    "ended_at": "2026-10-27T09:30:14",
+    "duration_s": 0.0,
+    "status": "failed",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "best-time",
+      "until": "build",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "best-time",
+      "steps": {
+        "intake": {
+          "status": "failed",
+          "detail": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph",
+          "at": "2026-10-27T09:30:14"
+        }
+      },
+      "summary": null
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "batch-best-time@2026-10-27T09:50:23",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-best-time",
+    "started_at": "2026-10-27T09:50:23",
+    "ended_at": "2026-10-27T10:24:31",
+    "duration_s": 2048.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "best-time",
+      "until": "build",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "best-time",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-10-27T09:50:23"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-27T09:50:23"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already done",
+          "at": "2026-10-27T09:50:23"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-10-27T09:50:23"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-10-27T09:50:23"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-10-27T08:32:58",
+          "at": "2026-10-27T09:50:23"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-10-27T09:50:23"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-27T09:50:23"
+        },
+        "gate_2nd": {
+          "status": "skipped",
+          "detail": "approved 2026-10-27T08:37:19",
+          "at": "2026-10-27T09:50:23"
+        },
+        "lane2_finish": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-27T09:50:23"
+        },
+        "lane2_build": {
+          "status": "ran",
+          "detail": "1 built here, 0 awaited; all 2 7-built PASS",
+          "at": "2026-10-27T10:24:31"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-27T10:24:31"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-27T10:24:31"
+        }
+      },
+      "summary": {
+        "batch": "best-time",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "built",
+        "lane2_clips": 2,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": "build"
+      }
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "publish-best-time-20261027@2026-10-27T10:38:03",
+    "lane": 5,
+    "lane_name": "publish",
+    "thread": "publish-best-time-20261027",
+    "started_at": "2026-10-27T10:38:03",
+    "ended_at": "2026-10-27T10:38:05",
+    "duration_s": 1.6,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": "best-time",
+    "summary": {
+      "batch": "best-time",
+      "sandbox": false,
+      "date": "2026-10-27",
+      "clips": 2,
+      "added": 2,
+      "skipped": 0,
+      "dest_dir": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\shorts\\best-time-2026-10-27",
+      "queue_total": 284,
+      "lint": "clean"
+    },
+    "error": null
+  },
+  {
+    "run_id": "batch-best-time@2026-10-27T10:36:48",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-best-time",
+    "started_at": "2026-10-27T10:36:48",
+    "ended_at": "2026-10-27T10:38:05",
+    "duration_s": 77.4,
+    "status": "done",
+    "stub": "",
+    "dry_run": false,
+    "requested": {
+      "batch": "best-time",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "best-time",
+      "steps": {
+        "intake": {
+          "status": "skipped",
+          "detail": "artifacts on disk",
+          "at": "2026-10-27T10:36:48"
+        },
+        "register": {
+          "status": "skipped",
+          "detail": "already registered",
+          "at": "2026-10-27T10:36:48"
+        },
+        "launch_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 already done",
+          "at": "2026-10-27T10:36:48"
+        },
+        "lane2_select": {
+          "status": "skipped",
+          "detail": "clip-plan.json on disk",
+          "at": "2026-10-27T10:36:48"
+        },
+        "lane2_cut": {
+          "status": "skipped",
+          "detail": "progress.json past cut",
+          "at": "2026-10-27T10:36:48"
+        },
+        "gate_4b": {
+          "status": "skipped",
+          "detail": "approved 2026-10-27T08:32:58",
+          "at": "2026-10-27T10:36:48"
+        },
+        "lane2_tighten_plan": {
+          "status": "skipped",
+          "detail": "tighten-plan.json on disk",
+          "at": "2026-10-27T10:36:48"
+        },
+        "lane2_tighten": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-27T10:36:48"
+        },
+        "gate_2nd": {
+          "status": "skipped",
+          "detail": "approved 2026-10-27T08:37:19",
+          "at": "2026-10-27T10:36:48"
+        },
+        "lane2_finish": {
+          "status": "skipped",
+          "detail": "phase 6-transcribed",
+          "at": "2026-10-27T10:36:48"
+        },
+        "lane2_build": {
+          "status": "skipped",
+          "detail": "every surviving clip is 7-built PASS",
+          "at": "2026-10-27T10:36:48"
+        },
+        "lane2_publish": {
+          "status": "ran",
+          "detail": "staged 2 clip(s) under date 2026-10-27; 2 queued total",
+          "at": "2026-10-27T10:38:05"
+        },
+        "join_lane3": {
+          "status": "skipped",
+          "detail": "lane 3 done (waited 0 min)",
+          "at": "2026-10-27T10:38:05"
+        },
+        "verify_batch": {
+          "status": "ran",
+          "detail": "",
+          "at": "2026-10-27T10:38:05"
+        }
+      },
+      "summary": {
+        "batch": "best-time",
+        "lane1_longform": "skipped",
+        "lane2_shorts": "published",
+        "lane2_clips": 2,
+        "lane3_repurpose": "done",
+        "lane3_queued": {
+          "x-tweets": 0,
+          "x-threads": 0,
+          "x-polls": 0,
+          "yt-posts": 0,
+          "yt-text-polls": 0,
+          "ig-single-image": 0
+        },
+        "until": ""
+      }
+    },
+    "error": "intake artifacts are missing and no --source was given; pass the recording path to run the intake graph"
+  },
+  {
+    "run_id": "batch-stub-20261027-164225@2026-10-27T16:42:26",
+    "lane": 9,
+    "lane_name": "batch",
+    "thread": "batch-stub-20261027-164225",
+    "started_at": "2026-10-27T16:42:26",
+    "ended_at": "2026-10-27T16:42:26",
+    "duration_s": 0.1,
+    "status": "done",
+    "stub": "ok",
+    "dry_run": false,
+    "requested": {
+      "batch": "stub-batch",
+      "until": "",
+      "approve": [],
+      "resume": false
+    },
+    "summary": {
+      "batch": "stub-batch",
+      "steps": {
+        "intake": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "register": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "launch_lane3": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "lane2_select": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "lane2_cut": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "gate_4b": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "lane2_tighten_plan": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "lane2_tighten": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "gate_2nd": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "lane2_finish": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "lane2_build": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "lane2_publish": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "join_lane3": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        },
+        "verify_batch": {
+          "status": "stub",
+          "detail": "",
+          "at": "2026-10-27T16:42:26"
+        }
+      },
+      "summary": {
+        "stub": true
+      }
     },
     "error": null
   }

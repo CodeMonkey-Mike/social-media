@@ -163,6 +163,30 @@ def lint(proj: Path, duration=None, say_min=0.8):
                     break
             if not ok:
                 fails.append(f"EDIT-PLAN.md: {m.group(1)} title card at {ta:.2f}s needs a [CARD] event carrying an [IMPACT]")
+    # receipt treatment (Mike, 2026-10-21; longform-edited.md section 7): every receipt IN row names pan / highlight / push,
+    # decided per receipt; zero pans on a receipt-heavy video means the camera move was never considered
+    lines, receipts, pans = text.splitlines(), 0, 0
+    for i, ln in enumerate(lines):
+        e = EVENT_RE.match(ln)
+        if not (e and "[RECEIPT]" in ln and re.search(r"\bIN\b", ln)):
+            continue
+        block = ln
+        for nxt in lines[i + 1:]:
+            if not nxt.startswith((" ", "\t")) or EVENT_RE.match(nxt):
+                break
+            block += " " + nxt
+        receipts += 1
+        tm = re.search(r"treatment:\s*(pan|highlight|push)\b", block)
+        if not tm:
+            fails.append(f"EDIT-PLAN.md: receipt row without `treatment: pan|highlight|push` (decide per receipt, "
+                         f"longform-edited.md section 7): {ln[:70]!r}")
+        elif tm.group(1) == "pan":
+            pans += 1
+            if "[MOTION]" not in block:
+                fails.append(f"EDIT-PLAN.md: `treatment: pan` receipt names no `[MOTION] lib:<id>` move: {ln[:70]!r}")
+    if receipts >= 3 and pans == 0:
+        warns.append(f"EDIT-PLAN.md: {receipts} receipts and not one `treatment: pan`: is there no article title, repo page "
+                     "or long document shown as an object? (Mike 2026-10-21: case by case, but never never)")
     # CUE-SHEET
     for sec in CUE_SECTIONS:
         if not re.search(r"^##\s+" + re.escape(sec), cue, re.M):

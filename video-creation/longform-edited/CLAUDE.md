@@ -76,6 +76,9 @@ do NOT render-then-explain-it-as-an-open-item.
      then broken up into spotlight containers. (Added 2026-07-10 after the Clarity Act container swing cost a
      full day of rework.)
 7. **video-qa.md passes on 10s CHUNKS (motion + audio), not stills**, before you call it done or hand it off.
+8. **B-ROLL MOTION on the FULL render (Mike, 2026-10-17):** `python skills/video-qa/check_broll_motion.py <render> <comp.tsx>
+   <assets>` must print `BROLL-MOTION PASS` (verify_final enforces it). Render ONLY through `scripts/render_comp.py`, which is CHUNKED + WATCHED since 2026-10-27 (`video-creation/skills/chunked-render/`: 1-minute resumable chunks, stall kill + retry, desktop notifications; the run takes the run-queue turn) (3 GB
+   OffthreadVideo cache since 2026-10-20, a memory trial: 4 GB passed, a motion FAIL at 3 GB = back to 4 GB; the old 400 MB cap made ~60% of b-roll frames stale repeats over a long render, invisible in chunks).
 
 ## ⛔ A NEW VIDEO IS DRIVEN BY THE GRAPH (2026-09-17) — never by hand-running the phases
 `python video-creation/longform-edited/graph/run.py longform --project <name> [--brief-file <md>]
@@ -154,8 +157,8 @@ reference files inside the same folder, no orphan files at the `skills/` level (
   `--face-max N`); the longform graph runs it in its `screenplay` node, `--fix` repairs the mechanical class.
 - **`skills/vertical-repurpose/vertical-repurpose.md`** — turning an APPROVED 16:9 longform-edited video into a vertical
   (1080×1920) cut: native-vertical assets (article/receipt screenshots captured in MOBILE VIEW, not
-  landscape-cropped), the vertical comp, the split-and-concat render (works around the ~frame-14436 FFmpeg
-  stitch handle-ceiling — memory `reference_remotion_stitch_handle_ceiling`), reuse of the 16:9 mix, and
+  landscape-cropped), the vertical comp, ONE chunked render (the old split-and-concat for the ~frame-14436 stitch
+  ceiling is retired: `video-creation/skills/chunked-render/`), reuse of the 16:9 mix, and
   vertical-specific QA (concat seam + framing + audio parity). The content is locked; the vertical is a
   reframe, not a re-edit.
 - **`skills/longform-to-short/longform-to-short.md`** — condensing an APPROVED vertical cut into a **~40s short** with a

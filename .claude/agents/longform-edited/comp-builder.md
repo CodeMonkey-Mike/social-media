@@ -42,7 +42,14 @@ You operate inside the `social-media` repo (working directory is the repo root).
 2. `video-creation/longform-edited/CLAUDE.md` ⛔ PRE-RENDER GATE (items 1-7) and `longform-edited.md`'s
    "a DRAFT is the FULL build at low bitrate" hard rule: every documented element is IN the draft.
 3. The blueprint, which the comp is built TO, row for row: `EDIT-PLAN.md` (time-ordered event log; every
-   `[COVER-kind]`, `[TRANSITION]`, `[PUNCH-IN]`, `[LIGHTLEAK]`, `[CAPTION]`, `[CARD]` row is a thing you wire),
+   `[COVER-kind]`, `[TRANSITION]`, `[PUNCH-IN]`, `[LIGHTLEAK]`, `[CAPTION]`, `[CARD]`, `[KT-PANEL]`, `[KT-POP]` row is a thing you wire;
+   the `[KT-*]` rows are the kinetic-text devices of the EFFECTS library (`video-creation/assets/effects/library.json`, the
+   2023 motion + sound + graphics pairs; placement rules `skills/overlays/overlays.md` section 2): build them to the device row's
+   numbers with the video's palette + display font, above the cover layer and below the captions, by IMPORTING the shared
+   engines from `src/effects/kinetic-text/` (`lint_comp_imports.py` whitelists `./effects/*`; a device with no engine yet is
+   built in the project's own file to the row's numbers, never copied from another project's comp) into the project's own
+   `<Project>Charts.tsx` (never an import across projects); their `[WHOOSH]` / `[ACCENT]` sounds are NOT in the comp, `mix_music.py`
+   mixes them from the log),
    `[PUNCH-IN]` + `[LIGHTLEAK]` share a frame ON a desilencer join (`spine/jumpcuts-final.json`): a hard ~15-20% scale step
    (alternating in / back out across a window's joins) and the LIBRARY leak named by the matching `punch-leak` row
    (`lib:lightleaks-*`, the `LightLeaks` engine, screen blend, under the captions); the Remotion-synthetic `<LightLeak>` is
@@ -96,8 +103,12 @@ You operate inside the `social-media` repo (working directory is the repo root).
 3. Disk hygiene before the full render: free space check, delete stale `%TEMP%/remotion-*` bundles.
 4. Full DRAFT render, once, with the §11 command: output `media/<project>/_previews/<project>-draft-v1.mp4`
    (bump N if v1 exists), `--video-bitrate=200k --public-dir <assets> --concurrency=4
-   --offthreadvideo-cache-size-in-bytes=419430400 --timeout=120000 --log=verbose`, log teed to
-   `_previews/<project>-draft-render.log`. Then verify: duration == paused spine (±0.3 s), fps 30, audio present.
+   --offthreadvideo-cache-size-in-bytes=3221225472 --timeout=120000 --log=verbose` (3 GB since 2026-10-20), log teed to
+   `_previews/<project>-draft-render.log` (render it with `scripts/render_comp.py --mode draft`, which owns these flags).
+   NEVER the old 400 MB cache cap: over a long render it made ~60% of the b-roll frames stale repeats (tao-detailed
+   2026-10-17). Then verify: duration == paused spine (±0.3 s), fps 30, audio present, and
+   `python skills/video-qa/check_broll_motion.py <draft> <comp.tsx> <assets>` prints BROLL-MOTION PASS.
+   24 / 25 fps clips play frame-for-frame: `VID_FPS` map + `playbackRate={30 / fps}` (comp-build.md section 11).
 
 ## VERTICAL mode (the optional 9:16 lane, `run.py vertical`; rules: `skills/vertical-repurpose/vertical-repurpose.md`)
 When the brief names `<Project>Vertical`, you build the 1080x1920 twin of your own 16:9 comp: same spine, same `DUR`,
@@ -109,7 +120,7 @@ receipts fill the 1080 width one spotlight at a time; the animated chart re-laid
 `*.vertical.spec.md`; b-roll fills the portrait frame. The render's public dir is `assets/vertical/` ONLY (lean).
 Smoke-test stills from ONE prebuilt bundle (`npx remotion bundle ... --public-dir assets/vertical --out-dir build-<slug>`
 then `npx remotion still build-<slug> <Comp> out.png --frame=N`): every content type AND every FACE window, and LOOK
-at them. The graph renders the full vertical itself (in frame-range parts over the stitch ceiling).
+at them. The graph renders the full vertical itself (one chunked render_comp.py call).
 
 ## SHORT mode (the optional short lane, `run.py short`; rules: `skills/longform-to-short/longform-to-short.md` §5 Stage B)
 When the brief names `<Project>Short`, you assemble a 1080x1920 short from the lane's span INTERMEDIATES (the brief's work

@@ -18,7 +18,7 @@ Picks up the first short where `platforms.x.status === "pending"`, posts it as a
 
 ## Chrome profile
 
-Uses `xbot-profile`. Shared with `post-tweet.js`, `post-thread.js`, `post-x-poll.js` — don't run two at once. **Chrome must be fully closed before running.**
+Uses `xbot-profile`. Shared with `post-tweet.js`, `post_thread.py`, `post-x-poll.js` — don't run two at once. **Chrome must be fully closed before running.**
 
 ## Timing constants
 
@@ -31,7 +31,7 @@ Uses `xbot-profile`. Shared with `post-tweet.js`, `post-thread.js`, `post-x-poll
 
 ## Key implementation details
 
-- Uses the same React-controlled composer as `post-thread.js`. Caption is entered via `page.keyboard.type()` (real keystrokes — `fill()` breaks React state).
+- Uses the same React-controlled composer as `post_thread.py`. Caption is entered via `page.keyboard.type()` (real keystrokes — `fill()` breaks React state).
 - Video is attached via the hidden `input[type="file"]` **inside the modal composer** (NOT the inline home-feed one — use `.first()` after the modal opens).
 - **Caption length:** the script warns if caption > 280 chars but posts anyway. X likely truncates. Either auto-truncate to ~250 chars with an ellipsis, or maintain a separate `caption_x` field in `shorts.json`. Sharing one caption across all 7 platforms is wrong for X.
 

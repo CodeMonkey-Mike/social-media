@@ -1,6 +1,0 @@
-[0:a]atrim=start_sample=0:end_sample=17265150,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.008,afade=t=out:st=391.49200:d=0.008[k0];
-[0:a]atrim=start_sample=17406270:end_sample=21207690,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.008,afade=t=out:st=86.19200:d=0.008[k1];
-[0:a]atrim=start_sample=21337049,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.008,afade=t=out:st=274.56969:d=0.008[k2];
-[1:a]aresample=44100,atrim=start_sample=1323:end_sample=142443,asetpts=PTS-STARTPTS,volume=1.4dB,afade=t=in:st=0:d=0.008,afade=t=out:st=3.19200:d=0.008[p0];
-[2:a]aresample=44100,atrim=start_sample=1469:end_sample=130828,asetpts=PTS-STARTPTS,volume=1.6dB,afade=t=in:st=0:d=0.008,afade=t=out:st=2.92531:d=0.008[p1];
-[k0][p0][k1][p1][k2]concat=n=5:v=0:a=1[outa]

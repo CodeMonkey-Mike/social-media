@@ -3,7 +3,7 @@
 # Also finalizes A (the validated test clip) at 1.2x. Raw clips kept as toccata-<X>-raw.mp3.
 set -u
 cd "$(dirname "$0")"
-AUDIO="/c/Users/mnede/Documents/Claude/social-media/video-creation/vertical-ai-persona/Yuli y Ana/media/kaspa-toccata/audio"
+AUDIO="/c/Users/mnede/Documents/Claude/social-media/video-creation/yuli-y-ana/media/kaspa-toccata/audio"
 
 speed() { ffmpeg -y -i "$1" -filter:a "atempo=1.20" -b:a 192k "$2" 2>/dev/null; }
 

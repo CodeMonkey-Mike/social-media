@@ -31,15 +31,21 @@ if (scriptPath) {
   console.log('WARNING: no SCRIPT.md passed — running WITHOUT the script-match gate. Prefer: node _batch-generate.js <chunks.json> <audioDir> <SCRIPT.md>');
 }
 
+// The selected-voice label lives in the LEFT composer panel (2026-10 layout: "Selected Voice" card,
+// x<480) — the older layout had it bottom-right (x>820, y>650). History cards (x~500) also print voice
+// names, so geometry matters. Card text is lowercase in the DOM (CSS-uppercased) -> compare case-insensitively.
 const readVoice = (page) => page.evaluate(() => {
+  let fallback = '?';
   for (const e of document.querySelectorAll('*')) {
     const t = (e.innerText || '').trim();
-    if (/^(MIKE-CLONE|YULI-1|ANA-2|MIKE)$/.test(t) && e.children.length === 0) {
+    if (/^(MIKE-CLONE|YULI-1|ANA-2|MIKE)$/i.test(t) && e.children.length === 0) {
       const r = e.getBoundingClientRect();
-      if (r.left > 820 && r.top > 650) return t;
+      if (r.width < 4 || r.height < 4) continue;
+      if (r.left < 480 && r.top < 650) return t.toUpperCase();   // left composer panel = the selected voice
+      if (r.left > 820 && r.top > 650) fallback = t.toUpperCase(); // legacy layout
     }
   }
-  return '?';
+  return fallback;
 });
 
 (async () => {
@@ -72,16 +78,26 @@ const readVoice = (page) => page.evaluate(() => {
     });
     if (!clicked) { manifest.push({ file: c.file, ok: false, err: 'no-generate-btn' }); fs.writeFileSync(audioDir + '/_manifest.json', JSON.stringify(manifest, null, 1)); continue; }
 
+    // 2026-10-17: the Audio page no longer mounts an <audio> element for a fresh generation; the result
+    // appears as a NEW History card (LI row, newest on top) and its mp3 only loads when the row's Play is
+    // clicked. So: wait for the row count to grow, click the top row's Play, capture the cloudfront mp3.
+    const countRows = () => page.evaluate(() => [...document.querySelectorAll('li')].filter(li => { const r = li.getBoundingClientRect(); return r.width > 300 && r.height > 50 && r.height < 130 && li.querySelector('button[aria-label="Play"]'); }).length);
+    const rowsBefore = await countRows();
     let url = null;
     for (let i = 0; i < 70; i++) {
       await page.waitForTimeout(1000);
-      // network-captured
       for (const u of seen) { if (!before.has(u)) { url = u; break; } }
       if (url) break;
-      // DOM fallback (the reliable path — the generated <audio> src)
-      const now = await page.evaluate(() => [...document.querySelectorAll('audio,source')].map(a => a.src || a.currentSrc).filter(Boolean));
-      for (const u of now) { if (/\.mp3/i.test(u) && !before.has(u)) { url = u; break; } }
-      if (url) break;
+      if ((await countRows()) > rowsBefore) {
+        await page.waitForTimeout(1500);
+        const top = await page.evaluate(() => { const rows = [...document.querySelectorAll('li')].filter(li => { const r = li.getBoundingClientRect(); return r.width > 300 && r.height > 50 && r.height < 130 && li.querySelector('button[aria-label="Play"]'); }).sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top); const b = rows[0] && rows[0].querySelector('button[aria-label="Play"]'); if (!b) return null; const r = b.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
+        if (top) {
+          await page.mouse.click(top.x, top.y);
+          for (let k = 0; k < 24 && !url; k++) { await page.waitForTimeout(250); for (const u of seen) { if (!before.has(u)) { url = u; break; } } }
+          await page.mouse.click(top.x, top.y); // pause
+          if (url) break;
+        }
+      }
     }
     if (!url) { manifest.push({ file: c.file, ok: false, err: 'timeout' }); }
     else { seen.add(url); manifest.push({ file: c.file, ok: true, url }); }

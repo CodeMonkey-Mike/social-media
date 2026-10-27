@@ -1,0 +1,512 @@
+{
+  "batch": "kcc20-live",
+  "date": "2026-10-21",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/kcc20-live LOW BPS VERTICAL/kcc20-live LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-10-21",
+  "brief": "Do not add any images to the Instagram post queue: no Instagram image posts or carousels, generate no images for Instagram. Add exactly 4 YT quizzes, each a different question on a different topic from the stream.",
+  "fact_check": [
+    {
+      "claim": "'KCC1, KCC2, and KCC20 are now final. Meaning they are ready for full adoption across the ecosystem... we invite Kaspa builders to join the public KCC channel' (transcript, Mike reading the announcement)",
+      "verdict": "verified verbatim and current: the KCC Coordination Forum announced on October 21, 2026 that 'KCC-1, KCC-2 and KCC-20 are now Final, meaning they are ready for full adoption across the ecosystem' and invited builders to 'join the public KCC channel to ask questions, get support, discuss implementations'. KCC-1 is the covenant specification, KCC-2 the authority (authorization) specification, KCC-20 the application standard for fungible-token covenants; under KCC-0, Final requires test vectors plus at least one public implementation that passes them (reference implementation in Argent with generated SilverScript contracts), and finalization does not change consensus rules or force adoption. Copy uses the quoted sentence, 'test vectors exist and a public implementation already passes them', and 'the public KCC channel' (platform not named by the source; the transcript's 'telegram' is not asserted).",
+      "source": "crypto.news/kaspa-finalizes-kcc-native-token-app-standards/ (fetched 2026-10-22); tokenpost.com/news/technology/37279; kucoin.com/news/trends/KAS/6ad907f3c31ba80007326918; en.coinotag.com/kaspa-kcc-forum-finalizes-three-token-covenant-standards; github.com/kaspanet/kccs"
+    },
+    {
+      "claim": "'KCC20... is built on covenants... released like a month or two ago... tokens etched into the L1 rather than through a third party indexer like Kasplex' (transcript)",
+      "verdict": "verified in substance, dates made precise: covenants activated on Kaspa mainnet with the Toccata upgrade on June 30, 2026 (prior ledger, was-i-right), so copy says 'covenants went live with Toccata at the end of June' rather than 'a month or two ago'. KRC-20 token ownership 'isn't enforced directly by Kaspa consensus'; the off-chain Kasplex indexer reads KRC-20 instructions embedded in Kaspa transactions and determines ownership, while KCC-20 is 'a standard designed to put token rules into scripts enforced by the network itself'. Copy: 'a third-party indexer reading the chain', 'rules in covenants on the Kaspa L1 itself, enforced by the network'.",
+      "source": "news.bitcoin.com/security/kasplex-krc-20-indexer-signature-bypass-drains-two-token-pools/ (fetched 2026-10-22); repurpose/output/was-i-right-lane3-plan.json fact_check (Toccata, DAA 474,165,565); wiki.kaspa.org/en/Kasplex_KRC_20"
+    },
+    {
+      "claim": "The September 20 KRC-20 indexer exploit (NOT in the transcript; added as the verified illustration of the middleman risk Mike described)",
+      "verdict": "verified: on September 20, 2026 an attacker used an empty signature plus an OP_NOT after OP_ENDIF so the base chain accepted the script while the Kasplex indexer credited five forged KRC-20 transfers (about 186.4M ZEAL and 54.4B NACHO from a bridge custody address); the forged tokens were minted on the L2s and sold into Zealous Swap pools, which lost 94% to 99.6% of their KAS-side value; the article states Kaspa itself was not hacked and native KAS and Kaspa consensus were unaffected. Copy keeps it to one beat: 'a month ago that indexer got tricked into crediting forged transfers and two token pools got drained. Kaspa itself was never hacked', and the V4 slide 3 figures '94% to 99.6%'.",
+      "source": "news.bitcoin.com/security/kasplex-krc-20-indexer-signature-bypass-drains-two-token-pools/ (published 2026-09-21, fetched 2026-10-22)"
+    },
+    {
+      "claim": "'look who responded. Nacho the cat. Excited for our future on Kaspa. Who's with us? Migration to KCC20 is up next to be announced... the KRC20s have to migrate over to KCC20' (transcript, Mike reading a Nacho post)",
+      "verdict": "verified in the general form only: Bitcoin.com (September 21) reports Nacho the Kat 'says the community intends to move toward KCC-20'; a KuCoin item reports KaspaCom building a one-way bridge to move KRC20 and Kaspa L2 tokens onto KCC-20 (prior ledger). The exact post wording Mike read on stream is not indexed anywhere I could reach, so copy never quotes it and says 'Nacho the Kat already said the community is moving over to KCC-20' and 'the ecosystem is building the bridges'. 'Have to migrate' is softened to 'the migration is next'. Nacho is described as 'one of the OG KRC20s' (launched on KRC20 in 2024, named after Kaspa core dev Shai Wyborski's cat); 'biggest KRC20' is not claimed (NACHO market cap about $4M, CoinGecko).",
+      "source": "news.bitcoin.com (above); kucoin.com/news/insight/KAS/6ac9029f38a2640007935a9c; bitcointalk.org/index.php?topic=5499815.0; api.coingecko.com/api/v3/coins/markets?ids=nacho-the-kat (fetched 2026-10-22)"
+    },
+    {
+      "claim": "'demands for KRC20s were pretty high back in 2024'; KRC20 went live in 2024 (transcript)",
+      "verdict": "verified: KRC20 went live on Kaspa mainnet September 15, 2024 (prior ledger). Copy: 'Back in 2024 the demand for KRC20s was through the roof' (Mike's read) and the V4 slide 2 milestone 'KRC20 LIVE: SEPT 2024'.",
+      "source": "repurpose/output/was-i-right-lane3-plan.json fact_check; banklesstimes.com/articles/2024/10/22/kas-coin-spikes-as-krc20-tokens-and-kaspa-ecosystem-experience-rapid-growth/"
+    },
+    {
+      "claim": "'everything pumping, Kaspa especially pumping on the news' (transcript)",
+      "verdict": "verified and UPDATED to drafting time: $KAS $0.0385, +3.0% 24h, +5.7% 7d, -11.9% 30d, market cap $1.07B, rank 75, ATH $0.2074 (July 31, 2024) so the price is 81% under its ATH. Copy says 'about 3.9 cents this week, up on the news' / 'up on the week' and 'about 80% under its all-time high'; no exact percentage move is printed.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=kaspa (fetched 2026-10-22 02:34 UTC)"
+    },
+    {
+      "claim": "'Kasware wallet... the Ghost Wallet... I would imagine integration into OneKey... Uniswap... Phantom' (transcript)",
+      "verdict": "KasWare and Ghost Wallet are verified real Kaspa browser-extension wallets that handle KRC20; the OneKey / Uniswap / Phantom integrations are Mike's imagination ('I would imagine') and are not drafted. Copy keeps the wallet beat generic: 'open the wallet, select Kaspa as the network, swap'.",
+      "source": "chromeboard.com/extension/kasware-wallet-hklhheigdmpoolooomdihmhlpjjdbklf; extscope.org/extension/npeepgefdbcmlapenpeephmidkobghna"
+    },
+    {
+      "claim": "'U.S. officially finalizes crypto stablecoin regulations under the Genius Act' (transcript, reading a headline)",
+      "verdict": "verified and made precise: the OCC issued its final GENIUS Act rule on October 21, 2026, the first federal regulator to finish; both the rule and the Act take effect January 18, 2027; issuers must hold reserves at least equal to outstanding stablecoins and generally process redemptions within two business days; the ban on paying yield directly to holders stays (the proposed affiliate presumption was dropped). Copy: 'The OCC just finalized the GENIUS Act stablecoin rules: full reserves, redemptions within two business days, live January 18, 2027'. 'The US is shifting the dollar's backing from oil to the stablecoin' is Mike's own on-stream read, written as 'the way I see it'.",
+      "source": "theblock.co/news/regulation/2026-10-21-occ-final-rule-implementing-trump-signed-genius-act-421470; cointelegraph.com/news/occ-finalizes-genius-act-rules-stablecoin-issuers-custody; coindesk.com/policy/2026/10/21/occ-s-final-rule-to-start-fresh-in-weighing-stablecoin-rewards-against-genius-act-ban"
+    },
+    {
+      "claim": "'we have a hawkish Fed chair, Kevin Warsh... the entire market believes there's not going to be a rate hike... 86% chance that interest rates are not going to change... October 28... I think it's more likely than not that we're going to get a rate hike' (transcript)",
+      "verdict": "verified and UPDATED: the FOMC meets October 27-28, 2026 (target range 3.75% to 4.00% after Chair Warsh's September hike, a 12-0 vote); CME FedWatch on October 21 prices roughly 16% for a quarter-point hike and about 84% for a hold (17% on rateprobability.com), after a spike to about 41% to 44% on the hot September CPI (October 14) and a fall-back after Warsh declined to signal in Bangkok; CNBC ran 'Everyone expects the Fed to hold rates in October. Kevin Warsh could surprise us all' (October 16). Copy says 'about 84%' / 'about 84% of traders price a pause' and 'a chair who already hiked in September'. The hike call is Mike's own, in first person, with 'never financial advice' kept in the YT post.",
+      "source": "fxstreet.com/news/euro-weakens-below-11250-as-french-protests-and-fiscal-risks-weigh-202610210100; rateprobability.com/fed; cnbc.com/2026/10/16/kevin-warsh-fed-october-rate-hike-interest-rates-markets.html; finance.yahoo.com/economy/policy/articles/traders-warsh-42-chance-doing-082651946.html; schwab.com/learn/story/fomc-meeting; repurpose/output/was-i-right-lane3-plan.json fact_check (83.9% hold on Oct 16)"
+    },
+    {
+      "claim": "'we have a lot of bad inflation' (transcript); the hot CPI / PPI prints and the ISM prices index used in copy",
+      "verdict": "verified: September CPI (October 14) came in hot enough to swing hike odds to about 44% intraday; PPI (October 15) printed 6.3% y/y (prior ledger); the ISM Manufacturing Prices Index for September was 77.9%, up 6.8 points. Copy: 'Hot CPI, hot PPI, an ISM prices index at 77.9'.",
+      "source": "ismworld.org/supply-management-news-and-reports/reports/ism-pmi-reports/pmi/september/; repurpose/output/ai-takeover-lane3-plan.json fact_check (PPI 6.3%); admiralmarkets.com/analytics/traders-blog/fed-rate-decision-october-2026"
+    },
+    {
+      "claim": "'we're above 50 when it comes to the ISM PMI, so the economy is in expansionary territory' (transcript)",
+      "verdict": "verified: ISM Manufacturing PMI 54.5% for September 2026, the ninth consecutive month of expansion (0.1 point under August's 54.6%). Copy: 'ISM PMI at 54.5, nine months in a row' and quiz 4.",
+      "source": "ismworld.org/supply-management-news-and-reports/reports/ism-pmi-reports/pmi/september/"
+    },
+    {
+      "claim": "'Bitcoin is pumping... the 50 day moving average is being used as support... open to the idea that Bitcoin drops down to the 50 week moving average... hanging along this May high' (transcript)",
+      "verdict": "verified and UPDATED: $BTC $82,879 at drafting (CoinGecko, +2.3% 7d), last daily close $84,025 on October 21; 50-day SMA of Coinbase daily closes about $81.7K (24/7 Wall St $81.5K, Cryptoticker $81.5K); 50-week SMA of the last 50 completed Sunday Coinbase closes about $76.5K; May 2026 high $82,814; last Sunday close $82,007; October high $87,249. Copy: 'about $83K', 'the 50-day SMA (about $81.7K)', 'the 50-week SMA sits at about $76K', 'a 7% to 8% drop' ($83K to $76K is 8.4%, $82K to $76.5K is 6.7%; 'about' kept). 'Moving average' written as SMA per persona.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=bitcoin (fetched 2026-10-22); api.exchange.coinbase.com/products/BTC-USD/candles (daily, computed 2026-10-22 02:34 UTC); 247wallst.com/investing/cryptocurrency/2026/10/20/bitcoin-analysis-btc-is-clinging-to-its-50-day-average-how-low-could-it-go-if-that-breaks/; cryptoticker.io/en/bitcoin-price-narrow-daily-range-sma50-20-october-2026/"
+    },
+    {
+      "claim": "'this May high that according to Benjamin Cowen wasn't supposed to happen. We weren't supposed to go above it' (transcript)",
+      "verdict": "verified in substance: Cowen said he 'certainly didn't think' Bitcoin would take out its May high this year and has since shifted to 'the burden of proof is on the bears' (Stocktwits, October 2026). Copy does not name him (he anchored the downtober V4 carousel a week ago); it says 'the May high it was never supposed to take out'.",
+      "source": "stocktwits.com/news/markets/cryptocurrency/bitcoin-monthly-closes-ben-cowen/cZDFyhQRB1v; repurpose/output/downtober-lane3-plan.json fact_check"
+    },
+    {
+      "claim": "'back in 2022... we went down to 15,600... everybody and their grandma believes Bitcoin was going to go down to 8k but it didn't happen, bear trap... eight weeks later we're just going back up' (transcript)",
+      "verdict": "verified with the numbers corrected: the November 2022 low was $15,476 (November 21, 2022, after the FTX collapse); contemporaneous calls were for $10,000 (crypto Twitter) with bearish targets as low as $6,000 (ZebPay, November 28, 2022); no verifiable $8,000 call surfaced, so copy says 'calling $10K. Some were calling $6K'. Eight weeks after the low (mid-January 2023) Bitcoin was above $21K and January 2023 closed up about 40%, so 'eight weeks later it was ripping' and 'then a 40% January' (quiz 2) hold. 'Bear trap' is Mike's characterization, kept in his voice.",
+      "source": "zebpay.com/blog/bitcoin-technical-analysis-report-28th-november-2022; my.tradingview.com/chart/BTCUSD/DR1eSFHN-Bitcoin-BTC-Bottom-just-one-step-away; theinformerpost.beehiiv.com (Smart Contracter, ~$15,700 low)"
+    },
+    {
+      "claim": "'the four year cycle zombies that waited all year for October they're getting in they keep eating up those red candles' (transcript)",
+      "verdict": "Mike's own thesis (persona core_theses item 9), drafted per its rule: the zombies are buying the red candles, which is why the bottom never lands in October; copy never says they cause an October bottom. Used in the YT post 2 body and thread 2 only ('the four-year cycle zombies will panic about their October bottom').",
+      "source": "transcript; persona.json core_theses"
+    },
+    {
+      "claim": "'Typically after the elections, no matter what parties win, things get better' (transcript)",
+      "verdict": "kept as Mike's general observation, dated: the US midterm elections are November 3, 2026. Copy: 'after the midterms on November 3 things typically get better no matter who wins'. No statistic is asserted.",
+      "source": "transcript; US midterm election date 2026-11-03"
+    },
+    {
+      "claim": "'the fear is neutral... 51... rather low by comparison to what the rest of the market thinks' (transcript)",
+      "verdict": "STALE and dropped: the Crypto Fear and Greed Index moved to 63 (Greed) on October 21 and 68 on October 22, so the 'fear is low' angle no longer holds; no copy uses it.",
+      "source": "api.alternative.me/fng/?limit=3 (fetched 2026-10-22)"
+    },
+    {
+      "claim": "'I had the Pieverse... on a retracement from this recent pump... in the payments narrative, agents and agent payment narrative... they have a little mascot, little cat creature... came out before cat season' (transcript)",
+      "verdict": "verified and UPDATED: Pieverse ($PIEVERSE) is an agent-native payment stack on x402b (an extension of the x402 HTTP payment protocol) with gasless stablecoin settlement, on BNB Chain (prior ledger); price $1.035, market cap $284M, rank 149, 7d -9.8%, 30d -42%, ATH $1.98 on September 21, 2026, so it sits about 48% under its ATH. Copy: 'about $1.03, roughly half off the $1.98 all-time high it printed in September', 'agent-to-agent payments on x402 rails, stablecoins settling with no gas token in the way'. The mascot (plush white cat with a glowing headband) is pieverse.jpg. 'Before cat season' is Mike's own observation and is kept as such. No Follow line: Pieverse is not in persona project_handles.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=pieverse (fetched 2026-10-22); repurpose/output/pieverse-lane3-plan.json fact_check; coinmarketcap.com/currencies/pieverse/"
+    },
+    {
+      "claim": "'What do you think of C-Bucks?... Crypto Archie owns C-Bucks... cartoon money... it only has 713 followers' (transcript, chat question)",
+      "verdict": "skipped: an unverified game token Mike was dismissive of ('I don't know, I'll leave it at that'); a negative take on an unverified project is not drafted. Likewise 'Pearl AI... 800 million market cap', 'Cooper... probably so dead right now' (the Cooper sale is already announced; persona avoid_in_drafts), and the Kaspa privacy GitHub repo ('could happen') are not drafted.",
+      "source": "transcript; persona.json avoid_in_drafts (unverified projects, Cooper re-announcement, self-deprecating framing)"
+    },
+    {
+      "claim": "AI / robotics / longevity / asteroid-mining / 'this could be your last chance to get in on assets' and the 2005 gasoline-price tangent (transcript)",
+      "verdict": "not drafted: the AI-takeover thesis shipped as the ai-takeover batch two days earlier (YT post, thread, tweets); the asteroid-mining, longevity-escape-velocity and Social Security musings are speculation with no verifiable anchor; the '$5 gasoline in New York in 2005' memory does not match the 2005 record (US average peaked near $3.07 after Katrina), so it is dropped rather than printed wrong.",
+      "source": "repurpose/output/ai-takeover-lane3-plan.json; transcript"
+    },
+    {
+      "claim": "Whisper mishears audited: 'CASPA' / 'cast' = Kaspa; 'kerosene 20' / 'Kerasik 20' / 'ks320s' = KRC20; 'Hugshaven' = Robinhood Chain; the known STT mishears for the Kaspa colour, TAO, zKAS and SPON do not occur in this transcript",
+      "verdict": "corrected everywhere in copy (Kaspa, KRC20). No Zcash / zKAS ambiguity in this batch; no TAO, Toncoin, Housecoin or Pengu content on the stream, so the Kaspa-first weighting is honored with two Kaspa tweets, the Kaspa YT post, thread, YT poll, X poll and quiz, and the remainder follows what the stream actually discussed (the Fed and the bear trap, the GENIUS Act, Pieverse).",
+      "source": "transcript; persona.json terminology_rules, ticker_corrections"
+    },
+    {
+      "claim": "Image references",
+      "verdict": "kaspa-logo.png is cited on both Kaspa X images (efd05594, 32514513) with the instruction to use it only as the backwards-K source; pieverse.jpg (the mascot IS the Pieverse reference) is cited on 689f770b; nacho.jpg plus version4/hook.png anchor the V4 hook slide and version4/slide.png anchors V4 slides 2 to 5; the V2 slides cite the role-matched version2 exemplars; the Fed, bear-trap and GENIUS images are entity-free (no real person, plain unmarked coins). ls of schedule-tweets/images/reference/ done live on 2026-10-22.",
+      "source": "schedule-tweets/images/reference (ls 2026-10-22); persona.json image_generation; repurpose/SKILL.md"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-10-21-kcc20-is-final-kaspa-tokens-live-on-the-l1": "version4 (a usable topic photo exists and the extra V4 weight applies: images/reference/nacho.jpg, the Nacho the Kat mascot, and Nacho is inside the story (the KRC20 that already said it is moving to KCC-20 and one of the two pools drained in the September 20 indexer exploit). The post is fact-led (three standards, three dated milestones, the 94% to 99.6% pool drawdown, 20.7 cents ATH vs 3.9 cents now), so the V4 data-slide format carries it. Slide 1 cites BOTH nacho.jpg and version4/hook.png in ref (array) with the monitors rendered blank and no lettering copied from the banner; slides 2 to 5 cite version4/slide.png; every prompt carries 'no pagination dots', the watermark warning (slide.png carries a repeating @handle watermark) and the layout-only / exact-text clause. V1 was the runner-up (a Final announcement is news-flash material) and is the fallback if the hook photo does not bind; V2 was rejected because the tone is loud, not editorial. Per the SKILL.md 2026-09-10 note, the figure-bearing data slides 2, 3 and 4 are candidates for the code-rendered V4 path (repurpose/output/kaspa-lane3-fix/render_v4_slide.py) if ChatGPT drifts the figures; QA each one for figure drift before attaching. Five slides: hook, three beats, question.)",
+    "yt-post-2026-10-21-the-hike-nobody-priced-is-a-bear-trap": "version2 (analytical / editorial: the post is a reasoning chain, the pricing read, the chart levels, the 2022 parallel, the same-shape argument and the plan, so the V2 title + teal insight line + body box carries each beat cleanly. V4 was weighed first per the extra-weight rule, but no usable topic PHOTO exists in images/reference/ for the subject (no Warsh, no Federal Reserve, no Bitcoin or bear photo; Benjamin-Cowen.png exists but he is only an unnamed side reference here and anchored the downtober V4 carousel a week ago), so V4 cannot be anchored; V1 was rejected because the tone is reflective, not news-flash, and V1 already carried the last two macro carousels. Slides cite the role-matched version2 exemplars: 01 the 9611992a hook, 02/03/04 the 4a9a572c / 44d02f9a / 074be0dc beat slides, 05 the 81abb2d9 question slide; every prompt states the counter text once, forbids em dashes (the V2 hook exemplar carries one) and forbids copying the exemplar's words. Five slides: hook, three beats, question.)"
+  },
+  "missing_references": [
+    "Kevin Warsh / Federal Reserve photo for the Fed tweet image or a Version 4 hook: none in images/reference/, so image a1779992 is entity-free (no real likeness) and YT post 2 is anchored on Version 2 instead",
+    "Bitcoin logo / coin: no bitcoin reference file in images/reference/; image a358ba87 renders a plain unmarked gold coin and the V2 slides render no coin; Bitcoin is named only in copy",
+    "OCC / GENIUS Act / US dollar mark: none in images/reference/; image fad33858 is entity-free (plain coins, no dollar glyph, no seal), the OCC is named only in copy",
+    "Kasplex / KRC20 indexer logo: none in images/reference/; the indexer is rendered as a generic collapsing ledger scaffold on image efd05594 and named only as text on V4 slide 3",
+    "Pieverse coin / logo: only the mascot banner pieverse.jpg exists (it IS the Pieverse reference and is used as such on image 689f770b); the coins in that scene stay plain and unmarked",
+    "Solana logo (named in copy on tweet 32514513 and YT post 1): no reference file; not rendered"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "efd05594",
+      "slug": "kcc20-is-final",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A triumphant anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands on top of a vast solid bedrock slab of dark polished stone that stretches to the horizon, both fists raised in victory as three massive glowing greenish cyan keystones lock down into carved sockets in the slab with bursts of light. A parade of small plain coin characters in many colours marches up a ramp onto the bedrock, each one getting a thin greenish cyan rim glow as it steps on. Off to the side, a rickety wooden scaffold tower with a cracked ledger-desk on top (the old middleman) is tipping over, empty and abandoned. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character and the keystones, warm sparks from the locking sockets, cold blue fill on the collapsing scaffold. Mood: triumphant, built to last. The Kaspa character and the keystones carry the only logo in the image; every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The ledger pages are completely blank. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "a1779992",
+      "slug": "the-hike-nobody-priced",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A night-time harbour pier where a big crowd of small plain grey and silver coin characters in tiny party hats lounge in deck chairs, all facing the same way, relaxed, eyes closed, sipping drinks, completely unaware. Behind them, out of the dark sea, a towering wave is rising and curling, its crest lit with cold blue-white light. Standing apart on a high rock at the right edge, one plain gold coin character with a hungry, knowing grin holds a big open sack and braces its legs, ready, eyes locked on the wave. Deep navy near-black sky. Dramatic cinematic lighting: warm lantern light on the sleeping crowd, cold blue rim light on the wave, a single warm key light on the ready gold coin. Mood: tense, hungry, the calm before it lands. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No real people and no real logos anywhere. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "689f770b",
+      "slug": "pieverse-agent-payments-retracement",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\pieverse.jpg",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The plush white cat with the glowing headband shown in the attached reference image, kept faithful to the reference (round white plush body, small black eyes, glowing headband), sits calmly at a sleek dark desk in a futuristic night-time control room, patiently placing one more plain glowing coin onto a neat stack. Above the desk, two small sleek matte-white robot agents float on either side of a glowing ribbon of light and pass plain glowing coins to each other across it, the coins streaming along the ribbon like a river of light. Through the tall window behind the cat, a futuristic city skyline at dusk. Deep navy near-black background. Dramatic cinematic lighting: soft lavender and blue rim light from the ribbon on the cat and the robots, warm dusk light through the window. Mood: calm, patient, unbothered by the dip. The cat is the only character from the reference; render every holographic panel as a blank glowing rectangle and do not reproduce any lettering or numbers from the reference. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "a358ba87",
+      "slug": "bear-trap-2022-replay",
+      "prompt": "Cinematic photorealistic 3D render with Pixar-style characters, 1:1 square aspect ratio. A dark forest slope at night: a pack of grumpy cartoon bears in tiny suits charges downhill, roaring, chasing one plain gold coin character that is rolling down ahead of them. At the bottom of the slope a thick glowing horizontal line of light runs across the ground like a safety net; the gold coin has just hit it and is launching back up into the air, grinning, arms out, soaring over the bears' heads, while the ground under the bears is giving way into a dark pit and the bears tumble in with shocked faces. Deep navy near-black sky with moonlight through the trees. Dramatic rim lighting: cool blue moonlight on the bears, a warm gold glow on the soaring coin, the ground line glowing soft white. Mood: defiant, the trap springing. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. No real logos anywhere. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "32514513",
+      "slug": "now-we-just-say-kaspa-tokens",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A cheerful anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, runs a glowing night-market stall whose round signboard above the counter carries only the same backwards-K Kaspa logo in greenish cyan. The shelves behind it are lined with rows of small plain glowing coins in many bright colours, each with a thin greenish cyan rim, and the Kaspa character hands one of them with a wink to a small plain customer coin character holding a tiny shopping bag. Deep navy near-black background with soft bokeh lights. Dramatic cinematic lighting: greenish cyan rim light from the signboard and the Kaspa character, warm light from the stall lamps. Mood: playful, confident, open for business. The Kaspa character and the signboard carry the only logo in the image; every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "fad33858",
+      "slug": "genius-act-stablecoin-rules-final",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Inside a vast dark marble hall, an enormous round vault door shaped like a plain polished silver coin swings open, and from inside the vault a steady stream of small plain glowing pale-green coin characters files out in neat orderly lines, marching down a set of glowing light rails that run out of the hall and off toward a distant night-time city skyline. Beside the door a calm plain gold coin character in a tiny suit holds a clipboard with a completely blank page and nods approvingly as each coin passes. Deep navy near-black background. Dramatic cinematic lighting: cold white light spilling from the open vault, soft pale-green glow from the marching coins, warm city lights on the horizon. Mood: calm, official, inevitable. every other coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. The clipboard page is completely blank; no dollar sign, no seal, no emblem and no real logo anywhere. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "7fe43718",
+      "slug": "01-hook",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\nacho.jpg",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ],
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the 3D black cat with glowing greenish cyan eyes and a greenish cyan collar, holding a glowing greenish cyan Kaspa coin with the backwards-K logo, in a dark blue control room) as the full-bleed background image, keeping the cat's likeness and the coin faithful, cropped to a square on the cat with its face and the coin centred in the upper two thirds of the frame; render the monitors behind it as blank glowing panels and do not reproduce any lettering, numbers or posters from the reference. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple green upward line chart with no numbers or axis labels. Bold all-caps text across the bottom: 'KCC-20 IS FINAL.' in white on the first line, then 'KASPA TOKENS NOW LIVE ON THE L1' in bright green on the second line. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no artist signature and no initials anywhere in the frame or in any corner; the attached style reference carries a repeating watermark and it must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "6c411f5d",
+      "slug": "02-three-standards",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Three standards, one Final stamp'. Stat boxes: 'KCC-1: COVENANT SPEC', 'KCC-2: AUTHORIZATION SPEC', 'KCC-20: FUNGIBLE TOKEN STANDARD'. Centre: a horizontal timeline chart with a labeled year axis reading 2024, 2025, 2026 and three green milestone markers labelled 'KRC20 LIVE: SEPT 2024', 'COVENANTS LIVE: JUNE 30, 2026' and 'KCC STANDARDS FINAL: OCT 21, 2026'. Bottom green box labelled 'WHAT FINAL MEANS' with two bullets: 'Test vectors exist and a public implementation already passes them.' and 'Consensus rules do not change; adoption is up to the builders.' Page number 2 in a circle at the top right. No human faces, no watermark, no @handle, no signature or initials in any corner (the attached reference carries a repeating watermark and it must NOT be reproduced), no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "3e82a11f",
+      "slug": "03-indexer-vs-l1",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'KRC20 vs KCC-20: who enforces the rules'. Stat boxes: 'KRC20 RULES: OFF-CHAIN INDEXER', 'KCC-20 RULES: THE KASPA L1', 'KASPA CONSENSUS: NEVER HACKED'. Centre: a bar chart with labeled axes showing two token pools, each as a pair of bars labelled 'BEFORE' and 'AFTER', the AFTER bars only a sliver of the BEFORE bars, the pools labelled 'POOL 1' and 'POOL 2', no other numbers. Bottom red warning box labelled 'THE MIDDLEMAN RISK' with two bullets: 'September 20: the KRC20 indexer credited forged transfers and two token pools lost 94% to 99.6% of their KAS-side value.' and 'KCC-20 puts the rules in covenants the network itself enforces.' Page number 3 in a circle at the top right. No human faces, no watermark, no @handle, no signature or initials in any corner (the attached reference carries a repeating watermark and it must NOT be reproduced), no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "d7e72efd",
+      "slug": "04-migration-next",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'The migration is the next story'. Stat boxes: 'NACHO THE KAT: MOVING TO KCC-20', 'BRIDGES: IN THE WORKS', 'KAS: ABOUT 3.9 CENTS'. Centre: a bar chart with a labeled vertical axis in cents showing two bars, a tall one labelled 'ALL-TIME HIGH: 20.7 CENTS' and a short one labelled 'NOW: 3.9 CENTS', no other numbers. Bottom green box labelled 'NOW WE JUST SAY KASPA TOKENS' with two bullets: 'No more KRC20 or KCC-20 labels: the same way you say Solana tokens, you say Kaspa tokens.' and 'KAS is up on the week and still about 80% under its all-time high while the tech keeps shipping.' Page number 4 in a circle at the top right. No human faces, no watermark, no @handle, no signature or initials in any corner (the attached reference carries a repeating watermark and it must NOT be reproduced), no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "f8a014a6",
+      "slug": "05-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Which KRC20 migrates to KCC-20 first?'. Stat boxes: 'A: KRC20 SEASON 2', 'B: ONLY THE FAST MOVERS', 'C: NEW KCC-20 TOKENS WIN'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'Name the token you think moves first.' Page number 5 in a circle at the top right. No human faces, no watermark, no @handle, no signature or initials in any corner (the attached reference carries a repeating watermark and it must NOT be reproduced), no em dashes, no company logos or ticker symbols, and no text beyond what is listed here. The attached reference is for LAYOUT AND STYLING ONLY: do not copy any number, percentage, date, axis label, chart data, box title or bullet text from it. Every figure and every line of text on this slide must be exactly the text specified in this prompt, nothing added, nothing changed. Render the page number exactly as specified."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "388dcec9",
+      "slug": "01-hook",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-9611992a-01-hook.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '1 OF 5'. Large bold white title: 'EVERYBODY PRICES A PAUSE. I SEE A HIKE, AND A BEAR TRAP.'. Below, a teal accent line: 'About 84% of the market prices a Fed pause on October 28.'. At the bottom a dark rounded box with teal label 'THE SETUP' and white body text: 'Hot CPI, hot PPI, ISM prices at 77.9 and a chair who already hiked in September. When the hike nobody priced lands, everything goes down, down, down.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '1 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "5eae9cc9",
+      "slug": "02-the-chart",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-4a9a572c-02-btc-failure.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '2 OF 5'. Large bold white title: 'BTC IS RIDING THE 50-DAY. THE 50-WEEK SMA IS ABOUT $76K.'. Below, a teal accent line: 'A hike probably takes us there: a 7% to 8% drop, not the end of the world.'. At the bottom a dark rounded box with teal label 'THE LEVELS' and white body text: 'Bitcoin about $83K, the 50-day SMA about $81.7K holding as support, hanging around the May high it was never supposed to take out.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '2 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "b873e56d",
+      "slug": "03-the-2022-parallel",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-44d02f9a-03-the-problem.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '3 OF 5'. Large bold white title: 'NOVEMBER 2022: $15.5K, AND EVERYBODY CALLED $10K.'. Below, a teal accent line: 'Eight weeks later Bitcoin was ripping. Classic bear trap.'. At the bottom a dark rounded box with teal label 'WHAT A BEAR TRAP IS' and white body text: 'The drop that convinces the bears it keeps falling, right before it reverses. The people who are sure are the ones who get caught.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '3 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "6c61524c",
+      "slug": "04-the-plan",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-074be0dc-04-the-solution.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '4 OF 5'. Large bold white title: 'SMALL DCA NOW. UNDER THE 50-WEEK SMA, I BUY EVERYTHING.'. Below, a teal accent line: 'You cannot wait for a crash that may never come.'. At the bottom a dark rounded box with teal label 'IF THEY PAUSE INSTEAD' and white body text: 'No god candle. It just means we may never test the 50-week SMA at all, and we grind higher from here: ISM PMI 54.5, nine months of expansion, GENIUS Act rules final.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '4 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "fedea663",
+      "slug": "05-question",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-81abb2d9-06-question.png",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '5 OF 5'. Large bold white title: 'HIKE OR PAUSE ON OCTOBER 28?'. Below, a teal accent line: 'And if we dip to the 50-week SMA, do you buy it or wait for lower?'. At the bottom a dark rounded box with teal label 'TELL ME IN THE COMMENTS' and white body text: 'Pick one. The bears will be loud; I want to know who is actually buying.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '5 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here."
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "JUST IN: KCC-1, KCC-2 and KCC-20 are FINAL. Kaspa's native token standard is ready for full adoption across the ecosystem.\n\nKRC20 tokens get their rules from a third-party indexer reading the chain. KCC-20 tokens keep their rules in covenants on the Kaspa ($KAS) L1 itself, enforced by the network, no middleman.\n\nThe migration is next: Nacho the Kat already said the community is moving over. Kaspa to the moon 🚀\n\n#kaspa #KCC20",
+      "hook": "JUST IN: KCC-1, KCC-2 and KCC-20 are FINAL. Kaspa's native token standard is ready for full adoption across the ecosystem.",
+      "image_id": "efd05594",
+      "notes": "Kaspa subject; no Follow line (Mike is the Kaspa voice). The brief forbids IG, so no IG companion."
+    },
+    {
+      "tweet": "About 84% of the market says the Fed pauses on October 28. I think it is more likely than not that Warsh hikes.\n\nHot CPI, hot PPI, an ISM prices index at 77.9, and a chair who already hiked in September. I keep asking what data says pause and nobody can tell me.\n\nWhen everybody prices a pause and gets a hike, everything goes down, down, down, $BTC included. That is the dip I am waiting for. What am I missing?\n\n#bitcoin #fed",
+      "hook": "About 84% of the market says the Fed pauses on October 28. I think it is more likely than not that Warsh hikes.",
+      "image_id": "a1779992",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #3, the explicit 'What am I missing?' invitation, which is Mike's own on-stream ask ('drop me a comment, educate me'). Nothing is manufactured: the 84% pause pricing, the September hike, the CPI/PPI prints and the 77.9 ISM prices index are all verified."
+    },
+    {
+      "tweet": "Pieverse ($PIEVERSE) is on a retracement: about $1.03, roughly half off the $1.98 all-time high it printed in September.\n\nThe narrative did not change. Agent-to-agent payments on x402 rails, stablecoins settling with no gas token in the way, and a cat mascot that showed up before cat season did.\n\nAgent payments is a narrative I keep coming back to, and this is still one of my favorite plays in it. Never financial advice.\n\n#pieverse #AI",
+      "hook": "Pieverse ($PIEVERSE) is on a retracement: about $1.03, roughly half off the $1.98 all-time high it printed in September.",
+      "image_id": "689f770b",
+      "notes": "No Follow line: Pieverse is not in persona project_handles.handles (the pieverse batch report flagged @pieverse_io for Mike to add; not assumed here)."
+    },
+    {
+      "tweet": "November 2022: $BTC printed $15.5K and everybody and their grandma was calling $10K. Some were calling $6K.\n\nEight weeks later it was ripping. That is what a bear trap looks like.\n\nIf a hike on October 28 sends Bitcoin down to the 50-week SMA (about $76K), the bears will scream \"told you so\" all the way down... and that is the trap. I buy that dip, I do not sell it.\n\n#bitcoin #BTC",
+      "hook": "November 2022: $BTC printed $15.5K and everybody and their grandma was calling $10K. Some were calling $6K.",
+      "image_id": "a358ba87"
+    },
+    {
+      "tweet": "With KCC-20 final there is no reason to say \"KRC20 token\" or \"KCC-20 token\" anymore: the same way you buy Solana tokens, now you just buy Kaspa ($KAS) tokens 😎\n\n#kaspa #KCC20",
+      "hook": "With KCC-20 final there is no reason to say \"KRC20 token\" or \"KCC-20 token\" anymore: the same way you buy Solana tokens, now you just buy Kaspa ($KAS) tokens 😎",
+      "image_id": "32514513",
+      "notes": "Single-line image-first format. Kaspa subject; no Follow line; no IG companion (brief)."
+    },
+    {
+      "tweet": "The OCC just finalized the GENIUS Act stablecoin rules: full reserves, redemptions within two business days, live January 18, 2027. The way I see it, the US is shifting the dollar's backing from oil to the stablecoin, and stablecoins run on crypto rails 🔥\n\n#stablecoins #GENIUSAct",
+      "hook": "The OCC just finalized the GENIUS Act stablecoin rules: full reserves, redemptions within two business days, live January 18, 2027.",
+      "image_id": "fad33858",
+      "notes": "Single-line image-first format. The oil-to-stablecoin line is Mike's own on-stream read, written in first person."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-10-21-kcc20-is-final-kaspa-tokens-live-on-the-l1",
+      "topic": "Kaspa KCC-20 final: the three standards, indexer vs L1 covenants, the KRC20 migration, 'now we just say Kaspa tokens' (built from YT post 1)",
+      "variation_label": "A (news-flash, then the mechanics)",
+      "tweets": [
+        {
+          "text": "KCC-1, KCC-2 and KCC-20 are FINAL. Kaspa tokens just moved onto the L1 itself, and the KRC20 migration is next.\n\nHere is what actually changed, and why I think this is one of the biggest Kaspa ($KAS) updates of the year...",
+          "hook": "KCC-1, KCC-2 and KCC-20 are FINAL. Kaspa tokens just moved onto the L1 itself, and the KRC20 migration is next."
+        },
+        {
+          "text": "On October 21 the KCC Coordination Forum declared all three Final: KCC-1 is the covenant spec, KCC-2 is the authorization spec, KCC-20 is the fungible token standard on top.\n\nFinal means the test vectors exist and a public implementation already passes them."
+        },
+        {
+          "text": "Why it matters: a KRC20 balance was never enforced by Kaspa consensus. A third-party indexer read the chain and decided who owned what.\n\nA month ago that indexer got tricked into crediting forged transfers and two token pools got drained. Kaspa itself was never hacked."
+        },
+        {
+          "text": "KCC-20 tokens keep their rules in covenants on the Kaspa L1 itself. Covenants went live with Toccata at the end of June.\n\nThe network enforces the rules, not somebody's server. Tokens etched into the L1, no middleman."
+        },
+        {
+          "text": "The migration is the next story. Nacho the Kat, one of the OG KRC20s, already said the community is moving to KCC-20, and the ecosystem is building the bridges.\n\nWhich tokens move first, and how fast, is what I am watching now."
+        },
+        {
+          "text": "And the part I like most: no more \"KRC20 tokens\" or \"KCC-20 tokens\". The same way you say Solana tokens, now you just say Kaspa tokens.\n\n$KAS is about 3.9 cents, up on the week and still about 80% under its all-time high. The tech ships while the price sleeps."
+        },
+        {
+          "text": "Which KRC20 migrates first, and does it kick off KRC20 season 2?\n\nIf this cleared up what KCC-20 actually is...\n\nFollow me for the Kaspa updates explained before the rest of the market reads them 😎"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-10-21-the-hike-nobody-priced-is-a-bear-trap",
+      "topic": "Fed October 28 hike call, the 50-week SMA target, the November 2022 bear-trap parallel and the buy plan (built from YT post 2)",
+      "variation_label": "B (thesis-first, then the 2022 parallel)",
+      "tweets": [
+        {
+          "text": "Everybody is pricing a Fed pause on October 28. I think it is more likely than not that Warsh hikes, and I think the dump that follows is a bear trap.\n\nThe setup, the 2022 parallel, and exactly what I do if it plays out...",
+          "hook": "Everybody is pricing a Fed pause on October 28. I think it is more likely than not that Warsh hikes, and I think the dump that follows is a bear trap."
+        },
+        {
+          "text": "About 84% of traders price a pause. Hot CPI, hot PPI, the ISM prices index at 77.9, and a chair who already hiked in September.\n\nWhen everybody prices a pause and gets a hike, nobody is positioned for it, and everything goes down, down, down."
+        },
+        {
+          "text": "The chart: $BTC is about $83K, riding the 50-day SMA (about $81.7K) as support, hanging around the May high it was never supposed to take out.\n\nThe 50-week SMA sits at about $76K. A hike probably takes us there. A 7% to 8% drop, not the end of the world."
+        },
+        {
+          "text": "The 2022 parallel: in November 2022 Bitcoin printed $15.5K and everybody and their grandma was calling $10K. Some called $6K.\n\nEight weeks later it was ripping. Classic bear trap: the drop that convinces the bears it keeps falling, right before it reverses."
+        },
+        {
+          "text": "Same shape now. If we tumble to the 50-week SMA, the bears scream \"told you so\" and the four-year cycle zombies panic about their October bottom.\n\nMeanwhile: ISM PMI 54.5, nine months of expansion. GENIUS Act stablecoin rules final. Midterms on November 3."
+        },
+        {
+          "text": "The plan: small DCA now, because you cannot wait for a crash that may never come. Hike lands, we hit the 50-week SMA, I buy everything on my list.\n\nAnd if they pause after all? No god candle. We may just never test the 50-week, and we grind higher from here."
+        },
+        {
+          "text": "Hike or pause on October 28, and do you buy the 50-week SMA or wait for lower?\n\nIf this changed how you see the next two weeks...\n\nFollow me for the macro read before the Fed prints it 🧠"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-10-21-krc20-season-2-on-the-kcc20-migration",
+      "topic": "Kaspa / KCC-20 final: what happens to the KRC20 bags when they migrate to KCC-20",
+      "eligible_topic": "kaspa",
+      "tweet_text": "KCC-20 is FINAL. Kaspa ($KAS) tokens now live in covenants on the L1 itself, no third-party indexer, and the KRC20 migration is next.\n\nWhat happens to the KRC20 bags when they migrate?",
+      "hook": "KCC-20 is FINAL. Kaspa ($KAS) tokens now live in covenants on the L1 itself, no third-party indexer, and the KRC20 migration is next.",
+      "options": [
+        "KRC20 season 2",
+        "Only the fast movers win",
+        "New KCC-20 tokens win"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-10-21-krc20-season-2-on-the-kcc20-migration",
+      "topic": "Kaspa / KCC-20 final: what happens to the KRC20 bags when they migrate to KCC-20 (season 2, only the fast movers, new tokens take over)",
+      "question_text": "KCC-1, KCC-2 and KCC-20 are final. Kaspa tokens now keep their rules in covenants on the L1 itself instead of on a third-party indexer, and the KRC20 migration is the next story: Nacho the Kat already said it is moving over. So what happens to the KRC20 bags when they migrate?",
+      "hook": "KCC-1, KCC-2 and KCC-20 are final.",
+      "options": [
+        "KRC20 season 2: the migration pumps them",
+        "Only the tokens that migrate fast matter",
+        "The old ones fade, new KCC-20 tokens take over"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-10-21-fed-hike-or-pause-october-28",
+      "topic": "Fed October 27-28: about 84% price a pause, Mike sees a hike; pause, hike and dump to the 50-week SMA, or hike and Bitcoin holds the 50-day",
+      "question_text": "October 28 is the Fed decision and about 84% of the market is pricing a pause. I think it is more likely than not that Warsh hikes, because everybody is pricing the pause and nobody is pricing the hike, and that is exactly how you get the down, down, down. What do you say?",
+      "hook": "October 28 is the Fed decision and about 84% of the market is pricing a pause.",
+      "options": [
+        "Pause: the market is right, Mike is wrong",
+        "Hike, and everything dumps to the 50-week SMA",
+        "Hike, but Bitcoin holds the 50-day anyway"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-10-21-kcc20-is-final-kaspa-tokens-live-on-the-l1",
+      "topic": "Kaspa KCC-20 final: the KCC Coordination Forum declared KCC-1 (covenant spec), KCC-2 (authorization spec) and KCC-20 (fungible token standard) Final on October 21, what Final means, KRC20's off-chain indexer vs KCC-20 covenants enforced by the Kaspa L1 (the September 20 indexer exploit as the middleman risk, Kaspa itself never hacked), covenants live since Toccata at the end of June, the KRC20 migration next (Nacho the Kat moving over, bridges in the works), 'now we just say Kaspa tokens', $KAS about 3.9 cents and 80% under its ATH",
+      "variation_label": "A + CTA1",
+      "body_style": "news-flash arc: the Final headline and the migration hook before the fold with the 'what changed' payoff withheld, the three standards and what Final means, the indexer-vs-L1 beat with the exploit as proof, the covenant beat, the migration beat, the 'now we just say Kaspa tokens' beat, the price line, a name-the-token question and a like/subscribe ask",
+      "cta_target": "subscribe_youtube",
+      "body": "KCC-1, KCC-2 and KCC-20 are FINAL. Kaspa's native token standard is ready for full adoption, and the KRC20 migration is next.\n\nHere is what actually changed, and why it matters more than the price move.\n\nOn October 21 the KCC Coordination Forum declared all three standards Final: KCC-1 is the covenant spec, KCC-2 is the authorization spec, and KCC-20 is the fungible token standard built on top of them. Final means the test vectors exist and a public implementation already passes them. Builders are invited into the public KCC channel to ship on it.\n\nWhy does this matter? Think about how KRC20 worked. Your token balance was never enforced by Kaspa consensus; a third-party indexer read instructions off the chain and decided who owned what. A month ago that indexer got tricked into crediting forged transfers and two token pools got drained. Kaspa itself was never hacked. That is the middleman risk.\n\nKCC-20 tokens keep their rules in covenants on the Kaspa L1 itself. Covenants went live with Toccata at the end of June. The network enforces the rules, not somebody's server. The tokens are etched into the L1.\n\nSo the migration is the next story. Nacho the Kat, one of the OG KRC20s, already said the community is moving over to KCC-20, and the ecosystem is building the bridges. Which tokens move first, and how fast, is what I am watching now.\n\nAnd here is the part I like most: there is no reason to say \"KRC20 token\" or \"KCC-20 token\" anymore. The same way you say Solana tokens, now you just say Kaspa tokens. Open the wallet, select Kaspa as the network, swap. Back in 2024 the demand for KRC20s was through the roof. Native tokens on the fastest proof-of-work L1 around should pull even more.\n\n$KAS is at about 3.9 cents this week, up on the news and still about 80% under its all-time high. The tech keeps shipping while the price sleeps.\n\nWhich KRC20 migrates to KCC-20 first, and does the migration kick off KRC20 season 2? Name the token in the comments.\n\nHit like and subscribe if you want the Kaspa updates explained before the rest of the market reads them.",
+      "engagement_question": "Which KRC20 migrates to KCC-20 first, and does the migration kick off KRC20 season 2? Name the token in the comments.",
+      "images": [
+        {
+          "image_id": "7fe43718",
+          "slide_text": "KCC-20 IS FINAL. KASPA TOKENS NOW LIVE ON THE L1."
+        },
+        {
+          "image_id": "6c411f5d",
+          "slide_text": "KCC-1, KCC-2, KCC-20: THREE STANDARDS, ONE FINAL STAMP."
+        },
+        {
+          "image_id": "3e82a11f",
+          "slide_text": "KRC20: AN INDEXER DECIDES WHO OWNS WHAT. KCC-20: THE KASPA L1 DECIDES."
+        },
+        {
+          "image_id": "d7e72efd",
+          "slide_text": "NACHO IS MOVING TO KCC-20. NOW WE JUST SAY KASPA TOKENS."
+        },
+        {
+          "image_id": "f8a014a6",
+          "slide_text": "WHICH KRC20 MIGRATES TO KCC-20 FIRST?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-10-21-the-hike-nobody-priced-is-a-bear-trap",
+      "topic": "Fed October 27-28 and the bear trap: about 84% price a pause, Mike sees a Warsh hike (hot CPI and PPI, ISM prices 77.9, September hike), $BTC about $83K on the 50-day SMA (~$81.7K) near the May high, the 50-week SMA about $76K as the hike target, the November 2022 parallel ($15.5K low, $10K and $6K calls, ripping eight weeks later), the four-year cycle zombies, ISM PMI 54.5, GENIUS Act rules final, midterms November 3, small DCA now and buy everything under the 50-week SMA, the pause case",
+      "variation_label": "B + CTA2",
+      "body_style": "historical-parallel arc: the contrarian hike call and the bear-trap claim before the fold with the plan withheld, the pricing beat, the chart levels, the 2022 parallel as the pattern, the same-shape beat with the macro backdrop, the plan with the pause case, a 'never financial advice' line, a forked hike-or-pause plus buy-or-wait question and a like/subscribe ask",
+      "cta_target": "subscribe_youtube",
+      "body": "Everybody is pricing a Fed pause on October 28. I think it is more likely than not that Warsh hikes, and I think the dump that follows is a bear trap.\n\nHere is the setup, the 2022 parallel, and exactly what I do if it plays out.\n\nStart with the market. About 84% of traders price a pause. Hot CPI, hot PPI, the ISM prices index at 77.9, and a chair who already hiked in September. I keep asking what data people are looking at that says pause, and nobody can tell me. When everybody prices a pause and gets a hike, nobody is positioned for it, and everything goes down, down, down.\n\nNow the chart. $BTC is at about $83K, riding the 50-day SMA (about $81.7K) as support, hanging around the May high it was never supposed to take out. The 50-week SMA sits at about $76K. A hike probably takes us there. That is a 7% to 8% drop, not the end of the world.\n\nHere is the 2022 parallel. In November 2022 Bitcoin printed $15.5K, and everybody and their grandma was calling $10K. Some called $6K. The bears were certain the floor was gone. Eight weeks later Bitcoin was ripping and it never looked back. Classic bear trap: the drop that convinces the bears it keeps falling, right before it reverses.\n\nSame shape here. If we tumble to the 50-week SMA, the bears will scream \"told you so\" and the four-year cycle zombies will panic about their October bottom. Meanwhile the economy is in expansion (ISM PMI at 54.5, nine months in a row), the OCC just finalized the GENIUS Act stablecoin rules, and after the midterms on November 3 things typically get better no matter who wins.\n\nSo the plan: I DCA a little now, because you cannot wait for a crash that may never come. If the hike lands and we hit the 50-week SMA, I buy everything on my list. And if the Fed pauses after all, it is not a god candle; it just means we may never test the 50-week at all, and we grind higher from here.\n\nNever financial advice. I could be wrong, and that is the whole point of a bear trap: the people who are sure are the ones who get caught.\n\nHike or pause on October 28, and if we dip to the 50-week SMA, do you buy it or do you wait for lower? Pick one in the comments.\n\nHit like and subscribe if you want the macro read before the Fed prints it.",
+      "engagement_question": "Hike or pause on October 28, and if we dip to the 50-week SMA, do you buy it or do you wait for lower? Pick one in the comments.",
+      "images": [
+        {
+          "image_id": "388dcec9",
+          "slide_text": "EVERYBODY PRICES A PAUSE. I SEE A HIKE, AND A BEAR TRAP."
+        },
+        {
+          "image_id": "5eae9cc9",
+          "slide_text": "BTC IS RIDING THE 50-DAY. THE 50-WEEK SMA IS ABOUT $76K."
+        },
+        {
+          "image_id": "b873e56d",
+          "slide_text": "NOVEMBER 2022: $15.5K, AND EVERYBODY CALLED $10K. EIGHT WEEKS LATER IT WAS RIPPING."
+        },
+        {
+          "image_id": "6c61524c",
+          "slide_text": "SMALL DCA NOW. UNDER THE 50-WEEK SMA, I BUY EVERYTHING."
+        },
+        {
+          "image_id": "fedea663",
+          "slide_text": "HIKE OR PAUSE ON OCTOBER 28? AND DO YOU BUY THE 50-WEEK SMA?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [],
+  "yt_quizzes": [
+    {
+      "id": "yt-quiz-2026-10-21-where-kcc20-token-rules-live",
+      "topic": "KCC-20: where the token rules live",
+      "source_post": null,
+      "question_text": "KCC-1, KCC-2 and KCC-20 went Final on October 21 and I called it one of the biggest Kaspa updates of the year. Where does a KCC-20 token keep its rules?",
+      "hook": "Where do KCC-20 token rules live?",
+      "options": [
+        "On a third-party indexer, like KRC20",
+        "In covenants enforced by the Kaspa L1 itself",
+        "On the Kasplex L2",
+        "On Ethereum through a bridge"
+      ],
+      "correct_option_index": 1,
+      "explanation": "KCC-20 is covenant-native: the token rules sit in scripts the Kaspa L1 enforces, no off-chain indexer deciding who owns what.",
+      "capture_results_after_days": 14
+    },
+    {
+      "id": "yt-quiz-2026-10-21-what-is-a-bear-trap",
+      "topic": "Bear trap",
+      "source_post": null,
+      "question_text": "On stream I said a Fed hike could send Bitcoin down to the 50-week SMA and that it would be a bear trap, like November 2022 when Bitcoin printed $15.5K and everybody was calling $10K. What is a bear trap?",
+      "hook": "What is a bear trap?",
+      "options": [
+        "A rally that convinces the bulls, then dumps",
+        "A drop that convinces bears it keeps falling, then reverses up",
+        "A sideways range that goes nowhere",
+        "A short squeeze on the way up"
+      ],
+      "correct_option_index": 1,
+      "explanation": "A bear trap is the drop that makes the bears certain the floor is gone, right before price reverses up. 2022: $15.5K low, then a 40% January.",
+      "capture_results_after_days": 14
+    },
+    {
+      "id": "yt-quiz-2026-10-21-who-finalized-the-genius-act-rules",
+      "topic": "GENIUS Act stablecoin rules",
+      "source_post": null,
+      "question_text": "The US officially finalized its first GENIUS Act stablecoin rules this week, which I called some of the best news of the month. Which regulator issued the final rule?",
+      "hook": "Who finalized the GENIUS Act rules?",
+      "options": [
+        "The SEC",
+        "The Federal Reserve",
+        "The OCC",
+        "The CFTC"
+      ],
+      "correct_option_index": 2,
+      "explanation": "The OCC finalized its GENIUS Act rule on October 21, 2026: full reserves, redemptions within two business days, effective January 18, 2027.",
+      "capture_results_after_days": 14
+    },
+    {
+      "id": "yt-quiz-2026-10-21-ism-pmi-above-50",
+      "topic": "ISM PMI: the 50 line",
+      "source_post": null,
+      "question_text": "On stream I said the economy is in expansionary territory because of the ISM manufacturing PMI. The September reading was 54.5. What does a PMI above 50 mean?",
+      "hook": "What does a PMI above 50 mean?",
+      "options": [
+        "Manufacturing is expanding",
+        "Manufacturing is contracting",
+        "Inflation is above 5%",
+        "The Fed has to hike"
+      ],
+      "correct_option_index": 0,
+      "explanation": "50 is the line: above it manufacturing is expanding, below it contracting. September's 54.5 was the ninth straight month of expansion.",
+      "capture_results_after_days": 14
+    }
+  ]
+}

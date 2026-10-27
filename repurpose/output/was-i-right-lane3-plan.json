@@ -1,0 +1,433 @@
+{
+  "batch": "was-i-right",
+  "date": "2026-10-17",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/was-i-right LOW BPS VERTICAL/was-i-right LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-10-17",
+  "brief": "Limit threads to 1. NO YT community posts (no YT posts, no carousels). Add 3 YouTube community QUIZZES drawn from the stream (schema in schedule-tweets/data/yt-quizzes.json: question, 2-4 options each 65 chars max, exactly one correct, short explanation). Make 3 of the X tweets about Kaspa and/or KRC20 tokens.",
+  "fact_check": [
+    {
+      "claim": "'now it's at 83% there's going to be a pause on our rate' (transcript)",
+      "verdict": "verified and current. CME FedWatch for the October 27-28 FOMC on Friday October 16, 2026: 83.9% hold at 3.75% to 4.00%, 16.1% for a 25 bp hike (down from 27.7% Thursday after PPI and a brief move toward 44% Wednesday after CPI). Copy says '84% chance of pausing'. Chair Warsh's Bangkok remarks did not revive hike bets.",
+      "source": "actionforex.com/action-insight/market-overview/657759-dollar-extends-slide-as-fed-warsh-refuses-to-revive-october-hike-bets/; bitget.com/amp/news/detail/12560605970857"
+    },
+    {
+      "claim": "'worse than expected PPI readings... the day before we got worse than expected CPI readings' (transcript)",
+      "verdict": "verified. September 2026 PPI (released October 15): 6.3% year over year vs 5.3% expected, core 5.0% vs 4.4%, headline +1.3% month over month; Cointelegraph headlines it as the biggest PPI gain in over four years, so copy says 'the hottest PPI print in over four years'. September CPI (October 14): 3.7% year over year, hotter than expected (verified in the downtober ledger from CNBC). Copy uses 3.7% and 6.3%.",
+      "source": "fxstreet.com/cryptocurrencies/news/bitcoin-rebounds-to-82-000-as-ppi-hits-63-nearly-1b-liquidated-202610151820; cointelegraph.com/markets/bitcoin-price-breaks-under-80k-after-us-ppi-gains-most-in-over-4-years; cnbc.com/2026/10/14/cpi-inflation-report-september-2026.html"
+    },
+    {
+      "claim": "'the low is 79 six. So I went below 80 K in those two hours... it closed as a green candle' (transcript)",
+      "verdict": "verified. Bitcoin printed an intraday low of about $79,800 after the PPI release on October 15 and rebounded to about $82,000 to $83,000 the same day (about $930M liquidated market-wide). The 'about two hours' duration is Mike's read of his hourly chart and is kept as his statement. Current price about $81,300 (CoinDesk/CoinGecko, October 16).",
+      "source": "fxstreet.com (above); kucoin.com/news/flash/bitcoin-reclaims-83-000-after-hot-ppi-data; coindesk.com/price/bitcoin"
+    },
+    {
+      "claim": "'the NASDAQ closed the week down 5.5%. The lowest weekly decline since April of 2025. And it is now 7% below its high from just 10 days ago' (transcript)",
+      "verdict": "verified for the Nasdaq 100 (Bloomberg: 5.5% weekly loss, worst week since the April 2025 tariff turmoil); the Nasdaq Composite lost about 4.5% to 5%. Copy names the Nasdaq 100. The '7% below its high' detail could not be confirmed and is not used.",
+      "source": "bloomberg.com/news/articles/2026-10-16/wall-street-anxiety-spreads-as-ai-rout-meets-110-oil-shock; cnn.com/2026/10/16/investing/tech-stocks-ai-coreweave; cnbc.com/2026/10/15/stock-market-today-live-updates.html"
+    },
+    {
+      "claim": "'oil climbs to 110... bread oil surges, $111' (transcript; 'bread' = Brent)",
+      "verdict": "verified. Brent crude around $110 a barrel, its highest since May 2026; WTI $101.71 on October 16. Copy says 'Brent oil near $110'.",
+      "source": "bloomberg.com (above); kucoin.com/news/flash/nasdaq-100-falls-5-5-weekly-brent-crude-near-110"
+    },
+    {
+      "claim": "'U.S. deficit jumps 12% to nearly 2 trillion' (transcript)",
+      "verdict": "verified. Treasury's final fiscal 2026 tally (October 16): $1.992 trillion, up from $1.775 trillion in fiscal 2025 (about 12%), third largest on record, net interest above $1 trillion. Copy says 'a $2 trillion deficit, up 12% in one year'.",
+      "source": "cnbc.com/2026/10/16/us-budget-deficit-2026.html; bloomberg.com/news/articles/2026-10-16/us-posts-1-99-trillion-budget-gap-for-2026-as-spending-climbs"
+    },
+    {
+      "claim": "'the bottom was in June 30th, which is the exact end of quarter two' (transcript)",
+      "verdict": "verified. Bitcoin's 2026 low printed on June 30: about $58,379 (KuCoin), just under $59,000 (CoinDesk), about 53% below the $126,198 all-time high of October 6, 2025 (Coinbase daily candles put the wick at about $57.7K on July 1 UTC, the same session). Copy says 'about $58K on June 30, about 53% off the top'.",
+      "source": "kucoin.com/news/insight/BTC/6ac1bd3538a2640007927778; coindesk.com/markets/2026/10/06/from-retail-leverage-to-etf-flows-a-year-after-its-record-high-bitcoin-is-down-just-32; coindcx.com/blog/crypto-deep-dives/crypto-bear-market"
+    },
+    {
+      "claim": "'people are going to front run the supposed prophesied bottom in October. And we're going to start going up in September, which is exactly what we did' (transcript)",
+      "verdict": "verified. Bitcoin rebounded about 45% from the June low by late September and traded about $85,300 to $85,450 around the October 6 anniversary of the high. Copy says 'about 45% off the June low to about $85K by late September'.",
+      "source": "cryptobriefing.com/bitcoin-down-32-percent-year-after-record/; coindesk.com (above)"
+    },
+    {
+      "claim": "'I had been saying since like August of last year... a really really disappointing local top... dump in January... crypto winter for a quarter or two' (transcript)",
+      "verdict": "Mike's own statement of his prior calls (his streams, Discord and Telegram); the thread presents them as his calls and checks them against verified market facts (top October 6, 2025 at $126,198; low June 30, 2026). The 'January dump' is written as his call, not as a measured January figure. 'Then everybody front-running the October bottom' and the '10% odds of a new bottom months after October' are likewise his own stated probabilities from July and August.",
+      "source": "transcript; persona core_theses item 9"
+    },
+    {
+      "claim": "'Bloomberg intelligence strategist Micah McClone warns Bitcoin could fall to under $10,000, particularly if the US stock market suffers a 20% drawdown' (transcript; = Mike McGlone)",
+      "verdict": "verified (McGlone's conditional scenario: BTC toward $10,000 on a prolonged 20% S&P 500 drawdown, framed as a stress case not a forecast; coverage dated September 13 and October 16, 2026). Not drafted: dark-register BTC-to-$10K content stays off the Kaspa-weighted lineup this batch and would need the 2008-analogy framing that invites the wrong read.",
+      "source": "tradingview.com/news/u_today:a8df8a2d2094b:0-bitcoin-on-track-for-10-000-if-s-p-500-drops-20-bloomberg-strategist-insists/; en.bloomingbit.io/feed/news/122381"
+    },
+    {
+      "claim": "'Bitcoin goes down by like 85%, one bull run, then 84%... then 73%... this particular bear market the drawdown was like 53%' (transcript)",
+      "verdict": "approximately right (historical peak-to-trough drawdowns about 93% in 2011, 85% to 86% in 2014-15, 84% in 2018, 77% in 2022, about 53% in 2025-26). Only the 53% figure is used in copy.",
+      "source": "k33.com/research/archive/articles/zooming-out; newhedge.io/terminal/bitcoin/price-drawdown; coindesk.com (above)"
+    },
+    {
+      "claim": "'we don't know until it gets above the 50 week moving average... we're riding on the 50 day' (transcript)",
+      "verdict": "kept as Mike's framework (quiz 2: the 50-week SMA is his bull-run confirmation level; the 50-day is short-term support). No price level for either average is quoted in copy.",
+      "source": "transcript; persona terminology_rules.moving_averages"
+    },
+    {
+      "claim": "'Developers now have native tools on Kaspa that simply didn't exist before. Thanks to Covenants and a move forward to KCC 20... the ecosystem works on bridging KRC20 to KCC20' (transcript, read off a Kaspa ecosystem post)",
+      "verdict": "verified. Covenants activated on Kaspa mainnet with the Toccata upgrade at DAA score 474,165,565, which arrived about June 30, 2026 (1,078 active covenant IDs as of October 6). KCC-20, the covenant-native fungible token standard, is still Draft (a Last Call proposal is open); KCC-1 and KCC-2 reached Last Call October 1. KaspaCom is reported to be building a one-way bridge moving KRC20 and Kaspa L2 tokens onto KCC-20. Copy: 'Covenants have been live on Kaspa mainnet since the end of June', 'KCC-20 token standard is in draft', 'the ecosystem is working on bridging KRC20 tokens over to it'. KRC20 itself went live on Kaspa mainnet September 15, 2024 (quiz 1).",
+      "source": "kaspaexplained.com/status; kucoin.com/news/insight/KAS/6ac9029f38a2640007935a9c; github.com/kaspanet/kccs/pull/6; banklesstimes.com/articles/2024/10/22/kas-coin-spikes-as-krc20-tokens-and-kaspa-ecosystem-experience-rapid-growth/"
+    },
+    {
+      "claim": "'Kaspa rocket.fun... beta on Kaspa testnet... Testnet 10' (transcript)",
+      "verdict": "verified from the project's own site only (self-reported): 'KaspaRocket is currently in beta testing on Kaspa Testnet-10', a memecoin launchpad, 'Fair launch, no pre-sale, no team allocation', test KAS from the TN10 faucet. No independent coverage, so copy keeps it generic ('a fair-launch memecoin launchpad is in beta on testnet-10') and never names the product.",
+      "source": "kasparocket.fun/; kaspa.org/calling-all-kaspa-integrations-to-run-a-testnet-10-node/"
+    },
+    {
+      "claim": "'slippy is a KRC 20 token that launched this year. It wasn't from the KRC 20 season' (transcript)",
+      "verdict": "CORRECTED, no content drafted. The Kasplex KRC20 API shows SLIPPY deployed 2025-07-13 (last year, after the 2024 KRC20 season, so 'not from the season' is right but 'this year' is not), 260 holders, mint finished. A reference file (slippy.png) exists, but the claim as spoken is wrong and the token is too small to carry a tweet.",
+      "source": "api.kasplex.org/v1/krc20/token/SLIPPY"
+    },
+    {
+      "claim": "Kaspa price (not stated on stream; copy needs the current level)",
+      "verdict": "current: about $0.036 (Bybit $0.03636, Coinbase $0.03628 on October 17, 2026), market cap about $1.01B, about 82% under the 20.7-cent all-time high. Copy says 'about 3.6 cents', 'under 4 cents', 'roughly a $1B market cap'.",
+      "source": "bybit.com/en/price/kaspa/; coinbase.com/price/kaspa"
+    },
+    {
+      "claim": "'How's Toshi doing? $45 million... meme season comes probably an easy 10 X on Toshi' (transcript)",
+      "verdict": "updated: TOSHI market cap about $46.4M (CoinGecko; Kraken/Blockworks about $43M to $44M, Coinbase about $53M), 95% below its all-time high. Copy says 'about a $46M market cap' and does not quote a multiple.",
+      "source": "coingecko.com/en/coins/toshi; coinbase.com/price/toshi"
+    },
+    {
+      "claim": "'turbo could 10 X to all time high' (transcript)",
+      "verdict": "roughly right but understated: TURBO about $0.0009, market cap about $62M, 93.7% below its all-time high of $0.01432 (about 16x). Not used as a number; Turbo is named only in poll options.",
+      "source": "coingecko.com/en/coins/turbo"
+    },
+    {
+      "claim": "'the gas fees were insane... you want to cash out $30 and you have to pay $20... people paying like $100 in gas fees' (transcript, Ethereum)",
+      "verdict": "NOT verified, dropped. Ethereum trackers show the base fee near record lows in October 2026 (about 0.07 gwei, cents per transfer); Mike's anecdote is a specific token/moment that cannot be reproduced. No Ethereum gas content drafted.",
+      "source": "cryptoticker.io/en/ethereum-price-base-fee-low-october-2026/; chaingate.dev/gas-tracker/ethereum"
+    },
+    {
+      "claim": "Neptune privacy coin ($XNT, SafeTrade), Bike Tyson, Hellhound, Crawl Scan, 'Proof of War' coins, Tensor cash, Tick coin, 'my math theory' (transcript)",
+      "verdict": "unverified micro-caps and chat mentions, skipped; Mike himself passed on Neptune ('better plays than Neptune') and on the new memes. No content drafted.",
+      "source": "transcript"
+    },
+    {
+      "claim": "Citi restricting AI agents from accounts (FT); 'open call' agent charging $4,000 (transcript)",
+      "verdict": "off-lineup AI tangent, not researched, no content drafted.",
+      "source": "transcript"
+    },
+    {
+      "claim": "Flying car / DeLorean / OJ Simpson / John Candy / Crypto Wendy videos; Trump 'economy has never been stronger' (transcript)",
+      "verdict": "personal and political tangents (persona avoid_in_drafts), skipped. Mike can post these himself.",
+      "source": "transcript; persona avoid_in_drafts"
+    },
+    {
+      "claim": "Zcash check",
+      "verdict": "no 'Zcash' or 'zcash' in this transcript; nothing to resolve.",
+      "source": "transcript"
+    },
+    {
+      "claim": "FOMC date",
+      "verdict": "verified: the next FOMC decision is October 27-28, 2026; the Fed last hiked September 16, 2026 to 3.75% to 4.00%. Copy says 'October 28'.",
+      "source": "cnbc.com/2026/09/23/market-sees-next-fed-hike-in-october-following-barr-comments-hot-inflation.html; actionforex.com (above)"
+    }
+  ],
+  "carousel_versions": {},
+  "missing_references": [
+    "Bitcoin logo: no reference file in images/reference/; the falling coin in image 2bac3e32 is rendered as a plain unmarked gold coin, Bitcoin is named only in copy",
+    "Federal Reserve / Chair Warsh / Fed building: no reference file; image 7608aa6a is an entity-free boardroom scene with plain coins (the standing green-eyed coin stands in for Mike)",
+    "Turbo ($TURBO) and Pengu ($PENGU) mascots: no reference files; named only in poll options, not rendered"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "5ab28f03",
+      "slug": "long-way-since-early-krc20-days",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Inside a dark, high-ceilinged workshop, a focused, proud an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, wears a small leather tool belt and stands at a heavy steel workbench, both hands guiding a glowing greenish cyan chain of interlocking geometric links that rises off the bench and arcs up into the darkness like a bridge under construction. Along the walls, racks of precise new tools hang in neat rows, each tool with a faint greenish cyan edge glow; in the far dim corner sits a dusty, cluttered old bench with crude hand tools and cobwebs, the way things used to be done. Blank blueprint rolls lie on the bench with no markings on them. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the character and the chain, a single warm work lamp over the bench, cold blue fill on the old corner. Mood: calm, capable, building. The character's face is the only logo in the image; every other surface is completely plain: no symbol, no glyph, no lettering or marking of any kind. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "5ab28f03",
+      "slug": "long-way-since-early-krc20-days",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The scene fills the tall portrait frame, the character at the workbench in the lower centre with the chain arcing up through the upper half of the frame. Inside a dark, high-ceilinged workshop, a focused, proud an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, wears a small leather tool belt and stands at a heavy steel workbench, both hands guiding a glowing greenish cyan chain of interlocking geometric links that rises off the bench and arcs up into the darkness like a bridge under construction. Along the walls, racks of precise new tools hang in neat rows, each tool with a faint greenish cyan edge glow; in the far dim corner sits a dusty, cluttered old bench with crude hand tools and cobwebs, the way things used to be done. Blank blueprint rolls lie on the bench with no markings on them. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the character and the chain, a single warm work lamp over the bench, cold blue fill on the old corner. Mood: calm, capable, building. The character's face is the only logo in the image; every other surface is completely plain: no symbol, no glyph, no lettering or marking of any kind. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "c80388aa",
+      "slug": "proof-of-work-without-a-premine-beats-memes",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A determined, hungry-eyed an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands firmly on a slab of dark solid bedrock in the centre of the frame, a small steel pickaxe resting over one shoulder, chips of glowing greenish cyan ore scattered at its feet. All around it, a flock of flimsy, half-deflated plain balloon-coins in candy colours drift and sag toward the ground, tethered by loose strings, some already crumpled on the dark floor. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character and the ore, a hard white spotlight on the bedrock, dim pastel glow on the deflating balloons. Mood: defiant, grounded, built to last. every balloon coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "c80388aa",
+      "slug": "proof-of-work-without-a-premine-beats-memes",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The scene fills the tall portrait frame, the Kaspa character on the bedrock in the lower centre with the deflating balloons drifting down through the upper half of the frame. A determined, hungry-eyed an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, stands firmly on a slab of dark solid bedrock in the centre of the frame, a small steel pickaxe resting over one shoulder, chips of glowing greenish cyan ore scattered at its feet. All around it, a flock of flimsy, half-deflated plain balloon-coins in candy colours drift and sag toward the ground, tethered by loose strings, some already crumpled on the dark floor. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the Kaspa character and the ore, a hard white spotlight on the bedrock, dim pastel glow on the deflating balloons. Mood: defiant, grounded, built to last. every balloon coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "2bac3e32",
+      "slug": "zombies-buy-the-ppi-red-candle",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Night scene on a dark city street slick with rain. A crowd of slumped, grey-green zombie-like plain coin characters with hollow eyes and torn little jackets suddenly lunge forward together, arms outstretched, catching a large plain gold coin character that is falling from above; the gold coin has a startled face, and the zombies are shoving it back upward, several already lifting it over their heads. A long red neon tube light mounted on the wall behind them flickers, and a green neon tube above it is just switching on. Deep navy near-black background. Dramatic cinematic lighting: cold sickly green-grey light on the zombies, a warm gold glow from the caught coin, red and green neon reflections in the wet street. Mood: eerie, stubborn, a crowd that refuses to let anything fall. every coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind on the gold coin or the zombie coins. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "7608aa6a",
+      "slug": "pause-camp-what-am-i-missing",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A long dark mahogany boardroom table in a cavernous, dimly lit room. Around the table, a row of plain grey coin characters in little suits sit dozing with their eyes closed and their arms folded, calm and content, one wearing a sleep mask. Behind them, filling the back wall, a giant old-fashioned glass thermometer glows cherry red, its liquid surging up past the top and cracking the glass, with red heat shimmer rolling off it; a barrel of black oil beside it tips over and spills across the floor toward the table. At the near end of the table a single wide-awake plain coin character with bright green eyes stands up, palms open in disbelief, staring at the sleepers. Deep navy near-black background. Dramatic cinematic lighting: hot red glow from the thermometer against the back wall, cold blue fill on the sleeping coins, a single spotlight on the standing coin. Mood: tense, incredulous. every coin's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the thermometer carries no numbers or scale marks. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "56510706",
+      "slug": "bear-market-mindset-stacking-kaspa",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Inside a quiet, dark stone vault, a calm an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, kneels and carefully places one more coin onto tall, neat columns of smaller greenish cyan Kaspa coins that carry the same backwards-K logo as the reference, the stacks rising around it like a small skyline. Through a single barred window high in the vault wall, a violent storm rages outside: lightning, sideways rain, and a swirl of flimsy plain paper coins being blown away in the wind. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the character and the stacks, a cold blue-white lightning flash through the window, warm low light pooling on the vault floor. Mood: calm, patient, unbothered. the paper coins outside are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "56510706",
+      "slug": "bear-market-mindset-stacking-kaspa",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. The scene fills the tall portrait frame, the Kaspa character and its coin stacks in the lower centre with the barred window and the storm high in the upper part of the frame. Inside a quiet, dark stone vault, a calm an anthropomorphized Kaspa coin character, its face the backwards-K (mirrored K) Kaspa logo glowing greenish cyan exactly like the coin in the attached reference image, with little arms and legs, kneels and carefully places one more coin onto tall, neat columns of smaller greenish cyan Kaspa coins that carry the same backwards-K logo as the reference, the stacks rising around it like a small skyline. Through a single barred window high in the vault wall, a violent storm rages outside: lightning, sideways rain, and a swirl of flimsy plain paper coins being blown away in the wind. Deep navy near-black background. Dramatic cinematic lighting: strong greenish cyan rim light on the character and the stacks, a cold blue-white lightning flash through the window, warm low light pooling on the vault floor. Mood: calm, patient, unbothered. the paper coins outside are completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Use the attached reference only for the Kaspa logo and its greenish cyan colour. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "799fe902",
+      "slug": "toshi-waiting-for-meme-season",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\toshi.png",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. The Toshi cat mascot shown in the attached reference image, a blue cat with lighter sky-blue stripe markings, a white muzzle and chest, smug half-lidded eyes and a small closed-mouth smile, wearing an orange hoodie with green drawstrings, exactly the character and colours of the reference, sits relaxed on a dark wooden bench at an empty night-time train platform, one leg crossed, one paw flashing a casual peace sign, an old-fashioned round station clock with a completely blank face hanging above. A gust of wind blows a stream of flimsy, torn, half-transparent plain paper coins past the bench and off the edge of the platform into the dark, crumpling as they go; the cat does not even look at them. THE CHARACTER IS SCULPTED 3D GEOMETRY: a rounded volumetric head, large glossy 3D eyes with a corneal bulge and thick sculpted eyelids, soft short fur with real volume, a fabric hoodie with stitched seams and cloth weight, raytraced volumetric light; use the attached reference ONLY as the character design and colour key, do not copy its flat drawing style, its linework or its outlines. Deep navy near-black background. Dramatic cinematic lighting: a single warm platform lamp over the bench, cool blue moonlight on the tracks, soft orange rim light on the hoodie. Mood: patient, smug, unbothered. every paper coin is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind; the clock face is blank with no numbers and no markings. No artist signature, no watermark, no initials in any corner. No text or words anywhere in the image."
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "We have come a long way since the early KRC20 days.\n\nCovenants have been live on Kaspa mainnet since the end of June, the covenant-native KCC-20 token standard is in draft, the ecosystem is working on bridging KRC20 tokens over to it, and a fair-launch memecoin launchpad is already in beta on testnet-10.\n\nDevelopers now have native tools on Kaspa ($KAS) that did not exist in 2024. The next token season on Kaspa will not look like the first one.\n\n#kaspa #KRC20",
+      "hook": "We have come a long way since the early KRC20 days.",
+      "image_id": "5ab28f03"
+    },
+    {
+      "tweet": "A hot CPI and the hottest PPI print in over four years landed back to back this week, and Bitcoin ($BTC) still could not close red.\n\nIt dipped under $80K for about two hours on PPI day, somebody bought every bit of that red candle, and it closed the day green.\n\nI said the four-year cycle zombies would not let red candles run in October. They are proving me right one candle at a time...\n\n#bitcoin #crypto",
+      "hook": "A hot CPI and the hottest PPI print in over four years landed back to back this week, and Bitcoin ($BTC) still could not close red.",
+      "image_id": "2bac3e32"
+    },
+    {
+      "tweet": "Proof of work beats memes, and it has to be proof of work WITHOUT a premine.\n\nA miner in my chat said he has not seen green in his portfolio for a while, and then the chat landed on the exact thing I have been saying for years. New memes are dying in days. Hashrate does not care about hype.\n\nKaspa ($KAS) at about 3.6 cents is the same fair-launch GhostDAG it was at 20 cents, and I keep stacking.\n\n#kaspa #proofofwork",
+      "hook": "Proof of work beats memes, and it has to be proof of work WITHOUT a premine.",
+      "image_id": "c80388aa"
+    },
+    {
+      "tweet": "CPI at 3.7%. PPI at 6.3%, the hottest print in over four years. Brent oil near $110. A $2 trillion deficit, up 12% in one year.\n\nAnd the market gives the Fed an 84% chance of PAUSING on October 28.\n\nI do not get it. If that hike comes and nobody priced it in, November gets ugly fast. What is the pause camp looking at that I am not?\n\n#Fed #bitcoin",
+      "hook": "CPI at 3.7%. PPI at 6.3%, the hottest print in over four years. Brent oil near $110. A $2 trillion deficit, up 12% in one year.",
+      "image_id": "7608aa6a",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): technique #3, the explicit 'What is the pause camp looking at that I am not?' invitation to correct, on top of a defensible take (hot CPI + hottest PPI in four years vs an 84% pause priced for October 28). Every number is verified in fact_check; nothing is manufactured."
+    },
+    {
+      "tweet": "Bear market mindset: no new memes, no hype plays, just stacking Kaspa ($KAS) under 4 cents while the rest of the board bleeds out 💪\n\n#kaspa #KAS",
+      "hook": "Bear market mindset: no new memes, no hype plays, just stacking Kaspa ($KAS) under 4 cents while the rest of the board bleeds out 💪",
+      "image_id": "56510706"
+    },
+    {
+      "tweet": "New memes are dying in days, and Toshi ($TOSHI) is still sitting at about a $46M market cap waiting for meme season... one of the more safer 10x's 😎\n\nFollow: @Toshi\n\n#TOSHI #memecoins",
+      "hook": "New memes are dying in days, and Toshi ($TOSHI) is still sitting at about a $46M market cap waiting for meme season... one of the more safer 10x's 😎",
+      "image_id": "799fe902"
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-10-17-was-i-right-the-calls-from-last-august",
+      "topic": "Was I right? The calls Mike made from August 2025 onward, checked against what happened: a disappointing local top ($126K, October 6, 2025), a January dump into a crypto winter of a quarter or two (low about $58K on June 30, the last day of Q2), the September front-run of the prophesied October bottom (about 45% off the low to about $85K), the zombies buying the PPI-day red candle under $80K back to a green close, and the one scenario he does not want to be right about (a new bottom months after October) with CPI 3.7%, PPI 6.3%, oil near $110, a $2T deficit and an 84% pause priced for October 28. Standalone thread (no YT post this batch per the brief).",
+      "variation_label": "A (receipts-in-order: call, then what happened)",
+      "tweets": [
+        {
+          "text": "Was I right?\n\nLast August I laid out the whole year in advance: a disappointing local top, a January dump, a crypto winter lasting a quarter or two, then everybody front-running the October bottom.\n\nHere is how it actually played out...",
+          "hook": "Was I right?"
+        },
+        {
+          "text": "The disappointing top.\n\nBitcoin ($BTC) peaked at about $126K on October 6, 2025, and that was it. No blow-off, no $200K, just a top that left everybody unsatisfied.\n\nExactly the setup I described."
+        },
+        {
+          "text": "The dump and the winter.\n\nI said they would get pissed off, dump in January, and hand us a crypto winter for a quarter or two.\n\nThe low printed June 30 at about $58K, about 53% off the top. June 30 is the last day of Q2. Two quarters, to the day."
+        },
+        {
+          "text": "The front-run.\n\nThrough July and August I said people would front-run the prophesied October bottom and we would start going up in September.\n\nBitcoin ran about 45% off the June low to about $85K by late September. Right on schedule."
+        },
+        {
+          "text": "The October candles.\n\nI said the four-year cycle zombies would not let red candles run in October. PPI day: Bitcoin under $80K for about two hours, then bought straight back up to a green close.\n\nOn the hottest PPI print in over four years."
+        },
+        {
+          "text": "Now the part I do NOT want to be right about.\n\nBack in August I gave 10% odds to a new bottom printing months after October. CPI 3.7%, PPI 6.3%, oil near $110, a $2T deficit, and an 84% pause priced in for October 28.\n\nWe need good news, and we need it fast."
+        },
+        {
+          "text": "Kaspa Maxis did not wait for an October bottom; we stacked $KAS through the summer and we are still stacking.\n\nSo tell me: is the bottom behind us, or does a new one print months after October?\n\nFollow me for the calls before they happen 🔥"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-10-17-bear-market-mindset-where-is-your-next-dollar-going",
+      "topic": "Kaspa / bear market mindset: proof of work without a premine vs OG memes vs new memes vs cash",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Bear market mindset. New memes are dying in days, a miner in my chat has not seen green in a while, and the chat landed where I did years ago: proof of work without a premine beats memes.\n\nWhere is your next dollar going?",
+      "hook": "Bear market mindset. New memes are dying in days, a miner in my chat has not seen green in a while, and the chat landed where I did years ago: proof of work without a premine beats memes.",
+      "options": [
+        "Fair-launch PoW ($KAS)",
+        "OG memes (Turbo, Toshi)",
+        "A brand new meme",
+        "Cash, waiting on the Fed"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-10-17-fed-hikes-against-84-percent-pause-where-is-bitcoin-end-of-november",
+      "topic": "Macro: CPI 3.7%, PPI 6.3%, Brent near $110, and an 84% pause priced for October 28; if the Fed hikes against that consensus, where is Bitcoin at the end of November",
+      "question_text": "CPI 3.7%. PPI 6.3%, the hottest print in over four years. Brent oil near $110. And the market still prices an 84% chance the Fed PAUSES on October 28. I do not get the pause camp. So play it out with me: the Fed hikes on the 28th against that consensus, the move nobody priced in. Where is Bitcoin ($BTC) at the end of November?",
+      "hook": "CPI 3.7%. PPI 6.3%, the hottest print in over four years. Brent oil near $110. And the market still prices an 84% chance the Fed PAUSES on October 28.",
+      "options": [
+        "Under $70K, that hike was never priced in",
+        "$70K to $80K, a dip the zombies buy again",
+        "Above $80K, the market absorbs it"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-10-17-bear-market-mindset-where-is-your-next-dollar-going",
+      "topic": "Kaspa / bear market mindset: a miner in chat has not seen green in a while and the chat agreed proof of work without a premine beats memes; where is your next dollar going",
+      "question_text": "Bear market mindset. A miner in my chat said he has not seen green in his portfolio for a while, and the chat landed where I did years ago: proof of work without a premine beats memes. New memes are dying in days, and market volume is only going down. So where is your next dollar going right now?",
+      "hook": "Bear market mindset. A miner in my chat said he has not seen green in his portfolio for a while, and the chat landed where I did years ago: proof of work without a premine beats memes.",
+      "options": [
+        "Fair-launch proof of work: Kaspa ($KAS)",
+        "The OG memes that survived (Turbo, Toshi, Pengu)",
+        "A brand new meme, I like the odds",
+        "Nowhere, cash until the Fed is done"
+      ]
+    }
+  ],
+  "yt_posts": [],
+  "ig_single": [
+    {
+      "id": "ig-2026-10-17-long-way-since-early-krc20-days",
+      "kaspa_subject": true,
+      "image_id": "5ab28f03",
+      "aspect_ratio": "4:5",
+      "hook": "We have come a long way since the early KRC20 days.",
+      "caption": "We have come a long way since the early KRC20 days.\n\nCovenants have been live on Kaspa mainnet since the end of June. The covenant-native KCC-20 token standard is in draft, the ecosystem is already working on bridging KRC20 tokens over to it, and a fair-launch memecoin launchpad is in beta on testnet-10 right now.\n\nThink about where the first KRC20 season came from: a proof-of-work chain with no smart contracts, token rules living in an indexer instead of on the chain, and a wave of tokens that mostly did not survive. Developers now have native tools on Kaspa ($KAS) that simply did not exist in 2024, and the rules live on L1.\n\nThe next token season on Kaspa will not look like the first one. Which KRC20 names do you want to see make the jump? Tell me in the comments.\n\n#kaspa #kas #krc20 #kcc20 #covenants #proofofwork #fairlaunch #ghostdag #crypto #cryptocurrency #altcoins #blockchain #cryptoinvesting #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#krc20",
+        "#kcc20",
+        "#covenants",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "We have come a long way since the early KRC20 days."
+    },
+    {
+      "id": "ig-2026-10-17-proof-of-work-without-a-premine-beats-memes",
+      "kaspa_subject": true,
+      "image_id": "c80388aa",
+      "aspect_ratio": "4:5",
+      "hook": "Proof of work beats memes, and it has to be proof of work WITHOUT a premine.",
+      "caption": "Proof of work beats memes, and it has to be proof of work WITHOUT a premine.\n\nA miner in my chat said he has not seen green in his portfolio for a while. Then the chat landed on the exact thing I have been saying for years. New memes are dying in days. Volume across the whole market is sliding. And through all of it, hashrate does not care about hype.\n\nKaspa ($KAS) at about 3.6 cents is the same fair-launch GhostDAG it was at 20 cents: no premine, no VC allocation, no team unlock waiting to dump on you. The price changed; what the chain is did not. That is why it is the one thing I keep stacking with a bear market mindset.\n\nMiners, holders: are you still adding down here? Tell me in the comments.\n\n#kaspa #kas #proofofwork #fairlaunch #ghostdag #krc20 #mining #bitcoin #crypto #cryptocurrency #altcoins #blockchain #cryptoinvesting #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#proofofwork",
+        "#fairlaunch",
+        "#ghostdag",
+        "#krc20",
+        "#mining",
+        "#bitcoin",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Proof of work beats memes, and it has to be proof of work WITHOUT a premine."
+    },
+    {
+      "id": "ig-2026-10-17-bear-market-mindset-stacking-kaspa",
+      "kaspa_subject": true,
+      "image_id": "56510706",
+      "aspect_ratio": "4:5",
+      "hook": "Bear market mindset: no new memes, no hype plays, just stacking Kaspa ($KAS) under 4 cents while the rest of the board bleeds out 💪",
+      "caption": "Bear market mindset: no new memes, no hype plays, just stacking Kaspa ($KAS) under 4 cents while the rest of the board bleeds out 💪\n\nMarket volume is only going down. The Nasdaq 100 just had its worst week since April 2025, oil is near $110, and the new memes being pushed by every influencer die in days. This is the exact same feeling as the whole last bear market, and I am running the same playbook that worked then.\n\nThat playbook is boring on purpose: long-term plays with real backing, and a DCA into the fair-launch proof-of-work chain every time it gets cheaper. Kaspa at about 3.6 cents is about 82% under its all-time high at roughly a $1B market cap. Keep stacking.\n\nWhat are you stacking through this one? Tell me in the comments.\n\n#kaspa #kas #dca #proofofwork #fairlaunch #bearmarket #crypto #cryptocurrency #altcoins #blockchain #bitcoin #cryptoinvesting #cryptonews",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#dca",
+        "#proofofwork",
+        "#fairlaunch",
+        "#bearmarket",
+        "#crypto",
+        "#cryptocurrency",
+        "#altcoins",
+        "#blockchain",
+        "#bitcoin",
+        "#cryptoinvesting",
+        "#cryptonews"
+      ],
+      "hashtag_placement": "caption_end",
+      "source_post": "Bear market mindset: no new memes, no hype plays, just stacking Kaspa ($KAS) under 4 cents while the rest of the board bleeds out 💪"
+    }
+  ],
+  "yt_quizzes": [
+    {
+      "id": "yt-quiz-2026-10-17-krc20-runs-on-which-chain",
+      "topic": "KRC20 on Kaspa",
+      "source_post": null,
+      "question_text": "On stream I said we have come a long way since the early KRC20 days. KRC20 tokens live on which blockchain?",
+      "hook": "Which chain runs KRC20?",
+      "options": [
+        "Kaspa",
+        "Solana",
+        "Base",
+        "Ethereum"
+      ],
+      "correct_option_index": 0,
+      "explanation": "KRC20 is Kaspa's token standard. It went live on Kaspa mainnet in September 2024; covenant-native KCC-20 is the next step.",
+      "capture_results_after_days": 14
+    },
+    {
+      "id": "yt-quiz-2026-10-17-bull-run-confirmation-level",
+      "topic": "Bull run confirmation: the 50-week SMA",
+      "source_post": null,
+      "question_text": "Through July and August I kept saying we could be in a bull run, we just do not know yet. Which level does Bitcoin have to get back above before I call it confirmed?",
+      "hook": "What confirms a bull run?",
+      "options": [
+        "The 50-week SMA",
+        "The 50-day moving average",
+        "The 200-day moving average",
+        "The previous all-time high"
+      ],
+      "correct_option_index": 0,
+      "explanation": "A bull run is not confirmed until price is back above the 50-week SMA. The 50-day is short-term support, not confirmation.",
+      "capture_results_after_days": 14
+    },
+    {
+      "id": "yt-quiz-2026-10-17-front-running-the-october-bottom",
+      "topic": "Front-running the October bottom",
+      "source_post": null,
+      "question_text": "In August I said people would front-run the 'prophesied' October bottom, and we went up in September. What does front-running a bottom mean?",
+      "hook": "What is front-running a bottom?",
+      "options": [
+        "Buying in September, before the dip everyone expects",
+        "Shorting into October to force the bottom",
+        "Selling in September to buy back lower in October",
+        "Waiting until November to confirm the low"
+      ],
+      "correct_option_index": 0,
+      "explanation": "Front-running means buying BEFORE the dip the crowd is waiting for. That early buying is why the bottom never lands in October.",
+      "capture_results_after_days": 14
+    }
+  ]
+}
