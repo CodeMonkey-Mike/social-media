@@ -316,6 +316,14 @@ def spawn_agent(state: BatchState, node: str, agent: str, prompt: str, log_name:
     if state.get("stub"):
         return (0 if state["stub"] == "ok" else 1), f"STUB agent {agent}"
     rc, out = _spawn_agent_once(state, node, agent, prompt, log_name, marker, model=None)
+    # API OVERLOAD RETRY (Mike, 2026-10-27, after batch `best-time` clip 3's remotion-builder died
+    # 3 min in on "API Error: 529 Overloaded" and sat unbuilt for an hour while its sibling built):
+    # a 529 is transient server load, so wait a minute and respawn ONCE with the same model.
+    if rc != 0 and API_OVERLOAD_RE.search(out or ""):
+        print(f"[batch] {node}: API overloaded (529), respawning {agent} once in "
+              f"{API_OVERLOAD_WAIT_S}s", flush=True)
+        time.sleep(API_OVERLOAD_WAIT_S)
+        rc, out = _spawn_agent_once(state, node, agent, prompt, log_name, marker, model=None)
     # FABLE ALLOWANCE FALLBACK (Mike, 2026-08-09; put in code 2026-09-14 after both Lane 2 + 3
     # advisors of batch `perpspad` died in 6s): a `model: fable` agent has no automatic fallback,
     # so when the weekly Fable allowance is out, respawn ONCE with an explicit Opus override
@@ -335,6 +343,12 @@ def spawn_agent(state: BatchState, node: str, agent: str, prompt: str, log_name:
 # Keep this pattern IDENTICAL in every headless spawner (longform common.py, batch_graph.py, find_jobs.py).
 FABLE_LIMIT_RE = re.compile(r"\bFable\b[^\n]{0,40}\blimit\b|\blimit\b[^\n]{0,40}\bFable\b", re.I)
 FABLE_FALLBACK_MODEL = "opus"
+
+# The CLI's message when the API is overloaded (seen live 2026-10-27, batch best-time):
+#   "API Error: 529 Overloaded. This is a server-side issue, usually temporary — try again in a moment."
+# Keep IDENTICAL in common.py, batch_graph.py and find_jobs.py.
+API_OVERLOAD_RE = re.compile(r"API Error:\s*529\b|\b529 Overloaded\b|overloaded_error", re.I)
+API_OVERLOAD_WAIT_S = 60
 
 
 def _spawn_agent_once(state: BatchState, node: str, agent: str, prompt: str, log_name: str,

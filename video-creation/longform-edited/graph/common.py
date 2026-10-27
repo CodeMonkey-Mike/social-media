@@ -85,6 +85,11 @@ PROGRESS_RE = re.compile(r"^PROGRESS (\d+)%")
 # Keep this pattern IDENTICAL in every headless spawner (longform common.py, batch_graph.py, find_jobs.py).
 FABLE_LIMIT_RE = re.compile(r"\bFable\b[^\n]{0,40}\blimit\b|\blimit\b[^\n]{0,40}\bFable\b", re.I)
 FABLE_FALLBACK_MODEL = "opus"
+# The CLI's message when the API is overloaded (seen live 2026-10-27, batch best-time): "API Error: 529 Overloaded.
+# This is a server-side issue, usually temporary". Transient, so wait a minute and respawn ONCE with the same model
+# (Mike, 2026-10-27). Keep IDENTICAL in common.py, batch_graph.py and find_jobs.py.
+API_OVERLOAD_RE = re.compile(r"API Error:\s*529\b|\b529 Overloaded\b|overloaded_error", re.I)
+API_OVERLOAD_WAIT_S = 60
 
 CURRENT_PROJECT = None
 
@@ -397,6 +402,11 @@ def spawn_agent(state: dict, node: str, agent: str, prompt: str, log_name: str):
     if state.get("stub"):
         return (0 if state["stub"] == "ok" else 1), f"STUB agent {agent}"
     rc, out = _spawn_once(state, node, agent, prompt, log_name, None)
+    if rc != 0 and API_OVERLOAD_RE.search(out or ""):
+        print(f"[longform] {node}: API overloaded (529), respawning {agent} once in "
+              f"{API_OVERLOAD_WAIT_S}s", flush=True)
+        time.sleep(API_OVERLOAD_WAIT_S)
+        rc, out = _spawn_once(state, node, agent, prompt, log_name, None)
     if rc != 0 and FABLE_LIMIT_RE.search(out or ""):
         print(f"[longform] {node}: Fable allowance exhausted — respawning {agent} with "
               f"--model {FABLE_FALLBACK_MODEL}", flush=True)
