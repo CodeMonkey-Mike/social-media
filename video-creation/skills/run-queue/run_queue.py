@@ -106,7 +106,11 @@ def _locked():
         data.setdefault("paused", False)
         data.setdefault("entries", [])
         before = json.dumps(data, sort_keys=True)
-        data["entries"] = [e for e in data["entries"] if _alive(e)]
+        dead = [e for e in data["entries"] if not _alive(e)]
+        data["entries"] = [e for e in data["entries"] if e not in dead]
+        for e in dead:   # a clean stop removes its own entry, so a pruned one DIED (killed, crash, reboot): never silent
+            notify(e.get("label", "Video run"), f"DIED while {e.get('status', 'queued')} (process {e.get('pid')} is gone, "
+                   "it never reported a gate, done or failure). Nothing is running for it: it must be started again.")
         yield data
         if json.dumps(data, sort_keys=True) != before:
             tmp = QUEUE.with_suffix(".tmp")
@@ -161,6 +165,8 @@ def turn(label: str, kind: str = "run", project: str = "", skip: bool = False, p
             with _locked() as data:
                 mine = next((e for e in data["entries"] if e["id"] == me["id"]), None)
                 if mine is None:
+                    if os.environ.get(REPORT_ENV):   # a deliberate cancel is not a silent death
+                        Path(os.environ[REPORT_ENV]).write_text("cancelled", encoding="utf-8")
                     raise Cancelled(f"[run-queue] {label}: cancelled while waiting (run_queue.py cancel)")
                 holder, waiting = _holder(data), _waiting(data)
                 if not data["paused"] and holder is None and waiting and waiting[0]["id"] == me["id"]:
@@ -244,12 +250,123 @@ def supervise(label, kind, project, invoke, retry_nodes, is_gate, skip=False, de
         last = next(reversed(list((final.get("steps") or {}).keys())), "?")
         notify(label, f"Stopped early after {last} (status '{final.get('status')}', not done): check the run's log. "
                       "The turn passed to the next run.")
+    if os.environ.get(REPORT_ENV):
+        Path(os.environ[REPORT_ENV]).write_text(str(final.get("status")), encoding="utf-8")
     return final
+
+
+# ── self-detach + guard (Mike, 2026-10-29) ──────────────────────────────────────────────────────────────────────────
+# 2026-10-28 night: a vertical-approve + short run was launched as a Claude Code background task; Claude Code reaped it
+# for low memory while it WAITED in the queue, and nothing told Mike. HOW a run is launched is no longer anyone's choice:
+# every queued entry point calls detach() first and re-executes itself as a DETACHED process (its own console-less
+# process group, broken away from the launcher's job), under a GUARD that notifies when the run ends without having
+# reported. The launcher mirrors the log and returns the run's exit code, so it reads like a foreground run; killing the
+# launcher (or the whole session) never touches the run. Proven by test_detach.py.
+
+DETACHED_ENV = "RUN_QUEUE_DETACHED"
+REPORT_ENV = "RUN_QUEUE_REPORT"   # supervise() touches this file once it has sent its end report
+LOGS = STATE / "logs"
+
+
+def _spawn_detached(argv, log_path):
+    flags = 0
+    if os.name == "nt":
+        flags = 0x00000008 | 0x00000200 | 0x08000000   # DETACHED_PROCESS | CREATE_NEW_PROCESS_GROUP | CREATE_NO_WINDOW
+    import subprocess
+    out = open(log_path, "ab")
+    kw = dict(stdin=subprocess.DEVNULL, stdout=out, stderr=subprocess.STDOUT, close_fds=True,
+              env={**os.environ, DETACHED_ENV: "1", "PYTHONIOENCODING": "utf-8", "PYTHONUNBUFFERED": "1"})
+    try:
+        return subprocess.Popen(argv, creationflags=flags | 0x01000000, **kw)   # + CREATE_BREAKAWAY_FROM_JOB
+    except OSError:
+        return subprocess.Popen(argv, creationflags=flags, **kw)                 # the job forbids breakaway
+
+
+def detach(label: str, attach: bool = True):
+    """Call FIRST in a queued entry point. In the launcher: start the guard detached and (attach) mirror its log until
+    it ends, then exit with the run's exit code. In the detached run itself: return immediately."""
+    if os.environ.get(DETACHED_ENV) or os.environ.get(HELD_ENV):
+        return
+    LOGS.mkdir(parents=True, exist_ok=True)
+    slug = re.sub(r"[^\w.-]+", "-", label).strip("-")[:60]
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    log, rcf = LOGS / f"{stamp}-{slug}.log", LOGS / f"{stamp}-{slug}.rc"
+    run_argv = [sys.executable, "-u", *sys.argv]
+    guard = [sys.executable, "-u", str(Path(__file__).resolve()), "guard", "--label", label, "--rc", str(rcf), "--log", str(log), "--", *run_argv]
+    # ORPHAN the guard: a short-lived trampoline starts it and exits at once, so no live parent links the run to the
+    # launcher (a tree kill, `taskkill /T`, walks parent PIDs and took a merely-detached child with it in the test)
+    pidf = LOGS / f"{stamp}-{slug}.pid"
+    tramp = _spawn_detached([sys.executable, str(Path(__file__).resolve()), "spawn", "--log", str(log), "--pidfile", str(pidf),
+                             "--", *guard], log)
+    tramp.wait(30)
+    gpid = int(pidf.read_text()) if pidf.is_file() else tramp.pid
+
+    class _P:
+        pid = gpid
+    p = _P()
+    print(f"[run-queue] {label}: DETACHED (guard pid {p.pid}); log {log}", flush=True)
+    if not attach:
+        sys.exit(0)
+    pos = 0
+    try:
+        while True:
+            with open(log, "rb") as f:
+                f.seek(pos)
+                chunk = f.read()
+                pos += len(chunk)
+            if chunk:
+                sys.stdout.write(chunk.decode("utf-8", errors="replace"))
+                sys.stdout.flush()
+            if rcf.is_file():
+                with open(log, "rb") as f:
+                    f.seek(pos)
+                    sys.stdout.write(f.read().decode("utf-8", errors="replace"))
+                sys.exit(int(rcf.read_text().strip() or 1))
+            if _proc_start(p.pid) is None and not rcf.is_file():
+                print(f"[run-queue] {label}: the guard is gone without an exit code (see the notification log)", flush=True)
+                sys.exit(1)
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print(f"\n[run-queue] {label}: launcher stopped; the run continues detached (log {log})", flush=True)
+        sys.exit(0)
+
+
+def _guard(label, rc_path, argv, log=None):
+    """Run the real run as a child; if it ends without having sent its own notification, send one."""
+    import subprocess
+    marker = Path(str(rc_path) + ".reported")
+    out = open(log, "ab", buffering=0) if log else None   # the run writes its own log: a detached child's inherited
+    rc = subprocess.call(argv, stdin=subprocess.DEVNULL, stdout=out, stderr=subprocess.STDOUT if out else None,   # handles came out empty
+                         env={**os.environ, DETACHED_ENV: "1", REPORT_ENV: str(marker)})
+    reported = marker.is_file()
+    if not reported:
+        notify(label, f"STOPPED without reporting (exit {rc}): it never reached a gate, done or a failure report. "
+                      "Nothing is running for it now; check its log in run-queue/state/logs and start it again.")
+    Path(rc_path).write_text(str(rc))
+    return rc
 
 
 # ── CLI ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 def _cli():
+    if len(sys.argv) > 1 and sys.argv[1] == "spawn":     # the trampoline: start the guard detached, record it, exit
+        g = argparse.ArgumentParser(prog="run_queue.py spawn")
+        g.add_argument("--log", required=True)
+        g.add_argument("--pidfile", required=True)
+        g.add_argument("cmd", nargs=argparse.REMAINDER)
+        a = g.parse_args(sys.argv[2:])
+        child = _spawn_detached(a.cmd[1:] if a.cmd[:1] == ["--"] else a.cmd, a.log)
+        Path(a.pidfile).write_text(str(child.pid))
+        sys.exit(0)
+    if len(sys.argv) > 1 and sys.argv[1] == "guard":
+        g = argparse.ArgumentParser(prog="run_queue.py guard")
+        g.add_argument("--label", required=True)
+        g.add_argument("--rc", required=True)
+        g.add_argument("--log", default=None)
+        g.add_argument("cmd", nargs=argparse.REMAINDER)
+        a = g.parse_args(sys.argv[2:])
+        cmd = a.cmd[1:] if a.cmd[:1] == ["--"] else a.cmd
+        sys.exit(_guard(a.label, a.rc, cmd, a.log))
     ap = argparse.ArgumentParser(prog="run_queue.py", description="The video-production run queue (run-queue.md).")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("status")

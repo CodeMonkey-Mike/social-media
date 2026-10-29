@@ -384,7 +384,11 @@ COMMANDS = {"longform": main_longform, "vertical": main_vertical, "short": main_
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] in COMMANDS:
-        cmd = sys.argv.pop(1)
+        cmd = sys.argv[1]
+        if cmd != "status" and "--stub" not in sys.argv:   # every real run is DETACHED + guarded (run-queue.md)
+            proj = sys.argv[sys.argv.index("--project") + 1] if "--project" in sys.argv else "?"
+            RQ.detach(f"{cmd} {Path(proj).name}")
+        sys.argv.pop(1)
         COMMANDS[cmd]()
     else:
         main_longform()

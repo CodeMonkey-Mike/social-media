@@ -44,6 +44,30 @@ desktop notification: waiting at a gate / done / failed again. Never retried: ga
 (a re-drive fails the same way), `stage_longform` / `lane2_publish` / `register` / `launch_lane3` (side effects).
 Posting is never retried anywhere (hard rule); no graph node posts.
 
+**A re-drive must be able to change something (2026-10-28).** An asset node that fails visual-qa (`assets`, `v_assets`,
+`s_variants`) MOVES the failing files to `_previews/.../qa/rejected/` before it fails (`longform_graph._reject_qa_fails`), so
+the re-drive rebuilds ONLY that gap with the verdict as feedback. Before this, the failing file stayed, the re-drive re-judged
+it and failed identically in seconds: the retry was a no-op and the run sat failed overnight (inference vertical + only-18
+short, 2026-10-27). An OPTIONAL output never fails the run at all: the short's variants auto-waive after 2 rounds
+(`longform-to-short.md`). Proven by `longform-edited/graph/test_asset_qa_retry.py`.
+
+## Every run is DETACHED + GUARDED, in code (Mike, 2026-10-29)
+
+**Why:** 2026-10-28 night a vertical-approve + short run was launched as a Claude Code background task. Claude Code
+reaped it for low memory while it WAITED in the queue: it never took its turn, so the supervisor never ran and nothing
+notified Mike. He found out only by asking for the status. HOW a run is launched is no longer anyone's choice:
+
+- `run.py longform|vertical|short` (longform-edited) and `run.py batch` (livestream) call `run_queue.detach()` FIRST.
+  It hands the run to a trampoline that starts a GUARD as a detached, broken-away process and exits, so the run has no
+  living parent: killing the launcher, its whole process tree or the Claude session never touches it. The launcher
+  mirrors the run's log and exits with the run's exit code (2 = gate), so it reads like a foreground run.
+  Logs: `state/logs/<stamp>-<label>.log`. `--stub` runs and `status` stay in-process.
+- The GUARD notifies when the run ends WITHOUT its supervisor's end report (killed, crashed, out of memory):
+  "STOPPED without reporting ... start it again". A deliberate `cancel` is not a silent death.
+- The queue never prunes silently: an entry whose process is gone sends "DIED while waiting/running".
+- Proof: `python video-creation/skills/run-queue/test_detach.py` (launcher tree-killed -> the run finishes and
+  reports; run killed -> notified; dead entry -> notified). Run it after touching `detach` / `_guard`.
+
 ## Desktop notifications
 
 `notify.py` sends a Windows toast from the SCRIPT (works with no Claude session open), using PowerShell's always-

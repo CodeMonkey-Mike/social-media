@@ -1792,6 +1792,9 @@ SEGMENTS = {"cut": main_cut, "tighten": main_tighten,
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] in SEGMENTS:
+        if sys.argv[1] == "batch" and "--stub" not in sys.argv:   # a batch run is DETACHED + guarded (run-queue.md)
+            b = sys.argv[sys.argv.index("--batch") + 1] if "--batch" in sys.argv else Path(sys.argv[sys.argv.index("--source") + 1]).stem if "--source" in sys.argv else "?"
+            RQ.detach(f"livestream batch {b}")
         seg = sys.argv.pop(1)    # legacy no-segment invocation stays intake (Wave 1)
         SEGMENTS[seg]()
     else:
