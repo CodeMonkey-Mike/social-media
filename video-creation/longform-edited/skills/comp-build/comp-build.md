@@ -335,6 +335,14 @@ scale-in on each container/sub-point swap (hand-rolled `interpolate`, NOT `Trans
      point; the video then ADVANCES with the frame. On a **face-OUT** it walks straight off the end of the FACE
      window into the cover-blackout region and the outgoing face turns **BLACK one frame into the transition**.
      v7 shipped with Mike's face black at all 6 face-outs and every automated check passed.
+     **And wrap that Freeze in `<Sequence from={0} layout="none">`.** Remotion 4.0.462's `<Freeze frame={n}>` sets the
+     timeline to `n + the PARENT Sequence's from` and CLAMPS a timeline past the composition's last frame, so a
+     `<Freeze frame={abs}>` mounted straight under a Sequence that starts after the video's midpoint (a face whip at
+     2:00) silently freezes on frame `DUR - 1 - from`: a blacked cover frame (a black whip) or Mike's face from another
+     minute. The zero-offset Sequence makes the parent offset 0 in ANY nesting (`TransitionClip` already nests its
+     engine that way, which is why the light leaks were fine). growth-scale-up draft v1 (2026-10-28): 4 of 8 face whips
+     broken (2 pure black for 0.43 s, 2 on a face from 1:11 / 0:12), every comp gate passed. Its `SpineFrozen` is the
+     reference shape.
   2. **`muted`.** Every `TransitionClip` mounts the node **TWICE** (outgoing + incoming, ~0.1s apart) on top of
      the live spine, so an unmuted copy replays the VO 2 more times slightly late. Mike heard it as a doubled
      word ("right" twice a few ms apart). It is inaudible on a still frame and only shows up on a listen or as
@@ -347,7 +355,8 @@ scale-in on each container/sub-point swap (hand-rolled `interpolate`, NOT `Trans
      `spine.mp4`, the still must pull that clip (with its head-handle offset) or the backdrop pops to raw green
      screen for the length of the transition.
   Mechanically: the node is correct when a frame just BEFORE the engine window and a frame just INSIDE it are
-  identical except for the effect. Extract both and compare — that one check catches all four.
+  identical except for the effect. Extract both and compare — that one check catches all four. Run it on EVERY
+  face-side window (each face whip, leak, face-out), not a sample: the Freeze clamp above only bites past the midpoint.
 - **⛔ A transition PLANNED in `TRANSITIONS.md` is not a transition WIRED in the comp**, and a wired one whose
   plates/tiles/SFX were never copied into the lean project `assets/transitions/` renders as a plain cut. Neither
   errors: the effect is just silently missing (ethereum-rwa shipped v6+v7 with `STILL_FX` declared but never

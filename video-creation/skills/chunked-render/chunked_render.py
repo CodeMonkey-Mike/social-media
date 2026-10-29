@@ -188,7 +188,7 @@ def _render_chunk(bundle_dir, comp, path: Path, a, b, flags, logpath: Path, stal
     return True, "", state["frame"]
 
 
-def _verify_chunk(path: Path, a, b, fps, audio):
+def _verify_chunk(path: Path, a, b, fps, audio, last=False):
     if not path.is_file():
         return "no output file"
     n = len(_frame_pts(path))
@@ -196,7 +196,10 @@ def _verify_chunk(path: Path, a, b, fps, audio):
         return f"{n} frames, want {b - a + 1}"
     if audio:
         s = _audio_seconds(path)
-        if s is None or abs(s - (b - a + 1) / fps) > 0.002:
+        # the comp's LAST chunk may run short by the source's own tail (a spine whose audio stops ~20-40 ms before its
+        # picture, e.g. inference 2026-10-27): allow the join check's 30 ms there, never a long tail
+        want_s = (b - a + 1) / fps
+        if s is None or (abs(s - want_s) > 0.002 and not (last and 0 <= want_s - s <= 0.03)):
             return f"audio {s} s, want {(b - a + 1) / fps:.4f} s"
     return ""
 
@@ -279,7 +282,7 @@ def _render(*, comp, out, public_dir, quality, frames, chunk, audio, concurrency
         name = f"chunk-{a:06d}-{b:06d}"
         path = work / f"{name}.mkv"
         rec = man["chunks"].setdefault(name, {"attempts": []})
-        if rec.get("ok") and not _verify_chunk(path, a, b, fps, audio):
+        if rec.get("ok") and not _verify_chunk(path, a, b, fps, audio, last=(b == total - 1)):
             log(f"CHUNK {i + 1}/{len(ranges)} frames {a}-{b} skip (already rendered)")
             done_frames += b - a + 1
             continue
@@ -295,7 +298,7 @@ def _render(*, comp, out, public_dir, quality, frames, chunk, audio, concurrency
             lp = work / f"{name}.attempt{len(rec['attempts']) + 1}.log"
             t0 = time.time()
             ok, why, last = _render_chunk(bdir, comp, path, a, b, flags, lp, stall_s, first_frame_s, progress)
-            bad = why or _verify_chunk(path, a, b, fps, audio)
+            bad = why or _verify_chunk(path, a, b, fps, audio, last=(b == total - 1))
             rec["attempts"].append({"at": datetime.now().isoformat(timespec="seconds"), "ok": not bad, "why": bad,
                                     "last_frame": last, "log": lp.name, "seconds": round(time.time() - t0)})
             if not bad:

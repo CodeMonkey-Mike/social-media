@@ -49,6 +49,12 @@ no-cold-open rule; the format owner wins on conflict):
      `[SAY-EXACT]` line is only the words Mike says, so a parenthesis on one is a FAIL. A direction, aside,
      word-swap or pronunciation goes on its own 💬 `[NOTE]` / 🎬 `[SHOW]` line; a placeholder spoken line
      ("🗣️ `[COVER]` (CH2 follows)") is never written (screenplay.md Conventions 3 and 5).
+ 16. MUSIC-MOOD-PLAN ROWS NAME THE CHAPTER (Mike, 2026-10-28, growth-scale-up GATE plan: "I often find myself
+     scrolling up to find out what the title was"): every `| CH<n> ...` row of the `## MUSIC-MOOD-PLAN` table
+     carries the chapter's title as in its `## CH<n> - TITLE` heading (`CH1 THE HOOK`, a time range may follow),
+     a bare `CH1` is a FAIL; a title that does not match its heading is a WARN. The bed column (`New bed?` /
+     `Bed / carve`) that says only "continues" is a WARN: it names the SECTION of the file that plays and how it
+     is extended (remix loop) or right-aligned (music.md section ONE TRACK, CARVED).
 
 Usage:
   python video-creation/longform-edited/skills/doc-reference/lint_screenplay.py <SCREENPLAY.md> [--face-max N] [--fix] [--voice-clone]
@@ -229,6 +235,34 @@ def lint(text: str, face_max=None, voice_clone=False):
             fails.append(f"## CLIP-INSERTS lists {cid} as proposed but no chapter carries a 🎞️ `[INSERT]` {cid} line (add it, or mark the row REJECTED / HELD)")
     if none_declared and tagged:
         fails.append("## CLIP-INSERTS says NONE but the chapters carry `[INSERT]` lines")
+    # 16: MUSIC-MOOD-PLAN rows NAME THE CHAPTER, and the bed column says what plays (never a bare "continues")
+    mm = re.search(r"^##\s+MUSIC-MOOD-PLAN.*?(?=^##\s|\Z)", text, re.M | re.S)
+    if mm:
+        titles = {m.group(1).replace(" ", "").upper(): m.group(2).strip()
+                  for m in re.finditer(r"^##\s+(CH\s*\d+)\s*[-:]\s*([^\n(]+)", text, re.M)}
+        off = text[: mm.start()].count("\n")
+        bed_col = None
+        for j, row in enumerate(mm.group(0).splitlines()):
+            if not row.lstrip().startswith("|"):
+                continue
+            cells = [c.strip() for c in row.strip().strip("|").split("|")]
+            if bed_col is None and any(re.search(r"\b(bed|carve)\b", c, re.I) for c in cells):   # the header row
+                bed_col = next(i for i, c in enumerate(cells) if re.search(r"\b(bed|carve)\b", c, re.I))
+                continue
+            m = re.match(r"(CH\s*\d+)\b(.*)", cells[0], re.I) if cells else None
+            if not m:
+                continue
+            cid = m.group(1).replace(" ", "").upper()
+            rest = re.sub(r"\(.*?\)|[*`_]", "", m.group(2)).strip(" -:·")
+            if not rest:
+                fails.append(f"line {off + j + 1}: MUSIC-MOOD-PLAN row {cid} names no chapter title; write `{cid} {titles.get(cid, 'TITLE')}` "
+                             "(Mike 2026-10-28: the plan reads without scrolling back to the heading)")
+            elif cid in titles and titles[cid].lower()[:12] not in rest.lower():
+                warns.append(f"line {off + j + 1}: MUSIC-MOOD-PLAN row {cid} says '{rest[:30]}' but the chapter heading is '{titles[cid]}'")
+            if bed_col is not None and bed_col < len(cells) and \
+               re.fullmatch(r"(\*\*)?(continues?|same(\s+(bed|file|region))?|cont\.?)(\*\*)?(\s*\([^)]*\))?\.?", cells[bed_col], re.I):
+                warns.append(f"line {off + j + 1}: MUSIC-MOOD-PLAN row {cid} bed column says only '{cells[bed_col]}'; name the section of the "
+                             "file that plays and how it is extended or right-aligned (music.md ONE TRACK, CARVED, Mike 2026-10-28)")
     return fails, warns, faces, len(tagged)
 
 

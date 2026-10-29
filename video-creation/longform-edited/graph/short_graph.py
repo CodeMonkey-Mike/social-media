@@ -9,17 +9,19 @@ WATCH THE FULL VIDEO card. Mike's standing overrides for this lane: the target l
 outro inside it); the opening face hook is the natural hook; and for VARIETY, when a chosen span carries an Envato
 clip or a ChatGPT image, ONE alternative asset is sourced/generated for the short and overlaid over that window.
 
-  s_preflight -> s_cut_plan (short-cut-strategist, lint-short-spans gate) -> gate_short_plan (Mike reads the cut)
+  s_preflight -> s_cut_plan (short-cut-strategist, lint-short-spans gate) -> gate_short_plan (auto, NO HITL: Mike 2026-10-29)
   -> s_variants -> s_extract -> s_captions -> s_comp (comp-builder SHORT mode) -> s_verify_comp -> s_render
   -> s_mix -> s_verify_final -> gate_short (Mike) -> s_deliver (<project>-SHORT-<N>s.mp4 at the project root)
 
 Invocation: python video-creation/longform-edited/graph/run.py short --project <name> [--seconds 30] [--brief "..."]
 """
+import hashlib
 import json
 import re
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 from typing import Optional, TypedDict
 
@@ -230,9 +232,41 @@ def s_cut_plan(state: ShortState) -> ShortState:
 
 
 def gate_short_plan(state: ShortState) -> ShortState:
-    proj = _proj(state)
-    return C.gate(state, "short_plan", "the short's cut plan (claim, assembled read, spans); nothing is built before this",
-                  [proj / "SHORT-CUT-PLAN.snapped.json"])
+    # NOT a HITL gate (Mike, 2026-10-29): "There's no gate to ask me if I approve of the plan for the short." He has never
+    # rejected a short's cut; he reviews the FINISHED short at the `short` gate and asks for a second or two of change there.
+    # The node stays so the plan is still logged (and an old thread's checkpoint still resolves); it never interrupts.
+    return {"steps": C._step(state, "gate_short_plan", "ran", "auto-approved (no plan gate: Mike reviews the finished short)")}
+
+
+PAINT_16X9 = C.SCRIPTS / "short_spans_from_16x9.py"
+
+
+def s_paint_16x9(state: ShortState) -> ShortState:
+    """16:9-SOURCED MODE only (assets/short/from-16x9.json; longform-to-short.md): paint the APPROVED plan's spans into the
+    black adapter master, rendered from the 16:9 comp with captions off and re-framed 9:16 (--face-from-render). A graph node
+    since 2026-10-27 (only-18-months-left: Mike pre-approves the plan gate, so the hand step between the gate and the build
+    would have let the lane cut its spans out of a BLACK canvas). Skipped when the master is already painted from this exact
+    plan (assets/short/painted.json carries the plan's hash)."""
+    node = "s_paint_16x9"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    if not (proj / "assets" / "short" / "from-16x9.json").is_file():
+        return {"steps": C._step(state, node, "skipped", "not 16:9-sourced (a delivered vertical is the master)")}
+    plan_p = proj / "SHORT-CUT-PLAN.snapped.json"
+    digest = hashlib.sha256(plan_p.read_bytes()).hexdigest()[:16]
+    marker = proj / "assets" / "short" / "painted.json"
+    master = proj / f"{proj.name}-VERTICAL.mp4"
+    if marker.is_file() and master.is_file() and not _redo(state, node):
+        if json.loads(marker.read_text(encoding="utf-8")).get("plan_sha") == digest:
+            return {"steps": C._step(state, node, "skipped", "master already painted from this plan")}
+    rc, out = C.run_streaming([sys.executable, "-u", str(PAINT_16X9), str(proj), "--plan", str(plan_p), "--scope", scope,
+                               "--face-from-render"], state, node)
+    m = re.search(r"^MASTER-PAINTED .* spans=(\d+)", out or "", re.M)
+    if rc != 0 or not m:
+        return C._fail(state, node, "short_spans_from_16x9.py failed (see above)", out)
+    marker.write_text(json.dumps({"plan_sha": digest, "spans": int(m.group(1)), "at": C._now_iso()}, indent=1), encoding="utf-8")
+    return {"steps": C._step(state, node, "ran", f"{m.group(1)} span(s) rendered from the 16:9 comp and painted into {master.name}")}
 
 
 def _cover_windows_final(proj: Path, scope: str):
@@ -253,6 +287,12 @@ def _cover_windows_final(proj: Path, scope: str):
         ident = (("BR-" if m.group(1) == "E" else "IMG-") + m.group(2)) if m.group(1) else f"{m.group(3)}-{m.group(4)}"
         out.append({"id": ident, "kind": kind, "a": sh(float(b["tIn"])), "b": sh(float(b["tOut"])), "spoken": b.get("spoken", ""), "what": what})
     return out
+
+
+_qa_stem = G._qa_stem   # shared with the longform + vertical asset nodes
+
+
+VARIANT_ROUNDS = 2   # source + visual-qa rounds per variant slot before it is auto-waived
 
 
 def s_variants(state: ShortState) -> ShortState:
@@ -297,71 +337,103 @@ def s_variants(state: ShortState) -> ShortState:
         d = sdir / ("vid" if h["kind"] == "envato-video" else "img")
         c = sorted(d.glob(f"{h['id']}-*.*")) + sorted(d.glob(f"{h['id']}.*"))
         return c[0] if c else None
-    todo = [h for h in hits if _redo(state, node) or not vfile(h)]
+    redo = _redo(state, node)
     qa_dest = sdir / "VISUAL-QA.json"
-    def prior_fail(h):
-        """The prior visual-qa FAIL for this slot (the failing file was recycled; the verdict file is the builder's feedback)."""
-        if not qa_dest.is_file():
-            return ""
+    rej = _sdir(proj) / "qa" / "rejected"
+    # verdicts by file name. A PASS carries over: re-judging passed files flip-flopped (only-18 2026-10-28: a second QA pass failed
+    # the four images the first had passed and cost a 26-minute regeneration). Every FAIL stays on as the next sourcer's feedback.
+    verdicts = {}
+    if qa_dest.is_file() and not redo:
         try:
-            assets = json.loads(qa_dest.read_text(encoding="utf-8")).get("assets", [])
+            verdicts = {Path(str(a.get("path", ""))).name: a for a in json.loads(qa_dest.read_text(encoding="utf-8")).get("assets", [])}
         except Exception:
+            verdicts = {}
+    def passed(a):
+        return bool(a) and str(a.get("verdict", "")).upper() == "PASS"
+    shown_cache = {}
+    def shown(f):   # a clip is judged by its middle frame
+        if f not in shown_cache:
+            shown_cache[f] = (G._mid_frame(f, _sdir(proj) / "qa" / f"{f.stem}.mid.png") or f) if f.suffix.lower() in G.VIDEO_EXT else f
+        return shown_cache[f]
+    def prior_fail(h):
+        """Every earlier visual-qa FAIL for this slot (those files sit in _previews/short/qa/rejected/), as the sourcer's feedback."""
+        fs = [a for n, a in verdicts.items() if not passed(a) and G._qa_names_id(G._qa_stem(n), h["id"])]
+        if not fs:
             return ""
-        for a in assets:
-            stem = Path(str(a.get("path", ""))).name.replace(".mid.png", "")
-            if (stem == h["id"] or stem.startswith(h["id"] + "-")) and str(a.get("verdict", "")).upper() != "PASS":
-                return (f" PREVIOUS ATTEMPT ({stem}) FAILED visual-qa: " + "; ".join(a.get("defects") or [])[:400]
-                        + f" -> FIX: {str(a.get('fix', ''))[:300]} (the failing file was deleted; source a different clip without that defect)")
-        return ""
-    if todo:
-        specs = []
-        env = [h for h in todo if h["kind"] == "envato-video"]
-        img = [h for h in todo if h["kind"] == "chatgpt-image"]
-        if env:
-            specs.append(("envato-sourcer",
-                          f"SHORT variant b-roll for `{proj.name}` (folder `{proj}`): for EACH slot below source ONE DIFFERENT native VERTICAL Envato clip "
-                          "(`search_envato.py --portrait`), same beat meaning and query family as the BROLL-PLAN row but a visibly different shot "
-                          "(not the clip already in assets/vertical/vid/ or assets/vid/; open those to avoid a look-alike); 1080x1920, audio stripped, "
-                          "trimmed to the window + 1 s handles. Output assets/short/vid/<id>-<slug>.mp4. Slots:\n"
-                          + "\n".join(f"- {h['id']}: window {h['overlay_short']} s of the short; beat: {h['what'][:160]}{prior_fail(h)}" for h in env)
-                          + f"\nWorklist rows: `{C.doc(proj, 'broll_plan')}`. QA-open every clip; report per slot.", f"agent-short-env-{proj.name}.log"))
-        if img:
-            specs.append(("image-gen",
-                          f"SHORT variant images for `{proj.name}` (folder `{proj}`): for EACH slot below generate ONE NEW 9:16 portrait image of the SAME "
-                          "concept but a different composition/angle than the existing image (attach the existing assets/vertical/img/<id>-*.png, or assets/img/<id>-*.png when no vertical exists, as "
-                          "a reference for palette + subject, and the row's real-mark reference when the BROLL-PLAN Reference column names one). Output "
-                          "assets/short/img/<id>-<slug>.png. Slots:\n"
-                          + "\n".join(f"- {h['id']}: window {h['overlay_short']} s of the short; concept: {h['what'][:160]}{prior_fail(h)}" for h in img)
-                          + f"\nWorklist rows: `{C.doc(proj, 'broll_plan')}`. Every image unique; QA-open; report per slot.", f"agent-short-img-{proj.name}.log"))
-        C.spawn_agents_parallel(state, node, specs)
-    missing = [h["id"] for h in hits if not vfile(h)]
-    if missing:
-        return C._fail(state, node, "variant assets missing: " + ", ".join(missing))
-    # visual-qa on the variants
-    lines = []
-    for h in hits:
-        f = vfile(h)
-        shown = G._mid_frame(f, _sdir(proj) / "qa" / f"{f.stem}.mid.png") if f.suffix.lower() in G.VIDEO_EXT else f
-        lines.append(f"- `{shown}`  [{h['kind']} variant for {h['id']}, portrait 1080x1920] concept: {h['what'][:140]}")
-    # a verdict older than any variant file is stale (a slot was re-sourced after a FAIL): judge again
-    qa_fresh = qa_dest.is_file() and all(vfile(h).stat().st_mtime <= qa_dest.stat().st_mtime for h in hits)
-    if not (qa_fresh and not _redo(state, node)):
-        prompt = (f"Visual QA for the SHORT's variant assets of `{proj.name}`: open every file below and judge it (portrait, house style, the named "
-                  "concept, nothing clipped, no text/watermark; a `.mid.png` is a clip's middle frame).\n" + "\n".join(lines)
-                  + f"\nReturn your JSON verdict AND save it to EXACTLY `{qa_dest}` with Bash.")
-        rc, out = C.spawn_agent(state, node, "visual-qa", prompt, f"agent-short-visual-qa-{proj.name}.log")
-        if not C.persist_agent_json(out, qa_dest, want_key="assets"):
-            return C._fail(state, node, "visual-qa returned no verdict on the variants", out)
-    def in_play(a):   # a verdict on a slot that was since waived or re-sourced under a new name is not this round's
-        stem = Path(str(a.get("path", ""))).name.replace(".mid.png", "")
-        return any(stem == h["id"] or stem.startswith(h["id"] + "-") for h in hits) and any(
-            vfile(h) and Path(str(a.get("path", ""))).name.replace(".mid.png", "") == vfile(h).stem for h in hits)
-    bad = [a for a in json.loads(qa_dest.read_text(encoding="utf-8")).get("assets", []) if str(a.get("verdict", "")).upper() != "PASS" and in_play(a)]
-    if bad:
-        return C._fail(state, node, "variant assets failed visual-qa: " + "; ".join(f"{Path(a.get('path', '?')).name}: {', '.join(a.get('defects') or [])[:100]}" for a in bad))
+        return (" EARLIER ATTEMPTS FAILED visual-qa (moved to _previews/short/qa/rejected/; pick something visibly different from ALL of them): "
+                + " | ".join(f"{G._qa_stem(a.get('path', ''))}: " + "; ".join(a.get("defects") or [])[:240]
+                             + f" -> FIX: {str(a.get('fix', ''))[:160]}" for a in fs[-3:]))
+    def open_slots():
+        return [h for h in hits if not vfile(h) or not passed(verdicts.get(shown(vfile(h)).name))]
+    # A variant is OPTIONAL (without one the short shows the longform's own asset), so it never stops the run: up to
+    # VARIANT_ROUNDS source + visual-qa rounds, a FAIL moved aside and re-sourced with the verdict as feedback, then any slot still
+    # open is AUTO-WAIVED. (only-18 2026-10-27: one Envato slot failed visual-qa three times and the run sat failed overnight
+    # instead of delivering the short; Mike: "this should NEVER happen again".)
+    for rnd in range(1, VARIANT_ROUNDS + 1):
+        todo = [h for h in hits if (redo and rnd == 1) or not vfile(h)]
+        if todo:
+            print(f"[longform] {node}: round {rnd}/{VARIANT_ROUNDS}: sourcing " + ", ".join(h["id"] for h in todo), flush=True)
+            specs = []
+            env = [h for h in todo if h["kind"] == "envato-video"]
+            img = [h for h in todo if h["kind"] == "chatgpt-image"]
+            if env:
+                specs.append(("envato-sourcer",
+                              f"SHORT variant b-roll for `{proj.name}` (folder `{proj}`): for EACH slot below source ONE DIFFERENT native VERTICAL Envato clip "
+                              "(`search_envato.py --portrait`), same beat meaning and query family as the BROLL-PLAN row but a visibly different shot "
+                              "(not the clip already in assets/vertical/vid/ or assets/vid/; open those to avoid a look-alike); 1080x1920, audio stripped, "
+                              "trimmed to the window + 1 s handles. Output assets/short/vid/<id>-<slug>.mp4. Slots:\n"
+                              + "\n".join(f"- {h['id']}: window {h['overlay_short']} s of the short; beat: {h['what'][:160]}{prior_fail(h)}" for h in env)
+                              + f"\nWorklist rows: `{C.doc(proj, 'broll_plan')}`. QA-open every clip; report per slot.", f"agent-short-env-{proj.name}.log"))
+            if img:
+                specs.append(("image-gen",
+                              f"SHORT variant images for `{proj.name}` (folder `{proj}`): for EACH slot below generate ONE NEW 9:16 portrait image of the SAME "
+                              "concept but a different composition/angle than the existing image (attach the existing assets/vertical/img/<id>-*.png, or assets/img/<id>-*.png when no vertical exists, as "
+                              "a reference for palette + subject, and the row's real-mark reference when the BROLL-PLAN Reference column names one). Output "
+                              "assets/short/img/<id>-<slug>.png. Slots:\n"
+                              + "\n".join(f"- {h['id']}: window {h['overlay_short']} s of the short; concept: {h['what'][:160]}{prior_fail(h)}" for h in img)
+                              + f"\nWorklist rows: `{C.doc(proj, 'broll_plan')}`. Every image unique; QA-open; report per slot.", f"agent-short-img-{proj.name}.log"))
+            C.spawn_agents_parallel(state, node, specs)
+        # visual-qa on every variant file without a PASS (only those: the passed ones carry over)
+        need = [(h, vfile(h)) for h in hits if vfile(h) and not passed(verdicts.get(shown(vfile(h)).name))]
+        if need:
+            new_dest = sdir / "VISUAL-QA.new.json"
+            new_dest.unlink(missing_ok=True)
+            prompt = (f"Visual QA for the SHORT's variant assets of `{proj.name}`: open every file below and judge it (portrait, house style, the named "
+                      "concept, nothing clipped, no text/watermark; a `.mid.png` is a clip's middle frame). Check ONLY the files listed.\n"
+                      + "\n".join(f"- `{shown(f)}`  [{h['kind']} variant for {h['id']}, portrait 1080x1920] concept: {h['what'][:140]}" for h, f in need)
+                      + f"\nReturn your JSON verdict AND save it to EXACTLY `{new_dest}` with Bash. Every listed file appears with PASS or FAIL.")
+            rc, out = C.spawn_agent(state, node, "visual-qa", prompt, f"agent-short-visual-qa-{proj.name}.log")
+            if C.persist_agent_json(out, new_dest, want_key="assets"):
+                for a in json.loads(new_dest.read_text(encoding="utf-8")).get("assets", []):
+                    verdicts[Path(str(a.get("path", ""))).name] = a
+                new_dest.unlink(missing_ok=True)
+                C._write_json_atomic(qa_dest, {"assets": list(verdicts.values())})
+            else:
+                print(f"[longform] {node}: round {rnd}: visual-qa returned no verdict (rc {rc}); the unjudged files are judged next round", flush=True)
+        # every judged FAIL moves aside, so the next round re-sources only that slot
+        fails = [verdicts[shown(f).name] for _, f in need if shown(f).name in verdicts and not passed(verdicts[shown(f).name])]
+        for m in G._reject_qa_fails(fails, [(f, shown(f)) for _, f in need], rej):
+            print(f"VARIANT-REJECTED {m} -> {rej}", flush=True)
+        if not open_slots():
+            break
+    left = open_slots()
+    if left:
+        stamp = time.strftime("%Y-%m-%d %H:%M")
+        for h in left:
+            f = vfile(h)
+            failed = [n for n, a in verdicts.items() if not passed(a) and G._qa_names_id(G._qa_stem(n), h["id"])]
+            why = (f"visual-qa FAILED {len(failed)} attempt(s)" if failed else
+                   "no file produced" if not f else "never judged by visual-qa")
+            waivers[h["id"]] = (f"AUTO-WAIVED {stamp} by s_variants after {VARIANT_ROUNDS} sourcing round(s) ({why}): the short keeps the "
+                                "longform's own asset for this beat. To try again: delete this entry and re-drive s_variants.")
+            print(f"VARIANT-AUTO-WAIVED {h['id']}: {why}; the short keeps the longform's own asset", flush=True)
+        C._write_json_atomic(wv, waivers)
+        hits = [h for h in hits if h not in left]
     variants = [{"id": h["id"], "kind": h["kind"], "file": str(vfile(h)), "overlay_short": h["overlay_short"], "replaces_window_final": [round(h["a"], 3), round(h["b"], 3)]} for h in hits]
     vjson.write_text(json.dumps({"variants": variants}, indent=1), encoding="utf-8")
-    return {"steps": C._step(state, node, "ran", f"{len(variants)} variant asset(s) ready: " + ", ".join(v["id"] for v in variants))}
+    note = (f"; {len(left)} slot(s) AUTO-WAIVED, the longform's own asset kept (assets/short/variant-waivers.json): "
+            + ", ".join(h["id"] for h in left)) if left else ""
+    return {"steps": C._step(state, node, "ran", f"{len(variants)} variant asset(s) ready: " + (", ".join(v["id"] for v in variants) or "none") + note)}
 
 
 def s_extract(state: ShortState) -> ShortState:
@@ -639,7 +711,13 @@ def gate_short(state: ShortState) -> ShortState:
     proj = _proj(state)
     video = _latest_short_video(proj, int(round(_target(state))))
     mixed = video.with_name(video.name.replace("-video.mp4", ".mp4")) if video else _sdir(proj)
-    return C.gate(state, "short", "the mixed SHORT (seams, captions end to end, the CTA outro)", [mixed])
+    wv = proj / "assets" / "short" / "variant-waivers.json"
+    waived = json.loads(wv.read_text(encoding="utf-8")) if wv.is_file() else {}
+    auto = [k for k, v in waived.items() if str(v).startswith("AUTO-WAIVED")]
+    # NOT a HITL gate (Mike, 2026-10-29): "you could have already rendered it ... It could have already been done." A short
+    # that passed s_verify_final is DELIVERED; Mike watches it afterwards and asks for a second or two of change if any.
+    note = (f"; variant slot(s) {', '.join(auto)} AUTO-WAIVED (show the longform's own asset)" if auto else "")
+    return {"steps": C._step(state, "gate_short", "ran", f"auto-approved: {mixed.name if video else 'short'} passed verify{note}")}
 
 
 def s_deliver(state: ShortState) -> ShortState:
@@ -655,13 +733,11 @@ def s_deliver(state: ShortState) -> ShortState:
     dest = proj / f"{proj.name}-SHORT-{secs}s.mp4"
     if not dest.is_file() or dest.stat().st_size != mixed.stat().st_size:
         shutil.copyfile(mixed, dest)
-    ok, msg = G._recycle([_sdir(proj)])
-    if not ok:
-        return C._fail(state, node, f"promoted, but recycling _previews/short failed: {msg}")
+    # _previews/short is KEPT (no gate any more): Mike's after-the-fact "a second or two" change is a splice off it
     return {"steps": C._step(state, node, "ran", f"promoted -> {dest.name} ({dest.stat().st_size / 1e6:.0f} MB); not queued"), "status": "done"}
 
 
-ORDER = ["s_preflight", "s_cut_plan", "gate_short_plan", "s_variants", "s_extract", "s_captions", "s_comp", "s_verify_comp",
+ORDER = ["s_preflight", "s_cut_plan", "gate_short_plan", "s_paint_16x9", "s_variants", "s_extract", "s_captions", "s_comp", "s_verify_comp",
          "s_render", "s_mix", "s_verify_final", "gate_short", "s_deliver"]
 NODES = {n: globals()[n] for n in ORDER}
 

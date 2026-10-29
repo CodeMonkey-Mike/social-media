@@ -204,9 +204,10 @@ def v_assets(state: VerticalState) -> VerticalState:
     jobs = {}
     for e in exp:
         have = _vfiles(proj, e)
-        gone = any(not _qa_path_exists(proj, a.get("path", "")) and str(a.get("verdict", "")).upper() != "PASS"
-                   and (Path(a.get("path", "")).stem == e["id"] or Path(a.get("path", "")).stem.startswith(e["id"] + "-"))
-                   for a in prev.values())
+        # a FAILED file moved aside (G._reject_qa_fails) while a sibling remains: the id rebuilds with the verdict as feedback
+        have_stems = {f.stem for f in have}
+        gone = any(str(a.get("verdict", "")).upper() != "PASS" and G._qa_names_id(G._qa_stem(a.get("path", "")), e["id"])
+                   and G._qa_stem(a.get("path", "")) not in have_stems for a in prev.values())
         need = redo or not have or gone
         b = G.BUILDER_OF[e["kind"]]
         jobs.setdefault(b, {"todo": [], "done": []})
@@ -234,12 +235,13 @@ def v_assets(state: VerticalState) -> VerticalState:
     if missing:
         return C._fail(state, node, "vertical assets still missing: " + ", ".join(missing) + " (read graph/data/agent-vassets-<builder>-<project>.log; a re-drive rebuilds only the gap)")
     # visual-qa on every vertical file lacking a PASS
-    lines, carried = [], []
+    lines, carried, pairs = [], [], []
     for e in exp:
         for f in _vfiles(proj, e):
             shown = f
             if f.suffix.lower() in G.VIDEO_EXT:
                 shown = G._mid_frame(f, _vprev(proj) / "qa" / f"{f.stem}.mid.png") or f
+            pairs.append((f, shown))
             pa = prev.get(shown.name)
             if pa and str(pa.get("verdict", "")).upper() == "PASS":
                 carried.append(pa)
@@ -266,11 +268,13 @@ def v_assets(state: VerticalState) -> VerticalState:
                                        "failed": sum(1 for a in merged if str(a.get("verdict", "")).upper() != "PASS")}})
         new_dest.unlink(missing_ok=True)
     qa = json.loads(qa_dest.read_text(encoding="utf-8"))
-    fails = [a for a in qa.get("assets", []) if str(a.get("verdict", "")).upper() != "PASS"]
+    current = {Path(s).name for _, s in pairs}   # a verdict on a file already moved aside is not this round's
+    fails = [a for a in qa.get("assets", []) if str(a.get("verdict", "")).upper() != "PASS" and Path(str(a.get("path", ""))).name in current]
     if fails:
+        moved = G._reject_qa_fails(fails, pairs, _vprev(proj) / "qa" / "rejected")
         return C._fail(state, node, f"visual-qa FAILED {len(fails)} vertical asset(s): "
                        + "; ".join(f"{Path(a.get('path', '?')).name}: {', '.join(a.get('defects') or [])[:120]}" for a in fails[:8])
-                       + " (delete the failing files and re-drive; the builders get the defects as feedback)")
+                       + f" (moved {len(moved)} failing file(s) to _previews/vertical/qa/rejected/: a re-drive rebuilds ONLY those, with the defects as feedback)")
     return {"steps": C._step(state, node, "ran", f"{len(exp)} vertical asset id(s) built, visual-qa PASS on {len(qa.get('assets', []))} file(s)")}
 
 

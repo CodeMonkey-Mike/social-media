@@ -250,6 +250,20 @@ def container_theme(proj: Path) -> str:
     return v if v in CONTAINER_THEMES else "dark"
 
 
+# DELIVERY (per video, `run.py --delivery`): where stage_longform puts the finished video.
+#   queue = the house default: copied into schedule-tweets/longform/<slug>/ + a longs.json entry (rumble / bitchute /
+#           facebook pending), then _previews/_tmp recycled.
+#   root  = the AI Engineering Simplified channel rule: the FINAL stays at the project ROOT for Mike to upload, NEVER into
+#           longs.json; publish-meta.json + the usage ledger still happen, _previews is kept (inference 2026-10-27 was
+#           auto-staged into the main-channel queue and had to be reverted by hand).
+DELIVERIES = ("queue", "root")
+
+
+def delivery(proj: Path) -> str:
+    v = setting(proj, "delivery", "queue")
+    return v if v in DELIVERIES else "queue"
+
+
 def manual_done(proj: Path, node: str) -> bool:
     return node in (prog(proj).get("manual_done") or {})
 

@@ -1134,6 +1134,37 @@ def _qa_path_exists(proj: Path, raw: str) -> bool:
     return (proj / p).is_file() or (C.REPO_ROOT / p).is_file() or p.is_file()
 
 
+def _qa_stem(path) -> str:
+    """The asset file stem a visual-qa verdict path names: a video is judged by its `<stem>.mid.png` frame, an image by
+    itself (`<stem>.png`). Matching the raw name dropped image verdicts (only-18 short 2026-10-27: a Dell-logo FAIL was ignored)."""
+    name = Path(str(path)).name
+    return name[: -len(".mid.png")] if name.endswith(".mid.png") else Path(name).stem
+
+
+def _qa_names_id(stem: str, ident: str) -> bool:
+    return stem == ident or stem.startswith(ident + "-") or stem.startswith(ident + "_")
+
+
+def _reject_qa_fails(fails: list, files: list, rej: Path) -> list:
+    """Move every asset file whose visual-qa verdict is a FAIL into `rej` (`files` = (file, shown) pairs; a video is judged by
+    its .mid.png), so the run's re-drive rebuilds ONLY that gap with the verdict as the builder's feedback. Left in place, the
+    supervisor's automatic re-drive found every file present, re-judged the same file and failed identically: the retry was a
+    no-op and the run sat failed overnight (inference vertical + only-18 short, 2026-10-27). Returns the moved file names."""
+    bad = {Path(str(a.get("path", ""))).name for a in fails}
+    moved = []
+    for f, shown in files:
+        if Path(shown).name in bad and f.is_file():
+            rej.mkdir(parents=True, exist_ok=True)
+            dest = rej / f.name
+            n = 1
+            while dest.exists():
+                n += 1
+                dest = rej / f"{f.stem}.try{n}{f.suffix}"
+            shutil.move(str(f), str(dest))
+            moved.append(f.name)
+    return moved
+
+
 def _asset_files(proj: Path, e: dict, base: Optional[Path] = None):
     """Files on disk for one expectation: <folder>/<id>.<ext> or <folder>/<id>-*.<ext> (states, slugs).
     `base` overrides the asset root (the vertical lane reads assets/vertical/)."""
@@ -1157,12 +1188,12 @@ def _qa_feedback(prev: dict, todo: list) -> str:
     lines = []
     for e in todo:
         for name, a in prev.items():
-            stem = name.replace(".mid.png", "")
-            if (stem == e["id"] or stem.startswith(e["id"] + "-")) and str(a.get("verdict", "")).upper() != "PASS":
+            stem = _qa_stem(name)
+            if _qa_names_id(stem, e["id"]) and str(a.get("verdict", "")).upper() != "PASS":
                 lines.append(f"- {stem}: " + "; ".join(a.get("defects") or [])[:500] + f" -> FIX: {str(a.get('fix', ''))[:400]}")
     if not lines:
         return ""
-    return ("\nYour EARLIER build of these ids FAILED visual-qa. The failing files were deleted; rebuild them with these defects "
+    return ("\nYour EARLIER build of these ids FAILED visual-qa. The failing files were moved aside; rebuild them with these defects "
             "fixed (this is the whole point of the rebuild):\n" + "\n".join(lines))
 
 
@@ -1269,10 +1300,10 @@ def assets(state: LongformState) -> LongformState:
     jobs = {}
     for e in exp:
         have = _asset_files(proj, e)
-        # a partially deleted id (a FAILED state/crop file removed for rebuild while a sibling file remains) rebuilds too
-        gone = any(not _qa_path_exists(proj, a.get("path", "")) and str(a.get("verdict", "")).upper() != "PASS"
-                   and (Path(a.get("path", "")).stem == e["id"] or Path(a.get("path", "")).stem.startswith(e["id"] + "-"))
-                   for a in prev.values())
+        # a partially rejected id (a FAILED state/crop file moved aside for rebuild while a sibling file remains) rebuilds too
+        have_stems = {f.stem for f in have}
+        gone = any(str(a.get("verdict", "")).upper() != "PASS" and _qa_names_id(_qa_stem(a.get("path", "")), e["id"])
+                   and _qa_stem(a.get("path", "")) not in have_stems for a in prev.values())
         need = redo or not have or gone
         b = BUILDER_OF[e["kind"]]
         jobs.setdefault(b, {"todo": [], "done": []})
@@ -1297,12 +1328,13 @@ def assets(state: LongformState) -> LongformState:
                        + "; ".join(f"{b}: {', '.join(ids)}" for b, ids in by_b.items())
                        + " (read graph/data/agent-assets-<builder>-<project>.log; a re-drive dispatches only the missing ids)")
     # ── visual-qa: every file without a prior PASS (video slots contribute a mid frame); PASSes carry over ──
-    lines, carried = [], []
+    lines, carried, pairs = [], [], []
     for e in exp:
         for f in _asset_files(proj, e):
             shown = f
             if f.suffix.lower() in VIDEO_EXT:
                 shown = _mid_frame(f, proj / "_previews" / "qa" / "assets" / f"{f.stem}.mid.png") or f
+            pairs.append((f, shown))
             pa = prev.get(shown.name)
             if pa and str(pa.get("verdict", "")).upper() == "PASS":
                 carried.append(pa)
@@ -1340,11 +1372,13 @@ def assets(state: LongformState) -> LongformState:
     else:
         print(f"[longform] {node}: every file already carries a visual-qa PASS", flush=True)
     qa = json.loads(qa_dest.read_text(encoding="utf-8"))
-    fails = [a for a in qa.get("assets", []) if str(a.get("verdict", "")).upper() != "PASS"]
+    current = {Path(s).name for _, s in pairs}   # a verdict on a file already moved aside is not this round's
+    fails = [a for a in qa.get("assets", []) if str(a.get("verdict", "")).upper() != "PASS" and Path(str(a.get("path", ""))).name in current]
     if fails:
+        moved = _reject_qa_fails(fails, pairs, proj / "_previews" / "qa" / "rejected")
         return C._fail(state, node, f"visual-qa FAILED {len(fails)} asset(s): "
                        + "; ".join(f"{Path(a.get('path', '?')).name}: {', '.join(a.get('defects') or [])[:140]}" for a in fails[:8])
-                       + " (delete the failing files and re-drive: the builders get these defects as feedback, only the gap is rebuilt and re-QA'd)")
+                       + f" (moved {len(moved)} failing file(s) to _previews/qa/rejected/: a re-drive rebuilds ONLY those, with these defects as feedback)")
     return {"steps": C._step(state, node, "ran", f"{len(exp)} asset id(s) built ({len(dispatch)} builder(s) dispatched), visual-qa PASS on {len(qa.get('assets', []))} file(s)")}
 
 
@@ -1793,9 +1827,29 @@ def card_pauses(state: LongformState) -> LongformState:
              for cid, title, ta, tz, tail in _chapters(proj) if re.search(r'card\s+ON\s*"', tail)]
     inserts = _plan_inserts(proj)
     beats = _beat_pauses(proj)   # braam pauses between sentences (EDIT-PLAN `[BRAAM] ... spine pause <dur> s`), baked like cards
-    if not cards and not inserts:
-        return C._fail(state, node, "AS-RECORDED.md names no chapter with `card ON` and COVER-PLAN.json has no clip_inserts "
-                                    "(nothing to bake; if that is intended, --done card_pauses)")
+    if not cards and not inserts and not beats:
+        # NOTHING TO BAKE (growth-scale-up 2026-10-28, the first video with no card ON, no clip insert and no beat pause: one
+        # carved bed, so no title cards): the build spine IS the final spine. It is written as the next-letter paused spine with
+        # an empty-pauses sidecar and copied to assets/spine.mp4, so comp_build, verify_comp, mix_audio and verify_final keep
+        # their one contract. The old `--done card_pauses` advice left all four without a paused spine.
+        letter = re.search(rf"^{re.escape(scope)}\.([a-z])\.", fs.name)
+        paused = fs.with_name(f"{scope}.{chr(ord(letter.group(1)) + 1) if letter else 'g'}.paused.mp4")
+        if not paused.is_file() or paused.stat().st_size != fs.stat().st_size:
+            shutil.copyfile(fs, paused)
+        d = _duration(paused) or 0.0
+        C._write_json_atomic(paused.with_suffix(".json"), {
+            "pauses": [], "pause_s": pause_s, "source": str(fs), "output": str(paused), "output_duration_s": round(d, 3), "fps": 30.0,
+            "note": "no card ON, no clip insert, no beat pause: an identity copy of the final spine, so sh(t) = t"})
+        rc, out = C.run_streaming([sys.executable, "-u", str(CHECK_SPINE_FPS), str(paused), "30"], state, node)
+        if rc != 0:
+            return C._fail(state, node, "paused spine fps != 30 (check_spine_fps.py)", out)
+        dest = proj / "assets" / "spine.mp4"
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        if not dest.is_file() or dest.stat().st_size != paused.stat().st_size:
+            shutil.copyfile(paused, dest)
+        C.mark_manual(proj, node)
+        return {"steps": C._step(state, node, "ran", f"nothing to bake (no card ON, no clip insert, no beat pause): {paused.name} = "
+                                                     f"{fs.name} ({d:.2f}s), copied to assets/spine.mp4")}
     missing = [cid for _, f, cid in inserts if f is None]
     if missing:
         return C._fail(state, node, f"clip insert file(s) missing in assets/clip-inserts/: {', '.join(missing)} "
@@ -2237,7 +2291,8 @@ def verify_final(state: LongformState) -> LongformState:
     if pk is not None and pk > -0.1:
         probs.append(f"peak {pk} dBFS (clipping)")
     comp = REMOTION / "src" / f"{_pascal(proj.name)}.tsx"
-    if comp.is_file() and re.search(r"WIP|WATERMARK", comp.read_text(encoding="utf-8", errors="replace")):
+    # WIP as its own token only: a highlight-wipe constant (HL_WIPE, growth-scale-up 10-28) is not a watermark
+    if comp.is_file() and re.search(r"(?<![A-Za-z])WIP(?![A-Za-z])|WATERMARK", comp.read_text(encoding="utf-8", errors="replace")):
         probs.append("comp still carries a WIP/WATERMARK marker (remove before a final)")
     # B-ROLL MOTION on the FINISHED file (Mike 2026-10-17, tao-detailed shipped stuttering b-roll: a too-small OffthreadVideo
     # cache over the long render served stale frames; chunk renders never show it). Every vid slot must move as its source.
@@ -2301,7 +2356,9 @@ def stage_longform(state: LongformState) -> LongformState:
     """Wave F node 4: the longform-meta-author writes publish-meta.json (title / description / tags in Mike's voice);
     the node copies <project>-FINAL.mp4 + the thumbnail into schedule-tweets/longform/<slug>/, appends the
     longs.json entry (rumble / bitchute / facebook pending; never YouTube; batch null = longform-edited original),
-    confirms the queue copy, THEN recycles _previews/ and _tmp/ (comp-build §12a, Recycle Bin)."""
+    confirms the queue copy, THEN recycles _previews/ and _tmp/ (comp-build §12a, Recycle Bin).
+    `--delivery root` (the AI Engineering Simplified channel): publish-meta.json + the usage ledger only; the FINAL stays
+    at the project root, nothing goes into schedule-tweets or longs.json, _previews is kept."""
     node = "stage_longform"
     proj = _proj(state)
     if state.get("stub"):
@@ -2323,6 +2380,22 @@ def stage_longform(state: LongformState) -> LongformState:
     meta = json.loads(meta_p.read_text(encoding="utf-8"))
     if "\u2014" in json.dumps(meta, ensure_ascii=False) or not meta.get("title") or not meta.get("description"):
         return C._fail(state, node, "publish-meta.json incomplete or carries an em dash")
+
+    def record_usage():
+        """the variety ledger: this video's music + transitions are now "used" (None = ok, else the failure)"""
+        if USAGE_LEDGER.is_file():
+            rc, out = C.run_streaming([sys.executable, "-u", str(USAGE_LEDGER), "record", "--project", str(proj), "--source", "graph"], state, node)
+            if rc != 0 or "USAGE-RECORD ok" not in (out or ""):
+                return out or f"rc {rc}"
+        return None
+
+    if C.delivery(proj) == "root":
+        bad = record_usage()
+        if bad is not None:
+            return C._fail(state, node, "usage_ledger.py record failed (the next video would not rotate against this one)", bad)
+        return {"steps": C._step(state, node, "ran", f"root delivery: {final.name} + publish-meta.json stay at the project root, NOT "
+                                                     "queued (longs.json untouched), usage ledger recorded, _previews kept"),
+                "status": "done"}
     slug = proj.name
     st = C.REPO_ROOT / "schedule-tweets"
     dest_dir = st / "longform" / slug
@@ -2358,10 +2431,9 @@ def stage_longform(state: LongformState) -> LongformState:
         C._write_json_atomic(longs_p, data)
     if not (dest_mp4.is_file() and (_duration(dest_mp4) or 0) > 1):
         return C._fail(state, node, "queue copy did not verify; nothing recycled")
-    if USAGE_LEDGER.is_file():      # the variety ledger: this video's music + transitions are now "used"
-        rc, out = C.run_streaming([sys.executable, "-u", str(USAGE_LEDGER), "record", "--project", str(proj), "--source", "graph"], state, node)
-        if rc != 0 or "USAGE-RECORD ok" not in (out or ""):
-            return C._fail(state, node, "staged, but usage_ledger.py record failed (the next video would not rotate against this one); nothing recycled", out)
+    bad = record_usage()
+    if bad is not None:
+        return C._fail(state, node, "staged, but usage_ledger.py record failed (the next video would not rotate against this one); nothing recycled", bad)
     ok, msg = _recycle([proj / "_previews", proj / "_tmp"])
     if not ok:
         return C._fail(state, node, f"staged, but the _previews/_tmp recycle failed: {msg}")

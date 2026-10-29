@@ -1,0 +1,281 @@
+{
+ "project": "growth-scale-up",
+ "authored": "2026-10-28 by music-placement-strategist (read-only plan; the orchestrator lays it in, Mike reviews at GATE plan)",
+ "spine": "video-creation/longform-edited/media/growth-scale-up/spine/ALL.e.desilenced.mp4",
+ "spine_duration_sec": 229.715,
+ "ruling": "Mike 2026-10-25: ONE track for the whole video (happy-feet), one continuous bed from frame 0 to the last frame, no breath and no bed change at any chapter boundary, ducked under the VO and the pops, never stopped for a pop; past 3:31 extend by a section loop of the same file, never a second track. Every row below is the same file, sample-continuous (source_in = 1.980 + span start), so mix_music.py merges the six rows into ONE physical placement.",
+ "track": {
+  "id": "happy-feet",
+  "title": "Happy Feet",
+  "artist": "Lunareh",
+  "file": "video-creation/assets/music/Happy Feet/Lunareh_Happy_Feet_instrumental_3_31.mp3",
+  "duration_sec": 211.021,
+  "bpm": 93,
+  "beat_sec": 0.64516,
+  "bar_sec": 2.58065,
+  "beat_grid_offset_sec": 0.69,
+  "key": "C major",
+  "mix": "instrumental (the track has no vocal version)",
+  "license_code": "KXRKSRZUBNZNMOLF",
+  "ledger": "fresh (used_in empty); not BLOCKED (previous video only-18-months-left used harvester, leatherface, a-most-unusual-discovery, deceptive-cadence) and not in the last three videos (innovation, proton-streams, story-of-my-life, up-in-the-atmos). Report run 2026-10-28 with --exclude-project growth-scale-up. No mike_note on this track."
+ },
+ "levels": {
+  "vo_lufs_integrated": -21.3,
+  "bed_lufs_integrated": -8.6,
+  "measured_with": "ffmpeg ebur128 on spine/ALL.e.desilenced.mp4 (the Adobe-enhanced spine) and on the bed file, 2026-10-28",
+  "seat_db_under_vo": -17,
+  "remotion_gain_db": -29.7,
+  "remotion_volume": 0.0327,
+  "note": "gain = (VO LUFS + seat) - bed LUFS = (-21.3 - 17) - (-8.6) = -29.7 dB; volume = 10 ** (-29.7 / 20). One seat end to end; the file's own arc carves the intensity (verse env 7 under the teaching chapters, chorus env 8-9 under the list cards and the close). The kinetic-text SFX ride above it at the mixer's SFX gain."
+ },
+ "energy_profile": {
+  "video-creation/assets/music/Happy Feet/Lunareh_Happy_Feet_instrumental_3_31.mp3": {
+   "low_energy_regions": [
+    [
+     0.0,
+     0.69
+    ],
+    [
+     6.0,
+     10.0
+    ],
+    [
+     32.0,
+     36.0
+    ],
+    [
+     112.0,
+     116.0
+    ],
+    [
+     160.0,
+     174.0
+    ],
+    [
+     200.3,
+     211.021
+    ]
+   ],
+   "high_energy_regions": [
+    [
+     0.69,
+     32.0
+    ],
+    [
+     36.0,
+     68.0
+    ],
+    [
+     68.0,
+     112.0
+    ],
+    [
+     116.0,
+     160.0
+    ],
+    [
+     174.0,
+     200.3
+    ]
+   ],
+   "notes": "Catalog analysis (aggression 80, mean -10.9 dB, opening cold_hot, ending resolve; segments 0-160 high peak, 160-174 mid build, 174-202 high peak, 202-212 low outro). env by second: 0-32 hot opening at 7 with a short 6 dip at 6-10; 32-36 a 66 pre-chorus dip; 36-68 chorus 1 at 8-9; 68-80 chorus tail 8-9; 80-112 the flat verse plateau, sixteen consecutive 7s (the loop region lives here); 112-116 a 66 dip; 116-160 chorus 2 at 8-9; 160-174 the breakdown at 6; 174-200 the final chorus rising 7 to 9; 200-202 the final hit and decay. Grid localisation (the catalog has no onset data, so a 10 ms RMS read of the head and a 50 ms read of the tail were taken only to place events, never to re-score energy): the first downbeat hit is at 0.69 s (0-0.69 is the cold_hot swell from -88 dB), the beat grid is 0.69 + n * 0.64516 and it holds to the end (downbeat 77 at 199.40 s measured loud, catalog bpm 93 is exact); the band's FINAL HIT is beat 2 of the last bar at 200.045 s, ringing out to about 207 s and silent from 208 s."
+  }
+ },
+ "placement_math": {
+  "file_to_video": "video = file - 1.980 up to the loop exit (file 111.658 = video 109.66), then video = file + 28.967 after the extra pass (file 111.658 = video 140.65 on the second exit), minus the 0.020 s head trim",
+  "loop": "12 bars = 30.968 s, region 80.690-111.658 (bar 31 to bar 43 on the grid), inside the single steady section 0-160 on its flat verse plateau (env 7 at both ends, so loop_out audio matches loop_in). Repeated ONCE: the mixer plays file 1.980 to 111.658, repeats 80.690 to 111.658, then runs on into the real ending.",
+  "mixer_resolution": "avail = 211.021 - 1.980 = 209.041; length = hold_until 239.988; extra passes = ceil((239.988 - 209.041) / 30.968) = 1; total 240.009; head trim 0.020 s (end-aligned). hold_until is set 0.02 s under avail + region on purpose so float rounding can never tip the mixer into a second pass.",
+  "final_hit": "file 200.045 maps to video 200.045 - 1.980 + 30.968 - 0.020 = 229.012, i.e. on the arrow pop (click 228.94-229.06, right 229.06-229.36, here 229.36-229.60); the ring-out runs past the spine end and mix_music.py cuts the mix at 229.715 with its 0.2 s fade (end_card_hold.trim)."
+ },
+ "end_card_hold": {
+  "after_last_word_sec": 0.115,
+  "hold_until_sec": 239.988,
+  "trim": true,
+  "why": "Positions the end-pinned bed so the band's final hit (file 200.045) lands at video 229.01 on the arrow pop, the last words of the video. trim: true = the video still ends on the last word (house rule, kcc20 2026-10-22); the hold only positions the music and the mixer fades the cut over 0.2 s. No end card is held."
+ },
+ "beds": [
+  {
+   "chapter": "CH1",
+   "span": [
+    0.0,
+    23.34
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Happy Feet/Lunareh_Happy_Feet_instrumental_3_31.mp3",
+   "source_in": 1.98,
+   "cover": "loop",
+   "intensity": "aggressive",
+   "level_db_under_vo": -17,
+   "remotion_gain_db": -29.7,
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": 80.69,
+   "loop_out_sec": 111.658,
+   "align_end": true,
+   "why": "The hook rides the file's hot cold_hot opening (env 7 from 0.69 s, aggression 80): frame 0 enters at file 1.980 = beat 3 of bar 0, the band already at full level, so the signature-open whip (swoosh-4 at frame 0) and the first hammer sentence sit on a running groove, no fade-in (mix_music gives a frame-0 bed none). The short env 6 dip at file 6-10 lands at video 4-8 under the team-of-one sentence and reads as breathing room before the TEAM OF ONE / TEAM OF FIVE pops. The in-point is fixed by the end pin: the final hit must land on the last words (see end_card_hold), and with a whole-bar loop region only a beat-3 start satisfies both."
+  },
+  {
+   "chapter": "CH2",
+   "span": [
+    23.46,
+    68.02
+   ],
+   "register": "gear-2-explainer",
+   "source_file": "video-creation/assets/music/Happy Feet/Lunareh_Happy_Feet_instrumental_3_31.mp3",
+   "source_in": 25.44,
+   "cover": "loop",
+   "intensity": "aggressive",
+   "level_db_under_vo": -17,
+   "remotion_gain_db": -29.7,
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": 80.69,
+   "loop_out_sec": 111.658,
+   "align_end": true,
+   "why": "Same file, sample-continuous (no breath, Mike's ruling). File 25.4-36 (env 7 then the 66 dip at 32-36) sits under the fork face line, so the ZERO LEVERAGE verdict and its minecraft-damage (about 33.9) fall in the file's quietest pre-chorus bars. Chorus 1 (file 36-68, env 8-9) opens at video 34.8 exactly as the whip leaves the face for the prioritisation b-roll and runs under the K1 card and the C2 list card: the six tings (50.20 to 57.92) ride the drums of the chorus, which is the 2023 pattern the screenplay asked for. Seat unchanged at -17; the file's own lift from 7 to 9 is the only change."
+  },
+  {
+   "chapter": "CH3",
+   "span": [
+    68.4,
+    111.84
+   ],
+   "register": "gear-2-explainer",
+   "source_file": "video-creation/assets/music/Happy Feet/Lunareh_Happy_Feet_instrumental_3_31.mp3",
+   "source_in": 70.38,
+   "cover": "loop",
+   "intensity": "subtle",
+   "level_db_under_vo": -17,
+   "remotion_gain_db": -29.7,
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": 80.69,
+   "loop_out_sec": 111.658,
+   "align_end": true,
+   "why": "The chorus tail (file 68-80, env 8-9) carries the CH3 face opener (68.1-73.8) and the first lit column of the C1 diagram, then the file drops onto its flat verse plateau (file 80-112, sixteen 7s) from video 78.7 for the rest of the diagram, the anti-pattern card, the long-doc b-roll, the face verdict (99.6-103.3) and the seats row. That plateau is the file's steadiest, least busy region, which is what the dense teaching VO needs; the loop region sits inside it, and the one loop join (file 111.658 back to 80.690) lands at video 109.66 under the C1-seats cover line (103.27-112.4), never on a face or a pop."
+  },
+  {
+   "chapter": "CH4",
+   "span": [
+    111.96,
+    158.34
+   ],
+   "register": "gear-2-explainer",
+   "source_file": "video-creation/assets/music/Happy Feet/Lunareh_Happy_Feet_instrumental_3_31.mp3",
+   "source_in": 113.94,
+   "cover": "loop",
+   "intensity": "subtle",
+   "level_db_under_vo": -17,
+   "remotion_gain_db": -29.7,
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": 80.69,
+   "loop_out_sec": 111.658,
+   "align_end": true,
+   "why": "The repeated verse plateau (second pass of file 80.69-111.658, env 7) runs from video 109.66 to 140.65 under the one-on-ones b-roll, the Statsig receipt, the judgment-transfer face line (120.7-125.6), the direction b-roll and the L1 trade-offs card: steady, non-distracting, the tings on 134.16 / 135.20 / 136.98 sit over a 7 not a 9. The file's 66 dip (112-116) then lands at video 140.97-144.97, the softest bed of the video, right under the face line about an agent only knowing the trade-offs you put in writing (138.6-142.6), the closest thing to a quiet confessional beat this video has. Chorus 2 (file 116-160, env 8-9) lifts in at video 144.97 under the own-repo receipt pan and the TEAM OF FIVE dolly, building toward the CH5 opener."
+  },
+  {
+   "chapter": "CH5",
+   "span": [
+    158.68,
+    216.86
+   ],
+   "register": "gear-2-rising-to-3",
+   "source_file": "video-creation/assets/music/Happy Feet/Lunareh_Happy_Feet_instrumental_3_31.mp3",
+   "source_in": 160.66,
+   "cover": "loop",
+   "intensity": "aggressive",
+   "level_db_under_vo": -17,
+   "remotion_gain_db": -29.7,
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": 80.69,
+   "loop_out_sec": 111.658,
+   "align_end": true,
+   "why": "The rapid-fire chapter opens on the back half of chorus 2 (file 129-160, env 8-9, the file's longest 9 runs at 140-146 and 150-156 = video 169-175 and 179-185): the scale-up-mode opener (158.4-161.9), Play one and the experiment-loop diagram nodes lighting on their verbs, the sample-size receipt and Play two all ride the drums, so the four tings have the brisk bed the screenplay asked for. The file's breakdown (160-174, env 6) lands at video 188.97-202.97 under Play three (the Monday digest), the dashboard b-roll and Play four (programmatic SEO): the thinner stretch of the chapter, still at -15 to -18 dBFS raw, no silence. The final chorus (file 174-200, 7 rising to 9 by file 178 = video 207) starts under the Google receipt at video 202.97 and is at full 9 for the two seat lines that close the chapter (210.5-216.9), carrying the swell straight into the close with no boundary move."
+  },
+  {
+   "chapter": "CH6",
+   "span": [
+    217.06,
+    229.72
+   ],
+   "register": "gear-3-epic",
+   "source_file": "video-creation/assets/music/Happy Feet/Lunareh_Happy_Feet_instrumental_3_31.mp3",
+   "source_in": 219.04,
+   "cover": "loop",
+   "intensity": "aggressive",
+   "level_db_under_vo": -17,
+   "remotion_gain_db": -29.7,
+   "breath_before_sec": 0.0,
+   "loop_point_sec": null,
+   "loop_in_sec": 80.69,
+   "loop_out_sec": 111.658,
+   "align_end": true,
+   "why": "Right-aligned close: the last row runs to the plan's hold (mix_music takes the LAST row to mtotal = hold_until 239.988 and the whole merged bed is end-aligned), so the final chorus (file 188-200, env 9) is under the fewer-people / higher-velocity hammer line and the JUDGMENT payoff on make (221.26, cash-register-2), still at 9 under the subscribe button (222.74), and the band's FINAL HIT (file 200.045) lands at video 229.01 on click right here (228.94-229.60), the arrow pop with cartoon-accent. The decay after the hit runs past the spine and the mixer cuts it at 229.715 with the 0.2 s fade: the video ends on the last word, the music ends big on it. Not end-aligned to the file's silent tail (that would put the hit at 218.76 on velocity and leave the whole subscribe CTA over the file's sub -45 dB ring-out, a silent stretch)."
+  }
+ ],
+ "automation": [],
+ "automation_note": "None placed: Mike's ruling is one continuous bed with no change at any boundary, and at -17 dB under the VO every pop, ting, band and the subscribe sounds sit well above it at the mixer's SFX gain. No clip inserts on this video (COVER-PLAN clip_inserts empty), so no automatic insert ducks either. See open_questions 3 for the one optional dip.",
+ "hard_hits": [
+  {
+   "t": 0.0,
+   "beat": "signature open, the frame-0 whip (swoosh-4) onto the face",
+   "music_move": "the bed enters already running at file 1.980 (beat 3 of bar 0 of the hot cold_hot opening, env 7, no fade); the whip masks the entry, the first downbeat of the video falls at 0.60 (file 2.58) under the first word"
+  },
+  {
+   "t": 33.9,
+   "beat": "ZERO LEVERAGE verdict, minecraft-damage on zero (the one negative in the video)",
+   "music_move": "no move: the file's own 66 pre-chorus dip (32-36) sits under it, so the joke verdict lands on the quietest bars of the opening"
+  },
+  {
+   "t": 34.8,
+   "beat": "whip off the face onto the prioritisation b-roll, LIST THE / HIGHEST-IMPACT WORK pop, then the C2 list card tings 50.20-57.92",
+   "music_move": "chorus 1 (file 36-68, env 8-9) opens here and rides the whole list card; the tings sit on the drums"
+  },
+  {
+   "t": 109.66,
+   "beat": "the ONE remix loop join (file 111.658 back to 80.690, 12 bars, 7 to 7)",
+   "music_move": "under the C1-seats cover line (103.27-112.4), no face, no pop within 0.5 s"
+  },
+  {
+   "t": 141.0,
+   "beat": "face line about an agent only knowing the trade-offs you put in writing (138.6-142.6)",
+   "music_move": "the softest bed of the video: the file's 66 dip (112-116) lands at 140.97-144.97; chorus 2 lifts in at 144.97 under the own-repo receipt pan"
+  },
+  {
+   "t": 158.4,
+   "beat": "CH5 opener (scale-up mode) and Play one / the experiment-loop diagram",
+   "music_move": "chorus 2 at its loudest (file 129-160, env 9 runs) carries the opener and the diagram's six lit nodes; no boundary move (Mike)"
+  },
+  {
+   "t": 202.97,
+   "beat": "the Google receipt, then the two seat lines that close CH5 (210.5-216.9)",
+   "music_move": "the final chorus (file 174-200) starts under the receipt and is at full 9 from video 207, swelling into the close with no boundary move"
+  },
+  {
+   "t": 221.26,
+   "beat": "JUDGMENT payoff on make (cash-register-2), the CH6 hammer line",
+   "music_move": "final chorus at env 9, no dip placed (optional -3 dB dip in open_questions 3)"
+  },
+  {
+   "t": 229.01,
+   "beat": "the arrow pop on click right here (228.94-229.60), the last words of the video",
+   "music_move": "the band's FINAL HIT (file 200.045) lands here, end-pinned via end_card_hold; the ring-out is cut at the spine end 229.715 by the mixer's 0.2 s fade"
+  }
+ ],
+ "notes": [
+  "Coverage: six rows tile 0.0-229.72 with gaps of 0.12 / 0.38 / 0.12 / 0.34 / 0.20 s at the chapter boundaries (all under the 1.0 s breath, and the mixer merges the rows into one placement so there is no gap at all in the audio).",
+  "Every row is cover loop with the same region and align_end true: mix_music resolves the loop and the end alignment from the FIRST row of a merged placement, so the region must be on CH1 and the flags on every row.",
+  "No title cards, no clip inserts, so sh() is the identity on this video: every time above is both a FINAL-spine second and a comp second.",
+  "Catalog section cuts of the same track (chorus 0:52, intro 0:38, verse 0:32 WAVs) were not used: the full file with one remix loop keeps the bed sample-continuous end to end, which is what the one-continuous-bed ruling asks for."
+ ],
+ "open_questions": [
+  "In-point: frame 0 sits on beat 3 of bar 0 (file 1.980), not on the downbeat at 0.69. The end pin (the final hit on the arrow pop at 229.01) and a whole-bar loop region fix the in-point to the beat grid, and only a beat-3 start satisfies both. The downbeat alternative (source_in 0.69, loop region unchanged) moves the final hit to 227.73 on AI product, 1.3 s before the arrow; say the word if you prefer the downbeat start over the hit on the last words.",
+  "The spine (229.72 s) runs 18.7 s past the 211 s file, so the ONE section loop you allowed is in: the 12-bar verse plateau 80.690-111.658 repeats once, join at video 109.66 under the C1-seats cover line. Listen at that second on the draft; the env is 7 on both sides of the join.",
+  "One seat (-17 dB under the VO, measured: VO -21.3 LUFS after Adobe Enhance, bed -8.6 LUFS, gain -29.7 dB) end to end per the no-change ruling; the file's own arc does the carving. If the final chorus crowds the cash-register payoff on make (221.26) at the draft gate, the one-line fix is an automation row with window [216.95, 221.55], gain_db -3, relative true, ramp_sec 0.4; not placed.",
+  "The file's breakdown (env 6, file 160-174) lands at video 188.97-202.97 under Play three (Monday digest) and Play four (programmatic SEO), the thinner stretch of the rapid-fire chapter. That is where the file's structure falls once the end is pinned; moving it means a different in-point and losing the hit on the arrow.",
+  "Shortlist check against the 2026-10-28 ledger: happy-feet is fresh, not BLOCKED (the previous video is now only-18-months-left: harvester, leatherface, a-most-unusual-discovery, deceptive-cadence) and not in the last three videos; no replacement needed and no usage_waivers. The screenplay's alternates (pathways, synthy-waves, industry) are also still fresh. The subtle pool has 34 fresh beds, not running out.",
+  "The gain is computed from the Adobe-enhanced spine's LUFS; if the VO is re-levelled before the mix, re-measure and recompute remotion_gain_db = (VO LUFS - 17) + 8.6."
+ ]
+}

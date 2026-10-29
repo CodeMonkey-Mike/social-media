@@ -146,13 +146,17 @@ _Considered on every video (Convention 6; rule + pipeline in `skills/clip-insert
 
 ## MUSIC-MOOD-PLAN
 
-| CH | Mood + gear | Subtle / aggressive | New bed? | Track shortlist (assets/music/library.json) |
+| Chapter | Mood + gear | Subtle / aggressive | Bed / carve (which section of the file plays, how it is extended or right-aligned) | Track shortlist (assets/music/library.json) |
 |---|---|---|---|---|
-| CH1 | <dark epic, gear 3> | aggressive, hits cold on word one | **Bed A starts** | <track ids by aggression / opening meta> |
-| CH2 | <steady explainer, gear 2> | subtle, loop-safe | **Bed B starts** (card ON) | <track ids> |
-| CH3 | <rising epic, gear 3> | aggressive into the close | **Bed C starts** (card ON) | <an `epic_hit`-ending track> |
+| CH1 <NAME> (0:00-0:<ss>) | <dark epic, gear 3> | aggressive, hits cold on word one | **Bed A starts at frame 0**: <the file's intro groove, its first drop on "<word>"> | <track ids by aggression / opening meta> |
+| CH2 <NAME> (0:<ss>-<m:ss>) | <steady explainer, gear 2> | subtle, loop-safe | **Bed B starts** (card ON): <the verse plateau, extended to the chapter by a bar-aligned remix loop> | <track ids> |
+| CH3 <NAME> (<m:ss>-<m:ss>) | <rising epic, gear 3> | aggressive into the close | Bed B continues: <the chorus RIGHT-ALIGNED so its ending hits on the last word "<word>"> | <an `epic_hit`-ending track> |
 
-Exact carving (in-points, loops, dB under VO, breaths) is the `music-placement-strategist`'s job after the spine exists.
+The first column is `CHn TITLE` as in the chapter heading (a time range may follow); the `Bed / carve` column says WHICH
+SECTION of the file plays and how it is extended (remix loop) or right-aligned (a drop on a word, an ending on the last word),
+never a bare "continues" (Mike, 2026-10-28; `lint_screenplay.py` rule 16). A new BED is a new TRACK (and a card, Convention 2);
+another section of the same track is a carve, not a bed change. Exact carving (bar lines, in-points, loops, dB under VO,
+breaths) is the `music-placement-strategist`'s job after the spine exists (`../music/music.md` section ONE TRACK, CARVED).
 
 ## VISUAL-PLAN
 

@@ -84,7 +84,15 @@ You operate inside the `social-media` repo (working directory is the repo root).
 5. **Write the MUSIC MOOD PLAN** (a `## MUSIC-MOOD-PLAN` section). For each chapter give: mood + gear,
    **subtle vs aggressive** intent, whether it **STARTS A NEW BED** or continues the prior one, and a
    **shortlist of candidate tracks from `library.json`** chosen by mood/aggression/opening/ending meta
-   (reserve an `epic_hit`-ending track for the outro closer). **Variety (Mike, 2026-10-01): run
+   (reserve an `epic_hit`-ending track for the outro closer). **Table form (Mike, 2026-10-28; `lint_screenplay.py`
+   rule 16):** the first column is `CHn TITLE` exactly as the chapter heading (`CH1 THE HOOK`, a time range may
+   follow), never a bare `CH1`; the bed column is `Bed / carve`: it says WHICH SECTION of the file is meant to play
+   (its intro groove, verse plateau, breakdown, a drop on "<word>", the chorus RIGHT-ALIGNED so its ending hits the
+   chapter's last word, a short section extended by a remix loop), never a bare "continues". A new BED means a new
+   TRACK (and a title card, Convention 2); moving to another section of the same track is a carve, not a bed change.
+   For a one-track video name the intended carve per chapter from the catalog `env` and `segments` (which region
+   under which beat); the placement strategist measures the file per bar and lands it (music.md section ONE TRACK,
+   CARVED). **Variety (Mike, 2026-10-01): run
    `python video-creation/skills/usage-ledger/usage_ledger.py report --what music --exclude-project "<project>"` first.** Never shortlist a track it marks BLOCKED
    (the previous video used it); avoid the last three videos' tracks; among tracks that fit the mood prefer
    `fresh` (never used), then the least recently used. Fit comes first. Doc:
@@ -130,7 +138,9 @@ Return ONE markdown document following `screenplay.md`'s file skeleton:
 - Production-conventions block (the tag legend + the Title-card table that FALLS OUT of the music plan + FACE/COVER rules)
 - Per-chapter sections: register · Title-card flag · Convention-5 tagged beats (incl. any 🎞️ `[INSERT]`) · a `> [!IMPORTANT]` verify box
 - `## CLIP-INSERTS` (the CLIP-<n> rows with a status, or `NONE: <why>`; Convention 6, considered on every video)
-- `## MUSIC-MOOD-PLAN` (per-chapter mood/gear/intent/new-bed + track shortlist; hand exact carving to music-placement-strategist)
+- `## MUSIC-MOOD-PLAN` (first column `CHn TITLE`; per-chapter mood/gear/intent; the `Bed / carve` column says which section
+  of the file plays and how it is extended or right-aligned, a new bed = a new track; track shortlist; hand exact carving to
+  music-placement-strategist)
 - `## VISUAL-PLAN` (the marquee 🎬 `[SHOW]` cues — centerpiece diagrams/charts — as pointers for coverage-strategist; when the
   video gives chapters their own beds, a **Chapter themes** table too: one accent + one image style per chapter, Convention 4b)
 - `## OPEN QUESTIONS / NEXT SESSION` (anything Mike must decide + the live `[VERIFY]` checklist from DATA.md)

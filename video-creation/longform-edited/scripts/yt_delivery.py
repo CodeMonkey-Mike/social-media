@@ -70,9 +70,21 @@ def main():
     if len(keywords) != 10:
         fails.append(f"{jp.name} needs exactly 10 keyword phrases, it has {len(keywords)} (the main loop writes them)")
 
-    chapters = []
+    # a CARVED plan (one track carved into `cover: section` rows, music.md "ONE TRACK, CARVED") holds several rows per
+    # chapter, and each starts where the MUSIC lands (a splice before the chapter, a right-aligned climb), not where the
+    # chapter does: one chapter per distinct chapter, timed by its EDIT-PLAN heading span (`## CHn - NAME (M:SS.s-...`).
+    # A one-bed-per-chapter plan keeps its bed's span start, exactly as before.
+    carved = any(b.get("cover") == "section" for b in plan["beds"])
+    starts = {m.group(1): int(m.group(2)) * 60 + float(m.group(3)) for m in
+              re.finditer(r"^## (CH\d+) - .*?\((\d+):(\d+(?:\.\d+)?)-", ep.read_text(encoding="utf-8"), re.M)} if ep.is_file() else {}
+    chapters, done = [], set()
     for b in plan["beds"]:
+        if b["chapter"] in done:
+            continue
+        done.add(b["chapter"])
         ch, s = b["chapter"], float(b["span"][0])
+        if carved and ch in starts:
+            s = starts[ch]
         card = next((c for c in cards if abs(float(c["at"]) - s) <= 0.5), None)
         if card:
             t = float(card["at"]) + sum(float(p["dur"]) for p in pauses if float(p["at"]) < float(card["at"]) - 1e-6)
@@ -92,7 +104,7 @@ def main():
     lib = {t.get("id"): t for t in json.loads(LIBRARY.read_text(encoding="utf-8")).get("tracks", []) if isinstance(t, dict)}
     codes, seen = [], set()
     for b in plan["beds"]:
-        tid = b.get("track_id")
+        tid = b.get("track_id") or (plan.get("track") or {}).get("id")   # a carved plan names its one track at the top
         if tid in seen:
             continue
         seen.add(tid)

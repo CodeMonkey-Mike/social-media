@@ -50,7 +50,7 @@ import run_queue as RQ  # noqa: E402
 RETRY_LONGFORM = {"compress", "transcribe", "as_recorded", "coverage", "music_plan", "assets", "edit_plan", "transitions",
                   "card_pauses", "captions", "comp_build", "mix_audio", "final_render", "definition_of_done"}
 RETRY_VERTICAL = {"v_face_crop", "v_assets", "v_comp", "v_render", "v_mix"}
-RETRY_SHORT = {"s_variants", "s_extract", "s_captions", "s_comp", "s_render", "s_mix"}
+RETRY_SHORT = {"s_paint_16x9", "s_variants", "s_extract", "s_captions", "s_comp", "s_render", "s_mix"}
 
 
 def _gate_name(final):
@@ -166,6 +166,9 @@ def main_longform():
     ap.add_argument("--container-theme", choices=C.CONTAINER_THEMES, default=None,
                     help="per-video palette for every CSS container / diagram / animated chart, persisted in GRAPH-PROGRESS.json: "
                          "dark (default, container-canonical.css) | light (container-canonical-light.css loaded after it; Mike 2026-10-25)")
+    ap.add_argument("--delivery", choices=C.DELIVERIES, default=None,
+                    help="per-video delivery, persisted in GRAPH-PROGRESS.json: queue (default: schedule-tweets/longform + longs.json) | "
+                         "root (the FINAL stays at the project root, never longs.json: the AI Engineering Simplified channel)")
     ap.add_argument("--caption-windows", default=None, help="build: extra caption windows a-b,a-b in source seconds (the cold-open exception)")
     ap.add_argument("--envato-max", type=int, default=None, help="plan: Envato video budget (default: 3 per minute of final spine, floor 10)")
     ap.add_argument("--chatgpt-max", type=int, default=None, help="plan: ChatGPT image budget (default: 1 per minute of final spine, floor 5; raise it per video)")
@@ -225,6 +228,9 @@ def main_longform():
         if args.container_theme:
             C.set_setting(proj, "container_theme", args.container_theme)
             print(f"container theme for {project}: {args.container_theme} (saved in GRAPH-PROGRESS.json)")
+        if args.delivery:
+            C.set_setting(proj, "delivery", args.delivery)
+            print(f"delivery for {project}: {args.delivery} (saved in GRAPH-PROGRESS.json)")
         if args.caption_scope:
             scope_items = [] if args.caption_scope.strip() == "default" else _parse_list(args.caption_scope)
             bad = [x for x in scope_items if x not in C.CAPTION_SCOPES]
@@ -333,7 +339,7 @@ def main_short():
     ap.add_argument("--scope", default="ALL")
     ap.add_argument("--seconds", type=float, default=30.0, help="delivered length incl. the 3 s outro (default 30)")
     ap.add_argument("--brief", default=None, help="per-run overrides for the cut strategist")
-    ap.add_argument("--approve", default="", help="gate approvals: short_plan, short")
+    ap.add_argument("--approve", default="", help="gate approvals: short (short_plan is automatic since 2026-10-29)")
     ap.add_argument("--redo", default="")
     ap.add_argument("--thread", default=None)
     ap.add_argument("--resume", action="store_true")

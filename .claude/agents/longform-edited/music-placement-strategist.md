@@ -77,6 +77,23 @@ Run `python video-creation/skills/usage-ledger/usage_ledger.py report --what mus
    (one bar = 60 / bpm × 4 s) so the exit matches the entry, repeated as often as the span needs, with the file's
    real ending kept for a right-aligned hit; NEVER a whole-file restart (`music.md` ⛔ LOOP); (c) reserve the full
    track's drop for the single biggest beat. State the exact source-file in-point for each placement.
+4b. **ONE TRACK, CARVED (Mike's own editing method, 2026-10-28; canonical text: `music.md` section ONE TRACK, CARVED).**
+   When the video is on ONE track (or for any single bed), do NOT lay one continuous pass of the file. Read the file PER
+   BAR on its section grid (bar = 240 / bpm s; the phase by onset scoring; one scan in the scratchpad, the catalog `env`
+   only picks the track), name its regions (intro groove, pre-chorus dip, chorus, verse plateau, breakdown, rise, final
+   chorus, the ENDING bar with its measured BANG, often one beat after the bar line), then CARVE: subtle regions under the
+   explanations and the quiet face lines; the file's own drops on the hot words and the building b-roll (a dolly-in under
+   the dip, the drop on the cut); the intensity RIGHT-ALIGNED to a chapter's end (a 45 s chorus for a 30 s chapter plays
+   its LAST 30 s); a chapter may close on an ENDING (the master's, or a section cut's own hit, cross-correlate the cuts to
+   the master to learn what they are) with the BANG on the last word, its ring the breath into the next chapter; a short
+   subtle region is extended by a bar-aligned jump back (4 or 8 bars, or the 2-bar turnaround before an ending). Keep every
+   splice, out AND in, on a bar line of the running grid; a pinned drop or hit fixes its movement's grid, the other landings
+   of that movement fall on bar lines (within 1.3 s), and a fresh grid starts only after an ending's ring-out. WRITE IT as
+   `cover: section` rows (one per region played; a repeat = two rows jumping back to the same bar line, because the mixer's
+   loop branch fires only when the FILE is shorter than the span; outgoing rows `fade_out_sec: 0.08`; a swell `fade_in_sec`;
+   `carve` = the bars that play, `why` = the words and b-roll under them; rows may share a chapter id or enter inside the
+   previous chapter). The orchestrator renders a LISTENING COPY of your plan (`mix_music.py --plan-preview`) for GATE plan,
+   so name in `open_questions` the one or two landings Mike should listen for.
 5. **Level + breath.** Give a bed level target in dB under the VO (default ~-17 dB, note where to duck harder
    under dense narration) and mark the inter-bed breath (~0.4-0.8s) at every chapter change. **Clip inserts**
    (COVER-PLAN `clip_inserts`, a third-party clip with its OWN voice at a spine pause) are ducked AUTOMATICALLY by
@@ -104,6 +121,10 @@ Run `python video-creation/skills/usage-ledger/usage_ledger.py report --what mus
   "open_questions": ["..."]
 }
 ```
+A carved plan (step 4b) adds to each row `"carve": "<the bars that play>"`, `"fade_out_sec": 0.08` on every row that
+splices into the next, `"fade_in_sec"` on a swelling entry, and `"track.files_used": [...]` when a section cut is used for
+its ending; `energy_profile` then carries the per-bar read (regions by bar number and level) and `placement_math` the grid
+(phase, bar length, which word pins which movement).
 Every chapter in the map MUST appear in `beds` (no silent chapter, house rule #10). Ground every intensity
 call in a waveform region from the catalog `analysis` (or your `--file` measurement) in step 2 — never a
 vibe guess. Read-only: propose, never mix.

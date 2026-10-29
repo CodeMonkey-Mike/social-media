@@ -3570,6 +3570,20 @@ FILLER = {"uh", "um", "uhh", "umm", "mm", "hmm", "m"}
 # everything else still collapses exactly as before, so no past output can change. Key the run tightly
 # (include the words AROUND the doubling) so an unrelated stutter is never spared.
 PROTECTED_DOUBLES = [
+    # 30x-tao/get-into-assets-now-last-chance-impact (clip 7), 2026-10-28. "It's going to be REALLY,
+    # REALLY difficult in the future and it's going to happen VERY, VERY soon." Two intensifier
+    # doublings, not stutters: medium.en renders "really, really difficult" (13.72-14.10 / 14.10-14.40)
+    # and "very, very soon" (16.00-16.40 / 16.40-16.74) on the whole file, each limb a full token in one
+    # voiced run. Keyed with the words on both sides so a genuine stutter elsewhere still collapses.
+    ("be", "really", "really", "difficult"),
+    ("happen", "very", "very", "soon"),
+    # 30x-tao/tao-is-the-arena-not-a-competitor-impact (clip 6), 2026-10-28. "TAO, I think you're going
+    # to get MANY, MANY multipliers." The clip's payoff line: an intensifier doubling, not a stutter.
+    # medium.en renders "many, many multipliers" on the whole file AND the 14.8-18.8 window; two full
+    # tokens (16.34-16.72 / 16.72-17.02), continuous voiced audio, no restart. The collapse shipped
+    # "get many, multipliers." Keyed with the words on both sides so a genuine "many many" stutter
+    # elsewhere still collapses.
+    ("get", "many", "many", "multipliers"),
     # was-i-right/crypto-winter-called-to-the-day (clip 1), 2026-10-17. "we're going to get a REALLY,
     # REALLY disappointing local top." An intensifier doubling, not a stutter: medium.en renders
     # "a really, really disappointing" on the whole file; two full tokens (4.92-5.22 / 5.22-5.52).

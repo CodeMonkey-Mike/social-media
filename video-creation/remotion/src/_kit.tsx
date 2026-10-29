@@ -24,7 +24,10 @@ export type Caption = { t: number; h: string };
 export type BrollEv = { src: string; tIn: number; tOut: number; mode: 'full' | 'content' };
 export type Gfx     = { id: string; tIn: number; tOut: number };
 // vol/dur are optional per-event overrides (default 0.55 / 2s, the historical LivestreamShort values).
-export type Sfx     = { t: number; src: string; vol?: number; dur?: number };
+// fade (optional, seconds): a linear fade-out over the LAST `fade` s of `dur`, so a cue truncated mid-ring by `dur`
+// ends at zero instead of chopping (added 2026-10-28, 30x-tao clip 7). Omitted = the historical hard stop, so every
+// existing caller renders byte-identically.
+export type Sfx     = { t: number; src: string; vol?: number; dur?: number; fade?: number };
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────
 export function fadeInOut(t: number, tIn: number, tOut: number, fadeS = 0.15) {

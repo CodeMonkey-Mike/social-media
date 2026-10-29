@@ -133,7 +133,10 @@ def main():
     path = Path(sys.argv[1])
     src = load_source(path)
     covers = parse_covers(src)
-    if not covers:
+    # a DECLARED empty table is valid (a short whose spans need no variants, growth-scale-up 10-29); only a missing or
+    # unparseable table is an error
+    declared_empty = re.search(r"^\s*(?:export\s+)?const\s+COVERS(?![A-Za-z0-9_])[^=\n]*=\s*\[\s*\]\s*;", src, re.M)
+    if not covers and not declared_empty:
         print(f"lint_covers: could not parse a COVERS array in {path}", file=sys.stderr)
         sys.exit(2)
     errs, warns, n_broll = lint(covers, parse_caption_windows(src))

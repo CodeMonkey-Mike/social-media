@@ -109,6 +109,12 @@ production-conventions block.
   music never makes; cards and bed changes land together. So when you write the Music plan, the set of cards
   falls out of it: one card per new bed. (Worked example: a video on 3 beds where CH2 and CH4 start new beds
   shows cards only at CH2 + CH4; CH3/CH5/CH6 continue a bed and flow in cardless.)
+  **A new BED is a new TRACK (Mike, 2026-10-28).** One track CARVED into its sections (its verse plateau under an
+  explainer chapter, its chorus right-aligned to a chapter's close, a drop on a word) is still ONE bed: no card at
+  the section change. Different music per chapter is for a chapter with its own theme (look, colouring, b-roll
+  family). The MUSIC-MOOD-PLAN table names each chapter in its first column (`CH1 THE HOOK`) and says in its
+  `Bed / carve` column which section plays and how (never a bare "continues"); canonical method
+  `skills/music/music.md` section ONE TRACK, CARVED; gate `skills/doc-reference/lint_screenplay.py` rule 16.
 
 ## Convention 3 — [FACE] / [COVER] (when is Mike's face on screen?)
 

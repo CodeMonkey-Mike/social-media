@@ -11,10 +11,18 @@ argument (30 s default, outro inside), the opening FACE hook is the natural hook
 Envato clip or a ChatGPT image gets ONE alternative asset (`assets/short/`) overlaid in the short. The CTA line is the SHARED
 take `assets/vo/cta-watch-full.mp3` ("Click below to watch the full video"), mixed by `scripts/mix_short.py`; never re-voiced.
 
+## There is NO plan gate, in code (Mike, 2026-10-29)
+Mike: "There's no gate to ask me if I approve of the plan for the short." He has never rejected a short cut from a longform
+edit; at most he asks for a second or two of change on the FINISHED short. `gate_short_plan` auto-approves in
+`short_graph.py` (it used to be pre-approved by a launch flag, which a session forgot on growth-scale-up, 2026-10-29):
+`run.py short --project <name>` plans, builds AND DELIVERS in one run: the `short` gate auto-approves too (Mike, same day:
+"you could have already rendered it ... It could have already been done"). A short that passes `s_verify_final` lands at the
+project root, the run notifies, and Mike watches it after; a change is a splice off the KEPT `_previews/short/`. In 16:9-sourced mode the span painting is the `s_paint_16x9` graph node.
+
 ## 16:9-SOURCED MODE (no full vertical; every-job, Mike 2026-10-08)
 When Mike skips the full vertical ("I only want the short"), the lane still needs its two sources on one clock, so the
 VERTICAL master is an ADAPTER: a full-length 1080x1920 canvas (black) on the paused spine's clock, with the short's spans
-painted in after the cut plan is approved. The span pictures come from the 16:9 comp rendered WITHOUT its caption track
+painted in after the cut plan is approved (the `s_paint_16x9` node runs `scripts/short_spans_from_16x9.py --face-from-render`; skipped when the master is already painted from the same plan). The span pictures come from the 16:9 comp rendered WITHOUT its caption track
 (`render_comp.py --frames a-b --props <json with "captions": false>`; the comp exposes `inputProps.captions`), re-framed per
 span: FACE spans crop 608x1080 on the measured face centre (`assets/vertical/face-crop.json`, `measure_face_crop.py`),
 cover spans centre-crop (the variety rule overlays native-vertical alternates on Envato / AI-still spans anyway). The flag
@@ -32,10 +40,21 @@ face (role labels, side panels) is OUT of the 9:16 frame, and to avoid frames wh
 and outer chips, and the variety overlay only covers Envato / AI-still windows, never a card. Give the span `fit_windows`
 (`[{"a", "b", "box"}]`, final-video seconds) in SHORT-CUT-PLAN.snapped.json: inside the window the painter shows the card WHOLE,
 letterboxed on its own blurred, darkened frame; start it on the card's cross-fade and end it after the next ingress.
-**Waiving one variant slot:** `assets/short/variant-waivers.json` (`{"BR-1": "why"}`) drops that slot from the variety rule (the
-short keeps the longform's own asset there); `s_variants` prints VARIANT-WAIVED and ignores stale FAIL verdicts on slots no longer in
-play. Used on growth-vs-product (2026-10-23) after three Envato passes failed visual-qa and no clean portrait clip existed. Log it. Everything
-downstream (extract, variants, captions, comp, render, mix, verify, gates) is the normal lane.
+**A kinetic word pop inside a span (only-18-months-left 2026-10-28, Mike caught it at review):** the longform's big pop
+(hw-word-pop, 212 px, ~1110 px wide) is cut by the 608 px slice to a fragment ("18 MONTHS" read "ONTH"). Render the span with
+the comp's pops OFF (a `pops` prop next to `captions`) and draw the pop NATIVELY in the short comp, sized so its overshoot fits
+1080 px (160 px Showcard Gothic for "18 MONTHS"), in the caption slot with captions off under it. Check every span for pops
+BEFORE the render; a miss is a splice fix (re-render the span + the pop's frames only), never a full re-render.
+**A variant NEVER stops the short (Mike, 2026-10-28, in code: `s_variants`, proven by `graph/test_asset_qa_retry.py`):** a variant is
+optional (without one the short shows the longform's own asset), so `s_variants` runs up to `VARIANT_ROUNDS` (2) source + visual-qa
+rounds: a FAIL is moved to `_previews/short/qa/rejected/` and that slot alone is re-sourced with EVERY earlier verdict as feedback;
+a PASS carries over and is never re-judged (re-judging flip-flopped: a second pass failed four images the first had passed). A slot
+still open after the last round is AUTO-WAIVED into `assets/short/variant-waivers.json` (`"AUTO-WAIVED <time> ..."`), the run goes on
+to the render, and the `short` gate names the waived slots so Mike can ask for a re-source. Why: only-18-months-left (2026-10-27)
+failed one Envato slot three times and sat FAILED overnight instead of delivering the short; growth-vs-product (2026-10-23) hit the
+same wall and was waived by hand. **Waiving by hand** is still `{"BR-1": "why"}` in the same file (Mike's call, or the orchestrator's,
+logged in PROJECT-LOG); to retry an auto-waived slot, delete its entry and re-drive `s_variants`. Everything downstream (extract,
+captions, comp, render, mix, verify, gates) is the normal lane.
 
 ### Captions never cross a span end (lane rule in code, 2026-10-08)
 `s_captions` builds the short's caption groups from the words the short KEEPS only (a word belongs to a span when its
@@ -130,7 +149,7 @@ Budget the outro INSIDE the target length — a "40 second short" is 40 seconds 
    its final review window" (Oct 7), so the dated stamp "UPDATE / KCC-20 IS FINAL / OCT 21, 2026" holds ~1.9 s right after it.
    The lint skips it (no word cut), the extractor writes an `anullsrc` wav, the captions step gives it no words and no window,
    and the span still needs `sourced` + a parenthesized `says`. It adds to the runtime: re-size the target on resume
-   (`--resume --approve short_plan --seconds N`, which now updates the thread's target).
+   (`--resume --seconds N`, which updates the thread's target).
 
 ## 4. The CTA outro (Higgsfield MIKE-CLONE TTS)
 

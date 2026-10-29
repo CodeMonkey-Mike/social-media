@@ -18,7 +18,9 @@ the card start; the last bed fades over 0.25 s to the last frame. Gains = the pl
 
 Usage: python mix_music.py <media/<project>> --video <draft.mp4> [--out <mp4>] [--scope ALL]
          [--sfx-db -6] [--lib-sfx-peak -13 | --lib-sfx-db <fixed>] [--sfx-max 1.8]
-Machine lines: MIX-PLAN beds=N sfx=N lib_sfx=N · MIX-DONE out=<file> dur=X lufs_in=A lufs_out=B peak_out=P · PROGRESS 100%
+Machine lines: SFX-CHECK tags=N placed=N layer_none=N [WARN k SFX row(s) NOT mixed] · MIX-PLAN beds=N sfx=N lib_sfx=N ·
+MIX-DONE out=<file> dur=X lufs_in=A lufs_out=B peak_out=P · PROGRESS 100%
+A GATE-plan listening copy of the beds alone: --plan-preview [--plan <alternative MUSIC-PLAN.json>] (music.md ONE TRACK, CARVED).
 """
 import argparse
 import json
@@ -106,6 +108,10 @@ def bed_chain(k, b, file_len):
             f"aformat=sample_rates=48000:channel_layouts=stereo," + tail)
 
 
+# effects-library sound ids whose catalog file has another name (assets/effects/library.json -> assets/sfx)
+SFX_ALIAS = {"punch-1-2023": "punch-1"}
+
+
 def find_sfx(name):
     for p in SFX_ROOT.rglob(name):
         if "_source" not in p.parts:
@@ -131,27 +137,40 @@ def main():
                     help="the VOICE track to mix under (default: the project's paused spine assets/spine.mp4 when its length matches "
                          "the video; else the video's own audio). A Remotion render's audio runs 43 to 92 ms LATE against its own "
                          "picture (AAC priming plus stepped drift, golden-kitty 2026-10-02), so the VO is taken from the spine itself.")
+    ap.add_argument("--plan-preview", action="store_true",
+                    help="a GATE-plan LISTENING COPY (music.md section ONE TRACK, CARVED, Mike 2026-10-28): lay ONLY the MUSIC-PLAN beds "
+                         "under the given spine's own voice, no SFX rows, no transition SFX, no paused sidecar needed (sh() is the "
+                         "identity), written to _previews/<project>-music-preview[-<plan stem>].mp4 plus its .json; mix-audio.json is "
+                         "NOT touched, this is never the mix")
+    ap.add_argument("--plan", default=None,
+                    help="an alternative MUSIC-PLAN json to lay instead of the project's MUSIC-PLAN.json (A/B listening copies at the gate)")
     a = ap.parse_args()
     proj = Path(a.project_dir).resolve()
     video = Path(a.video).resolve()
-    out = Path(a.out).resolve() if a.out else video.with_name(video.stem + "-mix.mp4")
-    paused = sorted(proj.glob(f"spine/{a.scope}.*.paused.json"), key=lambda p: p.name)
-    if not paused:
-        print("FATAL: no paused sidecar in spine/", file=sys.stderr)
-        sys.exit(2)
-    meta = json.loads(paused[-1].read_text(encoding="utf-8"))
-    PAUSE = float(meta.get("pause_s") or 1.0)
-    # every baked pause: title cards (dur = pause_s, a bed breathes at them) AND clip inserts (their own dur, e.g. a 10 s
-    # spliced clip whose audio sits in the VO track; no card breath, the plan's automation ducks the bed). 2026-10-08.
-    PAUSES = [(float(p["at"]), float(p.get("dur") or PAUSE), bool(p.get("card"))) for p in meta.get("pauses") or []]
-    # BEAT pauses (a braam between sentences, Mike 2026-10-17): silence in the VO for the braam, the bed plays on, no duck
-    BEATS = {round(float(p["at"]), 3): float(p["dur"]) for p in meta.get("pauses") or [] if p.get("beat")}
-    CARD_T = [at for at, _, is_card in PAUSES if is_card]
+    mp_p = Path(a.plan).resolve() if a.plan else proj / "MUSIC-PLAN.json"
+    if a.plan_preview:
+        tag = "" if mp_p == proj / "MUSIC-PLAN.json" else "-" + re.sub(r"^MUSIC-PLAN\.?", "", mp_p.stem).strip("-.") or ""
+        out = Path(a.out).resolve() if a.out else proj / "_previews" / f"{proj.name}-music-preview{tag}.mp4"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        meta, PAUSE, PAUSES, BEATS, CARD_T = {}, 1.0, [], {}, []
+    else:
+        out = Path(a.out).resolve() if a.out else video.with_name(video.stem + "-mix.mp4")
+        paused = sorted(proj.glob(f"spine/{a.scope}.*.paused.json"), key=lambda p: p.name)
+        if not paused:
+            print("FATAL: no paused sidecar in spine/", file=sys.stderr)
+            sys.exit(2)
+        meta = json.loads(paused[-1].read_text(encoding="utf-8"))
+        PAUSE = float(meta.get("pause_s") or 1.0)
+        # every baked pause: title cards (dur = pause_s, a bed breathes at them) AND clip inserts (their own dur, e.g. a 10 s
+        # spliced clip whose audio sits in the VO track; no card breath, the plan's automation ducks the bed). 2026-10-08.
+        PAUSES = [(float(p["at"]), float(p.get("dur") or PAUSE), bool(p.get("card"))) for p in meta.get("pauses") or []]
+        # BEAT pauses (a braam between sentences, Mike 2026-10-17): silence in the VO for the braam, the bed plays on, no duck
+        BEATS = {round(float(p["at"]), 3): float(p["dur"]) for p in meta.get("pauses") or [] if p.get("beat")}
+        CARD_T = [at for at, _, is_card in PAUSES if is_card]
     total = duration(video)
     vo = Path(a.vo).resolve() if a.vo else (proj / "assets" / "spine.mp4")
     # MUSIC-PLAN `end_card_hold` (Mike's plan-gate ruling, tao-detailed 2026-10-16): the comp holds an end card PAST the spine,
     # so the spine is shorter than the video by that hold; it is still the VO (padded with silence), never the render's late audio
-    mp_p = proj / "MUSIC-PLAN.json"
     hold = (json.loads(mp_p.read_text(encoding="utf-8")).get("end_card_hold") or {}) if mp_p.is_file() else {}
     vo_pad = 0.0
     if vo.is_file() and hold.get("hold_until_sec"):
@@ -177,7 +196,7 @@ def main():
     def card_start(t):  # paused-spine time where the card at source t begins
         return sh(t) - PAUSE
 
-    plan = json.loads((proj / "MUSIC-PLAN.json").read_text(encoding="utf-8"))
+    plan = json.loads(mp_p.read_text(encoding="utf-8"))          # the project's MUSIC-PLAN.json, or --plan
     beds = sorted(plan.get("beds") or [], key=lambda b: float(b["span"][0]))
     resolved_beds = []
     prev_row = None
@@ -252,11 +271,12 @@ def main():
             if rb["t_start"] < pe and rb["t_end"] > ps:
                 rb["automation"].append({"start": round(max(0.0, ps - rb["t_start"]), 3), "end": round(min(rb["t_end"], pe) - rb["t_start"], 3),
                                          "rel_db": INSERT_DUCK_DB, "ramp": INSERT_RAMP, "why": f"clip insert at source {at} ({dur:.1f}s)"})
-    # SFX rows from the event log
-    ep = (proj / "EDIT-PLAN.md").read_text(encoding="utf-8")
+    # SFX rows from the event log (a --plan-preview lays the beds only: no event log, no transition SFX)
+    ep_p = proj / "EDIT-PLAN.md"
+    ep = ep_p.read_text(encoding="utf-8") if (ep_p.is_file() and not a.plan_preview) else ""
     ep_lines = ep.split("\n")
     card_turn = 0.37
-    tp_rows = json.loads((proj / "TRANSITION-PLAN.json").read_text(encoding="utf-8")).get("transitions") or [] if (proj / "TRANSITION-PLAN.json").is_file() else []
+    tp_rows = json.loads((proj / "TRANSITION-PLAN.json").read_text(encoding="utf-8")).get("transitions") or [] if ((proj / "TRANSITION-PLAN.json").is_file() and not a.plan_preview) else []
     for r in tp_rows:
         if str(r.get("role")) == "card" and r.get("duration_s"):
             card_turn = float(r["duration_s"])
@@ -268,7 +288,7 @@ def main():
     # so the card hits (file on a continuation line) and every new SFX type were silently dropped.
     KINDS = "IMPACT|RISER|BRAAM|DRONE|ACCENT|DOWNSHIFTER|WHOOSH|TEXTURE"
     # the body runs to the NEXT SFX tag, not the next "[": a [CARD] row names its impact file after the [TRANSITION] text
-    tag_re = re.compile(r"\[(" + KINDS + r")(?:→IMPACT|->IMPACT)?\](.*?)(?=\[(?:" + KINDS + r")|$)")
+    tag_re = re.compile(r"\[(" + KINDS + r")(?:→IMPACT|->IMPACT)?\](.*?)(?=\[(?:" + KINDS + r")\b|$)")
     file_re = re.compile(r"([A-Za-z0-9_/ .()-]+?\.(?:wav|mp3))")
     paren_file_re = re.compile(r"\(\s*([A-Za-z0-9_/ .-]+?\.(?:wav|mp3))\s*[,)]")
     blocks, cur = [], None
@@ -290,9 +310,17 @@ def main():
             # the event-log form is `name (dir/file.wav, mood_class ...)`: read the path inside the parentheses first;
             # file_re alone swallowed the label too ("Boom 2 (Boom 2.wav") and the SFX was dropped as not found
             fm = paren_file_re.search(body) or file_re.search(body)
-            if not fm:
-                continue
-            fname = fm.group(1).strip().split("(")[-1].strip().split("/")[-1]
+            if fm:
+                fname = fm.group(1).strip().split("(")[-1].strip().split("/")[-1]
+            else:
+                # an ID-ONLY row (`[WHOOSH] swoosh-4 (kinetic-text, neutral)`; growth-scale-up 2026-10-28: 84 of 85 kinetic-text
+                # sounds were silently dropped this way): resolve the id against assets/sfx, and never drop a row without saying so
+                idm = re.match(r"\s*([A-Za-z0-9_-]+)", body)
+                sid = SFX_ALIAS.get(idm.group(1), idm.group(1)) if idm else None
+                fname = next((sid + ext for ext in (".wav", ".mp3") if sid and find_sfx(sid + ext)), None)
+                if not fname:
+                    print(f"  warn  [{kind}] row at {t_row:.1f}s names no SFX file and no catalog id, NOT mixed: {body.strip()[:60]}")
+                    continue
             path = find_sfx(fname)
             if not path:
                 print(f"  warn  SFX file not found in assets/sfx: {fname}")
@@ -338,11 +366,18 @@ def main():
                 except (TypeError, ValueError):
                     row["gain_db"] = -30.0
             sfx.append(row)
+    # NEVER A SILENT DROP (growth-scale-up 2026-10-28: a stray BACKSPACE byte in tag_re, where a word boundary was meant,
+    # swallowed every second sound on an event line, 7 of 85 on that video): count the tags with an independent pattern
+    # and say so when placed + `layer: none` rows fall short of it
+    n_tags = sum(len(re.findall(r"\[(?:" + KINDS + r")(?:→IMPACT|->IMPACT)?\]", text)) for _, text in blocks)
+    n_none = sum(len(re.findall(r"\[(?:" + KINDS + r")(?:→IMPACT|->IMPACT)?\]\s*layer:\s*none", text)) for _, text in blocks)
+    print(f"SFX-CHECK tags={n_tags} placed={len(sfx)} layer_none={n_none}"
+          + ("" if len(sfx) + n_none >= n_tags else f"  WARN {n_tags - n_none - len(sfx)} SFX row(s) NOT mixed (see the warn lines above)"))
     sfx.sort(key=lambda s: s["t"])
     # library transition SFX
     lib_sfx, lib_peak = [], {}
     tp = proj / "TRANSITION-PLAN.json"
-    if tp.is_file() and LIB.is_file():
+    if tp.is_file() and LIB.is_file() and not a.plan_preview:
         raw = json.loads(LIB.read_text(encoding="utf-8"))
         rows = {r["id"]: r for r in (raw if isinstance(raw, list) else (raw.get("rows") or raw.get("transitions") or next(iter(raw.values())))) if isinstance(r, dict)}
         for r in json.loads(tp.read_text(encoding="utf-8")).get("transitions") or []:
@@ -436,12 +471,16 @@ def main():
         sys.exit(1)
     li, _ = lufs_and_peak(vo)
     lo, po = lufs_and_peak(out)
-    side = proj / "mix-audio.json"
-    side.write_text(json.dumps({"video": str(video), "vo": str(vo), "out": str(out), "card_t": CARD_T, "pause_s": PAUSE, "pauses": [{"at": a, "dur": d, "card": c} for a, d, c in PAUSES], "beds": resolved_beds,
+    # a --plan-preview is a listening copy: its resolution goes next to it in _previews/, never into mix-audio.json (the mix)
+    side = out.with_suffix(".json") if a.plan_preview else proj / "mix-audio.json"
+    flags = (" --plan-preview" if a.plan_preview else "") + (f" --plan \"{mp_p}\"" if a.plan else "")
+    side.write_text(json.dumps({"video": str(video), "vo": str(vo), "out": str(out), "plan": str(mp_p), "plan_preview": a.plan_preview,
+                                "card_t": CARD_T, "pause_s": PAUSE, "pauses": [{"at": a_, "dur": d, "card": c} for a_, d, c in PAUSES], "beds": resolved_beds,
                                 "sfx": sfx, "lib_sfx": lib_sfx, "lufs_in": li, "lufs_out": lo, "peak_out_dbfs": po,
-                                "rerun": f"python video-creation/longform-edited/scripts/mix_music.py \"{proj}\" --video \"{video}\""},
+                                "rerun": f"python video-creation/longform-edited/scripts/mix_music.py \"{proj}\" --video \"{video}\"{flags}"},
                                indent=2), encoding="utf-8")
-    print(f"MIX-DONE out={out} dur={duration(out):.3f} lufs_in={li} lufs_out={lo} peak_out={po} vo={'spine' if vo != video else 'video'}")
+    print(f"MIX-DONE out={out} dur={duration(out):.3f} lufs_in={li} lufs_out={lo} peak_out={po} vo={'spine' if vo != video else 'video'}"
+          + (" PLAN-PREVIEW (beds only, not the mix)" if a.plan_preview else ""))
     print(f"WROTE {side}")
     print("PROGRESS 100%")
 

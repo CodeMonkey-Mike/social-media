@@ -1,0 +1,692 @@
+{
+ "video": "growth-scale-up",
+ "spine": "C:/Users/mnede/Documents/Claude/social-media/video-creation/longform-edited/media/growth-scale-up/spine/ALL.e.desilenced.mp4",
+ "aspect": "16:9",
+ "authored": "2026-10-28 by transition-strategist against spine/ALL.e.desilenced.mp4 (229.72 s, 30 fps). Every tc is a FINAL-spine second, pre-card-pause; there are NO title cards and NO clip inserts, so sh() is the identity. Placement: CUE-SHEET.md TRANSITIONS section + every EDIT-PLAN.md row marked TRANSITIONS.md; FACE edges from AS-RECORDED.md (blackdetect, 8 windows); punch points from spine/jumpcuts-final.json (13 candidates). Ledger: usage_ledger.py report --what transitions --exclude-project growth-scale-up (previous video only-18-months-left: card cube, MELT/Equidistant, SPIN/Shake BLOCKED; no leak ids blocked; the last three videos also used flip, MELT/RGB, SPIN/Twirl, SPIN/Corner Bounce and the leak ids 7 / short-6 / short-7 / soft-short-3). No em dashes anywhere.",
+ "card_pick": {
+  "id": "rmn:slide",
+  "why": "NOMINAL pick, it never fires: this video has NO title cards (one continuous happy-feet bed carved across the chapters, Mike 2026-10-25 and the GATE plan ruling; CUE-SHEET CHAPTER cards NONE). Every chapter boundary is the chapter-level kt-whip-cut on swoosh-8 (23.4, 68.133, 112.4, 158.367, 216.933). Slide is named so the plan carries one card move should Mike reinstate a card: it is not BLOCKED (cube was only-18-months-left, flip is recent from growth-vs-product), it matches the video's horizontal kinetic language (the list cards and side panels all slide in from an edge) and it is a Safe CSS-3D pick (book-flip / swap are fresh but need the canvas-draw-element render flag). No card row is written, so the ledger records no card move for this video.",
+  "fires_at": []
+ },
+ "face_glitch_pick": {
+  "id": "hand:kt-whip-cut",
+  "why": "The video's motion grammar is Mike's 2023 kt-whip-cut on EVERY face to cover and cover to face cut (PROJECT-LOG hard constraint: STYLE = the inference video's style, the FULL kinetic-text-2023 theme; EDIT-PLAN and CUE-SHEET place a whip with its ONE kinetic-text sound on every FACE edge: swoosh-8 at the chapter level, whoosh-4 default, fast-reverse-1 / fast-reverse-5 for variety, swoosh-3 added on the calm cuts). It is a hand-rolled move on the continuous spine (the face stays one OffthreadVideo; the whip-zoom + lens curvature is the cover layer's own in / out), never a cross-fade. Film burn would stack a second picture move under every whip, and a Blocks glitch brings its own SFX on top of the whip's sound (one sound per event, overlays.md section 2), so neither fits; both are also the two most recent face picks in the ledger (film-burn growth-vs-product, Blocks only-18-months-left). Advisory slot: kt-whip-cut was inference's pick by the same style mandate. Edge exceptions are the devices' own: 0.0 the signature-open whip-in is the same move, 161.867 the L2 plays card slides in OVER the face (kt-list-card, fast-swoosh), 229.715 is the hard end on the last word."
+ },
+ "melt_pick": {
+  "family": "melt-rgb",
+  "why": "MELT/RGB is the only MELT look not BLOCKED (MELT/Equidistant was only-18-months-left; the family has two looks, so RGB is also recent from growth-vs-product and a WARN would be unavoidable the moment it is used). It is named so the plan carries one melt look, but it is used ZERO times on this video: both transform-shaped beats (73.833 the three hovering scatter words STRATEGY / EXECUTION / ANALYSIS reforming into C1's three columns, and 103.267 C1's seats row re-lit as the C1-seats break-up container, a textbook callback melt) sit on a FACE cut-out edge, where the face pick owns the cut and one move per cut is the rule (the same rule inference applied to its two AI stills on a face-out whip). If Mike wants the melt, the short 0.44 s melt-rgb-short-* is the one to use (see open_questions)."
+ },
+ "spin_pick": {
+  "family": "spin-corner-swinging",
+  "why": "SPIN/Corner Swinging, fresh (never used): a corner-hinged pendulum where the outgoing board swings away and the incoming board overshoots and oscillates to rest. The overshoot-and-settle is the same physics as the 2023 kinetic-text pops (Zoom Bounce on the keyword pops and the red arrow, the knock-pop bounces), so the one marquee spin speaks the video's own motion language rather than a foreign cinematic 3D turn, and the short 0.44 s variant keeps the oscillation to one wobble so the light diagram does not sway. SPIN/Shake is BLOCKED; Twirl, Corner Bounce and Shake are the last three videos' looks; the 3D ease looks (Side / Center / Corner) echo a cube card this video does not have. Direction RB: the hinge on the right-bottom corner so the diagram swings in from the right, the side the plays card and every side panel enter from."
+ },
+ "glitch_still_pick": {
+  "family": "none",
+  "why": "ZERO AI / ChatGPT stills on this video (COVER-PLAN chatgpt_used 0; GATE plan ruling: no ChatGPT images, Envato video only), so bucket 2 is empty and no glitch family is used. Nothing to report to the advisory ai_still slot."
+ },
+ "face_leak_set": {
+  "ids": [
+   "lib:lightleaks-soft-short-1",
+   "lib:lightleaks-soft-short-2",
+   "lib:lightleaks-soft-short-4",
+   "lib:lightleaks-soft-short-5"
+  ],
+  "why": "Gated slot face_leak: all four are fresh (never used by any video); the previous video used no leaks, so nothing is BLOCKED, and inference's soft-short-3 / short-6 / short-7 / 7 and kcc20's 1 / 4 / short-1 / short-4 are avoided as recent. One look, Soft Short (0.4 s): the organic soft sweep compressed to a blink suits the light containers and the upbeat happy-feet bed better than the harder pink Light Leaks flash, and 0.4 s is the right length for a fast 2023 cut where every punch sits next to a pop, a band or a label. The EDIT-PLAN named lightleaks-short-1..4 as a placeholder set; this plan supersedes it (the comp cues the leak id off TRANSITIONS.md). Cycled in order across the 13 punch points, never the same id twice in a row."
+ },
+ "transitions": [
+  {
+   "tc": 0.0,
+   "bucket": "face",
+   "change": "frame 0: kt-signature-open part 1, WHIP-IN onto F1 (0.73 s whip-zoom, 25 to 0 degree roll) + the slow 5 percent push over the thesis; the video opens ON the face, no cover before it",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.73,
+   "sfx_duck": false,
+   "why": "The face pick is the whip; the signature open's whip-in is the same move. Its one sound is swoosh-4 at file 0.0 (EDIT-PLAN), landing on the running groove (the bed enters mid-bar, no fade). The two labels TEAM OF ONE (3.48) / TEAM OF FIVE (7.74) ride the hold, not this cut."
+  },
+  {
+   "tc": 2.533,
+   "bucket": "face",
+   "change": "F1 punch-in: hard ~15-20 percent step IN on the desilencer join 2.533 (frame 76), before 'Now a team of one'; held to the next join",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-1",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 1 of the set peaking on the join 2.533 (F1 punch candidate 1 of 3, jumpcuts-final.json); the comp steps the punch on the same frame (overlays.md section 1: step in on the first candidate). The leak's baked sound stays OFF: the cash-register for the TEAM OF ONE label (file 3.31) is this beat's one sound. Screen blend under the captions."
+  },
+  {
+   "tc": 6.9,
+   "bucket": "face",
+   "change": "F1 punch: step on the desilencer join 6.900 (frame 207), before 'And a team of five'; held to 10.933",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-2",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 2 of the set on the join 6.9 (F1 punch candidate 2 of 3). Successive punch points in one window alternate (overlays.md section 1: back to the base frame on the second candidate; the EDIT-PLAN's 'hard step' is read as that alternation, never a compounded zoom). Sound OFF: the wooden-rattle-whoosh of the TEAM OF FIVE label (7.74) is the beat's one sound."
+  },
+  {
+   "tc": 10.933,
+   "bucket": "face",
+   "change": "F1: kt-signature-open part 2, the HARD cut on the desilencer join 10.933 (frame 328) into 'Welcome to the AI world'; both labels cut with it; LEAK ONLY, no scale step",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-4",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 3 of the set on the join 10.933 (F1 punch candidate 3 of 3) so the signature-open hard cut is covered by the leak flash. NO punch-in and no reframe zoom on this join: Mike's 2026-10-27 ruling (arms raised, both hands stay in frame, looser crop for 10.93-13.0; EDIT-PLAN). Sound OFF: the twinkle on the WELCOME TO / THE AI WORLD pop (11.06) and the CHORUS 1 drop (10.965) own the moment."
+  },
+  {
+   "tc": 13.0,
+   "bucket": "face",
+   "change": "F1 face to cover OUT: kt-whip-cut (blur-in variant) onto BR-1 solo night desk; the DARK side panel RIGHT (TEAM OF ONE) rises on its own swoosh-1 0.17 s before it moves",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-out; its one sound is whoosh-4 at file 13.0 (EDIT-PLAN). The whip hides the gated-face cut; BR-1 is reframed into the free 55 percent beside the panel. No b-roll fade on top of a whip."
+  },
+  {
+   "tc": 16.5,
+   "bucket": "broll",
+   "change": "BR-1 solo desk to BR-2 chat windows, under the HELD dark panel (the TEAM OF ONE panel holds 13.0 to 18.6 across both clips)",
+   "source": "hand",
+   "id": "hand:cut",
+   "role": "broll-cut",
+   "duration_s": 0.0,
+   "sfx_duck": false,
+   "why": "EDIT-PLAN: a hard cut under the held panel, the 2023 montage pattern (two literal-noun shots carrying one seat line, no sound on the cut). A 0.5 s dissolve would smear under the static panel and read as a mistake; the panel hold is what makes the hard cut invisible."
+  },
+  {
+   "tc": 18.6,
+   "bucket": "broll",
+   "change": "BR-2 to BR-3 team-table push-in (lead: true); the DARK side panel LEFT (TEAM OF FIVE) rises on swoosh-2 0.07 s before",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "broll-whip",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "CUE-SHEET: the in-video whips ride their kinetic-text sounds; this one is fast-reverse-1 at file 18.6 (EDIT-PLAN). A whip, not a fade, because the seat changes here (ONE to FIVE) and the panel swaps side with it."
+  },
+  {
+   "tc": 23.4,
+   "bucket": "face",
+   "change": "BR-3 to F2 cover to face CUT-IN, the CH2 chapter whip ('Now the fork'); the VERSE PLATEAU starts 23.869 on the whip",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-in, at the chapter level: its one sound is swoosh-8 at file 23.4 (the chapter whip, CUE-SHEET). No title card on this video, so the chapter change IS this whip."
+  },
+  {
+   "tc": 24.633,
+   "bucket": "face",
+   "change": "F2 punch-in: step IN on the desilencer join 24.633 (frame 739), before 'Budget shows up'; held to 31.4",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-5",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 4 of the set on the join 24.633 (F2 punch candidate 1 of 2). Sound OFF: the knock-pop of THE FORK (24.34) is the beat's one sound; the leak is picture only, screen blend under the captions."
+  },
+  {
+   "tc": 31.4,
+   "bucket": "face",
+   "change": "F2 punch: step on the desilencer join 31.400 (frame 942), landing on 'But that'; the band cuts away hard on the same frame; held to the cut-out",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-1",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 1 again (the cycle restarts, never the same id twice in a row) on the join 31.4 (F2 punch candidate 2 of 2; the comp alternates the step). The leak flash also covers the lower-third band's hard exit. Sound OFF: knock-pop on HIRE A JUNIOR (31.14) then minecraft-damage on ZERO (32.86) own the sounds."
+  },
+  {
+   "tc": 35.367,
+   "bucket": "face",
+   "change": "F2 face to cover OUT: kt-whip-cut onto BR-4 sticky notes on glass ('The better move'); the headline LIST THE / HIGHEST-IMPACT WORK pops 0.8 s later",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-out (AS-RECORDED window 2 ends 35.367; the EDIT-PLAN's 35.4 is the same frame rounded). Its sound is whoosh-4 + the calm swoosh-3 at file 35.4 (EDIT-PLAN, the calm-cut pairing). The ZERO / LEVERAGE verdict pop leaves with the whip."
+  },
+  {
+   "tc": 39.4,
+   "bucket": "container",
+   "change": "BR-4 to K1-better-move-card (light theme, one point, held while explained to 46.1)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Quiet text container: cross-fade + 0.93 to 1 scale-in, the constant house default (no sound, the bed carries it). The headline pop from the b-roll carries over into the card's headline, so the hand-off must stay soft."
+  },
+  {
+   "tc": 46.1,
+   "bucket": "container",
+   "change": "K1 card to C2-agents-take-list, the kt-list-card on crumpled paper SLIDING IN from the right over everything (items 1-6 lit in place on their words 50.2 / 52.34 / 53.78 / 55.46 / 56.98 / 57.92, each on a ting)",
+   "source": "hand",
+   "id": "hand:kt-list-card",
+   "role": "container-slide",
+   "duration_s": 0.4,
+   "sfx_duck": false,
+   "why": "The device's own entrance (kt-list-card slide-in on fast-swoosh at file 46.1, EDIT-PLAN): the card covers the K1 card by sliding over it, so no second transition is laid on this cut. The six item reveals are in-place state swaps on the same card (the spotlight convention), not scene changes."
+  },
+  {
+   "tc": 59.0,
+   "bucket": "broll",
+   "change": "C2 list card to BR-5 team at laptops (tech b-roll); the TEAM OF FIVE seat tag slides in from the left riding the whip; the HIRE INTO headline pops 0.8 s later",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "cover-whip",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "CUE-SHEET / EDIT-PLAN: kt-whip-cut off the card with whoosh-4 + ea-glitch-21 at file 59.0 (the tech-cut pairing). A whip, not a fade: the seat changes (ONE to FIVE) and the CHORUS 2 drop lands at 60.0 one second later, so the cut needs the energy."
+  },
+  {
+   "tc": 63.0,
+   "bucket": "container",
+   "change": "BR-5 to K2-hire-into-impact-card (seat accent B, TEAM OF FIVE header, held to the CH3 whip)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Quiet text container: cross-fade + 0.93 to 1 scale-in; the headline pop from BR-5 becomes the card's headline, so the hand-off stays soft on the hot chorus."
+  },
+  {
+   "tc": 68.133,
+   "bucket": "face",
+   "change": "K2 card to F3 cover to face CUT-IN, the CH3 chapter whip ('So when do you use AI'); bar 61 thins under the question",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-in at the chapter level: swoosh-8 at file 68.1 (EDIT-PLAN) is its one sound; the bed splice to chorus bar 60 at 67.743 sits just before it."
+  },
+  {
+   "tc": 70.967,
+   "bucket": "face",
+   "change": "F3 punch-in: step IN on the desilencer join 70.967 (frame 2129), before 'Strategy, execution, analysis'; the three scatter words pop around the head from 71.62",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-2",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 2 of the set on the join 70.967 (F3's only punch candidate). The tighter frame gives the scatter words room at the head's edges. Sound OFF: pop-1 / knock-pop / pop-1 on the three words (71.62 / 72.06 / 73.04) are the sounds."
+  },
+  {
+   "tc": 73.833,
+   "bucket": "face",
+   "change": "F3 face to cover OUT: kt-whip-cut onto C1 split-diagram (THE system diagram of the video, all columns dim; STRATEGY lights in place at 74.12, EXECUTION 81.58, ANALYSIS 86.12); the three hovering scatter words leave with the whip into the diagram's three columns",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-out; its one sound is whoosh-4 at file 73.8 (EDIT-PLAN). The CUE-SHEET flags C1 as a melt / spin candidate, but this cut is a FACE edge, and a face edge takes one move: the face pick (the same one-move-per-cut rule inference applied to its two AI stills on a face-out whip). The marquee treatment of C1 is its own in-place column lighting on the words (the charts.md scale-in convention) under the BREAKDOWN of the bed at 72.9; the whip carrying STRATEGY / EXECUTION / ANALYSIS off the face into the same three words on the diagram already reads as the words becoming the structure. See open_questions if Mike wants a melt here instead."
+  },
+  {
+   "tc": 90.5,
+   "bucket": "container",
+   "change": "C1 split-diagram (ANALYSIS lit, SCRAP OR SCALE badge) to K3-anti-pattern-card (TEAM OF FIVE header, 'Here's the anti-pattern')",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Diagram to a quiet text card: cross-fade + 0.93 to 1 scale-in, the house default; no sound (the bed is in its loop-back verse). Not a melt: the card is a new text point, not a reform of the diagram."
+  },
+  {
+   "tc": 95.9,
+   "bucket": "broll",
+   "change": "K3 card to BR-6 long document scrolling on a laptop (tech b-roll); the TEAM OF FIVE seat tag slides in from the left; THE LONG / AI-WRITTEN STRATEGY DOC headline pops 0.8 s later",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "cover-whip",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "EDIT-PLAN: kt-whip-cut with whoosh-4 + ea-glitch-21 at file 95.9 (tech cut) as the RISE (bars 67-68) starts under the question. A whip so the literal shot lands hard on 'a long AI written strategy doc' (96.0)."
+  },
+  {
+   "tc": 99.6,
+   "bucket": "face",
+   "change": "BR-6 to F4 cover to face CUT-IN ('That the agent is doing their thinking?'); the NOT WHY YOU HIRED THEM punch pop lands at 102.14 after the FINAL CHORUS drop 101.293",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-in; its one sound is fast-reverse-1 at file 99.6 (EDIT-PLAN, the variety whoosh for the question-answer turn). F4 has no interior punch candidate, so no leak row inside it."
+  },
+  {
+   "tc": 103.267,
+   "bucket": "face",
+   "change": "F4 face to cover OUT: kt-whip-cut onto C1-seats-row (the break-up container of C1, its bottom row enlarged, both seats dark; TEAM OF ONE lights in place at 103.38, TEAM OF FIVE at 105.72)",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-out; its one sound is whoosh-4 at file 103.3 (EDIT-PLAN). C1-seats is C1's re-lit callback (the one transform-shaped beat of the video), but it enters off a FACE edge, so the whip owns the cut; the seat lighting on the words is the spotlight reveal. Flagged in open_questions as the better home for a melt if Mike wants one."
+  },
+  {
+   "tc": 112.4,
+   "bucket": "broll",
+   "change": "C1-seats-row to BR-7 one-on-one across a table, the CH4 chapter whip on 'the one-on-ones' (the verse cut's BANG at 112.33 as 'Now,' ends IS the chapter hit); the TEAM OF FIVE seat tag rides the whip, the CALENDAR icon follows at 113.4",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "chapter-whip",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The chapter-level kt-whip-cut stands in for a title card (no cards this video): swoosh-8 + the calm swoosh-3 at file 112.4 (EDIT-PLAN). NO SFX impact is stacked on the music's own BANG (Mike, GATE plan); the whip's whoosh is a kinetic-text sound, not an impact. A whip, not a fade, on a chapter change."
+  },
+  {
+   "tc": 116.1,
+   "bucket": "container",
+   "change": "BR-7 to receipt C6 Statsig AI-Powered Experiment Summary, entering as a PAPER kt-side-panel RIGHT labelled THE READOUT IS THE AGENT'S JOB; treatment: settling push",
+   "source": "hand",
+   "id": "hand:kt-side-panel",
+   "role": "receipt-panel",
+   "duration_s": 0.4,
+   "sfx_duck": false,
+   "why": "The receipt enters inside its own device: the paper side panel's slide (whoosh-4 at file 116.1, EDIT-PLAN), so the panel entry IS the transition and nothing else is laid on the cut. The settling push on the real pixels is the receipt's own treatment (COVER-PLAN: push), not a library move; no glitch on a receipt."
+  },
+  {
+   "tc": 120.7,
+   "bucket": "face",
+   "change": "C6 panel to F5 cover to face CUT-IN ('So the whole one-on-one goes to transferring your judgment'), the face lifted 85 px for the band",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-in; its one sound is whoosh-4 at file 120.7 (EDIT-PLAN). The band's own swoosh-4 at 122.80 follows 2.1 s later, clear of the whip."
+  },
+  {
+   "tc": 123.133,
+   "bucket": "face",
+   "change": "F5 punch-in: step IN on the desilencer join 123.133 (frame 3694), as the lower-third band rises with THE 1:1 = JUDGMENT TRANSFER on 'judgment' (123.14); held to the cut-out",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-4",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 3 of the set on the join 123.133 (F5's only punch candidate; the two joins at 123.433 / 123.467 are inside the 1.5 s gap and take nothing). The leak and the band rise share the frame, one accent. Sound OFF: the band's knock-pop (123.14) is the sound. The leak renders under the band text (overlays render under the text layer)."
+  },
+  {
+   "tc": 125.567,
+   "bucket": "face",
+   "change": "F5 face to cover OUT: kt-whip-cut onto BR-8 whiteboard pointing ('Direction, same thing'); the band is cut under the whip, no slide-out; the SAY IT. / HAVE THEM PLAY IT BACK. headline pops 0.8 s later",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-out (AS-RECORDED window 5 ends 125.567; the EDIT-PLAN's 125.6 is the same frame rounded). Its sound is whoosh-4 + the calm swoosh-3 at file 125.6 (EDIT-PLAN). The whip hides both the face cut and the band's hard exit."
+  },
+  {
+   "tc": 129.4,
+   "bucket": "broll",
+   "change": "BR-8 whiteboard pointing to BR-9 present-back (reverse angle, a team member explains it back), under the HELD headline SAY IT. / HAVE THEM PLAY IT BACK.",
+   "source": "hand",
+   "id": "hand:cut",
+   "role": "broll-cut",
+   "duration_s": 0.0,
+   "sfx_duck": false,
+   "why": "EDIT-PLAN: a hard cut, the reverse-angle pattern (shot / reverse shot of the same scene) under a held headline; the held text is what makes the hard cut invisible, as at 16.5. No sound on the cut."
+  },
+  {
+   "tc": 132.5,
+   "bucket": "container",
+   "change": "BR-9 to L1-principles-list, the kt-list-card on crumpled paper SLIDING IN from the right (OPERATING PRINCIPLES, IN WRITING; items 1-3 lit in place on 134.16 / 135.20 / 136.98, each on a ting)",
+   "source": "hand",
+   "id": "hand:kt-list-card",
+   "role": "container-slide",
+   "duration_s": 0.4,
+   "sfx_duck": false,
+   "why": "The device's own entrance (kt-list-card slide-in on fast-swoosh at file 132.5, EDIT-PLAN) covers the b-roll by sliding over it; nothing else on the cut. Item reveals are in-place state swaps."
+  },
+  {
+   "tc": 138.567,
+   "bucket": "face",
+   "change": "L1 list card to F6 cover to face CUT-IN ('And so do your agents'); the AGENT icon slides up onto the chest riding the cut",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-in (AS-RECORDED window 6 opens 138.567; the EDIT-PLAN's 138.6 is the same frame rounded). Its sound is fast-reverse-5 at file 138.6; the icon's whoosh-4 rides the same cut per the EDIT-PLAN's device pairing; the whip itself adds nothing."
+  },
+  {
+   "tc": 139.767,
+   "bucket": "face",
+   "change": "F6 punch-in: step IN on the desilencer join 139.767 (frame 4193), before 'An agent only knows the trade-offs'; held to the cut-out",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-5",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 4 of the set on the join 139.767 (F6's only punch candidate). Sound OFF: the PUT IT IN WRITING knock-pop (142.40) is the beat's sound; the leak is picture only, under the AGENT icon and the pop."
+  },
+  {
+   "tc": 142.633,
+   "bucket": "face",
+   "change": "F6 face to cover OUT: kt-whip-cut onto receipt C14 (the .claude/agents/ tree, 29 definitions, real VS Code pixels); the TEAM OF ONE seat tag rides the whip in from the right, then the PAPER side panel 29 AGENT DEFINITIONS / 5 HUMAN GATES rises at 143.0",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-out (AS-RECORDED window 6 ends 142.633; the EDIT-PLAN's 142.6 is the same frame rounded). Its sound is whoosh-4 at file 142.6; the panel's own whoosh-4 at 143.0 is the next event. No glitch on a receipt."
+  },
+  {
+   "tc": 142.633,
+   "bucket": "container",
+   "change": "receipt C14 held 142.633 to 151.1 as an OBJECT: a slow perspective pan DOWN the long agents tree (a single-scene camera move, not a cut)",
+   "source": "lib",
+   "id": "lib:motion-3d-pan-1-down",
+   "role": "receipt-motion",
+   "duration_s": 8.467,
+   "sfx_duck": false,
+   "why": "COVER-PLAN / EDIT-PLAN treatment: pan (motion-3d-pan-1-down, 'a long tree shown as an object'). A library MOTION move on a receipt is a single-scene camera move, no cut hidden and no SFX (hasSound false), so it rides UNDER the face-out whip at the same tc and never fights it. Pan DOWN because the tree is tall and the count sits at its foot; the engine's 5 s master is time-scaled across the 8.467 s hold so the receipt never sits static. The bed is in its pre-chorus dip under it (153.419 hard hit after)."
+  },
+  {
+   "tc": 151.1,
+   "bucket": "container",
+   "change": "receipt C14 to receipt C14b (repo-root CLAUDE.md at the longform-edited row), settling push then the yellow HIGHLIGHT wipe on '5 HITL gates' as the line says 'five human gates'",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Receipt to receipt inside the same panel family: the quiet cross-fade + scale-in (the second capture keeps the 11.5 s stretch moving, COVER-PLAN). The push + highlight wipe are the receipt's own treatment (COVER-PLAN: highlight), not a transition; no sound (the bed's dip builds under the dolly)."
+  },
+  {
+   "tc": 154.2,
+   "bucket": "broll",
+   "change": "receipt C14b to BR-10 team on a shared screen, slow dolly IN (lead: true); the DARK side panel LEFT (TEAM OF FIVE / ONE DOC) rises on swoosh-2 0.07 s before",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "cover-whip",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "EDIT-PLAN: kt-whip-cut with fast-reverse-1 at file 154.2, landing on 'Team' (154.18); the seat changes to FIVE and the panel swaps side with it, so a whip, not a fade. The dolly then builds into the CHORUS 2 drop at 158.581."
+  },
+  {
+   "tc": 158.367,
+   "bucket": "face",
+   "change": "BR-10 to F7 cover to face CUT-IN, the CH5 chapter whip ('Now, scale-up mode'); the kick-impact-01-short peak lands on the CHORUS 2 DROP 158.58 in the mix; SCALE-UP MODE pops at 159.18",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-in at the chapter level (AS-RECORDED window 7 opens 158.367; the EDIT-PLAN's 158.4 is the same frame rounded). Its sound is swoosh-8 at file 158.4; the video's ONE library impact (mixed on with ffmpeg, not in the comp) rides the drop 0.2 s later under the VO. The whip's energy matches the rapid-fire chapter opening hot."
+  },
+  {
+   "tc": 159.333,
+   "bucket": "face",
+   "change": "F7 punch-in: step IN on the desilencer join 159.333 (frame 4780), right after the SCALE-UP MODE pop; held to 161.367",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-1",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 1 of the set on the join 159.333 (F7 punch candidate 1 of 2). Sound OFF: the SCALE-UP MODE knock-pop (159.18) and the chorus drop own the sound. Level-9 chorus under it, so the leak's flash reads as part of the hit."
+  },
+  {
+   "tc": 161.367,
+   "bucket": "face",
+   "change": "F7 punch: step BACK OUT on the desilencer join 161.367 (frame 4841), before 'force headcount' ends; held to the cut-out 0.5 s later",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-2",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 2 of the set on the join 161.367 (F7 punch candidate 2 of 2; the EDIT-PLAN already alternates this one back out). Sound OFF; the leak's tail (161.57) is clear before the L2 card's fast-swoosh at 161.9."
+  },
+  {
+   "tc": 161.867,
+   "bucket": "face",
+   "change": "F7 face to cover OUT: L2-plays-list (THE PLAYS, four empty slots) SLIDES IN over everything on fast-swoosh; the face stays under it until covered",
+   "source": "hand",
+   "id": "hand:kt-list-card",
+   "role": "face-cut",
+   "duration_s": 0.4,
+   "sfx_duck": false,
+   "why": "Edge exception, the device's own: the EDIT-PLAN and SCREENPLAY have the plays card slide in OVER the face (kt-list-card, fast-swoosh at file 161.9), so the slide hides the gated-face cut-out and a whip on top would be a second move on one cut (the same exception inference took at 70.267). AS-RECORDED window 7 ends 161.867; the EDIT-PLAN's 161.9 is the same frame rounded. It is not a cross-fade to or from the face."
+  },
+  {
+   "tc": 164.1,
+   "bucket": "diagram-marquee",
+   "change": "L2-plays-list-s2 (item 1 EXPERIMENT LOOP lit) to C3 experiment-loop-diagram, THE system diagram of the rapid-fire chapter (loop of six nodes, all dim; MINE lights in place at 164.28, BACKLOG 167.92, PLAN 168.64, VARIANTS 170.18, READOUT 171.90, HUMAN 172.34), on 'Agents mine the recordings'",
+   "source": "lib",
+   "id": "lib:spin-corner-swinging-short-rb",
+   "role": "SPIN-newfacet",
+   "duration_s": 0.44,
+   "sfx_duck": true,
+   "why": "NEW FACET, not a transform: the chapter turns from the LIST of plays (a text card) to HOW play one actually runs, the one whole-system loop of the chapter, shown once. The plays card swings away on its right-bottom hinge and the loop swings in from the right (the side the card itself entered from), overshoots and settles in one wobble: the 2023 bounce physics, so the marquee reads as the biggest keyword pop of the video rather than a foreign 3D move. Short 0.44 s (163.88 to 164.32) because the chapter is rapid-fire at gear 2 rising to 3: MINE lights at 164.28, right as the board settles. Full-frame swing over mirrored padding, the spine never peeks through (the face is gated black here). The baked SFX is the cut's ONE sound: it REPLACES the EDIT-PLAN's whoosh-4 at file 164.1 (the comp drops that whoosh row; one sound per event), ducked under 'Agents mine' per the SFX-under-VO rule. The CUE-SHEET names C3 as the melt / spin candidate; this is it."
+  },
+  {
+   "tc": 174.8,
+   "bucket": "container",
+   "change": "C3 experiment-loop-diagram (HUMAN lit, SCRAP OR SCALE) to receipt C15 Evan Miller sample size as it loads, entering as a PAPER kt-side-panel RIGHT labelled SAME SAMPLE SIZE; treatment: settling push",
+   "source": "hand",
+   "id": "hand:kt-side-panel",
+   "role": "receipt-panel",
+   "duration_s": 0.4,
+   "sfx_duck": false,
+   "why": "The receipt enters inside its own device (paper side panel on whoosh-4 at file 174.8, EDIT-PLAN); the panel slide IS the transition off the diagram. The settling push on the real pixels is the receipt's treatment (COVER-PLAN: push). Not a melt: the calculator is a different structure from the loop, not its reform."
+  },
+  {
+   "tc": 179.0,
+   "bucket": "container",
+   "change": "receipt C15 panel back to L2-plays-list-s3 (item 2 CHURN AGENT lit ON 'churn' 179.92, ting), the first declared callback return of the plays card",
+   "source": "hand",
+   "id": "hand:cut",
+   "role": "container-cut",
+   "duration_s": 0.0,
+   "sfx_duck": false,
+   "why": "EDIT-PLAN: a hard cut back to the card, snapping ON the ting so the item lights on its word. The plays card returns five times by design (declared callback, GATE plan); every return takes the same hard snap so the callback reads as one deliberate device (consistency within the family), not a soft re-entry each time. Text card, so no melt / spin; and no cross-fade because the ting needs the frame-exact snap. RETIMED 2026-10-28 from 179.92 to 179.0: the C15 cover beat ends at 179.0 (COVER-PLAN CH5@174.8-179.0, EDIT-PLAN 2:59.0, before 'Play two'); 179.92 is the CHURN AGENT item pop on 'churn', which stays."
+  },
+  {
+   "tc": 180.9,
+   "bucket": "container",
+   "change": "L2 card to receipt C11 Amplitude predictive cohorts (settling push, then the yellow HIGHLIGHT wipe on 'forecast who is likely to convert, churn'); the PAPER side panel CHURN AGENT + LIFEBUOY rises on the same whoosh",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "cover-whip",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "EDIT-PLAN: kt-whip-cut on whoosh-4 at file 180.9, the one sound shared with the panel entry (one sound per event). The push + highlight are the receipt's own treatment (COVER-PLAN: highlight); no glitch on a receipt."
+  },
+  {
+   "tc": 184.1,
+   "bucket": "container",
+   "change": "receipt C11 to receipt C12 Stripe Smart Retries shown as an object ('8 tries within 2 weeks' on screen only), on 'Retries failed payments'",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "cover-whip",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "EDIT-PLAN: 'cut' with fast-reverse-1 at file 184.1; a placed whoosh means a whip, so the receipt swap takes the whip (the rapid-fire chapter keeps the pace up). Receipt to receipt, no glitch."
+  },
+  {
+   "tc": 184.1,
+   "bucket": "container",
+   "change": "receipt C12 held 184.1 to 186.9 as an OBJECT: a slow tilted-plane drift toward right-up (a single-scene camera move, not a cut)",
+   "source": "lib",
+   "id": "lib:motion-3d-offset-2-right-up",
+   "role": "receipt-motion",
+   "duration_s": 2.8,
+   "sfx_duck": false,
+   "why": "COVER-PLAN / EDIT-PLAN treatment: pan (motion-3d-offset-2-right-up, 'not the C14 pan, variety': a different MOTION variant per receipt). A single-scene library move with no SFX (hasSound false), riding UNDER the whip at the same tc; the engine's 5 s master plays its first 2.8 s so the drift never reverses inside the short flash. Right-up so the '8 tries' line drifts toward the eye."
+  },
+  {
+   "tc": 186.9,
+   "bucket": "container",
+   "change": "receipt C12 to CHURN-agent-panel-s1 (full-frame light card, PLAY 2 CHURN AGENT + LIFEBUOY; line 2 YOU OWN THE TEMPLATE AND THE OFFER lights in place at 188.38)",
+   "source": "hand",
+   "id": "hand:xfade-scale",
+   "role": "container-xfade",
+   "duration_s": 0.35,
+   "sfx_duck": false,
+   "why": "Receipt to a quiet text card: cross-fade + 0.93 to 1 scale-in (the scripted paper panel promoted to the cover slot once the receipts clear, COVER-PLAN rule 13). No sound on the cut; the bed carries it."
+  },
+  {
+   "tc": 190.6,
+   "bucket": "container",
+   "change": "CHURN-agent-panel-s2 back to L2-plays-list-s4 (item 3 MONDAY DIGEST lit ON 'Monday' 191.74, ting), callback return 2 of 4",
+   "source": "hand",
+   "id": "hand:cut",
+   "role": "container-cut",
+   "duration_s": 0.0,
+   "sfx_duck": false,
+   "why": "The plays card's callback snap, the same hard cut as 179.92 so all five showings of the card use one move (the EDIT-PLAN leaves this return unmarked; the two it marks are hard cuts, so the family is unified on the hard snap). Text card, quiet."
+  },
+  {
+   "tc": 192.9,
+   "bucket": "broll",
+   "change": "L2 card to BR-11 analytics dashboard with a chat window (tech b-roll); the FUNNEL icon slides in from the right riding the whip",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "cover-whip",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "EDIT-PLAN: kt-whip-cut with whoosh-4 + ea-glitch-21 at file 192.9 (tech cut) landing on 'The agent reads the AARRR dashboard'. A whip off a card onto literal-noun footage, the chapter's pace."
+  },
+  {
+   "tc": 196.9,
+   "bucket": "container",
+   "change": "BR-11 back to L2-plays-list-s4 (three items hovering), callback return 3 of 4; the NO STATUS / MEETING headline pops over the card at 197.78 on twinkle",
+   "source": "hand",
+   "id": "hand:cut",
+   "role": "container-cut",
+   "duration_s": 0.0,
+   "sfx_duck": false,
+   "why": "EDIT-PLAN: hard cut back to the card (marked). Same callback snap as the other returns; the headline pop 0.9 s later is the beat's sound. No b-roll fade: the clip hands off to the card on the hard snap the chapter has established."
+  },
+  {
+   "tc": 201.6,
+   "bucket": "broll",
+   "change": "L2-plays-list-s5 (item 4 PROGRAMMATIC SEO lit) to BR-12 screen wall, pages multiplying across screens",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "cover-whip",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "EDIT-PLAN: kt-whip-cut with whoosh-4 at file 201.6 landing on 'Agents draft acquisition pages at scale'; the FINAL CHORUS takes over under it at 202.454. A whip to keep the rapid-fire grammar."
+  },
+  {
+   "tc": 204.0,
+   "bucket": "container",
+   "change": "BR-12 to receipt C13 Google Search Central 'Scaled content abuse', entering as a PAPER kt-side-panel RIGHT labelled VALUE TO THE USER, NO MATTER HOW IT'S MADE; settling push, then the yellow HIGHLIGHT wipe on 'no matter how it's created' ON 'no matter' (206.02)",
+   "source": "hand",
+   "id": "hand:kt-side-panel",
+   "role": "receipt-panel",
+   "duration_s": 0.4,
+   "sfx_duck": false,
+   "why": "The receipt enters inside its own device (paper side panel on whoosh-4 at file 204.0, EDIT-PLAN); the panel slide IS the transition off the b-roll (COVER-PLAN rule 13: sequenced after the clip, not beside it). The push + highlight are the receipt's treatment (COVER-PLAN: highlight). No glitch on a receipt."
+  },
+  {
+   "tc": 210.5,
+   "bucket": "container",
+   "change": "receipt C13 panel back to L2-plays-list-s6 FULL state (all four items + both seat tags), the last declared callback; the TEAM OF ONE tag slides in from the right at 210.72 (swoosh-1), TEAM OF FIVE from the left at 212.88 (swoosh-2)",
+   "source": "hand",
+   "id": "hand:cut",
+   "role": "container-cut",
+   "duration_s": 0.0,
+   "sfx_duck": false,
+   "why": "The plays card's callback snap, the same hard cut as its other returns (one move for the whole callback family). The two seat-tag slides 0.2 s and 2.4 s later are the beat's devices and sounds; the cut itself is silent. Text card, quiet."
+  },
+  {
+   "tc": 216.933,
+   "bucket": "face",
+   "change": "L2 full card to F8 cover to face CUT-IN, the CH6 chapter whip ('Fewer people, higher velocity'); the word-by-word FEWER PEOPLE lands at 217.06",
+   "source": "hand",
+   "id": "hand:kt-whip-cut",
+   "role": "face-cut",
+   "duration_s": 0.37,
+   "sfx_duck": false,
+   "why": "The face pick on the cut-in at the chapter level (AS-RECORDED window 8 opens 216.933; the EDIT-PLAN's 216.9 is the same frame rounded). Its one sound is swoosh-8 at file 216.9; the word-by-word phrases are silent by design, so the whip's whoosh is the only sound until cash-register-2 at 221.26."
+  },
+  {
+   "tc": 218.067,
+   "bucket": "face",
+   "change": "F8 punch-in: step IN on the desilencer join 218.067 (frame 6542), as HIGHER VELOCITY replaces FEWER PEOPLE (218.16); held to 220.833",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-4",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 3 of the set on the join 218.067 (F8 punch candidate 1 of 3). Sound OFF: the word-by-word phrases are silent and the final chorus is at full; the leak is picture only, under the lower-third text."
+  },
+  {
+   "tc": 220.833,
+   "bucket": "face",
+   "change": "F8 punch: step BACK OUT on the desilencer join 220.833 (frame 6625), just before the JUDGMENT payoff goes big mid-frame on 'make' (221.26); held to 228.9",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-5",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 4 of the set on the join 220.833 (F8 punch candidate 2 of 3; the two joins at 221.133 / 221.433 are inside the 1.5 s gap and take nothing). Stepping back OUT here (overlays.md alternation) gives the big JUDGMENT word the full frame 0.4 s later. Sound OFF: cash-register-2 on the payoff (221.26) is the sound; the leak's tail (221.03) clears before it."
+  },
+  {
+   "tc": 228.9,
+   "bucket": "face",
+   "change": "F8 punch-in: step IN on the desilencer join 228.900 (frame 6867), ON 'click' as the red arrow pops where Mike points (228.94) and the master's BANG hits (228.95); held to the end 229.715",
+   "source": "lib",
+   "id": "lib:lightleaks-soft-short-1",
+   "role": "punch-leak",
+   "duration_s": 0.4,
+   "sfx_duck": true,
+   "sfx": "off",
+   "why": "Leak 1 of the set on the join 228.9 (F8 punch candidate 3 of 3), the last accent of the video: the step in, the arrow's Zoom Bounce, the leak flash and the BANG all land within 50 ms, one hit. Sound OFF: the arrow's cartoon-accent (228.94) and the music's own BANG are the sounds, NO SFX stacked on the BANG (Mike, GATE plan). The leak's tail (229.1) is inside the 0.8 s left to the last word."
+  },
+  {
+   "tc": 229.715,
+   "bucket": "face",
+   "change": "F8 face OUT = the END of the video on the last word 'here' (house rule: end on the last word, no held still; the 2 to 3 s arrow hold is EDIT-PLAN open decision 3)",
+   "source": "hand",
+   "id": "hand:cut",
+   "role": "face-cut",
+   "duration_s": 0.0,
+   "sfx_duck": false,
+   "why": "Edge exception, the hard end: AS-RECORDED window 8 ends with the spine at 229.715, so there is no incoming cover to whip to; the bed cuts at 229.715 with its 0.2 s fade (MUSIC-PLAN). If Mike takes the arrow hold (open decision 3), the face freezes on its last frame under the arrow and this row becomes the hard end of that hold instead; no transition either way."
+  }
+ ],
+ "melt_spin_budget": {
+  "melt_used": 0,
+  "spin_used": 1,
+  "note": "Reserved to the diagram marquees only. The video has exactly two system diagrams (C1 split-diagram, C3 experiment-loop) and no charts. ONE spin (NEW FACET): 164.1, the plays card turning into the experiment-loop diagram, the one marquee reveal that sits on a cover-to-cover cut (short 0.44 s, its baked SFX replaces the whip's whoosh-4 at 164.1 and ducks under the VO). ZERO melts: the two transform-shaped beats (73.833 scatter words into C1's columns, 103.267 C1's seats row re-lit as C1-seats) both sit on a FACE cut-out edge where the face pick owns the cut, so no melt is forced onto a wrong cut; melt-rgb is named only so the plan carries one melt look. Everything else is quiet: 3 text cards and the CHURN card take the cross-fade + scale-in, the two list cards and the three paper-panel receipts enter inside their own kinetic-text device, the plays card's four callback returns snap back on a hard cut, 2 receipts ride a library MOTION move under their cut (no sound), b-roll changes are the EDIT-PLAN's whips under their placed kinetic-text sounds (2 hard cuts under a held panel / headline), 0 AI stills so bucket 2 is empty, and 13 light leaks ride the 13 punch points on the face joins."
+ },
+ "consistency_check": "ONE card move named (rmn:slide) and it never fires: no title cards this video, the five chapter changes are the swoosh-8 chapter whip (23.4, 68.133, 112.4, 158.367, 216.933). ONE face pick (hand:kt-whip-cut) with a face-cut row on all 16 FACE edges (8 windows from AS-RECORDED.md): 13 are the whip, the three exceptions are the devices' own (0.0 the signature whip-in is the same move, 161.867 the plays card slides in over the face, 229.715 the hard end on the last word); never a cross-fade to or from the face. ONE melt look (MELT/RGB, named, 0 rows). ONE spin look (SPIN/Corner Swinging, short, 1 row at 164.1 on the C3 marquee, sfx_duck true). ONE leak set of four fresh Soft Short ids cycled across all 13 punch points, never the same id twice in a row, the leak's own sound off (the kinetic-text devices own every sound). Text containers stay quiet (hand:xfade-scale on K1 / K2 / K3 / CHURN and the C14 to C14b receipt swap); the list cards and paper-panel receipts enter inside their own device; the plays card's callback returns are one consistent hard snap. No b-roll glitches, no glitch on any container / diagram / receipt, no insert rows (no clip inserts), no em dashes.",
+ "open_questions": [
+  "MELT = 0 on this video. Both transform-shaped beats sit on a FACE cut-out edge: 73.833 (the three hovering scatter words STRATEGY / EXECUTION / ANALYSIS reforming into C1's three columns) and 103.267 (C1's seats row re-lit as the C1-seats break-up container, the textbook callback melt). The plan keeps the face pick on both (one move per cut, as inference did). If Mike wants a melt, the better home is 103.267 (lib:melt-rgb-short-3, 0.44 s, replacing the whip and its whoosh-4 on that ONE face-out; melt_used becomes 1, sfx_duck true). Note MELT/RGB is also recent (growth-vs-product, three videos back): the family has only two looks and Equidistant is BLOCKED, so the ledger will WARN, not FAIL.",
+  "SPIN at 164.1 replaces the EDIT-PLAN's kt-whip-cut off the plays card AND its whoosh-4 at file 164.1: the spin's baked SFX becomes the cut's one sound (ducked under 'Agents mine the recordings'). The comp-builder drops that whoosh row; if Mike prefers the whip there, the spin budget becomes 0 and the C3 reveal is its own in-place node lighting.",
+  "FACE LEAK SET supersedes the EDIT-PLAN's placeholder ids (lightleaks-short-1 to -4, all 'used' in the ledger; RESOLVED 2026-10-28: the stale ids were stripped from the EDIT-PLAN and CUE-SHEET so reconcile fills every [LIGHTLEAK] line from this plan) with four fresh Soft Short ids (lightleaks-soft-short-1 / -2 / -4 / -5). Same 0.4 s length, softer look. The comp cues the ids off TRANSITIONS.md; the EDIT-PLAN's [LIGHTLEAK] lines keep their timecodes.",
+  "The plays card's five showings: the EDIT-PLAN marks two returns as hard cuts (179.92, 196.9) and leaves two unmarked (190.6, 210.5); this plan unifies all four returns on the hard snap so the declared callback is one device. If Mike wants the unmarked two soft, they take hand:xfade-scale 0.35.",
+  "Card pick rmn:slide is nominal and never fires (no title cards). If Mike reinstates a card at any chapter, slide is the one move (cube is BLOCKED, flip is recent); book-flip / swap are fresh but need the canvas-draw-element render flag.",
+  "End frame (EDIT-PLAN open decision 3): the plan ends on the last word at 229.715 (house rule). A 2 to 3 s arrow hold for the end-screen element would freeze the face under the arrow; no transition changes either way."
+ ]
+}

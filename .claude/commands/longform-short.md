@@ -24,11 +24,11 @@ in `CLAUDE.md` and `persona/persona.json`.
 python video-creation/longform-edited/graph/run.py short --project <name> [--seconds 30] [--brief "..."]
 ```
 ONE StateGraph (`graph/short_graph.py`): preflight (FINAL-TIME transcript) -> short-cut-strategist + the lint-short-spans
-snap gate -> GATE `short_plan` (Mike reads claim + assembled read) -> variant assets (Mike's variety rule: one different
+snap gate -> `short_plan` (automatic, no HITL since 2026-10-29) -> variant assets (Mike's variety rule: one different
 Envato clip / ChatGPT image for any span that carries one) -> Stage A extraction -> captions over the COVER-sourced frames
 -> comp-builder SHORT mode -> gates -> render -> mix (crossfaded VO + the SHARED CTA take `assets/vo/cta-watch-full.mp3` +
 one bed) -> verify (runtime, CTA present, hook face) -> GATE `short` -> `<project>-SHORT-<N>s.mp4` at the project root.
-Exit 2 = waiting on Mike: `run.py short --project <name> --resume --approve short_plan|short`. The phases below describe
+Exit 2 = waiting on Mike: `run.py short --project <name> --resume (no gates since 2026-10-29: it delivers on its own)`. The phases below describe
 what the graph does; hand-running one is for repairs only.
 
 ## The one-line contract
