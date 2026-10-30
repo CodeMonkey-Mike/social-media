@@ -117,3 +117,13 @@ Validated 2026-06-11 on the new app:
   cleanup recycles them (Mike's call 2026-06-11).
 - One download at a time; don't parallelize browser sessions on the same profile.
 - Record the Envato item URL for every clip used (license traceability).
+
+## No clean match on Envato: generate it, flag the animation (Mike, 2026-10-29)
+
+When a slot has no clean Envato match after the plan's queries + bench phrasing, do NOT settle for a
+near-miss clip and do NOT stall on a pick-one question. The fallback is:
+1. Generate the shot as a **ChatGPT image** (the video's image style: house Pixar, or photoreal when the
+   video says so) via the image-gen agent / canonical browser pipeline; the slot becomes an IMG row.
+2. **Flag it to Mike as an optional Higgsfield animation** of that image (Seedance image-to-video,
+   `--resolution 480p` HARD RULE). Animating is Mike's call: flag it, never generate the video unasked.
+Precedent: reset BR-7 (1946 American street, nothing on Envato) -> IMG-9.

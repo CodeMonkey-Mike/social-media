@@ -70,6 +70,16 @@ gain + the rerun command). Re-mix = re-run it. The section below stays as the WH
 A chapter that CONTINUES the previous chapter's bed with no title card between them (same file, sample-continuous
 `source_in`) is merged into ONE placement, so the file never restarts or doubles; only the last bed runs to the end
 of the video. `--dry-run` prints where every bed starts and stops without rendering (2026-10-01).
+- **VOICE GAIN +2 dB by default (Mike, 2026-10-30, reset draft):** the Enhance-Speech voice sits BELOW the spliced
+  clip-insert voices, so `mix_music.py --voice-db 2.0` (the default) raises Mike's voice in the VO track everywhere
+  EXCEPT the clip-insert windows (the sidecar's `pauses[].clip`, kept at unity). The beds and SFX are seated against
+  the VO as before. `--voice-db 0` restores the old behaviour.
+- **PEAK SAFETY (same note):** the final sum runs through a brick-wall limiter (`--peak-ceiling -1.5` dBFS, oversampled)
+  so the delivered mix never peaks above -1 dBFS (the reset v1 mix peaked at -0.2 dBFS). `MIX-DONE ... peak_out=` must
+  read <= -1.0.
+- **Per-transition SFX trim:** a TRANSITION-PLAN `lib:` row may carry `sfx_rel_db` (dB added to its peak-normalized
+  SFX gain) when Mike calls one too loud (reset 2026-10-30: the melt at ~10:05, -9 dB). An `[IMPACT]`/`[RISER]` row
+  Mike strikes is rewritten in EDIT-PLAN without its file name, so the parser no longer mixes it.
 
 ## ⛔ PERSIST THE MIX — the command is a project artifact, not shell history (ethereum-rwa, 2026-08-01)
 _Today the persisted artifact is `scripts/mix_music.py` + the project's `mix-audio.json` (section above); do NOT write a new

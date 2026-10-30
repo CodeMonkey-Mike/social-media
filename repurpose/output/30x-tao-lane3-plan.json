@@ -1,0 +1,524 @@
+{
+  "batch": "30x-tao",
+  "date": "2026-10-28",
+  "source_transcript": "video-creation/livestream-repurpose/transcripts/30x-tao LOW BPS VERTICAL/30x-tao LOW BPS VERTICAL_plain.txt",
+  "authored_by": "lane3-drafter agent, 2026-10-28",
+  "brief": null,
+  "fact_check": [
+    {
+      "claim": "'now that we got the KCC20 protocol live, now we have Kaspa tokens, officially... the same way we say Solana tokens' (transcript)",
+      "verdict": "verified: the KCC Coordination Forum declared KCC-1, KCC-2 and KCC-20 Final on October 21, 2026 (kcc20-live ledger, crypto.news); covenants have been live on mainnet since the Toccata upgrade on June 30, 2026; KRC-20 ownership was never enforced by Kaspa consensus (an off-chain indexer determined ownership) while KCC-20 puts token rules into scripts enforced by the network. The 'Kaspa tokens' naming is Mike's framing and is written as such. Copy: 'KCC-20 is final', 'rules live in covenants on the L1 itself', 'no third-party indexer deciding who owns what'.",
+      "source": "repurpose/output/kcc20-live-lane3-plan.json fact_check (crypto.news/kaspa-finalizes-kcc-native-token-app-standards/, news.bitcoin.com Kasplex indexer article); crypto.news re-surfaced 2026-10-28"
+    },
+    {
+      "claim": "'Caspercom saying that they're doing something that's just going to move all the KRC-20s over to KCC-20... I saw a post from Nacho... they're going to do the migration soon' (transcript)",
+      "verdict": "verified in the general form only: a KuCoin item reports KaspaCom building a one-way bridge to move KRC20 and Kaspa L2 tokens onto KCC-20, and Bitcoin.com (Sept 21) reports Nacho the Kat says the community intends to move to KCC-20; a kasplex GitHub comment (4 days old) describes NACHO's planned 'turnstile' migration tool. No official announcement that ALL KRC20s migrate, no launch date and no live bridge surfaced, so copy says 'KaspaCom is building a one-way bridge to move KRC20 tokens over to KCC-20' and 'Nacho the Kat already said it is moving', never 'all', 'soon' or 'live'. 'Caspercom' is the Whisper spelling of KaspaCom.",
+      "source": "kucoin.com/news/insight/KAS/6ac9029f38a2640007935a9c; news.bitcoin.com (Sept 21, prior ledger); github.com/kasplex/go-krc20d/issues/1 (searched 2026-10-28)"
+    },
+    {
+      "claim": "'if Ghost Wallet is not updated... if Ghost Wallet is no longer maintained... better bet to have them in KasWare' (transcript)",
+      "verdict": "verified as a maintenance signal, not as a shutdown: the ghost-wallet/web-extension GitHub repo shows its last update on December 30, 2024 (v0.0.190) and no 2026 release or discontinuation notice exists, so copy says 'Ghost Wallet's code on GitHub has not been updated since December 2024', never 'abandoned' or 'dead'. KasWare is a verified, maintained Kaspa browser-extension wallet (prior ledger). The 'Kaspa bot on Telegram' alternative Mike mentioned could not be identified and is not drafted. The 'people cannot get tokens out' line is kept as what people tell Mike, with his own tests working, exactly as he said it.",
+      "source": "github.com/ghost-wallet/web-extension/releases; github.com/ghost-wallet (Updated Dec 30, 2024); chromewebstore.google.com Ghost Wallet listing; kcc20-live ledger for KasWare (searched 2026-10-28)"
+    },
+    {
+      "claim": "'Kaspa... at 3.5 cents, still a good deal... maybe 3.2 cents... 2.7' (transcript)",
+      "verdict": "verified and current: $KAS $0.0357 on October 28, 2026 04:10 UTC (CoinGecko), market cap $992M, rank 75, -4.6% 7d, -23.2% 30d, ATH $0.2074 (July 31, 2024), so 3.5 cents is about 83% under the ATH (0.0357 / 0.2074 = 17.2%). The 3.2 and 2.7 cent levels are Mike's own scenario levels and are written as his ('maybe 3.2, worst case 2.7') with 'never financial advice'.",
+      "source": "api.coingecko.com/api/v3/coins/markets?ids=kaspa (fetched 2026-10-28 04:10 UTC); bybit.com/en/price/kaspa (Oct 27: $0.0349)"
+    },
+    {
+      "claim": "'TAO isn't competing. It's the arena for all others to compete to produce the best decentralized AI... near and render... qualify as like one subnet' (transcript, Mike agreeing with a comment)",
+      "verdict": "Mike's own thesis, drafted as his. Render Network is GPU compute and NEAR is a hosting / compute L1 (general knowledge, stated in Mike's loose words 'more on the hosting side'); Bittensor subnets compete for TAO emissions based on output quality (Bittensor's incentive mechanism, general knowledge). Copy: 'roughly one subnet's worth of work', 'subnets compete for TAO emissions by producing the best output'.",
+      "source": "transcript; bittensor.com docs (subnet emissions, general knowledge); render network / near protocol public descriptions"
+    },
+    {
+      "claim": "'The TAO token itself is not centralized... even like the founder stepped down out of the org' (transcript)",
+      "verdict": "verified via consistent secondary reporting: in February 2026 co-founder Jacob Robert Steeves gave up the Opentensor Foundation CEO post and co-founder Ala Shaabana stepped aside from the COO role, framed as a response to centralization criticism; no primary OTF statement surfaced, so copy stays general: 'the founders stepped back from running the foundation in February'. TAO's 21,000,000 max supply is verified (Coinbase: 55% of its 21,000,000 max supply circulating). Price updated: $TAO $257.82 on October 28 (CoinGecko), -5.2% 7d, -17.1% 30d, ATH $757.60 (March 7, 2024), so about 66% under the ATH (257.82 / 757.6 = 34%). Copy: 'about $258', 'roughly 66% under its $758 all-time high', 'down 17% on the month'.",
+      "source": "longtermwiki.com/things/snQ7wrYpSs; usethebitcoin.com Jacob Robert Steeves profile; coinbase.com/price/bittensor; api.coingecko.com/api/v3/coins/markets?ids=bittensor (fetched 2026-10-28)"
+    },
+    {
+      "claim": "'near is proof of stake it has an infinite max supply... 2.5 percent inflation new tokens get put into circulation every year' (transcript)",
+      "verdict": "verified: NEAR has no fixed max supply; nearcore 2.9.0 cut the maximum annual inflation rate from 5% to 2.5%, activated on mainnet on October 30, 2025 once 80% of block-producing validators adopted it; a further proposal to 1.6% is under discussion and is not drafted. Copy: 'Near is proof of stake with no max supply, and it only just cut its inflation cap from 5% to 2.5%'.",
+      "source": "blog.nearone.org/announcement/2025/10/21/enhancing-near-tokenomics.html; near.foundation blog (Oct 21, 2025); kucoin.com NEAR 1.6% proposal item (searched 2026-10-28)"
+    },
+    {
+      "claim": "'Solana is definitely more centralized than TAO... XRP is centralized, people buy it like crazy' (transcript)",
+      "verdict": "Mike's own opinion, drafted in first person in the TAO thread and YT post only; no statistic is asserted for either chain. The XRP line is his observation about buying behaviour, not a claim about the project.",
+      "source": "transcript; persona.json writing_style (first-person conviction)"
+    },
+    {
+      "claim": "'you can stake now over 33% APR... 42% APR on Kraken' (comments about TAO subnet staking)",
+      "verdict": "UNVERIFIED and dropped: viewer comments Mike had not checked ('I'm gonna check that out after the stream'); no subnet / exchange APR is printed anywhere.",
+      "source": "transcript"
+    },
+    {
+      "claim": "'BlackRock launches its first active robotics ETF RBTX' (transcript, reading Cointelegraph)",
+      "verdict": "verified: the iShares Future Robotics and Related Technologies Active ETF (RBTX) is BlackRock's first actively managed robotics ETF, listed on NYSE Arca (inception October 20, trading effective October 21, 2026), 0.65% expense ratio, early net assets about $10M, largest positions Tesla, AMD and Nvidia (TradingView data via DigitalToday). Copy: 'launched its first active robotics ETF on October 21 (RBTX: Tesla, AMD and Nvidia at the top)'. 'Mass produced like cars' is Mike's own thesis.",
+      "source": "cryptobriefing.com/blackrock-launches-rbtx-active-robotics-etf/; finance.yahoo.com/quote/RBTX/; ishares.com product 354128; digitaltoday.co.kr/en/view/118225 (searched 2026-10-28)"
+    },
+    {
+      "claim": "'Anthropic files IPO, noting strong growth and massive spending... there's no bubble... this is not like 2000' (transcript)",
+      "verdict": "verified and made precise: Anthropic publicly filed its S-1 on Monday October 26, 2026 for a Nasdaq Global Select listing under the ticker ANT; reported first-half 2026 revenue about $16.3 billion versus $1.2 billion a year earlier; the $80.7B net loss is mostly a non-cash convertible-note charge; price range and share count are blank pending an amendment; listing expected in November. Copy prints only the date, venue, ticker and the two revenue figures; the 'no bubble / not 2000' read and 'we are at 1992' are Mike's own thesis (persona core_theses).",
+      "source": "techcrunch.com/2026/10/26/anthropic-officially-files-for-its-public-debut/; bloomberg.com/news/articles/2026-10-26/anthropic-ipo-explained-s-1-filing-nasdaq-listing-and-key-risks; axios.com/2026/10/26/anthropic-ipo; npr.org/2026/10/26/nx-s1-6014772 (searched 2026-10-28)"
+    },
+    {
+      "claim": "'Bitcoin... bouncing off of the May High for 14 days... broke down through the 50 day moving average... the next step is the 50 week moving average... that mythical 40K level' (transcript)",
+      "verdict": "verified and updated: $BTC $80,910 on October 28 (CoinGecko, -2.1% 7d), dipped under $80K on October 27; it fell below its 50-day SMA (about $81.8K) for the first time in 66 days per CoinStats, below the 50-day EMA ($80,761) per FXStreet; the 50-week SMA sits at about $75.8K to $76.5K (Invezz $75,817; Galaxy $76,540); May 2026 high $82,814 (prior ledger); ATH $126,080 (October 6, 2025). Copy only uses 'if Bitcoin tags its 50-week SMA' (persona spelling) in the Kaspa items; the 40K scenario is not drafted.",
+      "source": "api.coingecko.com (fetched 2026-10-28); fxstreet.com crypto-today 2026-10-27; invezz.com/news/2026/10/27/bitcoin-dips-below-80k; chaincatcher.com/en/article/2299184 (Galaxy); kcc20-live ledger (May high)"
+    },
+    {
+      "claim": "'I don't believe in any 2029 top... Bitcoin make a new all-time high like every single year... could have happened this year if not for that Iran war... 100K is easy... if the money supply triples... $9,000' (transcript)",
+      "verdict": "Mike's own thesis (persona core_theses: the four-year cycle is dead), drafted in first person as the deliberate engagement-bait tweet. The factual anchor it rests on is verified: Bitcoin's ATH is $126,080 (October 6, 2025) and it trades about $81K, so '$100K this run' is a forward call, not a reported fact. The 'wrench in the machinery' Iran-war line is his own characterization; no claim about the war itself is made. The value-vs-dollars line is written as 'if the money supply triples, $100K of buying power is really a $300K print', his own arithmetic.",
+      "source": "transcript; api.coingecko.com (ATH); persona.json core_theses"
+    },
+    {
+      "claim": "'fear and greed... 43... people are becoming fearful' (transcript)",
+      "verdict": "STALE and dropped: the Crypto Fear and Greed Index reads 48 (Oct 27) and 51 (Oct 28), Neutral, so the 'fearful' angle is not printed anywhere.",
+      "source": "api.alternative.me/fng/?limit=5 (fetched 2026-10-28)"
+    },
+    {
+      "claim": "'Chicago Fed National Activity Index 0.07 as opposed to negative 0.08... Dallas Fed Manufacturing Index 13.4 where prior was 9.8... November 2nd ISM PMI' (transcript)",
+      "verdict": "verified: CFNAI September +0.07 from -0.08 (released October 26); Dallas Fed general business activity index 13.4 from 9.8 in October (released October 26, production index 15.8, new orders 9.3); ISM Manufacturing PMI September 54.5%, ninth month of expansion; the October ISM report lands on the first business day, Monday November 2, 2026 (ISM's standard schedule; the ISM calendar page could not be fetched). None of these numbers are printed in the drafted copy (the macro angle rides on the Bitcoin levels only), so nothing depends on the date.",
+      "source": "newsquawk.com (CFNAI Sep 0.07 prev -0.08); seekingalpha.com/news/4657200 (Dallas Fed October); ismworld.org September 2026 PMI report (searched 2026-10-28)"
+    },
+    {
+      "claim": "'a rate pause... if there's a rate hike... two days left' (transcript; the FOMC decision)",
+      "verdict": "NOT drafted: the FOMC decision was due October 28 at 2 pm ET (hold at 3.75% to 4.00% priced near 90%) and its outcome was not yet indexed at drafting time; because the batch posts days later, any 'will they pause' copy would be stale and any outcome copy would be unverified. No Fed item in this batch.",
+      "source": "cnbc.com/2026/10/26/fed-decision-expectations-october-meeting.html; news.kalshi.com interest-rate-odds-fed-october-2026 (searched 2026-10-28)"
+    },
+    {
+      "claim": "'350x on LAB... Tut 94x... Pippin 89x... $100 a week into ten plays, one rugs, one does a 300x' (transcript) and the long-term plays list (PEAQ, Pieverse, Arbitrum, Litecoin, Keeta, ZBCN)",
+      "verdict": "NOT drafted as items: the DCA-into-ten-plays math and the plays list are trader-portfolio framing (persona no_rotation_framing) and the membership pitch around them is skipped; Pieverse shipped a week ago (kcc20-live). The LAB 350x figure matches the persona's 353X record but no item here needs it. 'peak' / 'pyverse' / 'towel arrow' are Whisper spellings of PEAQ / Pieverse / TAO; PEAQ's live price could not be fetched (CoinGecko id mismatch), so PEAQ is not named in copy at all. Arbitrum's $120M is Offchain Labs' 2021 Series B, not Robinhood-chain funding, so that line is not drafted.",
+      "source": "transcript; persona.json brand_voice_patterns; blockworks.com Offchain Labs $120M (2021); coingecko.com/en/coins/peaq (stale snapshots only)"
+    },
+    {
+      "claim": "'ElizoS... rug... lawsuit', 'burgers on base... gone', 'Bike Tyson', 'Keeta... hacked a few months ago', Trump / Iran / midterms / voter fraud, gold made in a lab, the Twilight Zone and cable-TV stories, 'punch you guys in the balls' (transcript)",
+      "verdict": "skipped per persona avoid_in_drafts: ElizaOS content of any kind; a negative take on an unverified project (Keeta hack, Bike Tyson); the Burgers on Base closure is a dead play; political / personal tangents are Mike's to post manually; the gold-synthesis and nostalgia riffs have no post-worthy anchor.",
+      "source": "persona.json avoid_in_drafts; transcript"
+    },
+    {
+      "claim": "Zcash / zKAS audit",
+      "verdict": "no 'Zcash', 'ZEC' or 'zKAS' occurrence in this transcript; nothing to raise with Mike.",
+      "source": "transcript grep (2026-10-28)"
+    },
+    {
+      "claim": "Whisper mishears audited: 'Casper' / 'Caspercom' / 'CastWare' / 'Goswala', 'tau' / 'towel', 'peak', 'pyverse', 'Betanzer' / 'Botanzer', 'Nier'",
+      "verdict": "corrected everywhere in copy: Kaspa / KaspaCom / KasWare / Ghost Wallet, TAO (never 'tau'), PEAQ, Pieverse, Bittensor, Near. No 50WMA spelling: the weekly average is written '50-week SMA'. Toncoin (Gram), Housecoin and Pengu were not discussed on this stream, so the Kaspa-first weighting is honored with two Kaspa tweets, both IG companions, the Kaspa YT post, thread, YT poll and X poll, then TAO with a tweet, a one-liner, the YT post, thread, YT poll and X poll, and the remainder follows what the stream discussed (Bitcoin, Anthropic, robotics).",
+      "source": "transcript; persona.json terminology_rules, ticker_corrections"
+    },
+    {
+      "claim": "Image references",
+      "verdict": "kaspa-logo.png is cited on both Kaspa X images (759ab28b, cd1eb7d1) and their IG companions as the backwards-K source, and it doubles as the V4 hook 'topic photo' for YT post 1 (the 3D Kaspa coin render is the subject of the post) cited together with version4/hook.png; bittensor-tao.png is cited on the TAO arena image (93d3543b) as the tau emblem source; V4 slides 2 to 5 cite version4/slide.png; the V2 slides cite the role-matched version2 exemplars. The Bitcoin, Anthropic and robotics images are entity-free (plain unmarked coins, unbranded robots, no real person). ls of schedule-tweets/images/reference/ done live on 2026-10-28.",
+      "source": "schedule-tweets/images/reference (ls 2026-10-28); persona.json image_generation; repurpose/SKILL.md"
+    }
+  ],
+  "carousel_versions": {
+    "yt-post-2026-10-28-kaspa-tokens-what-to-do-with-krc20-bags": "version4 (a usable topic image exists and the extra V4 weight applies: images/reference/kaspa-logo.png, the 3D Kaspa coin render, IS the subject of the post (Kaspa tokens on the L1), so slide 1 cites BOTH kaspa-logo.png and version4/hook.png in ref (array) and slides 2 to 5 cite version4/slide.png. The post is a fact-led to-do list (three dates, a bridge diagram, a wallet comparison, an A/B/C question), which the V4 data-slide format carries cleanly; nacho.jpg was deliberately not reused (it anchored the kcc20-live V4 hook a week ago). Every prompt carries 'no pagination dots', the badge / watermark warning (hook.png carries a small badge and page dots, slide.png a repeating @handle watermark) and the layout-only / exact-text clause. The figures on slides 2 to 4 are dates and labels only (no percentages) to limit ChatGPT figure drift; per the SKILL.md 2026-09-10 note they remain candidates for the code-rendered V4 path (repurpose/output/kaspa-lane3-fix/render_v4_slide.py) if drift appears; QA each data slide before attaching. V1 was the runner-up (a 'Kaspa tokens are official' hook is news-flash material) and is the fallback if the hook does not bind; V2 was rejected because the tone is a checklist, not editorial. Five slides: hook, three beats, question.)",
+    "yt-post-2026-10-28-tao-is-the-arena": "version2 (analytical / editorial: the post is an argument chain, the arena claim, the subnet mechanics, the centralization rebuttal, the narrative, the question, so the V2 title + teal insight line + body box carries each beat. V4 was weighed first per the extra-weight rule, but the only TAO reference is bittensor-tao.png, a flat black tau glyph on white, not a usable full-bleed topic photo, and no robot, BlackRock, Near or Render image exists in images/reference/, so V4 cannot be anchored on a photo; V1 was rejected because the tone is reasoning, not news-flash, and V4 already carries the Kaspa post this batch. Slides cite the role-matched version2 exemplars: 01 the 9611992a hook, 02/03/04 the 4a9a572c / 44d02f9a / 074be0dc beat slides, 05 the 81abb2d9 question slide; every prompt states the counter text once, forbids em dashes (the V2 hook exemplar carries one) and forbids copying the exemplar's words. Five slides: hook, three beats, question.)"
+  },
+  "missing_references": [
+    "Bitcoin logo / coin: no bitcoin reference file in images/reference/; image 387cac08 renders a plain unmarked gold coin, Bitcoin is named only in copy",
+    "Anthropic logo: no reference file; image 37518187 is entity-free (plain coin, generic server racks), Anthropic is named only in copy",
+    "BlackRock / iShares / RBTX mark, Tesla, AMD, Nvidia marks and any humanoid-robot brand: no reference files; image 2144c1b6 renders unbranded white robots and no company mark, the names ride in copy only",
+    "Near and Render logos: no reference files; not rendered anywhere (the TAO arena image 93d3543b renders the competitors as plain unmarked coins, and the V2 slides carry them as text only)",
+    "KaspaCom, Ghost Wallet, KasWare and Nacho the Kat marks on the V4 data slides: rendered as text labels only (nacho.jpg exists but is not used this batch; the slide format forbids logos)",
+    "Bittensor TAO: only the flat tau glyph bittensor-tao.png exists (used as the emblem source on 93d3543b); no TAO topic photo usable for a V4 full-bleed hook, which is why YT post 2 is anchored on Version 2"
+  ],
+  "images": [
+    {
+      "purpose": "x-tweets",
+      "image_id": "759ab28b",
+      "slug": "kaspa-tokens-bridge-to-the-l1",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A single heroic Kaspa coin character with arms and legs and a calm confident face, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, standing on a vast slab of solid glowing bedrock and waving a long line of small round coin characters across a sturdy one-way bridge toward it. Every small coin character's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Behind the small coins, the rickety wooden scaffold they are leaving is propped up by a single stranger's server rack, tilting and creaking. Deep navy near-black background. Dramatic cinematic lighting with a greenish cyan rim light on the Kaspa coin and the bedrock, cold blue backlight on the scaffold. Calm and confident; a safe landing. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "93d3543b",
+      "slug": "tao-is-the-arena",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A colossal circular stone arena seen from a high angle, its entire floor one enormous dark coin whose face carries a single glowing white emblem: the stylized tau glyph shown in the attached reference image (a short flat top bar with a slim stem curving down to the left), rendered large, clean and glowing. On the arena floor several small round coin characters with arms and legs sprint around a track and lift weights, competing hard; every small coin character's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Deep navy near-black sky above the arena. Dramatic cinematic lighting, white and cool silver rim light from the tau emblem, warm spotlights on the competitors. Hungry and competitive. Use the attached reference only as the source for the tau emblem; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\bittensor-tao.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "387cac08",
+      "slug": "new-high-every-year",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Every coin character's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. A triumphant blank-faced gold coin character with arms and legs standing on a mountain summit at sunrise, one fist raised, with a chain of progressively taller summits rising ahead of it into the distance, each peak it already climbed behind it marked by a small plain glowing flag with nothing printed on it. A large rusty wrench lies discarded on the slope below. Deep navy near-black sky fading to a warm gold sunrise at the horizon. Dramatic cinematic lighting, warm gold rim light on the coin. Triumphant and forward-looking. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "37518187",
+      "slug": "not-a-bubble-revenue-is-here",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Every coin character's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. A determined blank-faced coin character in a yellow hard hat directing a tall construction crane as it lowers a glowing server rack onto a massive stone and steel foundation that is already several storeys high and solidly built, while off to the side a huge translucent soap bubble lies deflated and wrinkled on the ground, long since popped. Deep navy near-black background. Dramatic cinematic lighting, warm amber work lights on the foundation, cold blue sheen on the dead bubble. Confident and busy. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "cd1eb7d1",
+      "slug": "kaspa-haters-proven-wrong",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. A single calm Kaspa coin character with arms and legs and a quietly amused face, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, stacking one more glowing greenish cyan building block onto an already tall, perfectly straight tower of blocks that rises out of frame, while behind a thick glass wall a crowd of shadowy cartoon heckler silhouettes have given up shouting and are slumping away with their shoulders down. Deep navy near-black background. Dramatic cinematic lighting with a greenish cyan rim light on the Kaspa coin and the tower, cold blue backlight on the hecklers. Defiant and unbothered. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "x-tweets",
+      "image_id": "2144c1b6",
+      "slug": "robots-mass-produced-like-cars",
+      "prompt": "Pixar-style 3D animated CGI illustration, 1:1 square aspect ratio, film-quality render. Every coin character's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. A wide-eyed, hungry blank-faced coin character with arms and legs in a tiny hard hat standing at the end of an enormous factory assembly line that stretches to the horizon, where hundreds of sleek unbranded white humanoid robots roll off the line one after another like cars; no badge, emblem, logo or lettering on any robot. Deep navy near-black factory interior. Dramatic cinematic lighting, cool white rim light on the robots, a warm spotlight on the coin character. Awed and hungry. No text or words anywhere in the image."
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "759ab28b",
+      "slug": "kaspa-tokens-bridge-to-the-l1",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A single heroic Kaspa coin character with arms and legs and a calm confident face, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, standing on a vast slab of solid glowing bedrock and waving a long line of small round coin characters across a sturdy one-way bridge toward it. Every small coin character's face is completely plain: no symbol, no logo, no glyph, no lettering or marking of any kind. Behind the small coins, the rickety wooden scaffold they are leaving is propped up by a single stranger's server rack, tilting and creaking. Deep navy near-black background. Dramatic cinematic lighting with a greenish cyan rim light on the Kaspa coin and the bedrock, cold blue backlight on the scaffold. Calm and confident; a safe landing. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "ig-single",
+      "image_id": "cd1eb7d1",
+      "slug": "kaspa-haters-proven-wrong",
+      "prompt": "Pixar-style 3D animated CGI illustration, 4:5 portrait aspect ratio, film-quality render. A single calm Kaspa coin character with arms and legs and a quietly amused face, its face showing the backwards-K mirrored-K Kaspa logo exactly as shown in the attached reference image, glowing greenish cyan, stacking one more glowing greenish cyan building block onto an already tall, perfectly straight tower of blocks that rises out of frame, while behind a thick glass wall a crowd of shadowy cartoon heckler silhouettes have given up shouting and are slumping away with their shoulders down. Deep navy near-black background. Dramatic cinematic lighting with a greenish cyan rim light on the Kaspa coin and the tower, cold blue backlight on the hecklers. Defiant and unbothered. Use the attached reference only as the source for the backwards-K Kaspa logo; do not reproduce the reference image itself. No text or words anywhere in the image.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "470961cc",
+      "slug": "01-hook",
+      "prompt": "Single editorial hook image for a carousel, 1:1 square. TWO REFERENCE IMAGES ARE ATTACHED. Use the FIRST attached reference (the dark 3D Kaspa coin with the glowing greenish cyan backwards-K logo bursting with greenish cyan light on a black background) as the full-bleed background image, keeping the coin and its backwards-K logo faithful, cropped to a square with the coin centred in the upper two thirds of the frame. Use the SECOND attached reference ONLY as the layout and typography key: match its bold all-caps bottom text treatment, its small circular chart bubble overlay and its bottom SWIPE FOR MORE bar. In the top right corner place a small circular bubble overlay containing a simple green upward line chart with no numbers or axis labels. Bold all-caps text across the bottom: 'KASPA TOKENS ARE LIVE' in white on the first line, then 'ON THE L1 ITSELF' in bright green on the second line. Small white all-caps 'SWIPE FOR MORE' text at the very bottom. No pagination dots, no carousel indicators. Keep every line of text inside a margin of at least 8 percent of the frame width. Render NO watermark, no @handle, no username, no shield badge, no artist signature and no initials anywhere in the frame or in any corner; the second attached reference carries a small badge and page dots and they must NOT be reproduced. No em dashes anywhere in the rendered text, use colons or commas instead. Do not invent any numbers, tickers, logos or lettering beyond the exact text specified above.",
+      "ref": [
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\kaspa-logo.png",
+        "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\hook.png"
+      ]
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "0874b19f",
+      "slug": "02-what-changed",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'What actually changed'. Stat boxes: 'KCC-20: FINAL OCT 21', 'COVENANTS: LIVE JUNE 30', 'INDEXER: NOT NEEDED'. Centre panel: a two column comparison, the left column headed 'KRC20: A SERVER DECIDES' and the right column headed 'KCC-20: THE NETWORK DECIDES', each holding three plain rounded empty rows. Bottom green box labelled 'THE POINT' with two bullets: 'Token rules now live in covenants on the Kaspa L1.' and 'No third-party indexer deciding who owns what.' Page number 2 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "24deabac",
+      "slug": "03-the-migration",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Your KRC20 bags are moving'. Stat boxes: 'BRIDGE: ONE WAY', 'BUILDER: KASPACOM', 'ROUTE: KRC20 TO KCC-20'. Centre panel: three rounded nodes joined left to right by green arrows, labelled 'KRC20 TOKEN', 'BRIDGE', 'KCC-20 TOKEN'. Bottom green box labelled 'WHAT I EXPECT' with two bullets: 'Nobody designs a migration so holders lose tokens.' and 'Nacho the Kat already said it is moving over.' Page number 3 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "cf92d75e",
+      "slug": "04-check-your-wallet",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Check where you hold them'. Stat boxes: 'GHOST WALLET CODE: DEC 2024', 'KASWARE: MAINTAINED', 'RULE: BETTER SAFE THAN SORRY'. Centre panel: two large plain wallet icons side by side, the left one grey and dim with a few cobwebs in its corners, the right one bright with a green check mark, and a green arrow pointing from the left wallet to the right wallet. Bottom green box labelled 'MY MOVE' with two bullets: 'If a wallet stopped shipping updates, move before the migration, not after.' and 'A standard change is not the time to find out.' Page number 4 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "181dfd47",
+      "slug": "05-question",
+      "prompt": "Financial data slide, 1:1 square. Match the attached reference's layout and styling: white background, bold dark title at the top, three outlined rounded stat boxes in a row, a large panel in the centre, and a coloured insight box at the bottom. Title: 'Day one or wait and see?'. Stat boxes: 'A: MIGRATE ON DAY ONE', 'B: WAIT FOR THE BIG ONES', 'C: NOT MIGRATING'. Centre panel: three plain rounded panels side by side, each headed A, B and C, otherwise empty. Bottom green box labelled 'TELL ME IN THE COMMENTS' with one bullet: 'And name the wallet your Kaspa tokens are sitting in.' Page number 5 in a circle at the top right. Match the attached reference's layout and styling only: do NOT copy its words, numbers, charts or watermark; the attached reference carries a repeating @handle watermark and it must NOT be reproduced. No human faces, no watermark, no signature or initials in any corner, no em dashes anywhere in the rendered text (use colons or commas), no crypto coins, no Kaspa or Bitcoin logos, no company logos or ticker symbols, and no text beyond what is listed here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version4\\slide.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "67669f04",
+      "slug": "01-hook",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '1 OF 5'. Large bold white title: 'TAO IS NOT COMPETING. IT IS THE ARENA.'. Below, a teal accent line: 'Near and Render are each one subnet's worth of work'. At the bottom a dark rounded box with teal label 'THE CLAIM' and white body text: 'Bittensor is where decentralized AI lines up to compete, and the arena pays the winners.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '1 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-9611992a-01-hook.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "9276dbdb",
+      "slug": "02-one-subnet-each",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '2 OF 5'. Large bold white title: 'ONE SUBNET EACH'. Below, a teal accent line: 'Render is GPU compute. Near is more on the hosting side.'. At the bottom a dark rounded box with teal label 'HOW IT WORKS' and white body text: 'Subnets compete for TAO emissions by producing the best output. Nobody has to beat the others; they all run inside the same incentive machine.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '2 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-4a9a572c-02-btc-failure.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "b072cf73",
+      "slug": "03-centralized-talk",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '3 OF 5'. Large bold white title: 'CENTRALIZED? LOOK AT THE SUPPLY'. Below, a teal accent line: '21 million hard cap, and the founders stepped back in February'. At the bottom a dark rounded box with teal label 'THE RECEIPT' and white body text: 'Near is proof of stake with no max supply. People buy Solana and XRP without blinking.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '3 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-44d02f9a-03-the-problem.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "277c6c82",
+      "slug": "04-robotics-narrative",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '4 OF 5'. Large bold white title: 'ROBOTICS JUST GOT A BLACKROCK ETF'. Below, a teal accent line: 'RBTX launched October 21: Tesla, AMD and Nvidia at the top'. At the bottom a dark rounded box with teal label 'WHY TAO' and white body text: 'Robots mass produced like cars need an AI inference layer nobody owns. That is the arena.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '4 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-074be0dc-04-the-solution.png"
+    },
+    {
+      "purpose": "yt-posts",
+      "image_id": "5d125c0a",
+      "slug": "05-question",
+      "prompt": "Editorial carousel slide, 1:1 square. Very dark near-black background with subtle texture. Top-left small teal all-caps label: '5 OF 5'. Large bold white title: 'TAO, NEAR OR RENDER FOR FIVE YEARS?'. Below, a teal accent line: 'Pick one and defend it'. At the bottom a dark rounded box with teal label 'TELL ME IN THE COMMENTS' and white body text: 'If you say TAO is centralized, give me the actual argument. I will answer it on stream.'. Clean minimal layout, no dramatic effects, no human faces. Match the layout, typography, color and overall styling of the attached reference image. The counter label '5 OF 5' appears exactly once and nowhere else. No em dashes anywhere in the rendered text; use colons or commas. Do not copy any words, numbers or tickers from the attached reference; use it for layout, typography and colour only. No artist signature, no watermark, no initials in any corner. Render no text other than the text specified here.",
+      "ref": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\schedule-tweets\\images\\reference\\carousels\\version2\\yt-posts-81abb2d9-06-question.png"
+    }
+  ],
+  "x_tweets": [
+    {
+      "tweet": "Kaspa tokens are official. The same way you say Solana tokens or ETH tokens, you now say Kaspa tokens.\n\nKCC-20 is final and the token rules live in covenants on the L1 itself. No third-party indexer deciding who owns what.\n\nNext up is the KRC20 migration: KaspaCom is building a one-way bridge to move KRC20 tokens over to KCC-20, so the old bags get a path. $KAS is 3.5 cents while all of this ships.\n\n#kaspa #kas #kcc20",
+      "hook": "Kaspa tokens are official. The same way you say Solana tokens or ETH tokens, you now say Kaspa tokens.",
+      "image_id": "759ab28b",
+      "notes": "Kaspa subject; IG companion shares image 759ab28b. No Follow line (Kaspa). Migration stated in the verified general form (bridge being built), never as done or dated."
+    },
+    {
+      "tweet": "$TAO is not competing with Near or Render. It is the arena they compete in.\n\nRender is GPU compute, Near is more on the hosting side: each of those is roughly one subnet's worth of work on Bittensor, and the subnets compete for TAO emissions by producing the best decentralized AI.\n\nAnd the centralized talk? Near is proof of stake with no max supply. $TAO is hard capped at 21 million and the founders stepped back from running the foundation in February.\n\n#bittensor #tao",
+      "hook": "$TAO is not competing with Near or Render. It is the arena they compete in.",
+      "image_id": "93d3543b",
+      "notes": "TAO subject; no Follow line (persona project_handles.tao is null). No IG companion (not Kaspa). YT poll + X poll (eligible_topic tao) ride on this concept."
+    },
+    {
+      "tweet": "I do not believe in a 2029 top. I do not believe in a four-year cycle at all.\n\nBitcoin ($BTC) can print a new all-time high every single year of this economic expansion. 2026 would have been one of them if the Iran war had not thrown a wrench in the machinery.\n\n$100K this run is easy. And think in value, not dollars: if the money supply triples, $100K of buying power is really a $300K print. What am I missing?\n\n#bitcoin #btc",
+      "hook": "I do not believe in a 2029 top. I do not believe in a four-year cycle at all.",
+      "image_id": "387cac08",
+      "notes": "Deliberate engagement-bait item (persona 1-in-10 rule): provocative prediction (technique 5) plus the explicit 'What am I missing?' closer (technique 3) on Mike's own anti-four-year-cycle thesis. Nothing manufactured: the ATH-every-year and triple-money-supply lines are Mike's on-stream takes, stated in first person. Macro subject: no X poll, no IG companion. Geopolitical mention stays at tweet tier."
+    },
+    {
+      "tweet": "Anthropic filed for its IPO on October 26: Nasdaq, ticker ANT, about $16.3 billion in revenue for the first half of 2026 versus $1.2 billion a year earlier.\n\nThis is not 2000. In the dot-com bubble the spending went in and the revenue never showed up. Here the spending is massive and the revenue is showing up right alongside it.\n\nNo bubble. We are at the 1992 of this buildout, and the AI, robotics and crypto run has not even started.\n\n#AI #crypto",
+      "hook": "Anthropic filed for its IPO on October 26: Nasdaq, ticker ANT, about $16.3 billion in revenue for the first half of 2026 versus $1.2 billion a year earlier.",
+      "image_id": "37518187",
+      "notes": "AI / macro subject (persona core thesis 'we are at 1992 in the AI buildout'). No X poll, no IG companion. Image is entity-free (no Anthropic mark)."
+    },
+    {
+      "tweet": "Kaspa tokens are live on the L1 itself and $KAS is still 3.5 cents. The Kaspa haters get proven wrong one upgrade at a time... 😎\n\n#kaspa",
+      "hook": "Kaspa tokens are live on the L1 itself and $KAS is still 3.5 cents. The Kaspa haters get proven wrong one upgrade at a time... 😎",
+      "image_id": "cd1eb7d1",
+      "notes": "Single-line image-first format. Kaspa subject; IG companion shares image cd1eb7d1. Signature ellipsis used here (one in this batch's broadcast tweets)."
+    },
+    {
+      "tweet": "BlackRock launched its first active robotics ETF on October 21 (RBTX: Tesla, AMD and Nvidia at the top). Robots are about to be mass produced like cars, and $TAO is how I play the narrative in crypto 🤖\n\n#bittensor #robotics",
+      "hook": "BlackRock launched its first active robotics ETF on October 21 (RBTX: Tesla, AMD and Nvidia at the top). Robots are about to be mass produced like cars, and $TAO is how I play the narrative in crypto 🤖",
+      "image_id": "2144c1b6",
+      "notes": "Single-line image-first format. Robotics / TAO subject; no Follow line (tao null). No IG companion (not Kaspa). Image is entity-free (unbranded robots, no BlackRock or Tesla mark)."
+    }
+  ],
+  "x_threads": [
+    {
+      "id": "thread-2026-10-28-kaspa-tokens-what-to-do-with-krc20-bags",
+      "topic": "Kaspa tokens are official: what changed, the KRC20 migration path, wallet hygiene, 3.5 cents (built from YT post 1)",
+      "variation_label": "A (news, then the to-do list)",
+      "tweets": [
+        {
+          "text": "Kaspa tokens are official. The same way you say Solana tokens or ETH tokens, you now say Kaspa tokens.\n\nKCC-20 is final, the rules live on the L1 itself, and the KRC20 migration is next. Here is what I am doing with my bags...",
+          "hook": "Kaspa tokens are official. The same way you say Solana tokens or ETH tokens, you now say Kaspa tokens."
+        },
+        {
+          "text": "What changed: a KRC20 balance was never enforced by Kaspa consensus. A third-party indexer read the chain and decided who owned what.\n\nKCC-20 tokens keep their rules in covenants on the Kaspa L1, live since Toccata on June 30. The network decides, not a server."
+        },
+        {
+          "text": "The migration: KaspaCom is building a one-way bridge to move KRC20 tokens over to KCC-20, and Nacho the Kat already said it is moving.\n\nSo the old bags are not stranded. They get a path."
+        },
+        {
+          "text": "I am a software guy. When you migrate a system between databases, the entire job is making sure nobody loses anything.\n\nI would not expect anyone to build a token migration where holders lose tokens over where they stored them. But better safe than sorry."
+        },
+        {
+          "text": "So check your wallet. Ghost Wallet's code on GitHub has not been updated since December 2024.\n\nMy own transfers in and out still work, but a wallet that stopped shipping updates is not where I want my Kaspa tokens sitting through a standard change. KasWare is maintained."
+        },
+        {
+          "text": "$KAS is 3.5 cents while all of this ships, about 83% under its all-time high.\n\nIf the whole market cracks it can go lower, maybe 3.2, worst case 2.7. I DCA either way. Never financial advice."
+        },
+        {
+          "text": "If this told you what to actually do with your KRC20 bags...\n\nFollow me for the Kaspa updates explained before the rest of the market reads them 😎"
+        }
+      ]
+    },
+    {
+      "id": "thread-2026-10-28-tao-is-the-arena",
+      "topic": "TAO is not competing with Near and Render, it is the arena; the centralization talk; the robotics narrative; price (built from YT post 2)",
+      "variation_label": "A (hook-and-thesis-first)",
+      "tweets": [
+        {
+          "text": "$TAO is not competing with Near or Render.\n\nIt is the arena they compete in. And the people calling it centralized keep buying things that are far more centralized. Let me walk through it...",
+          "hook": "$TAO is not competing with Near or Render."
+        },
+        {
+          "text": "Render is GPU compute. Near is more on the hosting side.\n\nOn Bittensor each of those is roughly one subnet's worth of work. Subnets compete for TAO emissions by producing the best output. The arena pays the winners."
+        },
+        {
+          "text": "Now the centralization talk. $TAO is hard capped at 21 million, the same number as Bitcoin.\n\nIn February the founders stepped back from running the foundation. The network kept producing blocks like nothing happened."
+        },
+        {
+          "text": "Compare that to what people buy without blinking. Near is proof of stake with no max supply, and it only just cut its inflation cap from 5% to 2.5%.\n\nSolana is more centralized than TAO. XRP is centralized and people buy it like crazy. Nobody cares, and they still make money."
+        },
+        {
+          "text": "The narrative: BlackRock launched its first active robotics ETF on October 21 (RBTX, with Tesla, AMD and Nvidia at the top).\n\nRobots are about to be mass produced like cars. The AI inside them needs an inference layer nobody owns. That is the arena."
+        },
+        {
+          "text": "$TAO is about $258, roughly 66% under its $758 all-time high and down 17% on the month.\n\nI think you get many, many multipliers out of it from here, same as Kaspa. Never financial advice."
+        },
+        {
+          "text": "If this changed how you see TAO against the rest of decentralized AI...\n\nFollow me for the AI x crypto takes that ignore the four-year cycle echo chamber 🧠"
+        }
+      ]
+    }
+  ],
+  "x_polls": [
+    {
+      "id": "poll-2026-10-28-where-does-kas-bottom",
+      "topic": "Kaspa at 3.5 cents while Kaspa tokens go live on the L1: where does $KAS bottom if the market cracks",
+      "eligible_topic": "kaspa",
+      "tweet_text": "Kaspa tokens are live on the L1 itself and $KAS is sitting at 3.5 cents.\n\nIf the whole market cracks and Bitcoin tags its 50-week SMA, Kaspa goes lower with it. I DCA either way.\n\nWhere does $KAS bottom?",
+      "hook": "Kaspa tokens are live on the L1 itself and $KAS is sitting at 3.5 cents.",
+      "options": [
+        "3.5 cents holds",
+        "3.2 cents",
+        "2.7 cents",
+        "Lower, and I buy it"
+      ],
+      "duration": "1d"
+    },
+    {
+      "id": "poll-2026-10-28-tao-near-or-render",
+      "topic": "TAO is the arena Near and Render compete in: who wins decentralized AI",
+      "eligible_topic": "tao",
+      "tweet_text": "$TAO is not competing with Near or Render. It is the arena they compete in: each of them is one subnet's worth of work on Bittensor.\n\nSo who actually wins decentralized AI?",
+      "hook": "$TAO is not competing with Near or Render. It is the arena they compete in.",
+      "options": [
+        "$TAO, the arena wins",
+        "$NEAR",
+        "$RENDER",
+        "Big Tech wins it all"
+      ],
+      "duration": "1d"
+    }
+  ],
+  "yt_text_polls": [
+    {
+      "id": "yt-text-poll-2026-10-28-where-does-kas-bottom",
+      "topic": "Kaspa at 3.5 cents while Kaspa tokens go live on the L1: where does $KAS bottom if the market cracks",
+      "source_post": "yt-post-2026-10-28-kaspa-tokens-what-to-do-with-krc20-bags",
+      "question_text": "Kaspa tokens are live on the L1 itself, the KRC20 migration bridge is being built, and $KAS is sitting at 3.5 cents, about 83% under its all-time high.\n\nIf the whole market cracks and Bitcoin tags its 50-week SMA, Kaspa goes lower with it; the only question is how much lower before the bid shows up. I DCA either way, a little here and a little there, so a lower print just means I buy more of it.\n\nWhere does $KAS bottom?",
+      "hook": "Kaspa tokens are live on the L1 itself and $KAS is sitting at 3.5 cents.",
+      "options": [
+        "3.5 cents holds, this is the bottom",
+        "3.2 cents, one more flush",
+        "2.7 cents, the real capitulation",
+        "Lower than 2.7, and I am buying all of it"
+      ]
+    },
+    {
+      "id": "yt-text-poll-2026-10-28-tao-near-or-render",
+      "topic": "TAO is the arena Near and Render compete in: who wins decentralized AI",
+      "source_post": "yt-post-2026-10-28-tao-is-the-arena",
+      "question_text": "$TAO is not competing with Near or Render; it is the arena they compete in. Render is GPU compute, Near is more on the hosting side, and each of those is roughly one subnet's worth of work on Bittensor, where subnets compete for TAO emissions by producing the best output.\n\nAnd on the centralization talk: Near is proof of stake with no max supply. TAO is hard capped at 21 million and the founders stepped back from running the foundation in February.\n\nSo who actually wins decentralized AI? Pick one and defend it in the comments.",
+      "hook": "$TAO is not competing with Near or Render; it is the arena they compete in.",
+      "options": [
+        "$TAO: the arena wins, the rest are subnets",
+        "$NEAR",
+        "$RENDER",
+        "None of them, Big Tech keeps AI for itself"
+      ]
+    }
+  ],
+  "yt_posts": [
+    {
+      "id": "yt-post-2026-10-28-kaspa-tokens-what-to-do-with-krc20-bags",
+      "topic": "Kaspa tokens are official: what changed, the KRC20 migration path, wallet hygiene, 3.5 cents",
+      "variation_label": "A + CTA1",
+      "body_style": "news plus a two-item to-do list, with a first-person software-engineer read on migrations",
+      "cta_target": "subscribe_youtube",
+      "body": "Kaspa tokens are official. The same way you say Solana tokens, ETH tokens or Sui tokens, you now say Kaspa tokens. And if you are holding KRC20 bags, there are two things to do before the migration, not after.\n\nStart with what changed. A KRC20 balance was never enforced by Kaspa consensus. A third-party indexer read the chain and decided who owned what, and in September that indexer got tricked into crediting forged transfers and two token pools got drained. Kaspa itself was never touched. KCC-20, declared final on October 21, keeps the token rules in covenants on the Kaspa L1 itself; covenants have been live since Toccata on June 30. The network decides, not somebody's server. That is the whole reason this matters.\n\nNow the migration. KaspaCom is building a one-way bridge to move KRC20 tokens over to KCC-20, and Nacho the Kat already said it is moving. So the old bags get a path. I am a software guy, and when you migrate a system between databases the entire job is making sure nobody loses anything. I would not expect anyone to build a token migration where holders lose tokens because of where they stored them. But better safe than sorry, which brings me to the second thing.\n\nCheck your wallet. Ghost Wallet's code on GitHub has not been updated since December 2024. People keep telling me they cannot get tokens out of it, and every time I go test it my own transfers in and out work fine. But a wallet that stopped shipping updates is not where I want my Kaspa tokens sitting through a standard change. If the software is not maintained, eventually the technology moves on without it. Move them to something that is actively maintained, KasWare for example, and do it before the bridge opens.\n\nPrice: $KAS is 3.5 cents while all of this ships, about 83% under its all-time high. If the whole market cracks and Bitcoin tags its 50-week SMA, Kaspa goes lower with it, maybe 3.2 cents, worst case something like 2.7. I DCA either way; a little here, a little there, and if it drops I have more to buy it with. Never financial advice.\n\nSo tell me in the comments: are you migrating your KRC20 bags on day one, or waiting to see who goes first? And name the wallet you are holding them in, because I want to know how many of you are still on Ghost.\n\nHit like and subscribe if you want the Kaspa updates explained before the rest of the market reads them.",
+      "engagement_question": "Are you migrating your KRC20 bags on day one, or waiting to see who goes first? And name the wallet you are holding them in.",
+      "images": [
+        {
+          "image_id": "470961cc",
+          "slide_text": "KASPA TOKENS ARE LIVE ON THE L1 ITSELF"
+        },
+        {
+          "image_id": "0874b19f",
+          "slide_text": "WHAT ACTUALLY CHANGED"
+        },
+        {
+          "image_id": "24deabac",
+          "slide_text": "YOUR KRC20 BAGS ARE MOVING"
+        },
+        {
+          "image_id": "cf92d75e",
+          "slide_text": "CHECK WHERE YOU HOLD THEM"
+        },
+        {
+          "image_id": "181dfd47",
+          "slide_text": "DAY ONE OR WAIT AND SEE?"
+        }
+      ]
+    },
+    {
+      "id": "yt-post-2026-10-28-tao-is-the-arena",
+      "topic": "TAO is not competing with Near and Render, it is the arena; the centralization talk; the robotics narrative; price",
+      "variation_label": "A + CTA2",
+      "body_style": "hook-and-thesis-first argument: the arena, the centralization rebuttal, the narrative, the price",
+      "cta_target": "subscribe_youtube",
+      "body": "Every week somebody tells me $TAO is competing against Near and Render. It is not. Bittensor is the arena they compete in, and the people calling it centralized keep buying things that are far more centralized. Let me walk through it.\n\nRender is GPU compute. Near is more on the hosting side, with compute attached. On Bittensor, each of those is roughly one subnet's worth of work. Subnets compete for TAO emissions by producing the best output, and the arena pays the winners. One project does not have to beat the others; the whole point is that all of them line up inside the same incentive machine to produce the best decentralized AI. That is a different category of asset.\n\nNow the centralization talk, because I hear it constantly. $TAO is hard capped at 21 million, the same number as Bitcoin, and this past February the founders stepped back from running the foundation. The network kept producing blocks like nothing happened. Yes, fewer people run nodes than eventually will; Bitcoin was the same in its early years. Compare it to what people buy without blinking: Near is proof of stake with no max supply at all, and it only just cut its annual inflation cap from 5% to 2.5%. Solana is more centralized than TAO. XRP is centralized and people buy it like crazy. I have made plenty of gains on tokens with worse tokenomics than this.\n\nThen the narrative. BlackRock launched its first active robotics ETF on October 21, RBTX, with Tesla, AMD and Nvidia at the top of the book. Robots are about to be mass produced like cars, and the AI running inside them needs an inference layer nobody owns. That is the arena. And Anthropic filed for its IPO on October 26 with about $16.3 billion in revenue for the first half of 2026 versus $1.2 billion a year earlier. This is not 2000. The spending is massive and the revenue is showing up with it.\n\n$TAO is about $258, roughly 66% under its $758 all-time high and down 17% on the month. I think you get many, many multipliers out of it from here, the same way I think it about Kaspa. Never financial advice.\n\nSo here is the question: if you had to hold one for five years, is it $TAO, $NEAR or $RENDER? And if you are in the TAO-is-centralized camp, give me the actual argument in the comments, because I want to answer it on stream.\n\nHit like and subscribe for the AI x crypto takes that ignore the four-year cycle echo chamber.",
+      "engagement_question": "If you had to hold one for five years, is it $TAO, $NEAR or $RENDER? And if you are in the TAO-is-centralized camp, give me the actual argument.",
+      "images": [
+        {
+          "image_id": "67669f04",
+          "slide_text": "TAO IS NOT COMPETING. IT IS THE ARENA."
+        },
+        {
+          "image_id": "9276dbdb",
+          "slide_text": "ONE SUBNET EACH"
+        },
+        {
+          "image_id": "b072cf73",
+          "slide_text": "CENTRALIZED? LOOK AT THE SUPPLY"
+        },
+        {
+          "image_id": "277c6c82",
+          "slide_text": "ROBOTICS JUST GOT A BLACKROCK ETF"
+        },
+        {
+          "image_id": "5d125c0a",
+          "slide_text": "TAO, NEAR OR RENDER FOR FIVE YEARS?"
+        }
+      ]
+    }
+  ],
+  "ig_single": [
+    {
+      "id": "ig-2026-10-28-kaspa-tokens-bridge-to-the-l1",
+      "kaspa_subject": true,
+      "image_id": "759ab28b",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa tokens are official. The same way you say Solana tokens or ETH tokens, you now say Kaspa tokens.",
+      "caption": "Kaspa tokens are official. The same way you say Solana tokens or ETH tokens, you now say Kaspa tokens.\n\nKCC-20 is final and the token rules live in covenants on the Kaspa L1 itself. No third-party indexer deciding who owns what; the network decides.\n\nNext up is the KRC20 migration. KaspaCom is building a one-way bridge to move KRC20 tokens over to KCC-20, so the old bags get a path instead of getting stranded. As a software guy I will say it plainly: nobody designs a migration so that holders lose their tokens. But better safe than sorry, so check that the wallet you hold them in is still being maintained.\n\n$KAS is 3.5 cents while all of this ships, about 83% under its all-time high. The tech keeps landing and the price has not noticed yet.\n\nSave this for the day the bridge opens.",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#kcc20",
+        "#krc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting"
+      ],
+      "source_post": "Kaspa tokens are official. The same way you say Solana tokens or ETH tokens, you now say Kaspa tokens."
+    },
+    {
+      "id": "ig-2026-10-28-kaspa-haters-proven-wrong",
+      "kaspa_subject": true,
+      "image_id": "cd1eb7d1",
+      "aspect_ratio": "4:5",
+      "hook": "Kaspa tokens are live on the L1 itself and $KAS is still 3.5 cents.",
+      "caption": "Kaspa tokens are live on the L1 itself and $KAS is still 3.5 cents.\n\nThe Kaspa haters get proven wrong one upgrade at a time... Covenants landed with Toccata in June. KCC-20 went final on October 21. The KRC20 migration bridge is being built. Every objection that used to be a reason to wait keeps getting answered while the price sits at 3.5 cents.\n\nIf you are DCAing, this is exactly the kind of stretch you do it in: a little here, a little there, and if the market cracks you have more to buy it with. Never financial advice.\n\nTag the Kaspa hater in your life. 😎",
+      "hashtags": [
+        "#kaspa",
+        "#kas",
+        "#kcc20",
+        "#proofofwork",
+        "#fairlaunch",
+        "#mining",
+        "#crypto",
+        "#cryptocurrency",
+        "#bitcoin",
+        "#btc",
+        "#blockchain",
+        "#altcoins",
+        "#cryptoinvesting"
+      ],
+      "source_post": "Kaspa tokens are live on the L1 itself and $KAS is still 3.5 cents. The Kaspa haters get proven wrong one upgrade at a time... 😎"
+    }
+  ]
+}

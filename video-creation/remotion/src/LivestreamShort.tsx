@@ -212,11 +212,19 @@ export const LivestreamShort: React.FC<{ data: ShortData }> = ({ data }) => {
         </AbsoluteFill>
       )}
 
-      {data.sounds && data.sounds.map((s, i) => (
-        <Sequence key={i} from={Math.round(s.t * fps)} durationInFrames={Math.max(1, Math.round((s.dur ?? 2) * fps))}>
-          <Audio src={s.src} volume={s.vol ?? 0.55} />
-        </Sequence>
-      ))}
+      {data.sounds && data.sounds.map((s, i) => {
+        const durF = Math.max(1, Math.round((s.dur ?? 2) * fps));
+        const vol = s.vol ?? 0.55;
+        // optional tail fade (Sfx.fade); without it the volume stays the plain number (byte-identical)
+        const fadeF = s.fade ? Math.max(1, Math.round(s.fade * fps)) : 0;
+        return (
+          <Sequence key={i} from={Math.round(s.t * fps)} durationInFrames={durF}>
+            <Audio src={s.src} volume={fadeF
+              ? (f: number) => interpolate(f, [durF - 1 - fadeF, durF - 1], [vol, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
+              : vol} />
+          </Sequence>
+        );
+      })}
     </AbsoluteFill>
   );
 };

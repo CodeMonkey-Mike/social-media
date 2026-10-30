@@ -1510,6 +1510,29 @@
         "lane3": "Exactly 3 X posts (single tweets), no more. NO YouTube community posts (no YT posts, no carousels). NO X threads. Everything else stays at the defaults: one-liners, IG companions, X polls, YT polls, YT quizzes.",
         "clips": "Select EXACTLY 3 clips, no more. Every clip must be UNDER 60 seconds final length after tighten, so pick raw spans that land under 60 s."
       }
+    },
+    {
+      "batch": "30x-tao",
+      "track": "livestream-repurpose",
+      "status": "active",
+      "date": "2026-10-28",
+      "livestream_title": "30x-tao LOW BPS VERTICAL",
+      "title": "These Crypto Plays Could 30x",
+      "shorts_source": null,
+      "source_media": "video-creation/livestream-repurpose/media/30x-tao/30x-tao LOW BPS VERTICAL.mp4",
+      "transcript_plain": "video-creation/livestream-repurpose/transcripts/30x-tao LOW BPS VERTICAL/30x-tao LOW BPS VERTICAL_plain.txt",
+      "transcripts_dir": "video-creation/livestream-repurpose/transcripts/30x-tao LOW BPS VERTICAL",
+      "dashboard": "video-creation/shorts/30x-tao/dashboard.html",
+      "directories": [
+        "video-creation/remotion/out/30x-tao",
+        "video-creation/shorts/30x-tao"
+      ],
+      "pipelines": {
+        "shorts": "active",
+        "repurpose": "done",
+        "longform": "done"
+      },
+      "note": "cut via canonical cut_topics.py (Wave 2 cut graph), 2026-10-28."
     }
   ]
 }

@@ -1,0 +1,69 @@
+{
+  "pauses": [
+    {
+      "at": 45.82,
+      "planned": 45.82,
+      "dur": 4.0,
+      "clip": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\reset\\assets\\clip-inserts\\CLIP-1-trump-inflation.mp4",
+      "label": "CLIP-1",
+      "sits_in": "trough 45.580-46.220, gate guard -87.3 dB",
+      "dur_exact": 4.0,
+      "frames": 120
+    },
+    {
+      "at": 99.15,
+      "planned": 99.16,
+      "dur": 2.5,
+      "card": "THE DEBT NOBODY CAN PAY",
+      "sits_in": "trough 98.730-99.270, gate guard -139.1 dB",
+      "dur_exact": 2.5,
+      "frames": 75
+    },
+    {
+      "at": 333.36,
+      "planned": 333.16,
+      "dur": 13.8,
+      "clip": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\reset\\assets\\clip-inserts\\CLIP-5-warsh-10yr.mp4",
+      "label": "CLIP-5",
+      "sits_in": "trough 333.130-333.480, gate guard -87.4 dB",
+      "dur_exact": 13.8,
+      "frames": 414
+    },
+    {
+      "at": 402.38,
+      "planned": 402.34,
+      "dur": 17.6,
+      "clip": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\reset\\assets\\clip-inserts\\CLIP-4-bessent-equilibrium.mp4",
+      "label": "CLIP-4",
+      "sits_in": "trough 402.220-402.740, gate guard -84.8 dB",
+      "dur_exact": 17.6,
+      "frames": 528
+    },
+    {
+      "at": 458.94,
+      "planned": 459.08,
+      "dur": 13.8,
+      "clip": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\reset\\assets\\clip-inserts\\CLIP-6-schwab-reset.mp4",
+      "label": "CLIP-6",
+      "sits_in": "trough 458.870-459.470, gate guard -84.5 dB",
+      "dur_exact": 13.8,
+      "frames": 414
+    },
+    {
+      "at": 615.155,
+      "planned": 615.04,
+      "dur": 5.333333,
+      "beat": "BRAAM-1",
+      "sits_in": "trough 614.700-615.290, gate guard -84.9 dB",
+      "dur_exact": 5.333333,
+      "frames": 160
+    }
+  ],
+  "pause_s": 2.5,
+  "mixed_durations": true,
+  "source": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\reset\\spine\\ALL.g.restored.mp4",
+  "output": "media\\reset\\spine\\ALL.i.paused.mp4",
+  "output_duration_s": 805.3,
+  "fps": 30.0,
+  "note": "every comp cue is a SOURCE time; sh(t) adds each pause's `dur` whose `at` <= t (cards = pause_s, clip inserts = the clip length, their audio already in this VO track)"
+}

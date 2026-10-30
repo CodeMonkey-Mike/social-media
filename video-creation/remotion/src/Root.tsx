@@ -38,6 +38,9 @@ import { EveryJobShort, DUR as EJS_DUR, FPS as EJS_FPS } from './EveryJobShort';
 // longform-presentation history-of-crypto (2026-10-13): spotlight middle window of the EDIT, 1920x1080 @30 (skills/spotlight).
 // longform-edited inference (comp-builder 2026-10-26): AI Inference Explained, 16:9 draft build, DUR = the paused spine.
 import { Inference, DUR as INF_DUR, FPS as INF_FPS } from './Inference';
+// longform-edited inference VERTICAL (comp-builder 2026-10-27): the 1080x1920 twin, SAME DUR as the 16:9 (public dir assets/vertical).
+import { InferenceShort, DUR as INFS_DUR, FPS as INFS_FPS } from './InferenceShort';
+import { InferenceVertical, DUR as INFV_DUR, FPS as INFV_FPS } from './InferenceVertical';
 import { HistoryOfCryptoSpotlight, HOC_DUR, HOC_FPS } from './HistoryOfCryptoSpotlight';
 
 // longform-edited tao-detailed (comp-builder 2026-10-17): 1920x1080 @30, DUR = F(764.68) incl. the K30 end-card hold.
@@ -48,6 +51,9 @@ import { Evals, DUR as EVALS_DUR, FPS as EVALS_FPS } from './Evals';
 import { Kcc20, DUR as KCC20_DUR, FPS as KCC20_FPS } from './Kcc20';
 // longform-edited growth-vs-product (comp-builder 2026-10-23): 1920x1080 @30, DUR = the paused spine (6680 f).
 import { GrowthVsProduct, DUR as GVP_DUR, FPS as GVP_FPS } from './GrowthVsProduct';
+import { GrowthScaleUp, DUR as GSU_DUR, FPS as GSU_FPS } from './GrowthScaleUp';
+import { GrowthScaleUpVertical, DUR as GSUV_DUR, FPS as GSUV_FPS } from './GrowthScaleUpVertical';
+import { GrowthScaleUpShort, DUR as GSUS_DUR, FPS as GSUS_FPS } from './GrowthScaleUpShort';
 // longform-edited growth-vs-product SHORT (comp-builder SHORT mode 2026-10-23): 1080x1920 @30, 5 span intermediates + 3 s outro; public dir _previews/short/work.
 import { GrowthVsProductShort, DUR as GVPS_DUR, FPS as GVPS_FPS } from './GrowthVsProductShort';
 import { GrowthVsProductVertical, DUR as GVPV_DUR, FPS as GVPV_FPS } from './GrowthVsProductVertical';
@@ -55,10 +61,23 @@ import { GrowthVsProductVertical, DUR as GVPV_DUR, FPS as GVPV_FPS } from './Gro
 import { Kcc20Vertical, DUR as KCC20V_DUR, FPS as KCC20V_FPS } from './Kcc20Vertical';
 // longform-edited kcc20 SHORT (comp-builder SHORT mode 2026-10-22): 1080x1920 @30, 3 span intermediates + 3 s outro; public dir _previews/short/work.
 import { Kcc20Short, DUR as KCC20S_DUR, FPS as KCC20S_FPS } from './Kcc20Short';
+import { Only18MonthsLeftShort, DUR as O18S_DUR, FPS as O18S_FPS } from './Only18MonthsLeftShort';
+import { ResetShort, DUR as RESETS_DUR, FPS as RESETS_FPS } from './ResetShort';
 
 // livestream-repurpose best-time clip 2 ton-billion-users-at-1-26 (2026-10-27): 1080x1920 @30, 1122 f; public dir shorts/best-time/render-assets.
 import { BestTimeTonBillionUsers, BT2_FPS, BT2_DURATION_FRAMES } from './BestTimeTonBillionUsers';
 import { BestTimeLastChanceAssets, BT3_FPS, BT3_DURATION_FRAMES } from './BestTimeLastChanceAssets';
+// 30x-tao clip 6 (livestream short, 2026-10-28)
+import { ThirtyXTaoArenaImpact, XT6_FPS, XT6_DURATION_FRAMES } from './ThirtyXTaoArenaImpact';
+// 30x-tao clip 4 kaspa-tokens-are-official-kcc20-live (livestream short, 2026-10-28): 1080x1920 @30, 607 f; public dir shorts/30x-tao/render-assets.
+import { ThirtyXTaoKaspaTokensOfficial, XT4_FPS, XT4_DURATION_FRAMES } from './ThirtyXTaoKaspaTokensOfficial';
+import { ThirtyXTaoHundredDollars350x, XT3_FPS, XT3_DURATION_FRAMES } from './ThirtyXTaoHundredDollars350x';
+// 30x-tao clip 7 get-into-assets-now-last-chance-impact (livestream short, 2026-10-28): 1080x1920 @30, 681 f; public dir shorts/30x-tao/render-assets.
+import { ThirtyXTaoLastChanceImpact, XT7_FPS, XT7_DURATION_FRAMES } from './ThirtyXTaoLastChanceImpact';
+import { ThirtyXTaoLastChanceFull, XT2_FPS, XT2_DURATION_FRAMES } from './ThirtyXTaoLastChanceFull';
+// 30x-tao clip 5 no-2029-top-new-ath-every-year (livestream short, 2026-10-28): 1080x1920 @30, 927 f; public dir shorts/30x-tao/render-assets.
+import { ThirtyXTaoNo2029Top, XT5_FPS, XT5_DURATION_FRAMES } from './ThirtyXTaoNo2029Top';
+import { Reset, DUR as RESET_DUR, FPS as RESET_FPS } from './Reset';
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -189,15 +208,30 @@ export const RemotionRoot: React.FC = () => {
       {/* longform-edited kcc20: 1920x1080 @30, DUR = paused spine 10761 f (358.71 s: 3 x 1.5 s cards + CLIP-1 20.5 s + BRAAM 4.7 s) + the end-card hold to sh(335.78) = 10965 */}
       <Composition id="Kcc20" component={Kcc20} durationInFrames={KCC20_DUR} fps={KCC20_FPS} width={1920} height={1080} />
       <Composition id="GrowthVsProduct" component={GrowthVsProduct} durationInFrames={GVP_DUR} fps={GVP_FPS} width={1920} height={1080} />
+      <Composition id="GrowthScaleUp" component={GrowthScaleUp} durationInFrames={GSU_DUR} fps={GSU_FPS} width={1920} height={1080} />
+      <Composition id="GrowthScaleUpVertical" component={GrowthScaleUpVertical} durationInFrames={GSUV_DUR} fps={GSUV_FPS} width={1080} height={1920} />
+      <Composition id="GrowthScaleUpShort" component={GrowthScaleUpShort} durationInFrames={GSUS_DUR} fps={GSUS_FPS} width={1080} height={1920} />
       <Composition id="GrowthVsProductShort" component={GrowthVsProductShort} durationInFrames={GVPS_DUR} fps={GVPS_FPS} width={1080} height={1920} />
       <Composition id="GrowthVsProductVertical" component={GrowthVsProductVertical} durationInFrames={GVPV_DUR} fps={GVPV_FPS} width={1080} height={1920} />
       <Composition id="Kcc20Vertical" component={Kcc20Vertical} durationInFrames={KCC20V_DUR} fps={KCC20V_FPS} width={1080} height={1920} />
       <Composition id="Kcc20Short" component={Kcc20Short} durationInFrames={KCC20S_DUR} fps={KCC20S_FPS} width={1080} height={1920} />
+      <Composition id="Only18MonthsLeftShort" component={Only18MonthsLeftShort} durationInFrames={O18S_DUR} fps={O18S_FPS} width={1080} height={1920} />
+      <Composition id="ResetShort" component={ResetShort} durationInFrames={RESETS_DUR} fps={RESETS_FPS} width={1080} height={1920} />
       <Composition id="Inference" component={Inference} durationInFrames={INF_DUR} fps={INF_FPS} width={1920} height={1080} />
+      <Composition id="InferenceShort" component={InferenceShort} durationInFrames={INFS_DUR} fps={INFS_FPS} width={1080} height={1920} />
+      <Composition id="InferenceVertical" component={InferenceVertical} durationInFrames={INFV_DUR} fps={INFV_FPS} width={1080} height={1920} />
       {/* longform-edited only-18-months-left: 1920x1080 @30, DUR = the paused spine ALL.h.paused.mp4 = 20043 f (668.1 s: 4 x 1.5 s cards + 4 clip inserts 46.8 s + BRAAM 5.1 s) */}
+      {/* longform-edited reset: 1920x1080 @30, DUR = the paused spine ALL.f.paused.mp4 = 24096 f (803.2 s: card 1.5 s + 4 clip inserts 49.2 s + BRAAM 5.33 s) */}
+      <Composition id="Reset" component={Reset} durationInFrames={RESET_DUR} fps={RESET_FPS} width={1920} height={1080} />
       <Composition id="Only18MonthsLeft" component={Only18MonthsLeft} durationInFrames={O18_DUR} fps={O18_FPS} width={1920} height={1080} />
       <Composition id="BestTimeTonBillionUsers" component={BestTimeTonBillionUsers} durationInFrames={BT2_DURATION_FRAMES} fps={BT2_FPS} width={1080} height={1920} />
       <Composition id="BestTimeLastChanceAssets" component={BestTimeLastChanceAssets} durationInFrames={BT3_DURATION_FRAMES} fps={BT3_FPS} width={1080} height={1920} />
+      <Composition id="ThirtyXTaoArenaImpact" component={ThirtyXTaoArenaImpact} durationInFrames={XT6_DURATION_FRAMES} fps={XT6_FPS} width={1080} height={1920} />
+      <Composition id="ThirtyXTaoHundredDollars350x" component={ThirtyXTaoHundredDollars350x} durationInFrames={XT3_DURATION_FRAMES} fps={XT3_FPS} width={1080} height={1920} />
+      <Composition id="ThirtyXTaoKaspaTokensOfficial" component={ThirtyXTaoKaspaTokensOfficial} durationInFrames={XT4_DURATION_FRAMES} fps={XT4_FPS} width={1080} height={1920} />
+      <Composition id="ThirtyXTaoLastChanceImpact" component={ThirtyXTaoLastChanceImpact} durationInFrames={XT7_DURATION_FRAMES} fps={XT7_FPS} width={1080} height={1920} />
+      <Composition id="ThirtyXTaoLastChanceFull" component={ThirtyXTaoLastChanceFull} durationInFrames={XT2_DURATION_FRAMES} fps={XT2_FPS} width={1080} height={1920} />
+      <Composition id="ThirtyXTaoNo2029Top" component={ThirtyXTaoNo2029Top} durationInFrames={XT5_DURATION_FRAMES} fps={XT5_FPS} width={1080} height={1920} />
     </>
   );
 };

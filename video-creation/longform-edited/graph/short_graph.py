@@ -127,6 +127,32 @@ def _faces_final(proj: Path, scope: str):
 
 
 # ── nodes ────────────────────────────────────────────────────────────────────────────
+def _setup_16x9_mode(proj: Path, scope: str, vert: Path):
+    """16:9-SOURCED MODE setup (longform-to-short.md): the flag file, the black ADAPTER master (1080x1920 on the FINAL's
+    clock, carrying the FINAL audio) and the measured face crop. Done by hand on every-job / only-18 / reset until
+    2026-10-30; now automatic when no <project>-VERTICAL.mp4 exists. Returns a failure reason or None."""
+    final = proj / f"{proj.name}-FINAL.mp4"
+    if not final.is_file():
+        return f"no {vert.name} and no {final.name}: deliver the longform first"
+    flag = proj / "assets" / "short" / "from-16x9.json"
+    flag.parent.mkdir(parents=True, exist_ok=True)
+    flag.write_text(json.dumps({"mode": "16:9-sourced", "set_by": "s_preflight",
+                                "note": f"no full vertical; {vert.name} is the black ADAPTER master (FINAL audio)"}, indent=1), encoding="utf-8")
+    dur = G._duration(final) or 0.0
+    r = subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "lavfi", "-i", f"color=c=black:s=1080x1920:r=30:d={dur}", "-i", str(final),
+                        "-map", "0:v", "-map", "1:a", "-c:v", "libx264", "-preset", "ultrafast", "-crf", "30", "-pix_fmt", "yuv420p",
+                        "-c:a", "copy", "-shortest", str(vert)], capture_output=True, text=True)
+    if r.returncode != 0 or not vert.is_file():
+        return f"could not build the 16:9 adapter master: {r.stderr[-400:]}"
+    if not (proj / "assets" / "vertical" / "face-crop.json").is_file():
+        r = subprocess.run([sys.executable, str(C.SCRIPTS / "measure_face_crop.py"), str(proj), "--scope", scope],
+                           capture_output=True, text=True)
+        if r.returncode != 0:
+            return f"measure_face_crop.py failed: {(r.stdout + r.stderr)[-400:]}"
+    print(f"[longform] s_preflight: 16:9-SOURCED MODE set up ({vert.name} adapter + flag + face crop)")
+    return None
+
+
 def s_preflight(state: ShortState) -> ShortState:
     """Phase 0: the delivered vertical + the paused spine share one clock; the CTA take exists; write the FINAL-TIME
     transcript (sh() applied to the word JSON) the strategist works from."""
@@ -136,6 +162,10 @@ def s_preflight(state: ShortState) -> ShortState:
         return {"steps": C._step(state, node, "stub")}
     vert = proj / f"{proj.name}-VERTICAL.mp4"
     paused = C.paused_spine(proj, scope)
+    if not vert.is_file():   # Mike skipped the full vertical: set up 16:9-SOURCED MODE here (reset, 2026-10-30)
+        why = _setup_16x9_mode(proj, scope, vert)
+        if why:
+            return C._fail(state, node, why)
     wj = C.words_json(proj, scope)
     missing = [str(p) for p in (vert, CTA, C.doc(proj, "cue_sheet"), C.doc(proj, "transitions"), C.doc(proj, "music_plan")) if not p.is_file()]
     if missing or not paused or not wj:
@@ -436,6 +466,145 @@ def s_variants(state: ShortState) -> ShortState:
     return {"steps": C._step(state, node, "ran", f"{len(variants)} variant asset(s) ready: " + (", ".join(v["id"] for v in variants) or "none") + note)}
 
 
+VCARD_KINDS = {"container": "slide-builder", "title": "slide-builder", "diagram": "chart-builder", "animated-chart": "chart-builder",
+               "timeline": "chart-builder", "real-chart": "receipt-capturer", "receipt": "receipt-capturer"}
+VCARD_ROUNDS = 2
+SLIVER_S = 0.5   # a cover overlap this short at a span edge is a burn sliver: a held face frame, not a rebuilt card
+
+
+def _span_cover_hits(proj: Path, scope: str, kinds):
+    """COVER-PLAN beats of `kinds` that show inside the approved spans, as [{id, kind, what, a, b, overlay_short, edge}] (final + SHORT
+    seconds). `edge` = the overlap touches the span start/end (a burn sliver candidate)."""
+    sh, _, _ = _sh_fn(proj, scope)
+    plan = json.loads((proj / "SHORT-CUT-PLAN.snapped.json").read_text(encoding="utf-8"))
+    beats = json.loads(C.doc(proj, "cover_plan").read_text(encoding="utf-8")).get("cover_beats") or []
+    hits, t_out = [], 0.0
+    for s in sorted(plan["spans"], key=lambda x: int(x.get("order", 0))):
+        a, b = float(s["start"]), float(s["end"])
+        for i, bt in enumerate(beats):
+            kind = str(bt.get("cover_type", ""))
+            if kind not in kinds:
+                continue
+            ba, bb = sh(float(bt["tIn"])), sh(float(bt["tOut"]))
+            lo, hi = max(a, ba), min(b, bb)
+            if hi - lo < 1.5 / 30:
+                continue
+            what = str(bt.get("what", ""))
+            m = re.search(r"\b([A-Z]{1,2}\d+(?:\.\d+)?)\b", what)
+            hits.append({"id": m.group(1) if m else f"beat{i}", "kind": kind, "what": what, "a": lo, "b": hi,
+                         "overlay_short": [round(t_out + lo - a, 3), round(t_out + hi - a, 3)],
+                         "edge": (hi - lo) < SLIVER_S and (abs(lo - a) < 0.05 or abs(hi - b) < 0.05), "span_ab": (a, b)})
+        t_out += b - a
+    return hits
+
+
+def s_vertical_cards(state: ShortState) -> ShortState:
+    """16:9-SOURCED MODE only (Mike, reset 2026-10-30: "if we skip the vertical conversion, we still need to have those checks
+    and that type of building process for the short"). Every card / chart / diagram / timeline / receipt that shows inside a
+    span is REBUILT native 1080x1920 (slide-builder / chart-builder / receipt-capturer, the vertical-repurpose rules, never a crop
+    or letterbox) into assets/short/vertical-cards/, visual-qa'd, and recorded in assets/short/vertical-cards.json for the short
+    comp to overlay. A burn sliver (< SLIVER_S at a span edge) becomes a HOLD of the adjacent face frame instead. Envato and
+    ChatGPT assets are s_variants' job. Unlike a variant, a card that never passes FAILS the node: shipping the 608 px crop is
+    exactly what Mike rejected."""
+    node = "s_vertical_cards"
+    proj, scope = _proj(state), state.get("scope", "ALL")
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    if not (proj / "assets" / "short" / "from-16x9.json").is_file():
+        return {"steps": C._step(state, node, "skipped", "the delivered vertical already carries native-vertical assets")}
+    sdir = proj / "assets" / "short"
+    vdir = sdir / "vertical-cards"
+    vdir.mkdir(parents=True, exist_ok=True)
+    vj = sdir / "vertical-cards.json"
+    doc = json.loads(vj.read_text(encoding="utf-8")) if vj.is_file() and not _redo(state, node) else {}
+    cards = {c["id"]: c for c in doc.get("cards") or []}
+    holds = list(doc.get("holds") or [])
+    hits = _span_cover_hits(proj, scope, set(VCARD_KINDS))
+    # burn slivers -> hold the face frame just inside the span on the other side of the sliver (the painted adapter master)
+    master = proj / f"{proj.name}-VERTICAL.mp4"
+    held = {tuple(h["overlay_short"]) for h in holds}
+    for h in [h for h in hits if h["edge"]]:
+        if tuple(h["overlay_short"]) in held:
+            continue
+        a, b = h["span_ab"]
+        t = h["b"] + 2 / 30 if abs(h["a"] - a) < 0.05 else h["a"] - 2 / 30
+        png = vdir / f"hold-{h['overlay_short'][0]:.2f}.png"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{t:.3f}", "-i", str(master), "-frames:v", "1", str(png)], capture_output=True)
+        if png.is_file():
+            holds.append({"file": str(png.relative_to(proj)).replace("\\", "/"), "overlay_short": h["overlay_short"],
+                          "replaces": f"{h['id']} sliver on a span edge ({(h['b'] - h['a']) * 30:.1f} frames)"})
+    hits = [h for h in hits if not h["edge"]]
+    seen, todo = set(), []
+    for h in hits:
+        if h["id"] not in seen:
+            seen.add(h["id"])
+            todo.append(h)
+
+    def vfile(h):
+        c = sorted(vdir.glob(f"{h['id']}-*v.png")) + sorted(vdir.glob(f"{h['id']}-v*.png"))
+        return c[0] if c else None
+    qa_dest = sdir / "VERTICAL-CARDS-QA.json"
+    verdicts = {}
+    if qa_dest.is_file() and not _redo(state, node):
+        verdicts = {Path(str(a.get("path", ""))).name: a for a in json.loads(qa_dest.read_text(encoding="utf-8")).get("assets", [])}
+    ok = lambda f: bool(f) and str((verdicts.get(f.name) or {}).get("verdict", "")).upper() == "PASS"
+    for rnd in range(1, VCARD_ROUNDS + 1):
+        need = [h for h in todo if not vfile(h)]
+        by_agent = {}
+        for h in need:
+            by_agent.setdefault(VCARD_KINDS[h["kind"]], []).append(h)
+        specs = []
+        for agent, hs in by_agent.items():
+            fails = lambda h: "; ".join(f"{n}: {'; '.join(a.get('defects') or [])[:200]}" for n, a in verdicts.items()
+                                        if n.startswith(h["id"] + "-") and str(a.get("verdict", "")).upper() != "PASS")
+            specs.append((agent,
+                          f"NATIVE VERTICAL rebuilds for the SHORT of `{proj.name}` (folder `{proj}`), 16:9-sourced mode: the short shows these "
+                          "16:9 assets inside its spans, and a 608 px centre crop of them is NOT acceptable (Mike). For EACH asset below rebuild the "
+                          "SAME content native 1080x1920 per `video-creation/longform-edited/skills/vertical-repurpose/vertical-repurpose.md` section 1 "
+                          "(same locked light/dark stylesheet, same numbers, same state as shown at that moment; reflow, never squeeze; receipts = "
+                          "mobile-view captures). Find the 16:9 source in the project's assets/ (card-slides, title-slides, charts, diagrams, receipts) "
+                          "by its id. Output EXACTLY `" + str(vdir) + "/<id>-<slug>-v.png`. Assets:\n"
+                          + "\n".join(f"- {h['id']} [{h['kind']}] shown {h['overlay_short']} s of the short: {h['what'][:200]}"
+                                      + (f" EARLIER ATTEMPT FAILED visual-qa: {fails(h)}" if fails(h) else "") for h in hs)
+                          + "\nOpen every PNG you write; report per asset.", f"agent-short-vcards-{agent}-{proj.name}.log"))
+        if specs:
+            C.spawn_agents_parallel(state, node, specs)
+        judge = [(h, vfile(h)) for h in todo if vfile(h) and not ok(vfile(h))]
+        if judge:
+            new_dest = sdir / "VERTICAL-CARDS-QA.new.json"
+            new_dest.unlink(missing_ok=True)
+            prompt = (f"Visual QA for the SHORT's native-vertical rebuilds of `{proj.name}`: open every file and judge it (1080x1920, the locked "
+                      "stylesheet, the named content complete and legible, nothing cut at any edge, no overflow). Check ONLY these files.\n"
+                      + "\n".join(f"- `{f}`  [{h['kind']} {h['id']}] content: {h['what'][:160]}" for h, f in judge)
+                      + f"\nReturn your JSON verdict AND save it to EXACTLY `{new_dest}` with Bash. Every listed file appears with PASS or FAIL.")
+            rc, out = C.spawn_agent(state, node, "visual-qa", prompt, f"agent-short-vcards-qa-{proj.name}.log")
+            if C.persist_agent_json(out, new_dest, want_key="assets"):
+                for a in json.loads(new_dest.read_text(encoding="utf-8")).get("assets", []):
+                    verdicts[Path(str(a.get("path", ""))).name] = a
+                new_dest.unlink(missing_ok=True)
+                C._write_json_atomic(qa_dest, {"assets": list(verdicts.values())})
+            rej = _sdir(proj) / "qa" / "rejected"
+            rej.mkdir(parents=True, exist_ok=True)
+            for h, f in judge:
+                a = verdicts.get(f.name)
+                if a and str(a.get("verdict", "")).upper() != "PASS":
+                    shutil.move(str(f), str(rej / f.name))
+        if all(ok(vfile(h)) for h in todo):
+            break
+    left = [h["id"] for h in todo if not ok(vfile(h))]
+    for h in todo:
+        f = vfile(h)
+        if f and ok(f):
+            cards[h["id"]] = {"id": h["id"], "kind": h["kind"], "file": str(f.relative_to(proj)).replace("\\", "/"),
+                              "overlay_short": h["overlay_short"], "replaces": h["what"][:120]}
+    C._write_json_atomic(vj, {"note": "16:9-sourced short: native-vertical rebuilds + face holds the short comp overlays (SHORT seconds); "
+                                      "written by s_vertical_cards", "cards": list(cards.values()), "holds": holds})
+    if left:
+        return C._fail(state, node, f"native-vertical rebuild did not pass visual-qa after {VCARD_ROUNDS} round(s): {', '.join(left)} "
+                                    f"(see {qa_dest.name}; fix the card or rebuild it by hand, then re-drive)")
+    return {"steps": C._step(state, node, "ran", f"{len(cards)} card(s) rebuilt 1080x1920, {len(holds)} face hold(s) -> {vj.name}")}
+
+
 def s_extract(state: ShortState) -> ShortState:
     """Stage A: short_extract_spans.py -> frame-exact span intermediates (video from the vertical, VO from the spine)."""
     node = "s_extract"
@@ -511,6 +680,11 @@ def s_captions(state: ShortState) -> ShortState:
         for x, y in segs:
             windows.append([round(o + (x - a), 3), round(o + (y - a), 3)])
             for t, h in rows:
+                # a group whose first word's onset Whisper stamped just BEFORE the span start (its token absorbed the pause:
+                # reset 2026-10-30, 'Inflation' 26.30 vs span 26.40) still belongs here; it shows from the span's first frame.
+                # Only the words the short keeps are in `rows`, so the lead-in cannot steal another span's words.
+                if x - 0.6 <= t < x - 0.05 and not any(float(o2["src_start"]) <= t < float(o2["src_end"]) for o2 in table["spans"]):
+                    t = x
                 if x - 0.05 <= t < y:
                     for w, rr in fixes:
                         # whole words only: a bare substring turned "accountABle" into "accounta/ble" via "AB" -> "A/B"
@@ -558,9 +732,15 @@ def s_comp(state: ShortState) -> ShortState:
                   "each seam from the video's own transition family (hand-rolled flash/zoom; a library engine over these small linear clips is fine "
                   "only with pre-extracted cut frames).\n"
                   f"Captions: import ZCAPTIONS + CAPTION_WINDOWS from `{G.REMOTION / 'src' / (comp_id + 'Captions.ts')}` (SHORT seconds; render only "
-                  "inside CAPTION_WINDOWS, they are the COVER-sourced frames; the FACE-sourced frames already carry burned captions). Montserrat house style.\n"
+                  "inside CAPTION_WINDOWS, exactly as generated: s_captions already removed the frames that carry burned captions, and in 16:9-sourced "
+                  "mode NOTHING is burned so the windows cover every span; never clip them further). Montserrat house style, in the SAFE ZONE: "
+                  "bottom pad ~320 px so the block sits below a fit_window letterbox (y 656-1264) and above the platform UI, maxWidth <= 860 so "
+                  "the pop overshoot + stroke stay inside 1080 px; a caption never sits on card text.\n"
                   f"Variant overlays (Mike's variety rule): `{proj / 'assets' / 'short' / 'variants.json'}`; for each entry overlay the file full-frame over "
                   "its `overlay_short` window (copy the file into the public dir under variants/ first), with the same ingress the vertical used.\n"
+                  f"Native-vertical cards (16:9-sourced mode only): `{proj / 'assets' / 'short' / 'vertical-cards.json'}` when it exists; overlay "
+                  "every `cards` entry full-frame over its `overlay_short` window (hard in/out on the window edges, UNDER any variant that fades in "
+                  "over it) and every `holds` entry (a face frame) over its window: no frame of a cropped 16:9 card may show.\n"
                   f"Outro: the last {outro:.3f} s hold the last span's final frame and bring in a full-frame TITLE-SLIDE card reading exactly "
                   "\"WATCH THE FULL VIDEO\" in the locked container stylesheet (dark, Playfair headline, green accent word, no em dash), with a "
                   "downward arrow glyph; the CTA voice is mixed later, the comp has no audio.\n"
@@ -634,6 +814,58 @@ def s_mix(state: ShortState) -> ShortState:
     return {"steps": C._step(state, node, "ran", f"{out.name}: VO spans crossfaded + shared CTA + bed")}
 
 
+def _uncovered_16x9_covers(proj: Path, scope: str, min_frames: float = 1.5):
+    """16:9-SOURCED mode: every non-FACE frame of every span is a 608 px slice of a 16:9 cover asset (card, chart, receipt,
+    b-roll), which Mike rejected (reset 2026-10-30). Such frames must be covered in the short by a native-vertical overlay:
+    a variant (assets/short/variants.json) or a re-shot card / face hold (assets/short/vertical-cards.json). Returns the
+    uncovered windows in SHORT seconds that last >= min_frames frames (the H5 chart sliver on reset measured 1.8 frames on the plan clock and showed 3-4 in the render)."""
+    faces = _faces_final(proj, scope)
+    table = json.loads((_work(proj) / "spans.json").read_text(encoding="utf-8"))
+    cov = []
+    for name, key in (("variants.json", "variants"), ("vertical-cards.json", "cards"), ("vertical-cards.json", "holds")):
+        f = proj / "assets" / "short" / name
+        if f.is_file():
+            cov += [tuple(map(float, v["overlay_short"])) for v in json.loads(f.read_text(encoding="utf-8")).get(key) or []]
+    fps = float(table.get("fps") or 30)
+    bad = []
+    for sp in table["spans"]:
+        if sp.get("silent"):
+            continue
+        a, b, o = float(sp["src_start"]), float(sp["src_end"]), float(sp["out_start"])
+        segs = [(a, b)]
+        for fa, fz in faces:
+            nxt = []
+            for x, y in segs:
+                if fz <= x or fa >= y:
+                    nxt.append((x, y))
+                else:
+                    if x < fa:
+                        nxt.append((x, fa))
+                    if fz < y:
+                        nxt.append((fz, y))
+            segs = nxt
+        for x, y in segs:
+            segs2 = [(o + x - a, o + y - a)]
+            for ca, cb in cov:
+                nxt = []
+                for u, v in segs2:
+                    if cb <= u or ca >= v:
+                        nxt.append((u, v))
+                    else:
+                        if u < ca:
+                            nxt.append((u, ca))
+                        if cb < v:
+                            nxt.append((cb, v))
+                segs2 = nxt
+            bad += [(round(u, 3), round(v, 3)) for u, v in segs2 if (v - u) * fps >= min_frames - 0.01]
+    return bad
+
+
+def outro_s_eff(state, spans_s: float) -> float:
+    """The outro length s_comp built (target - spans, never under OUTRO_S)."""
+    return max(OUTRO_S, round(_target(state) - spans_s, 3))
+
+
 def s_verify_final(state: ShortState) -> ShortState:
     """Runtime == target (+-0.2 s), portrait, audio, no clipping, the CTA present at the outro (energy in the last 3 s),
     a face detected on the hook frame when the hook is FACE-sourced."""
@@ -700,11 +932,91 @@ def s_verify_final(state: ShortState) -> ShortState:
         face_pct = MF.face_centre_pct(png) if png else None
         if face_pct is None or not 35 <= face_pct <= 65:
             probs.append(f"hook face {'not detected' if face_pct is None else f'at {face_pct:.0f}%'} on the short")
+    # EDGE-CLIPPED TEXT / 16:9 CAPTION BURN-IN (reset 2026-10-30, Mike rejected the short: the 16:9 comp ignored
+    # {"captions": false}, so its big burned captions rode into every 608 px face slice cut at both edges, and frame-filling
+    # cards were chopped; nothing looked at the pixels). Two checks, longform-to-short.md "Edge-text gate":
+    # (1) 16:9-sourced mode: the 16:9 comp must DECLARE the captions prop and GATE its caption track on it;
+    # (2) every short: no stroked / dark-on-light text sliced by the left or right 2 percent margin (CTA card excluded).
+    edge = None
+    if (proj / "assets" / "short" / "from-16x9.json").is_file():
+        src16 = G.REMOTION / "src" / f"{G._pascal(proj.name)}.tsx"
+        body = src16.read_text(encoding="utf-8", errors="replace") if src16.is_file() else ""
+        if not (re.search(r"captions\s*\??\s*:\s*boolean", body) and re.search(r"\{\s*captions\s*&&\s*<", body)):
+            probs.append(f"16:9-sourced: {src16.name} does not honor inputProps.captions (declare `captions?: boolean` and render "
+                         "`{captions && <Captions />}`), so its burned captions ride into the 9:16 spans")
+        unc = _uncovered_16x9_covers(proj, scope)
+        if unc:
+            probs.append(f"16:9-sourced: non-FACE span frames show a CROPPED 16:9 cover asset with no native-vertical overlay at short "
+                         f"{', '.join(f'{u:.2f}-{v:.2f}s' for u, v in unc[:6])} (rebuild the asset 1080x1920 or hold a face frame; record it "
+                         "in assets/short/vertical-cards.json; longform-to-short.md 16:9-SOURCED MODE)")
+    edge_json = qa / "edge-text.json"
+    re_ = subprocess.run([sys.executable, "-u", str(C.SCRIPTS / "check_short_edge_text.py"), str(mixed), "--skip", f"{built - outro_s_eff(state, spans_s):.2f}-{d + 1:.2f}",
+                          "--json", str(edge_json)], capture_output=True, text=True, encoding="utf-8", errors="replace")
+    m_edge = re.search(r"^EDGE-TEXT frames=(\d+) bad=(\d+) worst=(\S+)", re_.stdout or "", re.M)
+    if re_.returncode == 2 or not m_edge:
+        probs.append("edge-text check could not run: " + ((re_.stderr or re_.stdout) or "")[-200:])
+    elif int(m_edge.group(2)):
+        bad_t = re.findall(r"EDGE-TEXT-BAD t=([\d.]+)s", re_.stdout)
+        edge = int(m_edge.group(2))
+        probs.append(f"text cut at the left/right edge on {edge} of {m_edge.group(1)} sampled frames (t={', '.join(bad_t[:8])}s; "
+                     "16:9 caption burn-in or a cropped card: honor captions:false, give the card a fit_window; see qa/edge-text.json)")
     C._write_json_atomic(_sdir(proj) / "verify-final.json", {"short": str(mixed), "duration_s": d, "target_s": _target(state), "lufs": lu, "peak": pk,
-                                                             "hook_face_pct": face_pct, "problems": probs})
+                                                             "hook_face_pct": face_pct, "edge_text_bad": edge, "problems": probs})
     if probs:
         return C._fail(state, node, "short does not verify: " + "; ".join(probs))
     return {"steps": C._step(state, node, "ran", f"{mixed.name}: {d:.2f}s, {lu} LUFS, peak {pk} dBFS" + (f", hook face {face_pct:.0f}%" if face_pct else ""))}
+
+
+def s_qa_final(state: ShortState) -> ShortState:
+    """The finished short is LOOKED AT before delivery (Mike, reset 2026-10-30: "Do you not QA this?"). Frames every 0.5 s are
+    tiled into contact sheets and the visual-qa agent judges every frame: text cut at an edge, a cropped 16:9 card / chart /
+    b-roll, 16:9 caption remnants, a caption on card text, a face out of frame. A FAIL stops delivery (the supervisor re-drives
+    once and notifies); the verdict lands in _previews/short/qa/final-visual-qa.json."""
+    node = "s_qa_final"
+    proj = _proj(state)
+    if state.get("stub"):
+        return {"steps": C._step(state, node, "stub")}
+    video = _latest_short_video(proj, int(round(_target(state))))
+    mixed = video.with_name(video.name.replace("-video.mp4", ".mp4")) if video else None
+    if not (mixed and mixed.is_file()):
+        return C._fail(state, node, "mixed short missing")
+    qa = _sdir(proj) / "qa"
+    qa.mkdir(parents=True, exist_ok=True)
+    dest = qa / "final-visual-qa.json"
+    stamp = f"{mixed.name}:{mixed.stat().st_size}"
+    if dest.is_file() and not _redo(state, node):
+        prev = json.loads(dest.read_text(encoding="utf-8"))
+        if prev.get("short") == stamp and str(prev.get("verdict", "")).upper() == "PASS":
+            return {"steps": C._step(state, node, "skipped", f"{mixed.name} already passed final visual-qa")}
+    for old in qa.glob("final-sheet-*.jpg"):
+        old.unlink()
+    # 2 fps, 270 px wide tiles, 5x4 = 10 s per sheet; each tile is time-stamped so a defect names its second
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(mixed), "-vf",
+                    "fps=2,scale=270:-1,drawtext=text='%{pts\\:hms}':x=6:y=6:fontsize=20:fontcolor=yellow:box=1:boxcolor=black@0.6,tile=5x4",
+                    str(qa / "final-sheet-%02d.jpg")], capture_output=True)
+    sheets = sorted(qa.glob("final-sheet-*.jpg"))
+    if not sheets:
+        return C._fail(state, node, "could not tile the short's frames for visual-qa")
+    dest.unlink(missing_ok=True)
+    prompt = (f"FINAL visual QA of the finished vertical SHORT `{mixed}` (1080x1920, project `{proj.name}`). The contact sheets below hold one "
+              "frame every 0.5 s (time-stamped, top-left). OPEN EVERY SHEET and judge EVERY frame for: text or captions cut at the left/right "
+              "edge; a 16:9 card / chart / receipt / slide cropped instead of shown whole in a native vertical layout; leftover big 16:9 "
+              "captions under the short's own; a caption sitting on card text; a face cut off or badly framed; black / blank frames before "
+              "the outro; the WATCH THE FULL VIDEO outro card intact. Open the short itself at any timestamp you need to see larger "
+              "(ffmpeg -ss <t> -frames:v 1). Sheets:\n" + "\n".join(f"- `{s}`" for s in sheets)
+              + f"\nReturn JSON {{\"verdict\": \"PASS\"|\"FAIL\", \"defects\": [{{\"t\": <s>, \"what\": ..., \"fix\": ...}}]}} AND save it to "
+              f"EXACTLY `{dest}` with Bash.")
+    rc, out = C.spawn_agent(state, node, "visual-qa", prompt, f"agent-short-final-qa-{proj.name}.log")
+    if not C.persist_agent_json(out, dest, want_key="verdict"):
+        return C._fail(state, node, f"final visual-qa returned no verdict (rc {rc}); see graph/data/agent-short-final-qa-{proj.name}.log")
+    v = json.loads(dest.read_text(encoding="utf-8"))
+    v["short"] = stamp
+    C._write_json_atomic(dest, v)
+    if str(v.get("verdict", "")).upper() != "PASS":
+        d = v.get("defects") or []
+        return C._fail(state, node, f"final visual-qa FAILED {len(d)} defect(s): "
+                       + "; ".join(f"{x.get('t')}s {str(x.get('what', ''))[:90]}" for x in d[:6]) + f" (full list {dest})")
+    return {"steps": C._step(state, node, "ran", f"{mixed.name}: final visual-qa PASS on {len(sheets)} contact sheet(s)")}
 
 
 def gate_short(state: ShortState) -> ShortState:
@@ -737,8 +1049,8 @@ def s_deliver(state: ShortState) -> ShortState:
     return {"steps": C._step(state, node, "ran", f"promoted -> {dest.name} ({dest.stat().st_size / 1e6:.0f} MB); not queued"), "status": "done"}
 
 
-ORDER = ["s_preflight", "s_cut_plan", "gate_short_plan", "s_paint_16x9", "s_variants", "s_extract", "s_captions", "s_comp", "s_verify_comp",
-         "s_render", "s_mix", "s_verify_final", "gate_short", "s_deliver"]
+ORDER = ["s_preflight", "s_cut_plan", "gate_short_plan", "s_paint_16x9", "s_variants", "s_vertical_cards", "s_extract", "s_captions", "s_comp", "s_verify_comp",
+         "s_render", "s_mix", "s_verify_final", "s_qa_final", "gate_short", "s_deliver"]
 NODES = {n: globals()[n] for n in ORDER}
 
 

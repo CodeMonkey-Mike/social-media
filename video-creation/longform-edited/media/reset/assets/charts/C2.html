@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C2: The WWII playbook</title>
+<!--
+C2: The WWII playbook  (Type 1 ANIMATED, project reset, LIGHT theme, chapter accent #8F6500)
+One full-frame 1920x1080 .frame per state; PNG = C2-<state>.png beside this file.
+Every number traces to media/reset/DATA.md (see the "data" block in #spec). Re-shoot after a [VERIFY] change:
+  python media/reset/_previews/chart-builder/build_charts.py C2
+ANIMATION / STATE SPEC (cue times = FINAL spine seconds, AS-RECORDED word timings):
+  SPOT 1 (204.70-224.70). 204.70 frame enters; axes + gridlines draw left->right (0.6 s). STATE axes.
+  207.74 'economy.' the 1946 point POPS (scale 0->1.15->1, halo pulse) with '106.3%'; 'still the record' types on at
+        209.50 'record.' STATE 1946.
+  210.48 'And starting in 1942' the gold band WIPES left->right from 1942 to 1951 (1.2 s), its bracket + label
+        'Long-term rates capped at 2.5% (1942 to 1951)' land on '2.5 percent' 216.36. STATE cap.
+  218.06 'Then prices took off' the dashed pin rises from the axis at March 1947 (0.5 s); the box 'Inflation +19.7%
+        March 1947' lands on '19.7' 222.54-223.90. STATE 1947. The line stays at the 1946 point.
+  SPOT 2 (231.16-237.87) re-enters on the same geometry (state swap). 233.32 'by 1974' the LINE DRAWS from 1946
+        through 1947 and 1951 to 1974 (stroke-dashoffset, linear in x, 3.66 s) with the pale area filling under it;
+        STATE draw-mid = drawn to 1951 (235.00). The 1974 point + '22.2% in 1974' land on '22 percent' 236.98. STATE 1974.
+  Only the four sourced points exist; straight segments join them (the full 1948-1973 annual series is not in DATA.md).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+</style>
+<style>/* LIGHT THEME (container-canonical-light.css, loaded after the canonical sheet) */
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+</style>
+<style>
+/* ---- chart / diagram layer: layout + the CHAPTER ACCENT only (locked tokens untouched) ---- */
+.frame{--acc:#8F6500;--acc-rgb:143,101,0;--acc-mid:#D0BE94;--acc-pale:#F0EBDE;
+  --neutral:#BDB8AC;--track:#ECE9E1}
+body{padding:0}
+.frame{margin:0 0 40px 0}
+.frame.dg{display:block;padding:0}
+.frame.dg>*:not(.orb){position:absolute}
+.hdr{left:120px;top:62px;z-index:2;max-width:1680px}
+.hdr .ey{font-size:24px;margin-bottom:14px}
+.hdr h1{font-size:64px;line-height:1.06;max-width:1680px}
+.hdr .divider{margin:22px 0 0;background:linear-gradient(90deg,var(--acc),rgba(var(--acc-rgb),.22))}
+.ak{color:var(--acc)}                         /* the accent key word (NOT .lit: the light sheet rings .lit) */
+.src{left:120px;bottom:32px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:18px;
+  color:var(--text-muted);z-index:2;letter-spacing:.01em;white-space:nowrap}
+.mono,.src,.m{font-variant-ligatures:none;font-feature-settings:"calt" 0,"liga" 0}
+.t-ey{font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted)}
+svg.layer{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible;z-index:1}
+/* nodes (system-design) */
+.node{z-index:2;background:var(--bg-card);border:3px solid var(--border);border-radius:18px;
+  display:flex;flex-direction:column;justify-content:center;padding:20px 30px}
+.node .t{font-family:'DM Sans';font-weight:700;font-size:34px;line-height:1.15;color:var(--text-primary)}
+.node .s{font-family:'DM Sans';font-weight:400;font-size:25px;line-height:1.36;color:var(--text-secondary);margin-top:10px}
+.node .m{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text-primary)}
+.node.dim{opacity:.36;box-shadow:none}
+.node.seen{border-color:rgba(var(--acc-rgb),.42)}
+.node.on{border-color:var(--acc);
+  background:linear-gradient(180deg,rgba(var(--acc-rgb),.09),rgba(var(--acc-rgb),.02)),var(--bg-card);
+  box-shadow:0 0 0 7px rgba(var(--acc-rgb),.13),0 16px 34px rgba(20,22,26,.14)}
+.node.on .t{color:var(--acc)}
+.node.on .m{color:var(--acc)}
+.node.dash{border-style:dashed}
+.chipx{display:inline-block;padding:6px 16px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-weight:600;
+  font-size:22px;border:2px solid var(--border);background:var(--bg-card-hover);color:var(--text-secondary);
+  font-variant-ligatures:none}
+.on .chipx,.chipx.on{border-color:rgba(var(--acc-rgb),.55);background:rgba(var(--acc-rgb),.08);color:var(--acc)}
+
+
+.yl{left:180px;width:96px;text-align:right;font-size:24px;color:var(--text-muted);z-index:2}
+.xl{top:922px;width:80px;text-align:center;font-size:24px;color:var(--text-muted);z-index:2}
+.bandlab{z-index:2;font-family:'DM Sans';font-weight:700;font-size:30px;color:var(--text-primary);white-space:nowrap}
+.bandlab .w{font-weight:400;color:var(--text-secondary)}
+.ptlab{z-index:2;text-align:right;white-space:nowrap}
+.ptlab.end,.ptlab.start{text-align:left}
+.ptlab .big{font-size:48px;line-height:1.05}
+.ptlab .sub{font-family:'DM Sans';font-weight:500;font-size:28px;color:var(--text-secondary);margin-top:4px}
+.pinbox{z-index:2;background:var(--bg-card);border:2px solid rgba(var(--acc-rgb),.55);border-radius:14px;padding:12px 22px;
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 10px 24px rgba(20,22,26,.08);white-space:nowrap}
+.pinbox .pt{font-family:'DM Sans';font-weight:700;font-size:30px;color:var(--text-primary)}
+.pinbox .mono{font-size:32px}
+.pinbox .pd{font-family:'DM Sans';font-size:24px;color:var(--text-secondary);margin-top:2px}
+
+</style>
+</head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="vblur" x="-5%" y="-30%" width="110%" height="160%"><feGaussianBlur stdDeviation="0 16"/></filter>
+<filter id="vblurL" x="-5%" y="-30%" width="110%" height="160%"><feGaussianBlur stdDeviation="0 24"/></filter>
+</defs></svg>
+<script type="application/json" id="spec">{
+ "id": "C2",
+ "type": "Type 1 ANIMATED",
+ "chapter": "CH3",
+ "accent": "#8F6500",
+ "beat": "CH3@204.70-224.70 + CH3@231.16-237.87 (returns after card-3.1)",
+ "states": {
+  "axes": 204.7,
+  "1946": 209.5,
+  "cap": 216.36,
+  "1947": 223.9,
+  "draw-mid": 235.0,
+  "1974": 236.98
+ },
+ "scale": "x 1940..1976 -> 300..1700 px (38.9 px/yr); y 0..120% -> 900..340 px (4.667 px per point)",
+ "data": {
+  "series": "debt held by the public % of GDP: 1946 106.3, 1947 89.9, 1951 61.8, 1974 22.2 (DATA.md Pillar 3, FRED FYPUGDA188S / OMB); ONLY these four sourced points are plotted, joined by straight lines",
+  "cap": "Fed implicitly capped long-term Treasury bonds at 2.5%, April 1942 to the March 1951 Accord (Fed History)",
+  "cpi": "CPI +19.7% y/y March 1947 (BLS CUUR0000SA0) = an EVENT pin on the time axis, never a value on the debt axis",
+  "guard": "1974 shows the LEVEL 22.2% of GDP, never a 22-point drop (AS-RECORDED flag)"
+ },
+ "notes": [
+  "SPOT 1 (204.70-224.70). 204.70 frame enters; axes + gridlines draw left->right (0.6 s). STATE axes.",
+  "207.74 'economy.' the 1946 point POPS (scale 0->1.15->1, halo pulse) with '106.3%'; 'still the record' types on at",
+  "      209.50 'record.' STATE 1946.",
+  "210.48 'And starting in 1942' the gold band WIPES left->right from 1942 to 1951 (1.2 s), its bracket + label",
+  "      'Long-term rates capped at 2.5% (1942 to 1951)' land on '2.5 percent' 216.36. STATE cap.",
+  "218.06 'Then prices took off' the dashed pin rises from the axis at March 1947 (0.5 s); the box 'Inflation +19.7%",
+  "      March 1947' lands on '19.7' 222.54-223.90. STATE 1947. The line stays at the 1946 point.",
+  "SPOT 2 (231.16-237.87) re-enters on the same geometry (state swap). 233.32 'by 1974' the LINE DRAWS from 1946",
+  "      through 1947 and 1951 to 1974 (stroke-dashoffset, linear in x, 3.66 s) with the pale area filling under it;",
+  "      STATE draw-mid = drawn to 1951 (235.00). The 1974 point + '22.2% in 1974' land on '22 percent' 236.98. STATE 1974.",
+  "Only the four sourced points exist; straight segments join them (the full 1948-1973 annual series is not in DATA.md)."
+ ]
+}</script>
+<div class="frame dg " id="axes" data-state="axes"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Debt held by the public, % of GDP</div><h1>The <span class="ak">WWII</span> playbook.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><line x1="300.0" y1="783.3" x2="1700.0" y2="783.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="666.7" x2="1700.0" y2="666.7" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="550.0" x2="1700.0" y2="550.0" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="433.3" x2="1700.0" y2="433.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="900.0" x2="1700.0" y2="900.0" stroke="var(--axis)" stroke-width="3"/><line x1="300.0" y1="900.0" x2="300.0" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="494.4" y1="900.0" x2="494.4" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="688.9" y1="900.0" x2="688.9" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="883.3" y1="900.0" x2="883.3" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1077.8" y1="900.0" x2="1077.8" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1272.2" y1="900.0" x2="1272.2" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1466.7" y1="900.0" x2="1466.7" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1661.1" y1="900.0" x2="1661.1" y2="912.0" stroke="var(--axis)" stroke-width="3"/></svg><div class="yl mono" style="top:885.0px">0%</div><div class="yl mono" style="top:768.3px">25%</div><div class="yl mono" style="top:651.7px">50%</div><div class="yl mono" style="top:535.0px">75%</div><div class="yl mono" style="top:418.3px">100%</div><div class="xl mono" style="left:260.0px">1940</div><div class="xl mono" style="left:454.4px">1945</div><div class="xl mono" style="left:648.9px">1950</div><div class="xl mono" style="left:843.3px">1955</div><div class="xl mono" style="left:1037.8px">1960</div><div class="xl mono" style="left:1232.2px">1965</div><div class="xl mono" style="left:1426.7px">1970</div><div class="xl mono" style="left:1621.1px">1975</div><div class="src">Sources: OMB via FRED (FYPUGDA188S) · Federal Reserve History, The Treasury-Fed Accord · BLS CPI-U · points 1946, 1947, 1951, 1974</div></div>
+<div class="frame dg " id="1946" data-state="1946"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Debt held by the public, % of GDP</div><h1>The <span class="ak">WWII</span> playbook.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><line x1="300.0" y1="783.3" x2="1700.0" y2="783.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="666.7" x2="1700.0" y2="666.7" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="550.0" x2="1700.0" y2="550.0" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="433.3" x2="1700.0" y2="433.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="900.0" x2="1700.0" y2="900.0" stroke="var(--axis)" stroke-width="3"/><line x1="300.0" y1="900.0" x2="300.0" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="494.4" y1="900.0" x2="494.4" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="688.9" y1="900.0" x2="688.9" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="883.3" y1="900.0" x2="883.3" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1077.8" y1="900.0" x2="1077.8" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1272.2" y1="900.0" x2="1272.2" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1466.7" y1="900.0" x2="1466.7" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1661.1" y1="900.0" x2="1661.1" y2="912.0" stroke="var(--axis)" stroke-width="3"/><circle cx="533.3" cy="403.9" r="26" fill="rgba(var(--acc-rgb),.16)"/><circle cx="533.3" cy="403.9" r="13" fill="var(--acc)"/></svg><div class="yl mono" style="top:885.0px">0%</div><div class="yl mono" style="top:768.3px">25%</div><div class="yl mono" style="top:651.7px">50%</div><div class="yl mono" style="top:535.0px">75%</div><div class="yl mono" style="top:418.3px">100%</div><div class="xl mono" style="left:260.0px">1940</div><div class="xl mono" style="left:454.4px">1945</div><div class="xl mono" style="left:648.9px">1950</div><div class="xl mono" style="left:843.3px">1955</div><div class="xl mono" style="left:1037.8px">1960</div><div class="xl mono" style="left:1232.2px">1965</div><div class="xl mono" style="left:1426.7px">1970</div><div class="xl mono" style="left:1621.1px">1975</div><div class="ptlab start" style="left:569.3px;top:351.9px"><div class="mono ak big">106.3%</div><div class="sub" style="opacity:1">still the record</div></div><div class="src">Sources: OMB via FRED (FYPUGDA188S) · Federal Reserve History, The Treasury-Fed Accord · BLS CPI-U · points 1946, 1947, 1951, 1974</div></div>
+<div class="frame dg " id="cap" data-state="cap"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Debt held by the public, % of GDP</div><h1>The <span class="ak">WWII</span> playbook.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><rect x="387.5" y="340.0" width="348.1" height="560.0" fill="rgba(var(--acc-rgb),.10)"/><path d="M389.5,330.0 v-16 H733.6 v16" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><line x1="300.0" y1="783.3" x2="1700.0" y2="783.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="666.7" x2="1700.0" y2="666.7" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="550.0" x2="1700.0" y2="550.0" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="433.3" x2="1700.0" y2="433.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="900.0" x2="1700.0" y2="900.0" stroke="var(--axis)" stroke-width="3"/><line x1="300.0" y1="900.0" x2="300.0" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="494.4" y1="900.0" x2="494.4" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="688.9" y1="900.0" x2="688.9" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="883.3" y1="900.0" x2="883.3" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1077.8" y1="900.0" x2="1077.8" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1272.2" y1="900.0" x2="1272.2" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1466.7" y1="900.0" x2="1466.7" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1661.1" y1="900.0" x2="1661.1" y2="912.0" stroke="var(--axis)" stroke-width="3"/><circle cx="533.3" cy="403.9" r="26" fill="rgba(var(--acc-rgb),.16)"/><circle cx="533.3" cy="403.9" r="13" fill="var(--acc)"/></svg><div class="yl mono" style="top:885.0px">0%</div><div class="yl mono" style="top:768.3px">25%</div><div class="yl mono" style="top:651.7px">50%</div><div class="yl mono" style="top:535.0px">75%</div><div class="yl mono" style="top:418.3px">100%</div><div class="xl mono" style="left:260.0px">1940</div><div class="xl mono" style="left:454.4px">1945</div><div class="xl mono" style="left:648.9px">1950</div><div class="xl mono" style="left:843.3px">1955</div><div class="xl mono" style="left:1037.8px">1960</div><div class="xl mono" style="left:1232.2px">1965</div><div class="xl mono" style="left:1426.7px">1970</div><div class="xl mono" style="left:1621.1px">1975</div><div class="bandlab" style="left:387.5px;top:260.0px">Long-term rates capped at <span class="mono ak">2.5%</span> <span class="w">(<span class="mono">1942</span> to <span class="mono">1951</span>)</span></div><div class="ptlab start" style="left:569.3px;top:351.9px"><div class="mono ak big">106.3%</div><div class="sub" style="opacity:1">still the record</div></div><div class="src">Sources: OMB via FRED (FYPUGDA188S) · Federal Reserve History, The Treasury-Fed Accord · BLS CPI-U · points 1946, 1947, 1951, 1974</div></div>
+<div class="frame dg " id="1947" data-state="1947"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Debt held by the public, % of GDP</div><h1>The <span class="ak">WWII</span> playbook.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><rect x="387.5" y="340.0" width="348.1" height="560.0" fill="rgba(var(--acc-rgb),.10)"/><path d="M389.5,330.0 v-16 H733.6 v16" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><line x1="300.0" y1="783.3" x2="1700.0" y2="783.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="666.7" x2="1700.0" y2="666.7" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="550.0" x2="1700.0" y2="550.0" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="433.3" x2="1700.0" y2="433.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="900.0" x2="1700.0" y2="900.0" stroke="var(--axis)" stroke-width="3"/><line x1="300.0" y1="900.0" x2="300.0" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="494.4" y1="900.0" x2="494.4" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="688.9" y1="900.0" x2="688.9" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="883.3" y1="900.0" x2="883.3" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1077.8" y1="900.0" x2="1077.8" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1272.2" y1="900.0" x2="1272.2" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1466.7" y1="900.0" x2="1466.7" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1661.1" y1="900.0" x2="1661.1" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="580.0" y1="900.0" x2="580.0" y2="462" stroke="var(--acc)" stroke-width="3" stroke-dasharray="8 7"/><line x1="580.0" y1="462" x2="800" y2="462" stroke="var(--acc)" stroke-width="3"/><circle cx="580.0" cy="900.0" r="9" fill="var(--acc)"/><circle cx="533.3" cy="403.9" r="26" fill="rgba(var(--acc-rgb),.16)"/><circle cx="533.3" cy="403.9" r="13" fill="var(--acc)"/></svg><div class="yl mono" style="top:885.0px">0%</div><div class="yl mono" style="top:768.3px">25%</div><div class="yl mono" style="top:651.7px">50%</div><div class="yl mono" style="top:535.0px">75%</div><div class="yl mono" style="top:418.3px">100%</div><div class="xl mono" style="left:260.0px">1940</div><div class="xl mono" style="left:454.4px">1945</div><div class="xl mono" style="left:648.9px">1950</div><div class="xl mono" style="left:843.3px">1955</div><div class="xl mono" style="left:1037.8px">1960</div><div class="xl mono" style="left:1232.2px">1965</div><div class="xl mono" style="left:1426.7px">1970</div><div class="xl mono" style="left:1621.1px">1975</div><div class="bandlab" style="left:387.5px;top:260.0px">Long-term rates capped at <span class="mono ak">2.5%</span> <span class="w">(<span class="mono">1942</span> to <span class="mono">1951</span>)</span></div><div class="ptlab start" style="left:569.3px;top:351.9px"><div class="mono ak big">106.3%</div><div class="sub" style="opacity:1">still the record</div></div><div class="pinbox" style="left:800px;top:440px"><div><span class="pt">Inflation</span> <span class="mono ak">+19.7%</span></div><div class="pd">March <span class="mono">1947</span></div></div><div class="src">Sources: OMB via FRED (FYPUGDA188S) · Federal Reserve History, The Treasury-Fed Accord · BLS CPI-U · points 1946, 1947, 1951, 1974</div></div>
+<div class="frame dg " id="draw-mid" data-state="draw-mid"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Debt held by the public, % of GDP</div><h1>The <span class="ak">WWII</span> playbook.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><rect x="387.5" y="340.0" width="348.1" height="560.0" fill="rgba(var(--acc-rgb),.10)"/><path d="M389.5,330.0 v-16 H733.6 v16" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><line x1="300.0" y1="783.3" x2="1700.0" y2="783.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="666.7" x2="1700.0" y2="666.7" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="550.0" x2="1700.0" y2="550.0" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="433.3" x2="1700.0" y2="433.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="900.0" x2="1700.0" y2="900.0" stroke="var(--axis)" stroke-width="3"/><line x1="300.0" y1="900.0" x2="300.0" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="494.4" y1="900.0" x2="494.4" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="688.9" y1="900.0" x2="688.9" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="883.3" y1="900.0" x2="883.3" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1077.8" y1="900.0" x2="1077.8" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1272.2" y1="900.0" x2="1272.2" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1466.7" y1="900.0" x2="1466.7" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1661.1" y1="900.0" x2="1661.1" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="580.0" y1="900.0" x2="580.0" y2="462" stroke="var(--acc)" stroke-width="3" stroke-dasharray="8 7"/><line x1="580.0" y1="462" x2="800" y2="462" stroke="var(--acc)" stroke-width="3"/><circle cx="580.0" cy="900.0" r="9" fill="var(--acc)"/><path d="M533.3,403.9 L572.2,480.5 L727.8,611.6 L727.8,900.0 L533.3,900.0 Z" fill="rgba(var(--acc-rgb),.07)"/><path d="M533.3,403.9 L572.2,480.5 L727.8,611.6" fill="none" stroke="var(--acc)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="572.2" cy="480.5" r="8" fill="#FFFFFF" stroke="var(--acc)" stroke-width="4"/><circle cx="727.8" cy="611.6" r="8" fill="#FFFFFF" stroke="var(--acc)" stroke-width="4"/><circle cx="533.3" cy="403.9" r="26" fill="rgba(var(--acc-rgb),.16)"/><circle cx="533.3" cy="403.9" r="13" fill="var(--acc)"/></svg><div class="yl mono" style="top:885.0px">0%</div><div class="yl mono" style="top:768.3px">25%</div><div class="yl mono" style="top:651.7px">50%</div><div class="yl mono" style="top:535.0px">75%</div><div class="yl mono" style="top:418.3px">100%</div><div class="xl mono" style="left:260.0px">1940</div><div class="xl mono" style="left:454.4px">1945</div><div class="xl mono" style="left:648.9px">1950</div><div class="xl mono" style="left:843.3px">1955</div><div class="xl mono" style="left:1037.8px">1960</div><div class="xl mono" style="left:1232.2px">1965</div><div class="xl mono" style="left:1426.7px">1970</div><div class="xl mono" style="left:1621.1px">1975</div><div class="bandlab" style="left:387.5px;top:260.0px">Long-term rates capped at <span class="mono ak">2.5%</span> <span class="w">(<span class="mono">1942</span> to <span class="mono">1951</span>)</span></div><div class="ptlab start" style="left:569.3px;top:351.9px"><div class="mono ak big">106.3%</div><div class="sub" style="opacity:1">still the record</div></div><div class="pinbox" style="left:800px;top:440px"><div><span class="pt">Inflation</span> <span class="mono ak">+19.7%</span></div><div class="pd">March <span class="mono">1947</span></div></div><div class="src">Sources: OMB via FRED (FYPUGDA188S) · Federal Reserve History, The Treasury-Fed Accord · BLS CPI-U · points 1946, 1947, 1951, 1974</div></div>
+<div class="frame dg " id="1974" data-state="1974"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Debt held by the public, % of GDP</div><h1>The <span class="ak">WWII</span> playbook.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><rect x="387.5" y="340.0" width="348.1" height="560.0" fill="rgba(var(--acc-rgb),.10)"/><path d="M389.5,330.0 v-16 H733.6 v16" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><line x1="300.0" y1="783.3" x2="1700.0" y2="783.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="666.7" x2="1700.0" y2="666.7" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="550.0" x2="1700.0" y2="550.0" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="433.3" x2="1700.0" y2="433.3" stroke="var(--grid)" stroke-width="2" stroke-dasharray="4 8"/><line x1="300.0" y1="900.0" x2="1700.0" y2="900.0" stroke="var(--axis)" stroke-width="3"/><line x1="300.0" y1="900.0" x2="300.0" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="494.4" y1="900.0" x2="494.4" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="688.9" y1="900.0" x2="688.9" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="883.3" y1="900.0" x2="883.3" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1077.8" y1="900.0" x2="1077.8" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1272.2" y1="900.0" x2="1272.2" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1466.7" y1="900.0" x2="1466.7" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="1661.1" y1="900.0" x2="1661.1" y2="912.0" stroke="var(--axis)" stroke-width="3"/><line x1="580.0" y1="900.0" x2="580.0" y2="462" stroke="var(--acc)" stroke-width="3" stroke-dasharray="8 7"/><line x1="580.0" y1="462" x2="800" y2="462" stroke="var(--acc)" stroke-width="3"/><circle cx="580.0" cy="900.0" r="9" fill="var(--acc)"/><path d="M533.3,403.9 L572.2,480.5 L727.8,611.6 L1622.2,796.4 L1622.2,900.0 L533.3,900.0 Z" fill="rgba(var(--acc-rgb),.07)"/><path d="M533.3,403.9 L572.2,480.5 L727.8,611.6 L1622.2,796.4" fill="none" stroke="var(--acc)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="572.2" cy="480.5" r="8" fill="#FFFFFF" stroke="var(--acc)" stroke-width="4"/><circle cx="727.8" cy="611.6" r="8" fill="#FFFFFF" stroke="var(--acc)" stroke-width="4"/><circle cx="1622.2" cy="796.4" r="26" fill="rgba(var(--acc-rgb),.16)"/><circle cx="1622.2" cy="796.4" r="13" fill="var(--acc)"/><circle cx="533.3" cy="403.9" r="26" fill="rgba(var(--acc-rgb),.16)"/><circle cx="533.3" cy="403.9" r="13" fill="var(--acc)"/></svg><div class="yl mono" style="top:885.0px">0%</div><div class="yl mono" style="top:768.3px">25%</div><div class="yl mono" style="top:651.7px">50%</div><div class="yl mono" style="top:535.0px">75%</div><div class="yl mono" style="top:418.3px">100%</div><div class="xl mono" style="left:260.0px">1940</div><div class="xl mono" style="left:454.4px">1945</div><div class="xl mono" style="left:648.9px">1950</div><div class="xl mono" style="left:843.3px">1955</div><div class="xl mono" style="left:1037.8px">1960</div><div class="xl mono" style="left:1232.2px">1965</div><div class="xl mono" style="left:1426.7px">1970</div><div class="xl mono" style="left:1621.1px">1975</div><div class="bandlab" style="left:387.5px;top:260.0px">Long-term rates capped at <span class="mono ak">2.5%</span> <span class="w">(<span class="mono">1942</span> to <span class="mono">1951</span>)</span></div><div class="ptlab start" style="left:569.3px;top:351.9px"><div class="mono ak big">106.3%</div><div class="sub" style="opacity:1">still the record</div></div><div class="pinbox" style="left:800px;top:440px"><div><span class="pt">Inflation</span> <span class="mono ak">+19.7%</span></div><div class="pd">March <span class="mono">1947</span></div></div><div class="ptlab end" style="left:1558.2px;top:668.4px"><div class="mono ak big">22.2%</div><div class="sub">in <span class="mono">1974</span></div></div><div class="src">Sources: OMB via FRED (FYPUGDA188S) · Federal Reserve History, The Treasury-Fed Accord · BLS CPI-U · points 1946, 1947, 1951, 1974</div></div>
+</body></html>

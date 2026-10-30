@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C6: Where every tax dollar went, FY2026</title>
+<!--
+C6: Where every tax dollar went, FY2026  (Type 1 ANIMATED, project reset, LIGHT theme, chapter accent #8F6500)
+One full-frame 1920x1080 .frame per state; PNG = C6-<state>.png beside this file.
+Every number traces to media/reset/DATA.md (see the "data" block in #spec). Re-shoot after a [VERIFY] change:
+  python media/reset/_previews/chart-builder/build_charts.py C6
+ANIMATION / STATE SPEC (cue times = FINAL spine seconds, AS-RECORDED word timings):
+  SPOT 1 (117.24-130.03). 117.24 'In the 2026 budget year' frame enters, both rows are dashed empty tracks.
+  119.76 'took in' the TOOK IN bar GROWS left->right (easeOutCubic, 1.4 s) landing on 'trillion' 121.24; '5.4T' counts up
+        with it (one decimal). STATE took-in.
+  122.66 'it spent' the SPENT bar grows (1.2 s) landing on 'trillion.' 123.88; took-in settles to mid gold. STATE spent.
+  124.78 'So it borrowed' the part of SPENT past the took-in edge (x 1421 -> 1798) turns RED (0.4 s colour wipe), the dashed
+        guide drops from the took-in edge, 'Borrowed 2T' fades in; '= 27 cents of every dollar spent' lands on '27' 127.62.
+        STATE borrowed. Hold to 130.03 (FACE 6).
+  SPOT 2 (136.17-148.70) re-enters on the SAME geometry (no new ingress move, a state swap): the spent row fades to 30%,
+        the took-in bar goes pale and the NET INTEREST slice (x 400 -> 599) fills gold on '19' 137.52 with the bracket
+        + '19 cents of every tax dollar'. STATE interest.
+  139.94 the 19-cents callout fades; segments STACK on in turn, each sliding in from the right edge of the last:
+        Social Security 140.12, Medicare 141.46, Medicaid 142.10 (STATE big-five-mid), Veterans 143.40. The newest
+        segment is solid gold, the placed ones mid gold.
+  146.22 '91 cents' all five go solid gold together, the bracket draws across them (0.5 s) and '4.93T = 91 cents of
+        every dollar collected' lands. STATE big-five. Hold to 148.70 (BR-5).
+  Red is used ONLY for the borrowed overhang (the plan's 'the gap fills red'); every lit element is the CH2 gold.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+</style>
+<style>/* LIGHT THEME (container-canonical-light.css, loaded after the canonical sheet) */
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+</style>
+<style>
+/* ---- chart / diagram layer: layout + the CHAPTER ACCENT only (locked tokens untouched) ---- */
+.frame{--acc:#8F6500;--acc-rgb:143,101,0;--acc-mid:#D0BE94;--acc-pale:#F0EBDE;
+  --neutral:#BDB8AC;--track:#ECE9E1}
+body{padding:0}
+.frame{margin:0 0 40px 0}
+.frame.dg{display:block;padding:0}
+.frame.dg>*:not(.orb){position:absolute}
+.hdr{left:120px;top:62px;z-index:2;max-width:1680px}
+.hdr .ey{font-size:24px;margin-bottom:14px}
+.hdr h1{font-size:64px;line-height:1.06;max-width:1680px}
+.hdr .divider{margin:22px 0 0;background:linear-gradient(90deg,var(--acc),rgba(var(--acc-rgb),.22))}
+.ak{color:var(--acc)}                         /* the accent key word (NOT .lit: the light sheet rings .lit) */
+.src{left:120px;bottom:32px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:18px;
+  color:var(--text-muted);z-index:2;letter-spacing:.01em;white-space:nowrap}
+.mono,.src,.m{font-variant-ligatures:none;font-feature-settings:"calt" 0,"liga" 0}
+.t-ey{font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted)}
+svg.layer{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible;z-index:1}
+/* nodes (system-design) */
+.node{z-index:2;background:var(--bg-card);border:3px solid var(--border);border-radius:18px;
+  display:flex;flex-direction:column;justify-content:center;padding:20px 30px}
+.node .t{font-family:'DM Sans';font-weight:700;font-size:34px;line-height:1.15;color:var(--text-primary)}
+.node .s{font-family:'DM Sans';font-weight:400;font-size:25px;line-height:1.36;color:var(--text-secondary);margin-top:10px}
+.node .m{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text-primary)}
+.node.dim{opacity:.36;box-shadow:none}
+.node.seen{border-color:rgba(var(--acc-rgb),.42)}
+.node.on{border-color:var(--acc);
+  background:linear-gradient(180deg,rgba(var(--acc-rgb),.09),rgba(var(--acc-rgb),.02)),var(--bg-card);
+  box-shadow:0 0 0 7px rgba(var(--acc-rgb),.13),0 16px 34px rgba(20,22,26,.14)}
+.node.on .t{color:var(--acc)}
+.node.on .m{color:var(--acc)}
+.node.dash{border-style:dashed}
+.chipx{display:inline-block;padding:6px 16px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-weight:600;
+  font-size:22px;border:2px solid var(--border);background:var(--bg-card-hover);color:var(--text-secondary);
+  font-variant-ligatures:none}
+.on .chipx,.chipx.on{border-color:rgba(var(--acc-rgb),.55);background:rgba(var(--acc-rgb),.08);color:var(--acc)}
+
+
+.rl{left:120px;z-index:2}
+.rl .nm{font-family:'DM Sans';font-weight:700;font-size:36px;color:var(--text-primary);line-height:1.1}
+.rl .vv{font-size:44px;color:var(--text-primary);margin-top:8px;line-height:1.1}
+.rl.faded{opacity:.30}
+.seg{z-index:2;display:flex;flex-direction:column;justify-content:center;overflow:visible;white-space:nowrap}
+.seg .sn{font-family:'DM Sans';font-weight:700;font-size:23px;line-height:1.15}
+.seg .sv{font-size:26px;margin-top:4px}
+.seg.hi .sn,.seg.hi .sv{color:#FFFFFF}
+.seg.pl .sn,.seg.pl .sv{color:var(--text-primary)}
+.seg.bor .sn{font-size:30px}.seg.bor .sv{font-size:34px}
+.seg.faded{opacity:.30}
+.segout{z-index:2;white-space:nowrap;font-size:23px}
+.segout .sn{font-family:'DM Sans';font-weight:700;color:var(--text-primary)}
+.segout .sv{font-size:24px;color:var(--text-primary)}
+.segout.hi .sv,.segout.hi .sn{color:var(--acc)}
+.lead{width:2px;background:#8A877E;z-index:2}
+.callout{z-index:2;font-family:'DM Sans';font-size:34px;color:var(--text-secondary);white-space:nowrap;line-height:1.3}
+.callout .mono{color:var(--text-primary)}
+.callout .big{font-size:46px}
+.callout .reb{color:var(--accent-red);font-size:46px}
+.callout.right{text-align:right}
+
+</style>
+</head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="vblur" x="-5%" y="-30%" width="110%" height="160%"><feGaussianBlur stdDeviation="0 16"/></filter>
+<filter id="vblurL" x="-5%" y="-30%" width="110%" height="160%"><feGaussianBlur stdDeviation="0 24"/></filter>
+</defs></svg>
+<script type="application/json" id="spec">{
+ "id": "C6",
+ "type": "Type 1 ANIMATED",
+ "chapter": "CH2",
+ "accent": "#8F6500",
+ "beat": "CH2@117.24-130.03 + CH2@136.17-148.70 (a continuation across FACE 6)",
+ "states": {
+  "start": 117.24,
+  "took-in": 121.24,
+  "spent": 123.88,
+  "borrowed": 127.62,
+  "interest": 137.52,
+  "big-five-mid": 142.1,
+  "big-five": 146.22
+ },
+ "scale": "both bars on ONE scale, 1T = 189 px, x0 = 400 (took in 1021.2 px, spent 1397.8 px)",
+ "data": {
+  "receipts": "5.403T -> '5.4T'",
+  "outlays": "7.396T -> '7.4T'",
+  "deficit": "1.992T -> 'Borrowed 2T', 26.9% of outlays -> '27 cents of every dollar spent'",
+  "net_interest": "1.052T -> '1.05T', 19.5% of receipts -> '19 cents of every tax dollar'",
+  "big_five": "SS 1.667, Medicare 1.073, Medicaid 0.723, Veterans 0.416, net interest 1.052 = 4.931T -> '4.93T = 91 cents' (91.3% of receipts; never 'more than every dollar', do-not-air item 2)",
+  "source": "DATA.md Pillar 2, Treasury Final MTS FY2026 Tables 5 and 9"
+ },
+ "notes": [
+  "SPOT 1 (117.24-130.03). 117.24 'In the 2026 budget year' frame enters, both rows are dashed empty tracks.",
+  "119.76 'took in' the TOOK IN bar GROWS left->right (easeOutCubic, 1.4 s) landing on 'trillion' 121.24; '5.4T' counts up",
+  "      with it (one decimal). STATE took-in.",
+  "122.66 'it spent' the SPENT bar grows (1.2 s) landing on 'trillion.' 123.88; took-in settles to mid gold. STATE spent.",
+  "124.78 'So it borrowed' the part of SPENT past the took-in edge (x 1421 -> 1798) turns RED (0.4 s colour wipe), the dashed",
+  "      guide drops from the took-in edge, 'Borrowed 2T' fades in; '= 27 cents of every dollar spent' lands on '27' 127.62.",
+  "      STATE borrowed. Hold to 130.03 (FACE 6).",
+  "SPOT 2 (136.17-148.70) re-enters on the SAME geometry (no new ingress move, a state swap): the spent row fades to 30%,",
+  "      the took-in bar goes pale and the NET INTEREST slice (x 400 -> 599) fills gold on '19' 137.52 with the bracket",
+  "      + '19 cents of every tax dollar'. STATE interest.",
+  "139.94 the 19-cents callout fades; segments STACK on in turn, each sliding in from the right edge of the last:",
+  "      Social Security 140.12, Medicare 141.46, Medicaid 142.10 (STATE big-five-mid), Veterans 143.40. The newest",
+  "      segment is solid gold, the placed ones mid gold.",
+  "146.22 '91 cents' all five go solid gold together, the bracket draws across them (0.5 s) and '4.93T = 91 cents of",
+  "      every dollar collected' lands. STATE big-five. Hold to 148.70 (BR-5).",
+  "Red is used ONLY for the borrowed overhang (the plan's 'the gap fills red'); every lit element is the CH2 gold."
+ ]
+}</script>
+<div class="frame dg " id="start" data-state="start"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey"><span class="mono">FY2026</span> federal budget</div><h1>Where every <span class="ak">tax dollar</span> went.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="start-ti"><rect x="400.0" y="452" width="1021.2" height="124" rx="12"/></clipPath><clipPath id="start-sp"><rect x="400.0" y="712" width="1397.8" height="124" rx="12"/></clipPath></defs><rect x="400.0" y="452" width="1021.2" height="124" rx="12" fill="var(--track)" stroke="#CFCABF" stroke-width="2" stroke-dasharray="10 8"/><g><rect x="400.0" y="712" width="1397.8" height="124" rx="12" fill="var(--track)" stroke="#CFCABF" stroke-width="2" stroke-dasharray="10 8"/></g></svg><div class="rl" style="top:468px"><div class="nm">Took in</div><div class="vv mono" style="opacity:0">5.4T</div></div><div class="rl" style="top:728px"><div class="nm">Spent</div><div class="vv mono" style="opacity:0">7.4T</div></div><div class="src">Source: US Treasury, Final Monthly Treasury Statement FY2026 (Tables 5 and 9) · net interest = budget function 900</div></div>
+<div class="frame dg " id="took-in" data-state="took-in"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey"><span class="mono">FY2026</span> federal budget</div><h1>Where every <span class="ak">tax dollar</span> went.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="took-in-ti"><rect x="400.0" y="452" width="1021.2" height="124" rx="12"/></clipPath><clipPath id="took-in-sp"><rect x="400.0" y="712" width="1397.8" height="124" rx="12"/></clipPath></defs><g clip-path="url(#took-in-ti)"><rect x="400.0" y="452" width="1021.2" height="124" fill="var(--acc)"/></g><g><rect x="400.0" y="712" width="1397.8" height="124" rx="12" fill="var(--track)" stroke="#CFCABF" stroke-width="2" stroke-dasharray="10 8"/></g></svg><div class="rl" style="top:468px"><div class="nm">Took in</div><div class="vv mono ak" style="opacity:1">5.4T</div></div><div class="rl" style="top:728px"><div class="nm">Spent</div><div class="vv mono" style="opacity:0">7.4T</div></div><div class="src">Source: US Treasury, Final Monthly Treasury Statement FY2026 (Tables 5 and 9) · net interest = budget function 900</div></div>
+<div class="frame dg " id="spent" data-state="spent"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey"><span class="mono">FY2026</span> federal budget</div><h1>Where every <span class="ak">tax dollar</span> went.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="spent-ti"><rect x="400.0" y="452" width="1021.2" height="124" rx="12"/></clipPath><clipPath id="spent-sp"><rect x="400.0" y="712" width="1397.8" height="124" rx="12"/></clipPath></defs><g clip-path="url(#spent-ti)"><rect x="400.0" y="452" width="1021.2" height="124" fill="var(--acc-mid)"/></g><g><g clip-path="url(#spent-sp)"><rect x="400.0" y="712" width="1397.8" height="124" fill="var(--acc)"/></g></g></svg><div class="rl" style="top:468px"><div class="nm">Took in</div><div class="vv mono" style="opacity:1">5.4T</div></div><div class="rl" style="top:728px"><div class="nm">Spent</div><div class="vv mono ak" style="opacity:1">7.4T</div></div><div class="src">Source: US Treasury, Final Monthly Treasury Statement FY2026 (Tables 5 and 9) · net interest = budget function 900</div></div>
+<div class="frame dg " id="borrowed" data-state="borrowed"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey"><span class="mono">FY2026</span> federal budget</div><h1>Where every <span class="ak">tax dollar</span> went.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="borrowed-ti"><rect x="400.0" y="452" width="1021.2" height="124" rx="12"/></clipPath><clipPath id="borrowed-sp"><rect x="400.0" y="712" width="1397.8" height="124" rx="12"/></clipPath></defs><g clip-path="url(#borrowed-ti)"><rect x="400.0" y="452" width="1021.2" height="124" fill="var(--acc-mid)"/></g><g><g clip-path="url(#borrowed-sp)"><rect x="400.0" y="712" width="1397.8" height="124" fill="var(--acc-mid)"/><rect x="1421.2" y="712" width="376.7" height="124" fill="var(--accent-red)"/><rect x="1419.7" y="712" width="3" height="124" fill="#FFFFFF"/></g><line x1="1421.2" y1="582" x2="1421.2" y2="706" stroke="#8A877E" stroke-width="2.5" stroke-dasharray="7 7"/></g></svg><div class="rl" style="top:468px"><div class="nm">Took in</div><div class="vv mono" style="opacity:1">5.4T</div></div><div class="rl" style="top:728px"><div class="nm">Spent</div><div class="vv mono" style="opacity:1">7.4T</div></div><div class="seg hi bor" style="left:1439.2px;top:712px;height:124px;width:346.7px"><div class="sn">Borrowed</div><div class="sv mono">2T</div></div><div class="callout right" style="right:122.2px;top:858px">= <span class="mono reb">27 cents</span> of every dollar spent</div><div class="src">Source: US Treasury, Final Monthly Treasury Statement FY2026 (Tables 5 and 9) · net interest = budget function 900</div></div>
+<div class="frame dg " id="interest" data-state="interest"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey"><span class="mono">FY2026</span> federal budget</div><h1>Where every <span class="ak">tax dollar</span> went.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="interest-ti"><rect x="400.0" y="452" width="1021.2" height="124" rx="12"/></clipPath><clipPath id="interest-sp"><rect x="400.0" y="712" width="1397.8" height="124" rx="12"/></clipPath></defs><g clip-path="url(#interest-ti)"><rect x="400.0" y="452" width="1021.2" height="124" fill="var(--acc-pale)"/><rect x="400.0" y="452" width="198.8" height="124" fill="var(--acc)"/><rect x="597.3" y="452" width="3" height="124" fill="#FFFFFF"/></g><g opacity="0.30"><g clip-path="url(#interest-sp)"><rect x="400.0" y="712" width="1397.8" height="124" fill="var(--acc-mid)"/><rect x="1421.2" y="712" width="376.7" height="124" fill="var(--accent-red)"/><rect x="1419.7" y="712" width="3" height="124" fill="#FFFFFF"/></g></g><path d="M402.0,440 v-18 H596.8 v18" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="rl" style="top:468px"><div class="nm">Took in</div><div class="vv mono" style="opacity:1">5.4T</div></div><div class="rl faded" style="top:728px"><div class="nm">Spent</div><div class="vv mono" style="opacity:1">7.4T</div></div><div class="seg hi" style="left:416.0px;top:452px;height:124px;width:176.8px"><div class="sn">Net interest</div><div class="sv mono">1.05T</div></div><div class="seg hi bor faded" style="left:1439.2px;top:712px;height:124px;width:346.7px"><div class="sn">Borrowed</div><div class="sv mono">2T</div></div><div class="callout" style="left:400.0px;top:360px"><span class="mono ak big">19 cents</span> of every tax dollar</div><div class="src">Source: US Treasury, Final Monthly Treasury Statement FY2026 (Tables 5 and 9) · net interest = budget function 900</div></div>
+<div class="frame dg " id="big-five-mid" data-state="big-five-mid"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey"><span class="mono">FY2026</span> federal budget</div><h1>Where every <span class="ak">tax dollar</span> went.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="big-five-mid-ti"><rect x="400.0" y="452" width="1021.2" height="124" rx="12"/></clipPath><clipPath id="big-five-mid-sp"><rect x="400.0" y="712" width="1397.8" height="124" rx="12"/></clipPath></defs><g clip-path="url(#big-five-mid-ti)"><rect x="400.0" y="452" width="1021.2" height="124" fill="var(--acc-pale)"/><rect x="400.0" y="452" width="198.8" height="124" fill="var(--acc-mid)"/><rect x="598.8" y="452" width="315.1" height="124" fill="var(--acc-mid)"/><rect x="913.9" y="452" width="202.8" height="124" fill="var(--acc-mid)"/><rect x="1116.7" y="452" width="136.6" height="124" fill="var(--acc)"/><rect x="597.3" y="452" width="3" height="124" fill="#FFFFFF"/><rect x="912.4" y="452" width="3" height="124" fill="#FFFFFF"/><rect x="1115.2" y="452" width="3" height="124" fill="#FFFFFF"/><rect x="1251.8" y="452" width="3" height="124" fill="#FFFFFF"/></g><g opacity="0.30"><g clip-path="url(#big-five-mid-sp)"><rect x="400.0" y="712" width="1397.8" height="124" fill="var(--acc-mid)"/><rect x="1421.2" y="712" width="376.7" height="124" fill="var(--accent-red)"/><rect x="1419.7" y="712" width="3" height="124" fill="#FFFFFF"/></g></g></svg><div class="rl" style="top:468px"><div class="nm">Took in</div><div class="vv mono" style="opacity:1">5.4T</div></div><div class="rl faded" style="top:728px"><div class="nm">Spent</div><div class="vv mono" style="opacity:1">7.4T</div></div><div class="seg pl" style="left:416.0px;top:452px;height:124px;width:176.8px"><div class="sn">Net interest</div><div class="sv mono">1.05T</div></div><div class="seg pl" style="left:614.8px;top:452px;height:124px;width:293.1px"><div class="sn">Social Security</div><div class="sv mono">1.67T</div></div><div class="seg pl" style="left:929.9px;top:452px;height:124px;width:180.8px"><div class="sn">Medicare</div><div class="sv mono">1.07T</div></div><div class="seg hi" style="left:1132.7px;top:452px;height:124px;width:114.6px"><div class="sn">Medicaid</div><div class="sv mono">0.72T</div></div><div class="seg hi bor faded" style="left:1439.2px;top:712px;height:124px;width:346.7px"><div class="sn">Borrowed</div><div class="sv mono">2T</div></div><div class="src">Source: US Treasury, Final Monthly Treasury Statement FY2026 (Tables 5 and 9) · net interest = budget function 900</div></div>
+<div class="frame dg " id="big-five" data-state="big-five"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey"><span class="mono">FY2026</span> federal budget</div><h1>Where every <span class="ak">tax dollar</span> went.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="big-five-ti"><rect x="400.0" y="452" width="1021.2" height="124" rx="12"/></clipPath><clipPath id="big-five-sp"><rect x="400.0" y="712" width="1397.8" height="124" rx="12"/></clipPath></defs><g clip-path="url(#big-five-ti)"><rect x="400.0" y="452" width="1021.2" height="124" fill="var(--acc-pale)"/><rect x="400.0" y="452" width="198.8" height="124" fill="var(--acc)"/><rect x="598.8" y="452" width="315.1" height="124" fill="var(--acc)"/><rect x="913.9" y="452" width="202.8" height="124" fill="var(--acc)"/><rect x="1116.7" y="452" width="136.6" height="124" fill="var(--acc)"/><rect x="1253.3" y="452" width="78.6" height="124" fill="var(--acc)"/><rect x="597.3" y="452" width="3" height="124" fill="#FFFFFF"/><rect x="912.4" y="452" width="3" height="124" fill="#FFFFFF"/><rect x="1115.2" y="452" width="3" height="124" fill="#FFFFFF"/><rect x="1251.8" y="452" width="3" height="124" fill="#FFFFFF"/><rect x="1330.5" y="452" width="3" height="124" fill="#FFFFFF"/></g><g opacity="0.30"><g clip-path="url(#big-five-sp)"><rect x="400.0" y="712" width="1397.8" height="124" fill="var(--acc-mid)"/><rect x="1421.2" y="712" width="376.7" height="124" fill="var(--accent-red)"/><rect x="1419.7" y="712" width="3" height="124" fill="#FFFFFF"/></g></g><path d="M402.0,440 v-18 H1330.0 v18" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="rl" style="top:468px"><div class="nm">Took in</div><div class="vv mono" style="opacity:1">5.4T</div></div><div class="rl faded" style="top:728px"><div class="nm">Spent</div><div class="vv mono" style="opacity:1">7.4T</div></div><div class="seg hi" style="left:416.0px;top:452px;height:124px;width:176.8px"><div class="sn">Net interest</div><div class="sv mono">1.05T</div></div><div class="seg hi" style="left:614.8px;top:452px;height:124px;width:293.1px"><div class="sn">Social Security</div><div class="sv mono">1.67T</div></div><div class="seg hi" style="left:929.9px;top:452px;height:124px;width:180.8px"><div class="sn">Medicare</div><div class="sv mono">1.07T</div></div><div class="seg hi" style="left:1132.7px;top:452px;height:124px;width:114.6px"><div class="sn">Medicaid</div><div class="sv mono">0.72T</div></div><div class="segout hi" style="left:1286.6px;top:590px"><span class="sn">Veterans</span> <span class="sv mono">0.42T</span></div><div class="lead" style="left:1291.6px;top:576px;height:16px"></div><div class="seg hi bor faded" style="left:1439.2px;top:712px;height:124px;width:346.7px"><div class="sn">Borrowed</div><div class="sv mono">2T</div></div><div class="callout" style="left:400.0px;top:360px"><span class="mono">4.93T</span> = <span class="mono ak big">91 cents</span> of every dollar collected</div><div class="src">Source: US Treasury, Final Monthly Treasury Statement FY2026 (Tables 5 and 9) · net interest = budget function 900</div></div>
+</body></html>

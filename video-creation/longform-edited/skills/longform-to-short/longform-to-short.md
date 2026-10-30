@@ -20,6 +20,7 @@ edit; at most he asks for a second or two of change on the FINISHED short. `gate
 project root, the run notifies, and Mike watches it after; a change is a splice off the KEPT `_previews/short/`. In 16:9-sourced mode the span painting is the `s_paint_16x9` graph node.
 
 ## 16:9-SOURCED MODE (no full vertical; every-job, Mike 2026-10-08)
+**Setup is automatic (2026-10-30, reset):** when `<project>-VERTICAL.mp4` is absent, `s_preflight` writes the flag file, builds the black adapter master off `<project>-FINAL.mp4` (its audio) and runs `measure_face_crop.py`. Nothing to do by hand; just run `run.py short`.
 When Mike skips the full vertical ("I only want the short"), the lane still needs its two sources on one clock, so the
 VERTICAL master is an ADAPTER: a full-length 1080x1920 canvas (black) on the paused spine's clock, with the short's spans
 painted in after the cut plan is approved (the `s_paint_16x9` node runs `scripts/short_spans_from_16x9.py --face-from-render`; skipped when the master is already painted from the same plan). The span pictures come from the 16:9 comp rendered WITHOUT its caption track
@@ -40,6 +41,42 @@ face (role labels, side panels) is OUT of the 9:16 frame, and to avoid frames wh
 and outer chips, and the variety overlay only covers Envato / AI-still windows, never a card. Give the span `fit_windows`
 (`[{"a", "b", "box"}]`, final-video seconds) in SHORT-CUT-PLAN.snapped.json: inside the window the painter shows the card WHOLE,
 letterboxed on its own blurred, darkened frame; start it on the card's cross-fade and end it after the next ingress.
+**Every non-face asset inside a span is rebuilt NATIVE VERTICAL (Mike, 2026-10-30, reset; overrides fit_windows as the default):**
+when the full vertical is skipped, the short gets the SAME per-asset treatment `../vertical-repurpose/vertical-repurpose.md` section 1
+gives a vertical, scoped to the short's spans: Envato -> a NEW vertical Envato clip (`s_variants`), ChatGPT stills -> regenerated
+9:16 (`s_variants`), title / card slides, diagrams and chart states -> the SAME HTML re-shot at 1080x1920 (reflowed, same locked
+stylesheet and state; slide-builder) into `assets/short/vertical-cards/`, overlaid by the short comp over that asset's window in
+SHORT time; receipts -> mobile-view captures. Never a 608 px crop, never a letterbox (`fit_windows` is now the last-resort
+fallback only, with Mike's OK). FACE spans keep the measured face crop. Every rebuilt asset passes visual-qa. Reset's short did
+this by hand (C4 debt ticker payoff + H4 card s1, ResetShort.tsx `NATIVE_CARDS`); the lane does not yet automate the card/chart
+rebuild (see the 'not yet in code' note under the edge-text gate).
+**The 16:9 comp MUST honor `captions: false` (reset 2026-10-30, Mike rejected the short):** Reset.tsx rendered its own big burned
+captions regardless of the prop, so every face span carried 16:9 captions sliced at both edges ("debt gets pa") under the short's own.
+Every longform comp declares `captions?: boolean` (and `pops?: boolean` when it has kinetic word pops) and renders
+`{captions && <Captions />}`. Check it BEFORE `s_paint_16x9`: one `npx remotion still` of a face frame with `--props {"captions": false}`.
+**Short captions sit in the SAFE ZONE:** bottom pad ~320 px (block at y ~1420-1600), maxWidth <= 860 px so the 1.12 pop and the
+12 px stroke stay inside 1080; never on card text; in 16:9-sourced mode they run over EVERY span (nothing is burned).
+**Edge-text + coverage gates (in code, `s_verify_final`, 2026-10-30):** (1) in 16:9-sourced mode the 16:9 comp source must
+declare `captions?: boolean` and gate `{captions && <...>}`, else FAIL; (2) in 16:9-sourced mode `_uncovered_16x9_covers` maps
+every span's non-FACE frames (AS-RECORDED FACE windows) to short time and FAILS on any window of >= 1.5 frames not covered by a
+native overlay listed in `assets/short/variants.json` or `assets/short/vertical-cards.json` (`cards` = re-shot 1080x1920 assets,
+`holds` = a face frame held over a 2-4 frame chart/card sliver where a face span enters or leaves on a film burn); proven on reset:
+without the json it reports 10.63-11.60 (C4), 17.80-18.89 (H4), 18.90-18.96 (H5 sliver), 24.86-24.98 (H2 sliver); (3) on every
+short, `scripts/check_short_edge_text.py` checks EVERY frame and FAILS when stroked caption glyphs or dark-on-light text are sliced
+by the left/right 2 percent margin (>= 120 text-edge pixels over >= 25 rows in a 22 px strip; the CTA outro skipped); per-frame
+scores in `_previews/short/qa/edge-text.json`. Calibrated on reset's rejected short: 302 of 816 frames flagged (every 16:9 caption
+remnant). It is weak on a FADED cropped light card (a 7-frame H4 flash under a fading overlay scored 52 px), which is why gate (2)
+is the structural one. **Captions:** a group whose first word Whisper stamped up to 0.6 s before the span start (its token absorbed
+the pause) is kept and shown from the span's first frame (`s_captions`, reset 'inflation makes' was silently dropped).
+**In code (2026-10-30, after reset):** node `s_vertical_cards` (after `s_variants`, 16:9-sourced mode only) lists every COVER-PLAN
+container / title / diagram / chart / timeline / receipt beat inside each span (`_span_cover_hits`), spawns slide-builder /
+chart-builder / receipt-capturer for 1080x1920 rebuilds into `assets/short/vertical-cards/<id>-<slug>-v.png`, visual-qa's them
+(2 rounds, then the node FAILS: a crop never ships), turns every burn sliver (< 0.5 s at a span edge) into a HOLD of the adjacent
+face frame off the painted adapter master, and writes `assets/short/vertical-cards.json` (`cards` + `holds`); `s_comp` overlays
+them. Verified on reset: it finds exactly the hand-built set (C4, H4 cards; H5, H2 slivers). Node `s_qa_final` (after
+`s_verify_final`, EVERY short) tiles the finished short at 2 fps into time-stamped contact sheets and the visual-qa agent judges
+every frame (edge-cut text, cropped 16:9 assets, caption remnants, captions on card text, face framing, outro); a FAIL stops
+delivery. The cut-plan brief's "avoid charts and text cards" is now optional.
 **A kinetic word pop inside a span (only-18-months-left 2026-10-28, Mike caught it at review):** the longform's big pop
 (hw-word-pop, 212 px, ~1110 px wide) is cut by the 608 px slice to a fragment ("18 MONTHS" read "ONTH"). Render the span with
 the comp's pops OFF (a `pops` prop next to `captions`) and draw the pop NATIVELY in the short comp, sized so its overshoot fits

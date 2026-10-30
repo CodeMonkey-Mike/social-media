@@ -872,7 +872,11 @@ const Captions: React.FC = () => {
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
-export const Only18MonthsLeft: React.FC = () => {
+// inputProps.captions=false renders the picture WITHOUT the burned caption track (the 16:9-sourced short re-frames spans 9:16
+// and captions them itself; longform-to-short.md 16:9-SOURCED MODE, 2026-10-27). Default true = the delivered longform.
+// `pops={false}`: the short's 16:9-sourced spans render without the word pops (a 608 px centre slice clipped '18 MONTHS' to
+// 'ONTH'); the short draws its own fitted pop. The delivered longform is unchanged (default true).
+export const Only18MonthsLeft: React.FC<{ captions?: boolean; pops?: boolean }> = ({ captions = true, pops = true }) => {
   const abs = useCurrentFrame();
   return (
     <AbsF.Provider value={abs}>
@@ -898,9 +902,9 @@ export const Only18MonthsLeft: React.FC = () => {
           <TxLayer />
           <CardLayer />
           <EndLayer />
-          <PopLayer />
+          {pops && <PopLayer />}
           <HwSubscribeLikeBell t0={603.23} fillSrc={staticFile(`${HW}graphics/subscribe-like-bell-fill.mp4`)} keySrc={staticFile(`${HW}graphics/subscribe-like-bell-key.mp4`)} />
-          <Captions />
+          {captions && <Captions />}
         </AbsoluteFill>
       </KtClock.Provider>
     </AbsF.Provider>

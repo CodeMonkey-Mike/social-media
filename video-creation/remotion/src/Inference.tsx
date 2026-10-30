@@ -54,7 +54,7 @@ export const CARD_T: number[] = []; // no title cards (PROJECT-LOG hard constrai
 export const INSERTS = [
   { at: 171.385, dur: 5.1 },
 ];
-const CLIP_INSERTS = [
+export const CLIP_INSERTS = [
   { at: 171.385, frames: 153, label: 'CLIP-3', src: 'clip-inserts/CLIP-3-huang-inference.mp4', leadIn: 'CLIP-3-STILLS-lead-in', leadOut: 'CLIP-3-STILLS-lead-out' },
 ];
 const pausedBefore = (t: number, strict: boolean) => INSERTS.filter((p) => (strict ? p.at < t : p.at <= t)).reduce((a, p) => a + p.dur, 0);
@@ -95,24 +95,24 @@ const sine = Easing.inOut(Easing.sin);
 export const FACE_REFRAME = { scale: 1.6, x: -966, y: -645 };
 const FACE_POINT = { x: 960, y: 432 }; // face_point_out
 // AS-RECORDED / CUE-SHEET FACE windows (source s)
-const FACE: [number, number][] = [
+export const FACE: [number, number][] = [
   [0.0, 6.467], [11.933, 16.9], [61.3, 66.933], [67.733, 70.267], [108.767, 113.067], [141.933, 147.7], [158.033, 164.633], [176.367, 190.4],
 ];
 // cover -> face cut-ins: hand:kt-whip-cut (face-cut, 0.37 s), the video's face pick (TRANSITIONS.md section 3)
-const FACE_IN_WHIPS = [11.933, 61.3, 67.733, 108.767, 141.933, 158.033, 176.367];
+export const FACE_IN_WHIPS = [11.933, 61.3, 67.733, 108.767, 141.933, 158.033, 176.367];
 // [PUNCH-IN] ON desilencer joins (spine/jumpcuts-final.json), one per window, a hard ~15 percent step held to the cut
-const PUNCH_JOINS = [2.867, 15.5, 62.733, 109.533, 161.967];
-const PUNCH = 1.15;
+export const PUNCH_JOINS = [2.867, 15.5, 62.733, 109.533, 161.967];
+export const PUNCH = 1.15;
 // [LIGHTLEAK] the library leak peaking ON the same join (punch-leak rows, TRANSITION-PLAN)
-const LEAKS: { tc: number; id: string }[] = [
+export const LEAKS: { tc: number; id: string }[] = [
   { tc: 2.867, id: 'lightleaks-short-6' }, // lib:lightleaks-short-6
   { tc: 15.5, id: 'lightleaks-soft-short-3' }, // lib:lightleaks-soft-short-3
   { tc: 62.733, id: 'lightleaks-short-7' }, // lib:lightleaks-short-7
   { tc: 109.533, id: 'lightleaks-7' }, // lib:lightleaks-7
   { tc: 161.967, id: 'lightleaks-short-6' }, // lib:lightleaks-short-6 (cycle restarts)
 ];
-const BAND = { t0: 63.17, swap: 65.46 }; // kt-lower-third-band on F3 (face lifted so the head clears the band)
-const DARK_PANEL = { t0: 108.9, t1: 113.067 }; // kt-side-panel DARK LEFT on F5: the face shifts RIGHT
+export const BAND = { t0: 63.17, swap: 65.46 }; // kt-lower-third-band on F3 (face lifted so the head clears the band)
+export const DARK_PANEL = { t0: 108.9, t1: 113.067 }; // kt-side-panel DARK LEFT on F5: the face shifts RIGHT
 
 /** the spine's picture transform at source time t (one function for the live layer AND every engine copy, §6a rule 3) */
 const spineMove = (t: number) => {
@@ -166,7 +166,7 @@ const SpineView: React.FC<{ frame: number }> = ({ frame }) => {
 
 // the paused spine's last 3 frames (5863-5865) are blackout tail (measured YAVG 16 vs ~81): the live layer holds the last
 // FACE frame over them (0.1 s) so the video ends ON the last word with picture, never a black flash (EDIT-PLAN [END])
-const LAST_PICTURE_FRAME = 5862;
+export const LAST_PICTURE_FRAME = 5862;
 const SpineLayer: React.FC = () => {
   const abs = useAbs();
   const t = useT();
@@ -187,7 +187,7 @@ const SpineLayer: React.FC = () => {
 // ingress (TRANSITION-PLAN id in the trailing comment): whip = hand:kt-whip-cut 0.37 s, blurin = hand:kt-whip-cut
 // blur-in 0.17 s, xfade = hand:xfade-scale 0.35 s (cross-fade + 0.93 -> 1), fade = hand:fade 0.5 s, lib = a library
 // transition placed in LIBS, list = hand:kt-list-card, none = handed over by the clip insert. Receipts read RECEIPT_VIEW.
-type Cover = {
+export type Cover = {
   tIn: number;
   tOut: number;
   kind: 'vid' | 'still' | 'deck' | 'container' | 'receipt' | 'chart';
@@ -202,7 +202,7 @@ type Cover = {
 };
 // DIAGRAM_REFS: tokenizer-split-text, tokenizer-split-split, tokenizer-split-ids, C1-rest, C1-prefill, C1-kvcache, c1-decode-spotlight-step, c1-decode-spotlight-reload, one-token-chain-start, one-token-chain-mid, one-token-chain-payoff, batching-lane-lane, batching-lane-swap, batching-lane-full, prefix-cache-rest, prefix-cache-shared, speculative-decoding-rest, speculative-decoding-draft, speculative-decoding-verify, speculative-decoding-same, engines-datacenter-rest, engines-datacenter-vllm, engines-datacenter-sglang, engines-datacenter-trtllm, engines-laptop-rest, engines-laptop-ollama, engines-laptop-llamacpp, my-pipeline-rest, my-pipeline-inference, load-once-load, load-once-run
 // (end declared refs)
-const COVERS: Cover[] = [
+export const COVERS: Cover[] = [
   // CH1 WHAT INFERENCE IS
   { tIn: 6.467, tOut: 9.7, kind: 'vid', ref: 'BR-1-datacenter-aisle', tr: 'blurin' }, // hand:kt-whip-cut blur-in (signature whip-out)
   { tIn: 9.7, tOut: 11.933, kind: 'container', ref: 'c2-training', state: 'training', tr: 'xfade' }, // hand:xfade-scale
@@ -302,7 +302,7 @@ const VID_FPS: Record<string, number> = {
 // receipt camera: the visible window (capture px) eases from (cx0, cy0, width z0) to (cx1, cy1, z1) over the slot.
 // hl = the highlight rows ([HIGHLIGHT]): the baked yellow band is REVEALED left to right from `t` (one line after the other).
 type View = { w: number; h: number; bg: string; cx0: number; cy0: number; z0: number; cx1: number; cy1: number; z1: number; hl?: { t: number; rects: [number, number, number, number][] } };
-const RECEIPT_VIEW: Record<string, View> = {
+export const RECEIPT_VIEW: Record<string, View> = {
   'C17-ibm-inference-90pct': { w: 3840, h: 2400, bg: '#FFFFFF', cx0: 2110, cy0: 760, z0: 2000, cx1: 2110, cy1: 700, z1: 1720, hl: { t: 25.4, rects: [[1536, 634, 1256, 62], [1374, 694, 1210, 60]] } },
   'C8-anthropic-pricing-tokens': { w: 1824, h: 640, bg: '#FCFCFB', cx0: 820, cy0: 320, z0: 1680, cx1: 720, cy1: 320, z1: 1400 },
   'C13-vllm-compute-memory-bound': { w: 3840, h: 1860, bg: '#FFFFFF', cx0: 1920, cy0: 560, z0: 1900, cx1: 1880, cy1: 500, z1: 1680, hl: { t: 60.56, rects: [[1320, 458, 834, 54]] } },
@@ -316,7 +316,7 @@ const RECEIPT_VIEW: Record<string, View> = {
   'CLIP-3-STILLS-lead-in': { w: 1920, h: 1080, bg: '#000000', cx0: 960, cy0: 540, z0: 1860, cx1: 960, cy1: 540, z1: 1920 }, // settles OUT to 1.0 = the clip's first frame at the insert-in,
   'CLIP-3-STILLS-lead-out': { w: 1920, h: 1080, bg: '#000000', cx0: 960, cy0: 540, z0: 1920, cx1: 960, cy1: 540, z1: 1880 },
 };
-const HL_LINE = 0.45; // seconds per highlighted line
+export const HL_LINE = 0.45; // seconds per highlighted line
 
 const ReceiptView: React.FC<{ c: Cover; still?: boolean }> = ({ c, still }) => {
   const t = useT();
@@ -383,8 +383,8 @@ const G = (ref: string) => {
 };
 // 7a: a Type 2 / container still never sits dead still: a gentle continuous push across the group (<= 3 percent so edge
 // titles never clip). Groups on either side of a MELT are held flat so the melt's still frames match what airs.
-const NO_PUSH = new Set(['dec', 'chain', 'edc', 'elp']);
-const SWAP = 0.2; // the 6 f in-place state swap
+export const NO_PUSH = new Set(['dec', 'chain', 'edc', 'elp']);
+export const SWAP = 0.2; // the 6 f in-place state swap
 
 const rowBody = (c: Cover, g: Group): React.ReactNode => {
   switch (c.kind) {
@@ -553,6 +553,8 @@ const LIBS: Lib[] = [
   { tc: 132.9, id: 'roughly-4x', out: () => <GroupBody g={G('load-once-run')} />, inn: () => <GroupBody g={G('IMG-3-gpu-forged-hot')} /> }, // lib:roughly-4x
   { tc: 140.7, id: 'roughly-2x', out: () => <GroupBody g={G('C7-agent-logs-listing')} />, inn: () => <GroupBody g={G('IMG-4-distant-datacenter-night')} /> }, // lib:roughly-2x
 ];
+/** the library-transition plan (tc + id), exported so the vertical twin (InferenceVertical.tsx) asserts it places the SAME ids at the SAME tcs */
+export const LIB_PLAN = LIBS.map((l) => ({ tc: l.tc, id: l.id }));
 // TRANSITIONS.md also lists lib:motion-3d-pan-1-left / lib:motion-3d-pan-2-right: wired as MotionWrap on C4 / C6 (COVERS `mo`).
 
 const LibLayer: React.FC = () => (
@@ -629,9 +631,9 @@ const KtLayer: React.FC = () => {
 // ---------------------------------------------------------------------------------------------------- §8 CAPTIONS
 // Generated (InferenceCaptions.ts, build_captions.py montserrat 2/4): rendered ONLY inside CAPTION_WINDOWS (the FACE
 // holds) and OFF for the hold of every pop / band / button in the caption zone (EDIT-PLAN [CAPTION] rows).
-const CAPTION_SRC: [number, number][] = [[0.0, 6.467], [61.3, 66.933], [141.933, 147.7], [158.033, 164.633], [176.367, 190.4]];
+export const CAPTION_SRC: [number, number][] = [[0.0, 6.467], [61.3, 66.933], [141.933, 147.7], [158.033, 164.633], [176.367, 190.4]];
 if (JSON.stringify(CAPTION_SRC) !== JSON.stringify(CAPTION_WINDOWS)) throw new Error('CAPTION_SRC drifted from InferenceCaptions.CAPTION_WINDOWS');
-const CAPTION_OFF: [number, number][] = [
+export const CAPTION_OFF: [number, number][] = [
   [1.98, 6.467], // TRAINING / INFERENCE labels hold
   [63.17, 66.933], // the lower-third band
   [141.933, 147.7], // NEVER TRAINED A MODEL holds the whole F6 window

@@ -30,7 +30,10 @@ comp-ready b-roll files. The pick is a taste call (that is why you exist); the m
 - A slot marked ⛔ HOLD is NOT licensed, period — report it skipped.
 - No two slots share a clip or a near-identical look (no-reuse rule reads at the VIDEO level).
 - If a query returns nothing clean, try the plan's bench phrasing; still nothing → FLAG, never settle
-  for an off-tone clip.
+  for an off-tone clip. The FLAG names the fix (Mike, 2026-10-29): the slot becomes a ChatGPT image
+  (the video's image style), never a near-miss Envato substitute, and the report flags it for Mike as
+  an optional Higgsfield animation of that image (Seedance, 480p HARD RULE). Animating is Mike's call:
+  flag it, never generate the video unasked.
 
 ## Mechanics (per the skill) + hard rules
 - Downloads via the skill's PYTHON tools (`search_envato.py`, `download_envato.py`) with the existing Envato login/session. **Browser flows are

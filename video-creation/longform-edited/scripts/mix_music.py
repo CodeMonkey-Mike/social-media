@@ -132,6 +132,13 @@ def main():
                     help="the library transition SFX are mastered quietly (peaks -17 to -22 dBFS): each is gained so its PEAK "
                          "lands here (Mike 2026-10-17, tao-detailed: the fixed -9 dB made every transition whoosh inaudible)")
     ap.add_argument("--sfx-max", type=float, default=1.8)
+    # VOICE GAIN (Mike 2026-10-30, reset draft): the Enhance-Speech voice sat BELOW the spliced clip voices, so Mike's voice is
+    # raised by default; the clip-insert windows of the VO track (their own voices) keep unity gain. 0 = the old behaviour.
+    ap.add_argument("--voice-db", type=float, default=2.0,
+                    help="gain on Mike's voice in the VO track, clip-insert windows excluded (default +2 dB, Mike 2026-10-30)")
+    # PEAK SAFETY (same note): a brick-wall limiter on the final sum so the mix never peaks above --peak-ceiling dBFS
+    ap.add_argument("--peak-ceiling", type=float, default=-1.5,
+                    help="final limiter ceiling in dBFS (true peak lands <= -1 dBFS after AAC); 0 disables")
     ap.add_argument("--dry-run", action="store_true", help="resolve and print the beds, render nothing")
     ap.add_argument("--vo", default=None,
                     help="the VOICE track to mix under (default: the project's paused spine assets/spine.mp4 when its length matches "
@@ -404,6 +411,8 @@ def main():
                 if str(p) not in lib_peak:
                     lib_peak[str(p)] = lufs_and_peak(p)[1]
                 g = round(a.lib_sfx_peak - lib_peak[str(p)], 1) if lib_peak[str(p)] is not None else -9.0
+            # a per-row trim from the TRANSITION-PLAN (`sfx_rel_db`, Mike's draft note: reset 2026-10-30, the melt SFX too loud)
+            g = round(g + float(r.get("sfx_rel_db") or 0.0), 1)
             lib_sfx.append({"id": tid, "file": str(p), "t": round(max(0.0, sh(float(r["tc"])) - dur / 2), 3), "gain_db": g})
     print(f"MIX-PLAN beds={len(resolved_beds)} sfx={len(sfx)} lib_sfx={len(lib_sfx)}")
     if a.dry_run:      # resolve only: show where every bed starts and stops, render nothing, write nothing
@@ -460,9 +469,20 @@ def main():
     if vo_pad:
         chains.append(f"[1:a]apad=whole_dur={total:.3f}[vop]")
         vo_in = "[vop]"
+    clip_win = [(round(sh(float(p["at"])) - float(p["dur"]), 3), round(sh(float(p["at"])), 3))
+                for p in (meta.get("pauses") or []) if p.get("clip")]
+    if a.voice_db and not a.plan_preview:
+        g = 10 ** (a.voice_db / 20)
+        inside = "+".join(f"between(t,{c0:.3f},{c1:.3f})" for c0, c1 in clip_win) or "0"
+        chains.append(f"{vo_in}volume='if({inside},1,{g:.5f})':eval=frame[vog]")
+        vo_in = "[vog]"
     fc = ";".join(chains) + (";" if chains else "") + vo_in + "".join(labels) + f"amix=inputs={n}:normalize=0:duration=first[ao]"
     if mtotal > total:   # trimmed hold: the music runs past the video's end, so fade the cut (0.2 s, after the last word)
         fc = fc[:-len("[ao]")] + f"[am];[am]afade=t=out:st={max(0.0, total - 0.2):.3f}:d=0.2[ao]"
+    if a.peak_ceiling:   # the final sum through a brick-wall limiter (4x oversampled peak detection via aresample)
+        lim = 10 ** (a.peak_ceiling / 20)
+        fc = fc[:-len("[ao]")] + (f"[apre];[apre]aresample=192000,alimiter=limit={lim:.4f}:attack=1:release=50:level=disabled,"
+                                  f"aresample=48000[ao]")
     cmd = ["ffmpeg", "-y", "-loglevel", "error", *inputs, "-filter_complex", fc, "-map", "0:v", "-c:v", "copy", "-map", "[ao]",
            "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(out)]
     r = subprocess.run(cmd, capture_output=True, text=True)
@@ -476,7 +496,8 @@ def main():
     flags = (" --plan-preview" if a.plan_preview else "") + (f" --plan \"{mp_p}\"" if a.plan else "")
     side.write_text(json.dumps({"video": str(video), "vo": str(vo), "out": str(out), "plan": str(mp_p), "plan_preview": a.plan_preview,
                                 "card_t": CARD_T, "pause_s": PAUSE, "pauses": [{"at": a_, "dur": d, "card": c} for a_, d, c in PAUSES], "beds": resolved_beds,
-                                "sfx": sfx, "lib_sfx": lib_sfx, "lufs_in": li, "lufs_out": lo, "peak_out_dbfs": po,
+                                "sfx": sfx, "lib_sfx": lib_sfx, "voice_db": a.voice_db, "voice_clip_windows": clip_win if not a.plan_preview else [],
+                                "peak_ceiling_dbfs": a.peak_ceiling, "lufs_in": li, "lufs_out": lo, "peak_out_dbfs": po,
                                 "rerun": f"python video-creation/longform-edited/scripts/mix_music.py \"{proj}\" --video \"{video}\"{flags}"},
                                indent=2), encoding="utf-8")
     print(f"MIX-DONE out={out} dur={duration(out):.3f} lufs_in={li} lufs_out={lo} peak_out={po} vo={'spine' if vo != video else 'video'}"

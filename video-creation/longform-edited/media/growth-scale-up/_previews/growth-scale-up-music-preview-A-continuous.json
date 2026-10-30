@@ -1,0 +1,40 @@
+{
+  "video": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-scale-up\\spine\\ALL.e.desilenced.mp4",
+  "vo": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-scale-up\\spine\\ALL.e.desilenced.mp4",
+  "out": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-scale-up\\_previews\\growth-scale-up-music-preview-A-continuous.mp4",
+  "plan": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-scale-up\\MUSIC-PLAN.v1-one-continuous-bed.json",
+  "plan_preview": true,
+  "card_t": [],
+  "pause_s": 1.0,
+  "pauses": [],
+  "beds": [
+    {
+      "chapter": "CH1+CH2+CH3+CH4+CH5+CH6",
+      "file": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\assets\\music\\Happy Feet\\Lunareh_Happy_Feet_instrumental_3_31.mp3",
+      "t_start": 0.0,
+      "t_end": 239.988,
+      "source_in": 1.98,
+      "fade_in": 0.0,
+      "fade_out": 0.25,
+      "gain_db": -29.7,
+      "loop": true,
+      "loop_in": 80.69,
+      "loop_out": 111.658,
+      "align_end": true,
+      "automation": [],
+      "loop_resolved": {
+        "loop_in": 80.69,
+        "loop_out": 111.658,
+        "extra_passes": 1,
+        "head_trim": 0.021,
+        "tail_trim": 0.0
+      }
+    }
+  ],
+  "sfx": [],
+  "lib_sfx": [],
+  "lufs_in": -21.3,
+  "lufs_out": -21.2,
+  "peak_out_dbfs": -9.0,
+  "rerun": "python video-creation/longform-edited/scripts/mix_music.py \"C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-scale-up\" --video \"C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-scale-up\\spine\\ALL.e.desilenced.mp4\" --plan-preview --plan \"C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-scale-up\\MUSIC-PLAN.v1-one-continuous-bed.json\""
+}

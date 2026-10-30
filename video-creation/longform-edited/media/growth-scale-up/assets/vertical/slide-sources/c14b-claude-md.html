@@ -1,0 +1,18 @@
+<!doctype html><meta charset=utf-8><style>
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;background:#1e1e1e;overflow:hidden}
+body{display:flex;flex-direction:column;font-family:'Segoe UI',Arial,sans-serif;color:#d4d4d4}
+.tabs{height:78px;background:#252526;display:flex;align-items:stretch;flex:none}
+.tab{background:#1e1e1e;color:#fff;font-size:30px;display:flex;align-items:center;padding:0 30px;border-top:2px solid #007acc}
+.crumb{height:56px;display:flex;align-items:center;padding-left:28px;font-size:25px;color:#a0a0a0;flex:none}
+.ed{flex:1;padding-top:16px}
+.ln{display:flex;margin-bottom:0}
+.num{width:92px;flex:none;text-align:right;padding-right:26px;color:#858585;font-family:Consolas,'Cascadia Mono',monospace;font-size:34px;line-height:52px}
+.tx{flex:1;padding-right:30px;font-family:Consolas,'Cascadia Mono',monospace;font-size:34px;line-height:52px;color:#d4d4d4;white-space:pre-wrap;overflow-wrap:break-word}
+.status{height:56px;background:#007acc;color:#fff;font-size:26px;display:flex;align-items:center;padding-left:30px;flex:none}
+</style>
+<div class=tabs><div class=tab>CLAUDE.md</div></div>
+<div class=crumb>social-media &gt; CLAUDE.md</div>
+<div class=ed><div class=ln><span class=num>59</span><span class=tx>| **Make a longform-edited video (the LangGraph, 2026-09-17)** | `python video-creation/longform-edited/graph/run.py longform --project &lt;name&gt; [--brief-file &lt;md&gt;] [--constraints-file &lt;md&gt;] [--face-max N]` · ONE StateGraph per video: pre-production -&gt; spine -&gt; plan -&gt; build -&gt; deliver, 5 HITL gates (screenplay · spine · plan · blueprint · draft); exit 2 = waiting on Mike, resume `--resume --approve &lt;gate&gt;`; steps not automated yet are artifact-aware placeholders (`--done &lt;node&gt;`), so the ORDER is the graph&#x27;s, never prose · `run.py status --project &lt;name&gt;` any time · first video through it: `kaspa-vprogs` |</span></div>
+<div class=ln><span class=num>60</span><span class=tx>| **Vertical (9:16) cut of a DELIVERED longform-edited video** | `python video-creation/longform-edited/graph/run.py vertical --project &lt;name&gt;` · exit 2 = Mike&#x27;s gate, resume `--resume --approve vertical` · output `&lt;project&gt;-VERTICAL.mp4` at the project root (not queued) · rules `video-creation/longform-edited/skills/vertical-repurpose/vertical-repurpose.md` |</span></div>
+<div class=ln><span class=num>61</span><span class=tx>| **Short (~30 s) cut of a delivered VERTICAL** | `python video-creation/longform-edited/graph/run.py short --project &lt;name&gt; [--seconds 30]` · gates `short_plan` then `short` · output `&lt;project&gt;-SHORT-&lt;N&gt;s.mp4` at the project root (not queued) · the CTA is the shared take `video-creation/assets/vo/cta-watch-full.mp3` · rules `video-creation/longform-edited/skills/longform-to-short/longform-to-short.md` |</span></div></div><div class=status>&#8982; main</div>

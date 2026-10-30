@@ -1,0 +1,370 @@
+{
+ "fps": 30,
+ "final_spine": "C:\\Users\\mnede\\Documents\\Claude\\social-media\\video-creation\\longform-edited\\media\\growth-scale-up\\spine\\ALL.e.desilenced.mp4",
+ "final_map": "ALL.e.desilenced.map.json",
+ "burst_cuts": "ALL.d.cleaned.mp4.cuts.json",
+ "note": "final-spine seconds, pre-card-pause; the comp routes every value through sh()",
+ "joins_s": [
+  0.0,
+  2.533,
+  6.9,
+  10.933,
+  12.933,
+  13.833,
+  17.0,
+  18.4,
+  19.3,
+  23.3,
+  24.633,
+  31.4,
+  35.2,
+  35.333,
+  38.367,
+  45.8,
+  49.767,
+  53.333,
+  53.5,
+  56.567,
+  58.967,
+  59.9,
+  62.967,
+  67.867,
+  68.033,
+  70.967,
+  73.567,
+  77.967,
+  81.1,
+  85.567,
+  88.1,
+  88.967,
+  90.2,
+  91.533,
+  95.5,
+  98.433,
+  99.267,
+  102.933,
+  105.3,
+  107.733,
+  109.833,
+  111.533,
+  113.033,
+  116.967,
+  120.367,
+  123.133,
+  123.433,
+  123.467,
+  125.2,
+  126.567,
+  130.3,
+  131.867,
+  133.467,
+  134.6,
+  136.333,
+  138.133,
+  139.767,
+  142.2,
+  143.467,
+  146.833,
+  151.1,
+  153.6,
+  157.933,
+  159.333,
+  161.367,
+  163.3,
+  166.2,
+  168.0,
+  171.2,
+  171.733,
+  174.233,
+  175.933,
+  178.4,
+  179.967,
+  182.3,
+  183.333,
+  187.633,
+  189.867,
+  192.067,
+  195.1,
+  195.667,
+  198.2,
+  203.133,
+  207.067,
+  209.833,
+  213.667,
+  214.5,
+  214.567,
+  216.267,
+  218.067,
+  220.833,
+  221.133,
+  221.433,
+  228.9
+ ],
+ "joins_total": 94,
+ "edge_margin_s": 0.5,
+ "min_gap_s": 1.5,
+ "face_windows": [
+  {
+   "n": 1,
+   "window_s": [
+    0.0,
+    13.0
+   ],
+   "length_s": 13.0,
+   "joins_s": [
+    2.533,
+    6.9,
+    10.933,
+    12.933
+   ],
+   "joins_frames": [
+    76,
+    207,
+    328,
+    388
+   ],
+   "punch_candidates_s": [
+    2.533,
+    6.9,
+    10.933
+   ],
+   "sources": {
+    "2.533": [
+     "desilence-coarse"
+    ],
+    "6.9": [
+     "desilence-coarse"
+    ],
+    "10.933": [
+     "desilence-coarse"
+    ],
+    "12.933": [
+     "desilence-coarse"
+    ]
+   }
+  },
+  {
+   "n": 2,
+   "window_s": [
+    23.4,
+    35.367
+   ],
+   "length_s": 11.967,
+   "joins_s": [
+    24.633,
+    31.4,
+    35.2,
+    35.333
+   ],
+   "joins_frames": [
+    739,
+    942,
+    1056,
+    1060
+   ],
+   "punch_candidates_s": [
+    24.633,
+    31.4
+   ],
+   "sources": {
+    "24.633": [
+     "desilence-coarse"
+    ],
+    "31.4": [
+     "desilence-coarse"
+    ],
+    "35.2": [
+     "desilence-coarse"
+    ],
+    "35.333": [
+     "burst-removal"
+    ]
+   }
+  },
+  {
+   "n": 3,
+   "window_s": [
+    68.133,
+    73.833
+   ],
+   "length_s": 5.7,
+   "joins_s": [
+    70.967,
+    73.567
+   ],
+   "joins_frames": [
+    2129,
+    2207
+   ],
+   "punch_candidates_s": [
+    70.967
+   ],
+   "sources": {
+    "70.967": [
+     "desilence-coarse"
+    ],
+    "73.567": [
+     "desilence-coarse"
+    ]
+   }
+  },
+  {
+   "n": 4,
+   "window_s": [
+    99.6,
+    103.267
+   ],
+   "length_s": 3.667,
+   "joins_s": [
+    102.933
+   ],
+   "joins_frames": [
+    3088
+   ],
+   "punch_candidates_s": [],
+   "sources": {
+    "102.933": [
+     "desilence-coarse"
+    ]
+   }
+  },
+  {
+   "n": 5,
+   "window_s": [
+    120.7,
+    125.567
+   ],
+   "length_s": 4.867,
+   "joins_s": [
+    123.133,
+    123.433,
+    123.467,
+    125.2
+   ],
+   "joins_frames": [
+    3694,
+    3703,
+    3704,
+    3756
+   ],
+   "punch_candidates_s": [
+    123.133
+   ],
+   "sources": {
+    "123.133": [
+     "desilence-coarse"
+    ],
+    "123.433": [
+     "desilence-coarse"
+    ],
+    "123.467": [
+     "burst-removal"
+    ],
+    "125.2": [
+     "desilence-coarse"
+    ]
+   }
+  },
+  {
+   "n": 6,
+   "window_s": [
+    138.567,
+    142.633
+   ],
+   "length_s": 4.066,
+   "joins_s": [
+    139.767,
+    142.2
+   ],
+   "joins_frames": [
+    4193,
+    4266
+   ],
+   "punch_candidates_s": [
+    139.767
+   ],
+   "sources": {
+    "139.767": [
+     "desilence-coarse"
+    ],
+    "142.2": [
+     "desilence-coarse"
+    ]
+   }
+  },
+  {
+   "n": 7,
+   "window_s": [
+    158.367,
+    161.867
+   ],
+   "length_s": 3.5,
+   "joins_s": [
+    159.333,
+    161.367
+   ],
+   "joins_frames": [
+    4780,
+    4841
+   ],
+   "punch_candidates_s": [
+    159.333,
+    161.367
+   ],
+   "sources": {
+    "159.333": [
+     "desilence-coarse"
+    ],
+    "161.367": [
+     "desilence-coarse"
+    ]
+   }
+  },
+  {
+   "n": 8,
+   "window_s": [
+    216.933,
+    229.715
+   ],
+   "length_s": 12.782,
+   "joins_s": [
+    218.067,
+    220.833,
+    221.133,
+    221.433,
+    228.9
+   ],
+   "joins_frames": [
+    6542,
+    6625,
+    6634,
+    6643,
+    6867
+   ],
+   "punch_candidates_s": [
+    218.067,
+    220.833,
+    228.9
+   ],
+   "sources": {
+    "218.067": [
+     "desilence-coarse"
+    ],
+    "220.833": [
+     "desilence-coarse"
+    ],
+    "221.133": [
+     "desilence-coarse"
+    ],
+    "221.433": [
+     "burst-removal"
+    ],
+    "228.9": [
+     "desilence-coarse"
+    ]
+   }
+  }
+ ],
+ "face_windows_with_joins": 8,
+ "punch_points_total": 13
+}

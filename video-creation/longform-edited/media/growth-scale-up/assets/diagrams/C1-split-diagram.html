@@ -1,0 +1,137 @@
+<!doctype html><html><head><meta charset="utf-8"><title>C1-split-diagram</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet"><style>/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+
+.frame{justify-content:flex-start;padding:84px 140px 0}
+.frame .ey{margin-bottom:18px} .frame h1{font-size:74px}
+.divider{margin:26px 0 0}
+.frame>.nd,.frame>svg.wires,.frame>.seats,.frame>.lap{position:absolute}
+.nd{position:absolute;border:2px solid var(--border);border-radius:22px;padding:26px 30px}
+.nd .nm{font-family:'DM Sans';font-weight:700;font-size:40px;letter-spacing:.04em;color:var(--text-primary)}
+.nd .sub{font-family:'DM Sans';font-size:28px;color:var(--text-secondary);margin-top:6px;line-height:1.35}
+.badge{display:inline-block;font-family:'DM Sans';font-weight:700;font-size:20px;letter-spacing:.14em;
+  padding:7px 14px;border-radius:999px;border:1.5px solid var(--border);color:var(--text-muted);background:#F1EFE9}
+.nd.dim{opacity:.42}
+.nd.lit{border-color:var(--accent-cyan)}
+.nd.lit .nm{color:var(--accent-cyan)}
+.nd.lit .badge{border-color:var(--accent-cyan);color:var(--accent-cyan);background:rgba(0,106,158,.07)}
+svg.wires{position:absolute;left:0;top:0;z-index:1}
+svg .wire{stroke-width:3;fill:none} svg .wire.lit{stroke:var(--accent-cyan);stroke-width:4}
+
+
+.col3{top:320px;width:500px;height:510px}
+.nd .badge{margin-top:16px}
+.nd ul{list-style:none;margin-top:26px}
+.nd li{font-family:'DM Sans';font-size:32px;line-height:1.6;color:var(--text-secondary);padding-left:26px;position:relative}
+.nd li::before{content:"";position:absolute;left:0;top:22px;width:9px;height:9px;border-radius:50%;background:var(--wire)}
+.nd.lit li{color:var(--text-primary)} .nd.lit li::before{background:var(--accent-cyan)}
+.extra{margin-top:22px;font-family:'DM Sans';font-weight:700;font-size:23px;letter-spacing:.12em;color:var(--text-muted)}
+.nd.lit .extra{color:var(--accent-cyan)}
+.stamp{display:inline-block;border:2.5px solid var(--text-muted);border-radius:10px;padding:10px 18px;font-size:26px}
+.nd.lit .stamp{border-color:var(--accent-cyan)}
+.seats{position:absolute;top:868px;left:140px;width:1640px;height:116px;display:flex;gap:40px}
+.seat{flex:1;border-radius:18px;background:#E9E6DE;border:1.5px solid var(--border);display:flex;align-items:center;
+  padding:0 34px;font-family:'DM Sans';font-weight:700;font-size:26px;letter-spacing:.14em;color:#9A9688}
+.seat span{font-weight:500;letter-spacing:.02em;margin-left:22px}
+</style></head><body><div class="frame" id="C1-split-diagram-strategy"><div class="orb" style="width:760px;height:760px;right:-240px;top:-300px;background:#006A9E"></div><div class="ey">THE SPLIT</div><h1>Strategy stays <span class="c">human.</span></h1><div class="divider"></div><svg class="wires" width="1920" height="1080"><defs><marker id="aw" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8A877E"/></marker><marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#006A9E"/></marker></defs><path class="wire" d="M648 575 L698 575" marker-end="url(#aw)"/><path class="wire" d="M1218 575 L1268 575" marker-end="url(#aw)"/></svg><div class="nd col3 lit" style="left:140px"><div class="nm">STRATEGY</div><div class="badge">HUMAN</div><ul><li>what matters</li><li>which bets</li><li>what to stop</li></ul><div class="extra">AI = SPARRING PARTNER</div></div><div class="nd col3 dim" style="left:710px"><div class="nm">EXECUTION</div><div class="badge">AGENTS</div><ul><li>build variants</li><li>draft</li><li>instrument</li><li>ship</li></ul></div><div class="nd col3 dim" style="left:1280px"><div class="nm">ANALYSIS</div><div class="badge">AGENT DRAFTS, HUMAN DECIDES</div><ul><li>agent drafts the readout</li></ul><div class="extra stamp">SCRAP OR SCALE</div></div><div class="seats"><div class="seat">TEAM OF ONE<span>you hold the strategy</span></div><div class="seat">TEAM OF FIVE<span>you write the guardrails</span></div></div></div><div class="frame" id="C1-split-diagram-execution"><div class="orb" style="width:760px;height:760px;right:-240px;top:-300px;background:#006A9E"></div><div class="ey">THE SPLIT</div><h1>Strategy stays <span class="c">human.</span></h1><div class="divider"></div><svg class="wires" width="1920" height="1080"><defs><marker id="aw" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8A877E"/></marker><marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#006A9E"/></marker></defs><path class="wire lit" d="M648 575 L698 575" marker-end="url(#ah)"/><path class="wire" d="M1218 575 L1268 575" marker-end="url(#aw)"/></svg><div class="nd col3 dim" style="left:140px"><div class="nm">STRATEGY</div><div class="badge">HUMAN</div><ul><li>what matters</li><li>which bets</li><li>what to stop</li></ul><div class="extra">AI = SPARRING PARTNER</div></div><div class="nd col3 lit" style="left:710px"><div class="nm">EXECUTION</div><div class="badge">AGENTS</div><ul><li>build variants</li><li>draft</li><li>instrument</li><li>ship</li></ul></div><div class="nd col3 dim" style="left:1280px"><div class="nm">ANALYSIS</div><div class="badge">AGENT DRAFTS, HUMAN DECIDES</div><ul><li>agent drafts the readout</li></ul><div class="extra stamp">SCRAP OR SCALE</div></div><div class="seats"><div class="seat">TEAM OF ONE<span>you hold the strategy</span></div><div class="seat">TEAM OF FIVE<span>you write the guardrails</span></div></div></div><div class="frame" id="C1-split-diagram-analysis"><div class="orb" style="width:760px;height:760px;right:-240px;top:-300px;background:#006A9E"></div><div class="ey">THE SPLIT</div><h1>Strategy stays <span class="c">human.</span></h1><div class="divider"></div><svg class="wires" width="1920" height="1080"><defs><marker id="aw" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8A877E"/></marker><marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#006A9E"/></marker></defs><path class="wire" d="M648 575 L698 575" marker-end="url(#aw)"/><path class="wire lit" d="M1218 575 L1268 575" marker-end="url(#ah)"/></svg><div class="nd col3 dim" style="left:140px"><div class="nm">STRATEGY</div><div class="badge">HUMAN</div><ul><li>what matters</li><li>which bets</li><li>what to stop</li></ul><div class="extra">AI = SPARRING PARTNER</div></div><div class="nd col3 dim" style="left:710px"><div class="nm">EXECUTION</div><div class="badge">AGENTS</div><ul><li>build variants</li><li>draft</li><li>instrument</li><li>ship</li></ul></div><div class="nd col3 lit" style="left:1280px"><div class="nm">ANALYSIS</div><div class="badge">AGENT DRAFTS, HUMAN DECIDES</div><ul><li>agent drafts the readout</li></ul><div class="extra stamp">SCRAP OR SCALE</div></div><div class="seats"><div class="seat">TEAM OF ONE<span>you hold the strategy</span></div><div class="seat">TEAM OF FIVE<span>you write the guardrails</span></div></div></div></body></html>

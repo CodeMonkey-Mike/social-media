@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 2 · Lecture 4: Crypto vs. The Traditional Financial System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0d;
+    --surface: #141414;
+    --border: #222;
+    --text: #f0f0f0;
+    --muted: #888;
+    --very-muted: #444;
+    --accent: #F5A623;
+    --sidebar-w: 220px;
+    --nav-h: 52px;
+    --progress-h: 3px;
+  }
+
+  html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: var(--progress-h);
+    background: var(--accent); width: 0%; z-index: 1000;
+    transition: width 0.4s ease;
+  }
+
+  #app { display: flex; height: 100vh; padding-top: var(--progress-h); }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: var(--sidebar-w); min-width: var(--sidebar-w);
+    background: var(--surface); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    padding: 2rem 0 calc(var(--nav-h) + 1rem);
+    overflow-y: auto; z-index: 10;
+  }
+
+  #sidebar-header {
+    padding: 0 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  #sidebar-header .section-label {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 0.35rem;
+  }
+
+  #sidebar-header .lecture-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 0.78rem; color: var(--text); line-height: 1.35;
+  }
+
+  #chapter-nav { list-style: none; padding: 0; flex: 1; }
+
+  #chapter-nav li {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    padding: 0.55rem 1.2rem;
+    border-left: 2px solid transparent;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+
+  #chapter-nav li:hover { border-left-color: var(--border); }
+  #chapter-nav li.active { border-left-color: var(--accent); }
+  #chapter-nav li.visited { border-left-color: #333; }
+
+  #chapter-nav li .ch-num {
+    font-size: 0.6rem; color: var(--accent); font-weight: 600;
+    margin-top: 0.1rem; min-width: 1rem;
+  }
+
+  #chapter-nav li.visited .ch-num { color: var(--very-muted); }
+  #chapter-nav li:not(.active):not(.visited) .ch-num { color: var(--muted); }
+
+  #chapter-nav li .ch-title {
+    font-size: 0.65rem; line-height: 1.4; font-weight: 500;
+    color: var(--muted);
+  }
+
+  #chapter-nav li.active .ch-title { color: var(--text); }
+  #chapter-nav li.visited .ch-title { color: var(--very-muted); }
+
+  /* MAIN */
+  #main {
+    flex: 1; overflow: hidden; position: relative;
+    padding-bottom: var(--nav-h);
+  }
+
+  .slide {
+    position: absolute; inset: 0;
+    padding: 3.5rem 4rem;
+    display: none; flex-direction: column;
+    opacity: 0; transition: opacity 0.5s ease;
+    overflow-y: auto;
+  }
+
+  .slide.active { display: flex; }
+  .slide.visible { opacity: 1; }
+
+  /* BREADCRUMB */
+  .breadcrumb {
+    font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1.4rem; font-weight: 500;
+  }
+
+  .breadcrumb span { color: var(--accent); }
+
+  /* EYEBROW */
+  .eyebrow {
+    font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 0.6rem;
+  }
+
+  /* HEADING */
+  h2 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    color: var(--text); line-height: 1.15; margin-bottom: 2.2rem;
+  }
+
+  /* SLIDE COUNTER */
+  .slide-counter {
+    position: fixed; bottom: calc(var(--nav-h) + 1rem); right: 1.8rem;
+    font-size: 0.62rem; letter-spacing: 0.12em; color: var(--muted);
+    font-weight: 500;
+  }
+
+  .slide-counter span { color: var(--accent); }
+
+  /* CONTENT BLOCKS */
+  .content { flex: 1; display: flex; flex-direction: column; gap: 1rem; }
+
+  /* TWO COLUMN */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+  /* COMPARISON CARDS */
+  .compare-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1.4rem 1.6rem;
+    display: flex; flex-direction: column; gap: 0.9rem;
+  }
+
+  .compare-card .card-label {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 600; margin-bottom: 0.2rem;
+  }
+
+  .compare-card.trad .card-label { color: var(--muted); }
+  .compare-card.crypto .card-label { color: var(--accent); }
+
+  .compare-card .card-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1rem; color: var(--text); margin-bottom: 0.5rem;
+  }
+
+  .compare-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; }
+
+  .compare-card ul li {
+    font-size: 0.72rem; color: var(--muted); padding-left: 1rem; position: relative;
+  }
+
+  .compare-card ul li::before {
+    content: ''; position: absolute; left: 0; top: 0.45em;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--border);
+  }
+
+  .compare-card.crypto ul li::before { background: var(--accent); }
+
+  /* STAT CARDS */
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-top: 2px solid var(--accent); border-radius: 3px;
+    padding: 1.2rem 1.4rem;
+  }
+
+  .stat-card .stat-num {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1.6rem; color: var(--accent); line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-card .stat-label {
+    font-size: 0.65rem; color: var(--muted); line-height: 1.4;
+  }
+
+  /* BULLET LIST BLOCK */
+  .bullet-block {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1.4rem 1.6rem;
+    display: flex; flex-direction: column; gap: 0.7rem;
+  }
+
+  .bullet-block .block-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 0.85rem; color: var(--text); margin-bottom: 0.3rem;
+  }
+
+  .bullet-block ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .bullet-block ul li {
+    font-size: 0.72rem; color: var(--muted); padding-left: 1.1rem; position: relative;
+  }
+
+  .bullet-block ul li::before {
+    content: ''; position: absolute; left: 0; top: 0.45em;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+  }
+
+  /* FLOW ROW */
+  .flow-row {
+    display: flex; align-items: center; gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .flow-node {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 3px; padding: 0.7rem 1rem;
+    font-size: 0.7rem; color: var(--text); font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .flow-node.highlight { border-color: var(--accent); color: var(--accent); }
+
+  .flow-arrow {
+    font-size: 0.75rem; color: var(--very-muted); flex-shrink: 0;
+  }
+
+  /* TRADEOFF CARDS */
+  .tradeoff-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+
+  .tradeoff-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 3px; padding: 1.1rem 1.3rem;
+  }
+
+  .tradeoff-card .t-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 0.78rem; color: var(--text); margin-bottom: 0.4rem;
+  }
+
+  /* CONVERGENCE CARDS */
+  .conv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+  .conv-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-top: 2px solid var(--accent); border-radius: 3px;
+    padding: 1.2rem 1.4rem;
+  }
+
+  .conv-card .conv-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 0.82rem; color: var(--accent); margin-bottom: 0.5rem;
+  }
+
+  .conv-card .conv-desc {
+    font-size: 0.68rem; color: var(--muted); line-height: 1.5;
+  }
+
+  /* CLOSING STATEMENT */
+  .closing-statement {
+    border-left: 2px solid var(--accent);
+    padding: 1rem 1.4rem;
+    margin-top: 0.5rem;
+  }
+
+  .closing-statement p {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 1rem; color: var(--text); line-height: 1.5;
+  }
+
+  .closing-statement p span { color: var(--accent); }
+
+  /* SUPPLY VISUAL */
+  .supply-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+
+  .supply-bar-wrap { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .supply-bar-label {
+    font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600;
+  }
+
+  .supply-bar {
+    height: 8px; border-radius: 2px; background: var(--border);
+    overflow: hidden; margin-bottom: 0.2rem;
+  }
+
+  .supply-bar .fill { height: 100%; border-radius: 2px; }
+  .supply-bar .fill.fiat { background: var(--muted); width: 100%; }
+  .supply-bar .fill.btc { background: var(--accent); width: 100%; }
+
+  .supply-note {
+    font-size: 0.65rem; color: var(--very-muted);
+  }
+
+  /* NAV */
+  #nav-bar {
+    position: fixed; bottom: 0; left: var(--sidebar-w); right: 0;
+    height: var(--nav-h); background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: flex-end;
+    padding: 0 2rem; gap: 0.75rem; z-index: 100;
+  }
+
+  .nav-btn {
+    font-family: 'Inter', sans-serif; font-size: 0.7rem;
+    font-weight: 500; letter-spacing: 0.08em;
+    padding: 0.45rem 1.2rem; border-radius: 2px;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+
+  #btn-prev {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  #btn-prev:hover { border-color: var(--muted); color: var(--text); }
+
+  #btn-next {
+    background: var(--accent); border: 1px solid var(--accent);
+    color: #000; font-weight: 600;
+  }
+
+  #btn-next:hover { opacity: 0.85; }
+
+  /* ANIMATIONS */
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .slide.visible .compare-card,
+  .slide.visible .stat-card,
+  .slide.visible .bullet-block,
+  .slide.visible .tradeoff-card,
+  .slide.visible .conv-card,
+  .slide.visible .flow-node {
+    animation: slideIn 0.4s ease both;
+  }
+
+  .slide.visible .compare-card:nth-child(2),
+  .slide.visible .stat-card:nth-child(2),
+  .slide.visible .tradeoff-card:nth-child(2),
+  .slide.visible .conv-card:nth-child(2) { animation-delay: 0.07s; }
+
+  .slide.visible .stat-card:nth-child(3),
+  .slide.visible .tradeoff-card:nth-child(3),
+  .slide.visible .conv-card:nth-child(3) { animation-delay: 0.14s; }
+
+  .slide.visible .tradeoff-card:nth-child(4) { animation-delay: 0.21s; }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div id="sidebar-header">
+      <div class="section-label">Section 2 · Lecture 4</div>
+      <div class="lecture-title">Crypto vs. The Traditional Financial System</div>
+    </div>
+    <ul id="chapter-nav">
+      <li data-slide="0" class="active">
+        <span class="ch-num">01</span>
+        <span class="ch-title">The Rules of the Old System</span>
+      </li>
+      <li data-slide="1">
+        <span class="ch-num">02</span>
+        <span class="ch-title">Who's Really in Control?</span>
+      </li>
+      <li data-slide="2">
+        <span class="ch-num">03</span>
+        <span class="ch-title">The Cost of Trust</span>
+      </li>
+      <li data-slide="3">
+        <span class="ch-num">04</span>
+        <span class="ch-title">Access & Exclusion</span>
+      </li>
+      <li data-slide="4">
+        <span class="ch-num">05</span>
+        <span class="ch-title">Transparency vs. Opacity</span>
+      </li>
+      <li data-slide="5">
+        <span class="ch-num">06</span>
+        <span class="ch-title">Inflation & Monetary Policy</span>
+      </li>
+      <li data-slide="6">
+        <span class="ch-num">07</span>
+        <span class="ch-title">The Tradeoffs</span>
+      </li>
+      <li data-slide="7">
+        <span class="ch-num">08</span>
+        <span class="ch-title">Not Either/Or</span>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main id="main">
+
+    <!-- SLIDE 1 -->
+    <section class="slide active" data-index="0">
+      <div class="breadcrumb">Section 2 / <span>Lecture 4</span></div>
+      <div class="eyebrow">The Old System</div>
+      <h2>The Rules of the Old System</h2>
+      <div class="content">
+        <div class="flow-row">
+          <div class="flow-node">Central Bank</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">Commercial Banks</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">Businesses</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">You</div>
+        </div>
+        <div class="two-col" style="margin-top: 0.5rem;">
+          <div class="bullet-block">
+            <div class="block-title">Central Banks</div>
+            <ul>
+              <li>Control money supply</li>
+              <li>Set interest rates</li>
+              <li>Lender of last resort</li>
+            </ul>
+          </div>
+          <div class="bullet-block">
+            <div class="block-title">Commercial Banks</div>
+            <ul>
+              <li>Hold your deposits</li>
+              <li>Approve or deny accounts</li>
+              <li>Execute transactions</li>
+            </ul>
+          </div>
+          <div class="bullet-block">
+            <div class="block-title">Governments</div>
+            <ul>
+              <li>Regulate the banks</li>
+              <li>Enforce legal tender laws</li>
+              <li>Sanction or seize assets</li>
+            </ul>
+          </div>
+          <div class="bullet-block">
+            <div class="block-title">You</div>
+            <ul>
+              <li>Agree to their terms</li>
+              <li>Subject to their rules</li>
+              <li>Dependent on their uptime</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-counter"><span>1</span> / 8</div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide" data-index="1">
+      <div class="breadcrumb">Section 2 / <span>Lecture 4</span></div>
+      <div class="eyebrow">Control</div>
+      <h2>Who's Really in Control?</h2>
+      <div class="content">
+        <div class="two-col">
+          <div class="compare-card trad">
+            <div class="card-label">Traditional Finance</div>
+            <div class="card-title">Centralized</div>
+            <ul>
+              <li>Bank can freeze your account</li>
+              <li>Transactions can be reversed</li>
+              <li>More money can be printed</li>
+              <li>Access can be denied</li>
+              <li>Rules can change overnight</li>
+            </ul>
+          </div>
+          <div class="compare-card crypto">
+            <div class="card-label">Crypto</div>
+            <div class="card-title">Decentralized</div>
+            <ul>
+              <li>No one can freeze your wallet</li>
+              <li>Transactions are irreversible</li>
+              <li>Supply is fixed by code</li>
+              <li>Open to anyone, anywhere</li>
+              <li>Rules enforced by math</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing-statement">
+          <p>In the traditional system, you don't own your money. You own a <span>claim</span> on money held by someone else.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>2</span> / 8</div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide" data-index="2">
+      <div class="breadcrumb">Section 2 / <span>Lecture 4</span></div>
+      <div class="eyebrow">Friction & Fees</div>
+      <h2>The Cost of Trust</h2>
+      <div class="content">
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-num">$25–$50</div>
+            <div class="stat-label">Average domestic wire transfer fee</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">3–5 days</div>
+            <div class="stat-label">International wire settlement time</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">6–7%</div>
+            <div class="stat-label">Average global remittance fee</div>
+          </div>
+        </div>
+        <div class="two-col" style="margin-top: 0.5rem;">
+          <div class="bullet-block">
+            <div class="block-title">Traditional Finance</div>
+            <ul>
+              <li>Banking hours limit access</li>
+              <li>Multiple intermediaries add fees</li>
+              <li>Cross-border payments take days</li>
+              <li>SWIFT network is 50 years old</li>
+            </ul>
+          </div>
+          <div class="bullet-block">
+            <div class="block-title">Crypto</div>
+            <ul>
+              <li>24/7/365, no banking hours</li>
+              <li>Peer-to-peer, no intermediaries</li>
+              <li>Global transfers in minutes</li>
+              <li>Fee is the same whether sending $10 or $10M</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-counter"><span>3</span> / 8</div>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="slide" data-index="3">
+      <div class="breadcrumb">Section 2 / <span>Lecture 4</span></div>
+      <div class="eyebrow">Inclusion</div>
+      <h2>Access & Exclusion</h2>
+      <div class="content">
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-num">1.4B</div>
+            <div class="stat-label">Adults globally with no bank account</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">6%</div>
+            <div class="stat-label">US adults who are unbanked</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">$0</div>
+            <div class="stat-label">Cost to create a crypto wallet</div>
+          </div>
+        </div>
+        <div class="two-col" style="margin-top: 0.5rem;">
+          <div class="bullet-block">
+            <div class="block-title">To Open a Bank Account</div>
+            <ul>
+              <li>Government-issued ID required</li>
+              <li>Proof of address</li>
+              <li>Credit history check</li>
+              <li>Minimum balance requirements</li>
+              <li>Subject to approval</li>
+            </ul>
+          </div>
+          <div class="bullet-block">
+            <div class="block-title">To Use Crypto</div>
+            <ul>
+              <li>Smartphone or internet access</li>
+              <li>No ID required</li>
+              <li>No credit check</li>
+              <li>No minimum balance</li>
+              <li>No one can deny you</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="slide-counter"><span>4</span> / 8</div>
+    </section>
+
+    <!-- SLIDE 5 -->
+    <section class="slide" data-index="4">
+      <div class="breadcrumb">Section 2 / <span>Lecture 4</span></div>
+      <div class="eyebrow">Visibility</div>
+      <h2>Transparency vs. Opacity</h2>
+      <div class="content">
+        <div class="two-col">
+          <div class="compare-card trad">
+            <div class="card-label">Traditional Finance</div>
+            <div class="card-title">Behind Closed Doors</div>
+            <ul>
+              <li>Bank ledgers are private</li>
+              <li>Fed balance sheet updated weekly</li>
+              <li>Audit trails controlled internally</li>
+              <li>You trust the institution's report</li>
+              <li>Fraud can go undetected for years</li>
+            </ul>
+          </div>
+          <div class="compare-card crypto">
+            <div class="card-label">Crypto</div>
+            <div class="card-title">Public by Default</div>
+            <ul>
+              <li>Every transaction on-chain forever</li>
+              <li>Anyone can verify any balance</li>
+              <li>Supply provably fixed by code</li>
+              <li>No trust required, just math</li>
+              <li>"Don't trust, verify"</li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing-statement">
+          <p>The blockchain is the first financial ledger in history that is <span>open to everyone</span> and controlled by <span>no one</span>.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>5</span> / 8</div>
+    </section>
+
+    <!-- SLIDE 6 -->
+    <section class="slide" data-index="5">
+      <div class="breadcrumb">Section 2 / <span>Lecture 4</span></div>
+      <div class="eyebrow">Monetary Policy</div>
+      <h2>Inflation & Monetary Policy</h2>
+      <div class="content">
+        <div class="supply-row">
+          <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+            <div class="supply-bar-wrap">
+              <div class="supply-bar-label">US Dollar Supply (M2): 2000 to 2024</div>
+              <div style="display: flex; align-items: center; gap: 0.8rem; margin-top: 0.3rem;">
+                <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.75rem; color: var(--muted); width: 3.5rem;">$4.6T</div>
+                <div class="supply-bar" style="flex: 1;"><div class="fill fiat" style="width: 22%;"></div></div>
+                <div style="font-size: 0.65rem; color: var(--very-muted);">2000</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.8rem; margin-top: 0.3rem;">
+                <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.75rem; color: var(--muted); width: 3.5rem;">$21T+</div>
+                <div class="supply-bar" style="flex: 1;"><div class="fill fiat"></div></div>
+                <div style="font-size: 0.65rem; color: var(--very-muted);">2024</div>
+              </div>
+              <div class="supply-note" style="margin-top: 0.4rem;">The dollar supply has grown ~4.5× in 24 years</div>
+            </div>
+            <div class="supply-bar-wrap">
+              <div class="supply-bar-label">Bitcoin Supply: Fixed Forever</div>
+              <div style="display: flex; align-items: center; gap: 0.8rem; margin-top: 0.3rem;">
+                <div style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.75rem; color: var(--accent); width: 3.5rem;">21M</div>
+                <div class="supply-bar" style="flex: 1;"><div class="fill btc"></div></div>
+                <div style="font-size: 0.65rem; color: var(--very-muted);">Cap</div>
+              </div>
+              <div class="supply-note" style="margin-top: 0.4rem;">Hard-coded in Bitcoin's protocol. No central bank can change it.</div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="bullet-block">
+              <div class="block-title">Fiat Money</div>
+              <ul>
+                <li>Supply set by central banks</li>
+                <li>Printed to fund deficits & bail outs</li>
+                <li>More supply = each dollar worth less</li>
+                <li>Inflation erodes savings over time</li>
+              </ul>
+            </div>
+            <div class="bullet-block">
+              <div class="block-title">Bitcoin</div>
+              <ul>
+                <li>21 million cap, hard-coded</li>
+                <li>Issuance rate halves every ~4 years</li>
+                <li>Disinflationary by design</li>
+                <li>No one can print more</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-counter"><span>6</span> / 8</div>
+    </section>
+
+    <!-- SLIDE 7 -->
+    <section class="slide" data-index="6">
+      <div class="breadcrumb">Section 2 / <span>Lecture 4</span></div>
+      <div class="eyebrow">Honest Assessment</div>
+      <h2>The Tradeoffs</h2>
+      <div class="content">
+        <div class="tradeoff-grid">
+          <div class="tradeoff-card">
+            <div class="t-title">Volatility</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.3rem;">
+              <li style="font-size: 0.7rem; color: var(--muted); padding-left: 1rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent);">·</span>
+                Not a stable store of value (yet)
+              </li>
+              <li style="font-size: 0.7rem; color: var(--muted); padding-left: 1rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent);">·</span>
+                Price swings can be extreme
+              </li>
+            </ul>
+          </div>
+          <div class="tradeoff-card">
+            <div class="t-title">No Chargebacks</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.3rem;">
+              <li style="font-size: 0.7rem; color: var(--muted); padding-left: 1rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent);">·</span>
+                Transactions are irreversible
+              </li>
+              <li style="font-size: 0.7rem; color: var(--muted); padding-left: 1rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent);">·</span>
+                Mistakes cannot be undone
+              </li>
+            </ul>
+          </div>
+          <div class="tradeoff-card">
+            <div class="t-title">No Insurance</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.3rem;">
+              <li style="font-size: 0.7rem; color: var(--muted); padding-left: 1rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent);">·</span>
+                No FDIC equivalent for crypto
+              </li>
+              <li style="font-size: 0.7rem; color: var(--muted); padding-left: 1rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent);">·</span>
+                Exchange failure = potential total loss
+              </li>
+            </ul>
+          </div>
+          <div class="tradeoff-card">
+            <div class="t-title">User Responsibility</div>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.3rem;">
+              <li style="font-size: 0.7rem; color: var(--muted); padding-left: 1rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent);">·</span>
+                Lose your keys, lose your crypto
+              </li>
+              <li style="font-size: 0.7rem; color: var(--muted); padding-left: 1rem; position: relative;">
+                <span style="position: absolute; left: 0; color: var(--accent);">·</span>
+                No one to call for help
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="closing-statement" style="margin-top: 0.5rem;">
+          <p>These tradeoffs are <span>real</span>, and understanding them is what separates informed investors from gamblers.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>7</span> / 8</div>
+    </section>
+
+    <!-- SLIDE 8 -->
+    <section class="slide" data-index="7">
+      <div class="breadcrumb">Section 2 / <span>Lecture 4</span></div>
+      <div class="eyebrow">The Big Picture</div>
+      <h2>Not Either/Or</h2>
+      <div class="content">
+        <div class="conv-grid">
+          <div class="conv-card">
+            <div class="conv-title">Bitcoin ETFs</div>
+            <div class="conv-desc">Approved by the SEC in January 2024. Wall Street now sells Bitcoin exposure through traditional brokerage accounts</div>
+          </div>
+          <div class="conv-card">
+            <div class="conv-title">Stablecoins</div>
+            <div class="conv-desc">Dollar-pegged crypto assets with the speed and openness of crypto with the stability of fiat, now used by hundreds of millions</div>
+          </div>
+          <div class="conv-card">
+            <div class="conv-title">CBDCs</div>
+            <div class="conv-desc">Central Bank Digital Currencies. Governments worldwide building digital versions of their currencies on blockchain rails</div>
+          </div>
+        </div>
+        <div class="closing-statement" style="margin-top: 1rem;">
+          <p>The future isn't crypto <span>vs.</span> traditional finance. It is crypto <span>becoming part of</span> traditional finance. That shift is already underway.</p>
+        </div>
+      </div>
+      <div class="slide-counter"><span>8</span> / 8</div>
+    </section>
+
+  </main>
+</div>
+
+<!-- NAV BAR -->
+<div id="nav-bar">
+  <button class="nav-btn" id="btn-prev">Prev</button>
+  <button class="nav-btn" id="btn-next">Next</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const navItems = document.querySelectorAll('#chapter-nav li');
+  const progressBar = document.getElementById('progress-bar');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  let current = 0;
+
+  function goTo(index) {
+    if (index < 0 || index >= slides.length) return;
+
+    // Deactivate current
+    slides[current].classList.remove('visible');
+    setTimeout(() => {
+      slides[current].classList.remove('active');
+
+      // Activate next
+      slides[index].classList.add('active');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          slides[index].classList.add('visible');
+        });
+      });
+    }, 300);
+
+    // Sidebar
+    navItems[current].classList.remove('active');
+    navItems[current].classList.add('visited');
+    navItems[index].classList.remove('visited');
+    navItems[index].classList.add('active');
+
+    current = index;
+
+    // Progress bar
+    const pct = ((current + 1) / slides.length) * 100;
+    progressBar.style.width = pct + '%';
+
+    // Buttons
+    btnPrev.style.opacity = current === 0 ? '0.3' : '1';
+    btnPrev.style.pointerEvents = current === 0 ? 'none' : 'auto';
+    btnNext.textContent = current === slides.length - 1 ? 'Done' : 'Next';
+  }
+
+  // Init
+  slides[0].classList.add('visible');
+  progressBar.style.width = (1 / slides.length * 100) + '%';
+  btnPrev.style.opacity = '0.3';
+  btnPrev.style.pointerEvents = 'none';
+
+  btnNext.addEventListener('click', () => goTo(current + 1));
+  btnPrev.addEventListener('click', () => goTo(current - 1));
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => goTo(parseInt(item.dataset.slide)));
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+</script>
+</body>
+</html>

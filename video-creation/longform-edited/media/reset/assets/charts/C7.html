@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>C7: Who owns the debt</title>
+<!--
+C7: Who owns the debt  (Type 1 ANIMATED, project reset, LIGHT theme, chapter accent #8F6500)
+One full-frame 1920x1080 .frame per state; PNG = C7-<state>.png beside this file.
+Every number traces to media/reset/DATA.md (see the "data" block in #spec). Re-shoot after a [VERIFY] change:
+  python media/reset/_previews/chart-builder/build_charts.py C7
+ANIMATION / STATE SPEC (cue times = FINAL spine seconds, AS-RECORDED word timings):
+  178.70 frame enters on 'Because', the bar is an empty dashed track.
+  179.42 'around three quarters' the bar FILLS left->right in two parts: the gold INSIDE THE US block (to x 1410) then the
+        grey FOREIGN block; brackets draw and '77%' counts up 0->77 landing on 'U.S.' 182.24; '23%' fades in. STATE split.
+  182.94 'To the Fed' the gold block SPLITS (two white seams wipe down) into Fed / trust funds / the rest, all pale,
+        then each lights as named: 'The Fed 11%' 183.34 (STATE fed); 'Social Security and other trust funds 19%' 184.66
+        (STATE trust); the rest segment 186.80 with its chips lighting one by one: US banks 187.14, pension funds 188.10,
+        insurers 188.92, households 190.26 (VO 'regular savers'; STATE rest).
+  191.00 'China, you ask?' the inside segments settle to mid gold; on 'Around' 192.80 the 1.5% sliver at the right end
+        of FOREIGN lights gold with its leader + 'China 1.5%' (STATE china). Hold to 194.10 (FACE 8).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================================
+   CANONICAL longform-edited CONTAINER STYLESHEET  — COPY THIS, DO NOT RE-DERIVE.
+   ----------------------------------------------------------------------------
+   WHY THIS FILE EXISTS (Mike, 2026-07-12): every video kept drifting the CSS
+   container style (wrong accent, Inter instead of Playfair/DM-Sans, colored
+   eyebrows, no divider) because each build re-invented the CSS from scratch.
+   The fix is a LOCKED, copyable stylesheet. Paste this <style> into the
+   project's `assets/containers/containers.html`, then build one full-frame
+   `<div class="frame" id="<slug>">` per beat and screenshot each at 1920x1080
+   @2x. Palette + typography match skills/presentation/presentation.md and the reference
+   frames in this folder (bittensor-text-*, banks-card-*). Do NOT change tokens.
+   The zebec build (media/zebec/assets/containers/containers.html) is the worked
+   example of this stylesheet in use.
+   ============================================================================ */
+:root{
+  --bg-deep:#0a0c10; --bg-card:#12151c; --bg-card-hover:#181c26;
+  --accent-green:#00e68a; --accent-cyan:#00c2ff; --accent-gold:#ffd700;
+  --accent-red:#ff4060; --accent-purple:#a855f7; --accent-teal:#49e0c8; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#e8eaf0; --text-secondary:#8892a4; --text-muted:#505a6e;
+  --border:#1e2330;
+}
+/* Fonts: <link> Playfair Display (900/700 headlines) + DM Sans (body) + JetBrains Mono (numbers). */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04060d;font-family:'DM Sans',sans-serif}
+
+.frame{width:1920px;height:1080px;background:var(--bg-deep);position:relative;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;padding:0 140px;color:var(--text-primary)}
+/* subtle film grain, matches presentation.md */
+.frame::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;opacity:.03;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.30;pointer-events:none;z-index:0}
+.frame>*:not(.orb){position:relative;z-index:1}
+
+/* THE ANATOMY: eyebrow (muted, NEVER colored) -> Playfair headline (accent key word) -> gradient divider -> body */
+.ey{font-family:'DM Sans';font-size:27px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.18em;color:var(--text-muted);margin-bottom:26px}
+h1{font-family:'Playfair Display',serif;font-weight:900;font-size:84px;line-height:1.07;
+  letter-spacing:-.02em;color:var(--text-primary);max-width:1440px}
+h1.sm{font-size:70px}
+.divider{width:66px;height:4px;border-radius:2px;
+  background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan));margin:32px 0}
+p,.body{font-family:'DM Sans';font-size:31px;line-height:1.55;color:var(--text-secondary);max-width:1240px}
+.mono{font-family:'JetBrains Mono',monospace;font-weight:600} /* EVERY number/date/ticker/% */
+b{color:var(--text-primary);font-weight:700}
+
+/* accent key-word spans — assign a CONSISTENT meaning per video and do not drift:
+   .g green=positive/bullish/real  .c cyan=neutral supporting  .go gold=special/warning
+   .re red=risk/negative/struck  .tl teal=BRAND ticker/logo only */
+.g{color:var(--accent-green)} .c{color:var(--accent-cyan)} .go{color:var(--accent-gold)}
+.re{color:var(--accent-red)} .pu{color:var(--accent-purple)} .tl{color:var(--accent-teal)}
+
+/* Common components (chips row, stat cards, top-accent card, 2-col compare, name badges, timeline rail,
+   flags grid, SVG node/flow diagram) — see media/zebec/assets/containers/containers.html for the full
+   worked set. SVG diagrams: node fill var(--bg-card) stroke var(--border); flow/arrows var(--accent-green)
+   or var(--accent-cyan); burn/negative nodes tinted var(--accent-red); positive nodes var(--accent-green). */
+
+</style>
+<style>/* LIGHT THEME (container-canonical-light.css, loaded after the canonical sheet) */
+/* ============================================================================
+   container-canonical-light.css: the LIGHT THEME override (Mike, 2026-10-25, first used on `inference`).
+   A PER-VIDEO option, never the default. Load it AFTER container-canonical.css (same <head>, second <style> /
+   <link>): every token below replaces the dark one, every other rule of the locked stylesheet stays untouched
+   (layout, type, sizes, anatomy, components). Promoted from the 2026-10-25 look test in _light-mode-experiment/
+   (three containers rendered dark and light, Mike: "I like the light mode version").
+   Switch: GRAPH-PROGRESS.json settings.container_theme = "light" (run.py --container-theme light); the graph
+   tells slide-builder / chart-builder / visual-qa, and visual-qa judges palette drift against THIS file.
+   Contrast: every text token >= 4.5:1 on the page (#F6F4EE) and on a white card; strokes >= 3:1.
+   ============================================================================ */
+:root{
+  --bg-deep:#F6F4EE; --bg-card:#FFFFFF; --bg-card-hover:#F1EFE9;
+  --accent-green:#007A55; --accent-cyan:#006A9E; --accent-gold:#8F6500;
+  --accent-red:#C41E3A; --accent-purple:#7C3AED; --accent-teal:#0E7A6C; /* teal = BRAND MARK/ticker ONLY */
+  --text-primary:#14161A; --text-secondary:#4A5263; --text-muted:#5E6676;
+  --border:#DDD9CF;
+  /* light-only helpers for charts / diagrams (dark has no equivalent: there the wire IS --border) */
+  --grid:#D6D2C7; --axis:#7A808B; --wire:#8A877E; --ink:#14161A;
+}
+body{background:#E4E1D8}
+
+/* the film grain stays, multiplied so it reads as paper tooth instead of lifting the blacks */
+.frame::after{opacity:.05;mix-blend-mode:multiply}
+
+/* accent orbs: same position and blur, a pale tint instead of a saturated bloom */
+.orb{opacity:.18}
+
+/* surfaces: a card is white with a hairline border and a soft lifted shadow (the dark 120 px black drop is gone) */
+.card,.col,.panel,.ecard,.nd,.node,.box{
+  background:var(--bg-card);border-color:var(--border);
+  box-shadow:0 1px 2px rgba(20,22,26,.05),0 14px 34px rgba(20,22,26,.08)}
+
+/* GLOW -> RING. On white a glow reads as a smear, so every "lit / on / hot" state becomes a tinted ring + a lifted
+   shadow in the element's accent (set --acc-rgb per chapter accent, default = cyan). */
+.frame{--acc-rgb:0,106,158}
+.lit,.on,.hot,.chip.on,.nd.lit,.node.on,.box.on,.ecard.on{
+  box-shadow:0 0 0 4px rgba(var(--acc-rgb),.12),0 12px 28px rgba(20,22,26,.12)}
+.hot,.nd.hot{box-shadow:0 0 0 6px rgba(var(--acc-rgb),.22),0 16px 34px rgba(20,22,26,.18)}
+.chip.on{background:rgba(var(--acc-rgb),.08)}
+.role,.rl,h1,h2{text-shadow:none}
+
+/* SVG diagrams / charts: wires and axes on the light ground. Lit wires use the accent token, resting wires --wire;
+   drop the SVG glow filter (filter="url(#g)") in the light build; hollow point centres fill white, the neutral
+   "ink" line is near-black; grid lines --grid; area fills under a line at .13 to .16 alpha of the accent. */
+svg .wire,svg line.wire,svg path.wire{stroke:var(--wire)}
+svg .grid{stroke:var(--grid)} svg .axis{stroke:var(--axis)}
+svg .ink{stroke:var(--ink);fill:var(--ink)}
+
+</style>
+<style>
+/* ---- chart / diagram layer: layout + the CHAPTER ACCENT only (locked tokens untouched) ---- */
+.frame{--acc:#8F6500;--acc-rgb:143,101,0;--acc-mid:#D0BE94;--acc-pale:#F0EBDE;
+  --neutral:#BDB8AC;--track:#ECE9E1}
+body{padding:0}
+.frame{margin:0 0 40px 0}
+.frame.dg{display:block;padding:0}
+.frame.dg>*:not(.orb){position:absolute}
+.hdr{left:120px;top:62px;z-index:2;max-width:1680px}
+.hdr .ey{font-size:24px;margin-bottom:14px}
+.hdr h1{font-size:64px;line-height:1.06;max-width:1680px}
+.hdr .divider{margin:22px 0 0;background:linear-gradient(90deg,var(--acc),rgba(var(--acc-rgb),.22))}
+.ak{color:var(--acc)}                         /* the accent key word (NOT .lit: the light sheet rings .lit) */
+.src{left:120px;bottom:32px;font-family:'JetBrains Mono',monospace;font-weight:400;font-size:18px;
+  color:var(--text-muted);z-index:2;letter-spacing:.01em;white-space:nowrap}
+.mono,.src,.m{font-variant-ligatures:none;font-feature-settings:"calt" 0,"liga" 0}
+.t-ey{font-family:'DM Sans';font-weight:700;font-size:22px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted)}
+svg.layer{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible;z-index:1}
+/* nodes (system-design) */
+.node{z-index:2;background:var(--bg-card);border:3px solid var(--border);border-radius:18px;
+  display:flex;flex-direction:column;justify-content:center;padding:20px 30px}
+.node .t{font-family:'DM Sans';font-weight:700;font-size:34px;line-height:1.15;color:var(--text-primary)}
+.node .s{font-family:'DM Sans';font-weight:400;font-size:25px;line-height:1.36;color:var(--text-secondary);margin-top:10px}
+.node .m{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text-primary)}
+.node.dim{opacity:.36;box-shadow:none}
+.node.seen{border-color:rgba(var(--acc-rgb),.42)}
+.node.on{border-color:var(--acc);
+  background:linear-gradient(180deg,rgba(var(--acc-rgb),.09),rgba(var(--acc-rgb),.02)),var(--bg-card);
+  box-shadow:0 0 0 7px rgba(var(--acc-rgb),.13),0 16px 34px rgba(20,22,26,.14)}
+.node.on .t{color:var(--acc)}
+.node.on .m{color:var(--acc)}
+.node.dash{border-style:dashed}
+.chipx{display:inline-block;padding:6px 16px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-weight:600;
+  font-size:22px;border:2px solid var(--border);background:var(--bg-card-hover);color:var(--text-secondary);
+  font-variant-ligatures:none}
+.on .chipx,.chipx.on{border-color:rgba(var(--acc-rgb),.55);background:rgba(var(--acc-rgb),.08);color:var(--acc)}
+
+
+.bk{z-index:2;display:flex;align-items:baseline;gap:18px;white-space:nowrap}
+.bk .big{font-size:72px;line-height:1;color:var(--text-primary)}
+.bk .big.ak{color:var(--acc)}
+.bk .bl{font-family:'DM Sans';font-weight:700;font-size:36px;color:var(--text-primary)}
+.bk.right .bl{color:var(--text-secondary)}
+.bk.right .big{color:var(--text-secondary)}
+.pl{z-index:2}
+.pl .pn{font-family:'DM Sans';font-weight:700;font-size:27px;line-height:1.2;color:var(--text-primary)}
+.pl .pv{font-size:36px;margin-top:6px;color:var(--text-primary)}
+.pl.hi .pn,.pl.hi .pv{color:var(--acc)}
+.pl.right{text-align:right}
+.pl.ghost,.chips.ghost{opacity:.35}
+.chips{z-index:2;display:flex;flex-wrap:wrap;gap:12px}
+.chips .chipx{font-family:'DM Sans';font-weight:700;font-size:24px}
+
+</style>
+</head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="vblur" x="-5%" y="-30%" width="110%" height="160%"><feGaussianBlur stdDeviation="0 16"/></filter>
+<filter id="vblurL" x="-5%" y="-30%" width="110%" height="160%"><feGaussianBlur stdDeviation="0 24"/></filter>
+</defs></svg>
+<script type="application/json" id="spec">{
+ "id": "C7",
+ "type": "Type 1 ANIMATED",
+ "chapter": "CH2",
+ "accent": "#8F6500",
+ "beat": "CH2@178.70-194.10",
+ "states": {
+  "start": 178.7,
+  "split": 182.24,
+  "fed": 183.34,
+  "trust": 184.66,
+  "rest": 190.26,
+  "china": 192.8
+ },
+ "scale": "one bar 1680 px = 100% of total public debt: Fed 11.3, trust funds 19.4, rest 46.1 | foreign 23.2 (China 1.47 at the right end)",
+ "data": {
+  "foreign": "9.332T = 23.2% (TIC, Aug 2026) -> 'Foreign 23%'; inside the US -> '77%' (around three quarters)",
+  "fed": "4.571T = 11.3% (H.4.1 week ended 2026-10-21) -> '11%'",
+  "trust": "intragovernmental 7.85T = around 19% -> '19%'",
+  "rest": "'US banks, pension funds, insurers, households' (DATA.md: the rest is US banks, funds, pensions, insurers, households, state and local governments); no figure shown",
+  "china": "590.7B = 1.47% -> '1.5%' [VERIFY next TIC release]",
+  "source": "DATA.md Pillar 2"
+ },
+ "notes": [
+  "178.70 frame enters on 'Because', the bar is an empty dashed track.",
+  "179.42 'around three quarters' the bar FILLS left->right in two parts: the gold INSIDE THE US block (to x 1410) then the",
+  "      grey FOREIGN block; brackets draw and '77%' counts up 0->77 landing on 'U.S.' 182.24; '23%' fades in. STATE split.",
+  "182.94 'To the Fed' the gold block SPLITS (two white seams wipe down) into Fed / trust funds / the rest, all pale,",
+  "      then each lights as named: 'The Fed 11%' 183.34 (STATE fed); 'Social Security and other trust funds 19%' 184.66",
+  "      (STATE trust); the rest segment 186.80 with its chips lighting one by one: US banks 187.14, pension funds 188.10,",
+  "      insurers 188.92, households 190.26 (VO 'regular savers'; STATE rest).",
+  "191.00 'China, you ask?' the inside segments settle to mid gold; on 'Around' 192.80 the 1.5% sliver at the right end",
+  "      of FOREIGN lights gold with its leader + 'China 1.5%' (STATE china). Hold to 194.10 (FACE 8)."
+ ]
+}</script>
+<div class="frame dg " id="start" data-state="start"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Who holds the US debt</div><h1>Who <span class="ak">owns</span> the debt.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="start-b"><rect x="120.0" y="520" width="1680.0" height="140" rx="14"/></clipPath></defs><rect x="120.0" y="520" width="1680.0" height="140" rx="14" fill="var(--track)" stroke="#CFCABF" stroke-width="2" stroke-dasharray="10 8"/></svg><div class="src">Sources: Treasury TIC (foreign holders, Aug 2026) · Fed H.4.1 (week ended Oct 21, 2026) · Debt to the Penny (intragovernmental holdings)</div></div>
+<div class="frame dg " id="split" data-state="split"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Who holds the US debt</div><h1>Who <span class="ak">owns</span> the debt.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="split-b"><rect x="120.0" y="520" width="1680.0" height="140" rx="14"/></clipPath></defs><g clip-path="url(#split-b)"><rect x="120.0" y="520" width="1290.2" height="140" fill="var(--acc)"/><rect x="1410.2" y="520" width="389.8" height="140" fill="var(--neutral)"/><rect x="1408.2" y="520" width="4" height="140" fill="#FFFFFF"/></g><path d="M122.0,506 v-18 H1402.2 v18" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M1418.2,506 v-18 H1798.0 v18" fill="none" stroke="#8A877E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="bk" style="left:120.0px;top:398px"><span class="mono big ak">77%</span><span class="bl">Inside the US</span></div><div class="bk right" style="right:120.0px;top:398px"><span class="bl">Foreign</span><span class="mono big">23%</span></div><div class="src">Sources: Treasury TIC (foreign holders, Aug 2026) · Fed H.4.1 (week ended Oct 21, 2026) · Debt to the Penny (intragovernmental holdings)</div></div>
+<div class="frame dg " id="fed" data-state="fed"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Who holds the US debt</div><h1>Who <span class="ak">owns</span> the debt.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="fed-b"><rect x="120.0" y="520" width="1680.0" height="140" rx="14"/></clipPath></defs><g clip-path="url(#fed-b)"><rect x="120.0" y="520" width="189.8" height="140" fill="var(--acc)"/><rect x="309.8" y="520" width="325.9" height="140" fill="var(--acc-pale)"/><rect x="635.8" y="520" width="774.5" height="140" fill="var(--acc-pale)"/><rect x="308.3" y="520" width="3" height="140" fill="#FFFFFF"/><rect x="634.3" y="520" width="3" height="140" fill="#FFFFFF"/><rect x="1410.2" y="520" width="389.8" height="140" fill="var(--neutral)"/><rect x="1408.2" y="520" width="4" height="140" fill="#FFFFFF"/></g><path d="M122.0,506 v-18 H1402.2 v18" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M1418.2,506 v-18 H1798.0 v18" fill="none" stroke="#8A877E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="bk" style="left:120.0px;top:398px"><span class="mono big ak">77%</span><span class="bl">Inside the US</span></div><div class="bk right" style="right:120.0px;top:398px"><span class="bl">Foreign</span><span class="mono big">23%</span></div><div class="pl hi" style="left:120.0px;top:684px;width:178px"><div class="pn">The Fed</div><div class="pv mono">11%</div></div><div class="pl ghost" style="left:325.8px;top:684px;width:300px"><div class="pn">Social Security and other trust funds</div><div class="pv mono">19%</div></div><div class="chips ghost" style="left:651.8px;top:686px;width:754px"><span class="chipx">US banks</span><span class="chipx">pension funds</span><span class="chipx">insurers</span><span class="chipx">households</span></div><div class="src">Sources: Treasury TIC (foreign holders, Aug 2026) · Fed H.4.1 (week ended Oct 21, 2026) · Debt to the Penny (intragovernmental holdings)</div></div>
+<div class="frame dg " id="trust" data-state="trust"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Who holds the US debt</div><h1>Who <span class="ak">owns</span> the debt.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="trust-b"><rect x="120.0" y="520" width="1680.0" height="140" rx="14"/></clipPath></defs><g clip-path="url(#trust-b)"><rect x="120.0" y="520" width="189.8" height="140" fill="var(--acc-mid)"/><rect x="309.8" y="520" width="325.9" height="140" fill="var(--acc)"/><rect x="635.8" y="520" width="774.5" height="140" fill="var(--acc-pale)"/><rect x="308.3" y="520" width="3" height="140" fill="#FFFFFF"/><rect x="634.3" y="520" width="3" height="140" fill="#FFFFFF"/><rect x="1410.2" y="520" width="389.8" height="140" fill="var(--neutral)"/><rect x="1408.2" y="520" width="4" height="140" fill="#FFFFFF"/></g><path d="M122.0,506 v-18 H1402.2 v18" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M1418.2,506 v-18 H1798.0 v18" fill="none" stroke="#8A877E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="bk" style="left:120.0px;top:398px"><span class="mono big ak">77%</span><span class="bl">Inside the US</span></div><div class="bk right" style="right:120.0px;top:398px"><span class="bl">Foreign</span><span class="mono big">23%</span></div><div class="pl" style="left:120.0px;top:684px;width:178px"><div class="pn">The Fed</div><div class="pv mono">11%</div></div><div class="pl hi" style="left:325.8px;top:684px;width:300px"><div class="pn">Social Security and other trust funds</div><div class="pv mono">19%</div></div><div class="chips ghost" style="left:651.8px;top:686px;width:754px"><span class="chipx">US banks</span><span class="chipx">pension funds</span><span class="chipx">insurers</span><span class="chipx">households</span></div><div class="src">Sources: Treasury TIC (foreign holders, Aug 2026) · Fed H.4.1 (week ended Oct 21, 2026) · Debt to the Penny (intragovernmental holdings)</div></div>
+<div class="frame dg " id="rest" data-state="rest"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Who holds the US debt</div><h1>Who <span class="ak">owns</span> the debt.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="rest-b"><rect x="120.0" y="520" width="1680.0" height="140" rx="14"/></clipPath></defs><g clip-path="url(#rest-b)"><rect x="120.0" y="520" width="189.8" height="140" fill="var(--acc-mid)"/><rect x="309.8" y="520" width="325.9" height="140" fill="var(--acc-mid)"/><rect x="635.8" y="520" width="774.5" height="140" fill="var(--acc)"/><rect x="308.3" y="520" width="3" height="140" fill="#FFFFFF"/><rect x="634.3" y="520" width="3" height="140" fill="#FFFFFF"/><rect x="1410.2" y="520" width="389.8" height="140" fill="var(--neutral)"/><rect x="1408.2" y="520" width="4" height="140" fill="#FFFFFF"/></g><path d="M122.0,506 v-18 H1402.2 v18" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M1418.2,506 v-18 H1798.0 v18" fill="none" stroke="#8A877E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/></svg><div class="bk" style="left:120.0px;top:398px"><span class="mono big ak">77%</span><span class="bl">Inside the US</span></div><div class="bk right" style="right:120.0px;top:398px"><span class="bl">Foreign</span><span class="mono big">23%</span></div><div class="pl" style="left:120.0px;top:684px;width:178px"><div class="pn">The Fed</div><div class="pv mono">11%</div></div><div class="pl" style="left:325.8px;top:684px;width:300px"><div class="pn">Social Security and other trust funds</div><div class="pv mono">19%</div></div><div class="chips" style="left:651.8px;top:686px;width:754px"><span class="chipx hi">US banks</span><span class="chipx hi">pension funds</span><span class="chipx hi">insurers</span><span class="chipx hi">households</span></div><div class="src">Sources: Treasury TIC (foreign holders, Aug 2026) · Fed H.4.1 (week ended Oct 21, 2026) · Debt to the Penny (intragovernmental holdings)</div></div>
+<div class="frame dg " id="china" data-state="china"><div class="orb" style="width:720px;height:720px;right:-300px;top:-380px;background:#8F6500"></div><div class="orb" style="width:620px;height:620px;left:-320px;bottom:-360px;background:#b9c3d6;opacity:.30"></div><div class="hdr"><div class="ey">Who holds the US debt</div><h1>Who <span class="ak">owns</span> the debt.</h1><div class="divider"></div></div><svg class="layer" viewBox="0 0 1920 1080"><defs><clipPath id="china-b"><rect x="120.0" y="520" width="1680.0" height="140" rx="14"/></clipPath></defs><g clip-path="url(#china-b)"><rect x="120.0" y="520" width="189.8" height="140" fill="var(--acc-mid)"/><rect x="309.8" y="520" width="325.9" height="140" fill="var(--acc-mid)"/><rect x="635.8" y="520" width="774.5" height="140" fill="var(--acc-mid)"/><rect x="308.3" y="520" width="3" height="140" fill="#FFFFFF"/><rect x="634.3" y="520" width="3" height="140" fill="#FFFFFF"/><rect x="1410.2" y="520" width="389.8" height="140" fill="var(--neutral)"/><rect x="1408.2" y="520" width="4" height="140" fill="#FFFFFF"/><rect x="1775.3" y="520" width="24.7" height="140" fill="var(--acc)"/><rect x="1773.8" y="520" width="3" height="140" fill="#FFFFFF"/></g><path d="M122.0,506 v-18 H1402.2 v18" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M1418.2,506 v-18 H1798.0 v18" fill="none" stroke="#8A877E" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><line x1="1787.7" y1="664" x2="1787.7" y2="690" stroke="var(--acc)" stroke-width="3"/></svg><div class="bk" style="left:120.0px;top:398px"><span class="mono big ak">77%</span><span class="bl">Inside the US</span></div><div class="bk right" style="right:120.0px;top:398px"><span class="bl">Foreign</span><span class="mono big">23%</span></div><div class="pl" style="left:120.0px;top:684px;width:178px"><div class="pn">The Fed</div><div class="pv mono">11%</div></div><div class="pl" style="left:325.8px;top:684px;width:300px"><div class="pn">Social Security and other trust funds</div><div class="pv mono">19%</div></div><div class="chips" style="left:651.8px;top:686px;width:754px"><span class="chipx hi">US banks</span><span class="chipx hi">pension funds</span><span class="chipx hi">insurers</span><span class="chipx hi">households</span></div><div class="pl hi right" style="right:120.0px;top:694px"><div class="pn">China</div><div class="pv mono">1.5%</div></div><div class="src">Sources: Treasury TIC (foreign holders, Aug 2026) · Fed H.4.1 (week ended Oct 21, 2026) · Debt to the Penny (intragovernmental holdings)</div></div>
+</body></html>

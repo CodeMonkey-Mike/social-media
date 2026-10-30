@@ -564,13 +564,13 @@ Not clips (no video exists, DATA.md section 6): Trump's TIME sentence (receipt C
 
 | CH | Mood + gear | Subtle / aggressive | New bed? | Track shortlist (assets/music/library.json) |
 |---|---|---|---|---|
-| CH1 | dark, suspenseful, cinematic; gear 3 epic hook | aggressive: builds under the locked face line, hits on the cut to C3, peaks through the reset beat, a hit on "will you be one of them?" | **Bed A starts** (card OFF) | **atmos-rise** (Louis Lion; Suspenseful, F major, 120 bpm, aggr 69, build to epic_hit, 198 s; env: mid build 0 to 16 s, high peak 16 to 88 s, mid build 88 to 120 s) · alt **the-evil-within** (C minor score, darker, aggr 79, 173 s) · alt **enigma** (dark and dynamic, aggr 78, 127 s) |
-| CH2 | calm, steady, reflective; gear 2 slow | SUBTLE: the Deliverance instrumental intro (29 s, aggr 14) into the instrumental verse (42 s, aggr 24) | **Bed B starts** (card ON "THE DEBT NOBODY CAN PAY") | **deliverance** (Cody Martin, Soundstripe 40464, playlist "explainer"; Inspiring / Hopeful / Calm, B major, 90 bpm) · alt **divine-land** (40520: verse aggr 36, chorus aggr 68, 76 s) · alt **kitsune** (40367: C minor, verse aggr 33, chorus aggr 52, a gentler contrast) |
-| CH3 | calm teacher; gear 2 slow | SUBTLE (verse / intro, looped) | continues Bed B (card OFF) | deliverance |
-| CH4 | rising tension; gear 2 rising | SUBTLE, then **AGGRESSIVE on Beat 2 (PUSH #1)**, subtle again from Beat 3 | continues Bed B (card OFF) | deliverance |
-| CH5 | serious, a scenario; gear 2 | SUBTLE, then **AGGRESSIVE on Beat 4 (PUSH #2)** | continues Bed B (card OFF) | deliverance |
-| CH6 | from data to conviction; gear 2 into 3 | SUBTLE through Beat 3, then **AGGRESSIVE from Beat 4 (PUSH #3)** | continues Bed B (card OFF) | deliverance |
-| CH7 | conviction close; gear 3 | AGGRESSIVE chorus carries the close, RIGHT-ALIGNED to resolve on "later." | continues Bed B (card OFF) | deliverance |
+| CH1 THE ADMISSION | dark, suspenseful, cinematic; gear 3 epic hook | aggressive: builds under the locked face line, hits on the cut to C3, peaks through the reset beat, a hit on "will you be one of them?" | **Bed A starts** (card OFF) | **atmos-rise** (Louis Lion; Suspenseful, F major, 120 bpm, aggr 69, build to epic_hit, 198 s; env: mid build 0 to 16 s, high peak 16 to 88 s, mid build 88 to 120 s) · alt **the-evil-within** (C minor score, darker, aggr 79, 173 s) · alt **enigma** (dark and dynamic, aggr 78, 127 s) |
+| CH2 THE DEBT NOBODY CAN PAY | calm, steady, reflective; gear 2 slow | SUBTLE: the Deliverance instrumental intro (29 s, aggr 14) into the instrumental verse (42 s, aggr 24) | **Bed B starts** (card ON "THE DEBT NOBODY CAN PAY") | **deliverance** (Cody Martin, Soundstripe 40464, playlist "explainer"; Inspiring / Hopeful / Calm, B major, 90 bpm) · alt **divine-land** (40520: verse aggr 36, chorus aggr 68, 76 s) · alt **kitsune** (40367: C minor, verse aggr 33, chorus aggr 52, a gentler contrast) |
+| CH3 HOW YOU INFLATE A DEBT AWAY | calm teacher; gear 2 slow | SUBTLE (verse / intro, looped) | continues Bed B (card OFF) | deliverance |
+| CH4 THE BOND MARKET SAYS NO | rising tension; gear 2 rising | SUBTLE, then **AGGRESSIVE on Beat 2 (PUSH #1)**, subtle again from Beat 3 | continues Bed B (card OFF) | deliverance |
+| CH5 THE EXCUSE: A RESET | serious, a scenario; gear 2 | SUBTLE, then **AGGRESSIVE on Beat 4 (PUSH #2)** | continues Bed B (card OFF) | deliverance |
+| CH6 WHERE BILLIONAIRES GET MADE | from data to conviction; gear 2 into 3 | SUBTLE through Beat 3, then **AGGRESSIVE from Beat 4 (PUSH #3)** | continues Bed B (card OFF) | deliverance |
+| CH7 THE CLOSE | conviction close; gear 3 | AGGRESSIVE chorus carries the close, RIGHT-ALIGNED to resolve on "later." | continues Bed B (card OFF) | deliverance |
 
 **Bed B's aggressive stretches (the chorus) and where Mike pushes:**
 

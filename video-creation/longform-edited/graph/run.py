@@ -50,7 +50,7 @@ import run_queue as RQ  # noqa: E402
 RETRY_LONGFORM = {"compress", "transcribe", "as_recorded", "coverage", "music_plan", "assets", "edit_plan", "transitions",
                   "card_pauses", "captions", "comp_build", "mix_audio", "final_render", "definition_of_done"}
 RETRY_VERTICAL = {"v_face_crop", "v_assets", "v_comp", "v_render", "v_mix"}
-RETRY_SHORT = {"s_paint_16x9", "s_variants", "s_extract", "s_captions", "s_comp", "s_render", "s_mix"}
+RETRY_SHORT = {"s_paint_16x9", "s_variants", "s_vertical_cards", "s_qa_final", "s_extract", "s_captions", "s_comp", "s_render", "s_mix"}
 
 
 def _gate_name(final):

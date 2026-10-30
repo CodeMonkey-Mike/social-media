@@ -129,7 +129,8 @@ deck-only capture has no face to cut to.
 ## Format 3 — music under the untouched master (VS Code coding videos)
 
 **`skills/music-bed/music-bed.md`** (canonical): the channel's musical intro from 0:00 at clip gain 0 dB -> -40 dB
-over its 11.9 s, then a random elevator bed from the library starting right after Mike's cue line ("...stick around
+over its 11.9 s (a Soundstripe track, Next Door Stomp, YouTube license code `36UJTFFHAT9SVPXZ` goes in the description),
+then a random elevator bed from the library starting right after Mike's cue line ("...stick around
 because this is a cool course" on print-function, ~0:55), -32 dB clip gain, remix-looped on a bar-aligned region,
 end-aligned to the last frame. One command, ~2 min, no video encode:
 ```

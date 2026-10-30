@@ -1,0 +1,19 @@
+{ "project": "reset", "comp_id": "ResetShort", "comp_file": "video-creation/remotion/src/ResetShort.tsx", "extra_files": ["video-creation/remotion/src/Root.tsx (registration)", "longform-edited/media/reset/_previews/short/work/variants/BR-1-cash-reception-desk.mp4 (copied)"],
+  "card_t": [], "pause_s": null, "spine_secs": 27.233, "dur_frames": 907,
+  "covers": 1, "transitions_wired": [{"tc": 10.633, "id": "hand:seam-zoom-flash-0.3s"}, {"tc": 18.9, "id": "hand:seam-zoom-flash-0.3s"}, {"tc": 24.967, "id": "hand:seam-zoom-flash-0.3s"}, {"tc": 11.6, "id": "hand:variant-fade-in-0.2s (BR-1)"}, {"tc": 27.233, "id": "hand:outro-card-fade+spring"}],
+  "captions_groups": 34,
+  "gates": {"COMP-IMPORTS-LINT": "PASS files=2 fails=0", "COVERS-LINT": "PASS covers=1 fails=0 warns=0"},
+  "chunks_qa": [
+    {"frames": "150", "what": "span 1 FACE hook", "verdict": "fixed: comp captions doubled the burned FACE captions; captions now gated to the COVER-sourced span 2 only"},
+    {"frames": "319", "what": "seam 1->2 hit", "verdict": "ok (zoom + white flash)"},
+    {"frames": "390", "what": "BR-1 variant overlay + caption", "verdict": "ok"},
+    {"frames": "480", "what": "span 2 tail, comp caption", "verdict": "ok"},
+    {"frames": "600", "what": "span 3 FACE", "verdict": "ok, single burned caption"},
+    {"frames": "780", "what": "span 4 kicker FACE", "verdict": "ok"},
+    {"frames": "880", "what": "outro card WATCH THE FULL VIDEO", "verdict": "ok (dark, Playfair, green FULL, down arrow)"}],
+  "draft": null,
+  "needs_review": [
+    "The burned captions inside the FACE span intermediates (span-01/03/04) are clipped at the 1080 px edges (frame 150 reads 'ut loud how 4'): it is baked into the span mp4s from the vertical/master, not fixable in this comp; re-extract the spans or re-caption them natively.",
+    "ResetShortCaptions.ts CAPTION_WINDOWS covers ALL spans (incl. FACE); the comp intersects them with the COVER-sourced span 2 to avoid doubling. If the generator is meant to emit COVER-only windows, fix build_captions in the short lane.",
+    "The vertical's exact variant ingress was not documented; used a 0.2 s fade + slight 1.04->1.0 settle."],
+  "deviations": ["Captions restricted to span 2 (COVER) instead of the full generated CAPTION_WINDOWS, to stop double captions over FACE spans."] }

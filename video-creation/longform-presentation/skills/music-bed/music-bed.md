@@ -8,6 +8,10 @@ music under it:
    that dies away) from **0:00**, under the voice, with a clip-gain ramp **0 dB at its first sample -> -40 dB at its
    last**, linear in dB. That is Premiere's two volume keyframes (clip start, clip end); Mike's numbers are always
    Premiere clip gain, never absolute dBFS. Its point is the guitar in the first ~2 s.
+   **It is a Soundstripe track (Mike, 2026-10-29): "Next Door Stomp" by Rest & Settle, soundstripe 16754,
+   library id `next-door-stomp`, YouTube license code `36UJTFFHAT9SVPXZ`.** Every video that uses this intro
+   (any longform-presentation format) carries that code in its YouTube description, like any Soundstripe bed
+   (music-sourcing skill: codes are YouTube-only). Earlier videos shipped it without the code.
 2. **Bed**: an elevator track from `video-creation/assets/music/library.json` (rows tagged `elevator`, the seven
    Soundstripe picks Mike made 2026-10-14 for programming videos; random by default, Mike: "just randomly choose")
    starting right after a spoken cue line (print-function: "...stick around because this is a cool course" at
