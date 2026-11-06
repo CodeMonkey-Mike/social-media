@@ -34,6 +34,10 @@ remotion/out/
 # ^ renders
 remotion/build-*/
 # ^ remotion bundle output (webpack build + source maps, regenerable)
+todo/demos/
+# ^ private work recordings: never commit anything from here, transcripts and notes included
+skills/music-sourcing/.algolia-key
+# ^ Soundstripe's public search key, read by skills/music-sourcing/scripts/algolia-key.js
 
 # ── Per-clip artifacts (regenerable from source + scripts) ───────────────────
 **/preview.mp4

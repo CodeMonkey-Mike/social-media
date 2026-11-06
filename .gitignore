@@ -57,13 +57,10 @@ schedule-tweets/UsersmnedeAppData*/
 # ── Python ───────────────────────────────────────────────────────────────────
 __pycache__/
 
-# ── LinkedIn: EVERYTHING that names a LinkedIn member, a group, or Mike's own profile lives in
-# linkedin-automation/private/ and never reaches the public repo (Mike, 2026-10-08): members.json,
-# members-urls.json, groups.json, endorsements.json, lane_runs.json, the lane logs, PROJECT-LOG.md
-# (member names in run entries), the friend handoff bundle, headshots, the job radar data +
-# dashboard, LangGraph checkpoints + heartbeat. Only the folder's README is committed.
-linkedin-automation/private/*
-!linkedin-automation/private/README.md
+# ── LinkedIn: the WHOLE folder stays out of git, code included, and was purged from the history
+# (Mike, 2026-11-06). It names LinkedIn members and groups, and it holds his job-search tooling.
+# It lives only on disk.
+linkedin-automation/
 
 # Livestream-repurpose graph: same policy as linkedin's (history committed,
 # heartbeat + checkpoints not).

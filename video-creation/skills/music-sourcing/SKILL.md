@@ -166,7 +166,7 @@ python scripts/analyze-music.py --file "<path>"   # analyze ANY audio file, prin
   `schedule-tweets/data/shorts.json`. The raw code never needs to live in `batches.json`.
 
 ## 4. The Soundstripe API map (discovered 2026-06-04)
-- **Search = Algolia.** App `W1S5J3A2XP`, public key `REDACTED_SOUNDSTRIPE_SEARCH_KEY`, index
+- **Search = Algolia.** App `W1S5J3A2XP`, public key in the gitignored `.algolia-key` (read by `scripts/algolia-key.js`), index
   `prod_songs_all_partners_most_recent`. `POST https://w1s5j3a2xp-dsn.algolia.net/1/indexes/*/queries`
   body `{requests:[{indexName,query,params}]}`. Hits carry `objectID` (=song id), `title`, `artists`,
   `bpm`, `energy`, `key`, `tags{mood,genre,instrument,characteristic}`, `keywords`,

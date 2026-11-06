@@ -10,11 +10,13 @@
 //            download button, saves the mp3, captures the content-id license code,
 //            and upserts <music>/library.json.
 //
-// Algolia creds are the PUBLIC search-only key embedded in Soundstripe's web client.
+// Algolia creds are the PUBLIC search-only key embedded in Soundstripe's web client. The key stays out
+// of git: see algolia-key.js.
 
 const fs    = require('fs');
 const path  = require('path');
 const https = require('https');
+const algoliaKey = require('./algolia-key');
 
 const MUSIC_DIR = path.join(__dirname, '..');
 const LIBRARY   = path.join(MUSIC_DIR, 'library.json');
@@ -24,7 +26,7 @@ const DEFAULT_DEST = path.join(MUSIC_DIR, 'downloads');
 
 const ALGOLIA = {
   app:   'W1S5J3A2XP',
-  key:   'REDACTED_SOUNDSTRIPE_SEARCH_KEY',
+  get key() { return algoliaKey(); },
   index: 'prod_songs_all_partners_most_recent',
 };
 

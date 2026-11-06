@@ -6,6 +6,7 @@
 //
 const fs   = require('fs');
 const path = require('path');
+const algoliaKey = require('./algolia-key');
 
 const MUSIC_DIR = path.join(__dirname, '..');
 const RECON     = path.join(MUSIC_DIR, '_recon');
@@ -101,7 +102,7 @@ const PROFILE   = 'C:\\Users\\mnede\\AppData\\Local\\Google\\Chrome\\soundstripe
       let hit = null;
       try {
         const r = await fetch(`https://w1s5j3a2xp-dsn.algolia.net/1/indexes/prod_songs_all_partners_most_recent/${id}`, {
-          headers: { 'X-Algolia-Application-Id': 'W1S5J3A2XP', 'X-Algolia-API-Key': 'REDACTED_SOUNDSTRIPE_SEARCH_KEY' },
+          headers: { 'X-Algolia-Application-Id': 'W1S5J3A2XP', 'X-Algolia-API-Key': algoliaKey() },
         });
         if (r.ok) hit = await r.json();
       } catch (e) { console.log(`algolia getObject ${id} err:`, e.message); }
