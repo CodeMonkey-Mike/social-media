@@ -78,6 +78,9 @@ Prefix every command with `cd C:\Users\mnede\Documents\Claude\social-media &&` (
 
 ## Global hard rules (authoritative copies live where cited — do not violate)
 
+- **Never write anything to D: (Mike, 2026-11-08).** D: is a removable drive he often has unplugged. No scratch,
+  renders, bundles, staging, backups or work dirs there; use C: (the project folder or `%TEMP%`) and free space on C:
+  instead. Reading his own source assets from `D:\Dropbox\...` is fine only when he says it's plugged in.
 - **Sequential posting only** — never run two posting scripts in parallel, for any reason. (`schedule-tweets/skills/SKILL.md`)
 - **One attempt per posting script** — if it seems stuck, READ THE LOG; never relaunch (shared Chrome profiles collide and kill the in-flight post).
 - **YouTube Shorts are posted via the API ONLY** (`scripts/post-yt-short-api.js`). There is **NO Playwright/browser fallback** — do NOT use `post-yt-short.js`, do NOT re-encode to dodge an upload-size limit, do NOT improvise. If the API fails (e.g. `invalid_grant` = expired OAuth token, which needs Mike to re-auth), mark it failed and **report it at the end of the run.** A failed step is reported, never worked around. (`schedule-tweets/skills/yt-post-vertical.md`)

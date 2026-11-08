@@ -358,7 +358,7 @@ def _render(*, comp, out, public_dir, quality, frames, chunk, audio, concurrency
 
 
 def _work_root():
-    """CHUNKED_RENDER_DIR, else the Windows TEMP the launcher set (renders point it at D:, C: is nearly full), else the OS
+    """CHUNKED_RENDER_DIR, else the Windows TEMP the launcher set (on C:, never D:: a removable drive), else the OS
     temp. Not tempfile.gettempdir(): it prefers TMPDIR, which a Git-bash parent exports as C:'s temp (2026-10-27)."""
     root = os.environ.get("CHUNKED_RENDER_DIR") or os.environ.get("TEMP") or tempfile.gettempdir()
     return Path(root) / "chunked-render"
